@@ -2107,7 +2107,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Gov.Base.html" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Gov.Base.md" class="md-nav__link">
         
   
   
@@ -2130,7 +2130,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Gov.Actions.html" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Gov.Actions.md" class="md-nav__link">
         
   
   
@@ -3271,7 +3271,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Script.Base.html" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Script.Base.md" class="md-nav__link">
         
   
   
@@ -3294,7 +3294,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Script.Timelock.html" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Script.Timelock.md" class="md-nav__link">
         
   
   
@@ -8415,11 +8415,11 @@
 <a id="91" class="Keyword">open</a> <a id="96" class="Keyword">import</a> <a id="103" href="Ledger.Conway.Specification.Abstract.html" class="Module">Ledger.Conway.Specification.Abstract</a>
 
 <a id="141" class="Keyword">module</a> <a id="148" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html" class="Module">Ledger.Conway.Specification.Epoch.Properties.ConstRwds</a>
-  <a id="205" class="Symbol">(</a><a id="206" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#206" class="Bound">txs</a> <a id="210" class="Symbol">:</a> <a id="212" class="Symbol">_)</a> <a id="215" class="Symbol">(</a><a id="216" class="Keyword">open</a> <a id="221" href="Ledger.Conway.Specification.Transaction.html#2457" class="Module">TransactionStructure</a> <a id="242" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#206" class="Bound">txs</a><a id="245" class="Symbol">)</a>
+  <a id="205" class="Symbol">(</a><a id="206" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#206" class="Bound">txs</a> <a id="210" class="Symbol">:</a> <a id="212" class="Symbol">_)</a> <a id="215" class="Symbol">(</a><a id="216" class="Keyword">open</a> <a id="221" href="Ledger.Conway.Specification.Transaction.html#2451" class="Module">TransactionStructure</a> <a id="242" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#206" class="Bound">txs</a><a id="245" class="Symbol">)</a>
   <a id="249" class="Symbol">(</a><a id="250" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#250" class="Bound">abs</a> <a id="254" class="Symbol">:</a> <a id="256" href="Ledger.Conway.Specification.Abstract.html#756" class="Record">AbstractFunctions</a> <a id="274" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#206" class="Bound">txs</a><a id="277" class="Symbol">)</a> <a id="279" class="Symbol">(</a><a id="280" class="Keyword">open</a> <a id="285" href="Ledger.Conway.Specification.Abstract.html#756" class="Module">AbstractFunctions</a> <a id="303" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#250" class="Bound">abs</a><a id="306" class="Symbol">)</a>
   <a id="310" class="Keyword">where</a>
 
-<a id="317" class="Keyword">open</a> <a id="322" class="Keyword">import</a> <a id="329" href="Ledger.Conway.Specification.Certs.html" class="Module">Ledger.Conway.Specification.Certs</a> <a id="363" href="Ledger.Conway.Specification.Transaction.html#3577" class="Function">govStructure</a>
+<a id="317" class="Keyword">open</a> <a id="322" class="Keyword">import</a> <a id="329" href="Ledger.Conway.Specification.Certs.html" class="Module">Ledger.Conway.Specification.Certs</a> <a id="363" href="Ledger.Conway.Specification.Transaction.html#3569" class="Function">govStructure</a>
 <a id="376" class="Keyword">open</a> <a id="381" class="Keyword">import</a> <a id="388" href="Ledger.Conway.Specification.Epoch.html" class="Module">Ledger.Conway.Specification.Epoch</a> <a id="422" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#206" class="Bound">txs</a> <a id="426" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#250" class="Bound">abs</a>
 <a id="430" class="Keyword">open</a> <a id="435" class="Keyword">import</a> <a id="442" href="Ledger.Prelude.html" class="Module">Ledger.Prelude</a>
 </pre>
@@ -8434,7 +8434,7 @@ then the rewards of <code class="AgdaBound">es</code> and <code class="AgdaBound
 <pre class="Agda"><a id="dom-rwds-const"></a><a id="913" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#913" class="Function">dom-rwds-const</a> <a id="928" class="Symbol">:</a> <a id="930" class="Symbol">{</a><a id="931" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#931" class="Bound">e</a> <a id="933" class="Symbol">:</a> <a id="935" href="Ledger.Core.Specification.Epoch.html#742" class="Function">Epoch</a><a id="940" class="Symbol">}</a> <a id="942" class="Symbol">(</a><a id="943" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#943" class="Bound">es</a> <a id="946" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#946" class="Bound">es&#39;</a> <a id="950" class="Symbol">:</a> <a id="952" href="Ledger.Conway.Specification.Epoch.html#4038" class="Record">NewEpochState</a><a id="965" class="Symbol">)</a>
   <a id="969" class="Symbol">→</a> <a id="971" class="Symbol">_</a> <a id="973" href="Ledger.Conway.Specification.Epoch.html#25845" class="Datatype Operator">⊢</a> <a id="975" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#943" class="Bound">es</a> <a id="978" href="Ledger.Conway.Specification.Epoch.html#25845" class="Datatype Operator">⇀⦇</a> <a id="981" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#931" class="Bound">e</a> <a id="983" href="Ledger.Conway.Specification.Epoch.html#25845" class="Datatype Operator">,NEWEPOCH⦈</a> <a id="994" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#946" class="Bound">es&#39;</a> <a id="998" class="Symbol">→</a> <a id="1000" href="Agda.Primitive.html#388" class="Primitive">Type</a>
 
-<a id="1006" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#913" class="Function">dom-rwds-const</a> <a id="1021" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#1021" class="Bound">es</a> <a id="1024" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#1024" class="Bound">es&#39;</a> <a id="1028" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#1028" class="Bound">step</a> <a id="1033" class="Symbol">=</a> <a id="1035" href="Class.IsSet.html#916" class="Function">dom</a> <a id="1039" class="Symbol">(</a><a id="1040" href="Ledger.Conway.Specification.Certs.html#2146" class="Field">RewardsOf</a> <a id="1050" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#1021" class="Bound">es</a><a id="1052" class="Symbol">)</a> <a id="1054" href="Agda.Builtin.Equality.html#150" class="Datatype Operator">≡</a> <a id="1056" href="Class.IsSet.html#916" class="Function">dom</a> <a id="1060" class="Symbol">(</a><a id="1061" href="Ledger.Conway.Specification.Certs.html#2146" class="Field">RewardsOf</a> <a id="1071" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#1024" class="Bound">es&#39;</a><a id="1074" class="Symbol">)</a>
+<a id="1006" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#913" class="Function">dom-rwds-const</a> <a id="1021" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#1021" class="Bound">es</a> <a id="1024" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#1024" class="Bound">es&#39;</a> <a id="1028" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#1028" class="Bound">step</a> <a id="1033" class="Symbol">=</a> <a id="1035" href="Class.IsSet.html#916" class="Function">dom</a> <a id="1039" class="Symbol">(</a><a id="1040" href="Ledger.Conway.Specification.Certs.html#2142" class="Field">RewardsOf</a> <a id="1050" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#1021" class="Bound">es</a><a id="1052" class="Symbol">)</a> <a id="1054" href="Agda.Builtin.Equality.html#150" class="Datatype Operator">≡</a> <a id="1056" href="Class.IsSet.html#916" class="Function">dom</a> <a id="1060" class="Symbol">(</a><a id="1061" href="Ledger.Conway.Specification.Certs.html#2142" class="Field">RewardsOf</a> <a id="1071" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#1024" class="Bound">es&#39;</a><a id="1074" class="Symbol">)</a>
 </pre>
 <p><em>Proof</em>. (coming soon)</p>
 

@@ -2107,7 +2107,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Gov.Base.html" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Gov.Base.md" class="md-nav__link">
         
   
   
@@ -2130,7 +2130,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Gov.Actions.html" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Gov.Actions.md" class="md-nav__link">
         
   
   
@@ -3271,7 +3271,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Script.Base.html" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Script.Base.md" class="md-nav__link">
         
   
   
@@ -3294,7 +3294,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Script.Timelock.html" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Script.Timelock.md" class="md-nav__link">
         
   
   
@@ -8415,12 +8415,12 @@
 <a id="88" class="Keyword">open</a> <a id="93" class="Keyword">import</a> <a id="100" href="Ledger.Conway.Specification.Transaction.html" class="Module">Ledger.Conway.Specification.Transaction</a>
 
 <a id="141" class="Keyword">module</a> <a id="148" href="Ledger.Conway.Specification.Chain.Properties.EpochStep.html" class="Module">Ledger.Conway.Specification.Chain.Properties.EpochStep</a>
-  <a id="205" class="Symbol">(</a><a id="206" href="Ledger.Conway.Specification.Chain.Properties.EpochStep.html#206" class="Bound">txs</a> <a id="210" class="Symbol">:</a> <a id="212" class="Symbol">_)</a> <a id="215" class="Symbol">(</a><a id="216" class="Keyword">open</a> <a id="221" href="Ledger.Conway.Specification.Transaction.html#2457" class="Module">TransactionStructure</a> <a id="242" href="Ledger.Conway.Specification.Chain.Properties.EpochStep.html#206" class="Bound">txs</a><a id="245" class="Symbol">)</a>
+  <a id="205" class="Symbol">(</a><a id="206" href="Ledger.Conway.Specification.Chain.Properties.EpochStep.html#206" class="Bound">txs</a> <a id="210" class="Symbol">:</a> <a id="212" class="Symbol">_)</a> <a id="215" class="Symbol">(</a><a id="216" class="Keyword">open</a> <a id="221" href="Ledger.Conway.Specification.Transaction.html#2451" class="Module">TransactionStructure</a> <a id="242" href="Ledger.Conway.Specification.Chain.Properties.EpochStep.html#206" class="Bound">txs</a><a id="245" class="Symbol">)</a>
   <a id="249" class="Symbol">(</a><a id="250" href="Ledger.Conway.Specification.Chain.Properties.EpochStep.html#250" class="Bound">abs</a> <a id="254" class="Symbol">:</a> <a id="256" href="Ledger.Conway.Specification.Abstract.html#756" class="Record">AbstractFunctions</a> <a id="274" href="Ledger.Conway.Specification.Chain.Properties.EpochStep.html#206" class="Bound">txs</a><a id="277" class="Symbol">)</a>
   <a id="281" class="Keyword">where</a>
 
 <a id="288" class="Keyword">open</a> <a id="293" class="Keyword">import</a> <a id="300" href="Ledger.Conway.Specification.Chain.html" class="Module">Ledger.Conway.Specification.Chain</a> <a id="334" href="Ledger.Conway.Specification.Chain.Properties.EpochStep.html#206" class="Bound">txs</a> <a id="338" href="Ledger.Conway.Specification.Chain.Properties.EpochStep.html#250" class="Bound">abs</a>
-<a id="342" class="Keyword">open</a> <a id="347" class="Keyword">import</a> <a id="354" href="Ledger.Conway.Specification.Enact.html" class="Module">Ledger.Conway.Specification.Enact</a> <a id="388" href="Ledger.Conway.Specification.Transaction.html#3577" class="Function">govStructure</a>
+<a id="342" class="Keyword">open</a> <a id="347" class="Keyword">import</a> <a id="354" href="Ledger.Conway.Specification.Enact.html" class="Module">Ledger.Conway.Specification.Enact</a> <a id="388" href="Ledger.Conway.Specification.Transaction.html#3569" class="Function">govStructure</a>
 <a id="401" class="Keyword">open</a> <a id="406" class="Keyword">import</a> <a id="413" href="Ledger.Conway.Specification.Epoch.html" class="Module">Ledger.Conway.Specification.Epoch</a> <a id="447" href="Ledger.Conway.Specification.Chain.Properties.EpochStep.html#206" class="Bound">txs</a> <a id="451" href="Ledger.Conway.Specification.Chain.Properties.EpochStep.html#250" class="Bound">abs</a>
 <a id="455" class="Keyword">open</a> <a id="460" class="Keyword">import</a> <a id="467" href="Ledger.Prelude.html" class="Module">Ledger.Prelude</a>
 <a id="482" class="Keyword">open</a> <a id="487" href="Ledger.Conway.Specification.BlockBody.html#921" class="Module">Block</a>
@@ -8435,7 +8435,7 @@ if the enact states of <code class="AgdaBound">cs</code> and <code class="AgdaBo
 the epoch of the slot of <code class="AgdaBound">b</code> is the successor of the last epoch of <code class="AgdaBound">cs</code>.</p>
 <p><em>Formally</em>.</p>
 <pre class="Agda"><a id="enact-change⇒newEpoch"></a><a id="979" href="Ledger.Conway.Specification.Chain.Properties.EpochStep.html#979" class="Function">enact-change⇒newEpoch</a> <a id="1001" class="Symbol">:</a> <a id="1003" class="Symbol">(</a><a id="1004" href="Ledger.Conway.Specification.Chain.Properties.EpochStep.html#1004" class="Bound">b</a> <a id="1006" class="Symbol">:</a> <a id="1008" href="Ledger.Conway.Specification.BlockBody.html#921" class="Record">Block</a><a id="1013" class="Symbol">)</a> <a id="1015" class="Symbol">{</a><a id="1016" href="Ledger.Conway.Specification.Chain.Properties.EpochStep.html#1016" class="Bound">cs</a> <a id="1019" href="Ledger.Conway.Specification.Chain.Properties.EpochStep.html#1019" class="Bound">cs&#39;</a>  <a id="1024" class="Symbol">:</a> <a id="1026" href="Ledger.Conway.Specification.Chain.html#1169" class="Record">ChainState</a><a id="1036" class="Symbol">}</a>
-  <a id="1040" class="Symbol">→</a> <a id="1042" class="Symbol">_</a> <a id="1044" href="Ledger.Conway.Specification.Chain.html#2761" class="Datatype Operator">⊢</a> <a id="1046" href="Ledger.Conway.Specification.Chain.Properties.EpochStep.html#1016" class="Bound">cs</a> <a id="1049" href="Ledger.Conway.Specification.Chain.html#2761" class="Datatype Operator">⇀⦇</a> <a id="1052" href="Ledger.Conway.Specification.Chain.Properties.EpochStep.html#1004" class="Bound">b</a> <a id="1054" href="Ledger.Conway.Specification.Chain.html#2761" class="Datatype Operator">,CHAIN⦈</a> <a id="1062" href="Ledger.Conway.Specification.Chain.Properties.EpochStep.html#1019" class="Bound">cs&#39;</a> <a id="1066" class="Symbol">→</a> <a id="1068" href="Ledger.Conway.Specification.Enact.html#1993" class="Field">EnactStateOf</a> <a id="1081" href="Ledger.Conway.Specification.Chain.Properties.EpochStep.html#1016" class="Bound">cs</a> <a id="1084" href="Relation.Binary.PropositionalEquality.Core.html#1000" class="Function Operator">≢</a> <a id="1086" href="Ledger.Conway.Specification.Enact.html#1993" class="Field">EnactStateOf</a> <a id="1099" href="Ledger.Conway.Specification.Chain.Properties.EpochStep.html#1019" class="Bound">cs&#39;</a>
+  <a id="1040" class="Symbol">→</a> <a id="1042" class="Symbol">_</a> <a id="1044" href="Ledger.Conway.Specification.Chain.html#2761" class="Datatype Operator">⊢</a> <a id="1046" href="Ledger.Conway.Specification.Chain.Properties.EpochStep.html#1016" class="Bound">cs</a> <a id="1049" href="Ledger.Conway.Specification.Chain.html#2761" class="Datatype Operator">⇀⦇</a> <a id="1052" href="Ledger.Conway.Specification.Chain.Properties.EpochStep.html#1004" class="Bound">b</a> <a id="1054" href="Ledger.Conway.Specification.Chain.html#2761" class="Datatype Operator">,CHAIN⦈</a> <a id="1062" href="Ledger.Conway.Specification.Chain.Properties.EpochStep.html#1019" class="Bound">cs&#39;</a> <a id="1066" class="Symbol">→</a> <a id="1068" href="Ledger.Conway.Specification.Enact.html#1989" class="Field">EnactStateOf</a> <a id="1081" href="Ledger.Conway.Specification.Chain.Properties.EpochStep.html#1016" class="Bound">cs</a> <a id="1084" href="Relation.Binary.PropositionalEquality.Core.html#1000" class="Function Operator">≢</a> <a id="1086" href="Ledger.Conway.Specification.Enact.html#1989" class="Field">EnactStateOf</a> <a id="1099" href="Ledger.Conway.Specification.Chain.Properties.EpochStep.html#1019" class="Bound">cs&#39;</a>
   <a id="1105" class="Symbol">→</a> <a id="1107" href="Agda.Primitive.html#388" class="Primitive">Type</a>
 
 <a id="1113" href="Ledger.Conway.Specification.Chain.Properties.EpochStep.html#979" class="Function">enact-change⇒newEpoch</a> <a id="1135" href="Ledger.Conway.Specification.Chain.Properties.EpochStep.html#1135" class="Bound">b</a> <a id="1137" class="Symbol">{</a><a id="1138" href="Ledger.Conway.Specification.Chain.Properties.EpochStep.html#1138" class="Bound">cs</a><a id="1140" class="Symbol">}</a> <a id="1142" href="Ledger.Conway.Specification.Chain.Properties.EpochStep.html#1142" class="Bound">h</a> <a id="1144" href="Ledger.Conway.Specification.Chain.Properties.EpochStep.html#1144" class="Bound">es≢es&#39;</a> <a id="1151" class="Symbol">=</a>

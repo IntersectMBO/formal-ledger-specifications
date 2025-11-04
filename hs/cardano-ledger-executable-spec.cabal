@@ -500,8 +500,6 @@ library
       MAlonzo.Code.Ledger.Conway.Specification.Epoch
       MAlonzo.Code.Ledger.Conway.Specification.Fees
       MAlonzo.Code.Ledger.Conway.Specification.Gov
-      MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions
-      MAlonzo.Code.Ledger.Conway.Specification.Gov.Base
       MAlonzo.Code.Ledger.Conway.Specification.Gov.Properties.Computational
       MAlonzo.Code.Ledger.Conway.Specification.Ledger
       MAlonzo.Code.Ledger.Conway.Specification.PoolReap
@@ -510,8 +508,6 @@ library
       MAlonzo.Code.Ledger.Conway.Specification.Ratify.Properties.Computational
       MAlonzo.Code.Ledger.Conway.Specification.Rewards
       MAlonzo.Code.Ledger.Conway.Specification.Script
-      MAlonzo.Code.Ledger.Conway.Specification.Script.Base
-      MAlonzo.Code.Ledger.Conway.Specification.Script.Timelock
       MAlonzo.Code.Ledger.Conway.Specification.Script.Validation
       MAlonzo.Code.Ledger.Conway.Specification.Transaction
       MAlonzo.Code.Ledger.Conway.Specification.Utxo
@@ -519,6 +515,10 @@ library
       MAlonzo.Code.Ledger.Core.Specification.Address
       MAlonzo.Code.Ledger.Core.Specification.Crypto
       MAlonzo.Code.Ledger.Core.Specification.Epoch
+      MAlonzo.Code.Ledger.Core.Specification.Gov.Actions
+      MAlonzo.Code.Ledger.Core.Specification.Gov.Base
+      MAlonzo.Code.Ledger.Core.Specification.Script.Base
+      MAlonzo.Code.Ledger.Core.Specification.Script.Timelock
       MAlonzo.Code.Ledger.Core.Specification.TokenAlgebra.Base
       MAlonzo.Code.Ledger.Core.Specification.TokenAlgebra.Coin
       MAlonzo.Code.Ledger.Prelude

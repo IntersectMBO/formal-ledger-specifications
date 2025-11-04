@@ -31,11 +31,11 @@ import qualified MAlonzo.Code.Ledger.Conway.Conformance.Certs
 import qualified MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert
 import qualified MAlonzo.Code.Ledger.Conway.Specification.Abstract
 import qualified MAlonzo.Code.Ledger.Conway.Specification.Certs
-import qualified MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions
-import qualified MAlonzo.Code.Ledger.Conway.Specification.Gov.Base
 import qualified MAlonzo.Code.Ledger.Conway.Specification.PParams
 import qualified MAlonzo.Code.Ledger.Conway.Specification.Transaction
 import qualified MAlonzo.Code.Ledger.Core.Specification.Address
+import qualified MAlonzo.Code.Ledger.Core.Specification.Gov.Actions
+import qualified MAlonzo.Code.Ledger.Core.Specification.Gov.Base
 import qualified MAlonzo.Code.Ledger.Prelude
 import qualified MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base
 import qualified MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Derive
@@ -703,9 +703,9 @@ du_DStateToConf_2778
                                                                     (coe
                                                                        (MAlonzo.RTE.QName
                                                                           (1178 :: Integer)
-                                                                          (7805089389717466778 ::
+                                                                          (4600622176344727455 ::
                                                                              Integer)
-                                                                          "Ledger.Conway.Specification.Gov.Base.GovStructure.globalConstants"
+                                                                          "Ledger.Core.Specification.Gov.Base.GovStructure.globalConstants"
                                                                           (MAlonzo.RTE.Fixity
                                                                              MAlonzo.RTE.NonAssoc
                                                                              MAlonzo.RTE.Unrelated)))
@@ -818,9 +818,9 @@ du_DStateToConf_2778
                                                                                       (MAlonzo.RTE.QName
                                                                                          (602 ::
                                                                                             Integer)
-                                                                                         (7805089389717466778 ::
+                                                                                         (4600622176344727455 ::
                                                                                             Integer)
-                                                                                         "Ledger.Conway.Specification.Gov.Base.GovStructure.cryptoStructure"
+                                                                                         "Ledger.Core.Specification.Gov.Base.GovStructure.cryptoStructure"
                                                                                          (MAlonzo.RTE.Fixity
                                                                                             MAlonzo.RTE.NonAssoc
                                                                                             MAlonzo.RTE.Unrelated)))
@@ -895,9 +895,9 @@ du_DStateToConf_2778
                                                                           (coe
                                                                              (MAlonzo.RTE.QName
                                                                                 (602 :: Integer)
-                                                                                (7805089389717466778 ::
+                                                                                (4600622176344727455 ::
                                                                                    Integer)
-                                                                                "Ledger.Conway.Specification.Gov.Base.GovStructure.cryptoStructure"
+                                                                                "Ledger.Core.Specification.Gov.Base.GovStructure.cryptoStructure"
                                                                                 (MAlonzo.RTE.Fixity
                                                                                    MAlonzo.RTE.NonAssoc
                                                                                    MAlonzo.RTE.Unrelated)))
@@ -1330,9 +1330,9 @@ du_GStateToConf_2806
                                                                  (coe
                                                                     (MAlonzo.RTE.QName
                                                                        (1178 :: Integer)
-                                                                       (7805089389717466778 ::
+                                                                       (4600622176344727455 ::
                                                                           Integer)
-                                                                       "Ledger.Conway.Specification.Gov.Base.GovStructure.globalConstants"
+                                                                       "Ledger.Core.Specification.Gov.Base.GovStructure.globalConstants"
                                                                        (MAlonzo.RTE.Fixity
                                                                           MAlonzo.RTE.NonAssoc
                                                                           MAlonzo.RTE.Unrelated)))
@@ -1444,9 +1444,9 @@ du_GStateToConf_2806
                                                                                    (MAlonzo.RTE.QName
                                                                                       (602 ::
                                                                                          Integer)
-                                                                                      (7805089389717466778 ::
+                                                                                      (4600622176344727455 ::
                                                                                          Integer)
-                                                                                      "Ledger.Conway.Specification.Gov.Base.GovStructure.cryptoStructure"
+                                                                                      "Ledger.Core.Specification.Gov.Base.GovStructure.cryptoStructure"
                                                                                       (MAlonzo.RTE.Fixity
                                                                                          MAlonzo.RTE.NonAssoc
                                                                                          MAlonzo.RTE.Unrelated)))
@@ -1521,9 +1521,9 @@ du_GStateToConf_2806
                                                                        (coe
                                                                           (MAlonzo.RTE.QName
                                                                              (602 :: Integer)
-                                                                             (7805089389717466778 ::
+                                                                             (4600622176344727455 ::
                                                                                 Integer)
-                                                                             "Ledger.Conway.Specification.Gov.Base.GovStructure.cryptoStructure"
+                                                                             "Ledger.Core.Specification.Gov.Base.GovStructure.cryptoStructure"
                                                                              (MAlonzo.RTE.Fixity
                                                                                 MAlonzo.RTE.NonAssoc
                                                                                 MAlonzo.RTE.Unrelated)))
@@ -1682,9 +1682,9 @@ du_GStateToConf_2806
                                                                     (coe
                                                                        (MAlonzo.RTE.QName
                                                                           (1178 :: Integer)
-                                                                          (7805089389717466778 ::
+                                                                          (4600622176344727455 ::
                                                                              Integer)
-                                                                          "Ledger.Conway.Specification.Gov.Base.GovStructure.globalConstants"
+                                                                          "Ledger.Core.Specification.Gov.Base.GovStructure.globalConstants"
                                                                           (MAlonzo.RTE.Fixity
                                                                              MAlonzo.RTE.NonAssoc
                                                                              MAlonzo.RTE.Unrelated)))
@@ -1797,9 +1797,9 @@ du_GStateToConf_2806
                                                                                       (MAlonzo.RTE.QName
                                                                                          (602 ::
                                                                                             Integer)
-                                                                                         (7805089389717466778 ::
+                                                                                         (4600622176344727455 ::
                                                                                             Integer)
-                                                                                         "Ledger.Conway.Specification.Gov.Base.GovStructure.cryptoStructure"
+                                                                                         "Ledger.Core.Specification.Gov.Base.GovStructure.cryptoStructure"
                                                                                          (MAlonzo.RTE.Fixity
                                                                                             MAlonzo.RTE.NonAssoc
                                                                                             MAlonzo.RTE.Unrelated)))
@@ -1874,9 +1874,9 @@ du_GStateToConf_2806
                                                                           (coe
                                                                              (MAlonzo.RTE.QName
                                                                                 (602 :: Integer)
-                                                                                (7805089389717466778 ::
+                                                                                (4600622176344727455 ::
                                                                                    Integer)
-                                                                                "Ledger.Conway.Specification.Gov.Base.GovStructure.cryptoStructure"
+                                                                                "Ledger.Core.Specification.Gov.Base.GovStructure.cryptoStructure"
                                                                                 (MAlonzo.RTE.Fixity
                                                                                    MAlonzo.RTE.NonAssoc
                                                                                    MAlonzo.RTE.Unrelated)))
@@ -2028,9 +2028,9 @@ du_GStateToConf_2806
                                                                                       (MAlonzo.RTE.QName
                                                                                          (1178 ::
                                                                                             Integer)
-                                                                                         (7805089389717466778 ::
+                                                                                         (4600622176344727455 ::
                                                                                             Integer)
-                                                                                         "Ledger.Conway.Specification.Gov.Base.GovStructure.globalConstants"
+                                                                                         "Ledger.Core.Specification.Gov.Base.GovStructure.globalConstants"
                                                                                          (MAlonzo.RTE.Fixity
                                                                                             MAlonzo.RTE.NonAssoc
                                                                                             MAlonzo.RTE.Unrelated)))
@@ -2146,9 +2146,9 @@ du_GStateToConf_2806
                                                                                                      (MAlonzo.RTE.QName
                                                                                                         (602 ::
                                                                                                            Integer)
-                                                                                                        (7805089389717466778 ::
+                                                                                                        (4600622176344727455 ::
                                                                                                            Integer)
-                                                                                                        "Ledger.Conway.Specification.Gov.Base.GovStructure.cryptoStructure"
+                                                                                                        "Ledger.Core.Specification.Gov.Base.GovStructure.cryptoStructure"
                                                                                                         (MAlonzo.RTE.Fixity
                                                                                                            MAlonzo.RTE.NonAssoc
                                                                                                            MAlonzo.RTE.Unrelated)))
@@ -2225,9 +2225,9 @@ du_GStateToConf_2806
                                                                                             (MAlonzo.RTE.QName
                                                                                                (602 ::
                                                                                                   Integer)
-                                                                                               (7805089389717466778 ::
+                                                                                               (4600622176344727455 ::
                                                                                                   Integer)
-                                                                                               "Ledger.Conway.Specification.Gov.Base.GovStructure.cryptoStructure"
+                                                                                               "Ledger.Core.Specification.Gov.Base.GovStructure.cryptoStructure"
                                                                                                (MAlonzo.RTE.Fixity
                                                                                                   MAlonzo.RTE.NonAssoc
                                                                                                   MAlonzo.RTE.Unrelated)))
@@ -2476,9 +2476,9 @@ du_GStateFromConf_2818
                                                                     (coe
                                                                        (MAlonzo.RTE.QName
                                                                           (1178 :: Integer)
-                                                                          (7805089389717466778 ::
+                                                                          (4600622176344727455 ::
                                                                              Integer)
-                                                                          "Ledger.Conway.Specification.Gov.Base.GovStructure.globalConstants"
+                                                                          "Ledger.Core.Specification.Gov.Base.GovStructure.globalConstants"
                                                                           (MAlonzo.RTE.Fixity
                                                                              MAlonzo.RTE.NonAssoc
                                                                              MAlonzo.RTE.Unrelated)))
@@ -2591,9 +2591,9 @@ du_GStateFromConf_2818
                                                                                       (MAlonzo.RTE.QName
                                                                                          (602 ::
                                                                                             Integer)
-                                                                                         (7805089389717466778 ::
+                                                                                         (4600622176344727455 ::
                                                                                             Integer)
-                                                                                         "Ledger.Conway.Specification.Gov.Base.GovStructure.cryptoStructure"
+                                                                                         "Ledger.Core.Specification.Gov.Base.GovStructure.cryptoStructure"
                                                                                          (MAlonzo.RTE.Fixity
                                                                                             MAlonzo.RTE.NonAssoc
                                                                                             MAlonzo.RTE.Unrelated)))
@@ -2668,9 +2668,9 @@ du_GStateFromConf_2818
                                                                           (coe
                                                                              (MAlonzo.RTE.QName
                                                                                 (602 :: Integer)
-                                                                                (7805089389717466778 ::
+                                                                                (4600622176344727455 ::
                                                                                    Integer)
-                                                                                "Ledger.Conway.Specification.Gov.Base.GovStructure.cryptoStructure"
+                                                                                "Ledger.Core.Specification.Gov.Base.GovStructure.cryptoStructure"
                                                                                 (MAlonzo.RTE.Fixity
                                                                                    MAlonzo.RTE.NonAssoc
                                                                                    MAlonzo.RTE.Unrelated)))
@@ -2822,9 +2822,9 @@ du_GStateFromConf_2818
                                                                                       (MAlonzo.RTE.QName
                                                                                          (1178 ::
                                                                                             Integer)
-                                                                                         (7805089389717466778 ::
+                                                                                         (4600622176344727455 ::
                                                                                             Integer)
-                                                                                         "Ledger.Conway.Specification.Gov.Base.GovStructure.globalConstants"
+                                                                                         "Ledger.Core.Specification.Gov.Base.GovStructure.globalConstants"
                                                                                          (MAlonzo.RTE.Fixity
                                                                                             MAlonzo.RTE.NonAssoc
                                                                                             MAlonzo.RTE.Unrelated)))
@@ -2940,9 +2940,9 @@ du_GStateFromConf_2818
                                                                                                      (MAlonzo.RTE.QName
                                                                                                         (602 ::
                                                                                                            Integer)
-                                                                                                        (7805089389717466778 ::
+                                                                                                        (4600622176344727455 ::
                                                                                                            Integer)
-                                                                                                        "Ledger.Conway.Specification.Gov.Base.GovStructure.cryptoStructure"
+                                                                                                        "Ledger.Core.Specification.Gov.Base.GovStructure.cryptoStructure"
                                                                                                         (MAlonzo.RTE.Fixity
                                                                                                            MAlonzo.RTE.NonAssoc
                                                                                                            MAlonzo.RTE.Unrelated)))
@@ -3019,9 +3019,9 @@ du_GStateFromConf_2818
                                                                                             (MAlonzo.RTE.QName
                                                                                                (602 ::
                                                                                                   Integer)
-                                                                                               (7805089389717466778 ::
+                                                                                               (4600622176344727455 ::
                                                                                                   Integer)
-                                                                                               "Ledger.Conway.Specification.Gov.Base.GovStructure.cryptoStructure"
+                                                                                               "Ledger.Core.Specification.Gov.Base.GovStructure.cryptoStructure"
                                                                                                (MAlonzo.RTE.Fixity
                                                                                                   MAlonzo.RTE.NonAssoc
                                                                                                   MAlonzo.RTE.Unrelated)))
@@ -3591,9 +3591,9 @@ du_CertStToConf_3142
                                                                                          (MAlonzo.RTE.QName
                                                                                             (1178 ::
                                                                                                Integer)
-                                                                                            (7805089389717466778 ::
+                                                                                            (4600622176344727455 ::
                                                                                                Integer)
-                                                                                            "Ledger.Conway.Specification.Gov.Base.GovStructure.globalConstants"
+                                                                                            "Ledger.Core.Specification.Gov.Base.GovStructure.globalConstants"
                                                                                             (MAlonzo.RTE.Fixity
                                                                                                MAlonzo.RTE.NonAssoc
                                                                                                MAlonzo.RTE.Unrelated)))
@@ -3710,9 +3710,9 @@ du_CertStToConf_3142
                                                                                                         (MAlonzo.RTE.QName
                                                                                                            (602 ::
                                                                                                               Integer)
-                                                                                                           (7805089389717466778 ::
+                                                                                                           (4600622176344727455 ::
                                                                                                               Integer)
-                                                                                                           "Ledger.Conway.Specification.Gov.Base.GovStructure.cryptoStructure"
+                                                                                                           "Ledger.Core.Specification.Gov.Base.GovStructure.cryptoStructure"
                                                                                                            (MAlonzo.RTE.Fixity
                                                                                                               MAlonzo.RTE.NonAssoc
                                                                                                               MAlonzo.RTE.Unrelated)))
@@ -3789,9 +3789,9 @@ du_CertStToConf_3142
                                                                                                (MAlonzo.RTE.QName
                                                                                                   (602 ::
                                                                                                      Integer)
-                                                                                                  (7805089389717466778 ::
+                                                                                                  (4600622176344727455 ::
                                                                                                      Integer)
-                                                                                                  "Ledger.Conway.Specification.Gov.Base.GovStructure.cryptoStructure"
+                                                                                                  "Ledger.Core.Specification.Gov.Base.GovStructure.cryptoStructure"
                                                                                                   (MAlonzo.RTE.Fixity
                                                                                                      MAlonzo.RTE.NonAssoc
                                                                                                      MAlonzo.RTE.Unrelated)))
@@ -4096,9 +4096,9 @@ du_CertStToConf_3142
                                                                                          (MAlonzo.RTE.QName
                                                                                             (1178 ::
                                                                                                Integer)
-                                                                                            (7805089389717466778 ::
+                                                                                            (4600622176344727455 ::
                                                                                                Integer)
-                                                                                            "Ledger.Conway.Specification.Gov.Base.GovStructure.globalConstants"
+                                                                                            "Ledger.Core.Specification.Gov.Base.GovStructure.globalConstants"
                                                                                             (MAlonzo.RTE.Fixity
                                                                                                MAlonzo.RTE.NonAssoc
                                                                                                MAlonzo.RTE.Unrelated)))
@@ -4215,9 +4215,9 @@ du_CertStToConf_3142
                                                                                                         (MAlonzo.RTE.QName
                                                                                                            (602 ::
                                                                                                               Integer)
-                                                                                                           (7805089389717466778 ::
+                                                                                                           (4600622176344727455 ::
                                                                                                               Integer)
-                                                                                                           "Ledger.Conway.Specification.Gov.Base.GovStructure.cryptoStructure"
+                                                                                                           "Ledger.Core.Specification.Gov.Base.GovStructure.cryptoStructure"
                                                                                                            (MAlonzo.RTE.Fixity
                                                                                                               MAlonzo.RTE.NonAssoc
                                                                                                               MAlonzo.RTE.Unrelated)))
@@ -4294,9 +4294,9 @@ du_CertStToConf_3142
                                                                                                (MAlonzo.RTE.QName
                                                                                                   (602 ::
                                                                                                      Integer)
-                                                                                                  (7805089389717466778 ::
+                                                                                                  (4600622176344727455 ::
                                                                                                      Integer)
-                                                                                                  "Ledger.Conway.Specification.Gov.Base.GovStructure.cryptoStructure"
+                                                                                                  "Ledger.Core.Specification.Gov.Base.GovStructure.cryptoStructure"
                                                                                                   (MAlonzo.RTE.Fixity
                                                                                                      MAlonzo.RTE.NonAssoc
                                                                                                      MAlonzo.RTE.Unrelated)))
@@ -4471,9 +4471,9 @@ du_CertStToConf_3142
                                                                                             (MAlonzo.RTE.QName
                                                                                                (1178 ::
                                                                                                   Integer)
-                                                                                               (7805089389717466778 ::
+                                                                                               (4600622176344727455 ::
                                                                                                   Integer)
-                                                                                               "Ledger.Conway.Specification.Gov.Base.GovStructure.globalConstants"
+                                                                                               "Ledger.Core.Specification.Gov.Base.GovStructure.globalConstants"
                                                                                                (MAlonzo.RTE.Fixity
                                                                                                   MAlonzo.RTE.NonAssoc
                                                                                                   MAlonzo.RTE.Unrelated)))
@@ -4590,9 +4590,9 @@ du_CertStToConf_3142
                                                                                                            (MAlonzo.RTE.QName
                                                                                                               (602 ::
                                                                                                                  Integer)
-                                                                                                              (7805089389717466778 ::
+                                                                                                              (4600622176344727455 ::
                                                                                                                  Integer)
-                                                                                                              "Ledger.Conway.Specification.Gov.Base.GovStructure.cryptoStructure"
+                                                                                                              "Ledger.Core.Specification.Gov.Base.GovStructure.cryptoStructure"
                                                                                                               (MAlonzo.RTE.Fixity
                                                                                                                  MAlonzo.RTE.NonAssoc
                                                                                                                  MAlonzo.RTE.Unrelated)))
@@ -4669,9 +4669,9 @@ du_CertStToConf_3142
                                                                                                   (MAlonzo.RTE.QName
                                                                                                      (602 ::
                                                                                                         Integer)
-                                                                                                     (7805089389717466778 ::
+                                                                                                     (4600622176344727455 ::
                                                                                                         Integer)
-                                                                                                     "Ledger.Conway.Specification.Gov.Base.GovStructure.cryptoStructure"
+                                                                                                     "Ledger.Core.Specification.Gov.Base.GovStructure.cryptoStructure"
                                                                                                      (MAlonzo.RTE.Fixity
                                                                                                         MAlonzo.RTE.NonAssoc
                                                                                                         MAlonzo.RTE.Unrelated)))
@@ -4827,9 +4827,9 @@ du_CertStToConf_3142
                                                                                                            (MAlonzo.RTE.QName
                                                                                                               (1178 ::
                                                                                                                  Integer)
-                                                                                                              (7805089389717466778 ::
+                                                                                                              (4600622176344727455 ::
                                                                                                                  Integer)
-                                                                                                              "Ledger.Conway.Specification.Gov.Base.GovStructure.globalConstants"
+                                                                                                              "Ledger.Core.Specification.Gov.Base.GovStructure.globalConstants"
                                                                                                               (MAlonzo.RTE.Fixity
                                                                                                                  MAlonzo.RTE.NonAssoc
                                                                                                                  MAlonzo.RTE.Unrelated)))
@@ -4946,9 +4946,9 @@ du_CertStToConf_3142
                                                                                                                           (MAlonzo.RTE.QName
                                                                                                                              (602 ::
                                                                                                                                 Integer)
-                                                                                                                             (7805089389717466778 ::
+                                                                                                                             (4600622176344727455 ::
                                                                                                                                 Integer)
-                                                                                                                             "Ledger.Conway.Specification.Gov.Base.GovStructure.cryptoStructure"
+                                                                                                                             "Ledger.Core.Specification.Gov.Base.GovStructure.cryptoStructure"
                                                                                                                              (MAlonzo.RTE.Fixity
                                                                                                                                 MAlonzo.RTE.NonAssoc
                                                                                                                                 MAlonzo.RTE.Unrelated)))
@@ -5025,9 +5025,9 @@ du_CertStToConf_3142
                                                                                                                  (MAlonzo.RTE.QName
                                                                                                                     (602 ::
                                                                                                                        Integer)
-                                                                                                                    (7805089389717466778 ::
+                                                                                                                    (4600622176344727455 ::
                                                                                                                        Integer)
-                                                                                                                    "Ledger.Conway.Specification.Gov.Base.GovStructure.cryptoStructure"
+                                                                                                                    "Ledger.Core.Specification.Gov.Base.GovStructure.cryptoStructure"
                                                                                                                     (MAlonzo.RTE.Fixity
                                                                                                                        MAlonzo.RTE.NonAssoc
                                                                                                                        MAlonzo.RTE.Unrelated)))
@@ -6073,9 +6073,9 @@ du_CERT'45'POST'45'CERTToConf_3348 v0 v1 v2
                                                                                               (MAlonzo.RTE.QName
                                                                                                  (1178 ::
                                                                                                     Integer)
-                                                                                                 (7805089389717466778 ::
+                                                                                                 (4600622176344727455 ::
                                                                                                     Integer)
-                                                                                                 "Ledger.Conway.Specification.Gov.Base.GovStructure.globalConstants"
+                                                                                                 "Ledger.Core.Specification.Gov.Base.GovStructure.globalConstants"
                                                                                                  (MAlonzo.RTE.Fixity
                                                                                                     MAlonzo.RTE.NonAssoc
                                                                                                     MAlonzo.RTE.Unrelated)))
@@ -6192,9 +6192,9 @@ du_CERT'45'POST'45'CERTToConf_3348 v0 v1 v2
                                                                                                              (MAlonzo.RTE.QName
                                                                                                                 (602 ::
                                                                                                                    Integer)
-                                                                                                                (7805089389717466778 ::
+                                                                                                                (4600622176344727455 ::
                                                                                                                    Integer)
-                                                                                                                "Ledger.Conway.Specification.Gov.Base.GovStructure.cryptoStructure"
+                                                                                                                "Ledger.Core.Specification.Gov.Base.GovStructure.cryptoStructure"
                                                                                                                 (MAlonzo.RTE.Fixity
                                                                                                                    MAlonzo.RTE.NonAssoc
                                                                                                                    MAlonzo.RTE.Unrelated)))
@@ -6271,9 +6271,9 @@ du_CERT'45'POST'45'CERTToConf_3348 v0 v1 v2
                                                                                                     (MAlonzo.RTE.QName
                                                                                                        (602 ::
                                                                                                           Integer)
-                                                                                                       (7805089389717466778 ::
+                                                                                                       (4600622176344727455 ::
                                                                                                           Integer)
-                                                                                                       "Ledger.Conway.Specification.Gov.Base.GovStructure.cryptoStructure"
+                                                                                                       "Ledger.Core.Specification.Gov.Base.GovStructure.cryptoStructure"
                                                                                                        (MAlonzo.RTE.Fixity
                                                                                                           MAlonzo.RTE.NonAssoc
                                                                                                           MAlonzo.RTE.Unrelated)))
@@ -6590,9 +6590,9 @@ du_CERT'45'POST'45'CERTToConf_3348 v0 v1 v2
                                                                                               (MAlonzo.RTE.QName
                                                                                                  (1178 ::
                                                                                                     Integer)
-                                                                                                 (7805089389717466778 ::
+                                                                                                 (4600622176344727455 ::
                                                                                                     Integer)
-                                                                                                 "Ledger.Conway.Specification.Gov.Base.GovStructure.globalConstants"
+                                                                                                 "Ledger.Core.Specification.Gov.Base.GovStructure.globalConstants"
                                                                                                  (MAlonzo.RTE.Fixity
                                                                                                     MAlonzo.RTE.NonAssoc
                                                                                                     MAlonzo.RTE.Unrelated)))
@@ -6709,9 +6709,9 @@ du_CERT'45'POST'45'CERTToConf_3348 v0 v1 v2
                                                                                                              (MAlonzo.RTE.QName
                                                                                                                 (602 ::
                                                                                                                    Integer)
-                                                                                                                (7805089389717466778 ::
+                                                                                                                (4600622176344727455 ::
                                                                                                                    Integer)
-                                                                                                                "Ledger.Conway.Specification.Gov.Base.GovStructure.cryptoStructure"
+                                                                                                                "Ledger.Core.Specification.Gov.Base.GovStructure.cryptoStructure"
                                                                                                                 (MAlonzo.RTE.Fixity
                                                                                                                    MAlonzo.RTE.NonAssoc
                                                                                                                    MAlonzo.RTE.Unrelated)))
@@ -6788,9 +6788,9 @@ du_CERT'45'POST'45'CERTToConf_3348 v0 v1 v2
                                                                                                     (MAlonzo.RTE.QName
                                                                                                        (602 ::
                                                                                                           Integer)
-                                                                                                       (7805089389717466778 ::
+                                                                                                       (4600622176344727455 ::
                                                                                                           Integer)
-                                                                                                       "Ledger.Conway.Specification.Gov.Base.GovStructure.cryptoStructure"
+                                                                                                       "Ledger.Core.Specification.Gov.Base.GovStructure.cryptoStructure"
                                                                                                        (MAlonzo.RTE.Fixity
                                                                                                           MAlonzo.RTE.NonAssoc
                                                                                                           MAlonzo.RTE.Unrelated)))
@@ -6967,9 +6967,9 @@ du_CERT'45'POST'45'CERTToConf_3348 v0 v1 v2
                                                                                                  (MAlonzo.RTE.QName
                                                                                                     (1178 ::
                                                                                                        Integer)
-                                                                                                    (7805089389717466778 ::
+                                                                                                    (4600622176344727455 ::
                                                                                                        Integer)
-                                                                                                    "Ledger.Conway.Specification.Gov.Base.GovStructure.globalConstants"
+                                                                                                    "Ledger.Core.Specification.Gov.Base.GovStructure.globalConstants"
                                                                                                     (MAlonzo.RTE.Fixity
                                                                                                        MAlonzo.RTE.NonAssoc
                                                                                                        MAlonzo.RTE.Unrelated)))
@@ -7086,9 +7086,9 @@ du_CERT'45'POST'45'CERTToConf_3348 v0 v1 v2
                                                                                                                 (MAlonzo.RTE.QName
                                                                                                                    (602 ::
                                                                                                                       Integer)
-                                                                                                                   (7805089389717466778 ::
+                                                                                                                   (4600622176344727455 ::
                                                                                                                       Integer)
-                                                                                                                   "Ledger.Conway.Specification.Gov.Base.GovStructure.cryptoStructure"
+                                                                                                                   "Ledger.Core.Specification.Gov.Base.GovStructure.cryptoStructure"
                                                                                                                    (MAlonzo.RTE.Fixity
                                                                                                                       MAlonzo.RTE.NonAssoc
                                                                                                                       MAlonzo.RTE.Unrelated)))
@@ -7165,9 +7165,9 @@ du_CERT'45'POST'45'CERTToConf_3348 v0 v1 v2
                                                                                                        (MAlonzo.RTE.QName
                                                                                                           (602 ::
                                                                                                              Integer)
-                                                                                                          (7805089389717466778 ::
+                                                                                                          (4600622176344727455 ::
                                                                                                              Integer)
-                                                                                                          "Ledger.Conway.Specification.Gov.Base.GovStructure.cryptoStructure"
+                                                                                                          "Ledger.Core.Specification.Gov.Base.GovStructure.cryptoStructure"
                                                                                                           (MAlonzo.RTE.Fixity
                                                                                                              MAlonzo.RTE.NonAssoc
                                                                                                              MAlonzo.RTE.Unrelated)))
@@ -7323,9 +7323,9 @@ du_CERT'45'POST'45'CERTToConf_3348 v0 v1 v2
                                                                                                                 (MAlonzo.RTE.QName
                                                                                                                    (1178 ::
                                                                                                                       Integer)
-                                                                                                                   (7805089389717466778 ::
+                                                                                                                   (4600622176344727455 ::
                                                                                                                       Integer)
-                                                                                                                   "Ledger.Conway.Specification.Gov.Base.GovStructure.globalConstants"
+                                                                                                                   "Ledger.Core.Specification.Gov.Base.GovStructure.globalConstants"
                                                                                                                    (MAlonzo.RTE.Fixity
                                                                                                                       MAlonzo.RTE.NonAssoc
                                                                                                                       MAlonzo.RTE.Unrelated)))
@@ -7442,9 +7442,9 @@ du_CERT'45'POST'45'CERTToConf_3348 v0 v1 v2
                                                                                                                                (MAlonzo.RTE.QName
                                                                                                                                   (602 ::
                                                                                                                                      Integer)
-                                                                                                                                  (7805089389717466778 ::
+                                                                                                                                  (4600622176344727455 ::
                                                                                                                                      Integer)
-                                                                                                                                  "Ledger.Conway.Specification.Gov.Base.GovStructure.cryptoStructure"
+                                                                                                                                  "Ledger.Core.Specification.Gov.Base.GovStructure.cryptoStructure"
                                                                                                                                   (MAlonzo.RTE.Fixity
                                                                                                                                      MAlonzo.RTE.NonAssoc
                                                                                                                                      MAlonzo.RTE.Unrelated)))
@@ -7521,9 +7521,9 @@ du_CERT'45'POST'45'CERTToConf_3348 v0 v1 v2
                                                                                                                       (MAlonzo.RTE.QName
                                                                                                                          (602 ::
                                                                                                                             Integer)
-                                                                                                                         (7805089389717466778 ::
+                                                                                                                         (4600622176344727455 ::
                                                                                                                             Integer)
-                                                                                                                         "Ledger.Conway.Specification.Gov.Base.GovStructure.cryptoStructure"
+                                                                                                                         "Ledger.Core.Specification.Gov.Base.GovStructure.cryptoStructure"
                                                                                                                          (MAlonzo.RTE.Fixity
                                                                                                                             MAlonzo.RTE.NonAssoc
                                                                                                                             MAlonzo.RTE.Unrelated)))
@@ -8008,9 +8008,9 @@ du_CERTSToConf_3384 v0 v1 v2
                                                                                               (MAlonzo.RTE.QName
                                                                                                  (1178 ::
                                                                                                     Integer)
-                                                                                                 (7805089389717466778 ::
+                                                                                                 (4600622176344727455 ::
                                                                                                     Integer)
-                                                                                                 "Ledger.Conway.Specification.Gov.Base.GovStructure.globalConstants"
+                                                                                                 "Ledger.Core.Specification.Gov.Base.GovStructure.globalConstants"
                                                                                                  (MAlonzo.RTE.Fixity
                                                                                                     MAlonzo.RTE.NonAssoc
                                                                                                     MAlonzo.RTE.Unrelated)))
@@ -8127,9 +8127,9 @@ du_CERTSToConf_3384 v0 v1 v2
                                                                                                              (MAlonzo.RTE.QName
                                                                                                                 (602 ::
                                                                                                                    Integer)
-                                                                                                                (7805089389717466778 ::
+                                                                                                                (4600622176344727455 ::
                                                                                                                    Integer)
-                                                                                                                "Ledger.Conway.Specification.Gov.Base.GovStructure.cryptoStructure"
+                                                                                                                "Ledger.Core.Specification.Gov.Base.GovStructure.cryptoStructure"
                                                                                                                 (MAlonzo.RTE.Fixity
                                                                                                                    MAlonzo.RTE.NonAssoc
                                                                                                                    MAlonzo.RTE.Unrelated)))
@@ -8206,9 +8206,9 @@ du_CERTSToConf_3384 v0 v1 v2
                                                                                                     (MAlonzo.RTE.QName
                                                                                                        (602 ::
                                                                                                           Integer)
-                                                                                                       (7805089389717466778 ::
+                                                                                                       (4600622176344727455 ::
                                                                                                           Integer)
-                                                                                                       "Ledger.Conway.Specification.Gov.Base.GovStructure.cryptoStructure"
+                                                                                                       "Ledger.Core.Specification.Gov.Base.GovStructure.cryptoStructure"
                                                                                                        (MAlonzo.RTE.Fixity
                                                                                                           MAlonzo.RTE.NonAssoc
                                                                                                           MAlonzo.RTE.Unrelated)))
@@ -8518,9 +8518,9 @@ du_CERTSToConf_3384 v0 v1 v2
                                                                                               (MAlonzo.RTE.QName
                                                                                                  (1178 ::
                                                                                                     Integer)
-                                                                                                 (7805089389717466778 ::
+                                                                                                 (4600622176344727455 ::
                                                                                                     Integer)
-                                                                                                 "Ledger.Conway.Specification.Gov.Base.GovStructure.globalConstants"
+                                                                                                 "Ledger.Core.Specification.Gov.Base.GovStructure.globalConstants"
                                                                                                  (MAlonzo.RTE.Fixity
                                                                                                     MAlonzo.RTE.NonAssoc
                                                                                                     MAlonzo.RTE.Unrelated)))
@@ -8637,9 +8637,9 @@ du_CERTSToConf_3384 v0 v1 v2
                                                                                                              (MAlonzo.RTE.QName
                                                                                                                 (602 ::
                                                                                                                    Integer)
-                                                                                                                (7805089389717466778 ::
+                                                                                                                (4600622176344727455 ::
                                                                                                                    Integer)
-                                                                                                                "Ledger.Conway.Specification.Gov.Base.GovStructure.cryptoStructure"
+                                                                                                                "Ledger.Core.Specification.Gov.Base.GovStructure.cryptoStructure"
                                                                                                                 (MAlonzo.RTE.Fixity
                                                                                                                    MAlonzo.RTE.NonAssoc
                                                                                                                    MAlonzo.RTE.Unrelated)))
@@ -8716,9 +8716,9 @@ du_CERTSToConf_3384 v0 v1 v2
                                                                                                     (MAlonzo.RTE.QName
                                                                                                        (602 ::
                                                                                                           Integer)
-                                                                                                       (7805089389717466778 ::
+                                                                                                       (4600622176344727455 ::
                                                                                                           Integer)
-                                                                                                       "Ledger.Conway.Specification.Gov.Base.GovStructure.cryptoStructure"
+                                                                                                       "Ledger.Core.Specification.Gov.Base.GovStructure.cryptoStructure"
                                                                                                        (MAlonzo.RTE.Fixity
                                                                                                           MAlonzo.RTE.NonAssoc
                                                                                                           MAlonzo.RTE.Unrelated)))
@@ -8895,9 +8895,9 @@ du_CERTSToConf_3384 v0 v1 v2
                                                                                                  (MAlonzo.RTE.QName
                                                                                                     (1178 ::
                                                                                                        Integer)
-                                                                                                    (7805089389717466778 ::
+                                                                                                    (4600622176344727455 ::
                                                                                                        Integer)
-                                                                                                    "Ledger.Conway.Specification.Gov.Base.GovStructure.globalConstants"
+                                                                                                    "Ledger.Core.Specification.Gov.Base.GovStructure.globalConstants"
                                                                                                     (MAlonzo.RTE.Fixity
                                                                                                        MAlonzo.RTE.NonAssoc
                                                                                                        MAlonzo.RTE.Unrelated)))
@@ -9014,9 +9014,9 @@ du_CERTSToConf_3384 v0 v1 v2
                                                                                                                 (MAlonzo.RTE.QName
                                                                                                                    (602 ::
                                                                                                                       Integer)
-                                                                                                                   (7805089389717466778 ::
+                                                                                                                   (4600622176344727455 ::
                                                                                                                       Integer)
-                                                                                                                   "Ledger.Conway.Specification.Gov.Base.GovStructure.cryptoStructure"
+                                                                                                                   "Ledger.Core.Specification.Gov.Base.GovStructure.cryptoStructure"
                                                                                                                    (MAlonzo.RTE.Fixity
                                                                                                                       MAlonzo.RTE.NonAssoc
                                                                                                                       MAlonzo.RTE.Unrelated)))
@@ -9093,9 +9093,9 @@ du_CERTSToConf_3384 v0 v1 v2
                                                                                                        (MAlonzo.RTE.QName
                                                                                                           (602 ::
                                                                                                              Integer)
-                                                                                                          (7805089389717466778 ::
+                                                                                                          (4600622176344727455 ::
                                                                                                              Integer)
-                                                                                                          "Ledger.Conway.Specification.Gov.Base.GovStructure.cryptoStructure"
+                                                                                                          "Ledger.Core.Specification.Gov.Base.GovStructure.cryptoStructure"
                                                                                                           (MAlonzo.RTE.Fixity
                                                                                                              MAlonzo.RTE.NonAssoc
                                                                                                              MAlonzo.RTE.Unrelated)))
@@ -9251,9 +9251,9 @@ du_CERTSToConf_3384 v0 v1 v2
                                                                                                                 (MAlonzo.RTE.QName
                                                                                                                    (1178 ::
                                                                                                                       Integer)
-                                                                                                                   (7805089389717466778 ::
+                                                                                                                   (4600622176344727455 ::
                                                                                                                       Integer)
-                                                                                                                   "Ledger.Conway.Specification.Gov.Base.GovStructure.globalConstants"
+                                                                                                                   "Ledger.Core.Specification.Gov.Base.GovStructure.globalConstants"
                                                                                                                    (MAlonzo.RTE.Fixity
                                                                                                                       MAlonzo.RTE.NonAssoc
                                                                                                                       MAlonzo.RTE.Unrelated)))
@@ -9370,9 +9370,9 @@ du_CERTSToConf_3384 v0 v1 v2
                                                                                                                                (MAlonzo.RTE.QName
                                                                                                                                   (602 ::
                                                                                                                                      Integer)
-                                                                                                                                  (7805089389717466778 ::
+                                                                                                                                  (4600622176344727455 ::
                                                                                                                                      Integer)
-                                                                                                                                  "Ledger.Conway.Specification.Gov.Base.GovStructure.cryptoStructure"
+                                                                                                                                  "Ledger.Core.Specification.Gov.Base.GovStructure.cryptoStructure"
                                                                                                                                   (MAlonzo.RTE.Fixity
                                                                                                                                      MAlonzo.RTE.NonAssoc
                                                                                                                                      MAlonzo.RTE.Unrelated)))
@@ -9449,9 +9449,9 @@ du_CERTSToConf_3384 v0 v1 v2
                                                                                                                       (MAlonzo.RTE.QName
                                                                                                                          (602 ::
                                                                                                                             Integer)
-                                                                                                                         (7805089389717466778 ::
+                                                                                                                         (4600622176344727455 ::
                                                                                                                             Integer)
-                                                                                                                         "Ledger.Conway.Specification.Gov.Base.GovStructure.cryptoStructure"
+                                                                                                                         "Ledger.Core.Specification.Gov.Base.GovStructure.cryptoStructure"
                                                                                                                          (MAlonzo.RTE.Fixity
                                                                                                                             MAlonzo.RTE.NonAssoc
                                                                                                                             MAlonzo.RTE.Unrelated)))

@@ -357,14 +357,6 @@
          <lastmod>1980-01-01</lastmod>
     </url>
     <url>
-         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Conway.Specification.Gov.Actions.html</loc>
-         <lastmod>1980-01-01</lastmod>
-    </url>
-    <url>
-         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Conway.Specification.Gov.Base.html</loc>
-         <lastmod>1980-01-01</lastmod>
-    </url>
-    <url>
          <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Conway.Specification.Gov.Properties.ChangePPGroup.html</loc>
          <lastmod>1980-01-01</lastmod>
     </url>
@@ -450,14 +442,6 @@
     </url>
     <url>
          <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Conway.Specification.Rewards.html</loc>
-         <lastmod>1980-01-01</lastmod>
-    </url>
-    <url>
-         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Conway.Specification.Script.Base.html</loc>
-         <lastmod>1980-01-01</lastmod>
-    </url>
-    <url>
-         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Conway.Specification.Script.Timelock.html</loc>
          <lastmod>1980-01-01</lastmod>
     </url>
     <url>
@@ -562,6 +546,22 @@
     </url>
     <url>
          <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Core.Specification.Epoch.html</loc>
+         <lastmod>1980-01-01</lastmod>
+    </url>
+    <url>
+         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Core.Specification.Gov.Actions.html</loc>
+         <lastmod>1980-01-01</lastmod>
+    </url>
+    <url>
+         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Core.Specification.Gov.Base.html</loc>
+         <lastmod>1980-01-01</lastmod>
+    </url>
+    <url>
+         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Core.Specification.Script.Base.html</loc>
+         <lastmod>1980-01-01</lastmod>
+    </url>
+    <url>
+         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Core.Specification.Script.Timelock.html</loc>
          <lastmod>1980-01-01</lastmod>
     </url>
     <url>

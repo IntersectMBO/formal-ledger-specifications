@@ -39,11 +39,11 @@ import qualified MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core
 import qualified MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.ExternalStructures
 import qualified MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov
 import qualified MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.Core
-import qualified MAlonzo.Code.Ledger.Conway.Specification.Script.Timelock
 import qualified MAlonzo.Code.Ledger.Conway.Specification.Transaction
 import qualified MAlonzo.Code.Ledger.Core.Specification.Address
 import qualified MAlonzo.Code.Ledger.Core.Specification.Crypto
 import qualified MAlonzo.Code.Ledger.Core.Specification.Epoch
+import qualified MAlonzo.Code.Ledger.Core.Specification.Script.Timelock
 import qualified MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes
 import qualified MAlonzo.Code.Prelude
 import qualified MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory
@@ -1724,7 +1724,7 @@ d_'46'extendedlambda_713
       (coe
          (\ v0 ->
             case coe v0 of
-              MAlonzo.Code.Ledger.Conway.Specification.Script.Timelock.C_RequireAllOf_106 v1
+              MAlonzo.Code.Ledger.Core.Specification.Script.Timelock.C_RequireAllOf_106 v1
                 -> coe
                      C_RequireAllOf_149
                      (coe
@@ -1734,7 +1734,7 @@ d_'46'extendedlambda_713
                         (MAlonzo.Code.Foreign.Convertible.d_to_18
                            (coe d_Conv'45'Timelock_16))
                         v1)
-              MAlonzo.Code.Ledger.Conway.Specification.Script.Timelock.C_RequireAnyOf_108 v1
+              MAlonzo.Code.Ledger.Core.Specification.Script.Timelock.C_RequireAnyOf_108 v1
                 -> coe
                      C_RequireAnyOf_171
                      (coe
@@ -1744,7 +1744,7 @@ d_'46'extendedlambda_713
                         (MAlonzo.Code.Foreign.Convertible.d_to_18
                            (coe d_Conv'45'Timelock_16))
                         v1)
-              MAlonzo.Code.Ledger.Conway.Specification.Script.Timelock.C_RequireMOf_110 v1 v2
+              MAlonzo.Code.Ledger.Core.Specification.Script.Timelock.C_RequireMOf_110 v1 v2
                 -> coe
                      C_RequireMOf_193 (coe v1)
                      (coe
@@ -1754,11 +1754,11 @@ d_'46'extendedlambda_713
                         (MAlonzo.Code.Foreign.Convertible.d_to_18
                            (coe d_Conv'45'Timelock_16))
                         v2)
-              MAlonzo.Code.Ledger.Conway.Specification.Script.Timelock.C_RequireSig_112 v1
+              MAlonzo.Code.Ledger.Core.Specification.Script.Timelock.C_RequireSig_112 v1
                 -> coe C_RequireSig_229 (coe v1)
-              MAlonzo.Code.Ledger.Conway.Specification.Script.Timelock.C_RequireTimeStart_114 v1
+              MAlonzo.Code.Ledger.Core.Specification.Script.Timelock.C_RequireTimeStart_114 v1
                 -> coe C_RequireTimeStart_255 (coe v1)
-              MAlonzo.Code.Ledger.Conway.Specification.Script.Timelock.C_RequireTimeExpire_116 v1
+              MAlonzo.Code.Ledger.Core.Specification.Script.Timelock.C_RequireTimeExpire_116 v1
                 -> coe C_RequireTimeExpire_293 (coe v1)
               _ -> MAlonzo.RTE.mazUnreachableError))
       (coe
@@ -1766,7 +1766,7 @@ d_'46'extendedlambda_713
             case coe v0 of
               C_RequireAllOf_149 v1
                 -> coe
-                     MAlonzo.Code.Ledger.Conway.Specification.Script.Timelock.C_RequireAllOf_106
+                     MAlonzo.Code.Ledger.Core.Specification.Script.Timelock.C_RequireAllOf_106
                      (coe
                         MAlonzo.Code.Class.Functor.Core.du_fmap_22
                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92 () erased
@@ -1776,7 +1776,7 @@ d_'46'extendedlambda_713
                         v1)
               C_RequireAnyOf_171 v1
                 -> coe
-                     MAlonzo.Code.Ledger.Conway.Specification.Script.Timelock.C_RequireAnyOf_108
+                     MAlonzo.Code.Ledger.Core.Specification.Script.Timelock.C_RequireAnyOf_108
                      (coe
                         MAlonzo.Code.Class.Functor.Core.du_fmap_22
                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92 () erased
@@ -1786,7 +1786,7 @@ d_'46'extendedlambda_713
                         v1)
               C_RequireMOf_193 v1 v2
                 -> coe
-                     MAlonzo.Code.Ledger.Conway.Specification.Script.Timelock.C_RequireMOf_110
+                     MAlonzo.Code.Ledger.Core.Specification.Script.Timelock.C_RequireMOf_110
                      (coe v1)
                      (coe
                         MAlonzo.Code.Class.Functor.Core.du_fmap_22
@@ -1797,15 +1797,15 @@ d_'46'extendedlambda_713
                         v2)
               C_RequireSig_229 v1
                 -> coe
-                     MAlonzo.Code.Ledger.Conway.Specification.Script.Timelock.C_RequireSig_112
+                     MAlonzo.Code.Ledger.Core.Specification.Script.Timelock.C_RequireSig_112
                      (coe v1)
               C_RequireTimeStart_255 v1
                 -> coe
-                     MAlonzo.Code.Ledger.Conway.Specification.Script.Timelock.C_RequireTimeStart_114
+                     MAlonzo.Code.Ledger.Core.Specification.Script.Timelock.C_RequireTimeStart_114
                      (coe v1)
               C_RequireTimeExpire_293 v1
                 -> coe
-                     MAlonzo.Code.Ledger.Conway.Specification.Script.Timelock.C_RequireTimeExpire_116
+                     MAlonzo.Code.Ledger.Core.Specification.Script.Timelock.C_RequireTimeExpire_116
                      (coe v1)
               _ -> MAlonzo.RTE.mazUnreachableError))
 -- Ledger.Conway.Foreign.HSLedger.Transaction.HSTimelock

@@ -27,9 +27,9 @@ import qualified MAlonzo.Code.Interface.ComputationalRelation
 import qualified MAlonzo.Code.Interface.STS
 import qualified MAlonzo.Code.Ledger.Conway.Specification.Enact
 import qualified MAlonzo.Code.Ledger.Conway.Specification.Enact.Properties.Computational
-import qualified MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions
 import qualified MAlonzo.Code.Ledger.Conway.Specification.Ratify
 import qualified MAlonzo.Code.Ledger.Conway.Specification.Transaction
+import qualified MAlonzo.Code.Ledger.Core.Specification.Gov.Actions
 import qualified MAlonzo.Code.Ledger.Prelude
 import qualified MAlonzo.Code.Relation.Nullary.Decidable.Core
 import qualified MAlonzo.Code.Relation.Nullary.Reflects
@@ -148,12 +148,12 @@ du_acceptConds'63'_2352 v0 v1 v2 v3
                MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_delayed'63'_3226
                (coe v0)
                (coe
-                  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_gaType_836
+                  MAlonzo.Code.Ledger.Core.Specification.Gov.Actions.d_gaType_836
                   (coe
-                     MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_action_1024
+                     MAlonzo.Code.Ledger.Core.Specification.Gov.Actions.d_action_1024
                      (coe MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30 (coe v3))))
                (coe
-                  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_prevAction_1026
+                  MAlonzo.Code.Ledger.Core.Specification.Gov.Actions.d_prevAction_1026
                   (coe MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30 (coe v3)))
                (coe
                   MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_es_2636 (coe v2))
@@ -184,7 +184,7 @@ du_acceptConds'63'_2352 v0 v1 v2 v3
             (coe
                MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_es_2636 (coe v2))
             (coe
-               MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_action_1024
+               MAlonzo.Code.Ledger.Core.Specification.Gov.Actions.d_action_1024
                (coe MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30 (coe v3)))
             (coe
                MAlonzo.Code.Ledger.Conway.Specification.Enact.Properties.Computational.d_Computational'45'ENACT_1202
@@ -256,11 +256,11 @@ d_RATIFY'45'total_2356 v0 v1 v2 v3
                                                                (coe
                                                                   MAlonzo.Code.Ledger.Conway.Specification.Ratify.du_delayingAction_3116
                                                                   (coe
-                                                                     MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_gaType_836
+                                                                     MAlonzo.Code.Ledger.Core.Specification.Gov.Actions.d_gaType_836
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_GovActionOf_850
+                                                                        MAlonzo.Code.Ledger.Core.Specification.Gov.Actions.d_GovActionOf_850
                                                                         (coe
-                                                                           MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.du_HasGovAction'45'GovActionState_1098)
+                                                                           MAlonzo.Code.Ledger.Core.Specification.Gov.Actions.du_HasGovAction'45'GovActionState_1098)
                                                                         (MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
                                                                            (coe v3))))))))
                                                       (coe

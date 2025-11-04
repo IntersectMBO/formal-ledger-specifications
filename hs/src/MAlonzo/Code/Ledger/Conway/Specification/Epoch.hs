@@ -60,7 +60,6 @@ import qualified MAlonzo.Code.Ledger.Conway.Specification.Abstract
 import qualified MAlonzo.Code.Ledger.Conway.Specification.Certs
 import qualified MAlonzo.Code.Ledger.Conway.Specification.Enact
 import qualified MAlonzo.Code.Ledger.Conway.Specification.Gov
-import qualified MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions
 import qualified MAlonzo.Code.Ledger.Conway.Specification.Ledger
 import qualified MAlonzo.Code.Ledger.Conway.Specification.PParams
 import qualified MAlonzo.Code.Ledger.Conway.Specification.PoolReap
@@ -71,6 +70,7 @@ import qualified MAlonzo.Code.Ledger.Conway.Specification.Utxo
 import qualified MAlonzo.Code.Ledger.Core.Specification.Address
 import qualified MAlonzo.Code.Ledger.Core.Specification.Crypto
 import qualified MAlonzo.Code.Ledger.Core.Specification.Epoch
+import qualified MAlonzo.Code.Ledger.Core.Specification.Gov.Actions
 import qualified MAlonzo.Code.Ledger.Prelude
 import qualified MAlonzo.Code.Ledger.Prelude.Base
 import qualified MAlonzo.Code.Ledger.Prelude.Instances
@@ -138,7 +138,7 @@ d_DecEq'45'VDeleg_148 ::
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 d_DecEq'45'VDeleg_148 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_DecEq'45'VDeleg_1110
+      MAlonzo.Code.Ledger.Core.Specification.Gov.Actions.d_DecEq'45'VDeleg_1110
       (coe
          MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_govStructure_2502
          (coe v0))
@@ -239,43 +239,43 @@ d_treasury_812 v0
       (coe v0)
 -- _.GovActionState.action
 d_action_872 ::
-  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovActionState_1006 ->
-  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovAction_830
+  MAlonzo.Code.Ledger.Core.Specification.Gov.Actions.T_GovActionState_1006 ->
+  MAlonzo.Code.Ledger.Core.Specification.Gov.Actions.T_GovAction_830
 d_action_872 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_action_1024
+      MAlonzo.Code.Ledger.Core.Specification.Gov.Actions.d_action_1024
       (coe v0)
 -- _.GovActionState.expiresIn
 d_expiresIn_874 ::
-  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovActionState_1006 ->
+  MAlonzo.Code.Ledger.Core.Specification.Gov.Actions.T_GovActionState_1006 ->
   AgdaAny
 d_expiresIn_874 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_expiresIn_1022
+      MAlonzo.Code.Ledger.Core.Specification.Gov.Actions.d_expiresIn_1022
       (coe v0)
 -- _.GovActionState.prevAction
 d_prevAction_876 ::
-  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovActionState_1006 ->
+  MAlonzo.Code.Ledger.Core.Specification.Gov.Actions.T_GovActionState_1006 ->
   AgdaAny
 d_prevAction_876 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_prevAction_1026
+      MAlonzo.Code.Ledger.Core.Specification.Gov.Actions.d_prevAction_1026
       (coe v0)
 -- _.GovActionState.returnAddr
 d_returnAddr_878 ::
-  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovActionState_1006 ->
+  MAlonzo.Code.Ledger.Core.Specification.Gov.Actions.T_GovActionState_1006 ->
   MAlonzo.Code.Ledger.Core.Specification.Address.T_RwdAddr_104
 d_returnAddr_878 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_returnAddr_1020
+      MAlonzo.Code.Ledger.Core.Specification.Gov.Actions.d_returnAddr_1020
       (coe v0)
 -- _.GovActionState.votes
 d_votes_880 ::
-  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovActionState_1006 ->
-  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovVotes_918
+  MAlonzo.Code.Ledger.Core.Specification.Gov.Actions.T_GovActionState_1006 ->
+  MAlonzo.Code.Ledger.Core.Specification.Gov.Actions.T_GovVotes_918
 d_votes_880 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_votes_1018
+      MAlonzo.Code.Ledger.Core.Specification.Gov.Actions.d_votes_1018
       (coe v0)
 -- _.GovActions.GovActionState
 d_GovActionState_930 a0 = ()
@@ -1064,11 +1064,11 @@ du_HasPools'45'LState_2572
 d_HasVoteDelegs'45'LState_2578 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_2322 ->
-  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_HasVoteDelegs_948
+  MAlonzo.Code.Ledger.Core.Specification.Gov.Actions.T_HasVoteDelegs_948
 d_HasVoteDelegs'45'LState_2578 ~v0 ~v1
   = du_HasVoteDelegs'45'LState_2578
 du_HasVoteDelegs'45'LState_2578 ::
-  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_HasVoteDelegs_948
+  MAlonzo.Code.Ledger.Core.Specification.Gov.Actions.T_HasVoteDelegs_948
 du_HasVoteDelegs'45'LState_2578
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Ledger.du_HasVoteDelegs'45'LState_2858
@@ -4843,7 +4843,7 @@ du_govSt''_3522 v0
          (coe MAlonzo.Code.Class.Bifunctor.du_Bifunctor'45''215'_156)
          (coe
             (\ v1 ->
-               MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_returnAddr_1020
+               MAlonzo.Code.Ledger.Core.Specification.Gov.Actions.d_returnAddr_1020
                  (coe v1))))
       (coe
          MAlonzo.Code.Axiom.Set.du_fromList_456
@@ -4923,14 +4923,14 @@ d_activeVDelegs_3576 ::
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] ->
   MAlonzo.Code.Ledger.Conway.Specification.Certs.T_GState_1382 ->
   MAlonzo.Code.Ledger.Conway.Specification.Certs.T_DState_1350 ->
-  [MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_VDeleg_934]
+  [MAlonzo.Code.Ledger.Core.Specification.Gov.Actions.T_VDeleg_934]
 d_activeVDelegs_3576 v0 ~v1 v2 ~v3 ~v4 v5 ~v6
   = du_activeVDelegs_3576 v0 v2 v5
 du_activeVDelegs_3576 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   AgdaAny ->
   MAlonzo.Code.Ledger.Conway.Specification.Certs.T_GState_1382 ->
-  [MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_VDeleg_934]
+  [MAlonzo.Code.Ledger.Core.Specification.Gov.Actions.T_VDeleg_934]
 du_activeVDelegs_3576 v0 v1 v2
   = coe
       MAlonzo.Code.Axiom.Set.du__'8746'__708
@@ -4944,7 +4944,7 @@ du_activeVDelegs_3576 v0 v1 v2
             (coe
                MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
          (coe
-            MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.C_vDelegCredential_936)
+            MAlonzo.Code.Ledger.Core.Specification.Gov.Actions.C_vDelegCredential_936)
          (coe du_activeDReps_3570 (coe v0) (coe v1) (coe v2)))
       (coe
          MAlonzo.Code.Axiom.Set.du__'8746'__708
@@ -4959,7 +4959,7 @@ du_activeVDelegs_3576 v0 v1 v2
                   MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
             erased
             (coe
-               MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.C_vDelegNoConfidence_940))
+               MAlonzo.Code.Ledger.Core.Specification.Gov.Actions.C_vDelegNoConfidence_940))
          (coe
             MAlonzo.Code.Axiom.Set.du_'10100'_'10101'_480
             (MAlonzo.Code.Axiom.Set.d_th_1516
@@ -4967,7 +4967,7 @@ du_activeVDelegs_3576 v0 v1 v2
                   MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
             erased
             (coe
-               MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.C_vDelegAbstain_938)))
+               MAlonzo.Code.Ledger.Core.Specification.Gov.Actions.C_vDelegAbstain_938)))
 -- Ledger.Conway.Specification.Epoch.VDelegDelegatedStake.stakePerCredential
 d_stakePerCredential_3578 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
@@ -5169,7 +5169,7 @@ du_calculate_3584 v0 v1 v2 v3 v4 v5
                     MAlonzo.Code.Axiom.Set.d_'8712''45'sp_1648
                     MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8
                     erased
-                    (MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_DecEq'45'VDeleg_1110
+                    (MAlonzo.Code.Ledger.Core.Specification.Gov.Actions.d_DecEq'45'VDeleg_1110
                        (coe
                           MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_govStructure_2502
                           (coe v0))))
@@ -5579,12 +5579,12 @@ du_step_3680 v0 v1 v2
                                  MAlonzo.Code.Ledger.Conway.Specification.Gov.d_hasParent'63'_2922
                                  (coe v0) (coe v1) (coe v4)
                                  (coe
-                                    MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_gaType_836
+                                    MAlonzo.Code.Ledger.Core.Specification.Gov.Actions.d_gaType_836
                                     (coe
-                                       MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_action_1024
+                                       MAlonzo.Code.Ledger.Core.Specification.Gov.Actions.d_action_1024
                                        (coe MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30 (coe v5))))
                                  (coe
-                                    MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_prevAction_1026
+                                    MAlonzo.Code.Ledger.Core.Specification.Gov.Actions.d_prevAction_1026
                                     (coe MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30 (coe v5))))))
                       (coe v4))))
              (coe
@@ -5599,12 +5599,12 @@ du_step_3680 v0 v1 v2
                               MAlonzo.Code.Ledger.Conway.Specification.Gov.d_hasParent'63'_2922
                               (coe v0) (coe v1) (coe v4)
                               (coe
-                                 MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_gaType_836
+                                 MAlonzo.Code.Ledger.Core.Specification.Gov.Actions.d_gaType_836
                                  (coe
-                                    MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_action_1024
+                                    MAlonzo.Code.Ledger.Core.Specification.Gov.Actions.d_action_1024
                                     (coe MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30 (coe v5))))
                               (coe
-                                 MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_prevAction_1026
+                                 MAlonzo.Code.Ledger.Core.Specification.Gov.Actions.d_prevAction_1026
                                  (coe MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30 (coe v5))))))
                    (coe v4)))
       _ -> MAlonzo.RTE.mazUnreachableError
@@ -5753,7 +5753,7 @@ du_removedGovActions_3744 v0 v1 v2
                  coe
                    MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                    (coe
-                      MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_returnAddr_1020
+                      MAlonzo.Code.Ledger.Core.Specification.Gov.Actions.d_returnAddr_1020
                       (coe MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30 (coe v3)))
                    (coe v4))
               (coe
@@ -6491,8 +6491,8 @@ du_gState''_3816 v0 v1 v2 v3
                                                             (coe
                                                                (MAlonzo.RTE.QName
                                                                   (1178 :: Integer)
-                                                                  (7805089389717466778 :: Integer)
-                                                                  "Ledger.Conway.Specification.Gov.Base.GovStructure.globalConstants"
+                                                                  (4600622176344727455 :: Integer)
+                                                                  "Ledger.Core.Specification.Gov.Base.GovStructure.globalConstants"
                                                                   (MAlonzo.RTE.Fixity
                                                                      MAlonzo.RTE.NonAssoc
                                                                      MAlonzo.RTE.Unrelated)))
@@ -6603,9 +6603,9 @@ du_gState''_3816 v0 v1 v2 v3
                                                                            (coe
                                                                               (MAlonzo.RTE.QName
                                                                                  (602 :: Integer)
-                                                                                 (7805089389717466778 ::
+                                                                                 (4600622176344727455 ::
                                                                                     Integer)
-                                                                                 "Ledger.Conway.Specification.Gov.Base.GovStructure.cryptoStructure"
+                                                                                 "Ledger.Core.Specification.Gov.Base.GovStructure.cryptoStructure"
                                                                                  (MAlonzo.RTE.Fixity
                                                                                     MAlonzo.RTE.NonAssoc
                                                                                     MAlonzo.RTE.Unrelated)))
@@ -6679,9 +6679,9 @@ du_gState''_3816 v0 v1 v2 v3
                                                                   (coe
                                                                      (MAlonzo.RTE.QName
                                                                         (602 :: Integer)
-                                                                        (7805089389717466778 ::
+                                                                        (4600622176344727455 ::
                                                                            Integer)
-                                                                        "Ledger.Conway.Specification.Gov.Base.GovStructure.cryptoStructure"
+                                                                        "Ledger.Core.Specification.Gov.Base.GovStructure.cryptoStructure"
                                                                         (MAlonzo.RTE.Fixity
                                                                            MAlonzo.RTE.NonAssoc
                                                                            MAlonzo.RTE.Unrelated)))
@@ -6825,9 +6825,9 @@ du_gState''_3816 v0 v1 v2 v3
                                                                            (coe
                                                                               (MAlonzo.RTE.QName
                                                                                  (1178 :: Integer)
-                                                                                 (7805089389717466778 ::
+                                                                                 (4600622176344727455 ::
                                                                                     Integer)
-                                                                                 "Ledger.Conway.Specification.Gov.Base.GovStructure.globalConstants"
+                                                                                 "Ledger.Core.Specification.Gov.Base.GovStructure.globalConstants"
                                                                                  (MAlonzo.RTE.Fixity
                                                                                     MAlonzo.RTE.NonAssoc
                                                                                     MAlonzo.RTE.Unrelated)))
@@ -6943,9 +6943,9 @@ du_gState''_3816 v0 v1 v2 v3
                                                                                              (MAlonzo.RTE.QName
                                                                                                 (602 ::
                                                                                                    Integer)
-                                                                                                (7805089389717466778 ::
+                                                                                                (4600622176344727455 ::
                                                                                                    Integer)
-                                                                                                "Ledger.Conway.Specification.Gov.Base.GovStructure.cryptoStructure"
+                                                                                                "Ledger.Core.Specification.Gov.Base.GovStructure.cryptoStructure"
                                                                                                 (MAlonzo.RTE.Fixity
                                                                                                    MAlonzo.RTE.NonAssoc
                                                                                                    MAlonzo.RTE.Unrelated)))
@@ -7021,9 +7021,9 @@ du_gState''_3816 v0 v1 v2 v3
                                                                                     (MAlonzo.RTE.QName
                                                                                        (602 ::
                                                                                           Integer)
-                                                                                       (7805089389717466778 ::
+                                                                                       (4600622176344727455 ::
                                                                                           Integer)
-                                                                                       "Ledger.Conway.Specification.Gov.Base.GovStructure.cryptoStructure"
+                                                                                       "Ledger.Core.Specification.Gov.Base.GovStructure.cryptoStructure"
                                                                                        (MAlonzo.RTE.Fixity
                                                                                           MAlonzo.RTE.NonAssoc
                                                                                           MAlonzo.RTE.Unrelated)))

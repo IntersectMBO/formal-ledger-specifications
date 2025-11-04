@@ -31,13 +31,13 @@ import qualified MAlonzo.Code.Class.IsSet
 import qualified MAlonzo.Code.Data.Sum.Base
 import qualified MAlonzo.Code.Ledger.Conway.Specification.Abstract
 import qualified MAlonzo.Code.Ledger.Conway.Specification.PParams
-import qualified MAlonzo.Code.Ledger.Conway.Specification.Script.Base
 import qualified MAlonzo.Code.Ledger.Conway.Specification.Script.Validation
 import qualified MAlonzo.Code.Ledger.Conway.Specification.Transaction
 import qualified MAlonzo.Code.Ledger.Conway.Specification.Utxo
 import qualified MAlonzo.Code.Ledger.Core.Specification.Address
 import qualified MAlonzo.Code.Ledger.Core.Specification.Crypto
 import qualified MAlonzo.Code.Ledger.Core.Specification.Epoch
+import qualified MAlonzo.Code.Ledger.Core.Specification.Script.Base
 import qualified MAlonzo.Code.Ledger.Core.Specification.TokenAlgebra.Base
 import qualified MAlonzo.Code.Ledger.Prelude
 import qualified MAlonzo.Code.Prelude
@@ -1045,15 +1045,15 @@ d_UTXO'45'premises_2942 v0 v1 v2 v3 v4
                                              (coe
                                                 MAlonzo.Code.Ledger.Core.Specification.Crypto.d_T'45'isHashable_44
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Conway.Specification.Script.Base.d_Data'688'_204
+                                                   MAlonzo.Code.Ledger.Core.Specification.Script.Base.d_Data'688'_204
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Conway.Specification.Script.Base.d_ps_328
+                                                      MAlonzo.Code.Ledger.Core.Specification.Script.Base.d_ps_328
                                                       (coe
                                                          MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_scriptStructure_1904
                                                          (coe v0))))))
-                                          (MAlonzo.Code.Ledger.Conway.Specification.Script.Base.d_DecEq'45'ExUnits_238
+                                          (MAlonzo.Code.Ledger.Core.Specification.Script.Base.d_DecEq'45'ExUnits_238
                                              (coe
-                                                MAlonzo.Code.Ledger.Conway.Specification.Script.Base.d_ps_328
+                                                MAlonzo.Code.Ledger.Core.Specification.Script.Base.d_ps_328
                                                 (coe
                                                    MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_scriptStructure_1904
                                                    (coe v0)))))))

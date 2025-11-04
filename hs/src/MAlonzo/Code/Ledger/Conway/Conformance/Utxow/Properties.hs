@@ -36,13 +36,13 @@ import qualified MAlonzo.Code.Interface.TypeClasses.Hashable
 import qualified MAlonzo.Code.Ledger.Conway.Conformance.Utxo.Properties
 import qualified MAlonzo.Code.Ledger.Conway.Conformance.Utxow
 import qualified MAlonzo.Code.Ledger.Conway.Specification.Abstract
-import qualified MAlonzo.Code.Ledger.Conway.Specification.Script.Base
 import qualified MAlonzo.Code.Ledger.Conway.Specification.Script.Validation
 import qualified MAlonzo.Code.Ledger.Conway.Specification.Transaction
 import qualified MAlonzo.Code.Ledger.Conway.Specification.Utxo
 import qualified MAlonzo.Code.Ledger.Conway.Specification.Utxow
 import qualified MAlonzo.Code.Ledger.Core.Specification.Address
 import qualified MAlonzo.Code.Ledger.Core.Specification.Crypto
+import qualified MAlonzo.Code.Ledger.Core.Specification.Script.Base
 import qualified MAlonzo.Code.Level
 import qualified MAlonzo.Code.Prelude
 import qualified MAlonzo.Code.Relation.Nullary.Decidable.Core
@@ -224,9 +224,9 @@ d_computeProof_2020 v0 v1 v2 v3 v4
                                                                    (coe v0)))
                                                              (coe
                                                                 MAlonzo.Code.Interface.TypeClasses.Hashable.d_hash_18
-                                                                (MAlonzo.Code.Ledger.Conway.Specification.Script.Base.d_Hashable'45'P1Script_122
+                                                                (MAlonzo.Code.Ledger.Core.Specification.Script.Base.d_Hashable'45'P1Script_122
                                                                    (coe
-                                                                      MAlonzo.Code.Ledger.Conway.Specification.Script.Base.d_p1s_306
+                                                                      MAlonzo.Code.Ledger.Core.Specification.Script.Base.d_p1s_306
                                                                       (coe
                                                                          MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_scriptStructure_1904
                                                                          (coe v0))))
@@ -252,8 +252,8 @@ d_computeProof_2020 v0 v1 v2 v3 v4
                                                                       MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_body_3454
                                                                       (coe v4)))))
                                                           (coe
-                                                             MAlonzo.Code.Ledger.Conway.Specification.Script.Base.d_Dec'45'validP1Script_120
-                                                             (MAlonzo.Code.Ledger.Conway.Specification.Script.Base.d_p1s_306
+                                                             MAlonzo.Code.Ledger.Core.Specification.Script.Base.d_Dec'45'validP1Script_120
+                                                             (MAlonzo.Code.Ledger.Core.Specification.Script.Base.d_p1s_306
                                                                 (coe
                                                                    MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_scriptStructure_1904
                                                                    (coe v0)))
@@ -294,7 +294,7 @@ d_computeProof_2020 v0 v1 v2 v3 v4
                                                         (coe
                                                            MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                                                      (coe
-                                                        MAlonzo.Code.Ledger.Conway.Specification.Script.Base.du_toP1Script_416)
+                                                        MAlonzo.Code.Ledger.Core.Specification.Script.Base.du_toP1Script_416)
                                                      (MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_txscripts_3570
                                                         (coe v0) (coe v4)
                                                         (coe
@@ -305,7 +305,7 @@ d_computeProof_2020 v0 v1 v2 v3 v4
                                        (case coe v10 of
                                           MAlonzo.Code.Data.Sum.Base.C_inj'8321'_38 v11
                                             -> coe
-                                                 ("\172\nClass.IsSet.All-syntax (.Axiom.Set.Theory\7496.th List-Model\7496)\n(\955 s\8321 \8594\n   (z\n    : (Class.IsSet.IsSet-Set (.Axiom.Set.Theory\7496.th List-Model\7496)\n       Class.IsSet.IsSet.\8712\n       .Hashable.hash\n       (.Ledger.Conway.Specification.Script.Base.P1ScriptStructure.Hashable-P1Script\n        (.Ledger.Conway.Specification.Script.Base.ScriptStructure.p1s\n         (.TransactionStructure.scriptStructure txs)))\n       s\8321)\n      (Axiom.Set.Theory.mapPartial (.Axiom.Set.Theory\7496.th List-Model\7496)\n       (\955 x \8594\n          Ledger.Core.Specification.Address.isScriptObj\n          (.Ledger.Core.Specification.Epoch.GlobalConstants.Network\n           (.TransactionStructure.globalConstants txs))\n          (.isHashableSet.THash\n           (.CryptoStructure.khs (.TransactionStructure.cryptoStructure txs)))\n          (.CryptoStructure.ScriptHash\n           (.TransactionStructure.cryptoStructure txs))\n          (.proj\8322 x))\n       (Ledger.Conway.Specification.Script.Validation.credsNeeded txs abs\n        (.Ledger.Conway.Specification.Utxo.UTxOState.utxo s)\n        (.TransactionStructure.Tx.body tx)))) \8594\n   .Ledger.Conway.Specification.Script.Base.P1ScriptStructure.validP1Script\n   (.Ledger.Conway.Specification.Script.Base.ScriptStructure.p1s\n    (.TransactionStructure.scriptStructure txs))\n   (Axiom.Set.Theory.map (.Axiom.Set.Theory\7496.th List-Model\7496)\n    (.Hashable.hash\n     (.isHashableSet.T-Hashable\n      (.CryptoStructure.khs\n       (.TransactionStructure.cryptoStructure txs))))\n    (Class.IsSet.dom (.Axiom.Set.Theory\7496.th List-Model\7496)\n     (.TransactionStructure.TxWitnesses.vkSigs\n      (.TransactionStructure.Tx.wits tx))))\n   (.TransactionStructure.TxBody.txVldt\n    (.TransactionStructure.Tx.body tx))\n   s\8321)\n(Axiom.Set.Theory.mapPartial (.Axiom.Set.Theory\7496.th List-Model\7496)\n (Ledger.Conway.Specification.Script.Base.ScriptStructure.toP1Script\n  (.TransactionStructure.scriptStructure txs))\n (TransactionStructure.txscripts txs tx\n  (.Ledger.Conway.Specification.Utxo.UTxOState.utxo s)))"
+                                                 ("\172\nClass.IsSet.All-syntax (.Axiom.Set.Theory\7496.th List-Model\7496)\n(\955 s\8321 \8594\n   (z\n    : (Class.IsSet.IsSet-Set (.Axiom.Set.Theory\7496.th List-Model\7496)\n       Class.IsSet.IsSet.\8712\n       .Hashable.hash\n       (.Ledger.Core.Specification.Script.Base.P1ScriptStructure.Hashable-P1Script\n        (.Ledger.Core.Specification.Script.Base.ScriptStructure.p1s\n         (.TransactionStructure.scriptStructure txs)))\n       s\8321)\n      (Axiom.Set.Theory.mapPartial (.Axiom.Set.Theory\7496.th List-Model\7496)\n       (\955 x \8594\n          Ledger.Core.Specification.Address.isScriptObj\n          (.Ledger.Core.Specification.Epoch.GlobalConstants.Network\n           (.TransactionStructure.globalConstants txs))\n          (.isHashableSet.THash\n           (.CryptoStructure.khs (.TransactionStructure.cryptoStructure txs)))\n          (.CryptoStructure.ScriptHash\n           (.TransactionStructure.cryptoStructure txs))\n          (.proj\8322 x))\n       (Ledger.Conway.Specification.Script.Validation.credsNeeded txs abs\n        (.Ledger.Conway.Specification.Utxo.UTxOState.utxo s)\n        (.TransactionStructure.Tx.body tx)))) \8594\n   .Ledger.Core.Specification.Script.Base.P1ScriptStructure.validP1Script\n   (.Ledger.Core.Specification.Script.Base.ScriptStructure.p1s\n    (.TransactionStructure.scriptStructure txs))\n   (Axiom.Set.Theory.map (.Axiom.Set.Theory\7496.th List-Model\7496)\n    (.Hashable.hash\n     (.isHashableSet.T-Hashable\n      (.CryptoStructure.khs\n       (.TransactionStructure.cryptoStructure txs))))\n    (Class.IsSet.dom (.Axiom.Set.Theory\7496.th List-Model\7496)\n     (.TransactionStructure.TxWitnesses.vkSigs\n      (.TransactionStructure.Tx.wits tx))))\n   (.TransactionStructure.TxBody.txVldt\n    (.TransactionStructure.Tx.body tx))\n   s\8321)\n(Axiom.Set.Theory.mapPartial (.Axiom.Set.Theory\7496.th List-Model\7496)\n (Ledger.Core.Specification.Script.Base.ScriptStructure.toP1Script\n  (.TransactionStructure.scriptStructure txs))\n (TransactionStructure.txscripts txs tx\n  (.Ledger.Conway.Specification.Utxo.UTxOState.utxo s)))"
                                                   ::
                                                   Data.Text.Text)
                                           MAlonzo.Code.Data.Sum.Base.C_inj'8322'_42 v11
@@ -413,7 +413,7 @@ d_computeProof_2020 v0 v1 v2 v3 v4
                                                                                           MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                                                                                     (MAlonzo.Code.Interface.TypeClasses.Hashable.d_hash_18
                                                                                        (coe
-                                                                                          MAlonzo.Code.Ledger.Conway.Specification.Script.Base.du_Hashable'45'Script_402
+                                                                                          MAlonzo.Code.Ledger.Core.Specification.Script.Base.du_Hashable'45'Script_402
                                                                                           (coe
                                                                                              MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_scriptStructure_1904
                                                                                              (coe
@@ -464,7 +464,7 @@ d_computeProof_2020 v0 v1 v2 v3 v4
                                                                                      MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                                                                                (MAlonzo.Code.Interface.TypeClasses.Hashable.d_hash_18
                                                                                   (coe
-                                                                                     MAlonzo.Code.Ledger.Conway.Specification.Script.Base.du_Hashable'45'Script_402
+                                                                                     MAlonzo.Code.Ledger.Core.Specification.Script.Base.du_Hashable'45'Script_402
                                                                                      (coe
                                                                                         MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_scriptStructure_1904
                                                                                         (coe v0))))
@@ -534,7 +534,7 @@ d_computeProof_2020 v0 v1 v2 v3 v4
                                                                                              MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                                                                                        (MAlonzo.Code.Interface.TypeClasses.Hashable.d_hash_18
                                                                                           (coe
-                                                                                             MAlonzo.Code.Ledger.Conway.Specification.Script.Base.du_Hashable'45'Script_402
+                                                                                             MAlonzo.Code.Ledger.Core.Specification.Script.Base.du_Hashable'45'Script_402
                                                                                              (coe
                                                                                                 MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_scriptStructure_1904
                                                                                                 (coe
@@ -553,7 +553,7 @@ d_computeProof_2020 v0 v1 v2 v3 v4
                                                                                   MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                                                                             (MAlonzo.Code.Interface.TypeClasses.Hashable.d_hash_18
                                                                                (coe
-                                                                                  MAlonzo.Code.Ledger.Conway.Specification.Script.Base.du_Hashable'45'Script_402
+                                                                                  MAlonzo.Code.Ledger.Core.Specification.Script.Base.du_Hashable'45'Script_402
                                                                                   (coe
                                                                                      MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_scriptStructure_1904
                                                                                      (coe v0))))
@@ -566,7 +566,7 @@ d_computeProof_2020 v0 v1 v2 v3 v4
                                                            (case coe v14 of
                                                               MAlonzo.Code.Data.Sum.Base.C_inj'8321'_38 v15
                                                                 -> coe
-                                                                     ("\172\n(.Axiom.Set.Theory\7496.th List-Model\7496 Axiom.Set.Theory.\8801\7497\n (HasSubtract-\8473 HasSubtract.-\n  Axiom.Set.Theory.mapPartial (.Axiom.Set.Theory\7496.th List-Model\7496)\n  (\955 x \8594\n     Ledger.Core.Specification.Address.isScriptObj\n     (.Ledger.Core.Specification.Epoch.GlobalConstants.Network\n      (.TransactionStructure.globalConstants txs))\n     (.isHashableSet.THash\n      (.CryptoStructure.khs (.TransactionStructure.cryptoStructure txs)))\n     (.CryptoStructure.ScriptHash\n      (.TransactionStructure.cryptoStructure txs))\n     (.proj\8322 x))\n  (Ledger.Conway.Specification.Script.Validation.credsNeeded txs abs\n   (.Ledger.Conway.Specification.Utxo.UTxOState.utxo s)\n   (.TransactionStructure.Tx.body tx)))\n (Axiom.Set.Theory.map (.Axiom.Set.Theory\7496.th List-Model\7496)\n  (.Hashable.hash\n   (Ledger.Conway.Specification.Script.Base.ScriptStructure.Hashable-Script\n    (.TransactionStructure.scriptStructure txs)))\n  (TransactionStructure.refScripts txs tx\n   (.Ledger.Conway.Specification.Utxo.UTxOState.utxo s))))\n(Axiom.Set.Theory.map (.Axiom.Set.Theory\7496.th List-Model\7496)\n (.Hashable.hash\n  (Ledger.Conway.Specification.Script.Base.ScriptStructure.Hashable-Script\n   (.TransactionStructure.scriptStructure txs)))\n (.TransactionStructure.TxWitnesses.scripts\n  (.TransactionStructure.Tx.wits tx)))"
+                                                                     ("\172\n(.Axiom.Set.Theory\7496.th List-Model\7496 Axiom.Set.Theory.\8801\7497\n (HasSubtract-\8473 HasSubtract.-\n  Axiom.Set.Theory.mapPartial (.Axiom.Set.Theory\7496.th List-Model\7496)\n  (\955 x \8594\n     Ledger.Core.Specification.Address.isScriptObj\n     (.Ledger.Core.Specification.Epoch.GlobalConstants.Network\n      (.TransactionStructure.globalConstants txs))\n     (.isHashableSet.THash\n      (.CryptoStructure.khs (.TransactionStructure.cryptoStructure txs)))\n     (.CryptoStructure.ScriptHash\n      (.TransactionStructure.cryptoStructure txs))\n     (.proj\8322 x))\n  (Ledger.Conway.Specification.Script.Validation.credsNeeded txs abs\n   (.Ledger.Conway.Specification.Utxo.UTxOState.utxo s)\n   (.TransactionStructure.Tx.body tx)))\n (Axiom.Set.Theory.map (.Axiom.Set.Theory\7496.th List-Model\7496)\n  (.Hashable.hash\n   (Ledger.Core.Specification.Script.Base.ScriptStructure.Hashable-Script\n    (.TransactionStructure.scriptStructure txs)))\n  (TransactionStructure.refScripts txs tx\n   (.Ledger.Conway.Specification.Utxo.UTxOState.utxo s))))\n(Axiom.Set.Theory.map (.Axiom.Set.Theory\7496.th List-Model\7496)\n (.Hashable.hash\n  (Ledger.Core.Specification.Script.Base.ScriptStructure.Hashable-Script\n   (.TransactionStructure.scriptStructure txs)))\n (.TransactionStructure.TxWitnesses.scripts\n  (.TransactionStructure.Tx.wits tx)))"
                                                                       ::
                                                                       Data.Text.Text)
                                                               MAlonzo.Code.Data.Sum.Base.C_inj'8322'_42 v15
@@ -588,9 +588,9 @@ d_computeProof_2020 v0 v1 v2 v3 v4
                                                                                            (coe
                                                                                               MAlonzo.Code.Ledger.Core.Specification.Crypto.d_T'45'isHashable_44
                                                                                               (coe
-                                                                                                 MAlonzo.Code.Ledger.Conway.Specification.Script.Base.d_Data'688'_204
+                                                                                                 MAlonzo.Code.Ledger.Core.Specification.Script.Base.d_Data'688'_204
                                                                                                  (coe
-                                                                                                    MAlonzo.Code.Ledger.Conway.Specification.Script.Base.d_ps_328
+                                                                                                    MAlonzo.Code.Ledger.Core.Specification.Script.Base.d_ps_328
                                                                                                     (coe
                                                                                                        MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_scriptStructure_1904
                                                                                                        (coe
@@ -607,9 +607,9 @@ d_computeProof_2020 v0 v1 v2 v3 v4
                                                                                                  (coe
                                                                                                     MAlonzo.Code.Ledger.Core.Specification.Crypto.d_T'45'isHashable_44
                                                                                                     (coe
-                                                                                                       MAlonzo.Code.Ledger.Conway.Specification.Script.Base.d_Data'688'_204
+                                                                                                       MAlonzo.Code.Ledger.Core.Specification.Script.Base.d_Data'688'_204
                                                                                                        (coe
-                                                                                                          MAlonzo.Code.Ledger.Conway.Specification.Script.Base.d_ps_328
+                                                                                                          MAlonzo.Code.Ledger.Core.Specification.Script.Base.d_ps_328
                                                                                                           (coe
                                                                                                              MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_scriptStructure_1904
                                                                                                              (coe
@@ -698,7 +698,7 @@ d_computeProof_2020 v0 v1 v2 v3 v4
                                                                      (case coe v16 of
                                                                         MAlonzo.Code.Data.Sum.Base.C_inj'8321'_38 v17
                                                                           -> coe
-                                                                               ("\172\n(HasSubset-Set HasSubset.\8838\n Axiom.Set.Theory.mapPartial (.Axiom.Set.Theory\7496.th List-Model\7496)\n (\955 txout \8594\n    (ToBool\8242.if ToBool-Maybe then\n     Ledger.Conway.Specification.Script.Validation.txOutToP2Script txs\n     abs (.Ledger.Conway.Specification.Utxo.UTxOState.utxo s) tx txout\n     else\n     (\955 {z} \8594\n        Ledger.Conway.Specification.Script.Validation.txOutToDataHash txs\n        abs txout))\n    (\955 {z} \8594 nothing))\n (Class.IsSet.range (.Axiom.Set.Theory\7496.th List-Model\7496)\n  ((.Axiom.Set.Theory\7496.th List-Model\7496 Axiom.Set.Map.Restriction\7504.\8739\n    .Axiom.Set.Theory\7496.\8712-sp List-Model\7496)\n   (.Ledger.Conway.Specification.Utxo.UTxOState.utxo s)\n   (.TransactionStructure.TxBody.txIns\n    (.TransactionStructure.Tx.body tx)))))\n(Axiom.Set.Theory.map (.Axiom.Set.Theory\7496.th List-Model\7496)\n (.Hashable.hash\n  (.isHashableSet.T-Hashable\n   (.HashableSet.T-isHashable\n    (.Ledger.Conway.Specification.Script.Base.PlutusStructure.Data\688\n     (.Ledger.Conway.Specification.Script.Base.ScriptStructure.ps\n      (.TransactionStructure.scriptStructure txs))))))\n (.TransactionStructure.TxWitnesses.txdats\n  (.TransactionStructure.Tx.wits tx)))"
+                                                                               ("\172\n(HasSubset-Set HasSubset.\8838\n Axiom.Set.Theory.mapPartial (.Axiom.Set.Theory\7496.th List-Model\7496)\n (\955 txout \8594\n    (ToBool\8242.if ToBool-Maybe then\n     Ledger.Conway.Specification.Script.Validation.txOutToP2Script txs\n     abs (.Ledger.Conway.Specification.Utxo.UTxOState.utxo s) tx txout\n     else\n     (\955 {z} \8594\n        Ledger.Conway.Specification.Script.Validation.txOutToDataHash txs\n        abs txout))\n    (\955 {z} \8594 nothing))\n (Class.IsSet.range (.Axiom.Set.Theory\7496.th List-Model\7496)\n  ((.Axiom.Set.Theory\7496.th List-Model\7496 Axiom.Set.Map.Restriction\7504.\8739\n    .Axiom.Set.Theory\7496.\8712-sp List-Model\7496)\n   (.Ledger.Conway.Specification.Utxo.UTxOState.utxo s)\n   (.TransactionStructure.TxBody.txIns\n    (.TransactionStructure.Tx.body tx)))))\n(Axiom.Set.Theory.map (.Axiom.Set.Theory\7496.th List-Model\7496)\n (.Hashable.hash\n  (.isHashableSet.T-Hashable\n   (.HashableSet.T-isHashable\n    (.Ledger.Core.Specification.Script.Base.PlutusStructure.Data\688\n     (.Ledger.Core.Specification.Script.Base.ScriptStructure.ps\n      (.TransactionStructure.scriptStructure txs))))))\n (.TransactionStructure.TxWitnesses.txdats\n  (.TransactionStructure.Tx.wits tx)))"
                                                                                 ::
                                                                                 Data.Text.Text)
                                                                         MAlonzo.Code.Data.Sum.Base.C_inj'8322'_42 v17
@@ -720,9 +720,9 @@ d_computeProof_2020 v0 v1 v2 v3 v4
                                                                                                      (coe
                                                                                                         MAlonzo.Code.Ledger.Core.Specification.Crypto.d_T'45'isHashable_44
                                                                                                         (coe
-                                                                                                           MAlonzo.Code.Ledger.Conway.Specification.Script.Base.d_Data'688'_204
+                                                                                                           MAlonzo.Code.Ledger.Core.Specification.Script.Base.d_Data'688'_204
                                                                                                            (coe
-                                                                                                              MAlonzo.Code.Ledger.Conway.Specification.Script.Base.d_ps_328
+                                                                                                              MAlonzo.Code.Ledger.Core.Specification.Script.Base.d_ps_328
                                                                                                               (coe
                                                                                                                  MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_scriptStructure_1904
                                                                                                                  (coe
@@ -896,9 +896,9 @@ d_computeProof_2020 v0 v1 v2 v3 v4
                                                                                                    (coe
                                                                                                       MAlonzo.Code.Ledger.Core.Specification.Crypto.d_T'45'isHashable_44
                                                                                                       (coe
-                                                                                                         MAlonzo.Code.Ledger.Conway.Specification.Script.Base.d_Data'688'_204
+                                                                                                         MAlonzo.Code.Ledger.Core.Specification.Script.Base.d_Data'688'_204
                                                                                                          (coe
-                                                                                                            MAlonzo.Code.Ledger.Conway.Specification.Script.Base.d_ps_328
+                                                                                                            MAlonzo.Code.Ledger.Core.Specification.Script.Base.d_ps_328
                                                                                                             (coe
                                                                                                                MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_scriptStructure_1904
                                                                                                                (coe
@@ -913,7 +913,7 @@ d_computeProof_2020 v0 v1 v2 v3 v4
                                                                                (case coe v18 of
                                                                                   MAlonzo.Code.Data.Sum.Base.C_inj'8321'_38 v19
                                                                                     -> coe
-                                                                                         ("\172\n(HasSubset-Set HasSubset.\8838\n Axiom.Set.Theory.map (.Axiom.Set.Theory\7496.th List-Model\7496)\n (.Hashable.hash\n  (.isHashableSet.T-Hashable\n   (.HashableSet.T-isHashable\n    (.Ledger.Conway.Specification.Script.Base.PlutusStructure.Data\688\n     (.Ledger.Conway.Specification.Script.Base.ScriptStructure.ps\n      (.TransactionStructure.scriptStructure txs))))))\n (.TransactionStructure.TxWitnesses.txdats\n  (.TransactionStructure.Tx.wits tx)))\n((.Axiom.Set.Theory\7496.th List-Model\7496 Axiom.Set.Theory.\8746\n  Axiom.Set.Theory.mapPartial (.Axiom.Set.Theory\7496.th List-Model\7496)\n  (\955 txout \8594\n     (ToBool\8242.if ToBool-Maybe then\n      Ledger.Conway.Specification.Script.Validation.txOutToP2Script txs\n      abs (.Ledger.Conway.Specification.Utxo.UTxOState.utxo s) tx txout\n      else\n      (\955 {z} \8594\n         Ledger.Conway.Specification.Script.Validation.txOutToDataHash txs\n         abs txout))\n     (\955 {z} \8594 nothing))\n  (Class.IsSet.range (.Axiom.Set.Theory\7496.th List-Model\7496)\n   ((.Axiom.Set.Theory\7496.th List-Model\7496 Axiom.Set.Map.Restriction\7504.\8739\n     .Axiom.Set.Theory\7496.\8712-sp List-Model\7496)\n    (.Ledger.Conway.Specification.Utxo.UTxOState.utxo s)\n    (.TransactionStructure.TxBody.txIns\n     (.TransactionStructure.Tx.body tx)))))\n ((.Axiom.Set.Theory\7496.th List-Model\7496 Axiom.Set.Theory.\8746\n   Axiom.Set.Theory.mapPartial (.Axiom.Set.Theory\7496.th List-Model\7496)\n   (Ledger.Conway.Specification.Script.Validation.txOutToDataHash txs\n    abs)\n   (Class.IsSet.range (.Axiom.Set.Theory\7496.th List-Model\7496)\n    (.TransactionStructure.TxBody.txOuts\n     (.TransactionStructure.Tx.body tx))))\n  (Axiom.Set.Theory.mapPartial (.Axiom.Set.Theory\7496.th List-Model\7496)\n   (Ledger.Conway.Specification.Script.Validation.txOutToDataHash txs\n    abs)\n   (Class.IsSet.range (.Axiom.Set.Theory\7496.th List-Model\7496)\n    ((.Axiom.Set.Theory\7496.th List-Model\7496 Axiom.Set.Map.Restriction\7504.\8739\n      .Axiom.Set.Theory\7496.\8712-sp List-Model\7496)\n     (.Ledger.Conway.Specification.Utxo.UTxOState.utxo s)\n     (.TransactionStructure.TxBody.refInputs\n      (.TransactionStructure.Tx.body tx)))))))"
+                                                                                         ("\172\n(HasSubset-Set HasSubset.\8838\n Axiom.Set.Theory.map (.Axiom.Set.Theory\7496.th List-Model\7496)\n (.Hashable.hash\n  (.isHashableSet.T-Hashable\n   (.HashableSet.T-isHashable\n    (.Ledger.Core.Specification.Script.Base.PlutusStructure.Data\688\n     (.Ledger.Core.Specification.Script.Base.ScriptStructure.ps\n      (.TransactionStructure.scriptStructure txs))))))\n (.TransactionStructure.TxWitnesses.txdats\n  (.TransactionStructure.Tx.wits tx)))\n((.Axiom.Set.Theory\7496.th List-Model\7496 Axiom.Set.Theory.\8746\n  Axiom.Set.Theory.mapPartial (.Axiom.Set.Theory\7496.th List-Model\7496)\n  (\955 txout \8594\n     (ToBool\8242.if ToBool-Maybe then\n      Ledger.Conway.Specification.Script.Validation.txOutToP2Script txs\n      abs (.Ledger.Conway.Specification.Utxo.UTxOState.utxo s) tx txout\n      else\n      (\955 {z} \8594\n         Ledger.Conway.Specification.Script.Validation.txOutToDataHash txs\n         abs txout))\n     (\955 {z} \8594 nothing))\n  (Class.IsSet.range (.Axiom.Set.Theory\7496.th List-Model\7496)\n   ((.Axiom.Set.Theory\7496.th List-Model\7496 Axiom.Set.Map.Restriction\7504.\8739\n     .Axiom.Set.Theory\7496.\8712-sp List-Model\7496)\n    (.Ledger.Conway.Specification.Utxo.UTxOState.utxo s)\n    (.TransactionStructure.TxBody.txIns\n     (.TransactionStructure.Tx.body tx)))))\n ((.Axiom.Set.Theory\7496.th List-Model\7496 Axiom.Set.Theory.\8746\n   Axiom.Set.Theory.mapPartial (.Axiom.Set.Theory\7496.th List-Model\7496)\n   (Ledger.Conway.Specification.Script.Validation.txOutToDataHash txs\n    abs)\n   (Class.IsSet.range (.Axiom.Set.Theory\7496.th List-Model\7496)\n    (.TransactionStructure.TxBody.txOuts\n     (.TransactionStructure.Tx.body tx))))\n  (Axiom.Set.Theory.mapPartial (.Axiom.Set.Theory\7496.th List-Model\7496)\n   (Ledger.Conway.Specification.Script.Validation.txOutToDataHash txs\n    abs)\n   (Class.IsSet.range (.Axiom.Set.Theory\7496.th List-Model\7496)\n    ((.Axiom.Set.Theory\7496.th List-Model\7496 Axiom.Set.Map.Restriction\7504.\8739\n      .Axiom.Set.Theory\7496.\8712-sp List-Model\7496)\n     (.Ledger.Conway.Specification.Utxo.UTxOState.utxo s)\n     (.TransactionStructure.TxBody.refInputs\n      (.TransactionStructure.Tx.body tx)))))))"
                                                                                           ::
                                                                                           Data.Text.Text)
                                                                                   MAlonzo.Code.Data.Sum.Base.C_inj'8322'_42 v19
@@ -931,9 +931,9 @@ d_computeProof_2020 v0 v1 v2 v3 v4
                                                                                                             (coe
                                                                                                                MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8)
                                                                                                             (coe
-                                                                                                               MAlonzo.Code.Ledger.Conway.Specification.Script.Base.d_DecEq'45'Language_228
+                                                                                                               MAlonzo.Code.Ledger.Core.Specification.Script.Base.d_DecEq'45'Language_228
                                                                                                                (coe
-                                                                                                                  MAlonzo.Code.Ledger.Conway.Specification.Script.Base.d_ps_328
+                                                                                                                  MAlonzo.Code.Ledger.Core.Specification.Script.Base.d_ps_328
                                                                                                                   (coe
                                                                                                                      MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_scriptStructure_1904
                                                                                                                      (coe

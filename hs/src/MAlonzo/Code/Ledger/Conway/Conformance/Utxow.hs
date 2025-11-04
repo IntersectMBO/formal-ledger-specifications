@@ -34,13 +34,13 @@ import qualified MAlonzo.Code.Interface.TypeClasses.Hashable
 import qualified MAlonzo.Code.Ledger.Conway.Conformance.Utxo
 import qualified MAlonzo.Code.Ledger.Conway.Specification.Abstract
 import qualified MAlonzo.Code.Ledger.Conway.Specification.PParams
-import qualified MAlonzo.Code.Ledger.Conway.Specification.Script.Base
 import qualified MAlonzo.Code.Ledger.Conway.Specification.Script.Validation
 import qualified MAlonzo.Code.Ledger.Conway.Specification.Transaction
 import qualified MAlonzo.Code.Ledger.Conway.Specification.Utxo
 import qualified MAlonzo.Code.Ledger.Conway.Specification.Utxow
 import qualified MAlonzo.Code.Ledger.Core.Specification.Address
 import qualified MAlonzo.Code.Ledger.Core.Specification.Crypto
+import qualified MAlonzo.Code.Ledger.Core.Specification.Script.Base
 import qualified MAlonzo.Code.Level
 import qualified MAlonzo.Code.Prelude
 import qualified MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory
@@ -51,7 +51,7 @@ d_Hashable'45'Script_344 ::
   MAlonzo.Code.Interface.TypeClasses.Hashable.T_Hashable_10
 d_Hashable'45'Script_344 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Specification.Script.Base.du_Hashable'45'Script_402
+      MAlonzo.Code.Ledger.Core.Specification.Script.Base.du_Hashable'45'Script_402
       (coe
          MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_scriptStructure_1904
          (coe v0))
@@ -105,7 +105,7 @@ du_toP1Script_764 ::
   MAlonzo.Code.Data.Sum.Base.T__'8846'__30 -> Maybe AgdaAny
 du_toP1Script_764
   = coe
-      MAlonzo.Code.Ledger.Conway.Specification.Script.Base.du_toP1Script_416
+      MAlonzo.Code.Ledger.Core.Specification.Script.Base.du_toP1Script_416
 -- _.txscripts
 d_txscripts_778 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
@@ -544,9 +544,9 @@ du_UTXOW'45'inductive'45'premises_2842 v0 v1 v2
                                 (coe v0)))
                           (coe
                              MAlonzo.Code.Interface.TypeClasses.Hashable.d_hash_18
-                             (MAlonzo.Code.Ledger.Conway.Specification.Script.Base.d_Hashable'45'P1Script_122
+                             (MAlonzo.Code.Ledger.Core.Specification.Script.Base.d_Hashable'45'P1Script_122
                                 (coe
-                                   MAlonzo.Code.Ledger.Conway.Specification.Script.Base.d_p1s_306
+                                   MAlonzo.Code.Ledger.Core.Specification.Script.Base.d_p1s_306
                                    (coe
                                       MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_scriptStructure_1904
                                       (coe v0))))
@@ -570,8 +570,8 @@ du_UTXOW'45'inductive'45'premises_2842 v0 v1 v2
                                    MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_body_3454
                                    (coe v1)))))
                        (coe
-                          MAlonzo.Code.Ledger.Conway.Specification.Script.Base.d_Dec'45'validP1Script_120
-                          (MAlonzo.Code.Ledger.Conway.Specification.Script.Base.d_p1s_306
+                          MAlonzo.Code.Ledger.Core.Specification.Script.Base.d_Dec'45'validP1Script_120
+                          (MAlonzo.Code.Ledger.Core.Specification.Script.Base.d_p1s_306
                              (coe
                                 MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_scriptStructure_1904
                                 (coe v0)))
@@ -611,7 +611,7 @@ du_UTXOW'45'inductive'45'premises_2842 v0 v1 v2
                      (coe
                         MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                   (coe
-                     MAlonzo.Code.Ledger.Conway.Specification.Script.Base.du_toP1Script_416)
+                     MAlonzo.Code.Ledger.Core.Specification.Script.Base.du_toP1Script_416)
                   (MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_txscripts_3570
                      (coe v0) (coe v1)
                      (coe
@@ -706,7 +706,7 @@ du_UTXOW'45'inductive'45'premises_2842 v0 v1 v2
                                          MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                                    (MAlonzo.Code.Interface.TypeClasses.Hashable.d_hash_18
                                       (coe
-                                         MAlonzo.Code.Ledger.Conway.Specification.Script.Base.du_Hashable'45'Script_402
+                                         MAlonzo.Code.Ledger.Core.Specification.Script.Base.du_Hashable'45'Script_402
                                          (coe
                                             MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_scriptStructure_1904
                                             (coe v0))))
@@ -753,7 +753,7 @@ du_UTXOW'45'inductive'45'premises_2842 v0 v1 v2
                                     MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                               (MAlonzo.Code.Interface.TypeClasses.Hashable.d_hash_18
                                  (coe
-                                    MAlonzo.Code.Ledger.Conway.Specification.Script.Base.du_Hashable'45'Script_402
+                                    MAlonzo.Code.Ledger.Core.Specification.Script.Base.du_Hashable'45'Script_402
                                     (coe
                                        MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_scriptStructure_1904
                                        (coe v0))))
@@ -817,7 +817,7 @@ du_UTXOW'45'inductive'45'premises_2842 v0 v1 v2
                                             MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                                       (MAlonzo.Code.Interface.TypeClasses.Hashable.d_hash_18
                                          (coe
-                                            MAlonzo.Code.Ledger.Conway.Specification.Script.Base.du_Hashable'45'Script_402
+                                            MAlonzo.Code.Ledger.Core.Specification.Script.Base.du_Hashable'45'Script_402
                                             (coe
                                                MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_scriptStructure_1904
                                                (coe v0))))
@@ -833,7 +833,7 @@ du_UTXOW'45'inductive'45'premises_2842 v0 v1 v2
                                  MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                            (MAlonzo.Code.Interface.TypeClasses.Hashable.d_hash_18
                               (coe
-                                 MAlonzo.Code.Ledger.Conway.Specification.Script.Base.du_Hashable'45'Script_402
+                                 MAlonzo.Code.Ledger.Core.Specification.Script.Base.du_Hashable'45'Script_402
                                  (coe
                                     MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_scriptStructure_1904
                                     (coe v0))))
@@ -858,9 +858,9 @@ du_UTXOW'45'inductive'45'premises_2842 v0 v1 v2
                                    (coe
                                       MAlonzo.Code.Ledger.Core.Specification.Crypto.d_T'45'isHashable_44
                                       (coe
-                                         MAlonzo.Code.Ledger.Conway.Specification.Script.Base.d_Data'688'_204
+                                         MAlonzo.Code.Ledger.Core.Specification.Script.Base.d_Data'688'_204
                                          (coe
-                                            MAlonzo.Code.Ledger.Conway.Specification.Script.Base.d_ps_328
+                                            MAlonzo.Code.Ledger.Core.Specification.Script.Base.d_ps_328
                                             (coe
                                                MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_scriptStructure_1904
                                                (coe v0))))))
@@ -876,9 +876,9 @@ du_UTXOW'45'inductive'45'premises_2842 v0 v1 v2
                                          (coe
                                             MAlonzo.Code.Ledger.Core.Specification.Crypto.d_T'45'isHashable_44
                                             (coe
-                                               MAlonzo.Code.Ledger.Conway.Specification.Script.Base.d_Data'688'_204
+                                               MAlonzo.Code.Ledger.Core.Specification.Script.Base.d_Data'688'_204
                                                (coe
-                                                  MAlonzo.Code.Ledger.Conway.Specification.Script.Base.d_ps_328
+                                                  MAlonzo.Code.Ledger.Core.Specification.Script.Base.d_ps_328
                                                   (coe
                                                      MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_scriptStructure_1904
                                                      (coe v0)))))))
@@ -961,9 +961,9 @@ du_UTXOW'45'inductive'45'premises_2842 v0 v1 v2
                                       (coe
                                          MAlonzo.Code.Ledger.Core.Specification.Crypto.d_T'45'isHashable_44
                                          (coe
-                                            MAlonzo.Code.Ledger.Conway.Specification.Script.Base.d_Data'688'_204
+                                            MAlonzo.Code.Ledger.Core.Specification.Script.Base.d_Data'688'_204
                                             (coe
-                                               MAlonzo.Code.Ledger.Conway.Specification.Script.Base.d_ps_328
+                                               MAlonzo.Code.Ledger.Core.Specification.Script.Base.d_ps_328
                                                (coe
                                                   MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_scriptStructure_1904
                                                   (coe v0))))))
@@ -1113,9 +1113,9 @@ du_UTXOW'45'inductive'45'premises_2842 v0 v1 v2
                                     (coe
                                        MAlonzo.Code.Ledger.Core.Specification.Crypto.d_T'45'isHashable_44
                                        (coe
-                                          MAlonzo.Code.Ledger.Conway.Specification.Script.Base.d_Data'688'_204
+                                          MAlonzo.Code.Ledger.Core.Specification.Script.Base.d_Data'688'_204
                                           (coe
-                                             MAlonzo.Code.Ledger.Conway.Specification.Script.Base.d_ps_328
+                                             MAlonzo.Code.Ledger.Core.Specification.Script.Base.d_ps_328
                                              (coe
                                                 MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_scriptStructure_1904
                                                 (coe v0)))))))
@@ -1136,9 +1136,9 @@ du_UTXOW'45'inductive'45'premises_2842 v0 v1 v2
                                       (coe
                                          MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8)
                                       (coe
-                                         MAlonzo.Code.Ledger.Conway.Specification.Script.Base.d_DecEq'45'Language_228
+                                         MAlonzo.Code.Ledger.Core.Specification.Script.Base.d_DecEq'45'Language_228
                                          (coe
-                                            MAlonzo.Code.Ledger.Conway.Specification.Script.Base.d_ps_328
+                                            MAlonzo.Code.Ledger.Core.Specification.Script.Base.d_ps_328
                                             (coe
                                                MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_scriptStructure_1904
                                                (coe v0))))

@@ -2107,7 +2107,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Gov.Base.html" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Gov.Base.md" class="md-nav__link">
         
   
   
@@ -2130,7 +2130,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Gov.Actions.html" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Gov.Actions.md" class="md-nav__link">
         
   
   
@@ -3271,7 +3271,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Script.Base.html" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Script.Base.md" class="md-nav__link">
         
   
   
@@ -3294,7 +3294,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Script.Timelock.html" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Script.Timelock.md" class="md-nav__link">
         
   
   
@@ -8415,13 +8415,13 @@
 <a id="91" class="Keyword">open</a> <a id="96" class="Keyword">import</a> <a id="103" href="Ledger.Conway.Specification.Abstract.html" class="Module">Ledger.Conway.Specification.Abstract</a>
 
 <a id="141" class="Keyword">module</a> <a id="148" href="Ledger.Conway.Specification.Chain.Properties.GovDepsMatch.html" class="Module">Ledger.Conway.Specification.Chain.Properties.GovDepsMatch</a>
-  <a id="208" class="Symbol">(</a><a id="209" href="Ledger.Conway.Specification.Chain.Properties.GovDepsMatch.html#209" class="Bound">txs</a> <a id="213" class="Symbol">:</a> <a id="215" class="Symbol">_)</a> <a id="218" class="Symbol">(</a><a id="219" class="Keyword">open</a> <a id="224" href="Ledger.Conway.Specification.Transaction.html#2457" class="Module">TransactionStructure</a> <a id="245" href="Ledger.Conway.Specification.Chain.Properties.GovDepsMatch.html#209" class="Bound">txs</a><a id="248" class="Symbol">)</a>
+  <a id="208" class="Symbol">(</a><a id="209" href="Ledger.Conway.Specification.Chain.Properties.GovDepsMatch.html#209" class="Bound">txs</a> <a id="213" class="Symbol">:</a> <a id="215" class="Symbol">_)</a> <a id="218" class="Symbol">(</a><a id="219" class="Keyword">open</a> <a id="224" href="Ledger.Conway.Specification.Transaction.html#2451" class="Module">TransactionStructure</a> <a id="245" href="Ledger.Conway.Specification.Chain.Properties.GovDepsMatch.html#209" class="Bound">txs</a><a id="248" class="Symbol">)</a>
   <a id="252" class="Symbol">(</a><a id="253" href="Ledger.Conway.Specification.Chain.Properties.GovDepsMatch.html#253" class="Bound">abs</a> <a id="257" class="Symbol">:</a> <a id="259" href="Ledger.Conway.Specification.Abstract.html#756" class="Record">AbstractFunctions</a> <a id="277" href="Ledger.Conway.Specification.Chain.Properties.GovDepsMatch.html#209" class="Bound">txs</a><a id="280" class="Symbol">)</a> <a id="282" class="Symbol">(</a><a id="283" class="Keyword">open</a> <a id="288" href="Ledger.Conway.Specification.Abstract.html#756" class="Module">AbstractFunctions</a> <a id="306" href="Ledger.Conway.Specification.Chain.Properties.GovDepsMatch.html#253" class="Bound">abs</a><a id="309" class="Symbol">)</a>
   <a id="313" class="Keyword">where</a>
 
-<a id="320" class="Keyword">open</a> <a id="325" class="Keyword">import</a> <a id="332" href="Ledger.Conway.Specification.Certs.html" class="Module">Ledger.Conway.Specification.Certs</a> <a id="366" href="Ledger.Conway.Specification.Transaction.html#3577" class="Function">govStructure</a>
+<a id="320" class="Keyword">open</a> <a id="325" class="Keyword">import</a> <a id="332" href="Ledger.Conway.Specification.Certs.html" class="Module">Ledger.Conway.Specification.Certs</a> <a id="366" href="Ledger.Conway.Specification.Transaction.html#3569" class="Function">govStructure</a>
 <a id="379" class="Keyword">open</a> <a id="384" class="Keyword">import</a> <a id="391" href="Ledger.Conway.Specification.Chain.html" class="Module">Ledger.Conway.Specification.Chain</a> <a id="425" href="Ledger.Conway.Specification.Chain.Properties.GovDepsMatch.html#209" class="Bound">txs</a> <a id="429" href="Ledger.Conway.Specification.Chain.Properties.GovDepsMatch.html#253" class="Bound">abs</a>
-<a id="433" class="Keyword">open</a> <a id="438" class="Keyword">import</a> <a id="445" href="Ledger.Conway.Specification.Enact.html" class="Module">Ledger.Conway.Specification.Enact</a> <a id="479" href="Ledger.Conway.Specification.Transaction.html#3577" class="Function">govStructure</a>
+<a id="433" class="Keyword">open</a> <a id="438" class="Keyword">import</a> <a id="445" href="Ledger.Conway.Specification.Enact.html" class="Module">Ledger.Conway.Specification.Enact</a> <a id="479" href="Ledger.Conway.Specification.Transaction.html#3569" class="Function">govStructure</a>
 <a id="492" class="Keyword">open</a> <a id="497" class="Keyword">import</a> <a id="504" href="Ledger.Conway.Specification.Epoch.html" class="Module">Ledger.Conway.Specification.Epoch</a> <a id="538" href="Ledger.Conway.Specification.Chain.Properties.GovDepsMatch.html#209" class="Bound">txs</a> <a id="542" href="Ledger.Conway.Specification.Chain.Properties.GovDepsMatch.html#253" class="Bound">abs</a>
 <a id="546" class="Keyword">open</a> <a id="551" class="Keyword">import</a> <a id="558" href="Ledger.Conway.Specification.Epoch.Properties.GovDepsMatch.html" class="Module">Ledger.Conway.Specification.Epoch.Properties.GovDepsMatch</a> <a id="616" href="Ledger.Conway.Specification.Chain.Properties.GovDepsMatch.html#209" class="Bound">txs</a> <a id="620" href="Ledger.Conway.Specification.Chain.Properties.GovDepsMatch.html#253" class="Bound">abs</a>
 <a id="624" class="Keyword">open</a> <a id="629" class="Keyword">import</a> <a id="636" href="Ledger.Conway.Specification.Ledger.html" class="Module">Ledger.Conway.Specification.Ledger</a> <a id="671" href="Ledger.Conway.Specification.Chain.Properties.GovDepsMatch.html#209" class="Bound">txs</a> <a id="675" href="Ledger.Conway.Specification.Chain.Properties.GovDepsMatch.html#253" class="Bound">abs</a>
@@ -8438,9 +8438,9 @@
   <a id="1035" class="Keyword">open</a> <a id="1040" href="Ledger.Conway.Specification.BlockBody.html#921" class="Module">Block</a> <a id="1046" href="Ledger.Conway.Specification.Chain.Properties.GovDepsMatch.html#966" class="Bound">b</a><a id="1047" class="Symbol">;</a> <a id="1049" class="Keyword">open</a> <a id="1054" href="Ledger.Conway.Specification.Chain.html#1169" class="Module">ChainState</a> <a id="1065" href="Ledger.Conway.Specification.Chain.Properties.GovDepsMatch.html#1007" class="Bound">cs</a>
   <a id="1070" class="Keyword">open</a> <a id="1075" href="Ledger.Conway.Specification.Epoch.html#4038" class="Module">NewEpochState</a>
   <a id="1091" class="Keyword">open</a> <a id="1096" href="Ledger.Conway.Specification.Epoch.Properties.GovDepsMatch.html#1475" class="Module">EPOCH-Body</a> <a id="1107" class="Symbol">(</a><a id="1108" href="Ledger.Conway.Specification.Epoch.html#2753" class="Field">EpochStateOf</a> <a id="1121" href="Ledger.Conway.Specification.Chain.Properties.GovDepsMatch.html#1007" class="Bound">cs</a><a id="1123" class="Symbol">)</a> <a id="1125" class="Keyword">renaming</a> <a id="1134" class="Symbol">(</a><a id="1135" href="Ledger.Conway.Specification.Epoch.Properties.GovDepsMatch.html#1561" class="Field">epsLState</a> <a id="1145" class="Symbol">to</a> <a id="1148" class="Field">csLState</a><a id="1156" class="Symbol">)</a>
-  <a id="1160" class="Keyword">open</a> <a id="1165" href="Ledger.Conway.Specification.Enact.html#1634" class="Module">EnactState</a> <a id="1176" href="Ledger.Conway.Specification.Epoch.Properties.GovDepsMatch.html#1734" class="Function">ens</a> <a id="1180" class="Keyword">using</a> <a id="1186" class="Symbol">(</a><a id="1187" href="Ledger.Conway.Specification.Enact.html#1844" class="Field">pparams</a><a id="1194" class="Symbol">)</a>
-  <a id="1198" href="Ledger.Conway.Specification.Chain.Properties.GovDepsMatch.html#1198" class="Function">pp</a> <a id="1201" class="Symbol">=</a> <a id="1203" href="Ledger.Conway.Specification.Enact.html#1844" class="Function">pparams</a> <a id="1211" class="Symbol">.</a><a id="1212" href="Data.Product.Base.html#636" class="Field">proj₁</a>
-  <a id="1220" class="Keyword">open</a> <a id="1225" href="Ledger.Conway.Specification.PParams.html#5526" class="Module">PParams</a> <a id="1233" href="Ledger.Conway.Specification.Chain.Properties.GovDepsMatch.html#1198" class="Function">pp</a> <a id="1236" class="Keyword">using</a> <a id="1242" class="Symbol">(</a><a id="1243" href="Ledger.Conway.Specification.PParams.html#6513" class="Field">maxRefScriptSizePerBlock</a><a id="1267" class="Symbol">)</a>
+  <a id="1160" class="Keyword">open</a> <a id="1165" href="Ledger.Conway.Specification.Enact.html#1630" class="Module">EnactState</a> <a id="1176" href="Ledger.Conway.Specification.Epoch.Properties.GovDepsMatch.html#1734" class="Function">ens</a> <a id="1180" class="Keyword">using</a> <a id="1186" class="Symbol">(</a><a id="1187" href="Ledger.Conway.Specification.Enact.html#1840" class="Field">pparams</a><a id="1194" class="Symbol">)</a>
+  <a id="1198" href="Ledger.Conway.Specification.Chain.Properties.GovDepsMatch.html#1198" class="Function">pp</a> <a id="1201" class="Symbol">=</a> <a id="1203" href="Ledger.Conway.Specification.Enact.html#1840" class="Function">pparams</a> <a id="1211" class="Symbol">.</a><a id="1212" href="Data.Product.Base.html#636" class="Field">proj₁</a>
+  <a id="1220" class="Keyword">open</a> <a id="1225" href="Ledger.Conway.Specification.PParams.html#5524" class="Module">PParams</a> <a id="1233" href="Ledger.Conway.Specification.Chain.Properties.GovDepsMatch.html#1198" class="Function">pp</a> <a id="1236" class="Keyword">using</a> <a id="1242" class="Symbol">(</a><a id="1243" href="Ledger.Conway.Specification.PParams.html#6511" class="Field">maxRefScriptSizePerBlock</a><a id="1267" class="Symbol">)</a>
 </pre>
 
 <p><a id="thm:ChainGovDepsMatch"></a>
@@ -8498,8 +8498,8 @@ In other terms,</p>
 <p><code class="AgdaFunction">govDepsMatch</code> <code class="AgdaFunction">csLState</code> implies <code class="AgdaFunction">govDepsMatch</code> <code class="AgdaFunction">nesState</code>.</p>
 <p><em>Formally</em>.</p>
 <pre class="Agda">  <a id="3965" href="Ledger.Conway.Specification.Chain.Properties.GovDepsMatch.html#3965" class="Function">CHAIN-govDepsMatch</a> <a id="3984" class="Symbol">:</a>
-    <a id="3990" href="Ledger.Conway.Specification.Chain.Properties.GovDepsMatch.html#887" class="Function">map</a> <a id="3994" class="Symbol">(</a><a id="3995" href="Ledger.Conway.Specification.Certs.html#976" class="InductiveConstructor">GovActionDeposit</a> <a id="4012" href="Function.Base.html#1134" class="Function Operator">∘</a> <a id="4014" href="Data.Product.Base.html#636" class="Field">proj₁</a><a id="4019" class="Symbol">)</a> <a id="4021" href="Ledger.Conway.Specification.Epoch.Properties.GovDepsMatch.html#1943" class="Function">removed&#39;</a> <a id="4030" href="Interface.TypeClasses.HasSubset.html#288" class="Field Operator">⊆</a> <a id="4032" href="Class.IsSet.html#916" class="Function">dom</a> <a id="4036" class="Symbol">(</a><a id="4037" href="Ledger.Conway.Specification.Certs.html#1154" class="Field">DepositsOf</a> <a id="4048" href="Ledger.Conway.Specification.Chain.Properties.GovDepsMatch.html#1007" class="Bound">cs</a><a id="4050" class="Symbol">)</a>
-    <a id="4056" class="Symbol">→</a>  <a id="4059" href="Ledger.Conway.Specification.Chain.html#2453" class="Function">totalRefScriptsSize</a> <a id="4079" href="Ledger.Conway.Specification.Chain.Properties.GovDepsMatch.html#1148" class="Function">csLState</a> <a id="4088" href="Ledger.Conway.Specification.BlockBody.html#978" class="Function">ts</a> <a id="4091" href="Class.HasOrder.Core.html#613" class="Field Operator">≤</a> <a id="4093" href="Ledger.Conway.Specification.PParams.html#6513" class="Function">maxRefScriptSizePerBlock</a>
+    <a id="3990" href="Ledger.Conway.Specification.Chain.Properties.GovDepsMatch.html#887" class="Function">map</a> <a id="3994" class="Symbol">(</a><a id="3995" href="Ledger.Conway.Specification.Certs.html#972" class="InductiveConstructor">GovActionDeposit</a> <a id="4012" href="Function.Base.html#1134" class="Function Operator">∘</a> <a id="4014" href="Data.Product.Base.html#636" class="Field">proj₁</a><a id="4019" class="Symbol">)</a> <a id="4021" href="Ledger.Conway.Specification.Epoch.Properties.GovDepsMatch.html#1943" class="Function">removed&#39;</a> <a id="4030" href="Interface.TypeClasses.HasSubset.html#288" class="Field Operator">⊆</a> <a id="4032" href="Class.IsSet.html#916" class="Function">dom</a> <a id="4036" class="Symbol">(</a><a id="4037" href="Ledger.Conway.Specification.Certs.html#1150" class="Field">DepositsOf</a> <a id="4048" href="Ledger.Conway.Specification.Chain.Properties.GovDepsMatch.html#1007" class="Bound">cs</a><a id="4050" class="Symbol">)</a>
+    <a id="4056" class="Symbol">→</a>  <a id="4059" href="Ledger.Conway.Specification.Chain.html#2453" class="Function">totalRefScriptsSize</a> <a id="4079" href="Ledger.Conway.Specification.Chain.Properties.GovDepsMatch.html#1148" class="Function">csLState</a> <a id="4088" href="Ledger.Conway.Specification.BlockBody.html#978" class="Function">ts</a> <a id="4091" href="Class.HasOrder.Core.html#613" class="Field Operator">≤</a> <a id="4093" href="Ledger.Conway.Specification.PParams.html#6511" class="Function">maxRefScriptSizePerBlock</a>
     <a id="4122" class="Symbol">→</a>  <a id="4125" class="Symbol">_</a> <a id="4127" href="Ledger.Conway.Specification.Chain.html#2761" class="Datatype Operator">⊢</a> <a id="4129" href="Ledger.Conway.Specification.Chain.Properties.GovDepsMatch.html#1007" class="Bound">cs</a> <a id="4132" href="Ledger.Conway.Specification.Chain.html#2761" class="Datatype Operator">⇀⦇</a> <a id="4135" href="Ledger.Conway.Specification.Chain.Properties.GovDepsMatch.html#966" class="Bound">b</a> <a id="4137" href="Ledger.Conway.Specification.Chain.html#2761" class="Datatype Operator">,CHAIN⦈</a> <a id="4145" href="Ledger.Conway.Specification.Chain.Properties.GovDepsMatch.html#1826" class="Function">cs&#39;</a>
     <a id="4153" class="Symbol">→</a>  <a id="4156" href="Ledger.Conway.Specification.Ledger.Properties.Base.html#1629" class="Function">govDepsMatch</a> <a id="4169" href="Ledger.Conway.Specification.Chain.Properties.GovDepsMatch.html#1148" class="Function">csLState</a> <a id="4178" class="Symbol">→</a> <a id="4180" href="Ledger.Conway.Specification.Ledger.Properties.Base.html#1629" class="Function">govDepsMatch</a> <a id="4193" class="Symbol">(</a><a id="4194" href="Ledger.Conway.Specification.Ledger.html#1558" class="Field">LStateOf</a> <a id="4203" href="Ledger.Conway.Specification.Chain.Properties.GovDepsMatch.html#983" class="Bound">nes</a><a id="4206" class="Symbol">)</a>
 </pre>
