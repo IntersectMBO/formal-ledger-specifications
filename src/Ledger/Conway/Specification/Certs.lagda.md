@@ -10,12 +10,12 @@ source_path: src/Ledger/Conway/Specification/Certs.lagda.md
 {-# OPTIONS --safe #-}
 
 open import Ledger.Prelude renaming (filterˢ to filter)
-open import Ledger.Conway.Specification.Gov.Base
+open import Ledger.Core.Specification.Gov.Base
 open import Ledger.Prelude.Numeric.UnitInterval
 
 module Ledger.Conway.Specification.Certs (gs : _) (open GovStructure gs) where
 
-open import Ledger.Conway.Specification.Gov.Actions gs hiding (yes; no)
+open import Ledger.Core.Specification.Gov.Actions gs hiding (yes; no)
 open RewardAddress
 open PParams
 ```

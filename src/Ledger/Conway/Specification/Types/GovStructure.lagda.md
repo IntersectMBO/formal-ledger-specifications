@@ -11,7 +11,7 @@ module Ledger.Conway.Specification.Types.GovStructure where
 open import Prelude using (Type)
 open import Class.DecEq
 open import Ledger.Core.Specification.Crypto
-open import Ledger.Conway.Specification.Script.Base
+open import Ledger.Core.Specification.Script.Base
 open import Ledger.Core.Specification.Epoch
 import Ledger.Conway.Specification.PParams
 

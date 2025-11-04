@@ -3,8 +3,8 @@
 {-# OPTIONS --safe #-}
 open import Ledger.Prelude
 open import Ledger.Conway.Specification.Abstract
-open import Ledger.Conway.Specification.Transaction
- 
+open import Ledger.Core.Specification.Transaction
+
 module Ledger.Conway.Specification.BlockBody
   (txs : _) (open TransactionStructure txs)
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
@@ -13,6 +13,7 @@ module Ledger.Conway.Specification.BlockBody
 open import Ledger.Conway.Specification.Enact govStructure
 open import Ledger.Conway.Specification.Ledger txs abs
 open import Ledger.Conway.Specification.Rewards txs abs
+open import Ledger.Conway.Specification.Transaction txs
 ```
 -->
 

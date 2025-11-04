@@ -9,11 +9,11 @@ source_path: src/Ledger/Conway/Specification/Chain.lagda.md
 ```agda
 {-# OPTIONS --safe #-}
 
-open import Ledger.Conway.Specification.Transaction
+open import Ledger.Core.Specification.Transaction using (TransactionStructure)
 open import Ledger.Conway.Specification.Abstract
 
 module Ledger.Conway.Specification.Chain
-  (txs : _) (open TransactionStructure txs)
+  (txs : TransactionStructure) (open TransactionStructure txs)
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
 
@@ -27,6 +27,7 @@ open import Ledger.Prelude; open Equivalence
 open import Ledger.Conway.Specification.Ratify txs
 open import Ledger.Conway.Specification.RewardUpdate txs abs
 open import Ledger.Conway.Specification.Utxo txs abs
+open import Ledger.Conway.Specification.Transaction txs
 
 open import Algebra
 open import Data.Nat.Properties using (+-0-monoid)
@@ -73,6 +74,9 @@ instance
 
   HasPParams-ChainState : HasPParams ChainState
   HasPParams-ChainState .PParamsOf = PParamsOf ∘ EnactStateOf
+
+-- refScriptsSize : UTxO → Tx → ℕ
+-- refScriptsSize utxo tx = sum (map scriptSize (setToList (refScripts tx utxo)))
 
 totalRefScriptsSize : LState → List Tx → ℕ
 totalRefScriptsSize lst txs = sum $ map (refScriptsSize utxo) txs

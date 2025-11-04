@@ -6,13 +6,13 @@ source_path: src/Ledger/Conway/Specification/Enact/Properties/Computational.lagd
 ```agda
 {-# OPTIONS --safe #-}
 
-open import Ledger.Conway.Specification.Gov.Base
+open import Ledger.Core.Specification.Gov.Base
 
 module Ledger.Conway.Specification.Enact.Properties.Computational (gs : _) (open GovStructure gs) where
 
 open import Ledger.Prelude
 
-open import Ledger.Conway.Specification.Gov.Actions gs hiding (yes; no)
+open import Ledger.Core.Specification.Gov.Actions gs hiding (yes; no)
 open import Ledger.Conway.Specification.Enact gs
 
 open EnactState

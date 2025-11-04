@@ -11,7 +11,7 @@ source_path: src/Ledger/Conway/Specification/Script/Validation.lagda.md
 ```agda
 {-# OPTIONS --safe #-}
 
-open import Ledger.Conway.Specification.Transaction
+open import Ledger.Core.Specification.Transaction
 open import Ledger.Conway.Specification.Abstract
 
 module Ledger.Conway.Specification.Script.Validation
@@ -20,6 +20,7 @@ module Ledger.Conway.Specification.Script.Validation
   where
 
 open import Ledger.Prelude
+open import Ledger.Conway.Specification.Transaction txs
 open import Ledger.Conway.Specification.Certs govStructure
 
 

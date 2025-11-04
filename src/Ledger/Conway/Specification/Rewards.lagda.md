@@ -21,7 +21,7 @@ open import Data.Rational using (ℚ; floor; _*_; _÷_; _/_; _-_; >-nonZero; _�
 open import Data.Rational.Literals using (number; fromℤ)
 open import Data.Rational.Properties using (pos⇒nonZero; positive⁻¹; +-mono-<-≤; normalize-pos; p≤p⊔q)
 open import Ledger.Conway.Specification.Abstract
-open import Ledger.Conway.Specification.Transaction
+open import Ledger.Core.Specification.Transaction using (TransactionStructure)
 open import Ledger.Prelude.Numeric.UnitInterval
 
 open import Agda.Builtin.FromNat

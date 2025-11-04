@@ -16,8 +16,8 @@ the [Enact](Ledger.Conway.Specification.Enact.md) module.
 ```agda
 {-# OPTIONS --safe #-}
 
-open import Ledger.Conway.Specification.Gov.Base
-open import Ledger.Conway.Specification.Transaction using (TransactionStructure)
+open import Ledger.Core.Specification.Gov.Base
+open import Ledger.Core.Specification.Transaction using (TransactionStructure)
 
 module Ledger.Conway.Specification.Gov (txs : _) (open TransactionStructure txs hiding (epoch)) where
 
@@ -25,7 +25,7 @@ open import Ledger.Prelude hiding (any?; Any; all?; All; Rel; lookup; ∈-filter
 
 open import Axiom.Set.Properties th using (∃-sublist-⇔)
 
-open import Ledger.Conway.Specification.Gov.Actions govStructure using (Vote)
+open import Ledger.Core.Specification.Gov.Actions govStructure using (Vote)
 open import Ledger.Conway.Specification.Enact govStructure
 open import Ledger.Conway.Specification.Ratify txs
 open import Ledger.Conway.Specification.Certs govStructure

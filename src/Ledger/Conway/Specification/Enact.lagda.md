@@ -13,11 +13,11 @@ open import Data.Nat.Properties using (+-0-monoid)
 open import Data.Rational using (ℚ)
 
 open import Ledger.Prelude
-open import Ledger.Conway.Specification.Gov.Base
+open import Ledger.Core.Specification.Gov.Base
 
 module Ledger.Conway.Specification.Enact (gs : _) (open GovStructure gs) where
 
-open import Ledger.Conway.Specification.Gov.Actions gs
+open import Ledger.Core.Specification.Gov.Actions gs
 ```
 -->
 

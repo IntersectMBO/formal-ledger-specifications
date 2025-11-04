@@ -103,5 +103,5 @@ module Implementation where
   AuxiliaryData   = ℕ
   DocHash         = ℕ
   tokenAlgebra    = Coin-TokenAlgebra
-    where open import Ledger.Conway.Specification.TokenAlgebra.Coin ScriptHash
+    where open import Ledger.Core.Specification.TokenAlgebra.Coin ScriptHash
             using (Coin-TokenAlgebra)

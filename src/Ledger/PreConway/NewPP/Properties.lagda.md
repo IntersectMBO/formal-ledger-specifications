@@ -9,7 +9,7 @@ source_path: src/Ledger/PreConway/NewPP/Properties.lagda.md
 open import Relation.Nullary.Decidable
 
 open import Ledger.Prelude
-open import Ledger.Conway.Specification.Transaction
+open import Ledger.Core.Specification.Transaction
 
 module Ledger.PreConway.NewPP.Properties (txs : _) (open TransactionStructure txs) where
 

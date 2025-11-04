@@ -21,7 +21,7 @@ open import Tactic.Derive.Show
 
 open import Ledger.Prelude
 open import Ledger.Core.Specification.Crypto
-open import Ledger.Conway.Specification.Script.Base
+open import Ledger.Core.Specification.Script.Base
 open import Ledger.Core.Specification.Epoch
 open import Ledger.Prelude.Numeric using (UnitInterval; ℕ⁺)
 

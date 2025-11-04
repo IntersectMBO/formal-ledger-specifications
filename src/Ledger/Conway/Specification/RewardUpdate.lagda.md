@@ -3,8 +3,8 @@
 {-# OPTIONS --safe #-}
 open import Ledger.Prelude
 open import Ledger.Conway.Specification.Abstract
-open import Ledger.Conway.Specification.Transaction
- 
+open import Ledger.Core.Specification.Transaction using (TransactionStructure)
+
 module Ledger.Conway.Specification.RewardUpdate
   (txs : _) (open TransactionStructure txs)
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)

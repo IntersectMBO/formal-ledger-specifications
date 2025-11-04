@@ -4,7 +4,7 @@ source_path: src/Ledger/Dijkstra/Specification/Certs.lagda.md
 ---
 ```agda
 {-# OPTIONS --safe #-}
-open import Ledger.Conway.Specification.Gov.Base
+open import Ledger.Core.Specification.Gov.Base
   using (GovStructure)
 
 module Ledger.Dijkstra.Specification.Certs

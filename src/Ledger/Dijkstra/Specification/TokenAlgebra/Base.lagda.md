@@ -7,5 +7,5 @@ source_path: src/Ledger/Dijkstra/Specification/TokenAlgebra/Base.lagda.md
 open import Prelude using (Type)
 module Ledger.Dijkstra.Specification.TokenAlgebra.Base (PolicyId : Type) where
 
-open import Ledger.Conway.Specification.TokenAlgebra.Base PolicyId public
+open import Ledger.Core.Specification.TokenAlgebra.Base PolicyId public
 ```

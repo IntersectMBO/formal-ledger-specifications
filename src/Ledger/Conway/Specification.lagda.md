@@ -72,7 +72,7 @@ import Ledger.Conway.Specification.Fees
 
 ```agda
 import Ledger.Conway.Specification.Gov
-import Ledger.Conway.Specification.Gov.Actions
+import Ledger.Core.Specification.Gov.Actions
 import Ledger.Conway.Specification.Gov.Properties
 import Ledger.Conway.Specification.Gov.Properties.ChangePPGroup
 import Ledger.Conway.Specification.Types.GovStructure
@@ -127,10 +127,10 @@ import Ledger.Conway.Specification.Script.Validation
 ## Token Algebras
 
 ```agda
-import Ledger.Conway.Specification.TokenAlgebra.Base
-import Ledger.Conway.Specification.TokenAlgebra.Coin
-import Ledger.Conway.Specification.TokenAlgebra.ValueSet
-import Ledger.Conway.Specification.TokenAlgebra.ValueVector
+import Ledger.Core.Specification.TokenAlgebra.Base
+import Ledger.Core.Specification.TokenAlgebra.Coin
+import Ledger.Core.Specification.TokenAlgebra.ValueSet
+import Ledger.Core.Specification.TokenAlgebra.ValueVector
 ```
 
 ## Transactions

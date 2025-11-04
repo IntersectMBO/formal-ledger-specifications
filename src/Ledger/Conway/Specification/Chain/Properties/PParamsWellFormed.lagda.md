@@ -11,7 +11,7 @@ source_path: src/Ledger/Conway/Specification/Chain/Properties/PParamsWellFormed.
 {-# OPTIONS --safe #-}
 
 open import Ledger.Conway.Specification.Abstract
-open import Ledger.Conway.Specification.Transaction
+open import Ledger.Core.Specification.Transaction
 
 module Ledger.Conway.Specification.Chain.Properties.PParamsWellFormed
   (txs : _) (open TransactionStructure txs)

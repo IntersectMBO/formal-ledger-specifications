@@ -1,13 +1,13 @@
 ---
 source_branch: master
-source_path: src/Ledger/Conway/Specification/TokenAlgebra/ValueVector.lagda.md
+source_path: src/Ledger/Core/Specification/TokenAlgebra/ValueVector.lagda.md
 ---
 
 ```agda
 {-# OPTIONS --safe #-}
 open import Ledger.Prelude hiding (_∙_; ε)
 
-module Ledger.Conway.Specification.TokenAlgebra.ValueVector (PolicyId : Type) (n : ℕ) where
+module Ledger.Core.Specification.TokenAlgebra.ValueVector (PolicyId : Type) (n : ℕ) where
 
 import Algebra as Alg
 open import Algebra.Construct.DirectProduct
@@ -19,7 +19,7 @@ open import Data.Vec as Vec
 import stdlib.Data.Vec.Instances as Vec
 import Data.Vec.Relation.Binary.Pointwise.Inductive as Vec
 
-open import Ledger.Conway.Specification.TokenAlgebra.Base PolicyId
+open import Ledger.Core.Specification.TokenAlgebra.Base PolicyId
 
 Quantity = ℕ
 

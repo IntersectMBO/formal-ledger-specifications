@@ -7,7 +7,7 @@ source_path: src/Ledger/Conway/Specification/Abstract.lagda.md
 {-# OPTIONS --safe #-}
 
 open import Ledger.Prelude
-open import Ledger.Conway.Specification.Transaction
+open import Ledger.Core.Specification.Transaction
 
 module Ledger.Conway.Specification.Abstract (txs : TransactionStructure) where
 

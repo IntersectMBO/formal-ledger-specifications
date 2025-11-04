@@ -13,7 +13,7 @@ properties of the ledger transition system.
 {-# OPTIONS --safe #-}
 
 open import Ledger.Conway.Specification.Abstract
-open import Ledger.Conway.Specification.Transaction
+open import Ledger.Core.Specification.Transaction
 import Ledger.Conway.Specification.Certs
 
 module Ledger.Conway.Specification.Ledger.Properties.Base
@@ -144,7 +144,8 @@ module LEDGER-PROPS (tx : Tx) (Γ : LEnv) (s : LState) where
 module SetoidProperties (tx : Tx) (Γ : LEnv) (s : LState) where
   open Tx tx renaming (body to txb); open TxBody txb
   open LEnv Γ renaming (pparams to pp)
-  open LEDGER-PROPS tx Γ s
+  -- open LEDGER-PROPS tx Γ s
+  open LEDGER-PROPS tx Γ s using (utxoDeps; propUpdate; mkAction; updateGovStates; STS→GovSt≡; voteUpdate; dpMap-rmOrphanDRepVotes)
   open SetoidReasoning (≡ᵉ-Setoid{DepositPurpose})
 
   CredDepIsNotGADep : ∀ {a c} → a ≡ CredentialDeposit c → ¬ isGADeposit a
@@ -235,8 +236,10 @@ module SetoidProperties (tx : Tx) (Γ : LEnv) (s : LState) where
       cd = certDeposit dcert pp
       filter0 = filterCD dcert deps
   noGACerts (dcert@(regpool _ _) ∷ cs) deps = begin
-    filterˢ isGADeposit (dom (updateCertDeposits pp cs (deps ∪ˡ cd))) ≈⟨ noGACerts cs _ ⟩
-    filterˢ isGADeposit (dom (deps ∪ˡ cd)) ≈⟨ filter-cong (dom∪ˡ≡∪dom {m = deps} {m' = cd}) ⟩
+    -- filterˢ isGADeposit (dom (updateCertDeposits pp cs (deps ∪ˡ cd))) ≈⟨ noGACerts cs _ ⟩
+    -- filterˢ isGADeposit (dom (deps ∪ˡ cd)) ≈⟨ filter-cong (dom∪ˡ≡∪dom {m = deps} {m' = cd}) ⟩
+    filterˢ isGADeposit (dom (updateCertDeposits pp cs (deps ∪⁺ cd))) ≈⟨ noGACerts cs _ ⟩
+    filterˢ isGADeposit (dom (deps ∪⁺ cd)) ≈⟨ filter-cong dom∪⁺≡∪dom ⟩
     filterˢ isGADeposit (dom deps ∪ dom (cd ˢ )) ≈⟨ filter-hom-∪ ⟩
     filterˢ isGADeposit (dom deps) ∪ filterˢ isGADeposit (dom (cd ˢ)) ≈⟨ ∪-cong ≡ᵉ.refl filter0 ⟩
     filterˢ isGADeposit (dom deps) ∪ ∅ ≈⟨ ∪-identityʳ $ filterˢ isGADeposit (dom deps) ⟩

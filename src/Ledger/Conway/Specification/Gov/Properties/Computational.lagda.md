@@ -6,8 +6,8 @@ source_path: src/Ledger/Conway/Specification/Gov/Properties/Computational.lagda.
 ```agda
 {-# OPTIONS --safe #-}
 
-open import Ledger.Conway.Specification.Gov.Base
-open import Ledger.Conway.Specification.Transaction using (TransactionStructure)
+open import Ledger.Core.Specification.Gov.Base
+open import Ledger.Core.Specification.Transaction using (TransactionStructure)
 
 module Ledger.Conway.Specification.Gov.Properties.Computational
   (txs : _) (open TransactionStructure txs using (govStructure))
@@ -19,7 +19,7 @@ open import Axiom.Set.Properties
 
 open import Ledger.Conway.Specification.Enact govStructure
 open import Ledger.Conway.Specification.Gov txs
-open import Ledger.Conway.Specification.Gov.Actions govStructure hiding (yes; no)
+open import Ledger.Core.Specification.Gov.Actions govStructure hiding (yes; no)
 open import Ledger.Conway.Specification.Ratify txs
 
 import Data.List.Membership.Propositional as P

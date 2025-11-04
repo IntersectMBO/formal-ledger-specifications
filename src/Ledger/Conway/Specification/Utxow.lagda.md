@@ -16,7 +16,7 @@ This section formalizes the mechanisms use by the Cardano ledger to support witn
 open import Ledger.Prelude
 open import Ledger.Core.Specification.Crypto
 open import Ledger.Conway.Specification.Abstract
-open import Ledger.Conway.Specification.Transaction
+open import Ledger.Core.Specification.Transaction using (TransactionStructure)
 
 module Ledger.Conway.Specification.Utxow
   (txs : _) (open TransactionStructure txs)
@@ -25,6 +25,7 @@ module Ledger.Conway.Specification.Utxow
 open import Ledger.Conway.Specification.Utxo txs abs
 open import Ledger.Conway.Specification.Script.Validation txs abs
 open import Ledger.Conway.Specification.Certs govStructure
+open import Ledger.Conway.Specification.Transaction txs
 ```
 -->
 
