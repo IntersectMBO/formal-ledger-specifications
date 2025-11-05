@@ -116,31 +116,6 @@ module LEDGER-PROPS (tx : Tx) (Γ : LEnv) (s : LState) where
 -- TODO: Move these proofs to agda-sets
 module _ {A V : Set} ⦃ mon : CommutativeMonoid 0ℓ 0ℓ V ⦄ ⦃ dA : DecEq A ⦄ {m m' : A ⇀ V} where
 
-  rhs-∪ˡ : A ⇀ V
-  rhs-∪ˡ = filterᵐ? (sp-∘ (sp-¬ (∈-sp {X = dom (m ˢ)})) proj₁) m'
-
-  dom∪ˡˡ : dom (m ˢ) ⊆ dom ((m ∪ˡ m') ˢ)
-  dom∪ˡˡ = begin
-    dom (m ˢ)                   ⊆⟨ ∪-⊆ˡ ⟩
-    dom (m ˢ) ∪ dom (rhs-∪ˡ ˢ)  ≈⟨ ≡ᵉA.sym dom∪ ⟩
-    dom ((m ˢ) ∪ (rhs-∪ˡ ˢ))    ≈⟨ ≡ᵉA.refl ⟩
-    dom ((m ∪ˡ m') ˢ)
-    ∎
-    where
-      open import Relation.Binary.Bundles using (Poset)
-      ⊆-Poset : Poset 0ℓ 0ℓ 0ℓ
-      ⊆-Poset = record
-        { Carrier = ℙ A
-        ; _≈_ = _≡ᵉ_
-        ; _≤_ = _⊆_
-        ; isPartialOrder = ⊆-PartialOrder
-        }
-      open import Relation.Binary.Reasoning.PartialOrder ⊆-Poset
-      open import Relation.Binary.Structures using (IsEquivalence)
-      module ≡ᵉA = IsEquivalence (≡ᵉ-isEquivalence {A = A})
-      open import Relation.Binary.Reasoning.Syntax
-      open ⊆-syntax _IsRelatedTo_ _IsRelatedTo_ ≤-go public
-
   _∎→ : ∀ (A : Type) → A → A
   A ∎→ = id
   infix 3 _∎→
@@ -151,6 +126,17 @@ module _ {A V : Set} ⦃ mon : CommutativeMonoid 0ℓ 0ℓ V ⦄ ⦃ dA : DecEq 
 
   begin→ : ∀ {A B : Type} → A → (A → B) → B
   begin→ a f = f a
+
+  rhs-∪ˡ : A ⇀ V
+  rhs-∪ˡ = filterᵐ? (sp-∘ (sp-¬ (∈-sp {X = dom (m ˢ)})) proj₁) m'
+
+  dom∪ˡˡ : dom (m ˢ) ⊆ dom ((m ∪ˡ m') ˢ)
+  dom∪ˡˡ {a} =
+    a ∈ dom (m ˢ)                   →⟨ ∪-⊆ˡ ⟩
+    a ∈ dom (m ˢ) ∪ dom (rhs-∪ˡ ˢ)  →⟨ proj₂ dom∪ ⟩
+    a ∈ dom ((m ˢ) ∪ (rhs-∪ˡ ˢ))    →⟨ id ⟩
+    a ∈ dom ((m ∪ˡ m') ˢ)
+    ∎→
 
   dom∪ˡʳ : dom (m' ˢ) ⊆ dom ((m ∪ˡ m') ˢ)
   dom∪ˡʳ {a} a∈ with a ∈? dom m
