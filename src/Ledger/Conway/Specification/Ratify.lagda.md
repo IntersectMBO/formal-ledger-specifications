@@ -321,6 +321,11 @@ module AcceptedByCC (currentEpoch : Epoch)
 ```
 -->
 ```agda
+  sizeActiveCC : ℕ
+  sizeActiveCC = case proj₁ cc of λ where
+    (just ((ccMembers , _) , _)) → lengthˢ (filterˢ (λ (_ , y) → currentEpoch ≤ y) ccMembers)
+    nothing → 0
+
   castVotes : Credential ⇀ Vote
   castVotes = gvCC
 
@@ -358,7 +363,7 @@ module AcceptedByCC (currentEpoch : Epoch)
   totalStake     = ∑[ x ← stakeDistr ∣ dom (actualVotes ∣^ (❴ Vote.yes ❵ ∪ ❴ Vote.no ❵)) ] x
 
   accepted = (acceptedStake /₀ totalStake) ≥ t
-    × (maybe (λ (m , _) → lengthˢ m) 0 (proj₁ cc) ≥ ccMinSize ⊎ (Is-nothing mT × ccMinSize ≡ 0))
+    × (sizeActiveCC ≥ ccMinSize ⊎ (Is-nothing mT × ccMinSize ≡ 0))
 ```
 
 ```agda
