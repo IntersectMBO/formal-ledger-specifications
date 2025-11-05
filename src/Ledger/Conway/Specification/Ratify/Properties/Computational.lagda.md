@@ -6,7 +6,7 @@ source_path: src/Ledger/Conway/Specification/Ratify/Properties/Computational.lag
 ```agda
 {-# OPTIONS --safe #-}
 
-open import Ledger.Conway.Specification.Transaction
+open import Ledger.Core.Specification.Transaction using (TransactionStructure)
 
 module Ledger.Conway.Specification.Ratify.Properties.Computational
   (txs : _) (open TransactionStructure txs) where

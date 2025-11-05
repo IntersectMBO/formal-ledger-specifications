@@ -107,7 +107,7 @@ instance
 open TransactionStructure HSTransactionStructure public
 open import Ledger.Conway.Specification.Certs govStructure public
 
-open import Ledger.Conway.Specification.Abstract it
+open import Ledger.Core.Specification.Abstract it
 
 instance
   HSAbstractFunctions : AbstractFunctions

@@ -1,34 +1,32 @@
 {-# OPTIONS --safe #-}
 
-open import Ledger.Conway.Specification.Abstract
-open import Ledger.Conway.Specification.Transaction
+open import Ledger.Core.Specification.Abstract
+open import Ledger.Core.Specification.Transaction
 
 module Ledger.Conway.Conformance.Epoch
-  (txs : _) (open TransactionStructure txs)
-  (abs : AbstractFunctions txs) (open AbstractFunctions abs)
+  (txs : TransactionStructure) (open TransactionStructure txs)
+  (abs : AbstractFunctions txs)
   where
 
-open import Ledger.Prelude
+open import Agda.Builtin.FromNat
 open import Data.Integer using () renaming (+_ to pos)
-import Data.Integer as ℤ
-
-open import Data.Nat.Properties using (+-0-monoid; +-0-commutativeMonoid)
 open import Data.List using (filter)
 
-open import Agda.Builtin.FromNat
+open import Ledger.Prelude
 
-open import Ledger.Conway.Specification.Enact govStructure
+open import Ledger.Conway.Conformance.Certs govStructure
 open import Ledger.Conway.Conformance.Equivalence txs abs
 open import Ledger.Conway.Conformance.Equivalence.Convert
 open import Ledger.Conway.Conformance.Equivalence.Deposits txs abs
 open import Ledger.Conway.Conformance.Ledger txs abs
-open import Ledger.Conway.Specification.Ratify txs
-open import Ledger.Conway.Conformance.Utxo txs abs
-open import Ledger.Conway.Conformance.Certs govStructure
 open import Ledger.Conway.Conformance.Rewards txs abs
+open import Ledger.Conway.Conformance.Utxo txs abs
+
+open import Ledger.Conway.Specification.Enact govStructure
 open import Ledger.Conway.Specification.Epoch txs abs
   using (getStakeCred; getOrphans; mkStakeDistrs; toRewardAddress) public
 import Ledger.Conway.Specification.Epoch txs abs as EpochSpec
+open import Ledger.Conway.Specification.Ratify txs
 
 record EpochState : Type where
   constructor ⟦_,_,_,_,_⟧ᵉ'

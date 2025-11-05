@@ -12,13 +12,13 @@ properties of the ledger transition system.
 ```agda
 {-# OPTIONS --safe #-}
 
-open import Ledger.Conway.Specification.Abstract
 open import Ledger.Core.Specification.Transaction
 import Ledger.Conway.Specification.Certs
 
 module Ledger.Conway.Specification.Ledger.Properties.Base
-  (txs : _) (open TransactionStructure txs) (open Ledger.Conway.Specification.Certs govStructure)
-  (abs : AbstractFunctions txs) (open AbstractFunctions abs)
+  (txs : TransactionStructure) (open TransactionStructure txs)
+  (open Ledger.Conway.Specification.Certs govStructure)
+  (abs : AbstractFunctions txs)
   where
 
 open import Ledger.Prelude
@@ -26,6 +26,7 @@ open import Ledger.Conway.Specification.Gov txs
 open import Ledger.Conway.Specification.Ledger txs abs
 open import Ledger.Conway.Specification.Utxo txs abs
 open import Ledger.Conway.Specification.Utxow txs abs
+open import Ledger.Conway.Specification.Transaction txs abs
 
 open import Data.List.Properties using (++-identityʳ; map-++)
 

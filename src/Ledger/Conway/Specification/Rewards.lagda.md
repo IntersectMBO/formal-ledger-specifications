@@ -12,25 +12,25 @@ are calculated and paid out. This calculation has two main aspects.
 
 <!--
 ```agda
-
 {-# OPTIONS --safe #-}
+
+open import Ledger.Core.Specification.Abstract
+open import Ledger.Core.Specification.Transaction
+
+module Ledger.Conway.Specification.Rewards
+  (txs : TransactionStructure) (open TransactionStructure txs)
+  (abs : AbstractFunctions txs)
+  where
 
 open import Data.Integer using () renaming (+_ to pos)
 open import Data.Rational using (ℚ; floor; _*_; _÷_; _/_; _-_; >-nonZero; _⊓_)
                           renaming (_⊔_ to _⊔ℚ_; NonZero to NonZeroℚ)
 open import Data.Rational.Literals using (number; fromℤ)
 open import Data.Rational.Properties using (pos⇒nonZero; positive⁻¹; +-mono-<-≤; normalize-pos; p≤p⊔q)
-open import Ledger.Conway.Specification.Abstract
-open import Ledger.Core.Specification.Transaction using (TransactionStructure)
 open import Ledger.Prelude.Numeric.UnitInterval
 
 open import Agda.Builtin.FromNat
 open        Number number renaming (fromNat to fromℕ)
-
-module Ledger.Conway.Specification.Rewards
-  (txs : _) (open TransactionStructure txs)
-  (abs : AbstractFunctions txs)
-  where
 
 open import Ledger.Conway.Specification.Certs govStructure
 open import Ledger.Conway.Specification.Ledger txs abs

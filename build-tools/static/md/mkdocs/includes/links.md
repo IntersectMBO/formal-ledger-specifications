@@ -28,6 +28,7 @@
 [Chain.Properties.GovDepsMatch]: Ledger.Conway.Specification.Chain.Properties.GovDepsMatch.md
 [CIPs]: https://github.com/cardano-foundation/CIPs
 [DELEG]: Ledger.Conway.Specification.Certs.md#auxiliary-deleg-transition-system
+[Deposit Types]: Ledger.Core.Specification.Certs.md#deposit-types
 [ENACT]: Ledger.Conway.Specification.Enact.md#sec:the-enact-transition-system
 [EPOCH]: Ledger.Conway.Specification.Epoch.md#sec:the-epoch-transition-system
 [Epoch]: Ledger.Conway.Specification.Epoch.md
@@ -42,7 +43,7 @@
 [formal ledger specification]: https://github.com/IntersectMBO/formal-ledger-specifications
 [Functions used in UTxO rules]: Ledger.Conway.Specification.Utxo.md#functions-used-in-utxo-rules
 [Governance Functions]: Ledger.Conway.Specification.Gov.md#governance-functions
-[Governance Actions]: Ledger.Conway.Specification.Gov.Actions.md#sec:governance-actions
+[Governance Actions]: Ledger.Core.Specification.Gov.Actions.md#sec:governance-actions
 [GOV]: Ledger.Conway.Specification.Gov.md#the-gov-transition-system
 [Gov.Properties.ChangePPGroup]: Ledger.Conway.Specification.Gov.Properties.ChangePPGroup.md
 [GOVCERT]: Ledger.Conway.Specification.Certs.md#auxiliary-govcert-transition-system

@@ -7,6 +7,7 @@ open import Ledger.Prelude.Numeric.PositiveNat
 open import Ledger.Conway.Foreign.ExternalFunctions
 open import Ledger.Conway.Foreign.HSLedger.Core public
 import Ledger.Prelude.Foreign.HSTypes as F
+open import Ledger.Conway.Specification.Transaction
 
 instance
   iConvTop    = Convertible-Refl {⊤}

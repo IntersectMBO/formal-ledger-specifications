@@ -1,21 +1,16 @@
 {-# OPTIONS --safe #-}
 
-open import Ledger.Prelude
-open import Ledger.Conway.Specification.Abstract
-open import Ledger.Conway.Specification.Transaction using (TransactionStructure)
-
-open import Data.Unit using (⊤)
-open import Data.Product using (_×_; _,_)
-open import Data.Product.Relation.Binary.Pointwise.NonDependent using (Pointwise)
-open import Relation.Binary.PropositionalEquality
-import Relation.Binary.Reasoning.Setoid as SetoidReasoning
-open import Relation.Binary using (Setoid; IsEquivalence)
-import Algebra.Structures as AlgStruct
+open import Ledger.Core.Specification.Abstract
+open import Ledger.Core.Specification.Transaction
 
 module Ledger.Conway.Conformance.Equivalence.Deposits
-  (txs : _) (open TransactionStructure txs)
-  (abs : AbstractFunctions txs) (open AbstractFunctions abs)
+  (txs : TransactionStructure) (open TransactionStructure txs)
+  (abs : AbstractFunctions txs)
   where
+
+open import Data.Product.Relation.Binary.Pointwise.NonDependent using (Pointwise)
+open import Relation.Binary using (Setoid; IsEquivalence)
+open import Ledger.Prelude
 
 private
   module L where
@@ -28,10 +23,12 @@ private
     open import Ledger.Conway.Conformance.Utxo txs abs public
     open import Ledger.Conway.Conformance.Certs govStructure public
 
-open Tx
 open import Ledger.Conway.Conformance.Equivalence.Map
 open import Ledger.Conway.Conformance.Equivalence.Certs txs abs
 open import Axiom.Set.Properties th using (≡ᵉ-Setoid; ≡ᵉ-isEquivalence)
+
+import Relation.Binary.Reasoning.Setoid as SetoidReasoning
+import Algebra.Structures as AlgStruct
 
 -- TODO: some hoop-jumping required since the Map proofs needs the
 -- stdlib IsCommutativeSemigroup for Coin.
@@ -40,6 +37,8 @@ open import Data.Nat.Properties using (+-isCommutativeSemigroup)
 instance
   Coin-Semigroup : IsCommutativeSemigroup _+_
   Coin-Semigroup = +-isCommutativeSemigroup
+
+open Tx
 
 -- TODO: The proofs in this module are kind of a mess! They've grown organically based on
 --       the specific needs of the equivalence proof and could really use some cleaning up.
@@ -292,17 +291,19 @@ lem-upd-cert-ddeps {pp} deps (L.reg c v ∷ certs) =
   lem-upd-cert-ddeps (deps ∪⁺ dep) certs
   where dep = ❴ L.CredentialDeposit c , pp .PParams.keyDeposit ❵
 lem-upd-cert-ddeps {pp} deps (L.regpool kh p ∷ certs) =
-  ≈-sym
-    (cong-updateDDeps
-      certs
-      (subst
-        (λ spQ → filterᵐ? spQ (deps ∪ˡ dep) ≡ᵐ filterᵐ? spQ deps)
-        ≡-sp-∘
-        (add-excluded-∪ˡ-l _ deps λ ())
-      )
-    )
-    ⟨≈⟩
-  lem-upd-cert-ddeps (deps ∪ˡ dep) certs
+--  ≈-sym
+--    (cong-updateDDeps
+--      certs
+--      (subst
+--        (λ spQ → filterᵐ? spQ (deps ∪ˡ dep) ≡ᵐ filterᵐ? spQ deps)
+--        ≡-sp-∘
+--        (add-excluded-∪ˡ-l _ deps λ ())
+--      )
+--    )
+--    ⟨≈⟩
+--  lem-upd-cert-ddeps (deps ∪ˡ dep) certs
+  ≈-sym (cong-updateDDeps certs (lem-add-excluded λ ())) ⟨≈⟩
+  lem-upd-cert-ddeps (deps ∪⁺ dep) certs
   where dep = ❴ L.PoolDeposit kh , pp .PParams.poolDeposit ❵
 lem-upd-cert-ddeps {pp} deps (L.regdrep c v a ∷ certs) =
   ≈-sym (cong-updateDDeps certs (lem-add-excluded λ ())) ⟨≈⟩
@@ -331,17 +332,19 @@ lem-upd-cert-gdeps {pp} deps (L.reg c v ∷ certs) =
   lem-upd-cert-gdeps (deps ∪⁺ dep) certs
   where dep = ❴ L.CredentialDeposit c , pp .PParams.keyDeposit ❵
 lem-upd-cert-gdeps {pp} deps (L.regpool kh p ∷ certs) =
-  ≈-sym
-    (cong-updateGDeps
-      certs
-      (subst
-        (λ spQ → filterᵐ? spQ (deps ∪ˡ dep) ≡ᵐ filterᵐ? spQ deps)
-        ≡-sp-∘
-        (add-excluded-∪ˡ-l _ deps λ ())
-      )
-    )
-    ⟨≈⟩
-  lem-upd-cert-gdeps (deps ∪ˡ dep) certs
+--  ≈-sym
+--    (cong-updateGDeps
+--      certs
+--      (subst
+--        (λ spQ → filterᵐ? spQ (deps ∪ˡ dep) ≡ᵐ filterᵐ? spQ deps)
+--        ≡-sp-∘
+--        (add-excluded-∪ˡ-l _ deps λ ())
+--      )
+--    )
+--    ⟨≈⟩
+--  lem-upd-cert-gdeps (deps ∪ˡ dep) certs
+  ≈-sym (cong-updateGDeps certs (lem-add-excluded λ ())) ⟨≈⟩
+  lem-upd-cert-gdeps (deps ∪⁺ dep) certs
   where dep = ❴ L.PoolDeposit kh , pp .PParams.poolDeposit ❵
 lem-upd-cert-gdeps {pp} deps (L.regdrep c v a ∷ certs) =
   ≈-sym (cong-updateGDeps certs (lem-add-included DRepDeposit)) ⟨≈⟩

@@ -7,6 +7,8 @@ open import Ledger.Conway.Foreign.HSLedger.Gov.Core
 open import Ledger.Conway.Foreign.HSLedger.Gov
 open import Ledger.Conway.Foreign.HSLedger.PParams
 
+open import Ledger.Conway.Specification.Transaction DummyTransactionStructure DummyAbstractFunctions public
+
 instance
   HsTy-Tag = autoHsType Tag
   Conv-Tag = autoConvert Tag

@@ -1,13 +1,14 @@
 {-# OPTIONS --safe #-}
 
-open import Ledger.Prelude
+open import Ledger.Core.Specification.Abstract
 open import Ledger.Core.Specification.Transaction
-open import Ledger.Conway.Specification.Abstract
 
 module Ledger.Conway.Conformance.Chain.Properties
-  (txs : _) (open TransactionStructure txs)
-  (abs : AbstractFunctions txs) (open AbstractFunctions abs)
+  (txs : TransactionStructure) (open TransactionStructure txs)
+  (abs : AbstractFunctions txs)
   where
+
+open import Ledger.Prelude
 
 open import Ledger.Conway.Conformance.Chain txs abs
 open import Ledger.Conway.Conformance.Epoch txs abs

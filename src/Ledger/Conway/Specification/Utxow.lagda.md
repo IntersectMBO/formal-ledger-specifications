@@ -13,19 +13,22 @@ This section formalizes the mechanisms use by the Cardano ledger to support witn
 ```agda
 {-# OPTIONS --safe #-}
 
-open import Ledger.Prelude
-open import Ledger.Core.Specification.Crypto
-open import Ledger.Conway.Specification.Abstract
-open import Ledger.Core.Specification.Transaction using (TransactionStructure)
+open import Ledger.Core.Specification.Abstract
+open import Ledger.Core.Specification.Transaction
 
 module Ledger.Conway.Specification.Utxow
-  (txs : _) (open TransactionStructure txs)
-  (abs : AbstractFunctions txs) (open AbstractFunctions abs)
+  (txs : TransactionStructure) (open TransactionStructure txs)
+  (abs : AbstractFunctions txs)
   where
-open import Ledger.Conway.Specification.Utxo txs abs
-open import Ledger.Conway.Specification.Script.Validation txs abs
+
+open import Ledger.Prelude
+
 open import Ledger.Conway.Specification.Certs govStructure
-open import Ledger.Conway.Specification.Transaction txs
+open import Ledger.Conway.Specification.Script.Validation txs abs
+open import Ledger.Conway.Specification.Transaction txs abs
+open import Ledger.Conway.Specification.Utxo txs abs
+
+open import Ledger.Core.Specification.Crypto
 ```
 -->
 

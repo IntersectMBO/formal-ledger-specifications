@@ -11,17 +11,20 @@ source_path: src/Ledger/Conway/Specification/Script/Validation.lagda.md
 ```agda
 {-# OPTIONS --safe #-}
 
+open import Ledger.Core.Specification.Abstract
 open import Ledger.Core.Specification.Transaction
-open import Ledger.Conway.Specification.Abstract
 
 module Ledger.Conway.Specification.Script.Validation
-  (txs : _) (open TransactionStructure txs)
-  (abs : AbstractFunctions txs) (open AbstractFunctions abs) (open indexOf indexOfImp)
+  (txs : TransactionStructure) (open TransactionStructure txs)
+  (abs : AbstractFunctions txs)
   where
 
 open import Ledger.Prelude
-open import Ledger.Conway.Specification.Transaction txs
 open import Ledger.Conway.Specification.Certs govStructure
+open import Ledger.Conway.Specification.Transaction txs abs
+
+open AbstractFunctions abs
+open indexOf indexOfImp
 
 
 open import Ledger.Conway.Specification.Abstract txs
@@ -123,3 +126,4 @@ opaque
 evalP2Scripts : List (P2Script × List Data × ExUnits × CostModel) → Bool
 evalP2Scripts = all (λ (s , d , eu , cm) → runPLCScript cm s eu d)
 ```
+-->

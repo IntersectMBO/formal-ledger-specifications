@@ -1,25 +1,24 @@
 {-# OPTIONS --safe #-}
 
-open import Ledger.Conway.Specification.Abstract
-open import Ledger.Prelude
-open import Ledger.Conway.Specification.Transaction using (TransactionStructure)
+open import Ledger.Core.Specification.Abstract
+open import Ledger.Core.Specification.Transaction
 
 module Ledger.Conway.Conformance.Gov
-  (txs : _) (open TransactionStructure txs hiding (epoch))
-  (abs : AbstractFunctions txs) (open AbstractFunctions abs)
+  (txs : TransactionStructure) (open TransactionStructure txs hiding (epoch))
+  (abs : AbstractFunctions txs)
   where
 
-open import Axiom.Set.Properties th using (∃-sublist-⇔)
-
-open import Ledger.Conway.Specification.Enact govStructure
-open import Ledger.Conway.Specification.Ledger txs abs
+open import Ledger.Prelude
 
 open import Ledger.Conway.Conformance.Certs govStructure
 open import Ledger.Conway.Conformance.Equivalence.Certs txs abs
 open import Ledger.Conway.Conformance.Equivalence.Convert
 
+open import Ledger.Conway.Specification.Enact govStructure
 open import Ledger.Conway.Specification.Gov txs using (GovState) public
 import Ledger.Conway.Specification.Gov txs as L
+open import Ledger.Conway.Specification.Ledger txs abs
+
 
 record GovEnv : Type where
   field

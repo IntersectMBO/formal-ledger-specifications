@@ -21,26 +21,27 @@ design. (See also [Corduan22](#adr3).)
 ```agda
 {-# OPTIONS --safe #-}
 
-open import Algebra              using (CommutativeMonoid)
-open import Data.Nat.Properties  using (+-0-monoid)
-import Data.Maybe as M
-import Data.Sum.Relation.Unary.All as Sum
-import Data.Integer as ℤ
-import Data.Rational as ℚ
-
-open import Ledger.Prelude
-open import Ledger.Conway.Specification.Abstract
-open import Ledger.Core.Specification.Transaction using (TransactionStructure)
+open import Ledger.Core.Specification.Abstract
+open import Ledger.Core.Specification.Transaction
 
 module Ledger.Conway.Specification.Utxo
-  (txs : _) (open TransactionStructure txs)
+  (txs : TransactionStructure) (open TransactionStructure txs)
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
 
-open import Ledger.Conway.Specification.Script.Validation txs abs
-open import Ledger.Conway.Specification.Fees txs using (scriptsCost)
+open import Algebra              using (CommutativeMonoid)
+open import Data.Nat.Properties  using (+-0-monoid)
+import Data.Integer as ℤ
+import Data.Maybe as M
+import Data.Rational as ℚ
+import Data.Sum.Relation.Unary.All as Sum
+
+open import Ledger.Prelude
+
 open import Ledger.Conway.Specification.Certs govStructure
-open import Ledger.Conway.Specification.Transaction txs
+open import Ledger.Conway.Specification.Fees txs using (scriptsCost)
+open import Ledger.Conway.Specification.Script.Validation txs abs
+open import Ledger.Conway.Specification.Transaction txs abs
 
 instance
   _ = +-0-monoid
@@ -76,10 +77,8 @@ open PParams
 As its name indicates, `DepositPurpose`{.AgdaDatatype} specifies the purpose of a
 deposit.  Deposits are stored in the `deposits`{.AgdaField} field of the
 `UTxOState`{.AgdaRecord} type defined in this section.
-(The `DepositPurpose`{.AgdaDatatype} and
-`Deposits`{.AgdaDatatype} types are defined in the [Deposit
-Types](Ledger.Conway.Specification.Certs.md#deposit-types) section of the
-`Certs`{.AgdaModule} module.)
+(The `DepositPurpose`{.AgdaDatatype} and `Deposits`{.AgdaDatatype} types are defined
+in the [Deposit Types][] section of the `Certs`{.AgdaModule} module.)
 
 
 *UTxO environment*

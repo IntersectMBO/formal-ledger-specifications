@@ -6,8 +6,7 @@ This section defines the function used to compute the fees associated with refer
 ```agda
 {-# OPTIONS --safe #-}
 
-open import Ledger.Prelude hiding (_%_; _*_; ≤-trans; ∣_∣)
-open import Ledger.Conway.Specification.Abstract
+open import Ledger.Core.Specification.Abstract
 open import Ledger.Core.Specification.Transaction
 
 module Ledger.Conway.Specification.Fees
@@ -24,6 +23,8 @@ open import Induction.WellFounded using (Acc; acc)
 open import Agda.Builtin.FromNat using (Number)
 
 open Number number renaming (fromNat to fromℕ)
+
+open import Ledger.Prelude hiding (_%_; _*_; ≤-trans; ∣_∣)
 ```
 -->
 

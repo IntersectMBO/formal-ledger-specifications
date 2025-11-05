@@ -2,7 +2,7 @@
 source_branch: master
 source_path: src/Test/Examples/SucceedIfNumber.lagda.md
 ---
-
+<!--
 ```agda
 {-# OPTIONS --safe #-}
 module Test.Examples.SucceedIfNumber where
@@ -20,15 +20,13 @@ valContext x x₁ = 0
 
 open import Test.AbstractImplementation valContext
 open import Test.Lib valContext
-open import Ledger.Conway.Specification.Script.Validation SVTransactionStructure SVAbstractFunctions
-
-open import Ledger.Conway.Specification.Utxo SVTransactionStructure SVAbstractFunctions
-open import Ledger.Conway.Specification.Utxo.Properties.Computational SVTransactionStructure SVAbstractFunctions
 
 open TransactionStructure SVTransactionStructure
+-- open EpochStructure SVEpochStructure
 open Implementation
 ```
 -->
+
 ```agda
 -- succeed if the datum is 1
 succeedIf1Datum' : Maybe ℕ → Maybe ℕ → Bool
@@ -152,6 +150,7 @@ evalScriptRedeemer = evalP2Scripts (collectP2ScriptsWithContext (UTxOEnv.pparams
 exampleDatum' : Maybe Datum
 exampleDatum' = getDatum failTx initStateRedeemer (Spend (6 , 6))
 ```
+
 <!--
 ```agda
 opaque

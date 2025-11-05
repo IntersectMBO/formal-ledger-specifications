@@ -4,7 +4,7 @@
 ```agda
 {-# OPTIONS --safe #-}
 
-open import Ledger.Conway.Specification.Abstract
+open import Ledger.Core.Specification.Abstract
 open import Ledger.Core.Specification.Transaction
 
 module Ledger.Conway.Specification.PoolReap

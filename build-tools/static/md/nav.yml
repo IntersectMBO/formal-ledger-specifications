@@ -5,13 +5,26 @@
 - Core:
   - Introduction: Ledger.Core.Specification.md
   - Modules/:
+    - Abstract: Ledger.Core.Specification.Abstract.md
     - Address: Ledger.Core.Specification.Address.md
+    - Certs: Ledger.Core.Specification.Certs.md
     - Crypto: Ledger.Core.Specification.Crypto.md
     - Epoch: Ledger.Core.Specification.Epoch.md
+    - Gov/:
+      - Actions: Ledger.Core.Specification.Gov.Actions.md
+      - Base: Ledger.Core.Specification.Gov.Base.md
+    - Script/:
+      - Base: Ledger.Core.Specification.Script.Base.md
+      - Timelock: Ledger.Core.Specification.Script.Timelock.md
+    - TokenAlgebra/:
+      - Base: Ledger.Core.Specification.TokenAlgebra.Base.md
+      - Coin: Ledger.Core.Specification.TokenAlgebra.Coin.md
+      - ValueSet: Ledger.Core.Specification.TokenAlgebra.ValueSet.md
+      - ValueVector: Ledger.Core.Specification.TokenAlgebra.ValueVector.md
+    - Transaction: Ledger.Core.Specification.Transaction.md
 - Conway:
   - Introduction: Ledger.Conway.Specification.md
   - Modules/:
-    - Abstract: Ledger.Conway.Specification.Abstract.md
     - BlockBody: Ledger.Conway.Specification.BlockBody.md
     - BlockBody/:
       - Properties: Ledger.Conway.Specification.BlockBody.Properties.md
@@ -51,8 +64,6 @@
     - Fees: Ledger.Conway.Specification.Fees.md
     - Gov: Ledger.Conway.Specification.Gov.md
     - Gov/:
-      - Base: Ledger.Conway.Specification.Gov.Base.md
-      - Actions: Ledger.Conway.Specification.Gov.Actions.md
       - Properties: Ledger.Conway.Specification.Gov.Properties.md
       - Properties/:
         - Computational: Ledger.Conway.Specification.Gov.Properties.Computational.md
@@ -87,15 +98,8 @@
         - Computational: Ledger.Conway.Specification.RewardUpdate.Properties.Computational.md
     - Script: Ledger.Conway.Specification.Script.md
     - Script/:
-      - Base: Ledger.Conway.Specification.Script.Base.md
       - ScriptPurpose: Ledger.Conway.Specification.Script.ScriptPurpose.md
-      - Timelock: Ledger.Conway.Specification.Script.Timelock.md
       - Validation: Ledger.Conway.Specification.Script.Validation.md
-    - TokenAlgebra/:
-      - Base: Ledger.Conway.Specification.TokenAlgebra.Base.md
-      - Coin: Ledger.Conway.Specification.TokenAlgebra.Coin.md
-      - ValueSet: Ledger.Conway.Specification.TokenAlgebra.ValueSet.md
-      - ValueVector: Ledger.Conway.Specification.TokenAlgebra.ValueVector.md
     - Transaction: Ledger.Conway.Specification.Transaction.md
     - Utxo: Ledger.Conway.Specification.Utxo.md
     - Utxo/:

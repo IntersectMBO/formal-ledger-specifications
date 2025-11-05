@@ -7,22 +7,23 @@ source_path: src/Ledger/Conway/Specification/Ledger/Properties/GovDepsMatch.lagd
 
 <!--
 ```agda
-
 {-# OPTIONS --safe #-}
 
+open import Ledger.Core.Specification.Abstract
 open import Ledger.Core.Specification.Transaction
-open import Ledger.Conway.Specification.Abstract
 
 module Ledger.Conway.Specification.Ledger.Properties.GovDepsMatch
-  (txs : _) (open TransactionStructure txs)
-  (abs : AbstractFunctions txs) (open AbstractFunctions abs)
+  (txs : TransactionStructure) (open TransactionStructure txs)
+  (abs : AbstractFunctions txs)
   where
+
+open import Ledger.Prelude
 
 open import Ledger.Conway.Specification.Certs govStructure using (DepositPurpose)
 open import Ledger.Conway.Specification.Ledger txs abs
 open import Ledger.Conway.Specification.Ledger.Properties.Base txs abs
 open import Ledger.Conway.Specification.Ledger.Properties.Computational txs abs
-open import Ledger.Prelude
+open import Ledger.Conway.Specification.Transaction txs abs
 open import Ledger.Conway.Specification.Utxo txs abs
 
 open import Axiom.Set.Properties th

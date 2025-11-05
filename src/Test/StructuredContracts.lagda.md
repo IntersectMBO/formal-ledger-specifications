@@ -1,6 +1,6 @@
 ---
 source_branch: master
-source_path: src/Ledger/Conway/Specification/Test/StructuredContracts.lagda.md
+source_path: src/Test/StructuredContracts.lagda.md
 ---
 
 # Structured Contracts
@@ -9,25 +9,27 @@ source_path: src/Ledger/Conway/Specification/Test/StructuredContracts.lagda.md
 ```agda
 {-# OPTIONS --safe #-}
 
-open import Algebra
-open import Data.Nat.Properties using (+-0-monoid)
-
-open import Ledger.Prelude; open Equivalence
-open import Ledger.Conway.Specification.Transaction
-open import Ledger.Conway.Specification.Abstract
-open import Ledger.Core.Specification.TokenAlgebra.Base
-open import Ledger.Core.Specification.TokenAlgebra.ValueSet
+open import Ledger.Core.Specification.Abstract
+open import Ledger.Core.Specification.Transaction
 
 
 module Test.StructuredContracts
-  (txs : _) (open TransactionStructure txs)
-  (abs : AbstractFunctions txs) (open AbstractFunctions abs)
+  (txs : TransactionStructure) (open TransactionStructure txs)
+  (abs : AbstractFunctions txs)
   where
+
+open import Ledger.Prelude
 
 open import Ledger.Conway.Specification.Ledger txs abs
 open import Ledger.Conway.Specification.Script.ScriptPurpose txs
 open import Ledger.Conway.Specification.Script.Validation txs abs
 open import Ledger.Conway.Specification.Utxo txs abs
+open import Ledger.Conway.Specification.Transaction txs abs
+
+open import Ledger.Core.Specification.TokenAlgebra.Base
+open import Ledger.Core.Specification.TokenAlgebra.ValueSet
+
+open Equivalence
 ```
 -->
 

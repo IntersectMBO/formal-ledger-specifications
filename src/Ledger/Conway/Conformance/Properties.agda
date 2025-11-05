@@ -1,21 +1,25 @@
 {-# OPTIONS --safe #-}
 
-open import Ledger.Prelude
-open import Ledger.Conway.Specification.Abstract
+open import Ledger.Core.Specification.Abstract
 open import Ledger.Core.Specification.Transaction
 
 module Ledger.Conway.Conformance.Properties
-  (txs : _) (open TransactionStructure txs)
-  (abs : AbstractFunctions txs) (open AbstractFunctions abs)
+  (txs : TransactionStructure) (open TransactionStructure txs)
+  (abs : AbstractFunctions txs)
   where
 
+open import Ledger.Prelude
+
+open import Ledger.Conway.Conformance.Certs govStructure
 open import Ledger.Conway.Conformance.Chain txs abs
-open import Ledger.Conway.Conformance.Utxo txs abs
 open import Ledger.Conway.Conformance.Epoch txs abs
 open import Ledger.Conway.Conformance.Ledger txs abs
+open import Ledger.Conway.Conformance.Utxo txs abs
+
 open import Ledger.Conway.Specification.Enact govStructure
 open import Ledger.Conway.Specification.Gov txs
-open import Ledger.Conway.Conformance.Certs govStructure
+open import Ledger.Conway.Specification.Transaction txs abs
+
 
 isCredDeposit : DepositPurpose → Type
 isCredDeposit (CredentialDeposit x) = ⊤
