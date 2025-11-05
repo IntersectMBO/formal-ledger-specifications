@@ -115,76 +115,47 @@ module LEDGER-PROPS (tx : Tx) (Γ : LEnv) (s : LState) where
 
 -- TODO: Move these proofs to agda-sets
 module _ {A V : Set} ⦃ mon : CommutativeMonoid 0ℓ 0ℓ V ⦄ ⦃ dA : DecEq A ⦄ {m m' : A ⇀ V} where
-
-  _∎→ : ∀ (A : Type) → A → A
-  A ∎→ = id
-  infix 3 _∎→
-
-  _→⟨_⟩_ : ∀ (x : Type) {y z : Type} → (x → y) → (y → z) → x → z
-  _ →⟨ f ⟩ g = g ∘ f
-  infixr 2 _→⟨_⟩_
-
-  begin→ : ∀ {A B : Type} → A → (A → B) → B
-  begin→ a f = f a
+  open import Function.Reasoning
 
   rhs-∪ˡ : A ⇀ V
   rhs-∪ˡ = filterᵐ? (sp-∘ (sp-¬ (∈-sp {X = dom (m ˢ)})) proj₁) m'
 
   dom∪ˡˡ : dom (m ˢ) ⊆ dom ((m ∪ˡ m') ˢ)
-  dom∪ˡˡ {a} =
-    a ∈ dom (m ˢ)                   →⟨ ∪-⊆ˡ ⟩
-    a ∈ dom (m ˢ) ∪ dom (rhs-∪ˡ ˢ)  →⟨ proj₂ dom∪ ⟩
-    a ∈ dom ((m ˢ) ∪ (rhs-∪ˡ ˢ))    →⟨ id ⟩
-    a ∈ dom ((m ∪ˡ m') ˢ)
-    ∎→
+  dom∪ˡˡ {a} a∈ = a∈ ∶
+      a ∈ dom (m ˢ)                   |> ∪-⊆ˡ ∶
+      a ∈ dom (m ˢ) ∪ dom (rhs-∪ˡ ˢ)  |> proj₂ dom∪ ∶
+      a ∈ dom ((m ˢ) ∪ (rhs-∪ˡ ˢ))    |> id ∶
+      a ∈ dom ((m ∪ˡ m') ˢ)
 
   dom∪ˡʳ : dom (m' ˢ) ⊆ dom ((m ∪ˡ m') ˢ)
   dom∪ˡʳ {a} a∈ with a ∈? dom m
   ... | yes p = dom∪ˡˡ p
-  ... | no ¬p =
-      begin→ a∈ $
-      a ∈ dom m'
-        →⟨ from ∈-map ⟩
-      (∃[ ab ] a ≡ proj₁ ab × ab ∈ (m' ˢ))
-        →⟨ (λ { (ab , refl , ab∈m') →
-             begin→ (¬p , ab∈m') $
-             (a ∉ dom m × ab ∈ m')
-               →⟨ to ∈-filter ⟩
-             ab ∈ rhs-∪ˡ
-               →⟨ (λ ab∈f → to ∈-map (ab , refl , ab∈f)) ⟩
+  ... | no ¬p = a∈ ∶
+      a ∈ dom m'                            |> from ∈-map ∶
+      (∃[ ab ] a ≡ proj₁ ab × ab ∈ (m' ˢ))  |>
+         (λ { (ab , refl , ab∈m') → (¬p , ab∈m') ∶
+             (a ∉ dom m × ab ∈ m')  |> to ∈-filter ∶
+             ab ∈ rhs-∪ˡ            |> (λ ab∈f → to ∈-map (ab , refl , ab∈f)) ∶
              a ∈ dom rhs-∪ˡ
-             ∎→
-         }) ⟩
-      a ∈ dom rhs-∪ˡ
-        →⟨ ∈-∪⁺ ∘ inj₂ ⟩
-      a ∈ dom m ∪ dom rhs-∪ˡ
-        →⟨ proj₂ dom∪ ⟩
-      a ∈ dom ((m ˢ) ∪ (rhs-∪ˡ ˢ))
-        →⟨ id ⟩
+         }) ∶
+      a ∈ dom rhs-∪ˡ                |> ∈-∪⁺ ∘ inj₂ ∶
+      a ∈ dom m ∪ dom rhs-∪ˡ        |> proj₂ dom∪ ∶
+      a ∈ dom ((m ˢ) ∪ (rhs-∪ˡ ˢ))  |> id ∶
       a ∈ dom ((m ∪ˡ m') ˢ)
-      ∎→
 
   dom∪ˡ⊆∪dom : dom ((m ∪ˡ m') ˢ) ⊆ dom (m ˢ) ∪ dom (m' ˢ)
   dom∪ˡ⊆∪dom {a} a∈dom∪ with ∈-∪⁻ (proj₁ dom∪ a∈dom∪)
   ... | inj₁ a∈domm = ∈-∪⁺ (inj₁ a∈domm)
-  ... | inj₂ a∈domf =
-      begin→ a∈domf $
-      a ∈ dom rhs-∪ˡ
-        →⟨ from ∈-map ⟩
-      (∃[ ab ] a ≡ proj₁ ab × ab ∈ rhs-∪ˡ)
-        →⟨ (λ { (ab , refl , ab∈fm') →
-             begin→ ab∈fm' $
-             ab ∈ rhs-∪ˡ
-               →⟨ proj₂ ∘ from ∈-filter ⟩
-             ab ∈ m'
-               →⟨ (λ ab∈m' → to ∈-map (ab , refl , ab∈m')) ⟩
+  ... | inj₂ a∈domf = a∈domf ∶
+      a ∈ dom rhs-∪ˡ                        |> from ∈-map ∶
+      (∃[ ab ] a ≡ proj₁ ab × ab ∈ rhs-∪ˡ)  |>
+         (λ { (ab , refl , ab∈fm') → ab∈fm' ∶
+             ab ∈ rhs-∪ˡ                    |> proj₂ ∘ from ∈-filter ∶
+             ab ∈ m'                        |> (λ ab∈m' → to ∈-map (ab , refl , ab∈m')) ∶
              a ∈ dom m'
-             ∎→
-         }) ⟩
-      a ∈ dom m'
-        →⟨ ∈-∪⁺ ∘ inj₂ ⟩
+         }) ∶
+      a ∈ dom m'          |> ∈-∪⁺ ∘ inj₂ ∶
       a ∈ dom m ∪ dom m'
-      ∎→
 
   ∪dom⊆dom∪ˡ : dom (m ˢ) ∪ dom (m' ˢ) ⊆ dom ((m ∪ˡ m') ˢ)
   ∪dom⊆dom∪ˡ {a} a∈
