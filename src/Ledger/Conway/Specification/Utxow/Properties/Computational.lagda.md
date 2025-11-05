@@ -8,19 +8,21 @@ source_path: src/Ledger/Conway/Specification/Utxow/Properties/Computational.lagd
 
 import Data.Maybe as M
 
-open import Ledger.Prelude
-open import Ledger.Core.Specification.Crypto
-open import Ledger.Conway.Specification.Abstract
+open import Ledger.Core.Specification.Abstract
 open import Ledger.Core.Specification.Transaction
 
 module Ledger.Conway.Specification.Utxow.Properties.Computational
-  (txs : _) (open TransactionStructure txs)
-  (abs : AbstractFunctions txs) (open AbstractFunctions abs)
+  (txs : TransactionStructure) (open TransactionStructure txs)
+  (abs : AbstractFunctions txs)
   where
+
+open import Ledger.Prelude
 
 open import Ledger.Conway.Specification.Utxow txs abs
 open import Ledger.Conway.Specification.Utxo txs abs
 open import Ledger.Conway.Specification.Utxo.Properties.Computational txs abs
+
+open import Ledger.Core.Specification.Crypto
 
 instance
   Computational-UTXOW : Computational _⊢_⇀⦇_,UTXOW⦈_ String

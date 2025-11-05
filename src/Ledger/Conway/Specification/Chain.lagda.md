@@ -9,13 +9,18 @@ source_path: src/Ledger/Conway/Specification/Chain.lagda.md
 ```agda
 {-# OPTIONS --safe #-}
 
-open import Ledger.Core.Specification.Transaction using (TransactionStructure)
-open import Ledger.Conway.Specification.Abstract
+open import Ledger.Core.Specification.Abstract
+open import Ledger.Core.Specification.Transaction
 
 module Ledger.Conway.Specification.Chain
   (txs : TransactionStructure) (open TransactionStructure txs)
-  (abs : AbstractFunctions txs) (open AbstractFunctions abs)
+  (abs : AbstractFunctions txs)
   where
+
+open import Algebra
+open import Data.Nat.Properties using (+-0-monoid)
+
+open import Ledger.Prelude
 
 open import Ledger.Conway.Specification.BlockBody txs abs public
 open import Ledger.Conway.Specification.Certs govStructure
@@ -23,14 +28,12 @@ open import Ledger.Conway.Specification.Enact govStructure
 open import Ledger.Conway.Specification.Epoch txs abs
 open import Ledger.Conway.Specification.Gov txs
 open import Ledger.Conway.Specification.Ledger txs abs
-open import Ledger.Prelude; open Equivalence
 open import Ledger.Conway.Specification.Ratify txs
 open import Ledger.Conway.Specification.RewardUpdate txs abs
+open import Ledger.Conway.Specification.Transaction txs abs
 open import Ledger.Conway.Specification.Utxo txs abs
-open import Ledger.Conway.Specification.Transaction txs
 
-open import Algebra
-open import Data.Nat.Properties using (+-0-monoid)
+open Equivalence
 ```
 -->
 
@@ -79,8 +82,7 @@ instance
 -- refScriptsSize utxo tx = sum (map scriptSize (setToList (refScripts tx utxo)))
 
 totalRefScriptsSize : LState → List Tx → ℕ
-totalRefScriptsSize lst txs = sum $ map (refScriptsSize utxo) txs
-  where open UTxOState (LState.utxoSt lst)
+totalRefScriptsSize lst ts = sum $ map (refScriptsSize (UTxOOf lst)) ts
 
 private variable
   ls' : LState

@@ -1,45 +1,30 @@
 {-# OPTIONS --safe #-}
 
-open import Ledger.Prelude
-open import Ledger.Conway.Specification.Transaction
-open import Ledger.Conway.Specification.Abstract
-import Ledger.Conway.Conformance.Certs
+open import Ledger.Core.Specification.Abstract
+open import Ledger.Core.Specification.Transaction
 
 module Ledger.Conway.Conformance.Ledger.Properties
-  (txs : _) (open TransactionStructure txs) (open Ledger.Conway.Conformance.Certs govStructure)
-  (abs : AbstractFunctions txs) (open AbstractFunctions abs)
+  (txs : TransactionStructure) (open TransactionStructure txs)
+  (abs : AbstractFunctions txs)
   where
 
-open import Axiom.Set.Properties th
-open import Ledger.Conway.Conformance.Chain txs abs
-open import Ledger.Conway.Specification.Enact govStructure
-open import Ledger.Conway.Conformance.Epoch txs abs
-open import Ledger.Conway.Conformance.Certs.Properties govStructure
-open import Ledger.Conway.Specification.Gov txs
-open import Ledger.Conway.Specification.Gov.Properties.Computational txs
-open import Ledger.Conway.Conformance.Ledger txs abs
-open import Ledger.Conway.Specification.Ratify txs
-open import Ledger.Conway.Conformance.Utxo txs abs
-open import Ledger.Conway.Conformance.Utxo.Properties txs abs
-open import Ledger.Conway.Conformance.Utxow txs abs
-open import Ledger.Conway.Conformance.Utxow.Properties txs abs
-
 open import Data.Bool.Properties using (¬-not)
-open import Data.List.Base using (filter)
-open import stdlib.Data.List.Subpermutations using (∈ˡ-map-filter)
-open import Data.List.Properties using (++-identityʳ; map-++; ++-assoc; length-++)
-open import Data.List.Membership.Propositional.Properties using (∈-filter⁺; map-∈↔)
-open import Data.Product.Properties using (×-≡,≡←≡)
-open import Data.Nat.Properties using (+-0-monoid; +-identityʳ; +-suc; +-comm)
-open import Relation.Binary using (IsEquivalence)
-open import Relation.Unary using (Decidable)
+open import Data.Nat.Properties using (+-0-monoid)
+
+open import Ledger.Prelude
 
 open import Ledger.Conway.Conformance.Equivalence.Certs txs abs
 open import Ledger.Conway.Conformance.Equivalence.Convert
+open import Ledger.Conway.Conformance.Certs govStructure
+open import Ledger.Conway.Conformance.Certs.Properties govStructure
+open import Ledger.Conway.Conformance.Ledger txs abs
+open import Ledger.Conway.Conformance.Utxo txs abs
+open import Ledger.Conway.Conformance.Utxow txs abs
+open import Ledger.Conway.Conformance.Utxow.Properties txs abs
 
-import Function.Related.Propositional as R
-
-import Relation.Binary.Reasoning.Setoid as SetoidReasoning
+open import Ledger.Conway.Specification.Gov txs
+open import Ledger.Conway.Specification.Gov.Properties.Computational txs
+open import Ledger.Conway.Specification.Transaction txs abs
 
 instance _ = +-0-monoid
 

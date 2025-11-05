@@ -6,12 +6,12 @@ source_path: src/Ledger/Conway/Specification/Epoch/Properties/Computational.lagd
 ```agda
 {-# OPTIONS --safe #-}
 
+open import Ledger.Core.Specification.Abstract
 open import Ledger.Core.Specification.Transaction
-open import Ledger.Conway.Specification.Abstract
 
 module Ledger.Conway.Specification.Epoch.Properties.Computational
-  (txs : _) (open TransactionStructure txs)
-  (abs : AbstractFunctions txs) (open AbstractFunctions abs)
+  (txs : TransactionStructure) (open TransactionStructure txs)
+  (abs : AbstractFunctions txs)
   where
 
 open import Agda.Builtin.FromNat

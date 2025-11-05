@@ -1,14 +1,16 @@
 <!--
 ```agda
 {-# OPTIONS --safe #-}
-open import Ledger.Prelude
-open import Ledger.Conway.Specification.Abstract
-open import Ledger.Core.Specification.Transaction using (TransactionStructure)
+
+open import Ledger.Core.Specification.Abstract
+open import Ledger.Core.Specification.Transaction
 
 module Ledger.Conway.Specification.RewardUpdate
-  (txs : _) (open TransactionStructure txs)
+  (txs : TransactionStructure) (open TransactionStructure txs)
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
+
+open import Ledger.Prelude
 
 open import Ledger.Conway.Specification.Epoch txs abs
 open import Ledger.Conway.Specification.Rewards txs abs

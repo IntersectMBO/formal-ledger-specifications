@@ -6,12 +6,12 @@ source_path: src/Ledger/Conway/Specification/BlockBody/Properties/Computational.
 ```agda
 {-# OPTIONS --safe #-}
 
-open import Ledger.Core.Specification.Transaction using (TransactionStructure)
-open import Ledger.Conway.Specification.Abstract using (AbstractFunctions)
+open import Ledger.Core.Specification.Abstract
+open import Ledger.Core.Specification.Transaction
 
 module Ledger.Conway.Specification.BlockBody.Properties.Computational
-  (txs : _) (open TransactionStructure txs)
-  (abs : AbstractFunctions txs) (open AbstractFunctions abs)
+  (txs : TransactionStructure) (open TransactionStructure txs)
+  (abs : AbstractFunctions txs)
   where
 open import Ledger.Conway.Specification.BlockBody txs abs
 open import Ledger.Conway.Specification.Ledger.Properties.Computational txs abs

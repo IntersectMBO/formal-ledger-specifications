@@ -14,10 +14,12 @@ define transactions in the Conway era.
 <!--
 ```agda
 {-# OPTIONS --safe #-}
+open import Ledger.Core.Specification.Abstract
 open import Ledger.Core.Specification.Transaction
 
 module Ledger.Conway.Specification.Transaction
   (txs : _) (open TransactionStructure txs)
+  (abs : AbstractFunctions txs)
   where
 
 open import Ledger.Prelude

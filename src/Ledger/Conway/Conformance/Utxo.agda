@@ -1,27 +1,20 @@
 {-# OPTIONS --safe #-}
 
-open import Algebra              using (CommutativeMonoid)
-open import Data.Nat.Properties  using (+-0-monoid)
-import Data.Maybe as M
-import Data.Sum.Relation.Unary.All as Sum
-
-import Data.Integer as ℤ
-import Data.Rational as ℚ
-
-
-open import Ledger.Prelude
-open import Ledger.Conway.Specification.Abstract
+open import Ledger.Core.Specification.Abstract
 open import Ledger.Core.Specification.Transaction
 
 module Ledger.Conway.Conformance.Utxo
-  (txs : _) (open TransactionStructure txs)
+  (txs : TransactionStructure) (open TransactionStructure txs)
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
 
+open import Data.Nat.Properties  using (+-0-monoid)
+import Data.Sum.Relation.Unary.All as Sum
+
+open import Ledger.Prelude
+
 open import Ledger.Conway.Specification.Script.Validation txs abs
-open import Ledger.Conway.Specification.Fees txs using (scriptsCost)
--- open import Ledger.Conway.Conformance.Certs govStructure
-open import Ledger.Conway.Specification.Transaction txs
+open import Ledger.Conway.Specification.Transaction txs abs
 
 private
   module L where

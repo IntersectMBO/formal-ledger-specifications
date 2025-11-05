@@ -1,6 +1,6 @@
 ---
 source_branch: master
-source_path: src/Ledger/Conway/Specification/Abstract.lagda.md
+source_path: src/Ledger/Core/Specification/Abstract.lagda.md
 ---
 
 ```agda
@@ -9,7 +9,7 @@ source_path: src/Ledger/Conway/Specification/Abstract.lagda.md
 open import Ledger.Prelude
 open import Ledger.Core.Specification.Transaction
 
-module Ledger.Conway.Specification.Abstract (txs : TransactionStructure) where
+module Ledger.Core.Specification.Abstract (txs : TransactionStructure) where
 
 open TransactionStructure txs
 open import Ledger.Conway.Specification.Certs govStructure

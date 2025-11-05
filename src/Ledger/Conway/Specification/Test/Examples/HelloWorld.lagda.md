@@ -18,14 +18,18 @@ scriptImp = record { serialise = id ;
 
 open import Ledger.Conway.Specification.Test.LedgerImplementation String String scriptImp
 open import Ledger.Conway.Specification.Test.Lib String String scriptImp
+
 open import Ledger.Conway.Specification.Script.Validation SVTransactionStructure SVAbstractFunctions
+open import Ledger.Conway.Specification.Transaction SVTransactionStructure SVAbstractFunctions
 open import Ledger.Conway.Specification.Utxo SVTransactionStructure SVAbstractFunctions
-open import Ledger.Conway.Specification.Transaction
-open TransactionStructure SVTransactionStructure
+open import Ledger.Conway.Specification.Utxo.Properties.Computational SVTransactionStructure SVAbstractFunctions
+
+open import Ledger.Core.Specification.Transaction
 open import Ledger.Core.Specification.Epoch
+
 open EpochStructure SVEpochStructure
 open Implementation
-open import Ledger.Conway.Specification.Utxo.Properties.Computational SVTransactionStructure SVAbstractFunctions
+open TransactionStructure SVTransactionStructure
 
 -- true if redeemer is "Hello World"
 helloWorld' : Maybe String → Maybe String → Bool

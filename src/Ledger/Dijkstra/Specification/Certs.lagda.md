@@ -10,5 +10,5 @@ open import Ledger.Core.Specification.Gov.Base
 module Ledger.Dijkstra.Specification.Certs
   (gs : GovStructure) where
 
-open import Ledger.Conway.Specification.Certs gs public
+open import Ledger.Core.Specification.Certs gs public
 ```

@@ -14,7 +14,6 @@ module Ledger.Conway.Specification.Test.LedgerImplementation
   (scriptImp : ScriptImplementation T D) (open ScriptImplementation scriptImp)
   where
 
-open import Ledger.Prelude hiding (fromList; ε); open Computational
 import      Data.Integer as ℤ
 open import Data.Rational using (0ℚ; ½)
 import      Data.Rational as ℚ
@@ -22,10 +21,15 @@ open import Algebra.Morphism    using (module MonoidMorphisms)
 open import Data.Nat.Properties using (+-0-commutativeMonoid)
 open import Relation.Binary.Morphism.Structures
 open import Algebra.Construct.DirectProduct
+
+open import Ledger.Prelude hiding (fromList; ε)
+
 open import Ledger.Core.Specification.Crypto
-open import Ledger.Conway.Specification.Transaction
 open import Ledger.Core.Specification.Epoch
 open import Ledger.Core.Specification.Gov.Base
+open import Ledger.Core.Specification.Transaction
+
+open Computational
 
 module _ {A : Type} ⦃ _ : DecEq A ⦄ ⦃ _ : Show A ⦄ where instance
   ∀Hashable : Hashable A A
@@ -173,7 +177,7 @@ SVTransactionStructure = record
   }
 instance _ = SVTransactionStructure
 
-open import Ledger.Conway.Specification.Abstract it
+open import Ledger.Core.Specification.Abstract it
 open import Ledger.Conway.Specification.Gov it
 
 open TransactionStructure it

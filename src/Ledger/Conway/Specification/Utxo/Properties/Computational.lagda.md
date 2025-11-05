@@ -6,31 +6,35 @@ source_path: src/Ledger/Conway/Specification/Utxo/Properties/Computational.lagda
 ```agda
 {-# OPTIONS --safe #-}
 
-open import Ledger.Conway.Specification.Abstract
-open import Ledger.Conway.Specification.Transaction
+open import Ledger.Core.Specification.Abstract
+open import Ledger.Core.Specification.Transaction
 
 module Ledger.Conway.Specification.Utxo.Properties.Computational
-  (txs : _) (open TransactionStructure txs)
-  (abs : AbstractFunctions txs) (open AbstractFunctions abs)
+  (txs : TransactionStructure) (open TransactionStructure txs)
+  (abs : AbstractFunctions txs)
   where
 
-open import Algebra.Morphism              using (module MonoidMorphisms; IsMagmaHomomorphism)
-open import Data.Integer as ℤ             using (ℤ)
-open import Data.List.Relation.Unary.All  using (All)
+open import Algebra.Morphism using (module MonoidMorphisms; IsMagmaHomomorphism)
+open import Data.Integer as ℤ using (ℤ)
+open import Data.List.Relation.Unary.All using (All)
 import Data.Nat as ℕ
-open import Data.Nat.Properties           hiding (_≟_)
-open import Data.String.Base              using () renaming (_++_ to _+ˢ_)
+open import Data.Nat.Properties hiding (_≟_)
+open import Data.String.Base using () renaming (_++_ to _+ˢ_)
 
-open import Prelude; open Equivalence
-open import Ledger.Prelude hiding (≤-trans; ≤-antisym; All); open Properties
-
-open import Tactic.Cong                 using (cong!)
-open import Tactic.EquationalReasoning  using (module ≡-Reasoning)
+open import Tactic.Cong using (cong!)
+open import Tactic.EquationalReasoning using (module ≡-Reasoning)
 open import stdlib-meta.Tactic.MonoidSolver.NonNormalising using (solve-macro)
 
-open import Ledger.Conway.Specification.Utxo txs abs
-open import Ledger.Conway.Specification.Script.Validation txs abs
+open import Prelude
+open import Ledger.Prelude hiding (≤-trans; ≤-antisym; All)
+
 open import Ledger.Conway.Specification.Certs govStructure
+open import Ledger.Conway.Specification.Script.Validation txs abs
+open import Ledger.Conway.Specification.Transaction txs abs
+open import Ledger.Conway.Specification.Utxo txs abs
+
+open Equivalence
+open Properties
 
 instance
   _ = TokenAlgebra.Value-CommutativeMonoid tokenAlgebra

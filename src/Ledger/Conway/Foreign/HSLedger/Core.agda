@@ -17,8 +17,7 @@ open import Foreign.HaskellTypes.Deriving public
 
 open import Ledger.Core.Specification.Crypto
 open import Ledger.Core.Specification.Epoch
-
-open import Ledger.Conway.Specification.Transaction renaming (Vote to VoteTag) public
+open import Ledger.Core.Specification.Transaction renaming (Vote to VoteTag) public
 
 open import Ledger.Prelude.Foreign.Util public
 

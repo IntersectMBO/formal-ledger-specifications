@@ -14,21 +14,22 @@ transform the ledger state.
 
 import Data.List as L
 
-open import Ledger.Prelude
-open import Ledger.Conway.Specification.Abstract
-open import Ledger.Core.Specification.Transaction using (TransactionStructure)
+open import Ledger.Core.Specification.Abstract
+open import Ledger.Core.Specification.Transaction
 
 module Ledger.Conway.Specification.Ledger
-  (txs : _) (open TransactionStructure txs)
-  (abs : AbstractFunctions txs) (open AbstractFunctions abs)
+  (txs : TransactionStructure) (open TransactionStructure txs)
+  (abs : AbstractFunctions txs)
   where
 
+open import Ledger.Prelude
+
+open import Ledger.Conway.Specification.Certs govStructure
 open import Ledger.Conway.Specification.Enact govStructure
 open import Ledger.Conway.Specification.Gov txs
+open import Ledger.Conway.Specification.Transaction txs abs
 open import Ledger.Conway.Specification.Utxo txs abs
 open import Ledger.Conway.Specification.Utxow txs abs
-open import Ledger.Conway.Specification.Certs govStructure
-open import Ledger.Conway.Specification.Transaction txs
 
 open Tx
 open GState

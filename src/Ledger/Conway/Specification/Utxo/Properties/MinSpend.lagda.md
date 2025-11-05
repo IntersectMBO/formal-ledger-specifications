@@ -3,12 +3,12 @@
 
 {-# OPTIONS --safe #-}
 
-open import Ledger.Conway.Specification.Abstract
-open import Ledger.Conway.Specification.Transaction
+open import Ledger.Core.Specification.Abstract
+open import Ledger.Core.Specification.Transaction
 
 module Ledger.Conway.Specification.Utxo.Properties.MinSpend
-  (txs : _) (open TransactionStructure txs)
-  (abs : AbstractFunctions txs) (open AbstractFunctions abs)
+  (txs : TransactionStructure) (open TransactionStructure txs)
+  (abs : AbstractFunctions txs)
   where
 
 open import Ledger.Conway.Specification.Certs govStructure
@@ -18,6 +18,7 @@ open import Ledger.Conway.Specification.Epoch txs abs
 open import Ledger.Conway.Specification.Ledger txs abs
 open import Ledger.Prelude hiding (≤-trans; ≤-antisym; All)
 open import Ledger.Conway.Specification.Properties txs abs using (validTxIn₂)
+open import Ledger.Conway.Specification.Transaction txs abs
 open import Ledger.Conway.Specification.Utxo txs abs
 open import Ledger.Conway.Specification.Utxo.Properties.GenMinSpend txs abs
 

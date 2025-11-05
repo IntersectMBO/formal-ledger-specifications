@@ -3,13 +3,15 @@
 
 {-# OPTIONS --safe #-}
 
+open import Ledger.Core.Specification.Abstract
 open import Ledger.Core.Specification.Transaction
-open import Ledger.Conway.Specification.Abstract
 
 module Ledger.Conway.Specification.Chain.Properties.GovDepsMatch
-  (txs : _) (open TransactionStructure txs)
-  (abs : AbstractFunctions txs) (open AbstractFunctions abs)
+  (txs : TransactionStructure) (open TransactionStructure txs)
+  (abs : AbstractFunctions txs)
   where
+
+open import Ledger.Prelude hiding (map) renaming (mapˢ to map)
 
 open import Ledger.Conway.Specification.Certs govStructure
 open import Ledger.Conway.Specification.Chain txs abs
@@ -19,7 +21,6 @@ open import Ledger.Conway.Specification.Epoch.Properties.GovDepsMatch txs abs
 open import Ledger.Conway.Specification.Ledger txs abs
 open import Ledger.Conway.Specification.Ledger.Properties.Base txs abs
 open import Ledger.Conway.Specification.Ledger.Properties.GovDepsMatch txs abs
-open import Ledger.Prelude hiding (map) renaming (mapˢ to map)
 open import Ledger.Conway.Specification.RewardUpdate txs abs
 
 module _

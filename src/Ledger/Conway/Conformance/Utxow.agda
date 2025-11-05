@@ -1,18 +1,20 @@
 
 {-# OPTIONS --safe #-}
 
-open import Ledger.Prelude
-open import Ledger.Core.Specification.Crypto
-open import Ledger.Conway.Specification.Abstract
-open import Ledger.Conway.Specification.Transaction
+open import Ledger.Core.Specification.Abstract
+open import Ledger.Core.Specification.Transaction
 
 module Ledger.Conway.Conformance.Utxow
-  (txs : _) (open TransactionStructure txs)
-  (abs : AbstractFunctions txs) (open AbstractFunctions abs)
+  (txs : TransactionStructure) (open TransactionStructure txs)
+  (abs : AbstractFunctions txs)
   where
+
+open import Ledger.Prelude
+
 open import Ledger.Conway.Conformance.Utxo txs abs
+
 open import Ledger.Conway.Specification.Script.Validation txs abs
-open import Ledger.Conway.Specification.Certs govStructure
+open import Ledger.Conway.Specification.Transaction txs abs
 
 private
   module L where

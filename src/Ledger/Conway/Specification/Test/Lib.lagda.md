@@ -6,26 +6,30 @@ source_path: src/Ledger/Conway/Specification/Test/Lib.lagda.md
 ```agda
 {-# OPTIONS --safe #-}
 
-open import Ledger.Prelude hiding (fromList; ε; _/_); open Computational
+open import Ledger.Prelude hiding (fromList; ε; _/_)
 open import Ledger.Conway.Specification.Test.Prelude
 
 module Ledger.Conway.Specification.Test.Lib (A D : Type)
   (scriptImp : ScriptImplementation A D) (open ScriptImplementation scriptImp)
   where
 
-open import Ledger.Conway.Specification.Test.LedgerImplementation A D scriptImp
-open import Ledger.Conway.Specification.Script.Validation SVTransactionStructure SVAbstractFunctions
-open import Ledger.Conway.Specification.Utxo SVTransactionStructure SVAbstractFunctions
-open import Ledger.Conway.Specification.Transaction
-open TransactionStructure SVTransactionStructure
-open import Ledger.Core.Specification.Epoch
-open import Ledger.Prelude.Numeric using (mkUnitInterval; mkℕ⁺)
-open EpochStructure SVEpochStructure
 open import Data.Integer using (ℤ; +_)
 open import Data.Rational using (½; 1ℚ ; mkℚ+ ; _/_)
 open import Data.Nat.Coprimality using (Coprime; gcd≡1⇒coprime)
-open Implementation
 
+open import Ledger.Prelude.Numeric using (mkUnitInterval; mkℕ⁺)
+
+open import Ledger.Conway.Specification.Test.LedgerImplementation A D scriptImp
+open import Ledger.Conway.Specification.Script.Validation SVTransactionStructure SVAbstractFunctions
+open import Ledger.Conway.Specification.Utxo SVTransactionStructure SVAbstractFunctions
+
+open import Ledger.Core.Specification.Epoch
+open import Ledger.Core.Specification.Transaction
+
+open EpochStructure SVEpochStructure
+open TransactionStructure SVTransactionStructure
+open Computational
+open Implementation
 createEnv : ℕ → UTxOEnv
 createEnv s = record { slot = s ; treasury = 0 ;
                    pparams = record

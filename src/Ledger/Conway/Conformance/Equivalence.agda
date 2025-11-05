@@ -2,22 +2,20 @@
 -- Proof that the rules under Ledger.Conway.Conformance are equivalent
 -- to the rules under Ledger.
 
-open import Ledger.Prelude
-open import Ledger.Conway.Specification.Abstract
-open import Ledger.Conway.Specification.Transaction using (TransactionStructure)
-
-open import Data.Unit using (⊤)
-open import Data.Product using (_×_; _,_) renaming (map to ⟨_,_⟩)
-open import Function.Bundles using (_⇔_; mk⇔; Equivalence)
-open import Relation.Binary.PropositionalEquality
-open import Relation.Binary using (IsEquivalence)
-
-open import Ledger.Conway.Conformance.Equivalence.Convert
+open import Ledger.Core.Specification.Abstract
+open import Ledger.Core.Specification.Transaction
 
 module Ledger.Conway.Conformance.Equivalence
-  (txs : _) (open TransactionStructure txs)
-  (abs : AbstractFunctions txs) (open AbstractFunctions abs)
+  (txs : TransactionStructure) (open TransactionStructure txs)
+  (abs : AbstractFunctions txs)
   where
+
+open import Data.Product using (_×_; _,_) renaming (map to ⟨_,_⟩)
+open import Relation.Binary using (IsEquivalence)
+
+open import Ledger.Prelude
+open import Ledger.Conway.Conformance.Equivalence.Convert
+open import Ledger.Conway.Specification.Transaction txs abs public
 
 module L where
   open import Ledger.Conway.Specification.Ledger txs abs public
