@@ -614,6 +614,8 @@ module _  {A B : Type}
       filterᵐ-singleton-true p .proj₁ = proj₂ ∘ (from ∈-filter)
       filterᵐ-singleton-true {k}{v} p .proj₂ {a} x = to ∈-filter (subst P′ (sym (from ∈-singleton x)) p , x)
 
+      -- TODO: move to agda-sets
+      -- https://github.com/input-output-hk/agda-sets/pull/19
       filterᵐ-singleton-false : ¬ P k → filterᵐ P′ ❴ k , v ❵ ≡ᵐ ∅
       filterᵐ-singleton-false ¬p .proj₁ x =
         ⊥-elim $ ¬p $ subst P′ (from ∈-singleton $ proj₂ (from ∈-filter x)) (proj₁ $ from ∈-filter x)
@@ -656,6 +658,8 @@ module _  {A B : Type}
       lem-add-excluded p =
         filterᵐ-∪⁺-distr _ _ ⟨≈⟩ ∪⁺-cong-l (filterᵐ-singleton-false p) ⟨≈⟩ ∪⁺-id-r _
 
+      -- TODO: move to agda-sets
+      -- https://github.com/input-output-hk/agda-sets/pull/19
       lem-add-excluded-∪ˡ
         : (m : A ⇀ B)
         → ¬ P k

@@ -114,6 +114,7 @@ module LEDGER-PROPS (tx : Tx) (Γ : LEnv) (s : LState) where
     dpMap-rmOrphanDRepVotes certState govSt = sym (fmap-∘ govSt) -- map proj₁ ∘ map (map₂ _) ≡ map (proj₁ ∘ map₂ _) ≡ map proj₁
 
 -- TODO: Move these proofs to agda-sets
+-- https://github.com/input-output-hk/agda-sets/pull/18
 module _ {A V : Set} ⦃ mon : CommutativeMonoid 0ℓ 0ℓ V ⦄ ⦃ dA : DecEq A ⦄ {m m' : A ⇀ V} where
   open import Function.Reasoning
 

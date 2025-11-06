@@ -141,6 +141,8 @@ module _ -- ASSUMPTION --
       disjoint-sing dp∉d a∈d a∈sing
         rewrite from ∈-dom-singleton-pair a∈sing = dp∉d a∈d
 
+      -- TODO: remove after adopting
+      -- https://github.com/input-output-hk/agda-sets/pull/17
       indexedSumᵐ-∪ˡ-∪ˡᶠ
         : ∀ m m'
         → indexedSumᵐ proj₂ ((m ∪ˡ m') ᶠᵐ) ≡ indexedSumᵐ proj₂ ((m ᶠᵐ) ∪ˡᶠ (m' ᶠᵐ))
