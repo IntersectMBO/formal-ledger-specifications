@@ -3991,7 +3991,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Test.Examples.html" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Test.Examples.md" class="md-nav__link">
         
   
   
@@ -4057,7 +4057,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Test.Examples.HelloWorld.html" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Test.Examples.HelloWorld.md" class="md-nav__link">
         
   
   
@@ -4080,7 +4080,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Test.Examples.SucceedIfNumber.html" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Test.Examples.SucceedIfNumber.md" class="md-nav__link">
         
   
   
@@ -4111,7 +4111,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Test.LedgerImplementation.html" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Test.LedgerImplementation.md" class="md-nav__link">
         
   
   
@@ -4134,7 +4134,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Test.Lib.html" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Test.Lib.md" class="md-nav__link">
         
   
   
@@ -4157,7 +4157,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Test.Prelude.html" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Test.Prelude.md" class="md-nav__link">
         
   
   
@@ -4180,7 +4180,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Test.StructuredContracts.html" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Test.StructuredContracts.md" class="md-nav__link">
         
   
   
@@ -8411,18 +8411,18 @@
 <pre class="Agda hidden-source">
 <a id="15" class="Symbol">{-#</a> <a id="19" class="Keyword">OPTIONS</a> <a id="27" class="Pragma">--safe</a> <a id="34" class="Symbol">#-}</a>
 
-<a id="39" class="Keyword">open</a> <a id="44" class="Keyword">import</a> <a id="51" href="Ledger.Conway.Specification.Transaction.html" class="Module">Ledger.Conway.Specification.Transaction</a>
-<a id="91" class="Keyword">open</a> <a id="96" class="Keyword">import</a> <a id="103" href="Ledger.Conway.Specification.Abstract.html" class="Module">Ledger.Conway.Specification.Abstract</a>
+<a id="39" class="Keyword">open</a> <a id="44" class="Keyword">import</a> <a id="51" href="Ledger.Core.Specification.Transaction.html" class="Module">Ledger.Core.Specification.Transaction</a>
+<a id="89" class="Keyword">open</a> <a id="94" class="Keyword">import</a> <a id="101" href="Ledger.Conway.Specification.Abstract.html" class="Module">Ledger.Conway.Specification.Abstract</a>
 
-<a id="141" class="Keyword">module</a> <a id="148" href="Ledger.Conway.Specification.Epoch.Properties.NoPropSameDReps.html" class="Module">Ledger.Conway.Specification.Epoch.Properties.NoPropSameDReps</a>
-  <a id="211" class="Symbol">(</a><a id="212" href="Ledger.Conway.Specification.Epoch.Properties.NoPropSameDReps.html#212" class="Bound">txs</a> <a id="216" class="Symbol">:</a> <a id="218" class="Symbol">_)</a> <a id="221" class="Symbol">(</a><a id="222" class="Keyword">open</a> <a id="227" href="Ledger.Conway.Specification.Transaction.html#2451" class="Module">TransactionStructure</a> <a id="248" href="Ledger.Conway.Specification.Epoch.Properties.NoPropSameDReps.html#212" class="Bound">txs</a><a id="251" class="Symbol">)</a>
-  <a id="255" class="Symbol">(</a><a id="256" href="Ledger.Conway.Specification.Epoch.Properties.NoPropSameDReps.html#256" class="Bound">abs</a> <a id="260" class="Symbol">:</a> <a id="262" href="Ledger.Conway.Specification.Abstract.html#756" class="Record">AbstractFunctions</a> <a id="280" href="Ledger.Conway.Specification.Epoch.Properties.NoPropSameDReps.html#212" class="Bound">txs</a><a id="283" class="Symbol">)</a> <a id="285" class="Symbol">(</a><a id="286" class="Keyword">open</a> <a id="291" href="Ledger.Conway.Specification.Abstract.html#756" class="Module">AbstractFunctions</a> <a id="309" href="Ledger.Conway.Specification.Epoch.Properties.NoPropSameDReps.html#256" class="Bound">abs</a><a id="312" class="Symbol">)</a>
-  <a id="316" class="Keyword">where</a>
+<a id="139" class="Keyword">module</a> <a id="146" href="Ledger.Conway.Specification.Epoch.Properties.NoPropSameDReps.html" class="Module">Ledger.Conway.Specification.Epoch.Properties.NoPropSameDReps</a>
+  <a id="209" class="Symbol">(</a><a id="210" href="Ledger.Conway.Specification.Epoch.Properties.NoPropSameDReps.html#210" class="Bound">txs</a> <a id="214" class="Symbol">:</a> <a id="216" class="Symbol">_)</a> <a id="219" class="Symbol">(</a><a id="220" class="Keyword">open</a> <a id="225" href="Ledger.Core.Specification.Transaction.html#1895" class="Module">TransactionStructure</a> <a id="246" href="Ledger.Conway.Specification.Epoch.Properties.NoPropSameDReps.html#210" class="Bound">txs</a><a id="249" class="Symbol">)</a>
+  <a id="253" class="Symbol">(</a><a id="254" href="Ledger.Conway.Specification.Epoch.Properties.NoPropSameDReps.html#254" class="Bound">abs</a> <a id="258" class="Symbol">:</a> <a id="260" href="Ledger.Conway.Specification.Abstract.html#754" class="Record">AbstractFunctions</a> <a id="278" href="Ledger.Conway.Specification.Epoch.Properties.NoPropSameDReps.html#210" class="Bound">txs</a><a id="281" class="Symbol">)</a> <a id="283" class="Symbol">(</a><a id="284" class="Keyword">open</a> <a id="289" href="Ledger.Conway.Specification.Abstract.html#754" class="Module">AbstractFunctions</a> <a id="307" href="Ledger.Conway.Specification.Epoch.Properties.NoPropSameDReps.html#254" class="Bound">abs</a><a id="310" class="Symbol">)</a>
+  <a id="314" class="Keyword">where</a>
 
-<a id="323" class="Keyword">open</a> <a id="328" class="Keyword">import</a> <a id="335" href="Ledger.Conway.Specification.Epoch.html" class="Module">Ledger.Conway.Specification.Epoch</a> <a id="369" href="Ledger.Conway.Specification.Epoch.Properties.NoPropSameDReps.html#212" class="Bound">txs</a> <a id="373" href="Ledger.Conway.Specification.Epoch.Properties.NoPropSameDReps.html#256" class="Bound">abs</a>
-<a id="377" class="Keyword">open</a> <a id="382" class="Keyword">import</a> <a id="389" href="Ledger.Conway.Specification.Gov.html" class="Module">Ledger.Conway.Specification.Gov</a> <a id="421" href="Ledger.Conway.Specification.Epoch.Properties.NoPropSameDReps.html#212" class="Bound">txs</a>
-<a id="425" class="Keyword">open</a> <a id="430" class="Keyword">import</a> <a id="437" href="Ledger.Prelude.html" class="Module">Ledger.Prelude</a>
-<a id="452" class="Keyword">open</a> <a id="457" class="Keyword">import</a> <a id="464" href="Ledger.Conway.Specification.Properties.html" class="Module">Ledger.Conway.Specification.Properties</a> <a id="503" href="Ledger.Conway.Specification.Epoch.Properties.NoPropSameDReps.html#212" class="Bound">txs</a> <a id="507" href="Ledger.Conway.Specification.Epoch.Properties.NoPropSameDReps.html#256" class="Bound">abs</a>
+<a id="321" class="Keyword">open</a> <a id="326" class="Keyword">import</a> <a id="333" href="Ledger.Conway.Specification.Epoch.html" class="Module">Ledger.Conway.Specification.Epoch</a> <a id="367" href="Ledger.Conway.Specification.Epoch.Properties.NoPropSameDReps.html#210" class="Bound">txs</a> <a id="371" href="Ledger.Conway.Specification.Epoch.Properties.NoPropSameDReps.html#254" class="Bound">abs</a>
+<a id="375" class="Keyword">open</a> <a id="380" class="Keyword">import</a> <a id="387" href="Ledger.Conway.Specification.Gov.html" class="Module">Ledger.Conway.Specification.Gov</a> <a id="419" href="Ledger.Conway.Specification.Epoch.Properties.NoPropSameDReps.html#210" class="Bound">txs</a>
+<a id="423" class="Keyword">open</a> <a id="428" class="Keyword">import</a> <a id="435" href="Ledger.Prelude.html" class="Module">Ledger.Prelude</a>
+<a id="450" class="Keyword">open</a> <a id="455" class="Keyword">import</a> <a id="462" href="Ledger.Conway.Specification.Properties.html" class="Module">Ledger.Conway.Specification.Properties</a> <a id="501" href="Ledger.Conway.Specification.Epoch.Properties.NoPropSameDReps.html#210" class="Bound">txs</a> <a id="505" href="Ledger.Conway.Specification.Epoch.Properties.NoPropSameDReps.html#254" class="Bound">abs</a>
 </pre>
 
 <p><strong>Claim (DReps unchanged if no gov proposals).</strong></p>
@@ -8433,9 +8433,9 @@ then the set of <code class="AgdaField">activeDReps</code> of <code class="AgdaB
 <code class="AgdaDatatype">Epoch</code> <code class="AgdaBound">e</code> is equal to the set of
 <code class="AgdaField">activeDReps</code> of <code>es</code> in the next epoch.</p>
 <p><em>Formally</em>.</p>
-<pre class="Agda"><a id="prop≡∅⇒activeDReps-const"></a><a id="933" href="Ledger.Conway.Specification.Epoch.Properties.NoPropSameDReps.html#933" class="Function">prop≡∅⇒activeDReps-const</a> <a id="958" class="Symbol">:</a> <a id="960" href="Ledger.Core.Specification.Epoch.html#742" class="Function">Epoch</a> <a id="966" class="Symbol">→</a> <a id="968" href="Ledger.Conway.Specification.Epoch.html#4038" class="Record">NewEpochState</a> <a id="982" class="Symbol">→</a> <a id="984" href="Agda.Primitive.html#388" class="Primitive">Type</a>
-<a id="989" href="Ledger.Conway.Specification.Epoch.Properties.NoPropSameDReps.html#933" class="Function">prop≡∅⇒activeDReps-const</a> <a id="1014" href="Ledger.Conway.Specification.Epoch.Properties.NoPropSameDReps.html#1014" class="Bound">e</a> <a id="1016" href="Ledger.Conway.Specification.Epoch.Properties.NoPropSameDReps.html#1016" class="Bound">es</a> <a id="1019" class="Symbol">=</a>
-  <a id="1023" href="Ledger.Conway.Specification.Gov.html#2186" class="Field">GovStateOf</a> <a id="1034" href="Ledger.Conway.Specification.Epoch.Properties.NoPropSameDReps.html#1016" class="Bound">es</a> <a id="1037" href="Agda.Builtin.Equality.html#150" class="Datatype Operator">≡</a> <a id="1039" href="Agda.Builtin.List.html#184" class="InductiveConstructor">[]</a> <a id="1042" class="Symbol">→</a> <a id="1044" href="Ledger.Conway.Specification.Properties.html#2504" class="Function">activeDReps</a> <a id="1056" href="Ledger.Conway.Specification.Epoch.Properties.NoPropSameDReps.html#1014" class="Bound">e</a> <a id="1058" href="Ledger.Conway.Specification.Epoch.Properties.NoPropSameDReps.html#1016" class="Bound">es</a> <a id="1061" href="Axiom.Set.html#2772" class="Function Operator">≡ᵉ</a> <a id="1064" href="Ledger.Conway.Specification.Properties.html#2504" class="Function">activeDReps</a> <a id="1076" class="Symbol">(</a><a id="1077" href="Ledger.Core.Specification.Epoch.html#1150" class="Function">sucᵉ</a> <a id="1082" href="Ledger.Conway.Specification.Epoch.Properties.NoPropSameDReps.html#1014" class="Bound">e</a><a id="1083" class="Symbol">)</a> <a id="1085" href="Ledger.Conway.Specification.Epoch.Properties.NoPropSameDReps.html#1016" class="Bound">es</a>
+<pre class="Agda"><a id="prop≡∅⇒activeDReps-const"></a><a id="931" href="Ledger.Conway.Specification.Epoch.Properties.NoPropSameDReps.html#931" class="Function">prop≡∅⇒activeDReps-const</a> <a id="956" class="Symbol">:</a> <a id="958" href="Ledger.Core.Specification.Epoch.html#742" class="Function">Epoch</a> <a id="964" class="Symbol">→</a> <a id="966" href="Ledger.Conway.Specification.Epoch.html#4036" class="Record">NewEpochState</a> <a id="980" class="Symbol">→</a> <a id="982" href="Agda.Primitive.html#388" class="Primitive">Type</a>
+<a id="987" href="Ledger.Conway.Specification.Epoch.Properties.NoPropSameDReps.html#931" class="Function">prop≡∅⇒activeDReps-const</a> <a id="1012" href="Ledger.Conway.Specification.Epoch.Properties.NoPropSameDReps.html#1012" class="Bound">e</a> <a id="1014" href="Ledger.Conway.Specification.Epoch.Properties.NoPropSameDReps.html#1014" class="Bound">es</a> <a id="1017" class="Symbol">=</a>
+  <a id="1021" href="Ledger.Conway.Specification.Gov.html#2184" class="Field">GovStateOf</a> <a id="1032" href="Ledger.Conway.Specification.Epoch.Properties.NoPropSameDReps.html#1014" class="Bound">es</a> <a id="1035" href="Agda.Builtin.Equality.html#150" class="Datatype Operator">≡</a> <a id="1037" href="Agda.Builtin.List.html#184" class="InductiveConstructor">[]</a> <a id="1040" class="Symbol">→</a> <a id="1042" href="Ledger.Conway.Specification.Properties.html#2554" class="Function">activeDReps</a> <a id="1054" href="Ledger.Conway.Specification.Epoch.Properties.NoPropSameDReps.html#1012" class="Bound">e</a> <a id="1056" href="Ledger.Conway.Specification.Epoch.Properties.NoPropSameDReps.html#1014" class="Bound">es</a> <a id="1059" href="Axiom.Set.html#2772" class="Function Operator">≡ᵉ</a> <a id="1062" href="Ledger.Conway.Specification.Properties.html#2554" class="Function">activeDReps</a> <a id="1074" class="Symbol">(</a><a id="1075" href="Ledger.Core.Specification.Epoch.html#1150" class="Function">sucᵉ</a> <a id="1080" href="Ledger.Conway.Specification.Epoch.Properties.NoPropSameDReps.html#1012" class="Bound">e</a><a id="1081" class="Symbol">)</a> <a id="1083" href="Ledger.Conway.Specification.Epoch.Properties.NoPropSameDReps.html#1014" class="Bound">es</a>
 </pre>
 <p><em>Proof</em>. (coming soon)</p>
 

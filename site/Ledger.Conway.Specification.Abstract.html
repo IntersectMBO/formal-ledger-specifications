@@ -3987,7 +3987,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Test.Examples.html" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Test.Examples.md" class="md-nav__link">
         
   
   
@@ -4053,7 +4053,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Test.Examples.HelloWorld.html" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Test.Examples.HelloWorld.md" class="md-nav__link">
         
   
   
@@ -4076,7 +4076,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Test.Examples.SucceedIfNumber.html" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Test.Examples.SucceedIfNumber.md" class="md-nav__link">
         
   
   
@@ -4107,7 +4107,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Test.LedgerImplementation.html" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Test.LedgerImplementation.md" class="md-nav__link">
         
   
   
@@ -4130,7 +4130,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Test.Lib.html" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Test.Lib.md" class="md-nav__link">
         
   
   
@@ -4153,7 +4153,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Test.Prelude.html" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Test.Prelude.md" class="md-nav__link">
         
   
   
@@ -4176,7 +4176,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Test.StructuredContracts.html" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Test.StructuredContracts.md" class="md-nav__link">
         
   
   
@@ -8407,28 +8407,28 @@
 <pre class="Agda"><a id="103" class="Symbol">{-#</a> <a id="107" class="Keyword">OPTIONS</a> <a id="115" class="Pragma">--safe</a> <a id="122" class="Symbol">#-}</a>
 
 <a id="127" class="Keyword">open</a> <a id="132" class="Keyword">import</a> <a id="139" href="Ledger.Prelude.html" class="Module">Ledger.Prelude</a>
-<a id="154" class="Keyword">open</a> <a id="159" class="Keyword">import</a> <a id="166" href="Ledger.Conway.Specification.Transaction.html" class="Module">Ledger.Conway.Specification.Transaction</a>
+<a id="154" class="Keyword">open</a> <a id="159" class="Keyword">import</a> <a id="166" href="Ledger.Core.Specification.Transaction.html" class="Module">Ledger.Core.Specification.Transaction</a>
 
-<a id="207" class="Keyword">module</a> <a id="214" href="Ledger.Conway.Specification.Abstract.html" class="Module">Ledger.Conway.Specification.Abstract</a> <a id="251" class="Symbol">(</a><a id="252" href="Ledger.Conway.Specification.Abstract.html#252" class="Bound">txs</a> <a id="256" class="Symbol">:</a> <a id="258" href="Ledger.Conway.Specification.Transaction.html#2451" class="Record">TransactionStructure</a><a id="278" class="Symbol">)</a> <a id="280" class="Keyword">where</a>
+<a id="205" class="Keyword">module</a> <a id="212" href="Ledger.Conway.Specification.Abstract.html" class="Module">Ledger.Conway.Specification.Abstract</a> <a id="249" class="Symbol">(</a><a id="250" href="Ledger.Conway.Specification.Abstract.html#250" class="Bound">txs</a> <a id="254" class="Symbol">:</a> <a id="256" href="Ledger.Core.Specification.Transaction.html#1895" class="Record">TransactionStructure</a><a id="276" class="Symbol">)</a> <a id="278" class="Keyword">where</a>
 
-<a id="287" class="Keyword">open</a> <a id="292" href="Ledger.Conway.Specification.Transaction.html#2451" class="Module">TransactionStructure</a> <a id="313" href="Ledger.Conway.Specification.Abstract.html#252" class="Bound">txs</a>
-<a id="317" class="Keyword">open</a> <a id="322" class="Keyword">import</a> <a id="329" href="Ledger.Conway.Specification.Certs.html" class="Module">Ledger.Conway.Specification.Certs</a> <a id="363" href="Ledger.Conway.Specification.Transaction.html#3569" class="Function">govStructure</a>
+<a id="285" class="Keyword">open</a> <a id="290" href="Ledger.Core.Specification.Transaction.html#1895" class="Module">TransactionStructure</a> <a id="311" href="Ledger.Conway.Specification.Abstract.html#250" class="Bound">txs</a>
+<a id="315" class="Keyword">open</a> <a id="320" class="Keyword">import</a> <a id="327" href="Ledger.Conway.Specification.Certs.html" class="Module">Ledger.Conway.Specification.Certs</a> <a id="361" href="Ledger.Core.Specification.Transaction.html#3013" class="Function">govStructure</a>
 
-<a id="377" class="Keyword">record</a> <a id="indexOf"></a><a id="384" href="Ledger.Conway.Specification.Abstract.html#384" class="Record">indexOf</a> <a id="392" class="Symbol">:</a> <a id="394" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="399" class="Keyword">where</a>
-  <a id="407" class="Keyword">field</a>
-    <a id="indexOf.indexOfDCert"></a><a id="417" href="Ledger.Conway.Specification.Abstract.html#417" class="Field">indexOfDCert</a>    <a id="433" class="Symbol">:</a> <a id="435" href="Ledger.Conway.Specification.Certs.html#2595" class="Datatype">DCert</a> <a id="441" class="Symbol">→</a> <a id="443" href="Agda.Builtin.List.html#147" class="Datatype">List</a> <a id="448" href="Ledger.Conway.Specification.Certs.html#2595" class="Datatype">DCert</a> <a id="454" class="Symbol">→</a> <a id="456" href="Agda.Builtin.Maybe.html#135" class="Datatype">Maybe</a> <a id="462" href="Ledger.Conway.Specification.Transaction.html#2528" class="Field">Ix</a>
-    <a id="indexOf.indexOfRwdAddr"></a><a id="469" href="Ledger.Conway.Specification.Abstract.html#469" class="Field">indexOfRwdAddr</a>  <a id="485" class="Symbol">:</a> <a id="487" href="Ledger.Core.Specification.Address.html#2298" class="Record">RwdAddr</a> <a id="495" class="Symbol">→</a> <a id="497" href="Ledger.Core.Specification.Address.html#2373" class="Function">Withdrawals</a> <a id="509" class="Symbol">→</a> <a id="511" href="Agda.Builtin.Maybe.html#135" class="Datatype">Maybe</a> <a id="517" href="Ledger.Conway.Specification.Transaction.html#2528" class="Field">Ix</a>
-    <a id="indexOf.indexOfTxIn"></a><a id="524" href="Ledger.Conway.Specification.Abstract.html#524" class="Field">indexOfTxIn</a>     <a id="540" class="Symbol">:</a> <a id="542" href="Ledger.Conway.Specification.Transaction.html#4126" class="Function">TxIn</a> <a id="547" class="Symbol">→</a> <a id="549" href="abstract-set-theory.FiniteSetTheory.html#488" class="Function Operator">ℙ</a> <a id="551" href="Ledger.Conway.Specification.Transaction.html#4126" class="Function">TxIn</a> <a id="556" class="Symbol">→</a> <a id="558" href="Agda.Builtin.Maybe.html#135" class="Datatype">Maybe</a> <a id="564" href="Ledger.Conway.Specification.Transaction.html#2528" class="Field">Ix</a>
-    <a id="indexOf.indexOfPolicyId"></a><a id="571" href="Ledger.Conway.Specification.Abstract.html#571" class="Field">indexOfPolicyId</a> <a id="587" class="Symbol">:</a> <a id="589" href="Ledger.Core.Specification.Crypto.html#1721" class="Function">ScriptHash</a> <a id="600" class="Symbol">→</a> <a id="602" href="abstract-set-theory.FiniteSetTheory.html#488" class="Function Operator">ℙ</a> <a id="604" href="Ledger.Core.Specification.Crypto.html#1721" class="Function">ScriptHash</a> <a id="615" class="Symbol">→</a> <a id="617" href="Agda.Builtin.Maybe.html#135" class="Datatype">Maybe</a> <a id="623" href="Ledger.Conway.Specification.Transaction.html#2528" class="Field">Ix</a>
-    <a id="indexOf.indexOfVote"></a><a id="630" href="Ledger.Conway.Specification.Abstract.html#630" class="Field">indexOfVote</a>     <a id="646" class="Symbol">:</a> <a id="648" href="Ledger.Core.Specification.Gov.Actions.html#5453" class="Record">GovVoter</a> <a id="657" class="Symbol">→</a> <a id="659" href="Agda.Builtin.List.html#147" class="Datatype">List</a> <a id="664" href="Ledger.Core.Specification.Gov.Actions.html#5453" class="Record">GovVoter</a> <a id="673" class="Symbol">→</a> <a id="675" href="Agda.Builtin.Maybe.html#135" class="Datatype">Maybe</a> <a id="681" href="Ledger.Conway.Specification.Transaction.html#2528" class="Field">Ix</a>
-    <a id="indexOf.indexOfProposal"></a><a id="688" href="Ledger.Conway.Specification.Abstract.html#688" class="Field">indexOfProposal</a> <a id="704" class="Symbol">:</a> <a id="706" href="Ledger.Core.Specification.Gov.Actions.html#10416" class="Record">GovProposal</a> <a id="718" class="Symbol">→</a> <a id="720" href="Agda.Builtin.List.html#147" class="Datatype">List</a> <a id="725" href="Ledger.Core.Specification.Gov.Actions.html#10416" class="Record">GovProposal</a> <a id="737" class="Symbol">→</a> <a id="739" href="Agda.Builtin.Maybe.html#135" class="Datatype">Maybe</a> <a id="745" href="Ledger.Conway.Specification.Transaction.html#2528" class="Field">Ix</a>
+<a id="375" class="Keyword">record</a> <a id="indexOf"></a><a id="382" href="Ledger.Conway.Specification.Abstract.html#382" class="Record">indexOf</a> <a id="390" class="Symbol">:</a> <a id="392" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="397" class="Keyword">where</a>
+  <a id="405" class="Keyword">field</a>
+    <a id="indexOf.indexOfDCert"></a><a id="415" href="Ledger.Conway.Specification.Abstract.html#415" class="Field">indexOfDCert</a>    <a id="431" class="Symbol">:</a> <a id="433" href="Ledger.Conway.Specification.Certs.html#2595" class="Datatype">DCert</a> <a id="439" class="Symbol">→</a> <a id="441" href="Agda.Builtin.List.html#147" class="Datatype">List</a> <a id="446" href="Ledger.Conway.Specification.Certs.html#2595" class="Datatype">DCert</a> <a id="452" class="Symbol">→</a> <a id="454" href="Agda.Builtin.Maybe.html#135" class="Datatype">Maybe</a> <a id="460" href="Ledger.Core.Specification.Transaction.html#1972" class="Field">Ix</a>
+    <a id="indexOf.indexOfRwdAddr"></a><a id="467" href="Ledger.Conway.Specification.Abstract.html#467" class="Field">indexOfRwdAddr</a>  <a id="483" class="Symbol">:</a> <a id="485" href="Ledger.Core.Specification.Address.html#2298" class="Record">RwdAddr</a> <a id="493" class="Symbol">→</a> <a id="495" href="Ledger.Core.Specification.Address.html#2373" class="Function">Withdrawals</a> <a id="507" class="Symbol">→</a> <a id="509" href="Agda.Builtin.Maybe.html#135" class="Datatype">Maybe</a> <a id="515" href="Ledger.Core.Specification.Transaction.html#1972" class="Field">Ix</a>
+    <a id="indexOf.indexOfTxIn"></a><a id="522" href="Ledger.Conway.Specification.Abstract.html#522" class="Field">indexOfTxIn</a>     <a id="538" class="Symbol">:</a> <a id="540" href="Ledger.Core.Specification.Transaction.html#3570" class="Function">TxIn</a> <a id="545" class="Symbol">→</a> <a id="547" href="abstract-set-theory.FiniteSetTheory.html#488" class="Function Operator">ℙ</a> <a id="549" href="Ledger.Core.Specification.Transaction.html#3570" class="Function">TxIn</a> <a id="554" class="Symbol">→</a> <a id="556" href="Agda.Builtin.Maybe.html#135" class="Datatype">Maybe</a> <a id="562" href="Ledger.Core.Specification.Transaction.html#1972" class="Field">Ix</a>
+    <a id="indexOf.indexOfPolicyId"></a><a id="569" href="Ledger.Conway.Specification.Abstract.html#569" class="Field">indexOfPolicyId</a> <a id="585" class="Symbol">:</a> <a id="587" href="Ledger.Core.Specification.Crypto.html#1721" class="Function">ScriptHash</a> <a id="598" class="Symbol">→</a> <a id="600" href="abstract-set-theory.FiniteSetTheory.html#488" class="Function Operator">ℙ</a> <a id="602" href="Ledger.Core.Specification.Crypto.html#1721" class="Function">ScriptHash</a> <a id="613" class="Symbol">→</a> <a id="615" href="Agda.Builtin.Maybe.html#135" class="Datatype">Maybe</a> <a id="621" href="Ledger.Core.Specification.Transaction.html#1972" class="Field">Ix</a>
+    <a id="indexOf.indexOfVote"></a><a id="628" href="Ledger.Conway.Specification.Abstract.html#628" class="Field">indexOfVote</a>     <a id="644" class="Symbol">:</a> <a id="646" href="Ledger.Core.Specification.Gov.Actions.html#5453" class="Record">GovVoter</a> <a id="655" class="Symbol">→</a> <a id="657" href="Agda.Builtin.List.html#147" class="Datatype">List</a> <a id="662" href="Ledger.Core.Specification.Gov.Actions.html#5453" class="Record">GovVoter</a> <a id="671" class="Symbol">→</a> <a id="673" href="Agda.Builtin.Maybe.html#135" class="Datatype">Maybe</a> <a id="679" href="Ledger.Core.Specification.Transaction.html#1972" class="Field">Ix</a>
+    <a id="indexOf.indexOfProposal"></a><a id="686" href="Ledger.Conway.Specification.Abstract.html#686" class="Field">indexOfProposal</a> <a id="702" class="Symbol">:</a> <a id="704" href="Ledger.Core.Specification.Gov.Actions.html#10416" class="Record">GovProposal</a> <a id="716" class="Symbol">→</a> <a id="718" href="Agda.Builtin.List.html#147" class="Datatype">List</a> <a id="723" href="Ledger.Core.Specification.Gov.Actions.html#10416" class="Record">GovProposal</a> <a id="735" class="Symbol">→</a> <a id="737" href="Agda.Builtin.Maybe.html#135" class="Datatype">Maybe</a> <a id="743" href="Ledger.Core.Specification.Transaction.html#1972" class="Field">Ix</a>
 
-<a id="749" class="Keyword">record</a> <a id="AbstractFunctions"></a><a id="756" href="Ledger.Conway.Specification.Abstract.html#756" class="Record">AbstractFunctions</a> <a id="774" class="Symbol">:</a> <a id="776" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="781" class="Keyword">where</a>
-  <a id="789" class="Keyword">field</a> <a id="AbstractFunctions.txscriptfee"></a><a id="795" href="Ledger.Conway.Specification.Abstract.html#795" class="Field">txscriptfee</a>  <a id="808" class="Symbol">:</a> <a id="810" href="Ledger.Core.Specification.Script.Base.html#1099" class="Function">Prices</a> <a id="817" class="Symbol">→</a> <a id="819" href="Ledger.Core.Specification.Script.Base.html#1118" class="Function">ExUnits</a> <a id="827" class="Symbol">→</a> <a id="829" href="Ledger.Prelude.Base.html#234" class="Function">Coin</a>
-        <a id="AbstractFunctions.serSize"></a><a id="842" href="Ledger.Conway.Specification.Abstract.html#842" class="Field">serSize</a>      <a id="855" class="Symbol">:</a> <a id="857" href="Ledger.Core.Specification.TokenAlgebra.Base.html#788" class="Function">Value</a> <a id="863" class="Symbol">→</a> <a id="865" href="Ledger.Core.Specification.TokenAlgebra.Base.html#669" class="Function">MemoryEstimate</a>
-        <a id="AbstractFunctions.indexOfImp"></a><a id="888" href="Ledger.Conway.Specification.Abstract.html#888" class="Field">indexOfImp</a>   <a id="901" class="Symbol">:</a> <a id="903" href="Ledger.Conway.Specification.Abstract.html#384" class="Record">indexOf</a>
-        <a id="AbstractFunctions.runPLCScript"></a><a id="919" href="Ledger.Conway.Specification.Abstract.html#919" class="Field">runPLCScript</a> <a id="932" class="Symbol">:</a> <a id="934" href="Ledger.Core.Specification.Script.Base.html#1089" class="Function">CostModel</a> <a id="944" class="Symbol">→</a> <a id="946" href="Ledger.Core.Specification.Script.Base.html#2465" class="Function">P2Script</a> <a id="955" class="Symbol">→</a> <a id="957" href="Ledger.Core.Specification.Script.Base.html#1118" class="Function">ExUnits</a> <a id="965" class="Symbol">→</a> <a id="967" href="Agda.Builtin.List.html#147" class="Datatype">List</a> <a id="972" href="Ledger.Core.Specification.Script.Base.html#1808" class="Function">Data</a> <a id="977" class="Symbol">→</a> <a id="979" href="Agda.Builtin.Bool.html#173" class="Datatype">Bool</a>
-        <a id="AbstractFunctions.scriptSize"></a><a id="992" href="Ledger.Conway.Specification.Abstract.html#992" class="Field">scriptSize</a>   <a id="1005" class="Symbol">:</a> <a id="1007" href="Ledger.Core.Specification.Script.Base.html#2543" class="Function">Script</a> <a id="1014" class="Symbol">→</a> <a id="1016" href="Agda.Builtin.Nat.html#203" class="Datatype">ℕ</a>
+<a id="747" class="Keyword">record</a> <a id="AbstractFunctions"></a><a id="754" href="Ledger.Conway.Specification.Abstract.html#754" class="Record">AbstractFunctions</a> <a id="772" class="Symbol">:</a> <a id="774" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="779" class="Keyword">where</a>
+  <a id="787" class="Keyword">field</a> <a id="AbstractFunctions.txscriptfee"></a><a id="793" href="Ledger.Conway.Specification.Abstract.html#793" class="Field">txscriptfee</a>  <a id="806" class="Symbol">:</a> <a id="808" href="Ledger.Core.Specification.Script.Base.html#1099" class="Function">Prices</a> <a id="815" class="Symbol">→</a> <a id="817" href="Ledger.Core.Specification.Script.Base.html#1118" class="Function">ExUnits</a> <a id="825" class="Symbol">→</a> <a id="827" href="Ledger.Prelude.Base.html#234" class="Function">Coin</a>
+        <a id="AbstractFunctions.serSize"></a><a id="840" href="Ledger.Conway.Specification.Abstract.html#840" class="Field">serSize</a>      <a id="853" class="Symbol">:</a> <a id="855" href="Ledger.Core.Specification.TokenAlgebra.Base.html#788" class="Function">Value</a> <a id="861" class="Symbol">→</a> <a id="863" href="Ledger.Core.Specification.TokenAlgebra.Base.html#669" class="Function">MemoryEstimate</a>
+        <a id="AbstractFunctions.indexOfImp"></a><a id="886" href="Ledger.Conway.Specification.Abstract.html#886" class="Field">indexOfImp</a>   <a id="899" class="Symbol">:</a> <a id="901" href="Ledger.Conway.Specification.Abstract.html#382" class="Record">indexOf</a>
+        <a id="AbstractFunctions.runPLCScript"></a><a id="917" href="Ledger.Conway.Specification.Abstract.html#917" class="Field">runPLCScript</a> <a id="930" class="Symbol">:</a> <a id="932" href="Ledger.Core.Specification.Script.Base.html#1089" class="Function">CostModel</a> <a id="942" class="Symbol">→</a> <a id="944" href="Ledger.Core.Specification.Script.Base.html#2465" class="Function">P2Script</a> <a id="953" class="Symbol">→</a> <a id="955" href="Ledger.Core.Specification.Script.Base.html#1118" class="Function">ExUnits</a> <a id="963" class="Symbol">→</a> <a id="965" href="Agda.Builtin.List.html#147" class="Datatype">List</a> <a id="970" href="Ledger.Core.Specification.Script.Base.html#1808" class="Function">Data</a> <a id="975" class="Symbol">→</a> <a id="977" href="Agda.Builtin.Bool.html#173" class="Datatype">Bool</a>
+        <a id="AbstractFunctions.scriptSize"></a><a id="990" href="Ledger.Conway.Specification.Abstract.html#990" class="Field">scriptSize</a>   <a id="1003" class="Symbol">:</a> <a id="1005" href="Ledger.Core.Specification.Script.Base.html#2543" class="Function">Script</a> <a id="1012" class="Symbol">→</a> <a id="1014" href="Agda.Builtin.Nat.html#203" class="Datatype">ℕ</a>
 </pre>
 
 
