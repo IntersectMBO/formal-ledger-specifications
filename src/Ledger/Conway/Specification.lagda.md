@@ -124,13 +124,6 @@ import Ledger.Conway.Specification.Script
 import Ledger.Conway.Specification.Script.Validation
 ```
 
-## Tests and Examples
-
-```agda
-import Test.Examples
-import Test.StructuredContracts
-```
-
 ## Token Algebras
 
 ```agda

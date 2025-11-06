@@ -78,7 +78,7 @@ evalTransanctionsW env (success s) (tx' ∷ txs') =
   maybe
     (λ tx → evalTransanctions
               initEnv
-              (UTXO-stepW initEnv s tx)
+              (UTXO-step initEnv s tx)
               txs')
     (failure "failed to generate tx")
     (makeTx s multiSigScript tx')

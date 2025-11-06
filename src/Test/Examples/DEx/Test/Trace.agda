@@ -42,17 +42,17 @@ initState' : UTxO
 initState' = fromList' (createInitUtxoState 5 startValue)
 
 
-data Tx' : Set where   
+data Tx' : Set where
     start      : ℕ → Value → Q.ℚ → Tx'
     close      : ℕ → Tx'
     updatetx   : ℕ → Value → Q.ℚ → Tx'
     exchange   : ℕ → Value → Tx'
-    
+
 
 makeTx : UTxOState → PlutusScript → Tx' → (id : ℕ) → Maybe Tx
 makeTx s script (start w v r) id = just (startTx id w 999 v r script)
 makeTx s script (close w) id = makeCloseTx id s script w
-makeTx s script (updatetx w v r) id = makeUpdateTx id s script w v r 
+makeTx s script (updatetx w v r) id = makeUpdateTx id s script w v r
 makeTx s script (exchange w v) id = makeExchangeTx id s script w v
 
 evalTransanctions : UTxOEnv → ComputationResult String UTxOState → List Tx' → ℕ → ComputationResult String UTxOState
@@ -75,7 +75,7 @@ evalTransanctionsW env (success s) (tx' ∷ txs') id =
   maybe
     (λ tx → evalTransanctions
               initEnv
-              (UTXO-stepW initEnv s tx)
+              (UTXO-step initEnv s tx)
               txs'
               (suc id))
     (failure "failed to generate tx")
@@ -105,7 +105,7 @@ validTrace = start 5 (adaValueOf 80000000) rate
 
 validTrace2 : List Tx'
 validTrace2 = start 5 (adaValueOf 8000000000) rate
-              ∷ exchange 1 (adaValueOf 70000000) 
+              ∷ exchange 1 (adaValueOf 70000000)
               ∷ []
 
 
@@ -123,7 +123,7 @@ opaque
 
   evalValidTrace : ComputationResult String UTxOState
   evalValidTrace = evalTransanctionsW initEnv (success ⟦ initState' , 0 , ∅ , 0 ⟧ᵘ) validTrace 6
-  
+
   evalValidTrace2 : ComputationResult String UTxOState
   evalValidTrace2 = evalTransanctionsW initEnv (success ⟦ initState' , 0 , ∅ , 0 ⟧ᵘ) validTrace2 6
 
@@ -137,4 +137,4 @@ opaque
   _ = refl
 
   _ : isSuccess evalFailingTrace ≡ false
-  _ = refl 
+  _ = refl
