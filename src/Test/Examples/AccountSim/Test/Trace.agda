@@ -47,9 +47,9 @@ data Tx' : Set where
     openn      : ℕ → Tx'
     close      : ℕ → Tx'
     withdraw   : ℕ → Value → Tx'
-    deposit    : ℕ -> Value -> Tx'
-    transfer   : ℕ -> ℕ -> Value -> Tx'
-    cleanup    : ℕ -> Tx'
+    deposit    : ℕ → Value → Tx'
+    transfer   : ℕ → ℕ → Value → Tx'
+    cleanup    : ℕ → Tx'
 
 
 makeTx : UTxOState → PlutusScript → Tx' → (id : ℕ) → Maybe Tx
@@ -82,7 +82,7 @@ evalTransanctionsW env (success s) (tx' ∷ txs') id =
   maybe
     (λ tx → evalTransanctions
               initEnv
-              (UTXO-stepW initEnv s tx)
+              (UTXO-step initEnv s tx)
               txs'
               (suc id))
     (failure "failed to generate tx")

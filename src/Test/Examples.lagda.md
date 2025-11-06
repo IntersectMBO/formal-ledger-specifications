@@ -7,7 +7,7 @@ The "Examples" module aims to add a couple of example smart contract
 validators written as part of the Cardano Formal Ledger Specification.
 These validator scripts are functions that examine a transaction and decide
 if the UTxO locked by their script can be spent as part of the current
-transaction. 
+transaction.
 
 <!--
 ```agda
@@ -30,7 +30,7 @@ of the UTxO rule, we also run the scripts locking any consumed outputs,
 which in our case are the validator scripts.
 
 The other examples are more in-depth and are separated across
-multiple modules. 
+multiple modules.
 
 ```agda
 import Test.Examples.MultiSig.Datum
@@ -69,8 +69,7 @@ Formal Ledger Rules.
 An "OffChain" folder, which defines the "endpoints" used to interact with
 our account. Essentially, this defines a way to easily create a transaction
 where we are attempting to execute one of the actions our validator
-might allow. This includes various aspects, such as making sure the transaction 
-
+might allow. This includes various aspects, such as making sure the transaction
 is signed by the right person, that the correct fees are paid, that payments
 are sent to the correct recipients, that the smart contract self-perpetuates, etc.
 
@@ -93,7 +92,7 @@ a payment. This trace succeeds and is tested with both the UTxO and UTxOw
 rules. We also have a failing trace, where after the first payment, we try
 to propose another payment of a larger amount than is contained in the wallet,
 which naturally fails.
- 
+
 ```agda
 import Test.Examples.AccountSim.Datum
 import Test.Examples.AccountSim.Validator
