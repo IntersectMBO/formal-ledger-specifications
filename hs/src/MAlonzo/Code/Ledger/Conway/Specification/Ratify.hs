@@ -47,10 +47,10 @@ import qualified MAlonzo.Code.Data.Rational.Properties
 import qualified MAlonzo.Code.Data.Refinement.Base
 import qualified MAlonzo.Code.Data.Sum.Base
 import qualified MAlonzo.Code.Function.Base
-import qualified MAlonzo.Code.Ledger.Conway.Specification.Certs
 import qualified MAlonzo.Code.Ledger.Conway.Specification.Enact
 import qualified MAlonzo.Code.Ledger.Conway.Specification.PParams
 import qualified MAlonzo.Code.Ledger.Core.Specification.Address
+import qualified MAlonzo.Code.Ledger.Core.Specification.Certs
 import qualified MAlonzo.Code.Ledger.Core.Specification.Crypto
 import qualified MAlonzo.Code.Ledger.Core.Specification.Epoch
 import qualified MAlonzo.Code.Ledger.Core.Specification.Gov.Actions
@@ -495,11 +495,11 @@ d_treasuryCut_1294 v0
       (coe v0)
 -- Ledger.Conway.Specification.Ratify._.DRepsOf
 d_DRepsOf_1798 ::
-  MAlonzo.Code.Ledger.Conway.Specification.Certs.T_HasDReps_1170 ->
+  MAlonzo.Code.Ledger.Core.Specification.Certs.T_HasDReps_1170 ->
   AgdaAny -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_DRepsOf_1798 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Specification.Certs.d_DRepsOf_1178
+      MAlonzo.Code.Ledger.Core.Specification.Certs.d_DRepsOf_1178
       (coe v0)
 -- Ledger.Conway.Specification.Ratify._.HasDReps
 d_HasDReps_1858 a0 a1 a2 = ()
@@ -512,50 +512,47 @@ d_Pools_1944 = erased
 d_StakePoolParams_1964 a0 = ()
 -- Ledger.Conway.Specification.Ratify._.HasDReps.DRepsOf
 d_DRepsOf_2114 ::
-  MAlonzo.Code.Ledger.Conway.Specification.Certs.T_HasDReps_1170 ->
+  MAlonzo.Code.Ledger.Core.Specification.Certs.T_HasDReps_1170 ->
   AgdaAny -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_DRepsOf_2114 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Specification.Certs.d_DRepsOf_1178
+      MAlonzo.Code.Ledger.Core.Specification.Certs.d_DRepsOf_1178
       (coe v0)
 -- Ledger.Conway.Specification.Ratify._.StakePoolParams.cost
 d_cost_2162 ::
-  MAlonzo.Code.Ledger.Conway.Specification.Certs.T_StakePoolParams_1076 ->
+  MAlonzo.Code.Ledger.Core.Specification.Certs.T_StakePoolParams_1076 ->
   Integer
 d_cost_2162 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Specification.Certs.d_cost_1090 (coe v0)
+      MAlonzo.Code.Ledger.Core.Specification.Certs.d_cost_1090 (coe v0)
 -- Ledger.Conway.Specification.Ratify._.StakePoolParams.margin
 d_margin_2164 ::
-  MAlonzo.Code.Ledger.Conway.Specification.Certs.T_StakePoolParams_1076 ->
+  MAlonzo.Code.Ledger.Core.Specification.Certs.T_StakePoolParams_1076 ->
   MAlonzo.Code.Data.Refinement.Base.T_Refinement_28
 d_margin_2164 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Specification.Certs.d_margin_1092
-      (coe v0)
+      MAlonzo.Code.Ledger.Core.Specification.Certs.d_margin_1092 (coe v0)
 -- Ledger.Conway.Specification.Ratify._.StakePoolParams.owners
 d_owners_2166 ::
-  MAlonzo.Code.Ledger.Conway.Specification.Certs.T_StakePoolParams_1076 ->
+  MAlonzo.Code.Ledger.Core.Specification.Certs.T_StakePoolParams_1076 ->
   [AgdaAny]
 d_owners_2166 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Specification.Certs.d_owners_1088
-      (coe v0)
+      MAlonzo.Code.Ledger.Core.Specification.Certs.d_owners_1088 (coe v0)
 -- Ledger.Conway.Specification.Ratify._.StakePoolParams.pledge
 d_pledge_2168 ::
-  MAlonzo.Code.Ledger.Conway.Specification.Certs.T_StakePoolParams_1076 ->
+  MAlonzo.Code.Ledger.Core.Specification.Certs.T_StakePoolParams_1076 ->
   Integer
 d_pledge_2168 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Specification.Certs.d_pledge_1094
-      (coe v0)
+      MAlonzo.Code.Ledger.Core.Specification.Certs.d_pledge_1094 (coe v0)
 -- Ledger.Conway.Specification.Ratify._.StakePoolParams.rewardAccount
 d_rewardAccount_2170 ::
-  MAlonzo.Code.Ledger.Conway.Specification.Certs.T_StakePoolParams_1076 ->
+  MAlonzo.Code.Ledger.Core.Specification.Certs.T_StakePoolParams_1076 ->
   MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20
 d_rewardAccount_2170 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Specification.Certs.d_rewardAccount_1096
+      MAlonzo.Code.Ledger.Core.Specification.Certs.d_rewardAccount_1096
       (coe v0)
 -- Ledger.Conway.Specification.Ratify._._⊢_⇀⦇_,ENACT⦈_
 d__'8866'_'8640''10631'_'44'ENACT'10632'__2174 a0 a1 a2 a3 a4 = ()
@@ -1179,13 +1176,13 @@ du_HasEnactState'45'RatifyState_2542
 -- Ledger.Conway.Specification.Ratify.HasDReps-RatifyEnv
 d_HasDReps'45'RatifyEnv_2544 ::
   MAlonzo.Code.Ledger.Core.Specification.Transaction.T_TransactionStructure_24 ->
-  MAlonzo.Code.Ledger.Conway.Specification.Certs.T_HasDReps_1170
+  MAlonzo.Code.Ledger.Core.Specification.Certs.T_HasDReps_1170
 d_HasDReps'45'RatifyEnv_2544 ~v0 = du_HasDReps'45'RatifyEnv_2544
 du_HasDReps'45'RatifyEnv_2544 ::
-  MAlonzo.Code.Ledger.Conway.Specification.Certs.T_HasDReps_1170
+  MAlonzo.Code.Ledger.Core.Specification.Certs.T_HasDReps_1170
 du_HasDReps'45'RatifyEnv_2544
   = coe
-      MAlonzo.Code.Ledger.Conway.Specification.Certs.C_constructor_1180
+      MAlonzo.Code.Ledger.Core.Specification.Certs.C_constructor_1180
       (coe (\ v0 -> d_dreps_2494 (coe v0)))
 -- Ledger.Conway.Specification.Ratify.HasTreasury-RatifyEnv
 d_HasTreasury'45'RatifyEnv_2546 ::
@@ -3241,7 +3238,7 @@ du_defaultVote_2902 v0 v1 v2 v3 v4
                               MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                         (coe v1)
                         (coe
-                           MAlonzo.Code.Ledger.Conway.Specification.Certs.d_rewardAccount_1096
+                           MAlonzo.Code.Ledger.Core.Specification.Certs.d_rewardAccount_1096
                            (coe v6))
                         (coe
                            MAlonzo.Code.Class.Decidable.Core.du_'8263''178'__102
@@ -3264,7 +3261,7 @@ du_defaultVote_2902 v0 v1 v2 v3 v4
                                        MAlonzo.Code.Ledger.Core.Specification.Transaction.d_cryptoStructure_1322
                                        (coe v0)))))
                            (coe
-                              MAlonzo.Code.Ledger.Conway.Specification.Certs.d_rewardAccount_1096
+                              MAlonzo.Code.Ledger.Core.Specification.Certs.d_rewardAccount_1096
                               (coe v6))
                            (let v7
                                   = MAlonzo.Code.Axiom.Set.d_th_1516

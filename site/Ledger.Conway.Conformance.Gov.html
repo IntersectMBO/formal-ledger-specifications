@@ -867,7 +867,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Abstract.html" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Abstract.md" class="md-nav__link">
         
   
   
@@ -3971,7 +3971,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Test.Examples.md" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Test.Examples.html" class="md-nav__link">
         
   
   
@@ -4037,7 +4037,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Test.Examples.HelloWorld.md" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Test.Examples.HelloWorld.html" class="md-nav__link">
         
   
   
@@ -4060,7 +4060,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Test.Examples.SucceedIfNumber.md" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Test.Examples.SucceedIfNumber.html" class="md-nav__link">
         
   
   
@@ -4091,7 +4091,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Test.LedgerImplementation.md" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Test.LedgerImplementation.html" class="md-nav__link">
         
   
   
@@ -4114,7 +4114,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Test.Lib.md" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Test.Lib.html" class="md-nav__link">
         
   
   
@@ -4137,7 +4137,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Test.Prelude.md" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Test.Prelude.html" class="md-nav__link">
         
   
   
@@ -4160,7 +4160,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Test.StructuredContracts.md" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Test.StructuredContracts.html" class="md-nav__link">
         
   
   
@@ -8418,48 +8418,45 @@
 
 <pre class="Agda"><a id="92" class="Symbol">{-#</a> <a id="96" class="Keyword">OPTIONS</a> <a id="104" class="Pragma">--safe</a> <a id="111" class="Symbol">#-}</a>
 
-<a id="116" class="Keyword">open</a> <a id="121" class="Keyword">import</a> <a id="128" href="Ledger.Conway.Specification.Abstract.html" class="Module">Ledger.Conway.Specification.Abstract</a>
-<a id="165" class="Keyword">open</a> <a id="170" class="Keyword">import</a> <a id="177" href="Ledger.Core.Specification.Transaction.html" class="Module">Ledger.Core.Specification.Transaction</a>
+<a id="116" class="Keyword">open</a> <a id="121" class="Keyword">import</a> <a id="128" href="Ledger.Core.Specification.Abstract.html" class="Module">Ledger.Core.Specification.Abstract</a>
+<a id="163" class="Keyword">open</a> <a id="168" class="Keyword">import</a> <a id="175" href="Ledger.Core.Specification.Transaction.html" class="Module">Ledger.Core.Specification.Transaction</a>
 
-<a id="216" class="Keyword">module</a> <a id="223" href="Ledger.Conway.Conformance.Gov.html" class="Module">Ledger.Conway.Conformance.Gov</a>
-  <a id="255" class="Symbol">(</a><a id="256" href="Ledger.Conway.Conformance.Gov.html#256" class="Bound">txs</a> <a id="260" class="Symbol">:</a> <a id="262" href="Ledger.Core.Specification.Transaction.html#1895" class="Record">TransactionStructure</a><a id="282" class="Symbol">)</a> <a id="284" class="Symbol">(</a><a id="285" class="Keyword">open</a> <a id="290" href="Ledger.Core.Specification.Transaction.html#1895" class="Module">TransactionStructure</a> <a id="311" href="Ledger.Conway.Conformance.Gov.html#256" class="Bound">txs</a> <a id="315" class="Keyword">hiding</a> <a id="322" class="Symbol">(</a><a id="323" href="Ledger.Core.Specification.Epoch.html#954" class="Function">epoch</a><a id="328" class="Symbol">))</a>
-  <a id="333" class="Symbol">(</a><a id="334" href="Ledger.Conway.Conformance.Gov.html#334" class="Bound">abs</a> <a id="338" class="Symbol">:</a> <a id="340" href="Ledger.Conway.Specification.Abstract.html#754" class="Record">AbstractFunctions</a> <a id="358" href="Ledger.Conway.Conformance.Gov.html#256" class="Bound">txs</a><a id="361" class="Symbol">)</a> <a id="363" class="Symbol">(</a><a id="364" class="Keyword">open</a> <a id="369" href="Ledger.Conway.Specification.Abstract.html#754" class="Module">AbstractFunctions</a> <a id="387" href="Ledger.Conway.Conformance.Gov.html#334" class="Bound">abs</a><a id="390" class="Symbol">)</a>
-  <a id="394" class="Keyword">where</a>
+<a id="214" class="Keyword">module</a> <a id="221" href="Ledger.Conway.Conformance.Gov.html" class="Module">Ledger.Conway.Conformance.Gov</a>
+  <a id="253" class="Symbol">(</a><a id="254" href="Ledger.Conway.Conformance.Gov.html#254" class="Bound">txs</a> <a id="258" class="Symbol">:</a> <a id="260" href="Ledger.Core.Specification.Transaction.html#1895" class="Record">TransactionStructure</a><a id="280" class="Symbol">)</a> <a id="282" class="Symbol">(</a><a id="283" class="Keyword">open</a> <a id="288" href="Ledger.Core.Specification.Transaction.html#1895" class="Module">TransactionStructure</a> <a id="309" href="Ledger.Conway.Conformance.Gov.html#254" class="Bound">txs</a> <a id="313" class="Keyword">hiding</a> <a id="320" class="Symbol">(</a><a id="321" href="Ledger.Core.Specification.Epoch.html#954" class="Function">epoch</a><a id="326" class="Symbol">))</a>
+  <a id="331" class="Symbol">(</a><a id="332" href="Ledger.Conway.Conformance.Gov.html#332" class="Bound">abs</a> <a id="336" class="Symbol">:</a> <a id="338" href="Ledger.Core.Specification.Abstract.html#750" class="Record">AbstractFunctions</a> <a id="356" href="Ledger.Conway.Conformance.Gov.html#254" class="Bound">txs</a><a id="359" class="Symbol">)</a>
+  <a id="363" class="Keyword">where</a>
 
-<a id="401" class="Keyword">open</a> <a id="406" class="Keyword">import</a> <a id="413" href="Ledger.Prelude.html" class="Module">Ledger.Prelude</a>
+<a id="370" class="Keyword">open</a> <a id="375" class="Keyword">import</a> <a id="382" href="Ledger.Prelude.html" class="Module">Ledger.Prelude</a>
 
-<a id="429" class="Keyword">open</a> <a id="434" class="Keyword">import</a> <a id="441" href="Axiom.Set.Properties.html" class="Module">Axiom.Set.Properties</a> <a id="462" href="Axiom.Set.html#10936" class="Function">th</a> <a id="465" class="Keyword">using</a> <a id="471" class="Symbol">(</a><a id="472" href="Axiom.Set.Properties.html#17410" class="Function">∃-sublist-⇔</a><a id="483" class="Symbol">)</a>
+<a id="398" class="Keyword">open</a> <a id="403" class="Keyword">import</a> <a id="410" href="Ledger.Conway.Conformance.Certs.html" class="Module">Ledger.Conway.Conformance.Certs</a> <a id="442" href="Ledger.Core.Specification.Transaction.html#3013" class="Function">govStructure</a>
+<a id="455" class="Keyword">open</a> <a id="460" class="Keyword">import</a> <a id="467" href="Ledger.Conway.Conformance.Equivalence.Certs.html" class="Module">Ledger.Conway.Conformance.Equivalence.Certs</a> <a id="511" href="Ledger.Conway.Conformance.Gov.html#254" class="Bound">txs</a> <a id="515" href="Ledger.Conway.Conformance.Gov.html#332" class="Bound">abs</a>
+<a id="519" class="Keyword">open</a> <a id="524" class="Keyword">import</a> <a id="531" href="Ledger.Conway.Conformance.Equivalence.Convert.html" class="Module">Ledger.Conway.Conformance.Equivalence.Convert</a>
 
-<a id="486" class="Keyword">open</a> <a id="491" class="Keyword">import</a> <a id="498" href="Ledger.Conway.Specification.Enact.html" class="Module">Ledger.Conway.Specification.Enact</a> <a id="532" href="Ledger.Core.Specification.Transaction.html#3013" class="Function">govStructure</a>
-<a id="545" class="Keyword">open</a> <a id="550" class="Keyword">import</a> <a id="557" href="Ledger.Conway.Specification.Ledger.html" class="Module">Ledger.Conway.Specification.Ledger</a> <a id="592" href="Ledger.Conway.Conformance.Gov.html#256" class="Bound">txs</a> <a id="596" href="Ledger.Conway.Conformance.Gov.html#334" class="Bound">abs</a>
-
-<a id="601" class="Keyword">open</a> <a id="606" class="Keyword">import</a> <a id="613" href="Ledger.Conway.Conformance.Certs.html" class="Module">Ledger.Conway.Conformance.Certs</a> <a id="645" href="Ledger.Core.Specification.Transaction.html#3013" class="Function">govStructure</a>
-<a id="658" class="Keyword">open</a> <a id="663" class="Keyword">import</a> <a id="670" href="Ledger.Conway.Conformance.Equivalence.Certs.html" class="Module">Ledger.Conway.Conformance.Equivalence.Certs</a> <a id="714" href="Ledger.Conway.Conformance.Gov.html#256" class="Bound">txs</a> <a id="718" href="Ledger.Conway.Conformance.Gov.html#334" class="Bound">abs</a>
-<a id="722" class="Keyword">open</a> <a id="727" class="Keyword">import</a> <a id="734" href="Ledger.Conway.Conformance.Equivalence.Convert.html" class="Module">Ledger.Conway.Conformance.Equivalence.Convert</a>
-
-<a id="781" class="Keyword">open</a> <a id="786" class="Keyword">import</a> <a id="793" href="Ledger.Conway.Specification.Gov.html" class="Module">Ledger.Conway.Specification.Gov</a> <a id="825" href="Ledger.Conway.Conformance.Gov.html#256" class="Bound">txs</a> <a id="829" class="Keyword">using</a> <a id="835" class="Symbol">(</a><a id="836" href="Ledger.Conway.Specification.Gov.html#2044" class="Function">GovState</a><a id="844" class="Symbol">)</a> <a id="846" class="Keyword">public</a>
-<a id="853" class="Keyword">import</a> <a id="860" href="Ledger.Conway.Specification.Gov.html" class="Module">Ledger.Conway.Specification.Gov</a> <a id="892" href="Ledger.Conway.Conformance.Gov.html#256" class="Bound">txs</a> <a id="896" class="Symbol">as</a> <a id="L"></a><a id="899" href="Ledger.Conway.Conformance.Gov.html#899" class="Module">L</a>
+<a id="578" class="Keyword">open</a> <a id="583" class="Keyword">import</a> <a id="590" href="Ledger.Conway.Specification.Enact.html" class="Module">Ledger.Conway.Specification.Enact</a> <a id="624" href="Ledger.Core.Specification.Transaction.html#3013" class="Function">govStructure</a>
+<a id="637" class="Keyword">open</a> <a id="642" class="Keyword">import</a> <a id="649" href="Ledger.Conway.Specification.Gov.html" class="Module">Ledger.Conway.Specification.Gov</a> <a id="681" href="Ledger.Conway.Conformance.Gov.html#254" class="Bound">txs</a> <a id="685" class="Keyword">using</a> <a id="691" class="Symbol">(</a><a id="692" href="Ledger.Conway.Specification.Gov.html#2044" class="Function">GovState</a><a id="700" class="Symbol">)</a> <a id="702" class="Keyword">public</a>
+<a id="709" class="Keyword">import</a> <a id="716" href="Ledger.Conway.Specification.Gov.html" class="Module">Ledger.Conway.Specification.Gov</a> <a id="748" href="Ledger.Conway.Conformance.Gov.html#254" class="Bound">txs</a> <a id="752" class="Symbol">as</a> <a id="L"></a><a id="755" href="Ledger.Conway.Conformance.Gov.html#755" class="Module">L</a>
+<a id="757" class="Keyword">open</a> <a id="762" class="Keyword">import</a> <a id="769" href="Ledger.Conway.Specification.Ledger.html" class="Module">Ledger.Conway.Specification.Ledger</a> <a id="804" href="Ledger.Conway.Conformance.Gov.html#254" class="Bound">txs</a> <a id="808" href="Ledger.Conway.Conformance.Gov.html#332" class="Bound">abs</a>
 
 
-<a id="903" class="Keyword">record</a> <a id="GovEnv"></a><a id="910" href="Ledger.Conway.Conformance.Gov.html#910" class="Record">GovEnv</a> <a id="917" class="Symbol">:</a> <a id="919" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="924" class="Keyword">where</a>
-  <a id="932" class="Keyword">field</a>
-    <a id="GovEnv.txid"></a><a id="942" href="Ledger.Conway.Conformance.Gov.html#942" class="Field">txid</a>        <a id="954" class="Symbol">:</a> <a id="956" href="Ledger.Core.Specification.Transaction.html#1975" class="Field">TxId</a>
-    <a id="GovEnv.epoch"></a><a id="965" href="Ledger.Conway.Conformance.Gov.html#965" class="Field">epoch</a>       <a id="977" class="Symbol">:</a> <a id="979" href="Ledger.Core.Specification.Epoch.html#742" class="Function">Epoch</a>
-    <a id="GovEnv.pparams"></a><a id="989" href="Ledger.Conway.Conformance.Gov.html#989" class="Field">pparams</a>     <a id="1001" class="Symbol">:</a> <a id="1003" href="Ledger.Conway.Specification.PParams.html#5524" class="Record">PParams</a>
-    <a id="GovEnv.ppolicy"></a><a id="1015" href="Ledger.Conway.Conformance.Gov.html#1015" class="Field">ppolicy</a>     <a id="1027" class="Symbol">:</a> <a id="1029" href="Agda.Builtin.Maybe.html#135" class="Datatype">Maybe</a> <a id="1035" href="Ledger.Core.Specification.Crypto.html#1721" class="Function">ScriptHash</a>
-    <a id="GovEnv.enactState"></a><a id="1050" href="Ledger.Conway.Conformance.Gov.html#1050" class="Field">enactState</a>  <a id="1062" class="Symbol">:</a> <a id="1064" href="Ledger.Conway.Specification.Enact.html#1630" class="Record">EnactState</a>
-    <a id="GovEnv.certState"></a><a id="1079" href="Ledger.Conway.Conformance.Gov.html#1079" class="Field">certState</a>   <a id="1091" class="Symbol">:</a> <a id="1093" href="Ledger.Conway.Conformance.Certs.html#1045" class="Record">CertState</a>
-    <a id="GovEnv.rewardCreds"></a><a id="1107" href="Ledger.Conway.Conformance.Gov.html#1107" class="Field">rewardCreds</a> <a id="1119" class="Symbol">:</a> <a id="1121" href="abstract-set-theory.FiniteSetTheory.html#488" class="Function Operator">ℙ</a> <a id="1123" href="Ledger.Core.Specification.Address.html#1214" class="Datatype">Credential</a>
+<a id="814" class="Keyword">record</a> <a id="GovEnv"></a><a id="821" href="Ledger.Conway.Conformance.Gov.html#821" class="Record">GovEnv</a> <a id="828" class="Symbol">:</a> <a id="830" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="835" class="Keyword">where</a>
+  <a id="843" class="Keyword">field</a>
+    <a id="GovEnv.txid"></a><a id="853" href="Ledger.Conway.Conformance.Gov.html#853" class="Field">txid</a>        <a id="865" class="Symbol">:</a> <a id="867" href="Ledger.Core.Specification.Transaction.html#1975" class="Field">TxId</a>
+    <a id="GovEnv.epoch"></a><a id="876" href="Ledger.Conway.Conformance.Gov.html#876" class="Field">epoch</a>       <a id="888" class="Symbol">:</a> <a id="890" href="Ledger.Core.Specification.Epoch.html#742" class="Function">Epoch</a>
+    <a id="GovEnv.pparams"></a><a id="900" href="Ledger.Conway.Conformance.Gov.html#900" class="Field">pparams</a>     <a id="912" class="Symbol">:</a> <a id="914" href="Ledger.Conway.Specification.PParams.html#5524" class="Record">PParams</a>
+    <a id="GovEnv.ppolicy"></a><a id="926" href="Ledger.Conway.Conformance.Gov.html#926" class="Field">ppolicy</a>     <a id="938" class="Symbol">:</a> <a id="940" href="Agda.Builtin.Maybe.html#135" class="Datatype">Maybe</a> <a id="946" href="Ledger.Core.Specification.Crypto.html#1721" class="Function">ScriptHash</a>
+    <a id="GovEnv.enactState"></a><a id="961" href="Ledger.Conway.Conformance.Gov.html#961" class="Field">enactState</a>  <a id="973" class="Symbol">:</a> <a id="975" href="Ledger.Conway.Specification.Enact.html#1630" class="Record">EnactState</a>
+    <a id="GovEnv.certState"></a><a id="990" href="Ledger.Conway.Conformance.Gov.html#990" class="Field">certState</a>   <a id="1002" class="Symbol">:</a> <a id="1004" href="Ledger.Conway.Conformance.Certs.html#1045" class="Record">CertState</a>
+    <a id="GovEnv.rewardCreds"></a><a id="1018" href="Ledger.Conway.Conformance.Gov.html#1018" class="Field">rewardCreds</a> <a id="1030" class="Symbol">:</a> <a id="1032" href="abstract-set-theory.FiniteSetTheory.html#488" class="Function Operator">ℙ</a> <a id="1034" href="Ledger.Core.Specification.Address.html#1214" class="Datatype">Credential</a>
 
-<a id="1135" class="Keyword">instance</a>
-  <a id="1146" class="Keyword">unquoteDecl</a> <a id="HasCast-GovEnv"></a><a id="1158" href="Ledger.Conway.Conformance.Gov.html#1158" class="Function">HasCast-GovEnv</a> <a id="1173" class="Symbol">=</a> <a id="1175" href="stdlib-classes.Class.HasCast.Derive.html#2690" class="Function">derive-HasCast</a>
-    <a id="1194" href="Data.List.Base.html#4907" class="Function Operator">[</a> <a id="1196" class="Symbol">(</a><a id="1197" class="Keyword">quote</a> <a id="1203" href="Ledger.Conway.Conformance.Gov.html#910" class="Record">GovEnv</a> <a id="1210" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="1212" href="Ledger.Conway.Conformance.Gov.html#1158" class="Function">HasCast-GovEnv</a><a id="1226" class="Symbol">)</a> <a id="1228" href="Data.List.Base.html#4907" class="Function Operator">]</a>
+<a id="1046" class="Keyword">instance</a>
+  <a id="1057" class="Keyword">unquoteDecl</a> <a id="HasCast-GovEnv"></a><a id="1069" href="Ledger.Conway.Conformance.Gov.html#1069" class="Function">HasCast-GovEnv</a> <a id="1084" class="Symbol">=</a> <a id="1086" href="stdlib-classes.Class.HasCast.Derive.html#2690" class="Function">derive-HasCast</a>
+    <a id="1105" href="Data.List.Base.html#4907" class="Function Operator">[</a> <a id="1107" class="Symbol">(</a><a id="1108" class="Keyword">quote</a> <a id="1114" href="Ledger.Conway.Conformance.Gov.html#821" class="Record">GovEnv</a> <a id="1121" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="1123" href="Ledger.Conway.Conformance.Gov.html#1069" class="Function">HasCast-GovEnv</a><a id="1137" class="Symbol">)</a> <a id="1139" href="Data.List.Base.html#4907" class="Function Operator">]</a>
 
-<a id="_⊢_⇀⦇_,GOVS⦈_"></a><a id="1231" href="Ledger.Conway.Conformance.Gov.html#1231" class="Function Operator">_⊢_⇀⦇_,GOVS⦈_</a> <a id="1245" class="Symbol">:</a> <a id="1247" href="Ledger.Conway.Conformance.Gov.html#910" class="Record">GovEnv</a> <a id="1254" class="Symbol">→</a> <a id="1256" href="Ledger.Conway.Specification.Gov.html#2044" class="Function">GovState</a> <a id="1265" class="Symbol">→</a> <a id="1267" href="Agda.Builtin.List.html#147" class="Datatype">List</a> <a id="1272" class="Symbol">(</a><a id="1273" href="Ledger.Core.Specification.Gov.Actions.html#5983" class="Record">GovVote</a> <a id="1281" href="Data.Sum.Base.html#625" class="Datatype Operator">⊎</a> <a id="1283" href="Ledger.Core.Specification.Gov.Actions.html#10416" class="Record">GovProposal</a><a id="1294" class="Symbol">)</a> <a id="1296" class="Symbol">→</a> <a id="1298" href="Ledger.Conway.Specification.Gov.html#2044" class="Function">GovState</a> <a id="1307" class="Symbol">→</a> <a id="1309" href="Agda.Primitive.html#388" class="Primitive">Type</a>
-<a id="1314" href="Ledger.Conway.Conformance.Gov.html#1314" class="Bound">Γ</a> <a id="1316" href="Ledger.Conway.Conformance.Gov.html#1231" class="Function Operator">⊢</a> <a id="1318" href="Ledger.Conway.Conformance.Gov.html#1318" class="Bound">govSt</a> <a id="1324" href="Ledger.Conway.Conformance.Gov.html#1231" class="Function Operator">⇀⦇</a> <a id="1327" href="Ledger.Conway.Conformance.Gov.html#1327" class="Bound">gvps</a> <a id="1332" href="Ledger.Conway.Conformance.Gov.html#1231" class="Function Operator">,GOVS⦈</a> <a id="1339" href="Ledger.Conway.Conformance.Gov.html#1339" class="Bound">govSt&#39;</a>
-  <a id="1348" class="Symbol">=</a> <a class="AgdaKaTeX">$\begin{pmatrix} \,\href{Ledger.Conway.Conformance.Gov.html#942}{\htmlId{1352}{\htmlClass{Function}{\text{txid}}}}\, \\ \,\href{Ledger.Conway.Conformance.Gov.html#965}{\htmlId{1359}{\htmlClass{Function}{\text{epoch}}}}\, \\ \,\href{Ledger.Conway.Conformance.Gov.html#989}{\htmlId{1367}{\htmlClass{Function}{\text{pparams}}}}\, \\ \,\href{Ledger.Conway.Conformance.Gov.html#1015}{\htmlId{1377}{\htmlClass{Function}{\text{ppolicy}}}}\, \\ \,\href{Ledger.Conway.Conformance.Gov.html#1050}{\htmlId{1387}{\htmlClass{Function}{\text{enactState}}}}\, \\ \,\href{Ledger.Conway.Conformance.Equivalence.Convert.html#559}{\htmlId{1400}{\htmlClass{Function}{\text{conv}}}}\, \,\href{Ledger.Conway.Conformance.Gov.html#1079}{\htmlId{1405}{\htmlClass{Function}{\text{certState}}}}\, \\
-  \,\href{Ledger.Conway.Conformance.Gov.html#1107}{\htmlId{1419}{\htmlClass{Function}{\text{rewardCreds}}}}\, \end{pmatrix}$</a> <a id="1433" href="Ledger.Conway.Specification.Gov.html#20647" class="Function Operator">L.⊢</a> <a id="1437" href="Ledger.Conway.Specification.Ledger.html#3336" class="Function">rmOrphanDRepVotes</a> <a id="1455" class="Symbol">(</a><a id="1456" href="Ledger.Conway.Conformance.Equivalence.Convert.html#559" class="Function">conv</a> <a id="1461" href="Ledger.Conway.Conformance.Gov.html#1079" class="Function">certState</a><a id="1470" class="Symbol">)</a> <a id="1472" href="Ledger.Conway.Conformance.Gov.html#1318" class="Bound">govSt</a>  <a id="1479" href="Ledger.Conway.Specification.Gov.html#20647" class="Function Operator">⇀⦇</a> <a id="1482" href="Ledger.Conway.Conformance.Gov.html#1327" class="Bound">gvps</a> <a id="1487" href="Ledger.Conway.Specification.Gov.html#20647" class="Function Operator">,GOVS⦈</a> <a id="1494" href="Ledger.Conway.Conformance.Gov.html#1339" class="Bound">govSt&#39;</a>
-  <a id="1503" class="Keyword">where</a> <a id="1509" class="Keyword">open</a> <a id="1514" href="Ledger.Conway.Conformance.Gov.html#910" class="Module">GovEnv</a> <a id="1521" href="Ledger.Conway.Conformance.Gov.html#1314" class="Bound">Γ</a>
+<a id="_⊢_⇀⦇_,GOVS⦈_"></a><a id="1142" href="Ledger.Conway.Conformance.Gov.html#1142" class="Function Operator">_⊢_⇀⦇_,GOVS⦈_</a> <a id="1156" class="Symbol">:</a> <a id="1158" href="Ledger.Conway.Conformance.Gov.html#821" class="Record">GovEnv</a> <a id="1165" class="Symbol">→</a> <a id="1167" href="Ledger.Conway.Specification.Gov.html#2044" class="Function">GovState</a> <a id="1176" class="Symbol">→</a> <a id="1178" href="Agda.Builtin.List.html#147" class="Datatype">List</a> <a id="1183" class="Symbol">(</a><a id="1184" href="Ledger.Core.Specification.Gov.Actions.html#5983" class="Record">GovVote</a> <a id="1192" href="Data.Sum.Base.html#625" class="Datatype Operator">⊎</a> <a id="1194" href="Ledger.Core.Specification.Gov.Actions.html#10416" class="Record">GovProposal</a><a id="1205" class="Symbol">)</a> <a id="1207" class="Symbol">→</a> <a id="1209" href="Ledger.Conway.Specification.Gov.html#2044" class="Function">GovState</a> <a id="1218" class="Symbol">→</a> <a id="1220" href="Agda.Primitive.html#388" class="Primitive">Type</a>
+<a id="1225" href="Ledger.Conway.Conformance.Gov.html#1225" class="Bound">Γ</a> <a id="1227" href="Ledger.Conway.Conformance.Gov.html#1142" class="Function Operator">⊢</a> <a id="1229" href="Ledger.Conway.Conformance.Gov.html#1229" class="Bound">govSt</a> <a id="1235" href="Ledger.Conway.Conformance.Gov.html#1142" class="Function Operator">⇀⦇</a> <a id="1238" href="Ledger.Conway.Conformance.Gov.html#1238" class="Bound">gvps</a> <a id="1243" href="Ledger.Conway.Conformance.Gov.html#1142" class="Function Operator">,GOVS⦈</a> <a id="1250" href="Ledger.Conway.Conformance.Gov.html#1250" class="Bound">govSt&#39;</a>
+  <a id="1259" class="Symbol">=</a> <a class="AgdaKaTeX">$\begin{pmatrix} \,\href{Ledger.Conway.Conformance.Gov.html#853}{\htmlId{1263}{\htmlClass{Function}{\text{txid}}}}\, \\ \,\href{Ledger.Conway.Conformance.Gov.html#876}{\htmlId{1270}{\htmlClass{Function}{\text{epoch}}}}\, \\ \,\href{Ledger.Conway.Conformance.Gov.html#900}{\htmlId{1278}{\htmlClass{Function}{\text{pparams}}}}\, \\ \,\href{Ledger.Conway.Conformance.Gov.html#926}{\htmlId{1288}{\htmlClass{Function}{\text{ppolicy}}}}\, \\ \,\href{Ledger.Conway.Conformance.Gov.html#961}{\htmlId{1298}{\htmlClass{Function}{\text{enactState}}}}\, \\ \,\href{Ledger.Conway.Conformance.Equivalence.Convert.html#559}{\htmlId{1311}{\htmlClass{Function}{\text{conv}}}}\, \,\href{Ledger.Conway.Conformance.Gov.html#990}{\htmlId{1316}{\htmlClass{Function}{\text{certState}}}}\, \\
+  \,\href{Ledger.Conway.Conformance.Gov.html#1018}{\htmlId{1330}{\htmlClass{Function}{\text{rewardCreds}}}}\, \end{pmatrix}$</a> <a id="1344" href="Ledger.Conway.Specification.Gov.html#20647" class="Function Operator">L.⊢</a> <a id="1348" href="Ledger.Conway.Specification.Ledger.html#3334" class="Function">rmOrphanDRepVotes</a> <a id="1366" class="Symbol">(</a><a id="1367" href="Ledger.Conway.Conformance.Equivalence.Convert.html#559" class="Function">conv</a> <a id="1372" href="Ledger.Conway.Conformance.Gov.html#990" class="Function">certState</a><a id="1381" class="Symbol">)</a> <a id="1383" href="Ledger.Conway.Conformance.Gov.html#1229" class="Bound">govSt</a>  <a id="1390" href="Ledger.Conway.Specification.Gov.html#20647" class="Function Operator">⇀⦇</a> <a id="1393" href="Ledger.Conway.Conformance.Gov.html#1238" class="Bound">gvps</a> <a id="1398" href="Ledger.Conway.Specification.Gov.html#20647" class="Function Operator">,GOVS⦈</a> <a id="1405" href="Ledger.Conway.Conformance.Gov.html#1250" class="Bound">govSt&#39;</a>
+  <a id="1414" class="Keyword">where</a> <a id="1420" class="Keyword">open</a> <a id="1425" href="Ledger.Conway.Conformance.Gov.html#821" class="Module">GovEnv</a> <a id="1432" href="Ledger.Conway.Conformance.Gov.html#1225" class="Bound">Γ</a>
 </pre>
 
 

@@ -44,12 +44,12 @@ import qualified MAlonzo.Code.Data.Sum.Base
 import qualified MAlonzo.Code.Function.Base
 import qualified MAlonzo.Code.Function.Bundles
 import qualified MAlonzo.Code.Interface.ComputationalRelation
-import qualified MAlonzo.Code.Ledger.Conway.Specification.Certs
 import qualified MAlonzo.Code.Ledger.Conway.Specification.Enact
 import qualified MAlonzo.Code.Ledger.Conway.Specification.Gov
 import qualified MAlonzo.Code.Ledger.Conway.Specification.PParams
 import qualified MAlonzo.Code.Ledger.Conway.Specification.Ratify
 import qualified MAlonzo.Code.Ledger.Core.Specification.Address
+import qualified MAlonzo.Code.Ledger.Core.Specification.Certs
 import qualified MAlonzo.Code.Ledger.Core.Specification.Crypto
 import qualified MAlonzo.Code.Ledger.Core.Specification.Epoch
 import qualified MAlonzo.Code.Ledger.Core.Specification.Gov.Actions
@@ -1047,9 +1047,9 @@ d_isRegistered'63'_1666 v0 v1 v2
                              (coe
                                 MAlonzo.Code.Axiom.Set.Map.du__'738'_570
                                 (coe
-                                   MAlonzo.Code.Ledger.Conway.Specification.Certs.d_ccHotKeys_1390
+                                   MAlonzo.Code.Ledger.Core.Specification.Certs.d_ccHotKeys_1390
                                    (coe
-                                      MAlonzo.Code.Ledger.Conway.Specification.Certs.d_gState_1406
+                                      MAlonzo.Code.Ledger.Core.Specification.Certs.d_gState_1406
                                       (coe
                                          MAlonzo.Code.Ledger.Conway.Specification.Gov.d_certState_2494
                                          (coe v1))))))))
@@ -1092,9 +1092,9 @@ d_isRegistered'63'_1666 v0 v1 v2
                              (coe
                                 MAlonzo.Code.Axiom.Set.Map.du__'738'_570
                                 (coe
-                                   MAlonzo.Code.Ledger.Conway.Specification.Certs.d_dreps_1388
+                                   MAlonzo.Code.Ledger.Core.Specification.Certs.d_dreps_1388
                                    (coe
-                                      MAlonzo.Code.Ledger.Conway.Specification.Certs.d_gState_1406
+                                      MAlonzo.Code.Ledger.Core.Specification.Certs.d_gState_1406
                                       (coe
                                          MAlonzo.Code.Ledger.Conway.Specification.Gov.d_certState_2494
                                          (coe v1))))))))
@@ -1126,9 +1126,9 @@ d_isRegistered'63'_1666 v0 v1 v2
                              (coe
                                 MAlonzo.Code.Axiom.Set.Map.du__'738'_570
                                 (coe
-                                   MAlonzo.Code.Ledger.Conway.Specification.Certs.d_pools_1374
+                                   MAlonzo.Code.Ledger.Core.Specification.Certs.d_pools_1374
                                    (coe
-                                      MAlonzo.Code.Ledger.Conway.Specification.Certs.d_pState_1404
+                                      MAlonzo.Code.Ledger.Core.Specification.Certs.d_pState_1404
                                       (coe
                                          MAlonzo.Code.Ledger.Conway.Specification.Gov.d_certState_2494
                                          (coe v1))))))))

@@ -492,7 +492,6 @@ library
       MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Rewards
       MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Transaction
       MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Utxo
-      MAlonzo.Code.Ledger.Conway.Specification.Abstract
       MAlonzo.Code.Ledger.Conway.Specification.Certs
       MAlonzo.Code.Ledger.Conway.Specification.Certs.Properties.Computational
       MAlonzo.Code.Ledger.Conway.Specification.Enact
@@ -512,7 +511,9 @@ library
       MAlonzo.Code.Ledger.Conway.Specification.Transaction
       MAlonzo.Code.Ledger.Conway.Specification.Utxo
       MAlonzo.Code.Ledger.Conway.Specification.Utxow
+      MAlonzo.Code.Ledger.Core.Specification.Abstract
       MAlonzo.Code.Ledger.Core.Specification.Address
+      MAlonzo.Code.Ledger.Core.Specification.Certs
       MAlonzo.Code.Ledger.Core.Specification.Crypto
       MAlonzo.Code.Ledger.Core.Specification.Epoch
       MAlonzo.Code.Ledger.Core.Specification.Gov.Actions

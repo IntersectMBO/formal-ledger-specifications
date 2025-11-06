@@ -867,7 +867,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Abstract.html" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Abstract.md" class="md-nav__link">
         
   
   
@@ -3971,7 +3971,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Test.Examples.md" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Test.Examples.html" class="md-nav__link">
         
   
   
@@ -4037,7 +4037,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Test.Examples.HelloWorld.md" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Test.Examples.HelloWorld.html" class="md-nav__link">
         
   
   
@@ -4060,7 +4060,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Test.Examples.SucceedIfNumber.md" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Test.Examples.SucceedIfNumber.html" class="md-nav__link">
         
   
   
@@ -4091,7 +4091,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Test.LedgerImplementation.md" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Test.LedgerImplementation.html" class="md-nav__link">
         
   
   
@@ -4114,7 +4114,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Test.Lib.md" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Test.Lib.html" class="md-nav__link">
         
   
   
@@ -4137,7 +4137,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Test.Prelude.md" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Test.Prelude.html" class="md-nav__link">
         
   
   
@@ -4160,7 +4160,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Test.StructuredContracts.md" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Test.StructuredContracts.html" class="md-nav__link">
         
   
   
@@ -8527,29 +8527,29 @@
 <a id="3449" class="Keyword">open</a> <a id="3454" href="Ledger.Core.Specification.Transaction.html#1895" class="Module">TransactionStructure</a> <a id="3475" href="Ledger.Conway.Foreign.HSLedger.ExternalStructures.html#3071" class="Function">HSTransactionStructure</a> <a id="3498" class="Keyword">public</a>
 <a id="3505" class="Keyword">open</a> <a id="3510" class="Keyword">import</a> <a id="3517" href="Ledger.Conway.Specification.Certs.html" class="Module">Ledger.Conway.Specification.Certs</a> <a id="3551" href="Ledger.Core.Specification.Transaction.html#3013" class="Function">govStructure</a> <a id="3564" class="Keyword">public</a>
 
-<a id="3572" class="Keyword">open</a> <a id="3577" class="Keyword">import</a> <a id="3584" href="Ledger.Conway.Specification.Abstract.html" class="Module">Ledger.Conway.Specification.Abstract</a> <a id="3621" href="Function.Base.html#4755" class="Function">it</a>
+<a id="3572" class="Keyword">open</a> <a id="3577" class="Keyword">import</a> <a id="3584" href="Ledger.Core.Specification.Abstract.html" class="Module">Ledger.Core.Specification.Abstract</a> <a id="3619" href="Function.Base.html#4755" class="Function">it</a>
 
-<a id="3625" class="Keyword">instance</a>
-  <a id="HSAbstractFunctions"></a><a id="3636" href="Ledger.Conway.Foreign.HSLedger.ExternalStructures.html#3636" class="Function">HSAbstractFunctions</a> <a id="3656" class="Symbol">:</a> <a id="3658" href="Ledger.Conway.Specification.Abstract.html#754" class="Record">AbstractFunctions</a>
-  <a id="3678" href="Ledger.Conway.Foreign.HSLedger.ExternalStructures.html#3636" class="Function">HSAbstractFunctions</a> <a id="3698" class="Symbol">=</a> <a id="3700" class="Keyword">record</a>
-    <a id="3711" class="Symbol">{</a> <a id="3713" href="Ledger.Conway.Foreign.HSLedger.Core.html#1801" class="Module">Implementation</a>
-    <a id="3732" class="Symbol">;</a> <a id="3734" href="Ledger.Conway.Specification.Abstract.html#793" class="Field">txscriptfee</a> <a id="3746" class="Symbol">=</a> <a id="3748" class="Symbol">λ</a> <a id="3750" href="Ledger.Conway.Foreign.HSLedger.ExternalStructures.html#3750" class="Bound">tt</a> <a id="3753" href="Ledger.Conway.Foreign.HSLedger.ExternalStructures.html#3753" class="Bound">y</a> <a id="3755" class="Symbol">→</a> <a id="3757" class="Number">0</a>
-    <a id="3763" class="Symbol">;</a> <a id="3765" href="Ledger.Conway.Specification.Abstract.html#840" class="Field">serSize</a>     <a id="3777" class="Symbol">=</a> <a id="3779" class="Symbol">λ</a> <a id="3781" href="Ledger.Conway.Foreign.HSLedger.ExternalStructures.html#3781" class="Bound">v</a> <a id="3783" class="Symbol">→</a> <a id="3785" class="Number">0</a>
-    <a id="3791" class="Symbol">;</a> <a id="3793" href="Ledger.Conway.Specification.Abstract.html#886" class="Field">indexOfImp</a>  <a id="3805" class="Symbol">=</a> <a id="3807" class="Keyword">record</a>
-      <a id="3820" class="Symbol">{</a> <a id="3822" href="Ledger.Conway.Specification.Abstract.html#415" class="Field">indexOfDCert</a>    <a id="3838" class="Symbol">=</a> <a id="3840" class="Symbol">λ</a> <a id="3842" href="Ledger.Conway.Foreign.HSLedger.ExternalStructures.html#3842" class="Bound">_</a> <a id="3844" href="Ledger.Conway.Foreign.HSLedger.ExternalStructures.html#3844" class="Bound">_</a> <a id="3846" class="Symbol">→</a> <a id="3848" href="Agda.Builtin.Maybe.html#194" class="InductiveConstructor">nothing</a>
-      <a id="3862" class="Symbol">;</a> <a id="3864" href="Ledger.Conway.Specification.Abstract.html#467" class="Field">indexOfRwdAddr</a>  <a id="3880" class="Symbol">=</a> <a id="3882" class="Symbol">λ</a> <a id="3884" href="Ledger.Conway.Foreign.HSLedger.ExternalStructures.html#3884" class="Bound">_</a> <a id="3886" href="Ledger.Conway.Foreign.HSLedger.ExternalStructures.html#3886" class="Bound">_</a> <a id="3888" class="Symbol">→</a> <a id="3890" href="Agda.Builtin.Maybe.html#194" class="InductiveConstructor">nothing</a>
-      <a id="3904" class="Symbol">;</a> <a id="3906" href="Ledger.Conway.Specification.Abstract.html#522" class="Field">indexOfTxIn</a>     <a id="3922" class="Symbol">=</a> <a id="3924" class="Symbol">λ</a> <a id="3926" href="Ledger.Conway.Foreign.HSLedger.ExternalStructures.html#3926" class="Bound">_</a> <a id="3928" href="Ledger.Conway.Foreign.HSLedger.ExternalStructures.html#3928" class="Bound">_</a> <a id="3930" class="Symbol">→</a> <a id="3932" href="Agda.Builtin.Maybe.html#194" class="InductiveConstructor">nothing</a>
-      <a id="3946" class="Symbol">;</a> <a id="3948" href="Ledger.Conway.Specification.Abstract.html#569" class="Field">indexOfPolicyId</a> <a id="3964" class="Symbol">=</a> <a id="3966" class="Symbol">λ</a> <a id="3968" href="Ledger.Conway.Foreign.HSLedger.ExternalStructures.html#3968" class="Bound">_</a> <a id="3970" href="Ledger.Conway.Foreign.HSLedger.ExternalStructures.html#3970" class="Bound">_</a> <a id="3972" class="Symbol">→</a> <a id="3974" href="Agda.Builtin.Maybe.html#194" class="InductiveConstructor">nothing</a>
-      <a id="3988" class="Symbol">;</a> <a id="3990" href="Ledger.Conway.Specification.Abstract.html#628" class="Field">indexOfVote</a>     <a id="4006" class="Symbol">=</a> <a id="4008" class="Symbol">λ</a> <a id="4010" href="Ledger.Conway.Foreign.HSLedger.ExternalStructures.html#4010" class="Bound">_</a> <a id="4012" href="Ledger.Conway.Foreign.HSLedger.ExternalStructures.html#4012" class="Bound">_</a> <a id="4014" class="Symbol">→</a> <a id="4016" href="Agda.Builtin.Maybe.html#194" class="InductiveConstructor">nothing</a>
-      <a id="4030" class="Symbol">;</a> <a id="4032" href="Ledger.Conway.Specification.Abstract.html#686" class="Field">indexOfProposal</a> <a id="4048" class="Symbol">=</a> <a id="4050" class="Symbol">λ</a> <a id="4052" href="Ledger.Conway.Foreign.HSLedger.ExternalStructures.html#4052" class="Bound">_</a> <a id="4054" href="Ledger.Conway.Foreign.HSLedger.ExternalStructures.html#4054" class="Bound">_</a> <a id="4056" class="Symbol">→</a> <a id="4058" href="Agda.Builtin.Maybe.html#194" class="InductiveConstructor">nothing</a>
-      <a id="4072" class="Symbol">}</a>
-    <a id="4078" class="Symbol">;</a> <a id="4080" href="Ledger.Conway.Specification.Abstract.html#917" class="Field">runPLCScript</a> <a id="4093" class="Symbol">=</a> <a id="4095" class="Symbol">λ</a> <a id="4097" href="Ledger.Conway.Foreign.HSLedger.ExternalStructures.html#4097" class="Bound">_</a> <a id="4099" href="Ledger.Conway.Foreign.HSLedger.ExternalStructures.html#4099" class="Bound">_</a> <a id="4101" href="Ledger.Conway.Foreign.HSLedger.ExternalStructures.html#4101" class="Bound">_</a> <a id="4103" href="Ledger.Conway.Foreign.HSLedger.ExternalStructures.html#4103" class="Bound">_</a> <a id="4105" class="Symbol">→</a> <a id="4107" href="Agda.Builtin.Bool.html#192" class="InductiveConstructor">false</a>
-    <a id="4117" class="Symbol">;</a> <a id="4119" href="Ledger.Conway.Specification.Abstract.html#990" class="Field">scriptSize</a> <a id="4130" class="Symbol">=</a> <a id="4132" class="Symbol">λ</a> <a id="4134" class="Keyword">where</a> 
-        <a id="4149" class="Symbol">(</a><a id="4150" href="Data.Sum.Base.html#675" class="InductiveConstructor">inj₁</a> <a id="4155" href="Ledger.Conway.Foreign.HSLedger.ExternalStructures.html#4155" class="Bound">x</a><a id="4156" class="Symbol">)</a> <a id="4158" class="Symbol">→</a> <a id="4160" href="Ledger.Conway.Conformance.Script.html#873" class="Field">HSTimelock.tlScriptSize</a> <a id="4184" href="Ledger.Conway.Foreign.HSLedger.ExternalStructures.html#4155" class="Bound">x</a>
-        <a id="4194" class="Symbol">(</a><a id="4195" href="Data.Sum.Base.html#700" class="InductiveConstructor">inj₂</a> <a id="4200" href="Ledger.Conway.Foreign.HSLedger.ExternalStructures.html#4200" class="Bound">x</a><a id="4201" class="Symbol">)</a> <a id="4203" class="Symbol">→</a> <a id="4205" href="Ledger.Conway.Conformance.Script.html#1208" class="Field">HSPlutusScript.psScriptSize</a> <a id="4233" href="Ledger.Conway.Foreign.HSLedger.ExternalStructures.html#4200" class="Bound">x</a>
-    <a id="4239" class="Symbol">}</a>
+<a id="3623" class="Keyword">instance</a>
+  <a id="HSAbstractFunctions"></a><a id="3634" href="Ledger.Conway.Foreign.HSLedger.ExternalStructures.html#3634" class="Function">HSAbstractFunctions</a> <a id="3654" class="Symbol">:</a> <a id="3656" href="Ledger.Core.Specification.Abstract.html#750" class="Record">AbstractFunctions</a>
+  <a id="3676" href="Ledger.Conway.Foreign.HSLedger.ExternalStructures.html#3634" class="Function">HSAbstractFunctions</a> <a id="3696" class="Symbol">=</a> <a id="3698" class="Keyword">record</a>
+    <a id="3709" class="Symbol">{</a> <a id="3711" href="Ledger.Conway.Foreign.HSLedger.Core.html#1801" class="Module">Implementation</a>
+    <a id="3730" class="Symbol">;</a> <a id="3732" href="Ledger.Core.Specification.Abstract.html#789" class="Field">txscriptfee</a> <a id="3744" class="Symbol">=</a> <a id="3746" class="Symbol">λ</a> <a id="3748" href="Ledger.Conway.Foreign.HSLedger.ExternalStructures.html#3748" class="Bound">tt</a> <a id="3751" href="Ledger.Conway.Foreign.HSLedger.ExternalStructures.html#3751" class="Bound">y</a> <a id="3753" class="Symbol">→</a> <a id="3755" class="Number">0</a>
+    <a id="3761" class="Symbol">;</a> <a id="3763" href="Ledger.Core.Specification.Abstract.html#836" class="Field">serSize</a>     <a id="3775" class="Symbol">=</a> <a id="3777" class="Symbol">λ</a> <a id="3779" href="Ledger.Conway.Foreign.HSLedger.ExternalStructures.html#3779" class="Bound">v</a> <a id="3781" class="Symbol">→</a> <a id="3783" class="Number">0</a>
+    <a id="3789" class="Symbol">;</a> <a id="3791" href="Ledger.Core.Specification.Abstract.html#882" class="Field">indexOfImp</a>  <a id="3803" class="Symbol">=</a> <a id="3805" class="Keyword">record</a>
+      <a id="3818" class="Symbol">{</a> <a id="3820" href="Ledger.Core.Specification.Abstract.html#411" class="Field">indexOfDCert</a>    <a id="3836" class="Symbol">=</a> <a id="3838" class="Symbol">λ</a> <a id="3840" href="Ledger.Conway.Foreign.HSLedger.ExternalStructures.html#3840" class="Bound">_</a> <a id="3842" href="Ledger.Conway.Foreign.HSLedger.ExternalStructures.html#3842" class="Bound">_</a> <a id="3844" class="Symbol">→</a> <a id="3846" href="Agda.Builtin.Maybe.html#194" class="InductiveConstructor">nothing</a>
+      <a id="3860" class="Symbol">;</a> <a id="3862" href="Ledger.Core.Specification.Abstract.html#463" class="Field">indexOfRwdAddr</a>  <a id="3878" class="Symbol">=</a> <a id="3880" class="Symbol">λ</a> <a id="3882" href="Ledger.Conway.Foreign.HSLedger.ExternalStructures.html#3882" class="Bound">_</a> <a id="3884" href="Ledger.Conway.Foreign.HSLedger.ExternalStructures.html#3884" class="Bound">_</a> <a id="3886" class="Symbol">→</a> <a id="3888" href="Agda.Builtin.Maybe.html#194" class="InductiveConstructor">nothing</a>
+      <a id="3902" class="Symbol">;</a> <a id="3904" href="Ledger.Core.Specification.Abstract.html#518" class="Field">indexOfTxIn</a>     <a id="3920" class="Symbol">=</a> <a id="3922" class="Symbol">λ</a> <a id="3924" href="Ledger.Conway.Foreign.HSLedger.ExternalStructures.html#3924" class="Bound">_</a> <a id="3926" href="Ledger.Conway.Foreign.HSLedger.ExternalStructures.html#3926" class="Bound">_</a> <a id="3928" class="Symbol">→</a> <a id="3930" href="Agda.Builtin.Maybe.html#194" class="InductiveConstructor">nothing</a>
+      <a id="3944" class="Symbol">;</a> <a id="3946" href="Ledger.Core.Specification.Abstract.html#565" class="Field">indexOfPolicyId</a> <a id="3962" class="Symbol">=</a> <a id="3964" class="Symbol">λ</a> <a id="3966" href="Ledger.Conway.Foreign.HSLedger.ExternalStructures.html#3966" class="Bound">_</a> <a id="3968" href="Ledger.Conway.Foreign.HSLedger.ExternalStructures.html#3968" class="Bound">_</a> <a id="3970" class="Symbol">→</a> <a id="3972" href="Agda.Builtin.Maybe.html#194" class="InductiveConstructor">nothing</a>
+      <a id="3986" class="Symbol">;</a> <a id="3988" href="Ledger.Core.Specification.Abstract.html#624" class="Field">indexOfVote</a>     <a id="4004" class="Symbol">=</a> <a id="4006" class="Symbol">λ</a> <a id="4008" href="Ledger.Conway.Foreign.HSLedger.ExternalStructures.html#4008" class="Bound">_</a> <a id="4010" href="Ledger.Conway.Foreign.HSLedger.ExternalStructures.html#4010" class="Bound">_</a> <a id="4012" class="Symbol">→</a> <a id="4014" href="Agda.Builtin.Maybe.html#194" class="InductiveConstructor">nothing</a>
+      <a id="4028" class="Symbol">;</a> <a id="4030" href="Ledger.Core.Specification.Abstract.html#682" class="Field">indexOfProposal</a> <a id="4046" class="Symbol">=</a> <a id="4048" class="Symbol">λ</a> <a id="4050" href="Ledger.Conway.Foreign.HSLedger.ExternalStructures.html#4050" class="Bound">_</a> <a id="4052" href="Ledger.Conway.Foreign.HSLedger.ExternalStructures.html#4052" class="Bound">_</a> <a id="4054" class="Symbol">→</a> <a id="4056" href="Agda.Builtin.Maybe.html#194" class="InductiveConstructor">nothing</a>
+      <a id="4070" class="Symbol">}</a>
+    <a id="4076" class="Symbol">;</a> <a id="4078" href="Ledger.Core.Specification.Abstract.html#913" class="Field">runPLCScript</a> <a id="4091" class="Symbol">=</a> <a id="4093" class="Symbol">λ</a> <a id="4095" href="Ledger.Conway.Foreign.HSLedger.ExternalStructures.html#4095" class="Bound">_</a> <a id="4097" href="Ledger.Conway.Foreign.HSLedger.ExternalStructures.html#4097" class="Bound">_</a> <a id="4099" href="Ledger.Conway.Foreign.HSLedger.ExternalStructures.html#4099" class="Bound">_</a> <a id="4101" href="Ledger.Conway.Foreign.HSLedger.ExternalStructures.html#4101" class="Bound">_</a> <a id="4103" class="Symbol">→</a> <a id="4105" href="Agda.Builtin.Bool.html#192" class="InductiveConstructor">false</a>
+    <a id="4115" class="Symbol">;</a> <a id="4117" href="Ledger.Core.Specification.Abstract.html#986" class="Field">scriptSize</a> <a id="4128" class="Symbol">=</a> <a id="4130" class="Symbol">λ</a> <a id="4132" class="Keyword">where</a> 
+        <a id="4147" class="Symbol">(</a><a id="4148" href="Data.Sum.Base.html#675" class="InductiveConstructor">inj₁</a> <a id="4153" href="Ledger.Conway.Foreign.HSLedger.ExternalStructures.html#4153" class="Bound">x</a><a id="4154" class="Symbol">)</a> <a id="4156" class="Symbol">→</a> <a id="4158" href="Ledger.Conway.Conformance.Script.html#873" class="Field">HSTimelock.tlScriptSize</a> <a id="4182" href="Ledger.Conway.Foreign.HSLedger.ExternalStructures.html#4153" class="Bound">x</a>
+        <a id="4192" class="Symbol">(</a><a id="4193" href="Data.Sum.Base.html#700" class="InductiveConstructor">inj₂</a> <a id="4198" href="Ledger.Conway.Foreign.HSLedger.ExternalStructures.html#4198" class="Bound">x</a><a id="4199" class="Symbol">)</a> <a id="4201" class="Symbol">→</a> <a id="4203" href="Ledger.Conway.Conformance.Script.html#1208" class="Field">HSPlutusScript.psScriptSize</a> <a id="4231" href="Ledger.Conway.Foreign.HSLedger.ExternalStructures.html#4198" class="Bound">x</a>
+    <a id="4237" class="Symbol">}</a>
 
-<a id="4242" class="Keyword">open</a> <a id="4247" class="Keyword">import</a> <a id="4254" href="Ledger.Core.Specification.Address.html" class="Module">Ledger.Core.Specification.Address</a> <a id="4288" href="Ledger.Core.Specification.Epoch.html#2409" class="Function">Network</a> <a id="4296" href="Ledger.Core.Specification.Crypto.html#1865" class="Function">KeyHash</a> <a id="4304" href="Ledger.Core.Specification.Crypto.html#1721" class="Function">ScriptHash</a> <a id="4315" class="Keyword">using</a> <a id="4321" class="Symbol">()</a> <a id="4324" class="Keyword">public</a>
+<a id="4240" class="Keyword">open</a> <a id="4245" class="Keyword">import</a> <a id="4252" href="Ledger.Core.Specification.Address.html" class="Module">Ledger.Core.Specification.Address</a> <a id="4286" href="Ledger.Core.Specification.Epoch.html#2409" class="Function">Network</a> <a id="4294" href="Ledger.Core.Specification.Crypto.html#1865" class="Function">KeyHash</a> <a id="4302" href="Ledger.Core.Specification.Crypto.html#1721" class="Function">ScriptHash</a> <a id="4313" class="Keyword">using</a> <a id="4319" class="Symbol">()</a> <a id="4322" class="Keyword">public</a>
 </pre>
 
 

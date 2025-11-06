@@ -60,12 +60,12 @@ import qualified MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov
 import qualified MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.Core
 import qualified MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.PParams
 import qualified MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Transaction
-import qualified MAlonzo.Code.Ledger.Conway.Specification.Certs
 import qualified MAlonzo.Code.Ledger.Conway.Specification.PParams
 import qualified MAlonzo.Code.Ledger.Conway.Specification.Script.Validation
 import qualified MAlonzo.Code.Ledger.Conway.Specification.Transaction
 import qualified MAlonzo.Code.Ledger.Conway.Specification.Utxo
 import qualified MAlonzo.Code.Ledger.Core.Specification.Address
+import qualified MAlonzo.Code.Ledger.Core.Specification.Certs
 import qualified MAlonzo.Code.Ledger.Core.Specification.Crypto
 import qualified MAlonzo.Code.Ledger.Core.Specification.Epoch
 import qualified MAlonzo.Code.Ledger.Core.Specification.Gov.Actions
@@ -240,7 +240,7 @@ d_realizedInputs_70 v0
 -- Ledger.Conway.Foreign.HSLedger.Utxo._.TxInfo.txCerts
 d_txCerts_72 ::
   MAlonzo.Code.Ledger.Conway.Specification.Script.Validation.T_TxInfo_2476 ->
-  [MAlonzo.Code.Ledger.Conway.Specification.Certs.T_DCert_1290]
+  [MAlonzo.Code.Ledger.Core.Specification.Certs.T_DCert_1290]
 d_txCerts_72 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Script.Validation.d_txCerts_2506
@@ -324,7 +324,7 @@ d_Scripts'45'No'45'premises_96 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_Scripts'45'No'45'premises_96
   = coe
-      MAlonzo.Code.Ledger.Conway.Conformance.Utxo.d_Scripts'45'No'45'premises_2326
+      MAlonzo.Code.Ledger.Conway.Conformance.Utxo.d_Scripts'45'No'45'premises_2322
       (coe
          MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.ExternalStructures.d_HSTransactionStructure_774
          (coe
@@ -339,7 +339,7 @@ d_Scripts'45'Yes'45'premises_100 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_Scripts'45'Yes'45'premises_100
   = coe
-      MAlonzo.Code.Ledger.Conway.Conformance.Utxo.d_Scripts'45'Yes'45'premises_2324
+      MAlonzo.Code.Ledger.Conway.Conformance.Utxo.d_Scripts'45'Yes'45'premises_2320
       (coe
          MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.ExternalStructures.d_HSTransactionStructure_774
          (coe
@@ -354,7 +354,7 @@ d_UTXO'45'premises_104 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_UTXO'45'premises_104
   = coe
-      MAlonzo.Code.Ledger.Conway.Conformance.Utxo.d_UTXO'45'premises_2480
+      MAlonzo.Code.Ledger.Conway.Conformance.Utxo.d_UTXO'45'premises_2476
       (coe
          MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.ExternalStructures.d_HSTransactionStructure_774
          (coe
@@ -548,7 +548,7 @@ d_UTXOW'45'inductive'45'premises_168 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_UTXOW'45'inductive'45'premises_168
   = coe
-      MAlonzo.Code.Ledger.Conway.Conformance.Utxow.du_UTXOW'45'inductive'45'premises_2844
+      MAlonzo.Code.Ledger.Conway.Conformance.Utxow.du_UTXOW'45'inductive'45'premises_2404
       (coe
          MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.ExternalStructures.d_HSTransactionStructure_774
          (coe
@@ -3210,13 +3210,15 @@ d_Conv'45'UTxOState_180
                            (let v5
                                   = MAlonzo.Code.Ledger.Conway.Foreign.ExternalFunctions.d_dummyExternalFunctions_16 in
                             coe
-                              (coe
-                                 MAlonzo.Code.Ledger.Conway.Specification.Certs.d_DecEq'45'DepositPurpose_1132
+                              (let v6
+                                     = MAlonzo.Code.Ledger.Core.Specification.Transaction.d_govStructure_2502
+                                         (coe
+                                            MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.ExternalStructures.d_HSTransactionStructure_774
+                                            (coe v5)) in
+                               coe
                                  (coe
-                                    MAlonzo.Code.Ledger.Core.Specification.Transaction.d_govStructure_2502
-                                    (coe
-                                       MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.ExternalStructures.d_HSTransactionStructure_774
-                                       (coe v5)))))
+                                    MAlonzo.Code.Ledger.Core.Specification.Certs.d_DecEq'45'DepositPurpose_1132
+                                    (coe v6))))
                            (coe
                               MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs.d_Conv'45'DepositPurpose_74)
                            (coe
@@ -3589,13 +3591,15 @@ du_utxo'45'debug_2470 v0 v1 v2
                                                          (let v8
                                                                 = MAlonzo.Code.Ledger.Conway.Foreign.ExternalFunctions.d_dummyExternalFunctions_16 in
                                                           coe
-                                                            (coe
-                                                               MAlonzo.Code.Ledger.Conway.Specification.Certs.d_DecEq'45'DepositPurpose_1132
+                                                            (let v9
+                                                                   = MAlonzo.Code.Ledger.Core.Specification.Transaction.d_govStructure_2502
+                                                                       (coe
+                                                                          MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.ExternalStructures.d_HSTransactionStructure_774
+                                                                          (coe v8)) in
+                                                             coe
                                                                (coe
-                                                                  MAlonzo.Code.Ledger.Core.Specification.Transaction.d_govStructure_2502
-                                                                  (coe
-                                                                     MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.ExternalStructures.d_HSTransactionStructure_774
-                                                                     (coe v8)))))
+                                                                  MAlonzo.Code.Ledger.Core.Specification.Certs.d_DecEq'45'DepositPurpose_1132
+                                                                  (coe v9))))
                                                          (coe
                                                             MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs.d_Conv'45'DepositPurpose_74)
                                                          (coe
@@ -3817,13 +3821,15 @@ du_utxo'45'debug_2470 v0 v1 v2
                                                             (let v8
                                                                    = MAlonzo.Code.Ledger.Conway.Foreign.ExternalFunctions.d_dummyExternalFunctions_16 in
                                                              coe
-                                                               (coe
-                                                                  MAlonzo.Code.Ledger.Conway.Specification.Certs.d_DecEq'45'DepositPurpose_1132
+                                                               (let v9
+                                                                      = MAlonzo.Code.Ledger.Core.Specification.Transaction.d_govStructure_2502
+                                                                          (coe
+                                                                             MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.ExternalStructures.d_HSTransactionStructure_774
+                                                                             (coe v8)) in
+                                                                coe
                                                                   (coe
-                                                                     MAlonzo.Code.Ledger.Core.Specification.Transaction.d_govStructure_2502
-                                                                     (coe
-                                                                        MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.ExternalStructures.d_HSTransactionStructure_774
-                                                                        (coe v8)))))
+                                                                     MAlonzo.Code.Ledger.Core.Specification.Certs.d_DecEq'45'DepositPurpose_1132
+                                                                     (coe v9))))
                                                             (coe
                                                                MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs.d_Conv'45'DepositPurpose_74)
                                                             (coe
@@ -4035,13 +4041,16 @@ du_utxo'45'debug_2470 v0 v1 v2
                                                                            (let v8
                                                                                   = MAlonzo.Code.Ledger.Conway.Foreign.ExternalFunctions.d_dummyExternalFunctions_16 in
                                                                             coe
-                                                                              (coe
-                                                                                 MAlonzo.Code.Ledger.Conway.Specification.Certs.d_DecEq'45'DepositPurpose_1132
+                                                                              (let v9
+                                                                                     = MAlonzo.Code.Ledger.Core.Specification.Transaction.d_govStructure_2502
+                                                                                         (coe
+                                                                                            MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.ExternalStructures.d_HSTransactionStructure_774
+                                                                                            (coe
+                                                                                               v8)) in
+                                                                               coe
                                                                                  (coe
-                                                                                    MAlonzo.Code.Ledger.Core.Specification.Transaction.d_govStructure_2502
-                                                                                    (coe
-                                                                                       MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.ExternalStructures.d_HSTransactionStructure_774
-                                                                                       (coe v8)))))
+                                                                                    MAlonzo.Code.Ledger.Core.Specification.Certs.d_DecEq'45'DepositPurpose_1132
+                                                                                    (coe v9))))
                                                                            (coe
                                                                               MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs.d_Conv'45'DepositPurpose_74)
                                                                            (coe
@@ -4226,14 +4235,16 @@ du_utxo'45'debug_2470 v0 v1 v2
                                                                               (let v8
                                                                                      = MAlonzo.Code.Ledger.Conway.Foreign.ExternalFunctions.d_dummyExternalFunctions_16 in
                                                                                coe
-                                                                                 (coe
-                                                                                    MAlonzo.Code.Ledger.Conway.Specification.Certs.d_DecEq'45'DepositPurpose_1132
+                                                                                 (let v9
+                                                                                        = MAlonzo.Code.Ledger.Core.Specification.Transaction.d_govStructure_2502
+                                                                                            (coe
+                                                                                               MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.ExternalStructures.d_HSTransactionStructure_774
+                                                                                               (coe
+                                                                                                  v8)) in
+                                                                                  coe
                                                                                     (coe
-                                                                                       MAlonzo.Code.Ledger.Core.Specification.Transaction.d_govStructure_2502
-                                                                                       (coe
-                                                                                          MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.ExternalStructures.d_HSTransactionStructure_774
-                                                                                          (coe
-                                                                                             v8)))))
+                                                                                       MAlonzo.Code.Ledger.Core.Specification.Certs.d_DecEq'45'DepositPurpose_1132
+                                                                                       (coe v9))))
                                                                               (coe
                                                                                  MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs.d_Conv'45'DepositPurpose_74)
                                                                               (coe

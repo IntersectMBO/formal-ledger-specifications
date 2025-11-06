@@ -41,9 +41,9 @@ import qualified MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core
 import qualified MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.ExternalStructures
 import qualified MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov
 import qualified MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.Core
-import qualified MAlonzo.Code.Ledger.Conway.Specification.Certs
 import qualified MAlonzo.Code.Ledger.Conway.Specification.Transaction
 import qualified MAlonzo.Code.Ledger.Core.Specification.Address
+import qualified MAlonzo.Code.Ledger.Core.Specification.Certs
 import qualified MAlonzo.Code.Ledger.Core.Specification.Crypto
 import qualified MAlonzo.Code.Ledger.Core.Specification.Epoch
 import qualified MAlonzo.Code.Ledger.Core.Specification.Gov.Actions
@@ -87,7 +87,7 @@ type Withdrawals = (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.HSMap MAlonzo.Co
 d_DCertsOf_12 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_HasDCerts_2274 ->
   AgdaAny ->
-  [MAlonzo.Code.Ledger.Conway.Specification.Certs.T_DCert_1290]
+  [MAlonzo.Code.Ledger.Core.Specification.Certs.T_DCert_1290]
 d_DCertsOf_12 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_DCertsOf_2282
@@ -224,7 +224,7 @@ d_txscripts_66
 d_DCertsOf_70 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_HasDCerts_2274 ->
   AgdaAny ->
-  [MAlonzo.Code.Ledger.Conway.Specification.Certs.T_DCert_1290]
+  [MAlonzo.Code.Ledger.Core.Specification.Certs.T_DCert_1290]
 d_DCertsOf_70 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_DCertsOf_2282
@@ -354,7 +354,7 @@ d_txADhash_110 v0
 -- Ledger.Conway.Foreign.HSLedger.Transaction._.TxBody.txCerts
 d_txCerts_112 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TxBody_2174 ->
-  [MAlonzo.Code.Ledger.Conway.Specification.Certs.T_DCert_1290]
+  [MAlonzo.Code.Ledger.Core.Specification.Certs.T_DCert_1290]
 d_txCerts_112 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_txCerts_2222
