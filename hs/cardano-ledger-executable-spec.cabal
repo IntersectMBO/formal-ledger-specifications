@@ -511,6 +511,7 @@ library
       MAlonzo.Code.Ledger.Conway.Specification.Rewards
       MAlonzo.Code.Ledger.Conway.Specification.Script
       MAlonzo.Code.Ledger.Conway.Specification.Script.Base
+      MAlonzo.Code.Ledger.Conway.Specification.Script.ScriptPurpose
       MAlonzo.Code.Ledger.Conway.Specification.Script.Timelock
       MAlonzo.Code.Ledger.Conway.Specification.Script.Validation
       MAlonzo.Code.Ledger.Conway.Specification.TokenAlgebra.Base
