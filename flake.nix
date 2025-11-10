@@ -115,7 +115,7 @@
           # ========================
           devShells = with nixpkgs; {
             default = mkShell {
-              inputsFrom = builtins.attrValues pkgs;
+              inputsFrom = builtins.attrValues (builtins.removeAttrs pkgs [ "cardano-ledger-executable-spec" ]) ;
             };
 
             # Minimal environment for CI builds (see GH actions)
