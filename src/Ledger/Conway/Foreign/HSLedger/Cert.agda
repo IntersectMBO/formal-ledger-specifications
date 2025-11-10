@@ -11,9 +11,6 @@ open import Ledger.Conway.Conformance.Certs.Properties govStructure
 open import Ledger.Conway.Conformance.Certs govStructure
 
 instance
-  -- HsTy-CertState = autoHsType' CertState (⟦_,_,_⟧ᶜˢ ↦ "MkCertState" ∷ [])
-  -- Conv-CertState = autoConvert CertState
-
   HsTy-CertState = autoHsType CertState ⊣ withConstructor "MkCertState"
   Conv-CertState = autoConvert CertState
 
