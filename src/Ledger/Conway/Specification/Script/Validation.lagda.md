@@ -28,15 +28,6 @@ open indexOf indexOfImp
 ```
 -->
 
-```agda
-data ScriptPurpose : Type where
-  Cert     : DCert        → ScriptPurpose
-  Rwrd     : RwdAddr      → ScriptPurpose
-  Mint     : ScriptHash   → ScriptPurpose
-  Spend    : TxIn         → ScriptPurpose
-  Vote     : GovVoter     → ScriptPurpose
-  Propose  : GovProposal  → ScriptPurpose
-```
 
 <!--
 ```agda
@@ -69,18 +60,6 @@ getDatum tx utxo _ = nothing
 -->
 
 ```agda
-record TxInfo : Type where
-  field realizedInputs : UTxO
-        txOuts         : Ix ⇀ TxOut
-        fee            : Value
-        mint           : Value
-        txCerts        : List DCert
-        txWithdrawals  : Withdrawals
-        txVldt         : Maybe Slot × Maybe Slot
-        vkKey          : ℙ KeyHash
-        txdats         : ℙ Datum
-        txId           : TxId
-
 txInfo : Language → PParams
                   → UTxO
                   → Tx

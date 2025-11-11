@@ -12,5 +12,7 @@ import Ledger.Core
 import Ledger.Conway
 import Ledger.Dijkstra
 
+import Test.Examples
+
 import EssentialAgda
 ```

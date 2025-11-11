@@ -27,7 +27,7 @@ open import Ledger.Core.Specification.Crypto
 instance
   Computational-UTXOW : Computational _⊢_⇀⦇_,UTXOW⦈_ String
   Computational-UTXOW = record {Go}
-    where module Go Γ s tx (let H , ⁇ H? = UTXOW-inductive-premises {tx} {s}) where
+    where module Go Γ s tx (let H , ⁇ H? = UTXOW-inductive-premises {tx}{s}) where
 
     open Computational Computational-UTXO
       renaming (computeProof to computeProof'; completeness to completeness')
@@ -62,4 +62,3 @@ instance
     ... | no ¬p = ⊥-elim $ ¬p ((p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈))
     ... | yes _ with computeProof' Γ s tx | completeness' _ _ _ _ h
     ... | success _ | refl = refl
-```
