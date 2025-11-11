@@ -16,9 +16,6 @@ instance
   Show-EPOCH : ∀ {eps e eps'} → Show (_ ⊢ eps ⇀⦇ e ,EPOCH⦈ eps')
   Show-EPOCH .show (EPOCH e s) = "EPOCH\n" S.++ show s S.++ " " S.++ show e 
 
-    -- record { currentEpoch = e
-    --        ; stakeDistrs = mkStakeDistrs  (Snapshots.mark ss') govSt'
-    --                                       (utxoSt' .deposits) (voteDelegs dState)
 instance
   HsTy-EpochState = autoHsType EpochState ⊣ withConstructor "MkEpochState"
                                           • fieldPrefix "es"

@@ -31,7 +31,6 @@ open import Class.MonadError
 open import Class.MonadReader
 open import Class.Show
 open import Class.Show.Instances
-open import Class.MonadTC using (TCEnv; dontReduce; defaultTCOptions)
 open import Tactic.Derive.Show using (showName)
 
 open import Reflection.Utils
@@ -50,76 +49,94 @@ private variable
   l : Level
   A B : Set l
 
--- * Controlling the names of the generated types
-
-record NameEnv : Set where
-  field
-    customNames : List (Name × String)
-    tName       : Name → Maybe String
-    cName       : Name → Maybe String
-    fName       : Name → Maybe String
-
 private
   mapHead : (A → A) → List A → List A
   mapHead f []       = []
   mapHead f (x ∷ xs) = f x ∷ xs
 
-capitalize : String → String
-capitalize = String.fromList ∘ mapHead toUpper ∘ String.toList
+  capitalize : String → String
+  capitalize = String.fromList ∘ mapHead toUpper ∘ String.toList
 
-uncapitalize : String → String
-uncapitalize = String.fromList ∘ mapHead toLower ∘ String.toList
+  uncapitalize : String → String
+  uncapitalize = String.fromList ∘ mapHead toLower ∘ String.toList
 
-private
+  joinStrings : String → List String → String
+  joinStrings sep ss = foldr _&_ "" $ intersperse sep ss
+
+  _‼_ : List A → ℕ → Maybe A
+  []       ‼ i     = nothing
+  (x ∷ xs) ‼ zero  = just x
+  (x ∷ xs) ‼ suc i = xs ‼ i
+
   lookup : ⦃ DecEq A ⦄ → A → List (A × B) → Maybe B
   lookup x xs = proj₂ <$> findᵇ ((x ==_) ∘ proj₁) xs
 
-  lookupEnv : (NameEnv → Name → Maybe String) → NameEnv → Name → Maybe String
-  lookupEnv fn env x = lookup x (NameEnv.customNames env) <∣> fn env x
+-- * Controlling the names of the generated types
 
-  lookupTypeName  = lookupEnv NameEnv.tName
-  lookupConName   = lookupEnv NameEnv.cName
-  lookupFieldName = lookupEnv NameEnv.fName
+record Env : Set where
+  field
+    customNames : List (Name × String)
+    tName       : Name → Maybe String
+    cName       : Name → Maybe String
+    fName       : Name → Maybe String
+    typeclassDeriving : List String → List String
 
-  emptyEnv : NameEnv
+private
+  lookupEnv : (Env → Name → Maybe String) → Env → Name → Maybe String
+  lookupEnv fn env x = lookup x (Env.customNames env) <∣> fn env x
+
+  lookupTypeName  = lookupEnv Env.tName
+  lookupConName   = lookupEnv Env.cName
+  lookupFieldName = lookupEnv Env.fName
+
+  emptyEnv : Env
   emptyEnv = record{ customNames = []
                    ; tName = const nothing
                    ; cName = const nothing
-                   ; fName = const nothing }
+                   ; fName = const nothing
+                   ; typeclassDeriving = id }
 
-  customName : Name → String → NameEnv
+  customName : Name → String → Env
   customName x s = record emptyEnv { customNames = (x , s) ∷ [] }
 
-onTypes : (String → String) → NameEnv
+onTypes : (String → String) → Env
 onTypes f = record emptyEnv { tName = just ∘ f ∘ showName }
 
-onConstructors : (String → String) → NameEnv
+onConstructors : (String → String) → Env
 onConstructors f = record emptyEnv { cName = just ∘ f ∘ showName }
 
-withName : String → NameEnv
+withName : String → Env
 withName t = onTypes (const t)
 
 -- Only use for single constructor types obviously
-withConstructor : String → NameEnv
+withConstructor : String → Env
 withConstructor c = onConstructors (const c)
 
-onFields : (String → String) → NameEnv
+onFields : (String → String) → Env
 onFields f = record emptyEnv { fName = just ∘ f ∘ showName }
 
-fieldPrefix : String → NameEnv
+
+fieldPrefix : String → Env
 fieldPrefix pre = onFields $ (pre String.++_) ∘ capitalize
 
+deriving : List String → Env
+deriving xs = record emptyEnv { typeclassDeriving = const xs }
+
+withDefaultDeriving : Env
+withDefaultDeriving = deriving ("Show" ∷ "Eq" ∷ "Generic" ∷ [])
+
 infixr 5 _•_
-_•_ : NameEnv → NameEnv → NameEnv
+_•_ : Env → Env → Env
 env • env₁ = record
   { customNames = env.customNames ++ env₁.customNames
   ; tName       = λ x → env.tName x <∣> env₁.tName x
   ; cName       = λ x → env.cName x <∣> env₁.cName x
   ; fName       = λ x → env.fName x <∣> env₁.fName x
+  ; typeclassDeriving = env₁.typeclassDeriving ∘ env.typeclassDeriving
   }
   where
-    module env  = NameEnv env
-    module env₁ = NameEnv env₁
+    module env  = Env env
+    module env₁ = Env env₁
 
 
 -- * The inner workings
@@ -135,11 +152,6 @@ solveHsType tm = do
 private
   debug = debugPrintFmt "tactic.hs-types"
 
-  _‼_ : List A → ℕ → Maybe A
-  []       ‼ i     = nothing
-  (x ∷ xs) ‼ zero  = just x
-  (x ∷ xs) ‼ suc i = xs ‼ i
-
   specialHsTypes : List (Name × String)
   specialHsTypes = (quote ⊤      , "()")
                  ∷ (quote ℕ      , "Integer")
@@ -152,19 +164,19 @@ private
                  ∷ (quote String , "Data.Text.Text")
                  ∷ []
 
-  hsTypeName : NameEnv → Name → String
+  hsTypeName : Env → Name → String
   hsTypeName env d = fromMaybe (capitalize $ showName d) (lookupTypeName env d)
 
-  freshHsTypeName : NameEnv → Name → TC Name
+  freshHsTypeName : Env → Name → TC Name
   freshHsTypeName env d = freshName (hsTypeName env d)
 
-  hsConName : NameEnv → Name → String
+  hsConName : Env → Name → String
   hsConName env c = fromMaybe (capitalize $ showName c) (lookupConName env c)
 
-  hsFieldName : NameEnv → Name → String
+  hsFieldName : Env → Name → String
   hsFieldName env f = fromMaybe (uncapitalize $ showName f) (lookupFieldName env f)
 
-  freshHsConName : NameEnv → Name → Name → TC Name
+  freshHsConName : Env → Name → Name → TC Name
   freshHsConName env tyName c =
     if showName c == "constructor"
     then freshName (hsConName env tyName) -- Unnamed record constructor: use type name
@@ -196,7 +208,7 @@ private
     debug 10 "HsType %t = %t" tm ty
     pure ty
 
-  makeHsCon : NameEnv → Name → Name → Name → TC (Name × Agda.Builtin.Reflection.Quantity × Type)
+  makeHsCon : Env → Name → Name → Name → TC (Name × Agda.Builtin.Reflection.Quantity × Type)
   makeHsCon env agdaName hsName c = do
     debug 10 "Making constructor %q : %q" c agdaName
     def agdaName' _ ← normalise (def agdaName [])
@@ -208,7 +220,7 @@ private
     debug 10 "hsTy = %t" hsTy
     pure (hsC , quantity-ω , hsTy)
 
-  makeHsData : NameEnv → Name → ℕ → List Name → TC Name
+  makeHsData : Env → Name → ℕ → List Name → TC Name
   makeHsData env agdaName nPars constrs = do
     hsName ← freshHsTypeName env agdaName
     declareData hsName 0 `Set
@@ -216,14 +228,11 @@ private
     defineData hsName hsCons
     pure hsName
 
-  makeHsType : NameEnv → Name → TC Name
+  makeHsType : Env → Name → TC Name
   makeHsType env d = getDefinition d >>= λ where
       (data-type pars cs) → makeHsData env d pars cs
       (record-type c fs)  → makeHsData env d 0 (c ∷ [])
       _                   → typeErrorFmt "%q is not a data or record type" d
-
-  joinStrings : String → List String → String
-  joinStrings sep ss = foldr _&_ "" $ intersperse sep ss
 
   compilePragma : Name → List Name → String
   compilePragma d cs = printf "= data %s (%s)" (showName d) (joinStrings " | " (map showName cs))
@@ -244,17 +253,21 @@ private
   renderHsArgs (vArg a ∷ as) = renderHsType a ∷ renderHsArgs as
   renderHsArgs (_ ∷ as) = renderHsArgs as
 
-  foreignPragma : Name → List Name → TC String
-  foreignPragma d cs = do
+  renderTypeclassDeriving : List String → String
+  renderTypeclassDeriving [] = ""
+  renderTypeclassDeriving xs = printf "deriving (%s)" (joinStrings ", " xs)
+
+  foreignPragma : Env → Name → List Name → TC String
+  foreignPragma env d cs = do
     cons ← forM cs λ c → do
             tel , _ ← viewTy <$> getType c
             let args = map unAbs tel
             pure $ printf "%s %s" (showName c) (joinStrings " " $ renderHsArgs args)
-    pure $ printf "data %s = %s\n  deriving (Show, Eq, Generic)"
-                  (showName d) (joinStrings " | " cons)
+    pure $ printf "data %s = %s\n  %s"
+                  (showName d) (joinStrings " | " cons) (renderTypeclassDeriving (Env.typeclassDeriving env []))
 
   -- Record types
-  foreignPragmaRec : NameEnv → Name → List Name → List Name → TC String
+  foreignPragmaRec : Env → Name → List Name → List Name → TC String
   foreignPragmaRec _ d [] _ = typeErrorFmt "impossible: %q is a record type with no constructors" d
   foreignPragmaRec env d (c ∷ _) fs = do
     tel , _ ← viewTy <$> withNormalisation true (getType c)
@@ -262,21 +275,21 @@ private
     let args = map unAbs tel
         renderField f ty = printf "%s :: %s" f (renderHsType $ unArg ty)
         con = printf "%s {%s}" (showName c) (joinStrings ", " $ zipWith renderField fNames args)
-    pure $ printf "data %s = %s\n  deriving (Show, Eq, Generic)"
-                  (showName d) con
+    pure $ printf "data %s = %s\n %s"
+                  (showName d) con (renderTypeclassDeriving (Env.typeclassDeriving env []))
 
   hsImports : String
   hsImports = "import GHC.Generics (Generic)"
 
   -- Take the name of a simple data type and generate the COMPILE and
   -- FOREIGN pragmas to bind to Haskell.
-  bindHsType : NameEnv → Name → Name → TC ⊤
+  bindHsType : Env → Name → Name → TC ⊤
   bindHsType env agdaName hsName = getDefinition hsName >>= λ where
     (data-type pars cs) → do
       pragmaForeign "GHC" hsImports
       pragmaCompile "GHC" hsName $ compilePragma hsName cs
       getDefinition agdaName >>= λ where
-        (data-type _ _)    → pragmaForeign "GHC" =<< foreignPragma hsName cs
+        (data-type _ _)    → pragmaForeign "GHC" =<< foreignPragma env hsName cs
         (record-type _ fs) → pragmaForeign "GHC" =<< foreignPragmaRec env hsName cs (map unArg fs)
         _ → typeErrorFmt "%q is not a data or record type" agdaName
     _ → typeErrorFmt "%q is not a data type (impossible)" hsName
@@ -290,7 +303,7 @@ private
                                (drop npars (zip is argTys)))) ∷ []
     return $ map (λ i → pat-lam (clause tel lhs (var i []) ∷ []) []) (drop npars is)
 
-  makeTypeAlias : Name → NameEnv → Term → TC ⊤
+  makeTypeAlias : Name → Env → Term → TC ⊤
   makeTypeAlias agdaName env hole = do
     hsTy ← solveHsType (def agdaName [])
     pragmaForeign "GHC" $ printf "type %s = %s" (hsTypeName env agdaName) (renderHsType hsTy)
@@ -298,7 +311,7 @@ private
 
 -- * Exported macros
 
-doAutoHsType : NameEnv → Name → Term → TC Term
+doAutoHsType : Env → Name → Term → TC Term
 doAutoHsType env d hole = do
   checkType hole (quote HasHsType ∙⟦ d ∙ ⟧)
   hs ← makeHsType env d
@@ -309,11 +322,11 @@ doAutoHsType env d hole = do
 
 macro
   autoHsType : Name → Term → TC ⊤
-  autoHsType d hole = _ <$ doAutoHsType emptyEnv d hole
+  autoHsType d hole = _ <$ doAutoHsType withDefaultDeriving d hole
 
   infix 0 autoHsType_⊣_
-  autoHsType_⊣_ : Name → NameEnv → Term → TC ⊤
-  autoHsType_⊣_ d env hole = _ <$ doAutoHsType env d hole
+  autoHsType_⊣_ : Name → Env → Term → TC ⊤
+  autoHsType_⊣_ d env hole = _ <$ doAutoHsType (withDefaultDeriving • env) d hole
 
   infix 9 _↦_
   _↦_ : Name → String → Term → TC ⊤
@@ -324,8 +337,8 @@ macro
   hsTypeAlias : Name → Term → TC ⊤
   hsTypeAlias agdaName = makeTypeAlias agdaName emptyEnv
 
-  -- The only NameEnv that's useful here is `withName`.
-  hsTypeAlias_⊣_ : Name → NameEnv → Term → TC ⊤
+  -- The only Env that's useful here is `withName`.
+  hsTypeAlias_⊣_ : Name → Env → Term → TC ⊤
   hsTypeAlias agdaName ⊣ env = makeTypeAlias agdaName env
 
   -- * Macros for constructing and deconstructing generated types
