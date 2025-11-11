@@ -26,15 +26,15 @@ import qualified MAlonzo.Code.Ledger.Core.Specification.Address
 
 import GHC.Generics (Generic)
 data HSVKey = MkHSVKey {hvkVKey :: Integer, hvkStoredHash :: Integer}
-  deriving (Show, Eq, Generic)
+ deriving (Show, Eq, Generic)
 data Credential = KeyHashObj Integer | ScriptObj Integer
   deriving (Show, Eq, Generic)
 data BaseAddr = BaseAddr {baseNet :: Integer, basePay :: MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.Credential, baseStake :: (Maybe MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.Credential)}
-  deriving (Show, Eq, Generic)
+ deriving (Show, Eq, Generic)
 data BootstrapAddr = BootstrapAddr {bootNet :: Integer, bootPay :: MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.Credential, bootAttrsSize :: Integer}
-  deriving (Show, Eq, Generic)
+ deriving (Show, Eq, Generic)
 data RwdAddr = RwdAddr {rwdNet :: Integer, rwdStake :: MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.Credential}
-  deriving (Show, Eq, Generic)
+ deriving (Show, Eq, Generic)
 type Addr = (Either MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.BaseAddr MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.BootstrapAddr)
 -- Ledger.Conway.Foreign.HSLedger.Address.HsTy-HSVKey
 d_HsTy'45'HSVKey_10 ::

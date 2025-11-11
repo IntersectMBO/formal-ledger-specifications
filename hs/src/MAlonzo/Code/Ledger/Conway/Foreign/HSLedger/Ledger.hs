@@ -66,9 +66,9 @@ import qualified MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base
 
 import GHC.Generics (Generic)
 data LEnv = MkLEnv {leSlot :: Integer, lePpolicy :: (Maybe Integer), lePparams :: MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.PParams.PParams, leEnactState :: MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Enact.EnactState, leTreasury :: Integer}
-  deriving (Show, Eq, Generic)
+ deriving (Show, Eq, Generic)
 data LState = MkLState {utxoSt :: MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Utxo.UTxOState, govSt :: [((Integer, Integer), MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.GovActionState)], certState :: MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Cert.CertState}
-  deriving (Show, Eq, Generic)
+ deriving (Show, Eq, Generic)
 -- Ledger.Conway.Foreign.HSLedger.Ledger._._⊢_⇀⦇_,LEDGERS⦈_
 d__'8866'_'8640''10631'_'44'LEDGERS'10632'__12 ::
   MAlonzo.Code.Ledger.Conway.Specification.Ledger.T_LEnv_2774 ->

@@ -42,16 +42,16 @@ import GHC.Generics (Generic)
 data GovRole = CC  | DRep  | SPO 
   deriving (Show, Eq, Generic)
 data Anchor = Anchor {url :: Data.Text.Text, hash :: Integer}
-  deriving (Show, Eq, Generic)
+ deriving (Show, Eq, Generic)
 data VDeleg = VDelegCredential MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.Credential | VDelegAbstain  | VDelegNoConfidence 
   deriving (Show, Eq, Generic)
 data Vote = Yes  | No  | Abstain 
   deriving (Show, Eq, Generic)
 data GovVotes = GovVotes {gvCC :: (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.HSMap MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.Credential MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.Core.Vote), gvDRep :: (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.HSMap MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.Credential MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.Core.Vote), gvSPO :: (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.HSMap Integer MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.Core.Vote)}
-  deriving (Show, Eq, Generic)
+ deriving (Show, Eq, Generic)
 type GovVoter = (MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.Core.GovRole, MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.Credential)
 data GovVote = MkGovVote {gid :: (Integer, Integer), voter :: (MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.Core.GovRole, MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.Credential), vote :: MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.Core.Vote, anchor :: (Maybe MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.Core.Anchor)}
-  deriving (Show, Eq, Generic)
+ deriving (Show, Eq, Generic)
 -- Ledger.Conway.Foreign.HSLedger.Gov.Core._.Vote
 d_Vote_14 = ()
 -- Ledger.Conway.Foreign.HSLedger.Gov.Core.GovRole

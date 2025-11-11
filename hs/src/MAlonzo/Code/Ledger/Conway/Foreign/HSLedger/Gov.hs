@@ -82,11 +82,11 @@ import qualified MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Derive
 
 import GHC.Generics (Generic)
 data GovEnv = MkGovEnv {geTxid :: Integer, geEpoch :: Integer, gePparams :: MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.PParams.PParams, gePpolicy :: (Maybe Integer), geEnactState :: MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Enact.EnactState, geCertState :: MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Cert.CertState, geRewardCreds :: (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.HSSet MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.Credential)}
-  deriving (Show, Eq, Generic)
+ deriving (Show, Eq, Generic)
 data GovProposal = MkGovProposal {gpAction :: MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.Actions.GovAction, gpPrevAction :: (Integer, Integer), gpPolicy :: (Maybe Integer), gpDeposit :: Integer, gpReturnAddr :: MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.RwdAddr, gpAnchor :: MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.Core.Anchor}
-  deriving (Show, Eq, Generic)
+ deriving (Show, Eq, Generic)
 data GovActionState = MkGovActionState {gasVotes :: MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.Core.GovVotes, gasReturnAddr :: MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.RwdAddr, gasExpiresIn :: Integer, gasAction :: MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.Actions.GovAction, gasPrevAction :: (Integer, Integer)}
-  deriving (Show, Eq, Generic)
+ deriving (Show, Eq, Generic)
 type GovActionID = (Integer, Integer)
 type GovState = [((Integer, Integer), MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.GovActionState)]
 type GovVoter' = (MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.Core.GovRole, MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.Credential)
