@@ -3,11 +3,11 @@
 
 {-# OPTIONS --safe #-}
 
-open import Ledger.Conway.Specification.Abstract
-open import Ledger.Conway.Specification.Transaction
+open import Ledger.Core.Specification.Abstract
+open import Ledger.Core.Specification.Transaction
 
 module Ledger.Conway.Specification.Chain.Properties.EpochStep
-  (txs : _) (open TransactionStructure txs)
+  (txs : TransactionStructure) (open TransactionStructure txs)
   (abs : AbstractFunctions txs)
   where
 

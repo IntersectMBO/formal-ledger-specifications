@@ -15,13 +15,13 @@ open import Data.Rational as ℚ using (ℚ; 0ℚ; _⊔_)
 open import Data.Nat.Properties hiding (_≟_; _≤?_)
 
 open import Ledger.Prelude hiding (_∧_; _∨_; _⊔_) renaming (filterᵐ to filter; ∣_∣ to _↓)
-open import Ledger.Conway.Specification.Transaction hiding (Vote)
+open import Ledger.Core.Specification.Transaction hiding (Vote)
 
 module Ledger.Conway.Specification.Ratify (txs : _) (open TransactionStructure txs) where
 
 open import Ledger.Conway.Specification.Certs govStructure
 open import Ledger.Conway.Specification.Enact govStructure
-open import Ledger.Conway.Specification.Gov.Actions govStructure using (Vote)
+open import Ledger.Core.Specification.Gov.Actions govStructure using (Vote)
 ```
 -->
 

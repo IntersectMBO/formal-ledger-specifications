@@ -11,21 +11,20 @@ source_path: src/Ledger/Conway/Specification/Script/Validation.lagda.md
 ```agda
 {-# OPTIONS --safe #-}
 
-open import Ledger.Conway.Specification.Transaction
-open import Ledger.Conway.Specification.Abstract
+open import Ledger.Core.Specification.Abstract
+open import Ledger.Core.Specification.Transaction
 
 module Ledger.Conway.Specification.Script.Validation
-  (txs : _) (open TransactionStructure txs)
+  (txs : TransactionStructure) (open TransactionStructure txs)
   (abs : AbstractFunctions txs) (open AbstractFunctions abs) (open indexOf indexOfImp)
   where
 
 open import Ledger.Prelude
 open import Ledger.Conway.Specification.Certs govStructure
+open import Ledger.Conway.Specification.Transaction txs abs
 
-
-open import Ledger.Conway.Specification.Abstract txs
+open import Ledger.Core.Specification.Abstract txs
 open import Ledger.Conway.Specification.Script.ScriptPurpose txs
-
 rdptr : TxBody → ScriptPurpose → Maybe RdmrPtr
 rdptr txb = λ where
   (Cert h)     → map (Cert    ,_) $ indexOfDCert    h txCerts
@@ -53,6 +52,7 @@ getDatum tx utxo (Spend txin) =
 getDatum tx utxo _ = nothing
 ```
 -->
+
 ```agda
 txInfo : Language → PParams
                   → UTxO
@@ -82,9 +82,6 @@ credsNeeded utxo txb
 <!--
 ```agda
   where open TxBody txb; open GovVote; open RwdAddr; open GovProposal
-
--- valContext : TxInfo → ScriptPurpose → Data
--- valContext txinfo sp = toData (txinfo , sp)
 
 txOutToDataHash : TxOut → Maybe DataHash
 txOutToDataHash (_ , _ , d , _) = d >>= isInj₂
@@ -122,3 +119,4 @@ opaque
 evalP2Scripts : List (P2Script × List Data × ExUnits × CostModel) → Bool
 evalP2Scripts = all (λ (s , d , eu , cm) → runPLCScript cm s eu d)
 ```
+-->

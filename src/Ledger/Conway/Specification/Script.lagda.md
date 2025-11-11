@@ -14,6 +14,6 @@ module Ledger.Conway.Specification.Script
   (es : _) (open EpochStructure es)
   where
 
-open import Ledger.Conway.Specification.Script.Base cs es public
-open import Ledger.Conway.Specification.Script.Timelock cs es public
+open import Ledger.Core.Specification.Script.Base cs es public
+open import Ledger.Core.Specification.Script.Timelock cs es public
 ```

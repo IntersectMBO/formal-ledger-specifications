@@ -19,7 +19,7 @@ instance ShowSData : Show SData
 open import Test.LedgerImplementation SData SData
 open import Ledger.Conway.Specification.Script.ScriptPurpose SVTransactionStructure
 
-open import Ledger.Conway.Specification.Transaction using (TransactionStructure)
+open import Ledger.Core.Specification.Transaction using (TransactionStructure)
 open TransactionStructure SVTransactionStructure
 
 open import Ledger.Conway.Specification.Script.Validation SVTransactionStructure

@@ -1,18 +1,16 @@
 {-# OPTIONS --safe #-}
 
-open import Ledger.Prelude
-open import Ledger.Conway.Specification.Abstract
-open import Ledger.Conway.Specification.Transaction using (TransactionStructure)
-
-open import Data.Product using (_×_; _,_)
-open import Relation.Binary.PropositionalEquality
-
-open import Ledger.Conway.Conformance.Equivalence.Convert
+open import Ledger.Core.Specification.Abstract
+open import Ledger.Core.Specification.Transaction
 
 module Ledger.Conway.Conformance.Equivalence.Certs
-  (txs : _) (open TransactionStructure txs)
-  (abs : AbstractFunctions txs) (open AbstractFunctions abs)
+  (txs : TransactionStructure) (open TransactionStructure txs)
+  (abs : AbstractFunctions txs)
   where
+
+open import Ledger.Prelude
+
+open import Ledger.Conway.Conformance.Equivalence.Convert
 
 private
   module L where

@@ -6,5 +6,5 @@ source_path: src/Ledger/Dijkstra/Specification/Gov/Base.lagda.md
 {-# OPTIONS --safe #-}
 module Ledger.Dijkstra.Specification.Gov.Base where
 
-open import Ledger.Conway.Specification.Gov.Base public
+open import Ledger.Core.Specification.Gov.Base public
 ```

@@ -6,17 +6,20 @@ source_path: src/Ledger/Conway/Specification/Utxo/Properties/Base.lagda.md
 ```agda
 {-# OPTIONS --safe #-}
 
-open import Ledger.Conway.Specification.Abstract
-open import Ledger.Conway.Specification.Transaction
+open import Ledger.Core.Specification.Abstract
+open import Ledger.Core.Specification.Transaction
 
 module Ledger.Conway.Specification.Utxo.Properties.Base
-  (txs : _) (open TransactionStructure txs)
-  (abs : AbstractFunctions txs) (open AbstractFunctions abs)
+  (txs : TransactionStructure) (open TransactionStructure txs)
+  (abs : AbstractFunctions txs)
   where
 
-open import Prelude; open Equivalence
+open import Prelude
+
 open import Ledger.Prelude hiding (≤-trans; ≤-antisym; All); open Properties
+
 open import Ledger.Conway.Specification.Certs govStructure
+open import Ledger.Conway.Specification.Transaction txs abs
 open import Ledger.Conway.Specification.Utxo txs abs
 
 open import Tactic.EquationalReasoning using (module ≡-Reasoning)
@@ -35,6 +38,7 @@ open import Relation.Binary             using (IsEquivalence)
 open import Algebra.Morphism              using (module MonoidMorphisms; IsMagmaHomomorphism)
 open import Algebra.Definitions.RawMagma +-rawMagma using () renaming (_,_ to _,≤_)
 
+open Equivalence
 
 posPart-negPart≡x : {x : ℤ} → posPart x - negPart x ≡ x
 posPart-negPart≡x {ℤ.+_ n}     = refl

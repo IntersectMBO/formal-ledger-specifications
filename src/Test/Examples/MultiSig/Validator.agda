@@ -6,7 +6,7 @@ open import Ledger.Prelude
 
 open import Test.Examples.MultiSig.Datum
 open import Test.Prelude MultiSigData
-open import Ledger.Conway.Specification.Transaction
+open import Ledger.Core.Specification.Transaction
 open import Test.SymbolicData MultiSigData
 
 open import Data.List using (filter)

@@ -6,17 +6,19 @@ source_path: src/Ledger/Conway/Specification/RewardUpdate/Properties/Computation
 ```agda
 {-# OPTIONS --safe #-}
 
-open import Ledger.Conway.Specification.Transaction using (TransactionStructure)
-open import Ledger.Conway.Specification.Abstract using (AbstractFunctions)
+open import Ledger.Core.Specification.Abstract
+open import Ledger.Core.Specification.Transaction
 
 module Ledger.Conway.Specification.RewardUpdate.Properties.Computational
-  (txs : _) (open TransactionStructure txs)
-  (abs : AbstractFunctions txs) (open AbstractFunctions abs)
+  (txs : TransactionStructure) (open TransactionStructure txs)
+  (abs : AbstractFunctions txs)
   where
-open import Ledger.Conway.Specification.RewardUpdate txs abs
+
+open import Ledger.Prelude
+
 open import Ledger.Conway.Specification.Epoch txs abs
 open import Ledger.Conway.Specification.Epoch.Properties.Computational txs abs
-open import Ledger.Prelude
+open import Ledger.Conway.Specification.RewardUpdate txs abs
 
 open Computational ⦃...⦄
 

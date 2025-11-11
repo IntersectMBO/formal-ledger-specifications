@@ -23,7 +23,7 @@ instance
   ShowAccountSimData = mkShow (λ x → "")
 
 open import Test.LedgerImplementation SData SData
-open import Ledger.Conway.Specification.Transaction using (TransactionStructure)
+open import Ledger.Core.Specification.Transaction
 
 open TransactionStructure SVTransactionStructure
 

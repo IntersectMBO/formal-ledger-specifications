@@ -1,22 +1,24 @@
 {-# OPTIONS --safe #-}
 
-import Data.Maybe as M
-
-open import Ledger.Prelude
-open import Ledger.Core.Specification.Crypto
-open import Ledger.Conway.Specification.Abstract
-open import Ledger.Conway.Specification.Transaction
+open import Ledger.Core.Specification.Abstract
+open import Ledger.Core.Specification.Transaction
 
 module Ledger.Conway.Conformance.Utxow.Properties
-  (txs : _) (open TransactionStructure txs)
-  (abs : AbstractFunctions txs) (open AbstractFunctions abs)
+  (txs : TransactionStructure) (open TransactionStructure txs)
+  (abs : AbstractFunctions txs)
   where
 
-open import Ledger.Conway.Conformance.Utxow txs abs
-open import Ledger.Conway.Conformance.Utxo txs abs
-open import Ledger.Conway.Conformance.Utxo.Properties txs abs
+import Data.Maybe as M
 
 open import stdlib-meta.Tactic.GenError using (genErrors)
+
+open import Ledger.Prelude
+
+open import Ledger.Conway.Conformance.Utxo txs abs
+open import Ledger.Conway.Conformance.Utxo.Properties txs abs
+open import Ledger.Conway.Conformance.Utxow txs abs
+
+open import Ledger.Core.Specification.Crypto
 
 instance
   Computational-UTXOW : Computational _⊢_⇀⦇_,UTXOW⦈_ String

@@ -32,7 +32,7 @@ instance
 -- No P2 scripts for now
 
 open import Ledger.Conway.Specification.Script it it
-open import Ledger.Conway.Specification.Script.Timelock it it public
+open import Ledger.Core.Specification.Script.Timelock it it public
 open import Ledger.Conway.Conformance.Script it it public
 
 instance
@@ -107,7 +107,7 @@ instance
 open TransactionStructure HSTransactionStructure public
 open import Ledger.Conway.Specification.Certs govStructure public
 
-open import Ledger.Conway.Specification.Abstract it
+open import Ledger.Core.Specification.Abstract it
 
 instance
   HSAbstractFunctions : AbstractFunctions

@@ -3,7 +3,7 @@
 module Test.Examples.DEx.OffChain.Update where
 
 open import Ledger.Prelude
-open import Ledger.Conway.Specification.Transaction
+open import Ledger.Core.Specification.Transaction
 
 open import Test.Examples.DEx.Datum
 open import Test.Examples.DEx.Validator
@@ -14,6 +14,7 @@ open import Test.LedgerImplementation SData SData
 open import Test.AbstractImplementation valContext
 open import Test.Lib valContext
 
+open import Ledger.Conway.Specification.Transaction SVTransactionStructure SVAbstractFunctions
 open import Ledger.Conway.Specification.Utxo SVTransactionStructure SVAbstractFunctions
 
 open TransactionStructure SVTransactionStructure
@@ -25,7 +26,7 @@ import Data.Rational.Base as Q
 
 makeUpdateTxOut : Label → (scriptIx w : ℕ) → Value → Q.ℚ → TxOut → List (ℕ × TxOut)
 makeUpdateTxOut (Always q o) ix w v r (fst , txValue , snd) =
-  (ix , (fst , v ,  just (inj₁ (inj₁ (inj₁ (Always r o)))) , nothing)) ∷ [] 
+  (ix , (fst , v ,  just (inj₁ (inj₁ (inj₁ (Always r o)))) , nothing)) ∷ []
 
 makeUpdateTx : (id : ℕ) → UTxOState → PlutusScript → (w : ℕ) → Value → Q.ℚ → Maybe Tx
 makeUpdateTx id state script@(sh , _) w v r =
@@ -39,13 +40,13 @@ makeUpdateTx id state script@(sh , _) w v r =
                          ; txOuts = fromListIx (makeFeeSwapTxOut wutxo txValue v ++ makeUpdateTxOut label (proj₂ scIn) w v r (fst , txValue , snd) )
                          ; txId = id
                          ; collateralInputs = Ledger.Prelude.fromList (map proj₁ wutxo)
-                         ; reqSignerHashes = Ledger.Prelude.fromList (w ∷ []) 
+                         ; reqSignerHashes = Ledger.Prelude.fromList (w ∷ [])
                          } ;
                 wits = record { vkSigs = fromListᵐ ((w , (_+_ {{addNat}} (getTxId wutxo) w)) ∷ []) ;
                                 scripts = Ledger.Prelude.fromList ((inj₂ script) ∷ []) ;
-                                txdats = ∅ ; 
+                                txdats = ∅ ;
                                 txrdmrs = fromListᵐ (((Spend , (proj₂ scIn)) ,
-                                                      inj₁ (inj₂ (Input.Update v r)) , 
+                                                      inj₁ (inj₂ (Input.Update v r)) ,
                                                       ((getTxId wutxo) , w)) ∷ []) } ;
                 txsize = 10 ;
                 isValid = true ;

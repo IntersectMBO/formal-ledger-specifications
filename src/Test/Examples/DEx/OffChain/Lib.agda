@@ -5,7 +5,7 @@ module Test.Examples.DEx.OffChain.Lib where
 open import Data.List using (filter)
 
 open import Ledger.Prelude
-open import Ledger.Conway.Specification.Transaction using (TransactionStructure)
+open import Ledger.Core.Specification.Transaction using (TransactionStructure)
 
 open import Test.Examples.DEx.Datum
 open import Test.Examples.DEx.Validator
@@ -14,6 +14,10 @@ open import Test.SymbolicData DExData
 open import Test.LedgerImplementation SData SData
 
 open TransactionStructure SVTransactionStructure
+
+open import Test.AbstractImplementation valContext
+
+open import Ledger.Conway.Specification.Transaction SVTransactionStructure SVAbstractFunctions
 
 defaultTxBody : TxBody
 defaultTxBody = record

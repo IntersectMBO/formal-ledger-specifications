@@ -1,22 +1,28 @@
 {-# OPTIONS --safe #-}
 
-open import Ledger.Conway.Specification.Abstract using (AbstractFunctions)
-open import Ledger.Conway.Specification.Transaction using (TransactionStructure)
+open import Ledger.Core.Specification.Abstract
+open import Ledger.Core.Specification.Transaction
 
 module Ledger.Conway.Conformance.Utxo.Properties
-  (txs : _) (open TransactionStructure txs)
-  (abs : AbstractFunctions txs) (open AbstractFunctions abs)
+  (txs : TransactionStructure) (open TransactionStructure txs)
+  (abs : AbstractFunctions txs)
   where
 
 open import Data.Nat.Properties hiding (_≟_)
 open import Data.String.Base renaming (_++_ to _+ˢ_) using ()
-open import Interface.ComputationalRelation
-open import Ledger.Prelude hiding (≤-trans; ≤-antisym; All); open Properties
-open import Ledger.Conway.Specification.Script.Validation txs abs
-open import Ledger.Conway.Conformance.Utxo txs abs
-open import Ledger.Conway.Conformance.Certs govStructure
-open import Prelude
 open import stdlib-meta.Tactic.GenError
+open import Interface.ComputationalRelation
+
+open import Prelude
+open import Ledger.Prelude hiding (≤-trans; ≤-antisym; All)
+
+open import Ledger.Conway.Conformance.Certs govStructure
+open import Ledger.Conway.Conformance.Utxo txs abs
+
+open import Ledger.Conway.Specification.Script.Validation txs abs
+open import Ledger.Conway.Specification.Transaction txs abs
+
+open Properties
 
 private
   module L where

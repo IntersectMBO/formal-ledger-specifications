@@ -1,18 +1,18 @@
 ---
 source_branch: master
-source_path: src/Ledger/Conway/Specification/Gov/Base.lagda.md
+source_path: src/Ledger/Core/Specification/Gov/Base.lagda.md
 ---
 
 ```agda
 {-# OPTIONS --safe #-}
 
-module Ledger.Conway.Specification.Gov.Base where
+module Ledger.Core.Specification.Gov.Base where
 
 open import Prelude using (Type)
 open import Class.DecEq
 open import Ledger.Core.Specification.Crypto
 open import Ledger.Core.Specification.Epoch
-open import Ledger.Conway.Specification.Script.Base
+open import Ledger.Core.Specification.Script.Base
 import Ledger.Conway.Specification.PParams
 
 record GovStructure : Type₁ where

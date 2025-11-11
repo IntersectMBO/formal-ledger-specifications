@@ -17,8 +17,7 @@ open import Foreign.HaskellTypes.Deriving public
 
 open import Ledger.Core.Specification.Crypto
 open import Ledger.Core.Specification.Epoch
-
-open import Ledger.Conway.Specification.Transaction renaming (Vote to VoteTag) public
+open import Ledger.Core.Specification.Transaction renaming (Vote to VoteTag) public
 
 open import Ledger.Prelude.Foreign.Util public
 
@@ -103,5 +102,5 @@ module Implementation where
   AuxiliaryData   = ℕ
   DocHash         = ℕ
   tokenAlgebra    = Coin-TokenAlgebra
-    where open import Ledger.Conway.Specification.TokenAlgebra.Coin ScriptHash
+    where open import Ledger.Core.Specification.TokenAlgebra.Coin ScriptHash
             using (Coin-TokenAlgebra)

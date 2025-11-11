@@ -1,6 +1,6 @@
 ---
 source_branch: master
-source_path: src/Ledger/Conway/Specification/Script/Timelock.lagda.md
+source_path: src/Ledger/Core/Specification/Script/Timelock.lagda.md
 ---
 
 # Timelock Scripts {#sec:timelock-scripts}
@@ -27,7 +27,7 @@ open import Ledger.Prelude hiding (All; Any; all?; any?; _∷ʳ_; uncons; _⊆_)
 open import Ledger.Core.Specification.Crypto
 open import Ledger.Core.Specification.Epoch
 
-module Ledger.Conway.Specification.Script.Timelock
+module Ledger.Core.Specification.Script.Timelock
   (cs : _) (open CryptoStructure cs)
   (es : _) (open EpochStructure es)
   where

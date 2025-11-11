@@ -191,7 +191,8 @@ The fields that depend on the transaction level use the auxiliary functions
       field
         txBody       : TxBody txLevel
         txWitnesses  : TxWitnesses txLevel
-        isValid      : InTopLevel txLevel Bool
+        txSize       : InSubLevel txLevel ℕ    -- only in sub-level tx
+        isValid      : InTopLevel txLevel Bool -- only in top-level tx
         txAuxData    : Maybe AuxiliaryData
 
     record TxBody (txLevel : TxLevel) : Type where
@@ -391,6 +392,10 @@ could be either of them.
   getTxScripts {TxLevelSub} = getSubTxScripts
   getTxScripts {TxLevelTop} =
     concatMapˢ getSubTxScripts ∘ fromList ∘ TxBody.txSubTransactions ∘ TxBodyOf
+
+  getTopLevelTxSize : TopLevelTx → ℕ
+  getTopLevelTxSize txTop = sum (map (λ subTx → subTx .txSize) (txTop .txBody .txSubTransactions))
+    where open Tx; open TxBody
 ```
 -->
 

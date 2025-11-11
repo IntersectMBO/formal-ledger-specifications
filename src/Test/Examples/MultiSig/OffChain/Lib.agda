@@ -3,7 +3,7 @@
 module Test.Examples.MultiSig.OffChain.Lib where
 
 open import Ledger.Prelude
-open import Ledger.Conway.Specification.Transaction using (TransactionStructure)
+open import Ledger.Core.Specification.Transaction
 
 open import Test.Examples.MultiSig.Datum
 open import Test.Examples.MultiSig.Validator
@@ -12,9 +12,12 @@ open import Test.SymbolicData MultiSigData
 open import Test.LedgerImplementation SData SData
 
 open TransactionStructure SVTransactionStructure
-open Implementation
+
 open import Data.List using (filter)
-open import Relation.Nullary
+
+open import Test.AbstractImplementation valContext
+
+open import Ledger.Conway.Specification.Transaction SVTransactionStructure SVAbstractFunctions
 
 defaultTxBody : TxBody
 defaultTxBody = record
