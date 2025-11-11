@@ -2,18 +2,27 @@
 
 -- Version 2 of MultiSig contract adapted from updated Agda2hs code
 
-open import Ledger.Prelude hiding (fromList; ε); open Computational
-open import Test.Examples.MultiSigV2.Datum
-open import Relation.Binary using (REL; Decidable)
-open import Level using (Level; _⊔_; suc)
-open import Data.Maybe renaming (map to maybeMap)
-open import Data.List using (filter)
+module Test.Examples.MultiSigV2.Validator where
 
 open import Data.Bool.Base renaming (_∧_ to _&&_) hiding (if_then_else_)
-import Agda.Builtin.Nat as N
-open import Test.Prelude MultiSigData
+open import Data.List using (filter)
+open import Data.Maybe renaming (map to maybeMap)
 
-module Test.Examples.MultiSigV2.Validator where
+open import Ledger.Prelude hiding (fromList; ε)
+
+open import Ledger.Core.Specification.Transaction using (TransactionStructure)
+
+open import Test.Examples.MultiSigV2.Datum
+open import Test.Prelude MultiSigData
+open import Test.SymbolicData MultiSigData
+
+instance
+  ShowMultiSigData : Show MultiSigData
+  ShowMultiSigData = mkShow (λ x → "")
+
+open import Test.LedgerImplementation SData SData
+
+open TransactionStructure SVTransactionStructure
 
 PubKeyHash = ℕ
 
@@ -24,27 +33,6 @@ record Params : Set where
     maxWait          : ℕ
 open Params
 
-open import Test.SymbolicData MultiSigData
-
-
-instance
-  ShowMultiSigData : Show MultiSigData
-  ShowMultiSigData = mkShow (λ x → "")
-
-open import Test.LedgerImplementation SData SData
-open import Ledger.Conway.Specification.Transaction using (TransactionStructure)
-open TransactionStructure SVTransactionStructure
-open import Test.AbstractImplementation valContext
-open import Test.Lib valContext
-open import Ledger.Conway.Specification.Script.Validation SVTransactionStructure SVAbstractFunctions
-open import Data.Empty
-open import Ledger.Conway.Specification.Utxo SVTransactionStructure SVAbstractFunctions
-open import Ledger.Conway.Specification.Transaction
-open import Ledger.Core.Specification.Epoch
-open EpochStructure SVEpochStructure
-open Implementation
-open import Ledger.Conway.Specification.Utxo.Properties.Computational SVTransactionStructure SVAbstractFunctions
-open import Ledger.Conway.Specification.Utxow.Properties.Computational SVTransactionStructure SVAbstractFunctions
 
 emptyValue : Value
 emptyValue = 0

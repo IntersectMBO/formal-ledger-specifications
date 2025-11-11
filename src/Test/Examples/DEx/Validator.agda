@@ -12,7 +12,7 @@ import Agda.Builtin.Nat as N
 import Data.Rational.Base as Q
 
 open import Ledger.Prelude
-open import Ledger.Conway.Specification.Transaction using (TransactionStructure)
+open import Ledger.Core.Specification.Transaction using (TransactionStructure)
 
 open import Test.Examples.DEx.Datum
 open import Test.Prelude DExData

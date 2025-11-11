@@ -1,6 +1,6 @@
 ---
 source_branch: master
-source_path: src/Ledger.Core.Specification.Transaction.lagda
+source_path: src/Ledger.Conway.Specification.Transaction.lagda
 ---
 
 # Transactions {#sec:transactions}

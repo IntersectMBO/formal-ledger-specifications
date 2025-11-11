@@ -3,7 +3,7 @@
 module Test.Examples.MultiSigV2.OffChain.Propose where
 
 open import Ledger.Prelude
-open import Ledger.Conway.Specification.Transaction
+open import Ledger.Core.Specification.Transaction
 
 open import Test.Examples.MultiSigV2.Datum
 open import Test.Examples.MultiSigV2.OffChain.Lib
@@ -15,6 +15,7 @@ open import Test.AbstractImplementation valContext
 open import Test.Lib valContext
 
 open import Ledger.Conway.Specification.Script.Validation SVTransactionStructure SVAbstractFunctions
+open import Ledger.Conway.Specification.Transaction SVTransactionStructure SVAbstractFunctions
 open import Ledger.Conway.Specification.Utxo SVTransactionStructure SVAbstractFunctions
 
 open TransactionStructure SVTransactionStructure
@@ -42,11 +43,11 @@ makeProposeTx id state script@(sh , _) w v tw d =
                          } ;
                 wits = record { vkSigs = fromListᵐ ((w , (_+_ {{addValue}} (getTxId wutxo) w)) ∷ []) ;
                                 scripts = Ledger.Prelude.fromList ((inj₂ script) ∷ []) ;
-                                txdats = ∅ ; 
+                                txdats = ∅ ;
                                 txrdmrs = fromListᵐ (((Spend , (proj₂ scIn)) ,
-                                                      inj₁ (inj₂ (Propose v 
-                                                                          tw 
-                                                                          d)) , 
+                                                      inj₁ (inj₂ (Propose v
+                                                                          tw
+                                                                          d)) ,
                                                       ((getTxId wutxo) , w)) ∷ []) } ;
                 txsize = 10 ;
                 isValid = true ;

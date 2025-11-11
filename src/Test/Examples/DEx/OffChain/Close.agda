@@ -3,7 +3,7 @@
 module Test.Examples.DEx.OffChain.Close where
 
 open import Ledger.Prelude
-open import Ledger.Conway.Specification.Transaction
+open import Ledger.Core.Specification.Transaction
 
 open import Test.Examples.DEx.Datum
 open import Test.Examples.DEx.Validator
@@ -14,6 +14,7 @@ open import Test.LedgerImplementation SData SData
 open import Test.AbstractImplementation valContext
 open import Test.Lib valContext
 
+open import Ledger.Conway.Specification.Transaction SVTransactionStructure SVAbstractFunctions
 open import Ledger.Conway.Specification.Utxo SVTransactionStructure SVAbstractFunctions
 
 open TransactionStructure SVTransactionStructure
@@ -31,13 +32,13 @@ makeCloseTx id state script@(sh , _) w =
                          ; txOuts = fromListIx (makeFeeUnPaymentTxOut wutxo txValue)
                          ; txId = id
                          ; collateralInputs = Ledger.Prelude.fromList (map proj₁ wutxo)
-                         ; reqSignerHashes = Ledger.Prelude.fromList (w ∷ []) 
+                         ; reqSignerHashes = Ledger.Prelude.fromList (w ∷ [])
                          } ;
                 wits = record { vkSigs = fromListᵐ ((w , (_+_ {{addNat}} (getTxId wutxo) w) ) ∷ []) ;
                                 scripts = Ledger.Prelude.fromList ((inj₂ script) ∷ []) ;
-                                txdats = ∅ ; 
+                                txdats = ∅ ;
                                 txrdmrs = fromListᵐ (((Spend , (proj₂ scIn)) ,
-                                                      inj₁ (inj₂ Close) , 
+                                                      inj₁ (inj₂ Close) ,
                                                       ((getTxId wutxo) , w)) ∷ []) } ;
                 txsize = 10 ;
                 isValid = true ;

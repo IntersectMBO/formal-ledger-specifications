@@ -25,9 +25,9 @@ open import Ledger.Prelude hiding (fromList; ε)
 open import Ledger.Core.Specification.Crypto
 open import Ledger.Core.Specification.Epoch
 open import Ledger.Core.Specification.Gov.Base
-open import Ledger.Core.Specification.Transaction
+-- open import Ledger.Core.Specification.Transaction
 
-open Computational
+-- open Computational
 
 module _ {A : Set} ⦃ _ : DecEq A ⦄ ⦃ _ : Show A ⦄ where instance
   ∀Hashable : Hashable A A

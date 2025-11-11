@@ -7,6 +7,8 @@ source_path: src/Test/Lib.lagda.md
 {-# OPTIONS --safe #-}
 
 open import Ledger.Prelude hiding (fromList; ε; _/_)
+-- open import Test.LedgerImplementation using (SVTransactionStructure)
+-- import Ledger.Conway.Specification.Script.ScriptPurpose as SP
 
 module Test.Lib
   {T D : Set}{{DecEq-Data : DecEq D}}{{Show-Data : Show D}}
@@ -14,6 +16,13 @@ module Test.Lib
   (valContext' : TxInfo → ScriptPurpose → D)
   where
 
+-- open import Test.AbstractImplementation valContext'
+-- open import Test.LedgerImplementation T D
+--   renaming (SVTransactionStructure to SVTransactionStructure')
+-- open import Ledger.Conway.Specification.Utxo SVTransactionStructure' SVAbstractFunctions
+-- open import Ledger.Core.Specification.Transaction using (TransactionStructure)
+-- open TransactionStructure SVTransactionStructure'
+-- open import Ledger.Prelude.Numeric using (mkUnitInterval; mkℕ⁺)
 open import Data.Integer using (ℤ; +_)
 open import Data.Rational using (½; 1ℚ ; mkℚ+ ; _/_)
 open import Data.Nat.Coprimality using (Coprime; gcd≡1⇒coprime)

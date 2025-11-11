@@ -14,7 +14,7 @@ open import Ledger.Prelude using (nothing; _,_)
 
 open import Test.LedgerImplementation T D
   renaming (SVTransactionStructure to SVTransactionStructure')
-open import Ledger.Conway.Specification.Abstract SVTransactionStructure'
+open import Ledger.Core.Specification.Abstract SVTransactionStructure'
 
 open Implementation
 
