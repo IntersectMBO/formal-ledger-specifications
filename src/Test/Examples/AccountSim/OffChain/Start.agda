@@ -3,7 +3,7 @@
 module Test.Examples.AccountSim.OffChain.Start where
 
 open import Ledger.Prelude
-open import Ledger.Conway.Specification.Transaction using (TransactionStructure)
+open import Ledger.Core.Specification.Transaction
 
 open import Test.Examples.AccountSim.Datum
 open import Test.Examples.AccountSim.OffChain.Lib
@@ -14,7 +14,12 @@ open import Test.LedgerImplementation SData SData
 open import Test.Lib valContext
 
 open TransactionStructure SVTransactionStructure
+
 open Implementation
+
+open import Test.AbstractImplementation valContext
+
+open import Ledger.Conway.Specification.Transaction SVTransactionStructure SVAbstractFunctions
 
 startTxOut : Value → PlutusScript → TxOut
 startTxOut v script = inj₁ (record { net = 0 ;

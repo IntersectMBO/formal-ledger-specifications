@@ -21,9 +21,9 @@ open import Data.Nat.Properties using (+-0-commutativeMonoid)
 open import Relation.Binary.Morphism.Structures
 open import Algebra.Construct.DirectProduct
 open import Ledger.Core.Specification.Crypto
-open import Ledger.Conway.Specification.Transaction
+open import Ledger.Core.Specification.Transaction
 open import Ledger.Core.Specification.Epoch
-open import Ledger.Conway.Specification.Gov.Base
+open import Ledger.Core.Specification.Gov.Base
 
 module _ {A : Set} ⦃ _ : DecEq A ⦄ ⦃ _ : Show A ⦄ where instance
   ∀Hashable : Hashable A A
@@ -81,7 +81,7 @@ module Implementation where
   AuxiliaryData   = ℕ
   DocHash         = ℕ
   tokenAlgebra    = Coin-TokenAlgebra
-    where open import Ledger.Conway.Specification.TokenAlgebra.Coin ScriptHash
+    where open import Ledger.Core.Specification.TokenAlgebra.Coin ScriptHash
             using (Coin-TokenAlgebra)
 
 SVGlobalConstants = GlobalConstants ∋ record {Implementation}
@@ -162,7 +162,7 @@ SVGovStructure = record
   }
 instance _ = SVGovStructure
 
-open import Ledger.Conway.Specification.Gov.Actions it hiding (Vote; GovRole; VDeleg; Anchor)
+open import Ledger.Core.Specification.Gov.Actions it hiding (Vote; GovRole; VDeleg; Anchor)
 open import Ledger.Conway.Conformance.Certs it hiding (StakePoolParams; DCert)
 
 SVTransactionStructure : TransactionStructure
@@ -181,7 +181,7 @@ SVTransactionStructure = record
 ```agda
 instance _ = SVTransactionStructure
 
-open import Ledger.Conway.Specification.Abstract it
+open import Ledger.Core.Specification.Abstract it
 open import Ledger.Conway.Conformance.Gov it
 
 open TransactionStructure it
