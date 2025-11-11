@@ -701,6 +701,27 @@ See [the `conformance-example` directory][conformance-example].
 ## 🗃️ Miscellanea
 
 
+### Updating Agda dependencies in the Nix configuration
+
+The following example ilustrates the procedure
+
+```
+nix flake update agda-nix/abstract-set-theory \
+  --override-input agda-nix/abstract-set-theory \
+  github:input-output-hk/agda-sets/bbaa00abc4aef061896ae5d3cdec148bfbf5029f
+nix build ./#fls-agdaWithPackages -o ~/ledger-agda
+```
+
+The first line updates the commit hash to use for a dependency. In the example,
+it updates the dependency `agda-nix/abstract-set-theory` to point at the commit
+`bbaa00abc4aef061896ae5d3cdec148bfbf5029f` or the repository
+`github:input-output-hk/agda-sets`.
+
+The second line rebuilds the Agda mode to use with emacs. This step is necessary
+for emacs to use the new version of the dependency when loading Agda code. This
+assumes that `~/ledger-agda/bin` is in your `PATH`.
+
+
 ### Plotting typechecking times
 
 The script `scripts/plot_typecheck_time.py` can be used to generate an `html`
