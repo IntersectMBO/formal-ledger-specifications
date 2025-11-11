@@ -324,7 +324,7 @@ module AcceptedByCC (currentEpoch : Epoch)
 ```agda
   sizeActiveCC : ℕ
   sizeActiveCC = case proj₁ cc of λ where
-    (just ((ccMembers , _) , _)) → lengthˢ (filterˢ (λ (_ , y) → currentEpoch ≤ y) ccMembers)
+    (just ((ccMembers , _) , _)) → lengthˢ (filterˢ (activeInEpoch currentEpoch) ccMembers)
     nothing → 0
 
   castVotes : Credential ⇀ Vote
