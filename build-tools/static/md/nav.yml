@@ -90,6 +90,7 @@
     - Script: Ledger.Conway.Specification.Script.md
     - Script/:
       - Base: Ledger.Conway.Specification.Script.Base.md
+      - ScriptPurpose: Ledger.Conway.Specification.Script.ScriptPurpose.md
       - Timelock: Ledger.Conway.Specification.Script.Timelock.md
       - Validation: Ledger.Conway.Specification.Script.Validation.md
     - TokenAlgebra/:
@@ -112,15 +113,6 @@
       - Properties: Ledger.Conway.Specification.Utxow.Properties.md
       - Properties/:
         - Computational: Ledger.Conway.Specification.Utxow.Properties.Computational.md
-    - Test:
-      - Examples: Ledger.Conway.Specification.Test.Examples.md
-      - Examples/:
-        - HelloWorld: Ledger.Conway.Specification.Test.Examples.HelloWorld.md
-        - SucceedIfNumber: Ledger.Conway.Specification.Test.Examples.SucceedIfNumber.md
-      - LedgerImplementation: Ledger.Conway.Specification.Test.LedgerImplementation.md
-      - Lib: Ledger.Conway.Specification.Test.Lib.md
-      - Prelude: Ledger.Conway.Specification.Test.Prelude.md
-      - StructuredContracts: Ledger.Conway.Specification.Test.StructuredContracts.md
     - Types/:
       - GovStructure: Ledger.Conway.Specification.Types.GovStructure.md
 - Dijkstra:
@@ -178,6 +170,69 @@
       - HaskellTypes/:
         - Deriving: Foreign.HaskellTypes.Deriving.md
     - MyDebugOptions: MyDebugOptions.md
+    - Test/:
+      - Examples: Test.Examples.md
+      - Examples/:
+        - HelloWorld: Test.Examples.HelloWorld.md
+        - SucceedIfNumber: Test.Examples.SucceedIfNumber.md
+        - AccountSim/:
+          - Datum: Test.Examples.AccountSim.Datum.md
+          - OffChain/:
+            - Cleanup: Test.Examples.AccountSim.OffChain.Cleanup.md
+            - Close: Test.Examples.AccountSim.OffChain.Close.md
+            - Deposit: Test.Examples.AccountSim.OffChain.Deposit.md
+            - Lib: Test.Examples.AccountSim.OffChain.Lib.md
+            - OffChain: Test.Examples.AccountSim.OffChain.OffChain.md
+            - Open: Test.Examples.AccountSim.OffChain.Open.md
+            - Start: Test.Examples.AccountSim.OffChain.Start.md
+            - Transfer: Test.Examples.AccountSim.OffChain.Transfer.md
+            - Withdraw: Test.Examples.AccountSim.OffChain.Withdraw.md
+          - Test/:
+            - Trace: Test.Examples.AccountSim.Test.Trace.md
+          - Validator: Test.Examples.AccountSim.Validator.md
+        - DEx/:
+          - Datum: Test.Examples.DEx.Datum.md
+          - OffChain/:
+            - Close: Test.Examples.DEx.OffChain.Close.md
+            - Exchange: Test.Examples.DEx.OffChain.Exchange.md
+            - Lib: Test.Examples.DEx.OffChain.Lib.md
+            - OffChain: Test.Examples.DEx.OffChain.OffChain.md
+            - Start: Test.Examples.DEx.OffChain.Start.md
+            - Update: Test.Examples.DEx.OffChain.Update.md
+          - Test/:
+            - Trace: Test.Examples.DEx.Test.Trace.md
+          - Validator: Test.Examples.DEx.Validator.md
+        - MultiSig/:
+          - Datum: Test.Examples.MultiSig.Datum.md
+          - OffChain/:
+            - AddSig: Test.Examples.MultiSig.OffChain.AddSig.md
+            - Lib: Test.Examples.MultiSig.OffChain.Lib.md
+            - OffChain: Test.Examples.MultiSig.OffChain.OffChain.md
+            - Open: Test.Examples.MultiSig.OffChain.Open.md
+            - Pay: Test.Examples.MultiSig.OffChain.Pay.md
+            - Propose: Test.Examples.MultiSig.OffChain.Propose.md
+          - Test/:
+            - Trace: Test.Examples.MultiSig.Test.Trace.md
+          - Validator: Test.Examples.MultiSig.Validator.md
+        - MultiSigV2/:
+          - Datum: Test.Examples.MultiSigV2.Datum.md
+          - OffChain/:
+            - AddSig: Test.Examples.MultiSigV2.OffChain.AddSig.md
+            - Cancel: Test.Examples.MultiSigV2.OffChain.Cancel.md
+            - Cleanup: Test.Examples.MultiSigV2.OffChain.Cleanup.md
+            - Lib: Test.Examples.MultiSigV2.OffChain.Lib.md
+            - OffChain: Test.Examples.MultiSigV2.OffChain.OffChain.md
+            - Open: Test.Examples.MultiSigV2.OffChain.Open.md
+            - Pay: Test.Examples.MultiSigV2.OffChain.Pay.md
+            - Propose: Test.Examples.MultiSigV2.OffChain.Propose.md
+          - Test/:
+            - Trace: Test.Examples.MultiSigV2.Test.Trace.md
+          - Validator: Test.Examples.MultiSigV2.Validator.md
+      - AbstractImplementation: Test.AbstractImplementation.md
+      - LedgerImplementation: Test.LedgerImplementation.md
+      - Lib: Test.Lib.md
+      - Prelude: Test.Prelude.md
+      - SymbolicData: Test.SymbolicData.md
   - Era-dependent Modules:
     - Dijkstra:
       - Ledger.Dijkstra: Ledger.Dijkstra.md
