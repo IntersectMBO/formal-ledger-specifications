@@ -129,29 +129,15 @@ module _ -- ASSUMPTION --
                                  (disjoint-sing ¬p)
                              ⟩
       indexedSumᵐ proj₂ ((d ᶠᵐ) ∪ˡᶠ (❴ dp , c ❵ ᶠᵐ))
-                            ≡⟨ sym $ indexedSumᵐ-∪ˡ-∪ˡᶠ d ❴ dp , c ❵ ⟩
+                            ≡⟨ sym $ indexedSumᵐ-∪ˡ-∪ˡᶠ {B = ⊤} d ❴ dp , c ❵ ⟩
       getCoin (d ∪ˡ ❴ dp , c ❵)
       ∎
     where
       open ≤-Reasoning
-      open import Relation.Binary.Structures using (IsEquivalence)
-      module ≡ᵉ = IsEquivalence ≡ᵉ-isEquivalence
 
       disjoint-sing : dp ∉ dom d → disjoint (dom d) (dom ❴ dp , c ❵ˢ)
       disjoint-sing dp∉d a∈d a∈sing
         rewrite from ∈-dom-singleton-pair a∈sing = dp∉d a∈d
-
-      -- TODO: remove after adopting
-      -- https://github.com/input-output-hk/agda-sets/pull/17
-      indexedSumᵐ-∪ˡ-∪ˡᶠ
-        : ∀ m m'
-        → indexedSumᵐ proj₂ ((m ∪ˡ m') ᶠᵐ) ≡ indexedSumᵐ proj₂ ((m ᶠᵐ) ∪ˡᶠ (m' ᶠᵐ))
-      indexedSumᵐ-∪ˡ-∪ˡᶠ m m' =
-        indexedSumᵐ-cong
-          {f = proj₂}
-          {x = (m ∪ˡ m') ᶠᵐ}
-          {y = (m ᶠᵐ) ∪ˡᶠ (m' ᶠᵐ)}
-          ≡ᵉ.refl
 
   ≤updateCertDeps : (cs : List DCert) {pp : PParams} {deposits : Deposits}
     → noRefundCert cs

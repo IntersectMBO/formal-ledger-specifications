@@ -2,9 +2,8 @@
 
 module Ledger.Conway.Conformance.Equivalence.Map where
 
-open import Ledger.Prelude
+open import Ledger.Prelude hiding (filterᵐ-singleton-false)
 open import Axiom.Set.Properties th
-open import Axiom.Set.Map.Dec
 
 import Algebra as Alg
 import Algebra.Definitions as AlgDefs
