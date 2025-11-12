@@ -225,7 +225,7 @@ nix develop
 
 # Build specific artifacts using fls-shake
 fls-shake html                # Build HTML docs
-fls-shake hs                  # Build Haskell source
+rm -rf _build dist/hs; fls-shake hs   # Build Haskell source
 
 # See all available targets
 fls-shake --help
@@ -341,10 +341,10 @@ Then point your browser to <http://127.0.0.1:8000>.
 
 For the best development experience, you should configure your IDE to use the Agda executable provided by this project's Nix environment.
 
-First, build `agdaWithPackages` and create a stable symlink to it in your home directory. This prevents you from having to update your IDE settings every time the project's dependencies change.
+First, build `fls-agdaWithPackages` and create a stable symlink to it in your home directory. This prevents you from having to update your IDE settings every time the project's dependencies change.
 
 ```bash
-nix build ./#agdaWithPackages -o ~/ledger-agda
+nix build ./#fls-agdaWithPackages -o ~/ledger-agda
 ```
 
 Then make sure that the `~/ledger-agda/bin` directory is in your `PATH` when starting your editor.
@@ -699,6 +699,27 @@ See [the `conformance-example` directory][conformance-example].
 
 <a id="miscellanea"></a>
 ## 🗃️ Miscellanea
+
+
+### Updating Agda dependencies in the Nix configuration
+
+The following example ilustrates the procedure
+
+```
+nix flake update agda-nix/abstract-set-theory \
+  --override-input agda-nix/abstract-set-theory \
+  github:input-output-hk/agda-sets/bbaa00abc4aef061896ae5d3cdec148bfbf5029f
+nix build ./#fls-agdaWithPackages -o ~/ledger-agda
+```
+
+The first line updates the commit hash to use for a dependency. In the example,
+it updates the dependency `agda-nix/abstract-set-theory` to point at the commit
+`bbaa00abc4aef061896ae5d3cdec148bfbf5029f` or the repository
+`github:input-output-hk/agda-sets`.
+
+The second line rebuilds the Agda mode to use with emacs. This step is necessary
+for emacs to use the new version of the dependency when loading Agda code. This
+assumes that `~/ledger-agda/bin` is in your `PATH`.
 
 
 ### Plotting typechecking times

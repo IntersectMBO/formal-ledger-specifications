@@ -104,6 +104,41 @@ module _ -- ASSUMPTION --
     where open ≤-Reasoning
 
 
+  ≤certDeps∪ˡ : {d : Deposits} {(dp , c) : DepositPurpose × Coin}
+              → getCoin d ≤ getCoin (d ∪ˡ ❴ (dp , c) ❵)
+
+  ≤certDeps∪ˡ {d} {dp , c} with dp ∈? dom d
+  ... | yes dp∈ =
+      from ≤⇔<∨≈ $ inj₂ $
+        indexedSumᵛ'-cong {C = Coin} {x = d} {y = d ∪ˡ ❴ dp , c ❵} $
+        begin
+          d ˢ ≈⟨ ≡ᵉ.sym $ singleton-∈-∪ˡ {m = d} dp∈ ⟩
+          (d ∪ˡ ❴ (dp , c) ❵) ˢ
+        ∎
+    where
+      open import Relation.Binary.Structures using (IsEquivalence; IsPreorder)
+      open import Relation.Binary.Reasoning.Setoid (≡ᵉ-Setoid {A = DepositPurpose × Coin})
+      module ≡ᵉ = IsEquivalence ≡ᵉ-isEquivalence
+
+  ... | no ¬p = begin
+      getCoin d             ≤⟨ m≤m+n (getCoin d) _ ⟩
+      getCoin d + _         ≡⟨ sym $ indexedSumᵐ-∪
+                                 {X = d ᶠᵐ}
+                                 {Y = ❴ dp , c ❵ ᶠᵐ}
+                                 {f = proj₂}
+                                 (disjoint-sing ¬p)
+                             ⟩
+      indexedSumᵐ proj₂ ((d ᶠᵐ) ∪ˡᶠ (❴ dp , c ❵ ᶠᵐ))
+                            ≡⟨ sym $ indexedSumᵐ-∪ˡ-∪ˡᶠ {B = ⊤} d ❴ dp , c ❵ ⟩
+      getCoin (d ∪ˡ ❴ dp , c ❵)
+      ∎
+    where
+      open ≤-Reasoning
+
+      disjoint-sing : dp ∉ dom d → disjoint (dom d) (dom ❴ dp , c ❵ˢ)
+      disjoint-sing dp∉d a∈d a∈sing
+        rewrite from ∈-dom-singleton-pair a∈sing = dp∉d a∈d
+
   ≤updateCertDeps : (cs : List DCert) {pp : PParams} {deposits : Deposits}
     → noRefundCert cs
     → getCoin deposits ≤ getCoin (updateCertDeposits pp cs deposits)
@@ -112,7 +147,8 @@ module _ -- ASSUMPTION --
     ≤-trans ≤certDeps (≤updateCertDeps cs {pp} {deposits ∪⁺ ❴ CredentialDeposit c , pp .PParams.keyDeposit ❵} nrf)
   ≤updateCertDeps (delegate c _ _ v ∷ cs) {pp} {deposits} (_ All.∷ nrf) =
     ≤-trans ≤certDeps (≤updateCertDeps cs {pp} {deposits ∪⁺ ❴ CredentialDeposit c , v ❵} nrf)
-  ≤updateCertDeps (regpool _ _ ∷ cs)       (_ All.∷ nrf) = ≤-trans ≤certDeps (≤updateCertDeps cs nrf)
+  ≤updateCertDeps (regpool _ _ ∷ cs) {_} {deposits} (_ All.∷ nrf) =
+    ≤-trans (≤certDeps∪ˡ {d = deposits}) (≤updateCertDeps cs nrf)
   ≤updateCertDeps (retirepool _ _ ∷ cs)    (_ All.∷ nrf) = ≤updateCertDeps cs nrf
   ≤updateCertDeps (regdrep _ _ _ ∷ cs)     (_ All.∷ nrf) = ≤-trans ≤certDeps (≤updateCertDeps cs nrf)
   ≤updateCertDeps (ccreghot _ _ ∷ cs)      (_ All.∷ nrf) = ≤updateCertDeps cs nrf
@@ -188,5 +224,3 @@ module _ -- ASSUMPTION --
     balIn = balance (st ∣ txIns)
     balOut = balance (outs txb)
 ```
-
-
