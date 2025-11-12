@@ -548,7 +548,7 @@ d_Computational'45'ENACT_1200 v0
                     -> let v6
                              = MAlonzo.Code.Data.Nat.Properties.d__'8804''63'__2920
                                  (coe
-                                    MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.du_indexedSum'7515'''_1414
+                                    MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.du_indexedSum'7515'''_1450
                                     (coe
                                        MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'RwdAddr_274
                                        (coe
@@ -577,7 +577,7 @@ d_Computational'45'ENACT_1200 v0
                                           MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3476))
                                     (coe (\ v6 -> v6))
                                     (coe
-                                       MAlonzo.Code.Axiom.Set.Map.Dec.du__'8746''8314'__550
+                                       MAlonzo.Code.Axiom.Set.Map.Dec.du__'8746''8314'__582
                                        MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8
                                        (coe
                                           MAlonzo.Code.Class.CommutativeMonoid.Core.du_fromBundle_64
@@ -633,7 +633,7 @@ d_Computational'45'ENACT_1200 v0
                                                           MAlonzo.Code.Ledger.Conway.Specification.Enact.d_pparams_1112
                                                           (coe v2))
                                                        (coe
-                                                          MAlonzo.Code.Axiom.Set.Map.Dec.du__'8746''8314'__550
+                                                          MAlonzo.Code.Axiom.Set.Map.Dec.du__'8746''8314'__582
                                                           MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8
                                                           MAlonzo.Code.Ledger.Prelude.Instances.d_CommMonoid'45'ℕ'45''43'_6
                                                           (let v10

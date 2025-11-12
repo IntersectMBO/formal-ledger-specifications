@@ -3911,7 +3911,7 @@ d_Computational'45'PRE'45'CERT_2410 v0
                                           MAlonzo.Code.Ledger.Conway.Specification.Certs.d_dState_1400
                                           (coe v2))))))
                          (coe
-                            MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.du_filter'738'_1234
+                            MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.du_filter'738'_1270
                             (\ v4 ->
                                coe
                                  MAlonzo.Code.Class.Decidable.Core.du_'8263''178'__102
@@ -4235,7 +4235,7 @@ d_Computational'45'PRE'45'CERT_2410 v0
                                                               MAlonzo.Code.Ledger.Conway.Specification.Certs.d_dState_1400
                                                               (coe v2))))))
                                              (coe
-                                                MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.du_filter'738'_1234
+                                                MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.du_filter'738'_1270
                                                 (\ v7 ->
                                                    coe
                                                      MAlonzo.Code.Class.Decidable.Core.du_'8263''178'__102

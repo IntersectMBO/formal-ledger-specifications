@@ -439,6 +439,7 @@ library
       MAlonzo.Code.Function.Properties.Inverse.HalfAdjointEquivalence
       MAlonzo.Code.Function.Properties.RightInverse
       MAlonzo.Code.Function.Properties.Surjection
+      MAlonzo.Code.Function.Reasoning
       MAlonzo.Code.Function.Related.Propositional
       MAlonzo.Code.Function.Related.TypeIsomorphisms
       MAlonzo.Code.Function.Strict
