@@ -48,27 +48,6 @@ module _  {A B : Type}
 
   open Equivalence
 
-  -- Properties of domains of maps of type m₁ ∪⁺ m₂ ---------------------
-
-  -- 1. If `k ∈ dom m₁ ∪ dom m₂` (for m₁, m₂ maps), then `(k , v) ∈ m₁ ∪⁺ m₂` for some `v`.
-  dom∪-∃∪⁺ : {m₁ m₂ : A ⇀ B} → k ∈ dom m₁ ∪ dom m₂ → Σ B (λ • → (k , •) ∈ m₁ ∪⁺ m₂)
-  dom∪-∃∪⁺ k∈ = from dom∈ (∪dom⊆dom∪⁺ k∈)
-
-  -- 2. If `(k , v) ∈ m₁ ∪⁺ m₂`, then `k ∈ dom m₁ ∪ dom m₂`.
-  ∪⁺-dom∪ : {m₁ m₂ : A ⇀ B}{k : A} {v : B} → (k , v) ∈ m₁ ∪⁺ m₂ → k ∈ dom m₁ ∪ dom m₂
-  ∪⁺-dom∪ {v = v} kv∈ = dom∪⁺⊆∪dom (to dom∈ (v , kv∈))
-
-  -- 3. The image of a key `k ∈ dom m₁ ∪ dom m₂` under the map `m₁ ∪⁺ m₂` is
-  --    `fold id id _◇_ (unionThese m₁ m₂ k p)`.
-  ∥_∪⁺_∥ : (m₁ m₂ : A ⇀ B) → k ∈ dom m₁ ∪ dom m₂ → B
-  ∥_∪⁺_∥ {k} m₁ m₂ p = fold id id _◇_ (unionThese m₁ m₂ k p)
-
-  -- 4. F[ m₁ , m₂ ] takes a key `k` and a proof of `k ∈ dom m₁ ∪ dom m₂` and returns
-  --    the pair `(k , v)` where `v` is the unique image of `k` under `m₁ ∪⁺ m₂`.
-  --    i.e., `(k , v) ∈ m₁ ∪⁺ m₂`.
-  F[_,_] : (m₁ m₂ : A ⇀ B) → Σ A (_∈ dom m₁ ∪ dom m₂) → A × B
-  F[ m₁ , m₂ ] (x , x∈) = x , ∥ m₁ ∪⁺ m₂ ∥ x∈
-
   -- 5. A simpler version of `lookupᵐ`; it doesn't require tactics.
   lookupᵐ∈ : (m : A ⇀ B) → k ∈ dom m → B
   lookupᵐ∈ _ = proj₁ ∘ (from dom∈)
