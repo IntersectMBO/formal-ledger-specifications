@@ -84,9 +84,6 @@ ccCreds : HashProtected (Maybe ((Credential ⇀ Epoch) × ℚ)) → ℙ Credenti
 ccCreds (just x   , _)  = dom (x .proj₁)
 ccCreds (nothing  , _)  = ∅
 
-ℚof? : HashProtected (Maybe ((Credential ⇀ Epoch) × ℚ)) → Maybe ℚ
-ℚof? cc' = proj₂ <$> (proj₁ cc')
-
 getHash : ∀ {a} → NeedsHash a → Maybe GovActionID
 getHash {NoConfidence}        h = just h
 getHash {UpdateCommittee}     h = just h

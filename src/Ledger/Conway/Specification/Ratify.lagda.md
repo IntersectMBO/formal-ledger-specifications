@@ -351,7 +351,7 @@ module AcceptedByCC (currentEpoch : Epoch)
                        else constMap (dom m) Vote.no
 
   mT : Maybe ℚ
-  mT = threshold (PParamsOf eSt) (ℚof? cc) action CC
+  mT = threshold (PParamsOf eSt) (proj₂ <$> (proj₁ cc)) action CC
 
   t : ℚ
   t = maybe id 0ℚ mT
@@ -436,7 +436,7 @@ module AcceptedByDRep (Γ : RatifyEnv)
                            ∪ˡ predeterminedDRepVotes
 
   t : ℚ
-  t = maybe id 0ℚ (threshold (PParamsOf eSt) (ℚof? cc) action DRep)
+  t = maybe id 0ℚ (threshold (PParamsOf eSt) (proj₂ <$> (proj₁ cc)) action DRep)
 
   acceptedStake totalStake : Coin
   acceptedStake  = ∑[ x ← stakeDistrVDeleg ∣ actualVotes ⁻¹ Vote.yes ] x
@@ -552,7 +552,7 @@ module AcceptedBySPO (delegatees : VoteDelegs)
   actualVotes = castVotes ∪ˡ mapFromFun defaultVote (dom stakeDistrPools)
 
   t : ℚ
-  t = maybe id 0ℚ (threshold (PParamsOf eSt) (ℚof? cc) action SPO)
+  t = maybe id 0ℚ (threshold (PParamsOf eSt) (proj₂ <$> (proj₁ cc)) action SPO)
 
   acceptedStake totalStake : Coin
   acceptedStake  = ∑[ x ← stakeDistrPools ∣ actualVotes ⁻¹ Vote.yes ] x
