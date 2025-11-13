@@ -611,7 +611,19 @@ module EPOCH {epSt epSt' : EpochState} (e : Epoch) (epSt≈epSt' : EpochState-[ 
           pools         = P.cong PState.pools (cSt≈cSt'.pState)
           delegatees    = P.cong DState.voteDelegs (cSt≈cSt'.dState)
 
-        fut≡fut' = RATIFIES.cong (record {Γ≈Γ'}) (P.cong (λ x → RatifyState.constructor (EnactStateOf x) ∅ false) epSt≈epSt'.fut) (P.cong Governance-Update.govSt' govUpd₁≡govUpd₂) ratify₁ ratify₂
+        fut≡fut' = RATIFIES.cong
+          (record {Γ≈Γ'})
+          (P.cong
+            (λ x → RatifyState.constructor
+                     (record (EnactStateOf x) {withdrawals = ∅})
+                     ∅
+                     false
+            )
+            epSt≈epSt'.fut
+          )
+          (P.cong Governance-Update.govSt' govUpd₁≡govUpd₂)
+          ratify₁
+          ratify₂
 
         module CS where
           dState = poPRUpd₁≈poPRUpd₂.dState''

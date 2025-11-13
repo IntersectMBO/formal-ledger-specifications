@@ -18,6 +18,9 @@ open import Data.List using (filter)
 open import Agda.Builtin.FromNat
 
 open import Ledger.Conway.Specification.Enact govStructure
+open import Ledger.Conway.Conformance.Equivalence txs abs
+open import Ledger.Conway.Conformance.Equivalence.Convert
+open import Ledger.Conway.Conformance.Equivalence.Deposits txs abs
 open import Ledger.Conway.Conformance.Ledger txs abs
 open import Ledger.Conway.Specification.Ratify txs
 open import Ledger.Conway.Conformance.Utxo txs abs
@@ -25,6 +28,7 @@ open import Ledger.Conway.Conformance.Certs govStructure
 open import Ledger.Conway.Conformance.Rewards txs abs
 open import Ledger.Conway.Specification.Epoch txs abs
   using (getStakeCred; getOrphans; mkStakeDistrs; toRwdAddr) public
+import Ledger.Conway.Specification.Epoch txs abs as EpochSpec
 
 record EpochState : Type where
   constructor ⟦_,_,_,_,_⟧ᵉ'
@@ -35,16 +39,43 @@ record EpochState : Type where
     es         : EnactState
     fut        : RatifyState
 
+PoolDelegatedStake : Type
+PoolDelegatedStake = KeyHash ⇀ Coin
+
 record NewEpochState : Type where
   field
     lastEpoch   : Epoch
+    bprev       : BlocksMade
+    bcur        : BlocksMade
     epochState  : EpochState
     ru          : Maybe RewardUpdate
+    pd          : PoolDelegatedStake
 
 instance
   unquoteDecl HasCast-EpochState HasCast-NewEpochState = derive-HasCast
     ( (quote EpochState     , HasCast-EpochState)
     ∷ [ (quote NewEpochState  , HasCast-NewEpochState)])
+
+  EpochStateFromConf : EpochState ⭆ EpochSpec.EpochState
+  EpochStateFromConf .convⁱ _ epochState =
+    let open EpochState epochState in
+    ⟦ acnt , ss , conv ls , es , fut ⟧
+
+  EpochStateToConf : EpochSpec.EpochState ⭆ EpochState
+  EpochStateToConf .convⁱ deposits epochSt =
+    let open EpochSpec.EpochState epochSt in
+    ⟦ acnt , ss , certDeposits ls ⊢conv ls , es , fut ⟧ᵉ'
+
+  NewEpochStateFromConf : NewEpochState ⭆ EpochSpec.NewEpochState
+  NewEpochStateFromConf .convⁱ _ newEpochState =
+    let open NewEpochState newEpochState in
+    ⟦ lastEpoch , bprev , bcur , conv epochState , ru , pd ⟧
+
+  NewEpochStateToConf : EpochSpec.NewEpochState ⭆ NewEpochState
+  NewEpochStateToConf .convⁱ deposits newEpochSt =
+    let open EpochSpec.NewEpochState newEpochSt in
+    ⟦ lastEpoch , bcur , bprev , conv epochState , ru , pd ⟧
+
 
 applyRUpd : RewardUpdate → EpochState → EpochState
 applyRUpd rewardUpdate
@@ -69,6 +100,24 @@ applyRUpd rewardUpdate
     regRU     = rs ∣ dom rewards
     unregRU   = rs ∣ dom rewards ᶜ
     unregRU'  = ∑[ x ← unregRU ] x
+
+opaque
+  calculatePoolDelegatedStake : Snapshot → PoolDelegatedStake
+  calculatePoolDelegatedStake ss =
+      -- Shelley spec: the output map must contain keys appearing in both
+      -- sd and the pool parameters.
+      sd ∣ dom (ss .pools)
+    where
+      open Snapshot
+
+      -- stake credentials delegating to each pool
+      stakeCredentialsPerPool : Rel KeyHash Credential
+      stakeCredentialsPerPool = (StakeDelegsOf ss ˢ) ⁻¹ʳ
+
+      -- delegated stake per pool
+      sd : KeyHash ⇀ Coin
+      sd = aggregate₊ ((stakeCredentialsPerPool ∘ʳ (StakeOf ss ˢ)) ᶠˢ)
+
 
 private variable
   nes nes' : NewEpochState
@@ -169,21 +218,30 @@ data _⊢_⇀⦇_,EPOCH⦈_ : ⊤ → EpochState → Epoch → EpochState → Ty
 
 data _⊢_⇀⦇_,NEWEPOCH⦈_ : ⊤ → NewEpochState → Epoch → NewEpochState → Type where
 
-  NEWEPOCH-New : let
-      eps' = applyRUpd ru eps
-    in
-    ∙ e ≡ lastEpoch + 1
-    ∙ _ ⊢ eps' ⇀⦇ e ,EPOCH⦈ eps''
-      ────────────────────────────────
-      _ ⊢ ⟦ lastEpoch , eps , just ru ⟧ ⇀⦇ e ,NEWEPOCH⦈ ⟦ e , eps'' , nothing ⟧
+  NEWEPOCH-New :
+    ∀ {bprev bcur : BlocksMade} {pd : PoolDelegatedStake} →
+    let
+       eps' = applyRUpd ru eps
+       ss   = EpochState.ss eps''
+       pd'  = calculatePoolDelegatedStake (Snapshots.set ss)
+     in
+       ∙ e ≡ lastEpoch + 1
+       ∙ _ ⊢ eps' ⇀⦇ e ,EPOCH⦈ eps''
+       ────────────────────────────────
+       _ ⊢ ⟦ lastEpoch , bprev , bcur , eps , just ru , pd ⟧ ⇀⦇ e ,NEWEPOCH⦈ ⟦ e , bcur , ∅ᵐ  , eps'' , nothing , pd' ⟧
 
-  NEWEPOCH-Not-New :
+  NEWEPOCH-Not-New : ∀ {bprev bcur : BlocksMade} {pd : PoolDelegatedStake} →
     ∙ e ≢ lastEpoch + 1
       ────────────────────────────────
-      _ ⊢ ⟦ lastEpoch , eps , mru ⟧ ⇀⦇ e ,NEWEPOCH⦈ ⟦ lastEpoch , eps , mru ⟧
+      _ ⊢ ⟦ lastEpoch , bprev , bcur , eps , mru , pd ⟧ ⇀⦇ e ,NEWEPOCH⦈ ⟦ lastEpoch , bprev , bcur , eps , mru , pd ⟧
 
   NEWEPOCH-No-Reward-Update :
-    ∙ e ≡ lastEpoch + 1
-    ∙ _ ⊢ eps ⇀⦇ e ,EPOCH⦈ eps'
+    ∀ {bprev bcur : BlocksMade} {pd : PoolDelegatedStake} →
+    let
+      ss  = EpochState.ss eps'
+      pd' = calculatePoolDelegatedStake (Snapshots.set ss)
+    in
+      ∙ e ≡ lastEpoch + 1
+      ∙ _ ⊢ eps ⇀⦇ e ,EPOCH⦈ eps'
       ────────────────────────────────
-      _ ⊢ ⟦ lastEpoch , eps , nothing ⟧ ⇀⦇ e ,NEWEPOCH⦈ ⟦ e , eps' , nothing ⟧
+      _ ⊢ ⟦ lastEpoch , bprev , bcur , eps , nothing , pd ⟧ ⇀⦇ e ,NEWEPOCH⦈ ⟦ e , bcur , ∅ᵐ , eps' , nothing , pd' ⟧
