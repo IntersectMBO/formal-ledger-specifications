@@ -10472,32 +10472,8 @@ du_filter'7504''45'singleton'45'true_4972 v0 v1 v2 v3
                  (coe v4))
               (coe
                  MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 (coe v3) (coe v5))))
--- Ledger.Conway.Conformance.Equivalence.Map._._._.filterᵐ-singleton-false2
-d_filter'7504''45'singleton'45'false2_4986 ::
-  () ->
-  () ->
-  MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
-  MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
-  MAlonzo.Code.Class.CommutativeMonoid.Core.T_CommutativeMonoid_12 ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemigroup_568 ->
-  (AgdaAny -> ()) ->
-  (AgdaAny -> MAlonzo.Code.Class.Decidable.Core.T__'8263'_10) ->
-  AgdaAny ->
-  AgdaAny ->
-  (AgdaAny -> MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20) ->
-  MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_filter'7504''45'singleton'45'false2_4986 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5
-                                           ~v6 ~v7 ~v8 ~v9 ~v10
-  = du_filter'7504''45'singleton'45'false2_4986
-du_filter'7504''45'singleton'45'false2_4986 ::
-  MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-du_filter'7504''45'singleton'45'false2_4986
-  = coe
-      MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
-      (coe (\ v0 v1 -> coe MAlonzo.Code.Data.Empty.du_'8869''45'elim_12))
-      (coe (\ v0 v1 -> coe MAlonzo.Code.Data.Empty.du_'8869''45'elim_12))
 -- Ledger.Conway.Conformance.Equivalence.Map._._._.filterᵐ-restrict
-d_filter'7504''45'restrict_4996 ::
+d_filter'7504''45'restrict_4990 ::
   () ->
   () ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
@@ -10508,14 +10484,14 @@ d_filter'7504''45'restrict_4996 ::
   (AgdaAny -> MAlonzo.Code.Class.Decidable.Core.T__'8263'_10) ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   [AgdaAny] -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_filter'7504''45'restrict_4996 ~v0 ~v1 v2 ~v3 ~v4 ~v5 ~v6 v7 v8 v9
-  = du_filter'7504''45'restrict_4996 v2 v7 v8 v9
-du_filter'7504''45'restrict_4996 ::
+d_filter'7504''45'restrict_4990 ~v0 ~v1 v2 ~v3 ~v4 ~v5 ~v6 v7 v8 v9
+  = du_filter'7504''45'restrict_4990 v2 v7 v8 v9
+du_filter'7504''45'restrict_4990 ::
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   (AgdaAny -> MAlonzo.Code.Class.Decidable.Core.T__'8263'_10) ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   [AgdaAny] -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-du_filter'7504''45'restrict_4996 v0 v1 v2 v3
+du_filter'7504''45'restrict_4990 v0 v1 v2 v3
   = coe
       MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
       (coe
@@ -10714,7 +10690,7 @@ du_filter'7504''45'restrict_4996 v0 v1 v2 v3
                              _ -> MAlonzo.RTE.mazUnreachableError))
               _ -> MAlonzo.RTE.mazUnreachableError))
 -- Ledger.Conway.Conformance.Equivalence.Map._._._.∈-filter-res-
-d_'8712''45'filter'45'res'45'_5082 ::
+d_'8712''45'filter'45'res'45'_5076 ::
   () ->
   () ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
@@ -10728,10 +10704,10 @@ d_'8712''45'filter'45'res'45'_5082 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_'8712''45'filter'45'res'45'_5082 ~v0 ~v1 v2 ~v3 ~v4 ~v5 ~v6 v7 v8
+d_'8712''45'filter'45'res'45'_5076 ~v0 ~v1 v2 ~v3 ~v4 ~v5 ~v6 v7 v8
                                    v9 v10 v11
-  = du_'8712''45'filter'45'res'45'_5082 v2 v7 v8 v9 v10 v11
-du_'8712''45'filter'45'res'45'_5082 ::
+  = du_'8712''45'filter'45'res'45'_5076 v2 v7 v8 v9 v10 v11
+du_'8712''45'filter'45'res'45'_5076 ::
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   (AgdaAny -> MAlonzo.Code.Class.Decidable.Core.T__'8263'_10) ->
   AgdaAny ->
@@ -10739,7 +10715,7 @@ du_'8712''45'filter'45'res'45'_5082 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-du_'8712''45'filter'45'res'45'_5082 v0 v1 v2 v3 v4 v5
+du_'8712''45'filter'45'res'45'_5076 v0 v1 v2 v3 v4 v5
   = coe
       MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
       (coe
@@ -10806,7 +10782,7 @@ du_'8712''45'filter'45'res'45'_5082 v0 v1 v2 v3 v4 v5
             v4)
          (coe v2) (coe v3) (coe v5))
 -- Ledger.Conway.Conformance.Equivalence.Map._._._.≡ᵉ.isPartialEquivalence
-d_isPartialEquivalence_5092 ::
+d_isPartialEquivalence_5086 ::
   () ->
   () ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
@@ -10816,17 +10792,17 @@ d_isPartialEquivalence_5092 ::
   (AgdaAny -> ()) ->
   (AgdaAny -> MAlonzo.Code.Class.Decidable.Core.T__'8263'_10) ->
   MAlonzo.Code.Relation.Binary.Structures.T_IsPartialEquivalence_16
-d_isPartialEquivalence_5092 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7
-  = du_isPartialEquivalence_5092
-du_isPartialEquivalence_5092 ::
+d_isPartialEquivalence_5086 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7
+  = du_isPartialEquivalence_5086
+du_isPartialEquivalence_5086 ::
   MAlonzo.Code.Relation.Binary.Structures.T_IsPartialEquivalence_16
-du_isPartialEquivalence_5092
+du_isPartialEquivalence_5086
   = coe
       MAlonzo.Code.Relation.Binary.Structures.du_isPartialEquivalence_44
       (coe
          MAlonzo.Code.Axiom.Set.Properties.du_'8801''7497''45'isEquivalence_284)
 -- Ledger.Conway.Conformance.Equivalence.Map._._._.≡ᵉ.refl
-d_refl_5094 ::
+d_refl_5088 ::
   () ->
   () ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
@@ -10837,14 +10813,14 @@ d_refl_5094 ::
   (AgdaAny -> MAlonzo.Code.Class.Decidable.Core.T__'8263'_10) ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_refl_5094 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 = du_refl_5094
-du_refl_5094 :: MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-du_refl_5094
+d_refl_5088 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 = du_refl_5088
+du_refl_5088 :: MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+du_refl_5088
   = coe
       MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 (coe (\ v0 v1 -> v1))
       (coe (\ v0 v1 -> v1))
 -- Ledger.Conway.Conformance.Equivalence.Map._._._.≡ᵉ.reflexive
-d_reflexive_5096 ::
+d_reflexive_5090 ::
   () ->
   () ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
@@ -10857,21 +10833,21 @@ d_reflexive_5096 ::
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_reflexive_5096 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7
-  = du_reflexive_5096
-du_reflexive_5096 ::
+d_reflexive_5090 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7
+  = du_reflexive_5090
+du_reflexive_5090 ::
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-du_reflexive_5096 v0 v1 v2
+du_reflexive_5090 v0 v1 v2
   = coe
       MAlonzo.Code.Relation.Binary.Structures.du_reflexive_42
       (coe
          MAlonzo.Code.Axiom.Set.Properties.du_'8801''7497''45'isEquivalence_284)
       v0
 -- Ledger.Conway.Conformance.Equivalence.Map._._._.≡ᵉ.sym
-d_sym_5098 ::
+d_sym_5092 ::
   () ->
   () ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
@@ -10884,19 +10860,19 @@ d_sym_5098 ::
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_sym_5098 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 ~v9 v10
-  = du_sym_5098 v10
-du_sym_5098 ::
+d_sym_5092 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 ~v9 v10
+  = du_sym_5092 v10
+du_sym_5092 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-du_sym_5098 v0
+du_sym_5092 v0
   = case coe v0 of
       MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v1 v2
         -> coe
              MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 (coe v2) (coe v1)
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Conway.Conformance.Equivalence.Map._._._.≡ᵉ.trans
-d_trans_5100 ::
+d_trans_5094 ::
   () ->
   () ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
@@ -10911,13 +10887,13 @@ d_trans_5100 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_trans_5100 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 ~v9 ~v10 v11 v12
-  = du_trans_5100 v11 v12
-du_trans_5100 ::
+d_trans_5094 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 ~v9 ~v10 v11 v12
+  = du_trans_5094 v11 v12
+du_trans_5094 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-du_trans_5100 v0 v1
+du_trans_5094 v0 v1
   = coe
       MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
       (coe
@@ -10931,7 +10907,7 @@ du_trans_5100 v0 v1
               MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30 v0 v2
               (coe MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30 v1 v2 v3)))
 -- Ledger.Conway.Conformance.Equivalence.Map._._._.restrict-singleton-filterᵐ-false
-d_restrict'45'singleton'45'filter'7504''45'false_5146 ::
+d_restrict'45'singleton'45'filter'7504''45'false_5140 ::
   () ->
   () ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
@@ -10944,17 +10920,17 @@ d_restrict'45'singleton'45'filter'7504''45'false_5146 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   (AgdaAny -> MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20) ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_restrict'45'singleton'45'filter'7504''45'false_5146 ~v0 ~v1 v2
+d_restrict'45'singleton'45'filter'7504''45'false_5140 ~v0 ~v1 v2
                                                       ~v3 ~v4 ~v5 ~v6 v7 v8 v9 ~v10
-  = du_restrict'45'singleton'45'filter'7504''45'false_5146
+  = du_restrict'45'singleton'45'filter'7504''45'false_5140
       v2 v7 v8 v9
-du_restrict'45'singleton'45'filter'7504''45'false_5146 ::
+du_restrict'45'singleton'45'filter'7504''45'false_5140 ::
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   (AgdaAny -> MAlonzo.Code.Class.Decidable.Core.T__'8263'_10) ->
   AgdaAny ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-du_restrict'45'singleton'45'filter'7504''45'false_5146 v0 v1 v2 v3
+du_restrict'45'singleton'45'filter'7504''45'false_5140 v0 v1 v2 v3
   = let v4
           = coe
               MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_begin__46
@@ -11462,7 +11438,7 @@ du_restrict'45'singleton'45'filter'7504''45'false_5146 v0 v1 v2 v3
                                       MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                                 erased v2)))
                        (coe
-                          du_'172'P'8594'res'45''8709'_5158 (coe v0) (coe v1) (coe v2)
+                          du_'172'P'8594'res'45''8709'_5152 (coe v0) (coe v1) (coe v2)
                           (coe v3))
                        (coe
                           MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 (coe (\ v4 v5 -> v5))
@@ -11511,7 +11487,7 @@ du_restrict'45'singleton'45'filter'7504''45'false_5146 v0 v1 v2 v3
                 MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 (coe v6) (coe v5)
          _ -> MAlonzo.RTE.mazUnreachableError)
 -- Ledger.Conway.Conformance.Equivalence.Map._._._._.¬P→res-∅
-d_'172'P'8594'res'45''8709'_5158 ::
+d_'172'P'8594'res'45''8709'_5152 ::
   () ->
   () ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
@@ -11524,16 +11500,16 @@ d_'172'P'8594'res'45''8709'_5158 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   (AgdaAny -> MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20) ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_'172'P'8594'res'45''8709'_5158 ~v0 ~v1 v2 ~v3 ~v4 ~v5 ~v6 v7 v8
+d_'172'P'8594'res'45''8709'_5152 ~v0 ~v1 v2 ~v3 ~v4 ~v5 ~v6 v7 v8
                                  v9 ~v10
-  = du_'172'P'8594'res'45''8709'_5158 v2 v7 v8 v9
-du_'172'P'8594'res'45''8709'_5158 ::
+  = du_'172'P'8594'res'45''8709'_5152 v2 v7 v8 v9
+du_'172'P'8594'res'45''8709'_5152 ::
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   (AgdaAny -> MAlonzo.Code.Class.Decidable.Core.T__'8263'_10) ->
   AgdaAny ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-du_'172'P'8594'res'45''8709'_5158 v0 v1 v2 v3
+du_'172'P'8594'res'45''8709'_5152 v0 v1 v2 v3
   = coe
       MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
       (coe
@@ -11559,7 +11535,7 @@ du_'172'P'8594'res'45''8709'_5158 v0 v1 v2 v3
               (seq (coe v6) (coe MAlonzo.Code.Data.Empty.du_'8869''45'elim_12))))
       (coe (\ v4 v5 -> coe MAlonzo.Code.Data.Empty.du_'8869''45'elim_12))
 -- Ledger.Conway.Conformance.Equivalence.Map._._._.lem-add-included
-d_lem'45'add'45'included_5176 ::
+d_lem'45'add'45'included_5170 ::
   () ->
   () ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
@@ -11571,17 +11547,17 @@ d_lem'45'add'45'included_5176 ::
   AgdaAny ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   AgdaAny -> AgdaAny -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_lem'45'add'45'included_5176 ~v0 ~v1 v2 ~v3 v4 ~v5 ~v6 v7 v8 v9
+d_lem'45'add'45'included_5170 ~v0 ~v1 v2 ~v3 v4 ~v5 ~v6 v7 v8 v9
                               v10 v11
-  = du_lem'45'add'45'included_5176 v2 v4 v7 v8 v9 v10 v11
-du_lem'45'add'45'included_5176 ::
+  = du_lem'45'add'45'included_5170 v2 v4 v7 v8 v9 v10 v11
+du_lem'45'add'45'included_5170 ::
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.CommutativeMonoid.Core.T_CommutativeMonoid_12 ->
   (AgdaAny -> MAlonzo.Code.Class.Decidable.Core.T__'8263'_10) ->
   AgdaAny ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   AgdaAny -> AgdaAny -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-du_lem'45'add'45'included_5176 v0 v1 v2 v3 v4 v5 v6
+du_lem'45'add'45'included_5170 v0 v1 v2 v3 v4 v5 v6
   = coe
       MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
       (coe
@@ -11964,7 +11940,7 @@ du_lem'45'add'45'included_5176 v0 v1 v2 v3 v4 v5 v6
                        (coe v5) (coe v6)))
                  v7 v8)))
 -- Ledger.Conway.Conformance.Equivalence.Map._._._.≡-sp-∘
-d_'8801''45'sp'45''8728'_5180 ::
+d_'8801''45'sp'45''8728'_5174 ::
   () ->
   () ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
@@ -11974,9 +11950,9 @@ d_'8801''45'sp'45''8728'_5180 ::
   (AgdaAny -> ()) ->
   (AgdaAny -> MAlonzo.Code.Class.Decidable.Core.T__'8263'_10) ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_'8801''45'sp'45''8728'_5180 = erased
+d_'8801''45'sp'45''8728'_5174 = erased
 -- Ledger.Conway.Conformance.Equivalence.Map._._._.lem-add-excluded
-d_lem'45'add'45'excluded_5184 ::
+d_lem'45'add'45'excluded_5178 ::
   () ->
   () ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
@@ -11990,10 +11966,10 @@ d_lem'45'add'45'excluded_5184 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   (AgdaAny -> MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20) ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_lem'45'add'45'excluded_5184 ~v0 ~v1 v2 ~v3 v4 ~v5 ~v6 v7 v8 v9
+d_lem'45'add'45'excluded_5178 ~v0 ~v1 v2 ~v3 v4 ~v5 ~v6 v7 v8 v9
                               v10 ~v11
-  = du_lem'45'add'45'excluded_5184 v2 v4 v7 v8 v9 v10
-du_lem'45'add'45'excluded_5184 ::
+  = du_lem'45'add'45'excluded_5178 v2 v4 v7 v8 v9 v10
+du_lem'45'add'45'excluded_5178 ::
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.CommutativeMonoid.Core.T_CommutativeMonoid_12 ->
   (AgdaAny -> MAlonzo.Code.Class.Decidable.Core.T__'8263'_10) ->
@@ -12001,7 +11977,7 @@ du_lem'45'add'45'excluded_5184 ::
   AgdaAny ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-du_lem'45'add'45'excluded_5184 v0 v1 v2 v3 v4 v5
+du_lem'45'add'45'excluded_5178 v0 v1 v2 v3 v4 v5
   = coe
       MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_begin__46
       (\ v6 v7 v8 ->
@@ -12372,7 +12348,7 @@ du_lem'45'add'45'excluded_5184 v0 v1 v2 v3 v4 v5
                (coe
                   MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 (coe v3) (coe v4)))))
 -- Ledger.Conway.Conformance.Equivalence.Map._._._.lem-del-excluded
-d_lem'45'del'45'excluded_5196 ::
+d_lem'45'del'45'excluded_5190 ::
   () ->
   () ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
@@ -12385,16 +12361,16 @@ d_lem'45'del'45'excluded_5196 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   (AgdaAny -> MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20) ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_lem'45'del'45'excluded_5196 ~v0 ~v1 v2 ~v3 ~v4 ~v5 ~v6 v7 v8 v9
+d_lem'45'del'45'excluded_5190 ~v0 ~v1 v2 ~v3 ~v4 ~v5 ~v6 v7 v8 v9
                               ~v10
-  = du_lem'45'del'45'excluded_5196 v2 v7 v8 v9
-du_lem'45'del'45'excluded_5196 ::
+  = du_lem'45'del'45'excluded_5190 v2 v7 v8 v9
+du_lem'45'del'45'excluded_5190 ::
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   (AgdaAny -> MAlonzo.Code.Class.Decidable.Core.T__'8263'_10) ->
   AgdaAny ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-du_lem'45'del'45'excluded_5196 v0 v1 v2 v3
+du_lem'45'del'45'excluded_5190 v0 v1 v2 v3
   = coe
       MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
       (coe
@@ -12402,7 +12378,7 @@ du_lem'45'del'45'excluded_5196 v0 v1 v2 v3
             coe
               MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
               (coe
-                 du_restrict'45'singleton'45'filter'7504''45'false_5146 (coe v0)
+                 du_restrict'45'singleton'45'filter'7504''45'false_5140 (coe v0)
                  (coe v1) (coe v2) (coe v3))
               v4
               (let v6
@@ -12556,7 +12532,7 @@ du_lem'45'del'45'excluded_5196 v0 v1 v2 v3
                                (coe
                                   MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
                                   (coe
-                                     du_restrict'45'singleton'45'filter'7504''45'false_5146 (coe v0)
+                                     du_restrict'45'singleton'45'filter'7504''45'false_5140 (coe v0)
                                      (coe v1) (coe v2) (coe v3))
                                   v4 v5) in
                      coe
