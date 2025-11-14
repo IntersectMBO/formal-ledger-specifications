@@ -21,11 +21,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1762794996,
-        "narHash": "sha256-B1NkVQ0r147HchfSGY8jE0i6uXy3gLFNuX22OO4br9A=",
+        "lastModified": 1763124721,
+        "narHash": "sha256-m+1qltoHALohYnPeQPWie93gewuv3NuUByZ0+HN+Qc0=",
         "owner": "input-output-hk",
         "repo": "agda-sets",
-        "rev": "bbaa00abc4aef061896ae5d3cdec148bfbf5029f",
+        "rev": "bc721845dba3208ce0aca59b09242f06d659fd97",
         "type": "github"
       },
       "original": {

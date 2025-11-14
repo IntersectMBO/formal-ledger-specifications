@@ -2,7 +2,7 @@
 
 module Ledger.Conway.Conformance.Equivalence.Map where
 
-open import Ledger.Prelude hiding (filterᵐ-singleton-false)
+open import Ledger.Prelude
 open import Axiom.Set.Properties th
 
 import Algebra as Alg
@@ -613,13 +613,6 @@ module _  {A B : Type}
       filterᵐ-singleton-true p .proj₁ = proj₂ ∘ (from ∈-filter)
       filterᵐ-singleton-true {k}{v} p .proj₂ {a} x = to ∈-filter (subst P′ (sym (from ∈-singleton x)) p , x)
 
-      -- TODO: move to agda-sets
-      -- https://github.com/input-output-hk/agda-sets/pull/19
-      filterᵐ-singleton-false : ¬ P k → filterᵐ P′ ❴ k , v ❵ ≡ᵐ ∅
-      filterᵐ-singleton-false ¬p .proj₁ x =
-        ⊥-elim $ ¬p $ subst P′ (from ∈-singleton $ proj₂ (from ∈-filter x)) (proj₁ $ from ∈-filter x)
-      filterᵐ-singleton-false _ .proj₂ = ⊥-elim ∘ ∉-∅
-
       filterᵐ-restrict : ∀ m {ks} → filterᵐ P′ (m ∣ ks ᶜ) ≡ᵐ filterᵐ P′ m ∣ ks ᶜ
       filterᵐ-restrict m {ks} .proj₁ {a , b} h with from ∈-filter h
       ... | Pa , ab∈m∖ks with resᶜ-dom∉⁻ m ab∈m∖ks
@@ -647,43 +640,30 @@ module _  {A B : Type}
           ... | px , b , refl = ⊥-elim (¬p px)
           ¬P→res-∅ .proj₂ = ⊥-elim ∘ ∉-∅
 
-
     opaque
+
       lem-add-included : P k → filterᵐ P′ (m ∪⁺ ❴ k , v ❵) ≡ᵐ filterᵐ P′ m ∪⁺ ❴ k , v ❵
-      lem-add-included p =
+      lem-add-included  p =
         filterᵐ-∪⁺-distr _ _ ⟨≈⟩ ∪⁺-cong-l (filterᵐ-singleton-true p)
 
-      lem-add-excluded : ¬ P k → filterᵐ P′ (m ∪⁺ ❴ k , v ❵) ≡ᵐ filterᵐ P′ m
-      lem-add-excluded p =
-        filterᵐ-∪⁺-distr _ _ ⟨≈⟩ ∪⁺-cong-l (filterᵐ-singleton-false p) ⟨≈⟩ ∪⁺-id-r _
+    opaque
+      unfolding to-sp
 
-      -- TODO: move to agda-sets
-      -- https://github.com/input-output-hk/agda-sets/pull/19
-      lem-add-excluded-∪ˡ
-        : (m : A ⇀ B)
-        → ¬ P k
-        → filterᵐ P′ (m ∪ˡ ❴ k , v ❵) ≡ᵐ filterᵐ P′ m
-      lem-add-excluded-∪ˡ {k = k} {v = v} m ¬p with k ∈? dom m
-      ... | yes k∈m =
-          filterᵐ-cong
-            {m = m ∪ˡ ❴ k , v ❵}
-            {m' = m}
-            (singleton-∈-∪ˡ {m = m} k∈m)
-      ... | no k∉m = begin
-          filterᵐ P′ (m ∪ˡ ❴ k , v ❵) ˢ
-            ≈⟨ filter-cong $ disjoint-∪ˡ-∪ (disjoint-sing k∉m) ⟩
-          filterˢ P′ (m ˢ ∪ ❴ k , v ❵)
-            ≈⟨ filter-hom-∪ ⟩
-          filterˢ P′ (m ˢ) ∪ filterˢ P′ ❴ k , v ❵
-            ≈⟨ ∪-cong ≡ᵉ.refl (filterᵐ-singleton-false ¬p) ⟩
-          filterˢ P′ (m ˢ) ∪ ∅
-            ≈⟨ ∪-identityʳ (filterˢ P′ (m ˢ)) ⟩
-          filterˢ P′ (m ˢ)
-          ∎
-        where
-          disjoint-sing : k ∉ dom m → disjoint (dom m) (dom (singleton (k , v)))
-          disjoint-sing k∉m a∈d a∈sing
-            rewrite from ∈-dom-singleton-pair a∈sing = k∉m a∈d
+      ≡-sp-∘ : sp-∘ (to-sp P) proj₁ ≡ to-sp P′
+      ≡-sp-∘ = refl
+
+      lem-add-excluded : {m : A ⇀ B} → ¬ P k → filterᵐ P′ (m ∪⁺ ❴ k , v ❵ᵐ) ≡ᵐ filterᵐ P′ m
+      lem-add-excluded {k = k} {v = v} {m = m} p = begin
+        filterᵐ P′ (m ∪⁺ ❴ k , v ❵ᵐ) ˢ
+            ≈⟨ filterᵐ-∪⁺-distr m ❴ k , v ❵ ⟩
+        (filterᵐ P′ m ∪⁺ filterᵐ P′ ❴ k , v ❵) ˢ
+            ≈⟨ ∪⁺-cong-l $ filterᵐ-singleton-false (to-sp P) p ⟩
+        (filterᵐ P′ m ∪⁺ ∅ᵐ) ˢ
+            ≈⟨ ∪⁺-id-r _ ⟩
+        filterᵐ P′ m ˢ
+        ∎
+
+    opaque
 
       lem-del-excluded : ∀ m → ¬ P k → filterᵐ P′ (m ∣ ❴ k ❵ ᶜ) ≡ᵐ filterᵐ P′ m
       lem-del-excluded m ¬p = filterᵐ-restrict m ⟨≈⟩ restrict-singleton-filterᵐ-false m ¬p
