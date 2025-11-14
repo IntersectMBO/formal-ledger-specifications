@@ -18,6 +18,7 @@ open import Ledger.Conway.Specification.Properties txs abs
 ```
 -->
 
+<a id="clm:NoPropSameDReps"></a>
 **Claim (DReps unchanged if no gov proposals).**
 
 *Informally*.

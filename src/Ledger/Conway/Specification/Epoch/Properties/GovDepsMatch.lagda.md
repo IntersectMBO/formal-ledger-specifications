@@ -16,6 +16,7 @@ open import Ledger.Conway.Specification.Certs govStructure
 open import Ledger.Conway.Specification.Enact govStructure
 open import Ledger.Conway.Specification.Epoch txs abs
 open import Ledger.Conway.Specification.Ledger txs abs
+open import Ledger.Conway.Specification.Properties txs abs
 open import Ledger.Conway.Specification.Ledger.Properties.Base txs abs
 open import Ledger.Conway.Specification.PoolReap txs abs
 open import Ledger.Prelude renaming (map to map'; mapˢ to map)

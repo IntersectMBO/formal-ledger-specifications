@@ -19,6 +19,7 @@ open Block
 ```
 -->
 
+<a id="clm:EpochStep"></a>
 **Claim (New enact state only if new epoch).**
 
 *Informally*.

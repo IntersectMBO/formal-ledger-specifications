@@ -18,7 +18,8 @@ open import Ledger.Conway.Specification.Properties txs abs
 ```
 -->
 
-**Claim (Equality of credential depsoits is a `CHAIN`{.AgdaOperator} invariant).**
+<a id="thm:CredDepsEqualDomRwds-inv"></a>
+**Claim (Equality of credential deposits is a `CHAIN`{.AgdaDatatype} invariant).**
 
 *Informally*.
 

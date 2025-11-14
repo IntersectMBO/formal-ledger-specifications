@@ -17,6 +17,7 @@ open import Ledger.Prelude
 ```
 -->
 
+<a id="clm:ConstRwds"></a>
 **Claim (The `NEWEPOCH`{.AgdaOperator} rule leaves rewards unchanged).**
 
 *Informally*.

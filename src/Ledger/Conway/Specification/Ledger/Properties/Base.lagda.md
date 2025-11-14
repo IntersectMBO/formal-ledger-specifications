@@ -32,27 +32,10 @@ import Relation.Binary.Reasoning.Setoid as SetoidReasoning
 
 -- ** Proof that the set equality `govDepsMatch` (below) is a LEDGER invariant.
 
--- Mapping a list of `GovActionID × GovActionState`s to a list of
--- `DepositPurpose`s is so common, we give it a name `dpMap`;
--- it's equivalent to `map (λ (id , _) → GovActionDeposit id)`.
-dpMap : GovState → List DepositPurpose
-dpMap = map (GovActionDeposit ∘ proj₁)
-
-isGADeposit : DepositPurpose → Type
-isGADeposit dp = isGADepositᵇ dp ≡ true
-  where
-  isGADepositᵇ : DepositPurpose → Bool
-  isGADepositᵇ (GovActionDeposit _) = true
-  isGADepositᵇ _                    = false
-
-govDepsMatch : LState → Type
-govDepsMatch ls =
-  filterˢ isGADeposit (dom (DepositsOf ls)) ≡ᵉ fromList (dpMap (GovStateOf ls))
-
 module ≡ᵉ = IsEquivalence (≡ᵉ-isEquivalence {DepositPurpose})
 pattern UTXOW-UTXOS x = UTXOW⇒UTXO (UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ x)
 open Equivalence
-
+{--
 filterGA : ∀ txId n → filterˢ isGADeposit ❴ GovActionDeposit (txId , n) ❵ ≡ᵉ ❴ GovActionDeposit (txId , n) ❵
 proj₁ (filterGA txId n) {a} x = (proj₂ (from ∈-filter x)) where open Equivalence
 proj₂ (filterGA txId n) {a} x = to ∈-filter (ξ (from ∈-singleton x) , x)
@@ -373,4 +356,5 @@ module SetoidProperties (tx : Tx) (Γ : LEnv) (s : LState) where
     fromList (dpMap (updateGovStates (map inj₂ txGovProposals) k govSt))
       ≈˘⟨ props-dpMap-votes-invar txGovVotes txGovProposals {k} {govSt} ⟩
     fromList (dpMap (updateGovStates (txgov txb) k govSt)) ∎
+--}
 ```

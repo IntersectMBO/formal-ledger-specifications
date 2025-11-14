@@ -20,6 +20,7 @@ open UTxOState; open Tx; open TxBody
 -->
 
 
+<a id="lem:UTXO-PoV"></a>
 **Lemma (The `UTXO`{.AgdaOperator} rule preserves value).**
 
 *Informally*.

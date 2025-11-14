@@ -16,6 +16,7 @@ open import Ledger.Prelude
 ```
 -->
 
+<a id="thm:pp-wellFormed-inv"></a>
 **Claim (Well-formedness of `PParams`{.AgdaRecord} is a `CHAIN`{.AgdaOperator} invariant).**
 
 *Informally*.
