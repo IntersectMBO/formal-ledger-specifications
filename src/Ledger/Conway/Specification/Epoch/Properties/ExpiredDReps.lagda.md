@@ -233,7 +233,7 @@ module AcceptedByDRep-≈ {Γ Γ' : RatifyEnv} (Γ≈Γ' : RatifyEnv- Γ ≈ Γ'
 
   acceptedStake : abdr.acceptedStake ≡ abdr'.acceptedStake
   acceptedStake =
-    indexedSumᵛ'-cong ⦃ it ⦄ ⦃ it ⦄ ⦃ CommMonoid-ℕ-+ ⦄ {f = id}
+    indexedSumᵛ'-cong {f = id}
       {x = StakeDistrs.stakeDistrVDeleg Γ.stakeDistrs ∣ abdr.actualVotes ⁻¹ _}
       {y = StakeDistrs.stakeDistrVDeleg Γ'.stakeDistrs ∣ abdr'.actualVotes ⁻¹ _}
       (resᵐ-cong {m = StakeDistrs.stakeDistrVDeleg Γ.stakeDistrs}
@@ -242,7 +242,7 @@ module AcceptedByDRep-≈ {Γ Γ' : RatifyEnv} (Γ≈Γ' : RatifyEnv- Γ ≈ Γ'
         (⁻¹-cong {m = abdr.actualVotes} {m' = abdr'.actualVotes} actualVotes))
 
   totalStake : abdr.totalStake ≡ abdr'.totalStake
-  totalStake = indexedSumᵛ'-cong ⦃ it ⦄ ⦃ it ⦄ ⦃ CommMonoid-ℕ-+ ⦄ {f = id}
+  totalStake = indexedSumᵛ'-cong {f = id}
                  {x = StakeDistrs.stakeDistrVDeleg Γ.stakeDistrs ∣ dom (abdr.actualVotes ∣^ (❴ Vote.yes ❵ ∪ ❴ Vote.no ❵))}
                  {y = StakeDistrs.stakeDistrVDeleg Γ'.stakeDistrs ∣ dom (abdr'.actualVotes ∣^ (❴ Vote.yes ❵ ∪ ❴ Vote.no ❵))}
                  (resᵐ-cong {m = StakeDistrs.stakeDistrVDeleg Γ.stakeDistrs}
