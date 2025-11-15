@@ -11,15 +11,16 @@ This section defines several concepts and types used to represent governance act
 ```agda
 {-# OPTIONS --safe #-}
 
+open import Ledger.Conway.Specification.Gov.Base
+
+module Ledger.Conway.Specification.Gov.Actions (gs : _) (open GovStructure gs) where
+
 open import Data.Nat.Properties using (+-0-monoid)
 open import Data.Rational using (ℚ; 0ℚ; 1ℚ)
 
 open import Tactic.Derive.Show
 
 open import Ledger.Prelude as P hiding (yes; no)
-open import Ledger.Conway.Specification.Gov.Base
-
-module Ledger.Conway.Specification.Gov.Actions (gs : _) (open GovStructure gs) where
 ```
 -->
 

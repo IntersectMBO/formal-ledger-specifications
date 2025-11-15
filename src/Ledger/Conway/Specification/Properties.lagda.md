@@ -1,4 +1,4 @@
-n---
+---
 source_branch: master
 source_path: src/Ledger/Conway/Specification/Properties.lagda.md
 ---
@@ -7,8 +7,8 @@ source_path: src/Ledger/Conway/Specification/Properties.lagda.md
 ```agda
 {-# OPTIONS --safe #-}
 
-open import Ledger.Conway.Specification.Transaction
 open import Ledger.Conway.Specification.Abstract
+open import Ledger.Conway.Specification.Transaction
 import Ledger.Conway.Specification.Certs
 
 module Ledger.Conway.Specification.Properties
@@ -17,11 +17,14 @@ module Ledger.Conway.Specification.Properties
   (abs : AbstractFunctions txs)
   where
 open import Ledger.Prelude
-open import Ledger.Conway.Specification.Gov txs
-open import Ledger.Conway.Specification.Ledger txs abs
+
 open import Ledger.Conway.Specification.Chain txs abs
 open import Ledger.Conway.Specification.Enact govStructure
 open import Ledger.Conway.Specification.Epoch txs abs
+open import Ledger.Conway.Specification.Gov txs
+open import Ledger.Conway.Specification.Ledger txs abs
+
+-- open AbstractFunctions abs
 ```
 -->
 

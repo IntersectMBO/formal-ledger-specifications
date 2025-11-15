@@ -3,39 +3,43 @@ source_branch: master
 source_path: src/Ledger/Conway/Specification/Ledger/Properties/Base.lagda.md
 ---
 
+<!--
 ```agda
 {-# OPTIONS --safe #-}
 
-open import Ledger.Conway.Specification.Transaction
 open import Ledger.Conway.Specification.Abstract
+open import Ledger.Conway.Specification.Transaction using (TransactionStructure)
 import Ledger.Conway.Specification.Certs
 
 module Ledger.Conway.Specification.Ledger.Properties.Base
-  (txs : _) (open TransactionStructure txs) (open Ledger.Conway.Specification.Certs govStructure)
+  (txs : TransactionStructure) (open TransactionStructure txs)
+  (open Ledger.Conway.Specification.Certs govStructure)
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
 
-open import Ledger.Prelude
-open import Ledger.Conway.Specification.Gov txs
-open import Ledger.Conway.Specification.Ledger txs abs
-open import Ledger.Conway.Specification.Utxo txs abs
-open import Ledger.Conway.Specification.Utxow txs abs
-
--- open import Data.List using (map)
 open import Data.List.Properties using (++-identityʳ; map-++)
-
-open import Axiom.Set.Properties th
-
 open import Data.Nat.Properties using (+-0-monoid; +-identityʳ; +-suc)
 open import Relation.Binary using (IsEquivalence)
 import Relation.Binary.Reasoning.Setoid as SetoidReasoning
 
+open import Ledger.Prelude
+open import Ledger.Conway.Specification.Gov txs
+open import Ledger.Conway.Specification.Ledger txs abs
+open import Ledger.Conway.Specification.Properties txs abs
+  using (isGADeposit; dpMap)
+open import Ledger.Conway.Specification.Utxo txs abs
+  using (UTxOState; certRefund; certDeposit; updateCertDeposits; updateProposalDeposits)
+
+open import Axiom.Set.Properties th
+
 -- ** Proof that the set equality `govDepsMatch` (below) is a LEDGER invariant.
 
 module ≡ᵉ = IsEquivalence (≡ᵉ-isEquivalence {DepositPurpose})
-pattern UTXOW-UTXOS x = UTXOW⇒UTXO (UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ x)
 open Equivalence
-{--
+```
+-->
+
+```agda
 filterGA : ∀ txId n → filterˢ isGADeposit ❴ GovActionDeposit (txId , n) ❵ ≡ᵉ ❴ GovActionDeposit (txId , n) ❵
 proj₁ (filterGA txId n) {a} x = (proj₂ (from ∈-filter x)) where open Equivalence
 proj₂ (filterGA txId n) {a} x = to ∈-filter (ξ (from ∈-singleton x) , x)
@@ -356,5 +360,4 @@ module SetoidProperties (tx : Tx) (Γ : LEnv) (s : LState) where
     fromList (dpMap (updateGovStates (map inj₂ txGovProposals) k govSt))
       ≈˘⟨ props-dpMap-votes-invar txGovVotes txGovProposals {k} {govSt} ⟩
     fromList (dpMap (updateGovStates (txgov txb) k govSt)) ∎
---}
 ```
