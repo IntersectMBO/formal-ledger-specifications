@@ -21,12 +21,12 @@ open import Ledger.Conway.Specification.Certs govStructure
 
 ```agda
 data ScriptPurpose : Type where
-  Cert     : DCert        → ScriptPurpose
-  Rwrd     : RewardAddress      → ScriptPurpose
-  Mint     : ScriptHash   → ScriptPurpose
-  Spend    : TxIn         → ScriptPurpose
-  Vote     : GovVoter     → ScriptPurpose
-  Propose  : GovProposal  → ScriptPurpose
+  Cert     : DCert          → ScriptPurpose
+  Rwrd     : RewardAddress  → ScriptPurpose
+  Mint     : ScriptHash     → ScriptPurpose
+  Spend    : TxIn           → ScriptPurpose
+  Vote     : GovVoter       → ScriptPurpose
+  Propose  : GovProposal    → ScriptPurpose
 
 record TxInfo : Type where
   field realizedInputs : UTxO

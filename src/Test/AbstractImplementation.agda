@@ -24,12 +24,12 @@ SVAbstractFunctions = record
   ; txscriptfee = λ tt y → 0
   ; serSize     = λ v → 0 -- changed to 0
   ; indexOfImp  = record
-    { indexOfDCert    = λ _ _ → nothing
+    { indexOfDCert          = λ _ _ → nothing
     ; indexOfRewardAddress  = λ _ _ → nothing
-    ; indexOfTxIn     = indexOfTxInImp
-    ; indexOfPolicyId = λ _ _ → nothing
-    ; indexOfVote     = λ _ _ → nothing
-    ; indexOfProposal = λ _ _ → nothing
+    ; indexOfTxIn           = indexOfTxInImp
+    ; indexOfPolicyId       = λ _ _ → nothing
+    ; indexOfVote           = λ _ _ → nothing
+    ; indexOfProposal       = λ _ _ → nothing
     }
   ; runPLCScript = λ { x (sh , script) x₂ x₃ → script x₃ }
   ; scriptSize = λ _ → 0
