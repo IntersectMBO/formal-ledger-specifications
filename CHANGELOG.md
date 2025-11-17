@@ -4,6 +4,7 @@
 
 ### WIP
 
+- Change `RwdAddr` to `RewardAddress`
 - Do not count pool deposits a second time when reregistering pools
 - Allow reregistration of pools in the POOL transition relation
 - Implement the fPoolParams field of PState as in the Shelley specification

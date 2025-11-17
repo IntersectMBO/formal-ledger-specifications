@@ -55,13 +55,13 @@ record GovProposal' : Type where
     prevAction  : GovActionID       -- NeedsHash action
     policy      : Maybe ScriptHash
     deposit     : Coin
-    returnAddr  : RwdAddr
+    returnAddr  : RewardAddress
     anchor      : Anchor
 
 record GovActionState' : Type where
   field
     votes       : GovVotes
-    returnAddr  : RwdAddr
+    returnAddr  : RewardAddress
     expiresIn   : Epoch
     action      : GovAction'
     prevAction  : GovActionID       -- NeedsHash action

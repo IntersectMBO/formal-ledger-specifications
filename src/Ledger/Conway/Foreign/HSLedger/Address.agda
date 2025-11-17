@@ -15,8 +15,8 @@ instance
   HsTy-BootstrapAddr = autoHsType BootstrapAddr ⊣ fieldPrefix "boot"
   Conv-BootstrapAddr = autoConvert BootstrapAddr
 
-  HsTy-RwdAddr = autoHsType RwdAddr ⊣ fieldPrefix "rwd"
-  Conv-RwdAddr = autoConvert RwdAddr
+  HsTy-RewardAddress = autoHsType RewardAddress ⊣ fieldPrefix "rwd"
+  Conv-RewardAddress = autoConvert RewardAddress
 
 unquoteDecl = do
   hsTypeAlias Addr

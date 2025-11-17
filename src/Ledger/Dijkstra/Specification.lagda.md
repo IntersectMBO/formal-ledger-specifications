@@ -17,7 +17,7 @@ module Ledger.Dijkstra.Specification where
 ## Addresses
 
 ```agda
-import Ledger.Core.Specification.Address renaming (RwdAddr to RewardAddress)
+import Ledger.Core.Specification.Address renaming (RewardAddress to RewardAddress)
 ```
 
 ## <span class="AgdaModule">Epoch</span>

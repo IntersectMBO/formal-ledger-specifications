@@ -18,7 +18,7 @@ open import Ledger.Conway.Specification.Script.ScriptPurpose txs
 record indexOf : Type where
   field
     indexOfDCert    : DCert → List DCert → Maybe Ix
-    indexOfRwdAddr  : RwdAddr → Withdrawals → Maybe Ix
+    indexOfRewardAddress  : RewardAddress → Withdrawals → Maybe Ix
     indexOfTxIn     : TxIn → ℙ TxIn → Maybe Ix
     indexOfPolicyId : ScriptHash → ℙ ScriptHash → Maybe Ix
     indexOfVote     : GovVoter → List GovVoter → Maybe Ix
