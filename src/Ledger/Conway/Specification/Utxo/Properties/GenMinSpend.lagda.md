@@ -129,7 +129,7 @@ module _ -- ASSUMPTION --
                                  (disjoint-sing ¬p)
                              ⟩
       indexedSumᵐ proj₂ ((d ᶠᵐ) ∪ˡᶠ (❴ dp , c ❵ ᶠᵐ))
-                            ≡⟨ sym $ indexedSumᵐ-∪ˡ-∪ˡᶠ {B = ⊤} d ❴ dp , c ❵ ⟩
+                            ≡⟨ sym $ indexedSumᵐ-∪ˡ-∪ˡᶠ d ❴ dp , c ❵ ⟩
       getCoin (d ∪ˡ ❴ dp , c ❵)
       ∎
     where
