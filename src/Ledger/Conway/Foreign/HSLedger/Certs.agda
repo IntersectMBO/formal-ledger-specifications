@@ -38,7 +38,7 @@ record CertEnv' : Type where
     epoch     : Epoch
     pp        : PParams
     votes     : List GovVote'
-    wdrls     : RwdAddr ⇀ Coin
+    wdrls     : RewardAddress ⇀ Coin
     coldCreds : ℙ Credential
 
 instance

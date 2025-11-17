@@ -27,7 +27,7 @@ open import Ledger.Conway.Conformance.Utxo txs abs
 open import Ledger.Conway.Conformance.Certs govStructure
 open import Ledger.Conway.Conformance.Rewards txs abs
 open import Ledger.Conway.Specification.Epoch txs abs
-  using (getStakeCred; getOrphans; mkStakeDistrs; toRwdAddr) public
+  using (getStakeCred; getOrphans; mkStakeDistrs; toRewardAddress) public
 import Ledger.Conway.Specification.Epoch txs abs as EpochSpec
 
 record EpochState : Type where
@@ -158,14 +158,14 @@ data _⊢_⇀⦇_,EPOCH⦈_ : ⊤ → EpochState → Epoch → EpochState → Ty
 
       govSt' = filter (λ x → ¿ proj₁ x ∉ mapˢ proj₁ removed' ¿) govSt
 
-      removedGovActions : ℙ (RwdAddr × DepositPurpose × Coin)
+      removedGovActions : ℙ (RewardAddress × DepositPurpose × Coin)
       removedGovActions =
         flip concatMapˢ removed' λ (gaid , gaSt) →
           mapˢ
             (returnAddr gaSt ,_)
             ((utxoSt .deposits ∣ ❴ GovActionDeposit gaid ❵) ˢ)
 
-      govActionReturns : RwdAddr ⇀ Coin
+      govActionReturns : RewardAddress ⇀ Coin
       govActionReturns =
         aggregate₊ (mapˢ (λ (a , _ , d) → a , d) removedGovActions ᶠˢ)
 
@@ -174,7 +174,7 @@ data _⊢_⇀⦇_,EPOCH⦈_ : ⊤ → EpochState → Epoch → EpochState → Ty
 
       retired    = (pState .retiring) ⁻¹ e
       payout     = govActionReturns ∪⁺ trWithdrawals
-      refunds    = pullbackMap payout toRwdAddr (dom (dState .rewards))
+      refunds    = pullbackMap payout toRewardAddress (dom (dState .rewards))
       unclaimed  = getCoin payout - getCoin refunds
       vDeposits  = gState .deposits
 

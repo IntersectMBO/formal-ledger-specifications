@@ -166,14 +166,14 @@ instance
         open GState (CertState.gState cs); open DState (CertState.dState cs)
         refresh = mapPartial (isGovVoterDRep ∘ voter) (fromList votes)
         refreshedDReps  = mapValueRestricted (const (CertEnv.epoch ce + drepActivity)) dreps refresh
-    in case ¿ filterˢ isKeyHash (mapˢ RwdAddr.stake (dom wdrls)) ⊆ dom voteDelegs
-              × mapˢ (map₁ RwdAddr.stake) (wdrls ˢ) ⊆ rewards ˢ ¿ of λ where
+    in case ¿ filterˢ isKeyHash (mapˢ RewardAddress.stake (dom wdrls)) ⊆ dom voteDelegs
+              × mapˢ (map₁ RewardAddress.stake) (wdrls ˢ) ⊆ rewards ˢ ¿ of λ where
       (yes p) → success (-, CERT-pre p)
       (no ¬p) → failure (genErrors ¬p)
   Computational-PRE-CERT .completeness ce st _ st' (CERT-pre p)
     rewrite let dState = CertState.dState st; open DState dState in
-      dec-yes ¿ filterˢ isKeyHash (mapˢ RwdAddr.stake (dom (CertEnv.wdrls ce))) ⊆ dom voteDelegs
-                × mapˢ (map₁ RwdAddr.stake) (CertEnv.wdrls ce ˢ) ⊆ rewards ˢ ¿
+      dec-yes ¿ filterˢ isKeyHash (mapˢ RewardAddress.stake (dom (CertEnv.wdrls ce))) ⊆ dom voteDelegs
+                × mapˢ (map₁ RewardAddress.stake) (CertEnv.wdrls ce ˢ) ⊆ rewards ˢ ¿
         p .proj₂ = refl
 
   -- POST-CERT has no premises, so computing always succeeds

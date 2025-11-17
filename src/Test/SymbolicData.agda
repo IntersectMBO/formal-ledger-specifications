@@ -37,7 +37,7 @@ AddrToSymbolic (inj₁ record { net = net ; pay = pay ; stake = stake })
 AddrToSymbolic (inj₂ record { net = net ; pay = pay ; attrsSize = attrsSize })
   = inj₂ (record { net = net ; pay = credToSymbolic pay ; attrsSize = attrsSize })
 
-RwdAddrToSymbolic : RwdAddr → SRwdAddr
+RwdAddrToSymbolic : RewardAddress → SRewardAddress
 RwdAddrToSymbolic record { net = net ; stake = stake } = record { net = net ; stake = credToSymbolic stake }
 
 DatumToSymbolic : Datum → Maybe SDatum
