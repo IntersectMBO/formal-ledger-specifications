@@ -1,3 +1,10 @@
+---
+source_branch: master
+source_path: src/Ledger/Conway/Specification/Chain/Properties/EpochStep.lagda.md
+---
+
+## Claim: New enact state only if new epoch {#clm:EpochStep}
+
 <!--
 ```agda
 
@@ -18,8 +25,6 @@ open import Ledger.Prelude
 open Block
 ```
 -->
-
-**Claim (New enact state only if new epoch).**
 
 *Informally*.
 

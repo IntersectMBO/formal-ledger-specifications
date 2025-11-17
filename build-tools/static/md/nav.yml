@@ -1,7 +1,6 @@
 - Home: index.md
 - Preliminaries:
   - Introduction: Ledger.Introduction.md
-  - Properties: Properties.md
   - Notation: Notation.md
 - Core:
   - Introduction: Ledger.Core.Specification.md

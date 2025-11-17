@@ -1,3 +1,10 @@
+---
+source_branch: master
+source_path: src/Ledger/Conway/Specification/Chain/Properties/PParamsWellFormed.lagda.md
+---
+
+## Claim: Well-formedness of <span class="AgdaRecord">PParams</span> is a <span class="AgdaOperator">CHAIN</span> invariant {#clm:pp-wellFormed-inv}
+
 <!--
 ```agda
 
@@ -15,8 +22,6 @@ open import Ledger.Conway.Specification.Chain txs abs
 open import Ledger.Prelude
 ```
 -->
-
-**Claim (Well-formedness of `PParams`{.AgdaRecord} is a `CHAIN`{.AgdaOperator} invariant).**
 
 *Informally*.
 

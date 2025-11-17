@@ -1,3 +1,10 @@
+---
+source_branch: master
+source_path: src/Ledger/Conway/Specification/Utxo/Properties/PoV.lagda.md
+---
+
+# The `UTXO`{.AgdaDatatype} Rule Preserves Value {#lem:UTXO-PoV}
+
 <!--
 ```agda
 
@@ -19,8 +26,6 @@ open UTxOState; open Tx; open TxBody
 ```
 -->
 
-
-**Lemma (The `UTXO`{.AgdaOperator} rule preserves value).**
 
 *Informally*.
 

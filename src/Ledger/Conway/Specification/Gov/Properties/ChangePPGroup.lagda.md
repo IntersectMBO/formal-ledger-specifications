@@ -1,3 +1,10 @@
+---
+source_branch: master
+source_path: src/Ledger/Conway/Specification/Gov/Properties/ChangePPGroup.lagda.md
+---
+
+## Claim: PParam updates have non-empty groups {#clm:ChangePPGroup}
+
 <!--
 ```agda
 
@@ -17,8 +24,6 @@ instance
   _ = record { toSet = fromList ∘ TxBody.txGovProposals }
 ```
 -->
-
-**Claim (PParam updates have non-empty groups).**
 
 *Informally*.
 

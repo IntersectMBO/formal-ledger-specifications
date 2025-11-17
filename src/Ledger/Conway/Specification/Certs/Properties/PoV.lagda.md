@@ -1,3 +1,10 @@
+---
+source_branch: master
+source_path: src/Ledger/Conway/Specification/Certs/Properties/PoV.lagda.md
+---
+
+## Theorem: The <span class="AgdaDatatype">CERTS</span> rule preserves value {#thm:CERTS-PoV}
+
 <!--
 ```agda
 
@@ -55,9 +62,6 @@ module Certs-PoV  ( indexedSumᵛ'-∪' :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' 
 ```
 -->
 
-
-<a id="thm:CERTS-PoV"></a>
-**Theorem (The `CERTS`{.AgdaOperator} rule preserves value).**
 
 *Informally*.
 

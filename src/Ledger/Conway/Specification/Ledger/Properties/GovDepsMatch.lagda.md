@@ -1,3 +1,10 @@
+---
+source_branch: master
+source_path: src/Ledger/Conway/Specification/Ledger/Properties/GovDepsMatch.lagda.md
+---
+
+## <span style="AgdaFunction">govDepsMatch</span> is an <span style="AgdaDatatype">LEDGER</span> invariant {#lem:LedgerGovDepsMatch}
+
 <!--
 ```agda
 
@@ -25,9 +32,6 @@ open SetoidReasoning (≡ᵉ-Setoid{DepositPurpose})
 ```
 -->
 
-<a id="lem:LedgerGovDepsMatch"></a>
-**Lemma (`govDepsMatch`{.AgdaFunction} is invariant of `LEDGER`{.AgdaOperator} rule).**
-
 *Informally*.
 
 Suppose `s`{.AgdaBound} and `s'`{.AgdaBound} are ledger states such that
@@ -46,8 +50,9 @@ In other terms, if `govDepsMatch`{.AgdaFunction} `s`{.AgdaBound}, then
 LEDGER-govDepsMatch :  LedgerInvariant _⊢_⇀⦇_,LEDGER⦈_ govDepsMatch
 ```
 
-*Proof*.
+*Proof*. (Click on the "Show more Agda" button to reveal the formal proof.)
 
+<!--
 ```agda
 LEDGER-govDepsMatch (LEDGER-I⋯ refl (UTXOW-UTXOS (Scripts-No _))) aprioriMatch = aprioriMatch
 
@@ -76,3 +81,4 @@ LEDGER-govDepsMatch {Γ}{s}{tx}{s'}
 
 LEDGER-govDepsMatch {s' = s'} utxosts@(LEDGER-V (() , UTXOW-UTXOS (Scripts-No (_ , refl)) , _ , GOV-sts)) aprioriMatch
 ```
+-->

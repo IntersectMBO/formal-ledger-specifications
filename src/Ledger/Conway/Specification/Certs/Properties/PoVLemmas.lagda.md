@@ -1,3 +1,10 @@
+---
+source_branch: master
+source_path: src/Ledger/Conway/Specification/Certs/Properties/PoVLemmas.lagda.md
+---
+
+## Theorem: The <span class="AgdaDatatype">CERT</span> rule preserves value {#thm:CERT-PoV}
+
 <!--
 ```agda
 
@@ -66,8 +73,6 @@ module _  ( indexedSumᵛ'-∪ :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ C
 -->
 
 
-**Lemma (The `CERT`{.AgdaOperator} rule preserves value).**
-
 *Informally*.
 
 Let `s`{.AgdaBound}, `s'`{.AgdaBound} be `CertStates`{.AgdaRecord} such that
@@ -83,8 +88,9 @@ some `dcert`{.AgdaBound} : `DCert`{.AgdaDatatype}. Then,
     → getCoin s ≡ getCoin s'
 ```
 
-*Proof*.
+*Proof*.  (Click the "Show more Agda" button to reveal the proof.)
 
+<!--
 ```agda
   CERT-pov (CERT-deleg (DELEG-delegate {rwds = rwds} _)) = sym (∪ˡsingleton0≡ rwds)
   CERT-pov (CERT-deleg (DELEG-reg {rwds = rwds} _)) = sym (∪ˡsingleton0≡ rwds)
@@ -133,7 +139,7 @@ some `dcert`{.AgdaBound} : `DCert`{.AgdaDatatype}. Then,
                          → InjectiveOn (dom s) f → getCoin (mapˢ (map₁ f) s) ≡ getCoin s )
     where
 ```
-
+-->
 
 **Lemma (`PRE-CERT`{.AgdaOperator} rule preserves value).**
 
@@ -156,8 +162,9 @@ value of the withdrawals in `Γ`{.AgdaBound}.  In other terms,
       → getCoin s ≡ getCoin s' + getCoin (CertEnv.wdrls Γ)
 ```
 
-*Proof*.
+*Proof*.  (Click the "Show more Agda" button to reveal the proof.)
 
+<!--
 ```agda
 
     PRE-CERT-pov  {Γ   = Γ}
@@ -209,7 +216,7 @@ value of the withdrawals in `Γ`{.AgdaBound}.  In other terms,
           getCoin (zeroMap ∪ˡ rewards) + getCoin wdrls
             ∎
 ```
-
+-->
 
 **Lemma (`POST-CERT`{.AgdaOperator} rule preserves value).**
 

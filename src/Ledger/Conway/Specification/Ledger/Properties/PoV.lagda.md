@@ -1,3 +1,10 @@
+---
+source_branch: master
+source_path: src/Ledger/Conway/Specification/Ledger/Properties/PoV.lagda.md
+---
+
+## Theorem: The <span style="AgdaDatatype">LEDGER</span> rule preserves value {#thm:LEDGER-PoV}
+
 <!--
 ```agda
 
@@ -25,8 +32,6 @@ open import Axiom.Set.Properties th
 
 open import Data.Nat.Properties using (+-0-monoid; +-identityʳ; +-comm; +-assoc; *-identityʳ; *-zeroʳ)
 
--- ** Proof that LEDGER preserves values.
-
 instance
   HasCoin-LState : HasCoin LState
   HasCoin-LState .getCoin s = getCoin (LState.utxoSt s) + getCoin (LState.certState s)
@@ -48,16 +53,13 @@ module _
 ```
 -->
 
-<a id="thm:LEDGER-PoV"></a>
-**Theorem (The `LEDGER`{.AgdaOperator} rule preserves value).**
-
 *Informally*.
 
  Let `s`{.AgdaBound} and `s'`{.AgdaBound} be ledger states and
  let `tx`{.AgdaBound} : `Tx`{.AgdaRecord} be a *fresh* transaction, that is, a transaction
 that is not already part of the `UTxOState`{.AgdaRecord} of `s`{.AgdaBound}. If
 `s`{.AgdaBound} `⇀⦇`{.AgdaDatatype} `tx`{.AgdaBound} `,LEDGER⦈`{.AgdaDatatype} `s'`{.AgdaBound},
-then the coin values of `s`{.AgdaBound} and `s'`{.AgdaBound} are equal, that is, 
+then the coin values of `s`{.AgdaBound} and `s'`{.AgdaBound} are equal, that is,
 `getCoin`{.AgdaField} `s`{.AgdaBound} $≡$ `getCoin`{.AgdaField} `s'`{.AgdaBound}.
 
 *Formally*.
@@ -68,8 +70,9 @@ then the coin values of `s`{.AgdaBound} and `s'`{.AgdaBound} are equal, that is,
     → Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s' → getCoin s ≡ getCoin s'
 ```
 
-*Proof*.
+*Proof*.  (Click the "Show more Agda" button to reveal the formal proof.)
 
+<!--
 ```agda
   LEDGER-pov
     {s  = s}
@@ -123,3 +126,4 @@ then the coin values of `s`{.AgdaBound} and `s'`{.AgdaBound} are equal, that is,
       getCoin ⟦ utxo' , fees' , deposits' , donations' ⟧ ∎ )
     where open ≡-Reasoning
 ```
+-->

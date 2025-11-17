@@ -1,3 +1,10 @@
+---
+source_branch: master
+source_path: src/Ledger/Conway/Specification/Chain/Properties/CredDepsEqualDomRwds.lagda.md
+---
+
+# Claim: Equality of credential deposits is a <span class="AgdaDatatype">CHAIN</span> invariant {#clm:CredDepsEqualDomRwds-inv}
+
 <!--
 ```agda
 
@@ -17,8 +24,6 @@ open import Ledger.Prelude hiding (map) renaming (mapˢ to map; filterˢ to filt
 open import Ledger.Conway.Specification.Properties txs abs
 ```
 -->
-
-**Claim (Equality of credential depsoits is a `CHAIN`{.AgdaOperator} invariant).**
 
 *Informally*.
 
