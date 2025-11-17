@@ -3525,7 +3525,7 @@ du_utxo'45'debug_2488 v0 v1 v2
                               MAlonzo.Code.Ledger.Conway.Specification.TokenAlgebra.Base.d_inject_216
                               MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.d_tokenAlgebra_110
                               (coe
-                                 MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.du_indexedSum'7515'''_1450
+                                 MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.du_indexedSum'7515'''_1446
                                  (let v3
                                         = MAlonzo.Code.Ledger.Conway.Foreign.ExternalFunctions.d_dummyExternalFunctions_16 in
                                   coe
@@ -5209,7 +5209,7 @@ du_utxow'45'debug_2564 v0 v1 v2
                      (coe
                         MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                         (coe
-                           MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.du_finiteness_1214
+                           MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.du_finiteness_1210
                            (coe
                               MAlonzo.Code.Axiom.Set.du_mapPartial_604
                               (MAlonzo.Code.Axiom.Set.d_th_1516
@@ -5254,7 +5254,7 @@ du_utxow'45'debug_2564 v0 v1 v2
                            (coe
                               MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                               (coe
-                                 MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.du_finiteness_1214
+                                 MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.du_finiteness_1210
                                  (coe
                                     MAlonzo.Code.Axiom.Set.du_map_426
                                     (MAlonzo.Code.Axiom.Set.d_th_1516
@@ -5299,7 +5299,7 @@ du_utxow'45'debug_2564 v0 v1 v2
                                  (coe
                                     MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                     (coe
-                                       MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.du_finiteness_1214
+                                       MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.du_finiteness_1210
                                        (coe
                                           MAlonzo.Code.Axiom.Set.du_mapPartial_604
                                           (MAlonzo.Code.Axiom.Set.d_th_1516
@@ -5346,7 +5346,7 @@ du_utxow'45'debug_2564 v0 v1 v2
                                        (coe
                                           MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                           (coe
-                                             MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.du_finiteness_1214
+                                             MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.du_finiteness_1210
                                              (coe
                                                 MAlonzo.Code.Axiom.Set.du_map_426
                                                 (MAlonzo.Code.Axiom.Set.d_th_1516
@@ -6372,7 +6372,7 @@ du_utxow'45'debug_2564 v0 v1 v2
                                              (coe
                                                 MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                 (coe
-                                                   MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.du_finiteness_1214
+                                                   MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.du_finiteness_1210
                                                    (coe
                                                       MAlonzo.Code.Axiom.Set.du_map_426
                                                       (MAlonzo.Code.Axiom.Set.d_th_1516
