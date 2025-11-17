@@ -807,7 +807,7 @@ du_maxThreshold_2548 v0
       (coe
          MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
          (coe
-            MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.du_finiteness_1214
+            MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.du_finiteness_1210
             v0))
 -- Ledger.Conway.Specification.Ratify._._._∨_
 d__'8744'__2556 ::
@@ -2112,7 +2112,7 @@ du_sizeActiveCC_2788 v0 v1 v2
                   -> case coe v5 of
                        MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v7 v8
                          -> coe
-                              MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.du_length'738'_1222
+                              MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.du_length'738'_1218
                               (coe
                                  MAlonzo.Code.Class.DecEq.Instances.du_DecEq'45''215'_182
                                  (coe
@@ -2136,7 +2136,7 @@ du_sizeActiveCC_2788 v0 v1 v2
                                        (coe v0))))
                               (coe MAlonzo.Code.Class.IsSet.du_IsSet'45'Set_590)
                               (coe
-                                 MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.du_filter'738'_1270
+                                 MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.du_filter'738'_1266
                                  (\ v9 ->
                                     coe
                                       MAlonzo.Code.Class.Decidable.Instances.du_Dec'45''8846'_16
@@ -2389,7 +2389,7 @@ d_actualVotes_2816 v0 v1 v2 v3 v4
                                    MAlonzo.Code.Ledger.Conway.Specification.Enact.d_pparams_1128
                                    (coe v3))))
                           (coe
-                             MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.du_length'738'_1222
+                             MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.du_length'738'_1218
                              (coe
                                 MAlonzo.Code.Class.DecEq.Instances.du_DecEq'45''215'_182
                                 (coe
@@ -2556,7 +2556,7 @@ d_acceptedStake_2828 ::
   Integer
 d_acceptedStake_2828 v0 v1 v2 v3 v4
   = coe
-      MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.du_indexedSum'7515'''_1450
+      MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.du_indexedSum'7515'''_1446
       (coe
          MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_222
          (coe
@@ -2631,7 +2631,7 @@ d_totalStake_2830 ::
   Integer
 d_totalStake_2830 v0 v1 v2 v3 v4
   = coe
-      MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.du_indexedSum'7515'''_1450
+      MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.du_indexedSum'7515'''_1446
       (coe
          MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_222
          (coe
@@ -3062,7 +3062,7 @@ du_acceptedStake_2906 ::
   Integer
 du_acceptedStake_2906 v0 v1 v2
   = coe
-      MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.du_indexedSum'7515'''_1450
+      MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.du_indexedSum'7515'''_1446
       (coe
          MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_DecEq'45'VDeleg_1108
          (coe
@@ -3121,7 +3121,7 @@ du_totalStake_2908 ::
   Integer
 du_totalStake_2908 v0 v1 v2
   = coe
-      MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.du_indexedSum'7515'''_1450
+      MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.du_indexedSum'7515'''_1446
       (coe
          MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_DecEq'45'VDeleg_1108
          (coe
@@ -3466,7 +3466,7 @@ du_acceptedStake_2966 ::
   Integer
 du_acceptedStake_2966 v0 v1 v2 v3 v4
   = coe
-      MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.du_indexedSum'7515'''_1450
+      MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.du_indexedSum'7515'''_1446
       (coe
          MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
          (coe
@@ -3535,7 +3535,7 @@ du_totalStake_2968 ::
   Integer
 du_totalStake_2968 v0 v1 v2 v3 v4
   = coe
-      MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.du_indexedSum'7515'''_1450
+      MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.du_indexedSum'7515'''_1446
       (coe
          MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
          (coe

@@ -2712,23 +2712,8 @@ du_filter'7504''45'singleton'45'false_756
       MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
       (coe (\ v0 v1 -> coe MAlonzo.Code.Data.Empty.du_'8869''45'elim_12))
       (coe (\ v0 v1 -> coe MAlonzo.Code.Data.Empty.du_'8869''45'elim_12))
--- Axiom.Set.Map.Dec.Lookupᵐᵈ.spᵐ
-d_sp'7504'_774 ::
-  MAlonzo.Code.Axiom.Set.T_Theory'7496'_1362 ->
-  () ->
-  (AgdaAny -> AgdaAny) -> () -> (AgdaAny -> ()) -> AgdaAny -> AgdaAny
-d_sp'7504'_774 v0 ~v1 ~v2 ~v3 ~v4 v5 = du_sp'7504'_774 v0 v5
-du_sp'7504'_774 ::
-  MAlonzo.Code.Axiom.Set.T_Theory'7496'_1362 -> AgdaAny -> AgdaAny
-du_sp'7504'_774 v0 v1
-  = coe
-      MAlonzo.Code.Axiom.Set.d_sp'45''8728'_74
-      (MAlonzo.Code.Axiom.Set.d_sp_188
-         (coe MAlonzo.Code.Axiom.Set.d_th_1516 (coe v0)))
-      erased erased erased v1
-      (\ v2 -> MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe v2))
 -- Axiom.Set.Map.Dec.Lookupᵐᵈ.add-excluded-∪ˡ-l
-d_add'45'excluded'45''8746''737''45'l_790 ::
+d_add'45'excluded'45''8746''737''45'l_784 ::
   MAlonzo.Code.Axiom.Set.T_Theory'7496'_1362 ->
   () ->
   (AgdaAny -> AgdaAny) ->
@@ -2741,10 +2726,10 @@ d_add'45'excluded'45''8746''737''45'l_790 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   (AgdaAny -> MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20) ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_add'45'excluded'45''8746''737''45'l_790 v0 ~v1 v2 ~v3 ~v4 v5 v6
+d_add'45'excluded'45''8746''737''45'l_784 v0 ~v1 v2 ~v3 ~v4 v5 v6
                                           v7 v8 v9 ~v10
-  = du_add'45'excluded'45''8746''737''45'l_790 v0 v2 v5 v6 v7 v8 v9
-du_add'45'excluded'45''8746''737''45'l_790 ::
+  = du_add'45'excluded'45''8746''737''45'l_784 v0 v2 v5 v6 v7 v8 v9
+du_add'45'excluded'45''8746''737''45'l_784 ::
   MAlonzo.Code.Axiom.Set.T_Theory'7496'_1362 ->
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
@@ -2753,7 +2738,7 @@ du_add'45'excluded'45''8746''737''45'l_790 ::
   AgdaAny ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-du_add'45'excluded'45''8746''737''45'l_790 v0 v1 v2 v3 v4 v5 v6
+du_add'45'excluded'45''8746''737''45'l_784 v0 v1 v2 v3 v4 v5 v6
   = let v7
           = coe
               MAlonzo.Code.Axiom.Set.d__'8712''63'__1650 v0 erased v4 v2
@@ -3276,7 +3261,7 @@ du_add'45'excluded'45''8746''737''45'l_790 v0 v1 v2 v3 v4 v5 v6
                                    erased))))
          _ -> MAlonzo.RTE.mazUnreachableError)
 -- Axiom.Set.Map.Dec.Lookupᵐᵈ._.disjoint-sing
-d_disjoint'45'sing_912 ::
+d_disjoint'45'sing_906 ::
   MAlonzo.Code.Axiom.Set.T_Theory'7496'_1362 ->
   () ->
   () ->
@@ -3292,4 +3277,4 @@ d_disjoint'45'sing_912 ::
   (AgdaAny -> MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20) ->
   AgdaAny ->
   AgdaAny -> AgdaAny -> MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20
-d_disjoint'45'sing_912 = erased
+d_disjoint'45'sing_906 = erased
