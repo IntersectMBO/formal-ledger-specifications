@@ -3,14 +3,13 @@ source_branch: master
 source_path: src/Ledger/Conway/Specification/Gov/Properties/ChangePPGroup.lagda.md
 ---
 
-## Claim: PParam updates have non-empty groups {#clm:ChangePPGroup}
+## Claim: <span class="AgdaRecord">PParam</span> updates have non-empty groups {#clm:ChangePPGroup}
 
 <!--
 ```agda
 
 {-# OPTIONS --safe #-}
 
-open import Ledger.Conway.Specification.Abstract
 open import Ledger.Conway.Specification.Transaction
 
 module Ledger.Conway.Specification.Gov.Properties.ChangePPGroup

@@ -3,7 +3,7 @@ source_branch: master
 source_path: src/Ledger/Conway/Specification/Utxo/Properties/PoV.lagda.md
 ---
 
-# The `UTXO`{.AgdaDatatype} Rule Preserves Value {#lem:UTXO-PoV}
+## Theorem: The <span class="AgdaDatatype">UTXO</span> rule preserves value {#thm:UTXO-PoV}
 
 <!--
 ```agda
@@ -25,7 +25,6 @@ open import Ledger.Conway.Specification.Utxo.Properties.Base txs abs public
 open UTxOState; open Tx; open TxBody
 ```
 -->
-
 
 *Informally*.
 
@@ -61,7 +60,6 @@ UTXOpov : {Γ : UTxOEnv} {tx : Tx} {s s' : UTxOState}
 *Proof*.
 
 ```agda
-
 UTXOpov h' step@(UTXO-inductive⋯ _ Γ _ _ _ _ _ _ _ newBal noMintAda _ _ _ _ _ _ _ _ _ (Scripts-Yes (_ , _ , valid)))
   = pov-scripts step h' refl valid
 

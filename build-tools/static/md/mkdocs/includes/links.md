@@ -82,7 +82,7 @@
 [Transaction Structure]: Ledger.Dijkstra.Specification.Transaction.md#sec:transaction-structure
 [Transactions]: Ledger.Dijkstra.Specification.Transaction.md#sec:transactions
 [UTXO]: Ledger.Conway.Specification.Utxo.md#sec:the-utxo-transition-system
-[UTXO-PoV]: Ledger.Conway.Specification.Utxo.Properties.PoV.md#lem:UTXO-PoV
+[UTXO-PoV]: Ledger.Conway.Specification.Utxo.Properties.PoV.md#thm:UTXO-PoV
 [UTXO-minspend]: Ledger.Conway.Specification.Utxo.Properties.MinSpend.md#thm:minspend
 [Utxo.Properties.MinSpend]: Ledger.Conway.Specification.Utxo.Properties.MinSpend.md
 [Utxo.Properties.PoV]: Ledger.Conway.Specification.Utxo.Properties.PoV.md
