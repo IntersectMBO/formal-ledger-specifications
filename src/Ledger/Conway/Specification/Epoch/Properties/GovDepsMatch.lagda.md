@@ -3,7 +3,7 @@ source_branch: master
 source_path: src/Ledger/Conway/Specification/Epoch/Properties/GovDepsMatch.lagda.md
 ---
 
-## Lemma: <span style="AgdaFunction">govDepsMatch</span> is an <span style="AgdaDatatype">EPOCH</span> invariant {#lem:EpochGovDepsMatch}
+## Lemma: <span class="AgdaFunction">govDepsMatch</span> is an <span class="AgdaDatatype">EPOCH</span> invariant {#lem:EpochGovDepsMatch}
 
 <!--
 ```agda

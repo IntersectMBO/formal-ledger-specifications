@@ -3,7 +3,7 @@ source_branch: master
 source_path: src/Ledger/Conway/Specification/Ledger/Properties/GovDepsMatch.lagda.md
 ---
 
-## <span style="AgdaFunction">govDepsMatch</span> is an <span style="AgdaDatatype">LEDGER</span> invariant {#lem:LedgerGovDepsMatch}
+## <span class="AgdaFunction">govDepsMatch</span> is an <span class="AgdaDatatype">LEDGER</span> invariant {#lem:LedgerGovDepsMatch}
 
 <!--
 ```agda

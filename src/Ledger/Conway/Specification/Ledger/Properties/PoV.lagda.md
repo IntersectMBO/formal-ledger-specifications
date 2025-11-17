@@ -3,7 +3,7 @@ source_branch: master
 source_path: src/Ledger/Conway/Specification/Ledger/Properties/PoV.lagda.md
 ---
 
-## Theorem: The <span style="AgdaDatatype">LEDGER</span> rule preserves value {#thm:LEDGER-PoV}
+## Theorem: The <span class="AgdaDatatype">LEDGER</span> rule preserves value {#thm:LEDGER-PoV}
 
 <!--
 ```agda
