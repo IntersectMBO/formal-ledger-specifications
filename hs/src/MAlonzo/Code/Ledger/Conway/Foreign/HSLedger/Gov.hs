@@ -1117,7 +1117,7 @@ d_actionValid'63'_622 ::
   MAlonzo.Code.Class.Decidable.Core.T__'8263'_10
 d_actionValid'63'_622
   = coe
-      MAlonzo.Code.Ledger.Conway.Specification.Gov.d_actionValid'63'_3248
+      MAlonzo.Code.Ledger.Conway.Specification.Gov.d_actionValid'63'_3232
       (coe
          MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.ExternalStructures.d_HSTransactionStructure_770
          (coe
@@ -1133,7 +1133,7 @@ d_actionWellFormed'63'_626 ::
   MAlonzo.Code.Class.Decidable.Core.T__'8263'_10
 d_actionWellFormed'63'_626
   = coe
-      MAlonzo.Code.Ledger.Conway.Specification.Gov.d_actionWellFormed'63'_3252
+      MAlonzo.Code.Ledger.Conway.Specification.Gov.d_actionWellFormed'63'_3236
       (coe
          MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.ExternalStructures.d_HSTransactionStructure_770
          (coe
