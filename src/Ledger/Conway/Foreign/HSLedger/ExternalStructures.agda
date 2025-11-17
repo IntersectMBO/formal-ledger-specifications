@@ -117,7 +117,7 @@ instance
     ; serSize     = λ v → 0
     ; indexOfImp  = record
       { indexOfDCert    = λ _ _ → nothing
-      ; indexOfRwdAddr  = λ _ _ → nothing
+      ; indexOfRewardAddress  = λ _ _ → nothing
       ; indexOfTxIn     = λ _ _ → nothing
       ; indexOfPolicyId = λ _ _ → nothing
       ; indexOfVote     = λ _ _ → nothing

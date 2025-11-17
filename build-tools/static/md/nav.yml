@@ -2,7 +2,6 @@
 - Preliminaries:
   - Guide for Contributors: guide.md
   - Introduction: Ledger.Introduction.md
-  - Properties: Properties.md
   - Notation: Notation.md
 - Core:
   - Introduction: Ledger.Core.Specification.md

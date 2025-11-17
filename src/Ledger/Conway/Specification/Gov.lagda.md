@@ -98,7 +98,7 @@ private variable
   vote   : GovVote
   v      : Vote
   d      : Coin
-  addr   : RwdAddr
+  addr   : RewardAddress
   a      : GovAction
   prev   : NeedsHash (gaType a)
   k      : ℕ
@@ -208,7 +208,7 @@ insertGovAction ((gaID₀ , gaSt₀) ∷ gaPrs) (gaID₁ , gaSt₁)
      then (gaID₀ , gaSt₀) ∷ insertGovAction gaPrs (gaID₁ , gaSt₁)
      else (gaID₁ , gaSt₁) ∷ (gaID₀ , gaSt₀) ∷ gaPrs
 
-mkGovStatePair :  Epoch → GovActionID → RwdAddr → (a : GovAction) → NeedsHash (a .gaType)
+mkGovStatePair :  Epoch → GovActionID → RewardAddress → (a : GovAction) → NeedsHash (a .gaType)
                   → GovActionID × GovActionState
 mkGovStatePair e aid addr a prev = (aid , gas)
   where
@@ -220,7 +220,7 @@ mkGovStatePair e aid addr a prev = (aid , gas)
                 ; prevAction = prev
                 }
 
-addAction :  GovState → Epoch → GovActionID → RwdAddr
+addAction :  GovState → Epoch → GovActionID → RewardAddress
              → (a : GovAction) → NeedsHash (a .gaType)
              → GovState
 addAction s e aid addr a prev = insertGovAction s (mkGovStatePair e aid addr a prev)
@@ -418,7 +418,7 @@ actionValid : ℙ Credential → Maybe ScriptHash → Maybe ScriptHash → Epoch
 actionValid rewardCreds p ppolicy epoch ⟦ ChangePParams , _ ⟧ᵍᵃ =
   p ≡ ppolicy
 actionValid rewardCreds p ppolicy epoch ⟦ TreasuryWithdrawal  , x ⟧ᵍᵃ =
-  p ≡ ppolicy × mapˢ RwdAddr.stake (dom x) ⊆ rewardCreds
+  p ≡ ppolicy × mapˢ RewardAddress.stake (dom x) ⊆ rewardCreds
 actionValid rewardCreds p ppolicy epoch ⟦ UpdateCommittee , (new , rem , q) ⟧ᵍᵃ =
   p ≡ nothing × (∀[ e ∈ range new ]  epoch < e) × (dom new ∩ rem ≡ᵉ ∅)
 actionValid rewardCreds p ppolicy epoch _ =
@@ -452,7 +452,7 @@ actionWellFormed _                 = ⊤
 
    -  a `TreasuryWithdrawal`{.AgdaInductiveConstructor} action is well-formed if the
       network ID is correct and there is at least one non-zero withdrawal amount in
-      the given `RwdAddrToCoinMap`{.AgdaRecord} map.
+      the given `RewardAddressToCoinMap`{.AgdaRecord} map.
 
 
 <!--

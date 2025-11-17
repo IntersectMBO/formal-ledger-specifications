@@ -15,7 +15,7 @@ open Certs public
   hiding (DState; GState; CertState; HasCast-DState; HasCast-GState; HasCast-CertState;
           _⊢_⇀⦇_,DELEG⦈_; _⊢_⇀⦇_,GOVCERT⦈_;
           _⊢_⇀⦇_,CERT⦈_; _⊢_⇀⦇_,PRE-CERT⦈_; _⊢_⇀⦇_,POST-CERT⦈_; _⊢_⇀⦇_,CERTS⦈_; ⟦_,_,_⟧ᵈ)
-open RwdAddr
+open RewardAddress
 
 record DState : Type where
   constructor ⟦_,_,_,_⟧ᵈ

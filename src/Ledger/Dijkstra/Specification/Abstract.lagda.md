@@ -12,7 +12,7 @@ open import Ledger.Dijkstra.Specification.Certs govStructure
 record indexOf : Type where
   field
     indexOfDCert    : DCert → List DCert → Maybe Ix
-    indexOfRwdAddr  : RewardAddress → Withdrawals → Maybe Ix
+    indexOfRewardAddress  : RewardAddress → Withdrawals → Maybe Ix
     indexOfTxIn     : TxIn → ℙ TxIn → Maybe Ix
     indexOfPolicyId : ScriptHash → ℙ ScriptHash → Maybe Ix
     indexOfVote     : GovVoter → List GovVoter → Maybe Ix

@@ -39,7 +39,7 @@ private variable
 rdptr : (Tx ℓ) → ScriptPurpose → Maybe (RedeemerPtr ℓ)
 rdptr tx = λ where
   (Cert h)              → map (Cert    ,_) $ indexOfDCert    h txCerts
-  (Rwrd h)              → map (Reward  ,_) $ indexOfRwdAddr  h txWithdrawals
+  (Rwrd h)              → map (Reward  ,_) $ indexOfRewardAddress  h txWithdrawals
   (Mint h)              → map (Mint    ,_) $ indexOfPolicyId h (policies mint)
   (Spend h)             → map (Spend   ,_) $ indexOfTxIn     h txIns
   (Vote h)              → map (Vote    ,_) $ indexOfVote     h (map GovVote.voter txGovVotes)

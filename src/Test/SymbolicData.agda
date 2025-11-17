@@ -37,8 +37,8 @@ AddrToSymbolic (inj₁ record { net = net ; pay = pay ; stake = stake })
 AddrToSymbolic (inj₂ record { net = net ; pay = pay ; attrsSize = attrsSize })
   = inj₂ (record { net = net ; pay = credToSymbolic pay ; attrsSize = attrsSize })
 
-RwdAddrToSymbolic : RwdAddr → SRwdAddr
-RwdAddrToSymbolic record { net = net ; stake = stake } = record { net = net ; stake = credToSymbolic stake }
+RewardAddressToSymbolic : RewardAddress → SRewardAddress
+RewardAddressToSymbolic record { net = net ; stake = stake } = record { net = net ; stake = credToSymbolic stake }
 
 DatumToSymbolic : Datum → Maybe SDatum
 DatumToSymbolic (inj₁ x) = just x
@@ -65,7 +65,7 @@ txInfoToSymbolic txinfo =
       ; txouts = map (\ x → (proj₁ x , TxOutToSymbolic (proj₂ x))) (setToList (txOuts ˢ))
       ; fee = fee
       ; mint = mint
-      ; txwdrls = map (\ x → (RwdAddrToSymbolic (proj₁ x) , proj₂ x)) (setToList (txWithdrawals ˢ))
+      ; txwdrls = map (\ x → (RewardAddressToSymbolic (proj₁ x) , proj₂ x)) (setToList (txWithdrawals ˢ))
       ; txvldt = txVldt
       ; vkey = vkKey
       ; txdats = mapMaybe DatumToSymbolic (setToList txdats) 
@@ -74,7 +74,7 @@ txInfoToSymbolic txinfo =
 
 ScriptPurposeToSymbolic : ScriptPurpose → SScriptPurpose
 ScriptPurposeToSymbolic (Cert x) = Empty
-ScriptPurposeToSymbolic (Rwrd x) = Rwrd (RwdAddrToSymbolic x)
+ScriptPurposeToSymbolic (Rwrd x) = Rwrd (RewardAddressToSymbolic x)
 ScriptPurposeToSymbolic (Mint x) = Mint x
 ScriptPurposeToSymbolic (Spend x) = Spend x
 ScriptPurposeToSymbolic (Vote x) = Empty
