@@ -1634,7 +1634,7 @@ du_activeDRepsOf_1258 ::
   AgdaAny -> AgdaAny -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 du_activeDRepsOf_1258 v0 v1 v2 v3
   = coe
-      MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.du_filter'7504'_1428
+      MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.du_filter'7504'_1424
       (\ v4 ->
          coe
            MAlonzo.Code.Class.Decidable.Instances.du_Dec'45''8846'_16

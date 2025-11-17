@@ -2883,7 +2883,7 @@ d_actionWellFormed'63'_3252 v0 v1
                        (coe
                           MAlonzo.Code.Class.Decidable.Instances.du_DecEq'8658'Dec_6
                           (coe
-                             MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.du_DecEq'45'ℙ_1248
+                             MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.du_DecEq'45'ℙ_1244
                              (coe
                                 MAlonzo.Code.Ledger.Conway.Specification.PParams.du_DecEq'45'PParamGroup_572))
                           (coe
