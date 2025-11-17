@@ -107,7 +107,6 @@ def stage_content(config: BuildConfig, processed_files: List[Path]) -> List[Path
         # keep this single source of truth in code, or load from a small JSON,
         # or pass through from BuildConfig if you wire mkdocs extras through.
         "index.md": "README.md",
-        "guide.md": "CONTRIBUTING.md",
         "Notation.md": "build-tools/static/md/mkdocs/docs/Notation.md",
         "Definitions.md": "build-tools/static/md/mkdocs/docs/Definitions.md",
         "ConwayBootstrap.md": "build-tools/static/md/mkdocs/docs/ConwayBootstrap.md",
@@ -139,8 +138,7 @@ def stage_content(config: BuildConfig, processed_files: List[Path]) -> List[Path
         )
 
     # To be absolutely sure, we could write the correct header for special cases "by hand";
-    # for `index.md` and `guide.md`, e.g.,
+    # for `index.md`
     #   ensure_source_header_file(mkdocs_docs_dir / "index.md", "README.md", "master", preserve_existing=True)
-    #   ensure_source_header_file(mkdocs_docs_dir / "guide.md", "CONTRIBUTING.md", "master", preserve_existing=True)
 
     return staged_files

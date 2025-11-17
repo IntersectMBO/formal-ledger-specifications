@@ -288,9 +288,8 @@ def deploy_mkdocs_assets(config: BuildConfig, nav_files: List[str]) -> List[str]
         shutil.copy2(bib_source, bib_target_dir)
         logging.info(f"✅ Deployed bibliography: {bib_source.name}.")
 
-   # 4. Handle index.md and guide.md by copying from root repo files
+   # 4. Handle index.md by copying from root repo files
     home_page = "index.md"
-    guide_page = "guide.md"
     # Copy README.md to docs/index.md
     readme_source_path = config.source_paths.readme_md_path
     index_target_path = config.build_paths.mkdocs_docs_dir / home_page
@@ -303,17 +302,6 @@ def deploy_mkdocs_assets(config: BuildConfig, nav_files: List[str]) -> List[str]
         logging.info(f"✅ Deployed root {readme_source_path.name} as site index.")
     else:
         logging.warning(f"Root README.md not found at {readme_source_path}. Cannot create site index.")
-
-    # Copy CONTRIBUTING.md to docs/guide.md
-    contrib_source_path = config.source_paths.contributing_md_path
-    guide_target_path = config.build_paths.mkdocs_docs_dir / guide_page
-    if contrib_source_path.exists():
-        shutil.copy2(contrib_source_path, guide_target_path)
-        if guide_page not in [f.lower() for f in nav_files]:
-            nav_files.append(guide_page)
-        logging.info(f"✅ Deployed root {contrib_source_path.name} as interactive guide page.")
-    else:
-        logging.warning(f"Root CONTRIBUTING.md not found at {contrib_source_path}. Cannot create guide page.")
 
     return sorted(list(set(nav_files)), key=lambda f: (f.lower() != home_page.lower(), f.lower()))
 
