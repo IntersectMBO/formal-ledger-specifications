@@ -1,3 +1,11 @@
+---
+source_branch: master
+source_path: src/Ledger/Conway/Specification/Chain/Properties/GovDepsMatch.lagda.md
+---
+
+## Theorem: <span style="AgdaFunction">govDepsMatch</span> is a <span style="AgdaDatatype">CHAIN</span> invariant {#thm:ChainGovDepsMatch}
+
+
 <!--
 ```agda
 
@@ -35,9 +43,6 @@ module _
   open PParams pp using (maxRefScriptSizePerBlock)
 ```
 -->
-
-<a id="thm:ChainGovDepsMatch"></a>
-**Theorem (`govDepsMatch`{.AgdaFunction} is invariant of `CHAIN`{.AgdaOperator} rule)**.
 
 *Informally*.
 

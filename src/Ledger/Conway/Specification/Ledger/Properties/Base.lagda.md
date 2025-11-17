@@ -3,11 +3,17 @@ source_branch: master
 source_path: src/Ledger/Conway/Specification/Ledger/Properties/Base.lagda.md
 ---
 
+## Properties Base
+
+This section defines some types and functions used in other modules to prove
+properties of the ledger transition system.
+
+<!--
 ```agda
 {-# OPTIONS --safe #-}
 
-open import Ledger.Conway.Specification.Transaction
 open import Ledger.Conway.Specification.Abstract
+open import Ledger.Conway.Specification.Transaction
 import Ledger.Conway.Specification.Certs
 
 module Ledger.Conway.Specification.Ledger.Properties.Base
@@ -21,7 +27,6 @@ open import Ledger.Conway.Specification.Ledger txs abs
 open import Ledger.Conway.Specification.Utxo txs abs
 open import Ledger.Conway.Specification.Utxow txs abs
 
--- open import Data.List using (map)
 open import Data.List.Properties using (++-identityʳ; map-++)
 
 open import Axiom.Set.Properties th
@@ -29,15 +34,26 @@ open import Axiom.Set.Properties th
 open import Data.Nat.Properties using (+-0-monoid; +-identityʳ; +-suc)
 open import Relation.Binary using (IsEquivalence)
 import Relation.Binary.Reasoning.Setoid as SetoidReasoning
+```
+-->
 
--- ** Proof that the set equality `govDepsMatch` (below) is a LEDGER invariant.
+Mapping a list of `GovActionID`{.AgdaDatatype} × `GovActionStates`{.AgdaRecord} to a list of
+`DepositPurposes`{.AgdaDatatype} is so common, we give it a name (`dpMap`{.AgdaFunction});
+it's equivalent to `map (λ (id , _) →` `GovActionDeposit`{.AgdaInductiveConstructor} `id)`.
 
--- Mapping a list of `GovActionID × GovActionState`s to a list of
--- `DepositPurpose`s is so common, we give it a name `dpMap`;
--- it's equivalent to `map (λ (id , _) → GovActionDeposit id)`.
+```agda
 dpMap : GovState → List DepositPurpose
 dpMap = map (GovActionDeposit ∘ proj₁)
+```
 
+Given a ledger state `s`, consider the deposits in the `UTxOState`{.AgdaRecord} of
+`s` that are `GovActionDeposits`{.AgdaRecord}.  We compare that set of
+deposits with the `GovActionDeposits`{.AgdaRecord} of the `GovState`{.AgdaRecord} of `s`.
+When these two sets are the same, we write `govDepsMatch`{.AgdaFunction} `s` and say
+the `govDepsMatch`{.AgdaFunction} relation holds for `s`.
+Formally, the `govDepsMatch`{.AgdaFunction} predicate is defined as follows:
+
+```agda
 isGADeposit : DepositPurpose → Type
 isGADeposit dp = isGADepositᵇ dp ≡ true
   where
@@ -48,12 +64,23 @@ isGADeposit dp = isGADepositᵇ dp ≡ true
 govDepsMatch : LState → Type
 govDepsMatch ls =
   filterˢ isGADeposit (dom (DepositsOf ls)) ≡ᵉ fromList (dpMap (GovStateOf ls))
+```
 
+In the remainder of this section, we show some utility lemmas without proofs.
+(To reveal the proofs, click the "Show more Agda" button at the top of the page.)
+<!--
+```agda
 module ≡ᵉ = IsEquivalence (≡ᵉ-isEquivalence {DepositPurpose})
 pattern UTXOW-UTXOS x = UTXOW⇒UTXO (UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ x)
-open Equivalence
 
+open Equivalence
+```
+-->
+```agda
 filterGA : ∀ txId n → filterˢ isGADeposit ❴ GovActionDeposit (txId , n) ❵ ≡ᵉ ❴ GovActionDeposit (txId , n) ❵
+```
+<!--
+```agda
 proj₁ (filterGA txId n) {a} x = (proj₂ (from ∈-filter x)) where open Equivalence
 proj₂ (filterGA txId n) {a} x = to ∈-filter (ξ (from ∈-singleton x) , x)
   where
@@ -70,7 +97,7 @@ module LEDGER-PROPS (tx : Tx) (Γ : LEnv) (s : LState) where
 
   -- initial utxo deposits
   utxoDeps : Deposits
-  utxoDeps = UTxOState.deposits (LState.utxoSt s)
+  utxoDeps = DepositsOf s
 
   -- GovState definitions and lemmas --
   mkAction : GovProposal → ℕ → GovActionID × GovActionState
@@ -117,7 +144,7 @@ module LEDGER-PROPS (tx : Tx) (Γ : LEnv) (s : LState) where
 module SetoidProperties (tx : Tx) (Γ : LEnv) (s : LState) where
   open Tx tx renaming (body to txb); open TxBody txb
   open LEnv Γ renaming (pparams to pp)
-  open LEDGER-PROPS tx Γ s using (utxoDeps; propUpdate; mkAction; updateGovStates; STS→GovSt≡; voteUpdate; dpMap-rmOrphanDRepVotes)
+  open LEDGER-PROPS tx Γ s
   open SetoidReasoning (≡ᵉ-Setoid{DepositPurpose})
 
   CredDepIsNotGADep : ∀ {a c} → a ≡ CredentialDeposit c → ¬ isGADeposit a
@@ -128,9 +155,15 @@ module SetoidProperties (tx : Tx) (Γ : LEnv) (s : LState) where
 
   DRepDepIsNotGADep : ∀ {a c} → a ≡ DRepDeposit c → ¬ isGADeposit a
   DRepDepIsNotGADep refl ()
+```
+-->
 
+```agda
   filterCR : (c : DCert) (deps : Deposits)
              → filterˢ isGADeposit (dom ( deps ∣ certRefund c ᶜ ˢ )) ≡ᵉ filterˢ isGADeposit (dom (deps ˢ))
+```
+<!--
+```agda
   filterCR (dereg c _) deps = ≡ᵉ.sym $ begin
     filterˢ isGADeposit (dom (deps ˢ)) ≈˘⟨ filter-cong $ dom-cong (res-ex-∪ Dec-∈-singleton) ⟩
     filterˢ isGADeposit (dom ((deps ∣ cr)ˢ ∪ (deps ∣ cr ᶜ)ˢ)) ≈⟨ filter-cong dom∪ ⟩
@@ -157,8 +190,13 @@ module SetoidProperties (tx : Tx) (Γ : LEnv) (s : LState) where
   filterCR (retirepool _ _)    deps = filter-cong (dom-cong (resᵐ-∅ᶜ {M = deps}))
   filterCR (ccreghot _ _)      deps = filter-cong (dom-cong (resᵐ-∅ᶜ {M = deps}))
   filterCR (reg _ _)           deps = filter-cong (dom-cong (resᵐ-∅ᶜ {M = deps}))
-
+```
+-->
+```agda
   filterCD : (c : DCert) (deps : Deposits) → filterˢ isGADeposit (dom (certDeposit c pp ˢ)) ≡ᵉ ∅
+```
+<!--
+```agda
   filterCD (delegate _ _ _ _)  deps = filter-∅ λ _ → CredDepIsNotGADep ∘ from ∈-singleton ∘ dom-single→single
   filterCD (reg _ _)           deps = filter-∅ λ _ → CredDepIsNotGADep ∘ from ∈-singleton ∘ dom-single→single
   filterCD (regpool _ _)       deps = filter-∅ λ _ → PoolDepIsNotGADep ∘ from ∈-singleton ∘ dom-single→single
@@ -167,9 +205,14 @@ module SetoidProperties (tx : Tx) (Γ : LEnv) (s : LState) where
   filterCD (retirepool _ _)    deps = ≡ᵉ.trans (filter-cong dom∅) $ filter-∅ λ _ a∈ _ → ∉-∅ a∈
   filterCD (deregdrep _ _)     deps = ≡ᵉ.trans (filter-cong dom∅) $ filter-∅ λ _ a∈ _ → ∉-∅ a∈
   filterCD (ccreghot _ _)      deps = ≡ᵉ.trans (filter-cong dom∅) $ filter-∅ λ _ a∈ _ → ∉-∅ a∈
-
+```
+-->
+```agda
   noGACerts : (cs : List DCert) (deps : Deposits)
     → filterˢ isGADeposit (dom (updateCertDeposits pp cs deps)) ≡ᵉ filterˢ isGADeposit (dom deps)
+```
+<!--
+```agda
   noGACerts [] _ = filter-cong ≡ᵉ.refl
   noGACerts (dcert@(delegate _ _ _ _) ∷ cs) deps = begin
     filterˢ isGADeposit (dom (updateCertDeposits pp cs (deps ∪⁺ cd))) ≈⟨ noGACerts cs _ ⟩
@@ -224,9 +267,13 @@ module SetoidProperties (tx : Tx) (Γ : LEnv) (s : LState) where
 
   opaque
     unfolding addVote
-
-    dpMap∘voteUpdate≡dpMap : (v : GovVote) {govSt : GovState}
-      → dpMap (voteUpdate govSt v) ≡ dpMap govSt
+```
+-->
+```agda
+    dpMap∘voteUpdate≡dpMap : (v : GovVote) {govSt : GovState} → dpMap (voteUpdate govSt v) ≡ dpMap govSt
+```
+<!--
+```agda
     dpMap∘voteUpdate≡dpMap v {[]} = refl
     dpMap∘voteUpdate≡dpMap v {(aid , ast) ∷ govSt} =
       cong (λ x → (GovActionDeposit ∘ proj₁) (aid , ast) ∷ x) (dpMap∘voteUpdate≡dpMap v)
@@ -244,10 +291,14 @@ module SetoidProperties (tx : Tx) (Γ : LEnv) (s : LState) where
     fromList (dpMap govSt)
       ∎
   props-dpMap-votes-invar (v ∷ vs) (p ∷ ps) {k} {govSt} = props-dpMap-votes-invar (v ∷ vs) ps
-
+```
+-->
+```agda
   dpMap-update-∪ : ∀ gSt p k
-    → fromList (dpMap gSt) ∪ ❴ GovActionDeposit (txId , k) ❵
-        ≡ᵉ fromList (dpMap (propUpdate gSt p k))
+    → fromList (dpMap gSt) ∪ ❴ GovActionDeposit (txId , k) ❵ ≡ᵉ fromList (dpMap (propUpdate gSt p k))
+```
+<!--
+```agda
   dpMap-update-∪ [] p k = ∪-identityˡ (fromList (dpMap [ mkAction p k ]))
   dpMap-update-∪ (g@(gaID₀ , gaSt₀) ∷ gSt) p k
     with (govActionPriority (GovActionTypeOf gaSt₀))
@@ -270,10 +321,15 @@ module SetoidProperties (tx : Tx) (Γ : LEnv) (s : LState) where
         ≈˘⟨ fromList-∪-singleton ⟩
       fromList (dpMap ((mkAction p k) ∷ g ∷ gSt))
         ∎
-
+```
+-->
+```agda
   connex-lemma : ∀ gSt p ps {k}
     → fromList (dpMap (updateGovStates (map inj₂ ps) k gSt)) ∪ ❴ GovActionDeposit (txId , k + length ps) ❵
         ≡ᵉ fromList (dpMap (updateGovStates (map inj₂ ps) (suc k) (propUpdate gSt p k)))
+```
+<!--
+```agda
   connex-lemma gSt p [] {k} = begin
       fromList (dpMap gSt) ∪ ❴ GovActionDeposit (txId , k + 0) ❵
         ≡⟨ cong (λ x → fromList (dpMap gSt) ∪ ❴ GovActionDeposit (txId , x) ❵) (+-identityʳ k) ⟩
@@ -298,11 +354,16 @@ module SetoidProperties (tx : Tx) (Γ : LEnv) (s : LState) where
         ≈⟨ connex-lemma (propUpdate gSt p k) p' ps ⟩
     fromList (dpMap (updateGovStates (map inj₂ (p' ∷ ps)) (suc k) (propUpdate gSt p k)))
         ∎
-
+```
+-->
+```agda
   utxo-govst-connex : ∀ txp {utxoDs gSt gad}
     → filterˢ isGADeposit (dom (utxoDs)) ≡ᵉ fromList (dpMap gSt)
     → filterˢ isGADeposit (dom (updateProposalDeposits txp txId gad utxoDs))
       ≡ᵉ fromList (dpMap (updateGovStates (map inj₂ txp) 0 gSt))
+```
+<!--
+```agda
   utxo-govst-connex [] x = x
   utxo-govst-connex (p ∷ ps) {utxoDs} {gSt} {gad} x = begin
     filterˢ isGADeposit (dom (updateProposalDeposits (p ∷ ps) txId gad utxoDs))
@@ -324,11 +385,15 @@ module SetoidProperties (tx : Tx) (Γ : LEnv) (s : LState) where
   ⟦0:<_⟧ : ℕ → List ℕ
   ⟦0:< 0     ⟧ = []
   ⟦0:< suc n ⟧ = ⟦0:< n ⟧ ++ [ n ]
-
+```
+-->
+```agda
   connex-lemma-rep : ∀ k govSt ps →
     fromList (dpMap (updateGovStates (map inj₂ ps) k govSt))
-    ≡ᵉ
-    fromList (dpMap govSt) ∪ fromList (map (λ i → GovActionDeposit (txId , k + i)) ⟦0:< length ps ⟧)
+    ≡ᵉ fromList (dpMap govSt) ∪ fromList (map (λ i → GovActionDeposit (txId , k + i)) ⟦0:< length ps ⟧)
+```
+<!--
+```agda
   connex-lemma-rep k govSt [] = begin
     fromList (dpMap govSt)
       ≈˘⟨ ∪-identityʳ (fromList (dpMap govSt)) ⟩
@@ -355,12 +420,16 @@ module SetoidProperties (tx : Tx) (Γ : LEnv) (s : LState) where
     fromList (dpMap govSt) ∪ fromList (map (λ i → GovActionDeposit (txId , k + i)) (⟦0:< length ps ⟧ ++ [ length ps ]))
       ≡⟨⟩
     fromList (dpMap govSt) ∪ fromList (map (λ i → GovActionDeposit (txId , k + i)) ⟦0:< length (p ∷ ps) ⟧) ∎
-
+```
+-->
+```agda
   -- Removing orphan DRep votes does not modify the set of GAs in GovState
   |ᵒ-GAs-pres : ∀ k govSt certState →
     fromList (dpMap (updateGovStates (txgov txb) k (rmOrphanDRepVotes certState govSt)))
-    ≡ᵉ
-    fromList (dpMap (updateGovStates (txgov txb) k govSt))
+    ≡ᵉ fromList (dpMap (updateGovStates (txgov txb) k govSt))
+```
+<!--
+```agda
   |ᵒ-GAs-pres k govSt certState = begin
     fromList (dpMap (updateGovStates (txgov txb) k (rmOrphanDRepVotes certState govSt)))
       ≈⟨ props-dpMap-votes-invar txGovVotes txGovProposals {k} {rmOrphanDRepVotes certState govSt} ⟩
@@ -374,3 +443,4 @@ module SetoidProperties (tx : Tx) (Γ : LEnv) (s : LState) where
       ≈˘⟨ props-dpMap-votes-invar txGovVotes txGovProposals {k} {govSt} ⟩
     fromList (dpMap (updateGovStates (txgov txb) k govSt)) ∎
 ```
+-->
