@@ -38,13 +38,13 @@ private variable
 
 rdptr : (Tx ℓ) → ScriptPurpose → Maybe (RedeemerPtr ℓ)
 rdptr tx = λ where
-  (Cert h)              → map (Cert    ,_) $ indexOfDCert    h txCerts
+  (Cert h)              → map (Cert    ,_) $ indexOfDCert          h txCerts
   (Rwrd h)              → map (Reward  ,_) $ indexOfRewardAddress  h txWithdrawals
-  (Mint h)              → map (Mint    ,_) $ indexOfPolicyId h (policies mint)
-  (Spend h)             → map (Spend   ,_) $ indexOfTxIn     h txIns
-  (Vote h)              → map (Vote    ,_) $ indexOfVote     h (map GovVote.voter txGovVotes)
-  (Propose h)           → map (Propose ,_) $ indexOfProposal h txGovProposals
-  (Guard h)             → map (Guard   ,_) $ indexOfGuard    h (getTxScripts tx)
+  (Mint h)              → map (Mint    ,_) $ indexOfPolicyId       h (policies mint)
+  (Spend h)             → map (Spend   ,_) $ indexOfTxIn           h txIns
+  (Vote h)              → map (Vote    ,_) $ indexOfVote           h (map GovVote.voter txGovVotes)
+  (Propose h)           → map (Propose ,_) $ indexOfProposal       h txGovProposals
+  (Guard h)             → map (Guard   ,_) $ indexOfGuard          h (getTxScripts tx)
  where open TxBody (TxBodyOf tx)
 -- getSubTxScripts : TopLevelTx → ℙ (TxId × ScriptHash)
 

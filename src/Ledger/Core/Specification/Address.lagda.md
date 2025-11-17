@@ -195,9 +195,9 @@ getScriptHash (inj₂ _) (SHisScript sh) = sh
 
 instance abstract
   unquoteDecl DecEq-BaseAddr DecEq-BootstrapAddr DecEq-RewardAddress = derive-DecEq
-    ( (quote BaseAddr      , DecEq-BaseAddr)
-    ∷ (quote BootstrapAddr , DecEq-BootstrapAddr)
-    ∷ (quote RewardAddress       , DecEq-RewardAddress)
+    ( (quote BaseAddr       , DecEq-BaseAddr)
+    ∷ (quote BootstrapAddr  , DecEq-BootstrapAddr)
+    ∷ (quote RewardAddress  , DecEq-RewardAddress)
     ∷ [] )
 
 module _ ⦃ _ : Show Network  ⦄ ⦃ _ : Show KeyHash  ⦄ ⦃ _ : Show ScriptHash  ⦄ where
