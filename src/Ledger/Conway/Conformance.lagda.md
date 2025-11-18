@@ -8,30 +8,33 @@ In the Conway specification, deposits are stored in `LState.utxoSt.deposits`.
 The conformance model, on the other hand, separates deposits in three disjoint
 maps:
 
-* `LState.utxoSt.deposits`
-* `LState.certState.dState.deposits`
-* `LState.certState.gState.deposits`
+* `LState.utxoSt.deposits`{.AgdaField}
+* `LState.certState.dState.deposits`{.AgdaField}
+* `LState.certState.gState.deposits`{.AgdaField}
 
 ## Motivation
 
 The conformance model follows the way in which the Haskell implementation stores
 the deposits, which makes possible to compare the behaviors of the conformance
-model and the implementation of the `UTXOS` rule.
+model and the implementation of the `UTXOS`{.AgdaDatatype} rule.
 
 The UTXOS rule transforms `UTxOState`s. While the specification updates the
 deposits in this rule, the implementation cannot do so because its input state
 does not contain the deposits in `DState` and `GState`.
 
-Other rules which use UTXOS are in a similar predicament, namely `UTXO` and
-`UTXOW`. The `LEDGER` rule, which uses `UTXOW`, is the first rule where the
-implementation has all the state necessary to reconstruct the full deposits
-that the specification needs.
+Other rules which use `UTXOS`{.AgdaDatatype} are in a similar predicament,
+namely `UTXO`{.AgdaDatatype} and `UTXOW`{.AgdaDatatype}. The
+`LEDGER`{.AgdaDatatype} rule, which uses `UTXOW`{.AgdaDatatype}, is the first
+rule where the implementation has all the state necessary to reconstruct the
+full deposits that the specification needs.
 
 ## Guarantees
 
 Since we still want to check that the implementation behaves as the
 specification, there is a proof of the equivalence between the conformance model
-and the specification.
+and the specification:
+
+* `Ledger.Conway.Conformance.Equivalence.bisimilarityProof`{.AgdaBound}
 
 ## Alternatives
 
@@ -45,9 +48,10 @@ While we could decide the tradeoff for a particular implementation, it would be
 difficult to adjust the specification when multiple implementations need to be
 accommodated.
 
-Yet another option could have been to skip testing specifically for the `UTXOS`
-rule. This was a difficulty for testing, since spotting differences in a rule is
-harder when it is combined with other rules like the `LEDGER` rule does.
+Yet another option could have been to skip testing specifically for the
+`UTXOS`{.AgdaDatatype} rule. This was a difficulty for testing, since spotting
+differences in a rule is harder when it is combined with other rules like the
+`LEDGER`{.AgdaDatatype} rule does.
 
 ```agda
 {-# OPTIONS --safe #-}
