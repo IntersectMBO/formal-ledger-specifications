@@ -15,7 +15,7 @@ maps:
 ## Motivation
 
 The conformance model follows the way in which the Haskell implementation stores
-the deposits, which makes possible to compare the behaviors of the conformance
+the deposits, which makes it possible to compare the behaviors of the conformance
 model and the implementation of the `UTXOS`{.AgdaDatatype} rule.
 
 The UTXOS rule transforms `UTxOState`s. While the specification updates the
@@ -42,7 +42,7 @@ Rather than providing a conformance model, we could have changed the Conway
 specification to match the implementation way of storing deposits. However,
 there are trade offs to consider. Putting the deposits together in one place
 makes some proofs simpler, while splitting them as in the implementation makes
-more convenient to write the update functions for the separated pieces.
+it more convenient to write the update functions for the separated pieces.
 
 While we could decide the tradeoff for a particular implementation, it would be
 difficult to adjust the specification when multiple implementations need to be
