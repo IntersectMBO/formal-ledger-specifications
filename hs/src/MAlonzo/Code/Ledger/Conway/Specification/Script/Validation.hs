@@ -708,7 +708,7 @@ d_rdptr_2430 v0 v1 v2 v3
                      MAlonzo.Code.Ledger.Conway.Specification.Transaction.C_Rewrd_16)
                   (coe v5))
              (coe
-                MAlonzo.Code.Ledger.Conway.Specification.Abstract.d_indexOfRwdAddr_2376
+                MAlonzo.Code.Ledger.Conway.Specification.Abstract.d_indexOfRewardAddress_2376
                 (MAlonzo.Code.Ledger.Conway.Specification.Abstract.d_indexOfImp_2406
                    (coe v1))
                 v4

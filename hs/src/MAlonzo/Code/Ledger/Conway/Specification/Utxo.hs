@@ -138,13 +138,13 @@ d_DecEq'45'BootstrapAddr_94 v0
          (coe
             MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1316
             (coe v0)))
--- _.DecEq-RwdAddr
-d_DecEq'45'RwdAddr_128 ::
+-- _.DecEq-RewardAddress
+d_DecEq'45'RewardAddress_128 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
-d_DecEq'45'RwdAddr_128 v0
+d_DecEq'45'RewardAddress_128 v0
   = coe
-      MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'RwdAddr_274
+      MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'RewardAddress_274
       (coe
          MAlonzo.Code.Ledger.Core.Specification.Epoch.d_DecEq'45'Netw_320
          (coe
@@ -169,16 +169,17 @@ d_ExUnits_170 ::
 d_ExUnits_170 = erased
 -- _.GovProposal
 d_GovProposal_194 a0 = ()
--- _.HasNetworkId-RwdAddr
-d_HasNetworkId'45'RwdAddr_296 ::
+-- _.HasNetworkId-RewardAddress
+d_HasNetworkId'45'RewardAddress_296 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   MAlonzo.Code.Ledger.Core.Specification.Address.T_HasNetworkId_122
-d_HasNetworkId'45'RwdAddr_296 ~v0 = du_HasNetworkId'45'RwdAddr_296
-du_HasNetworkId'45'RwdAddr_296 ::
+d_HasNetworkId'45'RewardAddress_296 ~v0
+  = du_HasNetworkId'45'RewardAddress_296
+du_HasNetworkId'45'RewardAddress_296 ::
   MAlonzo.Code.Ledger.Core.Specification.Address.T_HasNetworkId_122
-du_HasNetworkId'45'RwdAddr_296
+du_HasNetworkId'45'RewardAddress_296
   = coe
-      MAlonzo.Code.Ledger.Core.Specification.Address.du_HasNetworkId'45'RwdAddr_162
+      MAlonzo.Code.Ledger.Core.Specification.Address.du_HasNetworkId'45'RewardAddress_162
 -- _.HasPParams
 d_HasPParams_298 a0 a1 a2 = ()
 -- _.HasUTxO
@@ -338,7 +339,7 @@ d_prevAction_1102 v0
 -- _.GovActions.GovProposal.returnAddr
 d_returnAddr_1104 ::
   MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovProposal_976 ->
-  MAlonzo.Code.Ledger.Core.Specification.Address.T_RwdAddr_104
+  MAlonzo.Code.Ledger.Core.Specification.Address.T_RewardAddress_104
 d_returnAddr_1104 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_returnAddr_998
@@ -2925,7 +2926,7 @@ du_consumed_3186 v0 v1 v2 v3
          (coe
             MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.du_indexedSum'7515'''_1446
             (coe
-               MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'RwdAddr_274
+               MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'RewardAddress_274
                (coe
                   MAlonzo.Code.Ledger.Core.Specification.Epoch.d_DecEq'45'Netw_320
                   (coe

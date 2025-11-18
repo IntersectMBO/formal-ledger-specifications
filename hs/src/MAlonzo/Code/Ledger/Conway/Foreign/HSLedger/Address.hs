@@ -33,7 +33,7 @@ data BaseAddr = BaseAddr {baseNet :: Integer, basePay :: MAlonzo.Code.Ledger.Con
  deriving (Show, Eq, Generic)
 data BootstrapAddr = BootstrapAddr {bootNet :: Integer, bootPay :: MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.Credential, bootAttrsSize :: Integer}
  deriving (Show, Eq, Generic)
-data RwdAddr = RwdAddr {rwdNet :: Integer, rwdStake :: MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.Credential}
+data RewardAddress = RewardAddress {rwdNet :: Integer, rwdStake :: MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.Credential}
  deriving (Show, Eq, Generic)
 type Addr = (Either MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.BaseAddr MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.BootstrapAddr)
 -- Ledger.Conway.Foreign.HSLedger.Address.HsTy-HSVKey
@@ -266,14 +266,14 @@ d_Conv'45'BootstrapAddr_24
                         v2)
                      (coe v3)
               _ -> MAlonzo.RTE.mazUnreachableError))
--- Ledger.Conway.Foreign.HSLedger.Address.HsTy-RwdAddr
-d_HsTy'45'RwdAddr_26 ::
+-- Ledger.Conway.Foreign.HSLedger.Address.HsTy-RewardAddress
+d_HsTy'45'RewardAddress_26 ::
   MAlonzo.Code.Foreign.HaskellTypes.T_HasHsType_14
-d_HsTy'45'RwdAddr_26 = erased
--- Ledger.Conway.Foreign.HSLedger.Address.Conv-RwdAddr
-d_Conv'45'RwdAddr_28 ::
+d_HsTy'45'RewardAddress_26 = erased
+-- Ledger.Conway.Foreign.HSLedger.Address.Conv-RewardAddress
+d_Conv'45'RewardAddress_28 ::
   MAlonzo.Code.Foreign.Convertible.T_Convertible_8
-d_Conv'45'RwdAddr_28
+d_Conv'45'RewardAddress_28
   = coe
       MAlonzo.Code.Foreign.Convertible.C_constructor_22
       (coe
@@ -281,7 +281,7 @@ d_Conv'45'RwdAddr_28
             case coe v0 of
               MAlonzo.Code.Ledger.Core.Specification.Address.C_constructor_114 v1 v2
                 -> coe
-                     C_RwdAddr_4501 (coe v1)
+                     C_RewardAddress_4501 (coe v1)
                      (coe
                         MAlonzo.Code.Foreign.Convertible.d_to_18
                         (coe
@@ -311,7 +311,7 @@ d_Conv'45'RwdAddr_28
       (coe
          (\ v0 ->
             case coe v0 of
-              C_RwdAddr_4501 v1 v2
+              C_RewardAddress_4501 v1 v2
                 -> coe
                      MAlonzo.Code.Ledger.Core.Specification.Address.C_constructor_114
                      (coe v1)
@@ -380,13 +380,14 @@ cover_BootstrapAddr_3129 :: BootstrapAddr -> ()
 cover_BootstrapAddr_3129 x
   = case x of
       BootstrapAddr _ _ _ -> ()
--- Ledger.Conway.Foreign.HSLedger.Address.RwdAddr
-d_RwdAddr_4499 = ()
-type T_RwdAddr_4499 = RwdAddr
-pattern C_RwdAddr_4501 a0 a1 = RwdAddr a0 a1
-check_RwdAddr_4501 :: Integer -> T_Credential_589 -> T_RwdAddr_4499
-check_RwdAddr_4501 = RwdAddr
-cover_RwdAddr_4499 :: RwdAddr -> ()
-cover_RwdAddr_4499 x
+-- Ledger.Conway.Foreign.HSLedger.Address.RewardAddress
+d_RewardAddress_4499 = ()
+type T_RewardAddress_4499 = RewardAddress
+pattern C_RewardAddress_4501 a0 a1 = RewardAddress a0 a1
+check_RewardAddress_4501 ::
+  Integer -> T_Credential_589 -> T_RewardAddress_4499
+check_RewardAddress_4501 = RewardAddress
+cover_RewardAddress_4499 :: RewardAddress -> ()
+cover_RewardAddress_4499 x
   = case x of
-      RwdAddr _ _ -> ()
+      RewardAddress _ _ -> ()

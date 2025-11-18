@@ -114,13 +114,13 @@ d_DecEq'45'Credential_98 v0
          (coe
             MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1316
             (coe v0)))
--- _.DecEq-RwdAddr
-d_DecEq'45'RwdAddr_128 ::
+-- _.DecEq-RewardAddress
+d_DecEq'45'RewardAddress_128 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
-d_DecEq'45'RwdAddr_128 v0
+d_DecEq'45'RewardAddress_128 v0
   = coe
-      MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'RwdAddr_274
+      MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'RewardAddress_274
       (coe
          MAlonzo.Code.Ledger.Core.Specification.Epoch.d_DecEq'45'Netw_320
          (coe
@@ -200,8 +200,8 @@ d_PParamsOf_424 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.PParams.d_PParamsOf_430
       (coe v0)
--- _.RwdAddr
-d_RwdAddr_464 a0 = ()
+-- _.RewardAddress
+d_RewardAddress_464 a0 = ()
 -- _.TxOut
 d_TxOut_576 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
@@ -262,7 +262,7 @@ d_prevAction_886 v0
 -- _.GovActionState.returnAddr
 d_returnAddr_888 ::
   MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovActionState_1004 ->
-  MAlonzo.Code.Ledger.Core.Specification.Address.T_RwdAddr_104
+  MAlonzo.Code.Ledger.Core.Specification.Address.T_RewardAddress_104
 d_returnAddr_888 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_returnAddr_1018
@@ -574,16 +574,16 @@ d_treasuryCut_1392 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.PParams.d_treasuryCut_372
       (coe v0)
--- _.RwdAddr.net
+-- _.RewardAddress.net
 d_net_1590 ::
-  MAlonzo.Code.Ledger.Core.Specification.Address.T_RwdAddr_104 ->
+  MAlonzo.Code.Ledger.Core.Specification.Address.T_RewardAddress_104 ->
   AgdaAny
 d_net_1590 v0
   = coe
       MAlonzo.Code.Ledger.Core.Specification.Address.d_net_110 (coe v0)
--- _.RwdAddr.stake
+-- _.RewardAddress.stake
 d_stake_1592 ::
-  MAlonzo.Code.Ledger.Core.Specification.Address.T_RwdAddr_104 ->
+  MAlonzo.Code.Ledger.Core.Specification.Address.T_RewardAddress_104 ->
   MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20
 d_stake_1592 v0
   = coe
@@ -2439,18 +2439,18 @@ du_HasCast'45'NewEpochState_3306
                                           (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))))
                               (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))))))
          (coe C_constructor_3242))
--- Ledger.Conway.Specification.Epoch.toRwdAddr
-d_toRwdAddr_3308 ::
+-- Ledger.Conway.Specification.Epoch.toRewardAddress
+d_toRewardAddress_3308 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_2388 ->
   MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20 ->
-  MAlonzo.Code.Ledger.Core.Specification.Address.T_RwdAddr_104
-d_toRwdAddr_3308 v0 ~v1 v2 = du_toRwdAddr_3308 v0 v2
-du_toRwdAddr_3308 ::
+  MAlonzo.Code.Ledger.Core.Specification.Address.T_RewardAddress_104
+d_toRewardAddress_3308 v0 ~v1 v2 = du_toRewardAddress_3308 v0 v2
+du_toRewardAddress_3308 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20 ->
-  MAlonzo.Code.Ledger.Core.Specification.Address.T_RwdAddr_104
-du_toRwdAddr_3308 v0 v1
+  MAlonzo.Code.Ledger.Core.Specification.Address.T_RewardAddress_104
+du_toRewardAddress_3308 v0 v1
   = coe
       MAlonzo.Code.Ledger.Core.Specification.Address.C_constructor_114
       (coe
@@ -4726,7 +4726,7 @@ du_stakeFromGADeposits_3516 v0 v1 v2
                (coe v0))
             MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
          (coe
-            MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'RwdAddr_274
+            MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'RewardAddress_274
             (coe
                MAlonzo.Code.Ledger.Core.Specification.Epoch.d_DecEq'45'Netw_320
                (coe
@@ -7189,7 +7189,7 @@ du_govActionReturns_3836 v0 v1
          (coe
             MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3476))
       (coe
-         MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'RwdAddr_274
+         MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'RewardAddress_274
          (coe
             MAlonzo.Code.Ledger.Core.Specification.Epoch.d_DecEq'45'Netw_320
             (coe
@@ -7247,7 +7247,7 @@ du_payout_3844 v0 v1 v2
          (coe
             MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3476))
       (coe
-         MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'RwdAddr_274
+         MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'RewardAddress_274
          (coe
             MAlonzo.Code.Ledger.Core.Specification.Epoch.d_DecEq'45'Netw_320
             (coe
@@ -7303,7 +7303,7 @@ du_refunds_3846 v0 v1 v2 v3
                  MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8
                  erased
                  (coe
-                    MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'RwdAddr_274
+                    MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'RewardAddress_274
                     (coe
                        MAlonzo.Code.Ledger.Core.Specification.Epoch.d_DecEq'45'Netw_320
                        (coe
@@ -7332,7 +7332,7 @@ du_refunds_3846 v0 v1 v2 v3
                     (coe
                        MAlonzo.Code.Axiom.Set.Map.du__'738'_570
                        (coe du_payout_3844 (coe v0) (coe v1) (coe v3)))))))
-      (coe du_toRwdAddr_3308 (coe v0))
+      (coe du_toRewardAddress_3308 (coe v0))
       (coe
          MAlonzo.Code.Class.IsSet.du_dom_586
          (coe
@@ -7538,7 +7538,7 @@ du_unclaimed_3850 v0 v1 v2 v3
       (coe
          MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.du_indexedSum'7515'''_1446
          (coe
-            MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'RwdAddr_274
+            MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'RewardAddress_274
             (coe
                MAlonzo.Code.Ledger.Core.Specification.Epoch.d_DecEq'45'Netw_320
                (coe
@@ -7608,7 +7608,7 @@ du_totWithdrawals_3852 v0 v1
   = coe
       MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.du_indexedSum'7515'''_1446
       (coe
-         MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'RwdAddr_274
+         MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'RewardAddress_274
          (coe
             MAlonzo.Code.Ledger.Core.Specification.Epoch.d_DecEq'45'Netw_320
             (coe

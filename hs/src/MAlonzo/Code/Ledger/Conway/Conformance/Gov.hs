@@ -101,7 +101,7 @@ d_prevAction_1100 v0
 -- _.GovActions.GovProposal.returnAddr
 d_returnAddr_1102 ::
   MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovProposal_976 ->
-  MAlonzo.Code.Ledger.Core.Specification.Address.T_RwdAddr_104
+  MAlonzo.Code.Ledger.Core.Specification.Address.T_RewardAddress_104
 d_returnAddr_1102 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_returnAddr_998

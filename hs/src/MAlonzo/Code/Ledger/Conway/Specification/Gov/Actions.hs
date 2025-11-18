@@ -57,23 +57,23 @@ d_THash_178 ::
   MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.T_GovStructure_10 ->
   ()
 d_THash_178 = erased
--- _.RwdAddr
-d_RwdAddr_246 a0 a1 a2 a3 = ()
+-- _.RewardAddress
+d_RewardAddress_246 a0 a1 a2 a3 = ()
 -- _.ScriptHash
 d_ScriptHash_262 ::
   MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.T_GovStructure_10 ->
   ()
 d_ScriptHash_262 = erased
--- _.RwdAddr.net
+-- _.RewardAddress.net
 d_net_760 ::
-  MAlonzo.Code.Ledger.Core.Specification.Address.T_RwdAddr_104 ->
+  MAlonzo.Code.Ledger.Core.Specification.Address.T_RewardAddress_104 ->
   AgdaAny
 d_net_760 v0
   = coe
       MAlonzo.Code.Ledger.Core.Specification.Address.d_net_110 (coe v0)
--- _.RwdAddr.stake
+-- _.RewardAddress.stake
 d_stake_762 ::
-  MAlonzo.Code.Ledger.Core.Specification.Address.T_RwdAddr_104 ->
+  MAlonzo.Code.Ledger.Core.Specification.Address.T_RewardAddress_104 ->
   MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20
 d_stake_762 v0
   = coe
@@ -360,7 +360,7 @@ d_GovProposal_976 a0 = ()
 data T_GovProposal_976
   = C_constructor_1002 T_GovAction_828 AgdaAny (Maybe AgdaAny)
                        Integer
-                       MAlonzo.Code.Ledger.Core.Specification.Address.T_RwdAddr_104
+                       MAlonzo.Code.Ledger.Core.Specification.Address.T_RewardAddress_104
                        T_Anchor_884
 -- Ledger.Conway.Specification.Gov.Actions.GovProposal.action
 d_action_990 :: T_GovProposal_976 -> T_GovAction_828
@@ -389,7 +389,7 @@ d_deposit_996 v0
 -- Ledger.Conway.Specification.Gov.Actions.GovProposal.returnAddr
 d_returnAddr_998 ::
   T_GovProposal_976 ->
-  MAlonzo.Code.Ledger.Core.Specification.Address.T_RwdAddr_104
+  MAlonzo.Code.Ledger.Core.Specification.Address.T_RewardAddress_104
 d_returnAddr_998 v0
   = case coe v0 of
       C_constructor_1002 v1 v2 v3 v4 v5 v6 -> coe v5
@@ -404,7 +404,7 @@ d_anchor_1000 v0
 d_GovActionState_1004 a0 = ()
 data T_GovActionState_1004
   = C_constructor_1026 T_GovVotes_916
-                       MAlonzo.Code.Ledger.Core.Specification.Address.T_RwdAddr_104
+                       MAlonzo.Code.Ledger.Core.Specification.Address.T_RewardAddress_104
                        AgdaAny T_GovAction_828 AgdaAny
 -- Ledger.Conway.Specification.Gov.Actions.GovActionState.votes
 d_votes_1016 :: T_GovActionState_1004 -> T_GovVotes_916
@@ -415,7 +415,7 @@ d_votes_1016 v0
 -- Ledger.Conway.Specification.Gov.Actions.GovActionState.returnAddr
 d_returnAddr_1018 ::
   T_GovActionState_1004 ->
-  MAlonzo.Code.Ledger.Core.Specification.Address.T_RwdAddr_104
+  MAlonzo.Code.Ledger.Core.Specification.Address.T_RewardAddress_104
 d_returnAddr_1018 v0
   = case coe v0 of
       C_constructor_1026 v1 v2 v3 v4 v5 -> coe v2

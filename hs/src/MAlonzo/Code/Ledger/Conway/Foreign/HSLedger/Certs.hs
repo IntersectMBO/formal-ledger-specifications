@@ -65,7 +65,7 @@ data DelegEnv = MkDelegEnv {dePparams :: MAlonzo.Code.Ledger.Conway.Foreign.HSLe
  deriving (Show, Eq, Generic)
 data PState = MkPState {psPools :: (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.HSMap Integer MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs.StakePoolParams), psFPools :: (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.HSMap Integer MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs.StakePoolParams), psRetiring :: (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.HSMap Integer Integer)}
  deriving (Show, Eq, Generic)
-data CertEnv = MkCertEnv {ceEpoch :: Integer, cePp :: MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.PParams.PParams, ceVotes :: [MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.Core.GovVote], ceWdrls :: (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.HSMap MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.RwdAddr Integer), ceColdCreds :: (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.HSSet MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.Credential)}
+data CertEnv = MkCertEnv {ceEpoch :: Integer, cePp :: MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.PParams.PParams, ceVotes :: [MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.Core.GovVote], ceWdrls :: (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.HSMap MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.RewardAddress Integer), ceColdCreds :: (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.HSSet MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.Credential)}
  deriving (Show, Eq, Generic)
 data DState = MkDState {dsVoteDelegs :: (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.HSMap MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.Credential MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.Core.VDeleg), dsStakeDelegs :: (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.HSMap MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.Credential Integer), dsRewards :: (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.HSMap MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.Credential Integer), dsDeposits :: (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.HSMap MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs.DepositPurpose Integer)}
  deriving (Show, Eq, Generic)
@@ -3954,7 +3954,7 @@ d_Conv'45'CertEnv''_110
                               (coe
                                  MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
                                  (coe
-                                    MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.d_Conv'45'RwdAddr_28)
+                                    MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.d_Conv'45'RewardAddress_28)
                                  (coe
                                     MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.d_iConvNat_12)))
                            (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe v4))))
@@ -5845,7 +5845,7 @@ d_Conv'45'CertEnv''_110
                                          (coe v6) in
                                coe
                                  (coe
-                                    MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'RwdAddr_274
+                                    MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'RewardAddress_274
                                     (coe
                                        MAlonzo.Code.Ledger.Core.Specification.Epoch.d_DecEq'45'Netw_320
                                        (coe
@@ -5864,7 +5864,7 @@ d_Conv'45'CertEnv''_110
                                           MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1316
                                           (coe v7))))))
                            (coe
-                              MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.d_Conv'45'RwdAddr_28)
+                              MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.d_Conv'45'RewardAddress_28)
                            (coe
                               MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.d_iConvNat_12))
                         (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_24
@@ -7311,7 +7311,7 @@ check_MkCertEnv_9057 ::
     ()
     MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.Core.T_GovVote_5373 ->
   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.T_HSMap_16
-    MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.T_RwdAddr_4499
+    MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.T_RewardAddress_4499
     Integer ->
   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.T_HSSet_30
     MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.T_Credential_589 ->

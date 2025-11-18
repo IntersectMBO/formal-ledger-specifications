@@ -62,16 +62,17 @@ du_Dec'45'isVKey_82 ::
 du_Dec'45'isVKey_82
   = coe
       MAlonzo.Code.Ledger.Core.Specification.Address.du_Dec'45'isVKey_224
--- _.HasNetworkId-RwdAddr
-d_HasNetworkId'45'RwdAddr_296 ::
+-- _.HasNetworkId-RewardAddress
+d_HasNetworkId'45'RewardAddress_296 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   MAlonzo.Code.Ledger.Core.Specification.Address.T_HasNetworkId_122
-d_HasNetworkId'45'RwdAddr_296 ~v0 = du_HasNetworkId'45'RwdAddr_296
-du_HasNetworkId'45'RwdAddr_296 ::
+d_HasNetworkId'45'RewardAddress_296 ~v0
+  = du_HasNetworkId'45'RewardAddress_296
+du_HasNetworkId'45'RewardAddress_296 ::
   MAlonzo.Code.Ledger.Core.Specification.Address.T_HasNetworkId_122
-du_HasNetworkId'45'RwdAddr_296
+du_HasNetworkId'45'RewardAddress_296
   = coe
-      MAlonzo.Code.Ledger.Core.Specification.Address.du_HasNetworkId'45'RwdAddr_162
+      MAlonzo.Code.Ledger.Core.Specification.Address.du_HasNetworkId'45'RewardAddress_162
 -- _.NetworkId
 d_NetworkId_392 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->

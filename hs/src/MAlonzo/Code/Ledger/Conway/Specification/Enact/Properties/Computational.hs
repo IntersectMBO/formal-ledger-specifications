@@ -550,7 +550,7 @@ d_Computational'45'ENACT_1216 v0
                                  (coe
                                     MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.du_indexedSum'7515'''_1446
                                     (coe
-                                       MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'RwdAddr_274
+                                       MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'RewardAddress_274
                                        (coe
                                           MAlonzo.Code.Ledger.Core.Specification.Epoch.d_DecEq'45'Netw_320
                                           (coe
@@ -584,7 +584,7 @@ d_Computational'45'ENACT_1216 v0
                                           (coe
                                              MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3476))
                                        (coe
-                                          MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'RwdAddr_274
+                                          MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'RewardAddress_274
                                           (coe
                                              MAlonzo.Code.Ledger.Core.Specification.Epoch.d_DecEq'45'Netw_320
                                              (coe
@@ -657,7 +657,7 @@ d_Computational'45'ENACT_1216 v0
                                                                               (coe v0)) in
                                                                  coe
                                                                    (coe
-                                                                      MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'RwdAddr_274
+                                                                      MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'RewardAddress_274
                                                                       (coe v10) (coe v11)
                                                                       (coe v12)))))
                                                           (MAlonzo.Code.Ledger.Conway.Specification.Enact.d_withdrawals_1130

@@ -37,8 +37,8 @@ d_THash_374 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   ()
 d_THash_374 = erased
--- Ledger.Conway.Specification.Script.ScriptPurpose._.RwdAddr
-d_RwdAddr_466 a0 = ()
+-- Ledger.Conway.Specification.Script.ScriptPurpose._.RewardAddress
+d_RewardAddress_466 a0 = ()
 -- Ledger.Conway.Specification.Script.ScriptPurpose._.ScriptHash
 d_ScriptHash_484 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
@@ -121,7 +121,7 @@ d_prevAction_1104 v0
 -- Ledger.Conway.Specification.Script.ScriptPurpose._.GovActions.GovProposal.returnAddr
 d_returnAddr_1106 ::
   MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovProposal_976 ->
-  MAlonzo.Code.Ledger.Core.Specification.Address.T_RwdAddr_104
+  MAlonzo.Code.Ledger.Core.Specification.Address.T_RewardAddress_104
 d_returnAddr_1106 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_returnAddr_998
@@ -142,16 +142,16 @@ d_gvRole_1130 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_gvRole_878
       (coe v0)
--- Ledger.Conway.Specification.Script.ScriptPurpose._.RwdAddr.net
+-- Ledger.Conway.Specification.Script.ScriptPurpose._.RewardAddress.net
 d_net_1592 ::
-  MAlonzo.Code.Ledger.Core.Specification.Address.T_RwdAddr_104 ->
+  MAlonzo.Code.Ledger.Core.Specification.Address.T_RewardAddress_104 ->
   AgdaAny
 d_net_1592 v0
   = coe
       MAlonzo.Code.Ledger.Core.Specification.Address.d_net_110 (coe v0)
--- Ledger.Conway.Specification.Script.ScriptPurpose._.RwdAddr.stake
+-- Ledger.Conway.Specification.Script.ScriptPurpose._.RewardAddress.stake
 d_stake_1594 ::
-  MAlonzo.Code.Ledger.Core.Specification.Address.T_RwdAddr_104 ->
+  MAlonzo.Code.Ledger.Core.Specification.Address.T_RewardAddress_104 ->
   MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20
 d_stake_1594 v0
   = coe
@@ -162,7 +162,7 @@ d_DCert_1932 a0 = ()
 d_ScriptPurpose_2306 a0 = ()
 data T_ScriptPurpose_2306
   = C_Cert_2308 MAlonzo.Code.Ledger.Conway.Specification.Certs.T_DCert_1282 |
-    C_Rwrd_2310 MAlonzo.Code.Ledger.Core.Specification.Address.T_RwdAddr_104 |
+    C_Rwrd_2310 MAlonzo.Code.Ledger.Core.Specification.Address.T_RewardAddress_104 |
     C_Mint_2312 AgdaAny |
     C_Spend_2314 MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 |
     C_Vote_2316 MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovVoter_872 |
