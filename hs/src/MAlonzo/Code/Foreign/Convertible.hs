@@ -234,9 +234,9 @@ du_Convertible'45'FinSet_104 v0
       (coe
          (\ v1 ->
             coe
-              MAlonzo.Code.Axiom.Set.du_fromList_430
+              MAlonzo.Code.Axiom.Set.du_fromList_456
               (coe
-                 MAlonzo.Code.Axiom.Set.d_th_1480
+                 MAlonzo.Code.Axiom.Set.d_th_1516
                  (coe
                     MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
               (coe
@@ -270,9 +270,9 @@ du_Convertible'45'Map_116 v0 v1 v2
       (coe
          (\ v3 ->
             coe
-              MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_592
+              MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
               (coe
-                 MAlonzo.Code.Axiom.Set.d_th_1480
+                 MAlonzo.Code.Axiom.Set.d_th_1516
                  (coe
                     MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
               (coe v0)

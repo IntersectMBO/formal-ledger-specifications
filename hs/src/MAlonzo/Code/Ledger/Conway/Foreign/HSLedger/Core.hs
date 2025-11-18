@@ -31,7 +31,7 @@ import qualified MAlonzo.Code.Data.Nat.Properties
 import qualified MAlonzo.Code.Data.Nat.Show
 import qualified MAlonzo.Code.Data.Rational.Base
 import qualified MAlonzo.Code.Data.String.Base
-import qualified MAlonzo.Code.Interface.Hashable
+import qualified MAlonzo.Code.Interface.TypeClasses.Hashable
 import qualified MAlonzo.Code.Ledger.Conway.Specification.TokenAlgebra.Base
 import qualified MAlonzo.Code.Ledger.Conway.Specification.TokenAlgebra.Coin
 import qualified MAlonzo.Code.Ledger.Core.Specification.Crypto
@@ -45,10 +45,10 @@ data HSVKey = MkHSVKey
   }
 -- Ledger.Conway.Foreign.HSLedger.Core.Hashable-⊤
 d_Hashable'45''8868'_10 ::
-  MAlonzo.Code.Interface.Hashable.T_Hashable_8
+  MAlonzo.Code.Interface.TypeClasses.Hashable.T_Hashable_10
 d_Hashable'45''8868'_10
   = coe
-      MAlonzo.Code.Interface.Hashable.C_constructor_18
+      MAlonzo.Code.Interface.TypeClasses.Hashable.C_constructor_20
       (coe (\ v0 -> seq (coe v0) (coe (0 :: Integer))))
 -- Ledger.Conway.Foreign.HSLedger.Core.HSVKey
 d_HSVKey_14 = ()
@@ -121,10 +121,10 @@ d_DecEq'45'HSVKey_26
               _ -> MAlonzo.RTE.mazUnreachableError))
 -- Ledger.Conway.Foreign.HSLedger.Core.Hashable-HSVKey
 d_Hashable'45'HSVKey_28 ::
-  MAlonzo.Code.Interface.Hashable.T_Hashable_8
+  MAlonzo.Code.Interface.TypeClasses.Hashable.T_Hashable_10
 d_Hashable'45'HSVKey_28
   = coe
-      MAlonzo.Code.Interface.Hashable.C_constructor_18
+      MAlonzo.Code.Interface.TypeClasses.Hashable.C_constructor_20
       (coe (\ v0 -> d_hvkStoredHash_22 (coe v0)))
 -- Ledger.Conway.Foreign.HSLedger.Core.isHashableSet-HSVKey
 d_isHashableSet'45'HSVKey_32 ::
@@ -140,13 +140,15 @@ d_isHashableSet'45'HSVKey_32
          (coe MAlonzo.Code.Data.Nat.Show.d_show_56))
       d_DecEq'45'HSVKey_26
       (coe
-         MAlonzo.Code.Interface.Hashable.C_constructor_18
+         MAlonzo.Code.Interface.TypeClasses.Hashable.C_constructor_20
          (coe (\ v0 -> d_hvkStoredHash_22 (coe v0))))
 -- Ledger.Conway.Foreign.HSLedger.Core.Hashable-ℕ
-d_Hashable'45'ℕ_34 :: MAlonzo.Code.Interface.Hashable.T_Hashable_8
+d_Hashable'45'ℕ_34 ::
+  MAlonzo.Code.Interface.TypeClasses.Hashable.T_Hashable_10
 d_Hashable'45'ℕ_34
   = coe
-      MAlonzo.Code.Interface.Hashable.C_constructor_18 (coe (\ v0 -> v0))
+      MAlonzo.Code.Interface.TypeClasses.Hashable.C_constructor_20
+      (coe (\ v0 -> v0))
 -- Ledger.Conway.Foreign.HSLedger.Core.isHashableSet-ℕ
 d_isHashableSet'45'ℕ_38 ::
   MAlonzo.Code.Ledger.Core.Specification.Crypto.T_isHashableSet_10
@@ -163,7 +165,7 @@ d_isHashableSet'45'ℕ_38
          MAlonzo.Code.Class.DecEq.Core.C_constructor_32
          (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796))
       (coe
-         MAlonzo.Code.Interface.Hashable.C_constructor_18
+         MAlonzo.Code.Interface.TypeClasses.Hashable.C_constructor_20
          (coe (\ v0 -> v0)))
 -- Ledger.Conway.Foreign.HSLedger.Core.Show-HSVKey
 d_Show'45'HSVKey_40 :: MAlonzo.Code.Class.Show.Core.T_Show_10
@@ -266,7 +268,7 @@ d_Data'688'_80
             MAlonzo.Code.Class.DecEq.Core.C_constructor_32
             (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796))
          (coe
-            MAlonzo.Code.Interface.Hashable.C_constructor_18
+            MAlonzo.Code.Interface.TypeClasses.Hashable.C_constructor_20
             (coe (\ v0 -> v0))))
 -- Ledger.Conway.Foreign.HSLedger.Core.Implementation.toData
 d_toData_84 :: () -> AgdaAny -> Integer

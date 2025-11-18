@@ -22,7 +22,7 @@ import qualified MAlonzo.Code.Agda.Builtin.Sigma
 import qualified MAlonzo.Code.Class.DecEq.Core
 import qualified MAlonzo.Code.Class.Decidable.Core
 import qualified MAlonzo.Code.Class.Show.Core
-import qualified MAlonzo.Code.Interface.Hashable
+import qualified MAlonzo.Code.Interface.TypeClasses.Hashable
 
 -- Ledger.Core.Specification.Crypto.isHashableSet
 d_isHashableSet_10 a0 = ()
@@ -30,7 +30,7 @@ data T_isHashableSet_10
   = C_mkIsHashableSet_34 MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
                          MAlonzo.Code.Class.Show.Core.T_Show_10
                          MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
-                         MAlonzo.Code.Interface.Hashable.T_Hashable_8
+                         MAlonzo.Code.Interface.TypeClasses.Hashable.T_Hashable_10
 -- Ledger.Core.Specification.Crypto.isHashableSet.THash
 d_THash_24 :: T_isHashableSet_10 -> ()
 d_THash_24 = erased
@@ -57,7 +57,8 @@ d_DecEq'45'T_30 v0
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Core.Specification.Crypto.isHashableSet.T-Hashable
 d_T'45'Hashable_32 ::
-  T_isHashableSet_10 -> MAlonzo.Code.Interface.Hashable.T_Hashable_8
+  T_isHashableSet_10 ->
+  MAlonzo.Code.Interface.TypeClasses.Hashable.T_Hashable_10
 d_T'45'Hashable_32 v0
   = case coe v0 of
       C_mkIsHashableSet_34 v2 v3 v4 v5 -> coe v5
@@ -91,7 +92,8 @@ d_Show'45'THash_52 v0
   = coe d_Show'45'THash_28 (coe d_T'45'isHashable_44 (coe v0))
 -- Ledger.Core.Specification.Crypto.HashableSet._.T-Hashable
 d_T'45'Hashable_54 ::
-  T_HashableSet_36 -> MAlonzo.Code.Interface.Hashable.T_Hashable_8
+  T_HashableSet_36 ->
+  MAlonzo.Code.Interface.TypeClasses.Hashable.T_Hashable_10
 d_T'45'Hashable_54 v0
   = coe d_T'45'Hashable_32 (coe d_T'45'isHashable_44 (coe v0))
 -- Ledger.Core.Specification.Crypto.HashableSet._.THash
@@ -327,6 +329,6 @@ d_Show'45'THash_220 v0
 -- Ledger.Core.Specification.Crypto.CryptoStructure._.T-Hashable
 d_T'45'Hashable_222 ::
   T_CryptoStructure_140 ->
-  MAlonzo.Code.Interface.Hashable.T_Hashable_8
+  MAlonzo.Code.Interface.TypeClasses.Hashable.T_Hashable_10
 d_T'45'Hashable_222 v0
   = coe d_T'45'Hashable_32 (coe d_khs_206 (coe v0))
