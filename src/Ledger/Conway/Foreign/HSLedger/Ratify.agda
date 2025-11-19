@@ -14,6 +14,8 @@ import Data.Rational.Show as Rational
 
 import Foreign.Haskell.Pair as F
 open import Ledger.Conway.Specification.Ratify it
+  hiding (acceptedByCC; acceptedByDRep; acceptedBySPO)
+import Ledger.Conway.Specification.Ratify it as Ratify
 open import Ledger.Conway.Specification.Ratify.Properties.Computational it
 
 instance
@@ -62,3 +64,18 @@ instance
   Show-RATIFIES : ∀ {Γ s sig s'}
     → Show (Γ ⊢ s ⇀⦇ sig  ,RATIFIES⦈ s')
   Show-RATIFIES {Γ} {s} {sig} .show r = "" -- ratify-debug (to Γ) (to s) (to sig)
+
+-- Expose acceptedBy predicates for conformance
+
+acceptedByCC : HsType (RatifyEnv → EnactState → GovActionState → Bool)
+acceptedByCC = λ Γ es st → to (does (acceptedByCC? (from Γ) (from es) (from st)))
+
+acceptedByDRep : HsType (RatifyEnv → EnactState → GovActionState → Bool)
+acceptedByDRep = λ Γ es st → to (does (acceptedByDRep? (from Γ) (from es) (from st)))
+
+acceptedBySPO : HsType (RatifyEnv → EnactState → GovActionState → Bool)
+acceptedBySPO = λ Γ es st → to (does (acceptedBySPO? (from Γ) (from es) (from st)))
+
+{-# COMPILE GHC acceptedByCC as acceptedByCC #-}
+{-# COMPILE GHC acceptedByDRep as acceptedByDRep #-}
+{-# COMPILE GHC acceptedBySPO as acceptedBySPO #-}
