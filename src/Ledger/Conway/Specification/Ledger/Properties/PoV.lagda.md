@@ -85,7 +85,7 @@ then the coin values of `s`{.AgdaBound} and `s'`{.AgdaBound} are equal, that is,
       open CertState certState'
       open ≡-Reasoning
       open Certs-PoV indexedSumᵛ'-∪ sumConstZero res-decomp  getCoin-cong ≡ᵉ-getCoinˢ
-      zeroMap    = constMap (mapˢ RwdAddr.stake (dom txWithdrawals)) 0
+      zeroMap    = constMap (mapˢ RewardAddress.stake (dom txWithdrawals)) 0
     in
     begin
       getCoin utxoSt + getCoin certState

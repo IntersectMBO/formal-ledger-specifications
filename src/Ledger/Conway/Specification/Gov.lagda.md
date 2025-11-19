@@ -98,7 +98,7 @@ private variable
   vote   : GovVote
   v      : Vote
   d      : Coin
-  addr   : RwdAddr
+  addr   : RewardAddress
   a      : GovAction
   prev   : NeedsHash (gaType a)
   k      : ℕ
@@ -208,7 +208,7 @@ insertGovAction ((gaID₀ , gaSt₀) ∷ gaPrs) (gaID₁ , gaSt₁)
      then (gaID₀ , gaSt₀) ∷ insertGovAction gaPrs (gaID₁ , gaSt₁)
      else (gaID₁ , gaSt₁) ∷ (gaID₀ , gaSt₀) ∷ gaPrs
 
-mkGovStatePair :  Epoch → GovActionID → RwdAddr → (a : GovAction) → NeedsHash (a .gaType)
+mkGovStatePair :  Epoch → GovActionID → RewardAddress → (a : GovAction) → NeedsHash (a .gaType)
                   → GovActionID × GovActionState
 mkGovStatePair e aid addr a prev = (aid , gas)
   where
@@ -220,7 +220,7 @@ mkGovStatePair e aid addr a prev = (aid , gas)
                 ; prevAction = prev
                 }
 
-addAction :  GovState → Epoch → GovActionID → RwdAddr
+addAction :  GovState → Epoch → GovActionID → RewardAddress
              → (a : GovAction) → NeedsHash (a .gaType)
              → GovState
 addAction s e aid addr a prev = insertGovAction s (mkGovStatePair e aid addr a prev)
@@ -410,25 +410,24 @@ maxAllEnactable e = maxsublists⊧P (allEnactable? e)
 
 ## Validity and Wellformedness Predicates {#validity-and-wellformedness-predicates}
 
-This section defines predicates used in the `GOVPropose`{.AgdaInductiveConstructor} case
-of the GOV rule to ensure that a governance action is valid and well-formed.
+This section defines two predicates used in the `GOVPropose`{.AgdaInductiveConstructor} case
+of the GOV rule to ensure that a governance action is valid and well-formed.  To make
+sense of these predicates, one must understand how we represent and construct a
+governance action. This is explained in the
+[Governance Actions Section](Ledger.Conway.Specification.Gov.Actions.md#sec:actions).
 
 ```agda
 actionValid : ℙ Credential → Maybe ScriptHash → Maybe ScriptHash → Epoch → GovAction → Type
-actionValid rewardCreds p ppolicy epoch ⟦ ChangePParams , _ ⟧ᵍᵃ =
-  p ≡ ppolicy
-actionValid rewardCreds p ppolicy epoch ⟦ TreasuryWithdrawal  , x ⟧ᵍᵃ =
-  p ≡ ppolicy × mapˢ RwdAddr.stake (dom x) ⊆ rewardCreds
-actionValid rewardCreds p ppolicy epoch ⟦ UpdateCommittee , (new , rem , q) ⟧ᵍᵃ =
-  p ≡ nothing × (∀[ e ∈ range new ]  epoch < e) × (dom new ∩ rem ≡ᵉ ∅)
-actionValid rewardCreds p ppolicy epoch _ =
-  p ≡ nothing
+actionValid _ p ppolicy _ ⟦ ChangePParams , _ ⟧ᵍᵃ = p ≡ ppolicy
+actionValid rwdCreds p ppolicy _ ⟦ TreasuryWithdrawal , wdrls ⟧ᵍᵃ = p ≡ ppolicy × mapˢ CredentialOf (dom wdrls) ⊆ rwdCreds
+actionValid _ p _ epoch ⟦ UpdateCommittee , (new , rem , q) ⟧ᵍᵃ = p ≡ nothing × (∀[ e ∈ range new ] epoch < e) × dom new ∩ rem ≡ᵉ ∅
+actionValid _ p _ _ _ = p ≡ nothing
 
 actionWellFormed : GovAction → Type
-actionWellFormed ⟦ ChangePParams , x ⟧ᵍᵃ = ppdWellFormed x
-actionWellFormed ⟦ TreasuryWithdrawal  , x ⟧ᵍᵃ =
-  (∀[ a ∈ dom x ] NetworkIdOf a ≡ NetworkId) × (∃[ v ∈ range x ] ¬ (v ≡ 0))
-actionWellFormed _                 = ⊤
+actionWellFormed ⟦ ChangePParams , ppup ⟧ᵍᵃ = ppdWellFormed ppup
+actionWellFormed ⟦ TreasuryWithdrawal , wdrls ⟧ᵍᵃ =  (∀[ a ∈ dom wdrls ] NetworkIdOf a ≡ NetworkId)
+                                                     × ∃[ v ∈ range wdrls ] ¬ (v ≡ 0)
+actionWellFormed _ = ⊤
 ```
 
 +  `actionValid`{.AgdaFunction} ensures that the proposed action is valid
@@ -442,17 +441,20 @@ actionWellFormed _                 = ⊤
        registered;
 
     -  an `UpdateCommittee`{.AgdaInductiveConstructor} action is valid if
-       credentials of proposed candidates have not expired, and the action
+       credentials of proposed candidates have not expired and the action
        does not propose to both add and remove the same candidate.
 
 +  `actionWellFormed`{.AgdaFunction} ensures that the proposed action is
-    well-formed:
+    well-formed; there are two cases:
 
-   -  a `ChangePParams`{.AgdaInductiveConstructor} action must preserves well-formedness of the protocol parameters;
+   -  a `ChangePParams`{.AgdaInductiveConstructor} action is well-formed if the
+      `PParamUpdate`{.AgdaField}, `ppup`{.AgdaBound}, preserves well-formedness of the
+      protocol parameters, as expressed by the `ppdWellFormed`{.AgdaFunction}
+      predicate (see [Abstract Type for Parameter Updates][]).
 
    -  a `TreasuryWithdrawal`{.AgdaInductiveConstructor} action is well-formed if the
-      network ID is correct and there is at least one non-zero withdrawal amount in
-      the given `RwdAddrToCoinMap`{.AgdaRecord} map.
+      network ID is correct and the `Withdrawals`{.AgdaDatatype} map,
+      `wdrls`{.AgdaBound}, includes at least one non-zero withdrawal amount.
 
 
 <!--

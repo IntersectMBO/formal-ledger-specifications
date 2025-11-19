@@ -116,12 +116,12 @@ instance
     ; txscriptfee = λ tt y → 0
     ; serSize     = λ v → 0
     ; indexOfImp  = record
-      { indexOfDCert    = λ _ _ → nothing
-      ; indexOfRwdAddr  = λ _ _ → nothing
-      ; indexOfTxIn     = λ _ _ → nothing
-      ; indexOfPolicyId = λ _ _ → nothing
-      ; indexOfVote     = λ _ _ → nothing
-      ; indexOfProposal = λ _ _ → nothing
+      { indexOfDCert          = λ _ _ → nothing
+      ; indexOfRewardAddress  = λ _ _ → nothing
+      ; indexOfTxIn           = λ _ _ → nothing
+      ; indexOfPolicyId       = λ _ _ → nothing
+      ; indexOfVote           = λ _ _ → nothing
+      ; indexOfProposal       = λ _ _ → nothing
       }
     ; runPLCScript = λ _ _ _ _ → false
     ; scriptSize = λ where 

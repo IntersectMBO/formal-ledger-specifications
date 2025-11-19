@@ -58,16 +58,16 @@ SAddr = SBaseAddr ⊎ SBootstrapAddr
 STxOut = SAddr × SValue × Maybe (D ⊎ D) -- Assumes hash is identity for datums, dropping Maybe Script for now
 SUTxO  = List (STxIn × STxOut)
 
-record SRwdAddr : Set where
+record SRewardAddress : Set where
   field net    : SNetwork
         stake  : SCredential
 instance
-  unquoteDecl DecEq-SRwdAddr = derive-DecEq
-    ((quote SRwdAddr , DecEq-SRwdAddr) ∷ [])
+  unquoteDecl DecEq-SRewardAddress = derive-DecEq
+    ((quote SRewardAddress , DecEq-SRewardAddress) ∷ [])
 
 data SScriptPurpose : Set where
   -- network is tt so we can ignore it here
-  Rwrd     : SRwdAddr → SScriptPurpose
+  Rwrd     : SRewardAddress → SScriptPurpose
   Mint     : SValue → SScriptPurpose
   Spend    : STxIn → SScriptPurpose
   Empty    : SScriptPurpose
@@ -82,7 +82,7 @@ record STxInfo : Set where
         fee            : SValue
         mint           : SValue
         -- not adding txcerts as rarely used
-        txwdrls        : List (SRwdAddr  × Coin)
+        txwdrls        : List (SRewardAddress  × Coin)
         txvldt         : Maybe SSlot × Maybe SSlot
         vkey           : ℙ SKeyHash
         txdats         : List D -- Hash is id for datums therfore List D can replicate: DataHash ⇀ Datum

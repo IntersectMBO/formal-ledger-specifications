@@ -1,3 +1,4 @@
+[Abstract Type for Parameter Updates]: Ledger.Conway.Specification.PParams.md#sec:abstract-type-for-parameter-updates
 [Agda documentation]: https://agda.readthedocs.io/en/
 [Agda record types]: https://agda.readthedocs.io/en/stable/language/record-types.html
 [Agda Wiki]: https://wiki.portal.chalmers.se/agda/pmwiki.php

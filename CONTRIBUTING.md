@@ -98,8 +98,7 @@ The core Agda dependencies include:
 
 ### Directory Structure
 
-The main directories and files involved in the build process are as follows. (A more
-detailed version of this annotated tree can be found at the bottom of this page.)
+The main directories and files involved in the build process are as follows.
 
 ```
 ├── flake.nix                  # The main Nix flake file.
@@ -785,82 +784,6 @@ Now, if we have `cs : CertState`, we can fetch the `voteDelegs` field of (the
 
 Without type classes we would have to `open DState` and `open CertState` and then
 write `cs .dState .voteDelegs`, or, if we want to avoid `open` clutter, `DState.voteDelegs CertState.dState cs`.
-
----
-
-### Build-tools
-
-Here is the complete annotated subtree of the `build-tools` directory.
-
-
-```
-├── build-tools/                                     # All build-related utilities and static assets
-│   ├── agda/                                        # Source for the custom `fls-agda` Agda backend
-│   │   ├── data/                                    # Static assets used by the fls-agda backend
-│   │   │   ├── Agda.css                             # Base CSS for styling Agda HTML output
-│   │   │   └── AgdaKaTeX.js                         # JS for integrating Agda's HTML with KaTeX
-│   │   ├── fls-agda.cabal                           # Cabal file for building the fls-agda Haskell package
-│   │   ├── nix/                                     # Nix-specific build files for fls-agda
-│   │   │   └── fls-agda.nix                         # Nix derivation for the fls-agda package
-│   │   ├── src/                                     # Haskell source code for the fls-agda backend
-│   │   │   └── Main.hs                              # Main entry point for the fls-agda executable
-│   │   └── test/                                    # Test files for the fls-agda backend
-│   │       └── Test0.agda                           # Agda file for testing the backend's functionality
-│   ├── nix/                                         # General Nix configuration for the project
-│   │   ├── sources.json                             # Niv-managed file pinning exact dependency versions
-│   │   └── sources.nix                              # Niv-generated file to load pinned dependencies
-│   ├── scripts/                                     # Various utility scripts for building and processing
-│   │   ├── agda2vec.py                              # Python script for post-processing Agda-generated LaTeX
-│   │   ├── checkTypeChecked.sh                      # Shell script to verify Agda type-checking success
-│   │   ├── hldiff.py                                # Python script for highlighting differences in LaTeX
-│   │   ├── md/                                      # Scripts for the Markdown documentation pipeline
-│   │   │   ├── agda-filter.lua                      # Pandoc Lua filter for processing Agda code blocks
-│   │   │   ├── build.py                             # Main entry point for the Markdown build script
-│   │   │   ├── config/                              # Configuration modules for the build script
-│   │   │   │   └── build_config.py                  # Defines dataclasses for build paths and settings
-│   │   │   ├── modules/                             # Core logic modules for the build script
-│   │   │   │   ├── agda_processing.py               # Handles interaction with the Agda compiler
-│   │   │   │   ├── bibtex_processor.py              # Processes BibTeX citations
-│   │   │   │   ├── content_staging.py               # Manages intermediate build files
-│   │   │   │   ├── latex_pipeline.py                # Orchestrates LaTeX-to-Markdown conversion
-│   │   │   │   ├── latex_preprocessor.py            # Pre-processes LaTeX files before conversion
-│   │   │   │   └── site_assembly.py                 # Assembles the final MkDocs/MdBook site
-│   │   │   ├── test/                                # Tests for the Markdown build pipeline
-│   │   │   │   └── test_bibtex_processor.py         # Unit tests for the BibTeX processor
-│   │   │   └── utils/                               # Utility functions used by the build script
-│   │   │       ├── command_runner.py                # Helper for running external commands
-│   │   │       ├── file_ops.py                      # Helpers for file system operations
-│   │   │       ├── pipeline_types.py                # Defines custom types used in the pipeline
-│   │   │       └── text_processing.py               # Helpers for text manipulation
-│   │   ├── plot_typecheck_time.py                   # Script to plot Agda type-checking performance
-│   │   └── prepare-conf-test.sh                     # Script to prepare for conformance testing
-│   ├── shake/                                       # Source for the `fls-shake` build tool
-│   │   ├── fls-shake.cabal                          # Cabal file for building the fls-shake Haskell package
-│   │   ├── nix/                                     # Nix-specific build files for fls-shake
-│   │   │   └── fls-shake.nix                        # Nix derivation for the fls-shake package
-│   │   └── src/                                     # Haskell source code for fls-shake
-│   │       └── Main.hs                              # Main entry point for the fls-shake build system
-│   └── static/                                      # Static assets copied into builds
-│       ├── hs-src/                                  # Template for the extracted Haskell source code
-│       │   ├── package.yaml                         # hpack file to generate the .cabal file
-│       │   └── src/MAlonzo/Code/Ledger/Foreign/API.hs # Manual Haskell FFI to Agda code
-│       ├── latex/                                   # Static LaTeX files for (legacy) PDF generation
-│       │   ├── cardano-ledger.tex                   # Main TeX file for the full specification PDF
-│       │   ├── ...                                  # Other TeX includes, diagrams, fonts, etc.
-│       │   └── references.bib                       # BibTeX file for all citations
-│       └── md/                                      # Static assets for Markdown documentation sites
-│           ├── common/                              # Assets shared between MkDocs and MdBook
-│           │   ├── nav.yml                          # Template for the MkDocs navigation structure
-│           │   └── src/                             # Source assets (CSS, JS, images, etc.)
-│           │       ├── css/custom.css               # Custom stylesheet for documentation sites
-│           │       └── js/custom.js                 # Custom JavaScript for documentation sites
-│           └── mkdocs/                              # Configuration and templates for MkDocs
-│               ├── docs/index.md                    # Homepage/landing page for the MkDocs site
-│               ├── includes/links.md                # Common Markdown link references
-│               └── mkdocs.yml                       # Main configuration file for the MkDocs site
-├── TEX2MD_MIGRATION.md                              # Guide for the LaTeX to Markdown migration process
-└── TROUBLESHOOTING.md                               # Guide for resolving common build issues
-```
 
 
 ---

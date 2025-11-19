@@ -124,7 +124,7 @@ some `dcert`{.AgdaBound} : `DCert`{.AgdaDatatype}. Then,
 
   injOn : (wdls : Withdrawals)
           → ∀[ a ∈ dom (wdls ˢ) ] NetworkIdOf a ≡ NetworkId
-          → InjectiveOn (dom (wdls ˢ)) RwdAddr.stake
+          → InjectiveOn (dom (wdls ˢ)) RewardAddress.stake
   injOn _ h {record { stake = stakex }} {record { stake = stakey }} x∈ y∈ refl =
     cong (λ u → record { net = u ; stake = stakex }) (trans (h x∈) (sym (h y∈)))
 
@@ -176,8 +176,8 @@ value of the withdrawals in `Γ`{.AgdaBound}.  In other terms,
         open DState (dState cs )
         open DState (dState cs') renaming (rewards to rewards')
         module ≡ᵉ       = IsEquivalence (≡ᵉ-isEquivalence {Credential × Coin})
-        wdrlsCC         = mapˢ (map₁ RwdAddr.stake) (wdrls ˢ)
-        zeroMap         = constMap (mapˢ RwdAddr.stake (dom wdrls)) 0
+        wdrlsCC         = mapˢ (map₁ RewardAddress.stake) (wdrls ˢ)
+        zeroMap         = constMap (mapˢ RewardAddress.stake (dom wdrls)) 0
         rwds-∪ˡ-decomp  = (rewards ∣ dom wdrlsCC ᶜ) ∪ˡ (rewards ∣ dom wdrlsCC)
       in
         begin

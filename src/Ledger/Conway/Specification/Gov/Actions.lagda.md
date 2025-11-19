@@ -337,7 +337,7 @@ record GovProposal : Type where
     prevAction  : NeedsHash (gaType action)
     policy      : Policy
     deposit     : Coin
-    returnAddr  : RwdAddr
+    returnAddr  : RewardAddress
     anchor      : Anchor
 ```
 
@@ -351,7 +351,7 @@ necessary to enact the action and to repay the deposit.
 record GovActionState : Type where
   field
     votes       : GovVotes
-    returnAddr  : RwdAddr
+    returnAddr  : RewardAddress
     expiresIn   : Epoch
     action      : GovAction
     prevAction  : NeedsHash (gaType action)

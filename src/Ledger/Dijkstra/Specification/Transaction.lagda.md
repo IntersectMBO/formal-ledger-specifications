@@ -24,7 +24,7 @@ open import Ledger.Core.Specification.Crypto
 open import Ledger.Core.Specification.Epoch
 open import Ledger.Dijkstra.Specification.Gov.Base
 
-import Ledger.Core.Specification.Address renaming (RwdAddr to RewardAddress)
+import Ledger.Core.Specification.Address renaming (RewardAddress to RewardAddress)
 import Ledger.Dijkstra.Specification.Certs
 import Ledger.Dijkstra.Specification.Gov.Actions
 import Ledger.Dijkstra.Specification.PParams

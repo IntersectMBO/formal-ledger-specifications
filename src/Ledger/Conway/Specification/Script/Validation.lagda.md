@@ -28,12 +28,12 @@ open import Ledger.Conway.Specification.Script.ScriptPurpose txs
 
 rdptr : TxBody → ScriptPurpose → Maybe RdmrPtr
 rdptr txb = λ where
-  (Cert h)     → map (Cert    ,_) $ indexOfDCert    h txCerts
-  (Rwrd h)     → map (Rewrd   ,_) $ indexOfRwdAddr  h txWithdrawals
-  (Mint h)     → map (Mint    ,_) $ indexOfPolicyId h (policies mint)
-  (Spend h)    → map (Spend   ,_) $ indexOfTxIn     h txIns
-  (Vote h)     → map (Vote    ,_) $ indexOfVote     h (map GovVote.voter txGovVotes)
-  (Propose h)  → map (Propose ,_) $ indexOfProposal h txGovProposals
+  (Cert h)     → map (Cert    ,_) $ indexOfDCert          h txCerts
+  (Rwrd h)     → map (Rewrd   ,_) $ indexOfRewardAddress  h txWithdrawals
+  (Mint h)     → map (Mint    ,_) $ indexOfPolicyId       h (policies mint)
+  (Spend h)    → map (Spend   ,_) $ indexOfTxIn           h txIns
+  (Vote h)     → map (Vote    ,_) $ indexOfVote           h (map GovVote.voter txGovVotes)
+  (Propose h)  → map (Propose ,_) $ indexOfProposal       h txGovProposals
  where open TxBody txb
 
 indexedRdmrs : Tx → ScriptPurpose → Maybe (Redeemer × ExUnits)
@@ -81,7 +81,7 @@ credsNeeded utxo txb
 
 <!--
 ```agda
-  where open TxBody txb; open GovVote; open RwdAddr; open GovProposal
+  where open TxBody txb; open GovVote; open RewardAddress; open GovProposal
 
 -- valContext : TxInfo → ScriptPurpose → Data
 -- valContext txinfo sp = toData (txinfo , sp)

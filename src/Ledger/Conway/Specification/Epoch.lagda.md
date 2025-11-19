@@ -191,8 +191,8 @@ instance
     ( (quote EpochState     , HasCast-EpochState)
     ∷ [ (quote NewEpochState  , HasCast-NewEpochState)])
 
-toRwdAddr : Credential → RwdAddr
-toRwdAddr x = record { net = NetworkId ; stake = x }
+toRewardAddress : Credential → RewardAddress
+toRewardAddress x = record { net = NetworkId ; stake = x }
 
 getStakeCred : TxOut → Maybe Credential
 getStakeCred (a , _ , _ , _) = stakeCred a
@@ -411,7 +411,7 @@ for voting purposes.
 
 <!--
 ```agda
-open RwdAddr using (stake)
+open RewardAddress using (stake)
 opaque
 ```
 -->
@@ -450,7 +450,7 @@ stake to `SPOs`{.AgdaInductiveConstructor}.  This function is used both in the
      where
        open UTxOState utxoSt
 
-       govSt' : ℙ (GovActionID × RwdAddr)
+       govSt' : ℙ (GovActionID × RewardAddress)
        govSt' = mapˢ (map₂ returnAddr) (fromList govSt)
 ```
 
@@ -618,7 +618,7 @@ getOrphans es govSt = proj₁ $ iterate step ([] , govSt) (length govSt)
 record Governance-Update : Type where
   constructor GovernanceUpdate
   field
-    removedGovActions : ℙ (RwdAddr × DepositPurpose × Coin)
+    removedGovActions : ℙ (RewardAddress × DepositPurpose × Coin)
     govSt'            : GovState
 
 module GovernanceUpdate (ls : LState)
@@ -641,7 +641,7 @@ module GovernanceUpdate (ls : LState)
   removed' : ℙ (GovActionID × GovActionState)
   removed' = removed ∪ orphans
 
-  removedGovActions : ℙ (RwdAddr × DepositPurpose × Coin)
+  removedGovActions : ℙ (RewardAddress × DepositPurpose × Coin)
   removedGovActions =
     flip concatMapˢ removed' λ (gaid , gaSt) →
       mapˢ
@@ -713,16 +713,16 @@ module Post-POOLREAPUpdate (es : EnactState)
 -->
 ```agda
   opaque
-    govActionReturns : RwdAddr ⇀ Coin
+    govActionReturns : RewardAddress ⇀ Coin
     govActionReturns =
       aggregate₊ (mapˢ (λ (a , _ , d) → a , d) removedGovActions ᶠˢ)
 
-    payout : RwdAddr ⇀ Coin
+    payout : RewardAddress ⇀ Coin
     payout = govActionReturns ∪⁺ WithdrawalsOf es
 
   opaque
     refunds : Credential ⇀ Coin
-    refunds = pullbackMap payout toRwdAddr (dom (RewardsOf dState'))
+    refunds = pullbackMap payout toRewardAddress (dom (RewardsOf dState'))
 
   dState'' : DState
   dState'' = ⟦ VoteDelegsOf dState' , StakeDelegsOf dState' , RewardsOf dState' ∪⁺ refunds ⟧

@@ -91,13 +91,13 @@ record BootstrapAddr : Type where
     pay        : Credential
     attrsSize  : ℕ
 
-record RwdAddr : Type where
+record RewardAddress : Type where
   field
     net    : Network
     stake  : Credential
 
 Withdrawals : Type
-Withdrawals = RwdAddr ⇀ Coin
+Withdrawals = RewardAddress ⇀ Coin
 ```
 
 <!--
@@ -119,11 +119,11 @@ instance
   HasNetworkId-BootstrapAddr : HasNetworkId BootstrapAddr
   HasNetworkId-BootstrapAddr .NetworkIdOf = BootstrapAddr.net
 
-  HasNetworkId-RwdAddr : HasNetworkId RwdAddr
-  HasNetworkId-RwdAddr .NetworkIdOf = RwdAddr.net
+  HasNetworkId-RewardAddress : HasNetworkId RewardAddress
+  HasNetworkId-RewardAddress .NetworkIdOf = RewardAddress.net
 
-  HasCredential-RwdAddr : HasCredential RwdAddr
-  HasCredential-RwdAddr .CredentialOf = RwdAddr.stake
+  HasCredential-RewardAddress : HasCredential RewardAddress
+  HasCredential-RewardAddress .CredentialOf = RewardAddress.stake
 ```
 -->
 
@@ -148,7 +148,7 @@ isScriptAddr  : Addr → Type
 
 isVKeyAddr       = isVKey ∘ payCred
 isScriptAddr     = isScript ∘ payCred
-isScriptRwdAddr  = isScript ∘ CredentialOf
+isScriptRewardAddress  = isScript ∘ CredentialOf
 ```
 
 <!--
@@ -187,23 +187,23 @@ _ = isVKey ⁇¹ ∋ it
 _ = isVKeyAddr ⁇¹ ∋ it
 _ = isScript ⁇¹ ∋ it
 _ = isScriptAddr ⁇¹ ∋ it
-_ = isScriptRwdAddr ⁇¹ ∋ it
+_ = isScriptRewardAddress ⁇¹ ∋ it
 
 getScriptHash : ∀ a → isScriptAddr a → ScriptHash
 getScriptHash (inj₁ _) (SHisScript sh) = sh
 getScriptHash (inj₂ _) (SHisScript sh) = sh
 
 instance abstract
-  unquoteDecl DecEq-BaseAddr DecEq-BootstrapAddr DecEq-RwdAddr = derive-DecEq
-    ( (quote BaseAddr      , DecEq-BaseAddr)
-    ∷ (quote BootstrapAddr , DecEq-BootstrapAddr)
-    ∷ (quote RwdAddr       , DecEq-RwdAddr)
+  unquoteDecl DecEq-BaseAddr DecEq-BootstrapAddr DecEq-RewardAddress = derive-DecEq
+    ( (quote BaseAddr       , DecEq-BaseAddr)
+    ∷ (quote BootstrapAddr  , DecEq-BootstrapAddr)
+    ∷ (quote RewardAddress  , DecEq-RewardAddress)
     ∷ [] )
 
 module _ ⦃ _ : Show Network  ⦄ ⦃ _ : Show KeyHash  ⦄ ⦃ _ : Show ScriptHash  ⦄ where
   instance
     unquoteDecl Show-Credential = derive-Show [ (quote Credential , Show-Credential) ]
-    unquoteDecl Show-RwdAddr = derive-Show [ (quote RwdAddr , Show-RwdAddr) ]
+    unquoteDecl Show-RewardAddress = derive-Show [ (quote RewardAddress , Show-RewardAddress) ]
     Show-Credential×Coin : Show (Credential × Coin)
     Show-Credential×Coin = Show-×
 ```
