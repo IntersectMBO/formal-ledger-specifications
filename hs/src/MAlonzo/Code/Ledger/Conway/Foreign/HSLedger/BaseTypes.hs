@@ -950,9 +950,10 @@ d_DecEq'45'PoolThresholds_268 ::
 d_DecEq'45'PoolThresholds_268
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.PParams.du_DecEq'45'PoolThresholds_568
--- Ledger.Conway.Foreign.HSLedger.BaseTypes._.DecEq-RwdAddr
-d_DecEq'45'RwdAddr_270 :: MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
-d_DecEq'45'RwdAddr_270
+-- Ledger.Conway.Foreign.HSLedger.BaseTypes._.DecEq-RewardAddress
+d_DecEq'45'RewardAddress_270 ::
+  MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
+d_DecEq'45'RewardAddress_270
   = let v0
           = MAlonzo.Code.Ledger.Conway.Foreign.ExternalFunctions.d_dummyExternalFunctions_16 in
     coe
@@ -961,7 +962,7 @@ d_DecEq'45'RwdAddr_270
                  (coe v0) in
        coe
          (coe
-            MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'RwdAddr_274
+            MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'RewardAddress_274
             (coe
                MAlonzo.Code.Ledger.Core.Specification.Epoch.d_DecEq'45'Netw_320
                (coe
@@ -1511,12 +1512,12 @@ d_HasCoin'45'TxOut_448
             (coe v0)))
 -- Ledger.Conway.Foreign.HSLedger.BaseTypes._.HasCredential
 d_HasCredential_450 a0 a1 = ()
--- Ledger.Conway.Foreign.HSLedger.BaseTypes._.HasCredential-RwdAddr
-d_HasCredential'45'RwdAddr_454 ::
+-- Ledger.Conway.Foreign.HSLedger.BaseTypes._.HasCredential-RewardAddress
+d_HasCredential'45'RewardAddress_454 ::
   MAlonzo.Code.Ledger.Core.Specification.Address.T_HasCredential_30
-d_HasCredential'45'RwdAddr_454
+d_HasCredential'45'RewardAddress_454
   = coe
-      MAlonzo.Code.Ledger.Core.Specification.Address.du_HasCredential'45'RwdAddr_164
+      MAlonzo.Code.Ledger.Core.Specification.Address.du_HasCredential'45'RewardAddress_164
 -- Ledger.Conway.Foreign.HSLedger.BaseTypes._.HasDCerts
 d_HasDCerts_456 a0 a1 = ()
 -- Ledger.Conway.Foreign.HSLedger.BaseTypes._.HasDCerts-Tx
@@ -1639,12 +1640,12 @@ d_HasNetworkId'45'BootstrapAddr_528 ::
 d_HasNetworkId'45'BootstrapAddr_528
   = coe
       MAlonzo.Code.Ledger.Core.Specification.Address.du_HasNetworkId'45'BootstrapAddr_160
--- Ledger.Conway.Foreign.HSLedger.BaseTypes._.HasNetworkId-RwdAddr
-d_HasNetworkId'45'RwdAddr_530 ::
+-- Ledger.Conway.Foreign.HSLedger.BaseTypes._.HasNetworkId-RewardAddress
+d_HasNetworkId'45'RewardAddress_530 ::
   MAlonzo.Code.Ledger.Core.Specification.Address.T_HasNetworkId_122
-d_HasNetworkId'45'RwdAddr_530
+d_HasNetworkId'45'RewardAddress_530
   = coe
-      MAlonzo.Code.Ledger.Core.Specification.Address.du_HasNetworkId'45'RwdAddr_162
+      MAlonzo.Code.Ledger.Core.Specification.Address.du_HasNetworkId'45'RewardAddress_162
 -- Ledger.Conway.Foreign.HSLedger.BaseTypes._.HasPParams
 d_HasPParams_532 a0 a1 = ()
 -- Ledger.Conway.Foreign.HSLedger.BaseTypes._.HasPParams-CertEnv
@@ -2204,19 +2205,19 @@ d_RetiringOf_788 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Certs.d_RetiringOf_1206
       (coe v0)
+-- Ledger.Conway.Foreign.HSLedger.BaseTypes._.RewardAddress
+d_RewardAddress_790 = ()
 -- Ledger.Conway.Foreign.HSLedger.BaseTypes._.Rewards
-d_Rewards_790 :: ()
-d_Rewards_790 = erased
+d_Rewards_794 :: ()
+d_Rewards_794 = erased
 -- Ledger.Conway.Foreign.HSLedger.BaseTypes._.RewardsOf
-d_RewardsOf_792 ::
+d_RewardsOf_796 ::
   MAlonzo.Code.Ledger.Conway.Specification.Certs.T_HasRewards_1214 ->
   AgdaAny -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_RewardsOf_792 v0
+d_RewardsOf_796 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Certs.d_RewardsOf_1222
       (coe v0)
--- Ledger.Conway.Foreign.HSLedger.BaseTypes._.RwdAddr
-d_RwdAddr_794 = ()
 -- Ledger.Conway.Foreign.HSLedger.BaseTypes._.SKey
 d_SKey_800 :: ()
 d_SKey_800 = erased
@@ -2387,15 +2388,15 @@ d_Show'45'ProtVer_846
       (coe
          MAlonzo.Code.Class.Show.Core.C_mkShow_18
          (coe MAlonzo.Code.Data.Nat.Show.d_show_56))
--- Ledger.Conway.Foreign.HSLedger.BaseTypes._.Show-RwdAddr
-d_Show'45'RwdAddr_848 ::
+-- Ledger.Conway.Foreign.HSLedger.BaseTypes._.Show-RewardAddress
+d_Show'45'RewardAddress_848 ::
   MAlonzo.Code.Class.Show.Core.T_Show_10 ->
   MAlonzo.Code.Class.Show.Core.T_Show_10 ->
   MAlonzo.Code.Class.Show.Core.T_Show_10 ->
   MAlonzo.Code.Class.Show.Core.T_Show_10
-d_Show'45'RwdAddr_848
+d_Show'45'RewardAddress_848
   = coe
-      MAlonzo.Code.Ledger.Core.Specification.Address.du_Show'45'RwdAddr_288
+      MAlonzo.Code.Ledger.Core.Specification.Address.du_Show'45'RewardAddress_288
 -- Ledger.Conway.Foreign.HSLedger.BaseTypes._.Show-ScriptHash
 d_Show'45'ScriptHash_850 :: MAlonzo.Code.Class.Show.Core.T_Show_10
 d_Show'45'ScriptHash_850
@@ -3180,10 +3181,11 @@ d_isScriptObj_1074 ::
 d_isScriptObj_1074
   = coe
       MAlonzo.Code.Ledger.Core.Specification.Address.du_isScriptObj_56
--- Ledger.Conway.Foreign.HSLedger.BaseTypes._.isScriptRwdAddr
-d_isScriptRwdAddr_1076 ::
-  MAlonzo.Code.Ledger.Core.Specification.Address.T_RwdAddr_104 -> ()
-d_isScriptRwdAddr_1076 = erased
+-- Ledger.Conway.Foreign.HSLedger.BaseTypes._.isScriptRewardAddress
+d_isScriptRewardAddress_1076 ::
+  MAlonzo.Code.Ledger.Core.Specification.Address.T_RewardAddress_104 ->
+  ()
+d_isScriptRewardAddress_1076 = erased
 -- Ledger.Conway.Foreign.HSLedger.BaseTypes._.isSigned
 d_isSigned_1078 ::
   MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.T_HSVKey_14 ->
@@ -4085,7 +4087,7 @@ d_prevAction_1380 v0
 -- Ledger.Conway.Foreign.HSLedger.BaseTypes._.GovActionState.returnAddr
 d_returnAddr_1382 ::
   MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovActionState_1004 ->
-  MAlonzo.Code.Ledger.Core.Specification.Address.T_RwdAddr_104
+  MAlonzo.Code.Ledger.Core.Specification.Address.T_RewardAddress_104
 d_returnAddr_1382 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_returnAddr_1018
@@ -4470,7 +4472,7 @@ d_prevAction_1596 v0
 -- Ledger.Conway.Foreign.HSLedger.BaseTypes._.GovActions.GovProposal.returnAddr
 d_returnAddr_1598 ::
   MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovProposal_976 ->
-  MAlonzo.Code.Ledger.Core.Specification.Address.T_RwdAddr_104
+  MAlonzo.Code.Ledger.Core.Specification.Address.T_RewardAddress_104
 d_returnAddr_1598 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_returnAddr_998
@@ -6259,16 +6261,16 @@ d_Q5_2146 ::
 d_Q5_2146 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.PParams.d_Q5_270 (coe v0)
--- Ledger.Conway.Foreign.HSLedger.BaseTypes._.RwdAddr.net
+-- Ledger.Conway.Foreign.HSLedger.BaseTypes._.RewardAddress.net
 d_net_2150 ::
-  MAlonzo.Code.Ledger.Core.Specification.Address.T_RwdAddr_104 ->
+  MAlonzo.Code.Ledger.Core.Specification.Address.T_RewardAddress_104 ->
   Integer
 d_net_2150 v0
   = coe
       MAlonzo.Code.Ledger.Core.Specification.Address.d_net_110 (coe v0)
--- Ledger.Conway.Foreign.HSLedger.BaseTypes._.RwdAddr.stake
+-- Ledger.Conway.Foreign.HSLedger.BaseTypes._.RewardAddress.stake
 d_stake_2152 ::
-  MAlonzo.Code.Ledger.Core.Specification.Address.T_RwdAddr_104 ->
+  MAlonzo.Code.Ledger.Core.Specification.Address.T_RewardAddress_104 ->
   MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20
 d_stake_2152 v0
   = coe

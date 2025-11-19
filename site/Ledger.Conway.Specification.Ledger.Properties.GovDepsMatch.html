@@ -249,7 +249,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="guide.html" class="md-tabs__link">
+        <a href="Ledger.Introduction.html" class="md-tabs__link">
           
   
   
@@ -461,29 +461,6 @@
             Preliminaries
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="guide.html" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Guide for Contributors
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
             
               
                 
@@ -10056,10 +10033,10 @@
 
 <a id="391" class="Keyword">module</a> <a id="398" href="Ledger.Conway.Specification.Ledger.Properties.GovDepsMatch.html" class="Module">Ledger.Conway.Specification.Ledger.Properties.GovDepsMatch</a>
   <a id="459" class="Symbol">(</a><a id="460" href="Ledger.Conway.Specification.Ledger.Properties.GovDepsMatch.html#460" class="Bound">txs</a> <a id="464" class="Symbol">:</a> <a id="466" class="Symbol">_)</a> <a id="469" class="Symbol">(</a><a id="470" class="Keyword">open</a> <a id="475" href="Ledger.Conway.Specification.Transaction.html#2459" class="Module">TransactionStructure</a> <a id="496" href="Ledger.Conway.Specification.Ledger.Properties.GovDepsMatch.html#460" class="Bound">txs</a><a id="499" class="Symbol">)</a>
-  <a id="503" class="Symbol">(</a><a id="504" href="Ledger.Conway.Specification.Ledger.Properties.GovDepsMatch.html#504" class="Bound">abs</a> <a id="508" class="Symbol">:</a> <a id="510" href="Ledger.Conway.Specification.Abstract.html#821" class="Record">AbstractFunctions</a> <a id="528" href="Ledger.Conway.Specification.Ledger.Properties.GovDepsMatch.html#460" class="Bound">txs</a><a id="531" class="Symbol">)</a> <a id="533" class="Symbol">(</a><a id="534" class="Keyword">open</a> <a id="539" href="Ledger.Conway.Specification.Abstract.html#821" class="Module">AbstractFunctions</a> <a id="557" href="Ledger.Conway.Specification.Ledger.Properties.GovDepsMatch.html#504" class="Bound">abs</a><a id="560" class="Symbol">)</a>
+  <a id="503" class="Symbol">(</a><a id="504" href="Ledger.Conway.Specification.Ledger.Properties.GovDepsMatch.html#504" class="Bound">abs</a> <a id="508" class="Symbol">:</a> <a id="510" href="Ledger.Conway.Specification.Abstract.html#930" class="Record">AbstractFunctions</a> <a id="528" href="Ledger.Conway.Specification.Ledger.Properties.GovDepsMatch.html#460" class="Bound">txs</a><a id="531" class="Symbol">)</a> <a id="533" class="Symbol">(</a><a id="534" class="Keyword">open</a> <a id="539" href="Ledger.Conway.Specification.Abstract.html#930" class="Module">AbstractFunctions</a> <a id="557" href="Ledger.Conway.Specification.Ledger.Properties.GovDepsMatch.html#504" class="Bound">abs</a><a id="560" class="Symbol">)</a>
   <a id="564" class="Keyword">where</a>
 
-<a id="571" class="Keyword">open</a> <a id="576" class="Keyword">import</a> <a id="583" href="Ledger.Conway.Specification.Certs.html" class="Module">Ledger.Conway.Specification.Certs</a> <a id="617" href="Ledger.Conway.Specification.Transaction.html#3581" class="Function">govStructure</a> <a id="630" class="Keyword">using</a> <a id="636" class="Symbol">(</a><a id="637" href="Ledger.Conway.Specification.Certs.html#787" class="Datatype">DepositPurpose</a><a id="651" class="Symbol">)</a>
+<a id="571" class="Keyword">open</a> <a id="576" class="Keyword">import</a> <a id="583" href="Ledger.Conway.Specification.Certs.html" class="Module">Ledger.Conway.Specification.Certs</a> <a id="617" href="Ledger.Conway.Specification.Transaction.html#3581" class="Function">govStructure</a> <a id="630" class="Keyword">using</a> <a id="636" class="Symbol">(</a><a id="637" href="Ledger.Conway.Specification.Certs.html#793" class="Datatype">DepositPurpose</a><a id="651" class="Symbol">)</a>
 <a id="653" class="Keyword">open</a> <a id="658" class="Keyword">import</a> <a id="665" href="Ledger.Conway.Specification.Ledger.html" class="Module">Ledger.Conway.Specification.Ledger</a> <a id="700" href="Ledger.Conway.Specification.Ledger.Properties.GovDepsMatch.html#460" class="Bound">txs</a> <a id="704" href="Ledger.Conway.Specification.Ledger.Properties.GovDepsMatch.html#504" class="Bound">abs</a>
 <a id="708" class="Keyword">open</a> <a id="713" class="Keyword">import</a> <a id="720" href="Ledger.Conway.Specification.Ledger.Properties.Base.html" class="Module">Ledger.Conway.Specification.Ledger.Properties.Base</a> <a id="771" href="Ledger.Conway.Specification.Ledger.Properties.GovDepsMatch.html#460" class="Bound">txs</a> <a id="775" href="Ledger.Conway.Specification.Ledger.Properties.GovDepsMatch.html#504" class="Bound">abs</a>
 <a id="779" class="Keyword">open</a> <a id="784" class="Keyword">import</a> <a id="791" href="Ledger.Conway.Specification.Ledger.Properties.Computational.html" class="Module">Ledger.Conway.Specification.Ledger.Properties.Computational</a> <a id="851" href="Ledger.Conway.Specification.Ledger.Properties.GovDepsMatch.html#460" class="Bound">txs</a> <a id="855" href="Ledger.Conway.Specification.Ledger.Properties.GovDepsMatch.html#504" class="Bound">abs</a>
@@ -10069,7 +10046,7 @@
 <a id="940" class="Keyword">open</a> <a id="945" class="Keyword">import</a> <a id="952" href="Axiom.Set.Properties.html" class="Module">Axiom.Set.Properties</a> <a id="973" href="Axiom.Set.html#10936" class="Function">th</a>
 <a id="976" class="Keyword">import</a> <a id="983" href="Relation.Binary.Reasoning.Setoid.html" class="Module">Relation.Binary.Reasoning.Setoid</a> <a id="1016" class="Symbol">as</a> <a id="1019" class="Module">SetoidReasoning</a>
 
-<a id="1036" class="Keyword">open</a> <a id="1041" href="Relation.Binary.Reasoning.Setoid.html" class="Module">SetoidReasoning</a> <a id="1057" class="Symbol">(</a><a id="1058" href="Axiom.Set.Properties.html#3967" class="Function">≡ᵉ-Setoid</a><a id="1067" class="Symbol">{</a><a id="1068" href="Ledger.Conway.Specification.Certs.html#787" class="Datatype">DepositPurpose</a><a id="1082" class="Symbol">})</a>
+<a id="1036" class="Keyword">open</a> <a id="1041" href="Relation.Binary.Reasoning.Setoid.html" class="Module">SetoidReasoning</a> <a id="1057" class="Symbol">(</a><a id="1058" href="Axiom.Set.Properties.html#3967" class="Function">≡ᵉ-Setoid</a><a id="1067" class="Symbol">{</a><a id="1068" href="Ledger.Conway.Specification.Certs.html#793" class="Datatype">DepositPurpose</a><a id="1082" class="Symbol">})</a>
 </pre>
 
 <p><em>Informally</em>.</p>

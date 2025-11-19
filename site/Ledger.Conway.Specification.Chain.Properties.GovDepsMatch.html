@@ -249,7 +249,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="guide.html" class="md-tabs__link">
+        <a href="Ledger.Introduction.html" class="md-tabs__link">
           
   
   
@@ -461,29 +461,6 @@
             Preliminaries
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="guide.html" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Guide for Contributors
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
             
               
                 
@@ -10056,7 +10033,7 @@
 
 <a id="397" class="Keyword">module</a> <a id="404" href="Ledger.Conway.Specification.Chain.Properties.GovDepsMatch.html" class="Module">Ledger.Conway.Specification.Chain.Properties.GovDepsMatch</a>
   <a id="464" class="Symbol">(</a><a id="465" href="Ledger.Conway.Specification.Chain.Properties.GovDepsMatch.html#465" class="Bound">txs</a> <a id="469" class="Symbol">:</a> <a id="471" class="Symbol">_)</a> <a id="474" class="Symbol">(</a><a id="475" class="Keyword">open</a> <a id="480" href="Ledger.Conway.Specification.Transaction.html#2459" class="Module">TransactionStructure</a> <a id="501" href="Ledger.Conway.Specification.Chain.Properties.GovDepsMatch.html#465" class="Bound">txs</a><a id="504" class="Symbol">)</a>
-  <a id="508" class="Symbol">(</a><a id="509" href="Ledger.Conway.Specification.Chain.Properties.GovDepsMatch.html#509" class="Bound">abs</a> <a id="513" class="Symbol">:</a> <a id="515" href="Ledger.Conway.Specification.Abstract.html#821" class="Record">AbstractFunctions</a> <a id="533" href="Ledger.Conway.Specification.Chain.Properties.GovDepsMatch.html#465" class="Bound">txs</a><a id="536" class="Symbol">)</a> <a id="538" class="Symbol">(</a><a id="539" class="Keyword">open</a> <a id="544" href="Ledger.Conway.Specification.Abstract.html#821" class="Module">AbstractFunctions</a> <a id="562" href="Ledger.Conway.Specification.Chain.Properties.GovDepsMatch.html#509" class="Bound">abs</a><a id="565" class="Symbol">)</a>
+  <a id="508" class="Symbol">(</a><a id="509" href="Ledger.Conway.Specification.Chain.Properties.GovDepsMatch.html#509" class="Bound">abs</a> <a id="513" class="Symbol">:</a> <a id="515" href="Ledger.Conway.Specification.Abstract.html#930" class="Record">AbstractFunctions</a> <a id="533" href="Ledger.Conway.Specification.Chain.Properties.GovDepsMatch.html#465" class="Bound">txs</a><a id="536" class="Symbol">)</a> <a id="538" class="Symbol">(</a><a id="539" class="Keyword">open</a> <a id="544" href="Ledger.Conway.Specification.Abstract.html#930" class="Module">AbstractFunctions</a> <a id="562" href="Ledger.Conway.Specification.Chain.Properties.GovDepsMatch.html#509" class="Bound">abs</a><a id="565" class="Symbol">)</a>
   <a id="569" class="Keyword">where</a>
 
 <a id="576" class="Keyword">open</a> <a id="581" class="Keyword">import</a> <a id="588" href="Ledger.Conway.Specification.Certs.html" class="Module">Ledger.Conway.Specification.Certs</a> <a id="622" href="Ledger.Conway.Specification.Transaction.html#3581" class="Function">govStructure</a>
@@ -10136,7 +10113,7 @@ In other terms,</p>
 <p><code class="AgdaFunction">govDepsMatch</code> <code class="AgdaFunction">csLState</code> implies <code class="AgdaFunction">govDepsMatch</code> <code class="AgdaFunction">nesState</code>.</p>
 <p><em>Formally</em>.</p>
 <pre class="Agda">  <a id="4096" href="Ledger.Conway.Specification.Chain.Properties.GovDepsMatch.html#4096" class="Function">CHAIN-govDepsMatch</a> <a id="4115" class="Symbol">:</a>
-    <a id="4121" href="Ledger.Conway.Specification.Chain.Properties.GovDepsMatch.html#1143" class="Function">map</a> <a id="4125" class="Symbol">(</a><a id="4126" href="Ledger.Conway.Specification.Certs.html#976" class="InductiveConstructor">GovActionDeposit</a> <a id="4143" href="Function.Base.html#1134" class="Function Operator">∘</a> <a id="4145" href="Data.Product.Base.html#636" class="Field">proj₁</a><a id="4150" class="Symbol">)</a> <a id="4152" href="Ledger.Conway.Specification.Epoch.Properties.GovDepsMatch.html#2165" class="Function">removed&#39;</a> <a id="4161" href="Interface.TypeClasses.HasSubset.html#288" class="Field Operator">⊆</a> <a id="4163" href="Class.IsSet.html#916" class="Function">dom</a> <a id="4167" class="Symbol">(</a><a id="4168" href="Ledger.Conway.Specification.Certs.html#1154" class="Field">DepositsOf</a> <a id="4179" href="Ledger.Conway.Specification.Chain.Properties.GovDepsMatch.html#1263" class="Bound">cs</a><a id="4181" class="Symbol">)</a>
+    <a id="4121" href="Ledger.Conway.Specification.Chain.Properties.GovDepsMatch.html#1143" class="Function">map</a> <a id="4125" class="Symbol">(</a><a id="4126" href="Ledger.Conway.Specification.Certs.html#982" class="InductiveConstructor">GovActionDeposit</a> <a id="4143" href="Function.Base.html#1134" class="Function Operator">∘</a> <a id="4145" href="Data.Product.Base.html#636" class="Field">proj₁</a><a id="4150" class="Symbol">)</a> <a id="4152" href="Ledger.Conway.Specification.Epoch.Properties.GovDepsMatch.html#2165" class="Function">removed&#39;</a> <a id="4161" href="Interface.TypeClasses.HasSubset.html#288" class="Field Operator">⊆</a> <a id="4163" href="Class.IsSet.html#916" class="Function">dom</a> <a id="4167" class="Symbol">(</a><a id="4168" href="Ledger.Conway.Specification.Certs.html#1160" class="Field">DepositsOf</a> <a id="4179" href="Ledger.Conway.Specification.Chain.Properties.GovDepsMatch.html#1263" class="Bound">cs</a><a id="4181" class="Symbol">)</a>
     <a id="4187" class="Symbol">→</a>  <a id="4190" href="Ledger.Conway.Specification.Chain.html#2453" class="Function">totalRefScriptsSize</a> <a id="4210" href="Ledger.Conway.Specification.Chain.Properties.GovDepsMatch.html#1404" class="Function">csLState</a> <a id="4219" href="Ledger.Conway.Specification.BlockBody.html#978" class="Function">ts</a> <a id="4222" href="Class.HasOrder.Core.html#613" class="Field Operator">≤</a> <a id="4224" href="Ledger.Conway.Specification.PParams.html#6513" class="Function">maxRefScriptSizePerBlock</a>
     <a id="4253" class="Symbol">→</a>  <a id="4256" class="Symbol">_</a> <a id="4258" href="Ledger.Conway.Specification.Chain.html#2761" class="Datatype Operator">⊢</a> <a id="4260" href="Ledger.Conway.Specification.Chain.Properties.GovDepsMatch.html#1263" class="Bound">cs</a> <a id="4263" href="Ledger.Conway.Specification.Chain.html#2761" class="Datatype Operator">⇀⦇</a> <a id="4266" href="Ledger.Conway.Specification.Chain.Properties.GovDepsMatch.html#1222" class="Bound">b</a> <a id="4268" href="Ledger.Conway.Specification.Chain.html#2761" class="Datatype Operator">,CHAIN⦈</a> <a id="4276" href="Ledger.Conway.Specification.Chain.Properties.GovDepsMatch.html#1957" class="Function">cs&#39;</a>
     <a id="4284" class="Symbol">→</a>  <a id="4287" href="Ledger.Conway.Specification.Ledger.Properties.Base.html#2236" class="Function">govDepsMatch</a> <a id="4300" href="Ledger.Conway.Specification.Chain.Properties.GovDepsMatch.html#1404" class="Function">csLState</a> <a id="4309" class="Symbol">→</a> <a id="4311" href="Ledger.Conway.Specification.Ledger.Properties.Base.html#2236" class="Function">govDepsMatch</a> <a id="4324" class="Symbol">(</a><a id="4325" href="Ledger.Conway.Specification.Ledger.html#1558" class="Field">LStateOf</a> <a id="4334" href="Ledger.Conway.Specification.Chain.Properties.GovDepsMatch.html#1239" class="Bound">nes</a><a id="4337" class="Symbol">)</a>
@@ -10144,7 +10121,7 @@ In other terms,</p>
 <p><em>Proof</em>.</p>
 <pre class="Agda">  <a id="4364" href="Ledger.Conway.Specification.Chain.Properties.GovDepsMatch.html#4096" class="Function">CHAIN-govDepsMatch</a> <a id="4383" href="Ledger.Conway.Specification.Chain.Properties.GovDepsMatch.html#4383" class="Bound">rrm</a> <a id="4387" href="Ledger.Conway.Specification.Chain.Properties.GovDepsMatch.html#4387" class="Bound">rss</a>
       <a id="4397" class="Symbol">(</a> <a id="4399" href="Ledger.Conway.Specification.Chain.html#2830" class="InductiveConstructor">CHAIN</a> <a id="4405" class="Symbol">(</a> <a id="4407" href="Ledger.Conway.Specification.Chain.Properties.GovDepsMatch.html#4407" class="Bound">x</a>
-              <a id="4423" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="4425" href="Ledger.Conway.Specification.RewardUpdate.html#3169" class="InductiveConstructor">TICK</a> <a id="4430" class="Symbol">((</a><a id="4432" href="Ledger.Conway.Specification.Epoch.html#26014" class="InductiveConstructor">NEWEPOCH-New</a> <a id="4445" class="Symbol">(_</a> <a id="4448" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="4450" href="Ledger.Conway.Specification.Chain.Properties.GovDepsMatch.html#4450" class="Bound">eps₁→eps₂</a><a id="4459" class="Symbol">))</a> <a id="4462" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="4464" class="Symbol">_)</a>
+              <a id="4423" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="4425" href="Ledger.Conway.Specification.RewardUpdate.html#3169" class="InductiveConstructor">TICK</a> <a id="4430" class="Symbol">((</a><a id="4432" href="Ledger.Conway.Specification.Epoch.html#26074" class="InductiveConstructor">NEWEPOCH-New</a> <a id="4445" class="Symbol">(_</a> <a id="4448" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="4450" href="Ledger.Conway.Specification.Chain.Properties.GovDepsMatch.html#4450" class="Bound">eps₁→eps₂</a><a id="4459" class="Symbol">))</a> <a id="4462" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="4464" class="Symbol">_)</a>
               <a id="4481" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="4483" href="Ledger.Conway.Specification.BlockBody.html#3076" class="InductiveConstructor">BBODY-Block-Body</a> <a id="4500" class="Symbol">(_</a> <a id="4503" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="4505" class="Symbol">_</a> <a id="4507" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="4509" href="Ledger.Conway.Specification.Chain.Properties.GovDepsMatch.html#4509" class="Bound">ledgers</a><a id="4516" class="Symbol">)</a>
               <a id="4532" class="Symbol">)</a>
       <a id="4540" class="Symbol">)</a> <a id="4542" class="Symbol">=</a>
@@ -10153,7 +10130,7 @@ In other terms,</p>
 
   <a id="4649" href="Ledger.Conway.Specification.Chain.Properties.GovDepsMatch.html#4096" class="Function">CHAIN-govDepsMatch</a> <a id="4668" href="Ledger.Conway.Specification.Chain.Properties.GovDepsMatch.html#4668" class="Bound">rrm</a> <a id="4672" href="Ledger.Conway.Specification.Chain.Properties.GovDepsMatch.html#4672" class="Bound">rss</a>
       <a id="4682" class="Symbol">(</a> <a id="4684" href="Ledger.Conway.Specification.Chain.html#2830" class="InductiveConstructor">CHAIN</a> <a id="4690" class="Symbol">(</a> <a id="4692" href="Ledger.Conway.Specification.Chain.Properties.GovDepsMatch.html#4692" class="Bound">x</a>
-              <a id="4708" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="4710" href="Ledger.Conway.Specification.RewardUpdate.html#3169" class="InductiveConstructor">TICK</a> <a id="4715" class="Symbol">(</a><a id="4716" href="Ledger.Conway.Specification.Epoch.html#26434" class="InductiveConstructor">NEWEPOCH-Not-New</a> <a id="4733" class="Symbol">_</a> <a id="4735" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="4737" class="Symbol">_)</a>
+              <a id="4708" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="4710" href="Ledger.Conway.Specification.RewardUpdate.html#3169" class="InductiveConstructor">TICK</a> <a id="4715" class="Symbol">(</a><a id="4716" href="Ledger.Conway.Specification.Epoch.html#26494" class="InductiveConstructor">NEWEPOCH-Not-New</a> <a id="4733" class="Symbol">_</a> <a id="4735" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="4737" class="Symbol">_)</a>
               <a id="4754" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="4756" href="Ledger.Conway.Specification.BlockBody.html#3076" class="InductiveConstructor">BBODY-Block-Body</a> <a id="4773" class="Symbol">(_</a> <a id="4776" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="4778" class="Symbol">_</a> <a id="4780" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="4782" href="Ledger.Conway.Specification.Chain.Properties.GovDepsMatch.html#4782" class="Bound">ledgers</a><a id="4789" class="Symbol">)</a>
               <a id="4805" class="Symbol">)</a>
       <a id="4813" class="Symbol">)</a> <a id="4815" class="Symbol">=</a>
@@ -10161,7 +10138,7 @@ In other terms,</p>
 
   <a id="4870" href="Ledger.Conway.Specification.Chain.Properties.GovDepsMatch.html#4096" class="Function">CHAIN-govDepsMatch</a> <a id="4889" href="Ledger.Conway.Specification.Chain.Properties.GovDepsMatch.html#4889" class="Bound">rrm</a> <a id="4893" href="Ledger.Conway.Specification.Chain.Properties.GovDepsMatch.html#4893" class="Bound">rss</a>
       <a id="4903" class="Symbol">(</a> <a id="4905" href="Ledger.Conway.Specification.Chain.html#2830" class="InductiveConstructor">CHAIN</a> <a id="4911" class="Symbol">(</a> <a id="4913" href="Ledger.Conway.Specification.Chain.Properties.GovDepsMatch.html#4913" class="Bound">x</a>
-              <a id="4929" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="4931" href="Ledger.Conway.Specification.RewardUpdate.html#3169" class="InductiveConstructor">TICK</a> <a id="4936" class="Symbol">(</a><a id="4937" href="Ledger.Conway.Specification.Epoch.html#26681" class="InductiveConstructor">NEWEPOCH-No-Reward-Update</a> <a id="4963" class="Symbol">(_</a> <a id="4966" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="4968" href="Ledger.Conway.Specification.Chain.Properties.GovDepsMatch.html#4968" class="Bound">eps₁→eps₂</a><a id="4977" class="Symbol">)</a> <a id="4979" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="4981" class="Symbol">_)</a>
+              <a id="4929" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="4931" href="Ledger.Conway.Specification.RewardUpdate.html#3169" class="InductiveConstructor">TICK</a> <a id="4936" class="Symbol">(</a><a id="4937" href="Ledger.Conway.Specification.Epoch.html#26741" class="InductiveConstructor">NEWEPOCH-No-Reward-Update</a> <a id="4963" class="Symbol">(_</a> <a id="4966" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="4968" href="Ledger.Conway.Specification.Chain.Properties.GovDepsMatch.html#4968" class="Bound">eps₁→eps₂</a><a id="4977" class="Symbol">)</a> <a id="4979" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="4981" class="Symbol">_)</a>
               <a id="4998" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="5000" href="Ledger.Conway.Specification.BlockBody.html#3076" class="InductiveConstructor">BBODY-Block-Body</a> <a id="5017" class="Symbol">(_</a> <a id="5020" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="5022" class="Symbol">_</a> <a id="5024" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="5026" href="Ledger.Conway.Specification.Chain.Properties.GovDepsMatch.html#5026" class="Bound">ledgers</a><a id="5033" class="Symbol">)</a>
               <a id="5049" class="Symbol">)</a>
       <a id="5057" class="Symbol">)</a> <a id="5059" class="Symbol">=</a>

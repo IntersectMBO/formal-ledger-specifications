@@ -43,7 +43,7 @@ import qualified MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes
 import qualified MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory
 
 import GHC.Generics (Generic)
-data GovAction = NoConfidence  | UpdateCommittee (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.HSMap MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.Credential Integer) (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.HSSet MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.Credential) MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.Rational | NewConstitution Integer (Maybe Integer) | TriggerHardFork (Integer, Integer) | ChangePParams MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.PParams.PParamsUpdate | TreasuryWithdrawal (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.HSMap MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.RwdAddr Integer) | Info 
+data GovAction = NoConfidence  | UpdateCommittee (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.HSMap MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.Credential Integer) (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.HSSet MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.Credential) MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.Rational | NewConstitution Integer (Maybe Integer) | TriggerHardFork (Integer, Integer) | ChangePParams MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.PParams.PParamsUpdate | TreasuryWithdrawal (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.HSMap MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.RewardAddress Integer) | Info 
   deriving (Show, Eq, Generic)
 -- Ledger.Conway.Foreign.HSLedger.Gov.Actions._.Vote
 d_Vote_14 = ()
@@ -586,7 +586,7 @@ d_Conv'45'GovAction''_80
                               (coe
                                  MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
                                  (coe
-                                    MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.d_Conv'45'RwdAddr_28)
+                                    MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.d_Conv'45'RewardAddress_28)
                                  (coe
                                     MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.d_iConvNat_12)))
                            (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe v1))))
@@ -1413,7 +1413,7 @@ d_Conv'45'GovAction''_80
                                          (coe v2) in
                                coe
                                  (coe
-                                    MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'RwdAddr_274
+                                    MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'RewardAddress_274
                                     (coe
                                        MAlonzo.Code.Ledger.Core.Specification.Epoch.d_DecEq'45'Netw_320
                                        (coe
@@ -1432,7 +1432,7 @@ d_Conv'45'GovAction''_80
                                           MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1316
                                           (coe v3))))))
                            (coe
-                              MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.d_Conv'45'RwdAddr_28)
+                              MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.d_Conv'45'RewardAddress_28)
                            (coe
                               MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.d_iConvNat_12))
                         (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_24
@@ -1487,7 +1487,7 @@ check_ChangePParams_1437 ::
 check_ChangePParams_1437 = ChangePParams
 check_TreasuryWithdrawal_1451 ::
   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.T_HSMap_16
-    MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.T_RwdAddr_4499
+    MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.T_RewardAddress_4499
     Integer ->
   T_GovAction_1109
 check_TreasuryWithdrawal_1451 = TreasuryWithdrawal

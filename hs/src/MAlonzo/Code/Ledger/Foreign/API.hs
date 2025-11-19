@@ -6,7 +6,7 @@ module MAlonzo.Code.Ledger.Foreign.API
 import MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes                   as X
   (HSSet(..), HSMap(..), ComputationResult(..), Rational(..))
 import MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address           as X
-  (Credential(..), BaseAddr(..), BootstrapAddr(..), RwdAddr(..), Addr, HSVKey (..))
+  (Credential(..), BaseAddr(..), BootstrapAddr(..), RewardAddress(..), Addr, HSVKey (..))
 import MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.PParams           as X
   (DrepThresholds(..), PoolThresholds(..), Acnt(..), PParams(..), PParamsUpdate(..))
 import MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Transaction       as X

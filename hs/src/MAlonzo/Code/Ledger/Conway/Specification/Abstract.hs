@@ -59,8 +59,8 @@ d_Prices_448 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   ()
 d_Prices_448 = erased
--- Ledger.Conway.Specification.Abstract._.RwdAddr
-d_RwdAddr_464 a0 = ()
+-- Ledger.Conway.Specification.Abstract._.RewardAddress
+d_RewardAddress_464 a0 = ()
 -- Ledger.Conway.Specification.Abstract._.Script
 d_Script_474 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
@@ -133,7 +133,7 @@ d_prevAction_1102 v0
 -- Ledger.Conway.Specification.Abstract._.GovActions.GovProposal.returnAddr
 d_returnAddr_1104 ::
   MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovProposal_976 ->
-  MAlonzo.Code.Ledger.Core.Specification.Address.T_RwdAddr_104
+  MAlonzo.Code.Ledger.Core.Specification.Address.T_RewardAddress_104
 d_returnAddr_1104 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_returnAddr_998
@@ -154,16 +154,16 @@ d_gvRole_1128 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_gvRole_878
       (coe v0)
--- Ledger.Conway.Specification.Abstract._.RwdAddr.net
+-- Ledger.Conway.Specification.Abstract._.RewardAddress.net
 d_net_1590 ::
-  MAlonzo.Code.Ledger.Core.Specification.Address.T_RwdAddr_104 ->
+  MAlonzo.Code.Ledger.Core.Specification.Address.T_RewardAddress_104 ->
   AgdaAny
 d_net_1590 v0
   = coe
       MAlonzo.Code.Ledger.Core.Specification.Address.d_net_110 (coe v0)
--- Ledger.Conway.Specification.Abstract._.RwdAddr.stake
+-- Ledger.Conway.Specification.Abstract._.RewardAddress.stake
 d_stake_1592 ::
-  MAlonzo.Code.Ledger.Core.Specification.Address.T_RwdAddr_104 ->
+  MAlonzo.Code.Ledger.Core.Specification.Address.T_RewardAddress_104 ->
   MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20
 d_stake_1592 v0
   = coe
@@ -260,7 +260,7 @@ data T_indexOf_2360
   = C_constructor_2386 (MAlonzo.Code.Ledger.Conway.Specification.Certs.T_DCert_1282 ->
                         [MAlonzo.Code.Ledger.Conway.Specification.Certs.T_DCert_1282] ->
                         Maybe AgdaAny)
-                       (MAlonzo.Code.Ledger.Core.Specification.Address.T_RwdAddr_104 ->
+                       (MAlonzo.Code.Ledger.Core.Specification.Address.T_RewardAddress_104 ->
                         MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 -> Maybe AgdaAny)
                        (MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
                         [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] -> Maybe AgdaAny)
@@ -281,12 +281,12 @@ d_indexOfDCert_2374 v0
   = case coe v0 of
       C_constructor_2386 v1 v2 v3 v4 v5 v6 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
--- Ledger.Conway.Specification.Abstract.indexOf.indexOfRwdAddr
-d_indexOfRwdAddr_2376 ::
+-- Ledger.Conway.Specification.Abstract.indexOf.indexOfRewardAddress
+d_indexOfRewardAddress_2376 ::
   T_indexOf_2360 ->
-  MAlonzo.Code.Ledger.Core.Specification.Address.T_RwdAddr_104 ->
+  MAlonzo.Code.Ledger.Core.Specification.Address.T_RewardAddress_104 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 -> Maybe AgdaAny
-d_indexOfRwdAddr_2376 v0
+d_indexOfRewardAddress_2376 v0
   = case coe v0 of
       C_constructor_2386 v1 v2 v3 v4 v5 v6 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError

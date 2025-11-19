@@ -79,23 +79,23 @@ du_DecEq'45'Credential_70 v0 v1
   = coe
       MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_222
       (coe v0) (coe v1)
--- _.DecEq-RwdAddr
-d_DecEq'45'RwdAddr_92 ::
+-- _.DecEq-RewardAddress
+d_DecEq'45'RewardAddress_92 ::
   MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.T_GovStructure_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
-d_DecEq'45'RwdAddr_92 ~v0 v1 v2 v3
-  = du_DecEq'45'RwdAddr_92 v1 v2 v3
-du_DecEq'45'RwdAddr_92 ::
+d_DecEq'45'RewardAddress_92 ~v0 v1 v2 v3
+  = du_DecEq'45'RewardAddress_92 v1 v2 v3
+du_DecEq'45'RewardAddress_92 ::
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
-du_DecEq'45'RwdAddr_92 v0 v1 v2
+du_DecEq'45'RewardAddress_92 v0 v1 v2
   = coe
-      MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'RwdAddr_274
+      MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'RewardAddress_274
       (coe v0) (coe v1) (coe v2)
 -- _.Epoch
 d_Epoch_122 ::
