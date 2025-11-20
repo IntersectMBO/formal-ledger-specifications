@@ -4,7 +4,7 @@ implementation of the Ledger.
 The conformance model differs from the Conway specification in how deposits are
 stored in the Ledger state.
 
-In the Conway specification, deposits are stored in `LState.utxoSt.deposits`.
+In the Conway specification, deposits are stored in `LState.utxoSt.deposits`{.AgdaField}.
 The conformance model, on the other hand, separates deposits in three disjoint
 maps:
 
