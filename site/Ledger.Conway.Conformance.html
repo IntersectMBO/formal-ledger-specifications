@@ -83,6 +83,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#motivation" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -8970,6 +8975,19 @@
       
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Conformance
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="Ledger.Conway.Conformance.html" class="md-nav__link md-nav__link--active">
         
   
@@ -8981,6 +8999,50 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#motivation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Motivation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#guarantees" class="md-nav__link">
+    <span class="md-ellipsis">
+      Guarantees
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#alternatives" class="md-nav__link">
+    <span class="md-ellipsis">
+      Alternatives
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -9965,6 +10027,41 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#motivation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Motivation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#guarantees" class="md-nav__link">
+    <span class="md-ellipsis">
+      Guarantees
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#alternatives" class="md-nav__link">
+    <span class="md-ellipsis">
+      Alternatives
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -9980,7 +10077,7 @@
 
 
 
-  <a href="https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/src/Ledger/Conway/Conformance.agda"
+  <a href="https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/src/Ledger/Conway/Conformance.lagda.md?plain=1"
      class="md-content__button md-icon"
      title="View the source of this page"
      aria-label="View the source of this page">
@@ -9992,25 +10089,69 @@
 
   <h1>Conformance</h1>
 
-<pre class="Agda"><a id="88" class="Symbol">{-#</a> <a id="92" class="Keyword">OPTIONS</a> <a id="100" class="Pragma">--safe</a> <a id="107" class="Symbol">#-}</a>
-<a id="111" class="Keyword">module</a> <a id="118" href="Ledger.Conway.Conformance.html" class="Module">Ledger.Conway.Conformance</a> <a id="144" class="Keyword">where</a>
+<p>This module provides the model used to do conformance testing of the Haskell
+implementation of the Ledger.</p>
+<p>The conformance model differs from the Conway specification in how deposits are
+stored in the Ledger state.</p>
+<p>In the Conway specification, deposits are stored in <code class="AgdaField">LState.utxoSt.deposits</code>.
+The conformance model, on the other hand, separates deposits in three disjoint
+maps:</p>
+<ul>
+<li><code class="AgdaField">LState.utxoSt.deposits</code></li>
+<li><code class="AgdaField">LState.certState.dState.deposits</code></li>
+<li><code class="AgdaField">LState.certState.gState.deposits</code></li>
+</ul>
+<h2 id="motivation">Motivation<a class="headerlink" href="#motivation" title="Permanent link">&para;</a></h2>
+<p>The conformance model follows the way in which the Haskell implementation stores
+the deposits, which makes it possible to compare the behaviors of the conformance
+model and the implementation of the <code class="AgdaDatatype">UTXOS</code> rule.</p>
+<p>The UTXOS rule transforms <code>UTxOState</code>s. While the specification updates the
+deposits in this rule, the implementation cannot do so because its input state
+does not contain the deposits in <code>DState</code> and <code>GState</code>.</p>
+<p>Other rules which use <code class="AgdaDatatype">UTXOS</code> are in a similar predicament,
+namely <code class="AgdaDatatype">UTXO</code> and <code class="AgdaDatatype">UTXOW</code>. The
+<code class="AgdaDatatype">LEDGER</code> rule, which uses <code class="AgdaDatatype">UTXOW</code>, is the first
+rule where the implementation has all the state necessary to reconstruct the
+full deposits that the specification needs.</p>
+<h2 id="guarantees">Guarantees<a class="headerlink" href="#guarantees" title="Permanent link">&para;</a></h2>
+<p>Since we still want to check that the implementation behaves as the
+specification, there is a proof of the equivalence between the conformance model
+and the specification:</p>
+<ul>
+<li><code class="AgdaBound">Ledger.Conway.Conformance.Equivalence.bisimilarityProof</code></li>
+</ul>
+<h2 id="alternatives">Alternatives<a class="headerlink" href="#alternatives" title="Permanent link">&para;</a></h2>
+<p>Rather than providing a conformance model, we could have changed the Conway
+specification to match the implementation way of storing deposits. However,
+there are trade offs to consider. Putting the deposits together in one place
+makes some proofs simpler, while splitting them as in the implementation makes
+it more convenient to write the update functions for the separated pieces.</p>
+<p>While we could decide the tradeoff for a particular implementation, it would be
+difficult to adjust the specification when multiple implementations need to be
+accommodated.</p>
+<p>Yet another option could have been to skip testing specifically for the
+<code class="AgdaDatatype">UTXOS</code> rule. This was a difficulty for testing, since spotting
+differences in a rule is harder when it is combined with other rules like the
+<code class="AgdaDatatype">LEDGER</code> rule does.</p>
+<pre class="Agda"><a id="2433" class="Symbol">{-#</a> <a id="2437" class="Keyword">OPTIONS</a> <a id="2445" class="Pragma">--safe</a> <a id="2452" class="Symbol">#-}</a>
+<a id="2456" class="Keyword">module</a> <a id="2463" href="Ledger.Conway.Conformance.html" class="Module">Ledger.Conway.Conformance</a> <a id="2489" class="Keyword">where</a>
 
-<a id="151" class="Keyword">import</a> <a id="158" href="Ledger.Conway.Conformance.Certs.html" class="Module">Ledger.Conway.Conformance.Certs</a>
-<a id="190" class="Keyword">import</a> <a id="197" href="Ledger.Conway.Conformance.Certs.Properties.html" class="Module">Ledger.Conway.Conformance.Certs.Properties</a>
-<a id="240" class="Keyword">import</a> <a id="247" href="Ledger.Conway.Conformance.Chain.html" class="Module">Ledger.Conway.Conformance.Chain</a>
-<a id="279" class="Keyword">import</a> <a id="286" href="Ledger.Conway.Conformance.Chain.Properties.html" class="Module">Ledger.Conway.Conformance.Chain.Properties</a>
-<a id="329" class="Keyword">import</a> <a id="336" href="Ledger.Conway.Conformance.Equivalence.html" class="Module">Ledger.Conway.Conformance.Equivalence</a>
-<a id="374" class="Keyword">import</a> <a id="381" href="Ledger.Conway.Conformance.Epoch.html" class="Module">Ledger.Conway.Conformance.Epoch</a>
-<a id="413" class="Keyword">import</a> <a id="420" href="Ledger.Conway.Conformance.Epoch.Properties.html" class="Module">Ledger.Conway.Conformance.Epoch.Properties</a>
-<a id="463" class="Keyword">import</a> <a id="470" href="Ledger.Conway.Conformance.Gov.html" class="Module">Ledger.Conway.Conformance.Gov</a>
-<a id="500" class="Keyword">import</a> <a id="507" href="Ledger.Conway.Conformance.Ledger.html" class="Module">Ledger.Conway.Conformance.Ledger</a>
-<a id="540" class="Keyword">import</a> <a id="547" href="Ledger.Conway.Conformance.Ledger.Properties.html" class="Module">Ledger.Conway.Conformance.Ledger.Properties</a>
-<a id="591" class="Keyword">import</a> <a id="598" href="Ledger.Conway.Conformance.Properties.html" class="Module">Ledger.Conway.Conformance.Properties</a>
-<a id="635" class="Keyword">import</a> <a id="642" href="Ledger.Conway.Conformance.Utxo.html" class="Module">Ledger.Conway.Conformance.Utxo</a>
-<a id="673" class="Keyword">import</a> <a id="680" href="Ledger.Conway.Conformance.Utxo.Properties.html" class="Module">Ledger.Conway.Conformance.Utxo.Properties</a>
-<a id="722" class="Keyword">import</a> <a id="729" href="Ledger.Conway.Conformance.Utxow.html" class="Module">Ledger.Conway.Conformance.Utxow</a>
-<a id="761" class="Keyword">import</a> <a id="768" href="Ledger.Conway.Conformance.Utxow.Properties.html" class="Module">Ledger.Conway.Conformance.Utxow.Properties</a>
-<a id="811" class="Keyword">import</a> <a id="818" href="Ledger.Conway.Conformance.Script.html" class="Module">Ledger.Conway.Conformance.Script</a>
+<a id="2496" class="Keyword">import</a> <a id="2503" href="Ledger.Conway.Conformance.Certs.html" class="Module">Ledger.Conway.Conformance.Certs</a>
+<a id="2535" class="Keyword">import</a> <a id="2542" href="Ledger.Conway.Conformance.Certs.Properties.html" class="Module">Ledger.Conway.Conformance.Certs.Properties</a>
+<a id="2585" class="Keyword">import</a> <a id="2592" href="Ledger.Conway.Conformance.Chain.html" class="Module">Ledger.Conway.Conformance.Chain</a>
+<a id="2624" class="Keyword">import</a> <a id="2631" href="Ledger.Conway.Conformance.Chain.Properties.html" class="Module">Ledger.Conway.Conformance.Chain.Properties</a>
+<a id="2674" class="Keyword">import</a> <a id="2681" href="Ledger.Conway.Conformance.Equivalence.html" class="Module">Ledger.Conway.Conformance.Equivalence</a>
+<a id="2719" class="Keyword">import</a> <a id="2726" href="Ledger.Conway.Conformance.Epoch.html" class="Module">Ledger.Conway.Conformance.Epoch</a>
+<a id="2758" class="Keyword">import</a> <a id="2765" href="Ledger.Conway.Conformance.Epoch.Properties.html" class="Module">Ledger.Conway.Conformance.Epoch.Properties</a>
+<a id="2808" class="Keyword">import</a> <a id="2815" href="Ledger.Conway.Conformance.Gov.html" class="Module">Ledger.Conway.Conformance.Gov</a>
+<a id="2845" class="Keyword">import</a> <a id="2852" href="Ledger.Conway.Conformance.Ledger.html" class="Module">Ledger.Conway.Conformance.Ledger</a>
+<a id="2885" class="Keyword">import</a> <a id="2892" href="Ledger.Conway.Conformance.Ledger.Properties.html" class="Module">Ledger.Conway.Conformance.Ledger.Properties</a>
+<a id="2936" class="Keyword">import</a> <a id="2943" href="Ledger.Conway.Conformance.Properties.html" class="Module">Ledger.Conway.Conformance.Properties</a>
+<a id="2980" class="Keyword">import</a> <a id="2987" href="Ledger.Conway.Conformance.Utxo.html" class="Module">Ledger.Conway.Conformance.Utxo</a>
+<a id="3018" class="Keyword">import</a> <a id="3025" href="Ledger.Conway.Conformance.Utxo.Properties.html" class="Module">Ledger.Conway.Conformance.Utxo.Properties</a>
+<a id="3067" class="Keyword">import</a> <a id="3074" href="Ledger.Conway.Conformance.Utxow.html" class="Module">Ledger.Conway.Conformance.Utxow</a>
+<a id="3106" class="Keyword">import</a> <a id="3113" href="Ledger.Conway.Conformance.Utxow.Properties.html" class="Module">Ledger.Conway.Conformance.Utxow.Properties</a>
+<a id="3156" class="Keyword">import</a> <a id="3163" href="Ledger.Conway.Conformance.Script.html" class="Module">Ledger.Conway.Conformance.Script</a>
 </pre>
 
 
