@@ -1,3 +1,10 @@
+---
+source_branch: master
+source_path: src/Ledger/Conway/Specification/Certs/Properties/VoteDelegsVDeleg.lagda.md
+---
+
+## Claim: <span class="AgdaField">voteDelegs</span> field values are <span class="AgdaDatatype">VDelegs</span> constructed from their keys {#clm:VDelegsInRegDReps}
+
 <!--
 ```agda
 
@@ -12,9 +19,6 @@ open import Ledger.Prelude
 open import Ledger.Conway.Specification.Gov.Actions gs
 ```
 -->
-
-<a id="thm:VDelegsInRegDReps"></a>
-**Claim (`voteDelegs`{.AgdaField} by `credVoter`{.AgdaInductiveConstructor} constructor).**
 
 *Informally*.
 

@@ -1,3 +1,10 @@
+---
+source_branch: master
+source_path: src/Ledger/Conway/Specification/Epoch/Properties/NoPropSameDReps.lagda.md
+---
+
+## Claim: DReps remain unchanged if there are no governance proposals {#clm:NoPropSameDReps}
+
 <!--
 ```agda
 
@@ -18,8 +25,6 @@ open import Ledger.Prelude
 open import Ledger.Conway.Specification.Properties txs abs
 ```
 -->
-
-**Claim (DReps unchanged if no gov proposals).**
 
 *Informally*.
 

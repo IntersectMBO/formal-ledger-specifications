@@ -1,3 +1,11 @@
+---
+source_branch: master
+source_path: src/Ledger/Conway/Specification/Epoch/Properties/ConstRwds.lagda.md
+---
+
+## Claim: The <span class="AgdaDatatype">NEWEPOCH</span> rule leaves rewards unchanged {#clm:NEWEPOCH-const-rwds}
+
+
 <!--
 ```agda
 
@@ -16,8 +24,6 @@ open import Ledger.Conway.Specification.Epoch txs abs
 open import Ledger.Prelude
 ```
 -->
-
-**Claim (The `NEWEPOCH`{.AgdaOperator} rule leaves rewards unchanged).**
 
 *Informally*.
 

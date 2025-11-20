@@ -90,6 +90,9 @@ instance
   HasLState-EpochState : HasLState EpochState
   HasLState-EpochState .LStateOf = EpochState.ls
 
+  HasGovState-EpochState : HasGovState EpochState
+  HasGovState-EpochState .GovStateOf = GovStateOf ∘ LStateOf
+
   HasEnactState-EpochState : HasEnactState EpochState
   HasEnactState-EpochState .EnactStateOf = EpochState.es
 
@@ -113,6 +116,9 @@ instance
 
   HasPState-EpochState : HasPState EpochState
   HasPState-EpochState .PStateOf = PStateOf ∘ CertStateOf ∘ LStateOf
+
+  HasRetiring-EpochState : HasRetiring EpochState
+  HasRetiring-EpochState .RetiringOf = RetiringOf ∘ PStateOf
 ```
 -->
 

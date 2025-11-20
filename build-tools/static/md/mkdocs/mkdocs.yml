@@ -118,4 +118,3 @@ extra:
     index.md: README.md
     Definitions.md: build-tools/static/md/common/src/Definitions.md
     Notation.md: build-tools/static/md/common/src/Notation.md
-    Properties.md: build-tools/static/md/common/src/Properties.md
