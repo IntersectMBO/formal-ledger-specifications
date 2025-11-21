@@ -363,8 +363,8 @@ module AcceptedByCC (currentEpoch : Epoch)
   acceptedStake  = ∑[ x ← stakeDistr ∣ actualVotes ⁻¹ Vote.yes ] x
   totalStake     = ∑[ x ← stakeDistr ∣ dom (actualVotes ∣^ (❴ Vote.yes ❵ ∪ ❴ Vote.no ❵)) ] x
 
-  accepted = (acceptedStake /₀ totalStake) ≥ t
-    × (sizeActiveCC ≥ ccMinSize ⊎ (Is-nothing mT × ccMinSize ≡ 0))
+  accepted = Is-just mT → (acceptedStake /₀ totalStake) ≥ t
+    × (sizeActiveCC ≥ ccMinSize)
 ```
 
 ```agda
@@ -667,8 +667,12 @@ opaque
   Is-nothing? {x = x} = All.dec (const $ no id) x
     where import Data.Maybe.Relation.Unary.All as All
 
+  Is-just? : ∀ {A : Set} {x : Maybe A} → Dec (Is-just x)
+  Is-just? {x = x} = Any.dec (const $ yes tt) x
+    where import Data.Maybe.Relation.Unary.Any as Any
+
   acceptedByCC? : ∀ Γ es st → Dec (acceptedByCC Γ es st)
-  acceptedByCC? _ _ _ = _ ℚ.≤? _ ×-dec (_ ≥? _ ⊎-dec (Is-nothing? ×-dec ¿ _ ¿))
+  acceptedByCC? _ _ _ = Is-just? →-dec (_ ℚ.≤? _ ×-dec (_ ≥? _))
 
   acceptedByDRep? : ∀ Γ es st → Dec (acceptedByDRep Γ es st)
   acceptedByDRep? _ _ _ = _ ℚ.≤? _
