@@ -667,17 +667,17 @@ opaque
   Is-nothing? {x = x} = All.dec (const $ no id) x
     where import Data.Maybe.Relation.Unary.All as All
 
+  acceptedByCC? : ∀ Γ es st → Dec (acceptedByCC Γ es st)
+  acceptedByCC? _ _ _ = _ ℚ.≤? _ ×-dec (_ ≥? _ ⊎-dec (Is-nothing? ×-dec ¿ _ ¿))
+
+  acceptedByDRep? : ∀ Γ es st → Dec (acceptedByDRep Γ es st)
+  acceptedByDRep? _ _ _ = _ ℚ.≤? _
+
+  acceptedBySPO? : ∀ Γ es st → Dec (acceptedBySPO Γ es st)
+  acceptedBySPO? _ _ _ = _ ℚ.≤? _
+
   accepted? : ∀ Γ es st → Dec (accepted Γ es st)
   accepted? Γ es st = acceptedByCC? Γ es st ×-dec acceptedByDRep? Γ es st ×-dec acceptedBySPO? Γ es st
-    where
-    acceptedByCC? : ∀ Γ es st → Dec (acceptedByCC Γ es st)
-    acceptedByCC? _ _ _ = _ ℚ.≤? _ ×-dec (_ ≥? _ ⊎-dec (Is-nothing? ×-dec ¿ _ ¿))
-
-    acceptedByDRep? : ∀ Γ es st → Dec (acceptedByDRep Γ es st)
-    acceptedByDRep? _ _ _ = _ ℚ.≤? _
-
-    acceptedBySPO? : ∀ Γ es st → Dec (acceptedBySPO Γ es st)
-    acceptedBySPO? _ _ _ = _ ℚ.≤? _
 
   expired? : ∀ e st → Dec (expired e st)
   expired? e st = ¿ expired e st ¿
