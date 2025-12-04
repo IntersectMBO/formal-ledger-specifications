@@ -257,35 +257,30 @@ utilizes the following auxiliary definitions.
    cast by members of the `CC`{.AgdaInductiveConstructor} and are
    part of the `GovActionState`{.AgdaDatatype} `gaSt`{.AgdaBound}.
 
-+  `getCCHotCred`{.AgdaFunction}: This function maps a `Credential`{.AgdaDatatype}
-   and an `Epoch`{.AgdaDatatype} to the hot key corresponding to the given
-   credential, in case this has not expired.
++  `getCCHotCredential`{.AgdaFunction}: This function maps a
+   `Credential`{.AgdaDatatype} and an `Epoch`{.AgdaDatatype} to the hot credential
+   corresponding to the given cold credential, in case this has not expired.
 
-+  `actualVote`{.AgdaFunction}: This function sets the default vote for
-   `CC`{.AgdaInductiveConstructor} members.  If the given
-   `CC`{.AgdaInductiveConstructor} member's term has expired, if they have not
-   yet registered a hot key, or if they have resigned, then
-   `actualVote`{.AgdaFunction} returns `abstain`{.AgdaInductiveConstructor}; if none
-   of these conditions is met, then
++  `activeCC`{.AgdaFunction}: The active committee members as a map from cold credentials
+   to hot credentials.  A committee member is _active_ iff:
+     1. their term has not expired, and
+     2. they have a registered hot credential.
+   Otherwise the member is considered to be _inactive_.
 
-    +  if the `CC`{.AgdaInductiveConstructor} member has voted, then that
-       vote is returned;
+   If the committee does not exist (e.g., the system is in a state of
+   no-confidence) then this set is empty.
 
-    +  if the `CC`{.AgdaInductiveConstructor} member has not voted, then
-       the default value `no`{.AgdaInductiveConstructor} is returned.
++  `actualVotes`{.AgdaFunction}: This map contains the actual votes of the active
+   `CC`{.AgdaInductiveConstructor}. For each member,
 
-+  `actualVotes`{.AgdaFunction}: This map contains the actual votes of
-   the `CC`{.AgdaInductiveConstructor}.  If the commitee does not exists then it is
-   the empty map, otherwise,
+    +  if the member has cast a vote using the hot credential then this vote is used,
+    +  if not the member default vote is `no`{.AgdaInductiveConstructor}.
 
-    +  if the number of `CC`{.AgdaInductiveConstructor} members with a registered hot
-       key is greater than the protocol parameter `ccMinSize`{.AgdaBound}, then
-       `actualVote`{.AgdaFunction} is returned (as a map), otherwise,
-
-    +  all commitee members vote `no`{.AgdaInductiveConstructor}.
-
-+  `mT`{.AgdaFunction}: This is the threshold of the `CC`{.AgdaInductiveConstructor}.
-   It may be `nothing`{.AgdaInductiveConstructor}.
++  `mT`{.AgdaFunction}: This is the threshold of the
+   `CC`{.AgdaInductiveConstructor}.  In case it is
+   `nothing`{.AgdaInductiveConstructor}, the `CC`{.AgdaInductiveConstructor} is
+   not allowed to vote and the action is accepted automatically (e.g., for
+   `NoConfidence` or `UpdateCommittee` actions).
 
 +  `stakeDistr`{.AgdaFunction} computes the stake distribution.  Note that every
    constitutional committe member has a stake of 1, giving them equal voting power.
@@ -299,12 +294,9 @@ utilizes the following auxiliary definitions.
 +  `totalStake`{.AgdaFunction}: This is the portion of `CC`{.AgdaInductiveConstructor}
    stake that voted either `yes`{.AgdaInductiveConstructor} or `no`{.AgdaInductiveConstructor}.
 
-In addition, it must be the case that either
-
-+  the size of the `CC`{.AgdaInductiveConstructor} is greater than
-   `ccMinSize`{.AgdaBound}, or
-
-+  the threshold function returns `nothing`{.AgdaInductiveConstructor}.
+In addition, if the committee is allowed to vote, it must be the case that the
+size of the active `CC`{.AgdaInductiveConstructor} is greater than
+`ccMinSize`{.AgdaBound}
 
 ```agda
 module AcceptedByCC (currentEpoch : Epoch)
@@ -322,39 +314,32 @@ module AcceptedByCC (currentEpoch : Epoch)
 ```
 -->
 ```agda
-  sizeActiveCC : ℕ
-  sizeActiveCC = case proj₁ cc of λ where
-    (just ((ccMembers , _) , _)) → lengthˢ (filterˢ (activeInEpoch currentEpoch) ccMembers)
-    nothing → 0
-
   castVotes : Credential ⇀ Vote
   castVotes = gvCC
 
-  getCCHotCred : Credential × Epoch → Maybe Credential
-  getCCHotCred (c , e) =
+  getCCHotCredential : Credential → Epoch → Maybe Credential
+  getCCHotCredential c e =
     if currentEpoch > e
     then nothing -- credential has expired
     else case lookupᵐ? ccHotKeys c of λ where
       (just (just c'))  → just c'
       _                 → nothing -- hot key not registered or resigned
 
-  actualVote : Credential → Epoch → Vote
-  actualVote c e = case getCCHotCred (c , e) of λ where
-    (just c')  → maybe id Vote.no (lookupᵐ? castVotes c')
-    _          → Vote.abstain
+  activeCC : Credential ⇀ Credential
+  activeCC = case proj₁ cc of λ where
+    (just (ccMembers , _)) → mapMaybeWithKeyᵐ getCCHotCredential ccMembers
+    nothing → ∅
+
+  sizeActiveCC : ℕ
+  sizeActiveCC = lengthˢ (dom activeCC)
 
   actualVotes : Credential ⇀ Vote
-  actualVotes = case proj₁ cc of λ where
-    nothing         →  ∅
-    (just (m , _))  →  if ccMinSize ≤ lengthˢ (mapFromPartialFun getCCHotCred (m ˢ))
-                       then mapWithKey actualVote m
-                       else constMap (dom m) Vote.no
+  actualVotes =
+    mapWithKey (λ coldCredential hotCredential → maybe id Vote.no (lookupᵐ? castVotes hotCredential))
+               activeCC
 
   mT : Maybe ℚ
   mT = threshold (PParamsOf eSt) (proj₂ <$> (proj₁ cc)) action CC
-
-  t : ℚ
-  t = maybe id 0ℚ mT
 
   stakeDistr : Credential ⇀ Coin
   stakeDistr = constMap (dom actualVotes) 1
@@ -363,8 +348,8 @@ module AcceptedByCC (currentEpoch : Epoch)
   acceptedStake  = ∑[ x ← stakeDistr ∣ actualVotes ⁻¹ Vote.yes ] x
   totalStake     = ∑[ x ← stakeDistr ∣ dom (actualVotes ∣^ (❴ Vote.yes ❵ ∪ ❴ Vote.no ❵)) ] x
 
-  accepted = (acceptedStake /₀ totalStake) ≥ t
-    × (sizeActiveCC ≥ ccMinSize ⊎ (Is-nothing mT × ccMinSize ≡ 0))
+  accepted = if mT then (λ {t} → sizeActiveCC ≥ ccMinSize × (acceptedStake /₀ totalStake) ≥ t)
+                   else ⊤
 ```
 
 ```agda
@@ -667,8 +652,20 @@ opaque
   Is-nothing? {x = x} = All.dec (const $ no id) x
     where import Data.Maybe.Relation.Unary.All as All
 
+  Is-just? : ∀ {A : Set} {x : Maybe A} → Dec (Is-just x)
+  Is-just? {x = x} = Any.dec (const $ yes tt) x
+    where import Data.Maybe.Relation.Unary.Any as Any
+
   acceptedByCC? : ∀ Γ es st → Dec (acceptedByCC Γ es st)
-  acceptedByCC? _ _ _ = _ ℚ.≤? _ ×-dec (_ ≥? _ ⊎-dec (Is-nothing? ×-dec ¿ _ ¿))
+  acceptedByCC? Γ es st = d
+    where
+      open RatifyEnv Γ using (currentEpoch; ccHotKeys)
+      module acbCC = AcceptedByCC currentEpoch ccHotKeys es st
+
+      d : Dec acbCC.accepted
+      d with acbCC.mT
+      ... | just t =  _ ≤? acbCC.sizeActiveCC ×-dec t ≤?  _
+      ... | nothing = yes tt
 
   acceptedByDRep? : ∀ Γ es st → Dec (acceptedByDRep Γ es st)
   acceptedByDRep? _ _ _ = _ ℚ.≤? _
