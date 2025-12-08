@@ -335,7 +335,7 @@ module AcceptedByCC (currentEpoch : Epoch)
 
   actualVotes : Credential ⇀ Vote
   actualVotes =
-    mapWithKey (λ coldCredential hotCredential → maybe id Vote.no (lookupᵐ? castVotes hotCredential))
+    mapValues (λ hotCredential → maybe id Vote.no (lookupᵐ? castVotes hotCredential))
                activeCC
 
   mT : Maybe ℚ
@@ -348,8 +348,10 @@ module AcceptedByCC (currentEpoch : Epoch)
   acceptedStake  = ∑[ x ← stakeDistr ∣ actualVotes ⁻¹ Vote.yes ] x
   totalStake     = ∑[ x ← stakeDistr ∣ dom (actualVotes ∣^ (❴ Vote.yes ❵ ∪ ❴ Vote.no ❵)) ] x
 
-  accepted = if mT then (λ {t} → sizeActiveCC ≥ ccMinSize × (acceptedStake /₀ totalStake) ≥ t)
-                   else ⊤
+  accepted : Type
+  accepted = case mT of λ where
+    (just t) → sizeActiveCC ≥ ccMinSize × (acceptedStake /₀ totalStake) ≥ t
+    nothing  → ⊤
 ```
 
 ```agda
