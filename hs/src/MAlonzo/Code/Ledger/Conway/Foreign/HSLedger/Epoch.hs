@@ -1973,7 +1973,7 @@ d_Conv'45'EpochState_414
                                     MAlonzo.Code.Ledger.Conway.Specification.Enact.d_withdrawals_1130
                                     (coe v4))))))
                      (coe
-                        MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Ratify.C_MkRatifyState_12053
+                        MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Ratify.C_MkRatifyState_12033
                         (coe
                            MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Enact.C_MkEnactState_161
                            (coe
@@ -4199,7 +4199,7 @@ d_Conv'45'EpochState_414
                                  case coe v6 of
                                    MAlonzo.Code.Ledger.Conway.Specification.Ratify.C_constructor_2652 v7 v8 v9
                                      -> coe
-                                          MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Ratify.C_MkRatifyState_12053
+                                          MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Ratify.C_MkRatifyState_12033
                                           (coe
                                              MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Enact.C_MkEnactState_161
                                              (coe
@@ -4373,7 +4373,7 @@ d_Conv'45'EpochState_414
                            (coe
                               (\ v6 ->
                                  case coe v6 of
-                                   MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Ratify.C_MkRatifyState_12053 v7 v8 v9
+                                   MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Ratify.C_MkRatifyState_12033 v7 v8 v9
                                      -> coe
                                           MAlonzo.Code.Ledger.Conway.Specification.Ratify.C_constructor_2652
                                           (coe
@@ -5420,7 +5420,7 @@ du_epoch'45'step_416 v0 v1
                                                      MAlonzo.Code.Ledger.Conway.Specification.Enact.d_withdrawals_1130
                                                      (coe v6))))))
                                       (coe
-                                         MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Ratify.C_MkRatifyState_12053
+                                         MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Ratify.C_MkRatifyState_12033
                                          (coe
                                             MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Enact.C_MkEnactState_161
                                             (coe
@@ -7706,7 +7706,7 @@ du_epoch'45'step_416 v0 v1
                                                   case coe v8 of
                                                     MAlonzo.Code.Ledger.Conway.Specification.Ratify.C_constructor_2652 v9 v10 v11
                                                       -> coe
-                                                           MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Ratify.C_MkRatifyState_12053
+                                                           MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Ratify.C_MkRatifyState_12033
                                                            (coe
                                                               MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Enact.C_MkEnactState_161
                                                               (coe
@@ -7883,7 +7883,7 @@ du_epoch'45'step_416 v0 v1
                                             (coe
                                                (\ v8 ->
                                                   case coe v8 of
-                                                    MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Ratify.C_MkRatifyState_12053 v9 v10 v11
+                                                    MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Ratify.C_MkRatifyState_12033 v9 v10 v11
                                                       -> coe
                                                            MAlonzo.Code.Ledger.Conway.Specification.Ratify.C_constructor_2652
                                                            (coe
@@ -8284,7 +8284,7 @@ check_MkEpochState_4247 ::
   MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Rewards.T_Snapshots_4277 ->
   MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Ledger.T_LState_2891 ->
   MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Enact.T_EnactState_159 ->
-  MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Ratify.T_RatifyState_12051 ->
+  MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Ratify.T_RatifyState_12031 ->
   T_EpochState_4245
 check_MkEpochState_4247 = MkEpochState
 cover_EpochState_4245 :: EpochState -> ()

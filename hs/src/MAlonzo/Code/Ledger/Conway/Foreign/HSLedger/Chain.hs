@@ -974,7 +974,7 @@ d_Conv'45'ChainState_52
                                                 MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_epochState_4786
                                                 (coe v1))))))))
                            (coe
-                              MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Ratify.C_MkRatifyState_12053
+                              MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Ratify.C_MkRatifyState_12033
                               (coe
                                  MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Enact.C_MkEnactState_161
                                  (coe
@@ -1959,7 +1959,7 @@ d_Conv'45'ChainState_52
                                                                MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_es_4758
                                                                (coe v6)))))))
                                              (coe
-                                                MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Ratify.C_MkRatifyState_12053
+                                                MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Ratify.C_MkRatifyState_12033
                                                 (coe
                                                    MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Enact.C_MkEnactState_161
                                                    (coe
@@ -2876,7 +2876,7 @@ d_Conv'45'ChainState_52
                                                                               MAlonzo.Code.Ledger.Conway.Specification.Enact.d_withdrawals_1130
                                                                               (coe v13))))))
                                                                (coe
-                                                                  MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Ratify.C_MkRatifyState_12053
+                                                                  MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Ratify.C_MkRatifyState_12033
                                                                   (coe
                                                                      MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Enact.C_MkEnactState_161
                                                                      (coe
@@ -5237,7 +5237,7 @@ d_Conv'45'ChainState_52
                                                                            case coe v15 of
                                                                              MAlonzo.Code.Ledger.Conway.Specification.Ratify.C_constructor_2652 v16 v17 v18
                                                                                -> coe
-                                                                                    MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Ratify.C_MkRatifyState_12053
+                                                                                    MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Ratify.C_MkRatifyState_12033
                                                                                     (coe
                                                                                        MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Enact.C_MkEnactState_161
                                                                                        (coe
@@ -5423,7 +5423,7 @@ d_Conv'45'ChainState_52
                                                                      (coe
                                                                         (\ v15 ->
                                                                            case coe v15 of
-                                                                             MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Ratify.C_MkRatifyState_12053 v16 v17 v18
+                                                                             MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Ratify.C_MkRatifyState_12033 v16 v17 v18
                                                                                -> coe
                                                                                     MAlonzo.Code.Ledger.Conway.Specification.Ratify.C_constructor_2652
                                                                                     (coe

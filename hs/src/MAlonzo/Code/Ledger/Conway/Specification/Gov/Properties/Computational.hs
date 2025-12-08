@@ -596,20 +596,20 @@ d_voter_1264 v0
       MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_voter_908
       (coe v0)
 -- Ledger.Conway.Specification.Gov.Properties.Computational._.canVote
-d_canVote_1386 ::
+d_canVote_1388 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   MAlonzo.Code.Ledger.Conway.Specification.PParams.T_PParams_274 ->
   MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovAction_828 ->
   MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovRole_782 ->
   ()
-d_canVote_1386 = erased
+d_canVote_1388 = erased
 -- Ledger.Conway.Specification.Gov.Properties.Computational._.expired
-d_expired_1394 ::
+d_expired_1396 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   AgdaAny ->
   MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovActionState_1004 ->
   ()
-d_expired_1394 = erased
+d_expired_1396 = erased
 -- Ledger.Conway.Specification.Gov.Properties.Computational.lookupActionId
 d_lookupActionId_1522 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
@@ -654,7 +654,7 @@ d_lookupActionId_1522 v0 v1 v2 v3 v4
                  (coe
                     MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'8594''45'dec__106
                     (coe
-                       MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_expired'63'_3220
+                       MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_expired'63'_3270
                        (coe v0) (coe v4)
                        (coe MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30 (coe v5)))
                     (coe

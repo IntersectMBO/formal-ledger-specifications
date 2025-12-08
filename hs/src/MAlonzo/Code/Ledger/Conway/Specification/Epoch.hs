@@ -1181,20 +1181,20 @@ du_HasEnactState'45'RatifyState_2686
 -- Ledger.Conway.Specification.Epoch._.HasRatifyState
 d_HasRatifyState_2688 a0 a1 a2 a3 = ()
 -- Ledger.Conway.Specification.Epoch._.RatifyEnv
-d_RatifyEnv_2702 a0 a1 = ()
+d_RatifyEnv_2704 a0 a1 = ()
 -- Ledger.Conway.Specification.Epoch._.RatifyState
-d_RatifyState_2706 a0 a1 = ()
+d_RatifyState_2708 a0 a1 = ()
 -- Ledger.Conway.Specification.Epoch._.RatifyStateOf
-d_RatifyStateOf_2710 ::
+d_RatifyStateOf_2712 ::
   MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_HasRatifyState_2658 ->
   AgdaAny ->
   MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyState_2638
-d_RatifyStateOf_2710 v0
+d_RatifyStateOf_2712 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_RatifyStateOf_2666
       (coe v0)
 -- Ledger.Conway.Specification.Epoch._.StakeDistrs
-d_StakeDistrs_2712 a0 a1 = ()
+d_StakeDistrs_2714 a0 a1 = ()
 -- Ledger.Conway.Specification.Epoch._.HasRatifyState.RatifyStateOf
 d_RatifyStateOf_2822 ::
   MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_HasRatifyState_2658 ->
@@ -2145,7 +2145,7 @@ du_HasCast'45'EpochState_3310
                                        MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                        (coe
                                           (MAlonzo.RTE.QName
-                                             (2706 :: Integer) (4112555248803407823 :: Integer)
+                                             (2708 :: Integer) (4112555248803407823 :: Integer)
                                              "Ledger.Conway.Specification.Epoch._.RatifyState"
                                              (MAlonzo.RTE.Fixity
                                                 MAlonzo.RTE.NonAssoc MAlonzo.RTE.Unrelated)))
@@ -3453,7 +3453,7 @@ du_applyRUpd_3454 v0 v1 v2
                                                                                     MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                                     (coe
                                                                                        (MAlonzo.RTE.QName
-                                                                                          (2706 ::
+                                                                                          (2708 ::
                                                                                              Integer)
                                                                                           (4112555248803407823 ::
                                                                                              Integer)
