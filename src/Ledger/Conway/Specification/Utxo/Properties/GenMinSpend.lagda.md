@@ -104,7 +104,7 @@ module _ -- ASSUMPTION --
 
   ≤certDeps {d} = begin
     getCoin d                      ≤⟨ m≤m+n (getCoin d) _ ⟩
-    getCoin d + _                  ≡⟨ sym ∪⁺singleton≡ ⟩
+    getCoin d + _                  ≡˘⟨ ∪⁺singleton≡ ⟩
     getCoin (d ∪⁺ ❴ _ ❵)           ∎
     where open ≤-Reasoning
 
@@ -117,7 +117,7 @@ module _ -- ASSUMPTION --
       from ≤⇔<∨≈ $ inj₂ $
         indexedSumᵛ'-cong {C = Coin} {x = d} {y = d ∪ˡ ❴ dp , c ❵} $
         begin
-          d ˢ ≈⟨ ≡ᵉ.sym $ singleton-∈-∪ˡ {m = d} dp∈ ⟩
+          d ˢ ≈˘⟨ singleton-∈-∪ˡ {m = d} dp∈ ⟩
           (d ∪ˡ ❴ (dp , c) ❵) ˢ
         ∎
     where
@@ -131,32 +131,11 @@ module _ -- ASSUMPTION --
       getCoin d + _
         ≡˘⟨ indexedSumᵐ-∪ {X = d ᶠᵐ} {Y = ❴ dp , c ❵ ᶠᵐ} {f = proj₂} (disjoint-sing ¬p) ⟩
       indexedSumᵐ proj₂ ((d ᶠᵐ) ∪ˡᶠ (❴ dp , c ❵ ᶠᵐ))
-        ≡˘⟨ indexedSumᵐ-∪ˡ-∪ˡᶠ' d ❴ dp , c ❵ ⟩
+        ≡˘⟨ indexedSumᵐ-∪ˡ-∪ˡᶠ d ❴ dp , c ❵ ⟩
       getCoin (d ∪ˡ ❴ dp , c ❵)
         ∎
     where
       open ≤-Reasoning
-
-      -- N.B. The following is a copy of the indexedSumᵐ-∪ˡ-∪ˡᶠ function from the
-      -- abstract-set-theory.FiniteSetTheory module; the latter should not have been
-      -- defined inside a submodule that requires {B} ⦃ _ : DecEq B ⦄ since it
-      -- doesn't use B at all.
-      indexedSumᵐ-∪ˡ-∪ˡᶠ' : ∀ {A}{C} ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq C ⦄
-        ⦃ _ : CommutativeMonoid 0ℓ 0ℓ C ⦄ (m : A ⇀ C) (m' : A ⇀ C)
-        → CommutativeMonoid._≈_ it
-          (indexedSumᵐ proj₂ ((m ∪ˡ m') ᶠᵐ))
-          (indexedSumᵐ proj₂ ((m ᶠᵐ) ∪ˡᶠ (m' ᶠᵐ)))
-      indexedSumᵐ-∪ˡ-∪ˡᶠ' m m' =
-          indexedSumᵐ-cong
-            {f = proj₂}
-            {x = (m ∪ˡ m') ᶠᵐ}
-            {y = (m ᶠᵐ) ∪ˡᶠ (m' ᶠᵐ)}
-            ≡ᵉ.refl
-        where
-          open import Relation.Binary.Structures using (IsEquivalence)
-          module ≡ᵉ = IsEquivalence ≡ᵉ-isEquivalence
-
-
       disjoint-sing : dp ∉ dom d → disjoint (dom d) (dom ❴ dp , c ❵ˢ)
       disjoint-sing dp∉d a∈d a∈sing
         rewrite from ∈-dom-singleton-pair a∈sing = dp∉d a∈d
