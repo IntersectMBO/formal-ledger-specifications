@@ -83,6 +83,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#clm:ChangePPGroup" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -470,29 +475,6 @@
   
   <span class="md-ellipsis">
     Introduction
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="Properties.html" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Properties
     
   </span>
   
@@ -2218,6 +2200,19 @@
       
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    ChangePPGroup
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="Ledger.Conway.Specification.Gov.Properties.ChangePPGroup.html" class="md-nav__link md-nav__link--active">
         
   
@@ -2229,6 +2224,32 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#clm:ChangePPGroup" class="md-nav__link">
+    <span class="md-ellipsis">
+      Claim: PParam updates have non-empty groups
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -9959,6 +9980,23 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#clm:ChangePPGroup" class="md-nav__link">
+    <span class="md-ellipsis">
+      Claim: PParam updates have non-empty groups
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -9986,24 +10024,23 @@
 
   <h1>ChangePPGroup</h1>
 
+<h2 id="clm:ChangePPGroup">Claim: <span class="AgdaRecord">PParam</span> updates have non-empty groups<a class="headerlink" href="#clm:ChangePPGroup" title="Permanent link">&para;</a></h2>
 <pre class="Agda hidden-source">
-<a id="15" class="Symbol">{-#</a> <a id="19" class="Keyword">OPTIONS</a> <a id="27" class="Pragma">--safe</a> <a id="34" class="Symbol">#-}</a>
+<a id="230" class="Symbol">{-#</a> <a id="234" class="Keyword">OPTIONS</a> <a id="242" class="Pragma">--safe</a> <a id="249" class="Symbol">#-}</a>
 
-<a id="39" class="Keyword">open</a> <a id="44" class="Keyword">import</a> <a id="51" href="Ledger.Conway.Specification.Abstract.html" class="Module">Ledger.Conway.Specification.Abstract</a>
-<a id="88" class="Keyword">open</a> <a id="93" class="Keyword">import</a> <a id="100" href="Ledger.Conway.Specification.Transaction.html" class="Module">Ledger.Conway.Specification.Transaction</a>
+<a id="254" class="Keyword">open</a> <a id="259" class="Keyword">import</a> <a id="266" href="Ledger.Conway.Specification.Transaction.html" class="Module">Ledger.Conway.Specification.Transaction</a>
 
-<a id="141" class="Keyword">module</a> <a id="148" href="Ledger.Conway.Specification.Gov.Properties.ChangePPGroup.html" class="Module">Ledger.Conway.Specification.Gov.Properties.ChangePPGroup</a>
-  <a id="207" class="Symbol">(</a><a id="208" href="Ledger.Conway.Specification.Gov.Properties.ChangePPGroup.html#208" class="Bound">txs</a> <a id="212" class="Symbol">:</a> <a id="214" class="Symbol">_)</a> <a id="217" class="Symbol">(</a><a id="218" class="Keyword">open</a> <a id="223" href="Ledger.Conway.Specification.Transaction.html#2459" class="Module">TransactionStructure</a> <a id="244" href="Ledger.Conway.Specification.Gov.Properties.ChangePPGroup.html#208" class="Bound">txs</a><a id="247" class="Symbol">)</a>
-  <a id="251" class="Keyword">where</a>
+<a id="307" class="Keyword">module</a> <a id="314" href="Ledger.Conway.Specification.Gov.Properties.ChangePPGroup.html" class="Module">Ledger.Conway.Specification.Gov.Properties.ChangePPGroup</a>
+  <a id="373" class="Symbol">(</a><a id="374" href="Ledger.Conway.Specification.Gov.Properties.ChangePPGroup.html#374" class="Bound">txs</a> <a id="378" class="Symbol">:</a> <a id="380" class="Symbol">_)</a> <a id="383" class="Symbol">(</a><a id="384" class="Keyword">open</a> <a id="389" href="Ledger.Conway.Specification.Transaction.html#2459" class="Module">TransactionStructure</a> <a id="410" href="Ledger.Conway.Specification.Gov.Properties.ChangePPGroup.html#374" class="Bound">txs</a><a id="413" class="Symbol">)</a>
+  <a id="417" class="Keyword">where</a>
 
-<a id="258" class="Keyword">open</a> <a id="263" class="Keyword">import</a> <a id="270" href="Ledger.Prelude.html" class="Module">Ledger.Prelude</a>
+<a id="424" class="Keyword">open</a> <a id="429" class="Keyword">import</a> <a id="436" href="Ledger.Prelude.html" class="Module">Ledger.Prelude</a>
 
-<a id="286" class="Keyword">instance</a>
-  <a id="297" href="Ledger.Conway.Specification.Gov.Properties.ChangePPGroup.html#297" class="Function">_</a> <a id="299" class="Symbol">:</a> <a id="301" href="Class.IsSet.html#375" class="Record">IsSet</a> <a id="307" href="Ledger.Conway.Specification.Transaction.html#4582" class="Record">TxBody</a> <a id="314" href="Ledger.Conway.Specification.Gov.Actions.html#10423" class="Record">GovProposal</a>
-  <a id="328" class="Symbol">_</a> <a id="330" class="Symbol">=</a> <a id="332" class="Keyword">record</a> <a id="339" class="Symbol">{</a> <a id="341" href="Class.IsSet.html#419" class="Field">toSet</a> <a id="347" class="Symbol">=</a> <a id="349" href="Axiom.Set.html#5903" class="Function">fromList</a> <a id="358" href="Function.Base.html#1134" class="Function Operator">∘</a> <a id="360" href="Ledger.Conway.Specification.Transaction.html#5091" class="Field">TxBody.txGovProposals</a> <a id="382" class="Symbol">}</a>
+<a id="452" class="Keyword">instance</a>
+  <a id="463" href="Ledger.Conway.Specification.Gov.Properties.ChangePPGroup.html#463" class="Function">_</a> <a id="465" class="Symbol">:</a> <a id="467" href="Class.IsSet.html#375" class="Record">IsSet</a> <a id="473" href="Ledger.Conway.Specification.Transaction.html#4582" class="Record">TxBody</a> <a id="480" href="Ledger.Conway.Specification.Gov.Actions.html#10423" class="Record">GovProposal</a>
+  <a id="494" class="Symbol">_</a> <a id="496" class="Symbol">=</a> <a id="498" class="Keyword">record</a> <a id="505" class="Symbol">{</a> <a id="507" href="Class.IsSet.html#419" class="Field">toSet</a> <a id="513" class="Symbol">=</a> <a id="515" href="Axiom.Set.html#5903" class="Function">fromList</a> <a id="524" href="Function.Base.html#1134" class="Function Operator">∘</a> <a id="526" href="Ledger.Conway.Specification.Transaction.html#5091" class="Field">TxBody.txGovProposals</a> <a id="548" class="Symbol">}</a>
 </pre>
 
-<p><strong>Claim (PParam updates have non-empty groups).</strong></p>
 <p><em>Informally</em>.</p>
 <p>Let <code class="AgdaBound">p</code> : <code class="AgdaRecord">GovProposal</code> be a governance proposal and suppose the
 <code class="AgdaDatatype">GovActionType</code> of <code class="AgdaBound">p</code> <code class="AgdaField">.action</code> is <code class="AgdaInductiveConstructor">ChangePParams</code>.
@@ -10012,10 +10049,10 @@ If the data field of <code class="AgdaBound">p</code>—that is
 denoted by <code class="AgdaBound">pu</code> (for "parameter update"), then the set
 <code class="AgdaField">updateGroups</code> <code class="AgdaBound">pu</code> is nonempty.</p>
 <p><em>Formally</em>.</p>
-<pre class="Agda"><a id="ChangePPHasGroup"></a><a id="942" href="Ledger.Conway.Specification.Gov.Properties.ChangePPGroup.html#942" class="Function">ChangePPHasGroup</a> <a id="959" class="Symbol">:</a> <a id="961" class="Symbol">{</a><a id="962" href="Ledger.Conway.Specification.Gov.Properties.ChangePPGroup.html#962" class="Bound">tx</a> <a id="965" class="Symbol">:</a> <a id="967" href="Ledger.Conway.Specification.Transaction.html#6300" class="Record">Tx</a><a id="969" class="Symbol">}</a> <a id="971" class="Symbol">{</a><a id="972" href="Ledger.Conway.Specification.Gov.Properties.ChangePPGroup.html#972" class="Bound">p</a> <a id="974" class="Symbol">:</a> <a id="976" href="Ledger.Conway.Specification.Gov.Actions.html#10423" class="Record">GovProposal</a><a id="987" class="Symbol">}</a> <a id="989" class="Symbol">(</a><a id="990" href="Ledger.Conway.Specification.Gov.Properties.ChangePPGroup.html#990" class="Bound">pu</a> <a id="993" class="Symbol">:</a> <a id="995" href="Ledger.Conway.Specification.PParams.html#19403" class="Function">PParamsUpdate</a><a id="1008" class="Symbol">)</a>
-  <a id="1012" class="Symbol">→</a> <a id="1014" href="Ledger.Conway.Specification.Gov.Properties.ChangePPGroup.html#972" class="Bound">p</a> <a id="1016" href="Class.IsSet.html#458" class="Function Operator">∈</a> <a id="1018" href="Ledger.Conway.Specification.Transaction.html#6332" class="Field">Tx.body</a> <a id="1026" href="Ledger.Conway.Specification.Gov.Properties.ChangePPGroup.html#962" class="Bound">tx</a> <a id="1029" class="Symbol">→</a> <a id="1031" href="Ledger.Conway.Specification.Gov.Properties.ChangePPGroup.html#972" class="Bound">p</a> <a id="1033" class="Symbol">.</a><a id="1034" href="Ledger.Conway.Specification.Gov.Actions.html#10460" class="Field">GovProposal.action</a> <a id="1053" href="Agda.Builtin.Equality.html#150" class="Datatype Operator">≡</a> <a class="AgdaKaTeX">$\begin{pmatrix} \,\href{Ledger.Conway.Specification.Gov.Actions.html#2598}{\htmlId{1057}{\htmlClass{InductiveConstructor}{\text{ChangePParams}}}}\, \\ \,\href{Ledger.Conway.Specification.Gov.Properties.ChangePPGroup.html#990}{\htmlId{1073}{\htmlClass{Bound}{\text{pu}}}}\, \end{pmatrix}$</a>
-  <a id="1082" class="Symbol">→</a> <a id="1084" href="Agda.Primitive.html#388" class="Primitive">Type</a>
-<a id="1089" href="Ledger.Conway.Specification.Gov.Properties.ChangePPGroup.html#942" class="Function">ChangePPHasGroup</a> <a id="1106" href="Ledger.Conway.Specification.Gov.Properties.ChangePPGroup.html#1106" class="Bound">pu</a> <a id="1109" class="Symbol">_</a> <a id="1111" class="Symbol">_</a> <a id="1113" class="Symbol">=</a> <a id="1115" href="Ledger.Conway.Specification.PParams.html#18937" class="Function">updateGroups</a> <a id="1128" href="Ledger.Conway.Specification.Gov.Properties.ChangePPGroup.html#1106" class="Bound">pu</a> <a id="1131" href="Relation.Binary.PropositionalEquality.Core.html#1000" class="Function Operator">≢</a> <a id="1133" href="Class.HasEmptySet.html#287" class="Field">∅</a>
+<pre class="Agda"><a id="ChangePPHasGroup"></a><a id="1057" href="Ledger.Conway.Specification.Gov.Properties.ChangePPGroup.html#1057" class="Function">ChangePPHasGroup</a> <a id="1074" class="Symbol">:</a> <a id="1076" class="Symbol">{</a><a id="1077" href="Ledger.Conway.Specification.Gov.Properties.ChangePPGroup.html#1077" class="Bound">tx</a> <a id="1080" class="Symbol">:</a> <a id="1082" href="Ledger.Conway.Specification.Transaction.html#6300" class="Record">Tx</a><a id="1084" class="Symbol">}</a> <a id="1086" class="Symbol">{</a><a id="1087" href="Ledger.Conway.Specification.Gov.Properties.ChangePPGroup.html#1087" class="Bound">p</a> <a id="1089" class="Symbol">:</a> <a id="1091" href="Ledger.Conway.Specification.Gov.Actions.html#10423" class="Record">GovProposal</a><a id="1102" class="Symbol">}</a> <a id="1104" class="Symbol">(</a><a id="1105" href="Ledger.Conway.Specification.Gov.Properties.ChangePPGroup.html#1105" class="Bound">pu</a> <a id="1108" class="Symbol">:</a> <a id="1110" href="Ledger.Conway.Specification.PParams.html#19403" class="Function">PParamsUpdate</a><a id="1123" class="Symbol">)</a>
+  <a id="1127" class="Symbol">→</a> <a id="1129" href="Ledger.Conway.Specification.Gov.Properties.ChangePPGroup.html#1087" class="Bound">p</a> <a id="1131" href="Class.IsSet.html#458" class="Function Operator">∈</a> <a id="1133" href="Ledger.Conway.Specification.Transaction.html#6332" class="Field">Tx.body</a> <a id="1141" href="Ledger.Conway.Specification.Gov.Properties.ChangePPGroup.html#1077" class="Bound">tx</a> <a id="1144" class="Symbol">→</a> <a id="1146" href="Ledger.Conway.Specification.Gov.Properties.ChangePPGroup.html#1087" class="Bound">p</a> <a id="1148" class="Symbol">.</a><a id="1149" href="Ledger.Conway.Specification.Gov.Actions.html#10460" class="Field">GovProposal.action</a> <a id="1168" href="Agda.Builtin.Equality.html#150" class="Datatype Operator">≡</a> <a class="AgdaKaTeX">$\begin{pmatrix} \,\href{Ledger.Conway.Specification.Gov.Actions.html#2598}{\htmlId{1172}{\htmlClass{InductiveConstructor}{\text{ChangePParams}}}}\, \\ \,\href{Ledger.Conway.Specification.Gov.Properties.ChangePPGroup.html#1105}{\htmlId{1188}{\htmlClass{Bound}{\text{pu}}}}\, \end{pmatrix}$</a>
+  <a id="1197" class="Symbol">→</a> <a id="1199" href="Agda.Primitive.html#388" class="Primitive">Type</a>
+<a id="1204" href="Ledger.Conway.Specification.Gov.Properties.ChangePPGroup.html#1057" class="Function">ChangePPHasGroup</a> <a id="1221" href="Ledger.Conway.Specification.Gov.Properties.ChangePPGroup.html#1221" class="Bound">pu</a> <a id="1224" class="Symbol">_</a> <a id="1226" class="Symbol">_</a> <a id="1228" class="Symbol">=</a> <a id="1230" href="Ledger.Conway.Specification.PParams.html#18937" class="Function">updateGroups</a> <a id="1243" href="Ledger.Conway.Specification.Gov.Properties.ChangePPGroup.html#1221" class="Bound">pu</a> <a id="1246" href="Relation.Binary.PropositionalEquality.Core.html#1000" class="Function Operator">≢</a> <a id="1248" href="Class.HasEmptySet.html#287" class="Field">∅</a>
 </pre>
 <p><em>Proof</em>. (coming soon)</p>
 

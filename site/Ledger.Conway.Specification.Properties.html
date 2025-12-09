@@ -83,6 +83,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#properties" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -470,29 +475,6 @@
   
   <span class="md-ellipsis">
     Introduction
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="Properties.html" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Properties
     
   </span>
   
@@ -2664,6 +2646,19 @@
       
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Properties
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="Ledger.Conway.Specification.Properties.html" class="md-nav__link md-nav__link--active">
         
   
@@ -2675,6 +2670,92 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#properties" class="md-nav__link">
+    <span class="md-ellipsis">
+      Properties
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Properties">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#preservation-of-value" class="md-nav__link">
+    <span class="md-ellipsis">
+      Preservation of Value
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#invariance-properties" class="md-nav__link">
+    <span class="md-ellipsis">
+      Invariance Properties
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#matching-governance-action-deposits" class="md-nav__link">
+    <span class="md-ellipsis">
+      Matching Governance Action Deposits
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#minimum-spending-condition" class="md-nav__link">
+    <span class="md-ellipsis">
+      Minimum Spending Condition
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#other-miscellaneous-properties" class="md-nav__link">
+    <span class="md-ellipsis">
+      Other Miscellaneous Properties
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#transaction-validity" class="md-nav__link">
+    <span class="md-ellipsis">
+      Transaction Validity
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -9955,6 +10036,83 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#properties" class="md-nav__link">
+    <span class="md-ellipsis">
+      Properties
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Properties">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#preservation-of-value" class="md-nav__link">
+    <span class="md-ellipsis">
+      Preservation of Value
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#invariance-properties" class="md-nav__link">
+    <span class="md-ellipsis">
+      Invariance Properties
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#matching-governance-action-deposits" class="md-nav__link">
+    <span class="md-ellipsis">
+      Matching Governance Action Deposits
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#minimum-spending-condition" class="md-nav__link">
+    <span class="md-ellipsis">
+      Minimum Spending Condition
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#other-miscellaneous-properties" class="md-nav__link">
+    <span class="md-ellipsis">
+      Other Miscellaneous Properties
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#transaction-validity" class="md-nav__link">
+    <span class="md-ellipsis">
+      Transaction Validity
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -9982,25 +10140,149 @@
 
   <h1>Properties</h1>
 
-<p>This section defines some of the types and functions we use to check the
-validity of transactions and blocks of the Cardano blockchain.</p>
-<pre class="Agda hidden-source"><a id="247" class="Symbol">{-#</a> <a id="251" class="Keyword">OPTIONS</a> <a id="259" class="Pragma">--safe</a> <a id="266" class="Symbol">#-}</a>
+<h2 id="properties">Properties<a class="headerlink" href="#properties" title="Permanent link">&para;</a></h2>
+<p>This section presents the properties of the ledger that we have formally proved in
+Agda or plan to do so in the near future.  We indicate in which Agda module each
+property is formally stated and (possibly) proved. A "Claim" is a property that is
+not yet proved, while a "Theorem" is one for which we have a formal proof.</p>
+<pre class="Agda hidden-source"><a id="449" class="Symbol">{-#</a> <a id="453" class="Keyword">OPTIONS</a> <a id="461" class="Pragma">--safe</a> <a id="468" class="Symbol">#-}</a>
 
-<a id="271" class="Keyword">open</a> <a id="276" class="Keyword">import</a> <a id="283" href="Ledger.Conway.Specification.Abstract.html" class="Module">Ledger.Conway.Specification.Abstract</a>
-<a id="320" class="Keyword">open</a> <a id="325" class="Keyword">import</a> <a id="332" href="Ledger.Conway.Specification.Transaction.html" class="Module">Ledger.Conway.Specification.Transaction</a>
+<a id="473" class="Keyword">open</a> <a id="478" class="Keyword">import</a> <a id="485" href="Ledger.Conway.Specification.Abstract.html" class="Module">Ledger.Conway.Specification.Abstract</a>
+<a id="522" class="Keyword">open</a> <a id="527" class="Keyword">import</a> <a id="534" href="Ledger.Conway.Specification.Transaction.html" class="Module">Ledger.Conway.Specification.Transaction</a>
 
-<a id="373" class="Keyword">module</a> <a id="380" href="Ledger.Conway.Specification.Properties.html" class="Module">Ledger.Conway.Specification.Properties</a>
-  <a id="421" class="Symbol">(</a><a id="422" href="Ledger.Conway.Specification.Properties.html#422" class="Bound">txs</a> <a id="426" class="Symbol">:</a> <a id="428" class="Symbol">_)</a> <a id="431" class="Symbol">(</a><a id="432" class="Keyword">open</a> <a id="437" href="Ledger.Conway.Specification.Transaction.html#2459" class="Module">TransactionStructure</a> <a id="458" href="Ledger.Conway.Specification.Properties.html#422" class="Bound">txs</a><a id="461" class="Symbol">)</a>
-  <a id="465" class="Symbol">(</a><a id="466" href="Ledger.Conway.Specification.Properties.html#466" class="Bound">abs</a> <a id="470" class="Symbol">:</a> <a id="472" href="Ledger.Conway.Specification.Abstract.html#930" class="Record">AbstractFunctions</a> <a id="490" href="Ledger.Conway.Specification.Properties.html#422" class="Bound">txs</a><a id="493" class="Symbol">)</a> <a id="495" class="Symbol">(</a><a id="496" class="Keyword">open</a> <a id="501" href="Ledger.Conway.Specification.Abstract.html#930" class="Module">AbstractFunctions</a> <a id="519" href="Ledger.Conway.Specification.Properties.html#466" class="Bound">abs</a><a id="522" class="Symbol">)</a>
-  <a id="526" class="Keyword">where</a>
-<a id="532" class="Keyword">open</a> <a id="537" class="Keyword">import</a> <a id="544" href="Ledger.Conway.Specification.Certs.html" class="Module">Ledger.Conway.Specification.Certs</a> <a id="578" href="Ledger.Conway.Specification.Transaction.html#3581" class="Function">govStructure</a>
-<a id="591" class="Keyword">open</a> <a id="596" class="Keyword">import</a> <a id="603" href="Ledger.Conway.Specification.Chain.html" class="Module">Ledger.Conway.Specification.Chain</a> <a id="637" href="Ledger.Conway.Specification.Properties.html#422" class="Bound">txs</a> <a id="641" href="Ledger.Conway.Specification.Properties.html#466" class="Bound">abs</a>
-<a id="645" class="Keyword">open</a> <a id="650" class="Keyword">import</a> <a id="657" href="Ledger.Conway.Specification.Enact.html" class="Module">Ledger.Conway.Specification.Enact</a> <a id="691" href="Ledger.Conway.Specification.Transaction.html#3581" class="Function">govStructure</a>
-<a id="704" class="Keyword">open</a> <a id="709" class="Keyword">import</a> <a id="716" href="Ledger.Conway.Specification.Epoch.html" class="Module">Ledger.Conway.Specification.Epoch</a> <a id="750" href="Ledger.Conway.Specification.Properties.html#422" class="Bound">txs</a> <a id="754" href="Ledger.Conway.Specification.Properties.html#466" class="Bound">abs</a>
-<a id="758" class="Keyword">open</a> <a id="763" class="Keyword">import</a> <a id="770" href="Ledger.Conway.Specification.Ledger.html" class="Module">Ledger.Conway.Specification.Ledger</a> <a id="805" href="Ledger.Conway.Specification.Properties.html#422" class="Bound">txs</a> <a id="809" href="Ledger.Conway.Specification.Properties.html#466" class="Bound">abs</a>
-<a id="813" class="Keyword">open</a> <a id="818" class="Keyword">import</a> <a id="825" href="Ledger.Prelude.html" class="Module">Ledger.Prelude</a>
+<a id="575" class="Keyword">module</a> <a id="582" href="Ledger.Conway.Specification.Properties.html" class="Module">Ledger.Conway.Specification.Properties</a>
+  <a id="623" class="Symbol">(</a><a id="624" href="Ledger.Conway.Specification.Properties.html#624" class="Bound">txs</a> <a id="628" class="Symbol">:</a> <a id="630" class="Symbol">_)</a> <a id="633" class="Symbol">(</a><a id="634" class="Keyword">open</a> <a id="639" href="Ledger.Conway.Specification.Transaction.html#2459" class="Module">TransactionStructure</a> <a id="660" href="Ledger.Conway.Specification.Properties.html#624" class="Bound">txs</a><a id="663" class="Symbol">)</a>
+  <a id="667" class="Symbol">(</a><a id="668" href="Ledger.Conway.Specification.Properties.html#668" class="Bound">abs</a> <a id="672" class="Symbol">:</a> <a id="674" href="Ledger.Conway.Specification.Abstract.html#930" class="Record">AbstractFunctions</a> <a id="692" href="Ledger.Conway.Specification.Properties.html#624" class="Bound">txs</a><a id="695" class="Symbol">)</a> <a id="697" class="Symbol">(</a><a id="698" class="Keyword">open</a> <a id="703" href="Ledger.Conway.Specification.Abstract.html#930" class="Module">AbstractFunctions</a> <a id="721" href="Ledger.Conway.Specification.Properties.html#668" class="Bound">abs</a><a id="724" class="Symbol">)</a>
+  <a id="728" class="Keyword">where</a>
+<a id="734" class="Keyword">open</a> <a id="739" class="Keyword">import</a> <a id="746" href="Ledger.Conway.Specification.Certs.html" class="Module">Ledger.Conway.Specification.Certs</a> <a id="780" href="Ledger.Conway.Specification.Transaction.html#3581" class="Function">govStructure</a>
+<a id="793" class="Keyword">open</a> <a id="798" class="Keyword">import</a> <a id="805" href="Ledger.Conway.Specification.Chain.html" class="Module">Ledger.Conway.Specification.Chain</a> <a id="839" href="Ledger.Conway.Specification.Properties.html#624" class="Bound">txs</a> <a id="843" href="Ledger.Conway.Specification.Properties.html#668" class="Bound">abs</a>
+<a id="847" class="Keyword">open</a> <a id="852" class="Keyword">import</a> <a id="859" href="Ledger.Conway.Specification.Enact.html" class="Module">Ledger.Conway.Specification.Enact</a> <a id="893" href="Ledger.Conway.Specification.Transaction.html#3581" class="Function">govStructure</a>
+<a id="906" class="Keyword">open</a> <a id="911" class="Keyword">import</a> <a id="918" href="Ledger.Conway.Specification.Epoch.html" class="Module">Ledger.Conway.Specification.Epoch</a> <a id="952" href="Ledger.Conway.Specification.Properties.html#624" class="Bound">txs</a> <a id="956" href="Ledger.Conway.Specification.Properties.html#668" class="Bound">abs</a>
+<a id="960" class="Keyword">open</a> <a id="965" class="Keyword">import</a> <a id="972" href="Ledger.Conway.Specification.Ledger.html" class="Module">Ledger.Conway.Specification.Ledger</a> <a id="1007" href="Ledger.Conway.Specification.Properties.html#624" class="Bound">txs</a> <a id="1011" href="Ledger.Conway.Specification.Properties.html#668" class="Bound">abs</a>
+<a id="1015" class="Keyword">open</a> <a id="1020" class="Keyword">import</a> <a id="1027" href="Ledger.Prelude.html" class="Module">Ledger.Prelude</a>
 </pre>
 
+<h3 id="preservation-of-value">Preservation of Value<a class="headerlink" href="#preservation-of-value" title="Permanent link">&para;</a></h3>
+<p>A key property of the ledger is that the total amount of coin in the system
+remains constant as transactions are processed.  This is known as
+"preservation of value" (PoV). </p>
+<p>There are several "preservation of value" proofs throughout this formal
+specificaition.  These can be found in the following modules:</p>
+<ul>
+<li>
+<p><strong>Theorem</strong> <a href="Ledger.Conway.Specification.Ledger.Properties.PoV.html#thm:LEDGER-PoV">LEDGER-PoV</a>. The <code class="AgdaDatatype">LEDGER</code> rule preserves value.</p>
+</li>
+<li>
+<p><strong>Lemma</strong> <a href="Ledger.Conway.Specification.Utxo.Properties.PoV.html#thm:UTXO-PoV">UTXO-PoV</a>. The <code class="AgdaDatatype">UTXO</code> rule preserves value.</p>
+</li>
+<li>
+<p><strong>Lemma</strong> <a href="Ledger.Conway.Specification.Certs.Properties.PoV.html#thm:CERTS-PoV">CERTS-PoV</a>. The <code class="AgdaDatatype">CERTS</code> rule preserves value.</p>
+</li>
+<li>
+<p><strong>Lemma</strong> <a href="Ledger.Conway.Specification.Certs.Properties.PoVLemmas.html#thm:CERT-PoV">CERT-PoV</a>. The <code class="AgdaDatatype">CERT</code> rule preserves value.</p>
+</li>
+</ul>
+<h3 id="invariance-properties">Invariance Properties<a class="headerlink" href="#invariance-properties" title="Permanent link">&para;</a></h3>
+<p>To say that a predicate <code class="AgdaBound">P</code> is an <em>invariant</em> of a transition rule
+<code class="AgdaBound">R</code> means the following: if the rule <code class="AgdaBound">R</code> relates states
+<code class="AgdaBound">s</code> and <code class="AgdaBound">s'</code> and if <code class="AgdaBound">P</code> holds at state
+<code class="AgdaBound">s</code>, then <code class="AgdaBound">P</code> holds at state <code class="AgdaBound">s'</code>.</p>
+<p>Here are two examples of invariance properties.</p>
+<ul>
+<li>
+<p><strong>Claim</strong> [CredDepsEqualDomRwds][]. Equality of credential deposits is a
+   <code class="AgdaDatatype">CHAIN</code> invariant.</p>
+</li>
+<li>
+<p><strong>Claim</strong> <a href="Ledger.Conway.Specification.Chain.Properties.PParamsWellFormed.html#clm:pp-wellFormed-inv">CHAIN-PParamsWellFormed-inv</a>. Well-formedness of <code class="AgdaRecord">PParams</code> is a
+   <code class="AgdaDatatype">CHAIN</code> invariant.</p>
+</li>
+</ul>
+<h3 id="matching-governance-action-deposits">Matching Governance Action Deposits<a class="headerlink" href="#matching-governance-action-deposits" title="Permanent link">&para;</a></h3>
+<p>Given a ledger state <code class="AgdaBound">s</code>, we focus on deposits in the
+<code class="AgdaRecord">UTxOState</code> of <code class="AgdaBound">s</code> that are
+<code class="AgdaInductiveConstructor">GovActionDeposit</code>s and we compare that set of
+deposits with the <code class="AgdaInductiveConstructor">GovActionDeposit</code>s of the
+<code class="AgdaDatatype">GovState</code> of <code class="AgdaBound">s</code>.
+When these two sets are the same, we write
+<code class="AgdaFunction">govDepsMatch</code> <code class="AgdaBound">s</code> and say the
+<code class="AgdaFunction">govDepsMatch</code> relation holds for <code class="AgdaBound">s</code>.
+The formal definition of <code class="AgdaFunction">govDepsMatch</code> is given
+in <a href="Ledger.Conway.Specification.Ledger.Properties.html">Ledger.Properties</a>.</p>
+<p>The properties [ChainGovDepsMatch][], [LedgerGovDepsMatch][] and [EpochGovDepsMatch][]
+assert that <code class="AgdaFunction">govDepsMatch</code> is an invariant of the <code class="AgdaDatatype">CHAIN</code>,
+<code class="AgdaDatatype">LEDGER</code>, and <code class="AgdaDatatype">EPOCH</code> rules, respectively.</p>
+<ul>
+<li><strong>Theorem</strong> <a href="Ledger.Conway.Specification.Chain.Properties.GovDepsMatch.html#thm:ChainGovDepsMatch">CHAIN-GovDepsMatch</a>. <code class="AgdaFunction">govDepsMatch</code> is invariant of <code class="AgdaOperator">CHAIN</code> rule.</li>
+</ul>
+<p>That is, if <code class="AgdaFunction">govDepsMatch</code> <code>s</code> and if
+   <code>s</code> <code class="AgdaDatatype">⇀⦇</code> <code>tx</code> <code class="AgdaDatatype">,CHAIN⦈</code> <code>s'</code>, then <code class="AgdaFunction">govDepsMatch</code> <code>s'</code>.</p>
+<ul>
+<li>
+<p><strong>Lemma</strong> <a href="Ledger.Conway.Specification.Ledger.Properties.GovDepsMatch.html#lem:LedgerGovDepsMatch">LEDGER-GovDepsMatch</a>. <code class="AgdaFunction">govDepsMatch</code> is an invariant of the <code class="AgdaDatatype">LEDGER</code> rule.</p>
+</li>
+<li>
+<p><strong>Lemma</strong> <a href="Ledger.Conway.Specification.Epoch.Properties.GovDepsMatch.html#lem:EpochGovDepsMatch">EPOCH-GovDepsMatch</a>. <code class="AgdaFunction">govDepsMatch</code> is an invariant of the <code class="AgdaDatatype">EPOCH</code> rule.</p>
+</li>
+</ul>
+<p>To be clear, the assertion that "the <code class="AgdaFunction">govDepsMatch</code> relation is an invariant of the
+<code class="AgdaDatatype">LEDGER</code> rule" means the following:
+if <code class="AgdaFunction">govDepsMatch</code> <code class="AgdaBound">s</code> and
+<code class="AgdaBound">s</code> <code class="AgdaDatatype">⇀⦇</code> <code class="AgdaBound">tx</code> <code class="AgdaDatatype">,LEDGER⦈</code> <code class="AgdaBound">s'</code>,
+then <code class="AgdaFunction">govDepsMatch</code> <code class="AgdaBound">s'</code>.</p>
+<h3 id="minimum-spending-condition">Minimum Spending Condition<a class="headerlink" href="#minimum-spending-condition" title="Permanent link">&para;</a></h3>
+<p><strong>Theorem</strong> <a href="Ledger.Conway.Specification.Utxo.Properties.MinSpend.html#thm:minspend">UTXO-minspend</a>. Let <code class="AgdaBound">s</code> and <code class="AgdaBound">s'</code> be UTxO states.
+If <code class="AgdaBound">s</code> <code class="AgdaDatatype">⇀⦇</code> <code class="AgdaBound">tx</code> <code class="AgdaDatatype">,UTXO⦈</code> <code class="AgdaBound">s'</code> and
+if there are no refunds from deregistrations, then the coin consumed by
+<code class="AgdaBound">tx</code> is at least the sum of the governance action deposits of the
+proposals in <code class="AgdaBound">tx</code>.</p>
+<h3 id="other-miscellaneous-properties">Other Miscellaneous Properties<a class="headerlink" href="#other-miscellaneous-properties" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Claim</strong> <a href="Ledger.Conway.Specification.Gov.Properties.ChangePPGroup.html#clm:ChangePPGroup">Gov-ChangePPHasGroup</a>. PParam updates have non-empty groups.</li>
+</ul>
+<p>Let <code class="AgdaBound">p</code> : <code class="AgdaRecord">GovProposal</code> be a governance proposal and
+   suppose the <code class="AgdaDatatype">GovActionType</code> of <code class="AgdaBound">p</code>
+   <code class="AgdaField">.action</code> is <code class="AgdaInductiveConstructor">ChangePParams</code>.  Moreover,
+   suppose <code class="AgdaBound">pu</code> is the data field of <code class="AgdaBound">p</code>. Then the
+   set <code class="AgdaField">updateGroups</code> <code class="AgdaBound">pu</code> is nonempty.</p>
+<ul>
+<li><strong>Claim</strong> <a href="Ledger.Conway.Specification.Chain.Properties.EpochStep.html#clm:EpochStep">CHAIN-EpochStep</a>.  A new enact state occurs only in a new epoch.</li>
+</ul>
+<p>Let <code class="AgdaBound">cs</code> and <code class="AgdaBound">cs'</code> be <code class="AgdaRecord">ChainStates</code> and
+   <code class="AgdaBound">b</code> a <code class="AgdaRecord">Block</code>.  If <code class="AgdaBound">cs</code> <code class="AgdaDatatype">⇀⦇</code>
+   <code class="AgdaBound">b</code> <code class="AgdaDatatype">,CHAIN⦈</code> <code class="AgdaBound">cs'</code> and if the enact states
+   of <code class="AgdaBound">cs</code> and <code class="AgdaBound">cs'</code> differ, then the epoch of the slot of
+   <code class="AgdaBound">b</code> is the successor of the last epoch of <code class="AgdaBound">cs</code>.</p>
+<ul>
+<li><strong>Claim</strong> <a href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#clm:NEWEPOCH-const-rwds">NEWEPOCH-ConstRwds</a>.  Rewards are left unchanged by the <code class="AgdaOperator">NEWEPOCH</code> rule.</li>
+</ul>
+<p>That is, if <code class="AgdaBound">es</code> and <code class="AgdaBound">es'</code> are two
+   <code class="AgdaRecord">NewEpochStates</code> such that <code class="AgdaBound">es</code> <code class="AgdaDatatype">⇀⦇</code>
+   <code class="AgdaBound">e</code> <code class="AgdaDatatype">,NEWEPOCH⦈</code> <code class="AgdaBound">es'</code>, then the rewards of
+   <code class="AgdaBound">es</code> and <code class="AgdaBound">es'</code> are equal.</p>
+<ul>
+<li><strong>Claim</strong> <a href="Ledger.Conway.Specification.Epoch.Properties.NoPropSameDReps.html#clm:NoPropSameDReps">Epoch-NoPropSameDReps</a>. The set of active <code class="AgdaFunction">DReps</code> remains unchanged if
+   there are no governance proposals.</li>
+</ul>
+<p>That is, if <code class="AgdaBound">es</code> is a <code class="AgdaRecord">NewEpochState</code>, and if the
+   <code class="AgdaFunction">GovState</code> of <code class="AgdaBound">es</code> contains no governance proposals,
+   then the set of <code class="AgdaField">activeDReps</code> of <code class="AgdaBound">es</code> in
+   <code class="AgdaDatatype">Epoch</code> <code class="AgdaBound">e</code> is equal to the set of
+   <code class="AgdaField">activeDReps</code> of <code>es</code> in the next epoch.</p>
+<ul>
+<li><strong>Claim</strong> <a href="Ledger.Conway.Specification.Certs.Properties.VoteDelegsVDeleg.html#clm:VDelegsInRegDReps">Certs-VoteDelegsVDeleg</a>.</li>
+</ul>
+<p>Suppose we have a collection <code class="AgdaBound">C</code> of credentials—for instance, given
+   <code class="AgdaBound">d</code> : <code class="AgdaDatatype">DState</code>, take <code class="AgdaBound">C</code> to be the domain
+   of the <code class="AgdaField">voteDelegs</code> field of <code class="AgdaBound">d</code>.  Then the set of
+   <code class="AgdaDatatype">VDelegs</code> that results from applying
+   <code class="AgdaInductiveConstructor">vDelegCredential</code> to the domain of the
+   <code class="AgdaField">voteDelegs</code> of <code class="AgdaBound">d</code> contains the range of the
+   <code class="AgdaField">voteDelegs</code> of <code class="AgdaBound">d</code>.</p>
+<hr />
+<h2 id="transaction-validity">Transaction Validity<a class="headerlink" href="#transaction-validity" title="Permanent link">&para;</a></h2>
+<p>This section defines some of the types and functions we use to check the
+validity of transactions and blocks of the Cardano blockchain.</p>
 <p>Transaction validity is complicated. In the truest sense, a transaction
 is valid if it is part of a valid block; i.e.,
 <code class="AgdaFunction">validTxIn₁</code> <code class="AgdaBound">s</code> <code class="AgdaBound">tx</code>, where
@@ -10016,59 +10298,59 @@ require one to come up with a block, which we can't, while
 <code class="AgdaFunction">validTxIn₁</code> <code>=&gt;</code> <code class="AgdaFunction">validTxIn₂</code> may fail
 since the transaction might depend on a previous transaction in the same
 block.<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup></p>
-<pre class="Agda"><a id="isCredDeposit"></a><a id="1771" href="Ledger.Conway.Specification.Properties.html#1771" class="Function">isCredDeposit</a> <a id="1785" class="Symbol">:</a> <a id="1787" href="Ledger.Conway.Specification.Certs.html#793" class="Datatype">DepositPurpose</a> <a id="1802" class="Symbol">→</a> <a id="1804" href="Agda.Primitive.html#388" class="Primitive">Type</a>
-<a id="1809" href="Ledger.Conway.Specification.Properties.html#1771" class="Function">isCredDeposit</a> <a id="1823" class="Symbol">(</a><a id="1824" href="Ledger.Conway.Specification.Certs.html#823" class="InductiveConstructor">CredentialDeposit</a> <a id="1842" href="Ledger.Conway.Specification.Properties.html#1842" class="Bound">x</a><a id="1843" class="Symbol">)</a> <a id="1845" class="Symbol">=</a> <a id="1847" href="Agda.Builtin.Unit.html#175" class="Record">⊤</a>
-<a id="1849" href="Ledger.Conway.Specification.Properties.html#1771" class="CatchallClause Function">isCredDeposit</a><a id="1862" class="CatchallClause"> </a><a id="1863" class="CatchallClause Symbol">_</a> <a id="1865" class="Symbol">=</a> <a id="1867" href="Data.Empty.html#914" class="Function">⊥</a>
+<pre class="Agda"><a id="isCredDeposit"></a><a id="7942" href="Ledger.Conway.Specification.Properties.html#7942" class="Function">isCredDeposit</a> <a id="7956" class="Symbol">:</a> <a id="7958" href="Ledger.Conway.Specification.Certs.html#793" class="Datatype">DepositPurpose</a> <a id="7973" class="Symbol">→</a> <a id="7975" href="Agda.Primitive.html#388" class="Primitive">Type</a>
+<a id="7980" href="Ledger.Conway.Specification.Properties.html#7942" class="Function">isCredDeposit</a> <a id="7994" class="Symbol">(</a><a id="7995" href="Ledger.Conway.Specification.Certs.html#823" class="InductiveConstructor">CredentialDeposit</a> <a id="8013" href="Ledger.Conway.Specification.Properties.html#8013" class="Bound">x</a><a id="8014" class="Symbol">)</a> <a id="8016" class="Symbol">=</a> <a id="8018" href="Agda.Builtin.Unit.html#175" class="Record">⊤</a>
+<a id="8020" href="Ledger.Conway.Specification.Properties.html#7942" class="CatchallClause Function">isCredDeposit</a><a id="8033" class="CatchallClause"> </a><a id="8034" class="CatchallClause Symbol">_</a> <a id="8036" class="Symbol">=</a> <a id="8038" href="Data.Empty.html#914" class="Function">⊥</a>
 </pre>
-<pre class="Agda hidden-source"><a id="1887" class="Keyword">instance</a>
-  <a id="isCredDeposit?"></a><a id="1898" href="Ledger.Conway.Specification.Properties.html#1898" class="Function">isCredDeposit?</a> <a id="1913" class="Symbol">:</a> <a id="1915" href="Ledger.Conway.Specification.Properties.html#1771" class="Function">isCredDeposit</a> <a id="1929" href="Class.Decidable.Core.html#579" class="Function Operator">⁇¹</a>
-  <a id="1934" href="Ledger.Conway.Specification.Properties.html#1898" class="Function">isCredDeposit?</a> <a id="1949" class="Symbol">{</a><a id="1950" href="Ledger.Conway.Specification.Certs.html#823" class="InductiveConstructor">CredentialDeposit</a> <a id="1968" href="Ledger.Conway.Specification.Properties.html#1968" class="Bound">x</a><a id="1969" class="Symbol">}</a> <a id="1971" class="Symbol">=</a> <a id="1973" href="Class.Decidable.Core.html#262" class="InductiveConstructor Operator">⁇</a> <a id="1975" class="Symbol">(</a><a id="1976" href="Relation.Nullary.Decidable.Core.html#2099" class="InductiveConstructor">yes</a> <a id="1980" href="Agda.Builtin.Unit.html#212" class="InductiveConstructor">tt</a><a id="1982" class="Symbol">)</a>
-  <a id="1986" href="Ledger.Conway.Specification.Properties.html#1898" class="Function">isCredDeposit?</a> <a id="2001" class="Symbol">{</a><a id="2002" href="Ledger.Conway.Specification.Certs.html#876" class="InductiveConstructor">PoolDeposit</a> <a id="2014" href="Ledger.Conway.Specification.Properties.html#2014" class="Bound">x</a><a id="2015" class="Symbol">}</a> <a id="2017" class="Symbol">=</a> <a id="2019" href="Class.Decidable.Core.html#262" class="InductiveConstructor Operator">⁇</a> <a id="2021" class="Symbol">(</a><a id="2022" href="Relation.Nullary.Decidable.Core.html#2136" class="InductiveConstructor">no</a> <a id="2025" class="Symbol">λ</a> <a id="2027" class="Symbol">())</a>
-  <a id="2033" href="Ledger.Conway.Specification.Properties.html#1898" class="Function">isCredDeposit?</a> <a id="2048" class="Symbol">{</a><a id="2049" href="Ledger.Conway.Specification.Certs.html#929" class="InductiveConstructor">DRepDeposit</a> <a id="2061" href="Ledger.Conway.Specification.Properties.html#2061" class="Bound">x</a><a id="2062" class="Symbol">}</a> <a id="2064" class="Symbol">=</a> <a id="2066" href="Class.Decidable.Core.html#262" class="InductiveConstructor Operator">⁇</a> <a id="2068" class="Symbol">(</a><a id="2069" href="Relation.Nullary.Decidable.Core.html#2136" class="InductiveConstructor">no</a> <a id="2072" class="Symbol">λ</a> <a id="2074" class="Symbol">())</a>
-  <a id="2080" href="Ledger.Conway.Specification.Properties.html#1898" class="Function">isCredDeposit?</a> <a id="2095" class="Symbol">{</a><a id="2096" href="Ledger.Conway.Specification.Certs.html#982" class="InductiveConstructor">GovActionDeposit</a> <a id="2113" href="Ledger.Conway.Specification.Properties.html#2113" class="Bound">x</a><a id="2114" class="Symbol">}</a> <a id="2116" class="Symbol">=</a> <a id="2118" href="Class.Decidable.Core.html#262" class="InductiveConstructor Operator">⁇</a> <a id="2120" class="Symbol">(</a><a id="2121" href="Relation.Nullary.Decidable.Core.html#2136" class="InductiveConstructor">no</a> <a id="2124" class="Symbol">λ</a> <a id="2126" class="Symbol">())</a>
-</pre>
-
-<pre class="Agda"><a id="isGADeposit"></a><a id="2147" href="Ledger.Conway.Specification.Properties.html#2147" class="Function">isGADeposit</a> <a id="2159" class="Symbol">:</a> <a id="2161" href="Ledger.Conway.Specification.Certs.html#793" class="Datatype">DepositPurpose</a> <a id="2176" class="Symbol">→</a> <a id="2178" href="Agda.Primitive.html#388" class="Primitive">Type</a>
-<a id="2183" href="Ledger.Conway.Specification.Properties.html#2147" class="Function">isGADeposit</a> <a id="2195" class="Symbol">(</a><a id="2196" href="Ledger.Conway.Specification.Certs.html#982" class="InductiveConstructor">GovActionDeposit</a> <a id="2213" href="Ledger.Conway.Specification.Properties.html#2213" class="Bound">x</a><a id="2214" class="Symbol">)</a> <a id="2216" class="Symbol">=</a> <a id="2218" href="Agda.Builtin.Unit.html#175" class="Record">⊤</a>
-<a id="2220" href="Ledger.Conway.Specification.Properties.html#2147" class="CatchallClause Function">isGADeposit</a><a id="2231" class="CatchallClause"> </a><a id="2232" class="CatchallClause Symbol">_</a> <a id="2234" class="Symbol">=</a> <a id="2236" href="Data.Empty.html#914" class="Function">⊥</a>
-</pre>
-<pre class="Agda hidden-source"><a id="2256" class="Keyword">instance</a>
-  <a id="isGADeposit?"></a><a id="2267" href="Ledger.Conway.Specification.Properties.html#2267" class="Function">isGADeposit?</a> <a id="2280" class="Symbol">:</a> <a id="2282" href="Ledger.Conway.Specification.Properties.html#2147" class="Function">isGADeposit</a> <a id="2294" href="Class.Decidable.Core.html#579" class="Function Operator">⁇¹</a>
-  <a id="2299" href="Ledger.Conway.Specification.Properties.html#2267" class="Function">isGADeposit?</a> <a id="2312" class="Symbol">{</a><a id="2313" href="Ledger.Conway.Specification.Certs.html#823" class="InductiveConstructor">CredentialDeposit</a> <a id="2331" href="Ledger.Conway.Specification.Properties.html#2331" class="Bound">x</a><a id="2332" class="Symbol">}</a> <a id="2334" class="Symbol">=</a> <a id="2336" href="Class.Decidable.Core.html#262" class="InductiveConstructor Operator">⁇</a> <a id="2338" class="Symbol">(</a><a id="2339" href="Relation.Nullary.Decidable.Core.html#2136" class="InductiveConstructor">no</a> <a id="2342" class="Symbol">λ</a> <a id="2344" class="Symbol">())</a>
-  <a id="2350" href="Ledger.Conway.Specification.Properties.html#2267" class="Function">isGADeposit?</a> <a id="2363" class="Symbol">{</a><a id="2364" href="Ledger.Conway.Specification.Certs.html#876" class="InductiveConstructor">PoolDeposit</a> <a id="2376" href="Ledger.Conway.Specification.Properties.html#2376" class="Bound">x</a><a id="2377" class="Symbol">}</a> <a id="2379" class="Symbol">=</a> <a id="2381" href="Class.Decidable.Core.html#262" class="InductiveConstructor Operator">⁇</a> <a id="2383" class="Symbol">(</a><a id="2384" href="Relation.Nullary.Decidable.Core.html#2136" class="InductiveConstructor">no</a> <a id="2387" class="Symbol">λ</a> <a id="2389" class="Symbol">())</a>
-  <a id="2395" href="Ledger.Conway.Specification.Properties.html#2267" class="Function">isGADeposit?</a> <a id="2408" class="Symbol">{</a><a id="2409" href="Ledger.Conway.Specification.Certs.html#929" class="InductiveConstructor">DRepDeposit</a> <a id="2421" href="Ledger.Conway.Specification.Properties.html#2421" class="Bound">x</a><a id="2422" class="Symbol">}</a> <a id="2424" class="Symbol">=</a> <a id="2426" href="Class.Decidable.Core.html#262" class="InductiveConstructor Operator">⁇</a> <a id="2428" class="Symbol">(</a><a id="2429" href="Relation.Nullary.Decidable.Core.html#2136" class="InductiveConstructor">no</a> <a id="2432" class="Symbol">λ</a> <a id="2434" class="Symbol">())</a>
-  <a id="2440" href="Ledger.Conway.Specification.Properties.html#2267" class="Function">isGADeposit?</a> <a id="2453" class="Symbol">{</a><a id="2454" href="Ledger.Conway.Specification.Certs.html#982" class="InductiveConstructor">GovActionDeposit</a> <a id="2471" href="Ledger.Conway.Specification.Properties.html#2471" class="Bound">x</a><a id="2472" class="Symbol">}</a> <a id="2474" class="Symbol">=</a> <a id="2476" href="Class.Decidable.Core.html#262" class="InductiveConstructor Operator">⁇</a> <a id="2478" class="Symbol">(</a><a id="2479" href="Relation.Nullary.Decidable.Core.html#2099" class="InductiveConstructor">yes</a> <a id="2483" href="Agda.Builtin.Unit.html#212" class="InductiveConstructor">tt</a><a id="2485" class="Symbol">)</a>
-
-<a id="2488" class="Keyword">instance</a>
-  <a id="2499" href="Ledger.Conway.Specification.Properties.html#2499" class="Function">_</a> <a id="2501" class="Symbol">:</a> <a id="2503" href="Class.IsSet.html#375" class="Record">IsSet</a> <a id="2509" href="Ledger.Conway.Specification.BlockBody.html#921" class="Record">Block</a> <a id="2515" href="Ledger.Conway.Specification.Transaction.html#6300" class="Record">Tx</a>
-  <a id="2520" class="Symbol">_</a> <a id="2522" class="Symbol">=</a> <a id="2524" class="Keyword">record</a> <a id="2531" class="Symbol">{</a> <a id="2533" href="Class.IsSet.html#419" class="Field">toSet</a> <a id="2539" class="Symbol">=</a> <a id="2541" href="Axiom.Set.html#5903" class="Function">fromList</a> <a id="2550" href="Function.Base.html#1134" class="Function Operator">∘</a> <a id="2552" href="Ledger.Conway.Specification.BlockBody.html#978" class="Field">Block.ts</a> <a id="2561" class="Symbol">}</a>
-
-  <a id="2566" href="Ledger.Conway.Specification.Properties.html#2566" class="Function">_</a> <a id="2568" class="Symbol">:</a> <a id="2570" href="Class.IsSet.html#375" class="Record">IsSet</a> <a id="2576" href="Ledger.Conway.Specification.Transaction.html#4582" class="Record">TxBody</a> <a id="2583" href="Ledger.Conway.Specification.Gov.Actions.html#10423" class="Record">GovProposal</a>
-  <a id="2597" class="Symbol">_</a> <a id="2599" class="Symbol">=</a> <a id="2601" class="Keyword">record</a> <a id="2608" class="Symbol">{</a> <a id="2610" href="Class.IsSet.html#419" class="Field">toSet</a> <a id="2616" class="Symbol">=</a> <a id="2618" href="Axiom.Set.html#5903" class="Function">fromList</a> <a id="2627" href="Function.Base.html#1134" class="Function Operator">∘</a> <a id="2629" href="Ledger.Conway.Specification.Transaction.html#5091" class="Field">TxBody.txGovProposals</a> <a id="2651" class="Symbol">}</a>
+<pre class="Agda hidden-source"><a id="8058" class="Keyword">instance</a>
+  <a id="isCredDeposit?"></a><a id="8069" href="Ledger.Conway.Specification.Properties.html#8069" class="Function">isCredDeposit?</a> <a id="8084" class="Symbol">:</a> <a id="8086" href="Ledger.Conway.Specification.Properties.html#7942" class="Function">isCredDeposit</a> <a id="8100" href="Class.Decidable.Core.html#579" class="Function Operator">⁇¹</a>
+  <a id="8105" href="Ledger.Conway.Specification.Properties.html#8069" class="Function">isCredDeposit?</a> <a id="8120" class="Symbol">{</a><a id="8121" href="Ledger.Conway.Specification.Certs.html#823" class="InductiveConstructor">CredentialDeposit</a> <a id="8139" href="Ledger.Conway.Specification.Properties.html#8139" class="Bound">x</a><a id="8140" class="Symbol">}</a> <a id="8142" class="Symbol">=</a> <a id="8144" href="Class.Decidable.Core.html#262" class="InductiveConstructor Operator">⁇</a> <a id="8146" class="Symbol">(</a><a id="8147" href="Relation.Nullary.Decidable.Core.html#2099" class="InductiveConstructor">yes</a> <a id="8151" href="Agda.Builtin.Unit.html#212" class="InductiveConstructor">tt</a><a id="8153" class="Symbol">)</a>
+  <a id="8157" href="Ledger.Conway.Specification.Properties.html#8069" class="Function">isCredDeposit?</a> <a id="8172" class="Symbol">{</a><a id="8173" href="Ledger.Conway.Specification.Certs.html#876" class="InductiveConstructor">PoolDeposit</a> <a id="8185" href="Ledger.Conway.Specification.Properties.html#8185" class="Bound">x</a><a id="8186" class="Symbol">}</a> <a id="8188" class="Symbol">=</a> <a id="8190" href="Class.Decidable.Core.html#262" class="InductiveConstructor Operator">⁇</a> <a id="8192" class="Symbol">(</a><a id="8193" href="Relation.Nullary.Decidable.Core.html#2136" class="InductiveConstructor">no</a> <a id="8196" class="Symbol">λ</a> <a id="8198" class="Symbol">())</a>
+  <a id="8204" href="Ledger.Conway.Specification.Properties.html#8069" class="Function">isCredDeposit?</a> <a id="8219" class="Symbol">{</a><a id="8220" href="Ledger.Conway.Specification.Certs.html#929" class="InductiveConstructor">DRepDeposit</a> <a id="8232" href="Ledger.Conway.Specification.Properties.html#8232" class="Bound">x</a><a id="8233" class="Symbol">}</a> <a id="8235" class="Symbol">=</a> <a id="8237" href="Class.Decidable.Core.html#262" class="InductiveConstructor Operator">⁇</a> <a id="8239" class="Symbol">(</a><a id="8240" href="Relation.Nullary.Decidable.Core.html#2136" class="InductiveConstructor">no</a> <a id="8243" class="Symbol">λ</a> <a id="8245" class="Symbol">())</a>
+  <a id="8251" href="Ledger.Conway.Specification.Properties.html#8069" class="Function">isCredDeposit?</a> <a id="8266" class="Symbol">{</a><a id="8267" href="Ledger.Conway.Specification.Certs.html#982" class="InductiveConstructor">GovActionDeposit</a> <a id="8284" href="Ledger.Conway.Specification.Properties.html#8284" class="Bound">x</a><a id="8285" class="Symbol">}</a> <a id="8287" class="Symbol">=</a> <a id="8289" href="Class.Decidable.Core.html#262" class="InductiveConstructor Operator">⁇</a> <a id="8291" class="Symbol">(</a><a id="8292" href="Relation.Nullary.Decidable.Core.html#2136" class="InductiveConstructor">no</a> <a id="8295" class="Symbol">λ</a> <a id="8297" class="Symbol">())</a>
 </pre>
 
-<pre class="Agda"><a id="validBlockIn"></a><a id="2670" href="Ledger.Conway.Specification.Properties.html#2670" class="Function">validBlockIn</a> <a id="2683" class="Symbol">:</a> <a id="2685" href="Ledger.Conway.Specification.Chain.html#1169" class="Record">ChainState</a> <a id="2696" class="Symbol">→</a> <a id="2698" href="Ledger.Conway.Specification.BlockBody.html#921" class="Record">Block</a> <a id="2704" class="Symbol">→</a> <a id="2706" href="Agda.Primitive.html#388" class="Primitive">Type</a>
-<a id="2711" href="Ledger.Conway.Specification.Properties.html#2670" class="Function">validBlockIn</a> <a id="2724" href="Ledger.Conway.Specification.Properties.html#2724" class="Bound">s</a> <a id="2726" href="Ledger.Conway.Specification.Properties.html#2726" class="Bound">b</a> <a id="2728" class="Symbol">=</a> <a id="2730" href="Data.Product.Base.html#1371" class="Function">∃[</a> <a id="2733" href="Ledger.Conway.Specification.Properties.html#2733" class="Bound">s&#39;</a> <a id="2736" href="Data.Product.Base.html#1371" class="Function">]</a> <a id="2738" class="Symbol">_</a> <a id="2740" href="Ledger.Conway.Specification.Chain.html#2761" class="Datatype Operator">⊢</a> <a id="2742" href="Ledger.Conway.Specification.Properties.html#2724" class="Bound">s</a> <a id="2744" href="Ledger.Conway.Specification.Chain.html#2761" class="Datatype Operator">⇀⦇</a> <a id="2747" href="Ledger.Conway.Specification.Properties.html#2726" class="Bound">b</a> <a id="2749" href="Ledger.Conway.Specification.Chain.html#2761" class="Datatype Operator">,CHAIN⦈</a> <a id="2757" href="Ledger.Conway.Specification.Properties.html#2733" class="Bound">s&#39;</a>
-
-<a id="validBlock"></a><a id="2761" href="Ledger.Conway.Specification.Properties.html#2761" class="Function">validBlock</a> <a id="2772" class="Symbol">:</a> <a id="2774" href="Ledger.Conway.Specification.BlockBody.html#921" class="Record">Block</a> <a id="2780" class="Symbol">→</a> <a id="2782" href="Agda.Primitive.html#388" class="Primitive">Type</a>
-<a id="2787" href="Ledger.Conway.Specification.Properties.html#2761" class="Function">validBlock</a> <a id="2798" href="Ledger.Conway.Specification.Properties.html#2798" class="Bound">b</a> <a id="2800" class="Symbol">=</a> <a id="2802" href="Data.Product.Base.html#1371" class="Function">∃[</a> <a id="2805" href="Ledger.Conway.Specification.Properties.html#2805" class="Bound">s</a> <a id="2807" href="Data.Product.Base.html#1371" class="Function">]</a> <a id="2809" href="Ledger.Conway.Specification.Properties.html#2670" class="Function">validBlockIn</a> <a id="2822" href="Ledger.Conway.Specification.Properties.html#2805" class="Bound">s</a> <a id="2824" href="Ledger.Conway.Specification.Properties.html#2798" class="Bound">b</a>
-
-<a id="validTxIn₁"></a><a id="2827" href="Ledger.Conway.Specification.Properties.html#2827" class="Function">validTxIn₁</a> <a id="2838" class="Symbol">:</a> <a id="2840" href="Ledger.Conway.Specification.Chain.html#1169" class="Record">ChainState</a> <a id="2851" class="Symbol">→</a> <a id="2853" href="Ledger.Conway.Specification.Transaction.html#6300" class="Record">Tx</a> <a id="2856" class="Symbol">→</a> <a id="2858" href="Agda.Primitive.html#388" class="Primitive">Type</a>
-<a id="2863" href="Ledger.Conway.Specification.Properties.html#2827" class="Function">validTxIn₁</a> <a id="2874" href="Ledger.Conway.Specification.Properties.html#2874" class="Bound">s</a> <a id="2876" href="Ledger.Conway.Specification.Properties.html#2876" class="Bound">tx</a> <a id="2879" class="Symbol">=</a> <a id="2881" href="Data.Product.Base.html#1371" class="Function">∃[</a> <a id="2884" href="Ledger.Conway.Specification.Properties.html#2884" class="Bound">b</a> <a id="2886" href="Data.Product.Base.html#1371" class="Function">]</a> <a id="2888" href="Ledger.Conway.Specification.Properties.html#2876" class="Bound">tx</a> <a id="2891" href="Class.IsSet.html#458" class="Function Operator">∈</a> <a id="2893" href="Ledger.Conway.Specification.Properties.html#2884" class="Bound">b</a> <a id="2895" href="Data.Product.Base.html#1618" class="Function Operator">×</a> <a id="2897" href="Ledger.Conway.Specification.Properties.html#2670" class="Function">validBlockIn</a> <a id="2910" href="Ledger.Conway.Specification.Properties.html#2874" class="Bound">s</a> <a id="2912" href="Ledger.Conway.Specification.Properties.html#2884" class="Bound">b</a>
+<pre class="Agda"><a id="isGADeposit"></a><a id="8318" href="Ledger.Conway.Specification.Properties.html#8318" class="Function">isGADeposit</a> <a id="8330" class="Symbol">:</a> <a id="8332" href="Ledger.Conway.Specification.Certs.html#793" class="Datatype">DepositPurpose</a> <a id="8347" class="Symbol">→</a> <a id="8349" href="Agda.Primitive.html#388" class="Primitive">Type</a>
+<a id="8354" href="Ledger.Conway.Specification.Properties.html#8318" class="Function">isGADeposit</a> <a id="8366" class="Symbol">(</a><a id="8367" href="Ledger.Conway.Specification.Certs.html#982" class="InductiveConstructor">GovActionDeposit</a> <a id="8384" href="Ledger.Conway.Specification.Properties.html#8384" class="Bound">x</a><a id="8385" class="Symbol">)</a> <a id="8387" class="Symbol">=</a> <a id="8389" href="Agda.Builtin.Unit.html#175" class="Record">⊤</a>
+<a id="8391" href="Ledger.Conway.Specification.Properties.html#8318" class="CatchallClause Function">isGADeposit</a><a id="8402" class="CatchallClause"> </a><a id="8403" class="CatchallClause Symbol">_</a> <a id="8405" class="Symbol">=</a> <a id="8407" href="Data.Empty.html#914" class="Function">⊥</a>
 </pre>
-<pre class="Agda hidden-source"><a id="2932" class="Keyword">module</a> <a id="2939" href="Ledger.Conway.Specification.Properties.html#2939" class="Module">_</a> <a id="2941" class="Symbol">(</a><a id="2942" href="Ledger.Conway.Specification.Properties.html#2942" class="Bound">s</a> <a id="2944" class="Symbol">:</a> <a id="2946" href="Ledger.Conway.Specification.Chain.html#1169" class="Record">ChainState</a><a id="2956" class="Symbol">)</a> <a id="2958" class="Symbol">(</a><a id="2959" href="Ledger.Conway.Specification.Properties.html#2959" class="Bound">slot</a> <a id="2964" class="Symbol">:</a> <a id="2966" href="Ledger.Core.Specification.Epoch.html#818" class="Function">Slot</a><a id="2970" class="Symbol">)</a> <a id="2972" class="Keyword">where</a>
-  <a id="2980" class="Keyword">open</a> <a id="2985" href="Ledger.Conway.Specification.Chain.html#1169" class="Module">ChainState</a> <a id="2996" href="Ledger.Conway.Specification.Properties.html#2942" class="Bound">s</a><a id="2997" class="Symbol">;</a> <a id="2999" class="Keyword">open</a> <a id="3004" href="Ledger.Conway.Specification.Epoch.html#4038" class="Module">NewEpochState</a> <a id="3018" href="Ledger.Conway.Specification.Chain.html#1205" class="Function">newEpochState</a>
-  <a id="3034" class="Keyword">open</a> <a id="3039" href="Ledger.Conway.Specification.Epoch.html#2208" class="Module">EpochState</a> <a id="3050" href="Ledger.Conway.Specification.Epoch.html#4159" class="Function">epochState</a><a id="3060" class="Symbol">;</a> <a id="3062" class="Keyword">open</a> <a id="3067" href="Ledger.Conway.Specification.Enact.html#1634" class="Module">EnactState</a> <a id="3078" href="Ledger.Conway.Specification.Epoch.html#2378" class="Function">es</a>
+<pre class="Agda hidden-source"><a id="8427" class="Keyword">instance</a>
+  <a id="isGADeposit?"></a><a id="8438" href="Ledger.Conway.Specification.Properties.html#8438" class="Function">isGADeposit?</a> <a id="8451" class="Symbol">:</a> <a id="8453" href="Ledger.Conway.Specification.Properties.html#8318" class="Function">isGADeposit</a> <a id="8465" href="Class.Decidable.Core.html#579" class="Function Operator">⁇¹</a>
+  <a id="8470" href="Ledger.Conway.Specification.Properties.html#8438" class="Function">isGADeposit?</a> <a id="8483" class="Symbol">{</a><a id="8484" href="Ledger.Conway.Specification.Certs.html#823" class="InductiveConstructor">CredentialDeposit</a> <a id="8502" href="Ledger.Conway.Specification.Properties.html#8502" class="Bound">x</a><a id="8503" class="Symbol">}</a> <a id="8505" class="Symbol">=</a> <a id="8507" href="Class.Decidable.Core.html#262" class="InductiveConstructor Operator">⁇</a> <a id="8509" class="Symbol">(</a><a id="8510" href="Relation.Nullary.Decidable.Core.html#2136" class="InductiveConstructor">no</a> <a id="8513" class="Symbol">λ</a> <a id="8515" class="Symbol">())</a>
+  <a id="8521" href="Ledger.Conway.Specification.Properties.html#8438" class="Function">isGADeposit?</a> <a id="8534" class="Symbol">{</a><a id="8535" href="Ledger.Conway.Specification.Certs.html#876" class="InductiveConstructor">PoolDeposit</a> <a id="8547" href="Ledger.Conway.Specification.Properties.html#8547" class="Bound">x</a><a id="8548" class="Symbol">}</a> <a id="8550" class="Symbol">=</a> <a id="8552" href="Class.Decidable.Core.html#262" class="InductiveConstructor Operator">⁇</a> <a id="8554" class="Symbol">(</a><a id="8555" href="Relation.Nullary.Decidable.Core.html#2136" class="InductiveConstructor">no</a> <a id="8558" class="Symbol">λ</a> <a id="8560" class="Symbol">())</a>
+  <a id="8566" href="Ledger.Conway.Specification.Properties.html#8438" class="Function">isGADeposit?</a> <a id="8579" class="Symbol">{</a><a id="8580" href="Ledger.Conway.Specification.Certs.html#929" class="InductiveConstructor">DRepDeposit</a> <a id="8592" href="Ledger.Conway.Specification.Properties.html#8592" class="Bound">x</a><a id="8593" class="Symbol">}</a> <a id="8595" class="Symbol">=</a> <a id="8597" href="Class.Decidable.Core.html#262" class="InductiveConstructor Operator">⁇</a> <a id="8599" class="Symbol">(</a><a id="8600" href="Relation.Nullary.Decidable.Core.html#2136" class="InductiveConstructor">no</a> <a id="8603" class="Symbol">λ</a> <a id="8605" class="Symbol">())</a>
+  <a id="8611" href="Ledger.Conway.Specification.Properties.html#8438" class="Function">isGADeposit?</a> <a id="8624" class="Symbol">{</a><a id="8625" href="Ledger.Conway.Specification.Certs.html#982" class="InductiveConstructor">GovActionDeposit</a> <a id="8642" href="Ledger.Conway.Specification.Properties.html#8642" class="Bound">x</a><a id="8643" class="Symbol">}</a> <a id="8645" class="Symbol">=</a> <a id="8647" href="Class.Decidable.Core.html#262" class="InductiveConstructor Operator">⁇</a> <a id="8649" class="Symbol">(</a><a id="8650" href="Relation.Nullary.Decidable.Core.html#2099" class="InductiveConstructor">yes</a> <a id="8654" href="Agda.Builtin.Unit.html#212" class="InductiveConstructor">tt</a><a id="8656" class="Symbol">)</a>
+
+<a id="8659" class="Keyword">instance</a>
+  <a id="8670" href="Ledger.Conway.Specification.Properties.html#8670" class="Function">_</a> <a id="8672" class="Symbol">:</a> <a id="8674" href="Class.IsSet.html#375" class="Record">IsSet</a> <a id="8680" href="Ledger.Conway.Specification.BlockBody.html#921" class="Record">Block</a> <a id="8686" href="Ledger.Conway.Specification.Transaction.html#6300" class="Record">Tx</a>
+  <a id="8691" class="Symbol">_</a> <a id="8693" class="Symbol">=</a> <a id="8695" class="Keyword">record</a> <a id="8702" class="Symbol">{</a> <a id="8704" href="Class.IsSet.html#419" class="Field">toSet</a> <a id="8710" class="Symbol">=</a> <a id="8712" href="Axiom.Set.html#5903" class="Function">fromList</a> <a id="8721" href="Function.Base.html#1134" class="Function Operator">∘</a> <a id="8723" href="Ledger.Conway.Specification.BlockBody.html#978" class="Field">Block.ts</a> <a id="8732" class="Symbol">}</a>
+
+  <a id="8737" href="Ledger.Conway.Specification.Properties.html#8737" class="Function">_</a> <a id="8739" class="Symbol">:</a> <a id="8741" href="Class.IsSet.html#375" class="Record">IsSet</a> <a id="8747" href="Ledger.Conway.Specification.Transaction.html#4582" class="Record">TxBody</a> <a id="8754" href="Ledger.Conway.Specification.Gov.Actions.html#10423" class="Record">GovProposal</a>
+  <a id="8768" class="Symbol">_</a> <a id="8770" class="Symbol">=</a> <a id="8772" class="Keyword">record</a> <a id="8779" class="Symbol">{</a> <a id="8781" href="Class.IsSet.html#419" class="Field">toSet</a> <a id="8787" class="Symbol">=</a> <a id="8789" href="Axiom.Set.html#5903" class="Function">fromList</a> <a id="8798" href="Function.Base.html#1134" class="Function Operator">∘</a> <a id="8800" href="Ledger.Conway.Specification.Transaction.html#5091" class="Field">TxBody.txGovProposals</a> <a id="8822" class="Symbol">}</a>
 </pre>
 
-<pre class="Agda">  <a id="3100" class="Keyword">private</a>
-    <a id="3112" href="Ledger.Conway.Specification.Properties.html#3112" class="Function">ledgerEnv</a> <a id="3122" class="Symbol">=</a> <a class="AgdaKaTeX">$\begin{pmatrix} \,\href{Ledger.Conway.Specification.Properties.html#2959}{\htmlId{3126}{\htmlClass{Bound}{\text{slot}}}}\, \\ \,\href{Ledger.Conway.Specification.Enact.html#1739}{\htmlId{3133}{\htmlClass{Function}{\text{constitution}}}}\, \,\htmlId{3146}{\htmlClass{Symbol}{\text{.}}}\,\,\href{Data.Product.Base.html#636}{\htmlId{3147}{\htmlClass{Field}{\text{proj₁}}}}\, \,\htmlId{3153}{\htmlClass{Symbol}{\text{.}}}\,\,\href{Data.Product.Base.html#650}{\htmlId{3154}{\htmlClass{Field}{\text{proj₂}}}}\, \\ \,\href{Ledger.Conway.Specification.Enact.html#1844}{\htmlId{3162}{\htmlClass{Function}{\text{pparams}}}}\, \,\htmlId{3170}{\htmlClass{Symbol}{\text{.}}}\,\,\href{Data.Product.Base.html#636}{\htmlId{3171}{\htmlClass{Field}{\text{proj₁}}}}\, \\ \,\href{Ledger.Conway.Specification.Epoch.html#2378}{\htmlId{3179}{\htmlClass{Function}{\text{es}}}}\, \\ \,\href{Ledger.Conway.Specification.PParams.html#3084}{\htmlId{3184}{\htmlClass{Field}{\text{Acnt.treasury}}}}\, \,\href{Ledger.Conway.Specification.Epoch.html#2305}{\htmlId{3198}{\htmlClass{Function}{\text{acnt}}}}\, \end{pmatrix}$</a>
+<pre class="Agda"><a id="validBlockIn"></a><a id="8841" href="Ledger.Conway.Specification.Properties.html#8841" class="Function">validBlockIn</a> <a id="8854" class="Symbol">:</a> <a id="8856" href="Ledger.Conway.Specification.Chain.html#1169" class="Record">ChainState</a> <a id="8867" class="Symbol">→</a> <a id="8869" href="Ledger.Conway.Specification.BlockBody.html#921" class="Record">Block</a> <a id="8875" class="Symbol">→</a> <a id="8877" href="Agda.Primitive.html#388" class="Primitive">Type</a>
+<a id="8882" href="Ledger.Conway.Specification.Properties.html#8841" class="Function">validBlockIn</a> <a id="8895" href="Ledger.Conway.Specification.Properties.html#8895" class="Bound">s</a> <a id="8897" href="Ledger.Conway.Specification.Properties.html#8897" class="Bound">b</a> <a id="8899" class="Symbol">=</a> <a id="8901" href="Data.Product.Base.html#1371" class="Function">∃[</a> <a id="8904" href="Ledger.Conway.Specification.Properties.html#8904" class="Bound">s&#39;</a> <a id="8907" href="Data.Product.Base.html#1371" class="Function">]</a> <a id="8909" class="Symbol">_</a> <a id="8911" href="Ledger.Conway.Specification.Chain.html#2761" class="Datatype Operator">⊢</a> <a id="8913" href="Ledger.Conway.Specification.Properties.html#8895" class="Bound">s</a> <a id="8915" href="Ledger.Conway.Specification.Chain.html#2761" class="Datatype Operator">⇀⦇</a> <a id="8918" href="Ledger.Conway.Specification.Properties.html#8897" class="Bound">b</a> <a id="8920" href="Ledger.Conway.Specification.Chain.html#2761" class="Datatype Operator">,CHAIN⦈</a> <a id="8928" href="Ledger.Conway.Specification.Properties.html#8904" class="Bound">s&#39;</a>
 
-  <a id="3208" href="Ledger.Conway.Specification.Properties.html#3208" class="Function">validTxIn₂</a> <a id="3219" class="Symbol">:</a> <a id="3221" href="Ledger.Conway.Specification.Transaction.html#6300" class="Record">Tx</a> <a id="3224" class="Symbol">→</a> <a id="3226" href="Agda.Primitive.html#388" class="Primitive">Type</a>
-  <a id="3233" href="Ledger.Conway.Specification.Properties.html#3208" class="Function">validTxIn₂</a> <a id="3244" href="Ledger.Conway.Specification.Properties.html#3244" class="Bound">tx</a> <a id="3247" class="Symbol">=</a> <a id="3249" href="Data.Product.Base.html#1371" class="Function">∃[</a> <a id="3252" href="Ledger.Conway.Specification.Properties.html#3252" class="Bound">ls&#39;</a> <a id="3256" href="Data.Product.Base.html#1371" class="Function">]</a> <a id="3258" href="Ledger.Conway.Specification.Properties.html#3112" class="Function">ledgerEnv</a> <a id="3268" href="Ledger.Conway.Specification.Ledger.html#4340" class="Datatype Operator">⊢</a> <a id="3270" href="Ledger.Conway.Specification.Epoch.html#2354" class="Function">ls</a> <a id="3273" href="Ledger.Conway.Specification.Ledger.html#4340" class="Datatype Operator">⇀⦇</a> <a id="3276" href="Ledger.Conway.Specification.Properties.html#3244" class="Bound">tx</a> <a id="3279" href="Ledger.Conway.Specification.Ledger.html#4340" class="Datatype Operator">,LEDGER⦈</a> <a id="3288" href="Ledger.Conway.Specification.Properties.html#3252" class="Bound">ls&#39;</a>
+<a id="validBlock"></a><a id="8932" href="Ledger.Conway.Specification.Properties.html#8932" class="Function">validBlock</a> <a id="8943" class="Symbol">:</a> <a id="8945" href="Ledger.Conway.Specification.BlockBody.html#921" class="Record">Block</a> <a id="8951" class="Symbol">→</a> <a id="8953" href="Agda.Primitive.html#388" class="Primitive">Type</a>
+<a id="8958" href="Ledger.Conway.Specification.Properties.html#8932" class="Function">validBlock</a> <a id="8969" href="Ledger.Conway.Specification.Properties.html#8969" class="Bound">b</a> <a id="8971" class="Symbol">=</a> <a id="8973" href="Data.Product.Base.html#1371" class="Function">∃[</a> <a id="8976" href="Ledger.Conway.Specification.Properties.html#8976" class="Bound">s</a> <a id="8978" href="Data.Product.Base.html#1371" class="Function">]</a> <a id="8980" href="Ledger.Conway.Specification.Properties.html#8841" class="Function">validBlockIn</a> <a id="8993" href="Ledger.Conway.Specification.Properties.html#8976" class="Bound">s</a> <a id="8995" href="Ledger.Conway.Specification.Properties.html#8969" class="Bound">b</a>
 
-<a id="validTx₁"></a><a id="3293" href="Ledger.Conway.Specification.Properties.html#3293" class="Function">validTx₁</a> <a id="3302" class="Symbol">:</a> <a id="3304" href="Ledger.Conway.Specification.Transaction.html#6300" class="Record">Tx</a> <a id="3307" class="Symbol">→</a> <a id="3309" href="Agda.Primitive.html#388" class="Primitive">Type</a>
-<a id="3314" href="Ledger.Conway.Specification.Properties.html#3293" class="Function">validTx₁</a> <a id="3323" href="Ledger.Conway.Specification.Properties.html#3323" class="Bound">tx</a> <a id="3326" class="Symbol">=</a> <a id="3328" href="Data.Product.Base.html#1371" class="Function">∃[</a> <a id="3331" href="Ledger.Conway.Specification.Properties.html#3331" class="Bound">s</a> <a id="3333" href="Data.Product.Base.html#1371" class="Function">]</a> <a id="3335" href="Ledger.Conway.Specification.Properties.html#2827" class="Function">validTxIn₁</a> <a id="3346" href="Ledger.Conway.Specification.Properties.html#3331" class="Bound">s</a> <a id="3348" href="Ledger.Conway.Specification.Properties.html#3323" class="Bound">tx</a>
+<a id="validTxIn₁"></a><a id="8998" href="Ledger.Conway.Specification.Properties.html#8998" class="Function">validTxIn₁</a> <a id="9009" class="Symbol">:</a> <a id="9011" href="Ledger.Conway.Specification.Chain.html#1169" class="Record">ChainState</a> <a id="9022" class="Symbol">→</a> <a id="9024" href="Ledger.Conway.Specification.Transaction.html#6300" class="Record">Tx</a> <a id="9027" class="Symbol">→</a> <a id="9029" href="Agda.Primitive.html#388" class="Primitive">Type</a>
+<a id="9034" href="Ledger.Conway.Specification.Properties.html#8998" class="Function">validTxIn₁</a> <a id="9045" href="Ledger.Conway.Specification.Properties.html#9045" class="Bound">s</a> <a id="9047" href="Ledger.Conway.Specification.Properties.html#9047" class="Bound">tx</a> <a id="9050" class="Symbol">=</a> <a id="9052" href="Data.Product.Base.html#1371" class="Function">∃[</a> <a id="9055" href="Ledger.Conway.Specification.Properties.html#9055" class="Bound">b</a> <a id="9057" href="Data.Product.Base.html#1371" class="Function">]</a> <a id="9059" href="Ledger.Conway.Specification.Properties.html#9047" class="Bound">tx</a> <a id="9062" href="Class.IsSet.html#458" class="Function Operator">∈</a> <a id="9064" href="Ledger.Conway.Specification.Properties.html#9055" class="Bound">b</a> <a id="9066" href="Data.Product.Base.html#1618" class="Function Operator">×</a> <a id="9068" href="Ledger.Conway.Specification.Properties.html#8841" class="Function">validBlockIn</a> <a id="9081" href="Ledger.Conway.Specification.Properties.html#9045" class="Bound">s</a> <a id="9083" href="Ledger.Conway.Specification.Properties.html#9055" class="Bound">b</a>
+</pre>
+<pre class="Agda hidden-source"><a id="9103" class="Keyword">module</a> <a id="9110" href="Ledger.Conway.Specification.Properties.html#9110" class="Module">_</a> <a id="9112" class="Symbol">(</a><a id="9113" href="Ledger.Conway.Specification.Properties.html#9113" class="Bound">s</a> <a id="9115" class="Symbol">:</a> <a id="9117" href="Ledger.Conway.Specification.Chain.html#1169" class="Record">ChainState</a><a id="9127" class="Symbol">)</a> <a id="9129" class="Symbol">(</a><a id="9130" href="Ledger.Conway.Specification.Properties.html#9130" class="Bound">slot</a> <a id="9135" class="Symbol">:</a> <a id="9137" href="Ledger.Core.Specification.Epoch.html#818" class="Function">Slot</a><a id="9141" class="Symbol">)</a> <a id="9143" class="Keyword">where</a>
+  <a id="9151" class="Keyword">open</a> <a id="9156" href="Ledger.Conway.Specification.Chain.html#1169" class="Module">ChainState</a> <a id="9167" href="Ledger.Conway.Specification.Properties.html#9113" class="Bound">s</a><a id="9168" class="Symbol">;</a> <a id="9170" class="Keyword">open</a> <a id="9175" href="Ledger.Conway.Specification.Epoch.html#4262" class="Module">NewEpochState</a> <a id="9189" href="Ledger.Conway.Specification.Chain.html#1205" class="Function">newEpochState</a>
+  <a id="9205" class="Keyword">open</a> <a id="9210" href="Ledger.Conway.Specification.Epoch.html#2208" class="Module">EpochState</a> <a id="9221" href="Ledger.Conway.Specification.Epoch.html#4383" class="Function">epochState</a><a id="9231" class="Symbol">;</a> <a id="9233" class="Keyword">open</a> <a id="9238" href="Ledger.Conway.Specification.Enact.html#1634" class="Module">EnactState</a> <a id="9249" href="Ledger.Conway.Specification.Epoch.html#2378" class="Function">es</a>
+</pre>
+
+<pre class="Agda">  <a id="9271" class="Keyword">private</a>
+    <a id="9283" href="Ledger.Conway.Specification.Properties.html#9283" class="Function">ledgerEnv</a> <a id="9293" class="Symbol">=</a> <a class="AgdaKaTeX">$\begin{pmatrix} \,\href{Ledger.Conway.Specification.Properties.html#9130}{\htmlId{9297}{\htmlClass{Bound}{\text{slot}}}}\, \\ \,\href{Ledger.Conway.Specification.Enact.html#1739}{\htmlId{9304}{\htmlClass{Function}{\text{constitution}}}}\, \,\htmlId{9317}{\htmlClass{Symbol}{\text{.}}}\,\,\href{Data.Product.Base.html#636}{\htmlId{9318}{\htmlClass{Field}{\text{proj₁}}}}\, \,\htmlId{9324}{\htmlClass{Symbol}{\text{.}}}\,\,\href{Data.Product.Base.html#650}{\htmlId{9325}{\htmlClass{Field}{\text{proj₂}}}}\, \\ \,\href{Ledger.Conway.Specification.Enact.html#1844}{\htmlId{9333}{\htmlClass{Function}{\text{pparams}}}}\, \,\htmlId{9341}{\htmlClass{Symbol}{\text{.}}}\,\,\href{Data.Product.Base.html#636}{\htmlId{9342}{\htmlClass{Field}{\text{proj₁}}}}\, \\ \,\href{Ledger.Conway.Specification.Epoch.html#2378}{\htmlId{9350}{\htmlClass{Function}{\text{es}}}}\, \\ \,\href{Ledger.Conway.Specification.PParams.html#3084}{\htmlId{9355}{\htmlClass{Field}{\text{Acnt.treasury}}}}\, \,\href{Ledger.Conway.Specification.Epoch.html#2305}{\htmlId{9369}{\htmlClass{Function}{\text{acnt}}}}\, \end{pmatrix}$</a>
+
+  <a id="9379" href="Ledger.Conway.Specification.Properties.html#9379" class="Function">validTxIn₂</a> <a id="9390" class="Symbol">:</a> <a id="9392" href="Ledger.Conway.Specification.Transaction.html#6300" class="Record">Tx</a> <a id="9395" class="Symbol">→</a> <a id="9397" href="Agda.Primitive.html#388" class="Primitive">Type</a>
+  <a id="9404" href="Ledger.Conway.Specification.Properties.html#9379" class="Function">validTxIn₂</a> <a id="9415" href="Ledger.Conway.Specification.Properties.html#9415" class="Bound">tx</a> <a id="9418" class="Symbol">=</a> <a id="9420" href="Data.Product.Base.html#1371" class="Function">∃[</a> <a id="9423" href="Ledger.Conway.Specification.Properties.html#9423" class="Bound">ls&#39;</a> <a id="9427" href="Data.Product.Base.html#1371" class="Function">]</a> <a id="9429" href="Ledger.Conway.Specification.Properties.html#9283" class="Function">ledgerEnv</a> <a id="9439" href="Ledger.Conway.Specification.Ledger.html#4340" class="Datatype Operator">⊢</a> <a id="9441" href="Ledger.Conway.Specification.Epoch.html#2354" class="Function">ls</a> <a id="9444" href="Ledger.Conway.Specification.Ledger.html#4340" class="Datatype Operator">⇀⦇</a> <a id="9447" href="Ledger.Conway.Specification.Properties.html#9415" class="Bound">tx</a> <a id="9450" href="Ledger.Conway.Specification.Ledger.html#4340" class="Datatype Operator">,LEDGER⦈</a> <a id="9459" href="Ledger.Conway.Specification.Properties.html#9423" class="Bound">ls&#39;</a>
+
+<a id="validTx₁"></a><a id="9464" href="Ledger.Conway.Specification.Properties.html#9464" class="Function">validTx₁</a> <a id="9473" class="Symbol">:</a> <a id="9475" href="Ledger.Conway.Specification.Transaction.html#6300" class="Record">Tx</a> <a id="9478" class="Symbol">→</a> <a id="9480" href="Agda.Primitive.html#388" class="Primitive">Type</a>
+<a id="9485" href="Ledger.Conway.Specification.Properties.html#9464" class="Function">validTx₁</a> <a id="9494" href="Ledger.Conway.Specification.Properties.html#9494" class="Bound">tx</a> <a id="9497" class="Symbol">=</a> <a id="9499" href="Data.Product.Base.html#1371" class="Function">∃[</a> <a id="9502" href="Ledger.Conway.Specification.Properties.html#9502" class="Bound">s</a> <a id="9504" href="Data.Product.Base.html#1371" class="Function">]</a> <a id="9506" href="Ledger.Conway.Specification.Properties.html#8998" class="Function">validTxIn₁</a> <a id="9517" href="Ledger.Conway.Specification.Properties.html#9502" class="Bound">s</a> <a id="9519" href="Ledger.Conway.Specification.Properties.html#9494" class="Bound">tx</a>
 </pre>
 
 <div class="footnote">

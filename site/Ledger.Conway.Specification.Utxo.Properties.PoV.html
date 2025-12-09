@@ -83,6 +83,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#thm:UTXO-PoV" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -470,29 +475,6 @@
   
   <span class="md-ellipsis">
     Introduction
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="Properties.html" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Properties
     
   </span>
   
@@ -3737,6 +3719,19 @@
       
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    PoV
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="Ledger.Conway.Specification.Utxo.Properties.PoV.html" class="md-nav__link md-nav__link--active">
         
   
@@ -3748,6 +3743,32 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#thm:UTXO-PoV" class="md-nav__link">
+    <span class="md-ellipsis">
+      Theorem: The UTXO rule preserves value
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -9959,6 +9980,23 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#thm:UTXO-PoV" class="md-nav__link">
+    <span class="md-ellipsis">
+      Theorem: The UTXO rule preserves value
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -9986,25 +10024,25 @@
 
   <h1>PoV</h1>
 
+<h2 id="thm:UTXO-PoV">Theorem: The <span class="AgdaDatatype">UTXO</span> rule preserves value<a class="headerlink" href="#thm:UTXO-PoV" title="Permanent link">&para;</a></h2>
 <pre class="Agda hidden-source">
-<a id="15" class="Symbol">{-#</a> <a id="19" class="Keyword">OPTIONS</a> <a id="27" class="Pragma">--safe</a> <a id="34" class="Symbol">#-}</a>
+<a id="213" class="Symbol">{-#</a> <a id="217" class="Keyword">OPTIONS</a> <a id="225" class="Pragma">--safe</a> <a id="232" class="Symbol">#-}</a>
 
-<a id="39" class="Keyword">open</a> <a id="44" class="Keyword">import</a> <a id="51" href="Ledger.Conway.Specification.Abstract.html" class="Module">Ledger.Conway.Specification.Abstract</a>
-<a id="88" class="Keyword">open</a> <a id="93" class="Keyword">import</a> <a id="100" href="Ledger.Conway.Specification.Transaction.html" class="Module">Ledger.Conway.Specification.Transaction</a>
+<a id="237" class="Keyword">open</a> <a id="242" class="Keyword">import</a> <a id="249" href="Ledger.Conway.Specification.Abstract.html" class="Module">Ledger.Conway.Specification.Abstract</a>
+<a id="286" class="Keyword">open</a> <a id="291" class="Keyword">import</a> <a id="298" href="Ledger.Conway.Specification.Transaction.html" class="Module">Ledger.Conway.Specification.Transaction</a>
 
-<a id="141" class="Keyword">module</a> <a id="148" href="Ledger.Conway.Specification.Utxo.Properties.PoV.html" class="Module">Ledger.Conway.Specification.Utxo.Properties.PoV</a>
-  <a id="198" class="Symbol">(</a><a id="199" href="Ledger.Conway.Specification.Utxo.Properties.PoV.html#199" class="Bound">txs</a> <a id="203" class="Symbol">:</a> <a id="205" class="Symbol">_)</a> <a id="208" class="Symbol">(</a><a id="209" class="Keyword">open</a> <a id="214" href="Ledger.Conway.Specification.Transaction.html#2459" class="Module">TransactionStructure</a> <a id="235" href="Ledger.Conway.Specification.Utxo.Properties.PoV.html#199" class="Bound">txs</a><a id="238" class="Symbol">)</a>
-  <a id="242" class="Symbol">(</a><a id="243" href="Ledger.Conway.Specification.Utxo.Properties.PoV.html#243" class="Bound">abs</a> <a id="247" class="Symbol">:</a> <a id="249" href="Ledger.Conway.Specification.Abstract.html#930" class="Record">AbstractFunctions</a> <a id="267" href="Ledger.Conway.Specification.Utxo.Properties.PoV.html#199" class="Bound">txs</a><a id="270" class="Symbol">)</a>
-  <a id="274" class="Keyword">where</a>
+<a id="339" class="Keyword">module</a> <a id="346" href="Ledger.Conway.Specification.Utxo.Properties.PoV.html" class="Module">Ledger.Conway.Specification.Utxo.Properties.PoV</a>
+  <a id="396" class="Symbol">(</a><a id="397" href="Ledger.Conway.Specification.Utxo.Properties.PoV.html#397" class="Bound">txs</a> <a id="401" class="Symbol">:</a> <a id="403" class="Symbol">_)</a> <a id="406" class="Symbol">(</a><a id="407" class="Keyword">open</a> <a id="412" href="Ledger.Conway.Specification.Transaction.html#2459" class="Module">TransactionStructure</a> <a id="433" href="Ledger.Conway.Specification.Utxo.Properties.PoV.html#397" class="Bound">txs</a><a id="436" class="Symbol">)</a>
+  <a id="440" class="Symbol">(</a><a id="441" href="Ledger.Conway.Specification.Utxo.Properties.PoV.html#441" class="Bound">abs</a> <a id="445" class="Symbol">:</a> <a id="447" href="Ledger.Conway.Specification.Abstract.html#930" class="Record">AbstractFunctions</a> <a id="465" href="Ledger.Conway.Specification.Utxo.Properties.PoV.html#397" class="Bound">txs</a><a id="468" class="Symbol">)</a>
+  <a id="472" class="Keyword">where</a>
 
-<a id="281" class="Keyword">open</a> <a id="286" class="Keyword">import</a> <a id="293" href="Ledger.Conway.Specification.Certs.html" class="Module">Ledger.Conway.Specification.Certs</a> <a id="327" href="Ledger.Conway.Specification.Transaction.html#3581" class="Function">govStructure</a>
-<a id="340" class="Keyword">open</a> <a id="345" class="Keyword">import</a> <a id="352" href="Ledger.Prelude.html" class="Module">Ledger.Prelude</a>
-<a id="367" class="Keyword">open</a> <a id="372" class="Keyword">import</a> <a id="379" href="Ledger.Conway.Specification.Utxo.html" class="Module">Ledger.Conway.Specification.Utxo</a> <a id="412" href="Ledger.Conway.Specification.Utxo.Properties.PoV.html#199" class="Bound">txs</a> <a id="416" href="Ledger.Conway.Specification.Utxo.Properties.PoV.html#243" class="Bound">abs</a>
-<a id="420" class="Keyword">open</a> <a id="425" class="Keyword">import</a> <a id="432" href="Ledger.Conway.Specification.Utxo.Properties.Base.html" class="Module">Ledger.Conway.Specification.Utxo.Properties.Base</a> <a id="481" href="Ledger.Conway.Specification.Utxo.Properties.PoV.html#199" class="Bound">txs</a> <a id="485" href="Ledger.Conway.Specification.Utxo.Properties.PoV.html#243" class="Bound">abs</a> <a id="489" class="Keyword">public</a>
-<a id="496" class="Keyword">open</a> <a id="501" href="Ledger.Conway.Specification.Utxo.html#2905" class="Module">UTxOState</a><a id="510" class="Symbol">;</a> <a id="512" class="Keyword">open</a> <a id="517" href="Ledger.Conway.Specification.Transaction.html#6300" class="Module">Tx</a><a id="519" class="Symbol">;</a> <a id="521" class="Keyword">open</a> <a id="526" href="Ledger.Conway.Specification.Transaction.html#4582" class="Module">TxBody</a>
+<a id="479" class="Keyword">open</a> <a id="484" class="Keyword">import</a> <a id="491" href="Ledger.Conway.Specification.Certs.html" class="Module">Ledger.Conway.Specification.Certs</a> <a id="525" href="Ledger.Conway.Specification.Transaction.html#3581" class="Function">govStructure</a>
+<a id="538" class="Keyword">open</a> <a id="543" class="Keyword">import</a> <a id="550" href="Ledger.Prelude.html" class="Module">Ledger.Prelude</a>
+<a id="565" class="Keyword">open</a> <a id="570" class="Keyword">import</a> <a id="577" href="Ledger.Conway.Specification.Utxo.html" class="Module">Ledger.Conway.Specification.Utxo</a> <a id="610" href="Ledger.Conway.Specification.Utxo.Properties.PoV.html#397" class="Bound">txs</a> <a id="614" href="Ledger.Conway.Specification.Utxo.Properties.PoV.html#441" class="Bound">abs</a>
+<a id="618" class="Keyword">open</a> <a id="623" class="Keyword">import</a> <a id="630" href="Ledger.Conway.Specification.Utxo.Properties.Base.html" class="Module">Ledger.Conway.Specification.Utxo.Properties.Base</a> <a id="679" href="Ledger.Conway.Specification.Utxo.Properties.PoV.html#397" class="Bound">txs</a> <a id="683" href="Ledger.Conway.Specification.Utxo.Properties.PoV.html#441" class="Bound">abs</a> <a id="687" class="Keyword">public</a>
+<a id="694" class="Keyword">open</a> <a id="699" href="Ledger.Conway.Specification.Utxo.html#2905" class="Module">UTxOState</a><a id="708" class="Symbol">;</a> <a id="710" class="Keyword">open</a> <a id="715" href="Ledger.Conway.Specification.Transaction.html#6300" class="Module">Tx</a><a id="717" class="Symbol">;</a> <a id="719" class="Keyword">open</a> <a id="724" href="Ledger.Conway.Specification.Transaction.html#4582" class="Module">TxBody</a>
 </pre>
 
-<p><strong>Lemma (The <code class="AgdaOperator">UTXO</code> rule preserves value).</strong></p>
 <p><em>Informally</em>.</p>
 <p>Let <code class="AgdaBound">s</code> and <code class="AgdaBound">s'</code> be <code class="AgdaRecord">UTxOStates</code>, let
 <code class="AgdaBound">tx</code> : <code class="AgdaRecord">Tx</code> be a fresh transaction with withdrawals
@@ -10025,18 +10063,17 @@ If <code class="AgdaBound">tx</code> is not valid, then the coin values of <code
 <p>where <code class="AgdaFunction">χ</code> : <code class="AgdaDatatype">Bool</code> → <span class="arithmatex">\(\{0, 1\}\)</span> is the <em>characteristic function</em>,
 which returns 0 for false and 1 for true.</p>
 <p><em>Formally</em>.</p>
-<pre class="Agda"><a id="UTXOpov"></a><a id="2945" href="Ledger.Conway.Specification.Utxo.Properties.PoV.html#2945" class="Function">UTXOpov</a> <a id="2953" class="Symbol">:</a> <a id="2955" class="Symbol">{</a><a id="2956" href="Ledger.Conway.Specification.Utxo.Properties.PoV.html#2956" class="Bound">Γ</a> <a id="2958" class="Symbol">:</a> <a id="2960" href="Ledger.Conway.Specification.Utxo.html#2771" class="Record">UTxOEnv</a><a id="2967" class="Symbol">}</a> <a id="2969" class="Symbol">{</a><a id="2970" href="Ledger.Conway.Specification.Utxo.Properties.PoV.html#2970" class="Bound">tx</a> <a id="2973" class="Symbol">:</a> <a id="2975" href="Ledger.Conway.Specification.Transaction.html#6300" class="Record">Tx</a><a id="2977" class="Symbol">}</a> <a id="2979" class="Symbol">{</a><a id="2980" href="Ledger.Conway.Specification.Utxo.Properties.PoV.html#2980" class="Bound">s</a> <a id="2982" href="Ledger.Conway.Specification.Utxo.Properties.PoV.html#2982" class="Bound">s&#39;</a> <a id="2985" class="Symbol">:</a> <a id="2987" href="Ledger.Conway.Specification.Utxo.html#2905" class="Record">UTxOState</a><a id="2996" class="Symbol">}</a>
-  <a id="3000" class="Symbol">→</a> <a id="3002" href="Ledger.Conway.Specification.Transaction.html#5864" class="Field">TxIdOf</a> <a id="3009" href="Ledger.Conway.Specification.Utxo.Properties.PoV.html#2970" class="Bound">tx</a> <a id="3012" href="Class.IsSet.html#462" class="Function Operator">∉</a> <a id="3014" href="abstract-set-theory.FiniteSetTheory.html#519" class="Function">mapˢ</a> <a id="3019" href="Data.Product.Base.html#636" class="Field">proj₁</a> <a id="3025" class="Symbol">(</a><a id="3026" href="Class.IsSet.html#916" class="Function">dom</a> <a id="3030" class="Symbol">(</a><a id="3031" href="Ledger.Conway.Specification.Transaction.html#4490" class="Field">UTxOOf</a> <a id="3038" href="Ledger.Conway.Specification.Utxo.Properties.PoV.html#2980" class="Bound">s</a><a id="3039" class="Symbol">))</a>
-  <a id="3044" class="Symbol">→</a> <a id="3046" href="Ledger.Conway.Specification.Utxo.Properties.PoV.html#2956" class="Bound">Γ</a> <a id="3048" href="Ledger.Conway.Specification.Utxo.html#3919" class="Datatype Operator">⊢</a> <a id="3050" href="Ledger.Conway.Specification.Utxo.Properties.PoV.html#2980" class="Bound">s</a> <a id="3052" href="Ledger.Conway.Specification.Utxo.html#3919" class="Datatype Operator">⇀⦇</a> <a id="3055" href="Ledger.Conway.Specification.Utxo.Properties.PoV.html#2970" class="Bound">tx</a> <a id="3058" href="Ledger.Conway.Specification.Utxo.html#3919" class="Datatype Operator">,UTXO⦈</a> <a id="3065" href="Ledger.Conway.Specification.Utxo.Properties.PoV.html#2982" class="Bound">s&#39;</a>
-  <a id="3070" class="Symbol">→</a> <a id="3072" href="Ledger.Prelude.HasCoin.html#258" class="Field">getCoin</a> <a id="3080" href="Ledger.Conway.Specification.Utxo.Properties.PoV.html#2980" class="Bound">s</a> <a id="3082" href="Class.HasAdd.Core.html#162" class="Field Operator">+</a> <a id="3084" href="Ledger.Prelude.HasCoin.html#258" class="Field">getCoin</a> <a id="3092" class="Symbol">(</a><a id="3093" href="Ledger.Core.Specification.Address.html#2701" class="Field">WithdrawalsOf</a> <a id="3107" href="Ledger.Conway.Specification.Utxo.Properties.PoV.html#2970" class="Bound">tx</a><a id="3109" class="Symbol">)</a> <a id="3111" href="Agda.Builtin.Nat.html#539" class="Primitive Operator">*</a> <a id="3113" href="Ledger.Conway.Specification.Utxo.Properties.Base.html#1432" class="Function">χ</a> <a id="3115" class="Symbol">(</a><a id="3116" href="Ledger.Conway.Specification.Utxo.Properties.PoV.html#2970" class="Bound">tx</a> <a id="3119" class="Symbol">.</a><a id="3120" href="Ledger.Conway.Specification.Transaction.html#6404" class="Field">isValid</a><a id="3127" class="Symbol">)</a> <a id="3129" href="Agda.Builtin.Equality.html#150" class="Datatype Operator">≡</a> <a id="3131" href="Ledger.Prelude.HasCoin.html#258" class="Field">getCoin</a> <a id="3139" href="Ledger.Conway.Specification.Utxo.Properties.PoV.html#2982" class="Bound">s&#39;</a>
+<pre class="Agda"><a id="UTXOpov"></a><a id="3081" href="Ledger.Conway.Specification.Utxo.Properties.PoV.html#3081" class="Function">UTXOpov</a> <a id="3089" class="Symbol">:</a> <a id="3091" class="Symbol">{</a><a id="3092" href="Ledger.Conway.Specification.Utxo.Properties.PoV.html#3092" class="Bound">Γ</a> <a id="3094" class="Symbol">:</a> <a id="3096" href="Ledger.Conway.Specification.Utxo.html#2771" class="Record">UTxOEnv</a><a id="3103" class="Symbol">}</a> <a id="3105" class="Symbol">{</a><a id="3106" href="Ledger.Conway.Specification.Utxo.Properties.PoV.html#3106" class="Bound">tx</a> <a id="3109" class="Symbol">:</a> <a id="3111" href="Ledger.Conway.Specification.Transaction.html#6300" class="Record">Tx</a><a id="3113" class="Symbol">}</a> <a id="3115" class="Symbol">{</a><a id="3116" href="Ledger.Conway.Specification.Utxo.Properties.PoV.html#3116" class="Bound">s</a> <a id="3118" href="Ledger.Conway.Specification.Utxo.Properties.PoV.html#3118" class="Bound">s&#39;</a> <a id="3121" class="Symbol">:</a> <a id="3123" href="Ledger.Conway.Specification.Utxo.html#2905" class="Record">UTxOState</a><a id="3132" class="Symbol">}</a>
+  <a id="3136" class="Symbol">→</a> <a id="3138" href="Ledger.Conway.Specification.Transaction.html#5864" class="Field">TxIdOf</a> <a id="3145" href="Ledger.Conway.Specification.Utxo.Properties.PoV.html#3106" class="Bound">tx</a> <a id="3148" href="Class.IsSet.html#462" class="Function Operator">∉</a> <a id="3150" href="abstract-set-theory.FiniteSetTheory.html#519" class="Function">mapˢ</a> <a id="3155" href="Data.Product.Base.html#636" class="Field">proj₁</a> <a id="3161" class="Symbol">(</a><a id="3162" href="Class.IsSet.html#916" class="Function">dom</a> <a id="3166" class="Symbol">(</a><a id="3167" href="Ledger.Conway.Specification.Transaction.html#4490" class="Field">UTxOOf</a> <a id="3174" href="Ledger.Conway.Specification.Utxo.Properties.PoV.html#3116" class="Bound">s</a><a id="3175" class="Symbol">))</a>
+  <a id="3180" class="Symbol">→</a> <a id="3182" href="Ledger.Conway.Specification.Utxo.Properties.PoV.html#3092" class="Bound">Γ</a> <a id="3184" href="Ledger.Conway.Specification.Utxo.html#3919" class="Datatype Operator">⊢</a> <a id="3186" href="Ledger.Conway.Specification.Utxo.Properties.PoV.html#3116" class="Bound">s</a> <a id="3188" href="Ledger.Conway.Specification.Utxo.html#3919" class="Datatype Operator">⇀⦇</a> <a id="3191" href="Ledger.Conway.Specification.Utxo.Properties.PoV.html#3106" class="Bound">tx</a> <a id="3194" href="Ledger.Conway.Specification.Utxo.html#3919" class="Datatype Operator">,UTXO⦈</a> <a id="3201" href="Ledger.Conway.Specification.Utxo.Properties.PoV.html#3118" class="Bound">s&#39;</a>
+  <a id="3206" class="Symbol">→</a> <a id="3208" href="Ledger.Prelude.HasCoin.html#258" class="Field">getCoin</a> <a id="3216" href="Ledger.Conway.Specification.Utxo.Properties.PoV.html#3116" class="Bound">s</a> <a id="3218" href="Class.HasAdd.Core.html#162" class="Field Operator">+</a> <a id="3220" href="Ledger.Prelude.HasCoin.html#258" class="Field">getCoin</a> <a id="3228" class="Symbol">(</a><a id="3229" href="Ledger.Core.Specification.Address.html#2701" class="Field">WithdrawalsOf</a> <a id="3243" href="Ledger.Conway.Specification.Utxo.Properties.PoV.html#3106" class="Bound">tx</a><a id="3245" class="Symbol">)</a> <a id="3247" href="Agda.Builtin.Nat.html#539" class="Primitive Operator">*</a> <a id="3249" href="Ledger.Conway.Specification.Utxo.Properties.Base.html#1432" class="Function">χ</a> <a id="3251" class="Symbol">(</a><a id="3252" href="Ledger.Conway.Specification.Utxo.Properties.PoV.html#3106" class="Bound">tx</a> <a id="3255" class="Symbol">.</a><a id="3256" href="Ledger.Conway.Specification.Transaction.html#6404" class="Field">isValid</a><a id="3263" class="Symbol">)</a> <a id="3265" href="Agda.Builtin.Equality.html#150" class="Datatype Operator">≡</a> <a id="3267" href="Ledger.Prelude.HasCoin.html#258" class="Field">getCoin</a> <a id="3275" href="Ledger.Conway.Specification.Utxo.Properties.PoV.html#3118" class="Bound">s&#39;</a>
 </pre>
 <p><em>Proof</em>.</p>
-<pre class="Agda">
-<a id="3166" href="Ledger.Conway.Specification.Utxo.Properties.PoV.html#2945" class="Function">UTXOpov</a> <a id="3174" href="Ledger.Conway.Specification.Utxo.Properties.PoV.html#3174" class="Bound">h&#39;</a> <a id="3177" href="Ledger.Conway.Specification.Utxo.Properties.PoV.html#3177" class="Bound">step</a><a id="3181" class="Symbol">@(</a><a id="3183" href="Ledger.Conway.Specification.Utxo.html#19533" class="InductiveConstructor">UTXO-inductive⋯</a> <a id="3199" class="Symbol">_</a> <a id="3201" href="Ledger.Conway.Specification.Utxo.Properties.PoV.html#3201" class="Bound">Γ</a> <a id="3203" class="Symbol">_</a> <a id="3205" class="Symbol">_</a> <a id="3207" class="Symbol">_</a> <a id="3209" class="Symbol">_</a> <a id="3211" class="Symbol">_</a> <a id="3213" class="Symbol">_</a> <a id="3215" class="Symbol">_</a> <a id="3217" href="Ledger.Conway.Specification.Utxo.Properties.PoV.html#3217" class="Bound">newBal</a> <a id="3224" href="Ledger.Conway.Specification.Utxo.Properties.PoV.html#3224" class="Bound">noMintAda</a> <a id="3234" class="Symbol">_</a> <a id="3236" class="Symbol">_</a> <a id="3238" class="Symbol">_</a> <a id="3240" class="Symbol">_</a> <a id="3242" class="Symbol">_</a> <a id="3244" class="Symbol">_</a> <a id="3246" class="Symbol">_</a> <a id="3248" class="Symbol">_</a> <a id="3250" class="Symbol">_</a> <a id="3252" class="Symbol">(</a><a id="3253" href="Ledger.Conway.Specification.Utxo.html#16661" class="InductiveConstructor">Scripts-Yes</a> <a id="3265" class="Symbol">(_</a> <a id="3268" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="3270" class="Symbol">_</a> <a id="3272" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="3274" href="Ledger.Conway.Specification.Utxo.Properties.PoV.html#3274" class="Bound">valid</a><a id="3279" class="Symbol">)))</a>
-  <a id="3285" class="Symbol">=</a> <a id="3287" href="Ledger.Conway.Specification.Utxo.Properties.Base.html#18628" class="Function">pov-scripts</a> <a id="3299" href="Ledger.Conway.Specification.Utxo.Properties.PoV.html#3177" class="Bound">step</a> <a id="3304" href="Ledger.Conway.Specification.Utxo.Properties.PoV.html#3174" class="Bound">h&#39;</a> <a id="3307" href="Agda.Builtin.Equality.html#207" class="InductiveConstructor">refl</a> <a id="3312" href="Ledger.Conway.Specification.Utxo.Properties.PoV.html#3274" class="Bound">valid</a>
+<pre class="Agda"><a id="3301" href="Ledger.Conway.Specification.Utxo.Properties.PoV.html#3081" class="Function">UTXOpov</a> <a id="3309" href="Ledger.Conway.Specification.Utxo.Properties.PoV.html#3309" class="Bound">h&#39;</a> <a id="3312" href="Ledger.Conway.Specification.Utxo.Properties.PoV.html#3312" class="Bound">step</a><a id="3316" class="Symbol">@(</a><a id="3318" href="Ledger.Conway.Specification.Utxo.html#19533" class="InductiveConstructor">UTXO-inductive⋯</a> <a id="3334" class="Symbol">_</a> <a id="3336" href="Ledger.Conway.Specification.Utxo.Properties.PoV.html#3336" class="Bound">Γ</a> <a id="3338" class="Symbol">_</a> <a id="3340" class="Symbol">_</a> <a id="3342" class="Symbol">_</a> <a id="3344" class="Symbol">_</a> <a id="3346" class="Symbol">_</a> <a id="3348" class="Symbol">_</a> <a id="3350" class="Symbol">_</a> <a id="3352" href="Ledger.Conway.Specification.Utxo.Properties.PoV.html#3352" class="Bound">newBal</a> <a id="3359" href="Ledger.Conway.Specification.Utxo.Properties.PoV.html#3359" class="Bound">noMintAda</a> <a id="3369" class="Symbol">_</a> <a id="3371" class="Symbol">_</a> <a id="3373" class="Symbol">_</a> <a id="3375" class="Symbol">_</a> <a id="3377" class="Symbol">_</a> <a id="3379" class="Symbol">_</a> <a id="3381" class="Symbol">_</a> <a id="3383" class="Symbol">_</a> <a id="3385" class="Symbol">_</a> <a id="3387" class="Symbol">(</a><a id="3388" href="Ledger.Conway.Specification.Utxo.html#16661" class="InductiveConstructor">Scripts-Yes</a> <a id="3400" class="Symbol">(_</a> <a id="3403" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="3405" class="Symbol">_</a> <a id="3407" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="3409" href="Ledger.Conway.Specification.Utxo.Properties.PoV.html#3409" class="Bound">valid</a><a id="3414" class="Symbol">)))</a>
+  <a id="3420" class="Symbol">=</a> <a id="3422" href="Ledger.Conway.Specification.Utxo.Properties.Base.html#18628" class="Function">pov-scripts</a> <a id="3434" href="Ledger.Conway.Specification.Utxo.Properties.PoV.html#3312" class="Bound">step</a> <a id="3439" href="Ledger.Conway.Specification.Utxo.Properties.PoV.html#3309" class="Bound">h&#39;</a> <a id="3442" href="Agda.Builtin.Equality.html#207" class="InductiveConstructor">refl</a> <a id="3447" href="Ledger.Conway.Specification.Utxo.Properties.PoV.html#3409" class="Bound">valid</a>
 
-<a id="3319" href="Ledger.Conway.Specification.Utxo.Properties.PoV.html#2945" class="Function">UTXOpov</a> <a id="3327" href="Ledger.Conway.Specification.Utxo.Properties.PoV.html#3327" class="Bound">h&#39;</a> <a id="3330" href="Ledger.Conway.Specification.Utxo.Properties.PoV.html#3330" class="Bound">step</a><a id="3334" class="Symbol">@(</a><a id="3336" href="Ledger.Conway.Specification.Utxo.html#19533" class="InductiveConstructor">UTXO-inductive⋯</a> <a id="3352" class="Symbol">_</a> <a id="3354" class="Symbol">_</a> <a id="3356" class="Symbol">_</a> <a id="3358" class="Symbol">_</a> <a id="3360" class="Symbol">_</a> <a id="3362" class="Symbol">_</a> <a id="3364" class="Symbol">_</a> <a id="3366" class="Symbol">_</a> <a id="3368" class="Symbol">_</a> <a id="3370" class="Symbol">_</a> <a id="3372" class="Symbol">_</a> <a id="3374" class="Symbol">_</a> <a id="3376" class="Symbol">_</a> <a id="3378" class="Symbol">_</a> <a id="3380" class="Symbol">_</a> <a id="3382" class="Symbol">_</a> <a id="3384" class="Symbol">_</a> <a id="3386" class="Symbol">_</a> <a id="3388" class="Symbol">_</a> <a id="3390" class="Symbol">_</a> <a id="3392" class="Symbol">(</a><a id="3393" href="Ledger.Conway.Specification.Utxo.html#17208" class="InductiveConstructor">Scripts-No</a> <a id="3404" class="Symbol">(_</a> <a id="3407" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="3409" href="Ledger.Conway.Specification.Utxo.Properties.PoV.html#3409" class="Bound">invalid</a><a id="3416" class="Symbol">)))</a>
-  <a id="3422" class="Symbol">=</a> <a id="3424" href="Ledger.Conway.Specification.Utxo.Properties.Base.html#19076" class="Function">pov-no-scripts</a> <a id="3439" href="Ledger.Conway.Specification.Utxo.Properties.PoV.html#3330" class="Bound">step</a> <a id="3444" href="Ledger.Conway.Specification.Utxo.Properties.PoV.html#3327" class="Bound">h&#39;</a> <a id="3447" href="Ledger.Conway.Specification.Utxo.Properties.PoV.html#3409" class="Bound">invalid</a>
+<a id="3454" href="Ledger.Conway.Specification.Utxo.Properties.PoV.html#3081" class="Function">UTXOpov</a> <a id="3462" href="Ledger.Conway.Specification.Utxo.Properties.PoV.html#3462" class="Bound">h&#39;</a> <a id="3465" href="Ledger.Conway.Specification.Utxo.Properties.PoV.html#3465" class="Bound">step</a><a id="3469" class="Symbol">@(</a><a id="3471" href="Ledger.Conway.Specification.Utxo.html#19533" class="InductiveConstructor">UTXO-inductive⋯</a> <a id="3487" class="Symbol">_</a> <a id="3489" class="Symbol">_</a> <a id="3491" class="Symbol">_</a> <a id="3493" class="Symbol">_</a> <a id="3495" class="Symbol">_</a> <a id="3497" class="Symbol">_</a> <a id="3499" class="Symbol">_</a> <a id="3501" class="Symbol">_</a> <a id="3503" class="Symbol">_</a> <a id="3505" class="Symbol">_</a> <a id="3507" class="Symbol">_</a> <a id="3509" class="Symbol">_</a> <a id="3511" class="Symbol">_</a> <a id="3513" class="Symbol">_</a> <a id="3515" class="Symbol">_</a> <a id="3517" class="Symbol">_</a> <a id="3519" class="Symbol">_</a> <a id="3521" class="Symbol">_</a> <a id="3523" class="Symbol">_</a> <a id="3525" class="Symbol">_</a> <a id="3527" class="Symbol">(</a><a id="3528" href="Ledger.Conway.Specification.Utxo.html#17208" class="InductiveConstructor">Scripts-No</a> <a id="3539" class="Symbol">(_</a> <a id="3542" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="3544" href="Ledger.Conway.Specification.Utxo.Properties.PoV.html#3544" class="Bound">invalid</a><a id="3551" class="Symbol">)))</a>
+  <a id="3557" class="Symbol">=</a> <a id="3559" href="Ledger.Conway.Specification.Utxo.Properties.Base.html#19076" class="Function">pov-no-scripts</a> <a id="3574" href="Ledger.Conway.Specification.Utxo.Properties.PoV.html#3465" class="Bound">step</a> <a id="3579" href="Ledger.Conway.Specification.Utxo.Properties.PoV.html#3462" class="Bound">h&#39;</a> <a id="3582" href="Ledger.Conway.Specification.Utxo.Properties.PoV.html#3544" class="Bound">invalid</a>
 </pre>
 
 
