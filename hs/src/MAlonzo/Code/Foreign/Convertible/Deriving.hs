@@ -1418,7 +1418,7 @@ d_autoConvert_226 v0 v1
            (coe
               MAlonzo.Code.Agda.Builtin.Reflection.d_bindTC_336 () () erased
               erased
-              (MAlonzo.Code.Foreign.HaskellTypes.Deriving.d_solveHsType_138
+              (MAlonzo.Code.Foreign.HaskellTypes.Deriving.d_solveHsType_172
                  (coe
                     MAlonzo.Code.Agda.Builtin.Reflection.C_def_184 (coe v0)
                     (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))

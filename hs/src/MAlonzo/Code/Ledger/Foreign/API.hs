@@ -6,7 +6,7 @@ module MAlonzo.Code.Ledger.Foreign.API
 import MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes                   as X
   (HSSet(..), HSMap(..), ComputationResult(..), Rational(..))
 import MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address           as X
-  (Credential(..), BaseAddr(..), BootstrapAddr(..), RwdAddr(..), Addr, HSVKey (..))
+  (Credential(..), BaseAddr(..), BootstrapAddr(..), RewardAddress(..), Addr, HSVKey (..))
 import MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.PParams           as X
   (DrepThresholds(..), PoolThresholds(..), Acnt(..), PParams(..), PParamsUpdate(..))
 import MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Transaction       as X
@@ -35,7 +35,8 @@ import MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Ledger            as X
 import MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.NewEpoch          as X
   (NewEpochState(..), newEpochStep)
 import MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Ratify            as X
-  (StakeDistrs(..), RatifyEnv(..), RatifyState(..), ratifyStep)
+  (StakeDistrs(..), RatifyEnv(..), RatifyState(..), ratifyStep
+  ,acceptedBySPO, acceptedByDRep, acceptedByCC)
 import MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Rewards           as X
   (HsRewardUpdate(..), Snapshot(..), Snapshots(..))
 import MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Utxo              as X

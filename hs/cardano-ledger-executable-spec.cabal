@@ -439,6 +439,7 @@ library
       MAlonzo.Code.Function.Properties.Inverse.HalfAdjointEquivalence
       MAlonzo.Code.Function.Properties.RightInverse
       MAlonzo.Code.Function.Properties.Surjection
+      MAlonzo.Code.Function.Reasoning
       MAlonzo.Code.Function.Related.Propositional
       MAlonzo.Code.Function.Related.TypeIsomorphisms
       MAlonzo.Code.Function.Strict
@@ -460,8 +461,13 @@ library
       MAlonzo.Code.Ledger.Conway.Conformance.Chain.Properties
       MAlonzo.Code.Ledger.Conway.Conformance.Epoch
       MAlonzo.Code.Ledger.Conway.Conformance.Epoch.Properties
+      MAlonzo.Code.Ledger.Conway.Conformance.Equivalence
+      MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Bisimilarity
       MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Certs
       MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert
+      MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Deposits
+      MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Map
+      MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Utxo
       MAlonzo.Code.Ledger.Conway.Conformance.Gov
       MAlonzo.Code.Ledger.Conway.Conformance.Ledger
       MAlonzo.Code.Ledger.Conway.Conformance.Ledger.Properties
@@ -497,16 +503,20 @@ library
       MAlonzo.Code.Ledger.Conway.Specification.Enact
       MAlonzo.Code.Ledger.Conway.Specification.Enact.Properties.Computational
       MAlonzo.Code.Ledger.Conway.Specification.Epoch
+      MAlonzo.Code.Ledger.Conway.Specification.Epoch.Properties.Computational
       MAlonzo.Code.Ledger.Conway.Specification.Fees
       MAlonzo.Code.Ledger.Conway.Specification.Gov
       MAlonzo.Code.Ledger.Conway.Specification.Gov.Properties.Computational
       MAlonzo.Code.Ledger.Conway.Specification.Ledger
       MAlonzo.Code.Ledger.Conway.Specification.PoolReap
+      MAlonzo.Code.Ledger.Conway.Specification.PoolReap.Properties.Computational
       MAlonzo.Code.Ledger.Conway.Specification.PParams
       MAlonzo.Code.Ledger.Conway.Specification.Ratify
       MAlonzo.Code.Ledger.Conway.Specification.Ratify.Properties.Computational
       MAlonzo.Code.Ledger.Conway.Specification.Rewards
+      MAlonzo.Code.Ledger.Conway.Specification.Rewards.Properties.Computational
       MAlonzo.Code.Ledger.Conway.Specification.Script
+      MAlonzo.Code.Ledger.Conway.Specification.Script.ScriptPurpose
       MAlonzo.Code.Ledger.Conway.Specification.Script.Validation
       MAlonzo.Code.Ledger.Conway.Specification.Transaction
       MAlonzo.Code.Ledger.Conway.Specification.Utxo

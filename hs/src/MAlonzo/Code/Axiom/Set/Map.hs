@@ -4061,22 +4061,22 @@ du_'8315''185''45'cong_2182 v0 v1 v2 v3 v4 v5
             MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 (coe (\ v6 v7 -> v7))
             (coe (\ v6 v7 -> v7))))
 -- Axiom.Set.Map..generalizedField-A
-d_'46'generalizedField'45'A_190699 :: T_GeneralizeTel_190707 -> ()
-d_'46'generalizedField'45'A_190699 = erased
+d_'46'generalizedField'45'A_189927 :: T_GeneralizeTel_189935 -> ()
+d_'46'generalizedField'45'A_189927 = erased
 -- Axiom.Set.Map..generalizedField-B
-d_'46'generalizedField'45'B_190701 :: T_GeneralizeTel_190707 -> ()
-d_'46'generalizedField'45'B_190701 = erased
+d_'46'generalizedField'45'B_189929 :: T_GeneralizeTel_189935 -> ()
+d_'46'generalizedField'45'B_189929 = erased
 -- Axiom.Set.Map..generalizedField-B'
-d_'46'generalizedField'45'B''_190703 ::
-  T_GeneralizeTel_190707 -> ()
-d_'46'generalizedField'45'B''_190703 = erased
+d_'46'generalizedField'45'B''_189931 ::
+  T_GeneralizeTel_189935 -> ()
+d_'46'generalizedField'45'B''_189931 = erased
 -- Axiom.Set.Map..generalizedField-R
-d_'46'generalizedField'45'R_190705 ::
-  T_GeneralizeTel_190707 -> AgdaAny
-d_'46'generalizedField'45'R_190705 v0
+d_'46'generalizedField'45'R_189933 ::
+  T_GeneralizeTel_189935 -> AgdaAny
+d_'46'generalizedField'45'R_189933 v0
   = case coe v0 of
-      C_mkGeneralizeTel_190709 v4 -> coe v4
+      C_mkGeneralizeTel_189937 v4 -> coe v4
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Axiom.Set.Map.GeneralizeTel
-d_GeneralizeTel_190707 a0 = ()
-newtype T_GeneralizeTel_190707 = C_mkGeneralizeTel_190709 AgdaAny
+d_GeneralizeTel_189935 a0 = ()
+newtype T_GeneralizeTel_189935 = C_mkGeneralizeTel_189937 AgdaAny
