@@ -12,6 +12,7 @@ properties of the ledger transition system.
 ```agda
 {-# OPTIONS --safe #-}
 
+open import Ledger.Core.Specification.Abstract
 open import Ledger.Core.Specification.Transaction
 import Ledger.Conway.Specification.Certs
 
@@ -237,10 +238,8 @@ module SetoidProperties (tx : Tx) (Γ : LEnv) (s : LState) where
       cd = certDeposit dcert pp
       filter0 = filterCD dcert deps
   noGACerts (dcert@(regpool _ _) ∷ cs) deps = begin
-    -- filterˢ isGADeposit (dom (updateCertDeposits pp cs (deps ∪ˡ cd))) ≈⟨ noGACerts cs _ ⟩
-    -- filterˢ isGADeposit (dom (deps ∪ˡ cd)) ≈⟨ filter-cong (dom∪ˡ≡∪dom {m = deps} {m' = cd}) ⟩
-    filterˢ isGADeposit (dom (updateCertDeposits pp cs (deps ∪⁺ cd))) ≈⟨ noGACerts cs _ ⟩
-    filterˢ isGADeposit (dom (deps ∪⁺ cd)) ≈⟨ filter-cong dom∪⁺≡∪dom ⟩
+    filterˢ isGADeposit (dom (updateCertDeposits pp cs (deps ∪ˡ cd))) ≈⟨ noGACerts cs _ ⟩
+    filterˢ isGADeposit (dom (deps ∪ˡ cd)) ≈⟨ filter-cong (dom∪ˡ≡∪dom {m = deps} {m' = cd}) ⟩
     filterˢ isGADeposit (dom deps ∪ dom (cd ˢ )) ≈⟨ filter-hom-∪ ⟩
     filterˢ isGADeposit (dom deps) ∪ filterˢ isGADeposit (dom (cd ˢ)) ≈⟨ ∪-cong ≡ᵉ.refl filter0 ⟩
     filterˢ isGADeposit (dom deps) ∪ ∅ ≈⟨ ∪-identityʳ $ filterˢ isGADeposit (dom deps) ⟩

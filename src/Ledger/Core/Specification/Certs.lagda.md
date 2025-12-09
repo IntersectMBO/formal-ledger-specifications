@@ -66,9 +66,6 @@ instance
 CCHotKeys : Type
 CCHotKeys = Credential ⇀ Maybe Credential
 
-DReps : Type
-DReps = Credential ⇀ Epoch
-
 PoolEnv : Type
 PoolEnv = PParams
 
@@ -93,9 +90,6 @@ StakeDelegs = Credential ⇀ KeyHash
 record HasCCHotKeys {a} (A : Type a) : Type a where
   field CCHotKeysOf : A → CCHotKeys
 
-record HasDReps {a} (A : Type a) : Type a where
-  field DRepsOf : A → DReps
-
 record HasPools {a} (A : Type a) : Type a where
   field PoolsOf : A → Pools
 
@@ -112,7 +106,6 @@ record HasStakeDelegs {a} (A : Type a) : Type a where
   field StakeDelegsOf : A -> StakeDelegs
 
 open HasCCHotKeys ⦃...⦄ public
-open HasDReps ⦃...⦄ public
 open HasPools ⦃...⦄ public
 open HasRetiring ⦃...⦄ public
 open HasRewards ⦃...⦄ public

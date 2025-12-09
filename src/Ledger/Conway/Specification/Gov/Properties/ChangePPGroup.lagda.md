@@ -10,6 +10,7 @@ source_path: src/Ledger/Conway/Specification/Gov/Properties/ChangePPGroup.lagda.
 
 {-# OPTIONS --safe #-}
 
+open import Ledger.Core.Specification.Abstract
 open import Ledger.Core.Specification.Transaction
 
 module Ledger.Conway.Specification.Gov.Properties.ChangePPGroup

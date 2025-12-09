@@ -22,12 +22,13 @@ valContext x x₁ = ""
 open import Test.AbstractImplementation valContext
 open import Test.Lib valContext
 open import Ledger.Conway.Specification.Transaction SVTransactionStructure SVAbstractFunctions
+open import Ledger.Conway.Specification.Script.Validation SVTransactionStructure SVAbstractFunctions
+open import Ledger.Conway.Specification.Utxo SVTransactionStructure SVAbstractFunctions
+open import Ledger.Conway.Specification.Utxo.Properties.Computational SVTransactionStructure SVAbstractFunctions
 
--- open import Ledger.Conway.Specification.Utxo SVTransactionStructure SVAbstractFunctions
--- open import Ledger.Conway.Specification.Utxo.Properties.Computational SVTransactionStructure SVAbstractFunctions
-
--- open TransactionStructure SVTransactionStructure
+open TransactionStructure SVTransactionStructure
 open Implementation
+
 
 -- true if redeemer is "Hello World"
 helloWorld' : Maybe String → Maybe String → Bool

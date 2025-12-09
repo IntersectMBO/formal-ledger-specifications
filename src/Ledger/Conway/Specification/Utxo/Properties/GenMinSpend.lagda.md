@@ -7,7 +7,7 @@ open import Ledger.Core.Specification.Transaction
 
 module Ledger.Conway.Specification.Utxo.Properties.GenMinSpend
   (txs : TransactionStructure) (open TransactionStructure txs)
-  (abs : AbstractFunctions txs)
+  (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
 
 open import Data.List.Relation.Unary.All  using (All)
@@ -126,17 +126,14 @@ module _ -- ASSUMPTION --
       module ≡ᵉ = IsEquivalence ≡ᵉ-isEquivalence
 
   ... | no ¬p = begin
-      getCoin d             ≤⟨ m≤m+n (getCoin d) _ ⟩
-      getCoin d + _         ≡⟨ sym $ indexedSumᵐ-∪
-                                 {X = d ᶠᵐ}
-                                 {Y = ❴ dp , c ❵ ᶠᵐ}
-                                 {f = proj₂}
-                                 (disjoint-sing ¬p)
-                             ⟩
+      getCoin d
+        ≤⟨ m≤m+n (getCoin d) _ ⟩
+      getCoin d + _
+        ≡˘⟨ indexedSumᵐ-∪ {X = d ᶠᵐ} {Y = ❴ dp , c ❵ ᶠᵐ} {f = proj₂} (disjoint-sing ¬p) ⟩
       indexedSumᵐ proj₂ ((d ᶠᵐ) ∪ˡᶠ (❴ dp , c ❵ ᶠᵐ))
-                            ≡⟨ sym $ indexedSumᵐ-∪ˡ-∪ˡᶠ d ❴ dp , c ❵ ⟩
+        ≡˘⟨ indexedSumᵐ-∪ˡ-∪ˡᶠ {B = Coin} d ❴ dp , c ❵ ⟩
       getCoin (d ∪ˡ ❴ dp , c ❵)
-      ∎
+        ∎
     where
       open ≤-Reasoning
 

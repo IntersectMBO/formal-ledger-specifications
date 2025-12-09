@@ -12,6 +12,8 @@ open import Data.Product.Relation.Binary.Pointwise.NonDependent using (Pointwise
 open import Relation.Binary using (Setoid; IsEquivalence)
 open import Ledger.Prelude
 
+open import Ledger.Conway.Specification.Transaction txs abs
+
 private
   module L where
     open import Ledger.Conway.Specification.Ledger txs abs public
@@ -291,19 +293,17 @@ lem-upd-cert-ddeps {pp} deps (L.reg c v ∷ certs) =
   lem-upd-cert-ddeps (deps ∪⁺ dep) certs
   where dep = ❴ L.CredentialDeposit c , pp .PParams.keyDeposit ❵
 lem-upd-cert-ddeps {pp} deps (L.regpool kh p ∷ certs) =
---  ≈-sym
---    (cong-updateDDeps
---      certs
---      (subst
---        (λ spQ → filterᵐ? spQ (deps ∪ˡ dep) ≡ᵐ filterᵐ? spQ deps)
---        ≡-sp-∘
---        (add-excluded-∪ˡ-l _ deps λ ())
---      )
---    )
---    ⟨≈⟩
---  lem-upd-cert-ddeps (deps ∪ˡ dep) certs
-  ≈-sym (cong-updateDDeps certs (lem-add-excluded λ ())) ⟨≈⟩
-  lem-upd-cert-ddeps (deps ∪⁺ dep) certs
+ ≈-sym
+   (cong-updateDDeps
+     certs
+     (subst
+       (λ spQ → filterᵐ? spQ (deps ∪ˡ dep) ≡ᵐ filterᵐ? spQ deps)
+       ≡-sp-∘
+       (add-excluded-∪ˡ-l _ deps λ ())
+     )
+   )
+   ⟨≈⟩
+ lem-upd-cert-ddeps (deps ∪ˡ dep) certs
   where dep = ❴ L.PoolDeposit kh , pp .PParams.poolDeposit ❵
 lem-upd-cert-ddeps {pp} deps (L.regdrep c v a ∷ certs) =
   ≈-sym (cong-updateDDeps certs (lem-add-excluded λ ())) ⟨≈⟩
@@ -332,19 +332,17 @@ lem-upd-cert-gdeps {pp} deps (L.reg c v ∷ certs) =
   lem-upd-cert-gdeps (deps ∪⁺ dep) certs
   where dep = ❴ L.CredentialDeposit c , pp .PParams.keyDeposit ❵
 lem-upd-cert-gdeps {pp} deps (L.regpool kh p ∷ certs) =
---  ≈-sym
---    (cong-updateGDeps
---      certs
---      (subst
---        (λ spQ → filterᵐ? spQ (deps ∪ˡ dep) ≡ᵐ filterᵐ? spQ deps)
---        ≡-sp-∘
---        (add-excluded-∪ˡ-l _ deps λ ())
---      )
---    )
---    ⟨≈⟩
---  lem-upd-cert-gdeps (deps ∪ˡ dep) certs
-  ≈-sym (cong-updateGDeps certs (lem-add-excluded λ ())) ⟨≈⟩
-  lem-upd-cert-gdeps (deps ∪⁺ dep) certs
+ ≈-sym
+   (cong-updateGDeps
+     certs
+     (subst
+       (λ spQ → filterᵐ? spQ (deps ∪ˡ dep) ≡ᵐ filterᵐ? spQ deps)
+       ≡-sp-∘
+       (add-excluded-∪ˡ-l _ deps λ ())
+     )
+   )
+   ⟨≈⟩
+ lem-upd-cert-gdeps (deps ∪ˡ dep) certs
   where dep = ❴ L.PoolDeposit kh , pp .PParams.poolDeposit ❵
 lem-upd-cert-gdeps {pp} deps (L.regdrep c v a ∷ certs) =
   ≈-sym (cong-updateGDeps certs (lem-add-included DRepDeposit)) ⟨≈⟩

@@ -20,7 +20,7 @@ open import Ledger.Core.Specification.Transaction
 
 module Ledger.Conway.Specification.Properties
   (txs : TransactionStructure) (open TransactionStructure txs)
-  (abs : AbstractFunctions txs)
+  (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
 
 open import Ledger.Prelude

@@ -20,14 +20,12 @@ valContext x x₁ = 0
 
 open import Test.AbstractImplementation valContext
 open import Test.Lib valContext
--- open import Ledger.Conway.Specification.Script.Validation SVTransactionStructure SVAbstractFunctions
--- open import Ledger.Conway.Specification.Transaction SVTransactionStructure SVAbstractFunctions
-
--- open import Ledger.Conway.Specification.Utxo SVTransactionStructure SVAbstractFunctions
--- open import Ledger.Conway.Specification.Utxo.Properties.Computational SVTransactionStructure SVAbstractFunctions
+open import Ledger.Conway.Specification.Script.Validation SVTransactionStructure SVAbstractFunctions
+open import Ledger.Conway.Specification.Transaction SVTransactionStructure SVAbstractFunctions
+open import Ledger.Conway.Specification.Utxo SVTransactionStructure SVAbstractFunctions
+open import Ledger.Conway.Specification.Utxo.Properties.Computational SVTransactionStructure SVAbstractFunctions
 
 open TransactionStructure SVTransactionStructure
--- open EpochStructure SVEpochStructure
 open Implementation
 ```
 -->
