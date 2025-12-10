@@ -796,20 +796,20 @@ d_EnactStateOf_1986 v0
       MAlonzo.Code.Ledger.Conway.Specification.Enact.d_EnactStateOf_1146
       (coe v0)
 -- Ledger.Conway.Specification.Gov._.canVote
-d_canVote_2050 ::
+d_canVote_2052 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   MAlonzo.Code.Ledger.Conway.Specification.PParams.T_PParams_274 ->
   MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovAction_828 ->
   MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovRole_782 ->
   ()
-d_canVote_2050 = erased
+d_canVote_2052 = erased
 -- Ledger.Conway.Specification.Gov._.expired
-d_expired_2058 ::
+d_expired_2060 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   AgdaAny ->
   MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovActionState_1004 ->
   ()
-d_expired_2058 = erased
+d_expired_2060 = erased
 -- Ledger.Conway.Specification.Gov._.CertState
 d_CertState_2204 a0 = ()
 -- Ledger.Conway.Specification.Gov._.CertStateOf
