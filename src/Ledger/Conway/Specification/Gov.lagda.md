@@ -413,8 +413,8 @@ maxAllEnactable e = maxsublists⊧P (allEnactable? e)
 This section defines two predicates used in the `GOVPropose`{.AgdaInductiveConstructor} case
 of the GOV rule to ensure that a governance action is valid and well-formed.  To make
 sense of these predicates, one must understand how we represent and construct a
-governance action. This is explained in the
-[Governance Actions Section](Ledger.Conway.Specification.Gov.Actions.md#sec:actions).
+governance action.  This is explained in the [Governance Actions][] section of the
+[Gov.Actions][] module.
 
 ```agda
 actionValid : ℙ Credential → Maybe ScriptHash → Maybe ScriptHash → Epoch → GovAction → Type

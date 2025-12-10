@@ -156,7 +156,7 @@
     - Interface:
       - STS: Interface.STS.md
       - ComputationalRelation: Interface.ComputationalRelation.md
-      - TypeClasses: Interface.TypeClasses.Hashable.md
+      - TypeClasses: Interface.TypeClasses.md
       - TypeClasses/:
         - Hashable: Interface.TypeClasses.Hashable.md
         - HasSubset: Interface.TypeClasses.HasSubset.md
@@ -234,6 +234,7 @@
       - LedgerImplementation: Test.LedgerImplementation.md
       - Lib: Test.Lib.md
       - Prelude: Test.Prelude.md
+      - StructuredContracts: Test.StructuredContracts.md
       - SymbolicData: Test.SymbolicData.md
   - Era-dependent Modules:
     - Dijkstra:

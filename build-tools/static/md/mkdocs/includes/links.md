@@ -43,6 +43,7 @@
 [formal ledger specification]: https://github.com/IntersectMBO/formal-ledger-specifications
 [Functions used in UTxO rules]: Ledger.Conway.Specification.Utxo.md#functions-used-in-utxo-rules
 [Governance Functions]: Ledger.Conway.Specification.Gov.md#governance-functions
+[Gov.Actions]: Ledger.Core.Specification.Gov.Actions.md
 [Governance Actions]: Ledger.Core.Specification.Gov.Actions.md#sec:governance-actions
 [GOV]: Ledger.Conway.Specification.Gov.md#the-gov-transition-system
 [Gov.Properties.ChangePPGroup]: Ledger.Conway.Specification.Gov.Properties.ChangePPGroup.md
