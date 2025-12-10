@@ -12,13 +12,13 @@
         <meta name="author" content="Formal Methods Ledger Team">
       
       
-        <link rel="canonical" href="https://intersectmbo.github.io/formal-ledger-specifications/Ledger.PreConway.Conformance.NewPP.html">
+        <link rel="canonical" href="https://intersectmbo.github.io/formal-ledger-specifications/EarlierEras.html">
       
       
-        <link rel="prev" href="Ledger.PreConway.html">
+        <link rel="prev" href="Notation.html">
       
       
-        <link rel="next" href="Ledger.PreConway.Conformance.NewPP.Properties.html">
+        <link rel="next" href="Ledger.Core.Specification.html">
       
       
       <link rel="icon" href="img/Cardano-RGB_Logo-Icon-White.svg">
@@ -26,7 +26,7 @@
     
     
       
-        <title>NewPP - Formal Ledger Specification</title>
+        <title>Earlier Eras - Formal Ledger Specification</title>
       
     
     
@@ -83,6 +83,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#earlier-eras" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -112,7 +117,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              NewPP
+              Earlier Eras
             
           </span>
         </div>
@@ -240,10 +245,12 @@
   
   
   
+    
+  
   
     
     
-      <li class="md-tabs__item">
+      <li class="md-tabs__item md-tabs__item--active">
         <a href="Ledger.Introduction.html" class="md-tabs__link">
           
   
@@ -320,8 +327,6 @@
   
   
   
-    
-  
   
     
     
@@ -329,12 +334,10 @@
   
   
   
-    
-  
   
     
     
-      <li class="md-tabs__item md-tabs__item--active">
+      <li class="md-tabs__item">
         <a href="Definitions.html" class="md-tabs__link">
           
   
@@ -420,26 +423,31 @@
       
   
   
+    
   
   
+  
     
     
     
     
+      
+        
+        
       
       
         
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
         
           
-          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
             
   
   
@@ -452,7 +460,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_2">
             <span class="md-nav__icon md-icon"></span>
             Preliminaries
@@ -509,10 +517,30 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="EarlierEras.html" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Earlier Eras
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="EarlierEras.html" class="md-nav__link md-nav__link--active">
         
   
   
@@ -523,6 +551,135 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#earlier-eras" class="md-nav__link">
+    <span class="md-ellipsis">
+      Earlier Eras
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Earlier Eras">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#changes-to-shelley" class="md-nav__link">
+    <span class="md-ellipsis">
+      Changes to Shelley
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Changes to Shelley">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#chain-figure-75" class="md-nav__link">
+    <span class="md-ellipsis">
+      CHAIN (Figure 75)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bbody-figure-72" class="md-nav__link">
+    <span class="md-ellipsis">
+      BBODY (Figure 72)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tick-figure-64" class="md-nav__link">
+    <span class="md-ellipsis">
+      TICK (Figure 64)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#newepoch-figure-57" class="md-nav__link">
+    <span class="md-ellipsis">
+      NEWEPOCH (Figure 57)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#epoch-figure-45" class="md-nav__link">
+    <span class="md-ellipsis">
+      EPOCH (Figure 45)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ledger-figure-31" class="md-nav__link">
+    <span class="md-ellipsis">
+      LEDGER (Figure 31)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#utxow-figure-20" class="md-nav__link">
+    <span class="md-ellipsis">
+      UTXOW (Figure 20)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#utxo-figure-16" class="md-nav__link">
+    <span class="md-ellipsis">
+      UTXO (Figure 16)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      References
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -4544,31 +4701,26 @@
       
   
   
-    
   
   
-  
     
     
     
     
-      
-        
-        
       
       
         
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
         
           
-          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
             
   
   
@@ -4581,7 +4733,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_6">
             <span class="md-nav__icon md-icon"></span>
             Appendix
@@ -4601,20 +4753,17 @@
       
       
         
-          
-          
-        
       
     
     
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_1" >
         
           
-          <label class="md-nav__link" for="__nav_6_1" id="__nav_6_1_label" tabindex="">
+          <label class="md-nav__link" for="__nav_6_1" id="__nav_6_1_label" tabindex="0">
             
   
   
@@ -4798,20 +4947,17 @@
       
       
         
-          
-          
-        
       
     
     
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_2" >
         
           
-          <label class="md-nav__link" for="__nav_6_2" id="__nav_6_2_label" tabindex="">
+          <label class="md-nav__link" for="__nav_6_2" id="__nav_6_2_label" tabindex="0">
             
   
   
@@ -7741,31 +7887,26 @@
                 
   
   
-    
   
   
-  
     
     
     
     
       
       
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_3" >
         
           
-          
-        
-      
-    
-    
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_3" checked>
-        
-          
-          <label class="md-nav__link" for="__nav_6_3" id="__nav_6_3_label" tabindex="">
+          <label class="md-nav__link" for="__nav_6_3" id="__nav_6_3_label" tabindex="0">
             
   
   
@@ -7778,7 +7919,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_3_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_3_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_6_3">
             <span class="md-nav__icon md-icon"></span>
             Era-dependent Modules
@@ -7863,8 +8004,6 @@
                 
   
   
-    
-  
   
   
     
@@ -7877,11 +8016,11 @@
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_3_2" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_3_2" >
         
           
           <label class="md-nav__link" for="__nav_6_3_2" id="__nav_6_3_2_label" tabindex="0">
@@ -7897,7 +8036,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_6_3_2_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_6_3_2_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_6_3_2">
             <span class="md-nav__icon md-icon"></span>
             PreConway
@@ -7931,8 +8070,6 @@
                 
   
   
-    
-  
   
   
     
@@ -7945,11 +8082,11 @@
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_3_2_2" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_3_2_2" >
         
           
           <label class="md-nav__link" for="__nav_6_3_2_2" id="__nav_6_3_2_2_label" tabindex="0">
@@ -7965,7 +8102,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_6_3_2_2_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_6_3_2_2_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_6_3_2_2">
             <span class="md-nav__icon md-icon"></span>
             Ledger.PreConway/
@@ -7976,8 +8113,6 @@
                 
   
   
-    
-  
   
   
     
@@ -7990,11 +8125,11 @@
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_3_2_2_1" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_3_2_2_1" >
         
           
           <label class="md-nav__link" for="__nav_6_3_2_2_1" id="__nav_6_3_2_2_1_label" tabindex="0">
@@ -8010,7 +8145,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_6_3_2_2_1_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_6_3_2_2_1_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_6_3_2_2_1">
             <span class="md-nav__icon md-icon"></span>
             Conformance
@@ -8021,17 +8156,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-      
-      <a href="Ledger.PreConway.Conformance.NewPP.html" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="Ledger.PreConway.Conformance.NewPP.html" class="md-nav__link">
         
   
   
@@ -8042,7 +8170,6 @@
   
 
       </a>
-      
     </li>
   
 
@@ -10140,6 +10267,125 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#earlier-eras" class="md-nav__link">
+    <span class="md-ellipsis">
+      Earlier Eras
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Earlier Eras">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#changes-to-shelley" class="md-nav__link">
+    <span class="md-ellipsis">
+      Changes to Shelley
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Changes to Shelley">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#chain-figure-75" class="md-nav__link">
+    <span class="md-ellipsis">
+      CHAIN (Figure 75)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bbody-figure-72" class="md-nav__link">
+    <span class="md-ellipsis">
+      BBODY (Figure 72)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tick-figure-64" class="md-nav__link">
+    <span class="md-ellipsis">
+      TICK (Figure 64)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#newepoch-figure-57" class="md-nav__link">
+    <span class="md-ellipsis">
+      NEWEPOCH (Figure 57)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#epoch-figure-45" class="md-nav__link">
+    <span class="md-ellipsis">
+      EPOCH (Figure 45)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ledger-figure-31" class="md-nav__link">
+    <span class="md-ellipsis">
+      LEDGER (Figure 31)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#utxow-figure-20" class="md-nav__link">
+    <span class="md-ellipsis">
+      UTXOW (Figure 20)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#utxo-figure-16" class="md-nav__link">
+    <span class="md-ellipsis">
+      UTXO (Figure 16)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      References
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -10155,7 +10401,7 @@
 
 
 
-  <a href="https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/src/Ledger/PreConway/Conformance/NewPP.agda"
+  <a href="https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/build-tools/static/md/common/src/EarlierEras.md?plain=1"
      class="md-content__button md-icon"
      title="View the source of this page"
      aria-label="View the source of this page">
@@ -10165,61 +10411,56 @@
   </a>
 
 
-  <h1>NewPP</h1>
+  <h1>Earlier Eras</h1>
 
-<pre class="Agda">
-<a id="98" class="Symbol">{-#</a> <a id="102" class="Keyword">OPTIONS</a> <a id="110" class="Pragma">--safe</a> <a id="117" class="Symbol">#-}</a>
-
-<a id="122" class="Keyword">open</a> <a id="127" class="Keyword">import</a> <a id="134" href="Relation.Nullary.Decidable.html" class="Module">Relation.Nullary.Decidable</a>
-
-<a id="162" class="Keyword">open</a> <a id="167" class="Keyword">import</a> <a id="174" href="Ledger.Prelude.html" class="Module">Ledger.Prelude</a>
-<a id="189" class="Keyword">open</a> <a id="194" class="Keyword">import</a> <a id="201" href="Ledger.Core.Specification.Transaction.html" class="Module">Ledger.Core.Specification.Transaction</a>
-
-<a id="240" class="Keyword">module</a> <a id="247" href="Ledger.PreConway.Conformance.NewPP.html" class="Module">Ledger.PreConway.Conformance.NewPP</a> <a id="282" class="Symbol">(</a><a id="283" href="Ledger.PreConway.Conformance.NewPP.html#283" class="Bound">txs</a> <a id="287" class="Symbol">:</a> <a id="289" class="Symbol">_)</a> <a id="292" class="Symbol">(</a><a id="293" class="Keyword">open</a> <a id="298" href="Ledger.Core.Specification.Transaction.html#1895" class="Module">TransactionStructure</a> <a id="319" href="Ledger.PreConway.Conformance.NewPP.html#283" class="Bound">txs</a><a id="322" class="Symbol">)</a> <a id="324" class="Keyword">where</a>
-
-<a id="331" class="Keyword">open</a> <a id="336" class="Keyword">import</a> <a id="343" href="Ledger.PreConway.Conformance.PPUp.html" class="Module">Ledger.PreConway.Conformance.PPUp</a> <a id="377" href="Ledger.PreConway.Conformance.NewPP.html#283" class="Bound">txs</a>
-
-<a id="382" class="Keyword">record</a> <a id="NewPParamEnv"></a><a id="389" href="Ledger.PreConway.Conformance.NewPP.html#389" class="Record">NewPParamEnv</a> <a id="402" class="Symbol">:</a> <a id="404" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="409" class="Keyword">where</a>
-<a id="415" class="Comment">--  field</a>
-
-<a id="426" class="Keyword">record</a> <a id="NewPParamState"></a><a id="433" href="Ledger.PreConway.Conformance.NewPP.html#433" class="Record">NewPParamState</a> <a id="448" class="Symbol">:</a> <a id="450" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="455" class="Keyword">where</a>
-  <a id="463" class="Keyword">field</a>
-    <a id="NewPParamState.pparams"></a><a id="473" href="Ledger.PreConway.Conformance.NewPP.html#473" class="Field">pparams</a>  <a id="482" class="Symbol">:</a> <a id="484" href="Ledger.Conway.Specification.PParams.html#5524" class="Record">PParams</a>
-    <a id="NewPParamState.ppup"></a><a id="496" href="Ledger.PreConway.Conformance.NewPP.html#496" class="Field">ppup</a>     <a id="505" class="Symbol">:</a> <a id="507" href="Ledger.PreConway.Conformance.PPUp.html#624" class="Record">PPUpdateState</a>
-
-<a id="522" class="Keyword">instance</a>
-  <a id="533" class="Keyword">unquoteDecl</a> <a id="HasCast-NewPParamState"></a><a id="545" href="Ledger.PreConway.Conformance.NewPP.html#545" class="Function">HasCast-NewPParamState</a> <a id="568" class="Symbol">=</a> <a id="570" href="stdlib-classes.Class.HasCast.Derive.html#2690" class="Function">derive-HasCast</a>
-    <a id="589" href="Data.List.Base.html#4907" class="Function Operator">[</a> <a id="591" class="Symbol">(</a><a id="592" class="Keyword">quote</a> <a id="598" href="Ledger.PreConway.Conformance.NewPP.html#433" class="Record">NewPParamState</a> <a id="613" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="615" href="Ledger.PreConway.Conformance.NewPP.html#545" class="Function">HasCast-NewPParamState</a><a id="637" class="Symbol">)</a> <a id="639" href="Data.List.Base.html#4907" class="Function Operator">]</a>
-
-<a id="updatePPUp"></a><a id="642" href="Ledger.PreConway.Conformance.NewPP.html#642" class="Function">updatePPUp</a> <a id="653" class="Symbol">:</a> <a id="655" href="Ledger.Conway.Specification.PParams.html#5524" class="Record">PParams</a> <a id="663" class="Symbol">→</a> <a id="665" href="Ledger.PreConway.Conformance.PPUp.html#624" class="Record">PPUpdateState</a> <a id="679" class="Symbol">→</a> <a id="681" href="Ledger.PreConway.Conformance.PPUp.html#624" class="Record">PPUpdateState</a>
-<a id="695" href="Ledger.PreConway.Conformance.NewPP.html#642" class="Function">updatePPUp</a> <a id="706" href="Ledger.PreConway.Conformance.NewPP.html#706" class="Bound">pparams</a> <a id="714" class="Keyword">record</a> <a id="721" class="Symbol">{</a> <a id="723" href="Ledger.PreConway.Conformance.PPUp.html#695" class="Field">fpup</a> <a id="728" class="Symbol">=</a> <a id="730" href="Ledger.PreConway.Conformance.NewPP.html#730" class="Bound">fpup</a> <a id="735" class="Symbol">}</a>
-  <a id="739" class="Keyword">with</a> <a id="744" href="Axiom.Set.html#11487" class="Function">allᵇ</a> <a id="749" href="Class.Decidable.Core.html#783" class="Function Operator">¿</a> <a id="751" href="Ledger.PreConway.Conformance.PPUp.html#926" class="Function">isViableUpdate</a> <a id="766" href="Ledger.PreConway.Conformance.NewPP.html#706" class="Bound">pparams</a> <a id="774" href="Class.Decidable.Core.html#783" class="Function Operator">¿¹</a> <a id="777" class="Symbol">(</a><a id="778" href="Class.IsSet.html#959" class="Function">range</a> <a id="784" href="Ledger.PreConway.Conformance.NewPP.html#730" class="Bound">fpup</a><a id="788" class="Symbol">)</a>
-<a id="790" class="Symbol">...</a> <a id="794" class="Symbol">|</a> <a id="796" href="Agda.Builtin.Bool.html#192" class="InductiveConstructor">false</a>  <a id="803" class="Symbol">=</a> <a id="805" class="Keyword">record</a> <a id="812" class="Symbol">{</a> <a id="814" href="Ledger.PreConway.Conformance.PPUp.html#665" class="Field">pup</a> <a id="818" class="Symbol">=</a> <a id="820" href="Axiom.Set.Map.html#2671" class="Function">∅ᵐ</a>    <a id="826" class="Symbol">;</a> <a id="828" href="Ledger.PreConway.Conformance.PPUp.html#695" class="Field">fpup</a> <a id="833" class="Symbol">=</a> <a id="835" href="Axiom.Set.Map.html#2671" class="Function">∅ᵐ</a> <a id="838" class="Symbol">}</a>
-<a id="840" class="Symbol">...</a> <a id="844" class="Symbol">|</a> <a id="846" href="Agda.Builtin.Bool.html#198" class="InductiveConstructor">true</a>   <a id="853" class="Symbol">=</a> <a id="855" class="Keyword">record</a> <a id="862" class="Symbol">{</a> <a id="864" href="Ledger.PreConway.Conformance.PPUp.html#665" class="Field">pup</a> <a id="868" class="Symbol">=</a> <a id="870" class="Bound">fpup</a>  <a id="876" class="Symbol">;</a> <a id="878" href="Ledger.PreConway.Conformance.PPUp.html#695" class="Field">fpup</a> <a id="883" class="Symbol">=</a> <a id="885" href="Axiom.Set.Map.html#2671" class="Function">∅ᵐ</a> <a id="888" class="Symbol">}</a>
-
-<a id="votedValue"></a><a id="891" href="Ledger.PreConway.Conformance.NewPP.html#891" class="Function">votedValue</a> <a id="902" class="Symbol">:</a> <a id="904" href="Ledger.Core.Specification.Transaction.html#3749" class="Function">ProposedPPUpdates</a> <a id="922" class="Symbol">→</a> <a id="924" href="Ledger.Conway.Specification.PParams.html#5524" class="Record">PParams</a> <a id="932" class="Symbol">→</a> <a id="934" href="Agda.Builtin.Nat.html#203" class="Datatype">ℕ</a> <a id="936" class="Symbol">→</a> <a id="938" href="Agda.Builtin.Maybe.html#135" class="Datatype">Maybe</a> <a id="944" href="Ledger.Conway.Specification.PParams.html#19401" class="Function">PParamsUpdate</a>
-<a id="958" href="Ledger.PreConway.Conformance.NewPP.html#891" class="Function">votedValue</a> <a id="969" href="Ledger.PreConway.Conformance.NewPP.html#969" class="Bound">pup</a> <a id="973" href="Ledger.PreConway.Conformance.NewPP.html#973" class="Bound">pparams</a> <a id="981" href="Ledger.PreConway.Conformance.NewPP.html#981" class="Bound">quorum</a> <a id="988" class="Symbol">=</a>
-  <a id="992" href="Function.Base.html#4061" class="Function Operator">case</a> <a id="997" href="Axiom.Set.html#11162" class="Function">any?</a> <a id="1002" class="Symbol">(λ</a> <a id="1005" href="Ledger.PreConway.Conformance.NewPP.html#1005" class="Bound">u</a> <a id="1007" class="Symbol">→</a> <a id="1009" href="abstract-set-theory.FiniteSetTheory.html#2217" class="Function">lengthˢ</a> <a id="1017" class="Symbol">(</a><a id="1018" href="Ledger.PreConway.Conformance.NewPP.html#969" class="Bound">pup</a> <a id="1022" href="Axiom.Set.Map.html#17775" class="Function Operator">∣^</a> <a id="1025" href="Axiom.Set.html#5903" class="Function">fromList</a> <a id="1034" href="Data.List.Base.html#4907" class="Function Operator">[</a> <a id="1036" href="Ledger.PreConway.Conformance.NewPP.html#1005" class="Bound">u</a> <a id="1038" href="Data.List.Base.html#4907" class="Function Operator">]</a><a id="1039" class="Symbol">)</a> <a id="1041" href="Data.Nat.Properties.html#6984" class="Function Operator">≥?</a> <a id="1044" href="Ledger.PreConway.Conformance.NewPP.html#981" class="Bound">quorum</a><a id="1050" class="Symbol">)</a> <a id="1052" class="Symbol">(</a><a id="1053" href="Class.IsSet.html#959" class="Function">range</a> <a id="1059" href="Ledger.PreConway.Conformance.NewPP.html#969" class="Bound">pup</a><a id="1062" class="Symbol">)</a> <a id="1064" href="Function.Base.html#4061" class="Function Operator">of</a>
-    <a id="1071" class="Symbol">λ</a>  <a id="1074" class="Keyword">where</a>
-       <a id="1087" class="Symbol">(</a><a id="1088" href="Relation.Nullary.Decidable.Core.html#2136" class="InductiveConstructor">no</a>  <a id="1092" class="Symbol">_)</a>        <a id="1102" class="Symbol">→</a> <a id="1104" href="Agda.Builtin.Maybe.html#194" class="InductiveConstructor">nothing</a>
-       <a id="1119" class="Symbol">(</a><a id="1120" href="Relation.Nullary.Decidable.Core.html#2099" class="InductiveConstructor">yes</a> <a id="1124" class="Symbol">(</a><a id="1125" href="Ledger.PreConway.Conformance.NewPP.html#1125" class="Bound">u</a> <a id="1127" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="1129" class="Symbol">_))</a>  <a id="1134" class="Symbol">→</a> <a id="1136" href="Agda.Builtin.Maybe.html#173" class="InductiveConstructor">just</a> <a id="1141" href="Ledger.PreConway.Conformance.NewPP.html#1125" class="Bound">u</a>
-
-<a id="1144" class="Keyword">private</a> <a id="1152" class="Keyword">variable</a>
-  <a id="1163" href="Ledger.PreConway.Conformance.NewPP.html#1163" class="Generalizable">Γ</a> <a id="1165" class="Symbol">:</a> <a id="1167" href="Ledger.PreConway.Conformance.NewPP.html#389" class="Record">NewPParamEnv</a>
-  <a id="1182" href="Ledger.PreConway.Conformance.NewPP.html#1182" class="Generalizable">s</a> <a id="1184" href="Ledger.PreConway.Conformance.NewPP.html#1184" class="Generalizable">s&#39;</a> <a id="1187" class="Symbol">:</a> <a id="1189" href="Ledger.PreConway.Conformance.NewPP.html#433" class="Record">NewPParamState</a>
-  <a id="1206" href="Ledger.PreConway.Conformance.NewPP.html#1206" class="Generalizable">upd</a> <a id="1210" class="Symbol">:</a> <a id="1212" href="Ledger.Conway.Specification.PParams.html#19401" class="Function">PParamsUpdate</a>
-
-<a id="1227" class="Keyword">data</a> <a id="_⊢_⇀⦇_,NEWPP⦈_"></a><a id="1232" href="Ledger.PreConway.Conformance.NewPP.html#1232" class="Datatype Operator">_⊢_⇀⦇_,NEWPP⦈_</a> <a id="1247" class="Symbol">:</a> <a id="1249" href="Ledger.PreConway.Conformance.NewPP.html#389" class="Record">NewPParamEnv</a> <a id="1262" class="Symbol">→</a> <a id="1264" href="Ledger.PreConway.Conformance.NewPP.html#433" class="Record">NewPParamState</a> <a id="1279" class="Symbol">→</a> <a id="1281" href="Agda.Builtin.Maybe.html#135" class="Datatype">Maybe</a> <a id="1287" href="Ledger.Conway.Specification.PParams.html#19401" class="Function">PParamsUpdate</a> <a id="1301" class="Symbol">→</a> <a id="1303" href="Ledger.PreConway.Conformance.NewPP.html#433" class="Record">NewPParamState</a> <a id="1318" class="Symbol">→</a> <a id="1320" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="1325" class="Keyword">where</a>
-
-  <a id="_⊢_⇀⦇_,NEWPP⦈_.NEWPP-Accept"></a><a id="1334" href="Ledger.PreConway.Conformance.NewPP.html#1334" class="InductiveConstructor">NEWPP-Accept</a> <a id="1347" class="Symbol">:</a> <a id="1349" class="Symbol">∀</a> <a id="1351" class="Symbol">{</a><a id="1352" href="Ledger.PreConway.Conformance.NewPP.html#1352" class="Bound">Γ</a><a id="1353" class="Symbol">}</a> <a id="1355" class="Symbol">→</a> <a id="1357" class="Keyword">let</a> <a id="1361" class="Keyword">open</a> <a id="1366" href="Ledger.PreConway.Conformance.NewPP.html#433" class="Module">NewPParamState</a> <a id="1381" href="Ledger.PreConway.Conformance.NewPP.html#1182" class="Generalizable">s</a><a id="1382" class="Symbol">;</a> <a id="1384" href="Ledger.PreConway.Conformance.NewPP.html#1384" class="Bound">newpp</a> <a id="1390" class="Symbol">=</a> <a id="1392" href="Ledger.Conway.Specification.PParams.html#18887" class="Function">applyUpdate</a> <a id="1404" href="Ledger.PreConway.Conformance.NewPP.html#473" class="Function">pparams</a> <a id="1412" href="Ledger.PreConway.Conformance.NewPP.html#1206" class="Generalizable">upd</a> <a id="1416" class="Keyword">in</a>
-    <a id="1423" href="Ledger.PreConway.Conformance.PPUp.html#847" class="Function">viablePParams</a> <a id="1437" href="Ledger.PreConway.Conformance.NewPP.html#1384" class="Bound">newpp</a>
-    <a id="1447" href="Prelude.InferenceRules.html#13694" class="Function Operator">────────────────────────────────</a>
-    <a id="1484" href="Ledger.PreConway.Conformance.NewPP.html#1352" class="Bound">Γ</a> <a id="1486" href="Ledger.PreConway.Conformance.NewPP.html#1232" class="Datatype Operator">⊢</a> <a id="1488" href="Ledger.PreConway.Conformance.NewPP.html#1182" class="Generalizable">s</a> <a id="1490" href="Ledger.PreConway.Conformance.NewPP.html#1232" class="Datatype Operator">⇀⦇</a> <a id="1493" href="Agda.Builtin.Maybe.html#173" class="InductiveConstructor">just</a> <a id="1498" href="Ledger.PreConway.Conformance.NewPP.html#1206" class="Generalizable">upd</a> <a id="1502" href="Ledger.PreConway.Conformance.NewPP.html#1232" class="Datatype Operator">,NEWPP⦈</a> <a class="AgdaKaTeX">$\begin{pmatrix} \,\href{Ledger.PreConway.Conformance.NewPP.html#1384}{\htmlId{1512}{\htmlClass{Bound}{\text{newpp}}}}\, \\ \,\href{Ledger.PreConway.Conformance.NewPP.html#642}{\htmlId{1520}{\htmlClass{Function}{\text{updatePPUp}}}}\, \,\href{Ledger.PreConway.Conformance.NewPP.html#1384}{\htmlId{1531}{\htmlClass{Bound}{\text{newpp}}}}\, \,\href{Ledger.PreConway.Conformance.NewPP.html#496}{\htmlId{1537}{\htmlClass{Function}{\text{ppup}}}}\, \end{pmatrix}$</a>
-
-  <a id="_⊢_⇀⦇_,NEWPP⦈_.NEWPP-Reject"></a><a id="1547" href="Ledger.PreConway.Conformance.NewPP.html#1547" class="InductiveConstructor">NEWPP-Reject</a> <a id="1560" class="Symbol">:</a> <a id="1562" class="Symbol">∀</a> <a id="1564" class="Symbol">{</a><a id="1565" href="Ledger.PreConway.Conformance.NewPP.html#1565" class="Bound">Γ</a><a id="1566" class="Symbol">}</a> <a id="1568" class="Symbol">→</a>
-    <a id="1574" href="Ledger.PreConway.Conformance.NewPP.html#1565" class="Bound">Γ</a> <a id="1576" href="Ledger.PreConway.Conformance.NewPP.html#1232" class="Datatype Operator">⊢</a> <a id="1578" href="Ledger.PreConway.Conformance.NewPP.html#1182" class="Generalizable">s</a> <a id="1580" href="Ledger.PreConway.Conformance.NewPP.html#1232" class="Datatype Operator">⇀⦇</a> <a id="1583" href="Agda.Builtin.Maybe.html#194" class="InductiveConstructor">nothing</a> <a id="1591" href="Ledger.PreConway.Conformance.NewPP.html#1232" class="Datatype Operator">,NEWPP⦈</a> <a id="1599" href="Ledger.PreConway.Conformance.NewPP.html#1182" class="Generalizable">s</a>
-
-</pre>
+<h2 id="earlier-eras">Earlier Eras<a class="headerlink" href="#earlier-eras" title="Permanent link">&para;</a></h2>
+<p>Many of the material in the Conway specification is derived from the specifications of
+earlier eras. In this section we provide an account of how aspects of the earlier specifications
+have been modified in later specifications.</p>
+<h3 id="changes-to-shelley">Changes to Shelley<a class="headerlink" href="#changes-to-shelley" title="Permanent link">&para;</a></h3>
+<p>We describe changes to the specification <a href="#shelley-ledger-spec">CVG19</a> by rule type.</p>
+<h4 id="chain-figure-75"><code class="AgdaDatatype">CHAIN</code> (Figure 75)<a class="headerlink" href="#chain-figure-75" title="Permanent link">&para;</a></h4>
+<p>The uses of rules <code class="AgdaDatatype">PRTCL</code>, <code class="AgdaDatatype">TICKN</code>, and functions
+<code class="AgdaFunction">chainChecks</code> and <code class="AgdaFunction">prtlSeqChecks</code> were removed from the ledger specification
+and added to the consensus specification <a href="https://github.com/IntersectMBO/ouroboros-consensus/tree/d3fa7ecf1e230d54b08bcd6aa96c4c65db5f08e7/docs/agda-spec">[link]</a>.</p>
+<h4 id="bbody-figure-72"><code class="AgdaDatatype">BBODY</code> (Figure 72)<a class="headerlink" href="#bbody-figure-72" title="Permanent link">&para;</a></h4>
+<p>The block body hash function <code class="AgdaFunction">bbodyHash</code> became a field of the
+<code class="AgdaDatatype">Block</code> type.</p>
+<p>The block header hash function <code class="AgdaFunction">bhash</code> became a field of the
+<code class="AgdaDatatype">BHeader</code> type.</p>
+<p>The block body size function <code class="AgdaFunction">bbodySize</code> became a field of the
+<code class="AgdaDatatype">Block</code> type.</p>
+<p>The block header size function <code class="AgdaFunction">hBbsize</code> became a field of the
+<code class="AgdaDatatype">BHeader</code> type.</p>
+<p>The function <code class="AgdaFunction">isOverlaySlot</code> was removed in the Babbage
+era [[link]][babbage-spec].</p>
+<h4 id="tick-figure-64"><code class="AgdaDatatype">TICK</code> (Figure 64)<a class="headerlink" href="#tick-figure-64" title="Permanent link">&para;</a></h4>
+<p>The function <code class="AgdaFunction">adoptGenesisDelegs</code> was removed.</p>
+<h4 id="newepoch-figure-57"><code class="AgdaDatatype">NEWEPOCH</code> (Figure 57)<a class="headerlink" href="#newepoch-figure-57" title="Permanent link">&para;</a></h4>
+<p>The proof of the net neutrality of the reward update was moved to the
+<code class="AgdaDatatype">RewardUpdate</code>.</p>
+<p>The <code class="AgdaDatatype">PoolDistr</code> data type was replaced with the richer
+<code class="AgdaDatatype">PoolDelegatedStake</code> data type.</p>
+<p>The <code>MIR</code> rule was phased out in the Conway era.</p>
+<h4 id="epoch-figure-45"><code class="AgdaDatatype">EPOCH</code> (Figure 45)<a class="headerlink" href="#epoch-figure-45" title="Permanent link">&para;</a></h4>
+<p>The <code class="AgdaDatatype">NEWPP</code> rule was phased
+out in the Conway era.</p>
+<h4 id="ledger-figure-31"><code class="AgdaDatatype">LEDGER</code> (Figure 31)<a class="headerlink" href="#ledger-figure-31" title="Permanent link">&para;</a></h4>
+<p>Shelley assumes the transaction is valid</p>
+<p>A use of rule <code class="AgdaDatatype">DELEGS</code> was added in the Conway era.</p>
+<p>A use of rule <code class="AgdaDatatype">CERTS</code> was added in Conway.</p>
+<h4 id="utxow-figure-20"><code class="AgdaDatatype">UTXOW</code> (Figure 20)<a class="headerlink" href="#utxow-figure-20" title="Permanent link">&para;</a></h4>
+<p>The quorum check was removed in the Conway era, superseded by
+the new governance mechanism <a href="https://github.com/cardano-foundation/CIPs/tree/master/CIP-1694">[link]</a>.</p>
+<p>The checks about required scripts now account for reference scripts.</p>
+<h4 id="utxo-figure-16"><code class="AgdaDatatype">UTXO</code> (Figure 16)<a class="headerlink" href="#utxo-figure-16" title="Permanent link">&para;</a></h4>
+<p>The use of the <code class="AgdaDataype">PPUP</code> rule was removed in Conway, superseded by
+the new governance mechanism <a href="https://github.com/cardano-foundation/CIPs/tree/master/CIP-1694">[link]</a>.</p>
+<h2 class="unnumbered" id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
+<p><strong>[CVG19]</strong> <span id="shelley-ledger-spec"
+label="shelley-ledger-spec"></span> Jared Corduan and Polina Vinogradova
+and Matthias Güdemann. <em>A Formal Specification of the Cardano Ledger</em>.
+2019.</p>
 
 
 
@@ -10252,7 +10493,7 @@
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="Ledger.PreConway.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: Ledger.PreConway">
+          <a href="Notation.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: Notation">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
@@ -10262,20 +10503,20 @@
                 Previous
               </span>
               <div class="md-ellipsis">
-                Ledger.PreConway
+                Notation
               </div>
             </div>
           </a>
         
         
           
-          <a href="Ledger.PreConway.Conformance.NewPP.Properties.html" class="md-footer__link md-footer__link--next" aria-label="Next: Properties">
+          <a href="Ledger.Core.Specification.html" class="md-footer__link md-footer__link--next" aria-label="Next: Introduction">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Properties
+                Introduction
               </div>
             </div>
             <div class="md-footer__button md-icon">
