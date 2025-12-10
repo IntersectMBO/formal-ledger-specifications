@@ -92,8 +92,6 @@ data _⊢_⇀⦇_,TICK⦈_
 
   TICK : ∀ {slot nes nes' ru''} →
     let open NewEpochState in
-    -- TODO: Is this really how it should be?
-    -- We are skipping adoptGenesisDelegs here.
     ∙ tt ⊢ nes ⇀⦇ epoch slot ,NEWEPOCH⦈ nes'
     ∙ (nes .bprev , nes .epochState) ⊢ (nes' .ru) ⇀⦇ slot ,RUPD⦈ ru''
       ────────────────────────────────
