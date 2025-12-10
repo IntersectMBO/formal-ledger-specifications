@@ -5333,7 +5333,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Interface.TypeClasses.Hashable.html" class="md-nav__link">
+      <a href="Interface.TypeClasses.md" class="md-nav__link">
         
   
   
@@ -5404,7 +5404,7 @@
   
   
   <span class="md-ellipsis">
-    TypeClasses
+    Hashable
     
   </span>
   
@@ -7642,6 +7642,29 @@
   
   <span class="md-ellipsis">
     Prelude
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Test.StructuredContracts.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    StructuredContracts
     
   </span>
   
@@ -10164,7 +10187,7 @@
     <a id="1425" class="Keyword">open</a> <a id="1430" href="Interface.ComputationalRelation.html#13270" class="Module">Computational</a> <a id="1444" class="Symbol">⦃...⦄</a> <a id="1450" class="Keyword">renaming</a> <a id="1459" class="Symbol">(</a><a id="1460" href="Interface.ComputationalRelation.html#13350" class="Field">computeProof</a> <a id="1473" class="Symbol">to</a> <a id="1476" class="Field">comp</a><a id="1480" class="Symbol">;</a> <a id="1482" href="Interface.ComputationalRelation.html#13567" class="Field">completeness</a> <a id="1495" class="Symbol">to</a> <a id="1498" class="Field">complete</a><a id="1506" class="Symbol">)</a>
     <a id="1512" href="Ledger.Conway.Conformance.Ledger.Properties.html#1512" class="Function">computeUtxow</a> <a id="1525" class="Symbol">=</a> <a id="1527" href="Ledger.Conway.Conformance.Ledger.Properties.html#1476" class="Field">comp</a> <a id="1532" class="Symbol">{</a><a id="1533" class="Argument">STS</a> <a id="1537" class="Symbol">=</a> <a id="1539" href="Ledger.Conway.Conformance.Utxow.html#730" class="Datatype Operator">_⊢_⇀⦇_,UTXOW⦈_</a><a id="1553" class="Symbol">}</a>
     <a id="1559" href="Ledger.Conway.Conformance.Ledger.Properties.html#1559" class="Function">computeCerts</a> <a id="1572" class="Symbol">=</a> <a id="1574" href="Ledger.Conway.Conformance.Ledger.Properties.html#1476" class="Field">comp</a> <a id="1579" class="Symbol">{</a><a id="1580" class="Argument">STS</a> <a id="1584" class="Symbol">=</a> <a id="1586" href="Ledger.Conway.Conformance.Certs.html#7930" class="Function Operator">_⊢_⇀⦇_,CERTS⦈_</a><a id="1600" class="Symbol">}</a>
-    <a id="1606" href="Ledger.Conway.Conformance.Ledger.Properties.html#1606" class="Function">computeGov</a>   <a id="1619" class="Symbol">=</a> <a id="1621" href="Ledger.Conway.Conformance.Ledger.Properties.html#1476" class="Field">comp</a> <a id="1626" class="Symbol">{</a><a id="1627" class="Argument">STS</a> <a id="1631" class="Symbol">=</a> <a id="1633" href="Ledger.Conway.Specification.Gov.html#21095" class="Function Operator">_⊢_⇀⦇_,GOVS⦈_</a><a id="1646" class="Symbol">}</a>
+    <a id="1606" href="Ledger.Conway.Conformance.Ledger.Properties.html#1606" class="Function">computeGov</a>   <a id="1619" class="Symbol">=</a> <a id="1621" href="Ledger.Conway.Conformance.Ledger.Properties.html#1476" class="Field">comp</a> <a id="1626" class="Symbol">{</a><a id="1627" class="Argument">STS</a> <a id="1631" class="Symbol">=</a> <a id="1633" href="Ledger.Conway.Specification.Gov.html#21072" class="Function Operator">_⊢_⇀⦇_,GOVS⦈_</a><a id="1646" class="Symbol">}</a>
 
     <a id="1653" class="Keyword">module</a> <a id="1660" href="Ledger.Conway.Conformance.Ledger.Properties.html#1660" class="Module">go</a>
       <a id="1669" class="Symbol">(</a><a id="1670" href="Ledger.Conway.Conformance.Ledger.Properties.html#1670" class="Bound">Γ</a> <a id="1672" class="Symbol">:</a> <a id="1674" href="Ledger.Conway.Specification.Ledger.html#1043" class="Record">LEnv</a><a id="1678" class="Symbol">)</a>   <a id="1682" class="Symbol">(</a><a id="1683" class="Keyword">let</a> <a id="1687" class="Keyword">open</a> <a id="1692" href="Ledger.Conway.Specification.Ledger.html#1043" class="Module">LEnv</a> <a id="1697" href="Ledger.Conway.Conformance.Ledger.Properties.html#1670" class="Bound">Γ</a><a id="1698" class="Symbol">)</a>
@@ -10196,7 +10219,7 @@
       <a id="3000" class="Symbol">...</a> <a id="3004" class="Symbol">|</a> <a id="3006" href="Interface.ComputationalRelation.html#10518" class="InductiveConstructor">success</a> <a id="3014" class="Symbol">(</a><a id="3015" href="Ledger.Conway.Conformance.Ledger.Properties.html#3015" class="Bound">utxoSt&#39;</a> <a id="3023" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="3025" class="Symbol">_)</a> <a id="3028" class="Symbol">|</a> <a id="3030" href="Agda.Builtin.Equality.html#207" class="InductiveConstructor">refl</a>
         <a id="3043" class="Keyword">with</a> <a id="3048" href="Ledger.Conway.Conformance.Ledger.Properties.html#1559" class="Function">computeCerts</a> <a id="3061" href="Ledger.Conway.Conformance.Ledger.Properties.html#1875" class="Function">certΓ</a> <a id="3067" href="Ledger.Conway.Conformance.Ledger.html#940" class="Field">certState</a> <a id="3077" href="Ledger.Conway.Specification.Transaction.html#2159" class="Function">txCerts</a> <a id="3085" class="Symbol">|</a> <a id="3087" href="Ledger.Conway.Conformance.Ledger.Properties.html#1498" class="Field">complete</a> <a id="3096" class="Symbol">_</a> <a id="3098" class="Symbol">_</a> <a id="3100" class="Symbol">_</a> <a id="3102" class="Symbol">_</a> <a id="3104" class="Bound">certStep</a>
       <a id="3119" class="Symbol">...</a> <a id="3123" class="Symbol">|</a> <a id="3125" href="Interface.ComputationalRelation.html#10518" class="InductiveConstructor">success</a> <a id="3133" class="Symbol">(</a><a id="3134" href="Ledger.Conway.Conformance.Ledger.Properties.html#3134" class="Bound">certSt&#39;</a> <a id="3142" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="3144" class="Symbol">_)</a> <a id="3147" class="Symbol">|</a> <a id="3149" href="Agda.Builtin.Equality.html#207" class="InductiveConstructor">refl</a>
-        <a id="3162" class="Keyword">with</a> <a id="3167" href="Ledger.Conway.Conformance.Ledger.Properties.html#1606" class="Function">computeGov</a> <a id="3178" class="Symbol">(</a><a id="3179" href="Ledger.Conway.Conformance.Ledger.Properties.html#1957" class="Function">govΓ</a> <a id="3184" href="Ledger.Conway.Conformance.Ledger.Properties.html#3134" class="Bound">certSt&#39;</a><a id="3191" class="Symbol">)</a> <a id="3193" class="Symbol">(</a><a id="3194" href="Ledger.Conway.Specification.Ledger.html#3334" class="Function">rmOrphanDRepVotes</a> <a id="3212" class="Symbol">(</a><a id="3213" href="Ledger.Conway.Conformance.Equivalence.Convert.html#559" class="Function">conv</a> <a id="3218" href="Ledger.Conway.Conformance.Ledger.Properties.html#3134" class="Bound">certSt&#39;</a><a id="3225" class="Symbol">)</a> <a id="3227" href="Ledger.Conway.Conformance.Ledger.html#914" class="Field">govSt</a><a id="3232" class="Symbol">)</a> <a id="3234" class="Symbol">(</a><a id="3235" href="Ledger.Conway.Specification.Ledger.html#3204" class="Function">txgov</a> <a id="3241" href="Ledger.Conway.Conformance.Ledger.Properties.html#1792" class="Field">txb</a><a id="3244" class="Symbol">)</a> <a id="3246" class="Symbol">|</a> <a id="3248" href="Ledger.Conway.Conformance.Ledger.Properties.html#1498" class="Field">complete</a> <a id="3257" class="Symbol">{</a><a id="3258" class="Argument">STS</a> <a id="3262" class="Symbol">=</a> <a id="3264" href="Ledger.Conway.Specification.Gov.html#21095" class="Function Operator">_⊢_⇀⦇_,GOVS⦈_</a><a id="3277" class="Symbol">}</a> <a id="3279" class="Symbol">(</a><a id="3280" href="Ledger.Conway.Conformance.Ledger.Properties.html#1957" class="Function">govΓ</a> <a id="3285" href="Ledger.Conway.Conformance.Ledger.Properties.html#3134" class="Bound">certSt&#39;</a><a id="3292" class="Symbol">)</a> <a id="3294" class="Symbol">_</a> <a id="3296" class="Symbol">_</a> <a id="3298" class="Symbol">_</a> <a id="3300" class="Bound">govStep</a>
+        <a id="3162" class="Keyword">with</a> <a id="3167" href="Ledger.Conway.Conformance.Ledger.Properties.html#1606" class="Function">computeGov</a> <a id="3178" class="Symbol">(</a><a id="3179" href="Ledger.Conway.Conformance.Ledger.Properties.html#1957" class="Function">govΓ</a> <a id="3184" href="Ledger.Conway.Conformance.Ledger.Properties.html#3134" class="Bound">certSt&#39;</a><a id="3191" class="Symbol">)</a> <a id="3193" class="Symbol">(</a><a id="3194" href="Ledger.Conway.Specification.Ledger.html#3334" class="Function">rmOrphanDRepVotes</a> <a id="3212" class="Symbol">(</a><a id="3213" href="Ledger.Conway.Conformance.Equivalence.Convert.html#559" class="Function">conv</a> <a id="3218" href="Ledger.Conway.Conformance.Ledger.Properties.html#3134" class="Bound">certSt&#39;</a><a id="3225" class="Symbol">)</a> <a id="3227" href="Ledger.Conway.Conformance.Ledger.html#914" class="Field">govSt</a><a id="3232" class="Symbol">)</a> <a id="3234" class="Symbol">(</a><a id="3235" href="Ledger.Conway.Specification.Ledger.html#3204" class="Function">txgov</a> <a id="3241" href="Ledger.Conway.Conformance.Ledger.Properties.html#1792" class="Field">txb</a><a id="3244" class="Symbol">)</a> <a id="3246" class="Symbol">|</a> <a id="3248" href="Ledger.Conway.Conformance.Ledger.Properties.html#1498" class="Field">complete</a> <a id="3257" class="Symbol">{</a><a id="3258" class="Argument">STS</a> <a id="3262" class="Symbol">=</a> <a id="3264" href="Ledger.Conway.Specification.Gov.html#21072" class="Function Operator">_⊢_⇀⦇_,GOVS⦈_</a><a id="3277" class="Symbol">}</a> <a id="3279" class="Symbol">(</a><a id="3280" href="Ledger.Conway.Conformance.Ledger.Properties.html#1957" class="Function">govΓ</a> <a id="3285" href="Ledger.Conway.Conformance.Ledger.Properties.html#3134" class="Bound">certSt&#39;</a><a id="3292" class="Symbol">)</a> <a id="3294" class="Symbol">_</a> <a id="3296" class="Symbol">_</a> <a id="3298" class="Symbol">_</a> <a id="3300" class="Bound">govStep</a>
       <a id="3314" class="Symbol">...</a> <a id="3318" class="Symbol">|</a> <a id="3320" href="Interface.ComputationalRelation.html#10518" class="InductiveConstructor">success</a> <a id="3328" class="Symbol">(</a><a id="3329" href="Ledger.Conway.Conformance.Ledger.Properties.html#3329" class="Bound">govSt&#39;</a> <a id="3336" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="3338" class="Symbol">_)</a> <a id="3341" class="Symbol">|</a> <a id="3343" href="Agda.Builtin.Equality.html#207" class="InductiveConstructor">refl</a> <a id="3348" class="Symbol">=</a> <a id="3350" href="Agda.Builtin.Equality.html#207" class="InductiveConstructor">refl</a>
       <a id="3361" href="Ledger.Conway.Conformance.Ledger.Properties.html#2686" class="Function">completeness</a> <a id="3374" href="Ledger.Conway.Conformance.Ledger.Properties.html#3374" class="Bound">ls&#39;</a> <a id="3378" class="Symbol">(</a><a id="3379" href="Ledger.Conway.Conformance.Ledger.html#2284" class="InductiveConstructor">LEDGER-I⋯</a> <a id="3389" href="Ledger.Conway.Conformance.Ledger.Properties.html#3389" class="Bound">i</a> <a id="3391" href="Ledger.Conway.Conformance.Ledger.Properties.html#3391" class="Bound">utxoStep</a><a id="3399" class="Symbol">)</a>
         <a id="3409" class="Keyword">with</a> <a id="3414" href="Ledger.Conway.Specification.Transaction.html#3450" class="Field">isValid</a> <a id="3422" href="Class.DecEq.Core.html#168" class="Field Operator">≟</a> <a id="3424" href="Agda.Builtin.Bool.html#198" class="InductiveConstructor">true</a>
