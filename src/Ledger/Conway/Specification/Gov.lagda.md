@@ -17,7 +17,7 @@ the [Enact](Ledger.Conway.Specification.Enact.md) module.
 {-# OPTIONS --safe #-}
 
 open import Ledger.Core.Specification.Gov.Base
-open import Ledger.Core.Specification.Transaction using (TransactionStructure)
+open import Ledger.Conway.Specification.Transaction using (TransactionStructure)
 
 module Ledger.Conway.Specification.Gov (txs : _) (open TransactionStructure txs hiding (epoch)) where
 

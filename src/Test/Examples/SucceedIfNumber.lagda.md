@@ -12,7 +12,7 @@ open import Ledger.Prelude hiding (fromList; ε); open Computational
 open import Test.LedgerImplementation ℕ ℕ
 open import Ledger.Conway.Specification.Script.ScriptPurpose SVTransactionStructure
 
-open import Ledger.Core.Specification.Transaction
+open import Ledger.Conway.Specification.Transaction
 open TransactionStructure SVTransactionStructure using (Data)
 
 valContext : TxInfo → ScriptPurpose → Data
@@ -21,7 +21,7 @@ valContext x x₁ = 0
 open import Test.AbstractImplementation valContext
 open import Test.Lib valContext
 open import Ledger.Conway.Specification.Script.Validation SVTransactionStructure SVAbstractFunctions
-open import Ledger.Conway.Specification.Transaction SVTransactionStructure SVAbstractFunctions
+open import Ledger.Conway.Specification.Transaction
 open import Ledger.Conway.Specification.Utxo SVTransactionStructure SVAbstractFunctions
 open import Ledger.Conway.Specification.Utxo.Properties.Computational SVTransactionStructure SVAbstractFunctions
 

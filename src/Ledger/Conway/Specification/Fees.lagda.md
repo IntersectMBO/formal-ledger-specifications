@@ -7,7 +7,7 @@ This section defines the function used to compute the fees associated with refer
 {-# OPTIONS --safe #-}
 
 open import Ledger.Core.Specification.Abstract
-open import Ledger.Core.Specification.Transaction
+open import Ledger.Conway.Specification.Transaction
 
 module Ledger.Conway.Specification.Fees
   (txs : _) (open TransactionStructure txs)

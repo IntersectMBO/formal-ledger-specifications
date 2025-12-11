@@ -2,7 +2,7 @@
 {-# OPTIONS --safe #-}
 
 open import Ledger.Core.Specification.Abstract
-open import Ledger.Core.Specification.Transaction
+open import Ledger.Conway.Specification.Transaction
 
 module Ledger.Conway.Conformance.Utxow
   (txs : TransactionStructure) (open TransactionStructure txs)
@@ -14,7 +14,7 @@ open import Ledger.Prelude
 open import Ledger.Conway.Conformance.Utxo txs abs
 
 open import Ledger.Conway.Specification.Script.Validation txs abs
-open import Ledger.Conway.Specification.Transaction txs abs
+open import Ledger.Conway.Specification.Transaction
 
 private
   module L where

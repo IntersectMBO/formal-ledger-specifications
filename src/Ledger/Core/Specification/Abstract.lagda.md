@@ -6,7 +6,7 @@ source_path: src/Ledger/Core/Specification/Abstract.lagda.md
 ```agda
 {-# OPTIONS --safe #-}
 
-open import Ledger.Core.Specification.Transaction
+open import Ledger.Conway.Specification.Transaction
 
 module Ledger.Core.Specification.Abstract (txs : TransactionStructure) where
 

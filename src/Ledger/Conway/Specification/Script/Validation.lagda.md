@@ -12,7 +12,7 @@ source_path: src/Ledger/Conway/Specification/Script/Validation.lagda.md
 {-# OPTIONS --safe #-}
 
 open import Ledger.Core.Specification.Abstract
-open import Ledger.Core.Specification.Transaction
+open import Ledger.Conway.Specification.Transaction
 
 module Ledger.Conway.Specification.Script.Validation
   (txs : TransactionStructure) (open TransactionStructure txs)
@@ -21,7 +21,7 @@ module Ledger.Conway.Specification.Script.Validation
 
 open import Ledger.Prelude
 open import Ledger.Conway.Specification.Certs govStructure
-open import Ledger.Conway.Specification.Transaction txs abs
+open import Ledger.Conway.Specification.Transaction
 open import Ledger.Conway.Specification.Script.ScriptPurpose txs
 rdptr : TxBody → ScriptPurpose → Maybe RdmrPtr
 rdptr txb = λ where

@@ -7,7 +7,7 @@ source_path: src/Ledger/Conway/Specification/Rewards/Properties/Computational.la
 {-# OPTIONS --safe #-}
 
 open import Ledger.Core.Specification.Abstract
-open import Ledger.Core.Specification.Transaction
+open import Ledger.Conway.Specification.Transaction
 
 module Ledger.Conway.Specification.Rewards.Properties.Computational
   (txs : TransactionStructure) (open TransactionStructure txs)

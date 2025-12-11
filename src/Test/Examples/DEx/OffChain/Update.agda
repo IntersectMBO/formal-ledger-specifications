@@ -3,7 +3,7 @@
 module Test.Examples.DEx.OffChain.Update where
 
 open import Ledger.Prelude
-open import Ledger.Core.Specification.Transaction
+open import Ledger.Conway.Specification.Transaction
 
 open import Test.Examples.DEx.Datum
 open import Test.Examples.DEx.Validator
@@ -14,7 +14,7 @@ open import Test.LedgerImplementation SData SData
 open import Test.AbstractImplementation valContext
 open import Test.Lib valContext
 
-open import Ledger.Conway.Specification.Transaction SVTransactionStructure SVAbstractFunctions
+open import Ledger.Conway.Specification.Transaction
 open import Ledger.Conway.Specification.Utxo SVTransactionStructure SVAbstractFunctions
 
 open TransactionStructure SVTransactionStructure

@@ -9,7 +9,7 @@ source_path: src/Ledger/Conway/Specification/Utxow/Properties/Computational.lagd
 import Data.Maybe as M
 
 open import Ledger.Core.Specification.Abstract
-open import Ledger.Core.Specification.Transaction
+open import Ledger.Conway.Specification.Transaction
 
 module Ledger.Conway.Specification.Utxow.Properties.Computational
   (txs : TransactionStructure) (open TransactionStructure txs)

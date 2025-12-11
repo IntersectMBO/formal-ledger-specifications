@@ -22,7 +22,7 @@ design. (See also [Corduan22](#adr3).)
 {-# OPTIONS --safe #-}
 
 open import Ledger.Core.Specification.Abstract
-open import Ledger.Core.Specification.Transaction
+open import Ledger.Conway.Specification.Transaction
 
 module Ledger.Conway.Specification.Utxo
   (txs : TransactionStructure) (open TransactionStructure txs)
@@ -41,7 +41,7 @@ open import Ledger.Prelude
 open import Ledger.Conway.Specification.Certs govStructure
 open import Ledger.Conway.Specification.Fees txs using (scriptsCost)
 open import Ledger.Conway.Specification.Script.Validation txs abs
-open import Ledger.Conway.Specification.Transaction txs abs
+open import Ledger.Conway.Specification.Transaction
 
 instance
   _ = +-0-monoid

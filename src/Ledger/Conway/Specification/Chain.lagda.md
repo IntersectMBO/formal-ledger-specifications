@@ -10,7 +10,7 @@ source_path: src/Ledger/Conway/Specification/Chain.lagda.md
 {-# OPTIONS --safe #-}
 
 open import Ledger.Core.Specification.Abstract
-open import Ledger.Core.Specification.Transaction
+open import Ledger.Conway.Specification.Transaction
 
 module Ledger.Conway.Specification.Chain
   (txs : TransactionStructure) (open TransactionStructure txs)
@@ -30,7 +30,7 @@ open import Ledger.Conway.Specification.Gov txs
 open import Ledger.Conway.Specification.Ledger txs abs
 open import Ledger.Conway.Specification.Ratify txs
 open import Ledger.Conway.Specification.RewardUpdate txs abs
-open import Ledger.Conway.Specification.Transaction txs abs
+open import Ledger.Conway.Specification.Transaction
 open import Ledger.Conway.Specification.Utxo txs abs
 
 open Equivalence

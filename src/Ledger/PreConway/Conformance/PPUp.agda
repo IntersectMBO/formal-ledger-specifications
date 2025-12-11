@@ -7,7 +7,7 @@ import Data.Product.Properties as ×
 import Data.Nat as ℕ; import Data.Nat.Properties as ℕ
 
 open import Ledger.Prelude hiding (_*_)
-open import Ledger.Core.Specification.Transaction
+open import Ledger.Conway.Specification.Transaction
 
 module Ledger.PreConway.Conformance.PPUp (txs : _) (open TransactionStructure txs) where
 

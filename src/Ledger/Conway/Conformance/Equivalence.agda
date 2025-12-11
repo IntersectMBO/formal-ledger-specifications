@@ -3,7 +3,7 @@
 -- to the rules under Ledger.
 
 open import Ledger.Core.Specification.Abstract
-open import Ledger.Core.Specification.Transaction
+open import Ledger.Conway.Specification.Transaction
 
 module Ledger.Conway.Conformance.Equivalence
   (txs : TransactionStructure) (open TransactionStructure txs)
@@ -15,7 +15,7 @@ open import Relation.Binary using (IsEquivalence)
 
 open import Ledger.Prelude
 open import Ledger.Conway.Conformance.Equivalence.Convert
-open import Ledger.Conway.Specification.Transaction txs abs public
+open import Ledger.Conway.Specification.Transaction public
 
 module L where
   open import Ledger.Conway.Specification.Ledger txs abs public

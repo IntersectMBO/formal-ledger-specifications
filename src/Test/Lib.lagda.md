@@ -20,7 +20,7 @@ open import Test.AbstractImplementation valContext'
 open import Test.LedgerImplementation T D
   renaming (SVTransactionStructure to SVTransactionStructure')
 open import Ledger.Conway.Specification.Utxo SVTransactionStructure' SVAbstractFunctions
-open import Ledger.Core.Specification.Transaction using (TransactionStructure)
+open import Ledger.Conway.Specification.Transaction using (TransactionStructure)
 open TransactionStructure SVTransactionStructure'
 open import Ledger.Prelude.Numeric using (mkUnitInterval; mkℕ⁺)
 open import Data.Integer using (ℤ; +_)

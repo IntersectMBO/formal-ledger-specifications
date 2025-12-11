@@ -10,7 +10,7 @@ open import Data.Maybe renaming (map to maybeMap)
 
 open import Ledger.Prelude hiding (fromList; ε)
 
-open import Ledger.Core.Specification.Transaction using (TransactionStructure)
+open import Ledger.Conway.Specification.Transaction using (TransactionStructure)
 
 open import Test.Examples.MultiSigV2.Datum
 open import Test.Prelude MultiSigData

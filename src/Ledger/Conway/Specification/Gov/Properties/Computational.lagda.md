@@ -7,7 +7,7 @@ source_path: src/Ledger/Conway/Specification/Gov/Properties/Computational.lagda.
 {-# OPTIONS --safe #-}
 
 open import Ledger.Core.Specification.Gov.Base
-open import Ledger.Core.Specification.Transaction using (TransactionStructure)
+open import Ledger.Conway.Specification.Transaction using (TransactionStructure)
 
 module Ledger.Conway.Specification.Gov.Properties.Computational
   (txs : _) (open TransactionStructure txs using (govStructure))

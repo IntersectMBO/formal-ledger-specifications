@@ -1,7 +1,7 @@
 {-# OPTIONS --safe #-}
 
 open import Ledger.Core.Specification.Abstract
-open import Ledger.Core.Specification.Transaction
+open import Ledger.Conway.Specification.Transaction
 
 module Ledger.Conway.Conformance.Equivalence.Utxo
   (txs : TransactionStructure) (open TransactionStructure txs)
@@ -17,7 +17,7 @@ open import Ledger.Prelude
 
 open import Ledger.Conway.Conformance.Equivalence.Convert
 
-open import Ledger.Conway.Specification.Transaction txs abs
+open import Ledger.Conway.Specification.Transaction
 
 open ≡-Reasoning
 

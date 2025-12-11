@@ -16,7 +16,7 @@ open import Ledger.Conway.Foreign.HSLedger.Transaction
 
 open import Foreign.Haskell.Coerce
 
-open import Ledger.Conway.Foreign.HSLedger.BaseTypes hiding (TxWitnesses; isScriptObj; isKeyHashObj)
+open import Ledger.Conway.Foreign.HSLedger.BaseTypes hiding (TxWitnesses; refScripts; isScriptObj; isKeyHashObj)
 open import Ledger.Conway.Specification.Script.Validation DummyTransactionStructure DummyAbstractFunctions
 open import Ledger.Conway.Conformance.Utxo DummyTransactionStructure DummyAbstractFunctions
 open import Ledger.Conway.Conformance.Utxow DummyTransactionStructure DummyAbstractFunctions
@@ -34,7 +34,7 @@ unquoteDecl = do
   hsTypeAlias Redeemer
 
 module _ (ext : ExternalFunctions) where
-  open import Ledger.Conway.Foreign.HSLedger.ExternalStructures ext hiding (inject)
+  open import Ledger.Conway.Foreign.HSLedger.ExternalStructures ext hiding (Tx; TxBody; inject)
   open import Ledger.Conway.Conformance.Utxow.Properties HSTransactionStructure HSAbstractFunctions
   open import Ledger.Conway.Conformance.Utxo.Properties HSTransactionStructure HSAbstractFunctions
 

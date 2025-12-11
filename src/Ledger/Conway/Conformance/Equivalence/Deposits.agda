@@ -1,7 +1,7 @@
 {-# OPTIONS --safe #-}
 
 open import Ledger.Core.Specification.Abstract
-open import Ledger.Core.Specification.Transaction
+open import Ledger.Conway.Specification.Transaction
 
 module Ledger.Conway.Conformance.Equivalence.Deposits
   (txs : TransactionStructure) (open TransactionStructure txs)
@@ -12,7 +12,7 @@ open import Data.Product.Relation.Binary.Pointwise.NonDependent using (Pointwise
 open import Relation.Binary using (Setoid; IsEquivalence)
 open import Ledger.Prelude
 
-open import Ledger.Conway.Specification.Transaction txs abs
+open import Ledger.Conway.Specification.Transaction
 
 private
   module L where

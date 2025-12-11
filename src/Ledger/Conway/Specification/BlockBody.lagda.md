@@ -3,7 +3,7 @@
 {-# OPTIONS --safe #-}
 
 open import Ledger.Core.Specification.Abstract
-open import Ledger.Core.Specification.Transaction
+open import Ledger.Conway.Specification.Transaction
 
 module Ledger.Conway.Specification.BlockBody
   (txs : TransactionStructure) (open TransactionStructure txs)
@@ -15,7 +15,7 @@ open import Ledger.Prelude
 open import Ledger.Conway.Specification.Enact govStructure
 open import Ledger.Conway.Specification.Ledger txs abs
 open import Ledger.Conway.Specification.Rewards txs abs
-open import Ledger.Conway.Specification.Transaction txs abs
+open import Ledger.Conway.Specification.Transaction
 ```
 -->
 

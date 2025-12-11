@@ -1,6 +1,6 @@
 ---
 source_branch: master
-source_path: src/Ledger.Conway.Specification.Transaction.lagda
+source_path: src/Ledger/Conway/Specification/Transaction.lagda
 ---
 
 # Transactions {#sec:transactions}
@@ -8,28 +8,37 @@ source_path: src/Ledger.Conway.Specification.Transaction.lagda
 A transaction consists of a transaction body, a collection of witnesses
 and some optional auxiliary data.
 
-This section collects the **era-dependent** types and functions that are used to
-define transactions in the Conway era.
-
 <!--
 ```agda
 {-# OPTIONS --safe #-}
-open import Ledger.Core.Specification.Abstract
-open import Ledger.Core.Specification.Transaction
+--------------------------------------------------------------------------------
+-- NOTE: Everything in this module is part of TransactionStructure
+--------------------------------------------------------------------------------
+module Ledger.Conway.Specification.Transaction where
 
-module Ledger.Conway.Specification.Transaction
-  (txs : _) (open TransactionStructure txs)
-  (abs : AbstractFunctions txs)
-  where
+import Data.Maybe.Base as M
 
-open import Ledger.Prelude
-open import Ledger.Conway.Specification.Certs govStructure
+open import Ledger.Prelude renaming (filterᵐ to filter)
+
+open import Ledger.Core.Specification.Crypto
+open import Ledger.Core.Specification.Epoch
+open import Ledger.Core.Specification.Gov.Base
+import Ledger.Conway.Specification.PParams
+import Ledger.Core.Specification.Script.Base
+import Ledger.Core.Specification.Gov.Actions
+import Ledger.Conway.Specification.Certs
+import Ledger.Core.Specification.TokenAlgebra.Base
+import Ledger.Core.Specification.Address
+
+open import Relation.Nullary.Decidable using (⌊_⌋)
+
+data Tag : Type where
+  Spend Mint Cert Rewrd Vote Propose : Tag
+unquoteDecl DecEq-Tag = derive-DecEq ((quote Tag , DecEq-Tag) ∷ [])
 ```
 -->
 
-## Transaction Types
-
-We now describe the key components of the transaction body in the Conway era.
+Here are some key components of the transaction body.
 
 +  `txIns`{.AgdaField} denotes a set of transaction inputs; each input consists of a
    transaction id and an index that points to a unique output from a previous transaction.
@@ -55,91 +64,181 @@ In addition to these, the Conway era introduces some new fields to the transacti
    as a precondition to executing Plutus scripts that access the value of the treasury.
 
 
+## Transaction Types
+
 ```agda
-record TxBody : Type where
+record TransactionStructure : Type₁ where
   field
-    txIns                : ℙ TxIn
-    refInputs            : ℙ TxIn
-    collateralInputs     : ℙ TxIn
-    txOuts               : Ix ⇀ TxOut
-    txId                 : TxId
-    txCerts              : List DCert
-    txFee                : Fees
-    txWithdrawals        : Withdrawals
-    txVldt               : Maybe Slot × Maybe Slot
-    txADhash             : Maybe ADHash
-    txDonation           : Donations
-    txGovVotes           : List GovVote
-    txGovProposals       : List GovProposal
-    txNetworkId          : Maybe Network
-    currentTreasury      : Maybe Treasury
-    mint                 : Value
-    reqSignerHashes      : ℙ KeyHash
-    scriptIntegrityHash  : Maybe ScriptHash
-    -- txup              : Maybe Update   -- deprecated; leave for now
+```
+
+*Abstract types*
+```agda
+    Ix TxId AuxiliaryData : Type
 ```
 
 <!--
 ```agda
-record HasTxBody {a} (A : Type a) : Type a where
-  field TxBodyOf : A → TxBody
-open HasTxBody  ⦃...⦄ public
+    ⦃ DecEq-Ix   ⦄ : DecEq Ix
+    ⦃ DecEq-TxId ⦄ : DecEq TxId
+    adHashingScheme : isHashableSet AuxiliaryData
+  open isHashableSet adHashingScheme renaming (THash to ADHash) public
 
-record HasDCerts {a} (A : Type a) : Type a where
-  field DCertsOf : A → List DCert
-open HasDCerts ⦃...⦄ public
+  field globalConstants : _
+  open GlobalConstants globalConstants public
 
-record HasGovProposals {a} (A : Type a) : Type a where
-  field GovProposalsOf  : A → List GovProposal
-open HasGovProposals ⦃...⦄ public
+  field cryptoStructure : _
+  open CryptoStructure cryptoStructure public
+  open Ledger.Core.Specification.TokenAlgebra.Base ScriptHash public
+  open Ledger.Core.Specification.Address Network KeyHash ScriptHash ⦃ it ⦄ ⦃ it ⦄ ⦃ it ⦄ public
 
-record HasTxId {a} (A : Type a) : Type a where
-  field TxIdOf    : A → TxId
-open HasTxId ⦃...⦄ public
+  field epochStructure : _
+  open EpochStructure epochStructure public
+  open Ledger.Core.Specification.Script.Base cryptoStructure epochStructure public
 
-instance
-  HasDonations-TxBody : HasDonations TxBody
-  HasDonations-TxBody .DonationsOf = TxBody.txDonation
+  field scriptStructure : _
+  open ScriptStructure scriptStructure public
+  open Ledger.Conway.Specification.PParams cryptoStructure epochStructure scriptStructure public
+
+  field govParams : _
+  open GovParams govParams public
+
+  field tokenAlgebra : TokenAlgebra
+  open TokenAlgebra tokenAlgebra public
+
+  field txidBytes : TxId → Ser
+
+  govStructure : GovStructure
+  govStructure = record
+    -- TODO: figure out what to do with the hash
+    { TxId = TxId; DocHash = ADHash
+    ; cryptoStructure = cryptoStructure
+    ; epochStructure = epochStructure
+    ; scriptStructure = scriptStructure
+    ; govParams = govParams
+    ; globalConstants = globalConstants
+    }
+
+  module GovActions = Ledger.Core.Specification.Gov.Actions govStructure
+  open GovActions hiding (Vote; yes; no; abstain) public
+
+  open import Ledger.Conway.Specification.Certs govStructure
+```
+-->
+
+*Derived types*
+```agda
+  TxIn               = TxId × Ix
+  TxOut              = Addr × Value × Maybe (Datum ⊎ DataHash) × Maybe Script
+  UTxO               = TxIn ⇀ TxOut
+  RdmrPtr            = Tag × Ix
+  ProposedPPUpdates  = KeyHash ⇀ PParamsUpdate
+  Update             = ProposedPPUpdates × Epoch
+```
+
+<!--
+```agda
+  record HasUTxO {a} (A : Type a) : Type a where
+    field UTxOOf : A → UTxO
+  open HasUTxO ⦃...⦄ public
+```
+-->
+
+*Transaction types*
+```agda
+  record TxBody : Type where
+    field
+      txIns                : ℙ TxIn
+      refInputs            : ℙ TxIn
+      collateralInputs     : ℙ TxIn
+      txOuts               : Ix ⇀ TxOut
+      txId                 : TxId
+      txCerts              : List DCert
+      txFee                : Fees
+      txWithdrawals        : Withdrawals
+      txVldt               : Maybe Slot × Maybe Slot
+      txADhash             : Maybe ADHash
+      txDonation           : Donations
+      txGovVotes           : List GovVote
+      txGovProposals       : List GovProposal
+      txNetworkId          : Maybe Network
+      currentTreasury      : Maybe Treasury
+      mint                 : Value
+      reqSignerHashes      : ℙ KeyHash
+      scriptIntegrityHash  : Maybe ScriptHash
+      -- txup              : Maybe Update   -- deprecated; leave for now
+```
+
+<!--
+```agda
+  record HasTxBody {a} (A : Type a) : Type a where
+    field TxBodyOf : A → TxBody
+  open HasTxBody  ⦃...⦄ public
+
+  record HasDCerts {a} (A : Type a) : Type a where
+    field DCertsOf : A → List DCert
+  open HasDCerts ⦃...⦄ public
+
+  record HasGovProposals {a} (A : Type a) : Type a where
+    field GovProposalsOf  : A → List GovProposal
+  open HasGovProposals ⦃...⦄ public
+
+  record HasTxId {a} (A : Type a) : Type a where
+    field TxIdOf    : A → TxId
+  open HasTxId ⦃...⦄ public
+
+  instance
+    HasDonations-TxBody : HasDonations TxBody
+    HasDonations-TxBody .DonationsOf = TxBody.txDonation
 ```
 -->
 
 
 ```agda
-record Tx : Type where
-  field
-    body     : TxBody
-    wits     : TxWitnesses
-    txsize   : ℕ
-    isValid  : Bool
-    txAD     : Maybe AuxiliaryData
+  record TxWitnesses : Type where
+    field
+      vkSigs   : VKey ⇀ Sig
+      scripts  : ℙ Script
+      txdats   : ℙ Datum
+      txrdmrs  : RdmrPtr  ⇀ Redeemer × ExUnits
+
+    scriptsP1 : ℙ P1Script
+    scriptsP1 = mapPartial toP1Script scripts
+
+  record Tx : Type where
+    field
+      body     : TxBody
+      wits     : TxWitnesses
+      txsize   : ℕ
+      isValid  : Bool
+      txAD     : Maybe AuxiliaryData
 ```
 
 <!--
 ```agda
-instance
-  HasTxBody-Tx : HasTxBody Tx
-  HasTxBody-Tx .TxBodyOf = Tx.body
+  instance
+    HasTxBody-Tx : HasTxBody Tx
+    HasTxBody-Tx .TxBodyOf = Tx.body
 
-  HasFees-Tx : HasFees Tx
-  HasFees-Tx .FeesOf = TxBody.txFee ∘ TxBodyOf
+    HasFees-Tx : HasFees Tx
+    HasFees-Tx .FeesOf = TxBody.txFee ∘ TxBodyOf
 
-  HasDCerts-Tx : HasDCerts Tx
-  HasDCerts-Tx .DCertsOf = TxBody.txCerts ∘ TxBodyOf
+    HasDCerts-Tx : HasDCerts Tx
+    HasDCerts-Tx .DCertsOf = TxBody.txCerts ∘ TxBodyOf
 
-  HasGovProposals-Tx : HasGovProposals Tx
-  HasGovProposals-Tx .GovProposalsOf = TxBody.txGovProposals ∘ TxBodyOf
+    HasGovProposals-Tx : HasGovProposals Tx
+    HasGovProposals-Tx .GovProposalsOf = TxBody.txGovProposals ∘ TxBodyOf
 
-  HasWithdrawals-TxBody : HasWithdrawals TxBody
-  HasWithdrawals-TxBody .WithdrawalsOf = TxBody.txWithdrawals
+    HasWithdrawals-TxBody : HasWithdrawals TxBody
+    HasWithdrawals-TxBody .WithdrawalsOf = TxBody.txWithdrawals
 
-  HasWithdrawals-Tx : HasWithdrawals Tx
-  HasWithdrawals-Tx .WithdrawalsOf = WithdrawalsOf ∘ TxBodyOf
+    HasWithdrawals-Tx : HasWithdrawals Tx
+    HasWithdrawals-Tx .WithdrawalsOf = WithdrawalsOf ∘ TxBodyOf
 
-  HasTxId-Tx : HasTxId Tx
-  HasTxId-Tx .TxIdOf = TxBody.txId ∘ TxBodyOf
+    HasTxId-Tx : HasTxId Tx
+    HasTxId-Tx .TxIdOf = TxBody.txId ∘ TxBodyOf
 
-  HasDonations-Tx : HasDonations Tx
-  HasDonations-Tx .DonationsOf = DonationsOf ∘ TxBodyOf
+    HasDonations-Tx : HasDonations Tx
+    HasDonations-Tx .DonationsOf = DonationsOf ∘ TxBodyOf
 ```
 -->
 
@@ -148,17 +247,45 @@ instance
 
 
 ```agda
-refScripts : Tx → UTxO → ℙ Script
-refScripts tx utxo =
-  mapPartial (proj₂ ∘ proj₂ ∘ proj₂) (range (utxo ∣ (txIns ∪ refInputs)))
-  where open Tx; open TxBody (tx .body)
+  getValue : TxOut → Value
+  getValue (_ , v , _) = v
 
-txscripts : Tx → UTxO → ℙ Script
-txscripts tx utxo = scripts (tx .wits) ∪ refScripts tx utxo
-  where open Tx; open TxWitnesses
+  TxOutʰ = Addr × Value × Maybe (Datum ⊎ DataHash) × Maybe ScriptHash
 
-lookupScriptHash : ScriptHash → Tx → UTxO → Maybe Script
-lookupScriptHash sh tx utxo = lookupᵐ? m sh
-  where m = setToMap (mapˢ < hash , id > (txscripts tx utxo))
+  txOutHash : TxOut → TxOutʰ
+  txOutHash (a , v , d , s) = a , (v , (d , M.map hash s))
+
+  getValueʰ : TxOutʰ → Value
+  getValueʰ (_ , v , _) = v
+
+  txInsVKey : ℙ TxIn → UTxO → ℙ TxIn
+  txInsVKey txIns utxo = txIns ∩ dom (utxo ∣^' (isVKeyAddr ∘ proj₁))
+
+  scriptOuts : UTxO → UTxO
+  scriptOuts utxo = filter (λ (_ , addr , _) → isScriptAddr addr) utxo
+
+  txInsScript : ℙ TxIn → UTxO → ℙ TxIn
+  txInsScript txIns utxo = txIns ∩ dom (proj₁ (scriptOuts utxo))
+
+  refScripts : Tx → UTxO → ℙ Script
+  refScripts tx utxo =
+    mapPartial (proj₂ ∘ proj₂ ∘ proj₂) (range (utxo ∣ (txIns ∪ refInputs)))
+    where open Tx; open TxBody (tx .body)
+
+  txscripts : Tx → UTxO → ℙ Script
+  txscripts tx utxo = scripts (tx .wits) ∪ refScripts tx utxo
+    where open Tx; open TxWitnesses
+
+  lookupScriptHash : ScriptHash → Tx → UTxO → Maybe Script
+  lookupScriptHash sh tx utxo = lookupᵐ? m sh
+    where m = setToMap (mapˢ < hash , id > (txscripts tx utxo))
 ```
+
+<!--
+```agda
+  instance
+    HasCoin-TxOut : HasCoin TxOut
+    HasCoin-TxOut .getCoin = coin ∘ proj₁ ∘ proj₂
+```
+-->
 

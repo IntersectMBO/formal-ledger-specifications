@@ -3,7 +3,7 @@
 {-# OPTIONS --safe #-}
 
 open import Ledger.Core.Specification.Abstract
-open import Ledger.Core.Specification.Transaction
+open import Ledger.Conway.Specification.Transaction
 
 module Ledger.Conway.Specification.Utxo.Properties.GenMinSpend
   (txs : TransactionStructure) (open TransactionStructure txs)
@@ -17,7 +17,7 @@ open import Prelude
 open import Ledger.Prelude hiding (≤-trans; ≤-antisym; All)
 
 open import Ledger.Conway.Specification.Certs govStructure
-open import Ledger.Conway.Specification.Transaction txs abs
+open import Ledger.Conway.Specification.Transaction
 open import Ledger.Conway.Specification.Utxo txs abs
 
 open Equivalence

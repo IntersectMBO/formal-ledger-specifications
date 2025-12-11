@@ -1,7 +1,7 @@
 {-# OPTIONS --safe #-}
 
 open import Ledger.Core.Specification.Abstract
-open import Ledger.Core.Specification.Transaction
+open import Ledger.Conway.Specification.Transaction
 
 module Ledger.Conway.Conformance.Properties
   (txs : TransactionStructure) (open TransactionStructure txs)
@@ -18,7 +18,7 @@ open import Ledger.Conway.Conformance.Utxo txs abs
 
 open import Ledger.Conway.Specification.Enact govStructure
 open import Ledger.Conway.Specification.Gov txs
-open import Ledger.Conway.Specification.Transaction txs abs
+open import Ledger.Conway.Specification.Transaction
 
 
 isCredDeposit : DepositPurpose → Type

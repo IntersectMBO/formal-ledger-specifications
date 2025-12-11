@@ -1,7 +1,7 @@
 {-# OPTIONS --safe #-}
 
 open import Ledger.Core.Specification.Abstract
-open import Ledger.Core.Specification.Transaction
+open import Ledger.Conway.Specification.Transaction
 
 module Ledger.Conway.Conformance.Utxo.Properties
   (txs : TransactionStructure) (open TransactionStructure txs)
@@ -20,7 +20,7 @@ open import Ledger.Conway.Conformance.Certs govStructure
 open import Ledger.Conway.Conformance.Utxo txs abs
 
 open import Ledger.Conway.Specification.Script.Validation txs abs
-open import Ledger.Conway.Specification.Transaction txs abs
+open import Ledger.Conway.Specification.Transaction
 
 open Properties
 

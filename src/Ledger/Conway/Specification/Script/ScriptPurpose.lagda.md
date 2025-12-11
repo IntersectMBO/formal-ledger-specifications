@@ -9,7 +9,7 @@ source_path: src/Ledger/Conway/Specification/Script/ScriptPurpose.lagda.md
 ```agda
 {-# OPTIONS --safe #-}
 
-open import Ledger.Core.Specification.Transaction
+open import Ledger.Conway.Specification.Transaction
 
 module Ledger.Conway.Specification.Script.ScriptPurpose (txs : TransactionStructure) where
 

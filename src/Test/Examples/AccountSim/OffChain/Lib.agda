@@ -5,7 +5,7 @@ module Test.Examples.AccountSim.OffChain.Lib where
 open import Data.List using (filter)
 
 open import Ledger.Prelude
-open import Ledger.Core.Specification.Transaction
+open import Ledger.Conway.Specification.Transaction
 
 open import Test.Examples.AccountSim.Datum
 open import Test.Examples.AccountSim.Validator
@@ -17,7 +17,7 @@ open TransactionStructure SVTransactionStructure
 
 open import Test.AbstractImplementation valContext
 
-open import Ledger.Conway.Specification.Transaction SVTransactionStructure SVAbstractFunctions
+open import Ledger.Conway.Specification.Transaction
 
 defaultTxBody : TxBody
 defaultTxBody = record

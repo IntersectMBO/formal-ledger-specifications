@@ -11,7 +11,7 @@ source_path: src/Ledger/Conway/Specification/Chain/Properties/CredDepsEqualDomRw
 {-# OPTIONS --safe #-}
 
 open import Ledger.Core.Specification.Abstract
-open import Ledger.Core.Specification.Transaction
+open import Ledger.Conway.Specification.Transaction
 
 module Ledger.Conway.Specification.Chain.Properties.CredDepsEqualDomRwds
   (txs : TransactionStructure) (open TransactionStructure txs)

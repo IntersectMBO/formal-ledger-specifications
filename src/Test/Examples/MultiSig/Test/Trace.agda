@@ -3,7 +3,7 @@
 module Test.Examples.MultiSig.Test.Trace where
 
 open import Ledger.Prelude
-open import Ledger.Core.Specification.Transaction
+open import Ledger.Conway.Specification.Transaction
 
 open import Test.Examples.MultiSig.Datum
 open import Test.Examples.MultiSig.OffChain.OffChain
@@ -19,7 +19,7 @@ open import Ledger.Conway.Specification.Utxo SVTransactionStructure SVAbstractFu
 open import Ledger.Conway.Specification.Utxo.Properties.Computational SVTransactionStructure SVAbstractFunctions
 open import Ledger.Conway.Specification.Utxow.Properties.Computational SVTransactionStructure SVAbstractFunctions
 
-open import Ledger.Conway.Specification.Transaction SVTransactionStructure SVAbstractFunctions
+open import Ledger.Conway.Specification.Transaction
 
 open TransactionStructure SVTransactionStructure
 open Implementation

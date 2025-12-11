@@ -3,7 +3,7 @@
 module Test.Examples.MultiSig.OffChain.AddSig where
 
 open import Ledger.Prelude
-open import Ledger.Core.Specification.Transaction
+open import Ledger.Conway.Specification.Transaction
 
 open import Test.Examples.MultiSig.Datum
 open import Test.Examples.MultiSig.Validator
@@ -15,7 +15,7 @@ open import Test.AbstractImplementation valContext
 open import Test.Lib valContext
 
 open import Ledger.Conway.Specification.Utxo SVTransactionStructure SVAbstractFunctions
-open import Ledger.Conway.Specification.Transaction SVTransactionStructure SVAbstractFunctions
+open import Ledger.Conway.Specification.Transaction
 
 open TransactionStructure SVTransactionStructure
 open Implementation

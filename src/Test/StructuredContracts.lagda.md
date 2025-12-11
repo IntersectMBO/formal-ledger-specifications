@@ -10,7 +10,7 @@ source_path: src/Test/StructuredContracts.lagda.md
 {-# OPTIONS --safe #-}
 
 open import Ledger.Core.Specification.Abstract
-open import Ledger.Core.Specification.Transaction
+open import Ledger.Conway.Specification.Transaction
 
 
 module Test.StructuredContracts
@@ -24,7 +24,7 @@ open import Ledger.Conway.Specification.Ledger txs abs
 open import Ledger.Conway.Specification.Script.ScriptPurpose txs
 open import Ledger.Conway.Specification.Script.Validation txs abs
 open import Ledger.Conway.Specification.Utxo txs abs
-open import Ledger.Conway.Specification.Transaction txs abs
+open import Ledger.Conway.Specification.Transaction
 
 open import Ledger.Core.Specification.TokenAlgebra.Base
 open import Ledger.Core.Specification.TokenAlgebra.ValueSet

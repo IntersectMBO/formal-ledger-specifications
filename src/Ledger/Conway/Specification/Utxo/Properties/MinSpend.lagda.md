@@ -4,7 +4,7 @@
 {-# OPTIONS --safe #-}
 
 open import Ledger.Core.Specification.Abstract
-open import Ledger.Core.Specification.Transaction
+open import Ledger.Conway.Specification.Transaction
 
 module Ledger.Conway.Specification.Utxo.Properties.MinSpend
   (txs : TransactionStructure) (open TransactionStructure txs)
@@ -18,7 +18,7 @@ open import Ledger.Conway.Specification.Epoch txs abs
 open import Ledger.Conway.Specification.Ledger txs abs
 open import Ledger.Prelude hiding (≤-trans; ≤-antisym; All)
 open import Ledger.Conway.Specification.Properties txs abs using (validTxIn₂)
-open import Ledger.Conway.Specification.Transaction txs abs
+open import Ledger.Conway.Specification.Transaction
 open import Ledger.Conway.Specification.Utxo txs abs
 open import Ledger.Conway.Specification.Utxo.Properties.GenMinSpend txs abs
 

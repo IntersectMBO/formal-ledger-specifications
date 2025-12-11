@@ -4,7 +4,7 @@
 import Data.List as L
 
 open import Ledger.Core.Specification.Abstract
-open import Ledger.Core.Specification.Transaction
+open import Ledger.Conway.Specification.Transaction
 
 module Ledger.Conway.Conformance.Ledger
   (txs : TransactionStructure) (open TransactionStructure txs)
@@ -20,7 +20,7 @@ open import Ledger.Conway.Conformance.Utxow txs abs
 
 open import Ledger.Conway.Specification.Ledger txs abs public
   using (LEnv; HasCast-LEnv; allColdCreds; rmOrphanDRepVotes; txgov)
-open import Ledger.Conway.Specification.Transaction txs abs
+open import Ledger.Conway.Specification.Transaction
 
 open Tx
 

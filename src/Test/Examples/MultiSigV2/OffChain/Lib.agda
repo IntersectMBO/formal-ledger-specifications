@@ -3,7 +3,7 @@
 module Test.Examples.MultiSigV2.OffChain.Lib where
 
 open import Ledger.Prelude
-open import Ledger.Core.Specification.Transaction using (TransactionStructure)
+open import Ledger.Conway.Specification.Transaction using (TransactionStructure)
 
 open import Test.Examples.MultiSigV2.Datum
 open import Test.Examples.MultiSigV2.Validator
@@ -14,7 +14,7 @@ open import Test.AbstractImplementation valContext
 open import Test.Lib valContext
 
 open import Ledger.Conway.Specification.Script.Validation SVTransactionStructure SVAbstractFunctions
-open import Ledger.Conway.Specification.Transaction SVTransactionStructure SVAbstractFunctions
+open import Ledger.Conway.Specification.Transaction
 open import Ledger.Conway.Specification.Utxo SVTransactionStructure SVAbstractFunctions
 
 open TransactionStructure SVTransactionStructure

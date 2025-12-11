@@ -13,7 +13,7 @@ computational.
 {-# OPTIONS --safe #-}
 
 open import Ledger.Core.Specification.Abstract
-open import Ledger.Core.Specification.Transaction
+open import Ledger.Conway.Specification.Transaction
 
 module Ledger.Conway.Specification.Ledger.Properties.Computational
   (txs : TransactionStructure) (open TransactionStructure txs)
@@ -27,7 +27,7 @@ open import Ledger.Conway.Specification.Certs.Properties.Computational govStruct
 open import Ledger.Conway.Specification.Gov txs
 open import Ledger.Conway.Specification.Gov.Properties.Computational txs
 open import Ledger.Conway.Specification.Ledger txs abs
-open import Ledger.Conway.Specification.Transaction txs abs
+open import Ledger.Conway.Specification.Transaction
 open import Ledger.Conway.Specification.Utxo txs abs
 open import Ledger.Conway.Specification.Utxow txs abs
 open import Ledger.Conway.Specification.Utxow.Properties.Computational txs abs

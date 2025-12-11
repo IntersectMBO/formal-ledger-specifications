@@ -10,7 +10,7 @@ source_path: src/Ledger/Conway/Specification/Ratify.lagda.md
 
 {-# OPTIONS --safe #-}
 
-open import Ledger.Core.Specification.Transaction hiding (Vote)
+open import Ledger.Conway.Specification.Transaction hiding (Vote)
 
 module Ledger.Conway.Specification.Ratify (txs : _) (open TransactionStructure txs) where
 

@@ -7,7 +7,7 @@ source_path: src/Ledger/Conway/Specification/Chain/Properties/Computational.lagd
 {-# OPTIONS --safe #-}
 
 open import Ledger.Core.Specification.Abstract
-open import Ledger.Core.Specification.Transaction
+open import Ledger.Conway.Specification.Transaction
 
 module Ledger.Conway.Specification.Chain.Properties.Computational
   (txs : TransactionStructure) (open TransactionStructure txs)
@@ -23,7 +23,7 @@ open import Ledger.Conway.Specification.Epoch txs abs
 open import Ledger.Conway.Specification.Ledger txs abs
 open import Ledger.Conway.Specification.RewardUpdate txs abs
 open import Ledger.Conway.Specification.RewardUpdate.Properties.Computational txs abs
-open import Ledger.Conway.Specification.Transaction txs abs
+open import Ledger.Conway.Specification.Transaction
 
 open Computational ⦃...⦄
 

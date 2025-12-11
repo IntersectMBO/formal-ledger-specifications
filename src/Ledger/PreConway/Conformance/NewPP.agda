@@ -4,7 +4,7 @@
 open import Relation.Nullary.Decidable
 
 open import Ledger.Prelude
-open import Ledger.Core.Specification.Transaction
+open import Ledger.Conway.Specification.Transaction
 
 module Ledger.PreConway.Conformance.NewPP (txs : _) (open TransactionStructure txs) where
 
