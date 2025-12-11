@@ -1,6 +1,6 @@
 ---
 source_branch: master
-source_path: src/Ledger/Conway/Specification/Script/Base.lagda.md
+source_path: src/Ledger/Core/Specification/Script/Base.lagda.md
 ---
 
 ```agda
@@ -18,7 +18,7 @@ open import Ledger.Prelude hiding (All; Any; all?; any?; _∷ʳ_; uncons; _⊆_)
 open import Ledger.Core.Specification.Crypto
 open import Ledger.Core.Specification.Epoch
 
-module Ledger.Conway.Specification.Script.Base
+module Ledger.Core.Specification.Script.Base
   (cs : _) (open CryptoStructure cs)
   (es : _) (open EpochStructure es)
   where

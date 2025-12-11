@@ -15,6 +15,7 @@ open import Test.AbstractImplementation valContext
 open import Test.Lib valContext
 
 open import Ledger.Conway.Specification.Script.Validation SVTransactionStructure SVAbstractFunctions
+open import Ledger.Conway.Specification.Transaction
 open import Ledger.Conway.Specification.Utxo SVTransactionStructure SVAbstractFunctions
 
 open TransactionStructure SVTransactionStructure
@@ -48,7 +49,7 @@ makePayTx id state script@(sh , _) w =
                                   } ;
                           wits = record { vkSigs = fromListᵐ ((w , (_+_ {{addValue}} (getTxId wutxo) w)) ∷ []) ;
                                           scripts = Ledger.Prelude.fromList ((inj₂ script) ∷ []) ;
-                                          txdats = ∅ ; 
+                                          txdats = ∅ ;
                                           txrdmrs = fromListᵐ (((Spend , proj₂ scIn) ,
                                                                 inj₁ (inj₂ Pay) ,
                                                                 ((getTxId wutxo) , w)) ∷ []) } ;

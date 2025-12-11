@@ -10,16 +10,18 @@ source_path: src/Ledger/Conway/Specification/Utxo/Properties/PoV.lagda.md
 
 {-# OPTIONS --safe #-}
 
-open import Ledger.Conway.Specification.Abstract
+open import Ledger.Core.Specification.Abstract
 open import Ledger.Conway.Specification.Transaction
 
 module Ledger.Conway.Specification.Utxo.Properties.PoV
-  (txs : _) (open TransactionStructure txs)
+  (txs : TransactionStructure) (open TransactionStructure txs)
   (abs : AbstractFunctions txs)
   where
 
-open import Ledger.Conway.Specification.Certs govStructure
 open import Ledger.Prelude
+
+open import Ledger.Conway.Specification.Certs govStructure
+open import Ledger.Conway.Specification.Transaction
 open import Ledger.Conway.Specification.Utxo txs abs
 open import Ledger.Conway.Specification.Utxo.Properties.Base txs abs public
 open UTxOState; open Tx; open TxBody

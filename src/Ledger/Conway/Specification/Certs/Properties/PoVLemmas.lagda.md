@@ -10,12 +10,12 @@ source_path: src/Ledger/Conway/Specification/Certs/Properties/PoVLemmas.lagda.md
 
 {-# OPTIONS --safe #-}
 
-open import Ledger.Conway.Specification.Gov.Base
+open import Ledger.Core.Specification.Gov.Base
 
 module Ledger.Conway.Specification.Certs.Properties.PoVLemmas (gs : _) (open GovStructure gs) where
 
 open import Ledger.Conway.Specification.Certs gs
-open import Ledger.Conway.Specification.Gov.Actions gs hiding (yes; no)
+open import Ledger.Core.Specification.Gov.Actions gs hiding (yes; no)
 open import Ledger.Prelude
 
 open import Axiom.Set.Properties th

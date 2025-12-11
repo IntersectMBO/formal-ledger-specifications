@@ -22,12 +22,12 @@ open import Ledger.Prelude renaming (filterᵐ to filter)
 
 open import Ledger.Core.Specification.Crypto
 open import Ledger.Core.Specification.Epoch
-open import Ledger.Conway.Specification.Gov.Base
+open import Ledger.Core.Specification.Gov.Base
 import Ledger.Conway.Specification.PParams
-import Ledger.Conway.Specification.Script.Base
-import Ledger.Conway.Specification.Gov.Actions
+import Ledger.Core.Specification.Script.Base
+import Ledger.Core.Specification.Gov.Actions
 import Ledger.Conway.Specification.Certs
-import Ledger.Conway.Specification.TokenAlgebra.Base
+import Ledger.Core.Specification.TokenAlgebra.Base
 import Ledger.Core.Specification.Address
 
 open import Relation.Nullary.Decidable using (⌊_⌋)
@@ -88,12 +88,12 @@ record TransactionStructure : Type₁ where
 
   field cryptoStructure : _
   open CryptoStructure cryptoStructure public
-  open Ledger.Conway.Specification.TokenAlgebra.Base ScriptHash public
+  open Ledger.Core.Specification.TokenAlgebra.Base ScriptHash public
   open Ledger.Core.Specification.Address Network KeyHash ScriptHash ⦃ it ⦄ ⦃ it ⦄ ⦃ it ⦄ public
 
   field epochStructure : _
   open EpochStructure epochStructure public
-  open Ledger.Conway.Specification.Script.Base cryptoStructure epochStructure public
+  open Ledger.Core.Specification.Script.Base cryptoStructure epochStructure public
 
   field scriptStructure : _
   open ScriptStructure scriptStructure public
@@ -118,7 +118,7 @@ record TransactionStructure : Type₁ where
     ; globalConstants = globalConstants
     }
 
-  module GovActions = Ledger.Conway.Specification.Gov.Actions govStructure
+  module GovActions = Ledger.Core.Specification.Gov.Actions govStructure
   open GovActions hiding (Vote; yes; no; abstain) public
 
   open import Ledger.Conway.Specification.Certs govStructure

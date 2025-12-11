@@ -1,6 +1,6 @@
 ---
 source_branch: master
-source_path: src/Ledger/Conway/Specification/Gov/Actions.lagda.md
+source_path: src/Ledger/Core/Specification/Gov/Actions.lagda.md
 ---
 
 # Governance Actions {#sec:governance-actions}
@@ -11,9 +11,9 @@ This section defines several concepts and types used to represent governance act
 ```agda
 {-# OPTIONS --safe #-}
 
-open import Ledger.Conway.Specification.Gov.Base
+open import Ledger.Core.Specification.Gov.Base
 
-module Ledger.Conway.Specification.Gov.Actions (gs : _) (open GovStructure gs) where
+module Ledger.Core.Specification.Gov.Actions (gs : _) (open GovStructure gs) where
 
 open import Data.Nat.Properties using (+-0-monoid)
 open import Data.Rational using (ℚ; 0ℚ; 1ℚ)

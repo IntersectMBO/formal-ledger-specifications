@@ -16,7 +16,7 @@ the [Enact](Ledger.Conway.Specification.Enact.md) module.
 ```agda
 {-# OPTIONS --safe #-}
 
-open import Ledger.Conway.Specification.Gov.Base
+open import Ledger.Core.Specification.Gov.Base
 open import Ledger.Conway.Specification.Transaction using (TransactionStructure)
 
 module Ledger.Conway.Specification.Gov (txs : _) (open TransactionStructure txs hiding (epoch)) where
@@ -25,7 +25,7 @@ open import Ledger.Prelude hiding (any?; Any; all?; All; Rel; lookup; ∈-filter
 
 open import Axiom.Set.Properties th using (∃-sublist-⇔)
 
-open import Ledger.Conway.Specification.Gov.Actions govStructure using (Vote)
+open import Ledger.Core.Specification.Gov.Actions govStructure using (Vote)
 open import Ledger.Conway.Specification.Enact govStructure
 open import Ledger.Conway.Specification.Ratify txs
 open import Ledger.Conway.Specification.Certs govStructure
@@ -413,8 +413,8 @@ maxAllEnactable e = maxsublists⊧P (allEnactable? e)
 This section defines two predicates used in the `GOVPropose`{.AgdaInductiveConstructor} case
 of the GOV rule to ensure that a governance action is valid and well-formed.  To make
 sense of these predicates, one must understand how we represent and construct a
-governance action. This is explained in the
-[Governance Actions Section](Ledger.Conway.Specification.Gov.Actions.md#sec:actions).
+governance action.  This is explained in the [Governance Actions][] section of the
+[Gov.Actions][] module.
 
 ```agda
 actionValid : ℙ Credential → Maybe ScriptHash → Maybe ScriptHash → Epoch → GovAction → Type

@@ -17,6 +17,7 @@ open import Test.LedgerImplementation SData SData
 open import Test.AbstractImplementation valContext
 open import Test.Lib valContext
 open import Ledger.Conway.Specification.Script.Validation SVTransactionStructure SVAbstractFunctions
+open import Ledger.Conway.Specification.Transaction
 open import Ledger.Conway.Specification.Utxo SVTransactionStructure SVAbstractFunctions
 open import Ledger.Conway.Specification.Utxo.Properties.Computational SVTransactionStructure SVAbstractFunctions
 open import Ledger.Conway.Specification.Utxow.Properties.Computational SVTransactionStructure SVAbstractFunctions

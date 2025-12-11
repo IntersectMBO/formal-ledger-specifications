@@ -15,6 +15,10 @@ open import Test.LedgerImplementation SData SData
 
 open TransactionStructure SVTransactionStructure
 
+open import Test.AbstractImplementation valContext
+
+open import Ledger.Conway.Specification.Transaction
+
 defaultTxBody : TxBody
 defaultTxBody = record
                   { txIns = ∅

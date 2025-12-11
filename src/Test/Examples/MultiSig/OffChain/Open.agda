@@ -11,7 +11,10 @@ open import Test.Examples.MultiSig.OffChain.Lib
 open import Test.Prelude MultiSigData
 open import Test.SymbolicData MultiSigData
 open import Test.LedgerImplementation SData SData
+open import Test.AbstractImplementation valContext
 open import Test.Lib valContext
+
+open import Ledger.Conway.Specification.Transaction
 
 open TransactionStructure SVTransactionStructure
 open Implementation

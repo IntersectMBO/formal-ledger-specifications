@@ -16,6 +16,10 @@ open import Test.Lib valContext
 open TransactionStructure SVTransactionStructure
 open Implementation
 
+open import Test.AbstractImplementation valContext
+
+open import Ledger.Conway.Specification.Transaction
+
 import Data.Rational.Base as Q
 
 startTxOut : Value → Q.ℚ → ℕ → PlutusScript → TxOut

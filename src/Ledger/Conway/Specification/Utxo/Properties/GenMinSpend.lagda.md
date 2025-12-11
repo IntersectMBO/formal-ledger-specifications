@@ -2,35 +2,45 @@
 ```agda
 {-# OPTIONS --safe #-}
 
-open import Ledger.Conway.Specification.Abstract
+open import Ledger.Core.Specification.Abstract
 open import Ledger.Conway.Specification.Transaction
 
 module Ledger.Conway.Specification.Utxo.Properties.GenMinSpend
-  (txs : _) (open TransactionStructure txs)
+  (txs : TransactionStructure) (open TransactionStructure txs)
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
 
-open import Ledger.Conway.Specification.Certs govStructure
-open import Prelude; open Equivalence
-open import Ledger.Prelude hiding (≤-trans; ≤-antisym; All); open Properties
 open import Data.List.Relation.Unary.All  using (All)
-open import Ledger.Conway.Specification.Utxo txs abs
 open import Data.Nat.Properties hiding (_≟_)
 
+open import Prelude
+open import Ledger.Prelude hiding (≤-trans; ≤-antisym; All)
+
+open import Ledger.Conway.Specification.Certs govStructure
+open import Ledger.Conway.Specification.Transaction
+open import Ledger.Conway.Specification.Utxo txs abs
+
+open Equivalence
+open Properties
 ```
 -->
 
 ## General Minimum Spending Condition
 
+### Helper Functions and Lemmas
+
 ```agda
 isRefundCert : DCert → Bool
-isRefundCert (dereg c _) = true
-isRefundCert (deregdrep c _) = true
-isRefundCert _ = false
+isRefundCert (dereg c _)      = true
+isRefundCert (deregdrep c _)  = true
+isRefundCert _                = false
 
 noRefundCert : List DCert → Type _
 noRefundCert l = All (λ cert → isRefundCert cert ≡ false) l
+```
 
+<!--
+```agda
 opaque
   unfolding List-Model
   unfolding finiteness
@@ -38,8 +48,17 @@ opaque
   fin∘list[] = refl
   fin∘list∷[] : {A : Type} {a : A} → proj₁ (finiteness ❴ a ❵) ≡ [ a ]
   fin∘list∷[] = refl
+```
+-->
 
+```agda
 coin∅ : getCoin{A = Deposits} ∅ ≡ 0
+```
+
+(For proof this and other results on this page, click the "Show more Agda" button above.)
+
+<!--
+```agda
 coin∅ = begin
   foldr (λ x → (proj₂ x) +_) 0 (deduplicate _≟_ (proj₁ (finiteness ∅)))
     ≡⟨ cong (λ u → (foldr (λ x → (proj₂ x) +_) 0 (deduplicate _≟_ u))) fin∘list[] ⟩
@@ -50,15 +69,26 @@ coin∅ = begin
     ≡⟨ refl ⟩
   0 ∎
   where open Prelude.≡-Reasoning
+```
+-->
 
+```agda
 getCoin-singleton : ((dp , c) : DepositPurpose × Coin) → indexedSumᵛ' id ❴ (dp , c) ❵ ≡ c
 getCoin-singleton _ = indexedSum-singleton' {A = DepositPurpose × Coin} {f = proj₂} (finiteness _)
 
-module _ -- ASSUMPTION --
-         (gc-hom : (d₁ d₂ : Deposits) → getCoin (d₁ ∪⁺ d₂) ≡ getCoin d₁ + getCoin d₂)
+module _
+
+  -- !!! ASSUMPTION !!! --
+  (gc-hom : (d₁ d₂ : Deposits) → getCoin (d₁ ∪⁺ d₂) ≡ getCoin d₁ + getCoin d₂)
+
   where
+
   ∪⁺singleton≡ : {deps : Deposits} {(dp , c) : DepositPurpose × Coin}
-                 → getCoin (deps ∪⁺ ❴ (dp , c) ❵ᵐ) ≡ getCoin deps + c
+    → getCoin (deps ∪⁺ ❴ (dp , c) ❵ᵐ) ≡ getCoin deps + c
+```
+
+<!--
+```agda
   ∪⁺singleton≡ {deps} {(dp , c)} = begin
     getCoin (deps ∪⁺ ❴ (dp , c) ❵)
       ≡⟨ gc-hom deps ❴ (dp , c) ❵ ⟩
@@ -69,9 +99,16 @@ module _ -- ASSUMPTION --
     where open Prelude.≡-Reasoning
 
   module _ {deposits : Deposits} {txid : TxId} {gaDep : Coin} where
+```
+-->
 
+```agda
     ≤updatePropDeps : (props : List GovProposal)
       → getCoin deposits ≤ getCoin (updateProposalDeposits props txid gaDep deposits)
+```
+
+<!--
+```agda
     ≤updatePropDeps [] = ≤-reflexive refl
     ≤updatePropDeps (x ∷ props) = ≤-trans (≤updatePropDeps props)
                                           (≤-trans (m≤m+n _ _)
@@ -93,20 +130,32 @@ module _ -- ASSUMPTION --
         gaDep + (length ps) * gaDep
           ∎
         where open Prelude.≡-Reasoning
+```
+-->
 
-  ≤certDeps  :  {d : Deposits} {(dp , c) : DepositPurpose × Coin}
-             →  getCoin d ≤ getCoin (d ∪⁺ ❴ (dp , c) ❵)
+```agda
+  ≤certDeps : {d : Deposits} {(dp , c) : DepositPurpose × Coin}
+    → getCoin d ≤ getCoin (d ∪⁺ ❴ (dp , c) ❵)
+```
 
+<!--
+```agda
   ≤certDeps {d} = begin
-    getCoin d                      ≤⟨ m≤m+n (getCoin d) _ ⟩
-    getCoin d + _                  ≡⟨ sym ∪⁺singleton≡ ⟩
-    getCoin (d ∪⁺ ❴ _ ❵)           ∎
+    getCoin d             ≤⟨ m≤m+n (getCoin d) _ ⟩
+    getCoin d + _         ≡⟨ sym ∪⁺singleton≡ ⟩
+    getCoin (d ∪⁺ ❴ _ ❵)  ∎
     where open ≤-Reasoning
+```
+-->
 
 
+```agda
   ≤certDeps∪ˡ : {d : Deposits} {(dp , c) : DepositPurpose × Coin}
-              → getCoin d ≤ getCoin (d ∪ˡ ❴ (dp , c) ❵)
+    → getCoin d ≤ getCoin (d ∪ˡ ❴ (dp , c) ❵)
+```
 
+<!--
+```agda
   ≤certDeps∪ˡ {d} {dp , c} with dp ∈? dom d
   ... | yes dp∈ =
       from ≤⇔<∨≈ $ inj₂ $
@@ -121,19 +170,18 @@ module _ -- ASSUMPTION --
       module ≡ᵉ = IsEquivalence ≡ᵉ-isEquivalence
 
   ... | no ¬p = begin
-      getCoin d             ≤⟨ m≤m+n (getCoin d) _ ⟩
-      getCoin d + _         ≡⟨ sym $ indexedSumᵐ-∪
-                                 {X = d ᶠᵐ}
-                                 {Y = ❴ dp , c ❵ ᶠᵐ}
-                                 {f = proj₂}
-                                 (disjoint-sing ¬p)
-                             ⟩
+      getCoin d
+        ≤⟨ m≤m+n (getCoin d) _ ⟩
+      getCoin d + _
+        ≡˘⟨ indexedSumᵐ-∪ {X = d ᶠᵐ} {Y = ❴ dp , c ❵ ᶠᵐ} {f = proj₂} (disjoint-sing ¬p) ⟩
       indexedSumᵐ proj₂ ((d ᶠᵐ) ∪ˡᶠ (❴ dp , c ❵ ᶠᵐ))
-                            ≡⟨ sym $ indexedSumᵐ-∪ˡ-∪ˡᶠ d ❴ dp , c ❵ ⟩
+        ≡˘⟨ indexedSumᵐ-cong {f = proj₂} {x = (d ∪ˡ ❴ dp , c ❵) ᶠᵐ} {y = (d ᶠᵐ) ∪ˡᶠ (❴ dp , c ❵ ᶠᵐ)} ≡ᵉ.refl ⟩
       getCoin (d ∪ˡ ❴ dp , c ❵)
-      ∎
+        ∎
     where
       open ≤-Reasoning
+      open import Relation.Binary.Structures using (IsEquivalence)
+      module ≡ᵉ = IsEquivalence ≡ᵉ-isEquivalence
 
       disjoint-sing : dp ∉ dom d → disjoint (dom d) (dom ❴ dp , c ❵ˢ)
       disjoint-sing dp∉d a∈d a∈sing
@@ -153,6 +201,7 @@ module _ -- ASSUMPTION --
   ≤updateCertDeps (regdrep _ _ _ ∷ cs)     (_ All.∷ nrf) = ≤-trans ≤certDeps (≤updateCertDeps cs nrf)
   ≤updateCertDeps (ccreghot _ _ ∷ cs)      (_ All.∷ nrf) = ≤updateCertDeps cs nrf
 ```
+-->
 
 ### Main Theorem: General Minimum Spending Condition
 
@@ -170,11 +219,20 @@ module _ -- ASSUMPTION --
 -->
 
 ```agda
-  gmsc :  let open Tx tx renaming (body to txb); open TxBody txb
-              pp = UTxOEnv.pparams Γ; open PParams pp
-              open UTxOState utxoState
-                renaming (utxo to st; fees to fs; deposits to deps; donations to dons)
-          in
+  gmsc :
+```
+
+<!--
+```agda
+    let  open Tx tx renaming (body to txb); open TxBody txb
+         pp = UTxOEnv.pparams Γ; open PParams pp
+         open UTxOState utxoState
+           renaming (utxo to st; fees to fs; deposits to deps; donations to dons)
+    in
+```
+-->
+
+```agda
     Γ ⊢  ⟦ st   , fs   , deps   , dons   ⟧ ⇀⦇ tx ,UTXO⦈
          ⟦ utxo'  , fees'  , deposits'  , donations'  ⟧
 
@@ -182,7 +240,10 @@ module _ -- ASSUMPTION --
 
        -------------------------------------------------------------------
     →  coin (consumed pp utxoState txb) ≥ length txGovProposals * govActionDeposit
+```
 
+<!--
+```agda
   gmsc step@(UTXO-inductive⋯ tx Γ utxoState _ _ _ _ _ _ c≡p cmint≡0 _ _ _ _ _ _ _ _ _ _) nrf =
     begin
     length txGovProposals * govActionDeposit
@@ -224,3 +285,4 @@ module _ -- ASSUMPTION --
     balIn = balance (st ∣ txIns)
     balOut = balance (outs txb)
 ```
+-->

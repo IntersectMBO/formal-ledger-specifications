@@ -10,13 +10,17 @@ source_path: src/Ledger/Conway/Specification/Gov/Properties/ChangePPGroup.lagda.
 
 {-# OPTIONS --safe #-}
 
+open import Ledger.Core.Specification.Abstract
 open import Ledger.Conway.Specification.Transaction
 
 module Ledger.Conway.Specification.Gov.Properties.ChangePPGroup
-  (txs : _) (open TransactionStructure txs)
+  (txs : TransactionStructure) (open TransactionStructure txs)
+  (abs : AbstractFunctions txs)
   where
 
 open import Ledger.Prelude
+
+open import Ledger.Conway.Specification.Transaction
 
 instance
   _ : IsSet TxBody GovProposal

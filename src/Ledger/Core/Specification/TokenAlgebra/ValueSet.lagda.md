@@ -1,6 +1,6 @@
 ---
 source_branch: master
-source_path: src/Ledger/Conway/Specification/TokenAlgebra/ValueSet.lagda.md
+source_path: src/Ledger/Core/Specification/TokenAlgebra/ValueSet.lagda.md
 ---
 
 ## Value Set {#sec:value-set}
@@ -12,11 +12,11 @@ source_path: src/Ledger/Conway/Specification/TokenAlgebra/ValueSet.lagda.md
 
 open import Prelude using (Type)
 
-module Ledger.Conway.Specification.TokenAlgebra.ValueSet (PolicyId AssetName : Type) where
+module Ledger.Core.Specification.TokenAlgebra.ValueSet (PolicyId AssetName : Type) where
 
 open import Ledger.Prelude                         hiding (lookup ; update ; isMagma ; isEquivalence) renaming (TotalMap to _⇒_)
 open _⇒_
-open import Ledger.Conway.Specification.TokenAlgebra.Base PolicyId using (TokenAlgebra)
+open import Ledger.Core.Specification.TokenAlgebra.Base PolicyId using (TokenAlgebra)
 
 open import Algebra                                using (Op₂ ; IsSemigroup ; IsMonoid ; IsMagma ; IsCommutativeMonoid)
 open import Algebra.Morphism                       using (IsMonoidHomomorphism ; IsMagmaHomomorphism)

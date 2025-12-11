@@ -10,13 +10,13 @@ source_path: src/Ledger/Conway/Specification/Certs/Properties/VoteDelegsVDeleg.l
 
 {-# OPTIONS --safe #-}
 
-open import Ledger.Conway.Specification.Gov.Base
+open import Ledger.Core.Specification.Gov.Base
 
 module Ledger.Conway.Specification.Certs.Properties.VoteDelegsVDeleg (gs : _) (open GovStructure gs) where
 
 open import Ledger.Conway.Specification.Certs gs
 open import Ledger.Prelude
-open import Ledger.Conway.Specification.Gov.Actions gs
+open import Ledger.Core.Specification.Gov.Actions gs
 ```
 -->
 
