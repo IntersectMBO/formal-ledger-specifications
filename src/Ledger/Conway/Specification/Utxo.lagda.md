@@ -509,7 +509,7 @@ unquoteDecl Scripts-No-premises  = genPremises Scripts-No-premises  (quote Scrip
 
 This section ties all the pieces of the UTXO rule together.
 
-(The symbol `≡?`{.AgdaDatatype} is explained in Section [Notation][].)
+(The symbol `~`{.AgdaDatatype} is explained in Section [Notation][].)
 
 ```agda
 data _⊢_⇀⦇_,UTXO⦈_ where
