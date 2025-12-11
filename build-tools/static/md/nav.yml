@@ -22,7 +22,6 @@
       - Coin: Ledger.Core.Specification.TokenAlgebra.Coin.md
       - ValueSet: Ledger.Core.Specification.TokenAlgebra.ValueSet.md
       - ValueVector: Ledger.Core.Specification.TokenAlgebra.ValueVector.md
-    - Transaction: Ledger.Core.Specification.Transaction.md
 - Conway:
   - Introduction: Ledger.Conway.Specification.md
   - Modules/:
