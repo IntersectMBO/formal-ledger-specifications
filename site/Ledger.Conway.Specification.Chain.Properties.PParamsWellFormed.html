@@ -1106,7 +1106,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Core.Specification.Transaction.html" class="md-nav__link">
+      <a href="Ledger.Core.Specification.Transaction.md" class="md-nav__link">
         
   
   
@@ -10223,15 +10223,15 @@
 <a id="285" class="Symbol">{-#</a> <a id="289" class="Keyword">OPTIONS</a> <a id="297" class="Pragma">--safe</a> <a id="304" class="Symbol">#-}</a>
 
 <a id="309" class="Keyword">open</a> <a id="314" class="Keyword">import</a> <a id="321" href="Ledger.Core.Specification.Abstract.html" class="Module">Ledger.Core.Specification.Abstract</a>
-<a id="356" class="Keyword">open</a> <a id="361" class="Keyword">import</a> <a id="368" href="Ledger.Core.Specification.Transaction.html" class="Module">Ledger.Core.Specification.Transaction</a>
+<a id="356" class="Keyword">open</a> <a id="361" class="Keyword">import</a> <a id="368" href="Ledger.Conway.Specification.Transaction.html" class="Module">Ledger.Conway.Specification.Transaction</a>
 
-<a id="407" class="Keyword">module</a> <a id="414" href="Ledger.Conway.Specification.Chain.Properties.PParamsWellFormed.html" class="Module">Ledger.Conway.Specification.Chain.Properties.PParamsWellFormed</a>
-  <a id="479" class="Symbol">(</a><a id="480" href="Ledger.Conway.Specification.Chain.Properties.PParamsWellFormed.html#480" class="Bound">txs</a> <a id="484" class="Symbol">:</a> <a id="486" href="Ledger.Core.Specification.Transaction.html#1895" class="Record">TransactionStructure</a><a id="506" class="Symbol">)</a> <a id="508" class="Symbol">(</a><a id="509" class="Keyword">open</a> <a id="514" href="Ledger.Core.Specification.Transaction.html#1895" class="Module">TransactionStructure</a> <a id="535" href="Ledger.Conway.Specification.Chain.Properties.PParamsWellFormed.html#480" class="Bound">txs</a><a id="538" class="Symbol">)</a>
-  <a id="542" class="Symbol">(</a><a id="543" href="Ledger.Conway.Specification.Chain.Properties.PParamsWellFormed.html#543" class="Bound">abs</a> <a id="547" class="Symbol">:</a> <a id="549" href="Ledger.Core.Specification.Abstract.html#925" class="Record">AbstractFunctions</a> <a id="567" href="Ledger.Conway.Specification.Chain.Properties.PParamsWellFormed.html#480" class="Bound">txs</a><a id="570" class="Symbol">)</a>
-  <a id="574" class="Keyword">where</a>
+<a id="409" class="Keyword">module</a> <a id="416" href="Ledger.Conway.Specification.Chain.Properties.PParamsWellFormed.html" class="Module">Ledger.Conway.Specification.Chain.Properties.PParamsWellFormed</a>
+  <a id="481" class="Symbol">(</a><a id="482" href="Ledger.Conway.Specification.Chain.Properties.PParamsWellFormed.html#482" class="Bound">txs</a> <a id="486" class="Symbol">:</a> <a id="488" href="Ledger.Conway.Specification.Transaction.html#2451" class="Record">TransactionStructure</a><a id="508" class="Symbol">)</a> <a id="510" class="Symbol">(</a><a id="511" class="Keyword">open</a> <a id="516" href="Ledger.Conway.Specification.Transaction.html#2451" class="Module">TransactionStructure</a> <a id="537" href="Ledger.Conway.Specification.Chain.Properties.PParamsWellFormed.html#482" class="Bound">txs</a><a id="540" class="Symbol">)</a>
+  <a id="544" class="Symbol">(</a><a id="545" href="Ledger.Conway.Specification.Chain.Properties.PParamsWellFormed.html#545" class="Bound">abs</a> <a id="549" class="Symbol">:</a> <a id="551" href="Ledger.Core.Specification.Abstract.html#927" class="Record">AbstractFunctions</a> <a id="569" href="Ledger.Conway.Specification.Chain.Properties.PParamsWellFormed.html#482" class="Bound">txs</a><a id="572" class="Symbol">)</a>
+  <a id="576" class="Keyword">where</a>
 
-<a id="581" class="Keyword">open</a> <a id="586" class="Keyword">import</a> <a id="593" href="Ledger.Conway.Specification.Chain.html" class="Module">Ledger.Conway.Specification.Chain</a> <a id="627" href="Ledger.Conway.Specification.Chain.Properties.PParamsWellFormed.html#480" class="Bound">txs</a> <a id="631" href="Ledger.Conway.Specification.Chain.Properties.PParamsWellFormed.html#543" class="Bound">abs</a>
-<a id="635" class="Keyword">open</a> <a id="640" class="Keyword">import</a> <a id="647" href="Ledger.Prelude.html" class="Module">Ledger.Prelude</a>
+<a id="583" class="Keyword">open</a> <a id="588" class="Keyword">import</a> <a id="595" href="Ledger.Conway.Specification.Chain.html" class="Module">Ledger.Conway.Specification.Chain</a> <a id="629" href="Ledger.Conway.Specification.Chain.Properties.PParamsWellFormed.html#482" class="Bound">txs</a> <a id="633" href="Ledger.Conway.Specification.Chain.Properties.PParamsWellFormed.html#545" class="Bound">abs</a>
+<a id="637" class="Keyword">open</a> <a id="642" class="Keyword">import</a> <a id="649" href="Ledger.Prelude.html" class="Module">Ledger.Prelude</a>
 </pre>
 
 <p><em>Informally</em>.</p>
@@ -10247,11 +10247,11 @@ That is, if <code class="AgdaBound">cs</code> and <code class="AgdaBound">cs'</c
 <code class="AgdaRecord">PParams</code> of <code class="AgdaBound">cs</code> are well-formed, then so are the
 <code class="AgdaRecord">PParams</code> of <code class="AgdaBound">cs'</code> .</p>
 <p><em>Formally</em>.</p>
-<pre class="Agda"><a id="pp-wellFormed"></a><a id="1564" href="Ledger.Conway.Specification.Chain.Properties.PParamsWellFormed.html#1564" class="Function">pp-wellFormed</a> <a id="1578" class="Symbol">:</a> <a id="1580" href="Ledger.Conway.Specification.Chain.html#1216" class="Record">ChainState</a> <a id="1591" class="Symbol">→</a> <a id="1593" href="Agda.Primitive.html#388" class="Primitive">Type</a>
-<a id="1598" href="Ledger.Conway.Specification.Chain.Properties.PParamsWellFormed.html#1564" class="Function">pp-wellFormed</a> <a id="1612" class="Symbol">=</a> <a id="1614" href="Ledger.Conway.Specification.PParams.html#8596" class="Function">paramsWellFormed</a> <a id="1631" href="Function.Base.html#1134" class="Function Operator">∘</a> <a id="1633" href="Ledger.Conway.Specification.PParams.html#7869" class="Field">PParamsOf</a>
+<pre class="Agda"><a id="pp-wellFormed"></a><a id="1566" href="Ledger.Conway.Specification.Chain.Properties.PParamsWellFormed.html#1566" class="Function">pp-wellFormed</a> <a id="1580" class="Symbol">:</a> <a id="1582" href="Ledger.Conway.Specification.Chain.html#1210" class="Record">ChainState</a> <a id="1593" class="Symbol">→</a> <a id="1595" href="Agda.Primitive.html#388" class="Primitive">Type</a>
+<a id="1600" href="Ledger.Conway.Specification.Chain.Properties.PParamsWellFormed.html#1566" class="Function">pp-wellFormed</a> <a id="1614" class="Symbol">=</a> <a id="1616" href="Ledger.Conway.Specification.PParams.html#8596" class="Function">paramsWellFormed</a> <a id="1633" href="Function.Base.html#1134" class="Function Operator">∘</a> <a id="1635" href="Ledger.Conway.Specification.PParams.html#7869" class="Field">PParamsOf</a>
 
-<a id="pp-wellFormed-invariant"></a><a id="1644" href="Ledger.Conway.Specification.Chain.Properties.PParamsWellFormed.html#1644" class="Function">pp-wellFormed-invariant</a> <a id="1668" class="Symbol">:</a> <a id="1670" href="Agda.Primitive.html#388" class="Primitive">Type</a>
-<a id="1675" href="Ledger.Conway.Specification.Chain.Properties.PParamsWellFormed.html#1644" class="Function">pp-wellFormed-invariant</a> <a id="1699" class="Symbol">=</a> <a id="1701" href="Interface.STS.html#5246" class="Function">LedgerInvariant</a> <a id="1717" href="Ledger.Conway.Specification.Chain.html#2888" class="Datatype Operator">_⊢_⇀⦇_,CHAIN⦈_</a> <a id="1732" href="Ledger.Conway.Specification.Chain.Properties.PParamsWellFormed.html#1564" class="Function">pp-wellFormed</a>
+<a id="pp-wellFormed-invariant"></a><a id="1646" href="Ledger.Conway.Specification.Chain.Properties.PParamsWellFormed.html#1646" class="Function">pp-wellFormed-invariant</a> <a id="1670" class="Symbol">:</a> <a id="1672" href="Agda.Primitive.html#388" class="Primitive">Type</a>
+<a id="1677" href="Ledger.Conway.Specification.Chain.Properties.PParamsWellFormed.html#1646" class="Function">pp-wellFormed-invariant</a> <a id="1701" class="Symbol">=</a> <a id="1703" href="Interface.STS.html#5246" class="Function">LedgerInvariant</a> <a id="1719" href="Ledger.Conway.Specification.Chain.html#2882" class="Datatype Operator">_⊢_⇀⦇_,CHAIN⦈_</a> <a id="1734" href="Ledger.Conway.Specification.Chain.Properties.PParamsWellFormed.html#1566" class="Function">pp-wellFormed</a>
 </pre>
 <p><em>Proof</em>. (coming soon)</p>
 

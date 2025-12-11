@@ -532,7 +532,6 @@ library
       MAlonzo.Code.Ledger.Core.Specification.Script.Timelock
       MAlonzo.Code.Ledger.Core.Specification.TokenAlgebra.Base
       MAlonzo.Code.Ledger.Core.Specification.TokenAlgebra.Coin
-      MAlonzo.Code.Ledger.Core.Specification.Transaction
       MAlonzo.Code.Ledger.Prelude
       MAlonzo.Code.Ledger.Prelude.Base
       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes
