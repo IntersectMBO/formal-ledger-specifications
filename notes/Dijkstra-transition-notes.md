@@ -1,6 +1,6 @@
-# Notes on the Dijkstra Era Migration
+# Dijkstra Era Notes
 
-## A. Conway module annotations
+## A. Conway modules
 
 The following are notes on what (from the Conway era) we'll need to touch, and what can likely remain unchanged, as we transition to the Dijkstra era and support nested transactions.
 
@@ -90,7 +90,7 @@ The following are notes on what (from the Conway era) we'll need to touch, and w
 
 ---
 
-## B. Dijkstra module annotations
+## B. Dijkstra modules
 
 (This section includes concrete fixes for issue #996.)
 
