@@ -72,7 +72,8 @@ record TxInfo : Type where
         txCerts        : List DCert
         txWithdrawals  : Withdrawals
         txVldt         : Maybe Slot × Maybe Slot
-        vkKey          : ℙ KeyHash
+        vkKey          : ℙ KeyHash     -- native/phase-1/timelock signers
+        txGuards       : ℙ Credential  -- CIP-0112/0118 guards (required by tx body)
         txData         : ℙ Datum
         txId           : TxId
 
@@ -87,7 +88,8 @@ txInfo TxLevelTop utxo tx =
           ; txCerts = txCerts
           ; txWithdrawals = txWithdrawals
           ; txVldt = txVldt
-          ; vkKey = txRequiredGuards -- ?
+          ; vkKey = reqSignerHashes
+          ; txGuards = txGuards
           ; txData = DataOf tx
           ; txId = txId
           } where open Tx tx; open TxBody txBody
@@ -100,7 +102,8 @@ txInfo TxLevelSub utxo tx =
           ; txCerts = txCerts
           ; txWithdrawals = txWithdrawals
           ; txVldt = txVldt
-          ; vkKey = txRequiredGuards  -- ?
+          ; vkKey = reqSignerHashes
+          ; txGuards = txGuards
           ; txData = DataOf tx
           ; txId = txId
           } where open Tx tx; open TxBody txBody

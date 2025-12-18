@@ -213,15 +213,12 @@ The fields that depend on the transaction level use the auxiliary functions
         txNetworkId          : Maybe Network
         currentTreasury      : Maybe Coin
         mint                 : Value
+        reqSignerHashes      : ℙ KeyHash
         scriptIntegrityHash  : Maybe ScriptHash
 
         -- New in Dijkstra --
-        --
-        txSubTransactions    : InTopLevel txLevel (List (Tx TxLevelSub)) -- only in top-level tx
-        -- ^^^^^^^^^^ should this be a set? i.e. InTopLevel txLevel (ℙ (Tx TxLevelSub))
-        --            (in getTxScripts function below we need it as a set)
-        --
-        txRequiredGuards          : ℙ KeyHash -- replaces reqSigHash : ℙ KeyHash
+        txSubTransactions         : InTopLevel txLevel (List (Tx TxLevelSub)) -- only in top-level tx
+        txGuards                  : ℙ Credential -- Dijkstra guards: credentials required by this tx (key or script).
         txRequiredTopLevelGuards  : InSubLevel txLevel (ScriptHash ⇀ Datum) -- only in sub-level tx
         ---------------------
 
