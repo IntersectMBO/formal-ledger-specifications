@@ -164,7 +164,50 @@ This addresses #996’s second bullet (rename/refactor + add guards).
 
 #### 4.3 Fix `collectP2ScriptsWithContext` design
 
-+  **Update**.
++  **Update 2**.
+
+   Per-subTx "collection" refers to **building the list of phase-2 script evaluations and their contexts**, and/or **computing a tentative (uncommitted) batch post-state** as an internal decomposition. The ledger **does not commit** any subTx effects until after a **single batch-wide phase-2 evaluation** succeeds; if any script fails, the tentative post-state is discarded and only collateral is collected.
+
+   That keeps Alexey's "we process subTxs" compatible with "phase-2 runs once at end."
+
+   What CIP-0118 forces (for mempool safety) is:
+
+   +  **Phase-2 execution happens once, last, for the whole batch** (top-level + all subTxs).
+   +  But we can still **compute** the *prospective* ledger update by iterating through subTxs (and the top-level tx) *before* phase-2; we just must **not commit it** unless phase-2 succeeds.
+
+   So there are really *three* distinct notions that are sometimes conflated:
+
+   1.  **Collect scripts / build script inputs**
+
+       Purely assembling the list of `(script, purpose, redeemer, datum(s), exunits, costmodel, context)` to feed into phase-2 evaluation. (This should **not** mean "commit state.")
+
+   2.  **Process subTxs to compute the prospective post-state**
+
+       We may need this to:
+
+       + compute aggregate `produced/consumed` for POV,
+       + accumulate deposits / withdrawals / governance effects,
+       + build the final UTxO delta (remove all spent inputs, add all outputs),
+       + compute sizes, etc.
+
+       This processing can be done as a fold over subTxs, **but** the result is a *tentative state*.
+
+   3.  **Commit the state**
+
+       This happens *only if* phase-2 succeeds for the whole batch; otherwise we discard the tentative state and apply the collateral-collection branch.
+
+
+   **Where tension remains**.
+
+   CIP-0118 simultaneously says:
+
+   +  "All inputs … must be contained in the UTxO set before any … are applied," **and**
+   +  referenced scripts/datums may come from "outputs of preceding transactions in the batch."
+
+   These two statements are reconcilable only if "inputs" **does not include reference inputs**, or if there's an intended exception.  This should be resolved since it affects whether script contexts can consult an "evolving" UTxO view for reference-script lookup.
+
+
++  **Update 1**.
 
    The apparent tension below is only partly resolved by noting that, per CIP-0118, *phase-2 evaluation is performed once at the end for the full batch; per-subTx collection is only an internal decomposition*.  However, I initially thought subtransactions would not modify ledger state, and only at the very end, when processing the top-level transaction is complete, would the state be modified *once* (accounting for the impact of all subtransactions on the state at that point).  Alexey corrected me on this point; so, apparently, "per-subTx collection is only an internal decomposition" is a bit misleading if ledger state will be modified during this "collection."
 
