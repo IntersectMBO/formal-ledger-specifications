@@ -1,3 +1,5 @@
+<!-- File: notes/Dijkstra-transition-notes.md -->
+
 # Dijkstra Era Notes
 
 ## A. Conway modules
@@ -128,23 +130,10 @@ but we need to distinguish at least two cases:
 1.  "A guard script that belongs to a particular subTx" (or is required by it), and
 2.  "A top-level guard" (global for the batch, or required by the top-level Tx itself).
 
-**Concrete proposal (minimal and matches our current `(TxId × ScriptHash)` design)**
+**Proposal: CIP-based split**
 
-```agda
-data GuardScope : Type where
-  TopGuard SubGuard : GuardScope
-
-data ScriptPurpose : Type where
-  ...
-  Guard : GuardScope → (TxId × ScriptHash) → ScriptPurpose
-```
-
-+  For a subTx-required top-level guard: `Guard TopGuard (subTxId , sh)`
-+  For a subTx-local guard: `Guard SubGuard (subTxId , sh)`
-+  If we later decide top-level guards are not keyed by subTxId, then (for `TopGuard`) we could change `(TxId × ScriptHash)` to just `ScriptHash` without touching the rest of the constructors.
-
-**Question**. In the second item, "subTx-local guards" are mentions; do such guards exist?
-
+* **Guards (CIP-0112)** exist at **both levels** (`guards` field in both bodies).
+* **RequiredTopLevelGuards (CIP-0118)** exist only in **subTx bodies**, and they are enforced by a **phase-1 check** that top-level `guards` includes them.
 
 #### 4.2 Refactor/rename `CredsNeeded` (clarity + guards)
 
@@ -175,6 +164,26 @@ This addresses #996’s second bullet (rename/refactor + add guards).
 
 #### 4.3 Fix `collectP2ScriptsWithContext` design
 
++  **Update**.
+
+   The apparent tension below is only partly resolved by noting that, per CIP-0118, *phase-2 evaluation is performed once at the end for the full batch; per-subTx collection is only an internal decomposition*.  However, I initially thought subtransactions would not modify ledger state, and only at the very end, when processing the top-level transaction is complete, would the state be modified *once* (accounting for the impact of all subtransactions on the state at that point).  Alexey corrected me on this point; so, apparently, "per-subTx collection is only an internal decomposition" is a bit misleading if ledger state will be modified during this "collection."
+
+   Note that **Phase-2 validation runs last and for the full batch** (mempool safety).
+
+   We need to implement:
+
+   +  Phase-1 checks for the full top-level tx (including subTxs),
+   +  a single batch-wide `evalP2Scripts` at the end,
+   +  build `ScriptInputs` for:
+
+      + all subTx scripts (contexts built from subTx),
+      + all top-level scripts,
+      + all top-level guard scripts (contexts include `txInfoSubTxs`),
+   +  and evaluate **once** at the end.
+
+   **Still, it is not clear to me whether ledger state will change during Phase-1 checks or "collection" of subTx scripts.**
+
+
 We should resolve the conflicting interpretations, but for now we can support both "top-level loops over subTx" and "each subTx collects its own," without committing too much to one or the other, as follows:
 
 **Define a single primitive**
@@ -201,7 +210,7 @@ Then define two derived helpers:
 
 Now the **real decision** is whether the `utxo` passed to each subTx collection is:
 
-* the *starting* utxo (your point (5): all inputs exist beforehand), or
+* the *starting* utxo (point (5): all inputs exist beforehand), or
 * a sequentially-updated utxo.
 
 Given the prose (5), the default should be **starting utxo** for script contexts and input lookup; we can still "simulate" updates for later checks, but we shouldn't let script evaluation see a moving target unless CIP-0118 allows it.
