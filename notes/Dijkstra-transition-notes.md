@@ -132,8 +132,11 @@ but we need to distinguish at least two cases:
 
 **Proposal: CIP-based split**
 
-* **Guards (CIP-0112)** exist at **both levels** (`guards` field in both bodies).
-* **RequiredTopLevelGuards (CIP-0118)** exist only in **subTx bodies**, and they are enforced by a **phase-1 check** that top-level `guards` includes them.
++  **Guards (CIP-0112)** exist at **both levels** (`guards` field in both bodies).
++  **RequiredTopLevelGuards (CIP-0118)** exist only in **subTx bodies**, and they are enforced by a phase-1 check that top-level `guards` includes them.
+
+**Addendum:** CIP-0112 "guards" are **credentials**, not key hashes, so `txRequiredGuards : ℙ KeyHash` should probably be something like a (nonempty?) container of `Credential`, i.e. `KeyHashObj _` *or* `ScriptObj _`.
+
 
 #### 4.2 Refactor/rename `CredsNeeded` (clarity + guards)
 
