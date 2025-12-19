@@ -452,6 +452,8 @@ could be either of them.
     ... | yes _ = (c , (tid , md) ∷ xs) ∷ rest
     ... | no  _ = (c , xs) ∷ insertRequest (tid , cred , md) rest
 
+  -- Turn a subTx body's `txRequiredTopLevelGuards` into explicit top-level guard requests.
+  -- We attach the requesting subTx id so later grouping/execution can attribute arguments to the right subTx.
   subTxRequiredTopLevelGuardRequests : SubLevelTx → List RequiredTopLevelGuardRequest
   subTxRequiredTopLevelGuardRequests subtx =
     map (λ (cred , md) → (TxIdOf subtx , cred , md))
