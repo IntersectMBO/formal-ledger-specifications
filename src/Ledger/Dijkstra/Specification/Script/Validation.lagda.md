@@ -81,32 +81,32 @@ record TxInfo : Type where
 txInfo : (ℓ : TxLevel) → UTxO → Tx ℓ → TxInfo
 
 txInfo TxLevelTop utxo tx =
-  record  { realizedInputs = utxo ∣ txIns
-          ; txOuts = txOuts
-          ; txFee = just txFee
-          ; mint = mint
-          ; txCerts = txCerts
-          ; txWithdrawals = txWithdrawals
-          ; txVldt = txVldt
-          ; vkKey = reqSignerHashes
-          ; txGuards = txGuards
-          ; txData = DataOf tx
-          ; txId = txId
-          } where open Tx tx; open TxBody txBody
+  record  { realizedInputs = utxo ∣ (TxBody.txIns txBody)
+          ; txOuts         = TxBody.txOuts txBody
+          ; txFee          = just (TxBody.txFee txBody)
+          ; mint           = TxBody.mint txBody
+          ; txCerts        = TxBody.txCerts txBody
+          ; txWithdrawals  = TxBody.txWithdrawals txBody
+          ; txVldt         = TxBody.txVldt txBody
+          ; vkKey          = TxBody.reqSignerHashes txBody
+          ; txGuards       = TxBody.txGuards txBody
+          ; txData         = DataOf tx
+          ; txId           = TxBody.txId txBody
+          } where open Tx tx
 
 txInfo TxLevelSub utxo tx =
-  record  { realizedInputs = utxo ∣ txIns
-          ; txOuts = txOuts
-          ; txFee = nothing
-          ; mint = mint
-          ; txCerts = txCerts
-          ; txWithdrawals = txWithdrawals
-          ; txVldt = txVldt
-          ; vkKey = reqSignerHashes
-          ; txGuards = txGuards
-          ; txData = DataOf tx
-          ; txId = txId
-          } where open Tx tx; open TxBody txBody
+  record  { realizedInputs = utxo ∣ (TxBody.txIns txBody)
+          ; txOuts         = TxBody.txOuts txBody
+          ; txFee          = nothing
+          ; mint           = TxBody.mint txBody
+          ; txCerts        = TxBody.txCerts txBody
+          ; txWithdrawals  = TxBody.txWithdrawals txBody
+          ; txVldt         = TxBody.txVldt txBody
+          ; vkKey          = TxBody.reqSignerHashes txBody
+          ; txGuards       = TxBody.txGuards txBody
+          ; txData         = DataOf tx
+          ; txId           = TxBody.txId txBody
+          } where open Tx tx
 ```
 
 <!--
