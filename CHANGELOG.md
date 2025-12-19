@@ -1,8 +1,13 @@
 # Changelog
 
-## Conway spec
+## Dijkstra spec
 
 ### WIP
+
+- Change `TxBody.txRequiredGuards` to `TxBody.txGuards`.
+- Add `TxBody.reqSignerHashes`.
+
+## Conway spec
 
 - Change `RwdAddr` to `RewardAddress`
 - Do not count pool deposits a second time when reregistering pools
