@@ -411,12 +411,51 @@ could be either of them.
   getSubTxScripts subtx = mapˢ (λ hash → (TxIdOf subtx , hash)) (ScriptHashes subtx)
     where
     ScriptHashes : Tx TxLevelSub → ℙ ScriptHash
-    ScriptHashes = dom ∘ TxBody.txRequiredTopLevelGuards ∘ TxBodyOf
+    -- ScriptHashes = dom ∘ TxBody.txRequiredTopLevelGuards ∘ TxBodyOf
+    ScriptHashes tx = fromList (mapMaybe (isScriptObj ∘ proj₁) (TxBody.txRequiredTopLevelGuards (TxBodyOf tx)))
+    -- `txRequiredTopLevelGuards` has key creds too, but only `ScriptObj hash` contributes a phase-2 script hash.
 
   getTxScripts : {ℓ : TxLevel} → Tx ℓ → ℙ (TxId × ScriptHash)
   getTxScripts {TxLevelSub} = getSubTxScripts
   getTxScripts {TxLevelTop} =
     concatMapˢ getSubTxScripts ∘ fromList ∘ TxBody.txSubTransactions ∘ TxBodyOf
+
+  -- groupRequiredTopLevelGuards --
+  -- CIP-0118 models "required top-level guards" as a list of requests coming from subTx bodies.
+  -- The list can contain duplicates, and later logic needs to run each distinct guard credential
+  -- once while still providing it with all arguments (and knowing which subTx requested them).
+  -- The groupRequiredTopLevelGuards helper groups those per-subTx requests by credential.
+
+  -- A single "required top-level guard" request, including the requesting subTx id.
+  RequiredTopLevelGuardRequest : Type
+  RequiredTopLevelGuardRequest = TxId × Credential × Maybe Datum
+                             -- (subTxId, guard credential, optional datum argument)
+
+
+  -- Grouped guard requests keyed by guard credential.
+  -- Each credential maps to the list of (requesting subTx id, optional datum) pairs.
+  -- We use an association list for now to avoid committing to a particular Map interface.
+  GroupedRequests : Type
+  GroupedRequests = List (Credential × List (TxId × Maybe Datum))
+
+  -- Group a list of requests by credential (folding insertRequest over the list).
+  -- Duplicates are preserved as multiple (subTxId, datum?) entries under the same credential.
+  groupRequiredTopLevelGuards : List RequiredTopLevelGuardRequest → GroupedRequests
+  groupRequiredTopLevelGuards = foldr insertRequest []
+    where
+    -- Insert one request into an existing grouping:
+    --   + if the credential already has an entry, cons (subTxId, datum?) onto its list
+    --   + otherwise create a new entry for that credential.
+    insertRequest : RequiredTopLevelGuardRequest → GroupedRequests → GroupedRequests
+    insertRequest (tid , cred , md) [] = (cred , (tid , md) ∷ []) ∷ []
+    insertRequest (tid , cred , md) ((c , xs) ∷ rest) with c ≟ cred
+    ... | yes _ = (c , (tid , md) ∷ xs) ∷ rest
+    ... | no  _ = (c , xs) ∷ insertRequest (tid , cred , md) rest
+
+  subTxRequiredTopLevelGuardRequests : SubLevelTx → List RequiredTopLevelGuardRequest
+  subTxRequiredTopLevelGuardRequests subtx =
+    map (λ (cred , md) → (TxIdOf subtx , cred , md))
+      (TxBody.txRequiredTopLevelGuards (TxBodyOf subtx))
 ```
 -->
 
