@@ -4,6 +4,7 @@
 
 ### WIP
 
+- Change type of `txRequiredTopLevelGuards` from map to list.
 - Change `TxBody.txRequiredGuards` to `TxBody.txGuards`.
 - Add `TxBody.reqSignerHashes`.
 
