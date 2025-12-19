@@ -439,3 +439,7 @@ bisimilarityProof .Bisimilar.from {Γ} {tx} {sˡ} {sᶜ} {sᶜ'} (eqd , refl) r 
     wf  = ≡ᵈ-sym {certDeposits (conv sᶜ)} {certDepositsC (C.LState.certState sᶜ)} eqd
     wf' = ≡ᵈ-sym {certDepositsC (C.LState.certState sᶜ')} {certDeposits (conv sᶜ')} (lemWellformed wf r)
     r' = wf ⊢conv r
+
+
+bisimilarityLEDGERS : Bisimilar L._⊢_⇀⦇_,LEDGERS⦈_ C._⊢_⇀⦇_,LEDGERS⦈_
+bisimilarityLEDGERS = bisimilarity* bisimilarityProof
