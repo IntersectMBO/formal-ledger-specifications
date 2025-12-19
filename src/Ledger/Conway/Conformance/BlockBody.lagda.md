@@ -10,9 +10,9 @@ module Ledger.Conway.Conformance.BlockBody
   where
 
 open import Ledger.Conway.Specification.Enact govStructure
-open import Ledger.Conway.Conformance.Equivalence txs abs
 open import Ledger.Conway.Conformance.Equivalence.Convert
 open import Ledger.Conway.Conformance.Equivalence.Deposits txs abs
+open import Ledger.Conway.Conformance.Equivalence.Ledger txs abs
 open import Ledger.Conway.Conformance.Ledger txs abs using (_⊢_⇀⦇_,LEDGERS⦈_)
 
 open import Ledger.Conway.Specification.Ledger txs abs
