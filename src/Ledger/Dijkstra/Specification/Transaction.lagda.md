@@ -220,7 +220,7 @@ The fields that depend on the transaction level use the auxiliary functions
         txSubTransactions         : InTopLevel txLevel (List (Tx TxLevelSub)) -- only in top-level tx
         txGuards                  : ℙ Credential -- Dijkstra guards: credentials required by this tx (key or script).
         txRequiredTopLevelGuards  : InSubLevel txLevel (ScriptHash ⇀ Datum) -- only in sub-level tx
-                                                     -- ^ TODO (CIP-0118): should be List (Credential × Maybe Datum)`
+                                                     -- ^ TODO (CIP-0118): should be List (Credential × Maybe Datum)
         ---------------------
 
     record TxWitnesses (txLevel : TxLevel) : Type where
