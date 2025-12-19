@@ -243,7 +243,7 @@ Of particular note in the Dijkstra era are
         -- New in Dijkstra --
         txSubTransactions         : InTopLevel txLevel (List (Tx TxLevelSub))
         txGuards                  : ℙ Credential
-fffffffffff        txRequiredTopLevelGuards  : InSubLevel txLevel (ℙ (Credential × Maybe Datum))
+        txRequiredTopLevelGuards  : InSubLevel txLevel (ℙ (Credential × Maybe Datum))
         ---------------------
 
       reqSignerHashes : ℙ KeyHash
