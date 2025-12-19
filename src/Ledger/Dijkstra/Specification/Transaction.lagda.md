@@ -466,51 +466,99 @@ tricky, and this is as true in the Dijkstra era as it was in Conway, if not more
 
 Here are some key points about transaction validity in the Dijkstra era.
 
-1.  Sub-transactions are not allowed to contain sub-transactions themselves.
 
-2.  Sub-transactions are not allowed to contain collateral inputs.  Only a top-level
-    transaction is allowed to (furthermore, obligated to) provide sufficient
-    collateral for all scripts that are run as part of validating all transactions in
-    that batch.  If any script in a batch fails, none of the transactions in the batch
-    is applied; only the collateral is collected.
 
-3.  Transactions using the new features of the Dijkstra era are not allowed to run
-    PlutusV3 scripts (nor earlier Plutus version scripts).
+## Changes to Transaction Validity
 
-4.  All scripts are shared across all transactions within a single batch, so
-    attaching one script to either a sub- or a top-level-transaction allows other
-    transactions to run it without also including it in its own scripts.  This
-    includes references scripts that are sourced from the outputs to which reference
-    inputs point in the UTxO.  These referenced UTxO entries could be outputs of
-    preceding transactions in the batch.
+As discussed in [Ledger.Conway.Specification.Properties][], transaction validity is
+tricky, and this remains true in the Dijkstra era.
 
-    Datums (from reference inputs and from other transactions) are also shared in
-    this way.  As before, only the datums fixed by the executing transaction are
-    included in the `TxInfo`{.AgdaRecord} constructed for its scripts, however, now they don't
-    necessarily have to be attached to that transaction.
+The Dijkstra era introduces *nested transactions* (a single top-level transaction
+that contains a list of sub-transactions) and *guards* (CIP-0112 / CIP-0118).  As a
+result, several checks that were "per-transaction" in Conway become *batch-aware*.
 
-5.  All inputs of all transactions in a single batch must be contained in the UTxO
-    set before any of the batch transactions are applied.  This ensures that
-    operation of scripts is not disrupted, for example, by temporarily duplicating
-    thread tokens, or falsifying access to assets via flash loans.  In the future,
-    this may be up for reconsideration.
+### Key points
 
-6.  The batch must be balanced; i.e., preservation of value (POV) must hold.  The
-    updated `produced` and `consumed` calculations sum up the appropriate quantities
-    not for individual transactions, but for the entire batch, which includes the
-    top-level transaction and all its sub-transactions.
+1.  **No further nesting**
 
-7.  All transactions (sub- and top-level) may specify a non-zero fee.  The total fee
-    summed up across all transactions in a batch is required to cover the minimum
-    fees of all transactions.  The fees specified in all transactions are always
-    collected.  Individual transactions in a batch do not need to meet the min-fee
-    requirement.
+    Sub-transactions must not contain sub-transactions; only a
+    top-level transaction may carry a list of sub-transactions.
 
-8.  The total size of the top-level transaction (including all its sub-transactions)
-    must be less than the `maxTxSize`{.AgdaField}.  This constraint is necessary to
-    ensure efficient network operation since batches will be transmitted wholesale
-    across the Cardano network.
+2.  **Collateral is top-level only and mandatory**
 
+    Sub-transactions do not carry
+    collateral inputs.  A top-level transaction must provide sufficient collateral
+    for all scripts that are run as part of validating all transactions its that
+    batch.  If any script in the batch fails, then the collateral is collected and
+    none of the transactions in the batch is applied.
+
+3.  **Batch-wide phase-2 evaluation**
+
+    Phase-2 (Plutus) validation is performed **once**
+    for the whole batch (mempool safety), even though script inputs/contexts are
+    constructed from both sub- and top-level components.
+
+4.  **Guards are credentials**
+
+    A transaction body may specify *guards* as a set of *credentials* (key or
+    script).  This is distinct from the legacy "required signer" key hashes used for
+    phase-1 key-witness checking and native/timelock scripts.
+
+5.  **Required top-level guards are requests (list-like)**
+
+    Sub-transaction bodies may include a list of "required top-level guard" requests
+    (credential plus optional datum).  Ledger phase-1 checks must ensure that the
+    top-level `guards` includes all credentials required by sub-transactions before
+    any of the batch transactions are applied.
+
+6.  **The batch must be balanced**
+
+    Preservation of value (POV) must hold.  The updated `produced` and `consumed`
+    calculations sum up the appropriate quantities not for individual transactions,
+    but for the entire batch, which includes the top-level transaction and all its
+    sub-transactions.
+
+7.  **Fees / preservation-of-value may become batch-wide**
+
+    Several accounting checks (e.g. min-fee, preservation of value) are expected to
+    be defined over the full batch rather than per sub-transaction.  The definitive
+    statement lives in the Dijkstra UTxO transition once introduced.  (At present,
+    Dijkstra keeps `txFee` on the top-level body.)
+
+8.  **Size bounds apply to the whole batch**
+
+    The size of the top-level transaction (including all its sub-transactions)
+    must be less than `maxTxSize`{.AgdaField}.  This constraint is necessary to
+    ensure efficient network operation and preserve performance.
+
+9.  **Scripts/data availability is batch-scoped**
+
+    The witness set (scripts, redeemers, datums) is considered at the level of the
+    whole top-level transaction/batch.  (The exact constraints on what may be
+    referenced are defined by the UTxO rules.)
+
+
+<!--
+The following text previously appeared in item 4.
+
+> All scripts are shared across all transactions within a single batch, so
+> attaching one script to either a sub- or a top-level-transaction allows other
+> transactions to run it without also including it in its own scripts.  This
+> includes references scripts that are sourced from the outputs to which reference
+> inputs point in the UTxO.  These referenced UTxO entries could be outputs of
+> preceding transactions in the batch.
+
+> Datums (from reference inputs and from other transactions) are also shared in
+> this way.  As before, only the datums fixed by the executing transaction are
+> included in the `TxInfo`{.AgdaRecord} constructed for its scripts, however, now
+> they don't necessarily have to be attached to that transaction.
+
+I've removed these two paragraphs for now because I'm not sure they're accurate.
+I've replaced them with an explanation that removes the contradiction between "ref
+inputs may refer to earlier tx outputs in the batch" vs "all inputs must exist before
+applying any tx in the batch," and punts the exact constraint to the UTxO rules
+(where I think it belongs).
+-->
 
 [^1]:  See CIP 0118; once finalized and merged, CIP 0118 will appear in the
        main branch of [the CIP repository][CIPs]; until then, it can be found
