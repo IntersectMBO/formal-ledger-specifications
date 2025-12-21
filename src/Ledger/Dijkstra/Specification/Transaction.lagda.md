@@ -490,7 +490,7 @@ result, several checks that were "per-transaction" in Conway become *batch-aware
 
     Sub-transactions do not carry
     collateral inputs.  A top-level transaction must provide sufficient collateral
-    for all scripts that are run as part of validating all transactions its that
+    for all scripts that are run as part of validating all transactions in that
     batch.  If any script in the batch fails, then the collateral is collected and
     none of the transactions in the batch is applied.
 
