@@ -12,13 +12,13 @@ open import Ledger.Dijkstra.Specification.Certs govStructure
 
 record indexOf : Type where
   field
-    indexOfDCert          : DCert              → List DCert             → Maybe Ix
-    indexOfRewardAddress  : RewardAddress      → Withdrawals            → Maybe Ix
-    indexOfTxIn           : TxIn               → ℙ TxIn                 → Maybe Ix
-    indexOfPolicyId       : ScriptHash         → ℙ ScriptHash           → Maybe Ix
-    indexOfVote           : GovVoter           → List GovVoter          → Maybe Ix
-    indexOfProposal       : GovProposal        → List GovProposal       → Maybe Ix
-    indexOfGuard          : TxId × ScriptHash  → ℙ (TxId × ScriptHash)  → Maybe Ix
+    indexOfDCert          : DCert          → List DCert        → Maybe Ix
+    indexOfRewardAddress  : RewardAddress  → Withdrawals       → Maybe Ix
+    indexOfTxIn           : TxIn           → ℙ TxIn            → Maybe Ix
+    indexOfPolicyId       : ScriptHash     → ℙ ScriptHash      → Maybe Ix
+    indexOfVote           : GovVoter       → List GovVoter     → Maybe Ix
+    indexOfProposal       : GovProposal    → List GovProposal  → Maybe Ix
+    indexOfGuard          : Credential     → List Credential   → Maybe Ix
 
 record AbstractFunctions : Type where
   field txScriptFee     : Prices → ExUnits → Fees
