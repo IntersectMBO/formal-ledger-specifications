@@ -107,6 +107,7 @@ txInfo TxLevelTop utxo tx =
           ; txData          = DataOf tx
           ; txId            = TxBody.txId txBody
           ; txInfoSubTxs    = nothing
+          ; txInfoSubTxs = nothing
           } where open Tx tx
 
 txInfo TxLevelSub utxo tx =
@@ -122,6 +123,7 @@ txInfo TxLevelSub utxo tx =
           ; txData          = DataOf tx
           ; txId            = TxBody.txId txBody
           ; txInfoSubTxs    = nothing
+          ; txInfoSubTxs = nothing
           } where open Tx tx
 
 txInfoForPurpose : (ℓ : TxLevel) → UTxO → Tx ℓ → ScriptPurpose → TxInfo
