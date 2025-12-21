@@ -546,7 +546,7 @@ The following text previously appeared in item 4.
 > All scripts are shared across all transactions within a single batch, so
 > attaching one script to either a sub- or a top-level-transaction allows other
 > transactions to run it without also including it in its own scripts.  This
-> includes references scripts that are sourced from the outputs to which reference
+> includes reference scripts that are sourced from the outputs to which reference
 > inputs point in the UTxO.  These referenced UTxO entries could be outputs of
 > preceding transactions in the batch.
 
