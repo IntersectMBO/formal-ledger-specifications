@@ -504,6 +504,30 @@ and `lookupScriptHash`{.AgdaFunction} (defined below) will take *two* UTxO argum
   subTxRequiredTopLevelGuardRequests subtx =
     map (λ (cred , md) → (TxIdOf subtx , cred , md))
       (TxBody.txRequiredTopLevelGuards (TxBodyOf subtx))
+
+  -- Phase-1 condition (CIP-0118):
+  -- every credential requested by subTx bodies must appear in the top-level txGuards set.
+  requiredTopLevelGuardsSatisfiedᵇ : TopLevelTx → List SubLevelTx → Bool
+  requiredTopLevelGuardsSatisfiedᵇ topTx subTxs =
+    all (λ req → (requestedCred req ∈ᵇ topGuards))
+        (concatMap subTxRequiredTopLevelGuardRequests subTxs)
+    where
+      topGuards : ℙ Credential
+      topGuards = TxBody.txGuards (TxBodyOf topTx)
+      requestedCred : RequiredTopLevelGuardRequest → Credential
+      requestedCred = proj₁ ∘ proj₂
+
+  requiredTopLevelGuardsSatisfied : TopLevelTx → List SubLevelTx → Type
+  requiredTopLevelGuardsSatisfied topTx subTxs = requiredCreds ⊆ topGuards
+    -- (could just use `T (requiredTopLevelGuardsSatisfiedᵇ topTx subTxs)` here instead)
+    where
+    topGuards : ℙ Credential
+    topGuards = TxBody.txGuards (TxBodyOf topTx)
+
+    requiredCreds : ℙ Credential
+    requiredCreds =
+      fromList (map  (proj₁ ∘ proj₂)
+                     (concatMap subTxRequiredTopLevelGuardRequests subTxs))
 ```
 
 CIP-0118 models "required top-level guards" as a list of requirements coming
