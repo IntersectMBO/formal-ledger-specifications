@@ -70,18 +70,25 @@ getDatum tx utxo _ = nothing
 -->
 
 ```agda
-record TxInfo : Type where
-  field realizedInputs : UTxO
-        txOuts         : Ix ⇀ TxOut
-        txFee          : Maybe Fees
-        mint           : Value
-        txCerts        : List DCert
-        txWithdrawals  : Withdrawals
-        txVldt         : Maybe Slot × Maybe Slot
-        vkKey          : ℙ KeyHash     -- native/phase-1/timelock signers
-        txGuards       : ℙ Credential  -- CIP-0112/0118 guards (required by tx body)
-        txData         : ℙ Datum
-        txId           : TxId
+mutual
+  record TxInfo : Type where
+    inductive
+    field
+      realizedInputs : UTxO
+      txOuts         : Ix ⇀ TxOut
+      txFee          : Maybe Fees
+      mint           : Value
+      txCerts        : List DCert
+      txWithdrawals  : Withdrawals
+      txVldt         : Maybe Slot × Maybe Slot
+      vkKey          : ℙ KeyHash     -- native/phase-1/timelock signers
+      txGuards       : ℙ Credential  -- CIP-0112/0118 guards (required by tx body)
+      txData         : ℙ Datum
+      txId           : TxId
+      txInfoSubTxs   : Maybe (List SubTxInfo)
+
+  SubTxInfo : Type
+  SubTxInfo = TxInfo
 
 
 txInfo : (ℓ : TxLevel) → UTxO → Tx ℓ → TxInfo
@@ -98,6 +105,7 @@ txInfo TxLevelTop utxo tx =
           ; txGuards       = TxBody.txGuards txBody
           ; txData         = DataOf tx
           ; txId           = TxBody.txId txBody
+          ; txInfoSubTxs = nothing
           } where open Tx tx
 
 txInfo TxLevelSub utxo tx =
@@ -112,7 +120,25 @@ txInfo TxLevelSub utxo tx =
           ; txGuards       = TxBody.txGuards txBody
           ; txData         = DataOf tx
           ; txId           = TxBody.txId txBody
+          ; txInfoSubTxs = nothing
           } where open Tx tx
+
+txInfoForPurpose : (ℓ : TxLevel) → UTxO → Tx ℓ → ScriptPurpose → TxInfo
+-- SubTx scripts never get subTx infos (even if their ScriptPurpose is Guard).
+txInfoForPurpose TxLevelSub utxo tx sp = txInfo TxLevelSub utxo tx
+-- Top-level scripts:
+--   - guard scripts see txInfoSubTxs
+--   - others do not
+txInfoForPurpose TxLevelTop utxo tx sp with sp
+... | Guard _ =
+  let base   = txInfo TxLevelTop utxo tx
+      txb    = TxBodyOf tx
+      subTxs = TxBody.txSubTransactions txb
+      subInfos : List SubTxInfo
+      subInfos = map (txInfo TxLevelSub utxo) subTxs
+  in
+  record base { txInfoSubTxs = just subInfos }
+... | _ = txInfo TxLevelTop utxo tx
 ```
 
 <!--
