@@ -17,24 +17,11 @@ module Ledger.Dijkstra.Specification.Script.Validation
 
 open import Ledger.Prelude
 open import Ledger.Dijkstra.Specification.Certs govStructure
+
+open import Ledger.Dijkstra.Specification.Abstract txs
+open import Ledger.Dijkstra.Specification.Script.ScriptPurpose txs
 ```
 -->
-
-```agda
-data ScriptPurpose : Type where
-  Cert     : DCert          → ScriptPurpose
-  Rwrd     : RewardAddress  → ScriptPurpose
-  Mint     : ScriptHash     → ScriptPurpose
-  Spend    : TxIn           → ScriptPurpose
-  Vote     : GovVoter       → ScriptPurpose
-  Propose  : GovProposal    → ScriptPurpose
-  Guard    : Credential     → ScriptPurpose
-```
-
-Note that `Guard c` always indexes into *the current `tx`'s* `txGuards`:
-
-+  if `tx : TopLevelTx`, it indexes into the top-level guard set's list-view;
-+  if `tx : SubLevelTx`, it indexes into the subTx's guard set's list-view.
 
 <!--
 ```agda
@@ -66,32 +53,11 @@ getDatum tx utxoSpend₀ (Spend txin) =
      case d of λ where
        (inj₁ d) → just d
        (inj₂ h) → lookupᵐ? (setToMap (mapˢ < hash , id > (DataOf tx))) h
-getDatum tx utxo _ = nothing
+getDatum tx utxoSpend₀ _ = nothing
 ```
 -->
 
 ```agda
-mutual
-  record TxInfo : Type where
-    inductive
-    field
-      realizedInputs : UTxO
-      txOuts         : Ix ⇀ TxOut
-      txFee          : Maybe Fees
-      mint           : Value
-      txCerts        : List DCert
-      txWithdrawals  : Withdrawals
-      txVldt         : Maybe Slot × Maybe Slot
-      vkKey          : ℙ KeyHash     -- native/phase-1/timelock signers
-      txGuards       : ℙ Credential  -- CIP-0112/0118 guards (required by tx body)
-      txData         : ℙ Datum
-      txId           : TxId
-      txInfoSubTxs   : Maybe (List SubTxInfo)
-
-  SubTxInfo : Type
-  SubTxInfo = TxInfo
-
-
 txInfo : (ℓ : TxLevel) → UTxO → Tx ℓ → TxInfo
 
 txInfo TxLevelTop utxo tx =
@@ -145,15 +111,13 @@ txInfoForPurpose TxLevelTop utxo tx sp with sp
 <!--
 ```agda
 credsNeededMinusCollateral : {ℓ : TxLevel} → TxBody ℓ → ℙ (ScriptPurpose × Credential)
-credsNeededMinusCollateral txb = a ∪ b ∪ c ∪ d ∪ e
-  where
-  a b c d e : ℙ (ScriptPurpose × Credential)
-  a = mapˢ (λ a → (Rwrd a , CredentialOf a)) (dom ∣ WithdrawalsOf txb ∣)
-  b = mapPartial (λ c → (Cert c ,_) <$> cwitness c) (fromList (DCertsOf txb))
-  c = mapˢ (λ x → (Mint x , ScriptObj x)) (policies (ValueOf txb))
-  d = mapPartial (λ v → if isGovVoterCredential v then (λ {c} → just (Vote v , c)) else nothing)
+credsNeededMinusCollateral txb =
+  mapˢ (λ a → (Rwrd a , CredentialOf a)) (dom ∣ WithdrawalsOf txb ∣)
+  ∪ mapPartial (λ c → (Cert c ,_) <$> cwitness c) (fromList (DCertsOf txb))
+  ∪ mapˢ (λ x → (Mint x , ScriptObj x)) (policies (ValueOf txb))
+  ∪ mapPartial (λ v → if isGovVoterCredential v then (λ {c} → just (Vote v , c)) else nothing)
                  (fromList (map GovVoterOf (GovVotesOf txb)))
-  e = mapPartial (λ p → if PolicyOf p then (λ {sh} → just (Propose  p , ScriptObj sh)) else nothing)
+  ∪ mapPartial (λ p → if PolicyOf p then (λ {sh} → just (Propose  p , ScriptObj sh)) else nothing)
                  (fromList (GovProposalsOf txb))
 
 credsNeeded : (ℓ : TxLevel) → UTxO → (TxBody ℓ) → ℙ (ScriptPurpose × Credential)
@@ -165,9 +129,6 @@ credsNeeded TxLevelSub utxo txb = credsNeededMinusCollateral txb
   ∪ mapˢ (λ (i , o) → (Spend  i , payCred (proj₁ o))) ((utxo ∣ txIns) ˢ)
   where open TxBody txb
 
---valContext : TxInfo → ScriptPurpose → Data
---valContext txinfo sp = toData (txinfo , sp)
-
 txOutToDataHash : TxOut → Maybe DataHash
 txOutToDataHash (_ , _ , d , _) = d >>= isInj₂
 
@@ -176,27 +137,30 @@ txOutToP2Script utxoSpend₀ utxoRefView tx (a , _) =
   do sh ← isScriptObj (payCred a)
      s  ← lookupScriptHash sh tx utxoSpend₀ utxoRefView
      toP2Script s
--- opaque
---   collectP2ScriptsWithContext
---     : PParams → (Tx ℓ) → UTxO
---     → List (P2Script × List Data × ExUnits × CostModel)
---   collectP2ScriptsWithContext pp tx utxo
---     = setToList
---     $ mapPartial (λ (sp , c) → if isScriptObj c
---                                 then (λ {sh} → toScriptInput sp sh)
---                                 else nothing)
---     $ credsNeeded utxo (TxBodyOf tx)
---     where
---       toScriptInput
---         : ScriptPurpose → ScriptHash
---         → Maybe (P2Script × List Data × ExUnits × CostModel)
---       toScriptInput sp sh =
---         do s ← lookupScriptHash sh tx utxo
---            p2s ← toP2Script s
---            (rdmr , exunits) ← indexedRdmrs tx sp
---            let data'     = maybe [_] [] (getDatum tx utxo sp) ++ rdmr ∷ [ valContext (txInfo (language p2s) pp utxo tx) sp ]
---                costModel = PParams.costmdls pp
---            just (p2s , data' , exunits , costModel)
+
+opaque
+  collectP2ScriptsWithContext
+    :  {ℓ : TxLevel} → PParams → (Tx ℓ) → UTxO → UTxO
+       → List (P2Script × List Data × ExUnits × CostModel)
+  collectP2ScriptsWithContext {ℓ} pp tx utxoSpend₀ utxoRefView
+    = setToList  $ mapPartial ( λ (sp , c) →  if isScriptObj c
+                                              then (λ {sh} → toScriptInput sp sh)
+                                              else nothing )
+                 $ credsNeeded ℓ utxoSpend₀ (TxBodyOf tx)
+      -- use initial utxo snapshot ^^here^^ to inspect `txIns` (collateral spend side)
+    where
+      toScriptInput
+        : ScriptPurpose → ScriptHash
+        → Maybe (P2Script × List Data × ExUnits × CostModel)
+      toScriptInput sp sh =
+        do s ← lookupScriptHash sh tx utxoSpend₀ utxoRefView
+           p2s ← toP2Script s
+           (rdmr , exunits) ← indexedRdmrs tx sp
+           let data'  = maybe [_] [] (getDatum tx utxoSpend₀ sp)
+                        ++ rdmr ∷ [ valContext (txInfoForPurpose ℓ utxoSpend₀ tx sp) sp ]
+                           --  use initial utxo snapshot ^^here^^ so spending
+                           --  inputs/realized inputs don't see prefix outputs
+           just (p2s , data' , exunits , PParams.costmdls pp)
 
 evalP2Scripts : List (P2Script × List Data × ExUnits × CostModel) → Bool
 evalP2Scripts = all (λ (s , d , eu , cm) → runPLCScript cm s eu d)
