@@ -602,28 +602,6 @@ lookup/validation, while *ledger state is committed only if the full batch succe
     referenced are defined by the UTxO rules.)
 
 
-<!--
-The following text previously appeared in item 4.
-
-> All scripts are shared across all transactions within a single batch, so
-> attaching one script to either a sub- or a top-level-transaction allows other
-> transactions to run it without also including it in its own scripts.  This
-> includes reference scripts that are sourced from the outputs to which reference
-> inputs point in the UTxO.  These referenced UTxO entries could be outputs of
-> preceding transactions in the batch.
-
-> Datums (from reference inputs and from other transactions) are also shared in
-> this way.  As before, only the datums fixed by the executing transaction are
-> included in the `TxInfo`{.AgdaRecord} constructed for its scripts, however, now
-> they don't necessarily have to be attached to that transaction.
-
-I've removed these two paragraphs for now because I'm not sure they're accurate.
-I've replaced them with an explanation that removes the contradiction between "ref
-inputs may refer to earlier tx outputs in the batch" vs "all inputs must exist before
-applying any tx in the batch," and punts the exact constraint to the UTxO rules
-(where I think it belongs).
--->
-
 [^1]:  See CIP 0118; once finalized and merged, CIP 0118 will appear in the
        main branch of [the CIP repository][CIPs]; until then, it can be found
        at <https://github.com/polinavino/CIPs/tree/polina/CIP0118/CIP-0118>.
