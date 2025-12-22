@@ -91,11 +91,11 @@ txInfo TxLevelSub utxo tx =
           } where open Tx tx
 
 txInfoForPurpose : (ℓ : TxLevel) → UTxO → Tx ℓ → ScriptPurpose → TxInfo
-
--- subtransactions: never get subTx infos (even if the ScriptPurpose is Guard).
-txInfoForPurpose TxLevelSub utxo tx _ = txInfo TxLevelSub utxo tx
-
--- top-level transactions:
+-- SubTx validation never populates txInfoSubTxs, regardless of purpose.
+txInfoForPurpose TxLevelSub utxo tx sp = txInfo TxLevelSub utxo tx
+-- Top-level scripts:
+--   - guard scripts see txInfoSubTxs
+--   - others do not
 txInfoForPurpose TxLevelTop utxo tx sp with sp
    -- · guard scripts see subTx infos
 ... | Guard _ =  record base { txInfoSubTxs = just subInfos }
