@@ -453,7 +453,10 @@ and `lookupScriptHash`{.AgdaFunction} (defined below) will take *two* UTxO argum
     where m = setToMap (mapˢ < hash , id > (txscripts tx utxoSpend₀ utxoRefView))
 
   -- TODO: implement the actual evolving `utxoRefView` (issue #1006)
+```
 
+<!--
+```agda
   getSubTxScripts : SubLevelTx → ℙ (TxId × ScriptHash)
   getSubTxScripts subtx = mapˢ (λ hash → (TxIdOf subtx , hash)) (ScriptHashes subtx)
     where
@@ -467,7 +470,11 @@ and `lookupScriptHash`{.AgdaFunction} (defined below) will take *two* UTxO argum
   getTxScripts {TxLevelSub} = getSubTxScripts
   getTxScripts {TxLevelTop} =
     concatMapˢ getSubTxScripts ∘ fromList ∘ TxBody.txSubTransactions ∘ TxBodyOf
+```
+-->
 
+<!--
+```agda
   -- groupRequiredTopLevelGuards --
   -- CIP-0118 models "required top-level guards" as a list of requests coming from subTx bodies.
   -- The list can contain duplicates, and later logic needs to run each distinct guard credential
