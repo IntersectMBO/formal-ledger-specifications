@@ -60,7 +60,7 @@ can include required top-level guards (the `txRequiredTopLevelGuards`{.AgdaField
 
 To that end, we define two auxiliary functions that will aid in
 specifying which record fields of a transaction body are present at
-each `TxLevel`{.agdatype}:
+each `TxLevel`{.AgdaDatatype}:
 
 ```agda
 InTopLevel : TxLevel → Type → Type
@@ -73,7 +73,7 @@ InSubLevel TxLevelTop _ = ⊤
 ```
 
 These functions discriminate on an argument of type
-`TxLevel`{.agdatype} and either act as the identity function on types
+`TxLevel`{.AgdaDatatype} and either act as the identity function on types
 or as the constant function that returns the unit type.
 
 <!--
@@ -403,23 +403,36 @@ This section collects some unimportant but useful helper and accessor functions.
 
   txinsScript : ℙ TxIn → UTxO → ℙ TxIn
   txinsScript txins utxo = txins ∩ dom (proj₁ (scriptOuts utxo))
+```
 
-  refScripts : Tx txLevel → UTxO → List Script
-  refScripts tx utxo =
-    mapMaybe (proj₂ ∘ proj₂ ∘ proj₂) $ setToList (range (utxo ∣ (txIns ∪ refInputs)))
-    where open Tx; open TxBody (TxBodyOf tx)
+In the Dijkstra era, *spending* inputs must exist in the initial UTxO snapshot, while
+*reference* inputs may see earlier outputs, so we need two UTxO views:
 
-  txscripts : Tx txLevel → UTxO → ℙ Script
-  txscripts tx utxo = scripts (tx .txWitnesses) ∪ fromList (refScripts tx utxo)
++ `utxoSpend₀`{.AgdaBound}, the initial snapshot, used for `txIns`{.AgdaField},
++ `utxoRefView`{.AgdaBound}, the evolving view, used for `refInputs`{.AgdaField}.
+
+Thus functions like `refScripts`{.AgdaFunction}, `txscripts`{.AgdaFunction},
+and `lookupScriptHash`{.AgdaFunction} (defined below) will take *two* UTxO arguments.
+
+```agda
+  refScripts : Tx txLevel → UTxO → UTxO → List Script
+  refScripts tx utxoSpend₀ utxoRefView =
+    mapMaybe (proj₂ ∘ proj₂ ∘ proj₂) ( setToList (range (utxoSpend₀ ∣ txIns))
+                                       ++ setToList (range (utxoRefView ∣ refInputs))
+                                     )
+    where open Tx tx; open TxBody (TxBodyOf tx)
+
+  txscripts : Tx txLevel → UTxO → UTxO → ℙ Script
+  txscripts tx utxoSpend₀ utxoRefView =
+    scripts (tx .txWitnesses) ∪ fromList (refScripts tx utxoSpend₀ utxoRefView)
     where open Tx; open TxWitnesses
 
-  lookupScriptHash : ScriptHash → Tx txLevel → UTxO → Maybe Script
-  lookupScriptHash sh tx utxo =
-    if sh ∈ mapˢ proj₁ (m ˢ) then
-      just (lookupᵐ m sh)
-    else
-      nothing
-    where m = setToMap (mapˢ < hash , id > (txscripts tx utxo))
+  lookupScriptHash : ScriptHash → Tx txLevel → UTxO → UTxO → Maybe Script
+  lookupScriptHash sh tx utxoSpend₀ utxoRefView =
+    if sh ∈ mapˢ proj₁ (m ˢ) then just (lookupᵐ m sh) else nothing
+    where m = setToMap (mapˢ < hash , id > (txscripts tx utxoSpend₀ utxoRefView))
+
+  -- TODO: implement the actual evolving `utxoRefView` (issue #1006)
 
   getSubTxScripts : SubLevelTx → ℙ (TxId × ScriptHash)
   getSubTxScripts subtx = mapˢ (λ hash → (TxIdOf subtx , hash)) (ScriptHashes subtx)
@@ -520,6 +533,14 @@ The Dijkstra era introduces *nested transactions* (a single top-level transactio
 that contains a list of sub-transactions) and *guards* (CIP-0112 / CIP-0118).  As a
 result, several checks that were "per-transaction" in Conway become *batch-aware*.
 
+**Design Note** (CIP-0118: spending inputs vs reference inputs).
+For Dijkstra batches, we distinguish *spending inputs* from *reference inputs*.
+All spending inputs across the whole batch must exist in the initial UTxO snapshot
+(mempool safety).  Reference inputs may additionally point to outputs of **preceding
+subtransactions in the batch order**.  Therefore reference-script/datum lookup is
+performed against an *evolving, tentative UTxO view* (prefix-applied), used only for
+lookup/validation, while *ledger state is committed only if the full batch succeeds*.
+
 ### Key points
 
 1.  **No further nesting**
@@ -537,9 +558,9 @@ result, several checks that were "per-transaction" in Conway become *batch-aware
 
 3.  **Batch-wide phase-2 evaluation**
 
-    Phase-2 (Plutus) validation is performed **once**
-    for the whole batch (mempool safety), even though script inputs/contexts are
-    constructed from both sub- and top-level components.
+    Phase-2 (Plutus) validation is performed *once* for the whole batch (mempool
+    safety), even though script inputs/contexts are constructed from both sub- and
+    top-level components.
 
 4.  **Guards are credentials**
 
@@ -547,7 +568,7 @@ result, several checks that were "per-transaction" in Conway become *batch-aware
     script).  This is distinct from the legacy "required signer" key hashes used for
     phase-1 key-witness checking and native/timelock scripts.
 
-5.  **Required top-level guards are requests (list-like)**
+5.  **Required top-level guards are requests**
 
     Sub-transaction bodies may include a list of "required top-level guard" requests
     (credential plus optional datum).  Ledger phase-1 checks must ensure that the

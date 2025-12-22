@@ -58,9 +58,10 @@ indexedRdmrs : (Tx ℓ) → ScriptPurpose → Maybe (Redeemer × ExUnits)
 indexedRdmrs tx sp = maybe (λ x → lookupᵐ? txRedeemers x) nothing (rdptr tx sp)
   where open Tx tx; open TxWitnesses txWitnesses
 
+-- Datum lookup for spent outputs (Spend txin). Uses initial UTxO snapshot, utxoSpend₀.
 getDatum : Tx ℓ → UTxO → ScriptPurpose → Maybe Datum
-getDatum tx utxo (Spend txin) =
-  do (_ , _ , just d , _) ← lookupᵐ? utxo txin where
+getDatum tx utxoSpend₀ (Spend txin) =
+  do (_ , _ , just d , _) ← lookupᵐ? utxoSpend₀ txin where
                             (_ , _ , nothing , _) → nothing
      case d of λ where
        (inj₁ d) → just d
@@ -171,12 +172,10 @@ credsNeeded TxLevelSub utxo txb = credsNeededMinusCollateral txb
 txOutToDataHash : TxOut → Maybe DataHash
 txOutToDataHash (_ , _ , d , _) = d >>= isInj₂
 
-txOutToP2Script
-  : UTxO → (Tx ℓ)
-  → TxOut → Maybe P2Script
-txOutToP2Script utxo tx (a , _) =
+txOutToP2Script : UTxO → UTxO → (Tx ℓ) → TxOut → Maybe P2Script
+txOutToP2Script utxoSpend₀ utxoRefView tx (a , _) =
   do sh ← isScriptObj (payCred a)
-     s  ← lookupScriptHash sh tx utxo
+     s  ← lookupScriptHash sh tx utxoSpend₀ utxoRefView
      toP2Script s
 -- opaque
 --   collectP2ScriptsWithContext
