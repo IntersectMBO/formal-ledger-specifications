@@ -41,6 +41,7 @@ record UTxOEnv : Type where
     slot      : Slot
     pparams   : PParams
     treasury  : Treasury
+    utxo₀     : UTxO
 
 record UTxOState : Type where
   field
@@ -83,11 +84,13 @@ data _⊢_⇀⦇_,UTXOS⦈_ : UTxOEnv → UTxOState → TopLevelTx → UTxOState
     Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ s
 ```
 
-## UTXO
+## The <span class="AgdaDatatype">UTXO</span> Transition System {#sec:the-utxo-transition-system}
 
-(skeleton with the new phase-1 check)
+### New in Dijkstra
 
-This is the intended home of Dijkstra "phase-1 structural checks."
+1. The set of spending inputs must exist in the UTxO _before_ applying the
+transaction (or partially applying any part of it). TODO: Add link to CIP once its finalized.
+
 
 ```agda
 data _⊢_⇀⦇_,SUBUTXO⦈_ : UTxOEnv → UTxOState → SubLevelTx → UTxOState → Type where
@@ -104,8 +107,15 @@ data _⊢_⇀⦇_,UTXO⦈_ : UTxOEnv → UTxOState → TopLevelTx → UTxOState 
   UTXO :
     let txb    = Tx.txBody tx
         subTxs = TxBody.txSubTransactions txb
+        utxo₀  = Γ .utxo₀
+        utxo   = s .utxo
     in
+    ∙ txIns ≢ ∅
+    ∙ txIns ⊆ dom utxo₀ -- (1)
+    ∙ refInputs ⊆ dom utxo
+
     ∙ requiredTopLevelGuardsSatisfied tx subTxs
+
     ∙ Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ s'
       ────────────────────────────────
       Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s'
