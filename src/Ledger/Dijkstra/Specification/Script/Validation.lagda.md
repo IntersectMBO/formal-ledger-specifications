@@ -146,7 +146,7 @@ opaque
     = setToList  $ mapPartial ( λ (sp , c) →  if isScriptObj c
                                               then (λ {sh} → toScriptInput sp sh)
                                               else nothing )
-                 $ credsNeeded ℓ utxoSpend₀ (TxBodyOf tx)
+                 $ credsNeeded utxoSpend₀ (TxBodyOf tx)
       -- use initial utxo snapshot ^^here^^ to inspect `txIns` (collateral spend side)
     where
       toScriptInput
