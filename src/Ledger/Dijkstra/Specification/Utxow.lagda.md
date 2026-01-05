@@ -50,34 +50,50 @@ data _⊢_⇀⦇_,UTXOW⦈_ : UTxOEnv → UTxOState → TopLevelTx → UTxOState
          open Tx tx
          open TxBody txBody
          open TxWitnesses txWitnesses
+         open UTxOEnv
 
-         utxo₀               = Γ .UTxOEnv.utxo₀
+         utxo₀               = Γ .utxo₀
          utxo                = s .UTxOState.utxo
+
+         witsKeyHashes       : ℙ KeyHash
          witsKeyHashes       = mapˢ hash (dom vKeySigs)
-         neededScriptHashes  = mapPartial (isScriptObj  ∘ proj₂) (credsNeeded utxo₀ txBody)
-         neededVKeyHashes    = mapPartial (isKeyHashObj ∘ proj₂) (credsNeeded utxo₀ txBody)
-         -- txdatsHashes        = mapˢ hash txdats
-         -- inputsDataHashes    = mapPartial (λ txout →  if txOutToP2Script utxo tx txout
-         --                                              then txOutToDataHash txout
-         --                                              else nothing) (range (utxo ∣ txIns))
-         -- refInputsDataHashes = mapPartial txOutToDataHash (range (utxo ∣ refInputs))
-         -- outputsDataHashes   = mapPartial txOutToDataHash (range txOuts)
-         p1Scripts       = mapPartial toP1Script
+
+         allScripts : ℙ Script
+         allScripts =
            ( scripts                             -- (1) scripts from witnesses
-             ∪ mapPartial txOutScript
+             ∪ mapPartial txOutToScript
                  ( range (utxo₀ ∣ txIns)         -- (2) scripts from transaction inputs
                    ∪ range (utxo ∣ refInputs)    -- (3) scripts from reference inputs
                  )
-             ∪ Γ .UTxOEnv.refInputsScripts       -- (4) scripts from all reference inputs
+             ∪ Γ .allRefInputsScripts            -- (4) scripts from all reference inputs
            )
+
+         p1Scripts : ℙ P1Script
+         p1Scripts = mapPartial toP1Script allScripts
+
+         p2Scripts : ℙ P2Script
+         p2Scripts = mapPartial toP2Script allScripts
+
+         neededScriptHashes  : ℙ ScriptHash
+         neededScriptHashes  = mapPartial (isScriptObj  ∘ proj₂) (credsNeeded utxo₀ txBody)
+
+         neededVKeyHashes : ℙ KeyHash
+         neededVKeyHashes = mapPartial (isKeyHashObj ∘ proj₂) (credsNeeded utxo₀ txBody)
+
+         neededDataHashes : ℙ DataHash
+         neededDataHashes = mapPartial (λ txOut@(a , _ , d , _) → do sh ← isScriptObj (payCred a)
+                                                                     _  ← lookupᵐ? (setToMap (mapˢ < hash , id > p2Scripts)) sh
+                                                                     d >>= isInj₂)
+                                       (range (utxo₀ ∣ txIns))
+
     in
     ∙  ∀[ (vk , σ) ∈ vKeySigs ] isSigned vk (txidBytes txId) σ
     ∙  ∀[ s ∈ p1Scripts ] (hash s ∈ neededScriptHashes → validP1Script witsKeyHashes txVldt s)
+    ∙  neededScriptHashes ⊆ mapˢ hash allScripts
     ∙  neededVKeyHashes ⊆ witsKeyHashes
-    -- ∙  inputsDataHashes ⊆ txdatsHashes
-    -- ∙  txdatsHashes ⊆ inputsDataHashes ∪ outputsDataHashes ∪ refInputsDataHashes
+    ∙  neededDataHashes ⊆ dom (Γ .allData)
     -- ∙  languages tx utxo ⊆ allowedLanguages tx utxo
-    -- ∙  txADhash ≡ map hash txAD
+    ∙  txADhash ≡ map hash txAuxData
     -- ∙  Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s'
       ────────────────────────────────
       Γ ⊢ s ⇀⦇ tx ,UTXOW⦈ s'

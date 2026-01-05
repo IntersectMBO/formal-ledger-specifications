@@ -42,7 +42,8 @@ record UTxOEnv : Type where
     pparams          : PParams
     treasury         : Treasury
     utxo₀            : UTxO
-    refInputsScripts : ℙ Script
+    allRefInputsScripts : ℙ Script
+    allData             : DataHash ⇀ Datum
 
 record UTxOState : Type where
   field
