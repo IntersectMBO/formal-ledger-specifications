@@ -120,12 +120,12 @@ credsNeededMinusCollateral txb =
   ∪ mapPartial (λ p → if PolicyOf p then (λ {sh} → just (Propose  p , ScriptObj sh)) else nothing)
                  (fromList (GovProposalsOf txb))
 
-credsNeeded : (ℓ : TxLevel) → UTxO → (TxBody ℓ) → ℙ (ScriptPurpose × Credential)
-credsNeeded TxLevelTop utxo txb = credsNeededMinusCollateral txb
+credsNeeded : {ℓ : TxLevel} → UTxO → (TxBody ℓ) → ℙ (ScriptPurpose × Credential)
+credsNeeded {TxLevelTop} utxo txb = credsNeededMinusCollateral txb
   ∪ mapˢ (λ (i , o) → (Spend  i , payCred (proj₁ o))) ((utxo ∣ (txIns ∪ collateralInputs)) ˢ)
   where open TxBody txb
 
-credsNeeded TxLevelSub utxo txb = credsNeededMinusCollateral txb
+credsNeeded {TxLevelSub} utxo txb = credsNeededMinusCollateral txb
   ∪ mapˢ (λ (i , o) → (Spend  i , payCred (proj₁ o))) ((utxo ∣ txIns) ˢ)
   where open TxBody txb
 
@@ -146,7 +146,7 @@ opaque
     = setToList  $ mapPartial ( λ (sp , c) →  if isScriptObj c
                                               then (λ {sh} → toScriptInput sp sh)
                                               else nothing )
-                 $ credsNeeded ℓ utxoSpend₀ (TxBodyOf tx)
+                 $ credsNeeded utxoSpend₀ (TxBodyOf tx)
       -- use initial utxo snapshot ^^here^^ to inspect `txIns` (collateral spend side)
     where
       toScriptInput
