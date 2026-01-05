@@ -526,6 +526,9 @@ on the present module; thus, we cannot bind the UTxO arguments to a particular
 UTxO environment and state at this point.)
 
 ```agda
+  txOutToScript : TxOut → Maybe Script
+  txOutToScript (_ , _ , _ , s) = s
+
   refScripts : Tx txLevel → UTxO → UTxO → List Script
   refScripts tx utxo₀ utxoRef =
     mapMaybe (proj₂ ∘ proj₂ ∘ proj₂)
@@ -536,9 +539,7 @@ UTxO environment and state at this point.)
   txscripts tx utxo₀ utxoRef = ScriptsOf tx ∪ fromList (refScripts tx utxo₀ utxoRef)
 
   lookupScriptHash : ScriptHash → Tx txLevel → UTxO → UTxO → Maybe Script
-  lookupScriptHash sh tx utxo₀ utxoRef =
-    if sh ∈ mapˢ proj₁ (m ˢ) then just (lookupᵐ m sh) else nothing
-    where m = setToMap (mapˢ < hash , id > (txscripts tx utxo₀ utxoRef))
+  lookupScriptHash sh tx utxoSpend₀ utxoRefView = lookupHash sh (txscripts tx utxoSpend₀ utxoRefView)
 
   getSubTxScripts : SubLevelTx → ℙ (TxId × ScriptHash)
   getSubTxScripts subtx = mapˢ (λ hash → (TxIdOf subtx , hash)) (ScriptHashes subtx)

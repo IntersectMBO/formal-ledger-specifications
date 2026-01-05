@@ -86,4 +86,8 @@ module Filter where
   filter : ∀ {a} {p} {A : Type a} → (P : Pred A p) → ⦃ P ⁇¹ ⦄ → List A → List A
   filter P = Data.List.filter ¿ P ¿¹
 
+lookupHash : ∀ {T H : Type} ⦃ _ : DecEq H ⦄ ⦃ _ : Hashable T H ⦄ → H → ℙ T → Maybe T
+lookupHash h s =
+  if h ∈ mapˢ proj₁ (m ˢ) then just (lookupᵐ m h) else nothing
+  where m = setToMap (mapˢ < hash , id > s)
 ```
