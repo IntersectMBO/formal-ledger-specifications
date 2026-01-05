@@ -38,10 +38,11 @@ open import Ledger.Dijkstra.Specification.Script.Validation txs abs
 ```agda
 record UTxOEnv : Type where
   field
-    slot      : Slot
-    pparams   : PParams
-    treasury  : Treasury
-    utxo₀     : UTxO
+    slot             : Slot
+    pparams          : PParams
+    treasury         : Treasury
+    utxo₀            : UTxO
+    refInputsScripts : ℙ Script
 
 record UTxOState : Type where
   field
