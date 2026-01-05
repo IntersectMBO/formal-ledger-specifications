@@ -423,6 +423,10 @@ This section collects some unimportant but useful helper and accessor functions.
 
   txinsScript : ℙ TxIn → UTxO → ℙ TxIn
   txinsScript txins utxo = txins ∩ dom (proj₁ (scriptOuts utxo))
+
+  txOutToScript : TxOut → Maybe Script
+  txOutToScript (_ , _ , _ , s) = s
+
 ```
 
 In the Dijkstra era, *spending* inputs must exist in the initial UTxO snapshot, while
