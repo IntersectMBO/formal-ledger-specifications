@@ -420,42 +420,46 @@ could be either of them.
   getTxScripts {TxLevelTop} =
     concatMapˢ getSubTxScripts ∘ fromList ∘ TxBody.txSubTransactions ∘ TxBodyOf
 
-  -- groupRequiredTopLevelGuards --
-  -- CIP-0118 models "required top-level guards" as a list of requests coming from subTx bodies.
-  -- The list can contain duplicates, and later logic needs to run each distinct guard credential
-  -- once while still providing it with all arguments (and knowing which subTx requested them).
-  -- The groupRequiredTopLevelGuards helper groups those per-subTx requests by credential.
+  -- CIP-0118 models "required top-level guards" as a list of requirements coming
+  -- from subtransaction bodies. The list can contain duplicates, and later logic
+  -- needs to run each distinct guard credential once while still providing it with
+  -- all arguments (and knowing which subtransaction required them).
+  -- The groupTopLevelGuards helper groups those per-subtransaction requirements by
+  -- credential.
 
-  -- A single "required top-level guard" request, including the requesting subTx id.
-  RequiredTopLevelGuardRequest : Type
-  RequiredTopLevelGuardRequest = TxId × Credential × Maybe Datum
-                             -- (subTxId, guard credential, optional datum argument)
+  -- A single "top-level guard," tagged with a subtransaction id
+  -- (e.g., the subtransaction that required the guard).
+  TaggedTopLevelGuard : Type
+  TaggedTopLevelGuard = TxId × Credential × Maybe Datum
+                     -- (subTxId, guard credential, optional datum argument)
 
 
-  -- Grouped guard requests keyed by guard credential.
-  -- Each credential maps to the list of (requesting subTx id, optional datum) pairs.
+  -- Grouped tagged guard (grouped by guard credential).
+  -- Each credential maps to the list of (id of subTx requiring the guard, optional
+  -- datum) pairs associated with that credential.
   -- We use an association list for now to avoid committing to a particular Map interface.
-  GroupedRequests : Type
-  GroupedRequests = List (Credential × List (TxId × Maybe Datum))
+  GroupedTopLevelGuards : Type
+  GroupedTopLevelGuards = List (Credential × List (TxId × Maybe Datum))
 
-  -- Group a list of requests by credential (folding insertRequest over the list).
+  -- Group a list of tagged guards by credential (folding insertGuard over the list).
   -- Duplicates are preserved as multiple (subTxId, datum?) entries under the same credential.
-  groupRequiredTopLevelGuards : List RequiredTopLevelGuardRequest → GroupedRequests
-  groupRequiredTopLevelGuards = foldr insertRequest []
+  groupTopLevelGuards : List TaggedTopLevelGuard → GroupedTopLevelGuards
+  groupTopLevelGuards = foldr insertGuard []
     where
-    -- Insert one request into an existing grouping:
-    --   + if the credential already has an entry, cons (subTxId, datum?) onto its list
-    --   + otherwise create a new entry for that credential.
-    insertRequest : RequiredTopLevelGuardRequest → GroupedRequests → GroupedRequests
-    insertRequest (tid , cred , md) [] = (cred , (tid , md) ∷ []) ∷ []
-    insertRequest (tid , cred , md) ((c , xs) ∷ rest) with c ≟ cred
+    -- Insert one tagged guard into an existing group:
+    --   + if the credential already has a group, cons (subTxId, datum?) onto its list
+    --   + otherwise create a new group for that credential.
+    insertGuard : TaggedTopLevelGuard → GroupedTopLevelGuards → GroupedTopLevelGuards
+    insertGuard (tid , cred , md) [] = (cred , (tid , md) ∷ []) ∷ []
+    insertGuard (tid , cred , md) ((c , xs) ∷ rest) with c ≟ cred
     ... | yes _ = (c , (tid , md) ∷ xs) ∷ rest
-    ... | no  _ = (c , xs) ∷ insertRequest (tid , cred , md) rest
+    ... | no  _ = (c , xs) ∷ insertGuard (tid , cred , md) rest
 
-  -- Turn a subTx body's `txRequiredTopLevelGuards` into explicit top-level guard requests.
-  -- We attach the requesting subTx id so later grouping/execution can attribute arguments to the right subTx.
-  subTxRequiredTopLevelGuardRequests : SubLevelTx → ℙ RequiredTopLevelGuardRequest
-  subTxRequiredTopLevelGuardRequests subtx =
+  -- Turn a subTx body's `txRequiredTopLevelGuards` into tagged top-level guards.
+  -- We attach the id of the subTx requiring the guard so later grouping/execution
+  -- can attribute arguments to the right subTx.
+  subTxTopLevelGuards : SubLevelTx → ℙ TaggedTopLevelGuard
+  subTxTopLevelGuards subtx =
     mapˢ (λ (cred , md) → (TxIdOf subtx , cred , md))
       (TxBody.txRequiredTopLevelGuards (TxBodyOf subtx))
 ```
