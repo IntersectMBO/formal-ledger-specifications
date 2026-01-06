@@ -454,9 +454,9 @@ could be either of them.
 
   -- Turn a subTx body's `txRequiredTopLevelGuards` into explicit top-level guard requests.
   -- We attach the requesting subTx id so later grouping/execution can attribute arguments to the right subTx.
-  subTxRequiredTopLevelGuardRequests : SubLevelTx → List RequiredTopLevelGuardRequest
+  subTxRequiredTopLevelGuardRequests : SubLevelTx → ℙ RequiredTopLevelGuardRequest
   subTxRequiredTopLevelGuardRequests subtx =
-    map (λ (cred , md) → (TxIdOf subtx , cred , md))
+    mapˢ (λ (cred , md) → (TxIdOf subtx , cred , md))
       (TxBody.txRequiredTopLevelGuards (TxBodyOf subtx))
 ```
 -->
