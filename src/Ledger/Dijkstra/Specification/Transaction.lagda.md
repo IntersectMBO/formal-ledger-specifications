@@ -213,7 +213,6 @@ The fields that depend on the transaction level use the auxiliary functions
         txNetworkId          : Maybe Network
         currentTreasury      : Maybe Coin
         mint                 : Value
-        reqSignerHashes      : ℙ KeyHash
         scriptIntegrityHash  : Maybe ScriptHash
 
         -- New in Dijkstra --
@@ -222,6 +221,10 @@ The fields that depend on the transaction level use the auxiliary functions
         txRequiredTopLevelGuards  : InSubLevel txLevel (ScriptHash ⇀ Datum) -- only in sub-level tx
                                                      -- ^ TODO (CIP-0118): should be List (Credential × Maybe Datum)
         ---------------------
+
+      reqSignerHashes : ℙ KeyHash
+      reqSignerHashes = mapPartial isKeyHashObj txGuards
+
 
     record TxWitnesses (txLevel : TxLevel) : Type where
       inductive
