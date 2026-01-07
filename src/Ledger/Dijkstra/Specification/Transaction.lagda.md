@@ -482,34 +482,29 @@ remaining helper functions of this section.
     ... | yes _ = (c , (tid , md) ∷ xs) ∷ rest
     ... | no  _ = (c , xs) ∷ insertGuard (tid , cred , md) rest
 
-  subTxTopLevelGuards : SubLevelTx → ℙ TaggedTopLevelGuard
-  subTxTopLevelGuards subtx =
+  subTxTaggedGuards : SubLevelTx → ℙ TaggedTopLevelGuard
+  subTxTaggedGuards subtx =
     mapˢ (λ (cred , md) → (TxIdOf subtx , cred , md))
       (TxBody.txRequiredTopLevelGuards (TxBodyOf subtx))
 
-  -- Phase-1 condition (CIP-0118):
-  -- every credential requested by subTx bodies must appear in the top-level txGuards set.
-  requiredTopLevelGuardsSatisfiedᵇ : TopLevelTx → List SubLevelTx → Bool
-  requiredTopLevelGuardsSatisfiedᵇ topTx subTxs =
-    all (λ req → (requestedCred req ∈ᵇ topGuards))
-        (concatMap subTxRequiredTopLevelGuardRequests subTxs)
-    where
-      topGuards : ℙ Credential
-      topGuards = TxBody.txGuards (TxBodyOf topTx)
-      requestedCred : RequiredTopLevelGuardRequest → Credential
-      requestedCred = proj₁ ∘ proj₂
+  -- Turn a subTx body's `txRequiredTopLevelGuards` into a set of guard credentials.
+  subTxGuardCredentials : SubLevelTx → ℙ Credential
+  subTxGuardCredentials = (mapˢ proj₁) ∘ (TxBody.txRequiredTopLevelGuards ∘ TxBodyOf)
 
+  -- Phase-1 condition (CIP-0118):
+  -- every credential required by a subTx body must appear in the top-level txGuards set.
   requiredTopLevelGuardsSatisfied : TopLevelTx → List SubLevelTx → Type
   requiredTopLevelGuardsSatisfied topTx subTxs = requiredCreds ⊆ topGuards
-    -- (could just use `T (requiredTopLevelGuardsSatisfiedᵇ topTx subTxs)` here instead)
     where
     topGuards : ℙ Credential
     topGuards = TxBody.txGuards (TxBodyOf topTx)
 
+    concatMapˡ : {A B : Type} → (A → ℙ B) → List A → ℙ B
+    concatMapˡ f as = proj₁ $ unions (fromList (map f as))
+    -- (maybe move concatMapˡ to src-lib-exts or agda-sets)
+
     requiredCreds : ℙ Credential
-    requiredCreds =
-      fromList (map  (proj₁ ∘ proj₂)
-                     (concatMap subTxRequiredTopLevelGuardRequests subTxs))
+    requiredCreds = concatMapˡ subTxGuardCredentials subTxs
 ```
 
 ## Changes to Transaction Validity
