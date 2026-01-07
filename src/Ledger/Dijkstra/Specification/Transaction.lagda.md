@@ -494,11 +494,8 @@ remaining helper functions of this section.
   -- Phase-1 condition (CIP-0118):
   -- every credential required by a subTx body must appear in the top-level txGuards set.
   requiredTopLevelGuardsSatisfied : TopLevelTx → List SubLevelTx → Type
-  requiredTopLevelGuardsSatisfied topTx subTxs = requiredCreds ⊆ topGuards
+  requiredTopLevelGuardsSatisfied topTx subTxs = requiredCreds ⊆ TxBody.txGuards (TxBodyOf topTx)
     where
-    topGuards : ℙ Credential
-    topGuards = TxBody.txGuards (TxBodyOf topTx)
-
     concatMapˡ : {A B : Type} → (A → ℙ B) → List A → ℙ B
     concatMapˡ f as = proj₁ $ unions (fromList (map f as))
     -- (maybe move concatMapˡ to src-lib-exts or agda-sets)
