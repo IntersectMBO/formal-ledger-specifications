@@ -3,6 +3,7 @@ source_branch: master
 source_path: src/Ledger/Conway/Specification/Abstract.lagda.md
 ---
 
+<!--
 ```agda
 {-# OPTIONS --safe #-}
 
@@ -14,7 +15,10 @@ module Ledger.Conway.Specification.Abstract (txs : TransactionStructure) where
 open TransactionStructure txs
 open import Ledger.Conway.Specification.Certs govStructure
 open import Ledger.Conway.Specification.Script.ScriptPurpose txs
+```
+-->
 
+```agda
 record indexOf : Type where
   field
     indexOfDCert          : DCert          → List DCert        → Maybe Ix
@@ -31,3 +35,4 @@ record AbstractFunctions : Type where
         runPLCScript : CostModel → P2Script → ExUnits → List Data → Bool
         scriptSize   : Script → ℕ
         valContext   : TxInfo → ScriptPurpose → Data
+```
