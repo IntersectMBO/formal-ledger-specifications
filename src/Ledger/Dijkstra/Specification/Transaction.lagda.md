@@ -369,10 +369,18 @@ could be either of them.
 
     HasData-Tx : HasData (Tx txLevel)
     HasData-Tx .DataOf = DataOf ∘ TxWitnessesOf
+```
+-->
 
+### Auxiliary Functions for Transaction Structures
+
+This section collects some unimportant but useful helper and accessor functions.
+
+```agda
   getValue : TxOut → Value
   getValue (_ , v , _) = v
 
+  TxOutʰ : Type
   TxOutʰ = Addr × Value × Maybe (Datum ⊎ DataHash) × Maybe ScriptHash
 
   txOutHash : TxOut → TxOutʰ
@@ -411,38 +419,58 @@ could be either of them.
   getSubTxScripts subtx = mapˢ (λ hash → (TxIdOf subtx , hash)) (ScriptHashes subtx)
     where
     ScriptHashes : Tx TxLevelSub → ℙ ScriptHash
-    -- ScriptHashes = dom ∘ TxBody.txRequiredTopLevelGuards ∘ TxBodyOf
-    ScriptHashes tx = fromList (mapMaybe (isScriptObj ∘ proj₁) (TxBody.txRequiredTopLevelGuards (TxBodyOf tx)))
-    -- `txRequiredTopLevelGuards` has key creds too, but only `ScriptObj hash` contributes a phase-2 script hash.
+    ScriptHashes tx =                                   -- `txRequiredTopLevelGuards`
+      mapPartial (isScriptObj ∘ proj₁)                  -- has key creds too, but only
+        (TxBody.txRequiredTopLevelGuards (TxBodyOf tx)) -- `ScriptObj hash` contributes
+                                                        -- a phase-2 script hash.
 
   getTxScripts : {ℓ : TxLevel} → Tx ℓ → ℙ (TxId × ScriptHash)
   getTxScripts {TxLevelSub} = getSubTxScripts
   getTxScripts {TxLevelTop} =
     concatMapˢ getSubTxScripts ∘ fromList ∘ TxBody.txSubTransactions ∘ TxBodyOf
+```
 
-  -- CIP-0118 models "required top-level guards" as a list of requirements coming
-  -- from subtransaction bodies. The list can contain duplicates, and later logic
-  -- needs to run each distinct guard credential once while still providing it with
-  -- all arguments (and knowing which subtransaction required them).
-  -- The groupTopLevelGuards helper groups those per-subtransaction requirements by
-  -- credential.
+CIP-0118 models "required top-level guards" as a list of requirements coming
+from subtransaction bodies. The list can contain duplicates, and later logic
+needs to run each distinct guard credential once while still providing it with
+all arguments (and knowing which subtransaction required them).
 
-  -- A single "top-level guard," tagged with a subtransaction id
-  -- (e.g., the subtransaction that required the guard).
+Because they are new and their meaning may be slightly less obvious than that of the
+functions defined above, we'll provide a one-line description for each of the
+remaining helper functions of this section.
+
++  `TaggedTopLevelGuard`{.AgdaDatatype} is the type of "tagged"
+   top-level guards (tagged by the id of the subtransaction requiring it);
+   an inhabitant of `TaggedTopLevelGuard`{.AgdaDatatype} represents a guard as
+   a triple comprised of *subtransaction id*, *guard credential*, and *optional datum
+   argument*; *the subtransaction id should be that of the subtransaction requiring
+   the guard*.
+
++  `GroupedTopLevelGuards`{.AgdaDatatype} is the type of lists of guard groups,
+   grouped by credential; each element of such a list is a guard credential paired
+   with a list of all subtransaction ids and optional datum arguments requiring that
+   the guard with that credential. (We use a simple association list for now to avoid
+   committing to a particular Map interface.)
+
++  `groupTopLevelGuards`{.AgdaFunction}: a function that takes a list of tagged
+   top-level guards and groups them into `GroupedTopLevelGuards`{.AgdaDatatype} by
+   folding an insertion function over the list.
+
++  `subTxTopLevelGuards`{.AgdaFunction}: a function that takes a
+   subtransaction and produces a set of tagged top-level guards required by that
+   subtransaction, by mapping over its `txRequiredTopLevelGuards` field and attaching
+   the subtransaction's id to each guard.  (We attach the id of the subTx requiring
+   the guard so later execution logic can attribute arguments to the right
+   subtransaction.)
+
+```agda
   TaggedTopLevelGuard : Type
   TaggedTopLevelGuard = TxId × Credential × Maybe Datum
                      -- (subTxId, guard credential, optional datum argument)
 
-
-  -- Grouped tagged guard (grouped by guard credential).
-  -- Each credential maps to the list of (id of subTx requiring the guard, optional
-  -- datum) pairs associated with that credential.
-  -- We use an association list for now to avoid committing to a particular Map interface.
   GroupedTopLevelGuards : Type
   GroupedTopLevelGuards = List (Credential × List (TxId × Maybe Datum))
 
-  -- Group a list of tagged guards by credential (folding insertGuard over the list).
-  -- Duplicates are preserved as multiple (subTxId, datum?) entries under the same credential.
   groupTopLevelGuards : List TaggedTopLevelGuard → GroupedTopLevelGuards
   groupTopLevelGuards = foldr insertGuard []
     where
@@ -455,24 +483,11 @@ could be either of them.
     ... | yes _ = (c , (tid , md) ∷ xs) ∷ rest
     ... | no  _ = (c , xs) ∷ insertGuard (tid , cred , md) rest
 
-  -- Turn a subTx body's `txRequiredTopLevelGuards` into tagged top-level guards.
-  -- We attach the id of the subTx requiring the guard so later grouping/execution
-  -- can attribute arguments to the right subTx.
   subTxTopLevelGuards : SubLevelTx → ℙ TaggedTopLevelGuard
   subTxTopLevelGuards subtx =
     mapˢ (λ (cred , md) → (TxIdOf subtx , cred , md))
       (TxBody.txRequiredTopLevelGuards (TxBodyOf subtx))
 ```
--->
-
-## Changes to Transaction Validity
-
-As discussed in [Ledger.Conway.Specification.Properties][], transaction validity is
-tricky, and this is as true in the Dijkstra era as it was in Conway, if not moreso.
-
-Here are some key points about transaction validity in the Dijkstra era.
-
-
 
 ## Changes to Transaction Validity
 
