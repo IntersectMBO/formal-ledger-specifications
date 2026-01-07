@@ -3,6 +3,7 @@ source_branch: master
 source_path: src/Ledger/Conway/Specification/Script/Base.lagda.md
 ---
 
+<!--
 ```agda
 {-# OPTIONS --safe #-}
 
@@ -13,7 +14,6 @@ open import Data.Nat.Properties using (+-0-commutativeMonoid; suc-injective)
 
 open import stdlib.Data.List.Relation.Unary.MOf
 
-
 open import Ledger.Prelude hiding (All; Any; all?; any?; _∷ʳ_; uncons; _⊆_)
 open import Ledger.Core.Specification.Crypto
 open import Ledger.Core.Specification.Epoch
@@ -22,7 +22,10 @@ module Ledger.Conway.Specification.Script.Base
   (cs : _) (open CryptoStructure cs)
   (es : _) (open EpochStructure es)
   where
+```
+-->
 
+```agda
 record P1ScriptStructure : Type₁ where
   field P1Script : Type
         validP1Script : ℙ KeyHash → Maybe Slot × Maybe Slot → P1Script → Type
