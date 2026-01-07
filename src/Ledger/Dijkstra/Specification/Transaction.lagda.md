@@ -52,7 +52,11 @@ section below.
 
 Transactions cannot be arbitrarily nested. That is, a transaction (henceforth refered
 as top-level transaction) can include subtransactions, but these cannot include
-other subtransactions.
+other subtransactions.  This will manifest in the types of transactions defined
+below by constraining which fields are present in each level of transaction.
+Specifically, only top-level transactions can include subtransactions
+(the `txSubTransactions`{.AgdaField} field) and only sub-level transactions
+can include required top-level guards (the `txRequiredTopLevelGuards`{.AgdaField} field).
 
 To that end, we define two auxiliary functions that will aid in
 specifying which record fields of a transaction body are present at
@@ -178,11 +182,32 @@ record TransactionStructure : Type₁ where
   open HasUTxO ⦃...⦄ public
 ```
 
-The type of transactions is defined as three mutually recursive
-records parameterised by a value of type `TxLevel`{.agdatype}.
+## The Main Transaction Types
+
+Transactions are represented as three mutually recursive record types that are
+parameterised by a value of type `TxLevel`{.agdatype}.
 
 The fields that depend on the transaction level use the auxiliary functions
 `InTopLevel` and `InSubLevel` defined in the section on [Transaction Levels][].
+
+Of particular note in the Dijkstra era are
+
++  `collateralInputs`{.AgdaField}: only present in top-level transactions,
+   this field contains the collateral inputs provided to cover script execution
+   costs in case of script failure;
+
++  `txFee`{.AgdaField}: only present in top-level transactions,
+   this field contains the fee paid for processing the transaction;
+
++  `txSubTransactions`{.AgdaField}: only present in top-level transactions,
+   this field contains a list of sub-transactions included in the top-level
+   transaction;
+
++  `txGuards`{.AgdaField}: only present in top-level transactions,
+   this field collects the guard scripts (credentials) required by this transaction;
+
++  `txRequiredTopLevelGuards`{.AgdaField}: only present in sub-level transactions,
+   this field collects the top-level guards required by a subtransaction.
 
 ```agda
   mutual
@@ -199,11 +224,11 @@ The fields that depend on the transaction level use the auxiliary functions
       field
         txIns                : ℙ TxIn
         refInputs            : ℙ TxIn
-        collateralInputs     : InTopLevel txLevel (ℙ TxIn) -- only in top-level tx
+        collateralInputs     : InTopLevel txLevel (ℙ TxIn)
         txOuts               : Ix ⇀ TxOut
         txId                 : TxId
         txCerts              : List DCert
-        txFee                : InTopLevel txLevel Fees -- only in top-level tx
+        txFee                : InTopLevel txLevel Fees
         txWithdrawals        : Withdrawals
         txVldt               : Maybe Slot × Maybe Slot
         txADhash             : Maybe ADHash
@@ -216,9 +241,9 @@ The fields that depend on the transaction level use the auxiliary functions
         scriptIntegrityHash  : Maybe ScriptHash
 
         -- New in Dijkstra --
-        txSubTransactions         : InTopLevel txLevel (List (Tx TxLevelSub)) -- only in top-level tx
-        txGuards                  : ℙ Credential -- Dijkstra guards: credentials required by this tx (key or script).
-        txRequiredTopLevelGuards  : InSubLevel txLevel (ScriptHash ⇀ Datum) -- only in sub-level tx
+        txSubTransactions         : InTopLevel txLevel (List (Tx TxLevelSub))
+        txGuards                  : ℙ Credential
+        txRequiredTopLevelGuards  : InSubLevel txLevel (ScriptHash ⇀ Datum)
                                                      -- ^ TODO (CIP-0118): change to ℙ (Credential × Maybe Datum)
         ---------------------
 
