@@ -52,10 +52,20 @@ record UTxOState : Type where
 
 <!--
 ```agda
+instance
+  unquoteDecl HasCast-UTxOEnv HasCast-UTxOState = derive-HasCast
+    ( (quote UTxOEnv   , HasCast-UTxOEnv  ) ∷
+    [ (quote UTxOState , HasCast-UTxOState) ])
+```
+-->
+
+<!--
+```agda
 private variable
   Γ : UTxOEnv
   s s' : UTxOState
   tx : TopLevelTx
+  stx : SubLevelTx
 ```
 -->
 
@@ -80,9 +90,18 @@ data _⊢_⇀⦇_,UTXOS⦈_ : UTxOEnv → UTxOState → TopLevelTx → UTxOState
 This is the intended home of Dijkstra "phase-1 structural checks."
 
 ```agda
+data _⊢_⇀⦇_,SUBUTXO⦈_ : UTxOEnv → UTxOState → SubLevelTx → UTxOState → Type where
+
+  SUBUTXO :
+    let txb    = Tx.txBody tx
+        subTxs = TxBody.txSubTransactions txb
+    in
+      ────────────────────────────────
+      Γ ⊢ s ⇀⦇ stx ,SUBUTXO⦈ s'
+
 data _⊢_⇀⦇_,UTXO⦈_ : UTxOEnv → UTxOState → TopLevelTx → UTxOState → Type where
 
-  UTXO-inductive :
+  UTXO :
     let txb    = Tx.txBody tx
         subTxs = TxBody.txSubTransactions txb
     in
