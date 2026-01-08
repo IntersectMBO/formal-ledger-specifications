@@ -42,7 +42,16 @@ postulate
 ## <span class="AgdaDatatype">LEDGER</span> Transition System Types
 
 ```agda
-record LEnv : Type where
+record SubLedgerEnv : Type where
+  field
+    slot        : Slot
+    ppolicy     : Maybe ScriptHash
+    pparams     : PParams
+    enactState  : EnactState
+    treasury    : Treasury
+    isValid     : Bool
+
+record LedgerEnv : Type where
   field
     slot        : Slot
     ppolicy     : Maybe ScriptHash
@@ -53,8 +62,14 @@ record LEnv : Type where
 <!--
 ```agda
 instance
-  HasPParams-LEnv : HasPParams LEnv
-  HasPParams-LEnv .PParamsOf = LEnv.pparams
+  unquoteDecl HasCast-LedgerEnv HasCast-SubLedgerEnv = derive-HasCast
+    ((quote LedgerEnv , HasCast-LedgerEnv) ∷ (quote SubLedgerEnv , HasCast-SubLedgerEnv) ∷ [])
+
+  HasPParams-LedgerEnv : HasPParams LedgerEnv
+  HasPParams-LedgerEnv .PParamsOf = LedgerEnv.pparams
+
+  HasPParams-SubLedgerEnv : HasPParams LedgerEnv
+  HasPParams-SubLedgerEnv .PParamsOf = LedgerEnv.pparams
 ```
 -->
 ```agda
@@ -125,8 +140,8 @@ open HasLState ⦃...⦄ public
 -- open GovVotes
 
 instance
-  unquoteDecl HasCast-LEnv HasCast-LState = derive-HasCast
-    ((quote LEnv , HasCast-LEnv) ∷ (quote LState , HasCast-LState) ∷ [])
+  unquoteDecl HasCast-LState = derive-HasCast
+    ((quote LState , HasCast-LState) ∷ [])
 ```
 -->
 
@@ -157,25 +172,25 @@ instance
 <!--
 ```agda
 private variable
-  Γ                     : LEnv
+  Γ                     : LedgerEnv
   s s' s''              : LState
-  utxoSt utxoSt'        : UTxOState
-  govSt govSt'          : GovState
+  utxoState utxoState'  : UTxOState
+  govState govState'    : GovState
   certState certState'  : CertState
-  tx                    : TopLevelTx
   stx                   : SubLevelTx
   slot                  : Slot
   ppolicy               : Maybe ScriptHash
   pp                    : PParams
   enactState            : EnactState
   treasury              : Treasury
+  isTopLevelValid       : Bool
 ```
 -->
 
 ```agda
-data _⊢_⇀⦇_,SUBLEDGER⦈_ : LEnv → LState → SubLevelTx → LState → Type where
-  SUBLEDGER :
-    let  txb = tx .txBody
+data _⊢_⇀⦇_,SUBLEDGER⦈_ : SubLedgerEnv → LState → SubLevelTx → LState → Type where
+  SUBLEDGER-V :
+    let  txb = stx .txBody
 ```
 <!--
 ```agda
@@ -184,14 +199,33 @@ data _⊢_⇀⦇_,SUBLEDGER⦈_ : LEnv → LState → SubLevelTx → LState → 
 -->
 ```agda
     in
-      ∙ ⟦ slot , pp , treasury ⟧ ⊢ utxoSt ⇀⦇ stx ,SUBUTXOW⦈ utxoSt'
+      ∙ isTopLevelValid ≡ true
+      ∙ ⟦ slot , pp , treasury ⟧  ⊢ utxoState ⇀⦇ stx ,SUBUTXOW⦈ utxoState'
+      ∙ ⟦ epoch slot , pp , txGovVotes , txWithdrawals , {!!} {- allColdCreds govSt enactState -} ⟧ ⊢ certState ⇀⦇ txCerts ,CERTS⦈ certState'
+      -- ∙ ⟦ txId , epoch slot , pp , ppolicy , enactState , certState' , dom (RewardsOf certState) ⟧ ⊢ rmOrphanDRepVotes certState' govSt ⇀⦇ txgov txb ,GOVS⦈ govSt'
       ────────────────────────────────
-      ⟦ slot , ppolicy , pp , enactState , treasury ⟧ ⊢ ⟦ utxoSt , govSt , certState ⟧ ⇀⦇ stx ,SUBLEDGER⦈ ⟦ utxoSt' , govSt' , certState' ⟧
+      ⟦ slot , ppolicy , pp , enactState , treasury , isTopLevelValid ⟧ ⊢ ⟦ utxoState , govState , certState ⟧ ⇀⦇ stx ,SUBLEDGER⦈ ⟦ utxoState' , govState' , certState' ⟧
 
-_⊢_⇀⦇_,SUBLEDGERS⦈_ : LEnv → LState → List SubLevelTx → LState → Type
+  SUBLEDGER-I :
+      ∙ isTopLevelValid ≡ false
+      ∙ ⟦ slot , pp , treasury ⟧ ⊢ utxoState ⇀⦇ stx ,SUBUTXOW⦈ utxoState'
+      ────────────────────────────────
+      ⟦ slot , ppolicy , pp , enactState , treasury , isTopLevelValid ⟧ ⊢ ⟦ utxoState , govState , certState ⟧ ⇀⦇ stx ,SUBLEDGER⦈ ⟦ utxoState' , govState , certState ⟧
+
+_⊢_⇀⦇_,SUBLEDGERS⦈_ : SubLedgerEnv → LState → List SubLevelTx → LState → Type
 _⊢_⇀⦇_,SUBLEDGERS⦈_ = ReflexiveTransitiveClosure {sts = _⊢_⇀⦇_,SUBLEDGER⦈_}
-
-data _⊢_⇀⦇_,LEDGER⦈_ : LEnv → LState → TopLevelTx → LState → Type where
+```
+<!--
+```agda
+private variable
+  utxoState'' : UTxOState
+  govState''  : GovState
+  certState'' : CertState
+  tx          : TopLevelTx
+```
+-->
+```agda
+data _⊢_⇀⦇_,LEDGER⦈_ : LedgerEnv → LState → TopLevelTx → LState → Type where
   LEDGER-V :
     let  txb = tx .txBody
 ```
@@ -203,19 +237,19 @@ data _⊢_⇀⦇_,LEDGER⦈_ : LEnv → LState → TopLevelTx → LState → Typ
 ```agda
     in
       ∙ isValid tx ≡ true
-      ∙ {!!} ⊢ {!!} ⇀⦇ {!!} ,SUBLEDGERS⦈ {!!}
-      ∙ ⟦ slot , pp , treasury ⟧  ⊢ utxoSt ⇀⦇ tx ,UTXOW⦈ utxoSt'
-      ∙ ⟦ epoch slot , pp , txGovVotes , txWithdrawals , {!!} {- allColdCreds govSt enactState -} ⟧ ⊢ certState ⇀⦇ txCerts ,CERTS⦈ certState'
+      ∙ ⟦ slot , ppolicy , pp , enactState , treasury , isValid tx ⟧ ⊢ ⟦ utxoState , govState , certState ⟧ ⇀⦇ {!!} ,SUBLEDGERS⦈ ⟦ utxoState' , govState' , certState' ⟧
+      ∙ ⟦ slot , pp , treasury ⟧  ⊢ utxoState' ⇀⦇ tx ,UTXOW⦈ utxoState''
+      ∙ ⟦ epoch slot , pp , txGovVotes , txWithdrawals , {!!} {- allColdCreds govSt enactState -} ⟧ ⊢ certState' ⇀⦇ txCerts ,CERTS⦈ certState''
       -- ∙ ⟦ txId , epoch slot , pp , ppolicy , enactState , certState' , dom (RewardsOf certState) ⟧ ⊢ rmOrphanDRepVotes certState' govSt ⇀⦇ txgov txb ,GOVS⦈ govSt'
       ────────────────────────────────
-      ⟦ slot , ppolicy , pp , enactState , treasury ⟧ ⊢ ⟦ utxoSt , govSt , certState ⟧ ⇀⦇ tx ,LEDGER⦈ ⟦ utxoSt' , govSt' , certState' ⟧
+      ⟦ slot , ppolicy , pp , enactState , treasury ⟧ ⊢ ⟦ utxoState , govState , certState ⟧ ⇀⦇ tx ,LEDGER⦈ ⟦ utxoState'' , govState'' , certState'' ⟧
 
   LEDGER-I :
       ∙ isValid tx ≡ false
-      ∙ {!!} ⊢ {!!} ⇀⦇ {!!} ,SUBLEDGERS⦈ {!!}
-      -- ∙ ⟦ slot , pp , treasury ⟧ ⊢ utxoSt ⇀⦇ tx ,UTXOW⦈ utxoSt'
+      ∙ ⟦ slot , ppolicy , pp , enactState , treasury , isValid tx ⟧ ⊢ ⟦ utxoState , govState , certState ⟧ ⇀⦇ {!!} ,SUBLEDGERS⦈ {!!}
+      ∙ ⟦ slot , pp , treasury ⟧ ⊢ utxoState ⇀⦇ tx ,UTXOW⦈ utxoState'
       ────────────────────────────────
-      ⟦ slot , ppolicy , pp , enactState , treasury ⟧ ⊢ ⟦ utxoSt , govSt , certState ⟧ ⇀⦇ tx ,LEDGER⦈ ⟦ utxoSt' , govSt , certState ⟧
+      ⟦ slot , ppolicy , pp , enactState , treasury ⟧ ⊢ ⟦ utxoState , govState , certState ⟧ ⇀⦇ tx ,LEDGER⦈ ⟦ utxoState' , govState , certState ⟧
 ```
 
 -- The rule `LEDGER`{.AgdaDatatype} invokes the `GOVS`{.AgdaDatatype} rule to
