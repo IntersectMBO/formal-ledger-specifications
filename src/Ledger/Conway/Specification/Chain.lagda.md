@@ -24,7 +24,7 @@ open import Ledger.Conway.Specification.Epoch txs abs
 open import Ledger.Conway.Specification.Gov txs
 open import Ledger.Conway.Specification.Ledger txs abs
 open import Ledger.Prelude; open Equivalence
-open import Ledger.Conway.Specification.Ratify txs
+open import Ledger.Conway.Specification.Ratify govStructure
 open import Ledger.Conway.Specification.RewardUpdate txs abs
 open import Ledger.Conway.Specification.Utxo txs abs
 

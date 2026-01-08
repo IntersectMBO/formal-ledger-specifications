@@ -10,9 +10,9 @@ source_path: src/Ledger/Conway/Specification/Ratify.lagda.md
 
 {-# OPTIONS --safe #-}
 
-open import Ledger.Conway.Specification.Transaction hiding (Vote)
+open import Ledger.Conway.Specification.Gov.Base
 
-module Ledger.Conway.Specification.Ratify (txs : _) (open TransactionStructure txs) where
+module Ledger.Conway.Specification.Ratify (govStructure : GovStructure) where
 
 import Data.Integer as ℤ
 open import Data.Rational as ℚ using (ℚ; 0ℚ; _⊔_)
@@ -22,7 +22,8 @@ open import Ledger.Prelude hiding (_∧_; _∨_; _⊔_) renaming (filterᵐ to f
 
 open import Ledger.Conway.Specification.Certs govStructure
 open import Ledger.Conway.Specification.Enact govStructure
-open import Ledger.Conway.Specification.Gov.Actions govStructure using (Vote)
+open import Ledger.Conway.Specification.Gov.Actions govStructure hiding (yes; no)
+open GovStructure govStructure
 ```
 -->
 

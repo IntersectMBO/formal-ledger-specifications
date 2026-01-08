@@ -24,7 +24,7 @@ open import Ledger.Conway.Specification.Enact govStructure
 open import Ledger.Conway.Specification.Ledger txs abs
 open import Ledger.Conway.Specification.PoolReap txs abs
 open import Ledger.Conway.Specification.PoolReap.Properties.Computational txs abs
-open import Ledger.Conway.Specification.Ratify txs
+open import Ledger.Conway.Specification.Ratify govStructure
 open import Ledger.Conway.Specification.Ratify.Properties.Computational txs
 open import Ledger.Conway.Specification.Rewards txs abs
 open import Ledger.Conway.Specification.Rewards.Properties.Computational txs abs

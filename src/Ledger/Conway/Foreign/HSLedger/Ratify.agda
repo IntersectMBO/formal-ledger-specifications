@@ -13,9 +13,9 @@ open import Data.String.Base renaming (_++_ to _+ˢ_) hiding (show; length)
 import Data.Rational.Show as Rational
 
 import Foreign.Haskell.Pair as F
-open import Ledger.Conway.Specification.Ratify it
+open import Ledger.Conway.Specification.Ratify govStructure
   hiding (acceptedByCC; acceptedByDRep; acceptedBySPO)
-import Ledger.Conway.Specification.Ratify it as Ratify
+import Ledger.Conway.Specification.Ratify govStructure as Ratify
 open import Ledger.Conway.Specification.Ratify.Properties.Computational it
 
 instance
