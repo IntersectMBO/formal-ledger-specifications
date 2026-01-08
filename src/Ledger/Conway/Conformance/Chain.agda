@@ -15,7 +15,7 @@ module Ledger.Conway.Conformance.Chain
 
 open import Ledger.Conway.Specification.Enact govStructure
 open import Ledger.Conway.Conformance.Ledger txs abs
-open import Ledger.Conway.Specification.Ratify txs
+open import Ledger.Conway.Specification.Ratify govStructure
 open import Ledger.Conway.Conformance.Utxo txs abs
 open import Ledger.Conway.Conformance.Epoch txs abs
 open import Ledger.Conway.Conformance.Certs govStructure

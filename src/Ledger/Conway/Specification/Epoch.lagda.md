@@ -43,7 +43,7 @@ open import Ledger.Conway.Specification.Enact govStructure
 open import Ledger.Conway.Specification.Gov txs
 open import Ledger.Conway.Specification.Ledger txs abs
 open import Ledger.Conway.Specification.PoolReap txs abs
-open import Ledger.Conway.Specification.Ratify txs
+open import Ledger.Conway.Specification.Ratify govStructure
 open import Ledger.Conway.Specification.Rewards txs abs
 open import Ledger.Conway.Specification.Utxo txs abs
 

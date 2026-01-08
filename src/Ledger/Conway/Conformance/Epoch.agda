@@ -22,7 +22,7 @@ open import Ledger.Conway.Conformance.Equivalence txs abs
 open import Ledger.Conway.Conformance.Equivalence.Convert
 open import Ledger.Conway.Conformance.Equivalence.Deposits txs abs
 open import Ledger.Conway.Conformance.Ledger txs abs
-open import Ledger.Conway.Specification.Ratify txs
+open import Ledger.Conway.Specification.Ratify govStructure
 open import Ledger.Conway.Conformance.Utxo txs abs
 open import Ledger.Conway.Conformance.Certs govStructure
 open import Ledger.Conway.Conformance.Rewards txs abs
