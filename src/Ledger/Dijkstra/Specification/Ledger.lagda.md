@@ -22,20 +22,17 @@ module Ledger.Dijkstra.Specification.Ledger
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
 
--- open import Ledger.Dijkstra.Specification.Enact govStructure
--- open import Ledger.Dijkstra.Specification.Gov txs
+open import Ledger.Conway.Specification.Enact govStructure
+open import Ledger.Conway.Specification.Gov govStructure
 open import Ledger.Dijkstra.Specification.Utxo txs abs
 open import Ledger.Dijkstra.Specification.Utxow txs abs
 open import Ledger.Dijkstra.Specification.Certs govStructure
 
 open Tx
--- open GState
--- open GovActionState
--- open EnactState using (cc)
+open GState
+open GovActionState
+open EnactState using (cc)
 --
-
-postulate
-  EnactState GovState : Type
 ```
 -->
 
@@ -149,9 +146,9 @@ instance
 -- ## Helper Functions
 
 ```agda
--- txgov : TxBody → List (GovVote ⊎ GovProposal)
--- txgov txb = map inj₂ txGovProposals ++ map inj₁ txGovVotes
---   where open TxBody txb
+txgov : ∀ {ℓ} → TxBody ℓ → List (GovVote ⊎ GovProposal)
+txgov txb = map inj₂ txGovProposals ++ map inj₁ txGovVotes
+  where open TxBody txb
 
 -- rmOrphanDRepVotes : CertState → GovState → GovState
 -- rmOrphanDRepVotes cs govSt = L.map (map₂ go) govSt
@@ -162,9 +159,9 @@ instance
 --    go : GovActionState → GovActionState
 --    go gas = record gas { votes = record (gas .votes) { gvDRep = filterKeys ifDRepRegistered (gas .votes .gvDRep) } }
 
--- allColdCreds : GovState → EnactState → ℙ Credential
--- allColdCreds govSt es =
---   ccCreds (es .cc) ∪ concatMapˢ (λ (_ , st) → proposedCC (GovActionOf st)) (fromList govSt)
+allColdCreds : GovState → EnactState → ℙ Credential
+allColdCreds govSt es =
+  ccCreds (es .cc) ∪ concatMapˢ (λ (_ , st) → proposedCC (GovActionOf st)) (fromList govSt)
 ```
 
 -- ## <span class="AgdaDatatype">LEDGER</span> Transition System
@@ -201,20 +198,21 @@ data _⊢_⇀⦇_,SUBLEDGER⦈_ : SubLedgerEnv → LState → SubLevelTx → LSt
     in
       ∙ isTopLevelValid ≡ true
       ∙ ⟦ slot , pp , treasury ⟧  ⊢ utxoState ⇀⦇ stx ,SUBUTXOW⦈ utxoState'
-      ∙ ⟦ epoch slot , pp , txGovVotes , txWithdrawals , {!!} {- allColdCreds govSt enactState -} ⟧ ⊢ certState ⇀⦇ txCerts ,CERTS⦈ certState'
-      -- ∙ ⟦ txId , epoch slot , pp , ppolicy , enactState , certState' , dom (RewardsOf certState) ⟧ ⊢ rmOrphanDRepVotes certState' govSt ⇀⦇ txgov txb ,GOVS⦈ govSt'
+      ∙ ⟦ epoch slot , pp , txGovVotes , txWithdrawals , allColdCreds govState enactState ⟧ ⊢ certState ⇀⦇ txCerts ,CERTS⦈ certState'
+      ∙ ⟦ txId , epoch slot , pp , ppolicy , enactState , certState' , dom (RewardsOf certState) ⟧ ⊢ {- rmOrphanDRepVotes certState' -} govState ⇀⦇ txgov txb ,GOVS⦈ govState'
       ────────────────────────────────
       ⟦ slot , ppolicy , pp , enactState , treasury , isTopLevelValid ⟧ ⊢ ⟦ utxoState , govState , certState ⟧ ⇀⦇ stx ,SUBLEDGER⦈ ⟦ utxoState' , govState' , certState' ⟧
 
   SUBLEDGER-I :
       ∙ isTopLevelValid ≡ false
-      ∙ ⟦ slot , pp , treasury ⟧ ⊢ utxoState ⇀⦇ stx ,SUBUTXOW⦈ utxoState'
+      ∙ ⟦ slot , pp , treasury ⟧ ⊢ utxoState ⇀⦇ stx ,SUBUTXOW⦈ utxoState
       ────────────────────────────────
-      ⟦ slot , ppolicy , pp , enactState , treasury , isTopLevelValid ⟧ ⊢ ⟦ utxoState , govState , certState ⟧ ⇀⦇ stx ,SUBLEDGER⦈ ⟦ utxoState' , govState , certState ⟧
+      ⟦ slot , ppolicy , pp , enactState , treasury , isTopLevelValid ⟧ ⊢ ⟦ utxoState , govState , certState ⟧ ⇀⦇ stx ,SUBLEDGER⦈ ⟦ utxoState , govState , certState ⟧
 
 _⊢_⇀⦇_,SUBLEDGERS⦈_ : SubLedgerEnv → LState → List SubLevelTx → LState → Type
 _⊢_⇀⦇_,SUBLEDGERS⦈_ = ReflexiveTransitiveClosure {sts = _⊢_⇀⦇_,SUBLEDGER⦈_}
 ```
+
 <!--
 ```agda
 private variable
@@ -224,6 +222,7 @@ private variable
   tx          : TopLevelTx
 ```
 -->
+
 ```agda
 data _⊢_⇀⦇_,LEDGER⦈_ : LedgerEnv → LState → TopLevelTx → LState → Type where
   LEDGER-V :
@@ -237,36 +236,29 @@ data _⊢_⇀⦇_,LEDGER⦈_ : LedgerEnv → LState → TopLevelTx → LState �
 ```agda
     in
       ∙ isValid tx ≡ true
-      ∙ ⟦ slot , ppolicy , pp , enactState , treasury , isValid tx ⟧ ⊢ ⟦ utxoState , govState , certState ⟧ ⇀⦇ {!!} ,SUBLEDGERS⦈ ⟦ utxoState' , govState' , certState' ⟧
+      ∙ ⟦ slot , ppolicy , pp , enactState , treasury , isValid tx ⟧ ⊢ ⟦ utxoState , govState , certState ⟧ ⇀⦇ txSubTransactions ,SUBLEDGERS⦈ ⟦ utxoState' , govState' , certState' ⟧
       ∙ ⟦ slot , pp , treasury ⟧  ⊢ utxoState' ⇀⦇ tx ,UTXOW⦈ utxoState''
-      ∙ ⟦ epoch slot , pp , txGovVotes , txWithdrawals , {!!} {- allColdCreds govSt enactState -} ⟧ ⊢ certState' ⇀⦇ txCerts ,CERTS⦈ certState''
-      -- ∙ ⟦ txId , epoch slot , pp , ppolicy , enactState , certState' , dom (RewardsOf certState) ⟧ ⊢ rmOrphanDRepVotes certState' govSt ⇀⦇ txgov txb ,GOVS⦈ govSt'
+      ∙ ⟦ epoch slot , pp , txGovVotes , txWithdrawals , allColdCreds govState enactState ⟧ ⊢ certState' ⇀⦇ txCerts ,CERTS⦈ certState''
+      ∙ ⟦ txId , epoch slot , pp , ppolicy , enactState , certState' , dom (RewardsOf certState) ⟧ ⊢ {- rmOrphanDRepVotes certState' -} govState ⇀⦇ txgov txb ,GOVS⦈ govState'
       ────────────────────────────────
       ⟦ slot , ppolicy , pp , enactState , treasury ⟧ ⊢ ⟦ utxoState , govState , certState ⟧ ⇀⦇ tx ,LEDGER⦈ ⟦ utxoState'' , govState'' , certState'' ⟧
 
   LEDGER-I :
+    let  txb = tx .txBody
+```
+<!--
+```agda
+         open TxBody txb
+```
+-->
+```agda
+    in
       ∙ isValid tx ≡ false
-      ∙ ⟦ slot , ppolicy , pp , enactState , treasury , isValid tx ⟧ ⊢ ⟦ utxoState , govState , certState ⟧ ⇀⦇ {!!} ,SUBLEDGERS⦈ {!!}
+      ∙ ⟦ slot , ppolicy , pp , enactState , treasury , isValid tx ⟧ ⊢ ⟦ utxoState , govState , certState ⟧ ⇀⦇ txSubTransactions  ,SUBLEDGERS⦈ ⟦ utxoState , govState , certState ⟧
       ∙ ⟦ slot , pp , treasury ⟧ ⊢ utxoState ⇀⦇ tx ,UTXOW⦈ utxoState'
       ────────────────────────────────
       ⟦ slot , ppolicy , pp , enactState , treasury ⟧ ⊢ ⟦ utxoState , govState , certState ⟧ ⇀⦇ tx ,LEDGER⦈ ⟦ utxoState' , govState , certState ⟧
 ```
-
--- The rule `LEDGER`{.AgdaDatatype} invokes the `GOVS`{.AgdaDatatype} rule to
--- process governance action proposals and votes.
-
--- ??? note
-
---     The governance state used as input to `GOVS`{.AgdaDatatype} is filtered to
---     remove votes from `DReps`{.AgdaInductiveConstructor} that are no longer
---     registered (see function `rmOrphanDRepVotes`{.AgdaFunction}).
-
---     This mechanism serves to prevent attacks where malicious adversaries could
---     submit transactions that
-
---     1.  register a fraudulent `DRep`{.AgdaInductiveConstructor},
---     2.  cast numerous votes utilizing that `DRep`{.AgdaInductiveConstructor},
---     3.  deregisters the `DRep`{.AgdaInductiveConstructor} thereby recovering the deposit.
 
 -- <!--
 -- ```agda

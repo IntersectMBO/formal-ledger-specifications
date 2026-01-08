@@ -24,7 +24,7 @@ module Ledger.Conway.Specification.Ledger
   where
 
 open import Ledger.Conway.Specification.Enact govStructure
-open import Ledger.Conway.Specification.Gov txs
+open import Ledger.Conway.Specification.Gov govStructure
 open import Ledger.Conway.Specification.Utxo txs abs
 open import Ledger.Conway.Specification.Utxow txs abs
 open import Ledger.Conway.Specification.Certs govStructure

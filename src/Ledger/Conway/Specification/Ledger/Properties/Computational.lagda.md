@@ -23,7 +23,7 @@ module Ledger.Conway.Specification.Ledger.Properties.Computational
 
 open import Ledger.Prelude
 open import Ledger.Conway.Specification.Certs.Properties.Computational govStructure
-open import Ledger.Conway.Specification.Gov txs
+open import Ledger.Conway.Specification.Gov govStructure
 open import Ledger.Conway.Specification.Gov.Properties.Computational txs
 open import Ledger.Conway.Specification.Ledger txs abs
 open import Ledger.Conway.Specification.Utxo txs abs
