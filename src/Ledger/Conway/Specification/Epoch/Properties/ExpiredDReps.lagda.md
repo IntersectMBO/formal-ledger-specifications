@@ -24,7 +24,7 @@ open import Ledger.Prelude hiding (cong)
 import Ledger.Prelude as P
 import Relation.Binary.Core as B
 open import Relation.Binary.Definitions
-open import Ledger.Conway.Specification.Ratify txs
+open import Ledger.Conway.Specification.Ratify govStructure
 open import Ledger.Conway.Specification.Enact govStructure
 open import Ledger.Conway.Specification.Enact.Properties.Computational govStructure
 open import Ledger.Conway.Specification.Ledger txs abs

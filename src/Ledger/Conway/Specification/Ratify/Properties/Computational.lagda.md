@@ -15,7 +15,7 @@ open import Ledger.Prelude
 open import Ledger.Conway.Specification.Gov txs
 open import Ledger.Conway.Specification.Enact govStructure
 open import Ledger.Conway.Specification.Enact.Properties.Computational govStructure
-open import Ledger.Conway.Specification.Ratify txs
+open import Ledger.Conway.Specification.Ratify govStructure
 
 open Computational ⦃...⦄ hiding (computeProof; completeness)
 
