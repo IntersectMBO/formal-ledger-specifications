@@ -216,6 +216,7 @@ Of particular note in the Dijkstra era are
       field
         txBody       : TxBody txLevel
         txWitnesses  : TxWitnesses txLevel
+        txSize       : ℕ
         isValid      : InTopLevel txLevel Bool
         txAuxData    : Maybe AuxiliaryData
 
@@ -379,6 +380,9 @@ could be either of them.
   instance
     HasTxBody-Tx : HasTxBody (Tx txLevel)
     HasTxBody-Tx .TxBodyOf = Tx.txBody
+
+    HasSize-Tx : HasSize (Tx txLevel)
+    HasSize-Tx .SizeOf = Tx.txSize
 
     HasTxWitnesses-Tx : HasTxWitnesses (Tx txLevel)
     HasTxWitnesses-Tx .TxWitnessesOf = Tx.txWitnesses

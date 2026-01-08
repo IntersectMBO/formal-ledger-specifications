@@ -131,7 +131,7 @@ credsNeeded {TxLevelSub} utxo txb = credsNeededMinusCollateral txb
 txOutToDataHash : TxOut → Maybe DataHash
 txOutToDataHash (_ , _ , d , _) = d >>= isInj₂
 
-txOutToP2Script : UTxO → UTxO → (Tx ℓ) → TxOut → Maybe P2Script
+txOutToP2Script : UTxO → UTxO → Tx ℓ → TxOut → Maybe P2Script
 txOutToP2Script utxo₀ utxoRefView tx (a , _) =
   do sh ← isScriptObj (payCred a)
      s  ← lookupScriptHash sh tx utxo₀ utxoRefView
@@ -139,7 +139,7 @@ txOutToP2Script utxo₀ utxoRefView tx (a , _) =
 
 opaque
   collectP2ScriptsWithContext
-    :  {ℓ : TxLevel} → PParams → (Tx ℓ) → UTxO → UTxO
+    :  {ℓ : TxLevel} → PParams → Tx ℓ → UTxO → UTxO
        → List (P2Script × List Data × ExUnits × CostModel)
   collectP2ScriptsWithContext {ℓ} pp tx utxoSpend₀ utxoRefView
     = setToList  $ mapPartial ( λ (sp , c) →  if isScriptObj c
