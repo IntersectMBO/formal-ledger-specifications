@@ -20,7 +20,7 @@ module Ledger.Conway.Specification.Epoch.Properties.NoPropSameDReps
 
 open import Ledger.Conway.Specification.Certs govStructure
 open import Ledger.Conway.Specification.Epoch txs abs
-open import Ledger.Conway.Specification.Gov txs
+open import Ledger.Conway.Specification.Gov govStructure
 open import Ledger.Prelude
 open import Ledger.Conway.Specification.Properties txs abs
 ```
