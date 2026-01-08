@@ -646,7 +646,9 @@ d_lookupActionId_1522 v0 v1 v2 v3 v4
                           (\ v6 ->
                              MAlonzo.Code.Class.Decidable.Instances.d_Dec'45''8868'_10))
                        (coe
-                          MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_threshold_2426 v0
+                          MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_threshold_1616
+                          (MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_govStructure_2490
+                             (coe v0))
                           v1 (coe MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18)
                           (MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_action_1022
                              (coe MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30 (coe v5)))
@@ -654,9 +656,11 @@ d_lookupActionId_1522 v0 v1 v2 v3 v4
                  (coe
                     MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'8594''45'dec__106
                     (coe
-                       MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_expired'63'_3270
-                       (coe v0) (coe v4)
-                       (coe MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30 (coe v5)))
+                       MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_expired'63'_2460
+                       (coe
+                          MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_govStructure_2490
+                          (coe v0))
+                       (coe v4) (coe MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30 (coe v5)))
                     (coe
                        MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
                        (coe MAlonzo.Code.Agda.Builtin.Bool.C_false_8)
