@@ -216,6 +216,7 @@ Of particular note in the Dijkstra era are
       field
         txBody       : TxBody txLevel
         txWitnesses  : TxWitnesses txLevel
+        txSize       : ℕ
         isValid      : InTopLevel txLevel Bool
         txAuxData    : Maybe AuxiliaryData
 
@@ -283,13 +284,62 @@ could be either of them.
 
 <!--
 ```agda
+  -- Level-Dependent Type Classes --
   record HasTxBody {txLevel} {a} (A : Type a) : Type a where
     field TxBodyOf : A → TxBody txLevel
   open HasTxBody  ⦃...⦄ public
 
-  record HasTxId    {a} (A : Type a) : Type a where
-    field TxIdOf    : A → TxId
-  open HasTxId    ⦃...⦄ public
+  record HasTxWitnesses {txLevel} {a} (A : Type a) : Type a where
+    field TxWitnessesOf : A → TxWitnesses txLevel
+  open HasTxWitnesses ⦃...⦄ public
+
+  record HasRedeemers {txLevel} {a} (A : Type a) : Type a where
+    field RedeemersOf : A → RedeemerPtr txLevel ⇀ Redeemer × ExUnits
+  open HasRedeemers ⦃...⦄ public
+
+  -- (top-level only) --
+  record HasCollateralInputs {txLevel} {a} (A : Type a) : Type a where
+    field CollateralInputsOf : A → InTopLevel txLevel (ℙ TxIn)
+  open HasCollateralInputs ⦃...⦄ public
+
+  record HasTxFees {txLevel} {a} (A : Type a) : Type a where
+    field TxFeesOf : A → InTopLevel txLevel Fees
+  open HasTxFees ⦃...⦄ public
+
+  record HasSubTransactions {txLevel} {a} (A : Type a) : Type a where
+    field SubTransactionsOf : A → InTopLevel txLevel (List (Tx TxLevelSub))
+  open HasSubTransactions ⦃...⦄ public
+
+  -- (sub-level only) --
+  record HasTopLevelGuards {txLevel} {a} (A : Type a) : Type a where
+    field TopLevelGuardsOf : A → InSubLevel txLevel (ℙ (Credential × Maybe Datum))
+  open HasTopLevelGuards ⦃...⦄ public
+
+
+  -- Level-Independent Type Classes --
+  record HasTxId {a} (A : Type a) : Type a where
+    field TxIdOf : A → TxId
+  open HasTxId ⦃...⦄ public
+
+  record HasSize {a} (A : Type a) : Type a where
+    field SizeOf : A → ℕ
+  open HasSize ⦃...⦄ public
+
+  record HasSpendInputs {a} (A : Type a) : Type a where
+    field SpendInputsOf : A → ℙ TxIn
+  open HasSpendInputs ⦃...⦄ public
+
+  record HasReferenceInputs {a} (A : Type a) : Type a where
+    field ReferenceInputsOf : A → ℙ TxIn
+  open HasReferenceInputs ⦃...⦄ public
+
+  record HasIndexedOutputs {a} (A : Type a) : Type a where
+    field IndexedOutputsOf : A → Ix ⇀ TxOut
+  open HasIndexedOutputs ⦃...⦄ public
+
+  record HasMintedValue {a} (A : Type a) : Type a where
+    field MintedValueOf : A → Value
+  open HasMintedValue ⦃...⦄ public
 
   record HasFees? {a} (A : Type a) : Type a where
     field FeesOf? : A → Maybe Fees
@@ -302,14 +352,6 @@ could be either of them.
   record HasData {a} (A : Type a) : Type a where
     field DataOf : A → ℙ Datum
   open HasData ⦃...⦄ public
-
-  record HasTxWitnesses {txLevel} {a} (A : Type a) : Type a where
-    field TxWitnessesOf : A → TxWitnesses txLevel
-  open HasTxWitnesses ⦃...⦄ public
-
-  record HasValue {a} (A : Type a) : Type a where
-    field ValueOf : A → Value
-  open HasValue ⦃...⦄ public
 
   record HasSubTransactions {txLevel} {a} (A : Type a) : Type a where
     field SubTransactionsOf : A → InTopLevel txLevel (List (Tx TxLevelSub))
@@ -331,15 +373,40 @@ could be either of them.
     field GovVotesOf : A → List GovVote
   open HasGovVotes ⦃...⦄ public
 
+
   instance
     HasTxBody-Tx : HasTxBody (Tx txLevel)
     HasTxBody-Tx .TxBodyOf = Tx.txBody
 
+    HasSize-Tx : HasSize (Tx txLevel)
+    HasSize-Tx .SizeOf = Tx.txSize
+
     HasTxWitnesses-Tx : HasTxWitnesses (Tx txLevel)
     HasTxWitnesses-Tx .TxWitnessesOf = Tx.txWitnesses
 
+    HasRedeemers-TxWitnesses : HasRedeemers (TxWitnesses txLevel)
+    HasRedeemers-TxWitnesses .RedeemersOf = TxWitnesses.txRedeemers
+
+    HasRedeemers-Tx : HasRedeemers (Tx txLevel)
+    HasRedeemers-Tx .RedeemersOf = RedeemersOf ∘ TxWitnessesOf
+
+    HasCollateralInputs-TopLevelTx : HasCollateralInputs TopLevelTx
+    HasCollateralInputs-TopLevelTx .CollateralInputsOf = TxBody.collateralInputs ∘ TxBodyOf
+
+    HasTxFees-TopLevelTx : HasTxFees TopLevelTx
+    HasTxFees-TopLevelTx .TxFeesOf = TxBody.txFee ∘ TxBodyOf
+
+    HasSubTransactions-TopLevelTx : HasSubTransactions TopLevelTx
+    HasSubTransactions-TopLevelTx .SubTransactionsOf = TxBody.txSubTransactions ∘ TxBodyOf
+
+    HasTopLevelGuards-SubLevelTx : HasTopLevelGuards SubLevelTx
+    HasTopLevelGuards-SubLevelTx .TopLevelGuardsOf = TxBody.txRequiredTopLevelGuards ∘ TxBodyOf
+
     HasDCerts-TxBody : HasDCerts (TxBody txLevel)
     HasDCerts-TxBody .DCertsOf = TxBody.txCerts
+
+    HasDCerts-Tx : HasDCerts (Tx txLevel)
+    HasDCerts-Tx .DCertsOf = DCertsOf ∘ TxBodyOf
 
     HasWithdrawals-TxBody : HasWithdrawals (TxBody txLevel)
     HasWithdrawals-TxBody .WithdrawalsOf = TxBody.txWithdrawals
@@ -359,8 +426,32 @@ could be either of them.
     HasReferenceInputs-Tx : HasReferenceInputs (Tx txLevel)
     HasReferenceInputs-Tx .ReferenceInputsOf = ReferenceInputsOf ∘ TxBodyOf
 
-    HasValue-TxBody : HasValue (TxBody txLevel)
-    HasValue-TxBody .ValueOf = TxBody.mint
+    HasSpendInputs-TxBody : HasSpendInputs (TxBody txLevel)
+    HasSpendInputs-TxBody .SpendInputsOf = TxBody.txIns
+
+    HasSpendInputs-Tx : HasSpendInputs (Tx txLevel)
+    HasSpendInputs-Tx .SpendInputsOf = SpendInputsOf ∘ TxBodyOf
+
+    HasReferenceInputs-TxBody : HasReferenceInputs (TxBody txLevel)
+    HasReferenceInputs-TxBody .ReferenceInputsOf = TxBody.refInputs
+
+    HasReferenceInputs-Tx : HasReferenceInputs (Tx txLevel)
+    HasReferenceInputs-Tx .ReferenceInputsOf = ReferenceInputsOf ∘ TxBodyOf
+
+    HasIndexedOutputs-TxBody : HasIndexedOutputs (TxBody txLevel)
+    HasIndexedOutputs-TxBody .IndexedOutputsOf = TxBody.txOuts
+
+    HasIndexedOutputs-Tx : HasIndexedOutputs (Tx txLevel)
+    HasIndexedOutputs-Tx .IndexedOutputsOf = IndexedOutputsOf ∘ TxBodyOf
+
+    -- HasValue-TxBody : HasValue (TxBody txLevel)
+    -- HasValue-TxBody .ValueOf = TxBody.mint
+
+    HasMintedValue-TxBody : HasMintedValue (TxBody txLevel)
+    HasMintedValue-TxBody .MintedValueOf = TxBody.mint
+
+    HasMintedValue-Tx : HasMintedValue (Tx txLevel)
+    HasMintedValue-Tx .MintedValueOf = MintedValueOf ∘ TxBodyOf
 
     HasGovVotes-TxBody : HasGovVotes (TxBody txLevel)
     HasGovVotes-TxBody .GovVotesOf = TxBody.txGovVotes
@@ -396,8 +487,17 @@ could be either of them.
     HasReferenceInputs-Tx : HasReferenceInputs (Tx txLevel)
     HasReferenceInputs-Tx .ReferenceInputsOf = ReferenceInputsOf ∘ TxBodyOf
 
+    HasTxId-TxBody : HasTxId (TxBody txLevel)
+    HasTxId-TxBody .TxIdOf = TxBody.txId
+
     HasTxId-Tx : HasTxId (Tx txLevel)
-    HasTxId-Tx .TxIdOf = TxBody.txId ∘ TxBodyOf
+    HasTxId-Tx .TxIdOf = TxIdOf ∘ TxBodyOf
+
+    HasDonations-TxBody : HasDonations (TxBody txLevel)
+    HasDonations-TxBody .DonationsOf = TxBody.txDonation
+
+    HasDonations-Tx : HasDonations (Tx txLevel)
+    HasDonations-Tx .DonationsOf = DonationsOf ∘ TxBodyOf
 
     HasCoin-TxOut : HasCoin TxOut
     HasCoin-TxOut .getCoin = coin ∘ proj₁ ∘ proj₂

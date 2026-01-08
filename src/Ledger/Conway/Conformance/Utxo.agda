@@ -19,7 +19,7 @@ module Ledger.Conway.Conformance.Utxo
   where
 
 open import Ledger.Conway.Specification.Script.Validation txs abs
-open import Ledger.Conway.Specification.Fees txs using (scriptsCost)
+open import Ledger.Conway.Specification.Fees using (scriptsCost)
 open import Ledger.Conway.Conformance.Certs govStructure
 
 private

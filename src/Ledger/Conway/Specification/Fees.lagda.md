@@ -7,11 +7,18 @@ This section defines the function used to compute the fees associated with refer
 {-# OPTIONS --safe #-}
 
 open import Ledger.Prelude hiding (_%_; _*_; ≤-trans; ∣_∣)
-open import Ledger.Conway.Specification.Abstract
-open import Ledger.Conway.Specification.Transaction
+-- open import Ledger.Conway.Specification.Abstract
+-- open import Ledger.Conway.Specification.Transaction
+
+open import Ledger.Core.Specification.Crypto
+open import Ledger.Core.Specification.Epoch
+open import Ledger.Conway.Specification.Script.Base
+open import Ledger.Conway.Specification.PParams
 
 module Ledger.Conway.Specification.Fees
-  (txs : _) (open TransactionStructure txs)
+  {cryptoStructure : _} {epochStructure : _}
+  {scriptStructure : ScriptStructure cryptoStructure epochStructure}
+  (pp : PParams cryptoStructure epochStructure scriptStructure)
   where
 
 open import Data.Rational using (0ℚ; ℚ; mkℚ+; _*_; floor)
@@ -52,8 +59,8 @@ are bundled with the protocol parameters (see the
 For background on this method of fee calculation, see [Kuleshevich24](#adr9).
 
 ```agda
-scriptsCost : (pp : PParams) → ℕ → Coin
-scriptsCost pp scriptSize
+scriptsCost : ℕ → Coin
+scriptsCost scriptSize
   = scriptsCostAux 0ℚ minFeeRefScriptCoinsPerByte scriptSize (<′-wellFounded scriptSize)
     where
     minFeeRefScriptCoinsPerByte refScriptCostMultiplier : ℚ

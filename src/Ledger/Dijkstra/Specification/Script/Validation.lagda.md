@@ -114,7 +114,7 @@ credsNeededMinusCollateral : {ℓ : TxLevel} → TxBody ℓ → ℙ (ScriptPurpo
 credsNeededMinusCollateral txb =
   mapˢ (λ a → (Rwrd a , CredentialOf a)) (dom ∣ WithdrawalsOf txb ∣)
   ∪ mapPartial (λ c → (Cert c ,_) <$> cwitness c) (fromList (DCertsOf txb))
-  ∪ mapˢ (λ x → (Mint x , ScriptObj x)) (policies (ValueOf txb))
+  ∪ mapˢ (λ x → (Mint x , ScriptObj x)) (policies (MintedValueOf txb))
   ∪ mapPartial (λ v → if isGovVoterCredential v then (λ {c} → just (Vote v , c)) else nothing)
                  (fromList (map GovVoterOf (GovVotesOf txb)))
   ∪ mapPartial (λ p → if PolicyOf p then (λ {sh} → just (Propose  p , ScriptObj sh)) else nothing)
@@ -132,7 +132,7 @@ credsNeeded TxLevelSub utxo txb = credsNeededMinusCollateral txb
 txOutToDataHash : TxOut → Maybe DataHash
 txOutToDataHash (_ , _ , d , _) = d >>= isInj₂
 
-txOutToP2Script : UTxO → UTxO → (Tx ℓ) → TxOut → Maybe P2Script
+txOutToP2Script : UTxO → UTxO → Tx ℓ → TxOut → Maybe P2Script
 txOutToP2Script utxoSpend₀ utxoRefView tx (a , _) =
   do sh ← isScriptObj (payCred a)
      s  ← lookupScriptHash sh tx utxoSpend₀ utxoRefView
@@ -140,7 +140,7 @@ txOutToP2Script utxoSpend₀ utxoRefView tx (a , _) =
 
 opaque
   collectP2ScriptsWithContext
-    :  {ℓ : TxLevel} → PParams → (Tx ℓ) → UTxO → UTxO
+    :  {ℓ : TxLevel} → PParams → Tx ℓ → UTxO → UTxO
        → List (P2Script × List Data × ExUnits × CostModel)
   collectP2ScriptsWithContext {ℓ} pp tx utxoSpend₀ utxoRefView
     = setToList  $ mapPartial ( λ (sp , c) →  if isScriptObj c
