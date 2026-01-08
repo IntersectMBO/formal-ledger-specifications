@@ -35,6 +35,8 @@ module C where
 open import Ledger.Conway.Conformance.Equivalence.Certs txs abs
 open import Ledger.Conway.Conformance.Equivalence.Utxo txs abs
 open import Ledger.Conway.Conformance.Equivalence.Deposits txs abs
+open import Ledger.Conway.Conformance.Equivalence.Ledger txs abs
+  using (LStateToConf; LStateFromConf)
 
 open Tx
 open import Axiom.Set.Properties th using (≡ᵉ-Setoid)
@@ -119,12 +121,6 @@ lem-cert-deposits-invalid refl (L.LEDGER-I⋯ _ utxow) rewrite lemInvalidDeposit
   (id , id) , (id , id)
 
 instance
-  LStateToConf : L.Deposits × L.Deposits ⊢ L.LState ⭆ C.LState
-  LStateToConf .convⁱ deposits ledgerSt =
-    let open L.LState ledgerSt in
-    ⟦ utxoSt , govSt , deposits ⊢conv certState ⟧
-
-instance
   LEDGERToConf : ∀ {Γ s tx s'}
                → Γ L.⊢ s ⇀⦇ tx ,LEDGER⦈ s' ⭆
                  ∃[ certDeposits-s' ]
@@ -167,13 +163,6 @@ instance
     subst (λ • → Γ C.⊢ _ ⊢conv s ⇀⦇ tx ,LEDGER⦈ ⟦ ⟦ _ , _ , • , _ ⟧ , _ , _ ⟧)
           (lemInvalidDepositsL refl utxow)
           (C.LEDGER-I⋯ refl (conv utxow))
-
-instance
-
-  LStateFromConf : C.LState ⭆ L.LState
-  LStateFromConf .convⁱ _ ls =
-    let open C.LState ls in
-    ⟦ utxoSt , govSt , conv certState ⟧
 
 certDepositsC : C.CertState → L.Deposits × L.Deposits
 certDepositsC cs = let open C.CertState cs in C.DState.deposits dState , C.GState.deposits gState
@@ -439,3 +428,7 @@ bisimilarityProof .Bisimilar.from {Γ} {tx} {sˡ} {sᶜ} {sᶜ'} (eqd , refl) r 
     wf  = ≡ᵈ-sym {certDeposits (conv sᶜ)} {certDepositsC (C.LState.certState sᶜ)} eqd
     wf' = ≡ᵈ-sym {certDepositsC (C.LState.certState sᶜ')} {certDeposits (conv sᶜ')} (lemWellformed wf r)
     r' = wf ⊢conv r
+
+
+bisimilarityLEDGERS : Bisimilar L._⊢_⇀⦇_,LEDGERS⦈_ C._⊢_⇀⦇_,LEDGERS⦈_
+bisimilarityLEDGERS = bisimilarity* bisimilarityProof
