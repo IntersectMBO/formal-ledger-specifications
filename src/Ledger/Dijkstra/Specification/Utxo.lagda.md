@@ -3,15 +3,12 @@ source_branch: master
 source_path: src/Ledger/Dijkstra/Specification/Utxo.lagda.md
 ---
 
-# UTxO
+# The UTxO Transition System
 
-(Dijkstra skeleton)
-
-This is a **minimal skeleton** of the Dijkstra-era UTxO transition system.
-
-It exists primarily to host **phase-1 structural checks** that are specific to
-Dijkstra (CIP-0118 / CIP-0112), without yet committing to the full batch semantics
-(issue #1007) or phase-2 execution model (issue #1006).
+This is a **work-in-progress** of the Dijkstra-era UTxO transition system.  It
+previously formalized just the phase-1 structural checks specific to Dijkstra, but it
+now also includes a first pass at formalizing the full batch semantics and phase-2
+execution model (see Issues #1006, #1007).
 
 <!--
 ```agda
@@ -306,12 +303,12 @@ consumedSub s txSub = balance (UTxOOf s ∣ SpendInputsOf txSub)
 producedSub : SubLevelTx → Value
 producedSub txSub = balance (outs txSub) + inject (DonationsOf txSub)
 
-module _ {Γ : UTxOEnv} {s : UTxOState} where
+module _ (Γ : UTxOEnv) (s : UTxOState) where
 
   getP2ScriptsWithContextOf : {ℓ : TxLevel} → Tx ℓ → List (P2Script × List Data × ExUnits × CostModel)
   getP2ScriptsWithContextOf {ℓ} tx = collectP2ScriptsWithContext {ℓ = ℓ} (PParamsOf Γ) tx (UTxOOf Γ) (utxoRefView s)
 
-  module _ {txTop : TopLevelTx} where
+  module _ (txTop : TopLevelTx) where
 
     Δdeposits : ℤ
     Δdeposits = depositsChange (PParamsOf Γ) txTop (DepositsOf s)
@@ -349,16 +346,57 @@ module _ {Γ : UTxOEnv} {s : UTxOState} where
     batchPOV : Type
     batchPOV = batchConsumed ≡ batchProduced
 
+
+
+module Batch (Γ : UTxOEnv) (s : UTxOState) (txTop : TopLevelTx) where
+
+  -- union a list of sets
+  concatMapˡ : {A B : Type} → (A → ℙ B) → List A → ℙ B
+  concatMapˡ f as = proj₁ $ unions (fromList (map f as))
+  -- (maybe move this to agda-sets or src-lib-exts)
+
+  batchSpendInputs : ℙ TxIn
+  batchSpendInputs =  SpendInputsOf txTop ∪ concatMapˡ SpendInputsOf (SubTransactionsOf txTop)
+
+  -- union UTxO maps for outputs.
+  batchOuts : UTxO
+  batchOuts = outs txTop ∪ˡ foldr (λ sub acc → outs sub ∪ˡ acc) ∅ (SubTransactionsOf txTop)
+
+  utxoSuccess : UTxO
+  utxoSuccess =  (UTxOOf s ∣ batchSpendInputs ᶜ)  -- remove ALL batch spend inputs
+                 ∪ˡ batchOuts                     -- add ALL outputs (top + subs)
+
+  depositsSuccess : Deposits
+  depositsSuccess = foldr  (λ sub deps → updateDeposits (PParamsOf Γ) sub deps)
+                           (updateDeposits (PParamsOf Γ) txTop (DepositsOf s))
+                           (SubTransactionsOf txTop)
+
+  donationsSuccess : Donations
+  donationsSuccess =  DonationsOf s + DonationsOf txTop
+                      + sum (map DonationsOf (SubTransactionsOf txTop))
+
+  feesSuccess : Fees
+  feesSuccess = FeesOf s + TxFeesOf txTop
+
+  successState : UTxOState
+  successState = ⟦ utxoSuccess , feesSuccess , depositsSuccess , donationsSuccess ⟧
+
+  collateralCoin : Coin
+  collateralCoin = coin (balance (UTxOOf s ∣ CollateralInputsOf txTop))
+
+  utxoFailure : UTxO
+  utxoFailure = UTxOOf s ∣ (CollateralInputsOf txTop) ᶜ
+
+  -- assuming for now that collateral is collected by adding it to fees
+  feesFailure : Fees
+  feesFailure = FeesOf s + collateralCoin
+
+  failureState : UTxOState
+  failureState = ⟦ utxoFailure , feesFailure , DepositsOf s , DonationsOf s ⟧
 ```
 
 
-
-## UTXOS
-
-(skeleton/stub)
-
-`UTXOS` will eventually process the batch (top-level tx + its subTxs) and handle
-phase-2 success/failure behavior.  For now it is merely a hook point.
+## The <span class="AgdaDatatype">UTXOS</span> Rule
 
 ```agda
 private variable
@@ -368,17 +406,29 @@ private variable
   stx : SubLevelTx
 
 data _⊢_⇀⦇_,UTXOS⦈_ : UTxOEnv → UTxOState → TopLevelTx → UTxOState → Type where
-  UTXOS-stub :
-    ────────────────────────────────
-    Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ s
+
+  UTXOS-success :
+
+    let open Batch Γ s tx in
+
+    ∙ Tx.isValid tx ≡ batchScriptsOk Γ s tx
+    ∙ batchScriptsOk Γ s tx ≡ true
+    ∙ batchPOV Γ s tx
+      ────────────────────────────────
+      Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ successState
+
+  UTXOS-failure :
+
+    let open Batch Γ s tx in
+
+    ∙ Tx.isValid tx ≡ batchScriptsOk Γ s tx
+    ∙ batchScriptsOk Γ s tx ≡ false
+    ∙ collateralCheck (PParamsOf Γ) tx (UTxOOf s)
+      ────────────────────────────────
+      Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ failureState
 ```
 
-## The <span class="AgdaDatatype">UTXO</span> Transition System {#sec:the-utxo-transition-system}
-
-### New in Dijkstra
-
-1. The set of spending inputs must exist in the UTxO _before_ applying the
-transaction (or partially applying any part of it). TODO: Add link to CIP once its finalized.
+## The <span class="AgdaDatatype">UTXO</span> Rule
 
 
 ```agda
