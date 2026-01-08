@@ -216,6 +216,7 @@ Of particular note in the Dijkstra era are
       field
         txBody       : TxBody txLevel
         txWitnesses  : TxWitnesses txLevel
+        txSize       : ℕ
         isValid      : InTopLevel txLevel Bool
         txAuxData    : Maybe AuxiliaryData
 
@@ -340,14 +341,6 @@ could be either of them.
     field MintedValueOf : A → Value
   open HasMintedValue ⦃...⦄ public
 
-  record HasSpendInputs {a} (A : Type a) : Type a where
-    field SpendInputsOf : A → ℙ TxIn
-  open HasSpendInputs ⦃...⦄ public
-
-  record HasReferenceInputs {a} (A : Type a) : Type a where
-    field ReferenceInputsOf : A → ℙ TxIn
-  open HasReferenceInputs ⦃...⦄ public
-
   record HasFees? {a} (A : Type a) : Type a where
     field FeesOf? : A → Maybe Fees
   open HasFees? ⦃...⦄ public
@@ -383,6 +376,9 @@ could be either of them.
   instance
     HasTxBody-Tx : HasTxBody (Tx txLevel)
     HasTxBody-Tx .TxBodyOf = Tx.txBody
+
+    HasSize-Tx : HasSize (Tx txLevel)
+    HasSize-Tx .SizeOf = Tx.txSize
 
     HasTxWitnesses-Tx : HasTxWitnesses (Tx txLevel)
     HasTxWitnesses-Tx .TxWitnessesOf = Tx.txWitnesses
@@ -547,13 +543,24 @@ UTxO environment and state at this point.)
   txOutToScript : TxOut → Maybe Script
   txOutToScript (_ , _ , _ , s) = s
 
+  spendInputScripts : UTxO → Tx txLevel → ℙ Script
+  spendInputScripts utxo tx =
+    mapPartial txOutToScript (range (utxo ∣ SpendInputsOf tx))
+
+  refInputScripts : UTxO → Tx txLevel → ℙ Script
+  refInputScripts utxo tx =
+    mapPartial txOutToScript (range (utxo ∣ ReferenceInputsOf tx))
+
+  txOutputScripts : Tx txLevel → ℙ Script
+  txOutputScripts tx =
+    mapPartial txOutToScript (range (TxOutsOf tx ˢ))
+
   getTxScripts : UTxO → Tx txLevel → ℙ Script
   getTxScripts utxo tx =
-    ScriptsOf tx                              -- (1) scripts from witnesses
-    ∪ mapPartial txOutToScript
-       ( range (utxo ∣ SpendInputsOf tx)      -- (2) scripts from spending inputs
-       ∪ range (utxo ∣ ReferenceInputsOf tx)  -- (3) scripts from reference inputs
-       ∪ range (TxOutsOf tx ˢ))                -- (4) scripts from transaction outputs
+    ScriptsOf tx                 -- (1) scripts from witnesses
+    ∪ spendInputScripts utxo tx  -- (2) scripts from spending inputs
+    ∪ refInputScripts utxo tx    -- (3) scripts from reference inputs
+    ∪ txOutputScripts tx         -- (4) scripts from transaction outputs
 
   getAllScripts : TopLevelTx → UTxO → ℙ P1Script × ℙ P2Script
   getAllScripts tx utxo = mapPartial toP1Script allScripts , mapPartial toP2Script allScripts
@@ -574,7 +581,7 @@ UTxO environment and state at this point.)
     ∪ mapPartial txOutToDatum
        ( range (utxo ∣ SpendInputsOf tx)      -- (2) data from spending inputs
        ∪ range (utxo ∣ ReferenceInputsOf tx)  -- (3) data from reference inputs
-       ∪ range (TxOutsOf tx ˢ))                -- (4) data from transaction outputs
+       ∪ range (TxOutsOf tx ˢ))               -- (4) data from transaction outputs
 
   getAllData : TopLevelTx → UTxO → ℙ Datum
   getAllData tx utxo = getTxData utxo tx
