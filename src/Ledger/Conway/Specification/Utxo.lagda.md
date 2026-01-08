@@ -1,3 +1,8 @@
+---
+source_branch: master
+source_path: src/Ledger/Conway/Specification/Utxo.lagda.md
+---
+
 # UTxO {#sec:utxo}
 
 The UTxO transition system is built up from a number of smaller parts defined in this

@@ -1,6 +1,6 @@
 ---
 source_branch: master
-source_path: src/Ledger/Conway/Specification/Utxow.lagda
+source_path: src/Ledger/Conway/Specification/Utxow.lagda.md
 ---
 
 # Witnessing {#sec:witnessing}
