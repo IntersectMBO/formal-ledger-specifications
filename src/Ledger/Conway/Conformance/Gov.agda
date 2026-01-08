@@ -18,8 +18,8 @@ open import Ledger.Conway.Conformance.Certs govStructure
 open import Ledger.Conway.Conformance.Equivalence.Certs txs abs
 open import Ledger.Conway.Conformance.Equivalence.Convert
 
-open import Ledger.Conway.Specification.Gov txs using (GovState) public
-import Ledger.Conway.Specification.Gov txs as L
+open import Ledger.Conway.Specification.Gov govStructure using (GovState) public
+import Ledger.Conway.Specification.Gov govStructure as L
 
 record GovEnv : Type where
   field

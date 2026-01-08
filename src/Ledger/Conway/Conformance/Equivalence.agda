@@ -23,7 +23,7 @@ module L where
   open import Ledger.Conway.Specification.Ledger txs abs public
   open import Ledger.Conway.Specification.Utxo txs abs public
   open import Ledger.Conway.Specification.Utxow txs abs public
-  open import Ledger.Conway.Specification.Gov txs public
+  open import Ledger.Conway.Specification.Gov govStructure public
   open import Ledger.Conway.Specification.Certs govStructure public
 
 module C where
