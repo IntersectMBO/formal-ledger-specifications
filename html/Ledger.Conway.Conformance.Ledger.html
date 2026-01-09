@@ -10,7 +10,7 @@
 
 <a id="207" class="Keyword">module</a> <a id="214" href="Ledger.Conway.Conformance.Ledger.html" class="Module">Ledger.Conway.Conformance.Ledger</a>
   <a id="249" class="Symbol">(</a><a id="250" href="Ledger.Conway.Conformance.Ledger.html#250" class="Bound">txs</a> <a id="254" class="Symbol">:</a> <a id="256" class="Symbol">_)</a> <a id="259" class="Symbol">(</a><a id="260" class="Keyword">open</a> <a id="265" href="Ledger.Conway.Specification.Transaction.html#999" class="Module">TransactionStructure</a> <a id="286" href="Ledger.Conway.Conformance.Ledger.html#250" class="Bound">txs</a><a id="289" class="Symbol">)</a>
-  <a id="293" class="Symbol">(</a><a id="294" href="Ledger.Conway.Conformance.Ledger.html#294" class="Bound">abs</a> <a id="298" class="Symbol">:</a> <a id="300" href="Ledger.Conway.Specification.Abstract.html#829" class="Record">AbstractFunctions</a> <a id="318" href="Ledger.Conway.Conformance.Ledger.html#250" class="Bound">txs</a><a id="321" class="Symbol">)</a> <a id="323" class="Symbol">(</a><a id="324" class="Keyword">open</a> <a id="329" href="Ledger.Conway.Specification.Abstract.html#829" class="Module">AbstractFunctions</a> <a id="347" href="Ledger.Conway.Conformance.Ledger.html#294" class="Bound">abs</a><a id="350" class="Symbol">)</a>
+  <a id="293" class="Symbol">(</a><a id="294" href="Ledger.Conway.Conformance.Ledger.html#294" class="Bound">abs</a> <a id="298" class="Symbol">:</a> <a id="300" href="Ledger.Conway.Specification.Abstract.html#830" class="Record">AbstractFunctions</a> <a id="318" href="Ledger.Conway.Conformance.Ledger.html#250" class="Bound">txs</a><a id="321" class="Symbol">)</a> <a id="323" class="Symbol">(</a><a id="324" class="Keyword">open</a> <a id="329" href="Ledger.Conway.Specification.Abstract.html#830" class="Module">AbstractFunctions</a> <a id="347" href="Ledger.Conway.Conformance.Ledger.html#294" class="Bound">abs</a><a id="350" class="Symbol">)</a>
   <a id="354" class="Keyword">where</a>
 
 <a id="361" class="Keyword">open</a> <a id="366" class="Keyword">import</a> <a id="373" href="Ledger.Conway.Specification.Enact.html" class="Module">Ledger.Conway.Specification.Enact</a> <a id="407" href="Ledger.Conway.Specification.Transaction.html#2077" class="Function">govStructure</a>
@@ -28,7 +28,7 @@
   <a id="801" class="Keyword">constructor</a> <a id="⟦_,_,_⟧ˡ"></a><a id="813" href="Ledger.Conway.Conformance.Ledger.html#813" class="InductiveConstructor Operator">⟦_,_,_⟧ˡ</a>
   <a id="824" class="Keyword">field</a>
     <a id="LState.utxoSt"></a><a id="834" href="Ledger.Conway.Conformance.Ledger.html#834" class="Field">utxoSt</a>     <a id="845" class="Symbol">:</a> <a id="847" href="Ledger.Conway.Specification.Utxo.html#1230" class="Record">UTxOState</a>
-    <a id="LState.govSt"></a><a id="861" href="Ledger.Conway.Conformance.Ledger.html#861" class="Field">govSt</a>      <a id="872" class="Symbol">:</a> <a id="874" href="Ledger.Conway.Specification.Gov.html#1465" class="Function">GovState</a>
+    <a id="LState.govSt"></a><a id="861" href="Ledger.Conway.Conformance.Ledger.html#861" class="Field">govSt</a>      <a id="872" class="Symbol">:</a> <a id="874" href="Ledger.Conway.Specification.Gov.html#1474" class="Function">GovState</a>
     <a id="LState.certState"></a><a id="887" href="Ledger.Conway.Conformance.Ledger.html#887" class="Field">certState</a>  <a id="898" class="Symbol">:</a> <a id="900" href="Ledger.Conway.Conformance.Certs.html#962" class="Record">CertState</a>
 
 <a id="911" class="Keyword">instance</a>
@@ -39,7 +39,7 @@
   <a id="1026" href="Ledger.Conway.Conformance.Ledger.html#1026" class="Generalizable">Γ</a> <a id="1028" class="Symbol">:</a> <a id="1030" href="Ledger.Conway.Specification.Ledger.html#713" class="Record">LEnv</a>
   <a id="1037" href="Ledger.Conway.Conformance.Ledger.html#1037" class="Generalizable">s</a> <a id="1039" href="Ledger.Conway.Conformance.Ledger.html#1039" class="Generalizable">s&#39;</a> <a id="1042" href="Ledger.Conway.Conformance.Ledger.html#1042" class="Generalizable">s&#39;&#39;</a> <a id="1046" class="Symbol">:</a> <a id="1048" href="Ledger.Conway.Conformance.Ledger.html#779" class="Record">LState</a>
   <a id="1057" href="Ledger.Conway.Conformance.Ledger.html#1057" class="Generalizable">utxoSt&#39;</a> <a id="1065" class="Symbol">:</a> <a id="1067" href="Ledger.Conway.Specification.Utxo.html#1230" class="Record">UTxOState</a>
-  <a id="1079" href="Ledger.Conway.Conformance.Ledger.html#1079" class="Generalizable">govSt&#39;</a> <a id="1086" class="Symbol">:</a> <a id="1088" href="Ledger.Conway.Specification.Gov.html#1465" class="Function">GovState</a>
+  <a id="1079" href="Ledger.Conway.Conformance.Ledger.html#1079" class="Generalizable">govSt&#39;</a> <a id="1086" class="Symbol">:</a> <a id="1088" href="Ledger.Conway.Specification.Gov.html#1474" class="Function">GovState</a>
   <a id="1099" href="Ledger.Conway.Conformance.Ledger.html#1099" class="Generalizable">certState&#39;</a> <a id="1110" class="Symbol">:</a> <a id="1112" href="Ledger.Conway.Conformance.Certs.html#962" class="Record">CertState</a>
   <a id="1124" href="Ledger.Conway.Conformance.Ledger.html#1124" class="Generalizable">tx</a> <a id="1127" class="Symbol">:</a> <a id="1129" href="Ledger.Conway.Specification.Transaction.html#4682" class="Record">Tx</a>
 
