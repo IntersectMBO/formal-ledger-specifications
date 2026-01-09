@@ -422,18 +422,6 @@ could be either of them.
     HasReferenceInputs-Tx : HasReferenceInputs (Tx txLevel)
     HasReferenceInputs-Tx .ReferenceInputsOf = ReferenceInputsOf ∘ TxBodyOf
 
-    HasSpendInputs-TxBody : HasSpendInputs (TxBody txLevel)
-    HasSpendInputs-TxBody .SpendInputsOf = TxBody.txIns
-
-    HasSpendInputs-Tx : HasSpendInputs (Tx txLevel)
-    HasSpendInputs-Tx .SpendInputsOf = SpendInputsOf ∘ TxBodyOf
-
-    HasReferenceInputs-TxBody : HasReferenceInputs (TxBody txLevel)
-    HasReferenceInputs-TxBody .ReferenceInputsOf = TxBody.refInputs
-
-    HasReferenceInputs-Tx : HasReferenceInputs (Tx txLevel)
-    HasReferenceInputs-Tx .ReferenceInputsOf = ReferenceInputsOf ∘ TxBodyOf
-
     HasIndexedOutputs-TxBody : HasIndexedOutputs (TxBody txLevel)
     HasIndexedOutputs-TxBody .IndexedOutputsOf = TxBody.txOuts
 

@@ -345,6 +345,12 @@ module _ (Γ : UTxOEnv) (s : UTxOState) where
     batchPOV : Type
     batchPOV = batchConsumed ≡ batchProduced
 
+    -- Total Ada minted across the entire batch (top-level tx + all sub-txs).
+    -- This must equal 0 to prevent Ada forgery and maintain the total Ada supply invariant.
+    -- Analogous to Conway's `coin mint ≡ 0` constraint, but generalized to batches.
+    batchMintedCoin : Coin
+    batchMintedCoin = coin (MintedValueOf txTop) + sum (map (λ txSub → coin (MintedValueOf txSub)) (SubTransactionsOf txTop))
+
 
 
 module Batch (Γ : UTxOEnv) (s : UTxOState) (txTop : TopLevelTx) where
@@ -397,13 +403,18 @@ module Batch (Γ : UTxOEnv) (s : UTxOState) (txTop : TopLevelTx) where
 
 ## The <span class="AgdaDatatype">UTXOS</span> Rule
 
+
+<!--
 ```agda
 private variable
   Γ : UTxOEnv
   s s' : UTxOState
   tx : TopLevelTx
   stx : SubLevelTx
+```
+-->
 
+```agda
 data _⊢_⇀⦇_,UTXOS⦈_ : UTxOEnv → UTxOState → TopLevelTx → UTxOState → Type where
 
   UTXO-scripts✓ :
@@ -413,6 +424,7 @@ data _⊢_⇀⦇_,UTXOS⦈_ : UTxOEnv → UTxOState → TopLevelTx → UTxOState
     ∙ Tx.isValid tx ≡ batchScripts✓ Γ s tx
     ∙ batchScripts✓ Γ s tx ≡ true
     ∙ batchPOV Γ s tx
+    ∙ batchMintedCoin Γ s tx ≡ 0
       ────────────────────────────────
       Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ s'-scripts✓
 
