@@ -398,13 +398,18 @@ module Batch (Γ : UTxOEnv) (s : UTxOState) (txTop : TopLevelTx) where
 
 ## The <span class="AgdaDatatype">UTXOS</span> Rule
 
+
+<!--
 ```agda
 private variable
   Γ : UTxOEnv
   s s' : UTxOState
   tx : TopLevelTx
   stx : SubLevelTx
+```
+-->
 
+```agda
 data _⊢_⇀⦇_,UTXOS⦈_ : UTxOEnv → UTxOState → TopLevelTx → UTxOState → Type where
 
   UTXO-scripts✓ :
