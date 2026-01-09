@@ -346,6 +346,9 @@ module _ (Γ : UTxOEnv) (s : UTxOState) where
     batchPOV : Type
     batchPOV = batchConsumed ≡ batchProduced
 
+    -- Total Ada minted across the entire batch (top-level tx + all sub-txs).
+    -- This must equal 0 to prevent Ada forgery and maintain the total Ada supply invariant.
+    -- Analogous to Conway's `coin mint ≡ 0` constraint, but generalized to batches.
     batchMintedCoin : Coin
     batchMintedCoin = coin (MintedValueOf txTop) + ∑[ txSub ← SubTransactionsOf txTop ] coin (MintedValueOf txSub)
 
