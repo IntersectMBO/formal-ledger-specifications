@@ -350,7 +350,7 @@ module _ (Γ : UTxOEnv) (s : UTxOState) where
     -- This must equal 0 to prevent Ada forgery and maintain the total Ada supply invariant.
     -- Analogous to Conway's `coin mint ≡ 0` constraint, but generalized to batches.
     batchMintedCoin : Coin
-    batchMintedCoin = coin (MintedValueOf txTop) + ∑[ txSub ← SubTransactionsOf txTop ] coin (MintedValueOf txSub)
+    batchMintedCoin = coin (MintedValueOf txTop) + sum (map (λ txSub → coin (MintedValueOf txSub)) (SubTransactionsOf txTop))
 
 
 
