@@ -323,6 +323,14 @@ could be either of them.
     field SubTransactionsOf : A → InTopLevel txLevel (List (Tx TxLevelSub))
   open HasSubTransactions ⦃...⦄ public
 
+  record HasSpendInputs {a} (A : Type a) : Type a where
+    field SpendInputsOf : A → ℙ TxIn
+  open HasSpendInputs ⦃...⦄ public
+
+  record HasReferenceInputs {a} (A : Type a) : Type a where
+    field ReferenceInputsOf : A → ℙ TxIn
+  open HasReferenceInputs ⦃...⦄ public
+
   record HasGovProposals {a} (A : Type a) : Type a where
     field GovProposalsOf : A → List GovProposal
   open HasGovProposals ⦃...⦄ public
@@ -383,6 +391,18 @@ could be either of them.
 
     HasSubTransactions-TopLevelTx : HasSubTransactions TopLevelTx
     HasSubTransactions-TopLevelTx .SubTransactionsOf = TxBody.txSubTransactions ∘ TxBodyOf
+
+    HasSpendInputs-TxBody : HasSpendInputs (TxBody txLevel)
+    HasSpendInputs-TxBody .SpendInputsOf = TxBody.txIns
+
+    HasSpendInputs-Tx : HasSpendInputs (Tx txLevel)
+    HasSpendInputs-Tx .SpendInputsOf = SpendInputsOf ∘ TxBodyOf
+
+    HasReferenceInputs-TxBody : HasReferenceInputs (TxBody txLevel)
+    HasReferenceInputs-TxBody .ReferenceInputsOf = TxBody.refInputs
+
+    HasReferenceInputs-Tx : HasReferenceInputs (Tx txLevel)
+    HasReferenceInputs-Tx .ReferenceInputsOf = ReferenceInputsOf ∘ TxBodyOf
 
     HasTxId-Tx : HasTxId (Tx txLevel)
     HasTxId-Tx .TxIdOf = TxBody.txId ∘ TxBodyOf
