@@ -60,7 +60,7 @@ can include required top-level guards (the `txRequiredTopLevelGuards`{.AgdaField
 
 To that end, we define two auxiliary functions that will aid in
 specifying which record fields of a transaction body are present at
-each `TxLevel`{.agdatype}:
+each `TxLevel`{.AgdaDatatype}:
 
 ```agda
 InTopLevel : TxLevel → Type → Type
@@ -73,7 +73,7 @@ InSubLevel TxLevelTop _ = ⊤
 ```
 
 These functions discriminate on an argument of type
-`TxLevel`{.agdatype} and either act as the identity function on types
+`TxLevel`{.AgdaDatatype} and either act as the identity function on types
 or as the constant function that returns the unit type.
 
 <!--
@@ -311,6 +311,18 @@ could be either of them.
     field ValueOf : A → Value
   open HasValue ⦃...⦄ public
 
+  record HasSubTransactions {txLevel} {a} (A : Type a) : Type a where
+    field SubTransactionsOf : A → InTopLevel txLevel (List (Tx TxLevelSub))
+  open HasSubTransactions ⦃...⦄ public
+
+  record HasSpendInputs {a} (A : Type a) : Type a where
+    field SpendInputsOf : A → ℙ TxIn
+  open HasSpendInputs ⦃...⦄ public
+
+  record HasReferenceInputs {a} (A : Type a) : Type a where
+    field ReferenceInputsOf : A → ℙ TxIn
+  open HasReferenceInputs ⦃...⦄ public
+
   record HasGovProposals {a} (A : Type a) : Type a where
     field GovProposalsOf : A → List GovProposal
   open HasGovProposals ⦃...⦄ public
@@ -335,6 +347,18 @@ could be either of them.
     HasWithdrawals-Tx : HasWithdrawals (Tx txLevel)
     HasWithdrawals-Tx .WithdrawalsOf = WithdrawalsOf ∘ TxBodyOf
 
+    HasSpendInputs-TxBody : HasSpendInputs (TxBody txLevel)
+    HasSpendInputs-TxBody .SpendInputsOf = TxBody.txIns
+
+    HasSpendInputs-Tx : HasSpendInputs (Tx txLevel)
+    HasSpendInputs-Tx .SpendInputsOf = SpendInputsOf ∘ TxBodyOf
+
+    HasReferenceInputs-TxBody : HasReferenceInputs (TxBody txLevel)
+    HasReferenceInputs-TxBody .ReferenceInputsOf = TxBody.refInputs
+
+    HasReferenceInputs-Tx : HasReferenceInputs (Tx txLevel)
+    HasReferenceInputs-Tx .ReferenceInputsOf = ReferenceInputsOf ∘ TxBodyOf
+
     HasValue-TxBody : HasValue (TxBody txLevel)
     HasValue-TxBody .ValueOf = TxBody.mint
 
@@ -356,6 +380,9 @@ could be either of them.
 
     HasFees?-Tx : HasFees? (Tx txLevel)
     HasFees?-Tx .FeesOf? = FeesOf? ∘ TxBodyOf
+
+    HasSubTransactions-TopLevelTx : HasSubTransactions TopLevelTx
+    HasSubTransactions-TopLevelTx .SubTransactionsOf = TxBody.txSubTransactions ∘ TxBodyOf
 
     HasTxId-Tx : HasTxId (Tx txLevel)
     HasTxId-Tx .TxIdOf = TxBody.txId ∘ TxBodyOf
@@ -397,23 +424,43 @@ This section collects some unimportant but useful helper and accessor functions.
   txinsScript : ℙ TxIn → UTxO → ℙ TxIn
   txinsScript txins utxo = txins ∩ dom (proj₁ (scriptOuts utxo))
 
-  refScripts : Tx txLevel → UTxO → List Script
-  refScripts tx utxo =
-    mapMaybe (proj₂ ∘ proj₂ ∘ proj₂) $ setToList (range (utxo ∣ (txIns ∪ refInputs)))
-    where open Tx; open TxBody (TxBodyOf tx)
+  txOutToScript : TxOut → Maybe Script
+  txOutToScript (_ , _ , _ , s) = s
 
-  txscripts : Tx txLevel → UTxO → ℙ Script
-  txscripts tx utxo = scripts (tx .txWitnesses) ∪ fromList (refScripts tx utxo)
+```
+
+In the Dijkstra era, *spending* inputs must exist in the initial UTxO snapshot, while
+*reference* inputs may see earlier outputs, so we need two UTxO views:
+
++ `utxoSpend₀`{.AgdaBound}, the initial snapshot, used for `txIns`{.AgdaField},
++ `utxoRefView`{.AgdaBound}, the evolving view, used for `refInputs`{.AgdaField}.
+
+Thus functions like `refScripts`{.AgdaFunction}, `txscripts`{.AgdaFunction},
+and `lookupScriptHash`{.AgdaFunction} (defined below) will take *two* UTxO arguments.
+
+```agda
+  refScripts : Tx txLevel → UTxO → UTxO → List Script
+  refScripts tx utxoSpend₀ utxoRefView =
+    mapMaybe (proj₂ ∘ proj₂ ∘ proj₂) ( setToList (range (utxoSpend₀ ∣ txIns))
+                                       ++ setToList (range (utxoRefView ∣ refInputs))
+                                     )
+    where open Tx tx; open TxBody (TxBodyOf tx)
+
+  txscripts : Tx txLevel → UTxO → UTxO → ℙ Script
+  txscripts tx utxoSpend₀ utxoRefView =
+    scripts (tx .txWitnesses) ∪ fromList (refScripts tx utxoSpend₀ utxoRefView)
     where open Tx; open TxWitnesses
 
-  lookupScriptHash : ScriptHash → Tx txLevel → UTxO → Maybe Script
-  lookupScriptHash sh tx utxo =
-    if sh ∈ mapˢ proj₁ (m ˢ) then
-      just (lookupᵐ m sh)
-    else
-      nothing
-    where m = setToMap (mapˢ < hash , id > (txscripts tx utxo))
+  lookupScriptHash : ScriptHash → Tx txLevel → UTxO → UTxO → Maybe Script
+  lookupScriptHash sh tx utxoSpend₀ utxoRefView =
+    if sh ∈ mapˢ proj₁ (m ˢ) then just (lookupᵐ m sh) else nothing
+    where m = setToMap (mapˢ < hash , id > (txscripts tx utxoSpend₀ utxoRefView))
 
+  -- TODO: implement the actual evolving `utxoRefView` (issue #1006)
+```
+
+<!--
+```agda
   getSubTxScripts : SubLevelTx → ℙ (TxId × ScriptHash)
   getSubTxScripts subtx = mapˢ (λ hash → (TxIdOf subtx , hash)) (ScriptHashes subtx)
     where
@@ -427,6 +474,71 @@ This section collects some unimportant but useful helper and accessor functions.
   getTxScripts {TxLevelSub} = getSubTxScripts
   getTxScripts {TxLevelTop} =
     concatMapˢ getSubTxScripts ∘ fromList ∘ TxBody.txSubTransactions ∘ TxBodyOf
+```
+-->
+
+<!--
+```agda
+  -- groupRequiredTopLevelGuards --
+  -- CIP-0118 models "required top-level guards" as a list of requests coming from subTx bodies.
+  -- The list can contain duplicates, and later logic needs to run each distinct guard credential
+  -- once while still providing it with all arguments (and knowing which subTx requested them).
+  -- The groupRequiredTopLevelGuards helper groups those per-subTx requests by credential.
+
+  -- A single "required top-level guard" request, including the requesting subTx id.
+  RequiredTopLevelGuardRequest : Type
+  RequiredTopLevelGuardRequest = TxId × Credential × Maybe Datum
+                             -- (subTxId, guard credential, optional datum argument)
+
+
+  -- Grouped guard requests keyed by guard credential.
+  -- Each credential maps to the list of (requesting subTx id, optional datum) pairs.
+  -- We use an association list for now to avoid committing to a particular Map interface.
+  GroupedRequests : Type
+  GroupedRequests = List (Credential × List (TxId × Maybe Datum))
+
+  -- Group a list of requests by credential (folding insertRequest over the list).
+  -- Duplicates are preserved as multiple (subTxId, datum?) entries under the same credential.
+  groupRequiredTopLevelGuards : List RequiredTopLevelGuardRequest → GroupedRequests
+  groupRequiredTopLevelGuards = foldr insertRequest []
+    where
+    -- Insert one request into an existing grouping:
+    --   + if the credential already has an entry, cons (subTxId, datum?) onto its list
+    --   + otherwise create a new entry for that credential.
+    insertRequest : RequiredTopLevelGuardRequest → GroupedRequests → GroupedRequests
+    insertRequest (tid , cred , md) [] = (cred , (tid , md) ∷ []) ∷ []
+    insertRequest (tid , cred , md) ((c , xs) ∷ rest) with c ≟ cred
+    ... | yes _ = (c , (tid , md) ∷ xs) ∷ rest
+    ... | no  _ = (c , xs) ∷ insertRequest (tid , cred , md) rest
+
+  subTxRequiredTopLevelGuardRequests : SubLevelTx → List RequiredTopLevelGuardRequest
+  subTxRequiredTopLevelGuardRequests subtx =
+    map (λ (cred , md) → (TxIdOf subtx , cred , md))
+      (TxBody.txRequiredTopLevelGuards (TxBodyOf subtx))
+
+  -- Phase-1 condition (CIP-0118):
+  -- every credential requested by subTx bodies must appear in the top-level txGuards set.
+  requiredTopLevelGuardsSatisfiedᵇ : TopLevelTx → List SubLevelTx → Bool
+  requiredTopLevelGuardsSatisfiedᵇ topTx subTxs =
+    all (λ req → (requestedCred req ∈ᵇ topGuards))
+        (concatMap subTxRequiredTopLevelGuardRequests subTxs)
+    where
+      topGuards : ℙ Credential
+      topGuards = TxBody.txGuards (TxBodyOf topTx)
+      requestedCred : RequiredTopLevelGuardRequest → Credential
+      requestedCred = proj₁ ∘ proj₂
+
+  requiredTopLevelGuardsSatisfied : TopLevelTx → List SubLevelTx → Type
+  requiredTopLevelGuardsSatisfied topTx subTxs = requiredCreds ⊆ topGuards
+    -- (could just use `T (requiredTopLevelGuardsSatisfiedᵇ topTx subTxs)` here instead)
+    where
+    topGuards : ℙ Credential
+    topGuards = TxBody.txGuards (TxBodyOf topTx)
+
+    requiredCreds : ℙ Credential
+    requiredCreds =
+      fromList (map  (proj₁ ∘ proj₂)
+                     (concatMap subTxRequiredTopLevelGuardRequests subTxs))
 ```
 
 CIP-0118 models "required top-level guards" as a list of requirements coming
@@ -513,6 +625,14 @@ The Dijkstra era introduces *nested transactions* (a single top-level transactio
 that contains a list of sub-transactions) and *guards* (CIP-0112 / CIP-0118).  As a
 result, several checks that were "per-transaction" in Conway become *batch-aware*.
 
+**Design Note** (CIP-0118: spending inputs vs reference inputs).
+For Dijkstra batches, we distinguish *spending inputs* from *reference inputs*.
+All spending inputs across the whole batch must exist in the initial UTxO snapshot
+(mempool safety).  Reference inputs may additionally point to outputs of **preceding
+subtransactions in the batch order**.  Therefore reference-script/datum lookup is
+performed against an *evolving, tentative UTxO view* (prefix-applied), used only for
+lookup/validation, while *ledger state is committed only if the full batch succeeds*.
+
 ### Key points
 
 1.  **No further nesting**
@@ -530,9 +650,9 @@ result, several checks that were "per-transaction" in Conway become *batch-aware
 
 3.  **Batch-wide phase-2 evaluation**
 
-    Phase-2 (Plutus) validation is performed **once**
-    for the whole batch (mempool safety), even though script inputs/contexts are
-    constructed from both sub- and top-level components.
+    Phase-2 (Plutus) validation is performed *once* for the whole batch (mempool
+    safety), even though script inputs/contexts are constructed from both sub- and
+    top-level components.
 
 4.  **Guards are credentials**
 
@@ -540,7 +660,7 @@ result, several checks that were "per-transaction" in Conway become *batch-aware
     script).  This is distinct from the legacy "required signer" key hashes used for
     phase-1 key-witness checking and native/timelock scripts.
 
-5.  **Required top-level guards are requests (list-like)**
+5.  **Required top-level guards are requests**
 
     Sub-transaction bodies may include a list of "required top-level guard" requests
     (credential plus optional datum).  Ledger phase-1 checks must ensure that the
@@ -573,28 +693,6 @@ result, several checks that were "per-transaction" in Conway become *batch-aware
     whole top-level transaction/batch.  (The exact constraints on what may be
     referenced are defined by the UTxO rules.)
 
-
-<!--
-The following text previously appeared in item 4.
-
-> All scripts are shared across all transactions within a single batch, so
-> attaching one script to either a sub- or a top-level-transaction allows other
-> transactions to run it without also including it in its own scripts.  This
-> includes reference scripts that are sourced from the outputs to which reference
-> inputs point in the UTxO.  These referenced UTxO entries could be outputs of
-> preceding transactions in the batch.
-
-> Datums (from reference inputs and from other transactions) are also shared in
-> this way.  As before, only the datums fixed by the executing transaction are
-> included in the `TxInfo`{.AgdaRecord} constructed for its scripts, however, now
-> they don't necessarily have to be attached to that transaction.
-
-I've removed these two paragraphs for now because I'm not sure they're accurate.
-I've replaced them with an explanation that removes the contradiction between "ref
-inputs may refer to earlier tx outputs in the batch" vs "all inputs must exist before
-applying any tx in the batch," and punts the exact constraint to the UTxO rules
-(where I think it belongs).
--->
 
 [^1]:  See CIP 0118; once finalized and merged, CIP 0118 will appear in the
        main branch of [the CIP repository][CIPs]; until then, it can be found
