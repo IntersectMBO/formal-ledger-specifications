@@ -459,9 +459,6 @@ could be either of them.
     HasTxId-TxBody : HasTxId (TxBody txLevel)
     HasTxId-TxBody .TxIdOf = TxBody.txId
 
-    HasSubTransactions-TopLevelTx : HasSubTransactions TopLevelTx
-    HasSubTransactions-TopLevelTx .SubTransactionsOf = TxBody.txSubTransactions ∘ TxBodyOf
-
     HasTxId-Tx : HasTxId (Tx txLevel)
     HasTxId-Tx .TxIdOf = TxIdOf ∘ TxBodyOf
 
