@@ -346,6 +346,9 @@ module _ (Γ : UTxOEnv) (s : UTxOState) where
     batchPOV : Type
     batchPOV = batchConsumed ≡ batchProduced
 
+    batchMintedCoin : Coin
+    batchMintedCoin = coin (MintedValueOf txTop) + ∑[ txSub ← SubTransactionsOf txTop ] coin (MintedValueOf txSub)
+
 
 
 module Batch (Γ : UTxOEnv) (s : UTxOState) (txTop : TopLevelTx) where
@@ -419,6 +422,7 @@ data _⊢_⇀⦇_,UTXOS⦈_ : UTxOEnv → UTxOState → TopLevelTx → UTxOState
     ∙ Tx.isValid tx ≡ batchScripts✓ Γ s tx
     ∙ batchScripts✓ Γ s tx ≡ true
     ∙ batchPOV Γ s tx
+    ∙ batchMintedCoin Γ s tx ≡ 0
       ────────────────────────────────
       Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ s'-scripts✓
 
