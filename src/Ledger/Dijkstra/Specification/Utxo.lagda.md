@@ -328,8 +328,8 @@ module _ (Γ : UTxOEnv) (s : UTxOState) where
     batchP2Inputs : List (P2Script × List Data × ExUnits × CostModel)
     batchP2Inputs = getP2ScriptsWithContextOf txTop ++ concatMap getP2ScriptsWithContextOf (SubTransactionsOf txTop)
 
-    batchScriptsOk : Bool
-    batchScriptsOk = evalP2Scripts batchP2Inputs
+    batchScripts✓ : Bool
+    batchScripts✓ = evalP2Scripts batchP2Inputs
 
     batchProduced : Value
     batchProduced = produced + sumᵛ (map producedSub (SubTransactionsOf txTop))
@@ -356,37 +356,37 @@ module Batch (Γ : UTxOEnv) (s : UTxOState) (txTop : TopLevelTx) where
   batchOuts : UTxO
   batchOuts = outs txTop ∪ˡ foldr (λ sub acc → outs sub ∪ˡ acc) ∅ (SubTransactionsOf txTop)
 
-  utxoSuccess : UTxO
-  utxoSuccess =  (UTxOOf s ∣ batchSpendInputs ᶜ)  -- remove ALL batch spend inputs
-                 ∪ˡ batchOuts                     -- add ALL outputs (top + subs)
+  utxo-scripts✓ : UTxO
+  utxo-scripts✓ =  (UTxOOf s ∣ batchSpendInputs ᶜ)  -- remove ALL batch spend inputs
+                   ∪ˡ batchOuts                     -- add ALL outputs (top + subs)
 
-  depositsSuccess : Deposits
-  depositsSuccess = foldr  (λ sub deps → updateDeposits (PParamsOf Γ) sub deps)
-                           (updateDeposits (PParamsOf Γ) txTop (DepositsOf s))
-                           (SubTransactionsOf txTop)
+  deposits-scripts✓ : Deposits
+  deposits-scripts✓ = foldr  (λ sub deps → updateDeposits (PParamsOf Γ) sub deps)
+                             (updateDeposits (PParamsOf Γ) txTop (DepositsOf s))
+                             (SubTransactionsOf txTop)
 
-  donationsSuccess : Donations
-  donationsSuccess =  DonationsOf s + DonationsOf txTop
-                      + sum (map DonationsOf (SubTransactionsOf txTop))
+  donations-scripts✓ : Donations
+  donations-scripts✓ =  DonationsOf s + DonationsOf txTop
+                            + sum (map DonationsOf (SubTransactionsOf txTop))
 
-  feesSuccess : Fees
-  feesSuccess = FeesOf s + TxFeesOf txTop
+  fees-scripts✓ : Fees
+  fees-scripts✓ = FeesOf s + TxFeesOf txTop
 
-  successState : UTxOState
-  successState = ⟦ utxoSuccess , feesSuccess , depositsSuccess , donationsSuccess ⟧
+  s'-scripts✓ : UTxOState
+  s'-scripts✓ = ⟦ utxo-scripts✓ , fees-scripts✓ , deposits-scripts✓ , donations-scripts✓ ⟧
 
   collateralCoin : Coin
   collateralCoin = coin (balance (UTxOOf s ∣ CollateralInputsOf txTop))
 
-  utxoFailure : UTxO
-  utxoFailure = UTxOOf s ∣ (CollateralInputsOf txTop) ᶜ
+  utxo-scripts× : UTxO
+  utxo-scripts× = UTxOOf s ∣ (CollateralInputsOf txTop) ᶜ
 
   -- assuming for now that collateral is collected by adding it to fees
-  feesFailure : Fees
-  feesFailure = FeesOf s + collateralCoin
+  fees-scripts× : Fees
+  fees-scripts× = FeesOf s + collateralCoin
 
-  failureState : UTxOState
-  failureState = ⟦ utxoFailure , feesFailure , DepositsOf s , DonationsOf s ⟧
+  s'-scripts× : UTxOState
+  s'-scripts× = ⟦ utxo-scripts× , fees-scripts× , DepositsOf s , DonationsOf s ⟧
 ```
 
 
@@ -401,9 +401,28 @@ private variable
 
 data _⊢_⇀⦇_,UTXOS⦈_ : UTxOEnv → UTxOState → TopLevelTx → UTxOState → Type where
 
-  UTXOS-success :
+  UTXO-scripts✓ :
 
     let open Batch Γ s tx in
+
+    ∙ Tx.isValid tx ≡ batchScripts✓ Γ s tx
+    ∙ batchScripts✓ Γ s tx ≡ true
+    ∙ batchPOV Γ s tx
+      ────────────────────────────────
+      Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ s'-scripts✓
+
+  UTXO-scripts× :
+
+    let open Batch Γ s tx in
+
+    ∙ Tx.isValid tx ≡ batchScripts✓ Γ s tx
+    ∙ batchScripts✓ Γ s tx ≡ false
+    ∙ collateralCheck (PParamsOf Γ) tx (UTxOOf s)
+      ────────────────────────────────
+      Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ s'-scripts×
+```
+
+## The <span class="AgdaDatatype">UTXO</span> Rule
 
 The CIP (TODO: add reference) states:
 
