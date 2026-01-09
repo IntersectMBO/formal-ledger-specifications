@@ -353,14 +353,6 @@ could be either of them.
     field DataOf : A → ℙ Datum
   open HasData ⦃...⦄ public
 
-  record HasSpendInputs {a} (A : Type a) : Type a where
-    field SpendInputsOf : A → ℙ TxIn
-  open HasSpendInputs ⦃...⦄ public
-
-  record HasReferenceInputs {a} (A : Type a) : Type a where
-    field ReferenceInputsOf : A → ℙ TxIn
-  open HasReferenceInputs ⦃...⦄ public
-
   record HasGovProposals {a} (A : Type a) : Type a where
     field GovProposalsOf : A → List GovProposal
   open HasGovProposals ⦃...⦄ public
