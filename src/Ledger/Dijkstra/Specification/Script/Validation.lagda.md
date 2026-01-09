@@ -126,20 +126,19 @@ txInfo TxLevelSub utxo tx =
 
 txInfoForPurpose : (ℓ : TxLevel) → UTxO → Tx ℓ → ScriptPurpose → TxInfo
 
+-- subtransactions: never get subTx infos (even if the ScriptPurpose is Guard).
+txInfoForPurpose TxLevelSub utxo tx _ = txInfo TxLevelSub utxo tx
 
-txInfoForPurpose TxLevelSub utxo tx sp = txInfo TxLevelSub utxo tx
-  -- SubTx scripts never get subTx infos (even if their ScriptPurpose is Guard).
-
+-- top-level transactions:
 txInfoForPurpose TxLevelTop utxo tx sp with sp
--- Top-level scripts:
--- · guard scripts see subTx infos
+   -- · guard scripts see subTx infos
 ... | Guard _ =  record base { txInfoSubTxs = just subInfos }
                  where
                  base : TxInfo
                  base = txInfo TxLevelTop utxo tx
                  subInfos : List SubTxInfo
                  subInfos = map (txInfo TxLevelSub utxo) (SubTransactionsOf tx)
--- · other top-level scripts see no subTx infos
+   -- · other top-level scripts see no subTx infos
 ... | _ = txInfo TxLevelTop utxo tx
 ```
 
