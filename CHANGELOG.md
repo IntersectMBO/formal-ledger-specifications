@@ -7,6 +7,9 @@
 - Change type of `txRequiredTopLevelGuards` from map to list.
 - Change `TxBody.txRequiredGuards` to `TxBody.txGuards`.
 - Add `TxBody.reqSignerHashes`.
+- Add `TxInfo.txInfoSubTxs` field (a `Maybe` list of `SubTxInfo` for guard scripts).
+- Introduce `SubTxInfo` type alias.
+- Add `txInfoForPurpose` function for purpose-specific `TxInfo` construction.
 
 ## Conway spec
 
