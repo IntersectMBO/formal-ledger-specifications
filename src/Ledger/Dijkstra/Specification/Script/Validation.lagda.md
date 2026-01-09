@@ -22,14 +22,19 @@ open import Ledger.Dijkstra.Specification.Certs govStructure
 
 ```agda
 data ScriptPurpose : Type where
-  Cert     : DCert               → ScriptPurpose
-  Rwrd     : RewardAddress       → ScriptPurpose
-  Mint     : ScriptHash          → ScriptPurpose
-  Spend    : TxIn                → ScriptPurpose
-  Vote     : GovVoter            → ScriptPurpose
-  Propose  : GovProposal         → ScriptPurpose
-  Guard    : (TxId × ScriptHash) → ScriptPurpose
+  Cert     : DCert          → ScriptPurpose
+  Rwrd     : RewardAddress  → ScriptPurpose
+  Mint     : ScriptHash     → ScriptPurpose
+  Spend    : TxIn           → ScriptPurpose
+  Vote     : GovVoter       → ScriptPurpose
+  Propose  : GovProposal    → ScriptPurpose
+  Guard    : Credential     → ScriptPurpose
 ```
+
+Note that `Guard c` always indexes into *the current `tx`'s* `txGuards`:
+
++  if `tx : TopLevelTx`, it indexes into the top-level guard set's list-view;
++  if `tx : SubLevelTx`, it indexes into the subTx's guard set's list-view.
 
 <!--
 ```agda
@@ -38,14 +43,15 @@ private variable
 
 rdptr : (Tx ℓ) → ScriptPurpose → Maybe (RedeemerPtr ℓ)
 rdptr tx = λ where
-  (Cert h)              → map (Cert    ,_) $ indexOfDCert          h txCerts
-  (Rwrd h)              → map (Reward  ,_) $ indexOfRewardAddress  h txWithdrawals
-  (Mint h)              → map (Mint    ,_) $ indexOfPolicyId       h (policies mint)
-  (Spend h)             → map (Spend   ,_) $ indexOfTxIn           h txIns
-  (Vote h)              → map (Vote    ,_) $ indexOfVote           h (map GovVote.voter txGovVotes)
-  (Propose h)           → map (Propose ,_) $ indexOfProposal       h txGovProposals
-  (Guard h)             → map (Guard   ,_) $ indexOfGuard          h (getTxScripts tx)
- where open TxBody (TxBodyOf tx)
+  (Cert h)     → map (Cert     ,_) $ indexOfDCert          h txCerts
+  (Rwrd h)     → map (Reward   ,_) $ indexOfRewardAddress  h txWithdrawals
+  (Mint h)     → map (Mint     ,_) $ indexOfPolicyId       h (policies mint)
+  (Spend h)    → map (Spend    ,_) $ indexOfTxIn           h txIns
+  (Vote h)     → map (Vote     ,_) $ indexOfVote           h (map GovVote.voter txGovVotes)
+  (Propose h)  → map (Propose  ,_) $ indexOfProposal       h txGovProposals
+  (Guard c)    → map (Guard    ,_) $ indexOfGuard          c (setToList txGuards)
+    where open TxBody (TxBodyOf tx)
+
 -- getSubTxScripts : TopLevelTx → ℙ (TxId × ScriptHash)
 
 indexedRdmrs : (Tx ℓ) → ScriptPurpose → Maybe (Redeemer × ExUnits)
