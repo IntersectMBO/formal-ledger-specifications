@@ -94,50 +94,51 @@ mutual
 txInfo : (ℓ : TxLevel) → UTxO → Tx ℓ → TxInfo
 
 txInfo TxLevelTop utxo tx =
-  record  { realizedInputs = utxo ∣ (TxBody.txIns txBody)
-          ; txOuts         = TxBody.txOuts txBody
-          ; txFee          = just (TxBody.txFee txBody)
-          ; mint           = TxBody.mint txBody
-          ; txCerts        = TxBody.txCerts txBody
-          ; txWithdrawals  = TxBody.txWithdrawals txBody
-          ; txVldt         = TxBody.txVldt txBody
-          ; vkKey          = TxBody.reqSignerHashes txBody
-          ; txGuards       = TxBody.txGuards txBody
-          ; txData         = DataOf tx
-          ; txId           = TxBody.txId txBody
-          ; txInfoSubTxs = nothing
+  record  { realizedInputs  = utxo ∣ (TxBody.txIns txBody)
+          ; txOuts          = TxBody.txOuts txBody
+          ; txFee           = just (TxBody.txFee txBody)
+          ; mint            = TxBody.mint txBody
+          ; txCerts         = TxBody.txCerts txBody
+          ; txWithdrawals   = TxBody.txWithdrawals txBody
+          ; txVldt          = TxBody.txVldt txBody
+          ; vkKey           = TxBody.reqSignerHashes txBody
+          ; txGuards        = TxBody.txGuards txBody
+          ; txData          = DataOf tx
+          ; txId            = TxBody.txId txBody
+          ; txInfoSubTxs    = nothing
           } where open Tx tx
 
 txInfo TxLevelSub utxo tx =
-  record  { realizedInputs = utxo ∣ (TxBody.txIns txBody)
-          ; txOuts         = TxBody.txOuts txBody
-          ; txFee          = nothing
-          ; mint           = TxBody.mint txBody
-          ; txCerts        = TxBody.txCerts txBody
-          ; txWithdrawals  = TxBody.txWithdrawals txBody
-          ; txVldt         = TxBody.txVldt txBody
-          ; vkKey          = TxBody.reqSignerHashes txBody
-          ; txGuards       = TxBody.txGuards txBody
-          ; txData         = DataOf tx
-          ; txId           = TxBody.txId txBody
-          ; txInfoSubTxs = nothing
+  record  { realizedInputs  = utxo ∣ (TxBody.txIns txBody)
+          ; txOuts          = TxBody.txOuts txBody
+          ; txFee           = nothing
+          ; mint            = TxBody.mint txBody
+          ; txCerts         = TxBody.txCerts txBody
+          ; txWithdrawals   = TxBody.txWithdrawals txBody
+          ; txVldt          = TxBody.txVldt txBody
+          ; vkKey           = TxBody.reqSignerHashes txBody
+          ; txGuards        = TxBody.txGuards txBody
+          ; txData          = DataOf tx
+          ; txId            = TxBody.txId txBody
+          ; txInfoSubTxs    = nothing
           } where open Tx tx
 
 txInfoForPurpose : (ℓ : TxLevel) → UTxO → Tx ℓ → ScriptPurpose → TxInfo
--- SubTx scripts never get subTx infos (even if their ScriptPurpose is Guard).
+
+
 txInfoForPurpose TxLevelSub utxo tx sp = txInfo TxLevelSub utxo tx
--- Top-level scripts:
---   - guard scripts see txInfoSubTxs
---   - others do not
+  -- SubTx scripts never get subTx infos (even if their ScriptPurpose is Guard).
+
 txInfoForPurpose TxLevelTop utxo tx sp with sp
-... | Guard _ =
-  let base   = txInfo TxLevelTop utxo tx
-      txb    = TxBodyOf tx
-      subTxs = TxBody.txSubTransactions txb
-      subInfos : List SubTxInfo
-      subInfos = map (txInfo TxLevelSub utxo) subTxs
-  in
-  record base { txInfoSubTxs = just subInfos }
+-- Top-level scripts:
+-- · guard scripts see subTx infos
+... | Guard _ =  record base { txInfoSubTxs = just subInfos }
+                 where
+                 base : TxInfo
+                 base = txInfo TxLevelTop utxo tx
+                 subInfos : List SubTxInfo
+                 subInfos = map (txInfo TxLevelSub utxo) (SubTransactionsOf tx)
+-- · other top-level scripts see no subTx infos
 ... | _ = txInfo TxLevelTop utxo tx
 ```
 
