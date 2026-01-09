@@ -384,6 +384,18 @@ could be either of them.
     HasSubTransactions-TopLevelTx : HasSubTransactions TopLevelTx
     HasSubTransactions-TopLevelTx .SubTransactionsOf = TxBody.txSubTransactions ∘ TxBodyOf
 
+    HasSpendInputs-TxBody : HasSpendInputs (TxBody txLevel)
+    HasSpendInputs-TxBody .SpendInputsOf = TxBody.txIns
+
+    HasSpendInputs-Tx : HasSpendInputs (Tx txLevel)
+    HasSpendInputs-Tx .SpendInputsOf = SpendInputsOf ∘ TxBodyOf
+
+    HasReferenceInputs-TxBody : HasReferenceInputs (TxBody txLevel)
+    HasReferenceInputs-TxBody .ReferenceInputsOf = TxBody.refInputs
+
+    HasReferenceInputs-Tx : HasReferenceInputs (Tx txLevel)
+    HasReferenceInputs-Tx .ReferenceInputsOf = ReferenceInputsOf ∘ TxBodyOf
+
     HasTxId-Tx : HasTxId (Tx txLevel)
     HasTxId-Tx .TxIdOf = TxBody.txId ∘ TxBodyOf
 
