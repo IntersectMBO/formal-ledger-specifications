@@ -15,7 +15,7 @@ open import Ledger.Conway.Conformance.Chain txs abs
 open import Ledger.Conway.Specification.Enact govStructure
 open import Ledger.Conway.Conformance.Epoch txs abs
 open import Ledger.Conway.Conformance.Certs.Properties govStructure
-open import Ledger.Conway.Specification.Gov txs
+open import Ledger.Conway.Specification.Gov govStructure
 open import Ledger.Conway.Specification.Gov.Properties.Computational txs
 open import Ledger.Conway.Conformance.Ledger txs abs
 open import Ledger.Conway.Specification.Ratify govStructure

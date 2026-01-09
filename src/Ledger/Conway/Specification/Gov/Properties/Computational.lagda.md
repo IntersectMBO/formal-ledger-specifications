@@ -18,7 +18,7 @@ open import Ledger.Prelude hiding (Any; any?)
 open import Axiom.Set.Properties
 
 open import Ledger.Conway.Specification.Enact govStructure
-open import Ledger.Conway.Specification.Gov txs
+open import Ledger.Conway.Specification.Gov govStructure
 open import Ledger.Conway.Specification.Gov.Actions govStructure hiding (yes; no)
 open import Ledger.Conway.Specification.Ratify govStructure
 

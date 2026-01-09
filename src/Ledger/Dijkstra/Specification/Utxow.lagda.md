@@ -29,13 +29,21 @@ private variable
   Γ  : UTxOEnv
   s s' : UTxOState
   tx : TopLevelTx
+  stx : SubLevelTx
 ```
 -->
 
 ```agda
+data _⊢_⇀⦇_,SUBUTXOW⦈_ : UTxOEnv → UTxOState → SubLevelTx → UTxOState → Type where
+
+  SUBUTXOW :
+    ∙ Γ ⊢ s ⇀⦇ stx ,SUBUTXO⦈ s'
+      ────────────────────────────────
+      Γ ⊢ s ⇀⦇ stx ,SUBUTXOW⦈ s'
+
 data _⊢_⇀⦇_,UTXOW⦈_ : UTxOEnv → UTxOState → TopLevelTx → UTxOState → Type where
 
-  UTXOW-inductive :
+  UTXOW :
     ∙ Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s'
       ────────────────────────────────
       Γ ⊢ s ⇀⦇ tx ,UTXOW⦈ s'

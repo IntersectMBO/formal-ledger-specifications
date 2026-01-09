@@ -21,7 +21,7 @@ open import Ledger.Conway.Specification.BlockBody txs abs public
 open import Ledger.Conway.Specification.Certs govStructure
 open import Ledger.Conway.Specification.Enact govStructure
 open import Ledger.Conway.Specification.Epoch txs abs
-open import Ledger.Conway.Specification.Gov txs
+open import Ledger.Conway.Specification.Gov govStructure
 open import Ledger.Conway.Specification.Ledger txs abs
 open import Ledger.Prelude; open Equivalence
 open import Ledger.Conway.Specification.Ratify govStructure

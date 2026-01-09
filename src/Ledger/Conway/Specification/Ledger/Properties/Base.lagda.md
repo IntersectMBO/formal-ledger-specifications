@@ -22,7 +22,7 @@ module Ledger.Conway.Specification.Ledger.Properties.Base
   where
 
 open import Ledger.Prelude
-open import Ledger.Conway.Specification.Gov txs
+open import Ledger.Conway.Specification.Gov govStructure
 open import Ledger.Conway.Specification.Ledger txs abs
 open import Ledger.Conway.Specification.Utxo txs abs
 open import Ledger.Conway.Specification.Utxow txs abs

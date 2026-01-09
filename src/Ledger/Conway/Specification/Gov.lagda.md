@@ -17,15 +17,14 @@ the [Enact](Ledger.Conway.Specification.Enact.md) module.
 {-# OPTIONS --safe #-}
 
 open import Ledger.Conway.Specification.Gov.Base
-open import Ledger.Conway.Specification.Transaction using (TransactionStructure)
 
-module Ledger.Conway.Specification.Gov (txs : _) (open TransactionStructure txs hiding (epoch)) where
+module Ledger.Conway.Specification.Gov (govStructure : GovStructure) where
 
 open import Ledger.Prelude hiding (any?; Any; all?; All; Rel; lookup; ∈-filter)
 
 open import Axiom.Set.Properties th using (∃-sublist-⇔)
 
-open import Ledger.Conway.Specification.Gov.Actions govStructure using (Vote)
+open import Ledger.Conway.Specification.Gov.Actions govStructure hiding (yes; no)
 open import Ledger.Conway.Specification.Enact govStructure
 open import Ledger.Conway.Specification.Ratify govStructure
 open import Ledger.Conway.Specification.Certs govStructure
@@ -43,6 +42,7 @@ open import Function.Properties.Equivalence using () renaming (sym to sym-Equiv)
 open import Function.Related.Propositional using (↔⇒)
 
 open GovActionState
+open GovStructure govStructure
 ```
 -->
 
