@@ -54,6 +54,12 @@ record UTxOState : Type where
 <!--
 ```agda
 instance
+  HasUTxO-UTxOEnv : HasUTxO UTxOEnv
+  HasUTxO-UTxOEnv .UTxOOf = UTxOEnv.utxo₀
+
+  HasUTxO-UTxOState : HasUTxO UTxOState
+  HasUTxO-UTxOState .UTxOOf = UTxOState.utxo
+
   unquoteDecl HasCast-UTxOEnv HasCast-UTxOState = derive-HasCast
     ( (quote UTxOEnv   , HasCast-UTxOEnv  ) ∷
     [ (quote UTxOState , HasCast-UTxOState) ])
@@ -105,28 +111,21 @@ data _⊢_⇀⦇_,SUBUTXO⦈_ : UTxOEnv → UTxOState → SubLevelTx → UTxOSta
 data _⊢_⇀⦇_,UTXO⦈_ : UTxOEnv → UTxOState → TopLevelTx → UTxOState → Type where
 
   UTXO :
-    let txb    = Tx.txBody tx
-        subTxs = TxBody.txSubTransactions txb
-        utxo₀  = Γ .utxo₀
-        utxo   = s .utxo
-    in
-    ∙ txIns ≢ ∅
-    ∙ txIns ⊆ dom utxo₀ -- (1)
-    ∙ refInputs ⊆ dom utxo
 
-    ∙ requiredTopLevelGuardsSatisfied tx subTxs
-
+    ∙ SpendInputsOf tx ≢ ∅
+    ∙ SpendInputsOf tx ⊆ dom (UTxOOf Γ)                           -- (1)
+    ∙ ReferenceInputsOf tx ⊆ dom (UTxOOf s)
+    ∙ requiredTopLevelGuardsSatisfied tx (SubTransactionsOf tx)   -- (2)
     ∙ Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ s'
       ────────────────────────────────
       Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s'
 ```
 
-**Note.** The premise `requiredTopLevelGuardsSatisfied tx subTxs`
-is explicitly a **phase-1** condition (CIP-0118): every guard credential requested by
-subTx bodies must appear in the top-level `txGuards` set.
+**Notes**.
 
-A couple of details to notice:
+1.  The set of spending inputs must exist in the UTxO *before* applying the
+    transaction (or partially applying any part of it).
 
-- `txb` is computed via `Tx.txBody tx` (no reliance on `TxBodyOf` instances).
-- `UTXOS-stub` returns the **same** state (so we can typecheck
-  everything without inventing semantics prematurely).
+2.  The premise `requiredTopLevelGuardsSatisfied tx subTxs` is explicitly a
+    phase-1 condition (CIP-0118): every guard credential requested by subtransaction
+    bodies must appear in the top-level `txGuards` set.
