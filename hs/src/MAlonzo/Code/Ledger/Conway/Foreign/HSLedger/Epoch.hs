@@ -499,13 +499,13 @@ d_HasEpochState'45'NewEpochState_170
       MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_HasEpochState'45'NewEpochState_3296
 -- Ledger.Conway.Foreign.HSLedger.Epoch.EpochSpec._.HasGovState-EpochState
 d_HasGovState'45'EpochState_172 ::
-  MAlonzo.Code.Ledger.Conway.Specification.Gov.T_HasGovState_2592
+  MAlonzo.Code.Ledger.Conway.Specification.Gov.T_HasGovState_1784
 d_HasGovState'45'EpochState_172
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_HasGovState'45'EpochState_3204
 -- Ledger.Conway.Foreign.HSLedger.Epoch.EpochSpec._.HasGovState-NewEpochState
 d_HasGovState'45'NewEpochState_174 ::
-  MAlonzo.Code.Ledger.Conway.Specification.Gov.T_HasGovState_2592
+  MAlonzo.Code.Ledger.Conway.Specification.Gov.T_HasGovState_1784
 d_HasGovState'45'NewEpochState_174
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_HasGovState'45'NewEpochState_3304
