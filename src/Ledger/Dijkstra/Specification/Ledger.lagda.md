@@ -181,6 +181,7 @@ private variable
   enactState            : EnactState
   treasury              : Treasury
   isTopLevelValid       : Bool
+  utxo₀                 : UTxO
 ```
 -->
 
@@ -197,7 +198,7 @@ data _⊢_⇀⦇_,SUBLEDGER⦈_ : SubLedgerEnv → LState → SubLevelTx → LSt
 ```agda
     in
       ∙ isTopLevelValid ≡ true
-      ∙ ⟦ slot , pp , treasury ⟧  ⊢ utxoState ⇀⦇ stx ,SUBUTXOW⦈ utxoState'
+      ∙ ⟦ slot , pp , treasury , utxo₀ ⟧  ⊢ utxoState ⇀⦇ stx ,SUBUTXOW⦈ utxoState'
       ∙ ⟦ epoch slot , pp , txGovVotes , txWithdrawals , allColdCreds govState enactState ⟧ ⊢ certState ⇀⦇ txCerts ,CERTS⦈ certState'
       ∙ ⟦ txId , epoch slot , pp , ppolicy , enactState , certState' , dom (RewardsOf certState) ⟧ ⊢ {- rmOrphanDRepVotes certState' -} govState ⇀⦇ txgov txb ,GOVS⦈ govState'
       ────────────────────────────────
@@ -205,7 +206,7 @@ data _⊢_⇀⦇_,SUBLEDGER⦈_ : SubLedgerEnv → LState → SubLevelTx → LSt
 
   SUBLEDGER-I :
       ∙ isTopLevelValid ≡ false
-      ∙ ⟦ slot , pp , treasury ⟧ ⊢ utxoState ⇀⦇ stx ,SUBUTXOW⦈ utxoState
+      ∙ ⟦ slot , pp , treasury , utxo₀ ⟧ ⊢ utxoState ⇀⦇ stx ,SUBUTXOW⦈ utxoState
       ────────────────────────────────
       ⟦ slot , ppolicy , pp , enactState , treasury , isTopLevelValid ⟧ ⊢ ⟦ utxoState , govState , certState ⟧ ⇀⦇ stx ,SUBLEDGER⦈ ⟦ utxoState , govState , certState ⟧
 
@@ -237,7 +238,7 @@ data _⊢_⇀⦇_,LEDGER⦈_ : LedgerEnv → LState → TopLevelTx → LState �
     in
       ∙ isValid tx ≡ true
       ∙ ⟦ slot , ppolicy , pp , enactState , treasury , isValid tx ⟧ ⊢ ⟦ utxoState , govState , certState ⟧ ⇀⦇ txSubTransactions ,SUBLEDGERS⦈ ⟦ utxoState' , govState' , certState' ⟧
-      ∙ ⟦ slot , pp , treasury ⟧  ⊢ utxoState' ⇀⦇ tx ,UTXOW⦈ utxoState''
+      ∙ ⟦ slot , pp , treasury , utxo₀ ⟧  ⊢ utxoState' ⇀⦇ tx ,UTXOW⦈ utxoState''
       ∙ ⟦ epoch slot , pp , txGovVotes , txWithdrawals , allColdCreds govState enactState ⟧ ⊢ certState' ⇀⦇ txCerts ,CERTS⦈ certState''
       ∙ ⟦ txId , epoch slot , pp , ppolicy , enactState , certState' , dom (RewardsOf certState) ⟧ ⊢ {- rmOrphanDRepVotes certState' -} govState ⇀⦇ txgov txb ,GOVS⦈ govState'
       ────────────────────────────────
@@ -255,7 +256,7 @@ data _⊢_⇀⦇_,LEDGER⦈_ : LedgerEnv → LState → TopLevelTx → LState �
     in
       ∙ isValid tx ≡ false
       ∙ ⟦ slot , ppolicy , pp , enactState , treasury , isValid tx ⟧ ⊢ ⟦ utxoState , govState , certState ⟧ ⇀⦇ txSubTransactions  ,SUBLEDGERS⦈ ⟦ utxoState , govState , certState ⟧
-      ∙ ⟦ slot , pp , treasury ⟧ ⊢ utxoState ⇀⦇ tx ,UTXOW⦈ utxoState'
+      ∙ ⟦ slot , pp , treasury , utxo₀ ⟧ ⊢ utxoState ⇀⦇ tx ,UTXOW⦈ utxoState'
       ────────────────────────────────
       ⟦ slot , ppolicy , pp , enactState , treasury ⟧ ⊢ ⟦ utxoState , govState , certState ⟧ ⇀⦇ tx ,LEDGER⦈ ⟦ utxoState' , govState , certState ⟧
 ```
