@@ -61,8 +61,7 @@ instance
   HasUTxO-UTxOState .UTxOOf = UTxOState.utxo
 
   unquoteDecl HasCast-UTxOEnv HasCast-UTxOState = derive-HasCast
-    ( (quote UTxOEnv   , HasCast-UTxOEnv  ) ∷
-    [ (quote UTxOState , HasCast-UTxOState) ])
+    ((quote UTxOEnv , HasCast-UTxOEnv  ) ∷ (quote UTxOState , HasCast-UTxOState) ∷ [])
 ```
 -->
 
