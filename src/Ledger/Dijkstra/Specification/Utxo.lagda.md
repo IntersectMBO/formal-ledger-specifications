@@ -27,6 +27,20 @@ open import Ledger.Dijkstra.Specification.Certs govStructure
 open import Ledger.Dijkstra.Specification.Script.Validation txs abs
 open import Ledger.Conway.Specification.Fees using (scriptsCost)
 
+private variable
+  ℓ : TxLevel
+
+totExUnits : Tx ℓ → ExUnits
+totExUnits tx = ∑[ (_ , eu) ← RedeemersOf tx ] eu
+
+-- utxoEntrySizeWithoutVal = 27 words (8 bytes)
+utxoEntrySizeWithoutVal : MemoryEstimate
+utxoEntrySizeWithoutVal = 8
+
+utxoEntrySize : TxOutʰ → MemoryEstimate
+utxoEntrySize o = utxoEntrySizeWithoutVal + size (getValueʰ o)
+
+open PParams
 ```
 -->
 
