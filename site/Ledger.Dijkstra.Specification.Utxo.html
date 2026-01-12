@@ -11864,13 +11864,30 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#utxo_1" class="md-nav__link">
+  <a href="#sec:the-utxo-transition-system" class="md-nav__link">
     <span class="md-ellipsis">
       
-        UTXO
+        The UTXO Transition System
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="The UTXO Transition System">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#new-in-dijkstra" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        New in Dijkstra
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -11915,11 +11932,11 @@ Dijkstra (CIP-0118 / CIP-0112), without yet committing to the full batch semanti
 <a id="532" class="Keyword">open</a> <a id="537" class="Keyword">import</a> <a id="544" href="Ledger.Dijkstra.Specification.Transaction.html" class="Module">Ledger.Dijkstra.Specification.Transaction</a>
 
 <a id="587" class="Keyword">module</a> <a id="594" href="Ledger.Dijkstra.Specification.Utxo.html" class="Module">Ledger.Dijkstra.Specification.Utxo</a>
-  <a id="631" class="Symbol">(</a><a id="632" href="Ledger.Dijkstra.Specification.Utxo.html#632" class="Bound">txs</a> <a id="636" class="Symbol">:</a> <a id="638" class="Symbol">_)</a> <a id="641" class="Symbol">(</a><a id="642" class="Keyword">open</a> <a id="647" href="Ledger.Dijkstra.Specification.Transaction.html#2990" class="Module">TransactionStructure</a> <a id="668" href="Ledger.Dijkstra.Specification.Utxo.html#632" class="Bound">txs</a><a id="671" class="Symbol">)</a>
+  <a id="631" class="Symbol">(</a><a id="632" href="Ledger.Dijkstra.Specification.Utxo.html#632" class="Bound">txs</a> <a id="636" class="Symbol">:</a> <a id="638" class="Symbol">_)</a> <a id="641" class="Symbol">(</a><a id="642" class="Keyword">open</a> <a id="647" href="Ledger.Dijkstra.Specification.Transaction.html#2998" class="Module">TransactionStructure</a> <a id="668" href="Ledger.Dijkstra.Specification.Utxo.html#632" class="Bound">txs</a><a id="671" class="Symbol">)</a>
   <a id="675" class="Symbol">(</a><a id="676" href="Ledger.Dijkstra.Specification.Utxo.html#676" class="Bound">abs</a> <a id="680" class="Symbol">:</a> <a id="682" href="Ledger.Dijkstra.Specification.Abstract.html#852" class="Record">AbstractFunctions</a> <a id="700" href="Ledger.Dijkstra.Specification.Utxo.html#632" class="Bound">txs</a><a id="703" class="Symbol">)</a> <a id="705" class="Symbol">(</a><a id="706" class="Keyword">open</a> <a id="711" href="Ledger.Dijkstra.Specification.Abstract.html#852" class="Module">AbstractFunctions</a> <a id="729" href="Ledger.Dijkstra.Specification.Utxo.html#676" class="Bound">abs</a><a id="732" class="Symbol">)</a>
   <a id="736" class="Keyword">where</a>
 
-<a id="743" class="Keyword">open</a> <a id="748" class="Keyword">import</a> <a id="755" href="Ledger.Dijkstra.Specification.Certs.html" class="Module">Ledger.Dijkstra.Specification.Certs</a> <a id="791" href="Ledger.Dijkstra.Specification.Transaction.html#4253" class="Function">govStructure</a>
+<a id="743" class="Keyword">open</a> <a id="748" class="Keyword">import</a> <a id="755" href="Ledger.Dijkstra.Specification.Certs.html" class="Module">Ledger.Dijkstra.Specification.Certs</a> <a id="791" href="Ledger.Dijkstra.Specification.Transaction.html#4261" class="Function">govStructure</a>
 <a id="804" class="Keyword">open</a> <a id="809" class="Keyword">import</a> <a id="816" href="Ledger.Dijkstra.Specification.Script.Validation.html" class="Module">Ledger.Dijkstra.Specification.Script.Validation</a> <a id="864" href="Ledger.Dijkstra.Specification.Utxo.html#632" class="Bound">txs</a> <a id="868" href="Ledger.Dijkstra.Specification.Utxo.html#676" class="Bound">abs</a>
 </pre>
 
@@ -11930,68 +11947,79 @@ Dijkstra (CIP-0118 / CIP-0112), without yet committing to the full batch semanti
     <a id="UTxOEnv.slot"></a><a id="1000" href="Ledger.Dijkstra.Specification.Utxo.html#1000" class="Field">slot</a>      <a id="1010" class="Symbol">:</a> <a id="1012" href="Ledger.Core.Specification.Epoch.html#818" class="Function">Slot</a>
     <a id="UTxOEnv.pparams"></a><a id="1021" href="Ledger.Dijkstra.Specification.Utxo.html#1021" class="Field">pparams</a>   <a id="1031" class="Symbol">:</a> <a id="1033" href="Ledger.Conway.Specification.PParams.html#5526" class="Record">PParams</a>
     <a id="UTxOEnv.treasury"></a><a id="1045" href="Ledger.Dijkstra.Specification.Utxo.html#1045" class="Field">treasury</a>  <a id="1055" class="Symbol">:</a> <a id="1057" href="Ledger.Prelude.Base.html#280" class="Function">Treasury</a>
+    <a id="UTxOEnv.utxo₀"></a><a id="1070" href="Ledger.Dijkstra.Specification.Utxo.html#1070" class="Field">utxo₀</a>     <a id="1080" class="Symbol">:</a> <a id="1082" href="Ledger.Dijkstra.Specification.Transaction.html#4943" class="Function">UTxO</a>
 
-<a id="1067" class="Keyword">record</a> <a id="UTxOState"></a><a id="1074" href="Ledger.Dijkstra.Specification.Utxo.html#1074" class="Record">UTxOState</a> <a id="1084" class="Symbol">:</a> <a id="1086" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="1091" class="Keyword">where</a>
-  <a id="1099" class="Keyword">field</a>
-    <a id="UTxOState.utxo"></a><a id="1109" href="Ledger.Dijkstra.Specification.Utxo.html#1109" class="Field">utxo</a>       <a id="1120" class="Symbol">:</a> <a id="1122" href="Ledger.Dijkstra.Specification.Transaction.html#4935" class="Function">UTxO</a>
-    <a id="UTxOState.fees"></a><a id="1131" href="Ledger.Dijkstra.Specification.Utxo.html#1131" class="Field">fees</a>       <a id="1142" class="Symbol">:</a> <a id="1144" href="Ledger.Prelude.Base.html#266" class="Function">Fees</a>
-    <a id="UTxOState.deposits"></a><a id="1153" href="Ledger.Dijkstra.Specification.Utxo.html#1153" class="Field">deposits</a>   <a id="1164" class="Symbol">:</a> <a id="1166" href="Ledger.Conway.Specification.Certs.html#1034" class="Function">Deposits</a>
-    <a id="UTxOState.donations"></a><a id="1179" href="Ledger.Dijkstra.Specification.Utxo.html#1179" class="Field">donations</a>  <a id="1190" class="Symbol">:</a> <a id="1192" href="Ledger.Prelude.Base.html#256" class="Function">Donations</a>
+<a id="1088" class="Keyword">record</a> <a id="UTxOState"></a><a id="1095" href="Ledger.Dijkstra.Specification.Utxo.html#1095" class="Record">UTxOState</a> <a id="1105" class="Symbol">:</a> <a id="1107" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="1112" class="Keyword">where</a>
+  <a id="1120" class="Keyword">field</a>
+    <a id="UTxOState.utxo"></a><a id="1130" href="Ledger.Dijkstra.Specification.Utxo.html#1130" class="Field">utxo</a>       <a id="1141" class="Symbol">:</a> <a id="1143" href="Ledger.Dijkstra.Specification.Transaction.html#4943" class="Function">UTxO</a>
+    <a id="UTxOState.fees"></a><a id="1152" href="Ledger.Dijkstra.Specification.Utxo.html#1152" class="Field">fees</a>       <a id="1163" class="Symbol">:</a> <a id="1165" href="Ledger.Prelude.Base.html#266" class="Function">Fees</a>
+    <a id="UTxOState.deposits"></a><a id="1174" href="Ledger.Dijkstra.Specification.Utxo.html#1174" class="Field">deposits</a>   <a id="1185" class="Symbol">:</a> <a id="1187" href="Ledger.Conway.Specification.Certs.html#1034" class="Function">Deposits</a>
+    <a id="UTxOState.donations"></a><a id="1200" href="Ledger.Dijkstra.Specification.Utxo.html#1200" class="Field">donations</a>  <a id="1211" class="Symbol">:</a> <a id="1213" href="Ledger.Prelude.Base.html#256" class="Function">Donations</a>
 </pre>
-<pre class="Agda hidden-source"><a id="1220" class="Keyword">instance</a>
-  <a id="1231" class="Keyword">unquoteDecl</a> <a id="HasCast-UTxOEnv"></a><a id="1243" href="Ledger.Dijkstra.Specification.Utxo.html#1243" class="Function">HasCast-UTxOEnv</a> <a id="HasCast-UTxOState"></a><a id="1259" href="Ledger.Dijkstra.Specification.Utxo.html#1259" class="Function">HasCast-UTxOState</a> <a id="1277" class="Symbol">=</a> <a id="1279" href="stdlib-classes.Class.HasCast.Derive.html#2690" class="Function">derive-HasCast</a>
-    <a id="1298" class="Symbol">(</a> <a id="1300" class="Symbol">(</a><a id="1301" class="Keyword">quote</a> <a id="1307" href="Ledger.Dijkstra.Specification.Utxo.html#967" class="Record">UTxOEnv</a>   <a id="1317" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="1319" href="Ledger.Dijkstra.Specification.Utxo.html#1243" class="Function">HasCast-UTxOEnv</a>  <a id="1336" class="Symbol">)</a> <a id="1338" href="Agda.Builtin.List.html#199" class="InductiveConstructor Operator">∷</a>
-    <a id="1344" href="Data.List.Base.html#4907" class="Function Operator">[</a> <a id="1346" class="Symbol">(</a><a id="1347" class="Keyword">quote</a> <a id="1353" href="Ledger.Dijkstra.Specification.Utxo.html#1074" class="Record">UTxOState</a> <a id="1363" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="1365" href="Ledger.Dijkstra.Specification.Utxo.html#1259" class="Function">HasCast-UTxOState</a><a id="1382" class="Symbol">)</a> <a id="1384" href="Data.List.Base.html#4907" class="Function Operator">]</a><a id="1385" class="Symbol">)</a>
+<pre class="Agda hidden-source"><a id="1241" class="Keyword">instance</a>
+  <a id="HasUTxO-UTxOEnv"></a><a id="1252" href="Ledger.Dijkstra.Specification.Utxo.html#1252" class="Function">HasUTxO-UTxOEnv</a> <a id="1268" class="Symbol">:</a> <a id="1270" href="Ledger.Dijkstra.Specification.Transaction.html#5189" class="Record">HasUTxO</a> <a id="1278" href="Ledger.Dijkstra.Specification.Utxo.html#967" class="Record">UTxOEnv</a>
+  <a id="1288" href="Ledger.Dijkstra.Specification.Utxo.html#1252" class="Function">HasUTxO-UTxOEnv</a> <a id="1304" class="Symbol">.</a><a id="1305" href="Ledger.Dijkstra.Specification.Transaction.html#5239" class="Field">UTxOOf</a> <a id="1312" class="Symbol">=</a> <a id="1314" href="Ledger.Dijkstra.Specification.Utxo.html#1070" class="Field">UTxOEnv.utxo₀</a>
+
+  <a id="HasUTxO-UTxOState"></a><a id="1331" href="Ledger.Dijkstra.Specification.Utxo.html#1331" class="Function">HasUTxO-UTxOState</a> <a id="1349" class="Symbol">:</a> <a id="1351" href="Ledger.Dijkstra.Specification.Transaction.html#5189" class="Record">HasUTxO</a> <a id="1359" href="Ledger.Dijkstra.Specification.Utxo.html#1095" class="Record">UTxOState</a>
+  <a id="1371" href="Ledger.Dijkstra.Specification.Utxo.html#1331" class="Function">HasUTxO-UTxOState</a> <a id="1389" class="Symbol">.</a><a id="1390" href="Ledger.Dijkstra.Specification.Transaction.html#5239" class="Field">UTxOOf</a> <a id="1397" class="Symbol">=</a> <a id="1399" href="Ledger.Dijkstra.Specification.Utxo.html#1130" class="Field">UTxOState.utxo</a>
+
+  <a id="1417" class="Keyword">unquoteDecl</a> <a id="HasCast-UTxOEnv"></a><a id="1429" href="Ledger.Dijkstra.Specification.Utxo.html#1429" class="Function">HasCast-UTxOEnv</a> <a id="HasCast-UTxOState"></a><a id="1445" href="Ledger.Dijkstra.Specification.Utxo.html#1445" class="Function">HasCast-UTxOState</a> <a id="1463" class="Symbol">=</a> <a id="1465" href="stdlib-classes.Class.HasCast.Derive.html#2690" class="Function">derive-HasCast</a>
+    <a id="1484" class="Symbol">((</a><a id="1486" class="Keyword">quote</a> <a id="1492" href="Ledger.Dijkstra.Specification.Utxo.html#967" class="Record">UTxOEnv</a> <a id="1500" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="1502" href="Ledger.Dijkstra.Specification.Utxo.html#1429" class="Function">HasCast-UTxOEnv</a>  <a id="1519" class="Symbol">)</a> <a id="1521" href="Agda.Builtin.List.html#199" class="InductiveConstructor Operator">∷</a> <a id="1523" class="Symbol">(</a><a id="1524" class="Keyword">quote</a> <a id="1530" href="Ledger.Dijkstra.Specification.Utxo.html#1095" class="Record">UTxOState</a> <a id="1540" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="1542" href="Ledger.Dijkstra.Specification.Utxo.html#1445" class="Function">HasCast-UTxOState</a><a id="1559" class="Symbol">)</a> <a id="1561" href="Agda.Builtin.List.html#199" class="InductiveConstructor Operator">∷</a> <a id="1563" href="Agda.Builtin.List.html#184" class="InductiveConstructor">[]</a><a id="1565" class="Symbol">)</a>
 </pre>
 
-<pre class="Agda hidden-source"><a id="1409" class="Keyword">private</a> <a id="1417" class="Keyword">variable</a>
-  <a id="1428" href="Ledger.Dijkstra.Specification.Utxo.html#1428" class="Generalizable">Γ</a> <a id="1430" class="Symbol">:</a> <a id="1432" href="Ledger.Dijkstra.Specification.Utxo.html#967" class="Record">UTxOEnv</a>
-  <a id="1442" href="Ledger.Dijkstra.Specification.Utxo.html#1442" class="Generalizable">s</a> <a id="1444" href="Ledger.Dijkstra.Specification.Utxo.html#1444" class="Generalizable">s&#39;</a> <a id="1447" class="Symbol">:</a> <a id="1449" href="Ledger.Dijkstra.Specification.Utxo.html#1074" class="Record">UTxOState</a>
-  <a id="1461" href="Ledger.Dijkstra.Specification.Utxo.html#1461" class="Generalizable">tx</a> <a id="1464" class="Symbol">:</a> <a id="1466" href="Ledger.Dijkstra.Specification.Transaction.html#8350" class="Function">TopLevelTx</a>
-  <a id="1479" href="Ledger.Dijkstra.Specification.Utxo.html#1479" class="Generalizable">stx</a> <a id="1483" class="Symbol">:</a> <a id="1485" href="Ledger.Dijkstra.Specification.Transaction.html#8400" class="Function">SubLevelTx</a>
+<pre class="Agda hidden-source"><a id="1589" class="Keyword">private</a> <a id="1597" class="Keyword">variable</a>
+  <a id="1608" href="Ledger.Dijkstra.Specification.Utxo.html#1608" class="Generalizable">Γ</a> <a id="1610" class="Symbol">:</a> <a id="1612" href="Ledger.Dijkstra.Specification.Utxo.html#967" class="Record">UTxOEnv</a>
+  <a id="1622" href="Ledger.Dijkstra.Specification.Utxo.html#1622" class="Generalizable">s</a> <a id="1624" href="Ledger.Dijkstra.Specification.Utxo.html#1624" class="Generalizable">s&#39;</a> <a id="1627" class="Symbol">:</a> <a id="1629" href="Ledger.Dijkstra.Specification.Utxo.html#1095" class="Record">UTxOState</a>
+  <a id="1641" href="Ledger.Dijkstra.Specification.Utxo.html#1641" class="Generalizable">tx</a> <a id="1644" class="Symbol">:</a> <a id="1646" href="Ledger.Dijkstra.Specification.Transaction.html#8358" class="Function">TopLevelTx</a>
+  <a id="1659" href="Ledger.Dijkstra.Specification.Utxo.html#1659" class="Generalizable">stx</a> <a id="1663" class="Symbol">:</a> <a id="1665" href="Ledger.Dijkstra.Specification.Transaction.html#8408" class="Function">SubLevelTx</a>
 </pre>
 
 <h2 id="utxos">UTXOS<a class="headerlink" href="#utxos" title="Permanent link">&para;</a></h2>
 <p>(skeleton/stub)</p>
 <p><code>UTXOS</code> will eventually process the batch (top-level tx + its subTxs) and handle
 phase-2 success/failure behavior.  For now it is merely a hook point.</p>
-<pre class="Agda"><a id="1692" class="Keyword">data</a> <a id="_⊢_⇀⦇_,UTXOS⦈_"></a><a id="1697" href="Ledger.Dijkstra.Specification.Utxo.html#1697" class="Datatype Operator">_⊢_⇀⦇_,UTXOS⦈_</a> <a id="1712" class="Symbol">:</a> <a id="1714" href="Ledger.Dijkstra.Specification.Utxo.html#967" class="Record">UTxOEnv</a> <a id="1722" class="Symbol">→</a> <a id="1724" href="Ledger.Dijkstra.Specification.Utxo.html#1074" class="Record">UTxOState</a> <a id="1734" class="Symbol">→</a> <a id="1736" href="Ledger.Dijkstra.Specification.Transaction.html#8350" class="Function">TopLevelTx</a> <a id="1747" class="Symbol">→</a> <a id="1749" href="Ledger.Dijkstra.Specification.Utxo.html#1074" class="Record">UTxOState</a> <a id="1759" class="Symbol">→</a> <a id="1761" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="1766" class="Keyword">where</a>
-  <a id="_⊢_⇀⦇_,UTXOS⦈_.UTXOS-stub"></a><a id="1774" href="Ledger.Dijkstra.Specification.Utxo.html#1774" class="InductiveConstructor">UTXOS-stub</a> <a id="1785" class="Symbol">:</a>
-    <a id="1791" href="Prelude.InferenceRules.html#45235" class="Function Operator">────────────────────────────────</a>
-    <a id="1828" href="Ledger.Dijkstra.Specification.Utxo.html#1428" class="Generalizable">Γ</a> <a id="1830" href="Ledger.Dijkstra.Specification.Utxo.html#1697" class="Datatype Operator">⊢</a> <a id="1832" href="Ledger.Dijkstra.Specification.Utxo.html#1442" class="Generalizable">s</a> <a id="1834" href="Ledger.Dijkstra.Specification.Utxo.html#1697" class="Datatype Operator">⇀⦇</a> <a id="1837" href="Ledger.Dijkstra.Specification.Utxo.html#1461" class="Generalizable">tx</a> <a id="1840" href="Ledger.Dijkstra.Specification.Utxo.html#1697" class="Datatype Operator">,UTXOS⦈</a> <a id="1848" href="Ledger.Dijkstra.Specification.Utxo.html#1442" class="Generalizable">s</a>
+<pre class="Agda"><a id="1872" class="Keyword">data</a> <a id="_⊢_⇀⦇_,UTXOS⦈_"></a><a id="1877" href="Ledger.Dijkstra.Specification.Utxo.html#1877" class="Datatype Operator">_⊢_⇀⦇_,UTXOS⦈_</a> <a id="1892" class="Symbol">:</a> <a id="1894" href="Ledger.Dijkstra.Specification.Utxo.html#967" class="Record">UTxOEnv</a> <a id="1902" class="Symbol">→</a> <a id="1904" href="Ledger.Dijkstra.Specification.Utxo.html#1095" class="Record">UTxOState</a> <a id="1914" class="Symbol">→</a> <a id="1916" href="Ledger.Dijkstra.Specification.Transaction.html#8358" class="Function">TopLevelTx</a> <a id="1927" class="Symbol">→</a> <a id="1929" href="Ledger.Dijkstra.Specification.Utxo.html#1095" class="Record">UTxOState</a> <a id="1939" class="Symbol">→</a> <a id="1941" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="1946" class="Keyword">where</a>
+  <a id="_⊢_⇀⦇_,UTXOS⦈_.UTXOS-stub"></a><a id="1954" href="Ledger.Dijkstra.Specification.Utxo.html#1954" class="InductiveConstructor">UTXOS-stub</a> <a id="1965" class="Symbol">:</a>
+    <a id="1971" href="Prelude.InferenceRules.html#45235" class="Function Operator">────────────────────────────────</a>
+    <a id="2008" href="Ledger.Dijkstra.Specification.Utxo.html#1608" class="Generalizable">Γ</a> <a id="2010" href="Ledger.Dijkstra.Specification.Utxo.html#1877" class="Datatype Operator">⊢</a> <a id="2012" href="Ledger.Dijkstra.Specification.Utxo.html#1622" class="Generalizable">s</a> <a id="2014" href="Ledger.Dijkstra.Specification.Utxo.html#1877" class="Datatype Operator">⇀⦇</a> <a id="2017" href="Ledger.Dijkstra.Specification.Utxo.html#1641" class="Generalizable">tx</a> <a id="2020" href="Ledger.Dijkstra.Specification.Utxo.html#1877" class="Datatype Operator">,UTXOS⦈</a> <a id="2028" href="Ledger.Dijkstra.Specification.Utxo.html#1622" class="Generalizable">s</a>
 </pre>
-<h2 id="utxo_1">UTXO<a class="headerlink" href="#utxo_1" title="Permanent link">&para;</a></h2>
-<p>(skeleton with the new phase-1 check)</p>
-<p>This is the intended home of Dijkstra "phase-1 structural checks."</p>
-<pre class="Agda"><a id="1979" class="Keyword">data</a> <a id="_⊢_⇀⦇_,SUBUTXO⦈_"></a><a id="1984" href="Ledger.Dijkstra.Specification.Utxo.html#1984" class="Datatype Operator">_⊢_⇀⦇_,SUBUTXO⦈_</a> <a id="2001" class="Symbol">:</a> <a id="2003" href="Ledger.Dijkstra.Specification.Utxo.html#967" class="Record">UTxOEnv</a> <a id="2011" class="Symbol">→</a> <a id="2013" href="Ledger.Dijkstra.Specification.Utxo.html#1074" class="Record">UTxOState</a> <a id="2023" class="Symbol">→</a> <a id="2025" href="Ledger.Dijkstra.Specification.Transaction.html#8400" class="Function">SubLevelTx</a> <a id="2036" class="Symbol">→</a> <a id="2038" href="Ledger.Dijkstra.Specification.Utxo.html#1074" class="Record">UTxOState</a> <a id="2048" class="Symbol">→</a> <a id="2050" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="2055" class="Keyword">where</a>
+<h2 id="sec:the-utxo-transition-system">The <span class="AgdaDatatype">UTXO</span> Transition System<a class="headerlink" href="#sec:the-utxo-transition-system" title="Permanent link">&para;</a></h2>
+<h3 id="new-in-dijkstra">New in Dijkstra<a class="headerlink" href="#new-in-dijkstra" title="Permanent link">&para;</a></h3>
+<ol>
+<li>The set of spending inputs must exist in the UTxO <em>before</em> applying the
+transaction (or partially applying any part of it). TODO: Add link to CIP once its finalized.</li>
+</ol>
+<pre class="Agda"><a id="2334" class="Keyword">data</a> <a id="_⊢_⇀⦇_,SUBUTXO⦈_"></a><a id="2339" href="Ledger.Dijkstra.Specification.Utxo.html#2339" class="Datatype Operator">_⊢_⇀⦇_,SUBUTXO⦈_</a> <a id="2356" class="Symbol">:</a> <a id="2358" href="Ledger.Dijkstra.Specification.Utxo.html#967" class="Record">UTxOEnv</a> <a id="2366" class="Symbol">→</a> <a id="2368" href="Ledger.Dijkstra.Specification.Utxo.html#1095" class="Record">UTxOState</a> <a id="2378" class="Symbol">→</a> <a id="2380" href="Ledger.Dijkstra.Specification.Transaction.html#8408" class="Function">SubLevelTx</a> <a id="2391" class="Symbol">→</a> <a id="2393" href="Ledger.Dijkstra.Specification.Utxo.html#1095" class="Record">UTxOState</a> <a id="2403" class="Symbol">→</a> <a id="2405" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="2410" class="Keyword">where</a>
 
-  <a id="_⊢_⇀⦇_,SUBUTXO⦈_.SUBUTXO"></a><a id="2064" href="Ledger.Dijkstra.Specification.Utxo.html#2064" class="InductiveConstructor">SUBUTXO</a> <a id="2072" class="Symbol">:</a>
-    <a id="2078" class="Keyword">let</a> <a id="2082" href="Ledger.Dijkstra.Specification.Utxo.html#2082" class="Bound">txb</a>    <a id="2089" class="Symbol">=</a> <a id="2091" href="Ledger.Dijkstra.Specification.Transaction.html#6554" class="Field">Tx.txBody</a> <a id="2101" href="Ledger.Dijkstra.Specification.Utxo.html#1461" class="Generalizable">tx</a>
-        <a id="2112" href="Ledger.Dijkstra.Specification.Utxo.html#2112" class="Bound">subTxs</a> <a id="2119" class="Symbol">=</a> <a id="2121" href="Ledger.Dijkstra.Specification.Transaction.html#7593" class="Field">TxBody.txSubTransactions</a> <a id="2146" href="Ledger.Dijkstra.Specification.Utxo.html#2082" class="Bound">txb</a>
-    <a id="2154" class="Keyword">in</a>
-      <a id="2163" href="Prelude.InferenceRules.html#45235" class="Function Operator">────────────────────────────────</a>
-      <a id="2202" href="Ledger.Dijkstra.Specification.Utxo.html#1428" class="Generalizable">Γ</a> <a id="2204" href="Ledger.Dijkstra.Specification.Utxo.html#1984" class="Datatype Operator">⊢</a> <a id="2206" href="Ledger.Dijkstra.Specification.Utxo.html#1442" class="Generalizable">s</a> <a id="2208" href="Ledger.Dijkstra.Specification.Utxo.html#1984" class="Datatype Operator">⇀⦇</a> <a id="2211" href="Ledger.Dijkstra.Specification.Utxo.html#1479" class="Generalizable">stx</a> <a id="2215" href="Ledger.Dijkstra.Specification.Utxo.html#1984" class="Datatype Operator">,SUBUTXO⦈</a> <a id="2225" href="Ledger.Dijkstra.Specification.Utxo.html#1444" class="Generalizable">s&#39;</a>
+  <a id="_⊢_⇀⦇_,SUBUTXO⦈_.SUBUTXO"></a><a id="2419" href="Ledger.Dijkstra.Specification.Utxo.html#2419" class="InductiveConstructor">SUBUTXO</a> <a id="2427" class="Symbol">:</a>
 
-<a id="2229" class="Keyword">data</a> <a id="_⊢_⇀⦇_,UTXO⦈_"></a><a id="2234" href="Ledger.Dijkstra.Specification.Utxo.html#2234" class="Datatype Operator">_⊢_⇀⦇_,UTXO⦈_</a> <a id="2248" class="Symbol">:</a> <a id="2250" href="Ledger.Dijkstra.Specification.Utxo.html#967" class="Record">UTxOEnv</a> <a id="2258" class="Symbol">→</a> <a id="2260" href="Ledger.Dijkstra.Specification.Utxo.html#1074" class="Record">UTxOState</a> <a id="2270" class="Symbol">→</a> <a id="2272" href="Ledger.Dijkstra.Specification.Transaction.html#8350" class="Function">TopLevelTx</a> <a id="2283" class="Symbol">→</a> <a id="2285" href="Ledger.Dijkstra.Specification.Utxo.html#1074" class="Record">UTxOState</a> <a id="2295" class="Symbol">→</a> <a id="2297" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="2302" class="Keyword">where</a>
+      <a id="2436" href="Prelude.InferenceRules.html#45235" class="Function Operator">────────────────────────────────</a>
+      <a id="2475" href="Ledger.Dijkstra.Specification.Utxo.html#1608" class="Generalizable">Γ</a> <a id="2477" href="Ledger.Dijkstra.Specification.Utxo.html#2339" class="Datatype Operator">⊢</a> <a id="2479" href="Ledger.Dijkstra.Specification.Utxo.html#1622" class="Generalizable">s</a> <a id="2481" href="Ledger.Dijkstra.Specification.Utxo.html#2339" class="Datatype Operator">⇀⦇</a> <a id="2484" href="Ledger.Dijkstra.Specification.Utxo.html#1659" class="Generalizable">stx</a> <a id="2488" href="Ledger.Dijkstra.Specification.Utxo.html#2339" class="Datatype Operator">,SUBUTXO⦈</a> <a id="2498" href="Ledger.Dijkstra.Specification.Utxo.html#1624" class="Generalizable">s&#39;</a>
 
-  <a id="_⊢_⇀⦇_,UTXO⦈_.UTXO"></a><a id="2311" href="Ledger.Dijkstra.Specification.Utxo.html#2311" class="InductiveConstructor">UTXO</a> <a id="2316" class="Symbol">:</a>
-    <a id="2322" class="Keyword">let</a> <a id="2326" href="Ledger.Dijkstra.Specification.Utxo.html#2326" class="Bound">txb</a>    <a id="2333" class="Symbol">=</a> <a id="2335" href="Ledger.Dijkstra.Specification.Transaction.html#6554" class="Field">Tx.txBody</a> <a id="2345" href="Ledger.Dijkstra.Specification.Utxo.html#1461" class="Generalizable">tx</a>
-        <a id="2356" href="Ledger.Dijkstra.Specification.Utxo.html#2356" class="Bound">subTxs</a> <a id="2363" class="Symbol">=</a> <a id="2365" href="Ledger.Dijkstra.Specification.Transaction.html#7593" class="Field">TxBody.txSubTransactions</a> <a id="2390" href="Ledger.Dijkstra.Specification.Utxo.html#2326" class="Bound">txb</a>
-    <a id="2398" class="Keyword">in</a>
-    <a id="2405" href="Prelude.InferenceRules.html#56075" class="Function Operator">∙</a> <a id="2407" href="Ledger.Dijkstra.Specification.Transaction.html#17374" class="Function">requiredTopLevelGuardsSatisfied</a> <a id="2439" href="Ledger.Dijkstra.Specification.Utxo.html#1461" class="Generalizable">tx</a> <a id="2442" href="Ledger.Dijkstra.Specification.Utxo.html#2356" class="Bound">subTxs</a>
-    <a id="2453" href="Prelude.InferenceRules.html#56006" class="Function Operator">∙</a> <a id="2455" href="Ledger.Dijkstra.Specification.Utxo.html#1428" class="Generalizable">Γ</a> <a id="2457" href="Ledger.Dijkstra.Specification.Utxo.html#1697" class="Datatype Operator">⊢</a> <a id="2459" href="Ledger.Dijkstra.Specification.Utxo.html#1442" class="Generalizable">s</a> <a id="2461" href="Ledger.Dijkstra.Specification.Utxo.html#1697" class="Datatype Operator">⇀⦇</a> <a id="2464" href="Ledger.Dijkstra.Specification.Utxo.html#1461" class="Generalizable">tx</a> <a id="2467" href="Ledger.Dijkstra.Specification.Utxo.html#1697" class="Datatype Operator">,UTXOS⦈</a> <a id="2475" href="Ledger.Dijkstra.Specification.Utxo.html#1444" class="Generalizable">s&#39;</a>
-      <a id="2484" href="Prelude.InferenceRules.html#13694" class="Function Operator">────────────────────────────────</a>
-      <a id="2523" href="Ledger.Dijkstra.Specification.Utxo.html#1428" class="Generalizable">Γ</a> <a id="2525" href="Ledger.Dijkstra.Specification.Utxo.html#2234" class="Datatype Operator">⊢</a> <a id="2527" href="Ledger.Dijkstra.Specification.Utxo.html#1442" class="Generalizable">s</a> <a id="2529" href="Ledger.Dijkstra.Specification.Utxo.html#2234" class="Datatype Operator">⇀⦇</a> <a id="2532" href="Ledger.Dijkstra.Specification.Utxo.html#1461" class="Generalizable">tx</a> <a id="2535" href="Ledger.Dijkstra.Specification.Utxo.html#2234" class="Datatype Operator">,UTXO⦈</a> <a id="2542" href="Ledger.Dijkstra.Specification.Utxo.html#1444" class="Generalizable">s&#39;</a>
+<a id="2502" class="Keyword">data</a> <a id="_⊢_⇀⦇_,UTXO⦈_"></a><a id="2507" href="Ledger.Dijkstra.Specification.Utxo.html#2507" class="Datatype Operator">_⊢_⇀⦇_,UTXO⦈_</a> <a id="2521" class="Symbol">:</a> <a id="2523" href="Ledger.Dijkstra.Specification.Utxo.html#967" class="Record">UTxOEnv</a> <a id="2531" class="Symbol">→</a> <a id="2533" href="Ledger.Dijkstra.Specification.Utxo.html#1095" class="Record">UTxOState</a> <a id="2543" class="Symbol">→</a> <a id="2545" href="Ledger.Dijkstra.Specification.Transaction.html#8358" class="Function">TopLevelTx</a> <a id="2556" class="Symbol">→</a> <a id="2558" href="Ledger.Dijkstra.Specification.Utxo.html#1095" class="Record">UTxOState</a> <a id="2568" class="Symbol">→</a> <a id="2570" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="2575" class="Keyword">where</a>
+
+  <a id="_⊢_⇀⦇_,UTXO⦈_.UTXO"></a><a id="2584" href="Ledger.Dijkstra.Specification.Utxo.html#2584" class="InductiveConstructor">UTXO</a> <a id="2589" class="Symbol">:</a>
+
+    <a id="2596" href="Prelude.InferenceRules.html#56075" class="Function Operator">∙</a> <a id="2598" href="Ledger.Dijkstra.Specification.Transaction.html#8952" class="Field">SpendInputsOf</a> <a id="2612" href="Ledger.Dijkstra.Specification.Utxo.html#1641" class="Generalizable">tx</a> <a id="2615" href="Relation.Binary.PropositionalEquality.Core.html#1000" class="Function Operator">≢</a> <a id="2617" href="Class.HasEmptySet.html#287" class="Field">∅</a>
+    <a id="2623" href="Prelude.InferenceRules.html#56006" class="Function Operator">∙</a> <a id="2625" href="Ledger.Dijkstra.Specification.Transaction.html#8952" class="Field">SpendInputsOf</a> <a id="2639" href="Ledger.Dijkstra.Specification.Utxo.html#1641" class="Generalizable">tx</a> <a id="2642" href="Interface.TypeClasses.HasSubset.html#288" class="Field Operator">⊆</a> <a id="2644" href="Class.IsSet.html#916" class="Function">dom</a> <a id="2648" class="Symbol">(</a><a id="2649" href="Ledger.Dijkstra.Specification.Transaction.html#5239" class="Field">UTxOOf</a> <a id="2656" href="Ledger.Dijkstra.Specification.Utxo.html#1608" class="Generalizable">Γ</a><a id="2657" class="Symbol">)</a>                           <a id="2685" class="Comment">-- (1)</a>
+    <a id="2696" href="Prelude.InferenceRules.html#56006" class="Function Operator">∙</a> <a id="2698" href="Ledger.Dijkstra.Specification.Transaction.html#9085" class="Field">ReferenceInputsOf</a> <a id="2716" href="Ledger.Dijkstra.Specification.Utxo.html#1641" class="Generalizable">tx</a> <a id="2719" href="Interface.TypeClasses.HasSubset.html#288" class="Field Operator">⊆</a> <a id="2721" href="Class.IsSet.html#916" class="Function">dom</a> <a id="2725" class="Symbol">(</a><a id="2726" href="Ledger.Dijkstra.Specification.Transaction.html#5239" class="Field">UTxOOf</a> <a id="2733" href="Ledger.Dijkstra.Specification.Utxo.html#1622" class="Generalizable">s</a><a id="2734" class="Symbol">)</a>
+    <a id="2740" href="Prelude.InferenceRules.html#56006" class="Function Operator">∙</a> <a id="2742" href="Ledger.Dijkstra.Specification.Transaction.html#18946" class="Function">requiredTopLevelGuardsSatisfied</a> <a id="2774" href="Ledger.Dijkstra.Specification.Utxo.html#1641" class="Generalizable">tx</a> <a id="2777" class="Symbol">(</a><a id="2778" href="Ledger.Dijkstra.Specification.Transaction.html#9840" class="Field">SubTransactionsOf</a> <a id="2796" href="Ledger.Dijkstra.Specification.Utxo.html#1641" class="Generalizable">tx</a><a id="2798" class="Symbol">)</a>   <a id="2802" class="Comment">-- (2)</a>
+    <a id="2813" href="Prelude.InferenceRules.html#56006" class="Function Operator">∙</a> <a id="2815" href="Ledger.Dijkstra.Specification.Utxo.html#1608" class="Generalizable">Γ</a> <a id="2817" href="Ledger.Dijkstra.Specification.Utxo.html#1877" class="Datatype Operator">⊢</a> <a id="2819" href="Ledger.Dijkstra.Specification.Utxo.html#1622" class="Generalizable">s</a> <a id="2821" href="Ledger.Dijkstra.Specification.Utxo.html#1877" class="Datatype Operator">⇀⦇</a> <a id="2824" href="Ledger.Dijkstra.Specification.Utxo.html#1641" class="Generalizable">tx</a> <a id="2827" href="Ledger.Dijkstra.Specification.Utxo.html#1877" class="Datatype Operator">,UTXOS⦈</a> <a id="2835" href="Ledger.Dijkstra.Specification.Utxo.html#1624" class="Generalizable">s&#39;</a>
+      <a id="2844" href="Prelude.InferenceRules.html#13694" class="Function Operator">────────────────────────────────</a>
+      <a id="2883" href="Ledger.Dijkstra.Specification.Utxo.html#1608" class="Generalizable">Γ</a> <a id="2885" href="Ledger.Dijkstra.Specification.Utxo.html#2507" class="Datatype Operator">⊢</a> <a id="2887" href="Ledger.Dijkstra.Specification.Utxo.html#1622" class="Generalizable">s</a> <a id="2889" href="Ledger.Dijkstra.Specification.Utxo.html#2507" class="Datatype Operator">⇀⦇</a> <a id="2892" href="Ledger.Dijkstra.Specification.Utxo.html#1641" class="Generalizable">tx</a> <a id="2895" href="Ledger.Dijkstra.Specification.Utxo.html#2507" class="Datatype Operator">,UTXO⦈</a> <a id="2902" href="Ledger.Dijkstra.Specification.Utxo.html#1624" class="Generalizable">s&#39;</a>
 </pre>
-<p><strong>Note.</strong> The premise <code>requiredTopLevelGuardsSatisfied tx subTxs</code>
-is explicitly a <strong>phase-1</strong> condition (CIP-0118): every guard credential requested by
-subTx bodies must appear in the top-level <code>txGuards</code> set.</p>
-<p>A couple of details to notice:</p>
-<ul>
-<li><code>txb</code> is computed via <code>Tx.txBody tx</code> (no reliance on <code>TxBodyOf</code> instances).</li>
-<li><code>UTXOS-stub</code> returns the <strong>same</strong> state (so we can typecheck
-  everything without inventing semantics prematurely).</li>
-</ul>
+<p><strong>Notes</strong>.</p>
+<ol>
+<li>
+<p>The set of spending inputs must exist in the UTxO <em>before</em> applying the
+    transaction (or partially applying any part of it).</p>
+</li>
+<li>
+<p>The premise <code>requiredTopLevelGuardsSatisfied tx subTxs</code> is explicitly a
+    phase-1 condition (CIP-0118): every guard credential requested by subtransaction
+    bodies must appear in the top-level <code>txGuards</code> set.</p>
+</li>
+</ol>
 
 
 
