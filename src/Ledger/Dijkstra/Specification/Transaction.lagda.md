@@ -311,6 +311,10 @@ could be either of them.
     field ValueOf : A → Value
   open HasValue ⦃...⦄ public
 
+  record HasSubTransactions {txLevel} {a} (A : Type a) : Type a where
+    field SubTransactionsOf : A → InTopLevel txLevel (List (Tx TxLevelSub))
+  open HasSubTransactions ⦃...⦄ public
+
   record HasGovProposals {a} (A : Type a) : Type a where
     field GovProposalsOf : A → List GovProposal
   open HasGovProposals ⦃...⦄ public
@@ -356,6 +360,9 @@ could be either of them.
 
     HasFees?-Tx : HasFees? (Tx txLevel)
     HasFees?-Tx .FeesOf? = FeesOf? ∘ TxBodyOf
+
+    HasSubTransactions-TopLevelTx : HasSubTransactions TopLevelTx
+    HasSubTransactions-TopLevelTx .SubTransactionsOf = TxBody.txSubTransactions ∘ TxBodyOf
 
     HasTxId-Tx : HasTxId (Tx txLevel)
     HasTxId-Tx .TxIdOf = TxBody.txId ∘ TxBodyOf
