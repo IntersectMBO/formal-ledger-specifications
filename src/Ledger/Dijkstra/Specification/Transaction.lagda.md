@@ -324,6 +324,14 @@ could be either of them.
     field SizeOf : A → ℕ
   open HasSize ⦃...⦄ public
 
+  record HasSpendInputs {a} (A : Type a) : Type a where
+    field SpendInputsOf : A → ℙ TxIn
+  open HasSpendInputs ⦃...⦄ public
+
+  record HasReferenceInputs {a} (A : Type a) : Type a where
+    field ReferenceInputsOf : A → ℙ TxIn
+  open HasReferenceInputs ⦃...⦄ public
+
   record HasIndexedOutputs {a} (A : Type a) : Type a where
     field IndexedOutputsOf : A → Ix ⇀ TxOut
   open HasIndexedOutputs ⦃...⦄ public
@@ -343,14 +351,6 @@ could be either of them.
   record HasData {a} (A : Type a) : Type a where
     field DataOf : A → ℙ Datum
   open HasData ⦃...⦄ public
-
-  record HasSpendInputs {a} (A : Type a) : Type a where
-    field SpendInputsOf : A → ℙ TxIn
-  open HasSpendInputs ⦃...⦄ public
-
-  record HasReferenceInputs {a} (A : Type a) : Type a where
-    field ReferenceInputsOf : A → ℙ TxIn
-  open HasReferenceInputs ⦃...⦄ public
 
   record HasGovProposals {a} (A : Type a) : Type a where
     field GovProposalsOf : A → List GovProposal
