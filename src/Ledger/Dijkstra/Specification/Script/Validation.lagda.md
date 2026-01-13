@@ -120,12 +120,12 @@ credsNeededMinusCollateral txb =
   ∪ mapPartial (λ p → if PolicyOf p then (λ {sh} → just (Propose  p , ScriptObj sh)) else nothing)
                  (fromList (GovProposalsOf txb))
 
-credsNeeded : (ℓ : TxLevel) → UTxO → (TxBody ℓ) → ℙ (ScriptPurpose × Credential)
-credsNeeded TxLevelTop utxo txb = credsNeededMinusCollateral txb
+credsNeeded : {ℓ : TxLevel} → UTxO → (TxBody ℓ) → ℙ (ScriptPurpose × Credential)
+credsNeeded {TxLevelTop} utxo txb = credsNeededMinusCollateral txb
   ∪ mapˢ (λ (i , o) → (Spend  i , payCred (proj₁ o))) ((utxo ∣ (txIns ∪ collateralInputs)) ˢ)
   where open TxBody txb
 
-credsNeeded TxLevelSub utxo txb = credsNeededMinusCollateral txb
+credsNeeded {TxLevelSub} utxo txb = credsNeededMinusCollateral txb
   ∪ mapˢ (λ (i , o) → (Spend  i , payCred (proj₁ o))) ((utxo ∣ txIns) ˢ)
   where open TxBody txb
 

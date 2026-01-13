@@ -41,6 +41,13 @@ record UTxOEnv : Type where
     pparams   : PParams
     treasury  : Treasury
     utxo₀     : UTxO
+    slot             : Slot
+    pparams          : PParams
+    treasury         : Treasury
+    utxo₀            : UTxO
+    isTopLevelValid  : Bool
+    globalScripts    : ℙ Script
+    globalData       : DataHash ⇀ Datum
 ```
 
 The `utxo₀`{.AgdaField} field of `UTxOEnv`{.AgdaRecord} is introduced in the Dijkstra
@@ -65,7 +72,8 @@ instance
   HasUTxO-UTxOState .UTxOOf = UTxOState.utxo
 
   unquoteDecl HasCast-UTxOEnv HasCast-UTxOState = derive-HasCast
-    ((quote UTxOEnv , HasCast-UTxOEnv  ) ∷ (quote UTxOState , HasCast-UTxOState) ∷ [])
+    ( (quote UTxOEnv   , HasCast-UTxOEnv  ) ∷
+    [ (quote UTxOState , HasCast-UTxOState) ])
 ```
 -->
 
