@@ -283,13 +283,62 @@ could be either of them.
 
 <!--
 ```agda
+  -- Level-Dependent Type Classes --
   record HasTxBody {txLevel} {a} (A : Type a) : Type a where
     field TxBodyOf : A → TxBody txLevel
   open HasTxBody  ⦃...⦄ public
 
-  record HasTxId    {a} (A : Type a) : Type a where
-    field TxIdOf    : A → TxId
-  open HasTxId    ⦃...⦄ public
+  record HasTxWitnesses {txLevel} {a} (A : Type a) : Type a where
+    field TxWitnessesOf : A → TxWitnesses txLevel
+  open HasTxWitnesses ⦃...⦄ public
+
+  record HasRedeemers {txLevel} {a} (A : Type a) : Type a where
+    field RedeemersOf : A → RedeemerPtr txLevel ⇀ Redeemer × ExUnits
+  open HasRedeemers ⦃...⦄ public
+
+  -- (top-level only) --
+  record HasCollateralInputs {txLevel} {a} (A : Type a) : Type a where
+    field CollateralInputsOf : A → InTopLevel txLevel (ℙ TxIn)
+  open HasCollateralInputs ⦃...⦄ public
+
+  record HasTxFees {txLevel} {a} (A : Type a) : Type a where
+    field TxFeesOf : A → InTopLevel txLevel Fees
+  open HasTxFees ⦃...⦄ public
+
+  record HasSubTransactions {txLevel} {a} (A : Type a) : Type a where
+    field SubTransactionsOf : A → InTopLevel txLevel (List (Tx TxLevelSub))
+  open HasSubTransactions ⦃...⦄ public
+
+  -- (sub-level only) --
+  record HasTopLevelGuards {txLevel} {a} (A : Type a) : Type a where
+    field TopLevelGuardsOf : A → InSubLevel txLevel (ℙ (Credential × Maybe Datum))
+  open HasTopLevelGuards ⦃...⦄ public
+
+
+  -- Level-Independent Type Classes --
+  record HasTxId {a} (A : Type a) : Type a where
+    field TxIdOf : A → TxId
+  open HasTxId ⦃...⦄ public
+
+  record HasSize {a} (A : Type a) : Type a where
+    field SizeOf : A → ℕ
+  open HasSize ⦃...⦄ public
+
+  record HasSpendInputs {a} (A : Type a) : Type a where
+    field SpendInputsOf : A → ℙ TxIn
+  open HasSpendInputs ⦃...⦄ public
+
+  record HasReferenceInputs {a} (A : Type a) : Type a where
+    field ReferenceInputsOf : A → ℙ TxIn
+  open HasReferenceInputs ⦃...⦄ public
+
+  record HasIndexedOutputs {a} (A : Type a) : Type a where
+    field IndexedOutputsOf : A → Ix ⇀ TxOut
+  open HasIndexedOutputs ⦃...⦄ public
+
+  record HasMintedValue {a} (A : Type a) : Type a where
+    field MintedValueOf : A → Value
+  open HasMintedValue ⦃...⦄ public
 
   record HasFees? {a} (A : Type a) : Type a where
     field FeesOf? : A → Maybe Fees
@@ -303,26 +352,6 @@ could be either of them.
     field DataOf : A → ℙ Datum
   open HasData ⦃...⦄ public
 
-  record HasTxWitnesses {txLevel} {a} (A : Type a) : Type a where
-    field TxWitnessesOf : A → TxWitnesses txLevel
-  open HasTxWitnesses ⦃...⦄ public
-
-  record HasValue {a} (A : Type a) : Type a where
-    field ValueOf : A → Value
-  open HasValue ⦃...⦄ public
-
-  record HasSubTransactions {txLevel} {a} (A : Type a) : Type a where
-    field SubTransactionsOf : A → InTopLevel txLevel (List (Tx TxLevelSub))
-  open HasSubTransactions ⦃...⦄ public
-
-  record HasSpendInputs {a} (A : Type a) : Type a where
-    field SpendInputsOf : A → ℙ TxIn
-  open HasSpendInputs ⦃...⦄ public
-
-  record HasReferenceInputs {a} (A : Type a) : Type a where
-    field ReferenceInputsOf : A → ℙ TxIn
-  open HasReferenceInputs ⦃...⦄ public
-
   record HasGovProposals {a} (A : Type a) : Type a where
     field GovProposalsOf : A → List GovProposal
   open HasGovProposals ⦃...⦄ public
@@ -331,6 +360,14 @@ could be either of them.
     field GovVotesOf : A → List GovVote
   open HasGovVotes ⦃...⦄ public
 
+  record HasGuards {a} (A : Type a) : Type a where
+    field GuardsOf : A → ℙ Credential
+  open HasGuards ⦃...⦄ public
+
+  record HasScripts {a} (A : Type a) : Type a where
+    field ScriptsOf : A → ℙ Script
+  open HasScripts ⦃...⦄ public
+
   instance
     HasTxBody-Tx : HasTxBody (Tx txLevel)
     HasTxBody-Tx .TxBodyOf = Tx.txBody
@@ -338,8 +375,29 @@ could be either of them.
     HasTxWitnesses-Tx : HasTxWitnesses (Tx txLevel)
     HasTxWitnesses-Tx .TxWitnessesOf = Tx.txWitnesses
 
+    HasRedeemers-TxWitnesses : HasRedeemers (TxWitnesses txLevel)
+    HasRedeemers-TxWitnesses .RedeemersOf = TxWitnesses.txRedeemers
+
+    HasRedeemers-Tx : HasRedeemers (Tx txLevel)
+    HasRedeemers-Tx .RedeemersOf = RedeemersOf ∘ TxWitnessesOf
+
+    HasCollateralInputs-TopLevelTx : HasCollateralInputs TopLevelTx
+    HasCollateralInputs-TopLevelTx .CollateralInputsOf = TxBody.collateralInputs ∘ TxBodyOf
+
+    HasTxFees-TopLevelTx : HasTxFees TopLevelTx
+    HasTxFees-TopLevelTx .TxFeesOf = TxBody.txFee ∘ TxBodyOf
+
+    HasSubTransactions-TopLevelTx : HasSubTransactions TopLevelTx
+    HasSubTransactions-TopLevelTx .SubTransactionsOf = TxBody.txSubTransactions ∘ TxBodyOf
+
+    HasTopLevelGuards-SubLevelTx : HasTopLevelGuards SubLevelTx
+    HasTopLevelGuards-SubLevelTx .TopLevelGuardsOf = TxBody.txRequiredTopLevelGuards ∘ TxBodyOf
+
     HasDCerts-TxBody : HasDCerts (TxBody txLevel)
     HasDCerts-TxBody .DCertsOf = TxBody.txCerts
+
+    HasDCerts-Tx : HasDCerts (Tx txLevel)
+    HasDCerts-Tx .DCertsOf = DCertsOf ∘ TxBodyOf
 
     HasWithdrawals-TxBody : HasWithdrawals (TxBody txLevel)
     HasWithdrawals-TxBody .WithdrawalsOf = TxBody.txWithdrawals
@@ -359,8 +417,17 @@ could be either of them.
     HasReferenceInputs-Tx : HasReferenceInputs (Tx txLevel)
     HasReferenceInputs-Tx .ReferenceInputsOf = ReferenceInputsOf ∘ TxBodyOf
 
-    HasValue-TxBody : HasValue (TxBody txLevel)
-    HasValue-TxBody .ValueOf = TxBody.mint
+    HasIndexedOutputs-TxBody : HasIndexedOutputs (TxBody txLevel)
+    HasIndexedOutputs-TxBody .IndexedOutputsOf = TxBody.txOuts
+
+    HasIndexedOutputs-Tx : HasIndexedOutputs (Tx txLevel)
+    HasIndexedOutputs-Tx .IndexedOutputsOf = IndexedOutputsOf ∘ TxBodyOf
+
+    HasMintedValue-TxBody : HasMintedValue (TxBody txLevel)
+    HasMintedValue-TxBody .MintedValueOf = TxBody.mint
+
+    HasMintedValue-Tx : HasMintedValue (Tx txLevel)
+    HasMintedValue-Tx .MintedValueOf = MintedValueOf ∘ TxBodyOf
 
     HasGovVotes-TxBody : HasGovVotes (TxBody txLevel)
     HasGovVotes-TxBody .GovVotesOf = TxBody.txGovVotes
@@ -381,11 +448,17 @@ could be either of them.
     HasFees?-Tx : HasFees? (Tx txLevel)
     HasFees?-Tx .FeesOf? = FeesOf? ∘ TxBodyOf
 
-    HasSubTransactions-TopLevelTx : HasSubTransactions TopLevelTx
-    HasSubTransactions-TopLevelTx .SubTransactionsOf = TxBody.txSubTransactions ∘ TxBodyOf
+    HasTxId-TxBody : HasTxId (TxBody txLevel)
+    HasTxId-TxBody .TxIdOf = TxBody.txId
 
     HasTxId-Tx : HasTxId (Tx txLevel)
-    HasTxId-Tx .TxIdOf = TxBody.txId ∘ TxBodyOf
+    HasTxId-Tx .TxIdOf = TxIdOf ∘ TxBodyOf
+
+    HasDonations-TxBody : HasDonations (TxBody txLevel)
+    HasDonations-TxBody .DonationsOf = TxBody.txDonation
+
+    HasDonations-Tx : HasDonations (Tx txLevel)
+    HasDonations-Tx .DonationsOf = DonationsOf ∘ TxBodyOf
 
     HasCoin-TxOut : HasCoin TxOut
     HasCoin-TxOut .getCoin = coin ∘ proj₁ ∘ proj₂
@@ -395,6 +468,18 @@ could be either of them.
 
     HasData-Tx : HasData (Tx txLevel)
     HasData-Tx .DataOf = DataOf ∘ TxWitnessesOf
+
+    HasGuards-TxBody : HasGuards (TxBody txLevel)
+    HasGuards-TxBody .GuardsOf = TxBody.txGuards
+
+    HasGuards-Tx : HasGuards (Tx txLevel)
+    HasGuards-Tx .GuardsOf = GuardsOf ∘ TxBodyOf
+
+    HasScripts-TxWitnesses : HasScripts (TxWitnesses txLevel)
+    HasScripts-TxWitnesses .ScriptsOf = TxWitnesses.scripts
+
+    HasScripts-Tx : HasScripts (Tx txLevel)
+    HasScripts-Tx .ScriptsOf = ScriptsOf ∘ TxWitnessesOf
 ```
 -->
 
@@ -426,47 +511,46 @@ This section collects some unimportant but useful helper and accessor functions.
 ```
 
 In the Dijkstra era, *spending* inputs must exist in the initial UTxO snapshot, while
-*reference* inputs may see earlier outputs, so we need two UTxO views:
+*reference* inputs may come from earlier outputs, so we will need two to keep track
+of two UTxOs; we'll denote these as follows:
 
-+ `utxoSpend₀`{.AgdaBound}, the initial snapshot, used for `txIns`{.AgdaField},
-+ `utxoRefView`{.AgdaBound}, the evolving view, used for `refInputs`{.AgdaField}.
++  `utxo₀`{.AgdaBound}, the initial UTxO snapshot, used for `txIns`{.AgdaField};
++  `utxoRef`{.AgdaBound}, the evolving UTxO, used for reference input lookups.
 
-Thus functions like `refScripts`{.AgdaFunction}, `txscripts`{.AgdaFunction},
-and `lookupScriptHash`{.AgdaFunction} (defined below) will take *two* UTxO arguments.
+We now define some functions for scripts.  Some of these will take two UTxO
+arguments, denoting the initial UTxO snapshot and an evolving UTxO, which evolves as
+a batch of subtransactions is processed.  (Later, when the functions below are used,
+the two UTxO arguments may come from the UTxO environment and an evolving UTxO state;
+types for these are defined in the `Utxo`{.AgdaModule} module, which depends
+on the present module; thus, we cannot bind the UTxO arguments to a particular
+UTxO environment and state at this point.)
 
 ```agda
   refScripts : Tx txLevel → UTxO → UTxO → List Script
-  refScripts tx utxoSpend₀ utxoRefView =
-    mapMaybe (proj₂ ∘ proj₂ ∘ proj₂) ( setToList (range (utxoSpend₀ ∣ txIns))
-                                       ++ setToList (range (utxoRefView ∣ refInputs))
-                                     )
-    where open Tx tx; open TxBody (TxBodyOf tx)
+  refScripts tx utxo₀ utxoRef =
+    mapMaybe (proj₂ ∘ proj₂ ∘ proj₂)
+      ( setToList (range (utxo₀ ∣ SpendInputsOf tx))
+        ++ setToList (range (utxoRef ∣ ReferenceInputsOf tx)) )
 
   txscripts : Tx txLevel → UTxO → UTxO → ℙ Script
-  txscripts tx utxoSpend₀ utxoRefView =
-    scripts (tx .txWitnesses) ∪ fromList (refScripts tx utxoSpend₀ utxoRefView)
-    where open Tx; open TxWitnesses
+  txscripts tx utxo₀ utxoRef = ScriptsOf tx ∪ fromList (refScripts tx utxo₀ utxoRef)
 
   lookupScriptHash : ScriptHash → Tx txLevel → UTxO → UTxO → Maybe Script
-  lookupScriptHash sh tx utxoSpend₀ utxoRefView =
+  lookupScriptHash sh tx utxo₀ utxoRef =
     if sh ∈ mapˢ proj₁ (m ˢ) then just (lookupᵐ m sh) else nothing
-    where m = setToMap (mapˢ < hash , id > (txscripts tx utxoSpend₀ utxoRefView))
-
-  -- TODO: implement the actual evolving `utxoRefView` (issue #1006)
+    where m = setToMap (mapˢ < hash , id > (txscripts tx utxo₀ utxoRef))
 
   getSubTxScripts : SubLevelTx → ℙ (TxId × ScriptHash)
   getSubTxScripts subtx = mapˢ (λ hash → (TxIdOf subtx , hash)) (ScriptHashes subtx)
     where
     ScriptHashes : Tx TxLevelSub → ℙ ScriptHash
-    ScriptHashes tx =                                   -- `txRequiredTopLevelGuards`
-      mapPartial (isScriptObj ∘ proj₁)                  -- has key creds too, but only
-        (TxBody.txRequiredTopLevelGuards (TxBodyOf tx)) -- `ScriptObj hash` contributes
-                                                        -- a phase-2 script hash.
+    ScriptHashes tx = mapPartial (isScriptObj ∘ proj₁) (TopLevelGuardsOf tx)
+                      -- `txRequiredTopLevelGuards` has key creds too, but only
+                      -- `ScriptObj hash` contributes a phase-2 script hash.
 
   getTxScripts : {ℓ : TxLevel} → Tx ℓ → ℙ (TxId × ScriptHash)
   getTxScripts {TxLevelSub} = getSubTxScripts
-  getTxScripts {TxLevelTop} =
-    concatMapˢ getSubTxScripts ∘ fromList ∘ TxBody.txSubTransactions ∘ TxBodyOf
+  getTxScripts {TxLevelTop} = concatMapˢ getSubTxScripts ∘ fromList ∘ SubTransactionsOf
 ```
 
 CIP-0118 models "required top-level guards" as a list of requirements coming
@@ -524,17 +608,16 @@ remaining helper functions of this section.
 
   subTxTaggedGuards : SubLevelTx → ℙ TaggedTopLevelGuard
   subTxTaggedGuards subtx =
-    mapˢ (λ (cred , md) → (TxIdOf subtx , cred , md))
-      (TxBody.txRequiredTopLevelGuards (TxBodyOf subtx))
+    mapˢ (λ (cred , md) → (TxIdOf subtx , cred , md)) (TopLevelGuardsOf subtx)
 
   -- Turn a subTx body's `txRequiredTopLevelGuards` into a set of guard credentials.
   subTxGuardCredentials : SubLevelTx → ℙ Credential
-  subTxGuardCredentials = (mapˢ proj₁) ∘ (TxBody.txRequiredTopLevelGuards ∘ TxBodyOf)
+  subTxGuardCredentials = (mapˢ proj₁) ∘ TopLevelGuardsOf
 
   -- Phase-1 condition (CIP-0118):
   -- every credential required by a subTx body must appear in the top-level txGuards set.
   requiredTopLevelGuardsSatisfied : TopLevelTx → List SubLevelTx → Type
-  requiredTopLevelGuardsSatisfied topTx subTxs = requiredCreds ⊆ TxBody.txGuards (TxBodyOf topTx)
+  requiredTopLevelGuardsSatisfied topTx subTxs = requiredCreds ⊆ GuardsOf topTx
     where
     concatMapˡ : {A B : Type} → (A → ℙ B) → List A → ℙ B
     concatMapˡ f as = proj₁ $ unions (fromList (map f as))

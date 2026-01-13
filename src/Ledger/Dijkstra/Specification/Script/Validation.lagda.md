@@ -47,13 +47,13 @@ indexedRdmrs tx sp = maybe (λ x → lookupᵐ? txRedeemers x) nothing (rdptr tx
 
 -- Datum lookup for spent outputs (Spend txin). Uses initial UTxO snapshot, utxoSpend₀.
 getDatum : Tx ℓ → UTxO → ScriptPurpose → Maybe Datum
-getDatum tx utxoSpend₀ (Spend txin) =
-  do (_ , _ , just d , _) ← lookupᵐ? utxoSpend₀ txin where
+getDatum tx utxo₀ (Spend txin) =
+  do (_ , _ , just d , _) ← lookupᵐ? utxo₀ txin where
                             (_ , _ , nothing , _) → nothing
      case d of λ where
        (inj₁ d) → just d
        (inj₂ h) → lookupᵐ? (setToMap (mapˢ < hash , id > (DataOf tx))) h
-getDatum tx utxoSpend₀ _ = nothing
+getDatum tx utxo₀ _ = nothing
 ```
 -->
 
@@ -114,7 +114,7 @@ credsNeededMinusCollateral : {ℓ : TxLevel} → TxBody ℓ → ℙ (ScriptPurpo
 credsNeededMinusCollateral txb =
   mapˢ (λ a → (Rwrd a , CredentialOf a)) (dom ∣ WithdrawalsOf txb ∣)
   ∪ mapPartial (λ c → (Cert c ,_) <$> cwitness c) (fromList (DCertsOf txb))
-  ∪ mapˢ (λ x → (Mint x , ScriptObj x)) (policies (ValueOf txb))
+  ∪ mapˢ (λ x → (Mint x , ScriptObj x)) (policies (MintedValueOf txb))
   ∪ mapPartial (λ v → if isGovVoterCredential v then (λ {c} → just (Vote v , c)) else nothing)
                  (fromList (map GovVoterOf (GovVotesOf txb)))
   ∪ mapPartial (λ p → if PolicyOf p then (λ {sh} → just (Propose  p , ScriptObj sh)) else nothing)
@@ -133,9 +133,9 @@ txOutToDataHash : TxOut → Maybe DataHash
 txOutToDataHash (_ , _ , d , _) = d >>= isInj₂
 
 txOutToP2Script : UTxO → UTxO → (Tx ℓ) → TxOut → Maybe P2Script
-txOutToP2Script utxoSpend₀ utxoRefView tx (a , _) =
+txOutToP2Script utxo₀ utxoRefView tx (a , _) =
   do sh ← isScriptObj (payCred a)
-     s  ← lookupScriptHash sh tx utxoSpend₀ utxoRefView
+     s  ← lookupScriptHash sh tx utxo₀ utxoRefView
      toP2Script s
 
 opaque
