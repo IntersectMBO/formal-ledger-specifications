@@ -1,0 +1,16 @@
+<!DOCTYPE HTML>
+<html><head><meta charset="utf-8"><title>Interface.TypeClasses.HasSubtract</title><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css"><link rel="stylesheet" href="Agda.css"><script src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/contrib/auto-render.min.js"></script><script src="AgdaKaTeX.js" defer=""></script></head><body><pre class="Agda">
+<a id="2" class="Symbol">{-#</a> <a id="6" class="Keyword">OPTIONS</a> <a id="14" class="Pragma">--safe</a> <a id="21" class="Pragma">--cubical-compatible</a> <a id="42" class="Symbol">#-}</a>
+<a id="46" class="Keyword">module</a> <a id="53" href="Interface.TypeClasses.HasSubtract.html" class="Module">Interface.TypeClasses.HasSubtract</a> <a id="87" class="Keyword">where</a>
+
+<a id="94" class="Keyword">open</a> <a id="99" class="Keyword">import</a> <a id="106" href="Agda.Primitive.html" class="Module">Agda.Primitive</a> <a id="121" class="Keyword">using</a> <a id="127" class="Symbol">()</a> <a id="130" class="Keyword">renaming</a> <a id="139" class="Symbol">(</a><a id="140" href="Agda.Primitive.html#388" class="Primitive">Set</a> <a id="144" class="Symbol">to</a> <a id="147" class="Primitive">Type</a><a id="151" class="Symbol">)</a>
+
+
+<a id="155" class="Keyword">record</a> <a id="HasSubtract"></a><a id="162" href="Interface.TypeClasses.HasSubtract.html#162" class="Record">HasSubtract</a> <a id="174" class="Symbol">(</a><a id="175" href="Interface.TypeClasses.HasSubtract.html#175" class="Bound">A</a> <a id="177" href="Interface.TypeClasses.HasSubtract.html#177" class="Bound">B</a> <a id="179" class="Symbol">:</a> <a id="181" href="Interface.TypeClasses.HasSubtract.html#147" class="Primitive">Type</a><a id="185" class="Symbol">)</a> <a id="187" class="Symbol">:</a> <a id="189" href="Interface.TypeClasses.HasSubtract.html#147" class="Primitive">Type</a> <a id="194" class="Keyword">where</a>
+  <a id="202" class="Keyword">infixl</a> <a id="209" class="Number">6</a> _-_
+  <a id="217" class="Keyword">field</a> <a id="HasSubtract._-_"></a><a id="223" href="Interface.TypeClasses.HasSubtract.html#223" class="Field Operator">_-_</a> <a id="227" class="Symbol">:</a> <a id="229" href="Interface.TypeClasses.HasSubtract.html#175" class="Bound">A</a> <a id="231" class="Symbol">→</a> <a id="233" href="Interface.TypeClasses.HasSubtract.html#175" class="Bound">A</a> <a id="235" class="Symbol">→</a> <a id="237" href="Interface.TypeClasses.HasSubtract.html#177" class="Bound">B</a>
+
+
+<a id="241" class="Keyword">open</a> <a id="246" href="Interface.TypeClasses.HasSubtract.html#162" class="Module">HasSubtract</a> <a id="258" class="Symbol">⦃</a> <a id="260" class="Symbol">...</a> <a id="264" class="Symbol">⦄</a> <a id="266" class="Keyword">public</a>
+
+</pre></body></html>
