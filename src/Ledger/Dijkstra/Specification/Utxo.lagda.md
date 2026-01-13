@@ -33,7 +33,6 @@ open import Ledger.Dijkstra.Specification.Script.Validation txs abs
 
 ## Environments and states
 
-(copied shape from Conway; semantics TBD)
 
 ```agda
 record UTxOEnv : Type where
@@ -42,7 +41,12 @@ record UTxOEnv : Type where
     pparams   : PParams
     treasury  : Treasury
     utxo₀     : UTxO
+```
 
+The `utxo₀`{.AgdaField} field of `UTxOEnv`{.AgdaRecord} is introduced in the Dijkstra
+era; it denotes a *snapshot* of the UTxO before any subtransactions of a batch are applied.
+
+```agda
 record UTxOState : Type where
   field
     utxo       : UTxO

@@ -8,6 +8,7 @@ module Ledger.Dijkstra.Specification.Abstract (txs : TransactionStructure) where
 open import Ledger.Prelude
 open TransactionStructure txs
 open import Ledger.Dijkstra.Specification.Certs govStructure
+open import Ledger.Dijkstra.Specification.Script.ScriptPurpose txs
 
 
 record indexOf : Type where
@@ -26,4 +27,5 @@ record AbstractFunctions : Type where
         indexOfImp      : indexOf
         runPLCScript    : CostModel → P2Script → ExUnits → List Data → Bool
         scriptSize      : Script → ℕ
+        valContext      : TxInfo → ScriptPurpose → Data
 ```
