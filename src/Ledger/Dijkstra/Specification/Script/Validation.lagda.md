@@ -115,8 +115,7 @@ credsNeededMinusCollateral txb =
   mapˢ (λ a → (Rwrd a , CredentialOf a)) (dom ∣ WithdrawalsOf txb ∣)
   ∪ mapPartial (λ c → (Cert c ,_) <$> cwitness c) (fromList (DCertsOf txb))
   ∪ mapˢ (λ x → (Mint x , ScriptObj x)) (policies (MintedValueOf txb))
-  ∪ mapPartial (λ v → if isGovVoterCredential v then (λ {c} → just (Vote v , c)) else nothing)
-                 (fromList (map GovVoterOf (GovVotesOf txb)))
+  ∪ mapˢ (λ v → (Vote v , govVoterCredential v)) (fromList (map GovVoterOf (GovVotesOf txb)))
   ∪ mapPartial (λ p → if PolicyOf p then (λ {sh} → just (Propose  p , ScriptObj sh)) else nothing)
                  (fromList (GovProposalsOf txb))
 

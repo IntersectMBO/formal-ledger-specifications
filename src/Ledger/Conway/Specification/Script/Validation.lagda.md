@@ -73,8 +73,7 @@ credsNeeded utxo txb
   ∪  mapˢ (λ a        → (Rwrd   a , stake a)) (dom ∣ txWithdrawals ∣)
   ∪  mapPartial (λ c  → (Cert   c ,_) <$> cwitness c) (fromList txCerts)
   ∪  mapˢ (λ x        → (Mint   x , ScriptObj x)) (policies mint)
-  ∪  mapPartial (λ v → if isGovVoterCredential v then (λ {c} → just (Vote v , c)) else nothing)
-                (fromList (map voter txGovVotes))
+  ∪  mapˢ (λ v → (Vote v , govVoterCredential v)) (fromList (map voter txGovVotes))
   ∪  mapPartial (λ p → if p .policy then (λ {sh} → just (Propose  p , ScriptObj sh)) else nothing)
                 (fromList txGovProposals)
 ```
