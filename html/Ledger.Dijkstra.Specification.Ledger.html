@@ -9,7 +9,7 @@
 
 <a id="188" class="Keyword">module</a> <a id="195" href="Ledger.Dijkstra.Specification.Ledger.html" class="Module">Ledger.Dijkstra.Specification.Ledger</a>
   <a id="234" class="Symbol">(</a><a id="235" href="Ledger.Dijkstra.Specification.Ledger.html#235" class="Bound">txs</a> <a id="239" class="Symbol">:</a> <a id="241" class="Symbol">_)</a> <a id="244" class="Symbol">(</a><a id="245" class="Keyword">open</a> <a id="250" href="Ledger.Dijkstra.Specification.Transaction.html#1279" class="Module">TransactionStructure</a> <a id="271" href="Ledger.Dijkstra.Specification.Ledger.html#235" class="Bound">txs</a><a id="274" class="Symbol">)</a>
-  <a id="278" class="Symbol">(</a><a id="279" href="Ledger.Dijkstra.Specification.Ledger.html#279" class="Bound">abs</a> <a id="283" class="Symbol">:</a> <a id="285" href="Ledger.Dijkstra.Specification.Abstract.html#845" class="Record">AbstractFunctions</a> <a id="303" href="Ledger.Dijkstra.Specification.Ledger.html#235" class="Bound">txs</a><a id="306" class="Symbol">)</a> <a id="308" class="Symbol">(</a><a id="309" class="Keyword">open</a> <a id="314" href="Ledger.Dijkstra.Specification.Abstract.html#845" class="Module">AbstractFunctions</a> <a id="332" href="Ledger.Dijkstra.Specification.Ledger.html#279" class="Bound">abs</a><a id="335" class="Symbol">)</a>
+  <a id="278" class="Symbol">(</a><a id="279" href="Ledger.Dijkstra.Specification.Ledger.html#279" class="Bound">abs</a> <a id="283" class="Symbol">:</a> <a id="285" href="Ledger.Dijkstra.Specification.Abstract.html#912" class="Record">AbstractFunctions</a> <a id="303" href="Ledger.Dijkstra.Specification.Ledger.html#235" class="Bound">txs</a><a id="306" class="Symbol">)</a> <a id="308" class="Symbol">(</a><a id="309" class="Keyword">open</a> <a id="314" href="Ledger.Dijkstra.Specification.Abstract.html#912" class="Module">AbstractFunctions</a> <a id="332" href="Ledger.Dijkstra.Specification.Ledger.html#279" class="Bound">abs</a><a id="335" class="Symbol">)</a>
   <a id="339" class="Keyword">where</a>
 
 <a id="346" class="Keyword">open</a> <a id="351" class="Keyword">import</a> <a id="358" href="Ledger.Conway.Specification.Enact.html" class="Module">Ledger.Conway.Specification.Enact</a> <a id="392" href="Ledger.Dijkstra.Specification.Transaction.html#2455" class="Function">govStructure</a>
@@ -61,7 +61,7 @@
 
 
   <a id="1532" class="Keyword">field</a>
-    <a id="LState.utxoSt"></a><a id="1542" href="Ledger.Dijkstra.Specification.Ledger.html#1542" class="Field">utxoSt</a>     <a id="1553" class="Symbol">:</a> <a id="1555" href="Ledger.Dijkstra.Specification.Utxo.html#581" class="Record">UTxOState</a>
+    <a id="LState.utxoSt"></a><a id="1542" href="Ledger.Dijkstra.Specification.Ledger.html#1542" class="Field">utxoSt</a>     <a id="1553" class="Symbol">:</a> <a id="1555" href="Ledger.Dijkstra.Specification.Utxo.html#582" class="Record">UTxOState</a>
     <a id="LState.govSt"></a><a id="1569" href="Ledger.Dijkstra.Specification.Ledger.html#1569" class="Field">govSt</a>      <a id="1580" class="Symbol">:</a> <a id="1582" href="Ledger.Conway.Specification.Gov.html#1401" class="Function">GovState</a>
     <a id="LState.certState"></a><a id="1595" href="Ledger.Dijkstra.Specification.Ledger.html#1595" class="Field">certState</a>  <a id="1606" class="Symbol">:</a> <a id="1608" href="Ledger.Conway.Specification.Certs.html#4152" class="Record">CertState</a>
 
@@ -143,7 +143,7 @@
 <a id="4008" class="Keyword">private</a> <a id="4016" class="Keyword">variable</a>
   <a id="4027" href="Ledger.Dijkstra.Specification.Ledger.html#4027" class="Generalizable">Γ</a>                     <a id="4049" class="Symbol">:</a> <a id="4051" href="Ledger.Dijkstra.Specification.Ledger.html#919" class="Record">LedgerEnv</a>
   <a id="4063" href="Ledger.Dijkstra.Specification.Ledger.html#4063" class="Generalizable">s</a> <a id="4065" href="Ledger.Dijkstra.Specification.Ledger.html#4065" class="Generalizable">s&#39;</a> <a id="4068" href="Ledger.Dijkstra.Specification.Ledger.html#4068" class="Generalizable">s&#39;&#39;</a>              <a id="4085" class="Symbol">:</a> <a id="4087" href="Ledger.Dijkstra.Specification.Ledger.html#1483" class="Record">LState</a>
-  <a id="4096" href="Ledger.Dijkstra.Specification.Ledger.html#4096" class="Generalizable">utxoState</a> <a id="4106" href="Ledger.Dijkstra.Specification.Ledger.html#4106" class="Generalizable">utxoState&#39;</a>  <a id="4118" class="Symbol">:</a> <a id="4120" href="Ledger.Dijkstra.Specification.Utxo.html#581" class="Record">UTxOState</a>
+  <a id="4096" href="Ledger.Dijkstra.Specification.Ledger.html#4096" class="Generalizable">utxoState</a> <a id="4106" href="Ledger.Dijkstra.Specification.Ledger.html#4106" class="Generalizable">utxoState&#39;</a>  <a id="4118" class="Symbol">:</a> <a id="4120" href="Ledger.Dijkstra.Specification.Utxo.html#582" class="Record">UTxOState</a>
   <a id="4132" href="Ledger.Dijkstra.Specification.Ledger.html#4132" class="Generalizable">govState</a> <a id="4141" href="Ledger.Dijkstra.Specification.Ledger.html#4141" class="Generalizable">govState&#39;</a>    <a id="4154" class="Symbol">:</a> <a id="4156" href="Ledger.Conway.Specification.Gov.html#1401" class="Function">GovState</a>
   <a id="4167" href="Ledger.Dijkstra.Specification.Ledger.html#4167" class="Generalizable">certState</a> <a id="4177" href="Ledger.Dijkstra.Specification.Ledger.html#4177" class="Generalizable">certState&#39;</a>  <a id="4189" class="Symbol">:</a> <a id="4191" href="Ledger.Conway.Specification.Certs.html#4152" class="Record">CertState</a>
   <a id="4203" href="Ledger.Dijkstra.Specification.Ledger.html#4203" class="Generalizable">stx</a>                   <a id="4225" class="Symbol">:</a> <a id="4227" href="Ledger.Dijkstra.Specification.Transaction.html#5294" class="Function">SubLevelTx</a>
@@ -183,7 +183,7 @@
 
 
 <a id="5769" class="Keyword">private</a> <a id="5777" class="Keyword">variable</a>
-  <a id="5788" href="Ledger.Dijkstra.Specification.Ledger.html#5788" class="Generalizable">utxoState&#39;&#39;</a> <a id="5800" class="Symbol">:</a> <a id="5802" href="Ledger.Dijkstra.Specification.Utxo.html#581" class="Record">UTxOState</a>
+  <a id="5788" href="Ledger.Dijkstra.Specification.Ledger.html#5788" class="Generalizable">utxoState&#39;&#39;</a> <a id="5800" class="Symbol">:</a> <a id="5802" href="Ledger.Dijkstra.Specification.Utxo.html#582" class="Record">UTxOState</a>
   <a id="5814" href="Ledger.Dijkstra.Specification.Ledger.html#5814" class="Generalizable">govState&#39;&#39;</a>  <a id="5826" class="Symbol">:</a> <a id="5828" href="Ledger.Conway.Specification.Gov.html#1401" class="Function">GovState</a>
   <a id="5839" href="Ledger.Dijkstra.Specification.Ledger.html#5839" class="Generalizable">certState&#39;&#39;</a> <a id="5851" class="Symbol">:</a> <a id="5853" href="Ledger.Conway.Specification.Certs.html#4152" class="Record">CertState</a>
   <a id="5865" href="Ledger.Dijkstra.Specification.Ledger.html#5865" class="Generalizable">tx</a>          <a id="5877" class="Symbol">:</a> <a id="5879" href="Ledger.Dijkstra.Specification.Transaction.html#5244" class="Function">TopLevelTx</a>

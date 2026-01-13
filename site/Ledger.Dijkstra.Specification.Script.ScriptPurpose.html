@@ -12,7 +12,7 @@
         <meta name="author" content="Formal Methods Ledger Team">
       
       
-        <link rel="canonical" href="https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Dijkstra.Specification.Utxow.html">
+        <link rel="canonical" href="https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Dijkstra.Specification.Script.ScriptPurpose.html">
       
       
       
@@ -25,7 +25,7 @@
     
     
       
-        <title>UTxOW (Dijkstra skeleton) - Formal Ledger Specification</title>
+        <title>Script Purpose - Formal Ledger Specification</title>
       
     
     
@@ -82,7 +82,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#utxow-dijkstra-skeleton" class="md-skip">
+        <a href="#sec:script-purpose" class="md-skip">
           Skip to content
         </a>
       
@@ -115,7 +115,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              UTxOW (Dijkstra skeleton)
+              Script Purpose
             
           </span>
         </div>
@@ -11851,7 +11851,7 @@
 
 
 
-  <a href="https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/src/Ledger/Dijkstra/Specification/Utxow.lagda.md?plain=1"
+  <a href="https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/src/Ledger/Dijkstra/Specification/Script/ScriptPurpose.lagda.md?plain=1"
      class="md-content__button md-icon"
      title="View the source of this page"
      aria-label="View the source of this page">
@@ -11861,46 +11861,53 @@
   </a>
 
 
-<h1 id="utxow-dijkstra-skeleton">UTxOW (Dijkstra skeleton)<a class="headerlink" href="#utxow-dijkstra-skeleton" title="Permanent link">&para;</a></h1>
-<p>This is a <strong>minimal skeleton</strong> of the Dijkstra-era witnessing layer.</p>
-<p>It currently acts as a wrapper around <code>UTXO</code>, mirroring Conway's shape, but without
-committing to full witnessing checks yet.</p>
-<pre class="Agda hidden-source"><a id="333" class="Symbol">{-#</a> <a id="337" class="Keyword">OPTIONS</a> <a id="345" class="Pragma">--safe</a> <a id="352" class="Symbol">#-}</a>
+<h1 id="sec:script-purpose">Script Purpose<a class="headerlink" href="#sec:script-purpose" title="Permanent link">&para;</a></h1>
+<pre class="Agda hidden-source"><a id="162" class="Symbol">{-#</a> <a id="166" class="Keyword">OPTIONS</a> <a id="174" class="Pragma">--safe</a> <a id="181" class="Symbol">#-}</a>
 
-<a id="357" class="Keyword">open</a> <a id="362" class="Keyword">import</a> <a id="369" href="Ledger.Prelude.html" class="Module">Ledger.Prelude</a>
-<a id="384" class="Keyword">open</a> <a id="389" class="Keyword">import</a> <a id="396" href="Ledger.Dijkstra.Specification.Abstract.html" class="Module">Ledger.Dijkstra.Specification.Abstract</a>
-<a id="435" class="Keyword">open</a> <a id="440" class="Keyword">import</a> <a id="447" href="Ledger.Dijkstra.Specification.Transaction.html" class="Module">Ledger.Dijkstra.Specification.Transaction</a>
+<a id="186" class="Keyword">open</a> <a id="191" class="Keyword">import</a> <a id="198" href="Ledger.Dijkstra.Specification.Transaction.html" class="Module">Ledger.Dijkstra.Specification.Transaction</a>
 
-<a id="490" class="Keyword">module</a> <a id="497" href="Ledger.Dijkstra.Specification.Utxow.html" class="Module">Ledger.Dijkstra.Specification.Utxow</a>
-  <a id="535" class="Symbol">(</a><a id="536" href="Ledger.Dijkstra.Specification.Utxow.html#536" class="Bound">txs</a> <a id="540" class="Symbol">:</a> <a id="542" class="Symbol">_)</a> <a id="545" class="Symbol">(</a><a id="546" class="Keyword">open</a> <a id="551" href="Ledger.Dijkstra.Specification.Transaction.html#2998" class="Module">TransactionStructure</a> <a id="572" href="Ledger.Dijkstra.Specification.Utxow.html#536" class="Bound">txs</a><a id="575" class="Symbol">)</a>
-  <a id="579" class="Symbol">(</a><a id="580" href="Ledger.Dijkstra.Specification.Utxow.html#580" class="Bound">abs</a> <a id="584" class="Symbol">:</a> <a id="586" href="Ledger.Dijkstra.Specification.Abstract.html#919" class="Record">AbstractFunctions</a> <a id="604" href="Ledger.Dijkstra.Specification.Utxow.html#536" class="Bound">txs</a><a id="607" class="Symbol">)</a> <a id="609" class="Symbol">(</a><a id="610" class="Keyword">open</a> <a id="615" href="Ledger.Dijkstra.Specification.Abstract.html#919" class="Module">AbstractFunctions</a> <a id="633" href="Ledger.Dijkstra.Specification.Utxow.html#580" class="Bound">abs</a><a id="636" class="Symbol">)</a>
-  <a id="640" class="Keyword">where</a>
+<a id="241" class="Keyword">module</a> <a id="248" href="Ledger.Dijkstra.Specification.Script.ScriptPurpose.html" class="Module">Ledger.Dijkstra.Specification.Script.ScriptPurpose</a> <a id="299" class="Symbol">(</a><a id="300" href="Ledger.Dijkstra.Specification.Script.ScriptPurpose.html#300" class="Bound">txs</a> <a id="304" class="Symbol">:</a> <a id="306" href="Ledger.Dijkstra.Specification.Transaction.html#2998" class="Record">TransactionStructure</a><a id="326" class="Symbol">)</a> <a id="328" class="Keyword">where</a>
 
-<a id="647" class="Keyword">open</a> <a id="652" class="Keyword">import</a> <a id="659" href="Ledger.Dijkstra.Specification.Utxo.html" class="Module">Ledger.Dijkstra.Specification.Utxo</a> <a id="694" href="Ledger.Dijkstra.Specification.Utxow.html#536" class="Bound">txs</a> <a id="698" href="Ledger.Dijkstra.Specification.Utxow.html#580" class="Bound">abs</a>
-
-<a id="703" class="Keyword">private</a> <a id="711" class="Keyword">variable</a>
-  <a id="722" href="Ledger.Dijkstra.Specification.Utxow.html#722" class="Generalizable">Γ</a>  <a id="725" class="Symbol">:</a> <a id="727" href="Ledger.Dijkstra.Specification.Utxo.html#925" class="Record">UTxOEnv</a>
-  <a id="737" href="Ledger.Dijkstra.Specification.Utxow.html#737" class="Generalizable">s</a> <a id="739" href="Ledger.Dijkstra.Specification.Utxow.html#739" class="Generalizable">s&#39;</a> <a id="742" class="Symbol">:</a> <a id="744" href="Ledger.Dijkstra.Specification.Utxo.html#1244" class="Record">UTxOState</a>
-  <a id="756" href="Ledger.Dijkstra.Specification.Utxow.html#756" class="Generalizable">tx</a> <a id="759" class="Symbol">:</a> <a id="761" href="Ledger.Dijkstra.Specification.Transaction.html#8358" class="Function">TopLevelTx</a>
-  <a id="774" href="Ledger.Dijkstra.Specification.Utxow.html#774" class="Generalizable">stx</a> <a id="778" class="Symbol">:</a> <a id="780" href="Ledger.Dijkstra.Specification.Transaction.html#8408" class="Function">SubLevelTx</a>
+<a id="335" class="Keyword">open</a> <a id="340" class="Keyword">import</a> <a id="347" href="Ledger.Prelude.html" class="Module">Ledger.Prelude</a>
+<a id="362" class="Keyword">open</a> <a id="367" href="Ledger.Dijkstra.Specification.Transaction.html#2998" class="Module">TransactionStructure</a> <a id="388" href="Ledger.Dijkstra.Specification.Script.ScriptPurpose.html#300" class="Bound">txs</a>
+<a id="392" class="Keyword">open</a> <a id="397" class="Keyword">import</a> <a id="404" href="Ledger.Dijkstra.Specification.Certs.html" class="Module">Ledger.Dijkstra.Specification.Certs</a> <a id="440" href="Ledger.Dijkstra.Specification.Transaction.html#4261" class="Function">govStructure</a>
 </pre>
 
-<pre class="Agda"><a id="808" class="Keyword">data</a> <a id="_⊢_⇀⦇_,SUBUTXOW⦈_"></a><a id="813" href="Ledger.Dijkstra.Specification.Utxow.html#813" class="Datatype Operator">_⊢_⇀⦇_,SUBUTXOW⦈_</a> <a id="831" class="Symbol">:</a> <a id="833" href="Ledger.Dijkstra.Specification.Utxo.html#925" class="Record">UTxOEnv</a> <a id="841" class="Symbol">→</a> <a id="843" href="Ledger.Dijkstra.Specification.Utxo.html#1244" class="Record">UTxOState</a> <a id="853" class="Symbol">→</a> <a id="855" href="Ledger.Dijkstra.Specification.Transaction.html#8408" class="Function">SubLevelTx</a> <a id="866" class="Symbol">→</a> <a id="868" href="Ledger.Dijkstra.Specification.Utxo.html#1244" class="Record">UTxOState</a> <a id="878" class="Symbol">→</a> <a id="880" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="885" class="Keyword">where</a>
-
-  <a id="_⊢_⇀⦇_,SUBUTXOW⦈_.SUBUTXOW"></a><a id="894" href="Ledger.Dijkstra.Specification.Utxow.html#894" class="InductiveConstructor">SUBUTXOW</a> <a id="903" class="Symbol">:</a>
-    <a id="909" href="Prelude.InferenceRules.html#56075" class="Function Operator">∙</a> <a id="911" href="Ledger.Dijkstra.Specification.Utxow.html#722" class="Generalizable">Γ</a> <a id="913" href="Ledger.Dijkstra.Specification.Utxo.html#2488" class="Datatype Operator">⊢</a> <a id="915" href="Ledger.Dijkstra.Specification.Utxow.html#737" class="Generalizable">s</a> <a id="917" href="Ledger.Dijkstra.Specification.Utxo.html#2488" class="Datatype Operator">⇀⦇</a> <a id="920" href="Ledger.Dijkstra.Specification.Utxow.html#774" class="Generalizable">stx</a> <a id="924" href="Ledger.Dijkstra.Specification.Utxo.html#2488" class="Datatype Operator">,SUBUTXO⦈</a> <a id="934" href="Ledger.Dijkstra.Specification.Utxow.html#739" class="Generalizable">s&#39;</a>
-      <a id="943" href="Prelude.InferenceRules.html#13694" class="Function Operator">────────────────────────────────</a>
-      <a id="982" href="Ledger.Dijkstra.Specification.Utxow.html#722" class="Generalizable">Γ</a> <a id="984" href="Ledger.Dijkstra.Specification.Utxow.html#813" class="Datatype Operator">⊢</a> <a id="986" href="Ledger.Dijkstra.Specification.Utxow.html#737" class="Generalizable">s</a> <a id="988" href="Ledger.Dijkstra.Specification.Utxow.html#813" class="Datatype Operator">⇀⦇</a> <a id="991" href="Ledger.Dijkstra.Specification.Utxow.html#774" class="Generalizable">stx</a> <a id="995" href="Ledger.Dijkstra.Specification.Utxow.html#813" class="Datatype Operator">,SUBUTXOW⦈</a> <a id="1006" href="Ledger.Dijkstra.Specification.Utxow.html#739" class="Generalizable">s&#39;</a>
-
-<a id="1010" class="Keyword">data</a> <a id="_⊢_⇀⦇_,UTXOW⦈_"></a><a id="1015" href="Ledger.Dijkstra.Specification.Utxow.html#1015" class="Datatype Operator">_⊢_⇀⦇_,UTXOW⦈_</a> <a id="1030" class="Symbol">:</a> <a id="1032" href="Ledger.Dijkstra.Specification.Utxo.html#925" class="Record">UTxOEnv</a> <a id="1040" class="Symbol">→</a> <a id="1042" href="Ledger.Dijkstra.Specification.Utxo.html#1244" class="Record">UTxOState</a> <a id="1052" class="Symbol">→</a> <a id="1054" href="Ledger.Dijkstra.Specification.Transaction.html#8358" class="Function">TopLevelTx</a> <a id="1065" class="Symbol">→</a> <a id="1067" href="Ledger.Dijkstra.Specification.Utxo.html#1244" class="Record">UTxOState</a> <a id="1077" class="Symbol">→</a> <a id="1079" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="1084" class="Keyword">where</a>
-
-  <a id="_⊢_⇀⦇_,UTXOW⦈_.UTXOW"></a><a id="1093" href="Ledger.Dijkstra.Specification.Utxow.html#1093" class="InductiveConstructor">UTXOW</a> <a id="1099" class="Symbol">:</a>
-    <a id="1105" href="Prelude.InferenceRules.html#56075" class="Function Operator">∙</a> <a id="1107" href="Ledger.Dijkstra.Specification.Utxow.html#722" class="Generalizable">Γ</a> <a id="1109" href="Ledger.Dijkstra.Specification.Utxo.html#2656" class="Datatype Operator">⊢</a> <a id="1111" href="Ledger.Dijkstra.Specification.Utxow.html#737" class="Generalizable">s</a> <a id="1113" href="Ledger.Dijkstra.Specification.Utxo.html#2656" class="Datatype Operator">⇀⦇</a> <a id="1116" href="Ledger.Dijkstra.Specification.Utxow.html#756" class="Generalizable">tx</a> <a id="1119" href="Ledger.Dijkstra.Specification.Utxo.html#2656" class="Datatype Operator">,UTXO⦈</a> <a id="1126" href="Ledger.Dijkstra.Specification.Utxow.html#739" class="Generalizable">s&#39;</a>
-      <a id="1135" href="Prelude.InferenceRules.html#13694" class="Function Operator">────────────────────────────────</a>
-      <a id="1174" href="Ledger.Dijkstra.Specification.Utxow.html#722" class="Generalizable">Γ</a> <a id="1176" href="Ledger.Dijkstra.Specification.Utxow.html#1015" class="Datatype Operator">⊢</a> <a id="1178" href="Ledger.Dijkstra.Specification.Utxow.html#737" class="Generalizable">s</a> <a id="1180" href="Ledger.Dijkstra.Specification.Utxow.html#1015" class="Datatype Operator">⇀⦇</a> <a id="1183" href="Ledger.Dijkstra.Specification.Utxow.html#756" class="Generalizable">tx</a> <a id="1186" href="Ledger.Dijkstra.Specification.Utxow.html#1015" class="Datatype Operator">,UTXOW⦈</a> <a id="1194" href="Ledger.Dijkstra.Specification.Utxow.html#739" class="Generalizable">s&#39;</a>
+<pre class="Agda"><a id="470" class="Keyword">data</a> <a id="ScriptPurpose"></a><a id="475" href="Ledger.Dijkstra.Specification.Script.ScriptPurpose.html#475" class="Datatype">ScriptPurpose</a> <a id="489" class="Symbol">:</a> <a id="491" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="496" class="Keyword">where</a>
+  <a id="ScriptPurpose.Cert"></a><a id="504" href="Ledger.Dijkstra.Specification.Script.ScriptPurpose.html#504" class="InductiveConstructor">Cert</a>     <a id="513" class="Symbol">:</a> <a id="515" href="Ledger.Conway.Specification.Certs.html#2461" class="Datatype">DCert</a>          <a id="530" class="Symbol">→</a> <a id="532" href="Ledger.Dijkstra.Specification.Script.ScriptPurpose.html#475" class="Datatype">ScriptPurpose</a>
+  <a id="ScriptPurpose.Rwrd"></a><a id="548" href="Ledger.Dijkstra.Specification.Script.ScriptPurpose.html#548" class="InductiveConstructor">Rwrd</a>     <a id="557" class="Symbol">:</a> <a id="559" href="Ledger.Dijkstra.Specification.Transaction.html#724" class="Record">RewardAddress</a>  <a id="574" class="Symbol">→</a> <a id="576" href="Ledger.Dijkstra.Specification.Script.ScriptPurpose.html#475" class="Datatype">ScriptPurpose</a>
+  <a id="ScriptPurpose.Mint"></a><a id="592" href="Ledger.Dijkstra.Specification.Script.ScriptPurpose.html#592" class="InductiveConstructor">Mint</a>     <a id="601" class="Symbol">:</a> <a id="603" href="Ledger.Core.Specification.Crypto.html#1721" class="Function">ScriptHash</a>     <a id="618" class="Symbol">→</a> <a id="620" href="Ledger.Dijkstra.Specification.Script.ScriptPurpose.html#475" class="Datatype">ScriptPurpose</a>
+  <a id="ScriptPurpose.Spend"></a><a id="636" href="Ledger.Dijkstra.Specification.Script.ScriptPurpose.html#636" class="InductiveConstructor">Spend</a>    <a id="645" class="Symbol">:</a> <a id="647" href="Ledger.Dijkstra.Specification.Transaction.html#4828" class="Function">TxIn</a>           <a id="662" class="Symbol">→</a> <a id="664" href="Ledger.Dijkstra.Specification.Script.ScriptPurpose.html#475" class="Datatype">ScriptPurpose</a>
+  <a id="ScriptPurpose.Vote"></a><a id="680" href="Ledger.Dijkstra.Specification.Script.ScriptPurpose.html#680" class="InductiveConstructor">Vote</a>     <a id="689" class="Symbol">:</a> <a id="691" href="Ledger.Conway.Specification.Gov.Actions.html#5460" class="Record">GovVoter</a>       <a id="706" class="Symbol">→</a> <a id="708" href="Ledger.Dijkstra.Specification.Script.ScriptPurpose.html#475" class="Datatype">ScriptPurpose</a>
+  <a id="ScriptPurpose.Propose"></a><a id="724" href="Ledger.Dijkstra.Specification.Script.ScriptPurpose.html#724" class="InductiveConstructor">Propose</a>  <a id="733" class="Symbol">:</a> <a id="735" href="Ledger.Conway.Specification.Gov.Actions.html#10423" class="Record">GovProposal</a>    <a id="750" class="Symbol">→</a> <a id="752" href="Ledger.Dijkstra.Specification.Script.ScriptPurpose.html#475" class="Datatype">ScriptPurpose</a>
+  <a id="ScriptPurpose.Guard"></a><a id="768" href="Ledger.Dijkstra.Specification.Script.ScriptPurpose.html#768" class="InductiveConstructor">Guard</a>    <a id="777" class="Symbol">:</a> <a id="779" href="Ledger.Core.Specification.Address.html#1214" class="Datatype">Credential</a>     <a id="794" class="Symbol">→</a> <a id="796" href="Ledger.Dijkstra.Specification.Script.ScriptPurpose.html#475" class="Datatype">ScriptPurpose</a>
 </pre>
-<p>This file intentionally contains <strong>no</strong> additional premises yet.  As Dijkstra witnessing
-evolves, this is where signature / script / datum / language constraints can be added.</p>
+<p>Note that <code>Guard c</code> always indexes into <em>the current <code>tx</code>'s</em> <code>txGuards</code>:</p>
+<ul>
+<li>if <code>tx : TopLevelTx</code>, it indexes into the top-level guard set's list-view;</li>
+<li>if <code>tx : SubLevelTx</code>, it indexes into the subTx's guard set's list-view.</li>
+</ul>
+<pre class="Agda"><a id="1052" class="Keyword">mutual</a>
+  <a id="1061" class="Keyword">record</a> <a id="TxInfo"></a><a id="1068" href="Ledger.Dijkstra.Specification.Script.ScriptPurpose.html#1068" class="Record">TxInfo</a> <a id="1075" class="Symbol">:</a> <a id="1077" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="1082" class="Keyword">where</a>
+    <a id="1092" class="Keyword">inductive</a>
+    <a id="1106" class="Keyword">field</a>
+      <a id="TxInfo.realizedInputs"></a><a id="1118" href="Ledger.Dijkstra.Specification.Script.ScriptPurpose.html#1118" class="Field">realizedInputs</a> <a id="1133" class="Symbol">:</a> <a id="1135" href="Ledger.Dijkstra.Specification.Transaction.html#4943" class="Function">UTxO</a>
+      <a id="TxInfo.txOuts"></a><a id="1146" href="Ledger.Dijkstra.Specification.Script.ScriptPurpose.html#1146" class="Field">txOuts</a>         <a id="1161" class="Symbol">:</a> <a id="1163" href="Ledger.Dijkstra.Specification.Transaction.html#3045" class="Field">Ix</a> <a id="1166" href="abstract-set-theory.FiniteSetTheory.html#633" class="Function Operator">⇀</a> <a id="1168" href="Ledger.Dijkstra.Specification.Transaction.html#4862" class="Function">TxOut</a>
+      <a id="TxInfo.txFee"></a><a id="1180" href="Ledger.Dijkstra.Specification.Script.ScriptPurpose.html#1180" class="Field">txFee</a>          <a id="1195" class="Symbol">:</a> <a id="1197" href="Agda.Builtin.Maybe.html#135" class="Datatype">Maybe</a> <a id="1203" href="Ledger.Prelude.Base.html#266" class="Function">Fees</a>
+      <a id="TxInfo.mint"></a><a id="1214" href="Ledger.Dijkstra.Specification.Script.ScriptPurpose.html#1214" class="Field">mint</a>           <a id="1229" class="Symbol">:</a> <a id="1231" href="Ledger.Conway.Specification.TokenAlgebra.Base.html#792" class="Function">Value</a>
+      <a id="TxInfo.txCerts"></a><a id="1243" href="Ledger.Dijkstra.Specification.Script.ScriptPurpose.html#1243" class="Field">txCerts</a>        <a id="1258" class="Symbol">:</a> <a id="1260" href="Agda.Builtin.List.html#147" class="Datatype">List</a> <a id="1265" href="Ledger.Conway.Specification.Certs.html#2461" class="Datatype">DCert</a>
+      <a id="TxInfo.txWithdrawals"></a><a id="1277" href="Ledger.Dijkstra.Specification.Script.ScriptPurpose.html#1277" class="Field">txWithdrawals</a>  <a id="1292" class="Symbol">:</a> <a id="1294" href="Ledger.Core.Specification.Address.html#2379" class="Function">Withdrawals</a>
+      <a id="TxInfo.txVldt"></a><a id="1312" href="Ledger.Dijkstra.Specification.Script.ScriptPurpose.html#1312" class="Field">txVldt</a>         <a id="1327" class="Symbol">:</a> <a id="1329" href="Agda.Builtin.Maybe.html#135" class="Datatype">Maybe</a> <a id="1335" href="Ledger.Core.Specification.Epoch.html#818" class="Function">Slot</a> <a id="1340" href="Data.Product.Base.html#1618" class="Function Operator">×</a> <a id="1342" href="Agda.Builtin.Maybe.html#135" class="Datatype">Maybe</a> <a id="1348" href="Ledger.Core.Specification.Epoch.html#818" class="Function">Slot</a>
+      <a id="TxInfo.vkKey"></a><a id="1359" href="Ledger.Dijkstra.Specification.Script.ScriptPurpose.html#1359" class="Field">vkKey</a>          <a id="1374" class="Symbol">:</a> <a id="1376" href="abstract-set-theory.FiniteSetTheory.html#488" class="Function Operator">ℙ</a> <a id="1378" href="Ledger.Core.Specification.Crypto.html#1865" class="Function">KeyHash</a>     <a id="1390" class="Comment">-- native/phase-1/timelock signers</a>
+      <a id="TxInfo.txGuards"></a><a id="1431" href="Ledger.Dijkstra.Specification.Script.ScriptPurpose.html#1431" class="Field">txGuards</a>       <a id="1446" class="Symbol">:</a> <a id="1448" href="abstract-set-theory.FiniteSetTheory.html#488" class="Function Operator">ℙ</a> <a id="1450" href="Ledger.Core.Specification.Address.html#1214" class="Datatype">Credential</a>  <a id="1462" class="Comment">-- CIP-0112/0118 guards (required by tx body)</a>
+      <a id="TxInfo.txData"></a><a id="1514" href="Ledger.Dijkstra.Specification.Script.ScriptPurpose.html#1514" class="Field">txData</a>         <a id="1529" class="Symbol">:</a> <a id="1531" href="abstract-set-theory.FiniteSetTheory.html#488" class="Function Operator">ℙ</a> <a id="1533" href="Ledger.Conway.Specification.Script.Base.html#1894" class="Function">Datum</a>
+      <a id="TxInfo.txId"></a><a id="1545" href="Ledger.Dijkstra.Specification.Script.ScriptPurpose.html#1545" class="Field">txId</a>           <a id="1560" class="Symbol">:</a> <a id="1562" href="Ledger.Dijkstra.Specification.Transaction.html#3048" class="Field">TxId</a>
+      <a id="TxInfo.txInfoSubTxs"></a><a id="1573" href="Ledger.Dijkstra.Specification.Script.ScriptPurpose.html#1573" class="Field">txInfoSubTxs</a>   <a id="1588" class="Symbol">:</a> <a id="1590" href="Agda.Builtin.Maybe.html#135" class="Datatype">Maybe</a> <a id="1596" class="Symbol">(</a><a id="1597" href="Agda.Builtin.List.html#147" class="Datatype">List</a> <a id="1602" href="Ledger.Dijkstra.Specification.Script.ScriptPurpose.html#1616" class="Function">SubTxInfo</a><a id="1611" class="Symbol">)</a>
+
+  <a id="SubTxInfo"></a><a id="1616" href="Ledger.Dijkstra.Specification.Script.ScriptPurpose.html#1616" class="Function">SubTxInfo</a> <a id="1626" class="Symbol">:</a> <a id="1628" href="Agda.Primitive.html#388" class="Primitive">Type</a>
+  <a id="1635" href="Ledger.Dijkstra.Specification.Script.ScriptPurpose.html#1616" class="Function">SubTxInfo</a> <a id="1645" class="Symbol">=</a> <a id="1647" href="Ledger.Dijkstra.Specification.Script.ScriptPurpose.html#1068" class="Record">TxInfo</a>
+
+</pre>
 
 
 
