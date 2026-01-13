@@ -61,7 +61,7 @@ data _⊢_⇀⦇_,SUBUTXOW⦈_ : UTxOEnv → UTxOState → SubLevelTx → UTxOSt
                  ( range (utxo₀ ∣ txIns)         -- (2) scripts from transaction inputs
                    ∪ range (utxo ∣ refInputs)    -- (3) scripts from reference inputs
                  )
-             ∪ Γ .globalRefInputsScripts         -- (4) scripts from global reference inputs
+             ∪ Γ .globalScripts                  -- (4) scripts from the nested transaction
            )
 
          p1Scripts : ℙ P1Script
@@ -116,7 +116,7 @@ data _⊢_⇀⦇_,UTXOW⦈_ : UTxOEnv → UTxOState → TopLevelTx → UTxOState
                  ( range (utxo₀ ∣ txIns)         -- (2) scripts from transaction inputs
                    ∪ range (utxo ∣ refInputs)    -- (3) scripts from reference inputs
                  )
-             ∪ Γ .globalRefInputsScripts         -- (4) scripts from global reference inputs
+             ∪ Γ .globalScripts                  -- (4) scripts from the nested transaction
            )
 
          p1Scripts : ℙ P1Script

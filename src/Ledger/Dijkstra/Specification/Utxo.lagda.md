@@ -46,8 +46,8 @@ record UTxOEnv : Type where
     treasury         : Treasury
     utxo₀            : UTxO
     isTopLevelValid  : Bool
-    globalRefInputsScripts : ℙ Script
-    globalData             : DataHash ⇀ Datum
+    globalScripts    : ℙ Script
+    globalData       : DataHash ⇀ Datum
 ```
 
 The `utxo₀`{.AgdaField} field of `UTxOEnv`{.AgdaRecord} is introduced in the Dijkstra
