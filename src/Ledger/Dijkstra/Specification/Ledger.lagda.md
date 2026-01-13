@@ -1,6 +1,6 @@
---
+---
 source_branch: master
-source_path: src/Ledger/Dijkstra/Specification/Ledger.lagda
+source_path: src/Ledger/Dijkstra/Specification/Ledger.lagda.md
 ---
 
 # Ledger {#sec:ledger}
