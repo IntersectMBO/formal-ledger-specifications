@@ -39,6 +39,12 @@ import Ledger.Dijkstra.Specification.Gov.Base
 import Ledger.Dijkstra.Specification.Gov.Actions
 ```
 
+## Ledger
+
+```agda
+import Ledger.Dijkstra.Specification.Ledger
+```
+
 ## Protocol Parameters
 
 ```agda

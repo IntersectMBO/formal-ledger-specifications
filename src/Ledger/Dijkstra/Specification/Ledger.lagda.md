@@ -10,6 +10,7 @@ transform the ledger state.
 
 <!--
 ```agda
+{-# OPTIONS --safe #-}
 
 import Data.List as L
 

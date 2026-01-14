@@ -216,6 +216,24 @@ jobs:
     if: ${{ github.event_name == 'push' || github.event_name == 'workflow_dispatch' }}
     runs-on: ubuntu-latest
     steps:
+      - name: Free up disk space
+        run: |
+          # Remove software and language runtimes we're not using
+          sudo rm -rf \
+            "$AGENT_TOOLSDIRECTORY" \
+            /opt/google/chrome \
+            /opt/microsoft/msedge \
+            /opt/microsoft/powershell \
+            /opt/pipx \
+            /usr/lib/mono \
+            /usr/local/julia* \
+            /usr/local/lib/android \
+            /usr/local/lib/node_modules \
+            /usr/local/share/chromium \
+            /usr/local/share/powershell \
+            /usr/share/dotnet \
+            /usr/share/swift
+          df -h /
       - uses: cachix/install-nix-action@v31
         with:
           nix_path: nixpkgs=https://github.com/NixOS/nixpkgs/archive/6c5963357f3c1c840201eda129a99d455074db04.tar.gz
