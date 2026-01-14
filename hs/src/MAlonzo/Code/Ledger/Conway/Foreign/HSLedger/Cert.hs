@@ -258,13 +258,13 @@ d_HasCoin'45'CertState_146
          (coe v0))
 -- Ledger.Conway.Foreign.HSLedger.Cert._.HasDReps-CertState
 d_HasDReps'45'CertState_148 ::
-  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_HasDReps_1232
+  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_HasDReps_1234
 d_HasDReps'45'CertState_148
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Certs.du_HasDReps'45'CertState_1524
 -- Ledger.Conway.Foreign.HSLedger.Cert._.HasDReps-GState
 d_HasDReps'45'GState_150 ::
-  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_HasDReps_1232
+  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_HasDReps_1234
 d_HasDReps'45'GState_150
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Certs.du_HasDReps'45'GState_1512

@@ -54,11 +54,11 @@ import qualified MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Derive
 d_Credential_58 a0 = ()
 -- _.DRepsOf
 d_DRepsOf_68 ::
-  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_HasDReps_1232 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_HasDReps_1234 ->
   AgdaAny -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_DRepsOf_68 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_DRepsOf_1240
+      MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_DRepsOf_1242
       (coe v0)
 -- _.DecEq-Credential
 d_DecEq'45'Credential_98 ::
@@ -277,11 +277,11 @@ d_voter_1122 v0
       (coe v0)
 -- _.GovActions.HasDReps.DRepsOf
 d_DRepsOf_1140 ::
-  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_HasDReps_1232 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_HasDReps_1234 ->
   AgdaAny -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_DRepsOf_1140 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_DRepsOf_1240
+      MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_DRepsOf_1242
       (coe v0)
 -- _.GovActions.HasVoteDelegs.VoteDelegsOf
 d_VoteDelegsOf_1164 ::
@@ -1050,11 +1050,11 @@ d_HasCertState_2478 a0 a1 a2 a3 = ()
 d_HasDReps'45'CertState_2484 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_2388 ->
-  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_HasDReps_1232
+  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_HasDReps_1234
 d_HasDReps'45'CertState_2484 ~v0 ~v1
   = du_HasDReps'45'CertState_2484
 du_HasDReps'45'CertState_2484 ::
-  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_HasDReps_1232
+  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_HasDReps_1234
 du_HasDReps'45'CertState_2484
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Certs.du_HasDReps'45'CertState_1524
@@ -1571,17 +1571,17 @@ du_HasCCHotKeys'45'LState_2876
 d_HasDReps'45'LState_2878 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_2388 ->
-  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_HasDReps_1232
+  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_HasDReps_1234
 d_HasDReps'45'LState_2878 ~v0 ~v1 = du_HasDReps'45'LState_2878
 du_HasDReps'45'LState_2878 ::
-  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_HasDReps_1232
+  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_HasDReps_1234
 du_HasDReps'45'LState_2878
   = coe
-      MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.C_constructor_1242
+      MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.C_constructor_1244
       (coe
          (\ v0 ->
             coe
-              MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_DRepsOf_1240
+              MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_DRepsOf_1242
               (coe
                  MAlonzo.Code.Ledger.Conway.Specification.Certs.du_HasDReps'45'CertState_1524)
               (d_certState_2828 (coe v0))))
@@ -2116,7 +2116,7 @@ du_allColdCreds_2948 v0 v1
          (coe
             (\ v2 ->
                coe
-                 MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.du_proposedCC_1222
+                 MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.du_proposedCC_1224
                  (coe
                     MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_action_1022
                     (coe MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30 (coe v2)))))

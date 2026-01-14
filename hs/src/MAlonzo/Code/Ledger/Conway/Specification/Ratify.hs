@@ -185,11 +185,11 @@ d_EnactStateOf_510 v0
       (coe v0)
 -- Ledger.Conway.Specification.Ratify._.DRepsOf
 d_DRepsOf_526 ::
-  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_HasDReps_1232 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_HasDReps_1234 ->
   AgdaAny -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_DRepsOf_526 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_DRepsOf_1240
+      MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_DRepsOf_1242
       (coe v0)
 -- Ledger.Conway.Specification.Ratify._.GovAction
 d_GovAction_538 a0 = ()
@@ -290,11 +290,11 @@ d_votes_714 v0
       (coe v0)
 -- Ledger.Conway.Specification.Ratify._.HasDReps.DRepsOf
 d_DRepsOf_780 ::
-  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_HasDReps_1232 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_HasDReps_1234 ->
   AgdaAny -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_DRepsOf_780 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_DRepsOf_1240
+      MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_DRepsOf_1242
       (coe v0)
 -- Ledger.Conway.Specification.Ratify._.Credential
 d_Credential_852 a0 a1 a2 a3 = ()
@@ -1158,13 +1158,13 @@ du_HasEnactState'45'RatifyState_1864
 -- Ledger.Conway.Specification.Ratify.HasDReps-RatifyEnv
 d_HasDReps'45'RatifyEnv_1866 ::
   MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.T_GovStructure_10 ->
-  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_HasDReps_1232
+  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_HasDReps_1234
 d_HasDReps'45'RatifyEnv_1866 ~v0 = du_HasDReps'45'RatifyEnv_1866
 du_HasDReps'45'RatifyEnv_1866 ::
-  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_HasDReps_1232
+  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_HasDReps_1234
 du_HasDReps'45'RatifyEnv_1866
   = coe
-      MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.C_constructor_1242
+      MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.C_constructor_1244
       (coe (\ v0 -> d_dreps_1816 (coe v0)))
 -- Ledger.Conway.Specification.Ratify.HasTreasury-RatifyEnv
 d_HasTreasury'45'RatifyEnv_1868 ::
@@ -3472,7 +3472,7 @@ du_activeDReps_2076 v0 v1
             MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
       (coe MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_594)
       (coe
-         MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.du_activeDRepsOf_1258
+         MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.du_activeDRepsOf_1260
          (coe v0) (coe du_HasDReps'45'RatifyEnv_1866) (coe v1)
          (coe d_currentEpoch_1814 (coe v1)))
 -- Ledger.Conway.Specification.Ratify.AcceptedByDRep.predeterminedDRepVotes

@@ -223,10 +223,10 @@ du_HasCCHotKeys'45'LState_2668
 d_HasDReps'45'LState_2676 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_2388 ->
-  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_HasDReps_1232
+  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_HasDReps_1234
 d_HasDReps'45'LState_2676 ~v0 ~v1 = du_HasDReps'45'LState_2676
 du_HasDReps'45'LState_2676 ::
-  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_HasDReps_1232
+  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_HasDReps_1234
 du_HasDReps'45'LState_2676
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Ledger.du_HasDReps'45'LState_2878
@@ -4575,7 +4575,7 @@ du_EPOCH'45'total_3138 v0 v1 v2
                                     (coe
                                        MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                        (coe
-                                          MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_DRepsOf_1240
+                                          MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_DRepsOf_1242
                                           (coe
                                              MAlonzo.Code.Ledger.Conway.Specification.Ledger.du_HasDReps'45'LState_2878)
                                           (MAlonzo.Code.Ledger.Conway.Specification.Epoch.d_ls_3172
@@ -7940,7 +7940,7 @@ du_EPOCH'45'total_3138 v0 v1 v2
                               (coe
                                  MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                  (coe
-                                    MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_DRepsOf_1240
+                                    MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_DRepsOf_1242
                                     (coe
                                        MAlonzo.Code.Ledger.Conway.Specification.Ledger.du_HasDReps'45'LState_2878)
                                     (MAlonzo.Code.Ledger.Conway.Specification.Epoch.d_ls_3172
