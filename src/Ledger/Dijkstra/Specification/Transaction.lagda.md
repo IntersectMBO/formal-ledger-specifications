@@ -368,6 +368,10 @@ could be either of them.
     field ScriptsOf : A → ℙ Script
   open HasScripts ⦃...⦄ public
 
+  record HasTxOuts {a} (A : Type a) : Type a where
+    field TxOutsOf : A → Ix ⇀ TxOut
+  open HasTxOuts ⦃...⦄ public
+
   instance
     HasTxBody-Tx : HasTxBody (Tx txLevel)
     HasTxBody-Tx .TxBodyOf = Tx.txBody
@@ -480,6 +484,12 @@ could be either of them.
 
     HasScripts-Tx : HasScripts (Tx txLevel)
     HasScripts-Tx .ScriptsOf = ScriptsOf ∘ TxWitnessesOf
+
+    HasTxOuts-TxBody : HasTxOuts (TxBody txLevel)
+    HasTxOuts-TxBody .TxOutsOf = TxBody.txOuts
+
+    HasTxOuts-Tx : HasTxOuts (Tx txLevel)
+    HasTxOuts-Tx .TxOutsOf = TxOutsOf ∘ TxBodyOf
 ```
 -->
 
@@ -529,17 +539,16 @@ UTxO environment and state at this point.)
   txOutToScript : TxOut → Maybe Script
   txOutToScript (_ , _ , _ , s) = s
 
-  refScripts : Tx txLevel → UTxO → UTxO → List Script
-  refScripts tx utxo₀ utxoRef =
-    mapMaybe (proj₂ ∘ proj₂ ∘ proj₂)
-      ( setToList (range (utxo₀ ∣ SpendInputsOf tx))
-        ++ setToList (range (utxoRef ∣ ReferenceInputsOf tx)) )
-
-  txscripts : Tx txLevel → UTxO → UTxO → ℙ Script
-  txscripts tx utxo₀ utxoRef = ScriptsOf tx ∪ fromList (refScripts tx utxo₀ utxoRef)
+  txScripts : UTxO → Tx txLevel → ℙ Script
+  txScripts utxo tx =
+    ScriptsOf tx                               -- (1) scripts from witnesses
+    ∪ mapPartial txOutToScript
+        ( range (utxo ∣ SpendInputsOf tx)      -- (2) scripts from spending inputs
+        ∪ range (utxo ∣ ReferenceInputsOf tx)  -- (3) scripts from reference inputs
+        ∪ range (TxOutsOf tx ˢ))                -- (4) scripts from transaction outputs
 
   lookupScriptHash : ScriptHash → Tx txLevel → UTxO → UTxO → Maybe Script
-  lookupScriptHash sh tx utxoSpend₀ utxoRefView = lookupHash sh (txscripts tx utxoSpend₀ utxoRefView)
+  lookupScriptHash sh tx utxoSpend₀ utxoRefView = lookupHash sh (txScripts utxoRefView tx)
 
   getSubTxScripts : SubLevelTx → ℙ (TxId × ScriptHash)
   getSubTxScripts subtx = mapˢ (λ hash → (TxIdOf subtx , hash)) (ScriptHashes subtx)

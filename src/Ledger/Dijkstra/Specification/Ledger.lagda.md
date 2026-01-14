@@ -49,7 +49,7 @@ record SubLedgerEnv : Type where
     treasury    : Treasury
     utxo₀            : UTxO
     isTopLevelValid  : Bool
-    globalScripts    : ℙ Script
+    globalScripts    : ℙ P1Script × ℙ P2Script
     globalData       : DataHash ⇀ Datum
 
 record LedgerEnv : Type where
@@ -166,6 +166,13 @@ txgov txb = map inj₂ txGovProposals ++ map inj₁ txGovVotes
 allColdCreds : GovState → EnactState → ℙ Credential
 allColdCreds govSt es =
   ccCreds (es .cc) ∪ concatMapˢ (λ (_ , st) → proposedCC (GovActionOf st)) (fromList govSt)
+
+getGlobalScripts : TopLevelTx → UTxO → ℙ P1Script × ℙ P2Script
+getGlobalScripts tx utxo = mapPartial toP1Script allScripts , mapPartial toP2Script allScripts
+  where
+    allScripts : ℙ Script
+    allScripts = txScripts utxo tx                                               -- (1) scripts from top-level transaction
+                 ∪ concatMapˢ (txScripts utxo) (fromList (SubTransactionsOf tx))  -- (2) scripts from subtransactions
 ```
 
 -- ## <span class="AgdaDatatype">LEDGER</span> Transition System
@@ -186,7 +193,7 @@ private variable
   enactState            : EnactState
   treasury              : Treasury
   isTopLevelValid       : Bool
-  globalScripts         : ℙ Script
+  globalScripts         : ℙ P1Script × ℙ P2Script
   globalData            : DataHash ⇀ Datum
 ```
 -->
@@ -235,14 +242,6 @@ private variable
 data _⊢_⇀⦇_,LEDGER⦈_ : LedgerEnv → LState → TopLevelTx → LState → Type where
   LEDGER-V :
     let  txb = tx .txBody
-
-         utxo₀ = UTxOOf utxoState
-
-         globalScripts : ℙ Script
-         globalScripts = ∅ -- TODO
-
-         globalData : DataHash ⇀ Datum
-         globalData = ∅ -- TODO
 ```
 <!--
 ```agda
@@ -250,6 +249,11 @@ data _⊢_⇀⦇_,LEDGER⦈_ : LedgerEnv → LState → TopLevelTx → LState �
 ```
 -->
 ```agda
+         utxo₀ = UTxOOf utxoState
+         globalScripts = getGlobalScripts tx utxo₀
+
+         globalData : DataHash ⇀ Datum
+         globalData = ∅ -- TODO
     in
       ∙ isValid tx ≡ true
       ∙ ⟦ slot , ppolicy , pp , enactState , treasury , utxo₀ , isValid tx , globalScripts , globalData ⟧ ⊢ ⟦ utxoState , govState , certState ⟧ ⇀⦇ txSubTransactions ,SUBLEDGERS⦈ ⟦ utxoState' , govState' , certState' ⟧
@@ -261,14 +265,6 @@ data _⊢_⇀⦇_,LEDGER⦈_ : LedgerEnv → LState → TopLevelTx → LState �
 
   LEDGER-I :
     let  txb = tx .txBody
-
-         utxo₀ = UTxOOf utxoState
-
-         globalScripts : ℙ Script
-         globalScripts = ∅ -- TODO
-
-         globalData : DataHash ⇀ Datum
-         globalData = ∅ -- TODO
 ```
 <!--
 ```agda
@@ -276,6 +272,11 @@ data _⊢_⇀⦇_,LEDGER⦈_ : LedgerEnv → LState → TopLevelTx → LState �
 ```
 -->
 ```agda
+         utxo₀ = UTxOOf utxoState
+         globalScripts = getGlobalScripts tx utxo₀
+
+         globalData : DataHash ⇀ Datum
+         globalData = ∅ -- TODO
     in
       ∙ isValid tx ≡ false
       ∙ ⟦ slot , ppolicy , pp , enactState , treasury , utxo₀ , isValid tx , globalScripts , globalData ⟧ ⊢ ⟦ utxoState , govState , certState ⟧ ⇀⦇ txSubTransactions  ,SUBLEDGERS⦈ ⟦ utxoState , govState , certState ⟧

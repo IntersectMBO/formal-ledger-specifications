@@ -54,21 +54,11 @@ data _⊢_⇀⦇_,SUBUTXOW⦈_ : UTxOEnv → UTxOState → SubLevelTx → UTxOSt
          witsKeyHashes       : ℙ KeyHash
          witsKeyHashes       = mapˢ hash (dom vKeySigs)
 
-         allScripts : ℙ Script
-         allScripts =
-           ( scripts                             -- (1) scripts from witnesses
-             ∪ mapPartial txOutToScript
-                 ( range (utxo₀ ∣ txIns)         -- (2) scripts from transaction inputs
-                   ∪ range (utxo ∣ refInputs)    -- (3) scripts from reference inputs
-                 )
-             ∪ Γ .globalScripts                  -- (4) scripts from the nested transaction
-           )
-
          p1Scripts : ℙ P1Script
-         p1Scripts = mapPartial toP1Script allScripts
+         p1Scripts = proj₁ (Γ .globalScripts)
 
          p2Scripts : ℙ P2Script
-         p2Scripts = mapPartial toP2Script allScripts
+         p2Scripts = proj₂ (Γ .globalScripts)
 
          neededScriptHashes  : ℙ ScriptHash
          neededScriptHashes  = mapPartial (isScriptObj  ∘ proj₂) (credsNeeded utxo₀ txBody)
@@ -86,7 +76,7 @@ data _⊢_⇀⦇_,SUBUTXOW⦈_ : UTxOEnv → UTxOState → SubLevelTx → UTxOSt
     ∙  ∀[ (vk , σ) ∈ vKeySigs ] isSigned vk (txidBytes txId) σ
     ∙  ∀[ s ∈ p1Scripts ] (hash s ∈ neededScriptHashes → validP1Script witsKeyHashes txVldt s)
     ∙  neededVKeyHashes ⊆ witsKeyHashes
-    ∙  neededScriptHashes ⊆ mapˢ hash allScripts
+    ∙  neededScriptHashes ⊆ mapˢ hash p1Scripts ∪ mapˢ hash p2Scripts
     ∙  neededDataHashes ⊆ dom (Γ .globalData)
     ∙  languages tx utxo ⊆ allowedLanguages tx utxo
     ∙  txADhash ≡ map hash txAuxData
@@ -109,21 +99,11 @@ data _⊢_⇀⦇_,UTXOW⦈_ : UTxOEnv → UTxOState → TopLevelTx → UTxOState
          witsKeyHashes       : ℙ KeyHash
          witsKeyHashes       = mapˢ hash (dom vKeySigs)
 
-         allScripts : ℙ Script
-         allScripts =
-           ( scripts                             -- (1) scripts from witnesses
-             ∪ mapPartial txOutToScript
-                 ( range (utxo₀ ∣ txIns)         -- (2) scripts from transaction inputs
-                   ∪ range (utxo ∣ refInputs)    -- (3) scripts from reference inputs
-                 )
-             ∪ Γ .globalScripts                  -- (4) scripts from the nested transaction
-           )
-
          p1Scripts : ℙ P1Script
-         p1Scripts = mapPartial toP1Script allScripts
+         p1Scripts = proj₁ (Γ .globalScripts)
 
          p2Scripts : ℙ P2Script
-         p2Scripts = mapPartial toP2Script allScripts
+         p2Scripts = proj₂ (Γ .globalScripts)
 
          neededScriptHashes  : ℙ ScriptHash
          neededScriptHashes  = mapPartial (isScriptObj  ∘ proj₂) (credsNeeded utxo₀ txBody)
@@ -141,7 +121,7 @@ data _⊢_⇀⦇_,UTXOW⦈_ : UTxOEnv → UTxOState → TopLevelTx → UTxOState
     ∙  ∀[ (vk , σ) ∈ vKeySigs ] isSigned vk (txidBytes txId) σ
     ∙  ∀[ s ∈ p1Scripts ] (hash s ∈ neededScriptHashes → validP1Script witsKeyHashes txVldt s)
     ∙  neededVKeyHashes ⊆ witsKeyHashes
-    ∙  neededScriptHashes ⊆ mapˢ hash allScripts
+    ∙  neededScriptHashes ⊆ mapˢ hash p1Scripts ∪ mapˢ hash p2Scripts
     ∙  neededDataHashes ⊆ dom (Γ .globalData)
     ∙  languages tx utxo ⊆ allowedLanguages tx utxo
     ∙  txADhash ≡ map hash txAuxData
