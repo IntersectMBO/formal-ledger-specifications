@@ -432,10 +432,10 @@ isGovVoterDRep : GovVoter → Maybe Credential
 isGovVoterDRep ⟦ DRep , c ⟧ᵍᵛ = just c
 isGovVoterDRep _ = nothing
 
-isGovVoterCredential : GovVoter → Maybe Credential
-isGovVoterCredential ⟦ CC   , c ⟧ᵍᵛ = just c
-isGovVoterCredential ⟦ DRep , c ⟧ᵍᵛ = just c
-isGovVoterCredential _ = nothing
+govVoterCredential : GovVoter → Credential
+govVoterCredential ⟦ CC   , c  ⟧ᵍᵛ = c
+govVoterCredential ⟦ DRep , c  ⟧ᵍᵛ = c
+govVoterCredential ⟦ SPO  , kh ⟧ᵍᵛ = KeyHashObj kh
 
 proposedCC : GovAction → ℙ Credential
 proposedCC ⟦ UpdateCommittee , (x , _ , _) ⟧ᵍᵃ = dom x
