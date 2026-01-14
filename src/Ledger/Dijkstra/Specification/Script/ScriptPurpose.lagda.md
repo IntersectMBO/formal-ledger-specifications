@@ -14,7 +14,7 @@ open import Ledger.Dijkstra.Specification.Transaction
 module Ledger.Dijkstra.Specification.Script.ScriptPurpose (txs : TransactionStructure) where
 
 open import Ledger.Prelude
-open TransactionStructure txs
+open TransactionStructure txs hiding (txData)
 open import Ledger.Dijkstra.Specification.Certs govStructure
 ```
 -->

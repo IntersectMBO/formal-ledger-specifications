@@ -255,7 +255,7 @@ Of particular note in the Dijkstra era are
       field
         vKeySigs     : VKey ⇀ Sig
         scripts      : ℙ Script
-        txData       : DataHash ⇀ Datum
+        txData       : ℙ Datum
         txRedeemers  : RedeemerPtr txLevel ⇀ Redeemer × ExUnits
 
       scriptsP1 : ℙ P1Script
@@ -468,7 +468,7 @@ could be either of them.
     HasCoin-TxOut .getCoin = coin ∘ proj₁ ∘ proj₂
 
     HasData-TxWitnesses : HasData (TxWitnesses txLevel)
-    HasData-TxWitnesses .DataOf = range ∘ TxWitnesses.txData
+    HasData-TxWitnesses .DataOf = TxWitnesses.txData
 
     HasData-Tx : HasData (Tx txLevel)
     HasData-Tx .DataOf = DataOf ∘ TxWitnessesOf
@@ -561,6 +561,17 @@ UTxO environment and state at this point.)
   getTxScripts : {ℓ : TxLevel} → Tx ℓ → ℙ (TxId × ScriptHash)
   getTxScripts {TxLevelSub} = getSubTxScripts
   getTxScripts {TxLevelTop} = concatMapˢ getSubTxScripts ∘ fromList ∘ SubTransactionsOf
+
+  txOutToDatum : TxOut → Maybe Datum
+  txOutToDatum (_ , _ , d , _) = d >>= isInj₁
+
+  txData : UTxO → Tx txLevel → ℙ Datum
+  txData utxo tx =
+    DataOf tx                                  -- (1) data from witnesses
+    ∪ mapPartial txOutToDatum
+        ( range (utxo ∣ SpendInputsOf tx)      -- (2) data from spending inputs
+        ∪ range (utxo ∣ ReferenceInputsOf tx)  -- (3) data from reference inputs
+        ∪ range (TxOutsOf tx ˢ))                -- (4) data from transaction outputs
 ```
 
 CIP-0118 models "required top-level guards" as a list of requirements coming
