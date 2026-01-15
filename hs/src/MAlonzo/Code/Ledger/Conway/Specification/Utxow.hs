@@ -899,164 +899,177 @@ newtype T__'8866'_'8640''10631'_'44'UTXOW'10632'__2724
 d_txAD_2730 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_2388 ->
-  T_GeneralizeTel_32717 -> Maybe AgdaAny
+  T_GeneralizeTel_32739 -> Maybe AgdaAny
 d_txAD_2730 ~v0 ~v1 v2 = du_txAD_2730 v2
-du_txAD_2730 :: T_GeneralizeTel_32717 -> Maybe AgdaAny
+du_txAD_2730 :: T_GeneralizeTel_32739 -> Maybe AgdaAny
 du_txAD_2730 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_txAD_3454
-      (coe d_'46'generalizedField'45'tx_32709 (coe v0))
+      (coe d_'46'generalizedField'45'tx_32731 (coe v0))
 -- Ledger.Conway.Specification.Utxow._.body
 d_body_2732 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_2388 ->
-  T_GeneralizeTel_32717 ->
+  T_GeneralizeTel_32739 ->
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TxBody_3254
 d_body_2732 ~v0 ~v1 v2 = du_body_2732 v2
 du_body_2732 ::
-  T_GeneralizeTel_32717 ->
+  T_GeneralizeTel_32739 ->
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TxBody_3254
 du_body_2732 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_body_3446
-      (coe d_'46'generalizedField'45'tx_32709 (coe v0))
+      (coe d_'46'generalizedField'45'tx_32731 (coe v0))
 -- Ledger.Conway.Specification.Utxow._.wits
 d_wits_2736 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_2388 ->
-  T_GeneralizeTel_32717 ->
+  T_GeneralizeTel_32739 ->
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TxWitnesses_3412
 d_wits_2736 ~v0 ~v1 v2 = du_wits_2736 v2
 du_wits_2736 ::
-  T_GeneralizeTel_32717 ->
+  T_GeneralizeTel_32739 ->
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TxWitnesses_3412
 du_wits_2736 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_wits_3448
-      (coe d_'46'generalizedField'45'tx_32709 (coe v0))
+      (coe d_'46'generalizedField'45'tx_32731 (coe v0))
 -- Ledger.Conway.Specification.Utxow._.refInputs
 d_refInputs_2746 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_2388 ->
-  T_GeneralizeTel_32717 -> [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
+  T_GeneralizeTel_32739 -> [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
 d_refInputs_2746 ~v0 ~v1 v2 = du_refInputs_2746 v2
 du_refInputs_2746 ::
-  T_GeneralizeTel_32717 -> [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
+  T_GeneralizeTel_32739 -> [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
 du_refInputs_2746 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_refInputs_3294
       (coe
          MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_body_3446
-         (coe d_'46'generalizedField'45'tx_32709 (coe v0)))
+         (coe d_'46'generalizedField'45'tx_32731 (coe v0)))
+-- Ledger.Conway.Specification.Utxow._.reqSignerHashes
+d_reqSignerHashes_2748 ::
+  MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_2388 ->
+  T_GeneralizeTel_32739 -> [AgdaAny]
+d_reqSignerHashes_2748 ~v0 ~v1 v2 = du_reqSignerHashes_2748 v2
+du_reqSignerHashes_2748 :: T_GeneralizeTel_32739 -> [AgdaAny]
+du_reqSignerHashes_2748 v0
+  = coe
+      MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_reqSignerHashes_3324
+      (coe
+         MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_body_3446
+         (coe d_'46'generalizedField'45'tx_32731 (coe v0)))
 -- Ledger.Conway.Specification.Utxow._.txADhash
 d_txADhash_2752 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_2388 ->
-  T_GeneralizeTel_32717 -> Maybe AgdaAny
+  T_GeneralizeTel_32739 -> Maybe AgdaAny
 d_txADhash_2752 ~v0 ~v1 v2 = du_txADhash_2752 v2
-du_txADhash_2752 :: T_GeneralizeTel_32717 -> Maybe AgdaAny
+du_txADhash_2752 :: T_GeneralizeTel_32739 -> Maybe AgdaAny
 du_txADhash_2752 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_txADhash_3310
       (coe
          MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_body_3446
-         (coe d_'46'generalizedField'45'tx_32709 (coe v0)))
+         (coe d_'46'generalizedField'45'tx_32731 (coe v0)))
 -- Ledger.Conway.Specification.Utxow._.txId
 d_txId_2764 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_2388 ->
-  T_GeneralizeTel_32717 -> AgdaAny
+  T_GeneralizeTel_32739 -> AgdaAny
 d_txId_2764 ~v0 ~v1 v2 = du_txId_2764 v2
-du_txId_2764 :: T_GeneralizeTel_32717 -> AgdaAny
+du_txId_2764 :: T_GeneralizeTel_32739 -> AgdaAny
 du_txId_2764 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_txId_3300
       (coe
          MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_body_3446
-         (coe d_'46'generalizedField'45'tx_32709 (coe v0)))
+         (coe d_'46'generalizedField'45'tx_32731 (coe v0)))
 -- Ledger.Conway.Specification.Utxow._.txIns
 d_txIns_2766 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_2388 ->
-  T_GeneralizeTel_32717 -> [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
+  T_GeneralizeTel_32739 -> [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
 d_txIns_2766 ~v0 ~v1 v2 = du_txIns_2766 v2
 du_txIns_2766 ::
-  T_GeneralizeTel_32717 -> [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
+  T_GeneralizeTel_32739 -> [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
 du_txIns_2766 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_txIns_3292
       (coe
          MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_body_3446
-         (coe d_'46'generalizedField'45'tx_32709 (coe v0)))
+         (coe d_'46'generalizedField'45'tx_32731 (coe v0)))
 -- Ledger.Conway.Specification.Utxow._.txOuts
 d_txOuts_2770 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_2388 ->
-  T_GeneralizeTel_32717 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+  T_GeneralizeTel_32739 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_txOuts_2770 ~v0 ~v1 v2 = du_txOuts_2770 v2
 du_txOuts_2770 ::
-  T_GeneralizeTel_32717 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+  T_GeneralizeTel_32739 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 du_txOuts_2770 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_txOuts_3298
       (coe
          MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_body_3446
-         (coe d_'46'generalizedField'45'tx_32709 (coe v0)))
+         (coe d_'46'generalizedField'45'tx_32731 (coe v0)))
 -- Ledger.Conway.Specification.Utxow._.txVldt
 d_txVldt_2772 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_2388 ->
-  T_GeneralizeTel_32717 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+  T_GeneralizeTel_32739 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_txVldt_2772 ~v0 ~v1 v2 = du_txVldt_2772 v2
 du_txVldt_2772 ::
-  T_GeneralizeTel_32717 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+  T_GeneralizeTel_32739 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 du_txVldt_2772 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_txVldt_3308
       (coe
          MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_body_3446
-         (coe d_'46'generalizedField'45'tx_32709 (coe v0)))
+         (coe d_'46'generalizedField'45'tx_32731 (coe v0)))
 -- Ledger.Conway.Specification.Utxow._.scripts
 d_scripts_2778 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_2388 ->
-  T_GeneralizeTel_32717 -> [MAlonzo.Code.Data.Sum.Base.T__'8846'__30]
+  T_GeneralizeTel_32739 -> [MAlonzo.Code.Data.Sum.Base.T__'8846'__30]
 d_scripts_2778 ~v0 ~v1 v2 = du_scripts_2778 v2
 du_scripts_2778 ::
-  T_GeneralizeTel_32717 -> [MAlonzo.Code.Data.Sum.Base.T__'8846'__30]
+  T_GeneralizeTel_32739 -> [MAlonzo.Code.Data.Sum.Base.T__'8846'__30]
 du_scripts_2778 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_scripts_3424
       (coe
          MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_wits_3448
-         (coe d_'46'generalizedField'45'tx_32709 (coe v0)))
+         (coe d_'46'generalizedField'45'tx_32731 (coe v0)))
 -- Ledger.Conway.Specification.Utxow._.txdats
 d_txdats_2782 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_2388 ->
-  T_GeneralizeTel_32717 -> [AgdaAny]
+  T_GeneralizeTel_32739 -> [AgdaAny]
 d_txdats_2782 ~v0 ~v1 v2 = du_txdats_2782 v2
-du_txdats_2782 :: T_GeneralizeTel_32717 -> [AgdaAny]
+du_txdats_2782 :: T_GeneralizeTel_32739 -> [AgdaAny]
 du_txdats_2782 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_txdats_3426
       (coe
          MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_wits_3448
-         (coe d_'46'generalizedField'45'tx_32709 (coe v0)))
+         (coe d_'46'generalizedField'45'tx_32731 (coe v0)))
 -- Ledger.Conway.Specification.Utxow._.vkSigs
 d_vkSigs_2786 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_2388 ->
-  T_GeneralizeTel_32717 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+  T_GeneralizeTel_32739 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_vkSigs_2786 ~v0 ~v1 v2 = du_vkSigs_2786 v2
 du_vkSigs_2786 ::
-  T_GeneralizeTel_32717 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+  T_GeneralizeTel_32739 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 du_vkSigs_2786 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_vkSigs_3422
       (coe
          MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_wits_3448
-         (coe d_'46'generalizedField'45'tx_32709 (coe v0)))
+         (coe d_'46'generalizedField'45'tx_32731 (coe v0)))
 -- Ledger.Conway.Specification.Utxow.UTXOW-inductive-premises
 d_UTXOW'45'inductive'45'premises_2846 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
@@ -1244,19 +1257,30 @@ du_UTXOW'45'inductive'45'premises_2846 v0 v1 v2
                                       MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_wits_3448
                                       (coe v1)))))))
                   (coe
-                     MAlonzo.Code.Axiom.Set.du_mapPartial_604
-                     (MAlonzo.Code.Axiom.Set.d_th_1516
+                     MAlonzo.Code.Axiom.Set.du__'8746'__708
+                     (coe
+                        MAlonzo.Code.Axiom.Set.d_th_1516
                         (coe
                            MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
-                     (\ v3 ->
-                        coe
-                          MAlonzo.Code.Ledger.Core.Specification.Address.du_isKeyHashObj_46
-                          (coe MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30 (coe v3)))
                      (coe
-                        MAlonzo.Code.Ledger.Conway.Specification.Script.Validation.du_credsNeeded_2684
-                        (coe v0)
+                        MAlonzo.Code.Axiom.Set.du_mapPartial_604
+                        (MAlonzo.Code.Axiom.Set.d_th_1516
+                           (coe
+                              MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                        (\ v3 ->
+                           coe
+                             MAlonzo.Code.Ledger.Core.Specification.Address.du_isKeyHashObj_46
+                             (coe MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30 (coe v3)))
                         (coe
-                           MAlonzo.Code.Ledger.Conway.Specification.Utxo.d_utxo_2390 (coe v2))
+                           MAlonzo.Code.Ledger.Conway.Specification.Script.Validation.du_credsNeeded_2684
+                           (coe v0)
+                           (coe
+                              MAlonzo.Code.Ledger.Conway.Specification.Utxo.d_utxo_2390 (coe v2))
+                           (coe
+                              MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_body_3446
+                              (coe v1))))
+                     (coe
+                        MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_reqSignerHashes_3324
                         (coe
                            MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_body_3446
                            (coe v1)))))
@@ -1762,41 +1786,41 @@ du_UTXOW'45'inductive'45'premises_2846 v0 v1 v2
                                  (MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_txAD_3454
                                     (coe v1)))))))))))
 -- Ledger.Conway.Specification.Utxow..generalizedField-tx
-d_'46'generalizedField'45'tx_32709 ::
-  T_GeneralizeTel_32717 ->
+d_'46'generalizedField'45'tx_32731 ::
+  T_GeneralizeTel_32739 ->
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_Tx_3434
-d_'46'generalizedField'45'tx_32709 v0
+d_'46'generalizedField'45'tx_32731 v0
   = case coe v0 of
-      C_mkGeneralizeTel_32719 v1 v2 v3 v4 -> coe v1
+      C_mkGeneralizeTel_32741 v1 v2 v3 v4 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Conway.Specification.Utxow..generalizedField-s
-d_'46'generalizedField'45's_32711 ::
-  T_GeneralizeTel_32717 ->
+d_'46'generalizedField'45's_32733 ::
+  T_GeneralizeTel_32739 ->
   MAlonzo.Code.Ledger.Conway.Specification.Utxo.T_UTxOState_2380
-d_'46'generalizedField'45's_32711 v0
+d_'46'generalizedField'45's_32733 v0
   = case coe v0 of
-      C_mkGeneralizeTel_32719 v1 v2 v3 v4 -> coe v2
+      C_mkGeneralizeTel_32741 v1 v2 v3 v4 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Conway.Specification.Utxow..generalizedField-Γ
-d_'46'generalizedField'45'Γ_32713 ::
-  T_GeneralizeTel_32717 ->
+d_'46'generalizedField'45'Γ_32735 ::
+  T_GeneralizeTel_32739 ->
   MAlonzo.Code.Ledger.Conway.Specification.Utxo.T_UTxOEnv_2364
-d_'46'generalizedField'45'Γ_32713 v0
+d_'46'generalizedField'45'Γ_32735 v0
   = case coe v0 of
-      C_mkGeneralizeTel_32719 v1 v2 v3 v4 -> coe v3
+      C_mkGeneralizeTel_32741 v1 v2 v3 v4 -> coe v3
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Conway.Specification.Utxow..generalizedField-s'
-d_'46'generalizedField'45's''_32715 ::
-  T_GeneralizeTel_32717 ->
+d_'46'generalizedField'45's''_32737 ::
+  T_GeneralizeTel_32739 ->
   MAlonzo.Code.Ledger.Conway.Specification.Utxo.T_UTxOState_2380
-d_'46'generalizedField'45's''_32715 v0
+d_'46'generalizedField'45's''_32737 v0
   = case coe v0 of
-      C_mkGeneralizeTel_32719 v1 v2 v3 v4 -> coe v4
+      C_mkGeneralizeTel_32741 v1 v2 v3 v4 -> coe v4
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Conway.Specification.Utxow.GeneralizeTel
-d_GeneralizeTel_32717 a0 a1 = ()
-data T_GeneralizeTel_32717
-  = C_mkGeneralizeTel_32719 MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_Tx_3434
+d_GeneralizeTel_32739 a0 a1 = ()
+data T_GeneralizeTel_32739
+  = C_mkGeneralizeTel_32741 MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_Tx_3434
                             MAlonzo.Code.Ledger.Conway.Specification.Utxo.T_UTxOState_2380
                             MAlonzo.Code.Ledger.Conway.Specification.Utxo.T_UTxOEnv_2364
                             MAlonzo.Code.Ledger.Conway.Specification.Utxo.T_UTxOState_2380
