@@ -115,7 +115,7 @@ opaque
            p2s ← toP2Script s
            (rdmr , exunits) ← indexedRdmrs tx sp
            let data'     = maybe [_] [] (getDatum tx utxo sp) ++ rdmr ∷ [ valContext (txInfo (language p2s) pp utxo tx) sp ]
-               costModel = PParams.costmdls pp
+           costModel ← lookupᵐ? (PParams.costmdls pp) (language p2s)
            just (p2s , data' , exunits , costModel)
 
 evalP2Scripts : List (P2Script × List Data × ExUnits × CostModel) → Bool

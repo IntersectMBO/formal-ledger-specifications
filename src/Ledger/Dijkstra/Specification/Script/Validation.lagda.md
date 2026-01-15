@@ -157,7 +157,8 @@ opaque
            (rdmr , exunits) ← indexedRdmrs tx sp
            let data'  = maybe [_] [] (getDatum tx utxo sp)
                         ++ rdmr ∷ [ valContext (txInfoForPurpose ℓ utxo tx sp) sp ]
-           just (p2s , data' , exunits , PParams.costmdls pp)
+           costModel ← lookupᵐ? (PParams.costmdls pp) (language p2s)
+           just (p2s , data' , exunits , costModel)
 
 evalP2Scripts : List (P2Script × List Data × ExUnits × CostModel) → Bool
 evalP2Scripts = all (λ (s , d , eu , cm) → runPLCScript cm s eu d)
