@@ -31,6 +31,8 @@ module Ledger.Conway.Specification.PParams
   (ss : ScriptStructure cs es) (open ScriptStructure ss)
   where
 
+open import Data.String using (parens)
+
 private variable
   m n : ℕ
 ```
@@ -303,6 +305,9 @@ paramsWF-elim pp pwf (suc n) x = z<s
 paramsWF-elim pp pwf 0 0∈ = ⊥-elim (pwf (to ∈-fromList 0∈))
   where open Equivalence
 
+Show-L×C : Show (Language × CostModel)
+Show-L×C .show (x , y) = parens $ show x ◇ " , " ◇ show y
+
 instance
   unquoteDecl DecEq-DrepThresholds = derive-DecEq
     ((quote DrepThresholds , DecEq-DrepThresholds) ∷ [])
@@ -316,6 +321,8 @@ instance
     ((quote DrepThresholds , Show-DrepThresholds) ∷ [])
   unquoteDecl Show-PoolThresholds = derive-Show
     ((quote PoolThresholds , Show-PoolThresholds) ∷ [])
+  _ = Show-L×C
+  _ = Show-List
   unquoteDecl Show-PParams        = derive-Show
     ((quote PParams , Show-PParams) ∷ [])
 
