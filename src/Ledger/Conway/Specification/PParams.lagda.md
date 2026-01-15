@@ -233,16 +233,8 @@ record PParams : Type where
         nopt                          : ℕ
         a0                            : ℚ
         collateralPercentage          : ℕ
-```
-
-<!--
-```agda
-        -- costmdls                   : Language →/⇀ CostModel (Does not work with DecEq)
-```
--->
-
-```agda
-        costmdls                      : CostModel
+        -- use an association list instead of a map for DecEq
+        costmdlsAssoc                 : List (Language × CostModel)
 ```
 
 *Governance group*
@@ -255,6 +247,9 @@ record PParams : Type where
         govActionDeposit              : Coin
         drepDeposit                   : Coin
         drepActivity                  : Epoch
+
+  costmdls : Language ⇀ CostModel
+  costmdls = fromListᵐ costmdlsAssoc
 ```
 
 *Security group*
@@ -349,7 +344,7 @@ module PParamsUpdate where
           Emax                          : Maybe Epoch
           nopt                          : Maybe ℕ
           collateralPercentage          : Maybe ℕ
-          costmdls                      : Maybe CostModel
+          costmdls                      : Maybe (List (Language × CostModel))
           drepThresholds                : Maybe DrepThresholds
           poolThresholds                : Maybe PoolThresholds
           govActionLifetime             : Maybe ℕ
@@ -494,7 +489,7 @@ module PParamsUpdate where
       ; Emax                        = U.Emax ?↗ P.Emax
       ; nopt                        = U.nopt ?↗ P.nopt
       ; collateralPercentage        = U.collateralPercentage ?↗ P.collateralPercentage
-      ; costmdls                    = U.costmdls ?↗ P.costmdls
+      ; costmdlsAssoc               = U.costmdls ?↗ P.costmdlsAssoc
       ; drepThresholds              = U.drepThresholds ?↗ P.drepThresholds
       ; poolThresholds              = U.poolThresholds ?↗ P.poolThresholds
       ; govActionLifetime           = U.govActionLifetime ?↗ P.govActionLifetime

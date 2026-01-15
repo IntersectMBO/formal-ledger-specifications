@@ -59,7 +59,7 @@ createEnv s = record { slot = s ; treasury = 0 ;
                                ; Emax = 18
                                ; nopt = 0 -- don't know
                                ; collateralPercentage = 150
-                               ; costmdls = tt -- fix this
+                               ; costmdlsAssoc = [ (tt , tt) ] -- fix this
                                ; drepThresholds = record -- unknown so setting all to 50%
                                                     { P1 = ½
                                                     ; P2a = ½
