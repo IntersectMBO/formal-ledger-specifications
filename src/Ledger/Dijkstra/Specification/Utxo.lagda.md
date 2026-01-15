@@ -101,15 +101,29 @@ data _⊢_⇀⦇_,UTXOS⦈_ : UTxOEnv → UTxOState → TopLevelTx → UTxOState
 
 ### New in Dijkstra
 
-1. The set of spending inputs must exist in the UTxO _before_ applying the
-transaction (or partially applying any part of it). TODO: Add link to CIP once its finalized.
+The CIP (TODO: add reference) states:
 
+> All inputs of all transactions in a single batch must be contained in the UTxO
+  set before any of the batch transactions are applied. This ensures that
+  operation of scripts is not disrupted, for example, by temporarily duplicating
+  thread tokens, or falsifying access to assets via flash loans. In the future,
+  this may be up for reconsideration.
+
+This is achieved by the following precondition in the `UTXO`.{AgdaDatatype} and
+`SUBUTXO`.{AgdaDatatype} rules:
+
+1. The set of spending inputs must exist in the UTxO _before_ applying the
+transaction (or partially applying any part of it).
 
 ```agda
 data _⊢_⇀⦇_,SUBUTXO⦈_ : UTxOEnv → UTxOState → SubLevelTx → UTxOState → Type where
 
   SUBUTXO :
 
+    ∙ SpendInputsOf tx ≢ ∅
+    ∙ SpendInputsOf tx ⊆ dom (UTxOOf Γ)                           -- (1)
+    ∙ SpendInputsOf tx ⊆ dom (UTxOOf s)
+    ∙ ReferenceInputsOf tx ⊆ dom (UTxOOf s)
       ────────────────────────────────
       Γ ⊢ s ⇀⦇ stx ,SUBUTXO⦈ s'
 
@@ -119,17 +133,13 @@ data _⊢_⇀⦇_,UTXO⦈_ : UTxOEnv → UTxOState → TopLevelTx → UTxOState 
 
     ∙ SpendInputsOf tx ≢ ∅
     ∙ SpendInputsOf tx ⊆ dom (UTxOOf Γ)                           -- (1)
+    ∙ SpendInputsOf tx ⊆ dom (UTxOOf s)
     ∙ ReferenceInputsOf tx ⊆ dom (UTxOOf s)
     ∙ requiredTopLevelGuardsSatisfied tx (SubTransactionsOf tx)   -- (2)
     ∙ Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ s'
       ────────────────────────────────
       Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s'
 ```
-
-**Notes**.
-
-1.  The set of spending inputs must exist in the UTxO *before* applying the
-    transaction (or partially applying any part of it).
 
 2.  The premise `requiredTopLevelGuardsSatisfied tx subTxs` is explicitly a
     phase-1 condition (CIP-0118): every guard credential requested by subtransaction
