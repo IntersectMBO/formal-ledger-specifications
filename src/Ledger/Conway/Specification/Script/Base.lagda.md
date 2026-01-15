@@ -42,6 +42,7 @@ record PlutusStructure : Type₁ where
         ⦃ DecEq-Language           ⦄ : DecEq Language
         ⦃ DecEq-CostModel          ⦄ : DecEq CostModel
         ⦃ DecEq-LangDepView        ⦄ : DecEq LangDepView
+        ⦃ Show-Language            ⦄ : Show Language
         ⦃ Show-CostModel           ⦄ : Show CostModel
 
   field  _≥ᵉ_              : ExUnits → ExUnits → Type
