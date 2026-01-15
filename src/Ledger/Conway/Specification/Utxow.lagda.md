@@ -123,6 +123,7 @@ data _⊢_⇀⦇_,UTXOW⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Typ
          refScriptHashes     = mapˢ hash (refScripts tx utxo)
          neededScriptHashes  = mapPartial (isScriptObj  ∘ proj₂) (credsNeeded utxo txb)
          neededVKeyHashes    = mapPartial (isKeyHashObj ∘ proj₂) (credsNeeded utxo txb)
+                               ∪ reqSignerHashes
          txdatsHashes        = mapˢ hash txdats
          inputsDataHashes    = mapPartial (λ txout →  if txOutToP2Script utxo tx txout
                                                       then txOutToDataHash txout
