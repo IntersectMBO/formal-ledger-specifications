@@ -274,7 +274,8 @@ record TransactionStructure : Type₁ where
 
   txscripts : Tx → UTxO → ℙ Script
   txscripts tx utxo = scripts (tx .wits) ∪ refScripts tx utxo
-    where open Tx; open TxWitnesses
+                      ∪ mapPartial (proj₂ ∘ proj₂ ∘ proj₂) (range (txOuts (tx .body) ˢ))
+    where open Tx; open TxWitnesses; open TxBody
 
   lookupScriptHash : ScriptHash → Tx → UTxO → Maybe Script
   lookupScriptHash sh tx utxo = lookupᵐ? m sh

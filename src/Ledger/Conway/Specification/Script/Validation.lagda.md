@@ -49,7 +49,8 @@ getDatum tx utxo (Spend txin) =
        (inj₁ d) → just d
        (inj₂ h) → lookupᵐ? m h
      where
-       m = setToMap (mapˢ < hash , id > (TxWitnesses.txdats (Tx.wits tx)))
+       m = setToMap (mapˢ < hash , id > (TxWitnesses.txdats (Tx.wits tx)
+                                         ∪ mapPartial (λ { (_ , _ , d , _) → d >>= isInj₁}) (range (TxBody.txOuts (Tx.body tx) ˢ))))
 getDatum tx utxo _ = nothing
 ```
 -->
