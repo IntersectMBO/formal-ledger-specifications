@@ -18,17 +18,21 @@ import MAlonzo.RTE (coe, erased, AgdaAny, addInt, subInt, mulInt,
 import qualified MAlonzo.RTE
 import qualified Data.Text
 import qualified MAlonzo.Code.Agda.Builtin.Equality
+import qualified MAlonzo.Code.Agda.Builtin.Maybe
 import qualified MAlonzo.Code.Agda.Builtin.Sigma
 import qualified MAlonzo.Code.Agda.Primitive
 import qualified MAlonzo.Code.Axiom.Set
 import qualified MAlonzo.Code.Axiom.Set.Map
 import qualified MAlonzo.Code.Class.DecEq.Core
 import qualified MAlonzo.Code.Class.Decidable.Core
+import qualified MAlonzo.Code.Class.ToBool
 import qualified MAlonzo.Code.Data.Irrelevant
 import qualified MAlonzo.Code.Data.List.Base
+import qualified MAlonzo.Code.Data.Product.Base
 import qualified MAlonzo.Code.Data.Rational.Base
 import qualified MAlonzo.Code.Data.Rational.Properties
 import qualified MAlonzo.Code.Data.Sum.Base
+import qualified MAlonzo.Code.Interface.TypeClasses.Hashable
 import qualified MAlonzo.Code.Relation.Nullary.Decidable.Core
 import qualified MAlonzo.Code.Relation.Nullary.Reflects
 import qualified MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory
@@ -173,3 +177,72 @@ du_filter_112 v0
       MAlonzo.Code.Data.List.Base.du_filter_648
       (coe
          MAlonzo.Code.Class.Decidable.Core.du_'191'_'191''185'_80 (coe v0))
+-- Ledger.Prelude.lookupHash
+d_lookupHash_124 ::
+  () ->
+  () ->
+  MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
+  MAlonzo.Code.Interface.TypeClasses.Hashable.T_Hashable_10 ->
+  AgdaAny -> [AgdaAny] -> Maybe AgdaAny
+d_lookupHash_124 ~v0 ~v1 v2 v3 v4 v5
+  = du_lookupHash_124 v2 v3 v4 v5
+du_lookupHash_124 ::
+  MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
+  MAlonzo.Code.Interface.TypeClasses.Hashable.T_Hashable_10 ->
+  AgdaAny -> [AgdaAny] -> Maybe AgdaAny
+du_lookupHash_124 v0 v1 v2 v3
+  = coe
+      MAlonzo.Code.Class.ToBool.du_if_then_else__38
+      (coe MAlonzo.Code.Class.ToBool.du_ToBool'45''8263'_106) erased
+      (coe
+         MAlonzo.Code.Axiom.Set.du_Dec'45''8712'_1720
+         (coe
+            MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8)
+         (coe v0) (coe v2)
+         (coe
+            MAlonzo.Code.Axiom.Set.du_map_426
+            (MAlonzo.Code.Axiom.Set.d_th_1516
+               (coe
+                  MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+            (\ v4 -> MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe v4))
+            (coe
+               MAlonzo.Code.Axiom.Set.Map.du__'738'_570
+               (coe du_m_134 (coe v0) (coe v1) (coe v3)))))
+      (coe
+         (\ v4 ->
+            coe
+              MAlonzo.Code.Agda.Builtin.Maybe.C_just_16
+              (coe
+                 MAlonzo.Code.Axiom.Set.Map.du_lookup'7504'_2026
+                 (coe
+                    MAlonzo.Code.Axiom.Set.d_th_1516
+                    (coe
+                       MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                 (coe du_m_134 (coe v0) (coe v1) (coe v3)) (coe v2) (coe v4))))
+      (coe (\ v4 -> coe MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18))
+-- Ledger.Prelude._.m
+d_m_134 ::
+  () ->
+  () ->
+  MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
+  MAlonzo.Code.Interface.TypeClasses.Hashable.T_Hashable_10 ->
+  AgdaAny -> [AgdaAny] -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_m_134 ~v0 ~v1 v2 v3 ~v4 v5 = du_m_134 v2 v3 v5
+du_m_134 ::
+  MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
+  MAlonzo.Code.Interface.TypeClasses.Hashable.T_Hashable_10 ->
+  [AgdaAny] -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+du_m_134 v0 v1 v2
+  = coe
+      du_setToMap_44 (coe v0)
+      (coe
+         MAlonzo.Code.Axiom.Set.du_map_426
+         (MAlonzo.Code.Axiom.Set.d_th_1516
+            (coe
+               MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+         (coe
+            MAlonzo.Code.Data.Product.Base.du_'60'_'44'_'62'_112
+            (coe
+               MAlonzo.Code.Interface.TypeClasses.Hashable.d_hash_18 (coe v1))
+            (coe (\ v3 -> v3)))
+         v2)

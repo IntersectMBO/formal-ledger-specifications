@@ -231,7 +231,7 @@ d_HasCast'45'StakeDistrs_106
       MAlonzo.Code.Ledger.Conway.Specification.Ratify.du_HasCast'45'StakeDistrs_1870
 -- Ledger.Conway.Foreign.HSLedger.Ratify._.HasDReps-RatifyEnv
 d_HasDReps'45'RatifyEnv_108 ::
-  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_HasDReps_1232
+  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_HasDReps_1234
 d_HasDReps'45'RatifyEnv_108
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Ratify.du_HasDReps'45'RatifyEnv_1866
@@ -978,7 +978,7 @@ d_HasCast'45'StakeDistrs_282
       MAlonzo.Code.Ledger.Conway.Specification.Ratify.du_HasCast'45'StakeDistrs_1870
 -- Ledger.Conway.Foreign.HSLedger.Ratify.Ratify.HasDReps-RatifyEnv
 d_HasDReps'45'RatifyEnv_284 ::
-  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_HasDReps_1232
+  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_HasDReps_1234
 d_HasDReps'45'RatifyEnv_284
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Ratify.du_HasDReps'45'RatifyEnv_1866

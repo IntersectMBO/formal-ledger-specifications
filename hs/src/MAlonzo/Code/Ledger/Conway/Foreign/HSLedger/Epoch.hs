@@ -461,13 +461,13 @@ d_HasCertState'45'NewEpochState_154
       MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_HasCertState'45'NewEpochState_3306
 -- Ledger.Conway.Foreign.HSLedger.Epoch.EpochSpec._.HasDReps-EpochState
 d_HasDReps'45'EpochState_156 ::
-  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_HasDReps_1232
+  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_HasDReps_1234
 d_HasDReps'45'EpochState_156
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_HasDReps'45'EpochState_3210
 -- Ledger.Conway.Foreign.HSLedger.Epoch.EpochSpec._.HasDReps-NewEpochState
 d_HasDReps'45'NewEpochState_158 ::
-  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_HasDReps_1232
+  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_HasDReps_1234
 d_HasDReps'45'NewEpochState_158
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_HasDReps'45'NewEpochState_3308
