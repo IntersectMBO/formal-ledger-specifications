@@ -311,102 +311,134 @@ consumedSub s txSub = balance (UTxOOf s ∣ SpendInputsOf txSub)
 producedSub : SubLevelTx → Value
 producedSub txSub = balance (outs txSub) + inject (DonationsOf txSub)
 
-module _ (Γ : UTxOEnv) (s : UTxOState) where
+module Accounting (Γ : UTxOEnv) (s : UTxOState) where
+  open PParams (PParamsOf Γ)
+
+  record Acc : Type where
+    constructor mkAcc
+    field
+      consumed  : Value
+      produced  : Value
+      deposits  : Deposits
+
+  open Acc
+  depΔ : ∀ {ℓ} → Tx ℓ → Deposits → ℤ
+  depΔ tx deps = depositsChange (PParamsOf Γ) tx deps
+
+  depositRefunds : ∀ {ℓ} → Tx ℓ → Deposits → Coin
+  depositRefunds tx deps = negPart (depΔ tx deps)
+
+  newDeposits : ∀ {ℓ} → Tx ℓ → Deposits → Coin
+  newDeposits tx deps = posPart (depΔ tx deps)
+
+  -- Generic accounting, parameterized by whether fees exist at this level.
+  accTx : ∀ {ℓ} → Tx ℓ → Coin → Deposits → Acc
+  accTx tx fee deps = mkAcc c p (updateDeposits (PParamsOf Γ) tx deps)
+    where
+    c p : Value
+    c = balance (UTxOOf s ∣ SpendInputsOf tx)
+        + MintedValueOf tx + inject (depositRefunds tx deps) + inject (getCoin (WithdrawalsOf tx))
+    p = balance (outs tx) + inject fee + inject (newDeposits tx deps) + inject (DonationsOf tx)
+
+  accTop : TopLevelTx → Deposits → Acc
+  accTop txTop deps = accTx txTop (TxFeesOf txTop) deps
+
+  accSub : SubLevelTx → Deposits → Acc
+  accSub txSub deps = accTx txSub 0 deps
+
+  -- Fold over the batch in-order: top then subs.
+  record BatchAcc : Type where
+    constructor ⟦_,_,_⟧ᵇᵃ
+    field
+      batchConsumed : Value
+      batchProduced : Value
+      depositsFinal : Deposits
+
+  batchAcc : TopLevelTx → BatchAcc
+  batchAcc txTop = bTot
+    where
+    acc : Tx ℓ → Deposits → Acc
+    acc tx deps = accTx tx 0 deps  -- default fee=0, override for top below
+
+    step : Value × Value × Deposits → Tx ℓ → Value × Value × Deposits
+    step (cSum , pSum , deps) tx = let α  = acc tx deps in
+      cSum + consumed α , pSum + produced α , deposits α
+
+    -- do top-level with fee first
+    init : Value × Value × Deposits
+    init  = let α₀ = accTop txTop (DepositsOf s) in
+      consumed α₀ , produced α₀ , deposits α₀
+
+    bTot : BatchAcc
+    bTot with foldl step init (SubTransactionsOf txTop)
+    ... | (c , p , deps) = ⟦ c , p , deps ⟧ᵇᵃ
+
+
+
+module Phase2 (Γ : UTxOEnv) (s : UTxOState) where
 
   getP2ScriptsWithContextOf : {ℓ : TxLevel} → Tx ℓ → List (P2Script × List Data × ExUnits × CostModel)
-  getP2ScriptsWithContextOf {ℓ} tx = collectP2ScriptsWithContext {ℓ = ℓ} (PParamsOf Γ) tx (UTxOOf Γ) (utxoRefView s)
-
-  module _ (txTop : TopLevelTx) where
-
-    Δdeposits : ℤ
-    Δdeposits = depositsChange (PParamsOf Γ) txTop (DepositsOf s)
-
-    depositRefunds : Coin
-    depositRefunds  = negPart Δdeposits
-
-    newDeposits : Coin
-    newDeposits = posPart Δdeposits
-
-    consumed : Value
-    consumed =  balance (UTxOOf s ∣ SpendInputsOf txTop)
-                + MintedValueOf txTop
-                + inject depositRefunds
-                + inject (getCoin (WithdrawalsOf txTop))
-
-    produced : Value
-    produced =  balance (outs txTop)
-                + inject (TxFeesOf txTop)
-                + inject newDeposits
-                + inject (DonationsOf txTop)
-
-    batchP2Inputs : List (P2Script × List Data × ExUnits × CostModel)
-    batchP2Inputs = getP2ScriptsWithContextOf txTop ++ concatMap getP2ScriptsWithContextOf (SubTransactionsOf txTop)
-
-    batchScripts✓ : Bool
-    batchScripts✓ = evalP2Scripts batchP2Inputs
-
-    batchProduced : Value
-    batchProduced = produced + sumᵛ (map producedSub (SubTransactionsOf txTop))
-
-    batchConsumed : Value
-    batchConsumed = consumed + sumᵛ (map (consumedSub s) (SubTransactionsOf txTop))
-
-    batchPOV : Type
-    batchPOV = batchConsumed ≡ batchProduced
-
-    -- Total Ada minted across the entire batch (top-level tx + all sub-txs).
-    -- This must equal 0 to prevent Ada forgery and maintain the total Ada supply invariant.
-    -- Analogous to Conway's `coin mint ≡ 0` constraint, but generalized to batches.
-    batchMintedCoin : Coin
-    batchMintedCoin = coin (MintedValueOf txTop) + sum (map (λ txSub → coin (MintedValueOf txSub)) (SubTransactionsOf txTop))
-
-
-
-module Batch (Γ : UTxOEnv) (s : UTxOState) (txTop : TopLevelTx) where
+  getP2ScriptsWithContextOf {ℓ} tx =
+    collectP2ScriptsWithContext {ℓ = ℓ} (PParamsOf Γ) tx (UTxOOf Γ) (utxoRefView s)
 
   -- union a list of sets
   concatMapˡ : {A B : Type} → (A → ℙ B) → List A → ℙ B
   concatMapˡ f as = proj₁ $ unions (fromList (map f as))
   -- (maybe move this to agda-sets or src-lib-exts)
 
-  batchSpendInputs : ℙ TxIn
-  batchSpendInputs =  SpendInputsOf txTop ∪ concatMapˡ SpendInputsOf (SubTransactionsOf txTop)
+  module _ (txTop : TopLevelTx) where
 
-  -- union UTxO maps for outputs.
-  batchOuts : UTxO
-  batchOuts = outs txTop ∪ˡ foldr (λ sub acc → outs sub ∪ˡ acc) ∅ (SubTransactionsOf txTop)
+    P2ScriptsWithContext : List (P2Script × List Data × ExUnits × CostModel)
+    P2ScriptsWithContext = getP2ScriptsWithContextOf txTop
+                                 ++ concatMap getP2ScriptsWithContextOf (SubTransactionsOf txTop)
 
-  utxo-scripts✓ : UTxO
-  utxo-scripts✓ =  (UTxOOf s ∣ batchSpendInputs ᶜ)  -- remove ALL batch spend inputs
-                   ∪ˡ batchOuts                     -- add ALL outputs (top + subs)
+    batchScripts✓ : Bool
+    batchScripts✓ = evalP2Scripts P2ScriptsWithContext
 
-  deposits-scripts✓ : Deposits
-  deposits-scripts✓ = foldr  (λ sub deps → updateDeposits (PParamsOf Γ) sub deps)
-                             (updateDeposits (PParamsOf Γ) txTop (DepositsOf s))
-                             (SubTransactionsOf txTop)
+    batchSpendInputs : ℙ TxIn
+    batchSpendInputs = SpendInputsOf txTop ∪ concatMapˡ SpendInputsOf (SubTransactionsOf txTop)
 
-  donations-scripts✓ : Donations
-  donations-scripts✓ =  DonationsOf s + DonationsOf txTop
-                            + sum (map DonationsOf (SubTransactionsOf txTop))
+    -- union UTxO maps for outputs.
+    batchOuts : UTxO
+    batchOuts = outs txTop ∪ˡ foldr (λ sub acc → outs sub ∪ˡ acc) ∅ (SubTransactionsOf txTop)
 
-  fees-scripts✓ : Fees
-  fees-scripts✓ = FeesOf s + TxFeesOf txTop
+    utxo-scripts✓ : UTxO
+    utxo-scripts✓ = (UTxOOf s ∣ batchSpendInputs ᶜ) ∪ˡ batchOuts
+                    -- remove ALL batch spend inputs add ALL outputs (top + subs)
 
-  s'-scripts✓ : UTxOState
-  s'-scripts✓ = ⟦ utxo-scripts✓ , fees-scripts✓ , deposits-scripts✓ , donations-scripts✓ ⟧
+    deposits-scripts✓ : Deposits
+    deposits-scripts✓ = foldr  (λ sub deps → updateDeposits (PParamsOf Γ) sub deps)
+                               (updateDeposits (PParamsOf Γ) txTop (DepositsOf s))
+                               (SubTransactionsOf txTop)
 
-  collateralCoin : Coin
-  collateralCoin = coin (balance (UTxOOf s ∣ CollateralInputsOf txTop))
+    donations-scripts✓ : Donations
+    donations-scripts✓ = DonationsOf s + DonationsOf txTop
+                         + sum (map DonationsOf (SubTransactionsOf txTop))
 
-  utxo-scripts× : UTxO
-  utxo-scripts× = UTxOOf s ∣ (CollateralInputsOf txTop) ᶜ
+    fees-scripts✓ : Fees
+    fees-scripts✓ = FeesOf s + TxFeesOf txTop
 
-  -- assuming for now that collateral is collected by adding it to fees
-  fees-scripts× : Fees
-  fees-scripts× = FeesOf s + collateralCoin
+    s'-scripts✓ : UTxOState
+    s'-scripts✓ = ⟦ utxo-scripts✓ , fees-scripts✓ , deposits-scripts✓ , donations-scripts✓ ⟧
 
-  s'-scripts× : UTxOState
-  s'-scripts× = ⟦ utxo-scripts× , fees-scripts× , DepositsOf s , DonationsOf s ⟧
+    collateralCoin : Coin
+    collateralCoin = coin (balance (UTxOOf s ∣ CollateralInputsOf txTop))
+
+    utxo-scripts× : UTxO
+    utxo-scripts× = UTxOOf s ∣ (CollateralInputsOf txTop) ᶜ
+
+    -- assuming for now that collateral is collected by adding it to fees
+    fees-scripts× : Fees
+    fees-scripts× = FeesOf s + collateralCoin
+
+    s'-scripts× : UTxOState
+    s'-scripts× = ⟦ utxo-scripts× , fees-scripts× , DepositsOf s , DonationsOf s ⟧
+
+    -- Total Ada minted across the entire batch (top-level tx + all sub-txs).
+    -- This must equal 0 to prevent Ada forgery and maintain the total Ada supply invariant.
+    -- Analogous to Conway's `coin mint ≡ 0` constraint, but generalized to batches.
+    batchMintedCoin : Coin
+    batchMintedCoin = coin (MintedValueOf txTop) + sum (map (λ txSub → coin (MintedValueOf txSub)) (SubTransactionsOf txTop))
 ```
 
 
@@ -428,24 +460,19 @@ data _⊢_⇀⦇_,UTXOS⦈_ : UTxOEnv → UTxOState → TopLevelTx → UTxOState
 
   UTXO-scripts✓ :
 
-    let open Batch Γ s tx in
+    let open Phase2 Γ s in
 
-    ∙ Tx.isValid tx ≡ batchScripts✓ Γ s tx
-    ∙ batchScripts✓ Γ s tx ≡ true
-    ∙ batchPOV Γ s tx
-    ∙ batchMintedCoin Γ s tx ≡ 0
+    ∙ batchScripts✓ tx ≡ true
       ────────────────────────────────
-      Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ s'-scripts✓
+      Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ (s'-scripts✓ tx)
 
   UTXO-scripts× :
 
-    let open Batch Γ s tx in
+    let open Phase2 Γ s in
 
-    ∙ Tx.isValid tx ≡ batchScripts✓ Γ s tx
-    ∙ batchScripts✓ Γ s tx ≡ false
-    ∙ collateralCheck (PParamsOf Γ) tx (UTxOOf s)
+    ∙ batchScripts✓ tx ≡ false
       ────────────────────────────────
-      Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ s'-scripts×
+      Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ (s'-scripts× tx)
 ```
 
 ## The <span class="AgdaDatatype">UTXO</span> Rule
@@ -480,11 +507,26 @@ data _⊢_⇀⦇_,UTXO⦈_ : UTxOEnv → UTxOState → TopLevelTx → UTxOState 
 
   UTXO :
 
+    let  open Phase2 Γ s
+         open Accounting Γ s
+         open BatchAcc (batchAcc tx)
+         ok = batchScripts✓ tx
+    in
+
     ∙ SpendInputsOf tx ≢ ∅
     ∙ SpendInputsOf tx ⊆ dom (UTxOOf Γ)                           -- (1)
     ∙ SpendInputsOf tx ⊆ dom (UTxOOf s)
     ∙ ReferenceInputsOf tx ⊆ dom (UTxOOf s)
     ∙ requiredTopLevelGuardsSatisfied tx (SubTransactionsOf tx)   -- (2)
+
+    ∙ Tx.isValid tx ≡ ok
+
+    -- If scripts succeed, enforce batch accounting invariants
+    ∙ ok ≡ true → batchConsumed ≡ batchProduced × batchMintedCoin tx ≡ 0
+
+    -- If scripts fail, enforce collateral well-formedness
+    ∙ ok ≡ false → collateralCheck (PParamsOf Γ) tx (UTxOOf s)
+
     ∙ Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ s'
       ────────────────────────────────
       Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s'
