@@ -42,7 +42,7 @@ record UTxOEnv : Type where
     treasury         : Treasury
     utxo₀            : UTxO
     isTopLevelValid  : Bool
-    globalScripts    : ℙ Script
+    globalScripts    : ℙ P1Script × ℙ P2Script
     globalData       : DataHash ⇀ Datum
 ```
 

@@ -255,7 +255,7 @@ Of particular note in the Dijkstra era are
       field
         vKeySigs     : VKey ⇀ Sig
         scripts      : ℙ Script
-        txData       : DataHash ⇀ Datum
+        txData       : ℙ Datum
         txRedeemers  : RedeemerPtr txLevel ⇀ Redeemer × ExUnits
 
       scriptsP1 : ℙ P1Script
@@ -368,6 +368,10 @@ could be either of them.
     field ScriptsOf : A → ℙ Script
   open HasScripts ⦃...⦄ public
 
+  record HasTxOuts {a} (A : Type a) : Type a where
+    field TxOutsOf : A → Ix ⇀ TxOut
+  open HasTxOuts ⦃...⦄ public
+
   instance
     HasTxBody-Tx : HasTxBody (Tx txLevel)
     HasTxBody-Tx .TxBodyOf = Tx.txBody
@@ -464,7 +468,7 @@ could be either of them.
     HasCoin-TxOut .getCoin = coin ∘ proj₁ ∘ proj₂
 
     HasData-TxWitnesses : HasData (TxWitnesses txLevel)
-    HasData-TxWitnesses .DataOf = range ∘ TxWitnesses.txData
+    HasData-TxWitnesses .DataOf = TxWitnesses.txData
 
     HasData-Tx : HasData (Tx txLevel)
     HasData-Tx .DataOf = DataOf ∘ TxWitnessesOf
@@ -480,6 +484,12 @@ could be either of them.
 
     HasScripts-Tx : HasScripts (Tx txLevel)
     HasScripts-Tx .ScriptsOf = ScriptsOf ∘ TxWitnessesOf
+
+    HasTxOuts-TxBody : HasTxOuts (TxBody txLevel)
+    HasTxOuts-TxBody .TxOutsOf = TxBody.txOuts
+
+    HasTxOuts-Tx : HasTxOuts (Tx txLevel)
+    HasTxOuts-Tx .TxOutsOf = TxOutsOf ∘ TxBodyOf
 ```
 -->
 
@@ -529,29 +539,38 @@ UTxO environment and state at this point.)
   txOutToScript : TxOut → Maybe Script
   txOutToScript (_ , _ , _ , s) = s
 
-  refScripts : Tx txLevel → UTxO → UTxO → List Script
-  refScripts tx utxo₀ utxoRef =
-    mapMaybe (proj₂ ∘ proj₂ ∘ proj₂)
-      ( setToList (range (utxo₀ ∣ SpendInputsOf tx))
-        ++ setToList (range (utxoRef ∣ ReferenceInputsOf tx)) )
+  getTxScripts : UTxO → Tx txLevel → ℙ Script
+  getTxScripts utxo tx =
+    ScriptsOf tx                              -- (1) scripts from witnesses
+    ∪ mapPartial txOutToScript
+       ( range (utxo ∣ SpendInputsOf tx)      -- (2) scripts from spending inputs
+       ∪ range (utxo ∣ ReferenceInputsOf tx)  -- (3) scripts from reference inputs
+       ∪ range (TxOutsOf tx ˢ))                -- (4) scripts from transaction outputs
 
-  txscripts : Tx txLevel → UTxO → UTxO → ℙ Script
-  txscripts tx utxo₀ utxoRef = ScriptsOf tx ∪ fromList (refScripts tx utxo₀ utxoRef)
+  getAllScripts : TopLevelTx → UTxO → ℙ P1Script × ℙ P2Script
+  getAllScripts tx utxo = mapPartial toP1Script allScripts , mapPartial toP2Script allScripts
+    where
+      allScripts : ℙ Script
+      allScripts = getTxScripts utxo tx                                               -- (1) scripts from top-level transaction
+                   ∪ concatMapˢ (getTxScripts utxo) (fromList (SubTransactionsOf tx))  -- (2) scripts from subtransactions
 
   lookupScriptHash : ScriptHash → Tx txLevel → UTxO → UTxO → Maybe Script
-  lookupScriptHash sh tx utxoSpend₀ utxoRefView = lookupHash sh (txscripts tx utxoSpend₀ utxoRefView)
+  lookupScriptHash sh tx utxoSpend₀ utxoRefView = lookupHash sh (getTxScripts utxoRefView tx)
 
-  getSubTxScripts : SubLevelTx → ℙ (TxId × ScriptHash)
-  getSubTxScripts subtx = mapˢ (λ hash → (TxIdOf subtx , hash)) (ScriptHashes subtx)
-    where
-    ScriptHashes : Tx TxLevelSub → ℙ ScriptHash
-    ScriptHashes tx = mapPartial (isScriptObj ∘ proj₁) (TopLevelGuardsOf tx)
-                      -- `txRequiredTopLevelGuards` has key creds too, but only
-                      -- `ScriptObj hash` contributes a phase-2 script hash.
+  txOutToDatum : TxOut → Maybe Datum
+  txOutToDatum (_ , _ , d , _) = d >>= isInj₁
 
-  getTxScripts : {ℓ : TxLevel} → Tx ℓ → ℙ (TxId × ScriptHash)
-  getTxScripts {TxLevelSub} = getSubTxScripts
-  getTxScripts {TxLevelTop} = concatMapˢ getSubTxScripts ∘ fromList ∘ SubTransactionsOf
+  getTxData : UTxO → Tx txLevel → ℙ Datum
+  getTxData utxo tx =
+    DataOf tx                                 -- (1) data from witnesses
+    ∪ mapPartial txOutToDatum
+       ( range (utxo ∣ SpendInputsOf tx)      -- (2) data from spending inputs
+       ∪ range (utxo ∣ ReferenceInputsOf tx)  -- (3) data from reference inputs
+       ∪ range (TxOutsOf tx ˢ))                -- (4) data from transaction outputs
+
+  getAllData : TopLevelTx → UTxO → ℙ Datum
+  getAllData tx utxo = getTxData utxo tx
+                       ∪ concatMapˢ (getTxData utxo) (fromList (SubTransactionsOf tx))
 ```
 
 CIP-0118 models "required top-level guards" as a list of requirements coming

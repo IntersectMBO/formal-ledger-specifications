@@ -131,34 +131,32 @@ credsNeeded {TxLevelSub} utxo txb = credsNeededMinusCollateral txb
 txOutToDataHash : TxOut → Maybe DataHash
 txOutToDataHash (_ , _ , d , _) = d >>= isInj₂
 
-txOutToP2Script : UTxO → UTxO → (Tx ℓ) → TxOut → Maybe P2Script
-txOutToP2Script utxo₀ utxoRefView tx (a , _) =
+txOutToP2Script : ℙ Script → TxOut → Maybe P2Script
+txOutToP2Script allScripts (a , _) =
   do sh ← isScriptObj (payCred a)
-     s  ← lookupScriptHash sh tx utxo₀ utxoRefView
+     s  ← lookupHash sh allScripts
      toP2Script s
 
 opaque
   collectP2ScriptsWithContext
-    :  {ℓ : TxLevel} → PParams → (Tx ℓ) → UTxO → UTxO
+    :  {ℓ : TxLevel} → PParams → Tx ℓ → UTxO → ℙ Script
        → List (P2Script × List Data × ExUnits × CostModel)
-  collectP2ScriptsWithContext {ℓ} pp tx utxoSpend₀ utxoRefView
+  collectP2ScriptsWithContext {ℓ} pp tx utxo allScripts
     = setToList  $ mapPartial ( λ (sp , c) →  if isScriptObj c
                                               then (λ {sh} → toScriptInput sp sh)
                                               else nothing )
-                 $ credsNeeded utxoSpend₀ (TxBodyOf tx)
+                 $ credsNeeded utxo (TxBodyOf tx)
       -- use initial utxo snapshot ^^here^^ to inspect `txIns` (collateral spend side)
     where
       toScriptInput
         : ScriptPurpose → ScriptHash
         → Maybe (P2Script × List Data × ExUnits × CostModel)
       toScriptInput sp sh =
-        do s ← lookupScriptHash sh tx utxoSpend₀ utxoRefView
+        do s ← lookupHash sh allScripts
            p2s ← toP2Script s
            (rdmr , exunits) ← indexedRdmrs tx sp
-           let data'  = maybe [_] [] (getDatum tx utxoSpend₀ sp)
-                        ++ rdmr ∷ [ valContext (txInfoForPurpose ℓ utxoSpend₀ tx sp) sp ]
-                           --  use initial utxo snapshot ^^here^^ so spending
-                           --  inputs/realized inputs don't see prefix outputs
+           let data'  = maybe [_] [] (getDatum tx utxo sp)
+                        ++ rdmr ∷ [ valContext (txInfoForPurpose ℓ utxo tx sp) sp ]
            just (p2s , data' , exunits , PParams.costmdls pp)
 
 evalP2Scripts : List (P2Script × List Data × ExUnits × CostModel) → Bool
