@@ -77,12 +77,12 @@
   <a id="2246" class="Keyword">field</a>
 
 
-    <a id="TransactionStructure.govParams"></a><a id="2258" href="Ledger.Dijkstra.Specification.Transaction.html#2258" class="Field">govParams</a>              <a id="2281" class="Symbol">:</a> <a id="2283" href="Ledger.Conway.Specification.PParams.html#14214" class="Record">GovParams</a>
+    <a id="TransactionStructure.govParams"></a><a id="2258" href="Ledger.Dijkstra.Specification.Transaction.html#2258" class="Field">govParams</a>              <a id="2281" class="Symbol">:</a> <a id="2283" href="Ledger.Conway.Specification.PParams.html#14303" class="Record">GovParams</a>
     <a id="TransactionStructure.tokenAlgebra"></a><a id="2297" href="Ledger.Dijkstra.Specification.Transaction.html#2297" class="Field">tokenAlgebra</a>           <a id="2320" class="Symbol">:</a> <a id="2322" href="Ledger.Conway.Specification.TokenAlgebra.Base.html#478" class="Record">TokenAlgebra</a>
     <a id="TransactionStructure.txidBytes"></a><a id="2339" href="Ledger.Dijkstra.Specification.Transaction.html#2339" class="Field">txidBytes</a>              <a id="2362" class="Symbol">:</a> <a id="2364" href="Ledger.Dijkstra.Specification.Transaction.html#1329" class="Field">TxId</a> <a id="2369" class="Symbol">→</a> <a id="2371" href="Ledger.Core.Specification.Crypto.html#659" class="Function">Ser</a>
 
 
-  <a id="2379" class="Keyword">open</a> <a id="2384" href="Ledger.Conway.Specification.PParams.html#14214" class="Module">GovParams</a> <a id="2394" href="Ledger.Dijkstra.Specification.Transaction.html#2258" class="Field">govParams</a> <a id="2404" class="Keyword">public</a>
+  <a id="2379" class="Keyword">open</a> <a id="2384" href="Ledger.Conway.Specification.PParams.html#14303" class="Module">GovParams</a> <a id="2394" href="Ledger.Dijkstra.Specification.Transaction.html#2258" class="Field">govParams</a> <a id="2404" class="Keyword">public</a>
   <a id="2413" class="Keyword">open</a> <a id="2418" href="Ledger.Conway.Specification.TokenAlgebra.Base.html#478" class="Module">TokenAlgebra</a> <a id="2431" href="Ledger.Dijkstra.Specification.Transaction.html#2297" class="Field">tokenAlgebra</a> <a id="2444" class="Keyword">public</a>
 
 
@@ -117,7 +117,7 @@
   <a id="3176" href="Ledger.Dijkstra.Specification.Transaction.html#3145" class="Function">RedeemerPtr</a> <a id="3188" href="Ledger.Dijkstra.Specification.Transaction.html#3188" class="Bound">txLevel</a>  <a id="3197" class="Symbol">=</a> <a id="3199" href="Ledger.Dijkstra.Specification.Transaction.html#1088" class="Datatype">Tag</a> <a id="3203" href="Ledger.Dijkstra.Specification.Transaction.html#3188" class="Bound">txLevel</a> <a id="3211" href="Data.Product.Base.html#1618" class="Function Operator">×</a> <a id="3213" href="Ledger.Dijkstra.Specification.Transaction.html#1326" class="Field">Ix</a>
 
   <a id="TransactionStructure.ProposedPPUpdates"></a><a id="3219" href="Ledger.Dijkstra.Specification.Transaction.html#3219" class="Function">ProposedPPUpdates</a> <a id="3237" class="Symbol">:</a> <a id="3239" href="Agda.Primitive.html#388" class="Primitive">Type</a>
-  <a id="3246" href="Ledger.Dijkstra.Specification.Transaction.html#3219" class="Function">ProposedPPUpdates</a> <a id="3264" class="Symbol">=</a> <a id="3266" href="Ledger.Core.Specification.Crypto.html#1386" class="Function">KeyHash</a> <a id="3274" href="abstract-set-theory.FiniteSetTheory.html#633" class="Function Operator">⇀</a> <a id="3276" href="Ledger.Conway.Specification.PParams.html#14312" class="Function">PParamsUpdate</a>
+  <a id="3246" href="Ledger.Dijkstra.Specification.Transaction.html#3219" class="Function">ProposedPPUpdates</a> <a id="3264" class="Symbol">=</a> <a id="3266" href="Ledger.Core.Specification.Crypto.html#1386" class="Function">KeyHash</a> <a id="3274" href="abstract-set-theory.FiniteSetTheory.html#633" class="Function Operator">⇀</a> <a id="3276" href="Ledger.Conway.Specification.PParams.html#14401" class="Function">PParamsUpdate</a>
 
   <a id="TransactionStructure.Update"></a><a id="3293" href="Ledger.Dijkstra.Specification.Transaction.html#3293" class="Function">Update</a> <a id="3300" class="Symbol">:</a> <a id="3302" href="Agda.Primitive.html#388" class="Primitive">Type</a>
   <a id="3309" href="Ledger.Dijkstra.Specification.Transaction.html#3293" class="Function">Update</a> <a id="3316" class="Symbol">=</a> <a id="3318" href="Ledger.Dijkstra.Specification.Transaction.html#3219" class="Function">ProposedPPUpdates</a> <a id="3336" href="Data.Product.Base.html#1618" class="Function Operator">×</a> <a id="3338" href="Ledger.Core.Specification.Epoch.html#646" class="Function">Epoch</a>
