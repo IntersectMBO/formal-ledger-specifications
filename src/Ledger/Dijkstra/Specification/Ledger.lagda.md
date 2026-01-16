@@ -166,17 +166,6 @@ txgov txb = map inj₂ txGovProposals ++ map inj₁ txGovVotes
 allColdCreds : GovState → EnactState → ℙ Credential
 allColdCreds govSt es =
   ccCreds (es .cc) ∪ concatMapˢ (λ (_ , st) → proposedCC (GovActionOf st)) (fromList govSt)
-
-getGlobalScripts : TopLevelTx → UTxO → ℙ P1Script × ℙ P2Script
-getGlobalScripts tx utxo = mapPartial toP1Script allScripts , mapPartial toP2Script allScripts
-  where
-    allScripts : ℙ Script
-    allScripts = txScripts utxo tx                                               -- (1) scripts from top-level transaction
-                 ∪ concatMapˢ (txScripts utxo) (fromList (SubTransactionsOf tx))  -- (2) scripts from subtransactions
-
-getGlobalData : TopLevelTx → UTxO → ℙ Datum
-getGlobalData tx utxo = txData utxo tx
-                        ∪ concatMapˢ (txData utxo) (fromList (SubTransactionsOf tx))
 ```
 
 -- ## <span class="AgdaDatatype">LEDGER</span> Transition System
@@ -256,10 +245,10 @@ data _⊢_⇀⦇_,LEDGER⦈_ : LedgerEnv → LState → TopLevelTx → LState �
          utxo₀ = UTxOOf utxoState
 
          globalScripts : ℙ P1Script × ℙ P2Script
-         globalScripts = getGlobalScripts tx utxo₀
+         globalScripts = getAllScripts tx utxo₀
 
          globalData : DataHash ⇀ Datum
-         globalData = setToMap (mapˢ < hash , id > (getGlobalData tx utxo₀))
+         globalData = setToMap (mapˢ < hash , id > (getAllData tx utxo₀))
     in
       ∙ isValid tx ≡ true
       ∙ ⟦ slot , ppolicy , pp , enactState , treasury , utxo₀ , isValid tx , globalScripts , globalData ⟧ ⊢ ⟦ utxoState , govState , certState ⟧ ⇀⦇ txSubTransactions ,SUBLEDGERS⦈ ⟦ utxoState' , govState' , certState' ⟧
@@ -281,10 +270,10 @@ data _⊢_⇀⦇_,LEDGER⦈_ : LedgerEnv → LState → TopLevelTx → LState �
          utxo₀ = UTxOOf utxoState
 
          globalScripts : ℙ P1Script × ℙ P2Script
-         globalScripts = getGlobalScripts tx utxo₀
+         globalScripts = getAllScripts tx utxo₀
 
          globalData : DataHash ⇀ Datum
-         globalData = setToMap (mapˢ < hash , id > (getGlobalData tx utxo₀))
+         globalData = setToMap (mapˢ < hash , id > (getAllData tx utxo₀))
     in
       ∙ isValid tx ≡ false
       ∙ ⟦ slot , ppolicy , pp , enactState , treasury , utxo₀ , isValid tx , globalScripts , globalData ⟧ ⊢ ⟦ utxoState , govState , certState ⟧ ⇀⦇ txSubTransactions  ,SUBLEDGERS⦈ ⟦ utxoState , govState , certState ⟧
