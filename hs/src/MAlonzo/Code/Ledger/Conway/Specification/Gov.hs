@@ -464,7 +464,7 @@ du_DecEq'45'PParamGroup_1084 ::
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 du_DecEq'45'PParamGroup_1084
   = coe
-      MAlonzo.Code.Ledger.Conway.Specification.PParams.du_DecEq'45'PParamGroup_584
+      MAlonzo.Code.Ledger.Conway.Specification.PParams.du_DecEq'45'PParamGroup_578
 -- Ledger.Conway.Specification.Gov._.Epoch
 d_Epoch_1120 ::
   MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.T_GovStructure_10 ->
@@ -3150,10 +3150,10 @@ d_actionWellFormed'63'_2440 v0 v1
                           (coe
                              MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.du_DecEq'45'ℙ_1244
                              (coe
-                                MAlonzo.Code.Ledger.Conway.Specification.PParams.du_DecEq'45'PParamGroup_584))
+                                MAlonzo.Code.Ledger.Conway.Specification.PParams.du_DecEq'45'PParamGroup_578))
                           (coe
-                             MAlonzo.Code.Ledger.Conway.Specification.PParams.d_updateGroups_1500
-                             (MAlonzo.Code.Ledger.Conway.Specification.PParams.d_ppUpd_1534
+                             MAlonzo.Code.Ledger.Conway.Specification.PParams.d_updateGroups_1492
+                             (MAlonzo.Code.Ledger.Conway.Specification.PParams.d_ppUpd_1526
                                 (coe
                                    MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.d_govParams_1168
                                    (coe v0)))
@@ -3166,8 +3166,8 @@ d_actionWellFormed'63'_2440 v0 v1
                                    MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))))
                        (coe MAlonzo.Code.Class.Decidable.Instances.d_Dec'45''8869'_8))
                     (coe
-                       MAlonzo.Code.Ledger.Conway.Specification.PParams.d_ppWF'63'_1506
-                       (MAlonzo.Code.Ledger.Conway.Specification.PParams.d_ppUpd_1534
+                       MAlonzo.Code.Ledger.Conway.Specification.PParams.d_ppWF'63'_1498
+                       (MAlonzo.Code.Ledger.Conway.Specification.PParams.d_ppUpd_1526
                           (coe
                              MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.d_govParams_1168
                              (coe v0)))

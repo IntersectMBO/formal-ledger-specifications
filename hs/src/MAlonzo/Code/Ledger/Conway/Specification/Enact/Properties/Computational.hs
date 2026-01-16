@@ -526,8 +526,8 @@ d_Computational'45'ENACT_1222 v0
                                (coe
                                   MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                   (coe
-                                     MAlonzo.Code.Ledger.Conway.Specification.PParams.d_applyUpdate_1498
-                                     (MAlonzo.Code.Ledger.Conway.Specification.PParams.d_ppUpd_1534
+                                     MAlonzo.Code.Ledger.Conway.Specification.PParams.d_applyUpdate_1490
+                                     (MAlonzo.Code.Ledger.Conway.Specification.PParams.d_ppUpd_1526
                                         (coe
                                            MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.d_govParams_1168
                                            (coe v0)))

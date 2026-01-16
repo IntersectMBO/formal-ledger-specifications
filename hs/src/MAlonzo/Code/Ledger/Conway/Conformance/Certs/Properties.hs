@@ -4738,7 +4738,7 @@ d_Computational'45'PRE'45'CERT_2380 v0
                                                                          (coe v1))
                                                                       (let v9
                                                                              = coe
-                                                                                 MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_mkGeneralizeTel_86563
+                                                                                 MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_mkGeneralizeTel_86579
                                                                                  (coe
                                                                                     MAlonzo.Code.Ledger.Conway.Specification.Certs.d_pp_1338
                                                                                     (coe v1))
@@ -4795,7 +4795,7 @@ d_Computational'45'PRE'45'CERT_2380 v0
                                                                        coe
                                                                          (MAlonzo.Code.Ledger.Conway.Specification.PParams.d_drepActivity_416
                                                                             (coe
-                                                                               MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_'46'generalizedField'45'pp_86535
+                                                                               MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_'46'generalizedField'45'pp_86551
                                                                                (coe v9)))) in
                                                             coe (coe (\ v10 -> v9)))
                                                            (coe

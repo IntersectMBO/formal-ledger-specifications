@@ -2477,7 +2477,7 @@ d_Conv'45'PParamsUpdate_28
       (coe
          (\ v0 ->
             case coe v0 of
-              MAlonzo.Code.Ledger.Conway.Specification.PParams.C_constructor_740 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12 v13 v14 v15 v16 v17 v18 v19 v20 v21 v22 v23 v24 v25 v26 v27 v28 v29 v30 v31 v32 v33 v34 v35
+              MAlonzo.Code.Ledger.Conway.Specification.PParams.C_constructor_732 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12 v13 v14 v15 v16 v17 v18 v19 v20 v21 v22 v23 v24 v25 v26 v27 v28 v29 v30 v31 v32 v33 v34 v35
                 -> coe
                      C_MkPParamsUpdate_133325
                      (coe
@@ -2792,7 +2792,7 @@ d_Conv'45'PParamsUpdate_28
             case coe v0 of
               C_MkPParamsUpdate_133325 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12 v13 v14 v15 v16 v17 v18 v19 v20 v21 v22 v23 v24 v25 v26 v27 v28 v29 v30 v31 v32 v33 v34 v35
                 -> coe
-                     MAlonzo.Code.Ledger.Conway.Specification.PParams.C_constructor_740
+                     MAlonzo.Code.Ledger.Conway.Specification.PParams.C_constructor_732
                      (coe
                         MAlonzo.Code.Foreign.Convertible.d_from_20
                         (coe
