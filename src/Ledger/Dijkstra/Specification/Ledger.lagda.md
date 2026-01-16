@@ -191,6 +191,22 @@ private variable
 ```
 -->
 
+## New in Dijkstra
+
+In Dijkstra we compute the set of "global" scripts and data once at the
+top-level in the LEDGER{.AgdaDatatype} rule. This is threaded through
+`SUBLEDGER`{.AgdaDatatype} to UTXOW{.AgdaDatatype}/SUBUTXOW{.AgdaDatatype} via
+UTxOEnv{.AgdaDatatype}/SubLedgerEnv{.AgdaDatatype}.
+
+  -  allScripts : ℙ P1Script × ℙ P2Script is the union of all scripts relevant
+    to the entire batch: scripts referenced/witnessed by the top-level
+    transaction plus scripts referenced/witnessed by every subtransaction
+    (computed by `getAllScripts`).
+
+  - allData : DataHash ⇀ Datumis the collection of all data relevant to the
+    entire batch: all datums appearing in witnesses and in any (sub)transaction
+    context (computer by getAllData).
+
 ```agda
 data _⊢_⇀⦇_,SUBLEDGER⦈_ : SubLedgerEnv → LState → SubLevelTx → LState → Type where
   SUBLEDGER-V :
