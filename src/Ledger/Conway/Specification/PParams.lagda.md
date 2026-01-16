@@ -185,6 +185,8 @@ This section defines new protocol parameters which denote the following concepts
 
 
 ```agda
+LanguageCostModels = List (Language × CostModel)
+
 record PParams : Type where
   field
 ```
@@ -236,7 +238,7 @@ record PParams : Type where
         a0                            : ℚ
         collateralPercentage          : ℕ
         -- use an association list instead of a map for DecEq
-        costmdlsAssoc                 : List (Language × CostModel)
+        costmdlsAssoc                 : LanguageCostModels
 ```
 
 *Governance group*
@@ -318,7 +320,8 @@ instance
     ((quote DrepThresholds , Show-DrepThresholds) ∷ [])
   unquoteDecl Show-PoolThresholds = derive-Show
     ((quote PoolThresholds , Show-PoolThresholds) ∷ [])
-  Show-ListLanguage×CostModel =
+  Show-LanguageCostModels : Show LanguageCostModels
+  Show-LanguageCostModels =
     Show-List ⦃ Show-× ⦃ Show-Language ⦄ ⦃ Show-CostModel ⦄ ⦄
   unquoteDecl Show-PParams        = derive-Show
     ((quote PParams , Show-PParams) ∷ [])
