@@ -49,8 +49,8 @@ record SubLedgerEnv : Type where
     treasury    : Treasury
     utxo₀            : UTxO
     isTopLevelValid  : Bool
-    globalScripts    : ℙ P1Script × ℙ P2Script
-    globalData       : DataHash ⇀ Datum
+    allScripts    : ℙ P1Script × ℙ P2Script
+    allData       : DataHash ⇀ Datum
 
 record LedgerEnv : Type where
   field
@@ -186,8 +186,8 @@ private variable
   enactState            : EnactState
   treasury              : Treasury
   isTopLevelValid       : Bool
-  globalScripts         : ℙ P1Script × ℙ P2Script
-  globalData            : DataHash ⇀ Datum
+  allScripts         : ℙ P1Script × ℙ P2Script
+  allData            : DataHash ⇀ Datum
 ```
 -->
 
@@ -205,17 +205,17 @@ data _⊢_⇀⦇_,SUBLEDGER⦈_ : SubLedgerEnv → LState → SubLevelTx → LSt
 ```agda
     in
       ∙ isTopLevelValid ≡ true
-      ∙ ⟦ slot , pp , treasury , utxo₀ , isTopLevelValid , globalScripts , globalData ⟧  ⊢ utxoState ⇀⦇ stx ,SUBUTXOW⦈ utxoState'
+      ∙ ⟦ slot , pp , treasury , utxo₀ , isTopLevelValid , allScripts , allData ⟧  ⊢ utxoState ⇀⦇ stx ,SUBUTXOW⦈ utxoState'
       ∙ ⟦ epoch slot , pp , txGovVotes , txWithdrawals , allColdCreds govState enactState ⟧ ⊢ certState ⇀⦇ txCerts ,CERTS⦈ certState'
       ∙ ⟦ txId , epoch slot , pp , ppolicy , enactState , certState' , dom (RewardsOf certState) ⟧ ⊢ {- rmOrphanDRepVotes certState' -} govState ⇀⦇ txgov txb ,GOVS⦈ govState'
       ────────────────────────────────
-      ⟦ slot , ppolicy , pp , enactState , treasury , utxo₀ , isTopLevelValid , globalScripts , globalData ⟧ ⊢ ⟦ utxoState , govState , certState ⟧ ⇀⦇ stx ,SUBLEDGER⦈ ⟦ utxoState' , govState' , certState' ⟧
+      ⟦ slot , ppolicy , pp , enactState , treasury , utxo₀ , isTopLevelValid , allScripts , allData ⟧ ⊢ ⟦ utxoState , govState , certState ⟧ ⇀⦇ stx ,SUBLEDGER⦈ ⟦ utxoState' , govState' , certState' ⟧
 
   SUBLEDGER-I :
       ∙ isTopLevelValid ≡ false
-      ∙ ⟦ slot , pp , treasury , utxo₀ , isTopLevelValid , globalScripts , globalData ⟧ ⊢ utxoState ⇀⦇ stx ,SUBUTXOW⦈ utxoState
+      ∙ ⟦ slot , pp , treasury , utxo₀ , isTopLevelValid , allScripts , allData ⟧ ⊢ utxoState ⇀⦇ stx ,SUBUTXOW⦈ utxoState
       ────────────────────────────────
-      ⟦ slot , ppolicy , pp , enactState , treasury , utxo₀ , isTopLevelValid , globalScripts , globalData ⟧ ⊢ ⟦ utxoState , govState , certState ⟧ ⇀⦇ stx ,SUBLEDGER⦈ ⟦ utxoState , govState , certState ⟧
+      ⟦ slot , ppolicy , pp , enactState , treasury , utxo₀ , isTopLevelValid , allScripts , allData ⟧ ⊢ ⟦ utxoState , govState , certState ⟧ ⇀⦇ stx ,SUBLEDGER⦈ ⟦ utxoState , govState , certState ⟧
 
 _⊢_⇀⦇_,SUBLEDGERS⦈_ : SubLedgerEnv → LState → List SubLevelTx → LState → Type
 _⊢_⇀⦇_,SUBLEDGERS⦈_ = ReflexiveTransitiveClosure {sts = _⊢_⇀⦇_,SUBLEDGER⦈_}
@@ -244,15 +244,15 @@ data _⊢_⇀⦇_,LEDGER⦈_ : LedgerEnv → LState → TopLevelTx → LState �
 ```agda
          utxo₀ = UTxOOf utxoState
 
-         globalScripts : ℙ P1Script × ℙ P2Script
-         globalScripts = getAllScripts tx utxo₀
+         allScripts : ℙ P1Script × ℙ P2Script
+         allScripts = getAllScripts tx utxo₀
 
-         globalData : DataHash ⇀ Datum
-         globalData = setToMap (mapˢ < hash , id > (getAllData tx utxo₀))
+         allData : DataHash ⇀ Datum
+         allData = setToMap (mapˢ < hash , id > (getAllData tx utxo₀))
     in
       ∙ isValid tx ≡ true
-      ∙ ⟦ slot , ppolicy , pp , enactState , treasury , utxo₀ , isValid tx , globalScripts , globalData ⟧ ⊢ ⟦ utxoState , govState , certState ⟧ ⇀⦇ txSubTransactions ,SUBLEDGERS⦈ ⟦ utxoState' , govState' , certState' ⟧
-      ∙ ⟦ slot , pp , treasury , utxo₀ , isValid tx , globalScripts , globalData ⟧  ⊢ utxoState' ⇀⦇ tx ,UTXOW⦈ utxoState''
+      ∙ ⟦ slot , ppolicy , pp , enactState , treasury , utxo₀ , isValid tx , allScripts , allData ⟧ ⊢ ⟦ utxoState , govState , certState ⟧ ⇀⦇ txSubTransactions ,SUBLEDGERS⦈ ⟦ utxoState' , govState' , certState' ⟧
+      ∙ ⟦ slot , pp , treasury , utxo₀ , isValid tx , allScripts , allData ⟧  ⊢ utxoState' ⇀⦇ tx ,UTXOW⦈ utxoState''
       ∙ ⟦ epoch slot , pp , txGovVotes , txWithdrawals , allColdCreds govState enactState ⟧ ⊢ certState' ⇀⦇ txCerts ,CERTS⦈ certState''
       ∙ ⟦ txId , epoch slot , pp , ppolicy , enactState , certState' , dom (RewardsOf certState) ⟧ ⊢ {- rmOrphanDRepVotes certState' -} govState ⇀⦇ txgov txb ,GOVS⦈ govState'
       ────────────────────────────────
@@ -269,15 +269,15 @@ data _⊢_⇀⦇_,LEDGER⦈_ : LedgerEnv → LState → TopLevelTx → LState �
 ```agda
          utxo₀ = UTxOOf utxoState
 
-         globalScripts : ℙ P1Script × ℙ P2Script
-         globalScripts = getAllScripts tx utxo₀
+         allScripts : ℙ P1Script × ℙ P2Script
+         allScripts = getAllScripts tx utxo₀
 
-         globalData : DataHash ⇀ Datum
-         globalData = setToMap (mapˢ < hash , id > (getAllData tx utxo₀))
+         allData : DataHash ⇀ Datum
+         allData = setToMap (mapˢ < hash , id > (getAllData tx utxo₀))
     in
       ∙ isValid tx ≡ false
-      ∙ ⟦ slot , ppolicy , pp , enactState , treasury , utxo₀ , isValid tx , globalScripts , globalData ⟧ ⊢ ⟦ utxoState , govState , certState ⟧ ⇀⦇ txSubTransactions  ,SUBLEDGERS⦈ ⟦ utxoState , govState , certState ⟧
-      ∙ ⟦ slot , pp , treasury , utxo₀ , isValid tx , globalScripts , globalData ⟧ ⊢ utxoState ⇀⦇ tx ,UTXOW⦈ utxoState'
+      ∙ ⟦ slot , ppolicy , pp , enactState , treasury , utxo₀ , isValid tx , allScripts , allData ⟧ ⊢ ⟦ utxoState , govState , certState ⟧ ⇀⦇ txSubTransactions  ,SUBLEDGERS⦈ ⟦ utxoState , govState , certState ⟧
+      ∙ ⟦ slot , pp , treasury , utxo₀ , isValid tx , allScripts , allData ⟧ ⊢ utxoState ⇀⦇ tx ,UTXOW⦈ utxoState'
       ────────────────────────────────
       ⟦ slot , ppolicy , pp , enactState , treasury ⟧ ⊢ ⟦ utxoState , govState , certState ⟧ ⇀⦇ tx ,LEDGER⦈ ⟦ utxoState' , govState , certState ⟧
 ```
