@@ -102,6 +102,7 @@ instance
     ; txidBytes       = id
     ; scriptStructure = HSScriptStructure
     ; adHashingScheme = isHashableSet-ℕ
+    ; Hashable-ScriptIntegrity = record { hash = λ x → 0 }
     }
 
 open TransactionStructure HSTransactionStructure public
@@ -124,7 +125,7 @@ instance
       ; indexOfProposal       = λ _ _ → nothing
       }
     ; runPLCScript = λ _ _ _ _ → false
-    ; scriptSize = λ where 
+    ; scriptSize = λ where
         (inj₁ x) → HSTimelock.tlScriptSize x
         (inj₂ x) → HSPlutusScript.psScriptSize x
     ; valContext = λ _ _ → zero

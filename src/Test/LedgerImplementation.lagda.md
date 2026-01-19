@@ -175,6 +175,9 @@ SVTransactionStructure = record
   ; govParams       = SVGovParams
   ; txidBytes       = id
   ; scriptStructure = SVScriptStructure
+    -- This value is inconsequential while scriptIntegrityHash is set to
+    -- nothing
+  ; Hashable-ScriptIntegrity = record { hash = λ x → 0 }
   }
 ```
 <!--
