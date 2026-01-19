@@ -4,6 +4,7 @@
 
 ### WIP
 
+- Implement the hash integrity check of UTXOW
 - Change type of `costmdls` from CostModel to `List (Language × CostModel)`
 - Change type of `txRequiredTopLevelGuards` from map to list.
 - Change `TxBody.txRequiredGuards` to `TxBody.txGuards`.

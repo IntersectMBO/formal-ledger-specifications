@@ -105,7 +105,15 @@ record TransactionStructure : Type₁ where
   field tokenAlgebra : TokenAlgebra
   open TokenAlgebra tokenAlgebra public
 
-  field txidBytes : TxId → Ser
+  field
+    txidBytes : TxId → Ser
+    ⦃ Hashable-ScriptIntegrity ⦄ :
+        Hashable
+          ( ℙ Datum
+          × ((Tag × Ix) ⇀ (Redeemer × ExUnits))
+          × ℙ LangDepView
+          )
+          ScriptHash
 
   govStructure : GovStructure
   govStructure = record

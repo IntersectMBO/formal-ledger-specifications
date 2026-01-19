@@ -5,7 +5,8 @@ source_path: src/Ledger/Conway/Specification/Utxow.lagda.md
 
 # Witnessing {#sec:witnessing}
 
-The purpose of witnessing is make sure the actions specified a transaction are authorized
+The purpose of witnessing is making sure that the actions specified in a
+transaction are authorized
 by the holder of the signing key. (For details see [CVG19](#shelley-ledger-spec).)
 This section formalizes the mechanisms use by the Cardano ledger to support witnessing.
 
@@ -98,6 +99,26 @@ allowedLanguages tx utxo =
     os = range (outs txb) ∪ range (utxo ∣ (txIns ∪ refInputs))
 ```
 
+## Checking the script integrity hash
+
+The script integrity hash helps determining that the cost model for execution
+of a script hasn't changed since the transaction was submitted. Otherwise,
+evaluation of the script could yield a different value than expected.
+
+```agda
+hashScriptIntegrity
+  : PParams
+  → ℙ Language
+  → RdmrPtr ⇀ (Redeemer × ExUnits)
+  → ℙ Datum
+  → Maybe ScriptHash
+hashScriptIntegrity pp langs rdrms dats =
+  if (lengthˢ langs == 0) ∧ (lengthˢ dats == 0) then
+    nothing
+  else
+    just $ hash (dats , rdrms , mapˢ (getLanguageView pp) langs)
+```
+
 ## The <span class="AgdaDatatype">UTXOW</span> Transition System {#sec:the-utxow-transition-system}
 
 <!--
@@ -140,6 +161,12 @@ data _⊢_⇀⦇_,UTXOW⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Typ
     ∙  txdatsHashes ⊆ inputsDataHashes ∪ outputsDataHashes ∪ refInputsDataHashes
     ∙  languages tx utxo ⊆ dom (PParams.costmdls (PParamsOf Γ)) ∩ allowedLanguages tx utxo
     ∙  txADhash ≡ map hash txAD
+    ∙  scriptIntegrityHash ≡
+          hashScriptIntegrity
+            (UTxOEnv.pparams Γ)
+            (languages tx utxo)
+            txrdmrs
+            txdats
     ∙  Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s'
        ────────────────────────────────
        Γ ⊢ s ⇀⦇ tx ,UTXOW⦈ s'
@@ -160,9 +187,9 @@ data _⊢_⇀⦇_,UTXOW⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Typ
 
 <!--
 ```agda
-pattern UTXOW-inductive⋯ p₁ p₂ p₃ p₄ p₅ p₆ p₇ p₈ h
-      = UTXOW-inductive (p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , h)
-pattern UTXOW⇒UTXO x = UTXOW-inductive⋯ _ _ _ _ _ _ _ _ x
+pattern UTXOW-inductive⋯ p₁ p₂ p₃ p₄ p₅ p₆ p₇ p₈ p₉ h
+      = UTXOW-inductive (p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , h)
+pattern UTXOW⇒UTXO x = UTXOW-inductive⋯ _ _ _ _ _ _ _ _ _ x
 
 unquoteDecl UTXOW-inductive-premises =
   genPremises UTXOW-inductive-premises (quote UTXOW-inductive)
