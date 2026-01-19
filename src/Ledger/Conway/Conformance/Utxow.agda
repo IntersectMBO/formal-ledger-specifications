@@ -55,13 +55,19 @@ data _⊢_⇀⦇_,UTXOW⦈_ where
     ∙  txdatsHashes ⊆ inputsDataHashes ∪ outputsDataHashes ∪ refInputsDataHashes
     ∙  L.languages tx utxo ⊆ dom (PParams.costmdls (PParamsOf Γ)) ∩ L.allowedLanguages tx utxo
     ∙  txADhash ≡ map hash txAD
+    ∙  scriptIntegrityHash ≡
+         L.hashScriptIntegrity
+           (UTxOEnv.pparams Γ)
+           (L.languages tx utxo)
+           txrdmrs
+           txdats
     ∙  Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s'
        ────────────────────────────────
        Γ ⊢ s ⇀⦇ tx ,UTXOW⦈ s'
 
-pattern UTXOW-inductive⋯ p₁ p₂ p₃ p₄ p₅ p₆ p₇ p₈ h
-      = UTXOW-inductive (p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , h)
-pattern UTXOW⇒UTXO x = UTXOW-inductive⋯ _ _ _ _ _ _ _ _ x
+pattern UTXOW-inductive⋯ p₁ p₂ p₃ p₄ p₅ p₆ p₇ p₈ p₉ h
+      = UTXOW-inductive (p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , h)
+pattern UTXOW⇒UTXO x = UTXOW-inductive⋯ _ _ _ _ _ _ _ _ _ x
 
 unquoteDecl UTXOW-inductive-premises =
   genPremises UTXOW-inductive-premises (quote UTXOW-inductive)
