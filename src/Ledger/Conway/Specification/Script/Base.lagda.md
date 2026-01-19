@@ -108,4 +108,7 @@ record ScriptStructure : Type₁ where
 
   toP2Script : Script → Maybe P2Script
   toP2Script = isInj₂
+
+  getLanguage : Script → Maybe Language
+  getLanguage s = toP2Script s <&> language
 ```
