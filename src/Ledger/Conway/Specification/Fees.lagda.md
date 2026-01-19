@@ -1,3 +1,8 @@
+---
+source_branch: master
+source_path: src/Ledger/Conway/Specification/Fees.lagda.md
+---
+
 # Fee Calculation {#sec:fees}
 
 This section defines the function used to compute the fees associated with reference scripts.
@@ -7,8 +12,6 @@ This section defines the function used to compute the fees associated with refer
 {-# OPTIONS --safe #-}
 
 open import Ledger.Prelude hiding (_%_; _*_; ≤-trans; ∣_∣)
--- open import Ledger.Conway.Specification.Abstract
--- open import Ledger.Conway.Specification.Transaction
 
 open import Ledger.Core.Specification.Crypto
 open import Ledger.Core.Specification.Epoch

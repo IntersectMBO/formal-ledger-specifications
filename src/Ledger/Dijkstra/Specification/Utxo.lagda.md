@@ -252,10 +252,6 @@ updateDeposits pp tx = updateCertDeposits pp (DCertsOf tx)
 proposalDepositsΔ : List GovProposal → PParams → Tx ℓ → Deposits
 proposalDepositsΔ props pp tx = updateProposalDeposits props (TxIdOf tx) (pp .govActionDeposit) ∅
 
-depositsChange : PParams → Tx ℓ → Deposits → ℤ
-depositsChange pp tx deposits =
-  getCoin (updateDeposits pp tx deposits) - getCoin deposits
-
 data inInterval (slot : Slot) : (Maybe Slot × Maybe Slot) → Type where
   both   : ∀ {l r}  → l ≤ slot × slot ≤ r  →  inInterval slot (just l   , just r)
   lower  : ∀ {l}    → l ≤ slot             →  inInterval slot (just l   , nothing)
@@ -303,75 +299,46 @@ collateralCheck pp txTop utxo =
   × (CollateralInputsOf txTop) ≢ ∅
 
 
-consumedSub : UTxOState → SubLevelTx → Value
-consumedSub s txSub = balance (UTxOOf s ∣ SpendInputsOf txSub)
-                      + MintedValueOf txSub
-                      + inject (getCoin (WithdrawalsOf txSub))
+module Accounting (pp : PParams) (txTop : TopLevelTx) (deposits₀ : Deposits) where
 
-producedSub : SubLevelTx → Value
-producedSub txSub = balance (outs txSub) + inject (DonationsOf txSub)
-
-module Accounting (Γ : UTxOEnv) (s : UTxOState) where
-  open PParams (PParamsOf Γ)
-
-  record Acc : Type where
-    constructor mkAcc
-    field
-      consumed  : Value
-      produced  : Value
-      deposits  : Deposits
-
-  open Acc
-  depΔ : ∀ {ℓ} → Tx ℓ → Deposits → ℤ
-  depΔ tx deps = depositsChange (PParamsOf Γ) tx deps
-
-  depositRefunds : ∀ {ℓ} → Tx ℓ → Deposits → Coin
-  depositRefunds tx deps = negPart (depΔ tx deps)
-
-  newDeposits : ∀ {ℓ} → Tx ℓ → Deposits → Coin
-  newDeposits tx deps = posPart (depΔ tx deps)
-
-  -- Generic accounting, parameterized by whether fees exist at this level.
-  accTx : ∀ {ℓ} → Tx ℓ → Coin → Deposits → Acc
-  accTx tx fee deps = mkAcc c p (updateDeposits (PParamsOf Γ) tx deps)
+  updateDepositsBatch : Deposits
+  updateDepositsBatch =
+    foldl updateStep (updateDeposits pp txTop deposits₀) (SubTransactionsOf txTop)
     where
-    c p : Value
-    c = balance (UTxOOf s ∣ SpendInputsOf tx)
-        + MintedValueOf tx + inject (depositRefunds tx deps) + inject (getCoin (WithdrawalsOf tx))
-    p = balance (outs tx) + inject fee + inject (newDeposits tx deps) + inject (DonationsOf tx)
+    updateStep : Deposits → Tx ℓ → Deposits
+    updateStep deps tx = updateDeposits pp tx deps
 
-  accTop : TopLevelTx → Deposits → Acc
-  accTop txTop deps = accTx txTop (TxFeesOf txTop) deps
+  depositsChangeBatch : ℤ
+  depositsChangeBatch = getCoin updateDepositsBatch - getCoin deposits₀
 
-  accSub : SubLevelTx → Deposits → Acc
-  accSub txSub deps = accTx txSub 0 deps
+  depositRefundsBatch : Coin
+  depositRefundsBatch = negPart depositsChangeBatch
 
-  -- Fold over the batch in-order: top then subs.
-  record BatchAcc : Type where
-    constructor ⟦_,_,_⟧ᵇᵃ
-    field
-      batchConsumed : Value
-      batchProduced : Value
-      depositsFinal : Deposits
+  newDepositsBatch : Coin
+  newDepositsBatch = posPart depositsChangeBatch
 
-  batchAcc : TopLevelTx → BatchAcc
-  batchAcc txTop = bTot
+  consumed : UTxOEnv → Value
+  consumed Γ = foldl  (λ acc tx → acc + consumedTx tx)
+                      (consumedTx txTop + inject depositRefundsBatch)
+                      (SubTransactionsOf txTop)
     where
-    acc : Tx ℓ → Deposits → Acc
-    acc tx deps = accTx tx 0 deps  -- default fee=0, override for top below
+    consumedTx : ∀ {ℓ} → Tx ℓ → Value
+    consumedTx tx =  balance (UTxOOf Γ ∣ SpendInputsOf tx)  -- the only Γ dependency
+                     + MintedValueOf tx
+                     + inject (getCoin (WithdrawalsOf tx))
 
-    step : Value × Value × Deposits → Tx ℓ → Value × Value × Deposits
-    step (cSum , pSum , deps) tx = let α  = acc tx deps in
-      cSum + consumed α , pSum + produced α , deposits α
+  produced : Value
+  produced = foldl  (λ acc tx → acc + producedTx tx)
+                    (producedTx txTop + inject newDepositsBatch)
+                    (SubTransactionsOf txTop)
+    where
+    producedTx : ∀ {ℓ} → Tx ℓ → Value
+    producedTx {TxLevelTop} tx =  balance (outs tx)
+                                  + inject (TxFeesOf tx)     -- top-level tx has fees
+                                  + inject (DonationsOf tx)
+    producedTx {TxLevelSub} tx =  balance (outs tx)
+                                  + inject (DonationsOf tx)
 
-    -- do top-level with fee first
-    init : Value × Value × Deposits
-    init  = let α₀ = accTop txTop (DepositsOf s) in
-      consumed α₀ , produced α₀ , deposits α₀
-
-    bTot : BatchAcc
-    bTot with foldl step init (SubTransactionsOf txTop)
-    ... | (c , p , deps) = ⟦ c , p , deps ⟧ᵇᵃ
 
 
 module Phase2 (Γ : UTxOEnv) (s : UTxOState) where
@@ -388,11 +355,11 @@ module Phase2 (Γ : UTxOEnv) (s : UTxOState) where
   module _ (txTop : TopLevelTx) where
 
     p2ScriptsWithContext : List (P2Script × List Data × ExUnits × CostModel)
-    p2ScriptsWithContext = getP2ScriptsWithContextOf txTop
-                                 ++ concatMap getP2ScriptsWithContextOf (SubTransactionsOf txTop)
+    p2ScriptsWithContext =  getP2ScriptsWithContextOf txTop
+                            ++ concatMap getP2ScriptsWithContextOf (SubTransactionsOf txTop)
 
     batchScripts✓ : Bool
-    batchScripts✓ = evalP2Scripts P2ScriptsWithContext
+    batchScripts✓ = evalP2Scripts p2ScriptsWithContext
 
     batchSpendInputs : ℙ TxIn
     batchSpendInputs = SpendInputsOf txTop ∪ concatMapˡ SpendInputsOf (SubTransactionsOf txTop)
@@ -434,10 +401,13 @@ module Phase2 (Γ : UTxOEnv) (s : UTxOState) where
     s'-scripts× = ⟦ utxo-scripts× , fees-scripts× , DepositsOf s , DonationsOf s ⟧
 
     -- Total Ada minted across the entire batch (top-level tx + all sub-txs).
-    -- This must equal 0 to prevent Ada forgery and maintain the total Ada supply invariant.
-    -- Analogous to Conway's `coin mint ≡ 0` constraint, but generalized to batches.
     batchMintedCoin : Coin
-    batchMintedCoin = coin (MintedValueOf txTop) + sum (map (λ txSub → coin (MintedValueOf txSub)) (SubTransactionsOf txTop))
+    batchMintedCoin = foldl (λ acc txSub → acc + coin (MintedValueOf txSub))
+                            (coin (MintedValueOf txTop))
+                            (SubTransactionsOf txTop)
+    -- To maintain the total Ada supply invariant, this must satisfy
+    -- `batchMintedCoin ≡ 0`; this is the generalization of Conway's
+    -- `coin mint ≡ 0`.
 ```
 
 
@@ -451,6 +421,7 @@ private variable
   s s' : UTxOState
   tx : TopLevelTx
   stx : SubLevelTx
+  depΔ : ℤ
 ```
 -->
 
@@ -489,8 +460,8 @@ The CIP (TODO: add reference) states:
 This is achieved by the following precondition in the `UTXO`.{AgdaDatatype} and
 `SUBUTXO`.{AgdaDatatype} rules:
 
-1. The set of spending inputs must exist in the UTxO _before_ applying the
-transaction (or partially applying any part of it).
+1.  The set of spending inputs must exist in the UTxO _before_ applying the
+    transaction (or partially applying any part of it).
 
 2.  The premise `requiredTopLevelGuardsSatisfied tx subTxs` is explicitly a
     phase-1 condition (CIP-0118): every guard credential requested by subtransaction
@@ -513,8 +484,7 @@ data _⊢_⇀⦇_,UTXO⦈_ : UTxOEnv → UTxOState → TopLevelTx → UTxOState 
   UTXO :
 
     let  open Phase2 Γ s
-         open Accounting Γ s
-         open BatchAcc (batchAcc tx)
+         open Accounting (PParamsOf Γ) tx (DepositsOf s)
     in
 
     ∙ SpendInputsOf tx ≢ ∅
@@ -522,9 +492,9 @@ data _⊢_⇀⦇_,UTXO⦈_ : UTxOEnv → UTxOState → TopLevelTx → UTxOState 
     ∙ SpendInputsOf tx ⊆ dom (UTxOOf s)
     ∙ ReferenceInputsOf tx ⊆ dom (UTxOOf s)
     ∙ requiredTopLevelGuardsSatisfied tx (SubTransactionsOf tx)   -- (2)
-    ∙ batchConsumed ≡ batchProduced 
+    ∙ consumed Γ ≡ produced
     ∙ batchMintedCoin tx ≡ 0
-    ∙ collateralCheck (PParamsOf Γ) tx (UTxOOf s)
+    ∙ RedeemersOf tx ˢ ≢ ∅ → collateralCheck (PParamsOf Γ) tx (UTxOOf s)
     ∙ Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ s'
       ────────────────────────────────
       Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s'
