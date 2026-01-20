@@ -21,6 +21,8 @@ open import Data.Bool.ListAction public
 open import Data.Empty public
 open import Data.List public
   hiding (all; and; any; align; alignWith; filter; fromMaybe; map; or; product; sum; zip; zipWith)
+open import stdlib.Data.List public
+  using (Is-[])
 open import Data.List.Membership.Propositional public
   using () renaming (_∈_ to _∈ˡ_; _∉_ to _∉ˡ_)
 open import Data.Maybe public
@@ -120,4 +122,9 @@ negPart x with sign x
 ∸≡posPart⊖ {zero} {ℕ.suc n} = _≡_.refl
 ∸≡posPart⊖ {ℕ.suc m} {zero} = _≡_.refl
 ∸≡posPart⊖ {ℕ.suc m} {ℕ.suc n} = trans (∸≡posPart⊖{m}{n}) (sym (cong posPart (([1+m]⊖[1+n]≡m⊖n m n))))
+
+instance
+  Dec-NonZero : ∀ {n} → NonZero n ⁇
+  Dec-NonZero {zero} .dec = no λ ()
+  Dec-NonZero {suc n} .dec = yes (record { nonZero = tt })
 ```
