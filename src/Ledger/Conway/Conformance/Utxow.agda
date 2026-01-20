@@ -53,7 +53,7 @@ data _⊢_⇀⦇_,UTXOW⦈_ where
     ∙  neededScriptHashes - refScriptHashes ≡ᵉ witsScriptHashes
     ∙  inputsDataHashes ⊆ txdatsHashes
     ∙  txdatsHashes ⊆ inputsDataHashes ∪ outputsDataHashes ∪ refInputsDataHashes
-    ∙  L.languages tx utxo ⊆ L.allowedLanguages tx utxo
+    ∙  L.languages tx utxo ⊆ dom (PParams.costmdls (PParamsOf Γ)) ∩ L.allowedLanguages tx utxo
     ∙  txADhash ≡ map hash txAD
     ∙  Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s'
        ────────────────────────────────
