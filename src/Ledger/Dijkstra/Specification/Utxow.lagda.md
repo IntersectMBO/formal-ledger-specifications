@@ -128,10 +128,10 @@ data _⊢_⇀⦇_,SUBUTXOW⦈_ : UTxOEnv → UTxOState → SubLevelTx → UTxOSt
          witsKeyHashes       = mapˢ hash (dom vKeySigs)
 
          p1Scripts : ℙ P1Script
-         p1Scripts = proj₁ (Γ .globalScripts)
+         p1Scripts = mapPartial toP1Script (GlobalScriptsOf Γ)
 
          p2Scripts : ℙ P2Script
-         p2Scripts = proj₂ (Γ .globalScripts)
+         p2Scripts = mapPartial toP2Script (GlobalScriptsOf Γ)
 
          neededScriptHashes  : ℙ ScriptHash
          neededScriptHashes  = mapPartial (isScriptObj  ∘ proj₂) (credsNeeded utxo₀ txBody)
@@ -172,10 +172,10 @@ data _⊢_⇀⦇_,UTXOW⦈_ : UTxOEnv → UTxOState → TopLevelTx → UTxOState
          witsKeyHashes       = mapˢ hash (dom vKeySigs)
 
          p1Scripts : ℙ P1Script
-         p1Scripts = proj₁ (Γ .globalScripts)
+         p1Scripts = mapPartial toP1Script (GlobalScriptsOf Γ)
 
          p2Scripts : ℙ P2Script
-         p2Scripts = proj₂ (Γ .globalScripts)
+         p2Scripts = mapPartial toP2Script (GlobalScriptsOf Γ)
 
          neededScriptHashes  : ℙ ScriptHash
          neededScriptHashes  = mapPartial (isScriptObj  ∘ proj₂) (credsNeeded utxo₀ txBody)

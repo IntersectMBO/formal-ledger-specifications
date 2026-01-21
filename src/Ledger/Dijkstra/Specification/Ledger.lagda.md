@@ -241,7 +241,7 @@ data _⊢_⇀⦇_,LEDGER⦈_ : LedgerEnv → LState → TopLevelTx → LState �
   LEDGER-V :
     let  utxo₀ = UTxOOf utxoState
 
-         allScripts : ℙ P1Script × ℙ P2Script
+         allScripts : ℙ Script
          allScripts = getAllScripts tx utxo₀
 
          allData : DataHash ⇀ Datum
@@ -258,7 +258,7 @@ data _⊢_⇀⦇_,LEDGER⦈_ : LedgerEnv → LState → TopLevelTx → LState �
   LEDGER-I :
     let  utxo₀ = UTxOOf utxoState
 
-         allScripts : ℙ P1Script × ℙ P2Script
+         allScripts : ℙ Script
          allScripts = getAllScripts tx utxo₀
 
          allData : DataHash ⇀ Datum

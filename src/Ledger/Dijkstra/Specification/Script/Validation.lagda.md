@@ -45,15 +45,19 @@ indexedRdmrs : (Tx ℓ) → ScriptPurpose → Maybe (Redeemer × ExUnits)
 indexedRdmrs tx sp = maybe (λ x → lookupᵐ? txRedeemers x) nothing (rdptr tx sp)
   where open Tx tx; open TxWitnesses txWitnesses
 
+txDataMap : Tx ℓ → DataHash ⇀ Datum
+txDataMap tx = setToMap (mapˢ < hash , id > (DataOf tx))
+
 -- Datum lookup for spent outputs (Spend txin). Uses initial UTxO snapshot, utxoSpend₀.
-getDatum : Tx ℓ → UTxO → ScriptPurpose → Maybe Datum
-getDatum tx utxo₀ (Spend txin) =
-  do (_ , _ , just d , _) ← lookupᵐ? utxo₀ txin where
-                            (_ , _ , nothing , _) → nothing
-     case d of λ where
-       (inj₁ d) → just d
-       (inj₂ h) → lookupᵐ? (setToMap (mapˢ < hash , id > (DataOf tx))) h
-getDatum tx utxo₀ _ = nothing
+getDatum : Tx ℓ → UTxO → (DataHash ⇀ Datum) → ScriptPurpose → Maybe Datum
+getDatum tx utxo₀ extraData (Spend txin) with lookupᵐ? utxo₀ txin
+... | just (_ , _ , just d , _) =
+  case d of λ where
+    (inj₁ d) → just d
+    (inj₂ h) → lookupᵐ? (txDataMap tx ∪ˡ extraData) h
+                        -- tx-local witness data takes precedence over batch/global pool.
+... | _ = nothing
+getDatum tx utxo₀ _ _ = nothing
 ```
 -->
 
@@ -138,10 +142,10 @@ txOutToP2Script allScripts (a , _) =
      toP2Script s
 
 opaque
-  collectP2ScriptsWithContext
-    :  {ℓ : TxLevel} → PParams → Tx ℓ → UTxO → ℙ Script
-       → List (P2Script × List Data × ExUnits × CostModel)
-  collectP2ScriptsWithContext {ℓ} pp tx utxo allScripts
+  collectP2ScriptsWithContext : {ℓ : TxLevel} → PParams → Tx ℓ
+    → UTxO → (DataHash ⇀ Datum) → ℙ Script
+    → List (P2Script × List Data × ExUnits × CostModel)
+  collectP2ScriptsWithContext {ℓ} pp tx utxo extraData allScripts
     = setToList  $ mapPartial ( λ (sp , c) →  if isScriptObj c
                                               then (λ {sh} → toScriptInput sp sh)
                                               else nothing )
@@ -155,7 +159,7 @@ opaque
         do s ← lookupHash sh allScripts
            p2s ← toP2Script s
            (rdmr , exunits) ← indexedRdmrs tx sp
-           let data'  = maybe [_] [] (getDatum tx utxo sp)
+           let data' = maybe [_] [] (getDatum tx utxo extraData sp)
                         ++ rdmr ∷ [ valContext (txInfoForPurpose ℓ utxo tx sp) sp ]
            just (p2s , data' , exunits , PParams.costmdls pp)
 
