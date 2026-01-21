@@ -501,91 +501,94 @@ could be either of them.
 
 This section collects some unimportant but useful helper and accessor functions.
 
-```agda
-  getValue : TxOut → Value
-  getValue (_ , v , _) = v
+In the Dijkstra era, *spending* inputs must exist in the initial UTxO snapshot
+(mempool safety), while *script/data availability* is *batch-scoped*.  By this we
+mean that, with "self-usable outputs" (see CIP-????; TODO: add reference), we can
+form an order-independent "batch view" `utxoView = utxo₀ ∪ batchOuts`, and use that
+for reference lookups and script/data availability (while still using `utxo₀` for
+spending inputs).
 
++  `utxo₀`{.AgdaBound}, the initial UTxO snapshot, used for `txIns`{.AgdaField};
++  `utxoView`{.AgdaBound}, the batch view, `utxo₀ ∪ batchOuts`, used for reference
+   lookups and script/data availability.
+
+```agda
   TxOutʰ : Type
   TxOutʰ = Addr × Value × Maybe (Datum ⊎ DataHash) × Maybe ScriptHash
 
   txOutHash : TxOut → TxOutʰ
-  txOutHash (a , v , d , s) = a , (v , (d , M.map hash s))
+  txOutHash (a , v , d , s) = a , v , d , M.map hash s
 
   getValueʰ : TxOutʰ → Value
-  getValueʰ (_ , v , _) = v
+  getValueʰ (_ , v , _ , _) = v
 
-  txinsVKey : ℙ TxIn → UTxO → ℙ TxIn
-  txinsVKey txins utxo = txins ∩ dom (utxo ∣^' (isVKeyAddr ∘ proj₁))
-
-  scriptOuts : UTxO → UTxO
-  scriptOuts utxo = filter (λ (_ , addr , _) → isScriptAddr addr) utxo
-
-  txinsScript : ℙ TxIn → UTxO → ℙ TxIn
-  txinsScript txins utxo = txins ∩ dom (proj₁ (scriptOuts utxo))
-```
-
-In the Dijkstra era, *spending* inputs must exist in the initial UTxO snapshot, while
-*reference* inputs may come from earlier outputs, so we will need two to keep track
-of two UTxOs; we'll denote these as follows:
-
-+  `utxo₀`{.AgdaBound}, the initial UTxO snapshot, used for `txIns`{.AgdaField};
-+  `utxoRef`{.AgdaBound}, the evolving UTxO, used for reference input lookups.
-
-We now define some functions for scripts.  Some of these will take two UTxO
-arguments, denoting the initial UTxO snapshot and an evolving UTxO, which evolves as
-a batch of subtransactions is processed.  (Later, when the functions below are used,
-the two UTxO arguments may come from the UTxO environment and an evolving UTxO state;
-types for these are defined in the `Utxo`{.AgdaModule} module, which depends
-on the present module; thus, we cannot bind the UTxO arguments to a particular
-UTxO environment and state at this point.)
-
-```agda
   txOutToScript : TxOut → Maybe Script
   txOutToScript (_ , _ , _ , s) = s
-
-  spendInputScripts : UTxO → Tx txLevel → ℙ Script
-  spendInputScripts utxo tx =
-    mapPartial txOutToScript (range (utxo ∣ SpendInputsOf tx))
-
-  refInputScripts : UTxO → Tx txLevel → ℙ Script
-  refInputScripts utxo tx =
-    mapPartial txOutToScript (range (utxo ∣ ReferenceInputsOf tx))
-
-  txOutputScripts : Tx txLevel → ℙ Script
-  txOutputScripts tx =
-    mapPartial txOutToScript (range (TxOutsOf tx ˢ))
-
-  getTxScripts : UTxO → Tx txLevel → ℙ Script
-  getTxScripts utxo tx =
-    ScriptsOf tx                 -- (1) scripts from witnesses
-    ∪ spendInputScripts utxo tx  -- (2) scripts from spending inputs
-    ∪ refInputScripts utxo tx    -- (3) scripts from reference inputs
-    ∪ txOutputScripts tx         -- (4) scripts from transaction outputs
-
-  getAllScripts : TopLevelTx → UTxO → ℙ P1Script × ℙ P2Script
-  getAllScripts tx utxo = mapPartial toP1Script allScripts , mapPartial toP2Script allScripts
-    where
-      allScripts : ℙ Script
-      allScripts = getTxScripts utxo tx                                               -- (1) scripts from top-level transaction
-                   ∪ concatMapˢ (getTxScripts utxo) (fromList (SubTransactionsOf tx))  -- (2) scripts from subtransactions
-
-  lookupScriptHash : ScriptHash → Tx txLevel → UTxO → UTxO → Maybe Script
-  lookupScriptHash sh tx utxoSpend₀ utxoRefView = lookupHash sh (getTxScripts utxoRefView tx)
 
   txOutToDatum : TxOut → Maybe Datum
   txOutToDatum (_ , _ , d , _) = d >>= isInj₁
 
+  -- spending outputs
+  spendOut : UTxO → Tx txLevel → ℙ TxOut
+  spendOut utxo tx = range (utxo ∣ SpendInputsOf tx)
+
+  spendScripts : UTxO → Tx txLevel → ℙ Script
+  spendScripts = mapPartial txOutToScript ∘₂ spendOut
+
+  spendData : UTxO → Tx txLevel → ℙ Datum
+  spendData = mapPartial txOutToDatum ∘₂ spendOut
+
+  -- reference outputs
+  referenceOut : UTxO → Tx txLevel → ℙ TxOut
+  referenceOut utxo tx = range (utxo ∣ ReferenceInputsOf tx)
+
+  referenceScripts : UTxO → Tx txLevel → ℙ Script
+  referenceScripts = mapPartial txOutToScript ∘₂ referenceOut
+
+  referenceData : UTxO → Tx txLevel → ℙ Datum
+  referenceData = mapPartial txOutToDatum ∘₂ referenceOut
+
+  -- tx outputs
+  txOut : Tx txLevel → ℙ TxOut
+  txOut tx = range (TxOutsOf tx ˢ)
+
+  txOutScripts : Tx txLevel → ℙ Script
+  txOutScripts = mapPartial txOutToScript ∘ txOut
+
+  txOutData : Tx txLevel → ℙ Datum
+  txOutData = mapPartial txOutToDatum ∘ txOut
+
+  -- witnesses
+  witnessScripts : Tx txLevel → ℙ Script
+  witnessScripts tx = ScriptsOf tx
+
+  witnessData : Tx txLevel → ℙ Datum
+  witnessData tx = DataOf tx
+
+  getTxScripts : UTxO → Tx txLevel → ℙ Script
+  getTxScripts utxo tx =  witnessScripts tx
+                          ∪ spendScripts utxo tx
+                          ∪ referenceScripts utxo tx
+                          ∪ txOutScripts tx
+
   getTxData : UTxO → Tx txLevel → ℙ Datum
-  getTxData utxo tx =
-    DataOf tx                                 -- (1) data from witnesses
-    ∪ mapPartial txOutToDatum
-       ( range (utxo ∣ SpendInputsOf tx)      -- (2) data from spending inputs
-       ∪ range (utxo ∣ ReferenceInputsOf tx)  -- (3) data from reference inputs
-       ∪ range (TxOutsOf tx ˢ))               -- (4) data from transaction outputs
+  getTxData utxo tx =  witnessData tx
+                       ∪ spendData utxo tx
+                       ∪ referenceData utxo tx
+                       ∪ txOutData tx
+
+  getAllScripts : TopLevelTx → UTxO → ℙ Script
+  getAllScripts tx utxo =
+    getTxScripts utxo tx               -- (1) scripts from top-level transaction
+    ∪ concatMapˢ (getTxScripts utxo)   -- (2) scripts from subtransactions
+                 (fromList (SubTransactionsOf tx))
 
   getAllData : TopLevelTx → UTxO → ℙ Datum
-  getAllData tx utxo = getTxData utxo tx
-                       ∪ concatMapˢ (getTxData utxo) (fromList (SubTransactionsOf tx))
+  getAllData tx utxo =
+    getTxData utxo tx ∪ concatMapˢ (getTxData utxo) (fromList (SubTransactionsOf tx))
+
+  lookupScriptHash : ScriptHash → Tx txLevel → UTxO → Maybe Script
+  lookupScriptHash sh tx utxo = lookupHash sh (getTxScripts utxo tx)
 ```
 
 CIP-0118 models "required top-level guards" as a list of requirements coming
