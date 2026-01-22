@@ -88,13 +88,16 @@ credsNeeded utxo txb
 txOutToDataHash : TxOut → Maybe DataHash
 txOutToDataHash (_ , _ , d , _) = d >>= isInj₂
 
-txOutToP2Script
+credentialToP2Script
   : UTxO → Tx
-  → TxOut → Maybe P2Script
-txOutToP2Script utxo tx (a , _) =
-  do sh ← isScriptObj (payCred a)
+  → Credential → Maybe P2Script
+credentialToP2Script utxo tx c =
+  do sh ← isScriptObj c
      s  ← lookupScriptHash sh tx utxo
      toP2Script s
+
+txOutToP2Script : UTxO → Tx → TxOut → Maybe P2Script
+txOutToP2Script utxo tx = credentialToP2Script utxo tx ∘ payCred ∘ proj₁
 
 opaque
   collectP2ScriptsWithContext
@@ -102,17 +105,14 @@ opaque
     → List (P2Script × List Data × ExUnits × CostModel)
   collectP2ScriptsWithContext pp tx utxo
     = setToList
-    $ mapPartial (λ (sp , c) → if isScriptObj c
-                                then (λ {sh} → toScriptInput sp sh)
-                                else nothing)
+    $ mapPartial toScriptInput
     $ credsNeeded utxo (tx .Tx.body)
     where
       toScriptInput
-        : ScriptPurpose → ScriptHash
+        : ScriptPurpose × Credential
         → Maybe (P2Script × List Data × ExUnits × CostModel)
-      toScriptInput sp sh =
-        do s ← lookupScriptHash sh tx utxo
-           p2s ← toP2Script s
+      toScriptInput (sp , c) =
+        do p2s ← credentialToP2Script utxo tx c
            (rdmr , exunits) ← indexedRdmrs tx sp
            let data'     = maybe [_] [] (getDatum tx utxo sp) ++ rdmr ∷ [ valContext (txInfo (language p2s) pp utxo tx) sp ]
            costModel ← lookupᵐ? (PParams.costmdls pp) (language p2s)
