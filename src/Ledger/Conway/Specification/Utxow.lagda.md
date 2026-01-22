@@ -112,10 +112,10 @@ hashScriptIntegrity
   → RdmrPtr ⇀ (Redeemer × ExUnits)
   → ℙ Datum
   → Maybe ScriptHash
-hashScriptIntegrity pp langs rdrms dats =
-  if (lengthˢ langs == 0) ∧ (lengthˢ dats == 0) then
-    nothing
-  else
+hashScriptIntegrity pp langs rdrms dats
+  with rdrms ˢ ≟ ∅ˢ | langs ≟ ∅ˢ | dats ≟ ∅ˢ
+...  | yes _        | yes _      | yes _ = nothing
+...  | _            | _          | _     =
     just $ hash (dats , rdrms , mapˢ (getLanguageView pp) langs)
 ```
 
