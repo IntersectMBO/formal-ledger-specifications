@@ -38,15 +38,15 @@ open EnactState using (cc)
 ```agda
 record SubLedgerEnv : Type where
   field
-    slot        : Slot
-    ppolicy     : Maybe ScriptHash
-    pparams     : PParams
-    enactState  : EnactState
-    treasury    : Treasury
+    slot             : Slot
+    ppolicy          : Maybe ScriptHash
+    pparams          : PParams
+    enactState       : EnactState
+    treasury         : Treasury
     utxo₀            : UTxO
     isTopLevelValid  : Bool
-    allScripts    : ℙ P1Script × ℙ P2Script
-    allData       : DataHash ⇀ Datum
+    allScripts       : ℙ Script
+    allData          : DataHash ⇀ Datum
 
 record LedgerEnv : Type where
   field
@@ -185,8 +185,8 @@ private variable
   enactState            : EnactState
   treasury              : Treasury
   isTopLevelValid       : Bool
-  allScripts         : ℙ P1Script × ℙ P2Script
-  allData            : DataHash ⇀ Datum
+  allScripts            : ℙ Script
+  allData               : DataHash ⇀ Datum
 ```
 -->
 
