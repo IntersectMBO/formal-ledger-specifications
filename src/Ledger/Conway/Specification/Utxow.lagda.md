@@ -99,7 +99,10 @@ allowedLanguages tx utxo =
 
 The script integrity hash helps determining that the cost model for execution
 of a script hasn't changed since the transaction was submitted. Otherwise,
-evaluation of the script could yield a different value than expected.
+evaluation of the script could yield a different value than expected. It also
+helps checking that the same datums and redeemers are provided every time
+a transaction is validated. See Section 2.2, Propery C.8 and the proof of
+Lemma C.10 in [VK21,](#alonzo-ledger-spec) for the details.
 
 ```agda
 hashScriptIntegrity
