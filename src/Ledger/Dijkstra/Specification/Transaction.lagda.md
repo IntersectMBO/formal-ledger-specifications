@@ -6,10 +6,12 @@ source_path: src/Ledger/Dijkstra/Specification/Transaction.lagda.md
 # Transactions {#sec:transactions}
 
 A transaction in Dijkstra is very similar to a transaction in Conway
-except that now, as described in CIP 0118[^1], it may include
+except that now, as described in CIP 0118[^1], it may additionally include
 
-+  other (sub)transactions as part of its body;
-+  _guard_ scripts.
++  a list of **subtransactions** as part of its body; and
++  **guards**, expressed as a set of credentials (key or script), which can be
+   required by scripts and by subtransactions (CIP-0112 / CIP-0118).
+
 
 <!--
 ```agda
@@ -50,8 +52,8 @@ This type will be used, among other purposes, to provide a concise
 definition of the types of top-level and sub transactions in the [Transaction Structure][]
 section below.
 
-Transactions cannot be arbitrarily nested. That is, a transaction (henceforth refered
-as top-level transaction) can include subtransactions, but these cannot include
+Transactions cannot be arbitrarily nested. That is, a transaction (henceforth referred
+to as a top-level transaction) can include subtransactions, but these cannot include
 other subtransactions.  This will manifest in the types of transactions defined
 below by constraining which fields are present in each level of transaction.
 Specifically, only top-level transactions can include subtransactions
@@ -204,10 +206,13 @@ Of particular note in the Dijkstra era are
    transaction;
 
 +  `txGuards`{.AgdaField}: only present in top-level transactions,
-   this field collects the guard scripts (credentials) required by this transaction;
+   this field collects the guard *credentials* (keys or scripts) required by
+   this transaction and/or by its subtransactions;
+
 
 +  `txRequiredTopLevelGuards`{.AgdaField}: only present in sub-level transactions,
-   this field collects the top-level guards required by a subtransaction.
+   this field collects the guards (credential, optional datum) required by a
+   subtransaction.
 
 ```agda
   mutual
@@ -500,17 +505,24 @@ could be either of them.
 ### Auxiliary Functions for Transaction Structures
 
 This section collects some unimportant but useful helper and accessor functions.
+In the Dijkstra era, we need to talk about *which UTxO* a helper is parameterised by.
+In particular:
 
-In the Dijkstra era, *spending* inputs must exist in the initial UTxO snapshot
-(mempool safety), while *script/data availability* is *batch-scoped*.  By this we
-mean that, with "self-usable outputs" (see CIP-????; TODO: add reference), we can
-form an order-independent "batch view" `utxoView = utxo₀ ∪ batchOuts`, and use that
-for reference lookups and script/data availability (while still using `utxo₀` for
-spending inputs).
++  **Spend-side checks remain mempool-safe**. Spending inputs are always inspected
+   against the pre-batch UTxO snapshot (`utxo₀`{.AgdaField}).
++  **Script/data availability is batch-scoped**.  In the ledger rules, the "global"
+   script universe and datum-by-hash pool are computed once per top-level batch
+   (using `getAllScripts` / `getAllData`) and then threaded through the environment.
 
-+  `utxo₀`{.AgdaBound}, the initial UTxO snapshot, used for `txIns`{.AgdaField};
-+  `utxoView`{.AgdaBound}, the batch view, `utxo₀ ∪ batchOuts`, used for reference
-   lookups and script/data availability.
+This module stays intentionally *policy-neutral* about batch wiring.  The helpers
+below simply take a UTxO parameter, and callers choose whether that argument is
+the pre-batch snapshot (`utxo₀`), some batch view, or another derived map.
+
+Informally, you can think of two common choices that appear elsewhere:
+
++  `utxo₀`: the pre-batch UTxO snapshot used for spend-side lookups;
++  `utxo₀ ∪ batchOuts`: a batch view that includes outputs created in the batch
+   (when a rule needs those outputs explicitly).
 
 ```agda
   TxOutʰ : Type
@@ -617,7 +629,7 @@ remaining helper functions of this section.
    top-level guards and groups them into `GroupedTopLevelGuards`{.AgdaDatatype} by
    folding an insertion function over the list.
 
-+  `subTxTopLevelGuards`{.AgdaFunction}: a function that takes a
++  `subTxTaggedGuards`{.AgdaFunction}: a function that takes a
    subtransaction and produces a set of tagged top-level guards required by that
    subtransaction, by mapping over its `txRequiredTopLevelGuards` field and attaching
    the subtransaction's id to each guard.  (We attach the id of the subTx requiring
@@ -654,8 +666,8 @@ remaining helper functions of this section.
 
   -- Phase-1 condition (CIP-0118):
   -- every credential required by a subTx body must appear in the top-level txGuards set.
-  requiredTopLevelGuardsSatisfied : TopLevelTx → List SubLevelTx → Type
-  requiredTopLevelGuardsSatisfied topTx subTxs = requiredCreds ⊆ GuardsOf topTx
+  requiredGuardsInTopLevel : TopLevelTx → List SubLevelTx → Type
+  requiredGuardsInTopLevel topTx subTxs = requiredCreds ⊆ GuardsOf topTx
     where
     concatMapˡ : {A B : Type} → (A → ℙ B) → List A → ℙ B
     concatMapˡ f as = proj₁ $ unions (fromList (map f as))
@@ -674,13 +686,15 @@ The Dijkstra era introduces *nested transactions* (a single top-level transactio
 that contains a list of sub-transactions) and *guards* (CIP-0112 / CIP-0118).  As a
 result, several checks that were "per-transaction" in Conway become *batch-aware*.
 
-**Design Note** (CIP-0118: spending inputs vs reference inputs).
+**Design Note** (spending inputs vs reference inputs).
 For Dijkstra batches, we distinguish *spending inputs* from *reference inputs*.
 All spending inputs across the whole batch must exist in the initial UTxO snapshot
-(mempool safety).  Reference inputs may additionally point to outputs of **preceding
-subtransactions in the batch order**.  Therefore reference-script/datum lookup is
-performed against an *evolving, tentative UTxO view* (prefix-applied), used only for
-lookup/validation, while *ledger state is committed only if the full batch succeeds*.
+(mempool safety).  Reference inputs are treated separately by the UTxO rules.
+For script/data availability, the ledger computes batch-wide `globalScripts` and
+`globalData` once per top-level batch and threads them through the environment, so
+Phase 2 execution can be done with a shared, batch-scoped witness pool.
+
+
 
 ### Key points
 
