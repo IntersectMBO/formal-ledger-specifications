@@ -17,7 +17,8 @@ open import Ledger.Conway.Specification.Gov.Base
 
 module Ledger.Conway.Specification.Enact (gs : _) (open GovStructure gs) where
 
-open import Ledger.Conway.Specification.Gov.Actions gs
+open import Ledger.Conway.Specification.Gov.Actions (GS→GAS gs)
+open import Ledger.Core.Specification.ProtocolVersion
 ```
 -->
 

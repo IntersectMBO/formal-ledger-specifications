@@ -11,25 +11,25 @@ This section defines the adjustable protocol parameters of the Cardano ledger.
 ```agda
 {-# OPTIONS --safe #-}
 
-open import Data.Product.Properties
-open import Data.Nat.Properties using (m+1+n≢m)
-open import Data.Rational using (ℚ)
-open import Relation.Nullary.Decidable
-open import Data.List.Relation.Unary.Any using (Any; here; there)
-
-open import Tactic.Derive.Show
-
-open import Ledger.Prelude
-open import Ledger.Core.Specification.Crypto
 open import Ledger.Conway.Specification.Script.Base
+open import Ledger.Core.Specification.Crypto
 open import Ledger.Core.Specification.Epoch
-open import Ledger.Prelude.Numeric using (UnitInterval; ℕ⁺)
 
 module Ledger.Conway.Specification.PParams
   (cs : CryptoStructure )
   (es : _) (open EpochStructure es)
   (ss : ScriptStructure cs es) (open ScriptStructure ss)
   where
+
+open import Data.Product.Properties
+open import Data.Nat.Properties using (m+1+n≢m)
+open import Data.Rational using (ℚ)
+open import Data.List.Relation.Unary.Any using (Any; here; there)
+open import Tactic.Derive.Show
+
+open import Ledger.Core.Specification.ProtocolVersion
+open import Ledger.Prelude
+open import Ledger.Prelude.Numeric using (UnitInterval; ℕ⁺)
 
 private variable
   m n : ℕ
@@ -100,25 +100,6 @@ instance
   HasReserves-Acnt .ReservesOf = Acnt.reserves
 ```
 -->
-
-```agda
-ProtVer : Type
-ProtVer = ℕ × ℕ
-```
-
-<!--
-```agda
-instance
-  Show-ProtVer : Show ProtVer
-  Show-ProtVer = Show-×
-```
--->
-
-```agda
-data pvCanFollow : ProtVer → ProtVer → Type where
-  canFollowMajor : pvCanFollow (m , n) (m + 1 , 0)
-  canFollowMinor : pvCanFollow (m , n) (m , n + 1)
-```
 
 <!--
 ```agda

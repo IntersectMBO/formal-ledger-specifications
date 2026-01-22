@@ -12,15 +12,22 @@ This section defines several concepts and types used to represent governance act
 {-# OPTIONS --safe #-}
 
 open import Ledger.Conway.Specification.Gov.Base
+open import Ledger.Core.Specification.Crypto
+open import Ledger.Core.Specification.Epoch
+open import Ledger.Prelude as P hiding (yes; no)
 
-module Ledger.Conway.Specification.Gov.Actions (gs : _) (open GovStructure gs) where
+module Ledger.Conway.Specification.Gov.Actions
+  (govActionsStructure : GovActionsStructure)
+  where
+
+open GovActionsStructure govActionsStructure
+open import Ledger.Core.Specification.Address Network KeyHash ScriptHash
+open import Ledger.Core.Specification.ProtocolVersion
 
 open import Data.Nat.Properties using (+-0-monoid)
 open import Data.Rational using (ℚ; 0ℚ; 1ℚ)
 
 open import Tactic.Derive.Show
-
-open import Ledger.Prelude as P hiding (yes; no)
 ```
 -->
 

@@ -17,7 +17,7 @@ open import Relation.Nullary.Decidable
 open import Tactic.ReduceDec
 
 open import Algebra using (CommutativeMonoid)
-open import Ledger.Conway.Specification.Gov.Actions gs hiding (yes; no)
+open import Ledger.Conway.Specification.Gov.Actions (GS→GAS gs) hiding (yes; no)
 open import Ledger.Conway.Specification.Certs gs
 
 open import Data.Nat.Properties using (+-0-monoid; +-0-commutativeMonoid; +-identityʳ; +-identityˡ)

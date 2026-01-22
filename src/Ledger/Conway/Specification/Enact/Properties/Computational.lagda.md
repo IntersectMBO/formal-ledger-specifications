@@ -12,7 +12,7 @@ module Ledger.Conway.Specification.Enact.Properties.Computational (gs : _) (open
 
 open import Ledger.Prelude
 
-open import Ledger.Conway.Specification.Gov.Actions gs hiding (yes; no)
+open import Ledger.Conway.Specification.Gov.Actions (GS→GAS gs) hiding (yes; no)
 open import Ledger.Conway.Specification.Enact gs
 
 open EnactState

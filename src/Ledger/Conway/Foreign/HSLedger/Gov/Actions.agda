@@ -7,7 +7,8 @@ open import Ledger.Conway.Foreign.HSLedger.BaseTypes
 open import Ledger.Conway.Foreign.HSLedger.PParams
 
 open import Ledger.Conway.Specification.Gov.Base
-open import Ledger.Conway.Specification.Gov.Actions govStructure using (Vote) public
+open import Ledger.Conway.Specification.Gov.Actions (GS→GAS govStructure) using (Vote) public
+open import Ledger.Core.Specification.ProtocolVersion
 
 DocHash = GovStructure.DocHash govStructure
 

@@ -24,10 +24,11 @@ open import Ledger.Prelude hiding (any?; Any; all?; All; Rel; lookup; ∈-filter
 
 open import Axiom.Set.Properties th using (∃-sublist-⇔)
 
-open import Ledger.Conway.Specification.Gov.Actions govStructure hiding (yes; no)
+open import Ledger.Conway.Specification.Gov.Actions (GS→GAS govStructure) hiding (yes; no)
 open import Ledger.Conway.Specification.Enact govStructure
 open import Ledger.Conway.Specification.Ratify govStructure
 open import Ledger.Conway.Specification.Certs govStructure
+open import Ledger.Core.Specification.ProtocolVersion
 
 open import stdlib.Data.List.Subpermutations using (subpermutations; sublists)
 open import stdlib.Data.List.Subpermutations.Properties

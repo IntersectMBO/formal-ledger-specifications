@@ -2,7 +2,8 @@ module Ledger.Conway.Foreign.HSLedger.Gov.Core where
 
 open import Ledger.Conway.Foreign.HSLedger.Address
 open import Ledger.Conway.Foreign.HSLedger.BaseTypes
-open import Ledger.Conway.Specification.Gov.Actions govStructure using (Vote)
+open import Ledger.Conway.Specification.Gov.Base
+open import Ledger.Conway.Specification.Gov.Actions (GS→GAS govStructure) using (Vote)
 
 instance
   HsTy-GovRole = autoHsType GovRole

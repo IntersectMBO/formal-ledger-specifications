@@ -19,8 +19,9 @@ open import Axiom.Set.Properties
 
 open import Ledger.Conway.Specification.Enact govStructure
 open import Ledger.Conway.Specification.Gov govStructure
-open import Ledger.Conway.Specification.Gov.Actions govStructure hiding (yes; no)
+open import Ledger.Conway.Specification.Gov.Actions (GS→GAS govStructure) hiding (yes; no)
 open import Ledger.Conway.Specification.Ratify govStructure
+open import Ledger.Core.Specification.ProtocolVersion
 
 import Data.List.Membership.Propositional as P
 open import Data.List.Membership.Propositional.Properties

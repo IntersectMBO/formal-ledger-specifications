@@ -8,7 +8,7 @@ source_path: src/Ledger/Conway/Specification/Gov/Base.lagda.md
 
 module Ledger.Conway.Specification.Gov.Base where
 
-open import Prelude using (Type)
+open import Prelude
 open import Class.DecEq
 open import Ledger.Core.Specification.Crypto
 open import Ledger.Core.Specification.Epoch
@@ -37,4 +37,25 @@ record GovStructure : Type₁ where
   open GlobalConstants globalConstants public
 
   open import Ledger.Core.Specification.Address Network KeyHash ScriptHash public
+```
+
+```agda
+record GovActionsStructure : Type₁ where
+  field cryptoStructure : CryptoStructure
+  open CryptoStructure cryptoStructure public
+
+  field epochStructure : EpochStructure
+  open EpochStructure epochStructure public
+
+  field Network : Type
+        ⦃ DecEq-Network ⦄ : DecEq Network
+        ⦃ Show-Network  ⦄ : Show Network
+        DocHash : Type
+        TxId    : Type
+        PParamsUpdate : Type
+```
+
+```agda
+GS→GAS : GovStructure → GovActionsStructure
+GS→GAS govStructure = record { GovStructure govStructure }
 ```

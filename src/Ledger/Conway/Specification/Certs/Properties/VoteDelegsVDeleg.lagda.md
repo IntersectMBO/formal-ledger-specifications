@@ -16,7 +16,7 @@ module Ledger.Conway.Specification.Certs.Properties.VoteDelegsVDeleg (gs : _) (o
 
 open import Ledger.Conway.Specification.Certs gs
 open import Ledger.Prelude
-open import Ledger.Conway.Specification.Gov.Actions gs
+open import Ledger.Conway.Specification.Gov.Actions (GS→GAS gs)
 ```
 -->
 

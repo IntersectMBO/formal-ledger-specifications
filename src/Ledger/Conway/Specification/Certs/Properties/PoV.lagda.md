@@ -21,7 +21,7 @@ module Ledger.Conway.Specification.Certs.Properties.PoV (gs : _) (open GovStruct
 
 open import Ledger.Conway.Specification.Certs gs
 open import Ledger.Conway.Specification.Certs.Properties.PoVLemmas gs
-open import Ledger.Conway.Specification.Gov.Actions gs hiding (yes; no)
+open import Ledger.Conway.Specification.Gov.Actions (GS→GAS gs) hiding (yes; no)
 open import Ledger.Prelude
 
 open import Axiom.Set.Properties th

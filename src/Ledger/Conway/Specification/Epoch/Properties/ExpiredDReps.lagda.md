@@ -32,7 +32,8 @@ open import Ledger.Conway.Specification.Rewards txs abs
 open import Ledger.Conway.Specification.PoolReap txs abs
 open import Ledger.Conway.Specification.Utxo txs abs
 open import Ledger.Conway.Specification.Gov govStructure
-open import Ledger.Conway.Specification.Gov.Actions govStructure using (Vote)
+open import Ledger.Conway.Specification.Gov.Base
+open import Ledger.Conway.Specification.Gov.Actions (GS→GAS govStructure) using (Vote)
 open import Relation.Binary.PropositionalEquality hiding (cong)
 
 open import Axiom.Set.Properties th hiding (filter-map)
