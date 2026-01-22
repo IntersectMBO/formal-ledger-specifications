@@ -163,7 +163,7 @@ data _⊢_⇀⦇_,UTXOW⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Typ
     ∙  txADhash ≡ map hash txAD
     ∙  scriptIntegrityHash ≡
           hashScriptIntegrity
-            (UTxOEnv.pparams Γ)
+            (PParamsOf Γ)
             (languages tx utxo)
             txrdmrs
             txdats
