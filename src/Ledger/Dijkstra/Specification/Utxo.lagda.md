@@ -60,6 +60,10 @@ record UTxOState : Type where
 
 <!--
 ```agda
+record HasUTxOState {a} (A : Type a) : Type a where
+  field UTxOStateOf : A → UTxOState
+open HasUTxOState ⦃...⦄ public
+
 instance
   HasUTxO-UTxOEnv : HasUTxO UTxOEnv
   HasUTxO-UTxOEnv .UTxOOf = UTxOEnv.utxo₀

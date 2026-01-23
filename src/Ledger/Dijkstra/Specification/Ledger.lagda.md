@@ -23,8 +23,8 @@ module Ledger.Dijkstra.Specification.Ledger
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
 
-open import Ledger.Conway.Specification.Enact govStructure
-open import Ledger.Conway.Specification.Gov govStructure
+open import Ledger.Dijkstra.Specification.Enact govStructure
+open import Ledger.Dijkstra.Specification.Gov govStructure
 open import Ledger.Dijkstra.Specification.Utxo txs abs
 open import Ledger.Dijkstra.Specification.Utxow txs abs
 open import Ledger.Dijkstra.Specification.Certs govStructure
@@ -33,7 +33,6 @@ open Tx
 open GState
 open GovActionState
 open EnactState using (cc)
---
 ```
 -->
 
@@ -59,7 +58,15 @@ record LedgerEnv : Type where
     pparams     : PParams
     enactState  : EnactState
     treasury    : Treasury
+
+record LState : Type where
+  constructor ⟦_,_,_⟧ˡ
+  field
+    utxoSt     : UTxOState
+    govSt      : GovState
+    certState  : CertState
 ```
+
 <!--
 ```agda
 instance
@@ -73,72 +80,61 @@ instance
   HasPParams-SubLedgerEnv .PParamsOf = LedgerEnv.pparams
 ```
 -->
-```agda
-record LState : Type where
-```
-<!--
-```agda
-  constructor ⟦_,_,_⟧ˡ
-```
--->
-```agda
-  field
-    utxoSt     : UTxOState
-    govSt      : GovState
-    certState  : CertState
-```
-<!--
+
 ```agda
 record HasLState {a} (A : Type a) : Type a where
   field LStateOf : A → LState
 open HasLState ⦃...⦄ public
+```
+-->
+```agda
 
--- instance
---   HasUTxOState-LState : HasUTxOState LState
---   HasUTxOState-LState .UTxOStateOf = LState.utxoSt
+instance
+  HasUTxOState-LState : HasUTxOState LState
+  HasUTxOState-LState .UTxOStateOf = LState.utxoSt
 
---   HasUTxO-LState : HasUTxO LState
---   HasUTxO-LState .UTxOOf = UTxOOf ∘ UTxOStateOf
+  HasUTxO-LState : HasUTxO LState
+  HasUTxO-LState .UTxOOf = UTxOOf ∘ UTxOStateOf
 
---   HasGovState-LState : HasGovState LState
---   HasGovState-LState .GovStateOf = LState.govSt
+  HasGovState-LState : HasGovState LState
+  HasGovState-LState .GovStateOf = LState.govSt
 
---   HasCertState-LState : HasCertState LState
---   HasCertState-LState .CertStateOf = LState.certState
+  HasCertState-LState : HasCertState LState
+  HasCertState-LState .CertStateOf = LState.certState
 
---   HasDeposits-LState : HasDeposits LState
---   HasDeposits-LState .DepositsOf = DepositsOf ∘ UTxOStateOf
+  HasDeposits-LState : HasDeposits LState
+  HasDeposits-LState .DepositsOf = DepositsOf ∘ UTxOStateOf
 
---   HasPools-LState : HasPools LState
---   HasPools-LState .PoolsOf = PoolsOf ∘ CertStateOf
+  HasPools-LState : HasPools LState
+  HasPools-LState .PoolsOf = PoolsOf ∘ CertStateOf
 
---   HasGState-LState : HasGState LState
---   HasGState-LState .GStateOf = GStateOf ∘ CertStateOf
+  HasGState-LState : HasGState LState
+  HasGState-LState .GStateOf = GStateOf ∘ CertStateOf
 
---   HasDState-LState : HasDState LState
---   HasDState-LState .DStateOf = DStateOf ∘ CertStateOf
+  HasDState-LState : HasDState LState
+  HasDState-LState .DStateOf = DStateOf ∘ CertStateOf
 
---   HasPState-LState : HasPState LState
---   HasPState-LState .PStateOf = PStateOf ∘ CertStateOf
+  HasPState-LState : HasPState LState
+  HasPState-LState .PStateOf = PStateOf ∘ CertStateOf
 
---   HasVoteDelegs-LState : HasVoteDelegs LState
---   HasVoteDelegs-LState .VoteDelegsOf = VoteDelegsOf ∘ DStateOf ∘ CertStateOf
+  HasVoteDelegs-LState : HasVoteDelegs LState
+  HasVoteDelegs-LState .VoteDelegsOf = VoteDelegsOf ∘ DStateOf ∘ CertStateOf
 
---   HasDonations-LState : HasDonations LState
---   HasDonations-LState .DonationsOf = DonationsOf ∘ UTxOStateOf
+  HasDonations-LState : HasDonations LState
+  HasDonations-LState .DonationsOf = DonationsOf ∘ UTxOStateOf
 
---   HasFees-LState : HasFees LState
---   HasFees-LState .FeesOf = FeesOf ∘ UTxOStateOf
+  HasFees-LState : HasFees LState
+  HasFees-LState .FeesOf = FeesOf ∘ UTxOStateOf
 
---   HasCCHotKeys-LState : HasCCHotKeys LState
---   HasCCHotKeys-LState .CCHotKeysOf = CCHotKeysOf ∘ GStateOf
+  HasCCHotKeys-LState : HasCCHotKeys LState
+  HasCCHotKeys-LState .CCHotKeysOf = CCHotKeysOf ∘ GStateOf
 
---   HasDReps-LState : HasDReps LState
---   HasDReps-LState .DRepsOf = DRepsOf ∘ CertStateOf
+  HasDReps-LState : HasDReps LState
+  HasDReps-LState .DRepsOf = DRepsOf ∘ CertStateOf
 
--- open CertState
--- open DState
--- open GovVotes
+open CertState
+open DState
+open GovVotes
 
 instance
   unquoteDecl HasCast-LState = derive-HasCast
@@ -211,14 +207,7 @@ UTxOEnv{.AgdaDatatype}/SubLedgerEnv{.AgdaDatatype}.
 data _⊢_⇀⦇_,SUBLEDGER⦈_ : SubLedgerEnv → LState → SubLevelTx → LState → Type where
   SUBLEDGER-V :
     let txb = stx .txBody
-
-```
-<!--
-```agda
         open TxBody txb
-```
--->
-```agda
     in
       ∙ isTopLevelValid ≡ true
       ∙ ⟦ slot , pp , treasury , utxo₀ , isTopLevelValid , allScripts , allData ⟧  ⊢ utxoState ⇀⦇ stx ,SUBUTXOW⦈ utxoState'

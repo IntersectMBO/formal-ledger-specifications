@@ -4,7 +4,7 @@ source_path: src/Ledger/Dijkstra/Specification.lagda.md
 ---
 
 This is the formal specification of the Cardano ledger for the Dijkstra era.
-The Agda source code which formalizes the ledger specification in the Conway era
+The Agda source code which formalizes the ledger specification in the Dijkstra era
 consists of the modules listed below.
 
 <!--
@@ -42,7 +42,7 @@ import Ledger.Dijkstra.Specification.Gov.Actions
 ## Ledger
 
 ```agda
-import Ledger.Dijkstra.Specification.Ledger
+-- import Ledger.Dijkstra.Specification.Ledger
 ```
 
 ## Protocol Parameters

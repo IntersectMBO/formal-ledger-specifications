@@ -356,9 +356,9 @@ could be either of them.
     field GovProposalsOf : A → List GovProposal
   open HasGovProposals ⦃...⦄ public
 
-  record HasGovVotes {a} (A : Type a) : Type a where
-    field GovVotesOf : A → List GovVote
-  open HasGovVotes ⦃...⦄ public
+  record HasListOfGovVotes {a} (A : Type a) : Type a where
+    field ListOfGovVotesOf : A → List GovVote
+  open HasListOfGovVotes ⦃...⦄ public
 
   record HasGuards {a} (A : Type a) : Type a where
     field GuardsOf : A → ℙ Credential
@@ -433,11 +433,11 @@ could be either of them.
     HasMintedValue-Tx : HasMintedValue (Tx txLevel)
     HasMintedValue-Tx .MintedValueOf = MintedValueOf ∘ TxBodyOf
 
-    HasGovVotes-TxBody : HasGovVotes (TxBody txLevel)
-    HasGovVotes-TxBody .GovVotesOf = TxBody.txGovVotes
+    HasListOfGovVotes-TxBody : HasListOfGovVotes (TxBody txLevel)
+    HasListOfGovVotes-TxBody .ListOfGovVotesOf = TxBody.txGovVotes
 
-    HasGovVotes-Tx : HasGovVotes (Tx txLevel)
-    HasGovVotes-Tx .GovVotesOf = GovVotesOf ∘ TxBodyOf
+    HasListOfGovVotes-Tx : HasListOfGovVotes (Tx txLevel)
+    HasListOfGovVotes-Tx .ListOfGovVotesOf = ListOfGovVotesOf ∘ TxBodyOf
 
     HasGovProposals-TxBody : HasGovProposals (TxBody txLevel)
     HasGovProposals-TxBody .GovProposalsOf = TxBody.txGovProposals
