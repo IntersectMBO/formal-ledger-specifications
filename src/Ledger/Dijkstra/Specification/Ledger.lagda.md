@@ -165,6 +165,20 @@ rmOrphanDRepVotes cs govSt = L.map (map₂ go) govSt
 allColdCreds : GovState → EnactState → ℙ Credential
 allColdCreds govSt es =
   ccCreds (es .cc) ∪ concatMapˢ (λ (_ , st) → proposedCC (GovActionOf st)) (fromList govSt)
+
+calculateDepositsChange : CertState → CertState → ℤ
+calculateDepositsChange certState certState' = initialCoin - finalCoin
+  where
+    initialCoin : ℕ
+    initialCoin = getCoin (DepositsOf (DStateOf certState))
+                  + getCoin (DepositsOf (PStateOf certState))
+                  + getCoin (DepositsOf (GStateOf certState))
+
+    finalCoin : ℕ
+    finalCoin = getCoin (DepositsOf (DStateOf certState'))
+                + getCoin (DepositsOf (PStateOf certState'))
+                + getCoin (DepositsOf (GStateOf certState'))
+
 ```
 
 -- ## <span class="AgdaDatatype">LEDGER</span> Transition System
@@ -178,6 +192,7 @@ private variable
   utxo₀                 : UTxO
   govState govState'    : GovState
   certState certState'  : CertState
+  depositsChange        : ℤ
   stx                   : SubLevelTx
   slot                  : Slot
   ppolicy               : Maybe ScriptHash
@@ -249,12 +264,14 @@ data _⊢_⇀⦇_,LEDGER⦈_ : LedgerEnv → LState → TopLevelTx → LState �
          allData : DataHash ⇀ Datum
          allData = setToMap (mapˢ < hash , id > (getAllData tx utxo₀))
 
+         depositsChange : ℤ
+         depositsChange = calculateDepositsChange certState certState''
     in
       ∙ IsValidFlagOf tx ≡ true
       ∙ ⟦ slot , ppolicy , pp , enactState , treasury , utxo₀ , IsValidFlagOf tx , allScripts , allData ⟧ ⊢ ⟦ utxoState , govState , certState ⟧ ⇀⦇ SubTransactionsOf tx ,SUBLEDGERS⦈ ⟦ utxoState' , govState' , certState' ⟧
-      ∙ ⟦ slot , pp , treasury , utxo₀ , IsValidFlagOf tx , allScripts , allData ⟧  ⊢ utxoState' ⇀⦇ tx ,UTXOW⦈ utxoState''
       ∙ ⟦ epoch slot , pp , ListOfGovVotesOf tx , WithdrawalsOf tx , allColdCreds govState enactState ⟧ ⊢ certState' ⇀⦇ DCertsOf tx ,CERTS⦈ certState''
       ∙ ⟦ TxIdOf tx , epoch slot , pp , ppolicy , enactState , certState' , dom (RewardsOf certState) ⟧ ⊢ rmOrphanDRepVotes certState' govState ⇀⦇ GovProposals+Votes tx ,GOVS⦈ govState'
+      ∙ ⟦ slot , pp , treasury , utxo₀ , depositsChange , allScripts , allData ⟧  ⊢ utxoState' ⇀⦇ tx ,UTXOW⦈ utxoState''
       ────────────────────────────────
       ⟦ slot , ppolicy , pp , enactState , treasury ⟧ ⊢ ⟦ utxoState , govState , certState ⟧ ⇀⦇ tx ,LEDGER⦈ ⟦ utxoState'' , govState'' , certState'' ⟧
 
@@ -270,21 +287,12 @@ data _⊢_⇀⦇_,LEDGER⦈_ : LedgerEnv → LState → TopLevelTx → LState �
     in
       ∙ IsValidFlagOf tx ≡ false
       ∙ ⟦ slot , ppolicy , pp , enactState , treasury , utxo₀ , IsValidFlagOf tx , allScripts , allData ⟧ ⊢ ⟦ utxoState , govState , certState ⟧ ⇀⦇ SubTransactionsOf tx  ,SUBLEDGERS⦈ ⟦ utxoState , govState , certState ⟧
-      ∙ ⟦ slot , pp , treasury , utxo₀ , IsValidFlagOf tx , allScripts , allData ⟧ ⊢ utxoState ⇀⦇ tx ,UTXOW⦈ utxoState'
+      ∙ ⟦ slot , pp , treasury , utxo₀ , 0ℤ , allScripts , allData ⟧ ⊢ utxoState ⇀⦇ tx ,UTXOW⦈ utxoState'
       ────────────────────────────────
       ⟦ slot , ppolicy , pp , enactState , treasury ⟧ ⊢ ⟦ utxoState , govState , certState ⟧ ⇀⦇ tx ,LEDGER⦈ ⟦ utxoState' , govState , certState ⟧
 ```
 
--- <!--
--- ```agda
--- pattern LEDGER-V⋯ w x y z = LEDGER-V (w , x , y , z)
--- pattern LEDGER-I⋯ y z     = LEDGER-I (y , z)
--- ```
--- -->
-
--- ## <span class="AgdaDatatype">LEDGERS</span> Transition System
-
--- ```agda
--- _⊢_⇀⦇_,LEDGERS⦈_ : LEnv → LState → List Tx → LState → Type
--- _⊢_⇀⦇_,LEDGERS⦈_ = ReflexiveTransitiveClosure {sts = _⊢_⇀⦇_,LEDGER⦈_}
--- ```
+```agda
+_⊢_⇀⦇_,LEDGERS⦈_ : LedgerEnv → LState → List TopLevelTx → LState → Type
+_⊢_⇀⦇_,LEDGERS⦈_ = ReflexiveTransitiveClosure {sts = _⊢_⇀⦇_,LEDGER⦈_}
+```
