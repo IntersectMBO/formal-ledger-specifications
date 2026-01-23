@@ -68,10 +68,6 @@ instance
 
 languages : Tx → UTxO → ℙ Language
 languages tx utxo = mapPartial getLanguage (txscripts tx utxo)
-  where
-    getLanguage : Script → Maybe Language
-    getLanguage (inj₁ _) = nothing
-    getLanguage (inj₂ s) = just (language s)
 ```
 -->
 

@@ -90,4 +90,7 @@ lookupHash : ∀ {T H : Type} ⦃ _ : DecEq H ⦄ ⦃ _ : Hashable T H ⦄ → H
 lookupHash h s =
   if h ∈ mapˢ proj₁ (m ˢ) then just (lookupᵐ m h) else nothing
   where m = setToMap (mapˢ < hash , id > s)
+
+Is-∅ : {A : Type} → ℙ A → Type
+Is-∅ X = Is-[] (setToList X)
 ```
