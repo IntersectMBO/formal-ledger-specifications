@@ -539,6 +539,10 @@ data _⊢_⇀⦇_,UTXO⦈_ where
     ∙ txIns ∩ refInputs ≡ ∅                  ∙ inInterval slot txVldt
     ∙ minfee pp utxo tx ≤ txFee              ∙ (txrdmrs ˢ ≢ ∅ → collateralCheck pp tx utxo)
     ∙ consumed pp s txb ≡ produced pp s txb  ∙ coin mint ≡ 0
+    ∙ (¬ (∅ᵐ ≡ᵐ txrdmrs) × nothing ≢ proj₁ txVldt →
+         (do s ← proj₁ txVldt
+             epochInfoSlotToUTCTime EI SysSt s) ≢ nothing
+      )
     ∙ txsize ≤ maxTxSize pp
     ∙ refScriptsSize utxo tx ≤ pp .maxRefScriptSizePerTx
     ∙ ∀[ (_ , txout) ∈ ∣ txOutsʰ ∣ ]
@@ -558,8 +562,8 @@ data _⊢_⇀⦇_,UTXO⦈_ where
 
 <!--
 ```agda
-pattern UTXO-inductive⋯ tx Γ s x y z w k l m c v j n o p q r t u h
-  = UTXO-inductive {Γ = Γ} {s = s} {tx = tx} (x , y , z , w , k , l , m , c , v , j , n , o , p , q , r , t , u , h)
+pattern UTXO-inductive⋯ tx Γ s x y z w k l m c d v j n o p q r t u h
+  = UTXO-inductive {Γ = Γ} {s = s} {tx = tx} (x , y , z , w , k , l , m , c , d , v , j , n , o , p , q , r , t , u , h)
 unquoteDecl UTXO-premises = genPremises UTXO-premises (quote UTXO-inductive)
 ```
 -->

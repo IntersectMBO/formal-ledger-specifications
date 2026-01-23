@@ -183,7 +183,7 @@ module _ -- ASSUMPTION --
        -------------------------------------------------------------------
     →  coin (consumed pp utxoState txb) ≥ length txGovProposals * govActionDeposit
 
-  gmsc step@(UTXO-inductive⋯ tx Γ utxoState _ _ _ _ _ _ c≡p cmint≡0 _ _ _ _ _ _ _ _ _ _) nrf =
+  gmsc step@(UTXO-inductive⋯ tx Γ utxoState _ _ _ _ _ _ c≡p cmint≡0 _ _ _ _ _ _ _ _ _ _ _) nrf =
     begin
     length txGovProposals * govActionDeposit
       ≡˘⟨ updatePropDeps≡ txGovProposals ⟩

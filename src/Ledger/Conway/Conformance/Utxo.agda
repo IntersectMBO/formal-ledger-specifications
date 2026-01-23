@@ -91,6 +91,10 @@ data _⊢_⇀⦇_,UTXO⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Type
     ∙ txIns ∩ refInputs ≡ ∅                  ∙ L.inInterval slot txVldt
     ∙ L.minfee pp utxo tx ≤ txFee            ∙ (txrdmrs ˢ ≢ ∅ → L.collateralCheck pp tx utxo)
     ∙ consumed pp s txb ≡ produced pp s txb  ∙ coin mint ≡ 0
+    ∙ (¬ (∅ᵐ ≡ᵐ txrdmrs) × nothing ≢ proj₁ txVldt →
+         (do s ← proj₁ txVldt
+             epochInfoSlotToUTCTime EI SysSt s) ≢ nothing
+      )
     ∙ txsize ≤ maxTxSize pp
     ∙ L.refScriptsSize utxo tx ≤ pp .maxRefScriptSizePerTx
 
@@ -108,6 +112,6 @@ data _⊢_⇀⦇_,UTXO⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Type
       ────────────────────────────────
       Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s'
 
-pattern UTXO-inductive⋯ tx Γ s x y z w k l m c v j n o p q r t u h
-      = UTXO-inductive {tx}{Γ}{s} (x , y , z , w , k , l , m , c , v , j , n , o , p , q , r , t , u , h)
+pattern UTXO-inductive⋯ tx Γ s x y z w k l m c d v j n o p q r t u h
+      = UTXO-inductive {tx}{Γ}{s} (x , y , z , w , k , l , m , c , d , v , j , n , o , p , q , r , t , u , h)
 unquoteDecl UTXO-premises = genPremises UTXO-premises (quote UTXO-inductive)

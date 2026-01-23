@@ -39,6 +39,7 @@ need them by defining `transVITime`{.AgdaFunction} as abstract.
 ```agda
 record AbstractFunctions : Type₁ where
   field UTCTime      : Type
+        ⦃ DecEq-UTCTime ⦄ : DecEq UTCTime
         POSIXTimeRange : Type
         EpochInfo    : Type
         SystemStart  : Type
