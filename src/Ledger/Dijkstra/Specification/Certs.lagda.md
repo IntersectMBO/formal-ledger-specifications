@@ -31,16 +31,6 @@ record StakePoolParams : Type where
     pledge          : Coin
     rewardAccount   : Credential
 
--- Deposit Types
-data DepositPurpose : Type where
-  CredentialDeposit  : Credential   → DepositPurpose
-  PoolDeposit        : KeyHash      → DepositPurpose
-  DRepDeposit        : Credential   → DepositPurpose
-  GovActionDeposit   : GovActionID  → DepositPurpose
-
-Deposits : Type
-Deposits = DepositPurpose ⇀ Coin
-
 -- Miscellaneous Type Aliases
 
 CCHotKeys : Type
@@ -73,12 +63,6 @@ data DCert : Type where
   regdrep     : Credential → Coin → Anchor → DCert
   deregdrep   : Credential → Coin → DCert
   ccreghot    : Credential → Maybe Credential → DCert
-  -- The `reg` cert is deprecated in Conway, but it's still present in this era
-  -- for backwards compatibility. This has been added to the spec to make
-  -- conformance testing work properly. We don't talk about this certificate
-  -- in the docs because it has been deprecated and we want to discourage people
-  -- from using it.
-  reg         : Credential → Coin → DCert
 
 cwitness : DCert → Maybe Credential
 cwitness (delegate c _ _ _)  = just c
@@ -88,14 +72,6 @@ cwitness (retirepool kh _)   = just $ KeyHashObj kh
 cwitness (regdrep c _ _)     = just c
 cwitness (deregdrep c _)     = just c
 cwitness (ccreghot c _)      = just c
-
--- The implementation requires the `reg` cert to be witnessed only if the
--- deposit is set. There didn't use to be a field for the deposit, but that was
--- added in the Conway era to make it easier to determine, just by looking at
--- the transaction, how much deposit was paid for that certificate.
-cwitness (reg _ zero)        = nothing
-cwitness (reg c (suc _))     = just c
-
 
 -- Certification Types
 record CertEnv : Type where
@@ -112,18 +88,21 @@ record DState : Type where
     voteDelegs   : VoteDelegs
     stakeDelegs  : StakeDelegs
     rewards      : Rewards
+    deposits     : Credential ⇀ Coin
 
 record PState : Type where
   field
     pools     : Pools
     fPools    : Pools
     retiring  : KeyHash ⇀ Epoch
+    deposits  : KeyHash ⇀ Coin
 
 record GState : Type where
   constructor ⟦_,_⟧ᵛ
   field
     dreps      : DReps
     ccHotKeys  : Credential ⇀ Maybe Credential
+    deposits   : Credential ⇀ Coin
 
 record CertState : Type where
   constructor ⟦_,_,_⟧ᶜˢ
@@ -139,18 +118,11 @@ record DelegEnv : Type where
     delegatees    : ℙ Credential
 ```
 
-
-
-
 <!--
 ```agda
-record HasDeposits {a} (A : Type a) : Type a where
-  field DepositsOf : A → Deposits
+record HasDeposits (A : Type) {K : Type} : Type where
+  field DepositsOf : A → K ⇀ Coin
 open HasDeposits ⦃...⦄ public
-
-instance
-  unquoteDecl DecEq-DepositPurpose = derive-DecEq
-    ((quote DepositPurpose , DecEq-DepositPurpose) ∷ [])
 
 record HasCCHotKeys {a} (A : Type a) : Type a where
   field CCHotKeysOf : A → CCHotKeys
@@ -208,8 +180,14 @@ instance
   HasRewards-DState : HasRewards DState
   HasRewards-DState .RewardsOf = DState.rewards
 
+  HasDeposits-DState : HasDeposits DState
+  HasDeposits-DState .DepositsOf = DState.deposits
+
   HasPools-PState : HasPools PState
   HasPools-PState .PoolsOf = PState.pools
+
+  HasDeposits-PState : HasDeposits PState
+  HasDeposits-PState .DepositsOf = PState.deposits
 
   HasRetiring-PState : HasRetiring PState
   HasRetiring-PState .RetiringOf = PState.retiring
@@ -219,6 +197,9 @@ instance
 
   HasCCHotKeys-GState : HasCCHotKeys GState
   HasCCHotKeys-GState .CCHotKeysOf = GState.ccHotKeys
+
+  HasDeposits-GState : HasDeposits GState
+  HasDeposits-GState .DepositsOf = GState.deposits
 
   HasDState-CertState : HasDState CertState
   HasDState-CertState .DStateOf = CertState.dState
@@ -265,6 +246,8 @@ private variable
   pools fPools           : Pools
   retiring               : Retiring
   wdrls                  : Withdrawals
+  A                      : Type
+  deposits deposits'     : A ⇀ Coin
 
   an          : Anchor
   Γ           : CertEnv
@@ -314,19 +297,12 @@ data _⊢_⇀⦇_,DELEG⦈_ : DelegEnv → DState → DCert → DState → Type 
             fromList ( nothing ∷ just vDelegAbstain ∷ just vDelegNoConfidence ∷ [] )
     ∙ mkh ∈ mapˢ just (dom pools) ∪ ❴ nothing ❵
       ────────────────────────────────
-      ⟦ pp , pools , delegatees ⟧ ⊢ ⟦ vDelegs , sDelegs , rwds ⟧ ⇀⦇ delegate c mvd mkh d ,DELEG⦈ ⟦ insertIfJust c mvd vDelegs , insertIfJust c mkh sDelegs , rwds ∪ˡ ❴ c , 0 ❵ ⟧
+      ⟦ pp , pools , delegatees ⟧ ⊢ ⟦ vDelegs , sDelegs , rwds , deposits ⟧ ⇀⦇ delegate c mvd mkh d ,DELEG⦈ ⟦ insertIfJust c mvd vDelegs , insertIfJust c mkh sDelegs , rwds ∪ˡ ❴ c , 0 ❵ , deposits ∪⁺ ❴ c , d ❵ ⟧
 
   DELEG-dereg :
     ∙ (c , 0) ∈ rwds
       ────────────────────────────────
-      ⟦ pp , pools , delegatees ⟧ ⊢ ⟦ vDelegs , sDelegs , rwds ⟧ ⇀⦇ dereg c md ,DELEG⦈ ⟦ vDelegs ∣ ❴ c ❵ ᶜ , sDelegs ∣ ❴ c ❵ ᶜ , rwds ∣ ❴ c ❵ ᶜ ⟧
-
-  DELEG-reg :
-    ∙ c ∉ dom rwds
-    ∙ d ≡ pp .keyDeposit ⊎ d ≡ 0
-      ────────────────────────────────
-      ⟦ pp , pools , delegatees ⟧ ⊢ ⟦ vDelegs , sDelegs , rwds ⟧ ⇀⦇ reg c d ,DELEG⦈ ⟦ vDelegs , sDelegs , rwds ∪ˡ ❴ c , 0 ❵ ⟧
-
+      ⟦ pp , pools , delegatees ⟧ ⊢ ⟦ vDelegs , sDelegs , rwds , deposits ⟧ ⇀⦇ dereg c md ,DELEG⦈ ⟦ vDelegs ∣ ❴ c ❵ ᶜ , sDelegs ∣ ❴ c ❵ ᶜ , rwds ∣ ❴ c ❵ ᶜ , deposits ∣ ❴ c ❵ ᶜ ⟧
 
 
 isPoolRegistered : Pools -> KeyHash -> Maybe StakePoolParams
@@ -335,21 +311,32 @@ isPoolRegistered ps kh = lookupᵐ? ps kh
 -- Auxiliary POOL transition system --
 data _⊢_⇀⦇_,POOL⦈_ : PoolEnv → PState → DCert → PState → Type where
 
-  POOL-regpool :
-    let
-      fPool' =
-        if isPoolRegistered pools kh
-          then ❴ kh , poolParams ❵ ∪ˡ fPools
-          else fPools
-     in
+  POOL-reg :
+    ∙ Is-just (isPoolRegistered pools kh)
     ────────────────────────────────
     pp ⊢ ⟦ pools
          , fPools
          , retiring
+         , deposits
          ⟧ ⇀⦇ regpool kh poolParams ,POOL⦈ ⟦
            pools ∪ˡ ❴ kh , poolParams ❵
-         , fPool'
-         , retiring ∣  ❴ kh ❵ ᶜ
+         , fPools
+         , retiring
+         , deposits ∪ˡ ❴ kh , pp .poolDeposit ❵
+         ⟧
+
+  POOL-rereg :
+    ∙ Is-nothing (isPoolRegistered pools kh)
+    ────────────────────────────────
+    pp ⊢ ⟦ pools
+         , fPools
+         , retiring
+         , deposits
+         ⟧ ⇀⦇ regpool kh poolParams ,POOL⦈ ⟦
+           pools
+         , ❴ kh , poolParams ❵ ∪ˡ fPools
+         , retiring ∣ ❴ kh ❵ ᶜ
+         , deposits
          ⟧
 
   POOL-retirepool :
@@ -357,10 +344,12 @@ data _⊢_⇀⦇_,POOL⦈_ : PoolEnv → PState → DCert → PState → Type wh
     pp ⊢ ⟦ pools
          , fPools
          , retiring
+         , deposits
          ⟧ ⇀⦇ retirepool kh e ,POOL⦈ ⟦
            pools
          , fPools
          , ❴ kh , e ❵ ∪ˡ retiring
+         , deposits
          ⟧
 
 
@@ -370,18 +359,18 @@ data _⊢_⇀⦇_,GOVCERT⦈_ : CertEnv → GState → DCert → GState → Type
   GOVCERT-regdrep :
     ∙ (d ≡ pp .drepDeposit × c ∉ dom dReps) ⊎ (d ≡ 0 × c ∈ dom dReps)
       ────────────────────────────────
-      ⟦ e , pp , vs , wdrls , cc ⟧ ⊢ ⟦ dReps , ccKeys ⟧ ⇀⦇ regdrep c d an ,GOVCERT⦈ ⟦ ❴ c , e + pp .drepActivity ❵ ∪ˡ dReps , ccKeys ⟧
+      ⟦ e , pp , vs , wdrls , cc ⟧ ⊢ ⟦ dReps , ccKeys , deposits ⟧ ⇀⦇ regdrep c d an ,GOVCERT⦈ ⟦ ❴ c , e + pp .drepActivity ❵ ∪ˡ dReps , ccKeys , deposits ∪⁺ ❴ c , d ❵ ⟧
 
   GOVCERT-deregdrep :
     ∙ c ∈ dom dReps
       ────────────────────────────────
-      ⟦ e , pp , vs , wdrls , cc ⟧ ⊢ ⟦ dReps , ccKeys ⟧ ⇀⦇ deregdrep c d ,GOVCERT⦈ ⟦ dReps ∣ ❴ c ❵ ᶜ , ccKeys ⟧
+      ⟦ e , pp , vs , wdrls , cc ⟧ ⊢ ⟦ dReps , ccKeys , deposits ⟧ ⇀⦇ deregdrep c d ,GOVCERT⦈ ⟦ dReps ∣ ❴ c ❵ ᶜ , ccKeys , deposits ∣ ❴ c ❵ ᶜ ⟧
 
   GOVCERT-ccreghot :
     ∙ (c , nothing) ∉ ccKeys
     ∙ c ∈ cc
       ────────────────────────────────
-      ⟦ e , pp , vs , wdrls , cc ⟧ ⊢ ⟦ dReps , ccKeys ⟧ ⇀⦇ ccreghot c mc ,GOVCERT⦈ ⟦ dReps , ❴ c , mc ❵ ∪ˡ ccKeys ⟧
+      ⟦ e , pp , vs , wdrls , cc ⟧ ⊢ ⟦ dReps , ccKeys , deposits ⟧ ⇀⦇ ccreghot c mc ,GOVCERT⦈ ⟦ dReps , ❴ c , mc ❵ ∪ˡ ccKeys , deposits ⟧
 
 -- CERT Transition System --
 data _⊢_⇀⦇_,CERT⦈_  : CertEnv → CertState → DCert → CertState → Type where
@@ -396,7 +385,7 @@ data _⊢_⇀⦇_,CERT⦈_  : CertEnv → CertState → DCert → CertState → 
       ────────────────────────────────
       ⟦ e , pp , vs , wdrls , cc ⟧ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ , stᵖ' , stᵍ ⟧
 
-  CERT-vdel :
+  CERT-gov :
     ∙ Γ ⊢ stᵍ ⇀⦇ dCert ,GOVCERT⦈ stᵍ'
       ────────────────────────────────
       Γ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ , stᵖ , stᵍ' ⟧
@@ -416,7 +405,7 @@ data _⊢_⇀⦇_,PRE-CERT⦈_ : CertEnv → CertState → ⊤ → CertState →
     ∙ filter isKeyHash wdrlCreds ⊆ dom voteDelegs
     ∙ mapˢ (map₁ stake) (wdrls ˢ) ⊆ rewards ˢ
       ────────────────────────────────
-      ⟦ e , pp , vs , wdrls , cc ⟧ ⊢ ⟦ ⟦ voteDelegs , stakeDelegs , rewards ⟧ , stᵖ , ⟦ dReps , ccHotKeys ⟧ ⟧ ⇀⦇ _ ,PRE-CERT⦈ ⟦ ⟦ voteDelegs , stakeDelegs , constMap wdrlCreds 0 ∪ˡ rewards ⟧ , stᵖ , ⟦ refreshedDReps , ccHotKeys ⟧ ⟧
+      ⟦ e , pp , vs , wdrls , cc ⟧ ⊢ ⟦ ⟦ voteDelegs , stakeDelegs , rewards , deposits ⟧ , stᵖ , ⟦ dReps , ccHotKeys , deposits' ⟧ ⟧ ⇀⦇ _ ,PRE-CERT⦈ ⟦ ⟦ voteDelegs , stakeDelegs , constMap wdrlCreds 0 ∪ˡ rewards , deposits ⟧ , stᵖ , ⟦ refreshedDReps , ccHotKeys , deposits' ⟧ ⟧
 
 
 -- POST-CERT Transition Rule --
@@ -427,7 +416,7 @@ data _⊢_⇀⦇_,POST-CERT⦈_ : CertEnv → CertState → ⊤ → CertState �
     let activeVDelegs = mapˢ vDelegCredential (dom (DRepsOf stᵍ))
                          ∪ fromList (vDelegNoConfidence ∷ vDelegAbstain ∷ [])
     in
-      ⟦ e , pp , vs , wdrls , cc ⟧ ⊢ ⟦ ⟦ voteDelegs , stakeDelegs , rewards ⟧ , stᵖ , stᵍ ⟧ ⇀⦇ _ ,POST-CERT⦈ ⟦ ⟦ voteDelegs ∣^ activeVDelegs , stakeDelegs , rewards ⟧ , stᵖ , stᵍ ⟧
+      ⟦ e , pp , vs , wdrls , cc ⟧ ⊢ ⟦ ⟦ voteDelegs , stakeDelegs , rewards , deposits ⟧ , stᵖ , stᵍ ⟧ ⇀⦇ _ ,POST-CERT⦈ ⟦ ⟦ voteDelegs ∣^ activeVDelegs , stakeDelegs , rewards , deposits ⟧ , stᵖ , stᵍ ⟧
 
 
 -- CERTS Transition System --

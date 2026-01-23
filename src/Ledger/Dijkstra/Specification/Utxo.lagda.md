@@ -75,16 +75,25 @@ record UTxOEnv : Type where
     pparams           : PParams
     treasury          : Treasury
     utxo₀             : UTxO
-    isTopLevelValid   : Bool
+    depositsChange    : ℤ
     allScripts        : ℙ Script
     allData           : DataHash ⇀ Datum
+
+record SubUTxOEnv : Type where
+  field
+    slot             : Slot
+    pparams          : PParams
+    treasury         : Treasury
+    utxo₀            : UTxO
+    isTopLevelValid  : Bool
+    allScripts       : ℙ Script
+    allData          : DataHash ⇀ Datum
 
 record UTxOState : Type where
   constructor ⟦_,_,_,_⟧ᵘ
   field
     utxo       : UTxO
     fees       : Fees
-    deposits   : Deposits
     donations  : Donations
 ```
 
@@ -143,6 +152,10 @@ record HasIsTopLevelValidFlag {a} (A : Type a) : Type a where
   field IsTopLevelValidFlagOf : A → Bool
 open HasIsTopLevelValidFlag ⦃...⦄ public
 
+record HasDepositsChange {a} (A : Type a) : Type a where
+  field DepositsChangeOf : A → ℤ
+open HasDepositsChange ⦃...⦄ public
+
 record HasScriptPool {a} (A : Type a) : Type a where
   field ScriptPoolOf : A → ℙ Script
 open HasScriptPool ⦃...⦄ public
@@ -168,20 +181,8 @@ instance
   HasUTxO-UTxOEnv : HasUTxO UTxOEnv
   HasUTxO-UTxOEnv .UTxOOf = UTxOEnv.utxo₀
 
-  HasIsTopLevelValidFlag-UTxOEnv : HasIsTopLevelValidFlag UTxOEnv
-  HasIsTopLevelValidFlag-UTxOEnv .IsTopLevelValidFlagOf = UTxOEnv.isTopLevelValid
-
-  HasUTxO-UTxOState : HasUTxO UTxOState
-  HasUTxO-UTxOState .UTxOOf = UTxOState.utxo
-
-  HasFee-UTxOState : HasFees UTxOState
-  HasFee-UTxOState .FeesOf = UTxOState.fees
-
-  HasDeposits-UTxOState : HasDeposits UTxOState
-  HasDeposits-UTxOState .DepositsOf = UTxOState.deposits
-
-  HasDonations-UTxOState : HasDonations UTxOState
-  HasDonations-UTxOState .DonationsOf = UTxOState.donations
+  HasDepositsChange-UTxOEnv : HasDepositsChange UTxOEnv
+  HasDepositsChange-UTxOEnv .DepositsChangeOf = UTxOEnv.depositsChange
 
   HasScriptPool-UTxOEnv : HasScriptPool UTxOEnv
   HasScriptPool-UTxOEnv .ScriptPoolOf = UTxOEnv.allScripts
@@ -189,11 +190,41 @@ instance
   HasDataPool-UTxOEnv : HasDataPool UTxOEnv
   HasDataPool-UTxOEnv .DataPoolOf = UTxOEnv.allData
 
-  unquoteDecl HasCast-UTxOEnv HasCast-UTxOState = derive-HasCast
-    ( (quote UTxOEnv   , HasCast-UTxOEnv  ) ∷
-    [ (quote UTxOState , HasCast-UTxOState) ])
+  HasSlot-SubUTxOEnv : HasSlot SubUTxOEnv
+  HasSlot-SubUTxOEnv .SlotOf = SubUTxOEnv.slot
+
+  HasPParams-SubUTxOEnv : HasPParams SubUTxOEnv
+  HasPParams-SubUTxOEnv .PParamsOf = SubUTxOEnv.pparams
+
+  HasTreasury-SubUTxOEnv : HasTreasury SubUTxOEnv
+  HasTreasury-SubUTxOEnv .TreasuryOf = SubUTxOEnv.treasury
+
+  HasUTxO-SubUTxOEnv : HasUTxO SubUTxOEnv
+  HasUTxO-SubUTxOEnv .UTxOOf = SubUTxOEnv.utxo₀
+
+  HasIsTopLevelValidFlag-SubUTxOEnv : HasIsTopLevelValidFlag SubUTxOEnv
+  HasIsTopLevelValidFlag-SubUTxOEnv .IsTopLevelValidFlagOf = SubUTxOEnv.isTopLevelValid
+
+  HasScriptPool-SubUTxOEnv : HasScriptPool SubUTxOEnv
+  HasScriptPool-SubUTxOEnv .ScriptPoolOf = SubUTxOEnv.allScripts
+
+  HasDataPool-SubUTxOEnv : HasDataPool SubUTxOEnv
+  HasDataPool-SubUTxOEnv .DataPoolOf = SubUTxOEnv.allData
+
+  HasUTxO-UTxOState : HasUTxO UTxOState
+  HasUTxO-UTxOState .UTxOOf = UTxOState.utxo
+
+  HasFee-UTxOState : HasFees UTxOState
+  HasFee-UTxOState .FeesOf = UTxOState.fees
+
+  HasDonations-UTxOState : HasDonations UTxOState
+  HasDonations-UTxOState .DonationsOf = UTxOState.donations
 
 opaque
+  unquoteDecl HasCast-UTxOEnv HasCast-SubUTxOEnv HasCast-UTxOState = derive-HasCast
+    ( (quote UTxOEnv    , HasCast-UTxOEnv  ) ∷
+      (quote SubUTxOEnv , HasCast-SubUTxOEnv  ) ∷
+    [ (quote UTxOState  , HasCast-UTxOState) ])
 ```
 -->
 
@@ -224,116 +255,7 @@ instance
 ```
 -->
 
-
 ```agda
-certDeposit : DCert → PParams → Deposits
-certDeposit (delegate c _ _ v) _   = ❴ CredentialDeposit c , v ❵
-certDeposit (reg c _)          pp  = ❴ CredentialDeposit c , pp .keyDeposit ❵
-certDeposit (regpool kh _)     pp  = ❴ PoolDeposit kh , pp .poolDeposit ❵
-certDeposit (regdrep c v _)    _   = ❴ DRepDeposit c , v ❵
-certDeposit _                  _   = ∅
-
-certRefund : DCert → ℙ DepositPurpose
-certRefund (dereg c _)      = ❴ CredentialDeposit c ❵
-certRefund (deregdrep c _)  = ❴ DRepDeposit c ❵
-certRefund _                = ∅
-
-data ValidCertDeposits (pp : PParams) (deps : Deposits) : List DCert → Set
-  where
-  []         : ValidCertDeposits pp deps []
-  delegate   : ∀ {c del kh v certs}
-             → ValidCertDeposits pp (deps ∪⁺ ❴ CredentialDeposit c , v ❵) certs
-             → ValidCertDeposits pp deps (delegate c del kh v ∷ certs)
-  regpool    : ∀ {kh p certs}
-             → ValidCertDeposits pp (deps ∪⁺ ❴ PoolDeposit kh , pp .poolDeposit ❵) certs
-             → ValidCertDeposits pp deps (regpool kh p ∷ certs)
-  regdrep    : ∀ {c v a certs}
-             → ValidCertDeposits pp (deps ∪⁺ ❴ DRepDeposit c , v ❵) certs
-             → ValidCertDeposits pp deps (regdrep c v a ∷ certs)
-  reg        : ∀ {c v certs}
-             → ValidCertDeposits pp (deps ∪⁺ ❴ CredentialDeposit c , pp .keyDeposit ❵) certs
-             → ValidCertDeposits pp deps (reg c v ∷ certs)
-  dereg      : ∀ {c md d certs}
-             → (CredentialDeposit c , d) ∈ deps
-             → md ≡ nothing ⊎ md ≡ just d
-             → ValidCertDeposits pp (deps ∣ ❴ CredentialDeposit c ❵ ᶜ) certs
-             → ValidCertDeposits pp deps (dereg c md ∷ certs)
-  deregdrep  : ∀ {c d certs}
-             → (DRepDeposit c , d) ∈ deps
-             → ValidCertDeposits pp (deps ∣ ❴ DRepDeposit c ❵ ᶜ) certs
-             → ValidCertDeposits pp deps (deregdrep c d ∷ certs)
-  ccreghot   : ∀ {c v certs}
-             → ValidCertDeposits pp deps certs
-             → ValidCertDeposits pp deps (ccreghot c v ∷ certs)
-  retirepool : ∀ {kh e certs}
-             → ValidCertDeposits pp deps certs
-             → ValidCertDeposits pp deps (retirepool kh e  ∷ certs)
-```
-
-<!--
-```agda
-private
-  validCertDeposits? : ∀ {pp} deps certs → Dec (ValidCertDeposits pp deps certs)
-  validCertDeposits? deps [] = yes []
-  validCertDeposits? deps (delegate _ _ _ _ ∷ certs) =
-    mapDec delegate (λ where (delegate p) → p) (validCertDeposits? _ _)
-  validCertDeposits? deps (regpool _ _ ∷ certs) =
-    mapDec regpool (λ where (regpool p) → p) (validCertDeposits? _ _)
-  validCertDeposits? deps (regdrep _ _ _ ∷ certs) =
-    mapDec regdrep (λ where (regdrep p) → p) (validCertDeposits? _ _)
-  validCertDeposits? deps (retirepool _ _ ∷ certs) =
-    mapDec retirepool (λ where (retirepool p) → p) (validCertDeposits? _ _)
-  validCertDeposits? deps (ccreghot _ _ ∷ certs) =
-    mapDec ccreghot (λ where (ccreghot p) → p) (validCertDeposits? _ _)
-  validCertDeposits? deps (reg _ _ ∷ certs) =
-    mapDec reg (λ where (reg p) → p) (validCertDeposits? _ _)
-  validCertDeposits? deps (dereg c nothing ∷ certs) with ¿ CredentialDeposit c ∈ dom deps ¿
-  ... | yes p = mapDec (dereg (proj₂ (Equivalence.from dom∈ p)) (inj₁ refl)) (λ { (dereg _ _ p) → p }) (validCertDeposits? _ _)
-  ... | no ¬p = no λ { (dereg x _ _) → ¬p (Equivalence.to dom∈ (_ , x)) }
-  validCertDeposits? deps (dereg c (just d) ∷ certs) with ¿ (CredentialDeposit c , d) ∈ deps ¿
-  ... | yes p = mapDec (dereg p (inj₂ refl)) (λ { (dereg _ _ p) → p }) (validCertDeposits? _ _)
-  ... | no ¬p = no λ { (dereg x (inj₂ refl) _) → ¬p x }
-  validCertDeposits? deps (deregdrep c d ∷ certs) with ¿ (DRepDeposit c , d) ∈ deps ¿
-  ... | yes p = mapDec (deregdrep p)  (λ where (deregdrep _ v) → v) (validCertDeposits? _ _)
-  ... | no ¬p = no (λ where (deregdrep p _) → ¬p p)
-
-instance
-  Dec-ValidCertDeposits : ∀ {pp deps certs} → ValidCertDeposits pp deps certs ⁇
-  Dec-ValidCertDeposits = ⁇ (validCertDeposits? _ _)
-```
--->
-
-```agda
-updateCertDeposits  : PParams → List DCert → Deposits → Deposits
-updateCertDeposits pp [] deposits = deposits
-updateCertDeposits pp (reg c v ∷ certs) deposits
-  = updateCertDeposits pp certs (deposits ∪⁺ certDeposit (reg c v) pp)
-updateCertDeposits pp (delegate c vd khs v ∷ certs) deposits
-  = updateCertDeposits pp certs (deposits ∪⁺ certDeposit (delegate c vd khs v) pp)
-updateCertDeposits pp (regpool kh p ∷ certs) deposits
-  -- pool deposits are not added a second time if they are already present
-  -- (reregistrations or duplicate certificates).
-  = updateCertDeposits pp certs (deposits ∪ˡ certDeposit (regpool kh p) pp)
-updateCertDeposits pp (regdrep c v a ∷ certs) deposits
-  = updateCertDeposits pp certs (deposits ∪⁺ certDeposit (regdrep c v a) pp)
-updateCertDeposits pp (dereg c v ∷ certs) deposits
-  = updateCertDeposits pp certs (deposits ∣ certRefund (dereg c v)ᶜ)
-updateCertDeposits pp (deregdrep c v ∷ certs) deposits
-  = updateCertDeposits pp certs (deposits ∣ certRefund (deregdrep c v)ᶜ)
-updateCertDeposits pp (_ ∷ certs) deposits
-  = updateCertDeposits pp certs deposits
-
-updateProposalDeposits : List GovProposal → TxId → Coin → Deposits → Deposits
-updateProposalDeposits []        _     _      deposits  = deposits
-updateProposalDeposits (_ ∷ ps)  txid  gaDep  deposits  =
-  updateProposalDeposits ps txid gaDep deposits
-  ∪⁺ ❴ GovActionDeposit (txid , length ps) , gaDep ❵
-
-updateDeposits : PParams → Tx ℓ → Deposits → Deposits
-updateDeposits pp tx =
-  updateCertDeposits pp (DCertsOf tx)
-  ∘ updateProposalDeposits (ListOfGovProposalsOf tx) (TxIdOf tx) (pp .govActionDeposit)
-
 data inInterval (slot : Slot) : (Maybe Slot × Maybe Slot) → Type where
   both   : ∀ {l r}  → l ≤ slot × slot ≤ r  →  inInterval slot (just l   , just r)
   lower  : ∀ {l}    → l ≤ slot             →  inInterval slot (just l   , nothing)
@@ -357,12 +279,6 @@ instance
   ... | no ¬p = no  (λ where (upper h) → ¬p h)
   ... | yes p = yes (upper p)
   Dec-inInterval {slot} {nothing , nothing} .dec = yes none
-
-  HasCoin-UTxOState : HasCoin UTxOState
-  HasCoin-UTxOState .getCoin s = getCoin (UTxOOf s)
-                               + (FeesOf s)
-                               + getCoin (DepositsOf s)
-                               + DonationsOf s
 
 coinPolicies : ℙ ScriptHash
 coinPolicies = policies (inject 1)
@@ -394,24 +310,13 @@ batchOuts txTop = foldr (λ sub acc → outs sub ∪ˡ acc) (outs txTop) (SubTra
 utxoView : UTxO → TopLevelTx → UTxO
 utxoView utxo txTop = utxo ∪ˡ batchOuts txTop
 
-module Accounting (pp : PParams) (txTop : TopLevelTx) (deposits₀ : Deposits) where
-
-  updateDepositsBatch : Deposits
-  updateDepositsBatch = foldl  updateStep
-                               (updateDeposits pp txTop deposits₀)
-                               (SubTransactionsOf txTop)
-    where
-    updateStep : Deposits → SubLevelTx → Deposits
-    updateStep deps txSub = updateDeposits pp txSub deps
-
-  depositsChangeBatch : ℤ
-  depositsChangeBatch = getCoin updateDepositsBatch - getCoin deposits₀
+module Accounting (pp : PParams) (txTop : TopLevelTx) (depositsChange : ℤ) where
 
   depositRefundsBatch : Coin
-  depositRefundsBatch = negPart depositsChangeBatch
+  depositRefundsBatch = negPart depositsChange
 
   newDepositsBatch : Coin
-  newDepositsBatch = posPart depositsChangeBatch
+  newDepositsBatch = posPart depositsChange
 
   consumed : UTxOEnv → Value
   consumed Γ = foldl  (λ acc tx → acc + consumedTx tx)
@@ -525,20 +430,13 @@ allP2ScriptsWithContext : UTxOEnv → TopLevelTx → List (P2Script × List Data
 allP2ScriptsWithContext Γ t =
   p2ScriptsWithContext Γ t ++ concatMap (p2ScriptsWithContext Γ) (SubTransactionsOf t)
 
--- Deposits change in case Tx.isValid ≡ true.
-deposits✓ : UTxOEnv → Deposits → Tx ℓ → Deposits
-deposits✓ {TxLevelSub} Γ deps tx = updateDeposits (PParamsOf Γ) tx deps
-deposits✓ {TxLevelTop} Γ deps tx = foldr  (updateDeposits (PParamsOf Γ))
-                                          (updateDeposits (PParamsOf Γ) tx deps)
-                                          (SubTransactionsOf tx)
-
 -- UTxOState change in case Tx.isValid ≡ true.
-scripts✓ : UTxOEnv → UTxOState → Tx ℓ → UTxOState
-scripts✓ Γ s t = ⟦ utxo✓ (UTxOOf s) t , fees✓ (FeesOf s) t , deposits✓ Γ (DepositsOf s) t , donations✓ (DonationsOf s) t ⟧
+scripts✓ : UTxOState → Tx ℓ → UTxOState
+scripts✓ s t = ⟦ utxo✓ (UTxOOf s) t , fees✓ (FeesOf s) t , donations✓ (DonationsOf s) t ⟧
 
 -- UTxOState change in case Tx.isValid ≡ false.
-scripts× : UTxOEnv → UTxOState → Tx ℓ → UTxOState
-scripts× Γ s t = ⟦ utxo× (UTxOOf s) t , fees× (FeesOf s) (UTxOOf s) t , DepositsOf s , DonationsOf s ⟧
+scripts× : UTxOState → Tx ℓ → UTxOState
+scripts× s t = ⟦ utxo× (UTxOOf s) t , fees× (FeesOf s) (UTxOOf s) t , DonationsOf s ⟧
 ```
 
 
@@ -547,47 +445,45 @@ scripts× Γ s t = ⟦ utxo× (UTxOOf s) t , fees× (FeesOf s) (UTxOOf s) t , De
 <!--
 ```agda
 private variable
-  Γ        : UTxOEnv
+  A        : Type
+  Γ        : A
   s s'     : UTxOState
   txTop    : TopLevelTx
   txSub    : SubLevelTx
-  deposits : Deposits
 ```
 -->
 
 ```agda
-data _⊢_⇀⦇_,SUBUTXOS⦈_ : UTxOEnv → UTxOState → SubLevelTx → UTxOState → Type where
+data _⊢_⇀⦇_,SUBUTXOS⦈_ : SubUTxOEnv → UTxOState → SubLevelTx → UTxOState → Type where
 
   SUBUTXOS-scripts✓ :
 
-    ∙ ValidCertDeposits (PParamsOf Γ) deposits (DCertsOf txSub)
     ∙ IsTopLevelValidFlagOf Γ ≡ true
       ────────────────────────────────
-      Γ ⊢ s ⇀⦇ txSub ,SUBUTXOS⦈ scripts✓ Γ s txSub
+      Γ ⊢ s ⇀⦇ txSub ,SUBUTXOS⦈ scripts✓ s txSub
 
   SUBUTXOS-scripts× :
 
     ∙ IsTopLevelValidFlagOf Γ ≡ false
       ────────────────────────────────
-      Γ ⊢ s ⇀⦇ txSub ,SUBUTXOS⦈ scripts× Γ s txSub
+      Γ ⊢ s ⇀⦇ txSub ,SUBUTXOS⦈ scripts× s txSub
 
 
 data _⊢_⇀⦇_,UTXOS⦈_ : UTxOEnv → UTxOState → TopLevelTx → UTxOState → Type where
 
   UTXOS-scripts✓ :
 
-    ∙ ValidCertDeposits (PParamsOf Γ) deposits (allDCerts txTop)
     ∙ evalP2Scripts (allP2ScriptsWithContext Γ txTop) ≡ IsValidFlagOf txTop
     ∙ IsValidFlagOf txTop ≡ true
       ────────────────────────────────
-      Γ ⊢ s ⇀⦇ txTop ,UTXOS⦈ scripts✓ Γ s txTop
+      Γ ⊢ s ⇀⦇ txTop ,UTXOS⦈ scripts✓ s txTop
 
   UTXOS-scripts× :
 
     ∙ evalP2Scripts (allP2ScriptsWithContext Γ txTop) ≡ IsValidFlagOf txTop
     ∙ IsValidFlagOf txTop ≡ false
       ────────────────────────────────
-      Γ ⊢ s ⇀⦇ txTop ,UTXOS⦈ scripts× Γ s txTop
+      Γ ⊢ s ⇀⦇ txTop ,UTXOS⦈ scripts× s txTop
 ```
 <!--
 ```agda
@@ -629,7 +525,7 @@ This is achieved by the following precondition in the `UTXO`.{AgdaDatatype} and
     top-level `txGuards`{.AgdaField} set.
 
 ```agda
-data _⊢_⇀⦇_,SUBUTXO⦈_ : UTxOEnv → UTxOState → SubLevelTx → UTxOState → Type where
+data _⊢_⇀⦇_,SUBUTXO⦈_ : SubUTxOEnv → UTxOState → SubLevelTx → UTxOState → Type where
 
   SUBUTXO :
     ∙ SpendInputsOf txSub ≢ ∅
@@ -644,7 +540,7 @@ data _⊢_⇀⦇_,UTXO⦈_ : UTxOEnv → UTxOState → TopLevelTx → UTxOState 
 
   UTXO :
 
-    let  open Accounting (PParamsOf Γ) txTop (DepositsOf s)
+    let  open Accounting (PParamsOf Γ) txTop (DepositsChangeOf Γ)
 
          pp        = PParamsOf Γ
          utxo₀     = UTxOOf Γ

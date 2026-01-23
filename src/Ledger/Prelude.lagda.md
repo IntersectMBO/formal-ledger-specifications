@@ -46,6 +46,7 @@ open import abstract-set-theory.FiniteSetTheory public
   renaming (_⊆_ to _⊆ˢ_)
 
 import Data.Integer as ℤ
+open import Data.Integer using (0ℤ) public
 import Data.Rational as ℚ
 open import Data.Rational using (ℚ)
 
