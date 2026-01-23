@@ -12172,46 +12172,46 @@
   <h1>Introduction</h1>
 
 <p>This is the formal specification of the Cardano ledger for the Dijkstra era.
-The Agda source code which formalizes the ledger specification in the Conway era
+The Agda source code which formalizes the ledger specification in the Dijkstra era
 consists of the modules listed below.</p>
-<pre class="Agda hidden-source"><a id="298" class="Symbol">{-#</a> <a id="302" class="Keyword">OPTIONS</a> <a id="310" class="Pragma">--safe</a> <a id="317" class="Symbol">#-}</a>
-<a id="321" class="Keyword">module</a> <a id="328" href="Ledger.Dijkstra.Specification.html" class="Module">Ledger.Dijkstra.Specification</a> <a id="358" class="Keyword">where</a>
+<pre class="Agda hidden-source"><a id="300" class="Symbol">{-#</a> <a id="304" class="Keyword">OPTIONS</a> <a id="312" class="Pragma">--safe</a> <a id="319" class="Symbol">#-}</a>
+<a id="323" class="Keyword">module</a> <a id="330" href="Ledger.Dijkstra.Specification.html" class="Module">Ledger.Dijkstra.Specification</a> <a id="360" class="Keyword">where</a>
 </pre>
 
 <h2 id="addresses">Addresses<a class="headerlink" href="#addresses" title="Permanent link">&para;</a></h2>
-<pre class="Agda"><a id="395" class="Keyword">import</a> <a id="402" href="Ledger.Core.Specification.Address.html" class="Module">Ledger.Core.Specification.Address</a> <a id="436" class="Keyword">renaming</a> <a id="445" class="Symbol">(</a><a id="446" href="Ledger.Core.Specification.Address.html#2298" class="Record">RewardAddress</a> <a id="460" class="Symbol">to</a> <a id="463" class="Record">RewardAddress</a><a id="476" class="Symbol">)</a>
+<pre class="Agda"><a id="397" class="Keyword">import</a> <a id="404" href="Ledger.Core.Specification.Address.html" class="Module">Ledger.Core.Specification.Address</a> <a id="438" class="Keyword">renaming</a> <a id="447" class="Symbol">(</a><a id="448" href="Ledger.Core.Specification.Address.html#2298" class="Record">RewardAddress</a> <a id="462" class="Symbol">to</a> <a id="465" class="Record">RewardAddress</a><a id="478" class="Symbol">)</a>
 </pre>
 <h2 id="epoch"><span class="AgdaModule">Epoch</span><a class="headerlink" href="#epoch" title="Permanent link">&para;</a></h2>
-<pre class="Agda"><a id="533" class="Keyword">import</a> <a id="540" href="Ledger.Core.Specification.Epoch.html" class="Module">Ledger.Core.Specification.Epoch</a>
+<pre class="Agda"><a id="535" class="Keyword">import</a> <a id="542" href="Ledger.Core.Specification.Epoch.html" class="Module">Ledger.Core.Specification.Epoch</a>
 </pre>
 <h2 id="certificates">Certificates<a class="headerlink" href="#certificates" title="Permanent link">&para;</a></h2>
-<pre class="Agda"><a id="602" class="Keyword">import</a> <a id="609" href="Ledger.Dijkstra.Specification.Certs.html" class="Module">Ledger.Dijkstra.Specification.Certs</a>
+<pre class="Agda"><a id="604" class="Keyword">import</a> <a id="611" href="Ledger.Dijkstra.Specification.Certs.html" class="Module">Ledger.Dijkstra.Specification.Certs</a>
 </pre>
 <h2 id="governance">Governance<a class="headerlink" href="#governance" title="Permanent link">&para;</a></h2>
-<pre class="Agda"><a id="673" class="Keyword">import</a> <a id="680" href="Ledger.Dijkstra.Specification.Gov.Base.html" class="Module">Ledger.Dijkstra.Specification.Gov.Base</a>
-<a id="719" class="Keyword">import</a> <a id="726" href="Ledger.Dijkstra.Specification.Gov.Actions.html" class="Module">Ledger.Dijkstra.Specification.Gov.Actions</a>
+<pre class="Agda"><a id="675" class="Keyword">import</a> <a id="682" href="Ledger.Dijkstra.Specification.Gov.Base.html" class="Module">Ledger.Dijkstra.Specification.Gov.Base</a>
+<a id="721" class="Keyword">import</a> <a id="728" href="Ledger.Dijkstra.Specification.Gov.Actions.html" class="Module">Ledger.Dijkstra.Specification.Gov.Actions</a>
 </pre>
 <h2 id="ledger">Ledger<a class="headerlink" href="#ledger" title="Permanent link">&para;</a></h2>
-<pre class="Agda"><a id="792" class="Keyword">import</a> <a id="799" href="Ledger.Dijkstra.Specification.Ledger.html" class="Module">Ledger.Dijkstra.Specification.Ledger</a>
+<pre class="Agda"><a id="794" class="Keyword">import</a> <a id="801" href="Ledger.Dijkstra.Specification.Ledger.html" class="Module">Ledger.Dijkstra.Specification.Ledger</a>
 </pre>
 <h2 id="protocol-parameters">Protocol Parameters<a class="headerlink" href="#protocol-parameters" title="Permanent link">&para;</a></h2>
-<pre class="Agda"><a id="873" class="Keyword">import</a> <a id="880" href="Ledger.Dijkstra.Specification.PParams.html" class="Module">Ledger.Dijkstra.Specification.PParams</a>
+<pre class="Agda"><a id="875" class="Keyword">import</a> <a id="882" href="Ledger.Dijkstra.Specification.PParams.html" class="Module">Ledger.Dijkstra.Specification.PParams</a>
 </pre>
 <h2 id="scripts">Scripts<a class="headerlink" href="#scripts" title="Permanent link">&para;</a></h2>
-<pre class="Agda"><a id="943" class="Keyword">import</a> <a id="950" href="Ledger.Dijkstra.Specification.Script.html" class="Module">Ledger.Dijkstra.Specification.Script</a>
-<a id="987" class="Keyword">import</a> <a id="994" href="Ledger.Dijkstra.Specification.Script.Validation.html" class="Module">Ledger.Dijkstra.Specification.Script.Validation</a>
+<pre class="Agda"><a id="945" class="Keyword">import</a> <a id="952" href="Ledger.Dijkstra.Specification.Script.html" class="Module">Ledger.Dijkstra.Specification.Script</a>
+<a id="989" class="Keyword">import</a> <a id="996" href="Ledger.Dijkstra.Specification.Script.Validation.html" class="Module">Ledger.Dijkstra.Specification.Script.Validation</a>
 </pre>
 <h2 id="token-algebras">Token Algebras<a class="headerlink" href="#token-algebras" title="Permanent link">&para;</a></h2>
-<pre class="Agda"><a id="1074" class="Keyword">import</a> <a id="1081" href="Ledger.Dijkstra.Specification.TokenAlgebra.Base.html" class="Module">Ledger.Dijkstra.Specification.TokenAlgebra.Base</a>
+<pre class="Agda"><a id="1076" class="Keyword">import</a> <a id="1083" href="Ledger.Dijkstra.Specification.TokenAlgebra.Base.html" class="Module">Ledger.Dijkstra.Specification.TokenAlgebra.Base</a>
 </pre>
 <h2 id="transactions">Transactions<a class="headerlink" href="#transactions" title="Permanent link">&para;</a></h2>
-<pre class="Agda"><a id="1159" class="Keyword">import</a> <a id="1166" href="Ledger.Dijkstra.Specification.Transaction.html" class="Module">Ledger.Dijkstra.Specification.Transaction</a>
+<pre class="Agda"><a id="1161" class="Keyword">import</a> <a id="1168" href="Ledger.Dijkstra.Specification.Transaction.html" class="Module">Ledger.Dijkstra.Specification.Transaction</a>
 </pre>
 <h2 id="utxo"><span class="AgdaModule">Utxo</span><a class="headerlink" href="#utxo" title="Permanent link">&para;</a></h2>
-<pre class="Agda"><a id="1262" class="Keyword">import</a> <a id="1269" href="Ledger.Dijkstra.Specification.Utxo.html" class="Module">Ledger.Dijkstra.Specification.Utxo</a>
+<pre class="Agda"><a id="1264" class="Keyword">import</a> <a id="1271" href="Ledger.Dijkstra.Specification.Utxo.html" class="Module">Ledger.Dijkstra.Specification.Utxo</a>
 </pre>
 <h2 id="utxow"><span class="AgdaModule">Utxow</span><a class="headerlink" href="#utxow" title="Permanent link">&para;</a></h2>
-<pre class="Agda"><a id="1359" class="Keyword">import</a> <a id="1366" href="Ledger.Dijkstra.Specification.Utxow.html" class="Module">Ledger.Dijkstra.Specification.Utxow</a>
+<pre class="Agda"><a id="1361" class="Keyword">import</a> <a id="1368" href="Ledger.Dijkstra.Specification.Utxow.html" class="Module">Ledger.Dijkstra.Specification.Utxow</a>
 </pre>
 
 
