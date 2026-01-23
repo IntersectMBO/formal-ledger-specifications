@@ -246,3 +246,6 @@ du_m_134 v0 v1 v2
                MAlonzo.Code.Interface.TypeClasses.Hashable.d_hash_18 (coe v1))
             (coe (\ v3 -> v3)))
          v2)
+-- Ledger.Prelude.Is-∅
+d_Is'45''8709'_138 :: () -> [AgdaAny] -> ()
+d_Is'45''8709'_138 = erased

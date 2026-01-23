@@ -11983,6 +11983,9 @@
 
   <a id="ScriptStructure.toP2Script"></a><a id="3344" href="Ledger.Conway.Specification.Script.Base.html#3344" class="Function">toP2Script</a> <a id="3355" class="Symbol">:</a> <a id="3357" href="Ledger.Conway.Specification.Script.Base.html#2569" class="Function">Script</a> <a id="3364" class="Symbol">→</a> <a id="3366" href="Agda.Builtin.Maybe.html#135" class="Datatype">Maybe</a> <a id="3372" href="Ledger.Conway.Specification.Script.Base.html#2491" class="Function">P2Script</a>
   <a id="3383" href="Ledger.Conway.Specification.Script.Base.html#3344" class="Function">toP2Script</a> <a id="3394" class="Symbol">=</a> <a id="3396" href="Data.Sum.html#870" class="Function">isInj₂</a>
+
+  <a id="ScriptStructure.getLanguage"></a><a id="3406" href="Ledger.Conway.Specification.Script.Base.html#3406" class="Function">getLanguage</a> <a id="3418" class="Symbol">:</a> <a id="3420" href="Ledger.Conway.Specification.Script.Base.html#2569" class="Function">Script</a> <a id="3427" class="Symbol">→</a> <a id="3429" href="Agda.Builtin.Maybe.html#135" class="Datatype">Maybe</a> <a id="3435" href="Ledger.Conway.Specification.Script.Base.html#1091" class="Function">Language</a>
+  <a id="3446" href="Ledger.Conway.Specification.Script.Base.html#3406" class="Function">getLanguage</a> <a id="3458" href="Ledger.Conway.Specification.Script.Base.html#3458" class="Bound">s</a> <a id="3460" class="Symbol">=</a> <a id="3462" href="Ledger.Conway.Specification.Script.Base.html#3344" class="Function">toP2Script</a> <a id="3473" href="Ledger.Conway.Specification.Script.Base.html#3458" class="Bound">s</a> <a id="3475" href="Class.Functor.Core.html#337" class="Function Operator">&lt;&amp;&gt;</a> <a id="3479" href="Ledger.Conway.Specification.Script.Base.html#2088" class="Function">language</a>
 </pre>
 
 

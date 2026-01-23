@@ -23,6 +23,8 @@ import qualified MAlonzo.Code.Agda.Builtin.Unit
 import qualified MAlonzo.Code.Class.CommutativeMonoid.Core
 import qualified MAlonzo.Code.Class.DecEq.Core
 import qualified MAlonzo.Code.Class.Decidable.Core
+import qualified MAlonzo.Code.Class.Functor.Core
+import qualified MAlonzo.Code.Class.Functor.Instances
 import qualified MAlonzo.Code.Class.Show.Core
 import qualified MAlonzo.Code.Data.Sum
 import qualified MAlonzo.Code.Data.Sum.Base
@@ -363,7 +365,7 @@ d_language_268 v0
 -- Ledger.Conway.Specification.Script.Base.ScriptStructure
 d_ScriptStructure_272 a0 a1 = ()
 data T_ScriptStructure_272
-  = C_constructor_420 T_P1ScriptStructure_104
+  = C_constructor_424 T_P1ScriptStructure_104
                       (() ->
                        () ->
                        () ->
@@ -402,7 +404,7 @@ d_validP1Script_286 = erased
 d_p1s_298 :: T_ScriptStructure_272 -> T_P1ScriptStructure_104
 d_p1s_298 v0
   = case coe v0 of
-      C_constructor_420 v1 v2 v3 -> coe v1
+      C_constructor_424 v1 v2 v3 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Conway.Specification.Script.Base.ScriptStructure._.Dec-validP1Script
 d_Dec'45'validP1Script_302 ::
@@ -443,13 +445,13 @@ d_hashRespectsUnion_318 ::
   MAlonzo.Code.Interface.TypeClasses.Hashable.T_Hashable_10
 d_hashRespectsUnion_318 v0
   = case coe v0 of
-      C_constructor_420 v1 v2 v3 -> coe v2
+      C_constructor_424 v1 v2 v3 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Conway.Specification.Script.Base.ScriptStructure.ps
 d_ps_320 :: T_ScriptStructure_272 -> T_PlutusStructure_128
 d_ps_320 v0
   = case coe v0 of
-      C_constructor_420 v1 v2 v3 -> coe v3
+      C_constructor_424 v1 v2 v3 -> coe v3
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Conway.Specification.Script.Base.ScriptStructure._._≥ᵉ_
 d__'8805''7497'__324 ::
@@ -745,3 +747,19 @@ d_toP2Script_418 ~v0 ~v1 ~v2 = du_toP2Script_418
 du_toP2Script_418 ::
   MAlonzo.Code.Data.Sum.Base.T__'8846'__30 -> Maybe AgdaAny
 du_toP2Script_418 = coe MAlonzo.Code.Data.Sum.du_isInj'8322'_30
+-- Ledger.Conway.Specification.Script.Base.ScriptStructure.getLanguage
+d_getLanguage_420 ::
+  MAlonzo.Code.Ledger.Core.Specification.Crypto.T_CryptoStructure_140 ->
+  MAlonzo.Code.Ledger.Core.Specification.Epoch.T_EpochStructure_22 ->
+  T_ScriptStructure_272 ->
+  MAlonzo.Code.Data.Sum.Base.T__'8846'__30 -> Maybe AgdaAny
+d_getLanguage_420 ~v0 ~v1 v2 v3 = du_getLanguage_420 v2 v3
+du_getLanguage_420 ::
+  T_ScriptStructure_272 ->
+  MAlonzo.Code.Data.Sum.Base.T__'8846'__30 -> Maybe AgdaAny
+du_getLanguage_420 v0 v1
+  = coe
+      MAlonzo.Code.Class.Functor.Core.du__'60''38''62'__30
+      (coe MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
+      (coe ()) (coe ()) (coe du_toP2Script_418 v1)
+      (coe d_language_268 (coe d_ps_320 (coe v0)))
