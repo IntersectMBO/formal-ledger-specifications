@@ -352,13 +352,13 @@ could be either of them.
     field DataOf : A → ℙ Datum
   open HasData ⦃...⦄ public
 
-  record HasGovProposals {a} (A : Type a) : Type a where
-    field GovProposalsOf : A → List GovProposal
-  open HasGovProposals ⦃...⦄ public
+  record HasListOfGovProposals {a} (A : Type a) : Type a where
+    field ListOfGovProposalsOf : A → List GovProposal
+  open HasListOfGovProposals ⦃...⦄ public
 
-  record HasGovVotes {a} (A : Type a) : Type a where
-    field GovVotesOf : A → List GovVote
-  open HasGovVotes ⦃...⦄ public
+  record HasListOfGovVotes {a} (A : Type a) : Type a where
+    field ListOfGovVotesOf : A → List GovVote
+  open HasListOfGovVotes ⦃...⦄ public
 
   record HasGuards {a} (A : Type a) : Type a where
     field GuardsOf : A → ℙ Credential
@@ -433,17 +433,17 @@ could be either of them.
     HasMintedValue-Tx : HasMintedValue (Tx txLevel)
     HasMintedValue-Tx .MintedValueOf = MintedValueOf ∘ TxBodyOf
 
-    HasGovVotes-TxBody : HasGovVotes (TxBody txLevel)
-    HasGovVotes-TxBody .GovVotesOf = TxBody.txGovVotes
+    HasListOfGovVotes-TxBody : HasListOfGovVotes (TxBody txLevel)
+    HasListOfGovVotes-TxBody .ListOfGovVotesOf = TxBody.txGovVotes
 
-    HasGovVotes-Tx : HasGovVotes (Tx txLevel)
-    HasGovVotes-Tx .GovVotesOf = GovVotesOf ∘ TxBodyOf
+    HasListOfGovVotes-Tx : HasListOfGovVotes (Tx txLevel)
+    HasListOfGovVotes-Tx .ListOfGovVotesOf = ListOfGovVotesOf ∘ TxBodyOf
 
-    HasGovProposals-TxBody : HasGovProposals (TxBody txLevel)
-    HasGovProposals-TxBody .GovProposalsOf = TxBody.txGovProposals
+    HasListOfGovProposals-TxBody : HasListOfGovProposals (TxBody txLevel)
+    HasListOfGovProposals-TxBody .ListOfGovProposalsOf = TxBody.txGovProposals
 
-    HasGovProposals-Tx : HasGovProposals (Tx txLevel)
-    HasGovProposals-Tx .GovProposalsOf = GovProposalsOf ∘ TxBodyOf
+    HasListOfGovProposals-Tx : HasListOfGovProposals (Tx txLevel)
+    HasListOfGovProposals-Tx .ListOfGovProposalsOf = ListOfGovProposalsOf ∘ TxBodyOf
 
     HasFees?-TxBody : {ℓ : TxLevel} → HasFees? (TxBody ℓ)
     HasFees?-TxBody {TxLevelTop} .FeesOf? tbTop = just (TxBody.txFee tbTop)
