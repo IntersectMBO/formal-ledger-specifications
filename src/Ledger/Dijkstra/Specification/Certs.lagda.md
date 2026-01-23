@@ -303,6 +303,7 @@ instance
 ```
 -->
 
+```agda
 -- Auxiliary DELEG transition system --
 data _⊢_⇀⦇_,DELEG⦈_ : DelegEnv → DState → DCert → DState → Type where
 

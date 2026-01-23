@@ -352,9 +352,9 @@ could be either of them.
     field DataOf : A → ℙ Datum
   open HasData ⦃...⦄ public
 
-  record HasGovProposals {a} (A : Type a) : Type a where
-    field GovProposalsOf : A → List GovProposal
-  open HasGovProposals ⦃...⦄ public
+  record HasListOfGovProposals {a} (A : Type a) : Type a where
+    field ListOfGovProposalsOf : A → List GovProposal
+  open HasListOfGovProposals ⦃...⦄ public
 
   record HasListOfGovVotes {a} (A : Type a) : Type a where
     field ListOfGovVotesOf : A → List GovVote
@@ -439,11 +439,11 @@ could be either of them.
     HasListOfGovVotes-Tx : HasListOfGovVotes (Tx txLevel)
     HasListOfGovVotes-Tx .ListOfGovVotesOf = ListOfGovVotesOf ∘ TxBodyOf
 
-    HasGovProposals-TxBody : HasGovProposals (TxBody txLevel)
-    HasGovProposals-TxBody .GovProposalsOf = TxBody.txGovProposals
+    HasListOfGovProposals-TxBody : HasListOfGovProposals (TxBody txLevel)
+    HasListOfGovProposals-TxBody .ListOfGovProposalsOf = TxBody.txGovProposals
 
-    HasGovProposals-Tx : HasGovProposals (Tx txLevel)
-    HasGovProposals-Tx .GovProposalsOf = GovProposalsOf ∘ TxBodyOf
+    HasListOfGovProposals-Tx : HasListOfGovProposals (Tx txLevel)
+    HasListOfGovProposals-Tx .ListOfGovProposalsOf = ListOfGovProposalsOf ∘ TxBodyOf
 
     HasFees?-TxBody : {ℓ : TxLevel} → HasFees? (TxBody ℓ)
     HasFees?-TxBody {TxLevelTop} .FeesOf? tbTop = just (TxBody.txFee tbTop)

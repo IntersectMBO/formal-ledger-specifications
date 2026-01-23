@@ -33,6 +33,7 @@ open Tx
 open GState
 open GovActionState
 open EnactState using (cc)
+--
 ```
 -->
 
@@ -58,15 +59,7 @@ record LedgerEnv : Type where
     pparams     : PParams
     enactState  : EnactState
     treasury    : Treasury
-
-record LState : Type where
-  constructor ⟦_,_,_⟧ˡ
-  field
-    utxoSt     : UTxOState
-    govSt      : GovState
-    certState  : CertState
 ```
-
 <!--
 ```agda
 instance
@@ -80,61 +73,72 @@ instance
   HasPParams-SubLedgerEnv .PParamsOf = LedgerEnv.pparams
 ```
 -->
-
+```agda
+record LState : Type where
+```
+<!--
+```agda
+  constructor ⟦_,_,_⟧ˡ
+```
+-->
+```agda
+  field
+    utxoSt     : UTxOState
+    govSt      : GovState
+    certState  : CertState
+```
+<!--
 ```agda
 record HasLState {a} (A : Type a) : Type a where
   field LStateOf : A → LState
 open HasLState ⦃...⦄ public
-```
--->
-```agda
 
-instance
-  HasUTxOState-LState : HasUTxOState LState
-  HasUTxOState-LState .UTxOStateOf = LState.utxoSt
+-- instance
+--   HasUTxOState-LState : HasUTxOState LState
+--   HasUTxOState-LState .UTxOStateOf = LState.utxoSt
 
-  HasUTxO-LState : HasUTxO LState
-  HasUTxO-LState .UTxOOf = UTxOOf ∘ UTxOStateOf
+--   HasUTxO-LState : HasUTxO LState
+--   HasUTxO-LState .UTxOOf = UTxOOf ∘ UTxOStateOf
 
-  HasGovState-LState : HasGovState LState
-  HasGovState-LState .GovStateOf = LState.govSt
+--   HasGovState-LState : HasGovState LState
+--   HasGovState-LState .GovStateOf = LState.govSt
 
-  HasCertState-LState : HasCertState LState
-  HasCertState-LState .CertStateOf = LState.certState
+--   HasCertState-LState : HasCertState LState
+--   HasCertState-LState .CertStateOf = LState.certState
 
-  HasDeposits-LState : HasDeposits LState
-  HasDeposits-LState .DepositsOf = DepositsOf ∘ UTxOStateOf
+--   HasDeposits-LState : HasDeposits LState
+--   HasDeposits-LState .DepositsOf = DepositsOf ∘ UTxOStateOf
 
-  HasPools-LState : HasPools LState
-  HasPools-LState .PoolsOf = PoolsOf ∘ CertStateOf
+--   HasPools-LState : HasPools LState
+--   HasPools-LState .PoolsOf = PoolsOf ∘ CertStateOf
 
-  HasGState-LState : HasGState LState
-  HasGState-LState .GStateOf = GStateOf ∘ CertStateOf
+--   HasGState-LState : HasGState LState
+--   HasGState-LState .GStateOf = GStateOf ∘ CertStateOf
 
-  HasDState-LState : HasDState LState
-  HasDState-LState .DStateOf = DStateOf ∘ CertStateOf
+--   HasDState-LState : HasDState LState
+--   HasDState-LState .DStateOf = DStateOf ∘ CertStateOf
 
-  HasPState-LState : HasPState LState
-  HasPState-LState .PStateOf = PStateOf ∘ CertStateOf
+--   HasPState-LState : HasPState LState
+--   HasPState-LState .PStateOf = PStateOf ∘ CertStateOf
 
-  HasVoteDelegs-LState : HasVoteDelegs LState
-  HasVoteDelegs-LState .VoteDelegsOf = VoteDelegsOf ∘ DStateOf ∘ CertStateOf
+--   HasVoteDelegs-LState : HasVoteDelegs LState
+--   HasVoteDelegs-LState .VoteDelegsOf = VoteDelegsOf ∘ DStateOf ∘ CertStateOf
 
-  HasDonations-LState : HasDonations LState
-  HasDonations-LState .DonationsOf = DonationsOf ∘ UTxOStateOf
+--   HasDonations-LState : HasDonations LState
+--   HasDonations-LState .DonationsOf = DonationsOf ∘ UTxOStateOf
 
-  HasFees-LState : HasFees LState
-  HasFees-LState .FeesOf = FeesOf ∘ UTxOStateOf
+--   HasFees-LState : HasFees LState
+--   HasFees-LState .FeesOf = FeesOf ∘ UTxOStateOf
 
-  HasCCHotKeys-LState : HasCCHotKeys LState
-  HasCCHotKeys-LState .CCHotKeysOf = CCHotKeysOf ∘ GStateOf
+--   HasCCHotKeys-LState : HasCCHotKeys LState
+--   HasCCHotKeys-LState .CCHotKeysOf = CCHotKeysOf ∘ GStateOf
 
-  HasDReps-LState : HasDReps LState
-  HasDReps-LState .DRepsOf = DRepsOf ∘ CertStateOf
+--   HasDReps-LState : HasDReps LState
+--   HasDReps-LState .DRepsOf = DRepsOf ∘ CertStateOf
 
-open CertState
-open DState
-open GovVotes
+-- open CertState
+-- open DState
+-- open GovVotes
 
 instance
   unquoteDecl HasCast-LState = derive-HasCast
@@ -149,6 +153,9 @@ instance
 txgov : ∀ {ℓ} → TxBody ℓ → List (GovVote ⊎ GovProposal)
 txgov txb = map inj₂ txGovProposals ++ map inj₁ txGovVotes
   where open TxBody txb
+
+GovProposals+Votes : ∀ {ℓ} → Tx ℓ → List (GovVote ⊎ GovProposal)
+GovProposals+Votes tx = map inj₂ (ListOfGovProposalsOf tx) ++ map inj₁ (ListOfGovVotesOf tx)
 
 -- rmOrphanDRepVotes : CertState → GovState → GovState
 -- rmOrphanDRepVotes cs govSt = L.map (map₂ go) govSt
@@ -207,7 +214,14 @@ UTxOEnv{.AgdaDatatype}/SubLedgerEnv{.AgdaDatatype}.
 data _⊢_⇀⦇_,SUBLEDGER⦈_ : SubLedgerEnv → LState → SubLevelTx → LState → Type where
   SUBLEDGER-V :
     let txb = stx .txBody
+
+```
+<!--
+```agda
         open TxBody txb
+```
+-->
+```agda
     in
       ∙ isTopLevelValid ≡ true
       ∙ ⟦ slot , pp , treasury , utxo₀ , isTopLevelValid , allScripts , allData ⟧  ⊢ utxoState ⇀⦇ stx ,SUBUTXOW⦈ utxoState'
@@ -239,15 +253,7 @@ private variable
 ```agda
 data _⊢_⇀⦇_,LEDGER⦈_ : LedgerEnv → LState → TopLevelTx → LState → Type where
   LEDGER-V :
-    let  txb = tx .txBody
-```
-<!--
-```agda
-         open TxBody txb
-```
--->
-```agda
-         utxo₀ = UTxOOf utxoState
+    let  utxo₀ = UTxOOf utxoState
 
          allScripts : ℙ P1Script × ℙ P2Script
          allScripts = getAllScripts tx utxo₀
@@ -256,23 +262,15 @@ data _⊢_⇀⦇_,LEDGER⦈_ : LedgerEnv → LState → TopLevelTx → LState �
          allData = setToMap (mapˢ < hash , id > (getAllData tx utxo₀))
     in
       ∙ isValid tx ≡ true
-      ∙ ⟦ slot , ppolicy , pp , enactState , treasury , utxo₀ , isValid tx , allScripts , allData ⟧ ⊢ ⟦ utxoState , govState , certState ⟧ ⇀⦇ txSubTransactions ,SUBLEDGERS⦈ ⟦ utxoState' , govState' , certState' ⟧
+      ∙ ⟦ slot , ppolicy , pp , enactState , treasury , utxo₀ , isValid tx , allScripts , allData ⟧ ⊢ ⟦ utxoState , govState , certState ⟧ ⇀⦇ SubTransactionsOf tx ,SUBLEDGERS⦈ ⟦ utxoState' , govState' , certState' ⟧
       ∙ ⟦ slot , pp , treasury , utxo₀ , isValid tx , allScripts , allData ⟧  ⊢ utxoState' ⇀⦇ tx ,UTXOW⦈ utxoState''
-      ∙ ⟦ epoch slot , pp , txGovVotes , txWithdrawals , allColdCreds govState enactState ⟧ ⊢ certState' ⇀⦇ txCerts ,CERTS⦈ certState''
-      ∙ ⟦ txId , epoch slot , pp , ppolicy , enactState , certState' , dom (RewardsOf certState) ⟧ ⊢ {- rmOrphanDRepVotes certState' -} govState ⇀⦇ txgov txb ,GOVS⦈ govState'
+      ∙ ⟦ epoch slot , pp , ListOfGovVotesOf tx , WithdrawalsOf tx , allColdCreds govState enactState ⟧ ⊢ certState' ⇀⦇ DCertsOf tx ,CERTS⦈ certState''
+      ∙ ⟦ TxIdOf tx , epoch slot , pp , ppolicy , enactState , certState' , dom (RewardsOf certState) ⟧ ⊢ {- rmOrphanDRepVotes certState' -} govState ⇀⦇ GovProposals+Votes tx ,GOVS⦈ govState'
       ────────────────────────────────
       ⟦ slot , ppolicy , pp , enactState , treasury ⟧ ⊢ ⟦ utxoState , govState , certState ⟧ ⇀⦇ tx ,LEDGER⦈ ⟦ utxoState'' , govState'' , certState'' ⟧
 
   LEDGER-I :
-    let  txb = tx .txBody
-```
-<!--
-```agda
-         open TxBody txb
-```
--->
-```agda
-         utxo₀ = UTxOOf utxoState
+    let  utxo₀ = UTxOOf utxoState
 
          allScripts : ℙ P1Script × ℙ P2Script
          allScripts = getAllScripts tx utxo₀
@@ -281,7 +279,7 @@ data _⊢_⇀⦇_,LEDGER⦈_ : LedgerEnv → LState → TopLevelTx → LState �
          allData = setToMap (mapˢ < hash , id > (getAllData tx utxo₀))
     in
       ∙ isValid tx ≡ false
-      ∙ ⟦ slot , ppolicy , pp , enactState , treasury , utxo₀ , isValid tx , allScripts , allData ⟧ ⊢ ⟦ utxoState , govState , certState ⟧ ⇀⦇ txSubTransactions  ,SUBLEDGERS⦈ ⟦ utxoState , govState , certState ⟧
+      ∙ ⟦ slot , ppolicy , pp , enactState , treasury , utxo₀ , isValid tx , allScripts , allData ⟧ ⊢ ⟦ utxoState , govState , certState ⟧ ⇀⦇ SubTransactionsOf tx  ,SUBLEDGERS⦈ ⟦ utxoState , govState , certState ⟧
       ∙ ⟦ slot , pp , treasury , utxo₀ , isValid tx , allScripts , allData ⟧ ⊢ utxoState ⇀⦇ tx ,UTXOW⦈ utxoState'
       ────────────────────────────────
       ⟦ slot , ppolicy , pp , enactState , treasury ⟧ ⊢ ⟦ utxoState , govState , certState ⟧ ⇀⦇ tx ,LEDGER⦈ ⟦ utxoState' , govState , certState ⟧

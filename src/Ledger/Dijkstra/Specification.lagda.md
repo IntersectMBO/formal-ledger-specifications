@@ -42,7 +42,7 @@ import Ledger.Dijkstra.Specification.Gov.Actions
 ## Ledger
 
 ```agda
--- import Ledger.Dijkstra.Specification.Ledger
+import Ledger.Dijkstra.Specification.Ledger
 ```
 
 ## Protocol Parameters
