@@ -28,22 +28,18 @@ open import Ledger.Dijkstra.Specification.Script.ScriptPurpose txs
 private variable
   ℓ : TxLevel
 
-rdptr : (Tx ℓ) → ScriptPurpose → Maybe (RedeemerPtr ℓ)
+rdptr : Tx ℓ → ScriptPurpose → Maybe (RedeemerPtr ℓ)
 rdptr tx = λ where
-  (Cert h)     → map (Cert     ,_) $ indexOfDCert          h txCerts
-  (Rwrd h)     → map (Reward   ,_) $ indexOfRewardAddress  h txWithdrawals
-  (Mint h)     → map (Mint     ,_) $ indexOfPolicyId       h (policies mint)
-  (Spend h)    → map (Spend    ,_) $ indexOfTxIn           h txIns
-  (Vote h)     → map (Vote     ,_) $ indexOfVote           h (map GovVote.voter txGovVotes)
-  (Propose h)  → map (Propose  ,_) $ indexOfProposal       h txGovProposals
-  (Guard c)    → map (Guard    ,_) $ indexOfGuard          c (setToList txGuards)
-    where open TxBody (TxBodyOf tx)
+  (Cert h)     → map (Cert     ,_) $ indexOfDCert           h (DCertsOf tx)
+  (Rwrd h)     → map (Reward   ,_) $ indexOfRewardAddress   h (WithdrawalsOf tx)
+  (Mint h)     → map (Mint     ,_) $ indexOfPolicyId        h (policies (MintedValueOf tx))
+  (Spend h)    → map (Spend    ,_) $ indexOfTxIn            h (SpendInputsOf tx)
+  (Vote h)     → map (Vote     ,_) $ indexOfVote            h (map GovVote.voter (ListOfGovVotesOf tx))
+  (Propose h)  → map (Propose  ,_) $ indexOfProposal        h (ListOfGovProposalsOf tx)
+  (Guard c)    → map (Guard    ,_) $ indexOfGuard           c (setToList (GuardsOf tx))
 
--- getSubTxScripts : TopLevelTx → ℙ (TxId × ScriptHash)
-
-indexedRdmrs : (Tx ℓ) → ScriptPurpose → Maybe (Redeemer × ExUnits)
-indexedRdmrs tx sp = maybe (λ x → lookupᵐ? txRedeemers x) nothing (rdptr tx sp)
-  where open Tx tx; open TxWitnesses txWitnesses
+indexedRdmrs : Tx ℓ → ScriptPurpose → Maybe (Redeemer × ExUnits)
+indexedRdmrs tx sp = maybe (λ x → lookupᵐ? (RedeemersOf tx) x) nothing (rdptr tx sp)
 
 txDataMap : Tx ℓ → DataHash ⇀ Datum
 txDataMap tx = setToMap (mapˢ < hash , id > (DataOf tx))
@@ -65,19 +61,19 @@ getDatum tx utxo₀ _ _ = nothing
 txInfo : (ℓ : TxLevel) → UTxO → Tx ℓ → TxInfo
 
 txInfo TxLevelTop utxo tx =
-  record  { realizedInputs  = utxo ∣ (TxBody.txIns txBody)
-          ; txOuts          = TxBody.txOuts txBody
-          ; txFee           = just (TxBody.txFee txBody)
-          ; mint            = TxBody.mint txBody
-          ; txCerts         = TxBody.txCerts txBody
-          ; txWithdrawals   = TxBody.txWithdrawals txBody
-          ; txVldt          = TxBody.txVldt txBody
-          ; vkKey           = TxBody.reqSignerHashes txBody
-          ; txGuards        = TxBody.txGuards txBody
+  record  { realizedInputs  = utxo ∣ (SpendInputsOf tx)
+          ; txOuts          = IndexedOutputsOf tx
+          ; txFee           = FeesOf? tx
+          ; mint            = MintedValueOf tx
+          ; txCerts         = DCertsOf tx
+          ; txWithdrawals   = WithdrawalsOf tx
+          ; txVldt          = ValidIntervalOf tx
+          ; vkKey           = RequiredSignerHashesOf tx
+          ; txGuards        = GuardsOf tx
           ; txData          = DataOf tx
-          ; txId            = TxBody.txId txBody
+          ; txId            = TxIdOf tx
           ; txInfoSubTxs    = nothing
-          } where open Tx tx
+          }
 
 txInfo TxLevelSub utxo tx =
   record  { realizedInputs  = utxo ∣ (TxBody.txIns txBody)
@@ -87,20 +83,20 @@ txInfo TxLevelSub utxo tx =
           ; txCerts         = TxBody.txCerts txBody
           ; txWithdrawals   = TxBody.txWithdrawals txBody
           ; txVldt          = TxBody.txVldt txBody
-          ; vkKey           = TxBody.reqSignerHashes txBody
+          ; vkKey           = TxBody.requiredSignerHashes txBody
           ; txGuards        = TxBody.txGuards txBody
           ; txData          = DataOf tx
           ; txId            = TxBody.txId txBody
           ; txInfoSubTxs    = nothing
           } where open Tx tx
 
-txInfoForPurpose : (ℓ : TxLevel) → UTxO → Tx ℓ → ScriptPurpose → TxInfo
+txInfoForPurpose : {ℓ : TxLevel} → UTxO → Tx ℓ → ScriptPurpose → TxInfo
 
 -- subtransactions: never get subTx infos (even if the ScriptPurpose is Guard).
-txInfoForPurpose TxLevelSub utxo tx _ = txInfo TxLevelSub utxo tx
+txInfoForPurpose {TxLevelSub} utxo tx _ = txInfo TxLevelSub utxo tx
 
 -- top-level transactions:
-txInfoForPurpose TxLevelTop utxo tx sp with sp
+txInfoForPurpose {TxLevelTop} utxo tx sp with sp
    -- · guard scripts see subTx infos
 ... | Guard _ =  record base { txInfoSubTxs = just subInfos }
                  where
@@ -114,23 +110,25 @@ txInfoForPurpose TxLevelTop utxo tx sp with sp
 
 <!--
 ```agda
-credsNeededMinusCollateral : {ℓ : TxLevel} → TxBody ℓ → ℙ (ScriptPurpose × Credential)
-credsNeededMinusCollateral txb =
-  mapˢ (λ a → (Rwrd a , CredentialOf a)) (dom ∣ WithdrawalsOf txb ∣)
-  ∪ mapPartial (λ c → (Cert c ,_) <$> cwitness c) (fromList (DCertsOf txb))
-  ∪ mapˢ (λ x → (Mint x , ScriptObj x)) (policies (MintedValueOf txb))
-  ∪ mapˢ (λ v → (Vote v , govVoterCredential v)) (fromList (map GovVoterOf (ListOfGovVotesOf txb)))
-  ∪ mapPartial (λ p → if PolicyOf p then (λ {sh} → just (Propose  p , ScriptObj sh)) else nothing)
-                 (fromList (ListOfGovProposalsOf txb))
+credsNeededMinusCollateral : {ℓ : TxLevel} → Tx ℓ → ℙ (ScriptPurpose × Credential)
+credsNeededMinusCollateral tx =
+    mapˢ        (λ a →  (Rwrd a , CredentialOf a))        (dom ∣ WithdrawalsOf tx ∣)
+  ∪ mapPartial  (λ c →  (Cert c ,_) <$> cwitness c)       (fromList (DCertsOf tx))
+  ∪ mapˢ        (λ x →  (Mint x , ScriptObj x))           (policies (MintedValueOf tx))
+  ∪ mapˢ        (λ v →  (Vote v , govVoterCredential v))  (fromList (map GovVoterOf (ListOfGovVotesOf tx)))
+  ∪ mapPartial  (λ p →  if PolicyOf p then (λ {sh} → just (Propose  p , ScriptObj sh))
+                        else nothing) (fromList (ListOfGovProposalsOf tx))
+  ∪ mapˢ        (λ c →  (Guard c , c)) (GuardsOf tx) -- collectP2ScriptsWithContext should
+                                                     -- include scripts with creds in txGuards.
 
-credsNeeded : {ℓ : TxLevel} → UTxO → (TxBody ℓ) → ℙ (ScriptPurpose × Credential)
-credsNeeded {TxLevelTop} utxo txb = credsNeededMinusCollateral txb
-  ∪ mapˢ (λ (i , o) → (Spend  i , payCred (proj₁ o))) ((utxo ∣ (txIns ∪ collateralInputs)) ˢ)
-  where open TxBody txb
+credsNeeded : {ℓ : TxLevel} → UTxO → Tx ℓ → ℙ (ScriptPurpose × Credential)
+credsNeeded {TxLevelTop} utxo tx =
+  credsNeededMinusCollateral tx
+    ∪ mapˢ  (λ (i , o) → (Spend  i , payCred (proj₁ o)))
+            ((utxo ∣ (SpendInputsOf tx ∪ CollateralInputsOf tx)) ˢ)
 
-credsNeeded {TxLevelSub} utxo txb = credsNeededMinusCollateral txb
-  ∪ mapˢ (λ (i , o) → (Spend  i , payCred (proj₁ o))) ((utxo ∣ txIns) ˢ)
-  where open TxBody txb
+credsNeeded {TxLevelSub} utxo tx = credsNeededMinusCollateral tx
+  ∪ mapˢ (λ (i , o) → (Spend  i , payCred (proj₁ o))) ((utxo ∣ SpendInputsOf tx) ˢ)
 
 txOutToDataHash : TxOut → Maybe DataHash
 txOutToDataHash (_ , _ , d , _) = d >>= isInj₂
@@ -145,12 +143,11 @@ opaque
   collectP2ScriptsWithContext : {ℓ : TxLevel} → PParams → Tx ℓ
     → UTxO → (DataHash ⇀ Datum) → ℙ Script
     → List (P2Script × List Data × ExUnits × CostModel)
-  collectP2ScriptsWithContext {ℓ} pp tx utxo extraData allScripts
-    = setToList  $ mapPartial ( λ (sp , c) →  if isScriptObj c
+  collectP2ScriptsWithContext pp tx utxo extraData allScripts
+    = setToList $ mapPartial  ( λ (sp , c) →  if isScriptObj c
                                               then (λ {sh} → toScriptInput sp sh)
                                               else nothing )
-                 $ credsNeeded utxo (TxBodyOf tx)
-      -- use initial utxo snapshot ^^here^^ to inspect `txIns` (collateral spend side)
+                              ( credsNeeded utxo tx )
     where
       toScriptInput
         : ScriptPurpose → ScriptHash
@@ -160,7 +157,7 @@ opaque
            p2s ← toP2Script s
            (rdmr , exunits) ← indexedRdmrs tx sp
            let data' = maybe [_] [] (getDatum tx utxo extraData sp)
-                        ++ rdmr ∷ [ valContext (txInfoForPurpose ℓ utxo tx sp) sp ]
+                        ++ rdmr ∷ [ valContext (txInfoForPurpose utxo tx sp) sp ]
            just (p2s , data' , exunits , PParams.costmdls pp)
 
 evalP2Scripts : List (P2Script × List Data × ExUnits × CostModel) → Bool
