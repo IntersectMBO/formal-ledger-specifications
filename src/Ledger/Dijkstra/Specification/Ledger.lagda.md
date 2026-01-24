@@ -239,13 +239,21 @@ private variable
 ```agda
 data _⊢_⇀⦇_,LEDGER⦈_ : LedgerEnv → LState → TopLevelTx → LState → Type where
   LEDGER-V :
-    let  utxo₀ = UTxOOf utxoState
+    let  -- Pre-batch snapshot of UTxO
+         utxo₀ : UTxO
+         utxo₀ = UTxOOf utxoState
+
+         -- Batch view of UTxO: used only for resolving reference inputs to scripts/datums
+         -- that may appear on outputs created within this same batch.
+         utxoₙ : UTxO
+         utxoₙ = utxoView utxo₀ tx
 
          allScripts : ℙ Script
-         allScripts = getAllScripts tx utxo₀
+         allScripts = getAllScripts tx utxo₀ utxoₙ
 
          allData : DataHash ⇀ Datum
-         allData = setToMap (mapˢ < hash , id > (getAllData tx utxo₀))
+         allData = setToMap (mapˢ < hash , id > (getAllData tx utxo₀ utxoₙ))
+
     in
       ∙ Tx.isValid tx ≡ true
       ∙ ⟦ slot , ppolicy , pp , enactState , treasury , utxo₀ , Tx.isValid tx , allScripts , allData ⟧ ⊢ ⟦ utxoState , govState , certState ⟧ ⇀⦇ SubTransactionsOf tx ,SUBLEDGERS⦈ ⟦ utxoState' , govState' , certState' ⟧
@@ -256,13 +264,16 @@ data _⊢_⇀⦇_,LEDGER⦈_ : LedgerEnv → LState → TopLevelTx → LState �
       ⟦ slot , ppolicy , pp , enactState , treasury ⟧ ⊢ ⟦ utxoState , govState , certState ⟧ ⇀⦇ tx ,LEDGER⦈ ⟦ utxoState'' , govState'' , certState'' ⟧
 
   LEDGER-I :
-    let  utxo₀ = UTxOOf utxoState
+    let  utxo₀ : UTxO
+         utxo₀ = UTxOOf utxoState
+         utxoₙ : UTxO
+         utxoₙ = utxoView utxo₀ tx
 
          allScripts : ℙ Script
-         allScripts = getAllScripts tx utxo₀
+         allScripts = getAllScripts tx utxo₀ utxoₙ
 
          allData : DataHash ⇀ Datum
-         allData = setToMap (mapˢ < hash , id > (getAllData tx utxo₀))
+         allData = setToMap (mapˢ < hash , id > (getAllData tx utxo₀ utxoₙ))
     in
       ∙ Tx.isValid tx ≡ false
       ∙ ⟦ slot , ppolicy , pp , enactState , treasury , utxo₀ , Tx.isValid tx , allScripts , allData ⟧ ⊢ ⟦ utxoState , govState , certState ⟧ ⇀⦇ SubTransactionsOf tx  ,SUBLEDGERS⦈ ⟦ utxoState , govState , certState ⟧

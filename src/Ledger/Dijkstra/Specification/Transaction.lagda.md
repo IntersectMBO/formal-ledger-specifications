@@ -252,8 +252,8 @@ Of particular note in the Dijkstra era are
         txRequiredTopLevelGuards  : InSubLevel txLevel (ℙ (Credential × Maybe Datum))
         ---------------------
 
-      reqSignerHashes : ℙ KeyHash
-      reqSignerHashes = mapPartial isKeyHashObj txGuards
+      requiredSignerHashes : ℙ KeyHash
+      requiredSignerHashes = mapPartial isKeyHashObj txGuards
 
 
     record TxWitnesses (txLevel : TxLevel) : Type where
@@ -330,6 +330,10 @@ could be either of them.
     field SizeOf : A → ℕ
   open HasSize ⦃...⦄ public
 
+  record HasValidInterval {a} (A : Type a) : Type a where
+    field ValidIntervalOf : A → Maybe Slot × Maybe Slot
+  open HasValidInterval ⦃...⦄ public
+
   record HasSpendInputs {a} (A : Type a) : Type a where
     field SpendInputsOf : A → ℙ TxIn
   open HasSpendInputs ⦃...⦄ public
@@ -378,6 +382,10 @@ could be either of them.
     field TxOutsOf : A → Ix ⇀ TxOut
   open HasTxOuts ⦃...⦄ public
 
+  record HasRequiredSingerHashes {a} (A : Type a) : Type a where
+    field RequiredSignerHashesOf : A → ℙ KeyHash
+  open HasRequiredSingerHashes ⦃...⦄ public
+
   instance
     HasTxBody-Tx : HasTxBody (Tx txLevel)
     HasTxBody-Tx .TxBodyOf = Tx.txBody
@@ -408,68 +416,62 @@ could be either of them.
 
     HasDCerts-TxBody : HasDCerts (TxBody txLevel)
     HasDCerts-TxBody .DCertsOf = TxBody.txCerts
-
     HasDCerts-Tx : HasDCerts (Tx txLevel)
     HasDCerts-Tx .DCertsOf = DCertsOf ∘ TxBodyOf
 
     HasWithdrawals-TxBody : HasWithdrawals (TxBody txLevel)
     HasWithdrawals-TxBody .WithdrawalsOf = TxBody.txWithdrawals
-
     HasWithdrawals-Tx : HasWithdrawals (Tx txLevel)
     HasWithdrawals-Tx .WithdrawalsOf = WithdrawalsOf ∘ TxBodyOf
 
+    HasValidInterval-TxBody : HasValidInterval (TxBody txLevel)
+    HasValidInterval-TxBody .ValidIntervalOf = TxBody.txVldt
+    HasValidInterval-Tx : HasValidInterval (Tx txLevel)
+    HasValidInterval-Tx .ValidIntervalOf = ValidIntervalOf ∘ TxBodyOf
+
     HasSpendInputs-TxBody : HasSpendInputs (TxBody txLevel)
     HasSpendInputs-TxBody .SpendInputsOf = TxBody.txIns
-
     HasSpendInputs-Tx : HasSpendInputs (Tx txLevel)
     HasSpendInputs-Tx .SpendInputsOf = SpendInputsOf ∘ TxBodyOf
 
     HasReferenceInputs-TxBody : HasReferenceInputs (TxBody txLevel)
     HasReferenceInputs-TxBody .ReferenceInputsOf = TxBody.refInputs
-
     HasReferenceInputs-Tx : HasReferenceInputs (Tx txLevel)
     HasReferenceInputs-Tx .ReferenceInputsOf = ReferenceInputsOf ∘ TxBodyOf
 
     HasIndexedOutputs-TxBody : HasIndexedOutputs (TxBody txLevel)
     HasIndexedOutputs-TxBody .IndexedOutputsOf = TxBody.txOuts
-
     HasIndexedOutputs-Tx : HasIndexedOutputs (Tx txLevel)
     HasIndexedOutputs-Tx .IndexedOutputsOf = IndexedOutputsOf ∘ TxBodyOf
 
     HasMintedValue-TxBody : HasMintedValue (TxBody txLevel)
     HasMintedValue-TxBody .MintedValueOf = TxBody.mint
-
     HasMintedValue-Tx : HasMintedValue (Tx txLevel)
     HasMintedValue-Tx .MintedValueOf = MintedValueOf ∘ TxBodyOf
 
     HasListOfGovVotes-TxBody : HasListOfGovVotes (TxBody txLevel)
     HasListOfGovVotes-TxBody .ListOfGovVotesOf = TxBody.txGovVotes
-
     HasListOfGovVotes-Tx : HasListOfGovVotes (Tx txLevel)
     HasListOfGovVotes-Tx .ListOfGovVotesOf = ListOfGovVotesOf ∘ TxBodyOf
 
     HasListOfGovProposals-TxBody : HasListOfGovProposals (TxBody txLevel)
     HasListOfGovProposals-TxBody .ListOfGovProposalsOf = TxBody.txGovProposals
-
     HasListOfGovProposals-Tx : HasListOfGovProposals (Tx txLevel)
     HasListOfGovProposals-Tx .ListOfGovProposalsOf = ListOfGovProposalsOf ∘ TxBodyOf
 
     HasFees?-TxBody : {ℓ : TxLevel} → HasFees? (TxBody ℓ)
     HasFees?-TxBody {TxLevelTop} .FeesOf? tbTop = just (TxBody.txFee tbTop)
     HasFees?-TxBody {TxLevelSub} .FeesOf? tbSub = nothing
-
     HasFees?-Tx : HasFees? (Tx txLevel)
     HasFees?-Tx .FeesOf? = FeesOf? ∘ TxBodyOf
 
     HasTxId-TxBody : HasTxId (TxBody txLevel)
     HasTxId-TxBody .TxIdOf = TxBody.txId
-
     HasTxId-Tx : HasTxId (Tx txLevel)
     HasTxId-Tx .TxIdOf = TxIdOf ∘ TxBodyOf
 
     HasDonations-TxBody : HasDonations (TxBody txLevel)
     HasDonations-TxBody .DonationsOf = TxBody.txDonation
-
     HasDonations-Tx : HasDonations (Tx txLevel)
     HasDonations-Tx .DonationsOf = DonationsOf ∘ TxBodyOf
 
@@ -478,51 +480,48 @@ could be either of them.
 
     HasData-TxWitnesses : HasData (TxWitnesses txLevel)
     HasData-TxWitnesses .DataOf = TxWitnesses.txData
-
     HasData-Tx : HasData (Tx txLevel)
     HasData-Tx .DataOf = DataOf ∘ TxWitnessesOf
 
     HasGuards-TxBody : HasGuards (TxBody txLevel)
     HasGuards-TxBody .GuardsOf = TxBody.txGuards
-
     HasGuards-Tx : HasGuards (Tx txLevel)
     HasGuards-Tx .GuardsOf = GuardsOf ∘ TxBodyOf
 
     HasScripts-TxWitnesses : HasScripts (TxWitnesses txLevel)
     HasScripts-TxWitnesses .ScriptsOf = TxWitnesses.scripts
-
     HasScripts-Tx : HasScripts (Tx txLevel)
     HasScripts-Tx .ScriptsOf = ScriptsOf ∘ TxWitnessesOf
 
     HasTxOuts-TxBody : HasTxOuts (TxBody txLevel)
     HasTxOuts-TxBody .TxOutsOf = TxBody.txOuts
-
     HasTxOuts-Tx : HasTxOuts (Tx txLevel)
     HasTxOuts-Tx .TxOutsOf = TxOutsOf ∘ TxBodyOf
+
+    HasRequiredSingerHashes-TxBody : HasRequiredSingerHashes (TxBody txLevel)
+    HasRequiredSingerHashes-TxBody .RequiredSignerHashesOf = TxBody.requiredSignerHashes
+    HasRequiredSingerHashes-Tx : HasRequiredSingerHashes (Tx txLevel)
+    HasRequiredSingerHashes-Tx .RequiredSignerHashesOf = RequiredSignerHashesOf ∘ TxBodyOf
 ```
 -->
 
 ### Auxiliary Functions for Transaction Structures
 
-This section collects some unimportant but useful helper and accessor functions.
-In the Dijkstra era, we need to talk about *which UTxO* a helper is parameterised by.
-In particular:
+In the Dijkstra era, we need to talk about which UTxO a helper is parameterised by.
 
-+  **Spend-side checks remain mempool-safe**. Spending inputs are always inspected
-   against the pre-batch UTxO snapshot (`utxo₀`{.AgdaField}).
-+  **Script/data availability is batch-scoped**.  In the ledger rules, the "global"
++  Spending inputs are always inspected against the pre-batch UTxO snapshot (`utxo₀`{.AgdaField}).
++  Script/data availability is batch-scoped.  In the ledger rules, the global
    script universe and datum-by-hash pool are computed once per top-level batch
-   (using `getAllScripts` / `getAllData`) and then threaded through the environment.
+   (using `getAllScripts`{.AgdaFunction} and `getAllData`{.AgdaFunction}).
 
-This module stays intentionally *policy-neutral* about batch wiring.  The helpers
-below simply take a UTxO parameter, and callers choose whether that argument is
-the pre-batch snapshot (`utxo₀`), some batch view, or another derived map.
-
-Informally, you can think of two common choices that appear elsewhere:
+The present module is abstract and "policy-neutral" about which UTxO view is assumed
+since the helper functions below simply take a UTxO parameter, and the caller will choose
+whether that argument ought to be the pre-batch snapshot (`utxo₀`{.AgdaBound}), some
+batch view, or another derived map.  The two most common choices appearing elsewhere
+will be
 
 +  `utxo₀`: the pre-batch UTxO snapshot used for spend-side lookups;
-+  `utxo₀ ∪ batchOuts`: a batch view that includes outputs created in the batch
-   (when a rule needs those outputs explicitly).
++  `utxo₀ ∪ batchOuts`: a batch view that includes outputs created in the batch.
 
 ```agda
   TxOutʰ : Type
@@ -577,30 +576,55 @@ Informally, you can think of two common choices that appear elsewhere:
   witnessData : Tx txLevel → ℙ Datum
   witnessData tx = DataOf tx
 
-  getTxScripts : UTxO → Tx txLevel → ℙ Script
-  getTxScripts utxo tx =  witnessScripts tx
-                          ∪ spendScripts utxo tx
-                          ∪ referenceScripts utxo tx
-                          ∪ txOutScripts tx
+  -- --------------------------------------------------------------------------
+  -- Two-view script/data extraction
+  --
+  --   utxo₀ is the pre-batch snapshot for spend-side lookups
+  --   utxoₙ is the post-batch or evolving view for reference-input lookups
+  -- --------------------------------------------------------------------------
 
-  getTxData : UTxO → Tx txLevel → ℙ Datum
-  getTxData utxo tx =  witnessData tx
-                       ∪ spendData utxo tx
-                       ∪ referenceData utxo tx
-                       ∪ txOutData tx
+  getTxScripts : UTxO → UTxO → Tx txLevel → ℙ Script
+  getTxScripts utxo₀ utxoₙ tx =  witnessScripts tx
+                                 ∪ spendScripts utxo₀ tx
+                                 ∪ referenceScripts utxoₙ tx
+                                 ∪ txOutScripts tx
 
-  getAllScripts : TopLevelTx → UTxO → ℙ Script
-  getAllScripts tx utxo =
-    getTxScripts utxo tx               -- (1) scripts from top-level transaction
-    ∪ concatMapˢ (getTxScripts utxo)   -- (2) scripts from subtransactions
-                 (fromList (SubTransactionsOf tx))
+  getTxData : UTxO → UTxO → Tx txLevel → ℙ Datum
+  getTxData utxo₀ utxoₙ tx =  witnessData tx
+                              ∪ spendData utxo₀ tx
+                              ∪ referenceData utxoₙ tx
+                              ∪ txOutData tx
 
-  getAllData : TopLevelTx → UTxO → ℙ Datum
-  getAllData tx utxo =
-    getTxData utxo tx ∪ concatMapˢ (getTxData utxo) (fromList (SubTransactionsOf tx))
+  getAllScripts : TopLevelTx → UTxO → UTxO → ℙ Script
+  getAllScripts txTop utxo₀ utxoₙ =
+    getTxScripts utxo₀ utxoₙ txTop
+    ∪ concatMapˢ (getTxScripts utxo₀ utxoₙ)
+                 (fromList (SubTransactionsOf txTop))
 
-  lookupScriptHash : ScriptHash → Tx txLevel → UTxO → Maybe Script
-  lookupScriptHash sh tx utxo = lookupHash sh (getTxScripts utxo tx)
+  getAllData : TopLevelTx → UTxO → UTxO → ℙ Datum
+  getAllData txTop utxo₀ utxoₙ =
+    getTxData utxo₀ utxoₙ txTop
+    ∪ concatMapˢ (getTxData utxo₀ utxoₙ)
+                 (fromList (SubTransactionsOf txTop))
+
+  lookupScriptHash : ScriptHash → Tx txLevel → UTxO → UTxO → Maybe Script
+  lookupScriptHash sh tx utxo₀ utxoₙ = lookupHash sh (getTxScripts utxo₀ utxoₙ tx)
+
+  -- unary versions
+  getTxScripts₀ : UTxO → Tx txLevel → ℙ Script
+  getTxScripts₀ utxo tx = getTxScripts utxo utxo tx
+
+  getTxData₀ : UTxO → Tx txLevel → ℙ Datum
+  getTxData₀ utxo tx = getTxData utxo utxo tx
+
+  getAllScripts₀ : TopLevelTx → UTxO → ℙ Script
+  getAllScripts₀ txTop utxo = getAllScripts txTop utxo utxo
+
+  getAllData₀ : TopLevelTx → UTxO → ℙ Datum
+  getAllData₀ txTop utxo = getAllData txTop utxo utxo
+
+  lookupScriptHash₀ : ScriptHash → Tx txLevel → UTxO → Maybe Script
+  lookupScriptHash₀ sh tx utxo = lookupHash sh (getTxScripts₀ utxo tx)
 ```
 
 CIP-0118 models "required top-level guards" as a list of requirements coming
@@ -688,11 +712,11 @@ result, several checks that were "per-transaction" in Conway become *batch-aware
 
 **Design Note** (spending inputs vs reference inputs).
 For Dijkstra batches, we distinguish *spending inputs* from *reference inputs*.
-All spending inputs across the whole batch must exist in the initial UTxO snapshot
-(mempool safety).  Reference inputs are treated separately by the UTxO rules.
-For script/data availability, the ledger computes batch-wide `globalScripts` and
-`globalData` once per top-level batch and threads them through the environment, so
-Phase 2 execution can be done with a shared, batch-scoped witness pool.
+All spending inputs across the whole batch must exist in the initial UTxO snapshot.
+Reference inputs are treated separately by the UTxO rules.  For script/data
+availability, the ledger computes batch-wide `globalScripts` and `globalData` once
+per top-level batch and threads them through the environment, so phase-2 execution
+can be done with a shared, batch-scoped witness pool.
 
 
 
@@ -713,9 +737,8 @@ Phase 2 execution can be done with a shared, batch-scoped witness pool.
 
 3.  **Batch-wide phase-2 evaluation**
 
-    Phase-2 (Plutus) validation is performed *once* for the whole batch (mempool
-    safety), even though script inputs/contexts are constructed from both sub- and
-    top-level components.
+    Phase-2 (Plutus) validation is performed *once* for the whole batch, even though
+    script inputs/contexts are constructed from both sub- and top-level components.
 
 4.  **Guards are credentials**
 
