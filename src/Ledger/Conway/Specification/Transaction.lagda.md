@@ -118,7 +118,7 @@ record TransactionStructure : Type₁ where
     ; globalConstants = globalConstants
     }
 
-  module GovActions = Ledger.Conway.Specification.Gov.Actions govStructure
+  module GovActions = Ledger.Conway.Specification.Gov.Actions (GS→GAS govStructure)
   open GovActions hiding (Vote; yes; no; abstain) public
 
   open import Ledger.Conway.Specification.Certs govStructure

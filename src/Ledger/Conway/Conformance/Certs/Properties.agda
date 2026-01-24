@@ -1,7 +1,7 @@
 {-# OPTIONS --safe #-}
 
 open import Ledger.Prelude
-open import Ledger.Conway.Specification.Gov.Base using (GovStructure)
+open import Ledger.Conway.Specification.Gov.Base
 
 module Ledger.Conway.Conformance.Certs.Properties (gs : _) (open GovStructure gs) where
 
@@ -10,7 +10,7 @@ open import Relation.Nullary.Decidable
 
 open import Ledger.Conway.Specification.Certs.Properties.Computational gs
   using (Computational-POOL)
-open import Ledger.Conway.Specification.Gov.Actions gs hiding (yes; no)
+open import Ledger.Conway.Specification.Gov.Actions (GS→GAS gs) hiding (yes; no)
 open import Ledger.Conway.Conformance.Certs gs
 
 open Computational ⦃...⦄

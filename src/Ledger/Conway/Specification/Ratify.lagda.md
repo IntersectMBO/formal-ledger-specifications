@@ -22,7 +22,7 @@ open import Ledger.Prelude hiding (_∧_; _∨_; _⊔_) renaming (filterᵐ to f
 
 open import Ledger.Conway.Specification.Certs govStructure
 open import Ledger.Conway.Specification.Enact govStructure
-open import Ledger.Conway.Specification.Gov.Actions govStructure hiding (yes; no)
+open import Ledger.Conway.Specification.Gov.Actions (GS→GAS govStructure) hiding (yes; no)
 open GovStructure govStructure
 ```
 -->
