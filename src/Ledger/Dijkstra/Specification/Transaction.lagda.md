@@ -342,10 +342,6 @@ could be either of them.
     field ReferenceInputsOf : A → ℙ TxIn
   open HasReferenceInputs ⦃...⦄ public
 
-  record HasIndexedOutputs {a} (A : Type a) : Type a where
-    field IndexedOutputsOf : A → Ix ⇀ TxOut
-  open HasIndexedOutputs ⦃...⦄ public
-
   record HasMintedValue {a} (A : Type a) : Type a where
     field MintedValueOf : A → Value
   open HasMintedValue ⦃...⦄ public
@@ -386,6 +382,10 @@ could be either of them.
     field RequiredSignerHashesOf : A → ℙ KeyHash
   open HasRequiredSingerHashes ⦃...⦄ public
 
+  record HasCurrentTreasury {a} (A : Type a) : Type a where
+    field CurrentTreasuryOf : A → Maybe Coin
+  open HasCurrentTreasury ⦃...⦄ public
+
   instance
     HasTxBody-Tx : HasTxBody (Tx txLevel)
     HasTxBody-Tx .TxBodyOf = Tx.txBody
@@ -398,7 +398,6 @@ could be either of them.
 
     HasRedeemers-TxWitnesses : HasRedeemers (TxWitnesses txLevel)
     HasRedeemers-TxWitnesses .RedeemersOf = TxWitnesses.txRedeemers
-
     HasRedeemers-Tx : HasRedeemers (Tx txLevel)
     HasRedeemers-Tx .RedeemersOf = RedeemersOf ∘ TxWitnessesOf
 
@@ -439,11 +438,6 @@ could be either of them.
     HasReferenceInputs-Tx : HasReferenceInputs (Tx txLevel)
     HasReferenceInputs-Tx .ReferenceInputsOf = ReferenceInputsOf ∘ TxBodyOf
 
-    HasIndexedOutputs-TxBody : HasIndexedOutputs (TxBody txLevel)
-    HasIndexedOutputs-TxBody .IndexedOutputsOf = TxBody.txOuts
-    HasIndexedOutputs-Tx : HasIndexedOutputs (Tx txLevel)
-    HasIndexedOutputs-Tx .IndexedOutputsOf = IndexedOutputsOf ∘ TxBodyOf
-
     HasMintedValue-TxBody : HasMintedValue (TxBody txLevel)
     HasMintedValue-TxBody .MintedValueOf = TxBody.mint
     HasMintedValue-Tx : HasMintedValue (Tx txLevel)
@@ -458,6 +452,11 @@ could be either of them.
     HasListOfGovProposals-TxBody .ListOfGovProposalsOf = TxBody.txGovProposals
     HasListOfGovProposals-Tx : HasListOfGovProposals (Tx txLevel)
     HasListOfGovProposals-Tx .ListOfGovProposalsOf = ListOfGovProposalsOf ∘ TxBodyOf
+
+    HasMaybeNetworkId-TxBody : HasMaybeNetworkId (TxBody txLevel)
+    HasMaybeNetworkId-TxBody .MaybeNetworkIdOf = TxBody.txNetworkId
+    HasMaybeNetworkId-Tx : HasMaybeNetworkId (Tx txLevel)
+    HasMaybeNetworkId-Tx .MaybeNetworkIdOf = MaybeNetworkIdOf ∘ TxBodyOf
 
     HasFees?-TxBody : {ℓ : TxLevel} → HasFees? (TxBody ℓ)
     HasFees?-TxBody {TxLevelTop} .FeesOf? tbTop = just (TxBody.txFee tbTop)
@@ -502,6 +501,11 @@ could be either of them.
     HasRequiredSingerHashes-TxBody .RequiredSignerHashesOf = TxBody.requiredSignerHashes
     HasRequiredSingerHashes-Tx : HasRequiredSingerHashes (Tx txLevel)
     HasRequiredSingerHashes-Tx .RequiredSignerHashesOf = RequiredSignerHashesOf ∘ TxBodyOf
+
+    HasCurrentTreasury-TxBody : HasCurrentTreasury (TxBody txLevel)
+    HasCurrentTreasury-TxBody .CurrentTreasuryOf = TxBody.currentTreasury
+    HasCurrentTreasury-Tx : HasCurrentTreasury (Tx txLevel)
+    HasCurrentTreasury-Tx .CurrentTreasuryOf = CurrentTreasuryOf ∘ TxBodyOf
 ```
 -->
 

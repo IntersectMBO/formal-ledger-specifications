@@ -62,7 +62,7 @@ txInfo : (ℓ : TxLevel) → UTxO → Tx ℓ → TxInfo
 
 txInfo TxLevelTop utxo tx =
   record  { realizedInputs  = utxo ∣ (SpendInputsOf tx)
-          ; txOuts          = IndexedOutputsOf tx
+          ; txOuts          = TxOutsOf tx
           ; txFee           = FeesOf? tx
           ; mint            = MintedValueOf tx
           ; txCerts         = DCertsOf tx

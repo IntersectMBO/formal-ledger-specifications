@@ -128,10 +128,10 @@ data _⊢_⇀⦇_,SUBUTXOW⦈_ : UTxOEnv → UTxOState → SubLevelTx → UTxOSt
          witsKeyHashes       = mapˢ hash (dom vKeySigs)
 
          p1Scripts : ℙ P1Script
-         p1Scripts = mapPartial toP1Script (GlobalScriptsOf Γ)
+         p1Scripts = mapPartial toP1Script (ScriptPoolOf Γ)
 
          p2Scripts : ℙ P2Script
-         p2Scripts = mapPartial toP2Script (GlobalScriptsOf Γ)
+         p2Scripts = mapPartial toP2Script (ScriptPoolOf Γ)
 
          neededScriptHashes  : ℙ ScriptHash
          neededScriptHashes  = mapPartial (isScriptObj  ∘ proj₂) (credsNeeded utxo₀ tx)
@@ -150,7 +150,7 @@ data _⊢_⇀⦇_,SUBUTXOW⦈_ : UTxOEnv → UTxOState → SubLevelTx → UTxOSt
     ∙  ∀[ s ∈ p1Scripts ] (hash s ∈ neededScriptHashes → validP1Script witsKeyHashes txVldt s)
     ∙  neededVKeyHashes ⊆ witsKeyHashes
     ∙  neededScriptHashes ⊆ mapˢ hash p1Scripts ∪ mapˢ hash p2Scripts
-    ∙  neededDataHashes ⊆ dom (Γ .globalData)
+    ∙  neededDataHashes ⊆ dom (DataPoolOf Γ)
     ∙  languages p2Scripts ⊆ allowedLanguages tx utxo -- Redundant? Superseded by same in UTXOW?
     ∙  txADhash ≡ map hash txAuxData
     ∙ Γ ⊢ s ⇀⦇ stx ,SUBUTXO⦈ s'
@@ -173,10 +173,10 @@ data _⊢_⇀⦇_,UTXOW⦈_ : UTxOEnv → UTxOState → TopLevelTx → UTxOState
          witsKeyHashes       = mapˢ hash (dom vKeySigs)
 
          p1Scripts : ℙ P1Script
-         p1Scripts = mapPartial toP1Script (GlobalScriptsOf Γ)
+         p1Scripts = mapPartial toP1Script (ScriptPoolOf Γ)
 
          p2Scripts : ℙ P2Script
-         p2Scripts = mapPartial toP2Script (GlobalScriptsOf Γ)
+         p2Scripts = mapPartial toP2Script (ScriptPoolOf Γ)
 
          neededScriptHashes  : ℙ ScriptHash
          neededScriptHashes  = mapPartial (isScriptObj  ∘ proj₂) (credsNeeded utxo₀ tx)
@@ -195,7 +195,7 @@ data _⊢_⇀⦇_,UTXOW⦈_ : UTxOEnv → UTxOState → TopLevelTx → UTxOState
     ∙  ∀[ s ∈ p1Scripts ] (hash s ∈ neededScriptHashes → validP1Script witsKeyHashes txVldt s)
     ∙  neededVKeyHashes ⊆ witsKeyHashes
     ∙  neededScriptHashes ⊆ mapˢ hash p1Scripts ∪ mapˢ hash p2Scripts
-    ∙  neededDataHashes ⊆ dom (Γ .globalData)
+    ∙  neededDataHashes ⊆ dom (DataPoolOf Γ)
     ∙  languages p2Scripts ⊆ allowedLanguages tx utxo
     ∙  txADhash ≡ map hash txAuxData
     ∙  Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s'
