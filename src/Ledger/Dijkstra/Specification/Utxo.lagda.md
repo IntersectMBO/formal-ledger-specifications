@@ -107,8 +107,8 @@ are used to resolve all script and datum lookups during phase-2 validation of
 subtransactions in the batch.  Scripts and data are treated as *batch-wide witnesses*;
 attaching a script or datum to a transaction in the batch makes it available for
 phase-2 validation of any transaction in the batch, independent of which
-subtransaction originally supplied it.  The intent is that the ledger rules can validate
-all scripts in the a without recomputing per-subtransaction script/data availability.
+subtransaction originally supplied it.  Thus the ledger rules can validate
+all scripts in the batch without recomputing per-subtransaction script/data availability.
 
 In the `LEDGER`{.AgdaDatatype} rule, the *batch-wide script pool* and
 *datum-by-hash pool* are computed once and the results are used to populate
@@ -200,13 +200,13 @@ opaque
   cbalance : UTxO → Coin
   cbalance utxo = coin (balance utxo)
 
-  refScriptsSize : UTxO → Tx ℓ → ℕ
-  refScriptsSize utxo tx = sum (map scriptSize (setToList (referenceScripts utxo tx)))
+  refScriptsSize : Tx ℓ → UTxO → ℕ
+  refScriptsSize tx utxo = sum (map scriptSize (setToList (referenceScripts tx utxo)))
 
-  minfee : PParams → UTxO → Tx ℓ → Coin
-  minfee pp utxo tx =  pp .a * (SizeOf tx) + pp .b
+  minfee : PParams → Tx ℓ → UTxO → Coin
+  minfee pp tx utxo =  pp .a * (SizeOf tx) + pp .b
                        + txScriptFee (pp .prices) (totExUnits tx)
-                       + scriptsCost pp (refScriptsSize utxo tx)
+                       + scriptsCost pp (refScriptsSize tx utxo)
 ```
 
 <!--
@@ -441,104 +441,97 @@ the following components:
 +  the script pool `ScriptPoolOf`{.AgdaField} `Γ`{.AgdaBound},
 +  the datum-by-hash pool `DataPoolOf`{.AgdaField} `Γ`{.AgdaBound}.
 
-This keeps batch-specific details confined to the `Utxo.Phase2`{.AgdaModule}
-module we define in the present section.
-
 ```agda
-module Phase2 (Γ : UTxOEnv) (txTop : TopLevelTx) where
+-- union a list of sets
+concatMapˡ : {A B : Type} → (A → ℙ B) → List A → ℙ B
+concatMapˡ f as = proj₁ $ unions (fromList (map f as))
+-- maybe move this to agda-sets or src-lib-exts
 
-  extraData : DataHash ⇀ Datum
-  extraData = DataPoolOf Γ
+-- No-double-spend across the batch: the collection of all spending inputs must
+-- be pairwise disjoint.  NOTE: using `batchSpendInputs` alone is insufficient,
+-- because set union would silently erase duplicates.
+PairwiseDisjoint : List (ℙ TxIn) → Type
+PairwiseDisjoint []        = ⊤
+PairwiseDisjoint (X ∷ Xs)  = Allˡ (λ Y → disjoint X Y) Xs × PairwiseDisjoint Xs
 
-  p2ScriptsWithContext : List (P2Script × List Data × ExUnits × CostModel)
-  p2ScriptsWithContext = getP2Scripts txTop ++ concatMap getP2Scripts (SubTransactionsOf txTop)
-    where
-    getP2Scripts : Tx ℓ → List (P2Script × List Data × ExUnits × CostModel)
-    getP2Scripts tx =  collectP2ScriptsWithContext (PParamsOf Γ) tx
-                       (UTxOOf Γ)       -- pre-batch snapshot
-                       extraData        -- batch datum-by-hash pool
-                       (ScriptPoolOf Γ)  -- batch script universe
+p2ScriptsWithContext : UTxOEnv → Tx ℓ → List (P2Script × List Data × ExUnits × CostModel)
+p2ScriptsWithContext Γ t =
+  collectP2ScriptsWithContext (PParamsOf Γ) t
+                              (UTxOOf Γ)        -- pre-batch snapshot
+                              (DataPoolOf Γ)    -- batch datum-by-hash pool
+                              (ScriptPoolOf Γ)  -- batch script universe
 
+allDCerts : TopLevelTx → List DCert
+allDCerts t = DCertsOf t ++ concatMap DCertsOf (SubTransactionsOf t)
 
-  batchScripts✓ : Bool
-  batchScripts✓ = evalP2Scripts p2ScriptsWithContext
+allSpendInputs : TopLevelTx → ℙ TxIn
+allSpendInputs t = SpendInputsOf t ∪ concatMapˡ SpendInputsOf (SubTransactionsOf t)
 
-  allDCerts : List DCert
-  allDCerts = DCertsOf txTop ++ concatMap DCertsOf (SubTransactionsOf txTop)
+-- Reference inputs are validated against the "batch output view," so they may
+-- point to outputs produced in the same batch (including self-usable outputs).
+allReferenceInputs : TopLevelTx → ℙ TxIn
+allReferenceInputs t = ReferenceInputsOf t ∪ concatMapˡ ReferenceInputsOf (SubTransactionsOf t)
 
-  -- union a list of sets
-  concatMapˡ : {A B : Type} → (A → ℙ B) → List A → ℙ B
-  concatMapˡ f as = proj₁ $ unions (fromList (map f as))
-  -- maybe move this to agda-sets or src-lib-exts
+allSpendInputsList : TopLevelTx → List (ℙ TxIn)
+allSpendInputsList t = SpendInputsOf t ∷ map SpendInputsOf (SubTransactionsOf t)
 
-  batchSpendInputs : ℙ TxIn
-  batchSpendInputs =
-    SpendInputsOf txTop ∪ concatMapˡ SpendInputsOf (SubTransactionsOf txTop)
+noOverlappingSpendInputs : TopLevelTx → Type
+noOverlappingSpendInputs = PairwiseDisjoint ∘ allSpendInputsList
 
-  -- Reference inputs are validated against the "batch output view," so they may
-  -- point to outputs produced in the same batch (including self-usable outputs).
-  batchReferenceInputs : ℙ TxIn
-  batchReferenceInputs =
-    ReferenceInputsOf txTop ∪ concatMapˡ ReferenceInputsOf (SubTransactionsOf txTop)
+-- Total Ada minted across the entire batch (top-level tx + all sub-txs).
+allMintedCoin : TopLevelTx → Coin
+allMintedCoin txTop = foldl (λ acc txSub → acc + coin (MintedValueOf txSub))
+                            (coin (MintedValueOf txTop))
+                            (SubTransactionsOf txTop)
+    -- To maintain the total Ada supply invariant, this must satisfy
+    -- `batchMintedCoin ≡ 0`; this is the generalization of Conway's
+    -- `coin mint ≡ 0`.
 
-  -- No-double-spend across the batch: the collection of all spending inputs must
-  -- be pairwise disjoint.  NOTE: using `batchSpendInputs` alone is insufficient,
-  -- because set union would silently erase duplicates.
-  PairwiseDisjoint : List (ℙ TxIn) → Type
-  PairwiseDisjoint []        = ⊤
-  PairwiseDisjoint (X ∷ Xs)  = Allˡ (λ Y → disjoint X Y) Xs × PairwiseDisjoint Xs
+-- UTxO change in case Tx.isValid ≡ true. case
+utxo✓ : UTxO → Tx ℓ → UTxO
+utxo✓ {TxLevelSub} utxo tx = (utxo ∣ SpendInputsOf tx ᶜ) ∪ˡ outs tx
+utxo✓ {TxLevelTop} utxo tx = (utxo ∣ allSpendInputs tx ᶜ) ∪ˡ batchOuts tx
+                              -- ^ remove ALL spend inputs; add ALL outputs (top + subs)
 
-  batchSpendInputsList : List (ℙ TxIn)
-  batchSpendInputsList = SpendInputsOf txTop ∷ map SpendInputsOf (SubTransactionsOf txTop)
+-- Donations change in case Tx.isValid ≡ true.
+donations✓ : Donations → Tx ℓ → Donations
+donations✓ {TxLevelSub} dons tx = dons + DonationsOf tx
+donations✓ {TxLevelTop} dons tx = dons + foldl  (λ acc txSub → acc + DonationsOf txSub)
+                                                (DonationsOf tx) (SubTransactionsOf tx)
 
-  noOverlappingSpendInputs : Type
-  noOverlappingSpendInputs = PairwiseDisjoint batchSpendInputsList
+-- Fees change in case Tx.isValid ≡ true.
+fees✓ : Fees → Tx ℓ → Fees
+fees✓ {TxLevelSub} fees _ = fees
+fees✓ {TxLevelTop} fees tx = fees + TxFeesOf tx
 
-  -- Total Ada minted across the entire batch (top-level tx + all sub-txs).
-  batchMintedCoin : Coin
-  batchMintedCoin = foldl (λ acc txSub → acc + coin (MintedValueOf txSub))
-                          (coin (MintedValueOf txTop))
-                          (SubTransactionsOf txTop)
-  -- To maintain the total Ada supply invariant, this must satisfy
-  -- `batchMintedCoin ≡ 0`; this is the generalization of Conway's
-  -- `coin mint ≡ 0`.
+-- UTxO change in case Tx.isValid ≡ false.
+utxo× : UTxO → Tx ℓ → UTxO
+utxo× {TxLevelSub} utxo _ = utxo
+utxo× {TxLevelTop} utxo t = utxo ∣ (CollateralInputsOf t) ᶜ
 
-  -- UTxO change in case Tx.isValid ≡ true. case
-  utxo✓ : UTxO → UTxO
-  utxo✓ utxo = (utxo ∣ batchSpendInputs ᶜ) ∪ˡ batchOuts txTop
-                  -- remove ALL batch spend inputs add ALL outputs (top + subs)
+-- Fees change in case Tx.isValid ≡ false.
+fees× : Fees → UTxO → Tx ℓ → Fees
+fees× {TxLevelSub} fees _ _ = fees
+fees× {TxLevelTop} fees utxo tx = fees + coin (balance (utxo ∣ CollateralInputsOf tx))
 
-  -- Deposits change in case Tx.isValid ≡ true.
-  deposits✓ : Deposits → Deposits
-  deposits✓ deps = foldr  (λ sub ds → updateDeposits (PParamsOf Γ) sub ds)
-                          (updateDeposits (PParamsOf Γ) txTop deps)
-                          (SubTransactionsOf txTop)
+allP2ScriptsWithContext : UTxOEnv → TopLevelTx → List (P2Script × List Data × ExUnits × CostModel)
+allP2ScriptsWithContext Γ t =
+  p2ScriptsWithContext Γ t ++ concatMap (p2ScriptsWithContext Γ) (SubTransactionsOf t)
 
-  -- Donations change in case Tx.isValid ≡ true.
-  donations✓ : Donations → Donations
-  donations✓ dons = dons + foldl  (λ acc txSub → acc + DonationsOf txSub)
-                                  (DonationsOf txTop)
-                                  (SubTransactionsOf txTop)
+-- Deposits change in case Tx.isValid ≡ true.
+deposits✓ : UTxOEnv → Deposits → Tx ℓ → Deposits
+deposits✓ {TxLevelSub} Γ deps tx = updateDeposits (PParamsOf Γ) tx deps
+deposits✓ {TxLevelTop} Γ deps tx = foldr  (updateDeposits (PParamsOf Γ))
+                                          (updateDeposits (PParamsOf Γ) tx deps)
+                                          (SubTransactionsOf tx)
 
-  -- Fees change in case Tx.isValid ≡ true.
-  fees✓ : Fees → Fees
-  fees✓ fees = fees + TxFeesOf txTop
+-- UTxOState change in case Tx.isValid ≡ true.
+scripts✓ : UTxOEnv → UTxOState → Tx ℓ → UTxOState
+scripts✓ Γ s t = ⟦ utxo✓ (UTxOOf s) t , fees✓ (FeesOf s) t , deposits✓ Γ (DepositsOf s) t , donations✓ (DonationsOf s) t ⟧
 
-  -- UTxO change in case Tx.isValid ≡ false.
-  utxo× : UTxO → UTxO
-  utxo× = _∣ (CollateralInputsOf txTop) ᶜ
-
-  -- Fees change in case Tx.isValid ≡ false.
-  fees× : Fees → UTxO → Fees
-  fees× f utxo = f + coin (balance (utxo ∣ CollateralInputsOf txTop))
-
-  -- UTxOState change in case Tx.isValid ≡ true.
-  scripts✓ : UTxOState → UTxOState
-  scripts✓ s = ⟦ utxo✓ (UTxOOf s) , fees✓ (FeesOf s) , deposits✓ (DepositsOf s), donations✓ (DonationsOf s) ⟧
-
-  -- UTxOState change in case Tx.isValid ≡ false.
-  scripts× : UTxOState → UTxOState
-  scripts× s = ⟦ utxo× (UTxOOf s) , fees× (FeesOf s) (UTxOOf s) , DepositsOf s , DonationsOf s ⟧
+-- UTxOState change in case Tx.isValid ≡ false.
+scripts× : UTxOEnv → UTxOState → Tx ℓ → UTxOState
+scripts× Γ s t = ⟦ utxo× (UTxOOf s) t , fees× (FeesOf s) (UTxOOf s) t , DepositsOf s , DonationsOf s ⟧
 ```
 
 
@@ -556,26 +549,40 @@ private variable
 -->
 
 ```agda
+data _⊢_⇀⦇_,SUBUTXOS⦈_ : UTxOEnv → UTxOState → SubLevelTx → UTxOState → Type where
+
+  SUBUTXOS-scripts✓ :
+
+    ∙ ValidCertDeposits (PParamsOf Γ) deposits (DCertsOf txSub)
+    ∙ evalP2Scripts (p2ScriptsWithContext Γ txSub) ≡ Tx.isValid txTop
+    ∙ Tx.isValid txTop ≡ true
+      ────────────────────────────────
+      Γ ⊢ s ⇀⦇ txSub ,SUBUTXOS⦈ scripts✓ Γ s txSub
+
+  SUBUTXOS-scripts× :
+
+    ∙ evalP2Scripts (p2ScriptsWithContext Γ txSub) ≡ Tx.isValid txTop
+    ∙ Tx.isValid txTop ≡ false
+      ────────────────────────────────
+      Γ ⊢ s ⇀⦇ txSub ,SUBUTXOS⦈ scripts× Γ s txSub
+
+
 data _⊢_⇀⦇_,UTXOS⦈_ : UTxOEnv → UTxOState → TopLevelTx → UTxOState → Type where
 
   UTXOS-scripts✓ :
 
-    let open Phase2 Γ txTop in
-
-    ∙ ValidCertDeposits (PParamsOf Γ) deposits allDCerts
-    ∙ batchScripts✓ ≡ Tx.isValid txTop
+    ∙ ValidCertDeposits (PParamsOf Γ) deposits (allDCerts txTop)
+    ∙ evalP2Scripts (allP2ScriptsWithContext Γ txTop) ≡ Tx.isValid txTop
     ∙ Tx.isValid txTop ≡ true
       ────────────────────────────────
-      Γ ⊢ s ⇀⦇ txTop ,UTXOS⦈ scripts✓ s
+      Γ ⊢ s ⇀⦇ txTop ,UTXOS⦈ scripts✓ Γ s txTop
 
   UTXOS-scripts× :
 
-    let open Phase2 Γ txTop in
-
-    ∙ batchScripts✓ ≡ Tx.isValid txTop
+    ∙ evalP2Scripts (allP2ScriptsWithContext Γ txTop) ≡ Tx.isValid txTop
     ∙ Tx.isValid txTop ≡ false
       ────────────────────────────────
-      Γ ⊢ s ⇀⦇ txTop ,UTXOS⦈ scripts× s
+      Γ ⊢ s ⇀⦇ txTop ,UTXOS⦈ scripts× Γ s txTop
 ```
 <!--
 ```agda
@@ -626,15 +633,15 @@ data _⊢_⇀⦇_,SUBUTXO⦈_ : UTxOEnv → UTxOState → SubLevelTx → UTxOSta
     ∙ SpendInputsOf txSub ⊆ dom (UTxOOf Γ)                -- (1)
     ∙ inInterval (SlotOf Γ) (ValidIntervalOf txSub)
     ∙ MaybeNetworkIdOf txSub ~ just NetworkId
+    ∙ Γ ⊢ s ⇀⦇ txSub ,SUBUTXOS⦈ s'
       ────────────────────────────────
-      Γ ⊢ s ⇀⦇ txSub ,SUBUTXO⦈ s
+      Γ ⊢ s ⇀⦇ txSub ,SUBUTXO⦈ s'
 
 data _⊢_⇀⦇_,UTXO⦈_ : UTxOEnv → UTxOState → TopLevelTx → UTxOState → Type where
 
   UTXO :
 
-    let  open Phase2 Γ
-         open Accounting (PParamsOf Γ) txTop (DepositsOf s)
+    let  open Accounting (PParamsOf Γ) txTop (DepositsOf s)
 
          pp        = PParamsOf Γ
          utxo₀     = UTxOOf Γ
@@ -648,17 +655,17 @@ data _⊢_⇀⦇_,UTXO⦈_ : UTxOEnv → UTxOState → TopLevelTx → UTxOState 
     ∙ SpendInputsOf txTop ⊆ dom utxo₀                           -- (1)
     ∙ SpendInputsOf txTop ∩ ReferenceInputsOf txTop ≡ ∅
     ∙ inInterval (SlotOf Γ) (ValidIntervalOf txTop)
-    ∙ minfee pp utxo txTop ≤ TxFeesOf txTop
+    ∙ minfee pp txTop utxo ≤ TxFeesOf txTop
     ∙ consumed Γ ≡ produced
     ∙ SizeOf txTop ≤ maxTxSize pp
     -- ∙ refScriptsSize utxo tx ≤ pp .maxRefScriptSizePerTx     -- TODO: Dijkstra analog
 
-    ∙ batchSpendInputs txTop ⊆ dom utxo₀                        -- (1)
+    ∙ allSpendInputs txTop ⊆ dom utxo₀                          -- (1)
     ∙ noOverlappingSpendInputs txTop                            -- (2)
-    ∙ batchReferenceInputs txTop ⊆ dom (utxoView utxo₀ txTop)   -- (3)
+    ∙ allReferenceInputs txTop ⊆ dom (utxoView utxo₀ txTop)     -- (3)
     ∙ requiredGuardsInTopLevel txTop (SubTransactionsOf txTop)  -- (4)
     ∙ RedeemersOf txTop ˢ ≢ ∅ → collateralCheck pp txTop utxo₀
-    ∙ batchMintedCoin txTop ≡ 0
+    ∙ allMintedCoin txTop ≡ 0
 
     ∙ ∀[ (_ , txout) ∈ ∣ txOutsʰ ∣ ]
       (inject ((overhead + utxoEntrySize txout) * coinsPerUTxOByte pp) ≤ᵗ getValueʰ txout)

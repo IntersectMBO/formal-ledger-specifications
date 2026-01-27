@@ -243,16 +243,11 @@ data _⊢_⇀⦇_,LEDGER⦈_ : LedgerEnv → LState → TopLevelTx → LState �
          utxo₀ : UTxO
          utxo₀ = UTxOOf utxoState
 
-         -- Batch view of UTxO: used only for resolving reference inputs to scripts/datums
-         -- that may appear on outputs created within this same batch.
-         utxoₙ : UTxO
-         utxoₙ = utxoView utxo₀ tx
-
          allScripts : ℙ Script
-         allScripts = getAllScripts tx utxo₀ utxoₙ
+         allScripts = getAllScripts tx utxo₀
 
          allData : DataHash ⇀ Datum
-         allData = setToMap (mapˢ < hash , id > (getAllData tx utxo₀ utxoₙ))
+         allData = setToMap (mapˢ < hash , id > (getAllData tx utxo₀))
 
     in
       ∙ Tx.isValid tx ≡ true
@@ -266,14 +261,12 @@ data _⊢_⇀⦇_,LEDGER⦈_ : LedgerEnv → LState → TopLevelTx → LState �
   LEDGER-I :
     let  utxo₀ : UTxO
          utxo₀ = UTxOOf utxoState
-         utxoₙ : UTxO
-         utxoₙ = utxoView utxo₀ tx
 
          allScripts : ℙ Script
-         allScripts = getAllScripts tx utxo₀ utxoₙ
+         allScripts = getAllScripts tx utxo₀
 
          allData : DataHash ⇀ Datum
-         allData = setToMap (mapˢ < hash , id > (getAllData tx utxo₀ utxoₙ))
+         allData = setToMap (mapˢ < hash , id > (getAllData tx utxo₀))
     in
       ∙ Tx.isValid tx ≡ false
       ∙ ⟦ slot , ppolicy , pp , enactState , treasury , utxo₀ , Tx.isValid tx , allScripts , allData ⟧ ⊢ ⟦ utxoState , govState , certState ⟧ ⇀⦇ SubTransactionsOf tx  ,SUBLEDGERS⦈ ⟦ utxoState , govState , certState ⟧
