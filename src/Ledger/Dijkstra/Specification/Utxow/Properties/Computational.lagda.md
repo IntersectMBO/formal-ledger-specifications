@@ -36,26 +36,28 @@ instance
         genErr  ¬p = case dec-de-morgan ¬p of λ where
           (inj₁ a) → "¬ ∀[ (vk , σ) ∈ vkSigs ] isSigned vk (txidBytes txid) σ"
           (inj₂ b) → case dec-de-morgan b of λ where
-            (inj₁ a₁) → "∀[ s ∈ p1Scripts ] (hash s ∈ neededScriptHashes → validP1Script witsKeyHashes txVldt s)"
-            (inj₂ b₁) → case dec-de-morgan b₁ of λ where
-              (inj₁ a₂) → "neededVKeyHashes ⊆ witsKeyHashes"
-              (inj₂ b₂) → case dec-de-morgan b₂ of λ where
-                (inj₁ a₃) → "neededScriptHashes ⊆ mapˢ hash p1Scripts ∪ mapˢ hash p2Scripts"
-                (inj₂ b₃) → case dec-de-morgan b₃ of λ where
-                  (inj₁ a₄) → "neededDataHashes ⊆ dom (DataPoolOf Γ)"
-                  (inj₂ b₄) → "txADhash ≡ map hash txAD"
+            (inj₁ a) → "∀[ s ∈ p1Scripts ] (hash s ∈ neededScriptHashes → validP1Script witsKeyHashes txVldt s)"
+            (inj₂ b) → case dec-de-morgan b of λ where
+              (inj₁ a) → "neededVKeyHashes ⊆ witsKeyHashes"
+              (inj₂ b) → case dec-de-morgan b of λ where
+                (inj₁ a) → "∀[ s ∈   p2Scripts ] (hash s ∈ neededScriptHashes → language s ≡ PlutusV4)"
+                (inj₂ b) → case dec-de-morgan b of λ where
+                  (inj₁ a) → "neededScriptHashes ⊆ mapˢ hash p1Scripts ∪ mapˢ hash p2Scripts"
+                  (inj₂ b) → case dec-de-morgan b of λ where
+                    (inj₁ a) → "neededDataHashes ⊆ dom (DataPoolOf Γ)"
+                    (inj₂ b) → "txADhash ≡ map hash txAD"
 
         computeProof : ComputationResult String (∃ (Γ ⊢ s ⇀⦇ txSub ,SUBUTXOW⦈_))
         computeProof =
           case H? of λ where
-            (yes (p₁ , p₂ , p₃ , p₄ , p₅ , p₆ )) →
-              map (map₂′ (λ h → SUBUTXOW (p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , h ))) (computeProof' Γ s txSub)
+            (yes (p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ )) →
+              map (map₂′ (λ h → SUBUTXOW (p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , h ))) (computeProof' Γ s txSub)
             (no ¬p) → failure $ genErr ¬p
 
         completeness : ∀ s' → Γ ⊢ s ⇀⦇ txSub ,SUBUTXOW⦈ s'
                             → map proj₁ computeProof ≡ success s'
-        completeness s' (SUBUTXOW-⋯ p₁ p₂ p₃ p₄ p₅ p₆ h ) with H?
-        ... | no ¬p = ⊥-elim $ ¬p ((p₁ , p₂ , p₃ , p₄ , p₅ , p₆ ))
+        completeness s' (SUBUTXOW-⋯ p₁ p₂ p₃ p₄ p₅ p₆ p₇ h ) with H?
+        ... | no ¬p = ⊥-elim $ ¬p ((p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ ))
         ... | yes _ with computeProof' Γ s txSub | completeness' _ _ _ _ h
         ... | success _ | refl = refl
 ```

@@ -166,19 +166,30 @@ allColdCreds : GovState → EnactState → ℙ Credential
 allColdCreds govSt es =
   ccCreds (es .cc) ∪ concatMapˢ (λ (_ , st) → proposedCC (GovActionOf st)) (fromList govSt)
 
-calculateDepositsChange : CertState → CertState → ℤ
-calculateDepositsChange certState certState' = finalCoin - initialCoin
+calculateDepositsChange : CertState → CertState → CertState → DepositsChange
+calculateDepositsChange certState₀ certState₁ certState₂
+  = ⟦ coinChangeTop , coinChangeSub ⟧
   where
-    initialCoin : ℕ
-    initialCoin = getCoin (DepositsOf (DStateOf certState))
-                  + getCoin (DepositsOf (PStateOf certState))
-                  + getCoin (DepositsOf (GStateOf certState))
+    coinFromDeposit : CertState → Coin
+    coinFromDeposit certState =
+      getCoin (DepositsOf (DStateOf certState))
+      + getCoin (DepositsOf (PStateOf certState))
+      + getCoin (DepositsOf (GStateOf certState))
 
-    finalCoin : ℕ
-    finalCoin = getCoin (DepositsOf (DStateOf certState'))
-                + getCoin (DepositsOf (PStateOf certState'))
-                + getCoin (DepositsOf (GStateOf certState'))
+    coin₀ : Coin
+    coin₀ = coinFromDeposit certState₀
 
+    coin₁ : Coin
+    coin₁ = coinFromDeposit certState₁
+
+    coin₂ : Coin
+    coin₂ = coinFromDeposit certState₂
+
+    coinChangeSub : ℤ
+    coinChangeSub = coin₁ - coin₀
+
+    coinChangeTop : ℤ
+    coinChangeTop = coin₂ - coin₁
 ```
 
 ## <span class="AgdaDatatype">LEDGER</span> Transition System
@@ -298,8 +309,8 @@ data _⊢_⇀⦇_,LEDGER⦈_ : LedgerEnv → LState → TopLevelTx → LState �
          allData : DataHash ⇀ Datum
          allData = setToMap (mapˢ < hash , id > (getAllData tx utxo₀))
 
-         depositsChange : ℤ
-         depositsChange = calculateDepositsChange certState₀ certState₂
+         depositsChange : DepositsChange
+         depositsChange = calculateDepositsChange certState₀ certState₁ certState₂
     in
       ∙ IsValidFlagOf tx ≡ true
       ∙ ⟦ slot , ppolicy , pp , enactState , treasury , utxo₀ , IsValidFlagOf tx , allScripts , allData ⟧ ⊢ ⟦ utxoState₀ , govState₀ , certState₀ ⟧ ⇀⦇ SubTransactionsOf tx ,SUBLEDGERS⦈ ⟦ utxoState₁ , govState₁ , certState₁ ⟧
@@ -322,7 +333,7 @@ data _⊢_⇀⦇_,LEDGER⦈_ : LedgerEnv → LState → TopLevelTx → LState �
     in
       ∙ IsValidFlagOf tx ≡ false
       ∙ ⟦ slot , ppolicy , pp , enactState , treasury , utxo₀ , IsValidFlagOf tx , allScripts , allData ⟧ ⊢ ⟦ utxoState₀ , govState₀ , certState₀ ⟧ ⇀⦇ SubTransactionsOf tx ,SUBLEDGERS⦈ ⟦ utxoState₀ , govState₀ , certState₀ ⟧
-      ∙ ⟦ slot , pp , treasury , utxo₀ , 0ℤ , allScripts , allData ⟧ ⊢ utxoState₀ ⇀⦇ tx ,UTXOW⦈ utxoState₁
+      ∙ ⟦ slot , pp , treasury , utxo₀ , ⟦ 0ℤ , 0ℤ ⟧ , allScripts , allData ⟧ ⊢ utxoState₀ ⇀⦇ tx ,UTXOW⦈ utxoState₁
         ────────────────────────────────
         ⟦ slot , ppolicy , pp , enactState , treasury ⟧ ⊢ ⟦ utxoState₀ , govState₀ , certState₀ ⟧ ⇀⦇ tx ,LEDGER⦈ ⟦ utxoState₁ , govState₀ , certState₀ ⟧
 
