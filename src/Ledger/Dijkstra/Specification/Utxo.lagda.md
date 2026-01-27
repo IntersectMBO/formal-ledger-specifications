@@ -70,13 +70,16 @@ The UTxO rules are parameterised by an environment `UTxOEnv`{.AgdaRecord} and an
 evolving state `UTxOState`{.AgdaRecord}.
 
 ```agda
+DepositsChange : Type
+DepositsChange = ℤ × ℤ
+
 record UTxOEnv : Type where
   field
     slot              : Slot
     pparams           : PParams
     treasury          : Treasury
     utxo₀             : UTxO
-    depositsChange    : ℤ
+    depositsChange    : DepositsChange
     allScripts        : ℙ Script
     allData           : DataHash ⇀ Datum
 
@@ -135,7 +138,7 @@ record HasIsTopLevelValidFlag {a} (A : Type a) : Type a where
 open HasIsTopLevelValidFlag ⦃...⦄ public
 
 record HasDepositsChange {a} (A : Type a) : Type a where
-  field DepositsChangeOf : A → ℤ
+  field DepositsChangeOf : A → ℤ × ℤ
 open HasDepositsChange ⦃...⦄ public
 
 record HasScriptPool {a} (A : Type a) : Type a where
@@ -280,31 +283,52 @@ collateralCheck pp txTop utxo =
 ```
 
 ```agda
-module _ (txTop : TopLevelTx) (depositsChange : ℤ) where
+module _ (depositsChange : DepositsChange) where
 
-  depositRefundsBatch : Coin
-  depositRefundsBatch = negPart depositsChange
+  depositsChangeTop : ℤ
+  depositsChangeTop = depositsChange .proj₁
 
-  newDepositsBatch : Coin
-  newDepositsBatch = posPart depositsChange
+  depositsChangeSub : ℤ
+  depositsChangeSub = depositsChange .proj₂
 
-  consumed : UTxO → Value
-  consumed utxo =  consumedTx txTop + inject depositRefundsBatch
-                + ∑ˡ[ stx ← SubTransactionsOf txTop ] (consumedTx stx)
-    where
-    consumedTx : Tx ℓ → Value
-    consumedTx tx =  balance (utxo ∣ SpendInputsOf tx)
-                     + MintedValueOf tx
-                     + inject (getCoin (WithdrawalsOf tx))
+  depositRefundsSub : Coin
+  depositRefundsSub = negPart depositsChangeSub
 
-  produced : Value
-  produced =  producedTx txTop + inject newDepositsBatch
-              + ∑ˡ[ stx ← SubTransactionsOf txTop ] (producedTx stx)
-    where
-    producedTx : ∀ {ℓ} → Tx ℓ → Value
-    producedTx {TxLevelSub} tx =  balance (outs tx) + inject (DonationsOf tx)
-    producedTx {TxLevelTop} tx =
-      balance (outs tx) + inject (TxFeesOf tx) + inject (DonationsOf tx)
+  newDepositsSub : Coin
+  newDepositsSub = posPart depositsChangeSub
+
+  newDepositsTop : Coin
+  newDepositsTop = posPart depositsChangeTop
+
+  depositRefundsTop : Coin
+  depositRefundsTop = negPart depositsChangeTop
+
+  consumedTx : Tx ℓ → UTxO → Value
+  consumedTx tx utxo = balance (utxo ∣ SpendInputsOf tx)
+                       + MintedValueOf tx
+                       + inject (getCoin (WithdrawalsOf tx))
+
+  consumed : TopLevelTx → UTxO → Value
+  consumed txTop utxo = consumedTx txTop utxo
+                        + inject depositRefundsTop
+
+  consumedBatch : TopLevelTx → UTxO → Value
+  consumedBatch txTop utxo = consumed txTop utxo
+                             + ∑ˡ[ stx ← SubTransactionsOf txTop ] (consumedTx stx utxo)
+                             + inject depositRefundsSub
+
+  producedTx : Tx ℓ → Value
+  producedTx tx = balance (outs tx) + inject (DonationsOf tx)
+
+  produced : TopLevelTx → Value
+  produced txTop = producedTx txTop
+                   + inject (TxFeesOf txTop)
+                   + inject newDepositsTop
+
+  producedBatch : TopLevelTx → Value
+  producedBatch txTop = produced txTop
+                        + ∑ˡ[ stx ← SubTransactionsOf txTop ] (producedTx stx)
+                        + inject newDepositsSub
 ```
 
 
@@ -319,6 +343,7 @@ private
     s s'     : UTxOState
     txTop    : TopLevelTx
     txSub    : SubLevelTx
+    legacyMode : Bool
 ```
 -->
 
@@ -436,7 +461,7 @@ In addition, the `UTXO`{.AgdaDatatype} rule enforces:
 
 
 ```agda
-data _⊢_⇀⦇_,UTXO⦈_ : UTxOEnv → UTxOState → TopLevelTx → UTxOState → Type where
+data _⊢_⇀⦇_,UTXO⦈_ : UTxOEnv × Bool → UTxOState → TopLevelTx → UTxOState → Type where
 
   UTXO :
 
@@ -448,7 +473,7 @@ data _⊢_⇀⦇_,UTXO⦈_ : UTxOEnv → UTxOState → TopLevelTx → UTxOState 
     ∙ SpendInputsOf txTop ≢ ∅
     ∙ inInterval (SlotOf Γ) (ValidIntervalOf txTop)
     ∙ minfee pp txTop utxo ≤ TxFeesOf txTop
-    ∙ consumed txTop (DepositsChangeOf Γ) utxo₀ ≡ produced txTop (DepositsChangeOf Γ)
+    ∙ consumedBatch (DepositsChangeOf Γ) txTop utxo₀ ≡ producedBatch (DepositsChangeOf Γ) txTop
     ∙ SizeOf txTop ≤ maxTxSize pp
     ∙ refScriptsSize txTop utxo₀ ≤ pp .maxRefScriptSizePerTx
     ∙ allSpendInputs txTop ⊆ dom utxo₀                          -- (1)
@@ -468,11 +493,17 @@ data _⊢_⇀⦇_,UTXO⦈_ : UTxOEnv → UTxOState → TopLevelTx → UTxOState 
     ∙ MaybeNetworkIdOf txTop ~ just NetworkId
     ∙ CurrentTreasuryOf txTop  ~ just (TreasuryOf Γ)
     ∙ Γ ⊢ _ ⇀⦇ txTop ,UTXOS⦈ _
+    ∙ if legacyMode
+         then
+           ∙ consumed (DepositsChangeOf Γ) txTop utxo₀ ≡ produced (DepositsChangeOf Γ) txTop
+           ∙ Is-∅ (GuardsOf txTop)
+         else
+           ⊤
       ────────────────────────────────
     let
          s₁ = if IsValidFlagOf txTop then ⟦ (utxo ∣ SpendInputsOf txTop ᶜ) ∪ˡ outs txTop , fees + TxFeesOf txTop , donations + DonationsOf txTop ⟧ else ⟦ utxo ∣ (CollateralInputsOf txTop) ᶜ , fees + cbalance (utxo ∣ CollateralInputsOf txTop) , donations ⟧
     in
-      Γ ⊢ ⟦ utxo , fees , donations ⟧ ⇀⦇ txTop ,UTXO⦈ s₁
+      (Γ , legacyMode)  ⊢ ⟦ utxo , fees , donations ⟧ ⇀⦇ txTop ,UTXO⦈ s₁
 ```
 
 [1]: https://github.com/cardano-foundation/CIPs/tree/master/CIP-0118#changes-to-transaction-validity "CIP-0118 | Changes to Transaction Validity"
