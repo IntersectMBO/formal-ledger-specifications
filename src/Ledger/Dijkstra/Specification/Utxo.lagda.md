@@ -72,7 +72,7 @@ evolving state `UTxOState`{.AgdaRecord}.
 In Dijkstra, the `UTxOEnv`{.AgdaRecord} additionally carries
 
 +  `utxo₀`: the *pre-batch snapshot* of the UTxO (used for spend-side checks);
-+  `globalScripts` / `globalData`: a *batch-wide script universe* and *datum-by-hash
++  `allScripts` / `allData`: a *batch-wide script universe* and *datum-by-hash
    pool* computed once in the `LEDGER`{.AgdaDatatype} rule and threaded through to
    `UTXO`{.AgdaDatatype}/`UTXOS`{.AgdaDatatype}. Thus all scripts and datums are shared
    across the batch.
@@ -82,9 +82,9 @@ attaching a script or datum to a transaction in the batch makes it available for
 phase-2 validation of any transaction in the batch, independent of which
 subtransaction originally supplied it. Consequently, `LEDGER` precomputes:
 
-+  `globalScripts`: the set of all scripts available to the batch (witness scripts +
++  `allScripts`: the set of all scripts available to the batch (witness scripts +
    reference scripts resolved from allowed reference inputs / batch outputs);
-+  `globalData`: a datum-by-hash pool containing all datums available to the batch.
++  `allData`: a datum-by-hash pool containing all data available to the batch.
 
 The intent is that `UTXO`{.AgdaDatatype}/`UTXOS`{.AgdaDatatype} can validate all
 scripts in the batch without recomputing per-subtransaction script/data availability.
@@ -98,8 +98,8 @@ record UTxOEnv : Type where
     treasury         : Treasury
     utxo₀            : UTxO
     isTopLevelValid  : Bool
-    globalScripts    : ℙ Script
-    globalData       : DataHash ⇀ Datum
+    allScripts    : ℙ Script
+    allData       : DataHash ⇀ Datum
 ```
 
 The `utxo₀`{.AgdaField} field is introduced in the Dijkstra era; it denotes a
@@ -411,9 +411,9 @@ module Accounting (pp : PParams) (txTop : TopLevelTx) (deposits₀ : Deposits) w
 ## Phase-2 (Plutus) Execution for Nested Transactions
 
 The `LEDGER`{.AgdaDatatype} rule computes a *batch-wide script universe* and a
-*datum-by-hash pool* once, which populate the `globalScripts`{.AgdaField} and
-`globalData`{.AgdaField} fields of `UTxOEnv`{.AgdaRecord}.
-In this module we access them via `GlobalScriptsOf Γ` and `GlobalDataOf Γ`.
+*datum-by-hash pool* once, which populate the `allScripts`{.AgdaField} and
+`allData`{.AgdaField} fields of `UTxOEnv`{.AgdaRecord}.
+In this module we access them via `AllScriptsOf Γ` and `AllDataOf Γ`.
 
 Phase-2 execution in `UTXO`{.AgdaDatatype}/`UTXOS`{.AgdaDatatype} then evaluates all
 Plutus scripts needed by the top-level transaction and all its subtransactions
@@ -433,7 +433,7 @@ We distinguish two UTxO views:
    is defined here mainly as a convenience for rules that need access to outputs
    created within the batch (top-level outputs plus all subtransaction outputs).
    Phase-2 script collection below stays spend-side with respect to UTxO lookups,
-   and relies on `globalScripts`{.AgdaField}/`globalData`{.AgdaField} for
+   and relies on `allScripts`{.AgdaField}/`allData`{.AgdaField} for
    batch-scoped availability.
 
 Finally, note that `Script.Validation`{.AgdaModule} remains batch-agnostic — it does
