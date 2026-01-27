@@ -44,6 +44,7 @@ open import Ledger.Dijkstra.Specification.Script.Validation txs abs
 open import Ledger.Dijkstra.Specification.Fees using (scriptsCost)
 
 open import Data.List.Relation.Unary.All using () renaming (All to Allˡ)
+import Data.Sum.Relation.Unary.All as Sum
 
 private variable
   ℓ : TxLevel
@@ -67,46 +68,17 @@ open PParams
 The UTxO rules are parameterised by an environment `UTxOEnv`{.AgdaRecord} and an
 evolving state `UTxOState`{.AgdaRecord}.
 
-###  Batch-scoped witnesses
-
-In Dijkstra, the `UTxOEnv`{.AgdaRecord} additionally carries
-
-+  `utxo₀`: the *pre-batch snapshot* of the UTxO (used for spend-side checks);
-+  `allScripts` / `allData`: a *batch-wide script universe* and *datum-by-hash
-   pool* computed once in the `LEDGER`{.AgdaDatatype} rule and threaded through to
-   `UTXO`{.AgdaDatatype}/`UTXOS`{.AgdaDatatype}. Thus all scripts and datums are shared
-   across the batch.
-
-Following CIP-0118, scripts and datums are treated as *batch-wide witnesses*;
-attaching a script or datum to a transaction in the batch makes it available for
-phase-2 validation of any transaction in the batch, independent of which
-subtransaction originally supplied it. Consequently, `LEDGER` precomputes:
-
-+  `allScripts`: the set of all scripts available to the batch (witness scripts +
-   reference scripts resolved from allowed reference inputs / batch outputs);
-+  `allData`: a datum-by-hash pool containing all data available to the batch.
-
-The intent is that `UTXO`{.AgdaDatatype}/`UTXOS`{.AgdaDatatype} can validate all
-scripts in the batch without recomputing per-subtransaction script/data availability.
-
-
 ```agda
 record UTxOEnv : Type where
   field
-    slot             : Slot
-    pparams          : PParams
-    treasury         : Treasury
-    utxo₀            : UTxO
-    isTopLevelValid  : Bool
-    allScripts    : ℙ Script
-    allData       : DataHash ⇀ Datum
-```
+    slot              : Slot
+    pparams           : PParams
+    treasury          : Treasury
+    utxo₀             : UTxO
+    isTopLevelValid   : Bool
+    allScripts        : ℙ Script
+    allData           : DataHash ⇀ Datum
 
-The `utxo₀`{.AgdaField} field is introduced in the Dijkstra era; it denotes a
-*snapshot* of the UTxO before any subtransaction of a batch is applied.  This is
-the UTxO used for spend-side checks.
-
-```agda
 record UTxOState : Type where
   constructor ⟦_,_,_,_⟧ᵘ
   field
@@ -115,6 +87,45 @@ record UTxOState : Type where
     deposits   : Deposits
     donations  : Donations
 ```
+
+The `UTxOEnv`{.AgdaRecord} carries
+
++  `utxo₀`{.AgdaField}: *pre-batch snapshot* of the UTxO;
++  `allScripts`{.AgdaField}: *batch-wide script pool* containing all scripts available
+   to the batch (witness scripts plus reference scripts resolved from allowed
+   reference inputs and batch outputs);
++  `allData`{.AgdaField}: *datum-by-hash pool* containing all data available to the batch.
+
+The pre-batch UTxO snapshot `utxo₀`{.AgdaField} is used to resolve all *spend-side*
+lookups (inputs, collateral, and datum lookup for spent outputs); this reflects the
+the requirement that every spending input exists before any transaction in the
+batch is processed.
+
+The `allScripts`{.AgdaField} and `allData`{.AgdaField} fields of `UTxOEnv`{.AgdaRecord}
+capture the *batch-wide script pool* and *datum-by-hash pool* respectively.  These pools
+are used to resolve all script and datum lookups during phase-2 validation of
+subtransactions in the batch.  Scripts and data are treated as *batch-wide witnesses*;
+attaching a script or datum to a transaction in the batch makes it available for
+phase-2 validation of any transaction in the batch, independent of which
+subtransaction originally supplied it.  The intent is that the ledger rules can validate
+all scripts in the a without recomputing per-subtransaction script/data availability.
+
+In the `LEDGER`{.AgdaDatatype} rule, the *batch-wide script pool* and
+*datum-by-hash pool* are computed once and the results are used to populate
+the `allScripts`{.AgdaField} and `allData`{.AgdaField} fields of the
+`UTxOEnv`{.AgdaRecord} that appears in a few of the premises of the
+`LEDGER`{.AgdaDatatype} rule.
+
+If `Γ`{.AgdaBound} denotes a particular `UTxOEnv`{.AgdaRecord}, then
+we often access the `allScripts`{.AgdaField} and
+`allData`{.AgdaField} fields of `Γ`{.AgdaBound} via the
+`ScriptPoolOf`{.AgdaField} `Γ`{.AgdaBound} and
+`DataPoolOf`{.AgdaField} `Γ`{.AgdaBound} accessors, respectively.
+
+Finally, we occasionally need a *batch output view* of the UTxO, denoted by
+`utxoView`{.AgdaFunctions}, which includes the pre-batch UTxO (`utxo₀`{.AgdaField}) plus all
+outputs created within the batch (top-level outputs plus all subtransaction outputs).
+Formally,
 
 The rest of this module defines
 
@@ -128,18 +139,17 @@ record HasUTxOState {a} (A : Type a) : Type a where
   field UTxOStateOf : A → UTxOState
 open HasUTxOState ⦃...⦄ public
 
-record HasGlobalScripts {a} (A : Type a) : Type a where
-  field GlobalScriptsOf : A → ℙ Script
-open HasGlobalScripts ⦃...⦄ public
+record HasScriptPool {a} (A : Type a) : Type a where
+  field ScriptPoolOf : A → ℙ Script
+open HasScriptPool ⦃...⦄ public
 
-record HasGlobalData {a} (A : Type a) : Type a where
-  field GlobalDataOf : A → DataHash ⇀ Datum
-open HasGlobalData ⦃...⦄ public
+record HasDataPool {a} (A : Type a) : Type a where
+  field DataPoolOf : A → DataHash ⇀ Datum
+open HasDataPool ⦃...⦄ public
 
 record HasSlot {a} (A : Type a) : Type a where
   field SlotOf : A → Slot
 open HasSlot ⦃...⦄ public
-
 
 instance
   HasSlot-UTxOEnv : HasSlot UTxOEnv
@@ -147,6 +157,9 @@ instance
 
   HasPParams-UTxOEnv : HasPParams UTxOEnv
   HasPParams-UTxOEnv .PParamsOf = UTxOEnv.pparams
+
+  HasTreasury-UTxOEnv : HasTreasury UTxOEnv
+  HasTreasury-UTxOEnv .TreasuryOf = UTxOEnv.treasury
 
   HasUTxO-UTxOEnv : HasUTxO UTxOEnv
   HasUTxO-UTxOEnv .UTxOOf = UTxOEnv.utxo₀
@@ -163,11 +176,11 @@ instance
   HasDonations-UTxOState : HasDonations UTxOState
   HasDonations-UTxOState .DonationsOf = UTxOState.donations
 
-  HasGlobalScripts-UTxOEnv : HasGlobalScripts UTxOEnv
-  HasGlobalScripts-UTxOEnv .GlobalScriptsOf = UTxOEnv.globalScripts
+  HasScriptPool-UTxOEnv : HasScriptPool UTxOEnv
+  HasScriptPool-UTxOEnv .ScriptPoolOf = UTxOEnv.allScripts
 
-  HasGlobalData-UTxOEnv : HasGlobalData UTxOEnv
-  HasGlobalData-UTxOEnv .GlobalDataOf = UTxOEnv.globalData
+  HasDataPool-UTxOEnv : HasDataPool UTxOEnv
+  HasDataPool-UTxOEnv .DataPoolOf = UTxOEnv.allData
 
   unquoteDecl HasCast-UTxOEnv HasCast-UTxOState = derive-HasCast
     ( (quote UTxOEnv   , HasCast-UTxOEnv  ) ∷
@@ -179,7 +192,7 @@ opaque
 
 ```agda
   outs : Tx ℓ  → UTxO
-  outs tx = mapKeys (TxIdOf tx ,_) (IndexedOutputsOf tx)
+  outs tx = mapKeys (TxIdOf tx ,_) (TxOutsOf tx)
 
   balance : UTxO → Value
   balance utxo = ∑[ x ← mapValues txOutHash utxo ] getValueʰ x
@@ -363,10 +376,16 @@ collateralCheck pp txTop utxo =
 -- NOTE:
 -- Collateral is *top-level only* in Dijkstra.  In this first-pass model,
 -- we keep Conway's collateral predicate, but interpret it as covering the entire
--- batch's phase-2 execution (top-level tx + all subtransactions).
+-- batch's phase-2 validation (top-level tx + all subtransactions).
 --
 -- The precise relationship between collateral, per-script execution units, and
 -- fee/minfee accounting may be refined as the CIPs and ledger design stabilize.
+
+batchOuts : TopLevelTx → UTxO
+batchOuts txTop = foldr (λ sub acc → outs sub ∪ˡ acc) (outs txTop) (SubTransactionsOf txTop)
+
+utxoView : UTxO → TopLevelTx → UTxO
+utxoView utxo₀ txTop = utxo₀ ∪ˡ batchOuts txTop
 
 module Accounting (pp : PParams) (txTop : TopLevelTx) (deposits₀ : Deposits) where
 
@@ -408,84 +427,37 @@ module Accounting (pp : PParams) (txTop : TopLevelTx) (deposits₀ : Deposits) w
       balance (outs tx) + inject (TxFeesOf tx) + inject (DonationsOf tx)
 ```
 
-## Phase-2 (Plutus) Execution for Nested Transactions
+## Phase-2 Validation for Nested Transactions
 
-The `LEDGER`{.AgdaDatatype} rule computes a *batch-wide script universe* and a
-*datum-by-hash pool* once, which populate the `allScripts`{.AgdaField} and
-`allData`{.AgdaField} fields of `UTxOEnv`{.AgdaRecord}.
-In this module we access them via `AllScriptsOf Γ` and `AllDataOf Γ`.
+Phase-2 validation is the evaluation of all Plutus scripts needed by the
+top-level transaction and all its subtransactions in the shared, batch-scoped context.
 
-Phase-2 execution in `UTXO`{.AgdaDatatype}/`UTXOS`{.AgdaDatatype} then evaluates all
-Plutus scripts needed by the top-level transaction and all its subtransactions
-against this shared, batch-scoped context.
+The `Script.Validation`{.AgdaModule} module is not `UTxOEnv`{.AgdaRecord}-context
+aware, so in order to assemble the correct set of scripts and data
+for each transaction, we must provide `Script.Validation`{.AgdaModule} with
+the following components:
 
-We distinguish two UTxO views:
++  the pre-batch spend-side snapshot `UTxOOf`{.AgdaField} `Γ`{.AgdaBound},
++  the script pool `ScriptPoolOf`{.AgdaField} `Γ`{.AgdaBound},
++  the datum-by-hash pool `DataPoolOf`{.AgdaField} `Γ`{.AgdaBound}.
 
-+  **Pre-batch snapshot view**. `UTxOOf`{.AgdaField} `Γ`{.AgdaBound} (or
-   `utxo₀`{.AgdaField}) is used for all *spend-side* lookups (inputs, collateral, and
-   datum lookup for spent outputs), preserving the requirement that
-   every spending input must exist before any part of the batch is applied.
-
-+  **Batch output view**.
-   `utxoView`{.AgdaFunctions} `txTop`{.AgdaBound}
-   = `UTxOOf`{.AgdaField} `Γ`{.AgdaBound}
-   `∪ˡ`{.AgdaFunction} `batchOuts`{.AgdaFunction} `txTop`{.AgdaBound}
-   is defined here mainly as a convenience for rules that need access to outputs
-   created within the batch (top-level outputs plus all subtransaction outputs).
-   Phase-2 script collection below stays spend-side with respect to UTxO lookups,
-   and relies on `allScripts`{.AgdaField}/`allData`{.AgdaField} for
-   batch-scoped availability.
-
-Finally, note that `Script.Validation`{.AgdaModule} remains batch-agnostic — it does
-not know about subtransactions or `utxoView`.  Instead, we pass it exactly the
-ingredients it needs to assemble Plutus script inputs for each transaction, namely,
-
-+  the spend-side snapshot `UTxOOf`{.AgdaField} `Γ`{.AgdaBound},
-+  the datum-by-hash pool `extraData`{.AgdaFunction}
-   = `GlobalDataOf`{.AgdaField} `Γ`{.AgdaBound},
-+  the script universe `GlobalScriptsOf`{.AgdaField} `Γ`{.AgdaBound}.
-
-This keeps batch-specific definitions in `Utxo.Phase2`{.AgdaModule}, while
-`collectP2ScriptsWithContext`{.AgdaFunction} is reusable for both top-level and
-sub-level transactions.
+This keeps batch-specific details confined to the `Utxo.Phase2`{.AgdaModule}
+module we define in the present section.
 
 ```agda
--- --------------------------------------------------------------------------
--- Batch outputs / batch UTxO view
---
--- We sometimes need a UTxO view that contains outputs created within the
--- current top-level transaction batch, so that reference inputs can resolve
--- reference scripts / inline data from those outputs (e.g. for batch-wide
--- script sharing, or "self-usable outputs" style rules).
---
--- IMPORTANT: spend-side checks should still consult utxo₀; so we keep spend-
--- side and reference-side views distinct (see getTxScriptsWithViews).
--- --------------------------------------------------------------------------
-
-batchOuts : TopLevelTx → UTxO
-batchOuts txTop = foldr (λ sub acc → outs sub ∪ˡ acc) (outs txTop) (SubTransactionsOf txTop)
-
-utxoView : UTxO → TopLevelTx → UTxO
-utxoView utxo₀ txTop = utxo₀ ∪ˡ batchOuts txTop
-
--- collect all outputs created in the batch
--- utxoView : UTxOEnv → TopLevelTx → UTxO
--- utxoView Γ txTop = (UTxOOf Γ) ∪ˡ batchOuts txTop
--- TxId's are fresh, so keys shouldn't clash, but using `∪ˡ` is fine either way.
-
 module Phase2 (Γ : UTxOEnv) (txTop : TopLevelTx) where
 
   extraData : DataHash ⇀ Datum
-  extraData = GlobalDataOf Γ
+  extraData = DataPoolOf Γ
 
   p2ScriptsWithContext : List (P2Script × List Data × ExUnits × CostModel)
   p2ScriptsWithContext = getP2Scripts txTop ++ concatMap getP2Scripts (SubTransactionsOf txTop)
     where
     getP2Scripts : Tx ℓ → List (P2Script × List Data × ExUnits × CostModel)
     getP2Scripts tx =  collectP2ScriptsWithContext (PParamsOf Γ) tx
-                       (UTxOOf Γ)           -- pre-batch snapshot
-                       extraData            -- batch datum-by-hash pool
-                       (GlobalScriptsOf Γ)  -- batch script universe
+                       (UTxOOf Γ)       -- pre-batch snapshot
+                       extraData        -- batch datum-by-hash pool
+                       (ScriptPoolOf Γ)  -- batch script universe
 
 
   batchScripts✓ : Bool
@@ -609,6 +581,8 @@ data _⊢_⇀⦇_,UTXOS⦈_ : UTxOEnv → UTxOState → TopLevelTx → UTxOState
 ```agda
 unquoteDecl UTXOS-scripts✓-premises = genPremises UTXOS-scripts✓-premises (quote UTXOS-scripts✓)
 unquoteDecl UTXOS-scripts×-premises = genPremises UTXOS-scripts×-premises (quote UTXOS-scripts×)
+
+_⋀_ = _×_  -- synonym that improves readability of UTXO premises
 ```
 -->
 
@@ -651,6 +625,7 @@ data _⊢_⇀⦇_,SUBUTXO⦈_ : UTxOEnv → UTxOState → SubLevelTx → UTxOSta
     ∙ SpendInputsOf txSub ∩ ReferenceInputsOf txSub ≡ ∅
     ∙ SpendInputsOf txSub ⊆ dom (UTxOOf Γ)                -- (1)
     ∙ inInterval (SlotOf Γ) (ValidIntervalOf txSub)
+    ∙ MaybeNetworkIdOf txSub ~ just NetworkId
       ────────────────────────────────
       Γ ⊢ s ⇀⦇ txSub ,SUBUTXO⦈ s
 
@@ -660,23 +635,41 @@ data _⊢_⇀⦇_,UTXO⦈_ : UTxOEnv → UTxOState → TopLevelTx → UTxOState 
 
     let  open Phase2 Γ
          open Accounting (PParamsOf Γ) txTop (DepositsOf s)
-         utxo₀ : UTxO
-         utxo₀ = UTxOOf Γ
-         utxo  : UTxO
-         utxo  = UTxOOf s
+
+         pp        = PParamsOf Γ
+         utxo₀     = UTxOOf Γ
+         utxo      = UTxOOf s
+         overhead  = 160
+
+         txOutsʰ : Ix ⇀ TxOutʰ
+         txOutsʰ = mapValues txOutHash (TxOutsOf txTop)
     in
     ∙ SpendInputsOf txTop ≢ ∅
     ∙ SpendInputsOf txTop ⊆ dom utxo₀                           -- (1)
+    ∙ SpendInputsOf txTop ∩ ReferenceInputsOf txTop ≡ ∅
+    ∙ inInterval (SlotOf Γ) (ValidIntervalOf txTop)
+    ∙ minfee pp utxo txTop ≤ TxFeesOf txTop
+    ∙ consumed Γ ≡ produced
+    ∙ SizeOf txTop ≤ maxTxSize pp
+    -- ∙ refScriptsSize utxo tx ≤ pp .maxRefScriptSizePerTx     -- TODO: Dijkstra analog
+
     ∙ batchSpendInputs txTop ⊆ dom utxo₀                        -- (1)
     ∙ noOverlappingSpendInputs txTop                            -- (2)
     ∙ batchReferenceInputs txTop ⊆ dom (utxoView utxo₀ txTop)   -- (3)
     ∙ requiredGuardsInTopLevel txTop (SubTransactionsOf txTop)  -- (4)
-    ∙ inInterval (SlotOf Γ) (ValidIntervalOf txTop)
-    ∙ minfee (PParamsOf Γ) utxo txTop ≤ TxFeesOf txTop
-    ∙ RedeemersOf txTop ˢ ≢ ∅ → collateralCheck (PParamsOf Γ) txTop utxo₀
-    ∙ consumed Γ ≡ produced
-    ∙ SizeOf txTop ≤ maxTxSize (PParamsOf Γ)
+    ∙ RedeemersOf txTop ˢ ≢ ∅ → collateralCheck pp txTop utxo₀
     ∙ batchMintedCoin txTop ≡ 0
+
+    ∙ ∀[ (_ , txout) ∈ ∣ txOutsʰ ∣ ]
+      (inject ((overhead + utxoEntrySize txout) * coinsPerUTxOByte pp) ≤ᵗ getValueʰ txout)
+      ⋀ (serializedSize (getValueʰ txout) ≤ maxValSize pp)
+
+    ∙ ∀[ (a , _) ∈ range txOutsʰ ]
+      (Sum.All (const ⊤) (λ a → AttrSizeOf a ≤ 64) a) ⋀ (netId a ≡ NetworkId)
+
+    ∙ ∀[ a ∈ dom (WithdrawalsOf txTop)] NetworkIdOf a ≡ NetworkId
+    ∙ MaybeNetworkIdOf txTop ~ just NetworkId
+    ∙ CurrentTreasuryOf txTop  ~ just (TreasuryOf Γ)
     ∙ Γ ⊢ s ⇀⦇ txTop ,UTXOS⦈ s'
       ────────────────────────────────
       Γ ⊢ s ⇀⦇ txTop ,UTXO⦈ s'

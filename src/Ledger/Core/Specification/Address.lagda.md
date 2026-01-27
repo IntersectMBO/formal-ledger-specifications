@@ -108,9 +108,17 @@ record HasNetworkId {a} (A : Type a) : Type a where
   field NetworkIdOf : A → Network
 open HasNetworkId ⦃...⦄ public
 
+record HasMaybeNetworkId {a} (A : Type a) : Type a where
+  field MaybeNetworkIdOf : A → Maybe Network
+open HasMaybeNetworkId ⦃...⦄ public
+
 record HasWithdrawals {a} (A : Type a) : Type a where
   field WithdrawalsOf : A → Withdrawals
 open HasWithdrawals ⦃...⦄ public
+
+record HasAttrSize {a} (A : Type a) : Type a where
+  field AttrSizeOf : A → ℕ
+open HasAttrSize ⦃...⦄ public
 
 instance
   HasNetworkId-BaseAddr : HasNetworkId BaseAddr
@@ -124,6 +132,9 @@ instance
 
   HasCredential-RewardAddress : HasCredential RewardAddress
   HasCredential-RewardAddress .CredentialOf = RewardAddress.stake
+
+  HasAttrSize-BootstrapAddr : HasAttrSize BootstrapAddr
+  HasAttrSize-BootstrapAddr .AttrSizeOf = BootstrapAddr.attrsSize
 ```
 -->
 
