@@ -24,7 +24,7 @@ The primary guiding design principles are
 +  **Batch-consistency**. No two transactions in the batch may spend the
    same input.  This is enforced explicitly at the top level by a predicate
    (called `noOverlappingSpendInputs`{.AgdaFunction} below) that is checked in the
-   `UTXO`{.AgdaDatatype} rule
+   `UTXO`{.AgdaDatatype} rule.
 
 <!--
 ```agda
