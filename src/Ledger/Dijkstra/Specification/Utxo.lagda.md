@@ -647,12 +647,12 @@ data _⊢_⇀⦇_,SUBUTXO⦈_ : UTxOEnv → UTxOState → SubLevelTx → UTxOSta
 
   SUBUTXO :
 
-        ∙ SpendInputsOf txSub ≢ ∅
-        ∙ SpendInputsOf txSub ∩ ReferenceInputsOf txSub ≡ ∅
- {-1-}  ∙ SpendInputsOf txSub ⊆ dom (UTxOOf Γ)
-        ∙ inInterval (SlotOf Γ) (ValidIntervalOf txSub)
-          ────────────────────────────────
-          Γ ⊢ s ⇀⦇ txSub ,SUBUTXO⦈ s
+    ∙ SpendInputsOf txSub ≢ ∅
+    ∙ SpendInputsOf txSub ∩ ReferenceInputsOf txSub ≡ ∅
+    ∙ SpendInputsOf txSub ⊆ dom (UTxOOf Γ)                -- (1)
+    ∙ inInterval (SlotOf Γ) (ValidIntervalOf txSub)
+      ────────────────────────────────
+      Γ ⊢ s ⇀⦇ txSub ,SUBUTXO⦈ s
 
 data _⊢_⇀⦇_,UTXO⦈_ : UTxOEnv → UTxOState → TopLevelTx → UTxOState → Type where
 
@@ -660,28 +660,26 @@ data _⊢_⇀⦇_,UTXO⦈_ : UTxOEnv → UTxOState → TopLevelTx → UTxOState 
 
     let  open Phase2 Γ
          open Accounting (PParamsOf Γ) txTop (DepositsOf s)
-
          utxo₀ : UTxO
          utxo₀ = UTxOOf Γ
          utxo  : UTxO
          utxo  = UTxOOf s
     in
-
-        ∙ SpendInputsOf txTop ≢ ∅
- {-1-}  ∙ SpendInputsOf txTop ⊆ dom utxo₀
- {-1-}  ∙ batchSpendInputs txTop ⊆ dom utxo₀
- {-2-}  ∙ noOverlappingSpendInputs txTop
- {-3-}  ∙ batchReferenceInputs txTop ⊆ dom (utxoView utxo₀ txTop)
- {-4-}  ∙ requiredGuardsInTopLevel txTop (SubTransactionsOf txTop)
-        ∙ inInterval (SlotOf Γ) (ValidIntervalOf txTop)
-        ∙ minfee (PParamsOf Γ) utxo txTop ≤ TxFeesOf txTop
-        ∙ RedeemersOf txTop ˢ ≢ ∅ → collateralCheck (PParamsOf Γ) txTop utxo₀
-        ∙ consumed Γ ≡ produced
-        ∙ SizeOf txTop ≤ maxTxSize (PParamsOf Γ)
-        ∙ batchMintedCoin txTop ≡ 0
-        ∙ Γ ⊢ s ⇀⦇ txTop ,UTXOS⦈ s'
-          ────────────────────────────────
-          Γ ⊢ s ⇀⦇ txTop ,UTXO⦈ s'
+    ∙ SpendInputsOf txTop ≢ ∅
+    ∙ SpendInputsOf txTop ⊆ dom utxo₀                           -- (1)
+    ∙ batchSpendInputs txTop ⊆ dom utxo₀                        -- (1)
+    ∙ noOverlappingSpendInputs txTop                            -- (2)
+    ∙ batchReferenceInputs txTop ⊆ dom (utxoView utxo₀ txTop)   -- (3)
+    ∙ requiredGuardsInTopLevel txTop (SubTransactionsOf txTop)  -- (4)
+    ∙ inInterval (SlotOf Γ) (ValidIntervalOf txTop)
+    ∙ minfee (PParamsOf Γ) utxo txTop ≤ TxFeesOf txTop
+    ∙ RedeemersOf txTop ˢ ≢ ∅ → collateralCheck (PParamsOf Γ) txTop utxo₀
+    ∙ consumed Γ ≡ produced
+    ∙ SizeOf txTop ≤ maxTxSize (PParamsOf Γ)
+    ∙ batchMintedCoin txTop ≡ 0
+    ∙ Γ ⊢ s ⇀⦇ txTop ,UTXOS⦈ s'
+      ────────────────────────────────
+      Γ ⊢ s ⇀⦇ txTop ,UTXO⦈ s'
 ```
 
 [1]: https://github.com/cardano-foundation/CIPs/tree/master/CIP-0118#changes-to-transaction-validity "CIP-0118 | Changes to Transaction Validity"
