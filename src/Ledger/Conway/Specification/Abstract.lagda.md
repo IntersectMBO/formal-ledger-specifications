@@ -36,15 +36,16 @@ In the Alonzo specification [VK21,](#alonzo-ledger-spec),
 the plutus library. We defer bringing these operations to Agda until we actually
 need them by defining `transVITime`{.AgdaFunction} as abstract.
 
+The Alonzo specification also introduces constants `EI`{.AgdaFunction} and
+`SysSt`{.AgdaFunction} which are only consumed by abstract functions. Since
+eliding these constants induces no loss of generality, we don't define them
+yet.
+
 ```agda
 record AbstractFunctions : Type₁ where
   field UTCTime      : Type
         ⦃ DecEq-UTCTime ⦄ : DecEq UTCTime
         POSIXTimeRange : Type
-        EpochInfo    : Type
-        SystemStart  : Type
-        EI           : EpochInfo
-        SysSt        : SystemStart
         txscriptfee  : Prices → ExUnits → Coin
         serSize      : Value → MemoryEstimate
         indexOfImp   : indexOf
@@ -52,11 +53,11 @@ record AbstractFunctions : Type₁ where
         scriptSize   : Script → ℕ
         valContext   : TxInfo → ScriptPurpose → Data
         getLanguageView : PParams → Language → LangDepView
-        epochInfoSlotToUTCTime : EpochInfo → SystemStart → Slot → Maybe UTCTime
+        epochInfoSlotToUTCTime : Slot → Maybe UTCTime
 
         -- Translates a ValidityInterval, which is expressed in slots, to a
         -- POSIXTimeRange, expressed in terms of POSIXTime.
-        transVITime : EpochInfo → SystemStart → ValidityInterval → POSIXTimeRange
+        transVITime : ValidityInterval → POSIXTimeRange
 ```
 
 ## References {#references .unnumbered}

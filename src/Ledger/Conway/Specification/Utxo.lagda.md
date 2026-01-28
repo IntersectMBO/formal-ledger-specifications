@@ -541,7 +541,7 @@ data _⊢_⇀⦇_,UTXO⦈_ where
     ∙ consumed pp s txb ≡ produced pp s txb  ∙ coin mint ≡ 0
     ∙ (¬ (∅ᵐ ≡ᵐ txrdmrs) × nothing ≢ proj₁ txVldt →
          (do s ← proj₁ txVldt
-             epochInfoSlotToUTCTime EI SysSt s) ≢ nothing
+             epochInfoSlotToUTCTime s) ≢ nothing
       )
     ∙ txsize ≤ maxTxSize pp
     ∙ refScriptsSize utxo tx ≤ pp .maxRefScriptSizePerTx
@@ -577,4 +577,3 @@ unquoteDecl UTXO-premises = genPremises UTXO-premises (quote UTXO-inductive)
 label="shelley-ledger-spec"></span> Jared Corduan and Polina Vinogradova
 and Matthias Güdemann. *A Formal Specification of the Cardano Ledger*.
 2019.
-

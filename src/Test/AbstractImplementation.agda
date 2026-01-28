@@ -36,10 +36,6 @@ SVAbstractFunctions = record
   ; valContext = valContext'
   ; UTCTime = ℕ
   ; POSIXTimeRange = ⊤
-  ; EpochInfo = ⊤
-  ; SystemStart = ⊤
-  ; EI = tt
-  ; SysSt = tt
-  ; epochInfoSlotToUTCTime = λ _ _ _ → just 0
-  ; transVITime = λ _ _ _ → tt
+  ; epochInfoSlotToUTCTime = λ _ → just 0
+  ; transVITime = λ _ → tt
   }

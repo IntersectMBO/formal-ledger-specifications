@@ -131,12 +131,8 @@ instance
     ; valContext = λ _ _ → zero
     ; UTCTime = ℕ
     ; POSIXTimeRange = ⊤
-    ; EpochInfo = ⊤
-    ; SystemStart = ⊤
-    ; EI = tt
-    ; SysSt = tt
-    ; epochInfoSlotToUTCTime = λ _ _ _ → just 0
-    ; transVITime = λ _ _ _ → tt
+    ; epochInfoSlotToUTCTime = λ _ → just 0
+    ; transVITime = λ _ → tt
     }
 
 open import Ledger.Core.Specification.Address Network KeyHash ScriptHash using () public
