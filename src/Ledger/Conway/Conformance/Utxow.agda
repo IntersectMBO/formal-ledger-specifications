@@ -46,6 +46,12 @@ data _⊢_⇀⦇_,UTXOW⦈_ where
         refInputsDataHashes = mapPartial txOutToDataHash (range (utxo ∣ refInputs))
         outputsDataHashes   = mapPartial txOutToDataHash (range txOuts)
         nativeScripts       = mapPartial toP1Script (txscripts tx utxo)
+        scriptRdrptrs       =
+          mapPartial
+            (λ (sp , c) → if credentialToP2Script utxo tx c
+                          then rdptr txb sp
+                          else nothing)
+            (credsNeeded utxo txb)
     in
     ∙  ∀[ (vk , σ) ∈ vkSigs ] isSigned vk (txidBytes txId) σ
     ∙  ∀[ s ∈ nativeScripts ] (hash s ∈ neededScriptHashes → validP1Script witsKeyHashes txVldt s)
@@ -53,15 +59,22 @@ data _⊢_⇀⦇_,UTXOW⦈_ where
     ∙  neededScriptHashes - refScriptHashes ≡ᵉ witsScriptHashes
     ∙  inputsDataHashes ⊆ txdatsHashes
     ∙  txdatsHashes ⊆ inputsDataHashes ∪ outputsDataHashes ∪ refInputsDataHashes
+    ∙  dom txrdmrs ≡ᵉ scriptRdrptrs
     ∙  L.languages tx utxo ⊆ dom (PParams.costmdls (PParamsOf Γ)) ∩ L.allowedLanguages tx utxo
     ∙  txADhash ≡ map hash txAD
+    ∙  scriptIntegrityHash ≡
+         L.hashScriptIntegrity
+           (UTxOEnv.pparams Γ)
+           (L.languages tx utxo)
+           txrdmrs
+           txdats
     ∙  Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s'
        ────────────────────────────────
        Γ ⊢ s ⇀⦇ tx ,UTXOW⦈ s'
 
-pattern UTXOW-inductive⋯ p₁ p₂ p₃ p₄ p₅ p₆ p₇ p₈ h
-      = UTXOW-inductive (p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , h)
-pattern UTXOW⇒UTXO x = UTXOW-inductive⋯ _ _ _ _ _ _ _ _ x
+pattern UTXOW-inductive⋯ p₁ p₂ p₃ p₄ p₅ p₆ p₇ p₈ p₉ p₁₀ h
+      = UTXOW-inductive (p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , h)
+pattern UTXOW⇒UTXO x = UTXOW-inductive⋯ _ _ _ _ _ _ _ _ _ _ x
 
 unquoteDecl UTXOW-inductive-premises =
   genPremises UTXOW-inductive-premises (quote UTXOW-inductive)

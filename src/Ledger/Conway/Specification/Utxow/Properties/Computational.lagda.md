@@ -50,13 +50,13 @@ instance
     computeProof : ComputationResult String (∃ (Γ ⊢ s ⇀⦇ tx ,UTXOW⦈_))
     computeProof =
       case H? of λ where
-        (yes (p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈)) →
-          map (map₂′ (UTXOW-inductive⋯ p₁ p₂ p₃ p₄ p₅ p₆ p₇ p₈)) (computeProof' Γ s tx)
+        (yes (p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀)) →
+          map (map₂′ (UTXOW-inductive⋯ p₁ p₂ p₃ p₄ p₅ p₆ p₇ p₈ p₉ p₁₀)) (computeProof' Γ s tx)
         (no ¬p) → failure $ genErr ¬p
 
     completeness : ∀ s' → Γ ⊢ s ⇀⦇ tx ,UTXOW⦈ s'
                         → map proj₁ computeProof ≡ success s'
-    completeness s' (UTXOW-inductive⋯ p₁ p₂ p₃ p₄ p₅ p₆ p₇ p₈ h) with H?
-    ... | no ¬p = ⊥-elim $ ¬p ((p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈))
+    completeness s' (UTXOW-inductive⋯ p₁ p₂ p₃ p₄ p₅ p₆ p₇ p₈ p₉ p₁₀ h) with H?
+    ... | no ¬p = ⊥-elim $ ¬p ((p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀))
     ... | yes _ with computeProof' Γ s tx | completeness' _ _ _ _ h
     ... | success _ | refl = refl

@@ -5,7 +5,8 @@ source_path: src/Ledger/Conway/Specification/Utxow.lagda.md
 
 # Witnessing {#sec:witnessing}
 
-The purpose of witnessing is make sure the actions specified a transaction are authorized
+The purpose of witnessing is making sure that the actions specified in a
+transaction are authorized
 by the holder of the signing key. (For details see [CVG19](#shelley-ledger-spec).)
 This section formalizes the mechanisms use by the Cardano ledger to support witnessing.
 
@@ -94,6 +95,29 @@ allowedLanguages tx utxo =
     os = range (outs txb) ∪ range (utxo ∣ (txIns ∪ refInputs))
 ```
 
+## Checking the script integrity hash
+
+The script integrity hash helps determining that the cost model for execution
+of a script hasn't changed since the transaction was submitted. Otherwise,
+evaluation of the script could yield a different value than expected. It also
+helps checking that the same datums and redeemers are provided every time
+a transaction is validated. See Section 2.2, Propery C.8 and the proof of
+Lemma C.10 in [VK21,](#alonzo-ledger-spec) for the details.
+
+```agda
+hashScriptIntegrity
+  : PParams
+  → ℙ Language
+  → RdmrPtr ⇀ (Redeemer × ExUnits)
+  → ℙ Datum
+  → Maybe ScriptHash
+hashScriptIntegrity pp langs rdrms dats
+  with rdrms ˢ ≟ ∅ˢ | langs ≟ ∅ˢ | dats ≟ ∅ˢ
+...  | yes _        | yes _      | yes _ = nothing
+...  | _            | _          | _     =
+    just $ hash (dats , rdrms , mapˢ (getLanguageView pp) langs)
+```
+
 ## The <span class="AgdaDatatype">UTXOW</span> Transition System {#sec:the-utxow-transition-system}
 
 <!--
@@ -127,6 +151,12 @@ data _⊢_⇀⦇_,UTXOW⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Typ
          refInputsDataHashes = mapPartial txOutToDataHash (range (utxo ∣ refInputs))
          outputsDataHashes   = mapPartial txOutToDataHash (range txOuts)
          nativeScripts       = mapPartial toP1Script (txscripts tx utxo)
+         scriptRdrptrs       =
+           mapPartial
+             (λ (sp , c) → if credentialToP2Script utxo tx c
+                           then rdptr txb sp
+                           else nothing)
+             (credsNeeded utxo txb)
     in
     ∙  ∀[ (vk , σ) ∈ vkSigs ] isSigned vk (txidBytes txId) σ
     ∙  ∀[ s ∈ nativeScripts ] (hash s ∈ neededScriptHashes → validP1Script witsKeyHashes txVldt s)
@@ -134,8 +164,15 @@ data _⊢_⇀⦇_,UTXOW⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Typ
     ∙  neededScriptHashes - refScriptHashes ≡ᵉ witsScriptHashes
     ∙  inputsDataHashes ⊆ txdatsHashes
     ∙  txdatsHashes ⊆ inputsDataHashes ∪ outputsDataHashes ∪ refInputsDataHashes
+    ∙  dom txrdmrs ≡ᵉ scriptRdrptrs
     ∙  languages tx utxo ⊆ dom (PParams.costmdls (PParamsOf Γ)) ∩ allowedLanguages tx utxo
     ∙  txADhash ≡ map hash txAD
+    ∙  scriptIntegrityHash ≡
+          hashScriptIntegrity
+            (PParamsOf Γ)
+            (languages tx utxo)
+            txrdmrs
+            txdats
     ∙  Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s'
        ────────────────────────────────
        Γ ⊢ s ⇀⦇ tx ,UTXOW⦈ s'
@@ -156,9 +193,9 @@ data _⊢_⇀⦇_,UTXOW⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Typ
 
 <!--
 ```agda
-pattern UTXOW-inductive⋯ p₁ p₂ p₃ p₄ p₅ p₆ p₇ p₈ h
-      = UTXOW-inductive (p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , h)
-pattern UTXOW⇒UTXO x = UTXOW-inductive⋯ _ _ _ _ _ _ _ _ x
+pattern UTXOW-inductive⋯ p₁ p₂ p₃ p₄ p₅ p₆ p₇ p₈ p₉ p₁₀ h
+      = UTXOW-inductive (p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , h)
+pattern UTXOW⇒UTXO x = UTXOW-inductive⋯ _ _ _ _ _ _ _ _ _ _ x
 
 unquoteDecl UTXOW-inductive-premises =
   genPremises UTXOW-inductive-premises (quote UTXOW-inductive)
