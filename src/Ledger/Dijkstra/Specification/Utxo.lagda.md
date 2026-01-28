@@ -239,7 +239,12 @@ opaque
   cbalance utxo = coin (balance utxo)
 
   refScriptsSize : Tx ℓ → UTxO → ℕ
-  refScriptsSize tx utxo = sum (map scriptSize (setToList (referenceScripts tx utxo)))
+  refScriptsSize tx utxo =
+    ∑ˡ[ x ← setToList (referenceScripts tx utxo) ] scriptSize x
+
+  allRefScriptsSize : TopLevelTx → UTxO → ℕ
+  allRefScriptsSize txTop utxo =
+    ∑ˡ[ x ← setToList (getAllReferenceScripts txTop utxo) ] scriptSize x
 
   minfee : PParams → Tx ℓ → UTxO → Coin
   minfee pp tx utxo =  pp .a * (SizeOf tx) + pp .b
@@ -319,9 +324,8 @@ module Accounting (pp : PParams) (txTop : TopLevelTx) (depositsChange : ℤ) whe
   newDepositsBatch = posPart depositsChange
 
   consumed : UTxOEnv → Value
-  consumed Γ = foldl  (λ acc tx → acc + consumedTx tx)
-                      (consumedTx txTop + inject depositRefundsBatch)
-                      (SubTransactionsOf txTop)
+  consumed Γ =  consumedTx txTop + inject depositRefundsBatch
+                + ∑ˡ[ stx ← SubTransactionsOf txTop ] (consumedTx stx)
     where
     consumedTx : ∀ {ℓ} → Tx ℓ → Value
     consumedTx tx =  balance (UTxOOf Γ ∣ SpendInputsOf tx)
@@ -329,9 +333,8 @@ module Accounting (pp : PParams) (txTop : TopLevelTx) (depositsChange : ℤ) whe
                      + inject (getCoin (WithdrawalsOf tx))
 
   produced : Value
-  produced = foldl  (λ acc tx → acc + producedTx tx)
-                    (producedTx txTop + inject newDepositsBatch)
-                    (SubTransactionsOf txTop)
+  produced =  producedTx txTop + inject newDepositsBatch
+              + ∑ˡ[ stx ← SubTransactionsOf txTop ] (producedTx stx)
     where
     producedTx : ∀ {ℓ} → Tx ℓ → Value
     producedTx {TxLevelSub} tx =  balance (outs tx) + inject (DonationsOf tx)
@@ -528,9 +531,12 @@ This is achieved by the following precondition in the `UTXO`.{AgdaDatatype} and
 data _⊢_⇀⦇_,SUBUTXO⦈_ : SubUTxOEnv → UTxOState → SubLevelTx → UTxOState → Type where
 
   SUBUTXO :
+    let pp = PParamsOf Γ in
+
     ∙ SpendInputsOf txSub ≢ ∅
     ∙ SpendInputsOf txSub ∩ ReferenceInputsOf txSub ≡ ∅
     ∙ inInterval (SlotOf Γ) (ValidIntervalOf txSub)
+    ∙ refScriptsSize txSub (UTxOOf Γ) ≤ pp .maxRefScriptSizePerTx
     ∙ MaybeNetworkIdOf txSub ~ just NetworkId
     ∙ Γ ⊢ s ⇀⦇ txSub ,SUBUTXOS⦈ s'
       ────────────────────────────────
@@ -556,8 +562,7 @@ data _⊢_⇀⦇_,UTXO⦈_ : UTxOEnv → UTxOState → TopLevelTx → UTxOState 
     ∙ minfee pp txTop utxo ≤ TxFeesOf txTop
     ∙ consumed Γ ≡ produced
     ∙ SizeOf txTop ≤ maxTxSize pp
-    -- ∙ refScriptsSize utxo tx ≤ pp .maxRefScriptSizePerTx     -- TODO: Dijkstra analog
-
+    ∙ allRefScriptsSize txTop utxo ≤ pp .maxRefScriptSizePerTx
     ∙ allSpendInputs txTop ⊆ dom utxo₀                          -- (1)
     ∙ noOverlappingSpendInputs txTop                            -- (2)
     ∙ allReferenceInputs txTop ⊆ dom (utxoView utxo₀ txTop)     -- (3)
