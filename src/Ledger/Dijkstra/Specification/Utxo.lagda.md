@@ -561,14 +561,12 @@ data _⊢_⇀⦇_,SUBUTXOS⦈_ : UTxOEnv → UTxOState → SubLevelTx → UTxOSt
   SUBUTXOS-scripts✓ :
 
     ∙ ValidCertDeposits (PParamsOf Γ) deposits (DCertsOf txSub)
-    ∙ evalP2Scripts (p2ScriptsWithContext Γ txSub) ≡ IsTopLevelValidFlagOf Γ
     ∙ IsTopLevelValidFlagOf Γ ≡ true
       ────────────────────────────────
       Γ ⊢ s ⇀⦇ txSub ,SUBUTXOS⦈ scripts✓ Γ s txSub
 
   SUBUTXOS-scripts× :
 
-    ∙ evalP2Scripts (p2ScriptsWithContext Γ txSub) ≡ IsTopLevelValidFlagOf Γ
     ∙ IsTopLevelValidFlagOf Γ ≡ false
       ────────────────────────────────
       Γ ⊢ s ⇀⦇ txSub ,SUBUTXOS⦈ scripts× Γ s txSub
