@@ -242,6 +242,10 @@ opaque
   refScriptsSize tx utxo =
     ∑ˡ[ x ← setToList (referenceScripts tx utxo) ] scriptSize x
 
+  -- allRefScriptsSize : TopLevelTx → UTxO → ℕ
+  -- allRefScriptsSize txTop utxo =
+  --   ∑ˡ[ x ← setToList (getAllReferenceScripts txTop utxo) ] scriptSize x
+
   minfee : PParams → Tx ℓ → UTxO → Coin
   minfee pp tx utxo =  pp .a * (SizeOf tx) + pp .b
                        + txScriptFee (pp .prices) (totExUnits tx)
@@ -558,7 +562,8 @@ data _⊢_⇀⦇_,UTXO⦈_ : UTxOEnv → UTxOState → TopLevelTx → UTxOState 
     ∙ minfee pp txTop utxo ≤ TxFeesOf txTop
     ∙ consumed Γ ≡ produced
     ∙ SizeOf txTop ≤ maxTxSize pp
-    ∙ refScriptsSize txSub utxo₀ ≤ pp .maxRefScriptSizePerTx
+(??)    -- ∙ refScriptsSize utxo tx ≤ pp .maxRefScriptSizePerTx     -- TODO: Dijkstra analog
+(??)
     ∙ allSpendInputs txTop ⊆ dom utxo₀                          -- (1)
     ∙ noOverlappingSpendInputs txTop                            -- (2)
     ∙ allReferenceInputs txTop ⊆ dom (utxoView utxo₀ txTop)     -- (3)
