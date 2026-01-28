@@ -43,7 +43,7 @@ open import Ledger.Dijkstra.Specification.Certs govStructure
 open import Ledger.Dijkstra.Specification.Script.Validation txs abs
 open import Ledger.Dijkstra.Specification.Fees using (scriptsCost)
 
-open import Data.List.Relation.Unary.All using () renaming (All to Allˡ)
+import Data.List.Relation.Unary.All as List
 import Data.Sum.Relation.Unary.All as Sum
 
 private variable
@@ -385,7 +385,7 @@ batchOuts : TopLevelTx → UTxO
 batchOuts txTop = foldr (λ sub acc → outs sub ∪ˡ acc) (outs txTop) (SubTransactionsOf txTop)
 
 utxoView : UTxO → TopLevelTx → UTxO
-utxoView utxo₀ txTop = utxo₀ ∪ˡ batchOuts txTop
+utxoView utxo txTop = utxo ∪ˡ batchOuts txTop
 
 module Accounting (pp : PParams) (txTop : TopLevelTx) (deposits₀ : Deposits) where
 
@@ -452,7 +452,7 @@ concatMapˡ f as = proj₁ $ unions (fromList (map f as))
 -- because set union would silently erase duplicates.
 PairwiseDisjoint : List (ℙ TxIn) → Type
 PairwiseDisjoint []        = ⊤
-PairwiseDisjoint (X ∷ Xs)  = Allˡ (λ Y → disjoint X Y) Xs × PairwiseDisjoint Xs
+PairwiseDisjoint (X ∷ Xs)  = List.All (λ Y → disjoint X Y) Xs × PairwiseDisjoint Xs
 
 p2ScriptsWithContext : UTxOEnv → Tx ℓ → List (P2Script × List Data × ExUnits × CostModel)
 p2ScriptsWithContext Γ t =
@@ -672,7 +672,7 @@ data _⊢_⇀⦇_,UTXO⦈_ : UTxOEnv → UTxOState → TopLevelTx → UTxOState 
       ⋀ (serializedSize (getValueʰ txout) ≤ maxValSize pp)
 
     ∙ ∀[ (a , _) ∈ range txOutsʰ ]
-      (Sum.All (const ⊤) (λ a → AttrSizeOf a ≤ 64) a) ⋀ (netId a ≡ NetworkId)
+      (Sum.All (const ⊤) (λ a → AttrSizeOf a ≤ 64)) a ⋀ (netId a ≡ NetworkId)
 
     ∙ ∀[ a ∈ dom (WithdrawalsOf txTop)] NetworkIdOf a ≡ NetworkId
     ∙ MaybeNetworkIdOf txTop ~ just NetworkId
