@@ -312,7 +312,7 @@ isPoolRegistered ps kh = lookupᵐ? ps kh
 data _⊢_⇀⦇_,POOL⦈_ : PoolEnv → PState → DCert → PState → Type where
 
   POOL-reg :
-    ∙ Is-just (isPoolRegistered pools kh)
+    ∙ Is-nothing (isPoolRegistered pools kh)
     ────────────────────────────────
     pp ⊢ ⟦ pools
          , fPools
@@ -326,7 +326,7 @@ data _⊢_⇀⦇_,POOL⦈_ : PoolEnv → PState → DCert → PState → Type wh
          ⟧
 
   POOL-rereg :
-    ∙ Is-nothing (isPoolRegistered pools kh)
+    ∙ Is-just (isPoolRegistered pools kh)
     ────────────────────────────────
     pp ⊢ ⟦ pools
          , fPools
