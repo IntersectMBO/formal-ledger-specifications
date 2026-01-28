@@ -4,6 +4,7 @@
 
 ### WIP
 
+- Add premise about maxBlockExUnits to BBODY
 - Added the validity interval as a `POSIXTimeRange` to `TxInfo`.
 - Added premise about `epochInfoSlotToUTCTime` to the UTXO rule.
 - Added time handling functions and types (`epochInfoSlotToUTCTime`, `transVITime`,
