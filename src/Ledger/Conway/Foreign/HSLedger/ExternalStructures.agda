@@ -95,6 +95,7 @@ instance
   HSTransactionStructure : TransactionStructure
   HSTransactionStructure = record
     { Implementation
+    ; POSIXTimeRange = ⊤
     ; epochStructure  = HSEpochStructure
     ; globalConstants = HSGlobalConstants
     ; cryptoStructure = HSCryptoStructure
@@ -130,7 +131,6 @@ instance
         (inj₂ x) → HSPlutusScript.psScriptSize x
     ; valContext = λ _ _ → zero
     ; UTCTime = ℕ
-    ; POSIXTimeRange = ⊤
     ; epochInfoSlotToUTCTime = λ _ → just 0
     ; transVITime = λ _ → tt
     }

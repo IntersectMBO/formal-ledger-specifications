@@ -45,7 +45,6 @@ yet.
 record AbstractFunctions : Type₁ where
   field UTCTime      : Type
         ⦃ DecEq-UTCTime ⦄ : DecEq UTCTime
-        POSIXTimeRange : Type
         txscriptfee  : Prices → ExUnits → Coin
         serSize      : Value → MemoryEstimate
         indexOfImp   : indexOf

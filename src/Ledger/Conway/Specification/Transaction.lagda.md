@@ -73,7 +73,7 @@ record TransactionStructure : Type₁ where
 
 *Abstract types*
 ```agda
-    Ix TxId AuxiliaryData : Type
+    Ix TxId AuxiliaryData POSIXTimeRange : Type
 ```
 
 <!--
@@ -296,4 +296,3 @@ record TransactionStructure : Type₁ where
     HasCoin-TxOut .getCoin = coin ∘ proj₁ ∘ proj₂
 ```
 -->
-

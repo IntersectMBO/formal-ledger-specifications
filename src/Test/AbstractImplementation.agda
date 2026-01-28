@@ -35,7 +35,6 @@ SVAbstractFunctions = record
   ; scriptSize = λ _ → 0
   ; valContext = valContext'
   ; UTCTime = ℕ
-  ; POSIXTimeRange = ⊤
   ; epochInfoSlotToUTCTime = λ _ → just 0
   ; transVITime = λ _ → tt
   }
