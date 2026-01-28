@@ -386,6 +386,10 @@ could be either of them.
     field CurrentTreasuryOf : A → Maybe Coin
   open HasCurrentTreasury ⦃...⦄ public
 
+  record HasIsValidFlag {a} (A : Type a) : Type a where
+    field IsValidFlagOf : A → Bool
+  open HasIsValidFlag ⦃...⦄ public
+
   instance
     HasTxBody-Tx : HasTxBody (Tx txLevel)
     HasTxBody-Tx .TxBodyOf = Tx.txBody
@@ -395,6 +399,9 @@ could be either of them.
 
     HasTxWitnesses-Tx : HasTxWitnesses (Tx txLevel)
     HasTxWitnesses-Tx .TxWitnessesOf = Tx.txWitnesses
+
+    HasIsValidFlag-Tx : HasIsValidFlag TopLevelTx
+    HasIsValidFlag-Tx .IsValidFlagOf = Tx.isValid
 
     HasRedeemers-TxWitnesses : HasRedeemers (TxWitnesses txLevel)
     HasRedeemers-TxWitnesses .RedeemersOf = TxWitnesses.txRedeemers

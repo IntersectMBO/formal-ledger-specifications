@@ -250,9 +250,9 @@ data _⊢_⇀⦇_,LEDGER⦈_ : LedgerEnv → LState → TopLevelTx → LState �
          allData = setToMap (mapˢ < hash , id > (getAllData tx utxo₀))
 
     in
-      ∙ Tx.isValid tx ≡ true
-      ∙ ⟦ slot , ppolicy , pp , enactState , treasury , utxo₀ , Tx.isValid tx , allScripts , allData ⟧ ⊢ ⟦ utxoState , govState , certState ⟧ ⇀⦇ SubTransactionsOf tx ,SUBLEDGERS⦈ ⟦ utxoState' , govState' , certState' ⟧
-      ∙ ⟦ slot , pp , treasury , utxo₀ , Tx.isValid tx , allScripts , allData ⟧  ⊢ utxoState' ⇀⦇ tx ,UTXOW⦈ utxoState''
+      ∙ IsValidFlagOf tx ≡ true
+      ∙ ⟦ slot , ppolicy , pp , enactState , treasury , utxo₀ , IsValidFlagOf tx , allScripts , allData ⟧ ⊢ ⟦ utxoState , govState , certState ⟧ ⇀⦇ SubTransactionsOf tx ,SUBLEDGERS⦈ ⟦ utxoState' , govState' , certState' ⟧
+      ∙ ⟦ slot , pp , treasury , utxo₀ , IsValidFlagOf tx , allScripts , allData ⟧  ⊢ utxoState' ⇀⦇ tx ,UTXOW⦈ utxoState''
       ∙ ⟦ epoch slot , pp , ListOfGovVotesOf tx , WithdrawalsOf tx , allColdCreds govState enactState ⟧ ⊢ certState' ⇀⦇ DCertsOf tx ,CERTS⦈ certState''
       ∙ ⟦ TxIdOf tx , epoch slot , pp , ppolicy , enactState , certState' , dom (RewardsOf certState) ⟧ ⊢ rmOrphanDRepVotes certState' govState ⇀⦇ GovProposals+Votes tx ,GOVS⦈ govState'
       ────────────────────────────────
@@ -268,9 +268,9 @@ data _⊢_⇀⦇_,LEDGER⦈_ : LedgerEnv → LState → TopLevelTx → LState �
          allData : DataHash ⇀ Datum
          allData = setToMap (mapˢ < hash , id > (getAllData tx utxo₀))
     in
-      ∙ Tx.isValid tx ≡ false
-      ∙ ⟦ slot , ppolicy , pp , enactState , treasury , utxo₀ , Tx.isValid tx , allScripts , allData ⟧ ⊢ ⟦ utxoState , govState , certState ⟧ ⇀⦇ SubTransactionsOf tx  ,SUBLEDGERS⦈ ⟦ utxoState , govState , certState ⟧
-      ∙ ⟦ slot , pp , treasury , utxo₀ , Tx.isValid tx , allScripts , allData ⟧ ⊢ utxoState ⇀⦇ tx ,UTXOW⦈ utxoState'
+      ∙ IsValidFlagOf tx ≡ false
+      ∙ ⟦ slot , ppolicy , pp , enactState , treasury , utxo₀ , IsValidFlagOf tx , allScripts , allData ⟧ ⊢ ⟦ utxoState , govState , certState ⟧ ⇀⦇ SubTransactionsOf tx  ,SUBLEDGERS⦈ ⟦ utxoState , govState , certState ⟧
+      ∙ ⟦ slot , pp , treasury , utxo₀ , IsValidFlagOf tx , allScripts , allData ⟧ ⊢ utxoState ⇀⦇ tx ,UTXOW⦈ utxoState'
       ────────────────────────────────
       ⟦ slot , ppolicy , pp , enactState , treasury ⟧ ⊢ ⟦ utxoState , govState , certState ⟧ ⇀⦇ tx ,LEDGER⦈ ⟦ utxoState' , govState , certState ⟧
 ```
