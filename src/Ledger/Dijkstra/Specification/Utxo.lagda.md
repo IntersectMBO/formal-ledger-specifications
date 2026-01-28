@@ -139,6 +139,10 @@ record HasUTxOState {a} (A : Type a) : Type a where
   field UTxOStateOf : A → UTxOState
 open HasUTxOState ⦃...⦄ public
 
+record HasIsTopLevelValidFlag {a} (A : Type a) : Type a where
+  field IsTopLevelValidFlagOf : A → Bool
+open HasIsTopLevelValidFlag ⦃...⦄ public
+
 record HasScriptPool {a} (A : Type a) : Type a where
   field ScriptPoolOf : A → ℙ Script
 open HasScriptPool ⦃...⦄ public
@@ -163,6 +167,9 @@ instance
 
   HasUTxO-UTxOEnv : HasUTxO UTxOEnv
   HasUTxO-UTxOEnv .UTxOOf = UTxOEnv.utxo₀
+
+  HasIsTopLevelValidFlag-UTxOEnv : HasIsTopLevelValidFlag UTxOEnv
+  HasIsTopLevelValidFlag-UTxOEnv .IsTopLevelValidFlagOf = UTxOEnv.isTopLevelValid
 
   HasUTxO-UTxOState : HasUTxO UTxOState
   HasUTxO-UTxOState .UTxOOf = UTxOState.utxo
@@ -554,15 +561,13 @@ data _⊢_⇀⦇_,SUBUTXOS⦈_ : UTxOEnv → UTxOState → SubLevelTx → UTxOSt
   SUBUTXOS-scripts✓ :
 
     ∙ ValidCertDeposits (PParamsOf Γ) deposits (DCertsOf txSub)
-    ∙ evalP2Scripts (p2ScriptsWithContext Γ txSub) ≡ Tx.isValid txTop
-    ∙ Tx.isValid txTop ≡ true
+    ∙ IsTopLevelValidFlagOf Γ ≡ true
       ────────────────────────────────
       Γ ⊢ s ⇀⦇ txSub ,SUBUTXOS⦈ scripts✓ Γ s txSub
 
   SUBUTXOS-scripts× :
 
-    ∙ evalP2Scripts (p2ScriptsWithContext Γ txSub) ≡ Tx.isValid txTop
-    ∙ Tx.isValid txTop ≡ false
+    ∙ IsTopLevelValidFlagOf Γ ≡ false
       ────────────────────────────────
       Γ ⊢ s ⇀⦇ txSub ,SUBUTXOS⦈ scripts× Γ s txSub
 
@@ -572,15 +577,15 @@ data _⊢_⇀⦇_,UTXOS⦈_ : UTxOEnv → UTxOState → TopLevelTx → UTxOState
   UTXOS-scripts✓ :
 
     ∙ ValidCertDeposits (PParamsOf Γ) deposits (allDCerts txTop)
-    ∙ evalP2Scripts (allP2ScriptsWithContext Γ txTop) ≡ Tx.isValid txTop
-    ∙ Tx.isValid txTop ≡ true
+    ∙ evalP2Scripts (allP2ScriptsWithContext Γ txTop) ≡ IsValidFlagOf txTop
+    ∙ IsValidFlagOf txTop ≡ true
       ────────────────────────────────
       Γ ⊢ s ⇀⦇ txTop ,UTXOS⦈ scripts✓ Γ s txTop
 
   UTXOS-scripts× :
 
-    ∙ evalP2Scripts (allP2ScriptsWithContext Γ txTop) ≡ Tx.isValid txTop
-    ∙ Tx.isValid txTop ≡ false
+    ∙ evalP2Scripts (allP2ScriptsWithContext Γ txTop) ≡ IsValidFlagOf txTop
+    ∙ IsValidFlagOf txTop ≡ false
       ────────────────────────────────
       Γ ⊢ s ⇀⦇ txTop ,UTXOS⦈ scripts× Γ s txTop
 ```
@@ -627,10 +632,8 @@ This is achieved by the following precondition in the `UTXO`.{AgdaDatatype} and
 data _⊢_⇀⦇_,SUBUTXO⦈_ : UTxOEnv → UTxOState → SubLevelTx → UTxOState → Type where
 
   SUBUTXO :
-
     ∙ SpendInputsOf txSub ≢ ∅
     ∙ SpendInputsOf txSub ∩ ReferenceInputsOf txSub ≡ ∅
-    ∙ SpendInputsOf txSub ⊆ dom (UTxOOf Γ)                -- (1)
     ∙ inInterval (SlotOf Γ) (ValidIntervalOf txSub)
     ∙ MaybeNetworkIdOf txSub ~ just NetworkId
     ∙ Γ ⊢ s ⇀⦇ txSub ,SUBUTXOS⦈ s'
@@ -652,7 +655,6 @@ data _⊢_⇀⦇_,UTXO⦈_ : UTxOEnv → UTxOState → TopLevelTx → UTxOState 
          txOutsʰ = mapValues txOutHash (TxOutsOf txTop)
     in
     ∙ SpendInputsOf txTop ≢ ∅
-    ∙ SpendInputsOf txTop ⊆ dom utxo₀                           -- (1)
     ∙ SpendInputsOf txTop ∩ ReferenceInputsOf txTop ≡ ∅
     ∙ inInterval (SlotOf Γ) (ValidIntervalOf txTop)
     ∙ minfee pp txTop utxo ≤ TxFeesOf txTop
