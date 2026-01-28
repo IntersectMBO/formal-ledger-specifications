@@ -632,10 +632,8 @@ This is achieved by the following precondition in the `UTXO`.{AgdaDatatype} and
 data _⊢_⇀⦇_,SUBUTXO⦈_ : UTxOEnv → UTxOState → SubLevelTx → UTxOState → Type where
 
   SUBUTXO :
-
     ∙ SpendInputsOf txSub ≢ ∅
     ∙ SpendInputsOf txSub ∩ ReferenceInputsOf txSub ≡ ∅
-    ∙ SpendInputsOf txSub ⊆ dom (UTxOOf Γ)                -- (1)
     ∙ inInterval (SlotOf Γ) (ValidIntervalOf txSub)
     ∙ MaybeNetworkIdOf txSub ~ just NetworkId
     ∙ Γ ⊢ s ⇀⦇ txSub ,SUBUTXOS⦈ s'
@@ -657,7 +655,6 @@ data _⊢_⇀⦇_,UTXO⦈_ : UTxOEnv → UTxOState → TopLevelTx → UTxOState 
          txOutsʰ = mapValues txOutHash (TxOutsOf txTop)
     in
     ∙ SpendInputsOf txTop ≢ ∅
-    ∙ SpendInputsOf txTop ⊆ dom utxo₀                           -- (1)
     ∙ SpendInputsOf txTop ∩ ReferenceInputsOf txTop ≡ ∅
     ∙ inInterval (SlotOf Γ) (ValidIntervalOf txTop)
     ∙ minfee pp txTop utxo ≤ TxFeesOf txTop
