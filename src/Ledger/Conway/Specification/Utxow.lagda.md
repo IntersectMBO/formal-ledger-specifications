@@ -134,7 +134,7 @@ data _⊢_⇀⦇_,UTXOW⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Typ
     ∙  neededScriptHashes - refScriptHashes ≡ᵉ witsScriptHashes
     ∙  inputsDataHashes ⊆ txdatsHashes
     ∙  txdatsHashes ⊆ inputsDataHashes ∪ outputsDataHashes ∪ refInputsDataHashes
-    ∙  languages tx utxo ⊆ allowedLanguages tx utxo
+    ∙  languages tx utxo ⊆ dom (PParams.costmdls (PParamsOf Γ)) ∩ allowedLanguages tx utxo
     ∙  txADhash ≡ map hash txAD
     ∙  Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s'
        ────────────────────────────────

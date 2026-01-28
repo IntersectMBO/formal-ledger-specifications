@@ -31,6 +31,8 @@ module Ledger.Conway.Specification.PParams
   (ss : ScriptStructure cs es) (open ScriptStructure ss)
   where
 
+open import Data.String using (parens)
+
 private variable
   m n : ℕ
 ```
@@ -183,6 +185,8 @@ This section defines new protocol parameters which denote the following concepts
 
 
 ```agda
+LanguageCostModels = List (Language × CostModel)
+
 record PParams : Type where
   field
 ```
@@ -233,16 +237,8 @@ record PParams : Type where
         nopt                          : ℕ
         a0                            : ℚ
         collateralPercentage          : ℕ
-```
-
-<!--
-```agda
-        -- costmdls                   : Language →/⇀ CostModel (Does not work with DecEq)
-```
--->
-
-```agda
-        costmdls                      : CostModel
+        -- use an association list instead of a map for DecEq
+        costmdlsAssoc                 : LanguageCostModels
 ```
 
 *Governance group*
@@ -255,6 +251,9 @@ record PParams : Type where
         govActionDeposit              : Coin
         drepDeposit                   : Coin
         drepActivity                  : Epoch
+
+  costmdls : Language ⇀ CostModel
+  costmdls = fromListᵐ costmdlsAssoc
 ```
 
 *Security group*
@@ -321,6 +320,9 @@ instance
     ((quote DrepThresholds , Show-DrepThresholds) ∷ [])
   unquoteDecl Show-PoolThresholds = derive-Show
     ((quote PoolThresholds , Show-PoolThresholds) ∷ [])
+  Show-LanguageCostModels : Show LanguageCostModels
+  Show-LanguageCostModels =
+    Show-List ⦃ Show-× ⦃ Show-Language ⦄ ⦃ Show-CostModel ⦄ ⦄
   unquoteDecl Show-PParams        = derive-Show
     ((quote PParams , Show-PParams) ∷ [])
 
@@ -349,7 +351,7 @@ module PParamsUpdate where
           Emax                          : Maybe Epoch
           nopt                          : Maybe ℕ
           collateralPercentage          : Maybe ℕ
-          costmdls                      : Maybe CostModel
+          costmdls                      : Maybe (List (Language × CostModel))
           drepThresholds                : Maybe DrepThresholds
           poolThresholds                : Maybe PoolThresholds
           govActionLifetime             : Maybe ℕ
@@ -494,7 +496,7 @@ module PParamsUpdate where
       ; Emax                        = U.Emax ?↗ P.Emax
       ; nopt                        = U.nopt ?↗ P.nopt
       ; collateralPercentage        = U.collateralPercentage ?↗ P.collateralPercentage
-      ; costmdls                    = U.costmdls ?↗ P.costmdls
+      ; costmdlsAssoc               = U.costmdls ?↗ P.costmdlsAssoc
       ; drepThresholds              = U.drepThresholds ?↗ P.drepThresholds
       ; poolThresholds              = U.poolThresholds ?↗ P.poolThresholds
       ; govActionLifetime           = U.govActionLifetime ?↗ P.govActionLifetime
