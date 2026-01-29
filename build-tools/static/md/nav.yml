@@ -118,15 +118,24 @@
   - Introduction: Ledger.Dijkstra.Specification.md
   - Abstract: Ledger.Dijkstra.Specification.Abstract.md
   - Certs: Ledger.Dijkstra.Specification.Certs.md
+  - Enact: Ledger.Dijkstra.Specification.Enact.md
+  - Fees: Ledger.Dijkstra.Specification.Fees.md
+  - Gov: Ledger.Dijkstra.Specification.Gov.md
   - Gov/:
     - Actions: Ledger.Dijkstra.Specification.Gov.Actions.md
     - Base: Ledger.Dijkstra.Specification.Gov.Base.md
+  - Ledger: Ledger.Dijkstra.Specification.Ledger.md
   - PParams: Ledger.Dijkstra.Specification.PParams.md
+  - Ratify: Ledger.Dijkstra.Specification.Ratify.md
   - Script: Ledger.Dijkstra.Specification.Script.md
   - Script/:
+    - Base: Ledger.Dijkstra.Specification.Script.Base.md
+    - ScriptPurpose: Ledger.Dijkstra.Specification.Script.ScriptPurpose.md
     - Validation: Ledger.Dijkstra.Specification.Script.Validation.md
   - TokenAlgebra: Ledger.Dijkstra.Specification.TokenAlgebra.Base.md
   - Transaction: Ledger.Dijkstra.Specification.Transaction.md
+  - Utxo: Ledger.Dijkstra.Specification.Utxo.md
+  - Utxow: Ledger.Dijkstra.Specification.Utxow.md
 - Appendix:
   - Background:
     - Definitions: Definitions.md
