@@ -229,7 +229,7 @@ Of particular note in the Dijkstra era are
       inductive
       field
         txIns                : ℙ TxIn
-        refInputs            : ℙ TxIn
+        referenceInputs      : ℙ TxIn
         collateralInputs     : InTopLevel txLevel (ℙ TxIn)
         txOuts               : Ix ⇀ TxOut
         txId                 : TxId
@@ -441,7 +441,7 @@ could be either of them.
     HasSpendInputs-Tx .SpendInputsOf = SpendInputsOf ∘ TxBodyOf
 
     HasReferenceInputs-TxBody : HasReferenceInputs (TxBody txLevel)
-    HasReferenceInputs-TxBody .ReferenceInputsOf = TxBody.refInputs
+    HasReferenceInputs-TxBody .ReferenceInputsOf = TxBody.referenceInputs
     HasReferenceInputs-Tx : HasReferenceInputs (Tx txLevel)
     HasReferenceInputs-Tx .ReferenceInputsOf = ReferenceInputsOf ∘ TxBodyOf
 
@@ -552,14 +552,14 @@ In the Dijkstra era, we need to talk about which UTxO a helper is parameterised 
   spendData = mapPartial txOutToDatum ∘₂ spendOut
 
   -- reference outputs
-  referenceOut : Tx txLevel → UTxO → ℙ TxOut
-  referenceOut tx utxo = range (utxo ∣ ReferenceInputsOf tx)
+  referencedOuts : Tx txLevel → UTxO → ℙ TxOut
+  referencedOuts tx utxo = range (utxo ∣ ReferenceInputsOf tx)
 
   referenceScripts : Tx txLevel → UTxO → ℙ Script
-  referenceScripts = mapPartial txOutToScript ∘₂ referenceOut
+  referenceScripts = mapPartial txOutToScript ∘₂ referencedOuts
 
   referenceData : Tx txLevel → UTxO → ℙ Datum
-  referenceData = mapPartial txOutToDatum ∘₂ referenceOut
+  referenceData = mapPartial txOutToDatum ∘₂ referencedOuts
 
   -- tx outputs
   txOut : Tx txLevel → ℙ TxOut
@@ -578,6 +578,8 @@ In the Dijkstra era, we need to talk about which UTxO a helper is parameterised 
   witnessData : Tx txLevel → ℙ Datum
   witnessData tx = DataOf tx
 
+  -- The set of scripts the ledger may use to resolve script hashes while
+  -- validating tx, given it is allowed to inspect utxo for its inputs.
   getTxScripts : Tx txLevel → UTxO → ℙ Script
   getTxScripts tx utxo =  witnessScripts tx
                           ∪ spendScripts tx utxo
@@ -589,11 +591,6 @@ In the Dijkstra era, we need to talk about which UTxO a helper is parameterised 
                        ∪ spendData tx utxo
                        ∪ referenceData tx utxo
                        ∪ txOutData tx
-
-  getAllReferenceScripts : TopLevelTx → UTxO → ℙ Script
-  getAllReferenceScripts txTop utxo =
-    referenceScripts txTop utxo
-    ∪ concatMapˢ (λ tx → referenceScripts tx utxo) (fromList (SubTransactionsOf txTop))
 
   getAllScripts : TopLevelTx → UTxO →  ℙ Script
   getAllScripts txTop utxo =
