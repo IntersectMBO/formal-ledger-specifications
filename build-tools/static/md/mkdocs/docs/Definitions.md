@@ -401,7 +401,7 @@ The choice affects the meaning of `referenceScripts tx utxo` and `referenceData 
    outputs created earlier in the batch (including possibly the transaction's own
    outputs if the view includes them).
 
-[CIP-0118][] discusses both batch-level sharing and restrictions intended to prevent
+[CIP-118][] discusses both batch-level sharing and restrictions intended to prevent
 problematic intra-batch behavior; this is where the formalization must record the
 adopted interpretation.
 
