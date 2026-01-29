@@ -40,13 +40,13 @@ module _ (tx : TopLevelTx) where
 
   module _ (utxo : UTxO) where
     UsesBootstrapAddress : Type
-    UsesBootstrapAddress = ∃[ o ∈ (range txOuts) ∪ range (utxo ∣ (txIns ∪ refInputs)) ] isBootstrapAddr (proj₁ o)
+    UsesBootstrapAddress = ∃[ o ∈ (range txOuts) ∪ range (utxo ∣ (txIns ∪ referenceInputs)) ] isBootstrapAddr (proj₁ o)
 
     HasInlineDatum : TxOut → Type
     HasInlineDatum txout = Is-just (txOutToDatum txout)
 
     UsesV2Features : Type
-    UsesV2Features = ∃[ o ∈ (range txOuts) ∪ range (utxo ∣ (txIns ∪ refInputs)) ] HasInlineDatum o
+    UsesV2Features = ∃[ o ∈ (range txOuts) ∪ range (utxo ∣ (txIns ∪ referenceInputs)) ] HasInlineDatum o
 
   data UsesV3Features : Set where
     hasVotes     : ¬ (Is-[] txGovVotes)     → UsesV3Features
