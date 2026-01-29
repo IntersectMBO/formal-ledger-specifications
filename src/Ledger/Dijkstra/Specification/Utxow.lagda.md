@@ -197,7 +197,6 @@ data _⊢_⇀⦇_,UTXOW⦈_ : UTxOEnv → UTxOState → TopLevelTx → UTxOState
     ∙  neededScriptHashes ⊆ mapˢ hash p1Scripts ∪ mapˢ hash p2Scripts
     ∙  neededDataHashes ⊆ dom (DataPoolOf Γ)
     ∙  languages p2Scripts ⊆ dom (PParams.costmdls (PParamsOf Γ)) ∩ allowedLanguages tx utxo
-    -- ∙  languages p2Scripts ⊆ allowedLanguages tx utxo
     ∙  txADhash ≡ map hash txAuxData
     ∙  Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s'
       ────────────────────────────────
