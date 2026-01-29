@@ -1412,7 +1412,7 @@ d_UTXO'45'premises_2952 v0 v1 v2 v3 v4
                                                       (coe v0))))
                                              (coe MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18)
                                              (coe
-                                                MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
                                                 (coe
                                                    MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_txVldt_3392
                                                    (coe
@@ -1434,7 +1434,7 @@ d_UTXO'45'premises_2952 v0 v1 v2 v3 v4
                                              MAlonzo.Code.Class.Monad.Instances.d_Monad'45'Maybe_18
                                              MAlonzo.Code.Agda.Primitive.d_lzero_20 erased
                                              MAlonzo.Code.Agda.Primitive.d_lzero_20 erased
-                                             (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                             (MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
                                                 (coe
                                                    MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_txVldt_3392
                                                    (coe

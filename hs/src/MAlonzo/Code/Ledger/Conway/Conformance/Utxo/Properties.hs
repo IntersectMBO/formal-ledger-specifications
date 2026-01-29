@@ -1795,7 +1795,7 @@ d_computeProofH_2880 v0 v1 v2 v3 v4 v5
                                                                                                                               (coe
                                                                                                                                  MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18)
                                                                                                                               (coe
-                                                                                                                                 MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                                                                                                 MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
                                                                                                                                  (coe
                                                                                                                                     MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_txVldt_3392
                                                                                                                                     (coe
@@ -1821,7 +1821,7 @@ d_computeProofH_2880 v0 v1 v2 v3 v4 v5
                                                                                                                               erased
                                                                                                                               MAlonzo.Code.Agda.Primitive.d_lzero_20
                                                                                                                               erased
-                                                                                                                              (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                                                                                              (MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
                                                                                                                                  (coe
                                                                                                                                     MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_txVldt_3392
                                                                                                                                     (coe
@@ -1841,7 +1841,7 @@ d_computeProofH_2880 v0 v1 v2 v3 v4 v5
                                                                                                                   v24 of
                                                                                                              MAlonzo.Code.Data.Sum.Base.C_inj'8321'_38 v25
                                                                                                                -> coe
-                                                                                                                    ("\172\n((z\n  : \172\n    (.Axiom.Set.Theory\7496.th List-Model\7496 Axiom.Set.Map.\8801\7504\n     Axiom.Set.Map.\8709\7504 (.Axiom.Set.Theory\7496.th List-Model\7496))\n    (.TransactionStructure.TxWitnesses.txrdmrs\n     (.TransactionStructure.Tx.wits tx))\n    \215\n    nothing \8802\n    .proj\8321\n    (.TransactionStructure.TxBody.txVldt\n     (.TransactionStructure.Tx.body tx))) \8594\n (Monad-Maybe Monad.>>=\n  .proj\8321\n  (.TransactionStructure.TxBody.txVldt\n   (.TransactionStructure.Tx.body tx)))\n (.AbstractFunctions.epochInfoSlotToUTCTime abs)\n \8802 nothing)"
+                                                                                                                    ("\172\n((z\n  : \172\n    (.Axiom.Set.Theory\7496.th List-Model\7496 Axiom.Set.Map.\8801\7504\n     Axiom.Set.Map.\8709\7504 (.Axiom.Set.Theory\7496.th List-Model\7496))\n    (.TransactionStructure.TxWitnesses.txrdmrs\n     (.TransactionStructure.Tx.wits tx))\n    \215\n    nothing \8802\n    .proj\8322\n    (.TransactionStructure.TxBody.txVldt\n     (.TransactionStructure.Tx.body tx))) \8594\n (Monad-Maybe Monad.>>=\n  .proj\8322\n  (.TransactionStructure.TxBody.txVldt\n   (.TransactionStructure.Tx.body tx)))\n (.AbstractFunctions.epochInfoSlotToUTCTime abs)\n \8802 nothing)"
                                                                                                                      ::
                                                                                                                      Data.Text.Text)
                                                                                                              MAlonzo.Code.Data.Sum.Base.C_inj'8322'_42 v25
