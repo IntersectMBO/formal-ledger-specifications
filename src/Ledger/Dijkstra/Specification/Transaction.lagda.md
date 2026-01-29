@@ -541,6 +541,16 @@ In the Dijkstra era, we need to talk about which UTxO a helper is parameterised 
   txOutToDatum : TxOut → Maybe Datum
   txOutToDatum (_ , _ , d , _) = d >>= isInj₁
 
+  -- transaction inputs
+  allSpendInputs : TopLevelTx → ℙ TxIn
+  allSpendInputs txTop = SpendInputsOf txTop
+    ∪ concatMapˢ SpendInputsOf (fromList (SubTransactionsOf txTop))
+
+  -- reference inputs
+  allReferenceInputs : TopLevelTx → ℙ TxIn
+  allReferenceInputs txTop = ReferenceInputsOf txTop
+    ∪ concatMapˢ ReferenceInputsOf (fromList (SubTransactionsOf txTop))
+
   -- spending outputs
   spendOut : Tx txLevel → UTxO → ℙ TxOut
   spendOut tx utxo = range (utxo ∣ SpendInputsOf tx)
