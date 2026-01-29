@@ -5481,12 +5481,12 @@
   <a href="#agda-facing-addendum-what-is-available-to-a-transaction" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Agda-facing addendum: what is available to a transaction?
+        Agda-facing Addendum: what is available to a transaction?
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Agda-facing addendum: what is available to a transaction?">
+    <nav class="md-nav" aria-label="Agda-facing Addendum: what is available to a transaction?">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -12281,12 +12281,12 @@
   <a href="#agda-facing-addendum-what-is-available-to-a-transaction" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Agda-facing addendum: what is available to a transaction?
+        Agda-facing Addendum: what is available to a transaction?
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Agda-facing addendum: what is available to a transaction?">
+    <nav class="md-nav" aria-label="Agda-facing Addendum: what is available to a transaction?">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -12566,13 +12566,10 @@ can evaluate during transaction validation to decide whether some action is perm
 </ul>
 <p>The Shelley ledger defines a "simple language" for multi-signature–style
   conditions. See the <code>Cardano.Ledger.Shelley.Scripts</code> module documentation and the
-  ledger glossary entry for <em>Multisig</em>.<br />
-<a href="https://cardano-ledger.cardano.intersectmbo.org/cardano-ledger-shelley/Cardano-Ledger-Shelley-Scripts.html">https://cardano-ledger.cardano.intersectmbo.org/cardano-ledger-shelley/Cardano-Ledger-Shelley-Scripts.html</a>
-  <a href="https://cardano-ledger.readthedocs.io/en/latest/explanations/glossary.html">https://cardano-ledger.readthedocs.io/en/latest/explanations/glossary.html</a></p>
+  ledger glossary entry for <em>Multisig</em>. <sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup>,<sup id="fnref:2"><a class="footnote-ref" href="#fn:2">2</a></sup></p>
 <ul>
 <li><strong>Plutus scripts</strong> (smart contracts). Plutus V1 is described as the initial ledger
-   language version, enabled at the Alonzo hard fork; later versions extend this.<br />
-<a href="https://plutus.cardano.intersectmbo.org/docs/working-with-scripts/ledger-language-version">https://plutus.cardano.intersectmbo.org/docs/working-with-scripts/ledger-language-version</a></li>
+   language version, enabled at the Alonzo hard fork; later versions extend this.<sup id="fnref2:3"><a class="footnote-ref" href="#fn:3">3</a></sup></li>
 </ul>
 <p>These families coexist: the ledger can require key witnesses, native scripts, and/or
 Plutus scripts depending on which <em>credentials</em> (key hashes vs script hashes) appear
@@ -12582,8 +12579,7 @@ actions, etc.</p>
 <p>Ledger rules don't run "all scripts;" they run scripts for specific <em>purposes</em>
 (sometimes called <em>script roles</em>).  For Plutus V1, for example, the documentation
 describes purposes such as spending, minting, certifying, and rewarding, and explains
-that the arguments a script receives depend on its purpose.<br />
-<a href="https://plutus.cardano.intersectmbo.org/docs/working-with-scripts/ledger-language-version">https://plutus.cardano.intersectmbo.org/docs/working-with-scripts/ledger-language-version</a></p>
+that the arguments a script receives depend on its purpose.<sup id="fnref:3"><a class="footnote-ref" href="#fn:3">3</a></sup></p>
 <p>A transaction must normally <em>witness</em> the scripts it needs.</p>
 <ul>
 <li>If a transaction spends an output protected by a script credential, the
@@ -12599,8 +12595,7 @@ depending on the era).</p>
 <p>A reference input points to a UTxO entry <em>without consuming it</em>; it "looks at" an
 existing output, but does not spend it.  <a href="https://cips.cardano.org/cip/CIP-0031">CIP-31</a> summarizes this as allowing
 access to information stored on-chain without the churn of spending and recreating
-UTxOs.<br />
-<a href="https://cips.cardano.org/cip/CIP-0031">https://cips.cardano.org/cip/CIP-0031</a></p>
+UTxOs.</p>
 <p>Intuitively,</p>
 <ul>
 <li><strong>Spending input</strong> consumes the referenced output; its value contributes to
@@ -12616,8 +12611,7 @@ reference inputs.</p>
 <p><a href="https://cips.cardano.org/cip/CIP-0033">CIP-33</a> extends transaction outputs so an output may <em>carry an actual script</em> (a
 "reference script").  Then, instead of including the full script in every transaction
 that needs it, a transaction can reference an output that already contains the
-script.<br />
-<a href="https://cips.cardano.org/cip/CIP-0033">https://cips.cardano.org/cip/CIP-0033</a></p>
+script.</p>
 <p>In other words:</p>
 <ul>
 <li>A <em>reference script</em> is a script stored inside an output.</li>
@@ -12634,7 +12628,7 @@ to be explicit:</p>
 <li><strong>Outputs referenced by reference inputs</strong> ("referenced outputs"): these are the
     UTxO entries pointed to by a transaction's reference inputs (<a href="https://cips.cardano.org/cip/CIP-0031">CIP-31</a>).</li>
 <li><strong>Outputs that carry a reference script</strong> ("reference-script outputs"): these are
-    outputs whose optional script field is populated (CIP-33).</li>
+    outputs whose optional script field is populated (<a href="https://cips.cardano.org/cip/CIP-0033">CIP-33</a>).</li>
 </ol>
 <p>An output can be one, both, or neither.</p>
 <ul>
@@ -12657,8 +12651,7 @@ sometimes also scripts available from spent outputs or the witness set).</p>
 <em>which UTxO view</em> a subtransaction is allowed to inspect.  <a href="https://cips.cardano.org/cip/CIP-0118">CIP-118</a> discusses
 batch composition and validation, and (among other goals) aims to avoid dangerous
 intra-batch interactions (e.g., creating temporary states that could confuse script
-validation).<br />
-<a href="https://cips.cardano.org/cip/CIP-0118">https://cips.cardano.org/cip/CIP-0118</a></p>
+validation).  </p>
 <p>When formalizing batch semantics, it is therefore important to document:</p>
 <ul>
 <li>which inputs (spending vs reference) must come from the initial pre-batch
@@ -12674,7 +12667,7 @@ transaction", and thus how we should interpret and enforce bounds like
 "guard") whose intent is to decouple some validation logic from specific ledger
 actions.</p>
 <hr />
-<h2 id="agda-facing-addendum-what-is-available-to-a-transaction">Agda-facing addendum: what is available to a transaction?<a class="headerlink" href="#agda-facing-addendum-what-is-available-to-a-transaction" title="Permanent link">&para;</a></h2>
+<h2 id="agda-facing-addendum-what-is-available-to-a-transaction">Agda-facing Addendum: what is available to a transaction?<a class="headerlink" href="#agda-facing-addendum-what-is-available-to-a-transaction" title="Permanent link">&para;</a></h2>
 <p>This addendum is meant to connect the ledger/CIP terminology (reference inputs,
 reference scripts, etc.) to the <em>auxiliary functions</em> we use in the
 <code>TransactionStructure</code> type, and to make explicit the exact UTxO helper that
@@ -12858,11 +12851,25 @@ applies to:</p>
 <h3 id="suggested-naming-conventions-to-avoid-ambiguity">Suggested naming conventions (to avoid ambiguity)<a class="headerlink" href="#suggested-naming-conventions-to-avoid-ambiguity" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Prefer <strong><code>referencedOuts</code></strong> (or <code>refInputOuts</code>) over <code>referenceOut</code>.</li>
-<li>Reserve "reference script" for the CIP-33 meaning: a script stored inside an output.</li>
+<li>Reserve "reference script" for the <a href="https://cips.cardano.org/cip/CIP-0033">CIP-33</a> meaning: a script stored inside an output.</li>
 <li>Use suffixes like <code>₀</code> / <code>ᵇ</code> when splitting "initial UTxO" vs "batch outputs".</li>
 </ul>
 <p>These conventions make it easier to read our helper definitions and to spot
 accidental mixing of UTxO snapshots when refactoring.</p>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:1">
+<p>https://cardano-ledger.cardano.intersectmbo.org/cardano-ledger-shelley/Cardano-Ledger-Shelley-Scripts.html&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:2">
+<p>https://cardano-ledger.readthedocs.io/en/latest/explanations/glossary.html&#160;<a class="footnote-backref" href="#fnref:2" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+<li id="fn:3">
+<p>https://plutus.cardano.intersectmbo.org/docs/working-with-scripts/ledger-language-version&#160;<a class="footnote-backref" href="#fnref:3" title="Jump back to footnote 3 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:3" title="Jump back to footnote 3 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
 
 
 
