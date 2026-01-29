@@ -276,12 +276,12 @@ correspondence between evaluating phase-2 scripts and the `isValid` flag in the
 top-level transaction.
 
 ```agda
-data _⊢_⇀⦇_,UTXOS⦈_ : UTxOEnv → UTxOState → TopLevelTx → UTxOState → Type where
+data _⊢_⇀⦇_,UTXOS⦈_ : UTxOEnv → ⊤ → TopLevelTx → ⊤ → Type where
 
   UTXOS :
     ∙ evalP2Scripts (allP2ScriptsWithContext Γ txTop) ≡ IsValidFlagOf txTop
       ────────────────────────────────
-      Γ ⊢ s ⇀⦇ txTop ,UTXOS⦈ s
+      Γ ⊢ tt ⇀⦇ txTop ,UTXOS⦈ tt
 ```
 
 ## Helper functions
@@ -404,37 +404,6 @@ allMintedCoin txTop = foldl (λ acc txSub → acc + coin (MintedValueOf txSub))
     -- To maintain the total Ada supply invariant, this must satisfy
     -- `batchMintedCoin ≡ 0`; this is the generalization of Conway's
     -- `coin mint ≡ 0`.
-
--- UTxO change in case Tx.isValid ≡ true. case
-utxo✓ : UTxO → Tx ℓ → UTxO
-utxo✓ utxo tx = (utxo ∣ SpendInputsOf tx ᶜ) ∪ˡ outs tx
-
--- Donations change in case Tx.isValid ≡ true.
-donations✓ : Donations → Tx ℓ → Donations
-donations✓ dons tx = dons + DonationsOf tx
-
--- Fees change in case Tx.isValid ≡ true.
-fees✓ : Fees → Tx ℓ → Fees
-fees✓ {TxLevelSub} fees _  = fees
-fees✓ {TxLevelTop} fees tx = fees + TxFeesOf tx
-
--- UTxO change in case Tx.isValid ≡ false.
-utxo× : UTxO → Tx ℓ → UTxO
-utxo× {TxLevelSub} utxo _ = utxo
-utxo× {TxLevelTop} utxo t = utxo ∣ (CollateralInputsOf t) ᶜ
-
--- Fees change in case Tx.isValid ≡ false.
-fees× : Fees → UTxO → Tx ℓ → Fees
-fees× {TxLevelSub} fees _     _ = fees
-fees× {TxLevelTop} fees utxo tx = fees + coin (balance (utxo ∣ CollateralInputsOf tx))
-
--- UTxOState change in case Tx.isValid ≡ true.
-scripts✓ : UTxOState → Tx ℓ → UTxOState
-scripts✓ s t = ⟦ utxo✓ (UTxOOf s) t , fees✓ (FeesOf s) t , donations✓ (DonationsOf s) t ⟧
-
--- UTxOState change in case Tx.isValid ≡ false.
-scripts× : UTxOState → Tx ℓ → UTxOState
-scripts× s t = ⟦ utxo× (UTxOOf s) t , fees× (FeesOf s) (UTxOOf s) t , DonationsOf s ⟧
 ```
 
 <!--
@@ -468,14 +437,31 @@ This is achieved by the following precondition in the `UTXO`.{AgdaDatatype} and
     top-level `txGuards`{.AgdaField} set.
 
 ```agda
+private
+  variable
+    utxo : UTxO
+    fees : Fees
+    donations : Donations
+
 data _⊢_⇀⦇_,SUBUTXO⦈_ : SubUTxOEnv → UTxOState → SubLevelTx → UTxOState → Type where
 
-  SUBUTXO :
+  SUBUTXO-isTopLevelValid-✓ :
+
+    ∙ IsTopLevelValidFlagOf Γ ≡ true
     ∙ SpendInputsOf txSub ≢ ∅
     ∙ inInterval (SlotOf Γ) (ValidIntervalOf txSub)
     ∙ MaybeNetworkIdOf txSub ~ just NetworkId
       ────────────────────────────────
-      Γ ⊢ s ⇀⦇ txSub ,SUBUTXO⦈ s'
+      Γ ⊢ ⟦ utxo , fees , donations ⟧ ⇀⦇ txSub ,SUBUTXO⦈ ⟦ (utxo ∣ SpendInputsOf txSub ᶜ) ∪ˡ outs txSub , fees , donations + DonationsOf txSub ⟧
+
+  SUBUTXO-isTopLevelValid-× :
+
+    ∙ IsTopLevelValidFlagOf Γ ≡ true
+    ∙ SpendInputsOf txSub ≢ ∅
+    ∙ inInterval (SlotOf Γ) (ValidIntervalOf txSub)
+    ∙ MaybeNetworkIdOf txSub ~ just NetworkId
+      ────────────────────────────────
+      Γ ⊢ ⟦ utxo , fees , donations ⟧ ⇀⦇ txSub ,SUBUTXO⦈ ⟦ utxo , fees , donations ⟧
 
 data _⊢_⇀⦇_,UTXO⦈_ : UTxOEnv → UTxOState → TopLevelTx → UTxOState → Type where
 
@@ -485,7 +471,6 @@ data _⊢_⇀⦇_,UTXO⦈_ : UTxOEnv → UTxOState → TopLevelTx → UTxOState 
 
          pp        = PParamsOf Γ
          utxo₀     = UTxOOf Γ
-         utxo      = UTxOOf s
          overhead  = 160
 
          txOutsʰ : Ix ⇀ TxOutʰ
@@ -516,9 +501,9 @@ data _⊢_⇀⦇_,UTXO⦈_ : UTxOEnv → UTxOState → TopLevelTx → UTxOState 
     ∙ ∀[ a ∈ dom (WithdrawalsOf txTop)] NetworkIdOf a ≡ NetworkId
     ∙ MaybeNetworkIdOf txTop ~ just NetworkId
     ∙ CurrentTreasuryOf txTop  ~ just (TreasuryOf Γ)
-    ∙ Γ ⊢ s ⇀⦇ txTop ,UTXOS⦈ s'
+    ∙ Γ ⊢ _ ⇀⦇ txTop ,UTXOS⦈ _
       ────────────────────────────────
-      Γ ⊢ s ⇀⦇ txTop ,UTXO⦈ scripts✓ s' txTop
+      Γ ⊢ ⟦ utxo , fees , donations ⟧ ⇀⦇ txTop ,UTXO⦈ ⟦ (utxo ∣ SpendInputsOf txTop ᶜ) ∪ˡ outs txTop , fees + TxFeesOf txTop , donations + DonationsOf txTop ⟧
 
   UTXO-isValid-× :
 
@@ -557,9 +542,9 @@ data _⊢_⇀⦇_,UTXO⦈_ : UTxOEnv → UTxOState → TopLevelTx → UTxOState 
     ∙ ∀[ a ∈ dom (WithdrawalsOf txTop)] NetworkIdOf a ≡ NetworkId
     ∙ MaybeNetworkIdOf txTop ~ just NetworkId
     ∙ CurrentTreasuryOf txTop  ~ just (TreasuryOf Γ)
-    ∙ Γ ⊢ s ⇀⦇ txTop ,UTXOS⦈ s'
+    ∙ Γ ⊢ _ ⇀⦇ txTop ,UTXOS⦈ _
       ────────────────────────────────
-      Γ ⊢ s ⇀⦇ txTop ,UTXO⦈ scripts× s' txTop
+      Γ ⊢ ⟦ utxo , fees , donations ⟧ ⇀⦇ txTop ,UTXO⦈ ⟦ utxo ∣ (CollateralInputsOf txTop) ᶜ , fees + cbalance (utxo ∣ CollateralInputsOf txTop) , donations ⟧
 ```
 
 [1]: https://github.com/cardano-foundation/CIPs/tree/master/CIP-0118#changes-to-transaction-validity "CIP-0118 | Changes to Transaction Validity"
