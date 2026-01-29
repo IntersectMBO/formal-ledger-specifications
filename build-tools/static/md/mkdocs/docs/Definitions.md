@@ -99,13 +99,10 @@ In Cardano today, there are two main families of scripts:
 
    The Shelley ledger defines a "simple language" for multi-signature–style
   conditions. See the `Cardano.Ledger.Shelley.Scripts` module documentation and the
-  ledger glossary entry for *Multisig*.  
-  <https://cardano-ledger.cardano.intersectmbo.org/cardano-ledger-shelley/Cardano-Ledger-Shelley-Scripts.html>
-  <https://cardano-ledger.readthedocs.io/en/latest/explanations/glossary.html>
+  ledger glossary entry for *Multisig*. [^1],[^2]
 
 +  **Plutus scripts** (smart contracts). Plutus V1 is described as the initial ledger
-   language version, enabled at the Alonzo hard fork; later versions extend this.  
-  <https://plutus.cardano.intersectmbo.org/docs/working-with-scripts/ledger-language-version>
+   language version, enabled at the Alonzo hard fork; later versions extend this.[^3]
 
 These families coexist: the ledger can require key witnesses, native scripts, and/or
 Plutus scripts depending on which *credentials* (key hashes vs script hashes) appear
@@ -118,8 +115,7 @@ actions, etc.
 Ledger rules don't run "all scripts;" they run scripts for specific *purposes*
 (sometimes called *script roles*).  For Plutus V1, for example, the documentation
 describes purposes such as spending, minting, certifying, and rewarding, and explains
-that the arguments a script receives depend on its purpose.  
-<https://plutus.cardano.intersectmbo.org/docs/working-with-scripts/ledger-language-version>
+that the arguments a script receives depend on its purpose.[^3]
 
 A transaction must normally *witness* the scripts it needs.
 
@@ -140,8 +136,7 @@ depending on the era).
 A reference input points to a UTxO entry *without consuming it*; it "looks at" an
 existing output, but does not spend it.  [CIP-31][] summarizes this as allowing
 access to information stored on-chain without the churn of spending and recreating
-UTxOs.  
-<https://cips.cardano.org/cip/CIP-0031>
+UTxOs.
 
 Intuitively,
 
@@ -162,8 +157,7 @@ reference inputs.
 [CIP-33][] extends transaction outputs so an output may *carry an actual script* (a
 "reference script").  Then, instead of including the full script in every transaction
 that needs it, a transaction can reference an output that already contains the
-script.  
-<https://cips.cardano.org/cip/CIP-0033>
+script.
 
 In other words:
 
@@ -184,7 +178,7 @@ to be explicit:
 1.  **Outputs referenced by reference inputs** ("referenced outputs"): these are the
     UTxO entries pointed to by a transaction's reference inputs ([CIP-31][]).
 2.  **Outputs that carry a reference script** ("reference-script outputs"): these are
-    outputs whose optional script field is populated (CIP-33).
+    outputs whose optional script field is populated ([CIP-33][]).
 
 An output can be one, both, or neither.
 
@@ -215,7 +209,6 @@ The Dijkstra era (nested transactions / batches) introduces extra subtlety about
 batch composition and validation, and (among other goals) aims to avoid dangerous
 intra-batch interactions (e.g., creating temporary states that could confuse script
 validation).  
-<https://cips.cardano.org/cip/CIP-0118>
 
 When formalizing batch semantics, it is therefore important to document:
 
@@ -238,7 +231,7 @@ actions.
 ---
 
 
-## Agda-facing addendum: what is available to a transaction?
+## Agda-facing Addendum: what is available to a transaction?
 
 This addendum is meant to connect the ledger/CIP terminology (reference inputs,
 reference scripts, etc.) to the *auxiliary functions* we use in the
@@ -481,14 +474,12 @@ applies to:
 ### Suggested naming conventions (to avoid ambiguity)
 
 +  Prefer **`referencedOuts`** (or `refInputOuts`) over `referenceOut`.
-+  Reserve "reference script" for the CIP-33 meaning: a script stored inside an output.
++  Reserve "reference script" for the [CIP-33][] meaning: a script stored inside an output.
 +  Use suffixes like `₀` / `ᵇ` when splitting "initial UTxO" vs "batch outputs".
 
 These conventions make it easier to read our helper definitions and to spot
 accidental mixing of UTxO snapshots when refactoring.
 
-
-[CIP-31]: https://cips.cardano.org/cip/CIP-0031
-[CIP-33]: https://cips.cardano.org/cip/CIP-0033
-[CIP-112]: https://cips.cardano.org/cip/CIP-0112
-[CIP-118]: https://cips.cardano.org/cip/CIP-0118
+[^1]: https://cardano-ledger.cardano.intersectmbo.org/cardano-ledger-shelley/Cardano-Ledger-Shelley-Scripts.html
+[^2]: https://cardano-ledger.readthedocs.io/en/latest/explanations/glossary.html
+[^3]: https://plutus.cardano.intersectmbo.org/docs/working-with-scripts/ledger-language-version
