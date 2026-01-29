@@ -26,6 +26,10 @@
 [CHAIN-PParamsWellFormed-inv]: Ledger.Conway.Specification.Chain.Properties.PParamsWellFormed.md#clm:pp-wellFormed-inv
 [Chain.Properties.PParamsWellFormed]: Ledger.Conway.Specification.Chain.Properties.PParamsWellFormed.md
 [Chain.Properties.GovDepsMatch]: Ledger.Conway.Specification.Chain.Properties.GovDepsMatch.md
+[CIP-31]: https://cips.cardano.org/cip/CIP-0031
+[CIP-33]: https://cips.cardano.org/cip/CIP-0033
+[CIP-112]: https://cips.cardano.org/cip/CIP-0112
+[CIP-118]: https://cips.cardano.org/cip/CIP-0118
 [CIPs]: https://github.com/cardano-foundation/CIPs
 [DELEG]: Ledger.Conway.Specification.Certs.md#auxiliary-deleg-transition-system
 [ENACT]: Ledger.Conway.Specification.Enact.md#sec:the-enact-transition-system
