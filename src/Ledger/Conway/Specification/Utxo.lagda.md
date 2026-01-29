@@ -514,7 +514,13 @@ unquoteDecl Scripts-No-premises  = genPremises Scripts-No-premises  (quote Scrip
 
 This section ties all the pieces of the UTXO rule together.
 
-(The symbol `≡?`{.AgdaDatatype} is explained in Section [Notation][].)
+One of the checks is ensuring that the validity interval bounds are translatable
+to `UTCTime`{.AgdaBound}. This is necessary to ensure that
+`transVITime`{.AgdaFunction} can build a `POSIXTimeRange` from it.
+We only check for translatability of the upper bound because the lower bound is
+in the past and therefore guaranteed to be translatable.
+
+The symbol `≡?`{.AgdaDatatype} is explained in Section [Notation][].
 
 ```agda
 data _⊢_⇀⦇_,UTXO⦈_ where
