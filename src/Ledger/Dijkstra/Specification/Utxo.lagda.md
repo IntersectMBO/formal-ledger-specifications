@@ -562,8 +562,7 @@ data _⊢_⇀⦇_,UTXO⦈_ : UTxOEnv → UTxOState → TopLevelTx → UTxOState 
     ∙ minfee pp txTop utxo ≤ TxFeesOf txTop
     ∙ consumed Γ ≡ produced
     ∙ SizeOf txTop ≤ maxTxSize pp
-(??)    -- ∙ refScriptsSize utxo tx ≤ pp .maxRefScriptSizePerTx     -- TODO: Dijkstra analog
-(??)
+    ∙ refScriptsSize txTop utxo₀ ≤ pp .maxRefScriptSizePerTx
     ∙ allSpendInputs txTop ⊆ dom utxo₀                          -- (1)
     ∙ noOverlappingSpendInputs txTop                            -- (2)
     ∙ allReferenceInputs txTop ⊆ dom (utxoView utxo₀ txTop)     -- (3)

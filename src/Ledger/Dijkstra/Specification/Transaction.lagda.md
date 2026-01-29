@@ -592,11 +592,6 @@ In the Dijkstra era, we need to talk about which UTxO a helper is parameterised 
                        ∪ referenceData tx utxo
                        ∪ txOutData tx
 
-  getAllReferenceScripts : TopLevelTx → UTxO → ℙ Script
-  getAllReferenceScripts txTop utxo =
-    referenceScripts txTop utxo
-    ∪ concatMapˢ (λ tx → referenceScripts tx utxo) (fromList (SubTransactionsOf txTop))
-
   getAllScripts : TopLevelTx → UTxO →  ℙ Script
   getAllScripts txTop utxo =
     getTxScripts txTop utxo
