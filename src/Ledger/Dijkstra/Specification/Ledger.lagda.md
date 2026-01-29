@@ -143,7 +143,7 @@ instance
 -->
 
 
--- ## Helper Functions
+## Helper Functions
 
 ```agda
 txgov : ∀ {ℓ} → TxBody ℓ → List (GovVote ⊎ GovProposal)
@@ -181,7 +181,7 @@ calculateDepositsChange certState certState' = finalCoin - initialCoin
 
 ```
 
--- ## <span class="AgdaDatatype">LEDGER</span> Transition System
+## <span class="AgdaDatatype">LEDGER</span> Transition System
 
 <!--
 ```agda
@@ -208,12 +208,12 @@ private variable
 In Dijkstra we compute the set of "global" scripts and data once at the
 top-level in the LEDGER{.AgdaDatatype} rule. This is threaded through
 `SUBLEDGER`{.AgdaDatatype} to UTXOW{.AgdaDatatype}/SUBUTXOW{.AgdaDatatype} via
-UTxOEnv{.AgdaDatatype}/SubLedgerEnv{.AgdaDatatype}.
+UTxOEnv{.AgdaDatatype}/SubUTxOEnv{.AgdaDatatype}.
 
-  -  allScripts : ℙ P1Script × ℙ P2Script is the union of all scripts relevant
-    to the entire batch: scripts referenced/witnessed by the top-level
-    transaction plus scripts referenced/witnessed by every subtransaction
-    (computed by `getAllScripts`).
+  -  allScripts : ℙ Script is the union of all scripts relevant to the entire
+    batch: scripts referenced/witnessed by the top-level transaction plus
+    scripts referenced/witnessed by every subtransaction (computed by
+    `getAllScripts`).
 
   - allData : DataHash ⇀ Datumis the collection of all data relevant to the
     entire batch: all datums appearing in witnesses and in any (sub)transaction
@@ -270,12 +270,9 @@ data _⊢_⇀⦇_,SUBLEDGER⦈_ : SubLedgerEnv → LState → SubLevelTx → LSt
 
   SUBLEDGER-V :
       ∙ isTopLevelValid ≡ true
-        -- Subtx UTXOW (phase-1 + phase-2 checks for that subtx, using shared pools):
       ∙ ⟦ slot , pp , treasury , utxo₀ , isTopLevelValid , allScripts , allData ⟧ ⊢ utxoState₀ ⇀⦇ stx ,SUBUTXOW⦈ utxoState₁
-        -- Subtx CERTS (certificate state updates, incl. deposits tracked in CertState):
       ∙ ⟦ epoch slot , pp , ListOfGovVotesOf stx , WithdrawalsOf stx , allColdCreds govState₀ enactState ⟧ ⊢ certState₀ ⇀⦇ DCertsOf stx ,CERTS⦈ certState₁
-        -- Subtx GOVS (governance updates, parameterized by the post-subtx CERTS state):
-      ∙ ⟦ TxIdOf stx , epoch slot , pp , ppolicy , enactState , certState₁ , dom (RewardsOf certState₁) ⟧ ⊢ rmOrphanDRepVotes certState₁ govState₀ ⇀⦇ GovProposals+Votes stx ,GOVS⦈ govState₁
+      ∙ ⟦ TxIdOf stx , epoch slot , pp , ppolicy , enactState , certState₁ , dom (RewardsOf certState₁) ⟧ ⊢ govState₀ ⇀⦇ GovProposals+Votes stx ,GOVS⦈ govState₁
         ────────────────────────────────
         ⟦ slot , ppolicy , pp , enactState , treasury , utxo₀ , isTopLevelValid , allScripts , allData ⟧ ⊢ ⟦ utxoState₀ , govState₀ , certState₀ ⟧ ⇀⦇ stx ,SUBLEDGER⦈ ⟦ utxoState₁ , govState₁ , certState₁ ⟧
 
@@ -292,8 +289,7 @@ _⊢_⇀⦇_,SUBLEDGERS⦈_ = ReflexiveTransitiveClosure {sts = _⊢_⇀⦇_,SUB
 data _⊢_⇀⦇_,LEDGER⦈_ : LedgerEnv → LState → TopLevelTx → LState → Type where
 
   LEDGER-V :
-    let  -- Pre-batch snapshot of UTxO
-         utxo₀ : UTxO
+    let  utxo₀ : UTxO
          utxo₀ = UTxOOf utxoState₀
 
          allScripts : ℙ Script
@@ -302,23 +298,16 @@ data _⊢_⇀⦇_,LEDGER⦈_ : LedgerEnv → LState → TopLevelTx → LState �
          allData : DataHash ⇀ Datum
          allData = setToMap (mapˢ < hash , id > (getAllData tx utxo₀))
 
-         -- Net deposit change for entire batch computed with certStates that are
-         -- related by a composition of subtransaction CERTS and top-level CERTS.
          depositsChange : ℤ
          depositsChange = calculateDepositsChange certState₀ certState₂
-
     in
       ∙ IsValidFlagOf tx ≡ true
-      -- Assume SUBLEDGERS relation between initial ledger state and intermediate ledger state:
       ∙ ⟦ slot , ppolicy , pp , enactState , treasury , utxo₀ , IsValidFlagOf tx , allScripts , allData ⟧ ⊢ ⟦ utxoState₀ , govState₀ , certState₀ ⟧ ⇀⦇ SubTransactionsOf tx ,SUBLEDGERS⦈ ⟦ utxoState₁ , govState₁ , certState₁ ⟧
-      -- Assume CERTS relation between intermediate CertState and final CertState:
       ∙ ⟦ epoch slot , pp , ListOfGovVotesOf tx , WithdrawalsOf tx , allColdCreds govState₁ enactState ⟧ ⊢ certState₁ ⇀⦇ DCertsOf tx ,CERTS⦈ certState₂
-      -- Assume GOVS relation between intermediate GovState (parameterized by final CertState) and final GovState:
-      ∙ ⟦ TxIdOf tx , epoch slot , pp , ppolicy , enactState , certState₂ , dom (RewardsOf certState₂) ⟧ ⊢ rmOrphanDRepVotes certState₂ govState₁ ⇀⦇ GovProposals+Votes tx ,GOVS⦈ govState₂
-      -- Assume UTXOW relation between intermediate UTxOState and final UTxOState (with UTxOEnv incl. deposit changes):
+      ∙ ⟦ TxIdOf tx , epoch slot , pp , ppolicy , enactState , certState₂ , dom (RewardsOf certState₂) ⟧ ⊢ govState₁ ⇀⦇ GovProposals+Votes tx ,GOVS⦈ govState₂
       ∙ ⟦ slot , pp , treasury , utxo₀ , depositsChange , allScripts , allData ⟧ ⊢ utxoState₁ ⇀⦇ tx ,UTXOW⦈ utxoState₂
         ────────────────────────────────
-        ⟦ slot , ppolicy , pp , enactState , treasury ⟧ ⊢ ⟦ utxoState₀ , govState₀ , certState₀ ⟧ ⇀⦇ tx ,LEDGER⦈ ⟦ utxoState₂ , govState₂ , certState₂ ⟧
+        ⟦ slot , ppolicy , pp , enactState , treasury ⟧ ⊢ ⟦ utxoState₀ , govState₀ , certState₀ ⟧ ⇀⦇ tx ,LEDGER⦈ ⟦ utxoState₂ , rmOrphanDRepVotes certState₂ govState₂ , certState₂ ⟧
 
 
   LEDGER-I :
@@ -332,9 +321,6 @@ data _⊢_⇀⦇_,LEDGER⦈_ : LedgerEnv → LState → TopLevelTx → LState �
          allData = setToMap (mapˢ < hash , id > (getAllData tx utxo₀))
     in
       ∙ IsValidFlagOf tx ≡ false
-
-      -- Even if invalid, we still compute the pools once and run SUBLEDGERS
-      -- in identity/no-op mode by SUBLEDGER-I.
       ∙ ⟦ slot , ppolicy , pp , enactState , treasury , utxo₀ , IsValidFlagOf tx , allScripts , allData ⟧ ⊢ ⟦ utxoState₀ , govState₀ , certState₀ ⟧ ⇀⦇ SubTransactionsOf tx ,SUBLEDGERS⦈ ⟦ utxoState₀ , govState₀ , certState₀ ⟧
       ∙ ⟦ slot , pp , treasury , utxo₀ , 0ℤ , allScripts , allData ⟧ ⊢ utxoState₀ ⇀⦇ tx ,UTXOW⦈ utxoState₁
         ────────────────────────────────
