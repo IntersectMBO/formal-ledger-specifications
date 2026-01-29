@@ -1,0 +1,23 @@
+<!DOCTYPE HTML>
+<html><head><meta charset="utf-8"><title>Interface.TypeClasses.HasSubtract.Instances</title><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css"><link rel="stylesheet" href="Agda.css"><script src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/contrib/auto-render.min.js"></script><script src="AgdaKaTeX.js" defer=""></script></head><body><pre class="Agda">
+<a id="2" class="Symbol">{-#</a> <a id="6" class="Keyword">OPTIONS</a> <a id="14" class="Pragma">--safe</a> <a id="21" class="Symbol">#-}</a>
+
+<a id="26" class="Keyword">module</a> <a id="33" href="Interface.TypeClasses.HasSubtract.Instances.html" class="Module">Interface.TypeClasses.HasSubtract.Instances</a> <a id="77" class="Keyword">where</a>
+
+<a id="84" class="Keyword">open</a> <a id="89" class="Keyword">import</a> <a id="96" href="Interface.TypeClasses.HasSubtract.html" class="Module">Interface.TypeClasses.HasSubtract</a>
+
+<a id="131" class="Keyword">open</a> <a id="136" class="Keyword">import</a> <a id="143" href="Data.Integer.html" class="Module">Data.Integer</a> <a id="156" class="Symbol">as</a> <a id="159" class="Module">ℤ</a> <a id="161" class="Keyword">using</a> <a id="167" class="Symbol">(</a><a id="168" href="Agda.Builtin.Int.html#245" class="Datatype">ℤ</a><a id="169" class="Symbol">)</a>
+<a id="171" class="Keyword">open</a> <a id="176" class="Keyword">import</a> <a id="183" href="Data.Nat.html" class="Module">Data.Nat</a>     <a id="196" class="Symbol">as</a> <a id="199" class="Module">ℕ</a> <a id="201" class="Keyword">using</a> <a id="207" class="Symbol">(</a><a id="208" href="Agda.Builtin.Nat.html#203" class="Datatype">ℕ</a><a id="209" class="Symbol">)</a>
+
+
+<a id="213" class="Keyword">instance</a>
+  <a id="HasSubtract-ℕ"></a><a id="224" href="Interface.TypeClasses.HasSubtract.Instances.html#224" class="Function">HasSubtract-ℕ</a> <a id="238" class="Symbol">:</a> <a id="240" href="Interface.TypeClasses.HasSubtract.html#162" class="Record">HasSubtract</a> <a id="252" href="Agda.Builtin.Nat.html#203" class="Datatype">ℕ</a> <a id="254" href="Agda.Builtin.Nat.html#203" class="Datatype">ℕ</a>
+  <a id="258" href="Interface.TypeClasses.HasSubtract.Instances.html#224" class="Function">HasSubtract-ℕ</a> <a id="272" class="Symbol">.</a><a id="273" href="Interface.TypeClasses.HasSubtract.html#223" class="Field Operator">_-_</a> <a id="277" class="Symbol">=</a> <a id="279" href="Data.Nat.Base.html#4462" class="Primitive Operator">ℕ._∸_</a>
+
+  <a id="HasSubtract-ℤ"></a><a id="288" href="Interface.TypeClasses.HasSubtract.Instances.html#288" class="Function">HasSubtract-ℤ</a> <a id="302" class="Symbol">:</a> <a id="304" href="Interface.TypeClasses.HasSubtract.html#162" class="Record">HasSubtract</a> <a id="316" href="Agda.Builtin.Int.html#245" class="Datatype">ℤ</a> <a id="318" href="Agda.Builtin.Int.html#245" class="Datatype">ℤ</a>
+  <a id="322" href="Interface.TypeClasses.HasSubtract.Instances.html#288" class="Function">HasSubtract-ℤ</a> <a id="336" class="Symbol">.</a><a id="337" href="Interface.TypeClasses.HasSubtract.html#223" class="Field Operator">_-_</a> <a id="341" class="Symbol">=</a> <a id="343" href="Data.Integer.Base.html#5245" class="Function Operator">ℤ._-_</a>
+
+  <a id="HasSubtract-ℕ-ℤ"></a><a id="352" href="Interface.TypeClasses.HasSubtract.Instances.html#352" class="Function">HasSubtract-ℕ-ℤ</a> <a id="368" class="Symbol">:</a> <a id="370" href="Interface.TypeClasses.HasSubtract.html#162" class="Record">HasSubtract</a> <a id="382" href="Agda.Builtin.Nat.html#203" class="Datatype">ℕ</a> <a id="384" href="Agda.Builtin.Int.html#245" class="Datatype">ℤ</a>
+  <a id="388" href="Interface.TypeClasses.HasSubtract.Instances.html#352" class="Function">HasSubtract-ℕ-ℤ</a> <a id="404" class="Symbol">.</a><a id="405" href="Interface.TypeClasses.HasSubtract.html#223" class="Field Operator">_-_</a> <a id="409" class="Symbol">=</a> <a id="411" href="Data.Integer.Base.html#4959" class="Function Operator">ℤ._⊖_</a>
+
+</pre></body></html>
