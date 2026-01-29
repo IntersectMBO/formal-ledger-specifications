@@ -167,7 +167,7 @@ allColdCreds govSt es =
   ccCreds (es .cc) ∪ concatMapˢ (λ (_ , st) → proposedCC (GovActionOf st)) (fromList govSt)
 
 calculateDepositsChange : CertState → CertState → ℤ
-calculateDepositsChange certState certState' = initialCoin - finalCoin
+calculateDepositsChange certState certState' = finalCoin - initialCoin
   where
     initialCoin : ℕ
     initialCoin = getCoin (DepositsOf (DStateOf certState))
