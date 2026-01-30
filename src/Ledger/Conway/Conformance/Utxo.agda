@@ -91,7 +91,7 @@ data _⊢_⇀⦇_,UTXO⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Type
     ∙ txIns ∩ refInputs ≡ ∅                  ∙ L.inInterval slot txVldt
     ∙ L.minfee pp utxo tx ≤ txFee            ∙ (txrdmrs ˢ ≢ ∅ → L.collateralCheck pp tx utxo)
     ∙ consumed pp s txb ≡ produced pp s txb  ∙ coin mint ≡ 0
-    ∙ (¬ (∅ᵐ ≡ᵐ txrdmrs) × nothing ≢ proj₂ txVldt →
+    ∙ (∅ᵐ ≢ᵐ txrdmrs × nothing ≢ proj₂ txVldt →
          map epochInfoSlotToUTCTime (proj₂ txVldt) ≢ nothing
       )
     ∙ txsize ≤ maxTxSize pp

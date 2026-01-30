@@ -545,7 +545,7 @@ data _⊢_⇀⦇_,UTXO⦈_ where
     ∙ txIns ∩ refInputs ≡ ∅                  ∙ inInterval slot txVldt
     ∙ minfee pp utxo tx ≤ txFee              ∙ (txrdmrs ˢ ≢ ∅ → collateralCheck pp tx utxo)
     ∙ consumed pp s txb ≡ produced pp s txb  ∙ coin mint ≡ 0
-    ∙ (¬ (∅ᵐ ≡ᵐ txrdmrs) × nothing ≢ proj₂ txVldt →
+    ∙ (∅ᵐ ≢ᵐ txrdmrs × nothing ≢ proj₂ txVldt →
          map epochInfoSlotToUTCTime (proj₂ txVldt) ≢ nothing
       )
     ∙ txsize ≤ maxTxSize pp
