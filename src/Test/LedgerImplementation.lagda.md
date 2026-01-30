@@ -41,7 +41,7 @@ instance
 module Implementation where
   Network          = ℕ
   SlotsPerEpochᶜ   = 100
-  ActiveSlotCoeff  = ℤ.1ℤ ℚ./ 20  
+  ActiveSlotCoeff  = ℤ.1ℤ ℚ./ 20
   StabilityWindowᶜ = 10
   RandomnessStabilisationWindowᶜ = 2
   MaxLovelaceSupplyᶜ = 1000000000000000000
@@ -168,6 +168,7 @@ open import Ledger.Conway.Conformance.Certs it hiding (StakePoolParams; DCert)
 SVTransactionStructure : TransactionStructure
 SVTransactionStructure = record
   { Implementation
+  ; POSIXTimeRange = ⊤
   ; epochStructure  = SVEpochStructure
   ; globalConstants = SVGlobalConstants
   ; adHashingScheme = it

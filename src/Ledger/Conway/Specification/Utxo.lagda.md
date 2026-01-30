@@ -514,7 +514,13 @@ unquoteDecl Scripts-No-premises  = genPremises Scripts-No-premises  (quote Scrip
 
 This section ties all the pieces of the UTXO rule together.
 
-(The symbol `≡?`{.AgdaDatatype} is explained in Section [Notation][].)
+One of the checks is ensuring that the validity interval bounds are translatable
+to `UTCTime`{.AgdaBound}. This is necessary to ensure that
+`transVITime`{.AgdaFunction} can build a `POSIXTimeRange` from it.
+We only check for translatability of the upper bound because the lower bound is
+in the past and therefore guaranteed to be translatable.
+
+The symbol `≡?`{.AgdaDatatype} is explained in Section [Notation][].
 
 ```agda
 data _⊢_⇀⦇_,UTXO⦈_ where
@@ -539,6 +545,9 @@ data _⊢_⇀⦇_,UTXO⦈_ where
     ∙ txIns ∩ refInputs ≡ ∅                  ∙ inInterval slot txVldt
     ∙ minfee pp utxo tx ≤ txFee              ∙ (txrdmrs ˢ ≢ ∅ → collateralCheck pp tx utxo)
     ∙ consumed pp s txb ≡ produced pp s txb  ∙ coin mint ≡ 0
+    ∙ (∅ᵐ ≢ᵐ txrdmrs × nothing ≢ proj₂ txVldt →
+         map epochInfoSlotToUTCTime (proj₂ txVldt) ≢ nothing
+      )
     ∙ txsize ≤ maxTxSize pp
     ∙ refScriptsSize utxo tx ≤ pp .maxRefScriptSizePerTx
     ∙ ∀[ (_ , txout) ∈ ∣ txOutsʰ ∣ ]
@@ -558,8 +567,8 @@ data _⊢_⇀⦇_,UTXO⦈_ where
 
 <!--
 ```agda
-pattern UTXO-inductive⋯ tx Γ s x y z w k l m c v j n o p q r t u h
-  = UTXO-inductive {Γ = Γ} {s = s} {tx = tx} (x , y , z , w , k , l , m , c , v , j , n , o , p , q , r , t , u , h)
+pattern UTXO-inductive⋯ tx Γ s x y z w k l m c d v j n o p q r t u h
+  = UTXO-inductive {Γ = Γ} {s = s} {tx = tx} (x , y , z , w , k , l , m , c , d , v , j , n , o , p , q , r , t , u , h)
 unquoteDecl UTXO-premises = genPremises UTXO-premises (quote UTXO-inductive)
 ```
 -->
@@ -573,4 +582,3 @@ unquoteDecl UTXO-premises = genPremises UTXO-premises (quote UTXO-inductive)
 label="shelley-ledger-spec"></span> Jared Corduan and Polina Vinogradova
 and Matthias Güdemann. *A Formal Specification of the Cardano Ledger*.
 2019.
-

@@ -60,9 +60,9 @@ UTXOpov : {Γ : UTxOEnv} {tx : Tx} {s s' : UTxOState}
 *Proof*.
 
 ```agda
-UTXOpov h' step@(UTXO-inductive⋯ _ Γ _ _ _ _ _ _ _ newBal noMintAda _ _ _ _ _ _ _ _ _ (Scripts-Yes (_ , _ , valid)))
+UTXOpov h' step@(UTXO-inductive⋯ _ Γ _ _ _ _ _ _ _ newBal noMintAda _ _ _ _ _ _ _ _ _ _ (Scripts-Yes (_ , _ , valid)))
   = pov-scripts step h' refl valid
 
-UTXOpov h' step@(UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ (Scripts-No (_ , invalid)))
+UTXOpov h' step@(UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ (Scripts-No (_ , invalid)))
   = pov-no-scripts step h' invalid
 ```

@@ -35,6 +35,7 @@ record TxInfo : Type where
         mint           : Value
         txCerts        : List DCert
         txWithdrawals  : Withdrawals
+        txPOSIXTimeVldt : POSIXTimeRange
         txVldt         : Maybe Slot × Maybe Slot
         vkKey          : ℙ KeyHash
         txdats         : ℙ Datum
