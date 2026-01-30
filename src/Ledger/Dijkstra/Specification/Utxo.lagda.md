@@ -56,8 +56,8 @@ totExUnits tx = ∑[ (_ , eu) ← RedeemersOf tx ] eu
 utxoEntrySizeWithoutVal : MemoryEstimate
 utxoEntrySizeWithoutVal = 8
 
-utxoEntrySize : TxOutʰ → MemoryEstimate
-utxoEntrySize o = utxoEntrySizeWithoutVal + size (getValueʰ o)
+utxoEntrySize : TxOut → MemoryEstimate
+utxoEntrySize (_ , v , _ , _) = utxoEntrySizeWithoutVal + size v
 
 open PParams
 ```
@@ -233,18 +233,16 @@ opaque
   outs tx = mapKeys (TxIdOf tx ,_) (TxOutsOf tx)
 
   balance : UTxO → Value
-  balance utxo = ∑[ x ← mapValues txOutHash utxo ] getValueʰ x
+  balance utxo = ∑ˢ[ v ← valuesOfUTxO utxo ] v
 
   cbalance : UTxO → Coin
   cbalance utxo = coin (balance utxo)
 
   refScriptsSize : Tx ℓ → UTxO → ℕ
-  refScriptsSize tx utxo =
-    ∑ˡ[ x ← setToList (referenceScripts tx utxo) ] scriptSize x
-
-  -- allRefScriptsSize : TopLevelTx → UTxO → ℕ
-  -- allRefScriptsSize txTop utxo =
-  --   ∑ˡ[ x ← setToList (getAllReferenceScripts txTop utxo) ] scriptSize x
+  refScriptsSize {TxLevelSub} txSub utxo =
+    ∑ˡ[ x ← setToList (referenceScripts txSub utxo) ] scriptSize x
+  refScriptsSize {TxLevelTop} txTop utxo =
+    ∑ˡ[ x ← setToList (allReferenceScripts txTop utxo) ] scriptSize x
 
   minfee : PParams → Tx ℓ → UTxO → Coin
   minfee pp tx utxo =  pp .a * (SizeOf tx) + pp .b
@@ -357,18 +355,6 @@ the following components:
 +  the datum-by-hash pool `DataPoolOf`{.AgdaField} `Γ`{.AgdaBound}.
 
 ```agda
--- union a list of sets
-concatMapˡ : {A B : Type} → (A → ℙ B) → List A → ℙ B
-concatMapˡ f as = proj₁ $ unions (fromList (map f as))
--- maybe move this to agda-sets or src-lib-exts
-
--- No-double-spend across the batch: the collection of all spending inputs must
--- be pairwise disjoint.  NOTE: using `batchSpendInputs` alone is insufficient,
--- because set union would silently erase duplicates.
-PairwiseDisjoint : List (ℙ TxIn) → Type
-PairwiseDisjoint []        = ⊤
-PairwiseDisjoint (X ∷ Xs)  = List.All (λ Y → disjoint X Y) Xs × PairwiseDisjoint Xs
-
 p2ScriptsWithContext : UTxOEnv → Tx ℓ → List (P2Script × List Data × ExUnits × CostModel)
 p2ScriptsWithContext Γ t =
   collectP2ScriptsWithContext (PParamsOf Γ) t
@@ -376,31 +362,6 @@ p2ScriptsWithContext Γ t =
                               (DataPoolOf Γ)    -- batch datum-by-hash pool
                               (ScriptPoolOf Γ)  -- batch script universe
 
-allDCerts : TopLevelTx → List DCert
-allDCerts t = DCertsOf t ++ concatMap DCertsOf (SubTransactionsOf t)
-
-allSpendInputs : TopLevelTx → ℙ TxIn
-allSpendInputs t = SpendInputsOf t ∪ concatMapˡ SpendInputsOf (SubTransactionsOf t)
-
--- Reference inputs are validated against the "batch output view," so they may
--- point to outputs produced in the same batch (including self-usable outputs).
-allReferenceInputs : TopLevelTx → ℙ TxIn
-allReferenceInputs t = ReferenceInputsOf t ∪ concatMapˡ ReferenceInputsOf (SubTransactionsOf t)
-
-allSpendInputsList : TopLevelTx → List (ℙ TxIn)
-allSpendInputsList t = SpendInputsOf t ∷ map SpendInputsOf (SubTransactionsOf t)
-
-noOverlappingSpendInputs : TopLevelTx → Type
-noOverlappingSpendInputs = PairwiseDisjoint ∘ allSpendInputsList
-
--- Total Ada minted across the entire batch (top-level tx + all sub-txs).
-allMintedCoin : TopLevelTx → Coin
-allMintedCoin txTop = foldl (λ acc txSub → acc + coin (MintedValueOf txSub))
-                            (coin (MintedValueOf txTop))
-                            (SubTransactionsOf txTop)
-    -- To maintain the total Ada supply invariant, this must satisfy
-    -- `batchMintedCoin ≡ 0`; this is the generalization of Conway's
-    -- `coin mint ≡ 0`.
 
 -- UTxO change in case Tx.isValid ≡ true. case
 utxo✓ : UTxO → Tx ℓ → UTxO
@@ -536,7 +497,6 @@ data _⊢_⇀⦇_,SUBUTXO⦈_ : SubUTxOEnv → UTxOState → SubLevelTx → UTxO
     ∙ SpendInputsOf txSub ≢ ∅
     ∙ SpendInputsOf txSub ∩ ReferenceInputsOf txSub ≡ ∅
     ∙ inInterval (SlotOf Γ) (ValidIntervalOf txSub)
-    ∙ refScriptsSize txSub (UTxOOf Γ) ≤ pp .maxRefScriptSizePerTx
     ∙ MaybeNetworkIdOf txSub ~ just NetworkId
     ∙ Γ ⊢ s ⇀⦇ txSub ,SUBUTXOS⦈ s'
       ────────────────────────────────
@@ -553,8 +513,8 @@ data _⊢_⇀⦇_,UTXO⦈_ : UTxOEnv → UTxOState → TopLevelTx → UTxOState 
          utxo      = UTxOOf s
          overhead  = 160
 
-         txOutsʰ : Ix ⇀ TxOutʰ
-         txOutsʰ = mapValues txOutHash (TxOutsOf txTop)
+         -- txOutsʰ : Ix ⇀ TxOutʰ
+         -- txOutsʰ = mapValues txOutHash (TxOutsOf txTop)
     in
     ∙ SpendInputsOf txTop ≢ ∅
     ∙ SpendInputsOf txTop ∩ ReferenceInputsOf txTop ≡ ∅
@@ -570,11 +530,11 @@ data _⊢_⇀⦇_,UTXO⦈_ : UTxOEnv → UTxOState → TopLevelTx → UTxOState 
     ∙ RedeemersOf txTop ˢ ≢ ∅ → collateralCheck pp txTop utxo₀
     ∙ allMintedCoin txTop ≡ 0
 
-    ∙ ∀[ (_ , txout) ∈ ∣ txOutsʰ ∣ ]
-      (inject ((overhead + utxoEntrySize txout) * coinsPerUTxOByte pp) ≤ᵗ getValueʰ txout)
-      ⋀ (serializedSize (getValueʰ txout) ≤ maxValSize pp)
+    ∙ ∀[ (_ , o) ∈ ∣ TxOutsOf txTop ∣ ]
+      (inject ((overhead + utxoEntrySize o) * coinsPerUTxOByte pp) ≤ᵗ txOutToValue o)
+      ⋀ (serializedSize (txOutToValue o) ≤ maxValSize pp)
 
-    ∙ ∀[ (a , _) ∈ range txOutsʰ ]
+    ∙ ∀[ (a , _) ∈ range (TxOutsOf txTop) ]
       (Sum.All (const ⊤) (λ a → AttrSizeOf a ≤ 64)) a ⋀ (netId a ≡ NetworkId)
 
     ∙ ∀[ a ∈ dom (WithdrawalsOf txTop)] NetworkIdOf a ≡ NetworkId
