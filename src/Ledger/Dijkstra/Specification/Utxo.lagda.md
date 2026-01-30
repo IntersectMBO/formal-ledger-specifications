@@ -321,12 +321,12 @@ module Accounting (pp : PParams) (txTop : TopLevelTx) (depositsChange : ℤ) whe
   newDepositsBatch : Coin
   newDepositsBatch = posPart depositsChange
 
-  consumed : UTxOEnv → Value
-  consumed Γ =  consumedTx txTop + inject depositRefundsBatch
+  consumed : UTxO → Value
+  consumed utxo =  consumedTx txTop + inject depositRefundsBatch
                 + ∑ˡ[ stx ← SubTransactionsOf txTop ] (consumedTx stx)
     where
-    consumedTx : ∀ {ℓ} → Tx ℓ → Value
-    consumedTx tx =  balance (UTxOOf Γ ∣ SpendInputsOf tx)
+    consumedTx : Tx ℓ → Value
+    consumedTx tx =  balance (utxo ∣ SpendInputsOf tx)
                      + MintedValueOf tx
                      + inject (getCoin (WithdrawalsOf tx))
 
@@ -512,15 +512,12 @@ data _⊢_⇀⦇_,UTXO⦈_ : UTxOEnv → UTxOState → TopLevelTx → UTxOState 
          utxo₀     = UTxOOf Γ
          utxo      = UTxOOf s
          overhead  = 160
-
-         -- txOutsʰ : Ix ⇀ TxOutʰ
-         -- txOutsʰ = mapValues txOutHash (TxOutsOf txTop)
     in
     ∙ SpendInputsOf txTop ≢ ∅
     ∙ SpendInputsOf txTop ∩ ReferenceInputsOf txTop ≡ ∅
     ∙ inInterval (SlotOf Γ) (ValidIntervalOf txTop)
     ∙ minfee pp txTop utxo ≤ TxFeesOf txTop
-    ∙ consumed Γ ≡ produced
+    ∙ consumed utxo₀ ≡ produced
     ∙ SizeOf txTop ≤ maxTxSize pp
     ∙ refScriptsSize txTop utxo₀ ≤ pp .maxRefScriptSizePerTx
     ∙ allSpendInputs txTop ⊆ dom utxo₀                          -- (1)
