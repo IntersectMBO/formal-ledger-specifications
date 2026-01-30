@@ -546,8 +546,7 @@ data _⊢_⇀⦇_,UTXO⦈_ where
     ∙ minfee pp utxo tx ≤ txFee              ∙ (txrdmrs ˢ ≢ ∅ → collateralCheck pp tx utxo)
     ∙ consumed pp s txb ≡ produced pp s txb  ∙ coin mint ≡ 0
     ∙ (¬ (∅ᵐ ≡ᵐ txrdmrs) × nothing ≢ proj₂ txVldt →
-         (do s ← proj₂ txVldt
-             epochInfoSlotToUTCTime s) ≢ nothing
+         map epochInfoSlotToUTCTime (proj₂ txVldt) ≢ nothing
       )
     ∙ txsize ≤ maxTxSize pp
     ∙ refScriptsSize utxo tx ≤ pp .maxRefScriptSizePerTx
