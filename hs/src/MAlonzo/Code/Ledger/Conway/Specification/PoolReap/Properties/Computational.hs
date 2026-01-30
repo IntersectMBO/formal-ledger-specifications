@@ -101,7 +101,7 @@ du_POOLREAP'45'total_2018 v0 v1 v2
   = coe
       MAlonzo.Code.Data.Product.Base.du_'45''44'__92
       (coe
-         MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
+         MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
          (coe
             MAlonzo.Code.Ledger.Conway.Specification.PoolReap.du_HasCast'45'PoolReapState_2560)
          (coe
@@ -437,7 +437,7 @@ du_POOLREAP'45'total_2018 v0 v1 v2
                (coe
                   MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                   (coe
-                     MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
+                     MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
                      (coe
                         MAlonzo.Code.Ledger.Conway.Specification.Certs.du_HasCast'45'DState_1576)
                      (coe
@@ -718,7 +718,7 @@ du_POOLREAP'45'total_2018 v0 v1 v2
                                                    MAlonzo.Code.Ledger.Conway.Specification.PoolReap.d_'46'generalizedField'45'poolReapState_11529
                                                    (coe v4))))))))))))
                   (coe
-                     MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
+                     MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
                      (coe
                         MAlonzo.Code.Ledger.Conway.Specification.Certs.du_HasCast'45'PState_1578)
                      (coe

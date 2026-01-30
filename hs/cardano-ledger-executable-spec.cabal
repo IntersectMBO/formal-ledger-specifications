@@ -548,6 +548,7 @@ library
       MAlonzo.Code.Prelude.InferenceRules
       MAlonzo.Code.Prelude.Init
       MAlonzo.Code.Prelude.STS.GenPremises
+      MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.Axiom.Set.Map.Extra
       MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory
       MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.Prelude
       MAlonzo.Code.Qstdlib.Data.List

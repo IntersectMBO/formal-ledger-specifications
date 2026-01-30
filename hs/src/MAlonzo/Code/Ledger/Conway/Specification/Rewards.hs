@@ -938,7 +938,7 @@ du_mkApparentPerformance_2700 ::
   Integer -> Integer -> MAlonzo.Code.Data.Rational.Base.T_ℚ_6
 du_mkApparentPerformance_2700 v0 v1 v2
   = coe
-      MAlonzo.Code.Ledger.Prelude.d__'247''8320'__54
+      MAlonzo.Code.Ledger.Prelude.d__'247''8320'__58
       (coe du_ratioBlocks_2716 (coe v1) (coe v2))
       (coe
          MAlonzo.Code.Ledger.Prelude.Numeric.UnitInterval.d_fromUnitInterval_72
@@ -1030,7 +1030,7 @@ du_ratioStake_2732 ::
   MAlonzo.Code.Data.Rational.Base.T_ℚ_6
 du_ratioStake_2732 v0 v1
   = coe
-      MAlonzo.Code.Ledger.Prelude.d__'247''8320'__54
+      MAlonzo.Code.Ledger.Prelude.d__'247''8320'__58
       (coe
          MAlonzo.Code.Ledger.Prelude.Numeric.UnitInterval.d_fromUnitInterval_72
          (coe v0))
@@ -1138,7 +1138,7 @@ du_ratioStake_2752 ::
   MAlonzo.Code.Data.Rational.Base.T_ℚ_6
 du_ratioStake_2752 v0 v1
   = coe
-      MAlonzo.Code.Ledger.Prelude.d__'247''8320'__54
+      MAlonzo.Code.Ledger.Prelude.d__'247''8320'__58
       (coe
          MAlonzo.Code.Ledger.Prelude.Numeric.UnitInterval.d_fromUnitInterval_72
          (coe v0))
@@ -1257,7 +1257,7 @@ du_mkRelativeStake_2782 v0 v1
   = coe
       MAlonzo.Code.Ledger.Prelude.Numeric.UnitInterval.d_clamp_118
       (coe
-         MAlonzo.Code.Ledger.Prelude.d__'47''8320'__46 (coe v1) (coe v0))
+         MAlonzo.Code.Ledger.Prelude.d__'47''8320'__50 (coe v1) (coe v0))
 -- Ledger.Conway.Specification.Rewards._.owners
 d_owners_2786 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
@@ -1948,7 +1948,7 @@ du_Σ_'47'total_2888 v0 v1 v2
   = coe
       MAlonzo.Code.Ledger.Prelude.Numeric.UnitInterval.d_clamp_118
       (coe
-         MAlonzo.Code.Ledger.Prelude.d__'47''8320'__46
+         MAlonzo.Code.Ledger.Prelude.d__'47''8320'__50
          (coe
             MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.du_indexedSum'7515'''_1446
             (coe
@@ -1994,7 +1994,7 @@ du_Σ_'47'active_2894 v0 v1 v2
   = coe
       MAlonzo.Code.Ledger.Prelude.Numeric.UnitInterval.d_clamp_118
       (coe
-         MAlonzo.Code.Ledger.Prelude.d__'47''8320'__46
+         MAlonzo.Code.Ledger.Prelude.d__'47''8320'__50
          (coe
             MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.du_indexedSum'7515'''_1446
             (coe
@@ -2610,7 +2610,7 @@ du_stakeDistr_2998 ::
   T_Snapshot_2970
 du_stakeDistr_2998 v0 v1 v2 v3
   = coe
-      MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
+      MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
       (coe
          MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.C_constructor_30
          (coe

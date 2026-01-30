@@ -108,7 +108,7 @@ du_SNAP'45'total_2170 v0 v1 v2
   = coe
       MAlonzo.Code.Data.Product.Base.du_'45''44'__92
       (coe
-         MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
+         MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
          (coe
             MAlonzo.Code.Ledger.Conway.Specification.Rewards.du_HasCast'45'Snapshots_3070)
          (coe
