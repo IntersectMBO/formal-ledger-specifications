@@ -110,14 +110,28 @@ in the transaction's inputs, withdrawals, certificates, minting policies, govern
 actions, etc.
 
 
-### Script purposes and witnessing
+### Script purposes and witnessing {#script-purposes-and-witnessing}
 
-Ledger rules don't run "all scripts;" they run scripts for specific *purposes*
+#### Script Availability {#script-availability}
+
+To validate a transaction, a script must be *available* to the ledger.  A script is
+identified by its hash (e.g., in a UTxO being spent), but the actual script bytes
+must be provided at validation time.  This is achieved in two ways:
+
+1.  **Direct Witnessing**. The script bytes are included directly in the transaction's
+    witness set.
+
+2.  **Referencing**.  The transaction points to an existing on-chain output that
+    already contains the script bytes (see [Reference Scripts](#reference-scripts-cip-33)).
+
+#### Script Purposes {#script-purposes}
+
+Ledger rules don't run "all scripts"; they run scripts for specific *purposes*
 (sometimes called *script roles*).  For Plutus V1, for example, the documentation
 describes purposes such as spending, minting, certifying, and rewarding, and explains
 that the arguments a script receives depend on its purpose.[^3]
 
-A transaction must normally *witness* the scripts it needs.
+A transaction must normally provide the witnesses for the scripts it needs.
 
 +  If a transaction spends an output protected by a script credential, the
    corresponding script must be available to validate that spend.
@@ -129,14 +143,14 @@ available to the ledger at validation time (and supply any required redeemers/da
 depending on the era).
 
 
-### Reference inputs (CIP-31)
+### Reference inputs (CIP-31) {#reference-inputs-cip-31}
 
 **Reference inputs** are a special kind of transaction input introduced in [CIP-31][].
 
-A reference input points to a UTxO entry *without consuming it*; it "looks at" an
-existing output, but does not spend it.  [CIP-31][] summarizes this as allowing
+A reference input points to a UTxO entry *without consuming it*; it merely "looks at"
+(but does not spend) an existing output.  [CIP-31][] summarizes this as allowing
 access to information stored on-chain without the churn of spending and recreating
-UTxOs.
+UTxOs (as opposed to spending inputs that the transaction consumes).
 
 Intuitively,
 
@@ -145,11 +159,11 @@ Intuitively,
 +  **Reference input** does *not* consume the output; its value does *not* contribute
    to balancing; the output is merely made available to be inspected during validation.
 
-This is useful when a script needs to read some on-chain state (datum, value, script
+This is useful when a transaction needs to read some on-chain state (datum, value, script
 hash) while leaving the referenced output untouched.
 
 
-### Reference scripts (CIP-33)
+### Reference scripts (CIP-33) {#reference-scripts-cip-33}
 
 **Reference scripts** are introduced in [CIP-33][] and are tightly coupled to
 reference inputs.
@@ -479,6 +493,61 @@ applies to:
 
 These conventions make it easier to read our helper definitions and to spot
 accidental mixing of UTxO snapshots when refactoring.
+
+---
+
+## Appendix: The Mechanics of Datum Validation
+
+### Interpretation of Ledger Sets
+
+When evaluating transaction witnessing (specifically in the context of the `UTXOW`
+rule), we distinguish between several sets of hashes that represent how data is
+"seen" by the ledger:
+
++  `neededDataHashes` is the set of datum hashes required by Plutus scripts
+   currently being executed; these arise when a script is spending an input that
+   contains only a `DataHash` rather than an inline datum.
++  `txDataHashes` is the set of hashes of all datums explicitly provided in the
+   transaction’s *witness set* (`txData`).
++  `refInputsDataHashes` is the set of datum hashes found within the UTxO entries of
+   the transaction's *reference inputs*.
+*  `outputsDataHashes` is the set of datum hashes found in the transaction’s own
+   *outputs*.
+
+
+### Potential Issue: Datum Hashes vs. Inline Datums
+
+Since the Babbage era (Plutus V2), the ledger supports *Inline Datums*, where the
+actual `Datum` object is stored directly in the `TxOut`.  This creates a subtle fork
+in how scripts resolve data.
+
+1.  **Hash-based Resolution**
+
+    The script finds a hash in the UTxO and looks for the matching datum in the
+    transaction's witness set.  This datum's hash *is* included in `neededDataHashes`.
+
+2.  **Inline Resolution**
+
+    The script finds the full datum already present in the UTxO.  In this case, the
+    script does not *need* a hash to be resolved.  Consequently, this datum's hash
+    is *not* included in `neededDataHashes`.
+
+### Omission in Legacy Mode Isolation
+
+In Conway, and in the current (draft) version of the Dijkstra "Legacy Mode"
+(CIP-0118), we enforce strict isolation by requiring `neededDataHashes ⊆ txDataHashes`.
+
+**Potential Issue**.  While this premise correctly forces scripts to find their
+hash-resolved data within the top-level witness set, it does not explicitly account
+for datums supplied via the "Resolution via UTxO" path (Inline Datums).
+
+If a legacy script relies on an **Inline Datum** provided by a reference input, that
+datum exists in the UTxO but its hash is not present in the `txDataHashes` witness
+set.  Under the strictest interpretation of the current formalization, this could be
+seen as violating the "all data must be supplied at the top level" rule, even though
+the data is technically "on-chain" via a reference input.  Developers should be aware
+that "Legacy Mode" primarily preserves the Conway-era behavior where the witness set
+remains the primary source of truth for resolved hashes.
 
 [^1]: https://cardano-ledger.cardano.intersectmbo.org/cardano-ledger-shelley/Cardano-Ledger-Shelley-Scripts.html
 [^2]: https://cardano-ledger.readthedocs.io/en/latest/explanations/glossary.html
