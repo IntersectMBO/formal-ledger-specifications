@@ -301,6 +301,8 @@ data _⊢_⇀⦇_,DELEG⦈_ : DelegEnv → DState → DCert → DState → Type 
 
   DELEG-dereg :
     ∙ (c , 0) ∈ rwds
+    ∙ (c , d) ∈ deposits
+    ∙ md ≡ nothing ⊎ md ≡ just d
       ────────────────────────────────
       ⟦ pp , pools , delegatees ⟧ ⊢ ⟦ vDelegs , sDelegs , rwds , deposits ⟧ ⇀⦇ dereg c md ,DELEG⦈ ⟦ vDelegs ∣ ❴ c ❵ ᶜ , sDelegs ∣ ❴ c ❵ ᶜ , rwds ∣ ❴ c ❵ ᶜ , deposits ∣ ❴ c ❵ ᶜ ⟧
 
@@ -363,6 +365,7 @@ data _⊢_⇀⦇_,GOVCERT⦈_ : CertEnv → GState → DCert → GState → Type
 
   GOVCERT-deregdrep :
     ∙ c ∈ dom dReps
+    ∙ (c , d) ∈ deposits
       ────────────────────────────────
       ⟦ e , pp , vs , wdrls , cc ⟧ ⊢ ⟦ dReps , ccKeys , deposits ⟧ ⇀⦇ deregdrep c d ,GOVCERT⦈ ⟦ dReps ∣ ❴ c ❵ ᶜ , ccKeys , deposits ∣ ❴ c ❵ ᶜ ⟧
 
