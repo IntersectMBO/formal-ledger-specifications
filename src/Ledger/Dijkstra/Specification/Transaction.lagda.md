@@ -33,6 +33,8 @@ import Ledger.Dijkstra.Specification.PParams
 import Ledger.Dijkstra.Specification.Script
 import Ledger.Dijkstra.Specification.TokenAlgebra.Base
 
+import Data.List.Relation.Unary.AllPairs as List
+
 open import Tactic.Derive.DecEq
 open import Relation.Nullary.Decidable using (⌊_⌋)
 ```
@@ -229,7 +231,7 @@ Of particular note in the Dijkstra era are
       inductive
       field
         txIns                : ℙ TxIn
-        refInputs            : ℙ TxIn
+        referenceInputs      : ℙ TxIn
         collateralInputs     : InTopLevel txLevel (ℙ TxIn)
         txOuts               : Ix ⇀ TxOut
         txId                 : TxId
@@ -386,6 +388,10 @@ could be either of them.
     field CurrentTreasuryOf : A → Maybe Coin
   open HasCurrentTreasury ⦃...⦄ public
 
+  record HasIsValidFlag {a} (A : Type a) : Type a where
+    field IsValidFlagOf : A → Bool
+  open HasIsValidFlag ⦃...⦄ public
+
   instance
     HasTxBody-Tx : HasTxBody (Tx txLevel)
     HasTxBody-Tx .TxBodyOf = Tx.txBody
@@ -395,6 +401,9 @@ could be either of them.
 
     HasTxWitnesses-Tx : HasTxWitnesses (Tx txLevel)
     HasTxWitnesses-Tx .TxWitnessesOf = Tx.txWitnesses
+
+    HasIsValidFlag-Tx : HasIsValidFlag TopLevelTx
+    HasIsValidFlag-Tx .IsValidFlagOf = Tx.isValid
 
     HasRedeemers-TxWitnesses : HasRedeemers (TxWitnesses txLevel)
     HasRedeemers-TxWitnesses .RedeemersOf = TxWitnesses.txRedeemers
@@ -434,7 +443,7 @@ could be either of them.
     HasSpendInputs-Tx .SpendInputsOf = SpendInputsOf ∘ TxBodyOf
 
     HasReferenceInputs-TxBody : HasReferenceInputs (TxBody txLevel)
-    HasReferenceInputs-TxBody .ReferenceInputsOf = TxBody.refInputs
+    HasReferenceInputs-TxBody .ReferenceInputsOf = TxBody.referenceInputs
     HasReferenceInputs-Tx : HasReferenceInputs (Tx txLevel)
     HasReferenceInputs-Tx .ReferenceInputsOf = ReferenceInputsOf ∘ TxBodyOf
 
@@ -518,80 +527,142 @@ In the Dijkstra era, we need to talk about which UTxO a helper is parameterised 
    script universe and datum-by-hash pool are computed once per top-level batch
    (using `getAllScripts`{.AgdaFunction} and `getAllData`{.AgdaFunction}).
 
+The function `getTxScripts`{.AgdaFunction} defined below is the set of scripts the
+ledger may use to resolve script hashes while validating a transaction, given it is
+allowed to inspect utxo for its inputs.
+
 ```agda
-  TxOutʰ : Type
-  TxOutʰ = Addr × Value × Maybe (Datum ⊎ DataHash) × Maybe ScriptHash
-
-  txOutHash : TxOut → TxOutʰ
-  txOutHash (a , v , d , s) = a , v , d , M.map hash s
-
-  getValueʰ : TxOutʰ → Value
-  getValueʰ (_ , v , _ , _) = v
-
+  -- Helpers --
+  --| extract scripts from TxOuts
   txOutToScript : TxOut → Maybe Script
   txOutToScript (_ , _ , _ , s) = s
-
+  --| extract datum from TxOuts
   txOutToDatum : TxOut → Maybe Datum
   txOutToDatum (_ , _ , d , _) = d >>= isInj₁
+  --| extract value from TxOuts
+  txOutToValue : TxOut → Value
+  txOutToValue (_ , v , _ , _) = v
+  --| extract set of values from a UTxO
+  valuesOfUTxO : UTxO → ℙ Value
+  valuesOfUTxO = mapˢ txOutToValue ∘ range
 
-  -- spending outputs
-  spendOut : Tx txLevel → UTxO → ℙ TxOut
-  spendOut tx utxo = range (utxo ∣ SpendInputsOf tx)
+  --| Spending inputs
+  allSpendInputs : TopLevelTx → ℙ TxIn
+  allSpendInputs txTop = foldl  (λ acc txSub → acc ∪ SpendInputsOf txSub)
+                                (SpendInputsOf txTop)
+                                (SubTransactionsOf txTop)
+  allSpendInputsList : TopLevelTx → List (ℙ TxIn)
+  allSpendInputsList t = SpendInputsOf t ∷ map SpendInputsOf (SubTransactionsOf t)
 
+  --| Reference inputs
+  allReferenceInputs : TopLevelTx → ℙ TxIn
+  allReferenceInputs txTop = foldl  (λ acc txSub → acc ∪ ReferenceInputsOf txSub)
+                                    (ReferenceInputsOf txTop)
+                                    (SubTransactionsOf txTop)
+
+  --| OUTPUTS -------------------------------------------------------------------
+  --|
+  --| Sets of TxOuts can come from the range of...
+  --|
+  --| ...a UTxO
+  _ : UTxO → ℙ TxOut
+  _ = range
+  --|
+  --| ...the txOuts field of a transaction
+  _ : Tx txLevel → ℙ TxOut
+  _ = range ∘ TxOutsOf
+
+  --| TxOuts from .a UTxO restricted to spending inputs of a Tx
+  spendTxOuts : Tx txLevel → UTxO → ℙ TxOut
+  spendTxOuts tx utxo = range (utxo ∣ SpendInputsOf tx)
+
+  --| TxOuts from .a UTxO restricted to reference inputs of a Tx
+  referencedTxOuts : Tx txLevel → UTxO → ℙ TxOut
+  referencedTxOuts tx utxo = range (utxo ∣ ReferenceInputsOf tx)
+
+  --| Set of scripts from outputs of a UTxO
+  scriptsOfUTxO : UTxO → ℙ Script
+  scriptsOfUTxO = mapPartial txOutToScript ∘ range
+
+  --| Set of scripts from outputs of a Tx
+  scriptsOfTx : Tx txLevel → ℙ Script
+  scriptsOfTx = mapPartial txOutToScript ∘ range ∘ TxOutsOf
+
+  --| Set of scripts from the spending inputs of a Tx
   spendScripts : Tx txLevel → UTxO → ℙ Script
-  spendScripts = mapPartial txOutToScript ∘₂ spendOut
+  spendScripts = mapPartial txOutToScript ∘₂ spendTxOuts
 
-  spendData : Tx txLevel → UTxO → ℙ Datum
-  spendData = mapPartial txOutToDatum ∘₂ spendOut
-
-  -- reference outputs
-  referenceOut : Tx txLevel → UTxO → ℙ TxOut
-  referenceOut tx utxo = range (utxo ∣ ReferenceInputsOf tx)
-
+  --| Set of scripts from reference inputs
   referenceScripts : Tx txLevel → UTxO → ℙ Script
-  referenceScripts = mapPartial txOutToScript ∘₂ referenceOut
+  referenceScripts = mapPartial txOutToScript ∘₂ referencedTxOuts
 
-  referenceData : Tx txLevel → UTxO → ℙ Datum
-  referenceData = mapPartial txOutToDatum ∘₂ referenceOut
+  --| Set of scripts from reference inputs in a batch
+  allReferenceScripts : TopLevelTx → UTxO → ℙ Script
+  allReferenceScripts tx utxo =
+    foldl (λ acc t → acc ∪ referenceScripts t utxo)
+          (referenceScripts tx utxo) (SubTransactionsOf tx)
 
-  -- tx outputs
-  txOut : Tx txLevel → ℙ TxOut
-  txOut tx = range (TxOutsOf tx ˢ)
-
-  txOutScripts : Tx txLevel → ℙ Script
-  txOutScripts = mapPartial txOutToScript ∘ txOut
-
-  txOutData : Tx txLevel → ℙ Datum
-  txOutData = mapPartial txOutToDatum ∘ txOut
-
-  -- witnesses
+  --| Set of scripts from a transactions's witness field
   witnessScripts : Tx txLevel → ℙ Script
-  witnessScripts tx = ScriptsOf tx
+  witnessScripts = ScriptsOf
 
-  witnessData : Tx txLevel → ℙ Datum
-  witnessData tx = DataOf tx
-
+  --| Set of all scripts from a transaction
   getTxScripts : Tx txLevel → UTxO → ℙ Script
-  getTxScripts tx utxo =  witnessScripts tx
+  getTxScripts tx utxo =  scriptsOfTx tx
                           ∪ spendScripts tx utxo
                           ∪ referenceScripts tx utxo
-                          ∪ txOutScripts tx
+                          ∪ witnessScripts tx
 
+  --| Set of scripts from a batch
+  getAllScripts : TopLevelTx → UTxO →  ℙ Script
+  getAllScripts txTop utxo = foldl  (λ acc txSub → acc ∪ getTxScripts txSub utxo)
+                                    (getTxScripts txTop utxo)
+                                    (SubTransactionsOf txTop)
+
+  --| Set of datum from a transaction
+  dataOfTx : Tx txLevel → ℙ Datum
+  dataOfTx = mapPartial txOutToDatum ∘ range ∘ TxOutsOf
+
+  --| Set of data from a UTxO
+  txOutDataOfUTxO : UTxO → ℙ Datum
+  txOutDataOfUTxO = mapPartial txOutToDatum ∘ range
+
+  --| Set of data from spendTxOuts
+  spendData : Tx txLevel → UTxO → ℙ Datum
+  spendData = mapPartial txOutToDatum ∘₂ spendTxOuts
+
+  --| Set of data from referencedTxOuts
+  referenceData : Tx txLevel → UTxO → ℙ Datum
+  referenceData = mapPartial txOutToDatum ∘₂ referencedTxOuts
+
+  --| Set of data from a transaction's witness field
+  witnessData : Tx txLevel → ℙ Datum
+  witnessData = DataOf
+
+  --| Set of data from a transaction
   getTxData : Tx txLevel → UTxO → ℙ Datum
-  getTxData tx utxo =  witnessData tx
+  getTxData tx utxo =  dataOfTx tx
                        ∪ spendData tx utxo
                        ∪ referenceData tx utxo
-                       ∪ txOutData tx
+                       ∪ witnessData tx
 
-  getAllScripts : TopLevelTx → UTxO →  ℙ Script
-  getAllScripts txTop utxo =
-    getTxScripts txTop utxo
-    ∪ concatMapˢ (λ tx → getTxScripts tx utxo) (fromList (SubTransactionsOf txTop))
-
+  --| Set of data from a batch
   getAllData : TopLevelTx → UTxO → ℙ Datum
-  getAllData txTop utxo =
-    getTxData txTop utxo
-    ∪ concatMapˢ (λ tx → getTxData tx utxo) (fromList (SubTransactionsOf txTop))
+  getAllData txTop utxo = foldl  (λ acc txSub → acc ∪ getTxData txSub utxo)
+                                 (getTxData txTop utxo)
+                                 (SubTransactionsOf txTop)
+
+  NoOverlappingSpendInputs : TopLevelTx → Type
+  NoOverlappingSpendInputs topTx =
+    List.AllPairs disjoint (SpendInputsOf topTx ∷ map SpendInputsOf (SubTransactionsOf topTx))
+
+  -- Total Ada minted across the entire batch (top-level tx + all sub-txs).
+  allMintedCoin : TopLevelTx → Coin
+  allMintedCoin txTop = foldl (λ acc txSub → acc + coin (MintedValueOf txSub))
+                              (coin (MintedValueOf txTop))
+                              (SubTransactionsOf txTop)
+  -- To maintain total Ada supply invariant, this must satisfy `allMintedCoin ≡ 0`;
+  -- this is a generalization of Conway's `coin mint ≡ 0`.
 
   lookupScriptHash : ScriptHash → Tx txLevel → UTxO → Maybe Script
   lookupScriptHash sh tx utxo = lookupHash sh (getTxScripts tx utxo)
@@ -663,9 +734,10 @@ remaining helper functions of this section.
   requiredGuardsInTopLevel : TopLevelTx → List SubLevelTx → Type
   requiredGuardsInTopLevel topTx subTxs = requiredCreds ⊆ GuardsOf topTx
     where
+    -- union a list of sets
     concatMapˡ : {A B : Type} → (A → ℙ B) → List A → ℙ B
     concatMapˡ f as = proj₁ $ unions (fromList (map f as))
-    -- (maybe move concatMapˡ to src-lib-exts or agda-sets)
+    -- maybe move this to agda-sets or src-lib-exts
 
     requiredCreds : ℙ Credential
     requiredCreds = concatMapˡ subTxGuardCredentials subTxs

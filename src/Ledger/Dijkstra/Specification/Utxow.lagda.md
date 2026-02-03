@@ -23,7 +23,8 @@ open import Ledger.Dijkstra.Specification.Script.Validation txs abs
 
 private variable
   ℓ : TxLevel
-  Γ  : UTxOEnv
+  A  : Type
+  Γ  : A
   s s' : UTxOState
   tx : TopLevelTx
   stx : SubLevelTx
@@ -39,13 +40,13 @@ module _ (tx : TopLevelTx) where
 
   module _ (utxo : UTxO) where
     UsesBootstrapAddress : Type
-    UsesBootstrapAddress = ∃[ o ∈ (range txOuts) ∪ range (utxo ∣ (txIns ∪ refInputs)) ] isBootstrapAddr (proj₁ o)
+    UsesBootstrapAddress = ∃[ o ∈ (range txOuts) ∪ range (utxo ∣ (txIns ∪ referenceInputs)) ] isBootstrapAddr (proj₁ o)
 
     HasInlineDatum : TxOut → Type
     HasInlineDatum txout = Is-just (txOutToDatum txout)
 
     UsesV2Features : Type
-    UsesV2Features = ∃[ o ∈ (range txOuts) ∪ range (utxo ∣ (txIns ∪ refInputs)) ] HasInlineDatum o
+    UsesV2Features = ∃[ o ∈ (range txOuts) ∪ range (utxo ∣ (txIns ∪ referenceInputs)) ] HasInlineDatum o
 
   data UsesV3Features : Set where
     hasVotes     : ¬ (Is-[] txGovVotes)     → UsesV3Features
@@ -112,7 +113,7 @@ allowedLanguages tx utxo =
 ```
 
 ```agda
-data _⊢_⇀⦇_,SUBUTXOW⦈_ : UTxOEnv → UTxOState → SubLevelTx → UTxOState → Type where
+data _⊢_⇀⦇_,SUBUTXOW⦈_ : SubUTxOEnv → UTxOState → SubLevelTx → UTxOState → Type where
 
   SUBUTXOW :
     let
@@ -121,8 +122,8 @@ data _⊢_⇀⦇_,SUBUTXOW⦈_ : UTxOEnv → UTxOState → SubLevelTx → UTxOSt
          open TxWitnesses txWitnesses
          open UTxOEnv
 
-         utxo₀               = Γ .utxo₀
-         utxo                = s .UTxOState.utxo
+         utxo₀               = UTxOOf Γ
+         utxo                = UTxOOf s
 
          witsKeyHashes       : ℙ KeyHash
          witsKeyHashes       = mapˢ hash (dom vKeySigs)
@@ -151,11 +152,10 @@ data _⊢_⇀⦇_,SUBUTXOW⦈_ : UTxOEnv → UTxOState → SubLevelTx → UTxOSt
     ∙  neededVKeyHashes ⊆ witsKeyHashes
     ∙  neededScriptHashes ⊆ mapˢ hash p1Scripts ∪ mapˢ hash p2Scripts
     ∙  neededDataHashes ⊆ dom (DataPoolOf Γ)
-    ∙  languages p2Scripts ⊆ allowedLanguages tx utxo -- Redundant? Superseded by same in UTXOW?
     ∙  txADhash ≡ map hash txAuxData
-    ∙ Γ ⊢ s ⇀⦇ stx ,SUBUTXO⦈ s'
+    ∙  Γ ⊢ s ⇀⦇ stx ,SUBUTXO⦈ s'
       ────────────────────────────────
-      Γ ⊢ s ⇀⦇ stx ,SUBUTXOW⦈ s'
+       Γ ⊢ s ⇀⦇ stx ,SUBUTXOW⦈ s'
 
 data _⊢_⇀⦇_,UTXOW⦈_ : UTxOEnv → UTxOState → TopLevelTx → UTxOState → Type where
 
@@ -196,7 +196,7 @@ data _⊢_⇀⦇_,UTXOW⦈_ : UTxOEnv → UTxOState → TopLevelTx → UTxOState
     ∙  neededVKeyHashes ⊆ witsKeyHashes
     ∙  neededScriptHashes ⊆ mapˢ hash p1Scripts ∪ mapˢ hash p2Scripts
     ∙  neededDataHashes ⊆ dom (DataPoolOf Γ)
-    ∙  languages p2Scripts ⊆ allowedLanguages tx utxo
+    ∙  languages p2Scripts ⊆ dom (PParams.costmdls (PParamsOf Γ)) ∩ allowedLanguages tx utxo
     ∙  txADhash ≡ map hash txAuxData
     ∙  Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s'
       ────────────────────────────────

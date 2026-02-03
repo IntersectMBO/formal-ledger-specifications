@@ -47,6 +47,7 @@ open import abstract-set-theory.FiniteSetTheory public
 open import abstract-set-theory.Axiom.Set.Map.Extra th public
 
 import Data.Integer as ℤ
+open import Data.Integer using (0ℤ) public
 import Data.Rational as ℚ
 open import Data.Rational using (ℚ)
 
