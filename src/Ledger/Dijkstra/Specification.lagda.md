@@ -30,6 +30,7 @@ import Ledger.Core.Specification.Epoch
 
 ```agda
 import Ledger.Dijkstra.Specification.Certs
+import Ledger.Dijkstra.Specification.Certs.Properties
 ```
 
 ## Governance
