@@ -65,6 +65,7 @@ txInfo l pp utxo tx = record
   ; fee = inject txFee
   ; mint = mint
   ; vkKey = reqSignerHashes
+  ; txPOSIXTimeVldt = transVITime txVldt
   } where open Tx tx; open TxBody body
 
 credsNeeded : UTxO → TxBody → ℙ (ScriptPurpose × Credential)

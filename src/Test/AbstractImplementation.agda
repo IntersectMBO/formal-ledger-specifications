@@ -10,7 +10,7 @@ module Test.AbstractImplementation
   (valContext' : TxInfo → ScriptPurpose → D)
   where
 
-open import Ledger.Prelude using (nothing; _,_)
+open import Ledger.Prelude using (nothing; just; _,_; ℕ; ⊤; tt; id)
 
 open import Test.LedgerImplementation T D
   renaming (SVTransactionStructure to SVTransactionStructure')
@@ -34,4 +34,7 @@ SVAbstractFunctions = record
   ; runPLCScript = λ { x (sh , script) x₂ x₃ → script x₃ }
   ; scriptSize = λ _ → 0
   ; valContext = valContext'
+  ; UTCTime = ℕ
+  ; epochInfoSlotToUTCTime = λ _ → just 0
+  ; transVITime = λ _ → tt
   }

@@ -95,6 +95,7 @@ instance
   HSTransactionStructure : TransactionStructure
   HSTransactionStructure = record
     { Implementation
+    ; POSIXTimeRange = ⊤
     ; epochStructure  = HSEpochStructure
     ; globalConstants = HSGlobalConstants
     ; cryptoStructure = HSCryptoStructure
@@ -129,6 +130,9 @@ instance
         (inj₁ x) → HSTimelock.tlScriptSize x
         (inj₂ x) → HSPlutusScript.psScriptSize x
     ; valContext = λ _ _ → zero
+    ; UTCTime = ℕ
+    ; epochInfoSlotToUTCTime = λ _ → just 0
+    ; transVITime = λ _ → tt
     }
 
 open import Ledger.Core.Specification.Address Network KeyHash ScriptHash using () public

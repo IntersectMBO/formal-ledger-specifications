@@ -44,6 +44,7 @@ open import Prelude.STS.GenPremises public
 
 open import abstract-set-theory.FiniteSetTheory public
   renaming (_⊆_ to _⊆ˢ_)
+open import abstract-set-theory.Axiom.Set.Map.Extra th public
 
 import Data.Integer as ℤ
 open import Data.Integer using (0ℤ) public
