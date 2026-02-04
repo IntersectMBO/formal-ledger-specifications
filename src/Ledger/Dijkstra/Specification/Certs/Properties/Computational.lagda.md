@@ -22,9 +22,6 @@ import Data.Maybe.Relation.Unary.All as M
 
 open GovStructure govStructure
 open Inverse
-open DCert
-open PState
-open GovVote
 
 open Computational ⦃...⦄
 
@@ -39,19 +36,18 @@ private
 instance
   Computational-DELEG : Computational _⊢_⇀⦇_,DELEG⦈_ String
   Computational-DELEG .computeProof de ds =
-    let open DelegEnv de; open DState ds in
     λ where
-    (delegate c mv mc d) → case ¿ (c ∉ dom rewards → d ≡ pparams .PParams.keyDeposit)
-                                × (c ∈ dom rewards → d ≡ 0)
-                                × mv ∈ mapˢ (just ∘ vDelegCredential) delegatees ∪
+    (delegate c mv mc d) → case ¿ (c ∉ dom (RewardsOf ds) → d ≡ DelegEnv.pparams de .PParams.keyDeposit)
+                                × (c ∈ dom (RewardsOf ds) → d ≡ 0)
+                                × mv ∈ mapˢ (just ∘ vDelegCredential) (DelegEnv.delegatees de) ∪
                                     fromList ( nothing ∷ just vDelegAbstain ∷ just vDelegNoConfidence ∷ [] )
                                 × mc ∈ mapˢ just (dom (DelegEnv.pools de)) ∪ ❴ nothing ❵ ¿ of λ where
-      (yes p) → success (-, DELEG-delegate p )
+      (yes p) → success (-, DELEG-delegate p)
       (no ¬p) → failure (genErrors ¬p)
     (dereg c md) → case lookupᵐ?? (DepositsOf ds) c of λ where
       (yes ((_ , d) , _ , _)) →
         case
-          ¿ (c , 0) ∈ rewards
+          ¿ (c , 0) ∈ (RewardsOf ds)
           × (c , d) ∈ (DepositsOf ds)
           × (md ≡ nothing ⊎ md ≡ just d)
           ¿ of λ where
@@ -61,27 +57,27 @@ instance
     _ → failure "Unexpected certificate in DELEG"
 
   Computational-DELEG .completeness de ds (delegate c mv mc d)
-    s' (DELEG-delegate p) rewrite dec-yes (¿ (c ∉ dom (DState.rewards ds) → d ≡ DelegEnv.pparams de .PParams.keyDeposit)
-                                           × (c ∈ dom (DState.rewards ds) → d ≡ 0)
+    s' (DELEG-delegate p) rewrite dec-yes (¿ (c ∉ dom (RewardsOf ds) → d ≡ DelegEnv.pparams de .PParams.keyDeposit)
+                                           × (c ∈ dom (RewardsOf ds) → d ≡ 0)
                                            × mv ∈ mapˢ (just ∘ vDelegCredential) (DelegEnv.delegatees de) ∪
                                                fromList ( nothing ∷ just vDelegAbstain ∷ just vDelegNoConfidence ∷ [] )
                                            × mc ∈ mapˢ just (dom (DelegEnv.pools de)) ∪ ❴ nothing ❵ ¿) p .proj₂ = refl
   Computational-DELEG .completeness _ ds (dereg c nothing) _ (DELEG-dereg {d = d} h@(p , q , r))
-    with lookupᵐ?? (DState.deposits ds) c
+    with lookupᵐ?? (DepositsOf ds) c
   ... | (yes ((_ , d') , s₂ , refl)) rewrite dec-yes
-          (¿ (c , 0) ∈ (DState.rewards ds)
-           × (c , d') ∈ (DState.deposits ds)
+          (¿ (c , 0) ∈ (RewardsOf ds)
+           × (c , d') ∈ (DepositsOf ds)
            × (nothing ≡ nothing {A = ℕ} ⊎ nothing ≡ just d')
            ¿) (p , s₂ , inj₁ refl) .proj₂ = refl
   Computational-DELEG .completeness _ ds (dereg c nothing) _ (DELEG-dereg h@(p , q , r))
       | (no ¬s) = ⊥-elim (¬s (_ , q , refl))
   Computational-DELEG .completeness _ ds (dereg c (just d)) _ (DELEG-dereg h@(p , q , inj₂ refl))
-    with lookupᵐ?? (DState.deposits ds) c
+    with lookupᵐ?? (DepositsOf ds) c
   ... | (yes ((_ , d') , q' , refl)) rewrite dec-yes
-          (¿ (c , 0) ∈ (DState.rewards ds)
-           × (c , d') ∈ (DState.deposits ds)
+          (¿ (c , 0) ∈ (RewardsOf ds)
+           × (c , d') ∈ (DepositsOf ds)
            × (just d ≡ nothing {A = ℕ} ⊎ just d ≡ just d')
-           ¿) (p , q' , inj₂ (cong just (proj₂ (DState.deposits ds) q q'))) .proj₂ = refl
+           ¿) (p , q' , inj₂ (cong just (proj₂ (DepositsOf ds) q q'))) .proj₂ = refl
   ... | (no ¬s) = ⊥-elim (¬s (_ , q , refl))
 
   Computational-POOL : Computational _⊢_⇀⦇_,POOL⦈_ String
@@ -103,40 +99,35 @@ instance
 
   Computational-GOVCERT : Computational _⊢_⇀⦇_,GOVCERT⦈_ String
   Computational-GOVCERT .computeProof ce gs (regdrep c d _) =
-    let open CertEnv ce; open GState gs; open PParams pp in
-    case ¿ (d ≡ drepDeposit × c ∉ dom dreps)
-         ⊎ (d ≡ 0 × c ∈ dom dreps) ¿ of λ where
+    case ¿ d ≡ PParams.drepDeposit (PParamsOf ce) × c ∉ dom (DRepsOf gs)
+         ⊎ d ≡ 0 × c ∈ dom (DRepsOf gs) ¿ of λ where
       (yes p) → success (-, GOVCERT-regdrep p)
       (no ¬p) → failure (genErrors ¬p)
   Computational-GOVCERT .computeProof ce gs (deregdrep c d) =
-    case ¿ c ∈ dom (GState.dreps gs) × (c , d) ∈  (GState.deposits gs) ¿ of λ where
+    case ¿ c ∈ dom (DRepsOf gs) × (c , d) ∈  (DepositsOf gs) ¿ of λ where
       (yes p) → success (-, GOVCERT-deregdrep p)
       (no ¬p)  → failure (genErrors ¬p)
   Computational-GOVCERT .computeProof ce gs (ccreghot c _) =
-    let open CertEnv ce; open GState gs in
-    case ¿ ((c , nothing) ∉ ccHotKeys ˢ) × c ∈ coldCreds ¿ of λ where
+    case ¿ ((c , nothing) ∉ CCHotKeysOf gs ˢ) × c ∈ CertEnv.coldCreds ce ¿ of λ where
       (yes p) → success (-, GOVCERT-ccreghot p)
       (no ¬p) → failure (genErrors ¬p)
   Computational-GOVCERT .computeProof _ _ _ = failure "Unexpected certificate in GOVCERT"
-  Computational-GOVCERT .completeness ce gs
-    (regdrep c d _) _ (GOVCERT-regdrep p)
+  Computational-GOVCERT .completeness ce gs (regdrep c d _) _ (GOVCERT-regdrep p)
     rewrite dec-yes
-      ¿ (let open CertEnv ce; open PParams pp in
-        (d ≡ drepDeposit × c ∉ dom (GState.dreps gs)) ⊎ (d ≡ 0 × c ∈ dom (GState.dreps gs)))
+      ¿  (d ≡ PParams.drepDeposit (PParamsOf ce) × c ∉ dom (DRepsOf gs))
+         ⊎ (d ≡ 0 × c ∈ dom (DRepsOf gs))
       ¿ p .proj₂ = refl
-  Computational-GOVCERT .completeness _ gs
-    (deregdrep c d) _ (GOVCERT-deregdrep p)
-    rewrite dec-yes ¿ c ∈ dom (GState.dreps gs) × (c , d) ∈ (GState.deposits gs) ¿ p .proj₂ = refl
-  Computational-GOVCERT .completeness ce gs
-    (ccreghot c _) _ (GOVCERT-ccreghot p)
-    rewrite dec-yes (¿ (((c , nothing) ∉ (GState.ccHotKeys gs) ˢ) × c ∈ CertEnv.coldCreds ce) ¿) p .proj₂ = refl
+  Computational-GOVCERT .completeness _ gs (deregdrep c d) _ (GOVCERT-deregdrep p)
+    rewrite dec-yes ¿ c ∈ dom (DRepsOf gs) × (c , d) ∈ (DepositsOf gs) ¿ p .proj₂ = refl
+  Computational-GOVCERT .completeness ce gs (ccreghot c _) _ (GOVCERT-ccreghot p)
+    rewrite dec-yes ¿ (c , nothing) ∉ CCHotKeysOf gs ˢ × c ∈ CertEnv.coldCreds ce ¿ p .proj₂ = refl
 
   Computational-CERT : Computational _⊢_⇀⦇_,CERT⦈_ String
   Computational-CERT .computeProof ce cs dCert
-    with computeProof ⟦ CertEnv.pp ce , PState.pools (CertState.pState cs) , dom (GState.dreps (CertState.gState cs)) ⟧
-                      (CertState.dState cs) dCert
-         | computeProof (CertEnv.pp ce) (CertState.pState cs) dCert
-         | computeProof ce (CertState.gState cs) dCert
+    with computeProof ⟦ PParamsOf ce , PoolsOf cs , dom (DRepsOf cs) ⟧ (DStateOf cs) dCert
+         | computeProof (PParamsOf ce) (PStateOf cs) dCert
+         | computeProof ce (GStateOf cs) dCert
+
   ... | success (_ , h) | _               | _               = success (-, CERT-deleg h)
   ... | failure _       | success (_ , h) | _               = success (-, CERT-pool h)
   ... | failure _       | failure _       | success (_ , h) = success (-, CERT-gov h)
@@ -144,14 +135,12 @@ instance
     "DELEG: " <> e₁ <> "\nPOOL: " <> e₂ <> "\nGOV: " <> e₃
   Computational-CERT .completeness ce cs
     dCert@(delegate c mv mc d) cs' (CERT-deleg h)
-    with computeProof ⟦ CertEnv.pp ce , PState.pools (CertState.pState cs) , dom (GState.dreps (CertState.gState cs)) ⟧
-                      (CertState.dState cs) dCert
+    with computeProof ⟦ PParamsOf ce , PoolsOf cs , dom (DRepsOf cs) ⟧ (DStateOf cs) dCert
          | completeness _ _ _ _ h
   ... | success _ | refl = refl
   Computational-CERT .completeness ce cs
     dCert@(dereg c _) cs' (CERT-deleg h)
-    with computeProof ⟦ CertEnv.pp ce , PState.pools (CertState.pState cs) , dom (GState.dreps (CertState.gState cs)) ⟧
-                      (CertState.dState cs) dCert
+    with computeProof ⟦ PParamsOf ce , PoolsOf cs , dom (DRepsOf cs) ⟧ (DStateOf cs) dCert
          | completeness _ _ _ _ h
   ... | success _ | refl = refl
   Computational-CERT .completeness ce cs
@@ -178,29 +167,23 @@ instance
 
   Computational-PRE-CERT : Computational _⊢_⇀⦇_,PRE-CERT⦈_ String
   Computational-PRE-CERT .computeProof ce cs _ =
-    let open CertEnv ce; open PParams pp
-        open GState (CertState.gState cs); open DState (CertState.dState cs)
-        refresh = mapPartial (isGovVoterDRep ∘ voter) (fromList votes)
-        refreshedDReps  = mapValueRestricted (const (CertEnv.epoch ce + drepActivity)) dreps refresh
-    in case ¿ filterˢ isKeyHash (mapˢ RewardAddress.stake (dom wdrls)) ⊆ dom voteDelegs
-              × mapˢ (map₁ RewardAddress.stake) (wdrls ˢ) ⊆ rewards ˢ ¿ of λ where
+    case ¿  filterˢ isKeyHash (mapˢ CredentialOf (dom (WithdrawalsOf ce))) ⊆ dom (VoteDelegsOf cs)
+            × mapˢ (map₁ CredentialOf) (WithdrawalsOf ce ˢ) ⊆ (RewardsOf cs) ˢ  ¿
+    of λ where
       (yes p) → success (-, CERT-pre p)
       (no ¬p) → failure (genErrors ¬p)
-  Computational-PRE-CERT .completeness ce st _ st' (CERT-pre p)
-    rewrite let dState = CertState.dState st; open DState dState in
-      dec-yes ¿ filterˢ isKeyHash (mapˢ RewardAddress.stake (dom (CertEnv.wdrls ce))) ⊆ dom voteDelegs
-                × mapˢ (map₁ RewardAddress.stake) (CertEnv.wdrls ce ˢ) ⊆ rewards ˢ ¿
+  Computational-PRE-CERT .completeness ce st _ st' (CERT-pre p) rewrite
+    dec-yes ¿  filterˢ isKeyHash (mapˢ CredentialOf (dom (WithdrawalsOf ce))) ⊆ dom (VoteDelegsOf st)
+               × mapˢ (map₁ CredentialOf) (WithdrawalsOf ce ˢ) ⊆ (RewardsOf st) ˢ  ¿
         p .proj₂ = refl
 
   Computational-POST-CERT : Computational _⊢_⇀⦇_,POST-CERT⦈_ String
   Computational-POST-CERT .computeProof ce cs tt = success ( cs' , CERT-post)
     where
-      dreps : DReps
-      dreps = GState.dreps (CertState.gState cs)
       validVoteDelegs : VoteDelegs
-      validVoteDelegs = (DState.voteDelegs (CertState.dState cs)) ∣^ ( mapˢ vDelegCredential (dom dreps) ∪ fromList (vDelegNoConfidence ∷ vDelegAbstain ∷ []) )
+      validVoteDelegs = VoteDelegsOf cs ∣^ (mapˢ vDelegCredential (dom (DRepsOf cs)) ∪ fromList (vDelegNoConfidence ∷ vDelegAbstain ∷ []) )
       cs' : CertState
-      cs' = ⟦ ⟦ validVoteDelegs , _ , _ ⟧ , CertState.pState cs , CertState.gState cs ⟧
+      cs' = ⟦ ⟦ validVoteDelegs , _ , _ ⟧ , PStateOf cs , GStateOf cs ⟧
 
   Computational-POST-CERT .completeness ce cs _ cs' CERT-post = refl
 
