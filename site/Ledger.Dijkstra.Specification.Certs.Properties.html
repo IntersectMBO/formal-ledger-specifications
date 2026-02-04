@@ -12,13 +12,9 @@
         <meta name="author" content="Formal Methods Ledger Team">
       
       
-        <link rel="canonical" href="https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Dijkstra.Specification.html">
+        <link rel="canonical" href="https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Dijkstra.Specification.Certs.Properties.html">
       
       
-        <link rel="prev" href="Ledger.Conway.Specification.Types.GovStructure.html">
-      
-      
-        <link rel="next" href="Ledger.Dijkstra.Specification.Abstract.html">
       
       
         
@@ -29,7 +25,7 @@
     
     
       
-        <title>Introduction - Formal Ledger Specification</title>
+        <title>Properties Of Certificates - Formal Ledger Specification</title>
       
     
     
@@ -86,7 +82,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#addresses" class="md-skip">
+        <a href="#sec:properties-of-certificates" class="md-skip">
           Skip to content
         </a>
       
@@ -119,7 +115,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Introduction
+              Properties Of Certificates
             
           </span>
         </div>
@@ -307,12 +303,10 @@
   
   
   
-    
-  
   
     
     
-      <li class="md-tabs__item md-tabs__item--active">
+      <li class="md-tabs__item">
         <a href="Ledger.Dijkstra.Specification.html" class="md-tabs__link">
           
   
@@ -4735,31 +4729,26 @@
       
   
   
-    
   
   
-  
     
     
     
     
-      
-        
-        
       
       
         
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
         
           
-          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
             
   
   
@@ -4777,7 +4766,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_5">
             <span class="md-nav__icon md-icon"></span>
             
@@ -4792,35 +4781,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Introduction
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="Ledger.Dijkstra.Specification.html" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="Ledger.Dijkstra.Specification.html" class="md-nav__link">
         
   
   
@@ -4836,145 +4800,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#addresses" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Addresses
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#epoch" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Epoch
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#certificates" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Certificates
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#governance" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Governance
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#ledger" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Ledger
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#protocol-parameters" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Protocol Parameters
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#scripts" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Scripts
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#token-algebras" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Token Algebras
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#transactions" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Transactions
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#utxo" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Utxo
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#utxow" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Utxow
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -5133,20 +4958,17 @@
       
       
         
-          
-          
-        
       
     
     
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_7" >
         
           
-          <label class="md-nav__link" for="__nav_5_7" id="__nav_5_7_label" tabindex="">
+          <label class="md-nav__link" for="__nav_5_7" id="__nav_5_7_label" tabindex="0">
             
   
   
@@ -5364,20 +5186,17 @@
       
       
         
-          
-          
-        
       
     
     
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_12" >
         
           
-          <label class="md-nav__link" for="__nav_5_12" id="__nav_5_12_label" tabindex="">
+          <label class="md-nav__link" for="__nav_5_12" id="__nav_5_12_label" tabindex="0">
             
   
   
@@ -12265,135 +12084,8 @@
   
   
   
+    
   
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#addresses" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Addresses
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#epoch" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Epoch
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#certificates" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Certificates
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#governance" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Governance
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#ledger" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Ledger
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#protocol-parameters" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Protocol Parameters
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#scripts" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Scripts
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#token-algebras" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Token Algebras
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#transactions" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Transactions
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#utxo" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Utxo
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#utxow" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Utxow
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
   
 </nav>
                   </div>
@@ -12411,7 +12103,7 @@
 
 
 
-  <a href="https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/src/Ledger/Dijkstra/Specification.lagda.md?plain=1"
+  <a href="https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/src/Ledger/Dijkstra/Specification/Certs/Properties.lagda.md?plain=1"
      class="md-content__button md-icon"
      title="View the source of this page"
      aria-label="View the source of this page">
@@ -12421,50 +12113,12 @@
   </a>
 
 
-  <h1>Introduction</h1>
-
-<p>This is the formal specification of the Cardano ledger for the Dijkstra era.
-The Agda source code which formalizes the ledger specification in the Dijkstra era
-consists of the modules listed below.</p>
-<pre class="Agda hidden-source"><a id="300" class="Symbol">{-#</a> <a id="304" class="Keyword">OPTIONS</a> <a id="312" class="Pragma">--safe</a> <a id="319" class="Symbol">#-}</a>
-<a id="323" class="Keyword">module</a> <a id="330" href="Ledger.Dijkstra.Specification.html" class="Module">Ledger.Dijkstra.Specification</a> <a id="360" class="Keyword">where</a>
+<h1 id="sec:properties-of-certificates">Properties Of Certificates<a class="headerlink" href="#sec:properties-of-certificates" title="Permanent link">&para;</a></h1>
+<pre class="Agda hidden-source"><a id="182" class="Symbol">{-#</a> <a id="186" class="Keyword">OPTIONS</a> <a id="194" class="Pragma">--safe</a> <a id="201" class="Symbol">#-}</a>
+<a id="205" class="Keyword">module</a> <a id="212" href="Ledger.Dijkstra.Specification.Certs.Properties.html" class="Module">Ledger.Dijkstra.Specification.Certs.Properties</a> <a id="259" class="Keyword">where</a>
 </pre>
 
-<h2 id="addresses">Addresses<a class="headerlink" href="#addresses" title="Permanent link">&para;</a></h2>
-<pre class="Agda"><a id="397" class="Keyword">import</a> <a id="404" href="Ledger.Core.Specification.Address.html" class="Module">Ledger.Core.Specification.Address</a> <a id="438" class="Keyword">renaming</a> <a id="447" class="Symbol">(</a><a id="448" href="Ledger.Core.Specification.Address.html#2298" class="Record">RewardAddress</a> <a id="462" class="Symbol">to</a> <a id="465" class="Record">RewardAddress</a><a id="478" class="Symbol">)</a>
-</pre>
-<h2 id="epoch"><span class="AgdaModule">Epoch</span><a class="headerlink" href="#epoch" title="Permanent link">&para;</a></h2>
-<pre class="Agda"><a id="535" class="Keyword">import</a> <a id="542" href="Ledger.Core.Specification.Epoch.html" class="Module">Ledger.Core.Specification.Epoch</a>
-</pre>
-<h2 id="certificates">Certificates<a class="headerlink" href="#certificates" title="Permanent link">&para;</a></h2>
-<pre class="Agda"><a id="604" class="Keyword">import</a> <a id="611" href="Ledger.Dijkstra.Specification.Certs.html" class="Module">Ledger.Dijkstra.Specification.Certs</a>
-<a id="647" class="Keyword">import</a> <a id="654" href="Ledger.Dijkstra.Specification.Certs.Properties.html" class="Module">Ledger.Dijkstra.Specification.Certs.Properties</a>
-</pre>
-<h2 id="governance">Governance<a class="headerlink" href="#governance" title="Permanent link">&para;</a></h2>
-<pre class="Agda"><a id="729" class="Keyword">import</a> <a id="736" href="Ledger.Dijkstra.Specification.Gov.Base.html" class="Module">Ledger.Dijkstra.Specification.Gov.Base</a>
-<a id="775" class="Keyword">import</a> <a id="782" href="Ledger.Dijkstra.Specification.Gov.Actions.html" class="Module">Ledger.Dijkstra.Specification.Gov.Actions</a>
-</pre>
-<h2 id="ledger">Ledger<a class="headerlink" href="#ledger" title="Permanent link">&para;</a></h2>
-<pre class="Agda"><a id="848" class="Keyword">import</a> <a id="855" href="Ledger.Dijkstra.Specification.Ledger.html" class="Module">Ledger.Dijkstra.Specification.Ledger</a>
-</pre>
-<h2 id="protocol-parameters">Protocol Parameters<a class="headerlink" href="#protocol-parameters" title="Permanent link">&para;</a></h2>
-<pre class="Agda"><a id="929" class="Keyword">import</a> <a id="936" href="Ledger.Dijkstra.Specification.PParams.html" class="Module">Ledger.Dijkstra.Specification.PParams</a>
-</pre>
-<h2 id="scripts">Scripts<a class="headerlink" href="#scripts" title="Permanent link">&para;</a></h2>
-<pre class="Agda"><a id="999" class="Keyword">import</a> <a id="1006" href="Ledger.Dijkstra.Specification.Script.html" class="Module">Ledger.Dijkstra.Specification.Script</a>
-<a id="1043" class="Keyword">import</a> <a id="1050" href="Ledger.Dijkstra.Specification.Script.Validation.html" class="Module">Ledger.Dijkstra.Specification.Script.Validation</a>
-</pre>
-<h2 id="token-algebras">Token Algebras<a class="headerlink" href="#token-algebras" title="Permanent link">&para;</a></h2>
-<pre class="Agda"><a id="1130" class="Keyword">import</a> <a id="1137" href="Ledger.Dijkstra.Specification.TokenAlgebra.Base.html" class="Module">Ledger.Dijkstra.Specification.TokenAlgebra.Base</a>
-</pre>
-<h2 id="transactions">Transactions<a class="headerlink" href="#transactions" title="Permanent link">&para;</a></h2>
-<pre class="Agda"><a id="1215" class="Keyword">import</a> <a id="1222" href="Ledger.Dijkstra.Specification.Transaction.html" class="Module">Ledger.Dijkstra.Specification.Transaction</a>
-</pre>
-<h2 id="utxo"><span class="AgdaModule">Utxo</span><a class="headerlink" href="#utxo" title="Permanent link">&para;</a></h2>
-<pre class="Agda"><a id="1318" class="Keyword">import</a> <a id="1325" href="Ledger.Dijkstra.Specification.Utxo.html" class="Module">Ledger.Dijkstra.Specification.Utxo</a>
-</pre>
-<h2 id="utxow"><span class="AgdaModule">Utxow</span><a class="headerlink" href="#utxow" title="Permanent link">&para;</a></h2>
-<pre class="Agda"><a id="1415" class="Keyword">import</a> <a id="1422" href="Ledger.Dijkstra.Specification.Utxow.html" class="Module">Ledger.Dijkstra.Specification.Utxow</a>
+<pre class="Agda"><a id="282" class="Keyword">open</a> <a id="287" class="Keyword">import</a> <a id="294" href="Ledger.Dijkstra.Specification.Certs.Properties.Computational.html" class="Module">Ledger.Dijkstra.Specification.Certs.Properties.Computational</a>
 </pre>
 
 
@@ -12493,44 +12147,6 @@ consists of the modules listed below.</p>
       
         <footer class="md-footer">
   
-    
-      
-      <nav class="md-footer__inner md-grid" aria-label="Footer" >
-        
-          
-          <a href="Ledger.Conway.Specification.Types.GovStructure.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: GovStructure">
-            <div class="md-footer__button md-icon">
-              
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
-            </div>
-            <div class="md-footer__title">
-              <span class="md-footer__direction">
-                Previous
-              </span>
-              <div class="md-ellipsis">
-                GovStructure
-              </div>
-            </div>
-          </a>
-        
-        
-          
-          <a href="Ledger.Dijkstra.Specification.Abstract.html" class="md-footer__link md-footer__link--next" aria-label="Next: Abstract">
-            <div class="md-footer__title">
-              <span class="md-footer__direction">
-                Next
-              </span>
-              <div class="md-ellipsis">
-                Abstract
-              </div>
-            </div>
-            <div class="md-footer__button md-icon">
-              
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
-            </div>
-          </a>
-        
-      </nav>
     
   
   <div class="md-footer-meta md-typeset">
