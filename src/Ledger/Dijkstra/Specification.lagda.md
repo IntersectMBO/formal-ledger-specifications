@@ -75,10 +75,12 @@ import Ledger.Dijkstra.Specification.Transaction
 
 ```agda
 import Ledger.Dijkstra.Specification.Utxo
+import Ledger.Dijkstra.Specification.Utxo.Properties
 ```
 
 ## <span class="AgdaModule">Utxow</span>
 
 ```agda
 import Ledger.Dijkstra.Specification.Utxow
+import Ledger.Dijkstra.Specification.Utxow.Properties
 ```

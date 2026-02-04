@@ -27,7 +27,7 @@ private variable
   Γ  : A
   s s' : UTxOState
   tx : TopLevelTx
-  stx : SubLevelTx
+  txSub : SubLevelTx
 ```
 -->
 
@@ -117,7 +117,7 @@ data _⊢_⇀⦇_,SUBUTXOW⦈_ : SubUTxOEnv → UTxOState → SubLevelTx → UTx
 
   SUBUTXOW :
     let
-         open Tx tx
+         open Tx txSub
          open TxBody txBody
          open TxWitnesses txWitnesses
          open UTxOEnv
@@ -135,10 +135,10 @@ data _⊢_⇀⦇_,SUBUTXOW⦈_ : SubUTxOEnv → UTxOState → SubLevelTx → UTx
          p2Scripts = mapPartial toP2Script (ScriptPoolOf Γ)
 
          neededScriptHashes  : ℙ ScriptHash
-         neededScriptHashes  = mapPartial (isScriptObj  ∘ proj₂) (credsNeeded utxo₀ tx)
+         neededScriptHashes  = mapPartial (isScriptObj  ∘ proj₂) (credsNeeded utxo₀ txSub)
 
          neededVKeyHashes : ℙ KeyHash
-         neededVKeyHashes = mapPartial (isKeyHashObj ∘ proj₂) (credsNeeded utxo₀ tx)
+         neededVKeyHashes = mapPartial (isKeyHashObj ∘ proj₂) (credsNeeded utxo₀ txSub)
 
          neededDataHashes : ℙ DataHash
          neededDataHashes = mapPartial (λ txOut@(a , _ , d , _) → do sh ← isScriptObj (payCred a)
@@ -153,9 +153,9 @@ data _⊢_⇀⦇_,SUBUTXOW⦈_ : SubUTxOEnv → UTxOState → SubLevelTx → UTx
     ∙  neededScriptHashes ⊆ mapˢ hash p1Scripts ∪ mapˢ hash p2Scripts
     ∙  neededDataHashes ⊆ dom (DataPoolOf Γ)
     ∙  txADhash ≡ map hash txAuxData
-    ∙  Γ ⊢ s ⇀⦇ stx ,SUBUTXO⦈ s'
+    ∙  Γ ⊢ s ⇀⦇ txSub ,SUBUTXO⦈ s'
       ────────────────────────────────
-       Γ ⊢ s ⇀⦇ stx ,SUBUTXOW⦈ s'
+       Γ ⊢ s ⇀⦇ txSub ,SUBUTXOW⦈ s'
 
 data _⊢_⇀⦇_,UTXOW⦈_ : UTxOEnv → UTxOState → TopLevelTx → UTxOState → Type where
 
@@ -202,3 +202,11 @@ data _⊢_⇀⦇_,UTXOW⦈_ : UTxOEnv → UTxOState → TopLevelTx → UTxOState
       ────────────────────────────────
       Γ ⊢ s ⇀⦇ tx ,UTXOW⦈ s'
 ```
+
+<!--
+```agda
+unquoteDecl UTXOW-premises = genPremises UTXOW-premises (quote UTXOW)
+unquoteDecl SUBUTXOW-premises = genPremises SUBUTXOW-premises (quote SUBUTXOW)
+pattern SUBUTXOW-⋯ p₁ p₂ p₃ p₄ p₅ p₆ p₇ = SUBUTXOW (p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ )
+```
+-->

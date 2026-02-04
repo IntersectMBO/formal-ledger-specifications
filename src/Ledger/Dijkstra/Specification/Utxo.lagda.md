@@ -117,7 +117,7 @@ access the `allScripts`{.AgdaField} and `allData`{.AgdaField} fields of
 
 ```agda
 record UTxOState : Type where
-  constructor ⟦_,_,_,_⟧ᵘ
+  constructor ⟦_,_,_⟧ᵘ
   field
     utxo       : UTxO
     fees       : Fees
@@ -202,7 +202,6 @@ instance
   HasDonations-UTxOState : HasDonations UTxOState
   HasDonations-UTxOState .DonationsOf = UTxOState.donations
 
-opaque
   unquoteDecl HasCast-UTxOEnv HasCast-SubUTxOEnv HasCast-UTxOState = derive-HasCast
     ( (quote UTxOEnv    , HasCast-UTxOEnv  ) ∷
       (quote SubUTxOEnv , HasCast-SubUTxOEnv  ) ∷
@@ -402,10 +401,17 @@ data _⊢_⇀⦇_,SUBUTXO⦈_ : SubUTxOEnv → UTxOState → SubLevelTx → UTxO
     ∙ MaybeNetworkIdOf txSub ~ just NetworkId
       ────────────────────────────────
     let
-         s₁ = if IsTopLevelValidFlagOf Γ then ⟦ (utxo ∣ SpendInputsOf txTop ᶜ) ∪ˡ outs txTop , fees , donations + DonationsOf txTop ⟧ else ⟦ utxo , fees , donations ⟧
+         s₁ = if IsTopLevelValidFlagOf Γ
+              then ⟦ (utxo ∣ SpendInputsOf txSub ᶜ) ∪ˡ outs txSub , fees , donations + DonationsOf txSub ⟧ else ⟦ utxo , fees , donations ⟧
     in
       Γ ⊢ ⟦ utxo , fees , donations ⟧ ⇀⦇ txSub ,SUBUTXO⦈ s₁
 ```
+
+<!--
+```agda
+unquoteDecl SUBUTXO-premises = genPremises SUBUTXO-premises (quote SUBUTXO)
+```
+-->
 
 ### The <span class="AgdaDatatype">UTXO</span> Rule
 
