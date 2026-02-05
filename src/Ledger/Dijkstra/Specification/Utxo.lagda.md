@@ -35,7 +35,7 @@ open import Ledger.Dijkstra.Specification.Abstract
 open import Ledger.Dijkstra.Specification.Transaction
 
 module Ledger.Dijkstra.Specification.Utxo
-  (txs : _) (open TransactionStructure txs)
+  (txs : TransactionStructure) (open TransactionStructure txs)
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
 
@@ -289,48 +289,31 @@ collateralCheck pp txTop utxo =
 ```
 
 ```agda
-module _ (depositsChange : DepositsChange) where
+module _ (txTop : TopLevelTx) (depositsChange : ℤ) where
 
-  open DepositsChange depositsChange
+  depositRefundsBatch : Coin
+  depositRefundsBatch = negPart depositsChange
 
-  depositRefundsSub : Coin
-  depositRefundsSub = negPart depositsChangeSub
+  newDepositsBatch : Coin
+  newDepositsBatch = posPart depositsChange
 
-  newDepositsSub : Coin
-  newDepositsSub = posPart depositsChangeSub
+  consumed : UTxO → Value
+  consumed utxo =  consumedTx txTop + inject depositRefundsBatch
+                + ∑ˡ[ stx ← SubTransactionsOf txTop ] (consumedTx stx)
+    where
+    consumedTx : Tx ℓ → Value
+    consumedTx tx =  balance (utxo ∣ SpendInputsOf tx)
+                     + MintedValueOf tx
+                     + inject (getCoin (WithdrawalsOf tx))
 
-  newDepositsTop : Coin
-  newDepositsTop = posPart depositsChangeTop
-
-  depositRefundsTop : Coin
-  depositRefundsTop = negPart depositsChangeTop
-
-  consumedTx : Tx ℓ → UTxO → Value
-  consumedTx tx utxo = balance (utxo ∣ SpendInputsOf tx)
-                       + MintedValueOf tx
-                       + inject (getCoin (WithdrawalsOf tx))
-
-  consumed : TopLevelTx → UTxO → Value
-  consumed txTop utxo = consumedTx txTop utxo
-                        + inject depositRefundsTop
-
-  consumedBatch : TopLevelTx → UTxO → Value
-  consumedBatch txTop utxo = consumed txTop utxo
-                             + ∑ˡ[ stx ← SubTransactionsOf txTop ] (consumedTx stx utxo)
-                             + inject depositRefundsSub
-
-  producedTx : Tx ℓ → Value
-  producedTx tx = balance (outs tx) + inject (DonationsOf tx)
-
-  produced : TopLevelTx → Value
-  produced txTop = producedTx txTop
-                   + inject (TxFeesOf txTop)
-                   + inject newDepositsTop
-
-  producedBatch : TopLevelTx → Value
-  producedBatch txTop = produced txTop
-                        + ∑ˡ[ stx ← SubTransactionsOf txTop ] (producedTx stx)
-                        + inject newDepositsSub
+  produced : Value
+  produced =  producedTx txTop + inject newDepositsBatch
+              + ∑ˡ[ stx ← SubTransactionsOf txTop ] (producedTx stx)
+    where
+    producedTx : ∀ {ℓ} → Tx ℓ → Value
+    producedTx {TxLevelSub} tx =  balance (outs tx) + inject (DonationsOf tx)
+    producedTx {TxLevelTop} tx =
+      balance (outs tx) + inject (TxFeesOf tx) + inject (DonationsOf tx)
 ```
 
 
@@ -345,7 +328,6 @@ private
     s s'     : UTxOState
     txTop    : TopLevelTx
     txSub    : SubLevelTx
-    legacyMode : Bool
 ```
 -->
 
@@ -408,13 +390,11 @@ data _⊢_⇀⦇_,UTXOS⦈_ : UTxOEnv → ⊤ → TopLevelTx → ⊤ → Type wh
 
 <!--
 ```agda
-private
-  variable
-    utxo : UTxO
-    fees : Fees
-    donations : Donations
+unquoteDecl UTXOS-premises = genPremises UTXOS-premises (quote UTXOS)
 ```
 -->
+
+## The UTXO Transition System
 
 ### The <span class="AgdaDatatype">SUBUTXO</span> Rule
 
@@ -422,6 +402,7 @@ private
 data _⊢_⇀⦇_,SUBUTXO⦈_ : SubUTxOEnv → UTxOState → SubLevelTx → UTxOState → Type where
 
   SUBUTXO :
+    {utxo : UTxO} {fees : Fees} {donations : Donations} →
 
     ∙ SpendInputsOf txSub ≢ ∅
     ∙ inInterval (SlotOf Γ) (ValidIntervalOf txSub)
@@ -468,35 +449,34 @@ In addition, the `UTXO`{.AgdaDatatype} rule enforces:
 data _⊢_⇀⦇_,UTXO⦈_ : UTxOEnv × Bool → UTxOState → TopLevelTx → UTxOState → Type where
 
   UTXO :
+    {legacyMode : Bool}
+    {Γ : UTxOEnv} {txTop : TopLevelTx} {s₁ : UTxOState}
+    {utxo : UTxO} {fees : Fees} {donations : Donations} →
 
-    let
-         pp        = PParamsOf Γ
-         utxo₀     = UTxOOf Γ
-         overhead  = 160
-    in
-    ∙ SpendInputsOf txTop ≢ ∅
-    ∙ inInterval (SlotOf Γ) (ValidIntervalOf txTop)
-    ∙ minfee pp txTop utxo ≤ TxFeesOf txTop
-    ∙ consumedBatch (DepositsChangeOf Γ) txTop utxo₀ ≡ producedBatch (DepositsChangeOf Γ) txTop
-    ∙ SizeOf txTop ≤ maxTxSize pp
-    ∙ refScriptsSize txTop utxo₀ ≤ pp .maxRefScriptSizePerTx
-    ∙ allSpendInputs txTop ⊆ dom utxo₀ -- (1)
-    ∙ allReferenceInputs txTop ⊆ dom utxo₀ -- (1)
-    ∙ NoOverlappingSpendInputs txTop -- (2)
-    ∙ RedeemersOf txTop ˢ ≢ ∅ → collateralCheck pp txTop utxo₀
-    ∙ allMintedCoin txTop ≡ 0
+    ∙ (SpendInputsOf txTop ≢ ∅)
+    ∙ (inInterval (SlotOf Γ) (ValidIntervalOf txTop))
+    ∙ (minfee (PParamsOf Γ) txTop utxo ≤ TxFeesOf txTop)
+    ∙ (consumed txTop (DepositsChangeOf Γ) (UTxOOf Γ) ≡ produced txTop (DepositsChangeOf Γ))
+    ∙ (SizeOf txTop ≤ maxTxSize (PParamsOf Γ))
+    ∙ (refScriptsSize txTop (UTxOOf Γ) ≤ (PParamsOf Γ) .maxRefScriptSizePerTx)
+    ∙ (allSpendInputs txTop ⊆ dom (UTxOOf Γ))                     -- (1)
+    ∙ (allReferenceInputs txTop ⊆ dom (UTxOOf Γ))                 -- (1)
+    ∙ (NoOverlappingSpendInputs txTop)                            -- (2)
+    ∙ (RedeemersOf txTop ˢ ≢ ∅ → collateralCheck (PParamsOf Γ) txTop (UTxOOf Γ))
+    ∙ (allMintedCoin txTop ≡ 0)
 
-    ∙ ∀[ (_ , o) ∈ ∣ TxOutsOf txTop ∣ ]
-      (inject ((overhead + utxoEntrySize o) * coinsPerUTxOByte pp) ≤ᵗ txOutToValue o)
-      × (serializedSize (txOutToValue o) ≤ maxValSize pp)
+    ∙ (∀[ (_ , o) ∈ ∣ TxOutsOf txTop ∣ ]
+      (inject ((160 + utxoEntrySize o) * coinsPerUTxOByte (PParamsOf Γ)) ≤ᵗ txOutToValue o)
+      × (serializedSize (txOutToValue o) ≤ maxValSize (PParamsOf Γ)))
 
-    ∙ ∀[ (a , _) ∈ range (TxOutsOf txTop) ]
-      (Sum.All (const ⊤) (λ a → AttrSizeOf a ≤ 64)) a × (netId a ≡ NetworkId)
+    ∙ (∀[ (a , _) ∈ range (TxOutsOf txTop) ]
+      (Sum.All (const ⊤) (λ a → AttrSizeOf a ≤ 64)) a × (netId a ≡ NetworkId))
 
-    ∙ ∀[ a ∈ dom (WithdrawalsOf txTop)] NetworkIdOf a ≡ NetworkId
-    ∙ MaybeNetworkIdOf txTop ~ just NetworkId
-    ∙ CurrentTreasuryOf txTop  ~ just (TreasuryOf Γ)
-    ∙ Γ ⊢ _ ⇀⦇ txTop ,UTXOS⦈ _
+    ∙ (∀[ a ∈ dom (WithdrawalsOf txTop)] NetworkIdOf a ≡ NetworkId)
+    ∙ (MaybeNetworkIdOf txTop ~ just NetworkId)
+    ∙ (CurrentTreasuryOf txTop  ~ just (TreasuryOf Γ))
+    ∙ (Γ ⊢ tt ⇀⦇ txTop ,UTXOS⦈ tt)
+    ∙ (s₁ ≡ (if IsValidFlagOf txTop then ⟦ (utxo ∣ SpendInputsOf txTop ᶜ) ∪ˡ outs txTop , fees + TxFeesOf txTop , donations + DonationsOf txTop ⟧ else ⟦ utxo ∣ (CollateralInputsOf txTop) ᶜ , fees + cbalance (utxo ∣ CollateralInputsOf txTop) , donations ⟧))
     ∙ if legacyMode
          then
            ∙ consumed (DepositsChangeOf Γ) txTop utxo₀ ≡ produced (DepositsChangeOf Γ) txTop -- (3)
@@ -508,7 +488,48 @@ data _⊢_⇀⦇_,UTXO⦈_ : UTxOEnv × Bool → UTxOState → TopLevelTx → UT
               then ⟦ (utxo ∣ SpendInputsOf txTop ᶜ) ∪ˡ outs txTop , fees + TxFeesOf txTop , donations + DonationsOf txTop ⟧ else ⟦ utxo ∣ (CollateralInputsOf txTop) ᶜ , fees + cbalance (utxo ∣ CollateralInputsOf txTop) , donations ⟧
     in
       (Γ , legacyMode)  ⊢ ⟦ utxo , fees , donations ⟧ ⇀⦇ txTop ,UTXO⦈ s₁
+
 ```
+<!--
+```agda
+-- unquoteDecl UTXO-premises = genPremises UTXO-premises (quote UTXO)
+-- ^ this doesn't work right now:
+-- "de Bruijn index 4 is not in scope in the context (txs : _) (abs : _) (Γ : _) (txTop : _)"
+
+-- switching to manual mode for now...
+UTXO-Premises : UTxOEnv → TopLevelTx → UTxOState → UTxO → Fees → Donations → Type
+UTXO-Premises Γ txTop s₁ utxo fees donations =
+      (SpendInputsOf txTop ≢ ∅)
+      × (inInterval (SlotOf Γ) (ValidIntervalOf txTop))
+      × (minfee (PParamsOf Γ) txTop utxo ≤ TxFeesOf txTop)
+      × (consumed txTop (DepositsChangeOf Γ) (UTxOOf Γ) ≡ produced txTop (DepositsChangeOf Γ))
+      × (SizeOf txTop ≤ maxTxSize (PParamsOf Γ))
+      × (refScriptsSize txTop (UTxOOf Γ) ≤ (PParamsOf Γ) .maxRefScriptSizePerTx)
+      × (allSpendInputs txTop ⊆ dom (UTxOOf Γ))
+      × (allReferenceInputs txTop ⊆ dom (UTxOOf Γ))
+      × (NoOverlappingSpendInputs txTop)
+      × (requiredGuardsInTopLevel txTop (SubTransactionsOf txTop))
+      × ((RedeemersOf txTop ˢ ≢ ∅) → collateralCheck (PParamsOf Γ) txTop (UTxOOf Γ))
+      × (allMintedCoin txTop ≡ 0)
+      × (∀[ (_ , o) ∈ ∣ TxOutsOf txTop ∣ ]
+        (inject ((160 + utxoEntrySize o) * coinsPerUTxOByte (PParamsOf Γ)) ≤ᵗ txOutToValue o)
+        × (serializedSize (txOutToValue o) ≤ maxValSize (PParamsOf Γ)))
+      × (∀[ (a , _) ∈ range (TxOutsOf txTop) ]
+        (Sum.All (const ⊤) (λ a → AttrSizeOf a ≤ 64)) a × (netId a ≡ NetworkId))
+      × (∀[ a ∈ dom (WithdrawalsOf txTop)] NetworkIdOf a ≡ NetworkId)
+      × (MaybeNetworkIdOf txTop ~ just NetworkId)
+      × (CurrentTreasuryOf txTop  ~ just (TreasuryOf Γ))
+      × (Γ ⊢ tt ⇀⦇ txTop ,UTXOS⦈ tt)
+      × (s₁ ≡ (if IsValidFlagOf txTop then ⟦ (utxo ∣ SpendInputsOf txTop ᶜ) ∪ˡ outs txTop , fees + TxFeesOf txTop , donations + DonationsOf txTop ⟧ else ⟦ utxo ∣ (CollateralInputsOf txTop) ᶜ , fees + cbalance (utxo ∣ CollateralInputsOf txTop) , donations ⟧))
+
+UTXO-step : {Γ : UTxOEnv} {txTop : TopLevelTx} {s₁ : UTxOState}
+            {utxo : UTxO} {fees : Fees} {donations : Donations}
+            → UTXO-Premises Γ txTop s₁ utxo fees donations
+            → Γ ⊢ ⟦ utxo , fees , donations ⟧ ⇀⦇ txTop ,UTXO⦈ s₁
+
+UTXO-step premises = UTXO premises
+```
+-->
 
 [1]: https://github.com/cardano-foundation/CIPs/tree/master/CIP-0118#changes-to-transaction-validity "CIP-0118 | Changes to Transaction Validity"
 [2]: https://cips.cardano.org/cip/CIP-0118 "CIP-0118 | Nested Transactions"
