@@ -376,6 +376,11 @@ data _⊢_⇀⦇_,UTXOS⦈_ : UTxOEnv → ⊤ → TopLevelTx → ⊤ → Type wh
       ────────────────────────────────
       Γ ⊢ tt ⇀⦇ txTop ,UTXOS⦈ tt
 ```
+<!--
+```agda
+unquoteDecl UTXOS-premises = genPremises UTXOS-premises (quote UTXOS)
+```
+-->
 
 ## The UTXO Transition System
 
