@@ -14,29 +14,15 @@ module Ledger.Dijkstra.Specification.Utxo.Properties.Computational
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
 
-open import Algebra.Morphism              using (module MonoidMorphisms; IsMagmaHomomorphism)
-open import Data.Integer as ℤ             using (ℤ)
-open import Data.List.Relation.Unary.All  using (All)
-import Data.Nat as ℕ
-open import Data.Nat.Properties           hiding (_≟_)
-open import Data.String.Base              using () renaming (_++_ to _+ˢ_)
-
-open import Prelude; open Equivalence
-open import Ledger.Prelude hiding (≤-trans; ≤-antisym; All); open Properties
-
-open import Tactic.Cong                 using (cong!)
-open import Tactic.EquationalReasoning  using (module ≡-Reasoning)
-open import stdlib-meta.Tactic.MonoidSolver.NonNormalising using (solve-macro)
+open import Prelude
+open import Ledger.Prelude
 open import stdlib-meta.Tactic.GenError using (genErrors)
 
 open import Ledger.Dijkstra.Specification.Utxo txs abs
 open import Ledger.Dijkstra.Specification.Script.Validation txs abs
-open import Ledger.Dijkstra.Specification.Certs govStructure
 open import Relation.Binary.PropositionalEquality
 
 instance
---   _ = TokenAlgebra.Value-CommutativeMonoid tokenAlgebra
---   _ = +-0-monoid
   _ = Functor-ComputationResult
 
 instance
@@ -76,4 +62,23 @@ instance
              × MaybeNetworkIdOf txSub ~ just NetworkId ¿
       ... |  (yes p) = refl
       ... |  (no ¬p) = ⊥-elim (¬p p)
+
+
+  Computational-UTXOS : Computational _⊢_⇀⦇_,UTXOS⦈_ String
+  Computational-UTXOS = MkComputational computeProof completeness
+    where
+      computeProof : (Γ : UTxOEnv) (s : ⊤) (txTop : TopLevelTx)
+        → ComputationResult String (∃[ s' ] Γ ⊢ s ⇀⦇ txTop ,UTXOS⦈ s')
+      computeProof Γ s txTop
+        with ¿ evalP2Scripts (allP2ScriptsWithContext Γ txTop) ≡ IsValidFlagOf txTop ¿
+      ... | yes p = success (tt , UTXOS p)
+      ... | no ¬p = failure (genErrors ¬p)
+
+      completeness : (Γ : UTxOEnv) (s : ⊤) (txTop : TopLevelTx) (s' : ⊤)
+        → Γ ⊢ s ⇀⦇ txTop ,UTXOS⦈ s'
+        → (map proj₁ $ computeProof Γ s txTop) ≡ success s'
+      completeness Γ s txTop s' (UTXOS p)
+        with ¿ evalP2Scripts (allP2ScriptsWithContext Γ txTop) ≡ IsValidFlagOf txTop ¿
+      ... | yes p = refl
+      ... | no ¬p = ⊥-elim (¬p p)
 ```
