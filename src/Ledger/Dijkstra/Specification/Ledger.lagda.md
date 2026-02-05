@@ -168,7 +168,7 @@ allColdCreds govSt es =
 
 calculateDepositsChange : CertState → CertState → CertState → DepositsChange
 calculateDepositsChange certState₀ certState₁ certState₂
-  = (coin₁ - coin₀) , (coin₂ - coin₁)
+  = ⟦ coinChangeTop , coinChangeSub ⟧
   where
     coinFromDeposit : CertState → Coin
     coinFromDeposit certState =
@@ -184,6 +184,12 @@ calculateDepositsChange certState₀ certState₁ certState₂
 
     coin₂ : Coin
     coin₂ = coinFromDeposit certState₂
+
+    coinChangeSub : ℤ
+    coinChangeSub = coin₁ - coin₀
+
+    coinChangeTop : ℤ
+    coinChangeTop = coin₂ - coin₁
 ```
 
 ## <span class="AgdaDatatype">LEDGER</span> Transition System
@@ -327,7 +333,7 @@ data _⊢_⇀⦇_,LEDGER⦈_ : LedgerEnv → LState → TopLevelTx → LState �
     in
       ∙ IsValidFlagOf tx ≡ false
       ∙ ⟦ slot , ppolicy , pp , enactState , treasury , utxo₀ , IsValidFlagOf tx , allScripts , allData ⟧ ⊢ ⟦ utxoState₀ , govState₀ , certState₀ ⟧ ⇀⦇ SubTransactionsOf tx ,SUBLEDGERS⦈ ⟦ utxoState₀ , govState₀ , certState₀ ⟧
-      ∙ ⟦ slot , pp , treasury , utxo₀ , (0ℤ , 0ℤ) , allScripts , allData ⟧ ⊢ utxoState₀ ⇀⦇ tx ,UTXOW⦈ utxoState₁
+      ∙ ⟦ slot , pp , treasury , utxo₀ , ⟦ 0ℤ , 0ℤ ⟧ , allScripts , allData ⟧ ⊢ utxoState₀ ⇀⦇ tx ,UTXOW⦈ utxoState₁
         ────────────────────────────────
         ⟦ slot , ppolicy , pp , enactState , treasury ⟧ ⊢ ⟦ utxoState₀ , govState₀ , certState₀ ⟧ ⇀⦇ tx ,LEDGER⦈ ⟦ utxoState₁ , govState₀ , certState₀ ⟧
 

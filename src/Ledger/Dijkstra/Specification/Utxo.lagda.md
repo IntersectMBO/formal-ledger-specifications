@@ -70,8 +70,10 @@ The UTxO rules are parameterised by an environment `UTxOEnv`{.AgdaRecord} and an
 evolving state `UTxOState`{.AgdaRecord}.
 
 ```agda
-DepositsChange : Type
-DepositsChange = ℤ × ℤ
+record DepositsChange : Type where
+  field
+    depositsChangeTop : ℤ
+    depositsChangeSub : ℤ
 
 record UTxOEnv : Type where
   field
@@ -138,7 +140,7 @@ record HasIsTopLevelValidFlag {a} (A : Type a) : Type a where
 open HasIsTopLevelValidFlag ⦃...⦄ public
 
 record HasDepositsChange {a} (A : Type a) : Type a where
-  field DepositsChangeOf : A → ℤ × ℤ
+  field DepositsChangeOf : A → DepositsChange
 open HasDepositsChange ⦃...⦄ public
 
 record HasScriptPool {a} (A : Type a) : Type a where
@@ -205,10 +207,14 @@ instance
   HasDonations-UTxOState : HasDonations UTxOState
   HasDonations-UTxOState .DonationsOf = UTxOState.donations
 
-  unquoteDecl HasCast-UTxOEnv HasCast-SubUTxOEnv HasCast-UTxOState = derive-HasCast
-    ( (quote UTxOEnv    , HasCast-UTxOEnv  ) ∷
-      (quote SubUTxOEnv , HasCast-SubUTxOEnv  ) ∷
-    [ (quote UTxOState  , HasCast-UTxOState) ])
+  unquoteDecl HasCast-DepositsChange
+              HasCast-UTxOEnv
+              HasCast-SubUTxOEnv
+              HasCast-UTxOState = derive-HasCast
+    ( (quote DepositsChange , HasCast-DepositsChange  ) ∷
+      (quote UTxOEnv        , HasCast-UTxOEnv  ) ∷
+      (quote SubUTxOEnv     , HasCast-SubUTxOEnv  ) ∷
+    [ (quote UTxOState      , HasCast-UTxOState) ])
 ```
 -->
 
@@ -285,11 +291,7 @@ collateralCheck pp txTop utxo =
 ```agda
 module _ (depositsChange : DepositsChange) where
 
-  depositsChangeTop : ℤ
-  depositsChangeTop = depositsChange .proj₁
-
-  depositsChangeSub : ℤ
-  depositsChangeSub = depositsChange .proj₂
+  open DepositsChange depositsChange
 
   depositRefundsSub : Coin
   depositRefundsSub = negPart depositsChangeSub
