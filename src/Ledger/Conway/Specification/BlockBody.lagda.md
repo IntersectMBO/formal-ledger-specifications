@@ -13,6 +13,8 @@ module Ledger.Conway.Specification.BlockBody
 open import Ledger.Conway.Specification.Enact govStructure
 open import Ledger.Conway.Specification.Ledger txs abs
 open import Ledger.Conway.Specification.Rewards txs abs
+open import Ledger.Conway.Specification.Tiers  txs abs
+open import Ledger.Conway.Specification.Utxo txs abs
 ```
 -->
 
@@ -30,6 +32,7 @@ record BHBody : Type where
     slot    : Slot
     bhash   : KeyHash
     hBbsize : ℕ
+    incomingIds : ℙ TxId
 
 record BHeader : Type where
   field
@@ -92,7 +95,7 @@ incrBlocks hk b = b ∪⁺ singletonᵐ hk 1
 data _⊢_⇀⦇_,BBODY⦈_
   : BBodyEnv → BBodyState → Block → BBodyState → Type where
 
-  BBODY-Block-Body : ∀ {acnt ls ls' b block es} →
+  BBODY-Block-Body : ∀ {acnt ls ls' b block es ps'} →
     let
       open BHeader
       open BHBody
@@ -100,14 +103,17 @@ data _⊢_⇀⦇_,BBODY⦈_
       open EnactState
       txs = block .ts
       bhb = block .bheader .bhbody
+      inIds = incomingIds bhb
       hk = hash (bhb .bvkcold)
       pp = PParamsOf es
       Γ  = ⟦ bhb .slot , ∣ es .constitution ∣ , pp , es , TreasuryOf acnt ⟧
+      ls'' = record { LState ls' ; utxoSt = record { UTxOState (ls' .LState.utxoSt) ; policyState = ps' } }
 
      in
     ∙ block .bBodySize ≡ bhb .hBbsize
-    ∙ block .bBodyHash ≡ bhb .bhash
+    ∙ block .bBodyHash ≡ bhb .bhash   
     ∙ Γ ⊢ ls ⇀⦇ txs ,LEDGERS⦈ ls'
+    ∙ ⊤ ⊢ (ls .LState.utxoSt .UTxOState.policyState) ⇀⦇ (ls' .LState.utxoSt .UTxOState.tiers , inIds) ,DIVUP⦈ ps'
     ────────────────────────────────
-    (es , acnt) ⊢ ls , b ⇀⦇ block ,BBODY⦈ (ls' , incrBlocks hk b)
+    (es , acnt) ⊢ ls , b ⇀⦇ block ,BBODY⦈ ( ls'' , incrBlocks hk b)
 ```

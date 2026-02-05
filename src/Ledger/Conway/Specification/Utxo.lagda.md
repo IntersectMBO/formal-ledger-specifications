@@ -37,12 +37,14 @@ open import Ledger.Prelude
 open import Ledger.Conway.Specification.Abstract
 open import Ledger.Conway.Specification.Transaction
 
+
 module Ledger.Conway.Specification.Utxo
   (txs : _) (open TransactionStructure txs)
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
 
 open import Ledger.Conway.Specification.Script.Validation txs abs
+open import Ledger.Conway.Specification.Tiers txs abs
 open import Ledger.Conway.Specification.Fees using (scriptsCost)
 open import Ledger.Conway.Specification.Certs govStructure
 
@@ -103,7 +105,7 @@ record UTxOState : Type where
 ```
 <!--
 ```agda
-  constructor ⟦_,_,_,_⟧ᵘ
+  constructor ⟦_,_,_,_,_,_⟧ᵘ
 ```
 -->
 ```agda
@@ -112,6 +114,8 @@ record UTxOState : Type where
     fees       : Fees
     deposits   : Deposits
     donations  : Donations
+    tiers : TxTiers
+    policyState : SDPolicy -- diversity policy and immature transactions
 ```
 
 <!--
@@ -462,6 +466,8 @@ private variable
   fees : Fees
   donations : Donations
   deposits : Deposits
+  tiers : TxTiers
+  policyState : SDPolicy
 
 open UTxOEnv
 ```
@@ -485,7 +491,7 @@ data _⊢_⇀⦇_,UTXOS⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Typ
         ∙ evalP2Scripts p2Scripts ≡ isValid
         ∙ isValid ≡ true
           ────────────────────────────────
-          Γ ⊢ ⟦ utxo , fees , deposits , donations ⟧ ⇀⦇ tx ,UTXOS⦈ ⟦ (utxo ∣ txIns ᶜ) ∪ˡ (outs txb) , fees + txFee , updateDeposits pp txb deposits , donations + txDonation ⟧
+          Γ ⊢ ⟦ utxo , fees , deposits , donations , tiers , policyState ⟧ᵘ ⇀⦇ tx ,UTXOS⦈ ⟦ (utxo ∣ txIns ᶜ) ∪ˡ (outs txb) , fees + txFee , updateDeposits pp txb deposits , donations + txDonation , ⟦ txId , tier , txsize ⟧ᵗˢ ∷ tiers , policyState ⟧ᵘ
   Scripts-No :
     let  pp         = Γ .pparams
 ```
@@ -500,7 +506,7 @@ data _⊢_⇀⦇_,UTXOS⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Typ
         ∙ evalP2Scripts p2Scripts ≡ isValid
         ∙ isValid ≡ false
           ────────────────────────────────
-          Γ ⊢ ⟦ utxo , fees , deposits , donations ⟧ ⇀⦇ tx ,UTXOS⦈ ⟦ utxo ∣ collateralInputs ᶜ , fees + cbalance (utxo ∣ collateralInputs) , deposits , donations ⟧
+          Γ ⊢ ⟦ utxo , fees , deposits , donations , tiers , policyState ⟧ᵘ  ⇀⦇ tx ,UTXOS⦈ ⟦ utxo ∣ collateralInputs ᶜ , fees + cbalance (utxo ∣ collateralInputs) , deposits , donations , ⟦ txId , tier , txsize ⟧ᵗˢ ∷ tiers , policyState ⟧ᵘ -- still added to tier list because tx pays fees
 ```
 <!--
 ```agda
@@ -527,7 +533,7 @@ data _⊢_⇀⦇_,UTXO⦈_ where
 ```
 <!--
 ```agda
-        open Tx tx renaming (body to txb); open TxBody txb
+        open Tx tx renaming (body to txb); open TxBody txb; open SDPolicy policyState
         open TxWitnesses wits
 ```
 -->
@@ -551,6 +557,7 @@ data _⊢_⇀⦇_,UTXO⦈_ where
     ∙ ∀[ a ∈ dom txWithdrawals ]    NetworkIdOf a  ≡ NetworkId
     ∙ txNetworkId  ~ just NetworkId
     ∙ currentTreasury  ~ just treasury
+    ∙ checkTiers txId tier tiers maturing diversityPolicy -- check that index in maturing of txid is right for the tier of the transaction and transaction has correct tier coefficient
     ∙ Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ s'
       ────────────────────────────────
       Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s'

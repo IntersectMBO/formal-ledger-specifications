@@ -141,6 +141,18 @@ record TransactionStructure : Type₁ where
   RdmrPtr            = Tag × Ix
   ProposedPPUpdates  = KeyHash ⇀ PParamsUpdate
   Update             = ProposedPPUpdates × Epoch
+
+  record TxTier : Set where
+    constructor ⟦_,_,_⟧ᵗˢ
+    field 
+      tid : TxId 
+      tierNo : ℕ -- tier number 
+      txsize : ℕ -- corresponding transaction size
+
+
+
+  TierCoeff = ℕ -- TODO define correctly
+  TxTiers = List TxTier
 ```
 
 <!--
@@ -173,6 +185,7 @@ record TransactionStructure : Type₁ where
       mint                 : Value
       reqSignerHashes      : ℙ KeyHash
       scriptIntegrityHash  : Maybe ScriptHash
+      tier : TierCoeff
       -- txup              : Maybe Update   -- deprecated; leave for now
 ```
 
