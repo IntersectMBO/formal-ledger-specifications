@@ -104,6 +104,10 @@ Withdrawals = RewardAddress ⇀ Coin
 ```agda
 open BaseAddr; open BootstrapAddr; open BaseAddr; open BootstrapAddr
 
+record HasRewardAddress {a} (A : Type a) : Type a where
+  field RewardAddressOf : A → RewardAddress
+open HasRewardAddress ⦃...⦄ public
+
 record HasNetworkId {a} (A : Type a) : Type a where
   field NetworkIdOf : A → Network
 open HasNetworkId ⦃...⦄ public

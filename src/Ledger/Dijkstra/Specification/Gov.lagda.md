@@ -80,6 +80,14 @@ record HasGovState {a} (A : Type a) : Type a where
   field GovStateOf : A → GovState
 open HasGovState ⦃...⦄ public
 
+record HasEpoch {a} (A : Type a) : Type a where
+  field EpochOf : A → Epoch
+open HasEpoch ⦃...⦄ public
+
+record HasRewardCredentials {a} (A : Type a) : Type a where
+  field RewardCredentialsOf : A → ℙ Credential
+open HasRewardCredentials ⦃...⦄ public
+
 instance
   HasPParams-GovEnv : HasPParams GovEnv
   HasPParams-GovEnv .PParamsOf = GovEnv.pparams
@@ -89,6 +97,12 @@ instance
 
   HasCertState-GovEnv : HasCertState GovEnv
   HasCertState-GovEnv .CertStateOf = GovEnv.certState
+
+  HasEpoch-GovEnv : HasEpoch GovEnv
+  HasEpoch-GovEnv .EpochOf = GovEnv.epoch
+
+  HasRewardCredentials-GovEnv : HasRewardCredentials GovEnv
+  HasRewardCredentials-GovEnv .RewardCredentialsOf = GovEnv.rewardCreds
 
   unquoteDecl HasCast-GovEnv = derive-HasCast
     [ (quote GovEnv , HasCast-GovEnv) ]
