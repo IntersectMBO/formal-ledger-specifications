@@ -26,7 +26,7 @@ private variable
   A  : Type
   Γ  : A
   s s' : UTxOState
-  tx : TopLevelTx
+  txTop : TopLevelTx
   txSub : SubLevelTx
 ```
 -->
@@ -136,9 +136,11 @@ data _⊢_⇀⦇_,SUBUTXOW⦈_ : SubUTxOEnv → UTxOState → SubLevelTx → UTx
 
          neededScriptHashes  : ℙ ScriptHash
          neededScriptHashes  = mapPartial (isScriptObj  ∘ proj₂) (credsNeeded utxo₀ txSub)
+                               ∪ (mapPartial isScriptObj (GuardsOf txSub))
 
          neededVKeyHashes : ℙ KeyHash
          neededVKeyHashes = mapPartial (isKeyHashObj ∘ proj₂) (credsNeeded utxo₀ txSub)
+                            ∪ (mapPartial isKeyHashObj (GuardsOf txSub))
 
          neededDataHashes : ℙ DataHash
          neededDataHashes = mapPartial (λ txOut@(a , _ , d , _) → do sh ← isScriptObj (payCred a)
@@ -156,21 +158,28 @@ data _⊢_⇀⦇_,SUBUTXOW⦈_ : SubUTxOEnv → UTxOState → SubLevelTx → UTx
     ∙  Γ ⊢ s ⇀⦇ txSub ,SUBUTXO⦈ s'
       ────────────────────────────────
        Γ ⊢ s ⇀⦇ txSub ,SUBUTXOW⦈ s'
+```
 
+1.  Guards
+
+2.  Every guard credential required by a subtransaction must appear in the
+    top-level `txGuards`{.AgdaField} set.
+
+```agda
 data _⊢_⇀⦇_,UTXOW⦈_ : UTxOEnv → UTxOState → TopLevelTx → UTxOState → Type where
 
   UTXOW :
     let
-         open Tx tx
+         open Tx txTop
          open TxBody txBody
          open TxWitnesses txWitnesses
          open UTxOEnv
 
-         utxo₀               = Γ .utxo₀
-         utxo                = s .UTxOState.utxo
+         utxo₀               = UTxOOf Γ
+         utxo                = UTxOOf s
 
-         witsKeyHashes       : ℙ KeyHash
-         witsKeyHashes       = mapˢ hash (dom vKeySigs)
+         witsKeyHashes : ℙ KeyHash
+         witsKeyHashes = mapˢ hash (dom vKeySigs)
 
          p1Scripts : ℙ P1Script
          p1Scripts = mapPartial toP1Script (ScriptPoolOf Γ)
@@ -178,11 +187,13 @@ data _⊢_⇀⦇_,UTXOW⦈_ : UTxOEnv → UTxOState → TopLevelTx → UTxOState
          p2Scripts : ℙ P2Script
          p2Scripts = mapPartial toP2Script (ScriptPoolOf Γ)
 
-         neededScriptHashes  : ℙ ScriptHash
-         neededScriptHashes  = mapPartial (isScriptObj  ∘ proj₂) (credsNeeded utxo₀ tx)
+         neededScriptHashes : ℙ ScriptHash
+         neededScriptHashes = mapPartial (isScriptObj  ∘ proj₂) (credsNeeded utxo₀ txTop)
+                               ∪ (mapPartial isScriptObj (GuardsOf txSub)) -- (1,2)
 
          neededVKeyHashes : ℙ KeyHash
-         neededVKeyHashes = mapPartial (isKeyHashObj ∘ proj₂) (credsNeeded utxo₀ tx)
+         neededVKeyHashes = mapPartial (isKeyHashObj ∘ proj₂) (credsNeeded utxo₀ txTop)
+                            ∪ (mapPartial isKeyHashObj (GuardsOf txSub)) -- (1,2)
 
          neededDataHashes : ℙ DataHash
          neededDataHashes = mapPartial (λ txOut@(a , _ , d , _) → do sh ← isScriptObj (payCred a)
@@ -196,11 +207,12 @@ data _⊢_⇀⦇_,UTXOW⦈_ : UTxOEnv → UTxOState → TopLevelTx → UTxOState
     ∙  neededVKeyHashes ⊆ witsKeyHashes
     ∙  neededScriptHashes ⊆ mapˢ hash p1Scripts ∪ mapˢ hash p2Scripts
     ∙  neededDataHashes ⊆ dom (DataPoolOf Γ)
-    ∙  languages p2Scripts ⊆ dom (PParams.costmdls (PParamsOf Γ)) ∩ allowedLanguages tx utxo
+    ∙  RequiredGuardsInTopLevel txTop -- (2)
+    ∙  languages p2Scripts ⊆ dom (PParams.costmdls (PParamsOf Γ)) ∩ allowedLanguages txTop utxo
     ∙  txADhash ≡ map hash txAuxData
-    ∙  Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s'
+    ∙  Γ ⊢ s ⇀⦇ txTop ,UTXO⦈ s'
       ────────────────────────────────
-      Γ ⊢ s ⇀⦇ tx ,UTXOW⦈ s'
+      Γ ⊢ s ⇀⦇ txTop ,UTXOW⦈ s'
 ```
 
 <!--

@@ -727,8 +727,8 @@ remaining helper functions of this section.
 
   -- Phase-1 condition (CIP-0118):
   -- every credential required by a subTx body must appear in the top-level txGuards set.
-  requiredGuardsInTopLevel : TopLevelTx → List SubLevelTx → Type
-  requiredGuardsInTopLevel topTx subTxs = requiredCreds ⊆ GuardsOf topTx
+  RequiredGuardsInTopLevel : TopLevelTx → Type
+  RequiredGuardsInTopLevel txTop = requiredCreds ⊆ GuardsOf txTop
     where
     -- union a list of sets
     concatMapˡ : {A B : Type} → (A → ℙ B) → List A → ℙ B
@@ -736,7 +736,7 @@ remaining helper functions of this section.
     -- maybe move this to agda-sets or src-lib-exts
 
     requiredCreds : ℙ Credential
-    requiredCreds = concatMapˡ subTxGuardCredentials subTxs
+    requiredCreds = concatMapˡ subTxGuardCredentials (SubTransactionsOf txTop)
 ```
 
 ## Changes to Transaction Validity

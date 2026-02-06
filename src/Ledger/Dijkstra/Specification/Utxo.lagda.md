@@ -434,9 +434,6 @@ In addition, the `UTXO`{.AgdaDatatype} rule enforces:
     be pairwise disjoint.  This is enforced by the `NoOverlappingSpendInputs
     txTop` precondition.
 
-3.  Every guard credential required by a subtransaction must appear in the
-    top-level `txGuards`{.AgdaField} set.
-
 
 ```agda
 data _⊢_⇀⦇_,UTXO⦈_ : UTxOEnv → UTxOState → TopLevelTx → UTxOState → Type where
@@ -457,7 +454,6 @@ data _⊢_⇀⦇_,UTXO⦈_ : UTxOEnv → UTxOState → TopLevelTx → UTxOState 
     ∙ allSpendInputs txTop ⊆ dom utxo₀                          -- (1)
     ∙ allReferenceInputs txTop ⊆ dom utxo₀                      -- (1)
     ∙ NoOverlappingSpendInputs txTop                            -- (2)
-    ∙ requiredGuardsInTopLevel txTop (SubTransactionsOf txTop)  -- (3)
     ∙ RedeemersOf txTop ˢ ≢ ∅ → collateralCheck pp txTop utxo₀
     ∙ allMintedCoin txTop ≡ 0
 
