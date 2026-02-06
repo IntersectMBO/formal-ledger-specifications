@@ -22,10 +22,10 @@ open import Ledger.Dijkstra.Specification.Utxo txs abs
 open import Ledger.Dijkstra.Specification.Script.Validation txs abs
 
 private variable
-  ℓ : TxLevel
-  A  : Type
-  Γ  : A
-  s s' : UTxOState
+  ℓ     : TxLevel
+  A     : Type
+  Γ     : A
+  s s'  : UTxOState
   txTop : TopLevelTx
   txSub : SubLevelTx
 ```
@@ -96,14 +96,8 @@ module _ {tx : TopLevelTx} where
 languages :  ℙ P2Script → ℙ Language
 languages p2Scripts = mapˢ language p2Scripts
 
-allowedLanguages : TopLevelTx → UTxO → ℙ Language
-allowedLanguages tx utxo =
-  if UsesBootstrapAddress tx utxo
-    then ∅
-    else
-  if UsesV4Features tx
-    then fromList (PlutusV4 ∷ [])
-    else
+allowedLanguagesLegacyMode : TopLevelTx → UTxO → ℙ Language
+allowedLanguagesLegacyMode tx utxo =
   if UsesV3Features tx
     then fromList (PlutusV4 ∷ PlutusV3 ∷ [])
     else
@@ -111,6 +105,8 @@ allowedLanguages tx utxo =
     then fromList (PlutusV4 ∷ PlutusV3 ∷ PlutusV2 ∷ [])
     else fromList (PlutusV4 ∷ PlutusV3 ∷ PlutusV2 ∷ PlutusV1 ∷ [])
 ```
+
+## The <span class="AgdaDatatype">SUBUTXOW</span> Transition System {#sec:the-subutxow-transition-system}
 
 ```agda
 data _⊢_⇀⦇_,SUBUTXOW⦈_ : SubUTxOEnv → UTxOState → SubLevelTx → UTxOState → Type where
@@ -142,6 +138,7 @@ data _⊢_⇀⦇_,SUBUTXOW⦈_ : SubUTxOEnv → UTxOState → SubLevelTx → UTx
          neededVKeyHashes = mapPartial (isKeyHashObj ∘ proj₂) (credsNeeded utxo₀ txSub)
                             ∪ (mapPartial (isKeyHashObj ∘ proj₁) (GuardsOf txSub))
 
+
          neededDataHashes : ℙ DataHash
          neededDataHashes = mapPartial (λ txOut@(a , _ , d , _) → do sh ← isScriptObj (payCred a)
                                                                      _  ← lookupHash sh p2Scripts
@@ -152,6 +149,7 @@ data _⊢_⇀⦇_,SUBUTXOW⦈_ : SubUTxOEnv → UTxOState → SubLevelTx → UTx
     ∙  ∀[ (vk , σ) ∈ vKeySigs ] isSigned vk (txidBytes txId) σ
     ∙  ∀[ s ∈ p1Scripts ] (hash s ∈ neededScriptHashes → validP1Script witsKeyHashes txVldt s)
     ∙  neededVKeyHashes ⊆ witsKeyHashes
+    ∙  ∀[ s ∈ p2Scripts ] (hash s ∈ neededScriptHashes → language s ≡ PlutusV4)
     ∙  neededScriptHashes ⊆ mapˢ hash p1Scripts ∪ mapˢ hash p2Scripts
     ∙  neededDataHashes ⊆ dom (DataPoolOf Γ)
     ∙  txADhash ≡ map hash txAuxData
@@ -159,6 +157,8 @@ data _⊢_⇀⦇_,SUBUTXOW⦈_ : SubUTxOEnv → UTxOState → SubLevelTx → UTx
       ────────────────────────────────
        Γ ⊢ s ⇀⦇ txSub ,SUBUTXOW⦈ s'
 ```
+
+## The <span class="AgdaDatatype">UTXOW</span> Transition System {#sec:the-utxow-transition-system}
 
 1.  Guards
 
@@ -168,7 +168,7 @@ data _⊢_⇀⦇_,SUBUTXOW⦈_ : SubUTxOEnv → UTxOState → SubLevelTx → UTx
 ```agda
 data _⊢_⇀⦇_,UTXOW⦈_ : UTxOEnv → UTxOState → TopLevelTx → UTxOState → Type where
 
-  UTXOW :
+  UTXOW-normal :
     let
          open Tx txTop
          open TxBody txBody
@@ -202,23 +202,80 @@ data _⊢_⇀⦇_,UTXOW⦈_ : UTxOEnv → UTxOState → TopLevelTx → UTxOState
                                        (range (utxo₀ ∣ txIns))
 
     in
+    ∙  ∀[ s ∈ p2Scripts ] (hash s ∈ neededScriptHashes → language s ≡ PlutusV4)
     ∙  ∀[ (vk , σ) ∈ vKeySigs ] isSigned vk (txidBytes txId) σ
     ∙  ∀[ s ∈ p1Scripts ] (hash s ∈ neededScriptHashes → validP1Script witsKeyHashes txVldt s)
     ∙  neededVKeyHashes ⊆ witsKeyHashes
     ∙  neededScriptHashes ⊆ mapˢ hash p1Scripts ∪ mapˢ hash p2Scripts
     ∙  neededDataHashes ⊆ dom (DataPoolOf Γ)
     ∙  RequiredGuardsInTopLevel txTop -- (2)
-    ∙  languages p2Scripts ⊆ dom (PParams.costmdls (PParamsOf Γ)) ∩ allowedLanguages txTop utxo
     ∙  txADhash ≡ map hash txAuxData
-    ∙  Γ ⊢ s ⇀⦇ txTop ,UTXO⦈ s'
+    ∙ (Γ , false) ⊢ s ⇀⦇ txTop ,UTXO⦈ s'
+      ────────────────────────────────
+      Γ ⊢ s ⇀⦇ txTop ,UTXOW⦈ s'
+
+  UTXOW-legacy :
+    let
+         open Tx txTop
+         open TxBody txBody
+         open TxWitnesses txWitnesses
+         open UTxOEnv
+
+         utxo₀ = UTxOOf Γ
+         utxo  = UTxOOf s
+
+         witsKeyHashes : ℙ KeyHash
+         witsKeyHashes = mapˢ hash (dom vKeySigs)
+
+         topLevelScripts : ℙ Script
+         topLevelScripts =  witnessScripts txTop
+                          ∪ spendScripts txTop utxo₀
+                          ∪ referenceScripts txTop utxo₀
+
+         p1Scripts : ℙ P1Script
+         p1Scripts = mapPartial toP1Script topLevelScripts
+
+         p2Scripts : ℙ P2Script
+         p2Scripts = mapPartial toP2Script topLevelScripts
+
+         neededScriptHashes  : ℙ ScriptHash
+         neededScriptHashes  = mapPartial (isScriptObj  ∘ proj₂) (credsNeeded utxo₀ txTop)
+
+         neededVKeyHashes : ℙ KeyHash
+         neededVKeyHashes = mapPartial (isKeyHashObj ∘ proj₂) (credsNeeded utxo₀ txTop)
+
+         txDataHashes     : ℙ DataHash
+         txDataHashes     = mapˢ hash txData
+
+         neededDataHashes : ℙ DataHash
+         neededDataHashes = mapPartial (λ txOut@(a , _ , d , _) → do sh ← isScriptObj (payCred a)
+                                                                     _  ← lookupHash sh p2Scripts
+                                                                     d >>= isInj₂)
+                                       (range (utxo₀ ∣ txIns))
+
+         refInputsDataHashes = mapPartial txOutToDataHash (range (utxo ∣ referenceInputs))
+         outputsDataHashes   = mapPartial txOutToDataHash (range txOuts)
+
+    in
+    ∙  ∃[ h ∈ neededScriptHashes ] ∃[ s ∈ p2Scripts ] h ≡ hash s × language s ∈ fromList (PlutusV1 ∷ PlutusV2 ∷ PlutusV3 ∷ [])
+    ∙  ∀[ (vk , σ) ∈ vKeySigs ] isSigned vk (txidBytes txId) σ
+    ∙  ∀[ s ∈ p1Scripts ] (hash s ∈ neededScriptHashes → validP1Script witsKeyHashes txVldt s)
+    ∙  neededScriptHashes ⊆ mapˢ hash topLevelScripts
+    ∙  neededVKeyHashes ⊆ witsKeyHashes
+    ∙  neededDataHashes ⊆ txDataHashes
+    ∙  txDataHashes     ⊆ neededDataHashes ∪ outputsDataHashes ∪ refInputsDataHashes
+    ∙  languages p2Scripts ⊆ allowedLanguagesLegacyMode txTop utxo
+    ∙  txADhash ≡ map hash txAuxData
+    ∙  (Γ , true) ⊢ s ⇀⦇ txTop ,UTXO⦈ s'
       ────────────────────────────────
       Γ ⊢ s ⇀⦇ txTop ,UTXOW⦈ s'
 ```
 
 <!--
 ```agda
-unquoteDecl UTXOW-premises = genPremises UTXOW-premises (quote UTXOW)
+-- unquoteDecl UTXOW-normal-premises = genPremises UTXOW-normal-premises (quote UTXOW-normal)
+-- unquoteDecl UTXOW-legacy-premises = genPremises UTXOW-legacy-premises (quote UTXOW-legacy)
 unquoteDecl SUBUTXOW-premises = genPremises SUBUTXOW-premises (quote SUBUTXOW)
-pattern SUBUTXOW-⋯ p₁ p₂ p₃ p₄ p₅ p₆ p₇ = SUBUTXOW (p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ )
+pattern SUBUTXOW-⋯ p₁ p₂ p₃ p₄ p₅ p₆ p₇ h = SUBUTXOW (p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , h)
 ```
 -->
