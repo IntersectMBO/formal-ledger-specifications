@@ -116,6 +116,27 @@
       H₁₆ Γ txTop utxo fees donations = H₁₅ Γ txTop utxo fees donations × (MaybeNetworkIdOf txTop ~ just NetworkId)
       H₁₇ Γ txTop utxo fees donations = H₁₆ Γ txTop utxo fees donations × (CurrentTreasuryOf txTop  ~ just (TreasuryOf Γ))
 
+      Hskip : UTxOEnv → TopLevelTx → UTxO → Fees → Donations → Type
+      Hskip Γ txTop utxo fees donations =
+            (SpendInputsOf txTop ≢ ∅)
+          × (inInterval (SlotOf Γ) (ValidIntervalOf txTop))
+          × (minfee (PParamsOf Γ) txTop utxo ≤ TxFeesOf txTop)
+          × (SizeOf txTop ≤ maxTxSize (PParamsOf Γ))
+          × (refScriptsSize txTop (UTxOOf Γ) ≤ (PParamsOf Γ) .maxRefScriptSizePerTx)
+          × (allSpendInputs txTop ⊆ dom (UTxOOf Γ))
+          × (allReferenceInputs txTop ⊆ dom (UTxOOf Γ))
+          × (NoOverlappingSpendInputs txTop)
+          × (requiredGuardsInTopLevel txTop (SubTransactionsOf txTop))
+          × ((RedeemersOf txTop ˢ ≢ ∅) → collateralCheck (PParamsOf Γ) txTop (UTxOOf Γ))
+          × (allMintedCoin txTop ≡ 0)
+          × (∀[ (_ , o) ∈ ∣ TxOutsOf txTop ∣ ]
+                (inject ((160 + utxoEntrySize o) * coinsPerUTxOByte (PParamsOf Γ)) ≤ᵗ txOutToValue o)
+              × (serializedSize (txOutToValue o) ≤ maxValSize (PParamsOf Γ)))
+          × (∀[ (a , _) ∈ range (TxOutsOf txTop) ]
+                (Sum.All (const ⊤) (λ a → AttrSizeOf a ≤ 64)) a × (netId a ≡ NetworkId))
+          × (∀[ a ∈ dom (WithdrawalsOf txTop)] NetworkIdOf a ≡ NetworkId)
+          × (MaybeNetworkIdOf txTop ~ just NetworkId)
+          × (CurrentTreasuryOf txTop ~ just (TreasuryOf Γ))
 
       takeH₃ :  {Γ : UTxOEnv} {txTop : TopLevelTx} {s₁ : UTxOState} {utxo : UTxO} {fees : Fees} {donations : Donations}
                 → UTXO-Premises Γ txTop s₁ utxo fees donations
@@ -132,9 +153,9 @@
                       → ComputationResult String (∃[ s&#39; ] Γ ⊢ s ⇀⦇ txTop ,UTXO⦈ s&#39;)
 
       computeProof Γ (⟦ utxo , fees , donations ⟧ᵘ) txTop
-        with ¿ H₃ Γ txTop utxo fees donations ¿
-      ... | no ¬h₃ = failure (genErrors ¬h₃)
-      ... | yes h₃
+        with ¿ Hskip Γ txTop utxo fees donations ¿
+      ... | no ¬hs = failure (genErrors ¬hs)
+      ... | yes hs
         with dec-ConsumedProduced Γ txTop
       ... | no ¬eq = failure (genErrors ¬eq)
       ... | yes eq
@@ -151,11 +172,17 @@
                     , fees + cbalance (utxo ∣ CollateralInputsOf txTop)
                     , donations ⟧ᵘ
 
-          p5 : SizeOf txTop ≤ maxTxSize (PParamsOf Γ)
-          p5 = {!!}
+          assemblePremises :
+            Hskip Γ txTop utxo fees donations
+            → ConsumedProduced Γ txTop
+            → (Γ ⊢ tt ⇀⦇ txTop ,UTXOS⦈ tt)
+            → UTXO-Premises Γ txTop s₁ utxo fees donations
+          assemblePremises
+            ( p₁ , p₂ , p₃ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , p₁₂ , p₁₃ , p₁₄ , p₁₅ , p₁₆ , p₁₇ ) eq utxosProof =
+              p₁ , p₂ , p₃ , eq , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , p₁₂ , p₁₃ , p₁₄ , p₁₅ , p₁₆ , p₁₇ , utxosProof , refl
 
           premises : UTXO-Premises Γ txTop s₁ utxo fees donations
-          premises = h₃ .proj₁ .proj₁ , h₃ .proj₁ .proj₂ , h₃ .proj₂ , eq , p5 , {!!}
+          premises = assemblePremises hs eq utxosProof
 
 
       completeness :  (Γ : UTxOEnv) (s : UTxOState) (txTop : TopLevelTx) (s&#39; : UTxOState)
@@ -164,18 +191,19 @@
 
       completeness Γ (⟦ utxo , fees , donations ⟧ᵘ) txTop s&#39; (UTXO premises)
         with premises
-      ... | (h , utxosProof , eqS₁)
-        with ¿ H₃ Γ txTop utxo fees donations ¿
-      ... | no ¬h₃ = ⊥-elim (¬h₃ (takeH₃ {utxo = utxo} premises))
-      ... | yes h₃&#39;
+      ... | ( p₁ , p₂ , p₃ , eq , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , p₁₂ , p₁₃ , p₁₄ , p₁₅ , p₁₆ , p₁₇ , utxosProof , eqS₁ )
+        with ¿ Hskip Γ txTop utxo fees donations ¿
+      ... | no ¬hs =
+          ⊥-elim (¬hs ( p₁ , p₂ , p₃ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , p₁₂ , p₁₃ , p₁₄ , p₁₅ , p₁₆ , p₁₇))
+      ... | yes hs&#39;
         with dec-ConsumedProduced Γ txTop
-      ... | no ¬eq = ⊥-elim (¬eq (premises .proj₂ .proj₂ .proj₂ .proj₁))
+      ... | no ¬eq = ⊥-elim (¬eq eq)
       ... | yes eq&#39;
-        with computeProof-UTXOS Γ tt txTop |  completeness-UTXOS Γ tt txTop tt
-                                              (premises .proj₂ .proj₂ .proj₂ .proj₂ .proj₂ .proj₂ .proj₂ .proj₂ .proj₂
-                                                        .proj₂ .proj₂ .proj₂ .proj₂ .proj₂ .proj₂ .proj₂ .proj₂ .proj₁)
+        with computeProof-UTXOS Γ tt txTop
+           | completeness-UTXOS Γ tt txTop tt utxosProof
       ... | failure es | ()   -- impossible: would imply failure ≡ success tt
-      ... | success (tt , _) | refl = {!!}
--- --}</a>
+      ... | success (tt , _) | refl
+        rewrite sym eqS₁ = refl
+--}</a>
 
 </pre></body></html>
