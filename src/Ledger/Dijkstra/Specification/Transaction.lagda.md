@@ -250,12 +250,12 @@ Of particular note in the Dijkstra era are
 
         -- New in Dijkstra --
         txSubTransactions         : InTopLevel txLevel (List (Tx TxLevelSub))
-        txGuards                  : ℙ Credential
+        txGuards                  : ℙ (Credential × Maybe Datum)
         txRequiredTopLevelGuards  : InSubLevel txLevel (ℙ (Credential × Maybe Datum))
         ---------------------
 
       requiredSignerHashes : ℙ KeyHash
-      requiredSignerHashes = mapPartial isKeyHashObj txGuards
+      requiredSignerHashes = mapPartial (isKeyHashObj ∘ proj₁) txGuards
 
 
     record TxWitnesses (txLevel : TxLevel) : Type where
@@ -369,7 +369,7 @@ could be either of them.
   open HasListOfGovVotes ⦃...⦄ public
 
   record HasGuards {a} (A : Type a) : Type a where
-    field GuardsOf : A → ℙ Credential
+    field GuardsOf : A → ℙ (Credential × Maybe Datum)
   open HasGuards ⦃...⦄ public
 
   record HasScripts {a} (A : Type a) : Type a where
@@ -721,22 +721,13 @@ remaining helper functions of this section.
   subTxTaggedGuards subtx =
     mapˢ (λ (cred , md) → (TxIdOf subtx , cred , md)) (TopLevelGuardsOf subtx)
 
-  -- Turn a subTx body's `txRequiredTopLevelGuards` into a set of guard credentials.
-  subTxGuardCredentials : SubLevelTx → ℙ Credential
-  subTxGuardCredentials = (mapˢ proj₁) ∘ TopLevelGuardsOf
-
   -- Phase-1 condition (CIP-0118):
   -- every credential required by a subTx body must appear in the top-level txGuards set.
   RequiredGuardsInTopLevel : TopLevelTx → Type
-  RequiredGuardsInTopLevel txTop = requiredCreds ⊆ GuardsOf txTop
+  RequiredGuardsInTopLevel txTop = requiredGuards ⊆ GuardsOf txTop
     where
-    -- union a list of sets
-    concatMapˡ : {A B : Type} → (A → ℙ B) → List A → ℙ B
-    concatMapˡ f as = proj₁ $ unions (fromList (map f as))
-    -- maybe move this to agda-sets or src-lib-exts
-
-    requiredCreds : ℙ Credential
-    requiredCreds = concatMapˡ subTxGuardCredentials (SubTransactionsOf txTop)
+    requiredGuards : ℙ (Credential × Maybe Datum)
+    requiredGuards = concatMapˡ GuardsOf (SubTransactionsOf txTop)
 ```
 
 ## Changes to Transaction Validity

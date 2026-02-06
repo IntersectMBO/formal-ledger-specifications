@@ -136,11 +136,11 @@ data _⊢_⇀⦇_,SUBUTXOW⦈_ : SubUTxOEnv → UTxOState → SubLevelTx → UTx
 
          neededScriptHashes  : ℙ ScriptHash
          neededScriptHashes  = mapPartial (isScriptObj  ∘ proj₂) (credsNeeded utxo₀ txSub)
-                               ∪ (mapPartial isScriptObj (GuardsOf txSub))
+                               ∪ (mapPartial (isScriptObj ∘ proj₁) (GuardsOf txSub))
 
          neededVKeyHashes : ℙ KeyHash
          neededVKeyHashes = mapPartial (isKeyHashObj ∘ proj₂) (credsNeeded utxo₀ txSub)
-                            ∪ (mapPartial isKeyHashObj (GuardsOf txSub))
+                            ∪ (mapPartial (isKeyHashObj ∘ proj₁) (GuardsOf txSub))
 
          neededDataHashes : ℙ DataHash
          neededDataHashes = mapPartial (λ txOut@(a , _ , d , _) → do sh ← isScriptObj (payCred a)
@@ -189,11 +189,11 @@ data _⊢_⇀⦇_,UTXOW⦈_ : UTxOEnv → UTxOState → TopLevelTx → UTxOState
 
          neededScriptHashes : ℙ ScriptHash
          neededScriptHashes = mapPartial (isScriptObj  ∘ proj₂) (credsNeeded utxo₀ txTop)
-                               ∪ (mapPartial isScriptObj (GuardsOf txSub)) -- (1,2)
+                               ∪ (mapPartial (isScriptObj ∘ proj₁) (GuardsOf txTop)) -- (1,2)
 
          neededVKeyHashes : ℙ KeyHash
          neededVKeyHashes = mapPartial (isKeyHashObj ∘ proj₂) (credsNeeded utxo₀ txTop)
-                            ∪ (mapPartial isKeyHashObj (GuardsOf txSub)) -- (1,2)
+                            ∪ (mapPartial (isKeyHashObj ∘ proj₁) (GuardsOf txTop)) -- (1,2)
 
          neededDataHashes : ℙ DataHash
          neededDataHashes = mapPartial (λ txOut@(a , _ , d , _) → do sh ← isScriptObj (payCred a)

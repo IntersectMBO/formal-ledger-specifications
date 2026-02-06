@@ -20,6 +20,8 @@ open import Ledger.Dijkstra.Specification.Certs govStructure
 
 open import Ledger.Dijkstra.Specification.Abstract txs
 open import Ledger.Dijkstra.Specification.Script.ScriptPurpose txs
+
+open import Data.List using (fromMaybe)
 ```
 -->
 
@@ -36,24 +38,26 @@ rdptr tx = λ where
   (Spend h)    → map (Spend    ,_) $ indexOfTxIn            h (SpendInputsOf tx)
   (Vote h)     → map (Vote     ,_) $ indexOfVote            h (map GovVote.voter (ListOfGovVotesOf tx))
   (Propose h)  → map (Propose  ,_) $ indexOfProposal        h (ListOfGovProposalsOf tx)
-  (Guard c)    → map (Guard    ,_) $ indexOfGuard           c (setToList (GuardsOf tx))
+  (Guard c)    → map (Guard    ,_) $ indexOfGuard           c (map proj₁ (setToList (GuardsOf tx)))
 
 indexedRdmrs : Tx ℓ → ScriptPurpose → Maybe (Redeemer × ExUnits)
 indexedRdmrs tx sp = maybe (λ x → lookupᵐ? (RedeemersOf tx) x) nothing (rdptr tx sp)
 
-txDataMap : Tx ℓ → DataHash ⇀ Datum
-txDataMap tx = setToMap (mapˢ < hash , id > (DataOf tx))
-
--- Datum lookup for spent outputs (Spend txin). Uses initial UTxO snapshot, utxoSpend₀.
-getDatum : Tx ℓ → UTxO → (DataHash ⇀ Datum) → ScriptPurpose → Maybe Datum
-getDatum tx utxo₀ extraData (Spend txin) with lookupᵐ? utxo₀ txin
+-- Data lookup for spent outputs (Spend txin) and guards (Guard c)
+getData : Tx ℓ
+        → UTxO
+        → (DataHash ⇀ Datum)
+        → ScriptPurpose
+        → ℙ Datum
+getData tx utxo₀ allData (Spend txin)
+  with lookupᵐ? utxo₀ txin
 ... | just (_ , _ , just d , _) =
   case d of λ where
-    (inj₁ d) → just d
-    (inj₂ h) → lookupᵐ? (txDataMap tx ∪ˡ extraData) h
-                        -- tx-local witness data takes precedence over batch/global pool.
-... | _ = nothing
-getDatum tx utxo₀ _ _ = nothing
+    (inj₁ d) → ❴ d ❵
+    (inj₂ h) → fromList (fromMaybe (lookupᵐ? allData h))
+... | _ = ∅
+getData tx utxo₀ _ (Guard c) = mapPartial (λ (c' , d) → if c ≡ c' then d else nothing) (GuardsOf tx)
+getData tx utxo₀ _ _         = ∅
 ```
 -->
 
@@ -118,8 +122,8 @@ credsNeededMinusCollateral tx =
   ∪ mapˢ        (λ v →  (Vote v , govVoterCredential v))  (fromList (map GovVoterOf (ListOfGovVotesOf tx)))
   ∪ mapPartial  (λ p →  if PolicyOf p then (λ {sh} → just (Propose  p , ScriptObj sh))
                         else nothing) (fromList (ListOfGovProposalsOf tx))
-  ∪ mapˢ        (λ c →  (Guard c , c)) (GuardsOf tx) -- collectP2ScriptsWithContext should
-                                                     -- include scripts with creds in txGuards.
+  ∪ mapˢ       (λ (c , d) → (Guard c , c)) (GuardsOf tx) -- collectP2ScriptsWithContext should
+                                                        -- include scripts with creds in txGuards.
 
 credsNeeded : {ℓ : TxLevel} → UTxO → Tx ℓ → ℙ (ScriptPurpose × Credential)
 credsNeeded {TxLevelTop} utxo tx =
@@ -143,23 +147,21 @@ opaque
   collectP2ScriptsWithContext : {ℓ : TxLevel} → PParams → Tx ℓ
     → UTxO → (DataHash ⇀ Datum) → ℙ Script
     → List (P2Script × List Data × ExUnits × CostModel)
-  collectP2ScriptsWithContext pp tx utxo extraData allScripts
-    = setToList $ mapPartial  ( λ (sp , c) →  if isScriptObj c
-                                              then (λ {sh} → toScriptInput sp sh)
-                                              else nothing )
-                              ( credsNeeded utxo tx )
+  collectP2ScriptsWithContext pp tx utxo allData allScripts
+    = concat (setToList (mapˢ toScriptInput ( credsNeeded utxo tx )))
     where
       toScriptInput
-        : ScriptPurpose → ScriptHash
-        → Maybe (P2Script × List Data × ExUnits × CostModel)
-      toScriptInput sp sh =
-        do s ← lookupHash sh allScripts
-           p2s ← toP2Script s
-           (rdmr , exunits) ← indexedRdmrs tx sp
-           let data' = maybe [_] [] (getDatum tx utxo extraData sp)
-                        ++ rdmr ∷ [ valContext (txInfoForPurpose utxo tx sp) sp ]
-           costModel ← lookupᵐ? (PParams.costmdls pp) (language p2s)
-           just (p2s , data' , exunits , costModel)
+        : ScriptPurpose × Credential
+        → List (P2Script × List Data × ExUnits × CostModel)
+      toScriptInput (sp , c) =
+        do (script , reedemer , exUnits , costModel) ← fromMaybe (do
+             script               ← isScriptObj c >>= λ sh → lookupHash sh allScripts >>= toP2Script
+             (reedemer , exUnits) ← indexedRdmrs tx sp
+             costModel            ← lookupᵐ? (PParams.costmdls pp) (language script)
+             return (script , reedemer , exUnits , costModel))
+           datum ← setToList (getData tx utxo allData sp)
+           let data′ = datum ∷ reedemer ∷ [ valContext (txInfoForPurpose utxo tx sp) sp ]
+           [ (script , data′ , exUnits , costModel) ]
 
 evalP2Scripts : List (P2Script × List Data × ExUnits × CostModel) → Bool
 evalP2Scripts = all (λ (s , d , eu , cm) → runPLCScript cm s eu d)
