@@ -560,15 +560,11 @@ allowed to inspect utxo for its inputs.
                                     (ReferenceInputsOf txTop)
                                     (SubTransactionsOf txTop)
 
-  --| OUTPUTS -------------------------------------------------------------------
-  --|
-  --| Sets of TxOuts can come from the range of...
-  --|
-  --| ...a UTxO
+  --| Set of TxOuts from a UTxO
   _ : UTxO → ℙ TxOut
   _ = range
-  --|
-  --| ...the txOuts field of a transaction
+
+  --| Set of TxOuts from transaction
   _ : Tx txLevel → ℙ TxOut
   _ = range ∘ TxOutsOf
 
