@@ -13,6 +13,7 @@ module Ledger.Conway.Specification.BlockBody
 open import Ledger.Conway.Specification.Enact govStructure
 open import Ledger.Conway.Specification.Ledger txs abs
 open import Ledger.Conway.Specification.Rewards txs abs
+open import Ledger.Conway.Specification.Utxo txs abs using (totExUnits)
 ```
 -->
 
@@ -107,6 +108,7 @@ data _⊢_⇀⦇_,BBODY⦈_
      in
     ∙ block .bBodySize ≡ bhb .hBbsize
     ∙ block .bBodyHash ≡ bhb .bhash
+    ∙ PParams.maxBlockExUnits pp ≥ᵉ (∑ˡ[ tx ← txs ] totExUnits tx)
     ∙ Γ ⊢ ls ⇀⦇ txs ,LEDGERS⦈ ls'
     ────────────────────────────────
     (es , acnt) ⊢ ls , b ⇀⦇ block ,BBODY⦈ (ls' , incrBlocks hk b)

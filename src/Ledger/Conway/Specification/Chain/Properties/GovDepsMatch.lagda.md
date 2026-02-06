@@ -112,7 +112,7 @@ In other terms,
   CHAIN-govDepsMatch rrm rss
       ( CHAIN ( x
               , TICK ((NEWEPOCH-New (_ , eps₁→eps₂)) , _)
-              , BBODY-Block-Body (_ , _ , ledgers)
+              , BBODY-Block-Body (_ , _ , _ , ledgers)
               )
       ) =
     RTC-preserves-inv LEDGER-govDepsMatch ledgers
@@ -121,7 +121,7 @@ In other terms,
   CHAIN-govDepsMatch rrm rss
       ( CHAIN ( x
               , TICK (NEWEPOCH-Not-New _ , _)
-              , BBODY-Block-Body (_ , _ , ledgers)
+              , BBODY-Block-Body (_ , _ , _ , ledgers)
               )
       ) =
     RTC-preserves-inv LEDGER-govDepsMatch ledgers
@@ -129,7 +129,7 @@ In other terms,
   CHAIN-govDepsMatch rrm rss
       ( CHAIN ( x
               , TICK (NEWEPOCH-No-Reward-Update (_ , eps₁→eps₂) , _)
-              , BBODY-Block-Body (_ , _ , ledgers)
+              , BBODY-Block-Body (_ , _ , _ , ledgers)
               )
       ) =
     RTC-preserves-inv LEDGER-govDepsMatch ledgers
