@@ -22,6 +22,8 @@ import qualified MAlonzo.Code.Agda.Primitive
 import qualified MAlonzo.Code.Algebra.Construct.DirectProduct
 import qualified MAlonzo.Code.Class.CommutativeMonoid.Core
 import qualified MAlonzo.Code.Class.DecEq.Core
+import qualified MAlonzo.Code.Class.DecEq.Instances
+import qualified MAlonzo.Code.Class.Decidable.Core
 import qualified MAlonzo.Code.Class.HasAdd.Core
 import qualified MAlonzo.Code.Class.Show.Core
 import qualified MAlonzo.Code.Class.Show.Instances
@@ -35,6 +37,7 @@ import qualified MAlonzo.Code.Interface.TypeClasses.Hashable
 import qualified MAlonzo.Code.Ledger.Conway.Specification.TokenAlgebra.Base
 import qualified MAlonzo.Code.Ledger.Conway.Specification.TokenAlgebra.Coin
 import qualified MAlonzo.Code.Ledger.Core.Specification.Crypto
+import qualified MAlonzo.Code.Prelude
 import qualified MAlonzo.Code.Relation.Nullary.Decidable.Core
 import qualified MAlonzo.Code.Relation.Nullary.Reflects
 import qualified MAlonzo.Code.Tactic.Derive.Show
@@ -290,14 +293,29 @@ d_ExUnit'45'CommutativeMonoid_88
             MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3476)
          (coe
             MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3476))
+-- Ledger.Conway.Foreign.HSLedger.Core.Implementation.≥ᵉ-Dec
+d_'8805''7497''45'Dec_90 ::
+  MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
+  MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
+  MAlonzo.Code.Class.Decidable.Core.T__'8263'_10
+d_'8805''7497''45'Dec_90 v0 v1
+  = coe
+      MAlonzo.Code.Class.Decidable.Core.du_'8263''178'__102
+      (coe
+         MAlonzo.Code.Class.DecEq.Core.d__'8799'__16
+         (coe
+            MAlonzo.Code.Prelude.d_DecEq'45''215''8242'_4 () erased () erased
+            MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22
+            MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22))
+      (coe v0) (coe v1)
 -- Ledger.Conway.Foreign.HSLedger.Core.Implementation._≥ᵉ_
-d__'8805''7497'__90 ::
+d__'8805''7497'__92 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 -> ()
-d__'8805''7497'__90 = erased
+d__'8805''7497'__92 = erased
 -- Ledger.Conway.Foreign.HSLedger.Core.Implementation.Show-ExUnits
-d_Show'45'ExUnits_92 :: MAlonzo.Code.Class.Show.Core.T_Show_10
-d_Show'45'ExUnits_92
+d_Show'45'ExUnits_94 :: MAlonzo.Code.Class.Show.Core.T_Show_10
+d_Show'45'ExUnits_94
   = coe
       MAlonzo.Code.Class.Show.Instances.du_Show'45''215'_6
       (coe
@@ -307,32 +325,32 @@ d_Show'45'ExUnits_92
          MAlonzo.Code.Class.Show.Core.C_mkShow_18
          (coe MAlonzo.Code.Data.Nat.Show.d_show_56))
 -- Ledger.Conway.Foreign.HSLedger.Core.Implementation.CostModel
-d_CostModel_94 :: ()
-d_CostModel_94 = erased
+d_CostModel_96 :: ()
+d_CostModel_96 = erased
 -- Ledger.Conway.Foreign.HSLedger.Core.Implementation.Language
-d_Language_96 :: ()
-d_Language_96 = erased
+d_Language_98 :: ()
+d_Language_98 = erased
 -- Ledger.Conway.Foreign.HSLedger.Core.Implementation.LangDepView
-d_LangDepView_98 :: ()
-d_LangDepView_98 = erased
+d_LangDepView_100 :: ()
+d_LangDepView_100 = erased
 -- Ledger.Conway.Foreign.HSLedger.Core.Implementation.Prices
-d_Prices_100 :: ()
-d_Prices_100 = erased
+d_Prices_102 :: ()
+d_Prices_102 = erased
 -- Ledger.Conway.Foreign.HSLedger.Core.Implementation.TxId
-d_TxId_102 :: ()
-d_TxId_102 = erased
+d_TxId_104 :: ()
+d_TxId_104 = erased
 -- Ledger.Conway.Foreign.HSLedger.Core.Implementation.Ix
-d_Ix_104 :: ()
-d_Ix_104 = erased
+d_Ix_106 :: ()
+d_Ix_106 = erased
 -- Ledger.Conway.Foreign.HSLedger.Core.Implementation.AuxiliaryData
-d_AuxiliaryData_106 :: ()
-d_AuxiliaryData_106 = erased
+d_AuxiliaryData_108 :: ()
+d_AuxiliaryData_108 = erased
 -- Ledger.Conway.Foreign.HSLedger.Core.Implementation.DocHash
-d_DocHash_108 :: ()
-d_DocHash_108 = erased
+d_DocHash_110 :: ()
+d_DocHash_110 = erased
 -- Ledger.Conway.Foreign.HSLedger.Core.Implementation.tokenAlgebra
-d_tokenAlgebra_110 ::
+d_tokenAlgebra_112 ::
   MAlonzo.Code.Ledger.Conway.Specification.TokenAlgebra.Base.T_TokenAlgebra_14
-d_tokenAlgebra_110
+d_tokenAlgebra_112
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.TokenAlgebra.Coin.du_Coin'45'TokenAlgebra_132
