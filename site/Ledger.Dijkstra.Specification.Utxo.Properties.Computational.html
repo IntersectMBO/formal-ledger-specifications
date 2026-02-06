@@ -12148,13 +12148,13 @@
       <a id="1568" class="Symbol">...</a> <a id="1572" class="Symbol">|</a> <a id="1574" href="Agda.Builtin.Bool.html#192" class="InductiveConstructor">false</a> <a id="1580" class="Symbol">|</a> <a id="1582" href="Relation.Binary.PropositionalEquality.html#4359" class="InductiveConstructor Operator">[</a> <a id="1584" href="Agda.Builtin.Equality.html#207" class="InductiveConstructor">refl</a> <a id="1589" href="Relation.Binary.PropositionalEquality.html#4359" class="InductiveConstructor Operator">]</a>
         <a id="1599" class="Keyword">with</a> <a id="1604" href="Class.Decidable.Core.html#470" class="Function Operator">¿</a> <a id="1606" href="Ledger.Dijkstra.Specification.Transaction.html#10637" class="Field">SpendInputsOf</a> <a id="1620" class="Bound">txSub</a> <a id="1626" href="Relation.Binary.PropositionalEquality.Core.html#1000" class="Function Operator">≢</a> <a id="1628" href="Class.HasEmptySet.html#287" class="Field">∅</a>
              <a id="1643" href="Data.Product.Base.html#1618" class="Function Operator">×</a> <a id="1645" href="Ledger.Dijkstra.Specification.Utxo.html#8066" class="Datatype">inInterval</a> <a id="1656" class="Symbol">(</a><a id="1657" href="Ledger.Dijkstra.Specification.Utxo.html#5337" class="Field">SlotOf</a> <a id="1664" class="Bound">Γ</a><a id="1665" class="Symbol">)</a> <a id="1667" class="Symbol">(</a><a id="1668" href="Ledger.Dijkstra.Specification.Transaction.html#10487" class="Field">ValidIntervalOf</a> <a id="1684" class="Bound">txSub</a><a id="1689" class="Symbol">)</a>
-             <a id="1704" href="Data.Product.Base.html#1618" class="Function Operator">×</a> <a id="1706" href="Ledger.Core.Specification.Address.html#2704" class="Field">MaybeNetworkIdOf</a> <a id="1723" class="Bound">txSub</a> <a id="1729" href="Prelude.html#3017" class="Function Operator">~</a> <a id="1731" href="Agda.Builtin.Maybe.html#173" class="InductiveConstructor">just</a> <a id="1736" href="Ledger.Core.Specification.Epoch.html#2799" class="Function">NetworkId</a> <a id="1746" href="Class.Decidable.Core.html#470" class="Function Operator">¿</a>
+             <a id="1704" href="Data.Product.Base.html#1618" class="Function Operator">×</a> <a id="1706" href="Ledger.Core.Specification.Address.html#2840" class="Field">MaybeNetworkIdOf</a> <a id="1723" class="Bound">txSub</a> <a id="1729" href="Prelude.html#3017" class="Function Operator">~</a> <a id="1731" href="Agda.Builtin.Maybe.html#173" class="InductiveConstructor">just</a> <a id="1736" href="Ledger.Core.Specification.Epoch.html#2799" class="Function">NetworkId</a> <a id="1746" href="Class.Decidable.Core.html#470" class="Function Operator">¿</a>
       <a id="1754" class="Symbol">...</a> <a id="1758" class="Symbol">|</a> <a id="1760" class="Symbol">(</a><a id="1761" href="Relation.Nullary.Decidable.Core.html#2099" class="InductiveConstructor">yes</a> <a id="1765" href="Ledger.Dijkstra.Specification.Utxo.Properties.Computational.html#1765" class="Bound">p</a><a id="1766" class="Symbol">)</a> <a id="1768" class="Symbol">=</a> <a id="1770" href="Interface.ComputationalRelation.html#10518" class="InductiveConstructor">success</a> <a id="1778" class="Symbol">(</a><a class="AgdaKaTeX">$\begin{pmatrix} \,\href{Ledger.Dijkstra.Specification.Transaction.html#5447}{\htmlId{1781}{\htmlClass{Field}{\text{UTxOOf}}}}\, \,\htmlId{1788}{\htmlClass{Bound}{\text{s}}}\, \\ \,\href{Ledger.Prelude.Base.html#765}{\htmlId{1792}{\htmlClass{Field}{\text{FeesOf}}}}\, \,\htmlId{1799}{\htmlClass{Bound}{\text{s}}}\, \\ \,\href{Ledger.Prelude.Base.html#650}{\htmlId{1803}{\htmlClass{Field}{\text{DonationsOf}}}}\, \,\htmlId{1815}{\htmlClass{Bound}{\text{s}}}\, \end{pmatrix}$</a> <a id="1819" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="1821" href="Ledger.Dijkstra.Specification.Utxo.html#13534" class="InductiveConstructor">SUBUTXO</a> <a id="1829" class="Symbol">{</a><a id="1830" class="Argument">txSub</a> <a id="1836" class="Symbol">=</a> <a id="1838" class="Bound">txSub</a><a id="1843" class="Symbol">}</a> <a id="1845" href="Ledger.Dijkstra.Specification.Utxo.Properties.Computational.html#1765" class="Bound">p</a><a id="1846" class="Symbol">)</a>
       <a id="1854" class="Symbol">...</a> <a id="1858" class="Symbol">|</a> <a id="1860" class="Symbol">(</a><a id="1861" href="Relation.Nullary.Decidable.Core.html#2136" class="InductiveConstructor">no</a> <a id="1864" href="Ledger.Dijkstra.Specification.Utxo.Properties.Computational.html#1864" class="Bound">¬p</a><a id="1866" class="Symbol">)</a> <a id="1868" class="Symbol">=</a> <a id="1870" href="Interface.ComputationalRelation.html#10560" class="InductiveConstructor">failure</a> <a id="1878" class="Symbol">(</a><a id="1879" href="stdlib-meta.Tactic.GenError.html#2066" class="Macro">genErrors</a> <a id="1889" href="Ledger.Dijkstra.Specification.Utxo.Properties.Computational.html#1864" class="Bound">¬p</a><a id="1891" class="Symbol">)</a>
       <a id="1899" href="Ledger.Dijkstra.Specification.Utxo.Properties.Computational.html#1323" class="Function">computeProof</a> <a id="1912" href="Ledger.Dijkstra.Specification.Utxo.Properties.Computational.html#1912" class="Bound">Γ</a> <a id="1914" href="Ledger.Dijkstra.Specification.Utxo.Properties.Computational.html#1914" class="Bound">s</a> <a id="1916" href="Ledger.Dijkstra.Specification.Utxo.Properties.Computational.html#1916" class="Bound">txSub</a> <a id="1922" class="Symbol">|</a> <a id="1924" href="Agda.Builtin.Bool.html#198" class="InductiveConstructor">true</a> <a id="1929" class="Symbol">|</a> <a id="1931" href="Relation.Binary.PropositionalEquality.html#4359" class="InductiveConstructor Operator">[</a> <a id="1933" href="Agda.Builtin.Equality.html#207" class="InductiveConstructor">refl</a> <a id="1938" href="Relation.Binary.PropositionalEquality.html#4359" class="InductiveConstructor Operator">]</a>
         <a id="1948" class="Keyword">with</a> <a id="1953" href="Class.Decidable.Core.html#470" class="Function Operator">¿</a> <a id="1955" href="Ledger.Dijkstra.Specification.Transaction.html#10637" class="Field">SpendInputsOf</a> <a id="1969" href="Ledger.Dijkstra.Specification.Utxo.Properties.Computational.html#1916" class="Bound">txSub</a> <a id="1975" href="Relation.Binary.PropositionalEquality.Core.html#1000" class="Function Operator">≢</a> <a id="1977" href="Class.HasEmptySet.html#287" class="Field">∅</a>
              <a id="1992" href="Data.Product.Base.html#1618" class="Function Operator">×</a> <a id="1994" href="Ledger.Dijkstra.Specification.Utxo.html#8066" class="Datatype">inInterval</a> <a id="2005" class="Symbol">(</a><a id="2006" href="Ledger.Dijkstra.Specification.Utxo.html#5337" class="Field">SlotOf</a> <a id="2013" href="Ledger.Dijkstra.Specification.Utxo.Properties.Computational.html#1912" class="Bound">Γ</a><a id="2014" class="Symbol">)</a> <a id="2016" class="Symbol">(</a><a id="2017" href="Ledger.Dijkstra.Specification.Transaction.html#10487" class="Field">ValidIntervalOf</a> <a id="2033" href="Ledger.Dijkstra.Specification.Utxo.Properties.Computational.html#1916" class="Bound">txSub</a><a id="2038" class="Symbol">)</a>
-             <a id="2053" href="Data.Product.Base.html#1618" class="Function Operator">×</a> <a id="2055" href="Ledger.Core.Specification.Address.html#2704" class="Field">MaybeNetworkIdOf</a> <a id="2072" href="Ledger.Dijkstra.Specification.Utxo.Properties.Computational.html#1916" class="Bound">txSub</a> <a id="2078" href="Prelude.html#3017" class="Function Operator">~</a> <a id="2080" href="Agda.Builtin.Maybe.html#173" class="InductiveConstructor">just</a> <a id="2085" href="Ledger.Core.Specification.Epoch.html#2799" class="Function">NetworkId</a> <a id="2095" href="Class.Decidable.Core.html#470" class="Function Operator">¿</a>
+             <a id="2053" href="Data.Product.Base.html#1618" class="Function Operator">×</a> <a id="2055" href="Ledger.Core.Specification.Address.html#2840" class="Field">MaybeNetworkIdOf</a> <a id="2072" href="Ledger.Dijkstra.Specification.Utxo.Properties.Computational.html#1916" class="Bound">txSub</a> <a id="2078" href="Prelude.html#3017" class="Function Operator">~</a> <a id="2080" href="Agda.Builtin.Maybe.html#173" class="InductiveConstructor">just</a> <a id="2085" href="Ledger.Core.Specification.Epoch.html#2799" class="Function">NetworkId</a> <a id="2095" href="Class.Decidable.Core.html#470" class="Function Operator">¿</a>
       <a id="2103" class="Symbol">...</a> <a id="2107" class="Symbol">|</a> <a id="2109" class="Symbol">(</a><a id="2110" href="Relation.Nullary.Decidable.Core.html#2099" class="InductiveConstructor">yes</a> <a id="2114" href="Ledger.Dijkstra.Specification.Utxo.Properties.Computational.html#2114" class="Bound">p</a><a id="2115" class="Symbol">)</a> <a id="2117" class="Symbol">=</a> <a id="2119" href="Interface.ComputationalRelation.html#10518" class="InductiveConstructor">success</a> <a id="2127" class="Symbol">(</a><a class="AgdaKaTeX">$\begin{pmatrix} \,\htmlId{2130}{\htmlClass{Symbol}{\text{(}}}\,\,\href{Ledger.Dijkstra.Specification.Transaction.html#5447}{\htmlId{2131}{\htmlClass{Field}{\text{UTxOOf}}}}\, \,\htmlId{2138}{\htmlClass{Bound}{\text{s}}}\, \,\href{Axiom.Set.Map.html#13606}{\htmlId{2140}{\htmlClass{Function Operator}{\text{∣}}}}\, \,\href{Ledger.Dijkstra.Specification.Transaction.html#10637}{\htmlId{2142}{\htmlClass{Field}{\text{SpendInputsOf}}}}\, \,\htmlId{2156}{\htmlClass{Bound}{\text{txSub}}}\, \,\href{Axiom.Set.Map.html#13606}{\htmlId{2162}{\htmlClass{Function Operator}{\text{ᶜ}}}}\,\,\htmlId{2163}{\htmlClass{Symbol}{\text{)}}}\, \,\href{Axiom.Set.Map.html#7640}{\htmlId{2165}{\htmlClass{Function Operator}{\text{∪ˡ}}}}\, \,\href{Ledger.Dijkstra.Specification.Utxo.html#7385}{\htmlId{2168}{\htmlClass{Function}{\text{outs}}}}\, \,\htmlId{2173}{\htmlClass{Bound}{\text{txSub}}}\, \\ \,\href{Ledger.Prelude.Base.html#765}{\htmlId{2181}{\htmlClass{Field}{\text{FeesOf}}}}\, \,\htmlId{2188}{\htmlClass{Bound}{\text{s}}}\, \\ \,\href{Ledger.Prelude.Base.html#650}{\htmlId{2192}{\htmlClass{Field}{\text{DonationsOf}}}}\, \,\htmlId{2204}{\htmlClass{Bound}{\text{s}}}\, \,\href{Class.HasAdd.Core.html#162}{\htmlId{2206}{\htmlClass{Field Operator}{\text{+}}}}\, \,\href{Ledger.Prelude.Base.html#650}{\htmlId{2208}{\htmlClass{Field}{\text{DonationsOf}}}}\, \,\htmlId{2220}{\htmlClass{Bound}{\text{txSub}}}\, \end{pmatrix}$</a> <a id="2228" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="2230" href="Ledger.Dijkstra.Specification.Utxo.html#13534" class="InductiveConstructor">SUBUTXO</a> <a id="2238" class="Symbol">{</a><a id="2239" class="Argument">txSub</a> <a id="2245" class="Symbol">=</a> <a id="2247" class="Bound">txSub</a><a id="2252" class="Symbol">}</a> <a id="2254" href="Ledger.Dijkstra.Specification.Utxo.Properties.Computational.html#2114" class="Bound">p</a><a id="2255" class="Symbol">)</a>
       <a id="2263" class="Symbol">...</a> <a id="2267" class="Symbol">|</a> <a id="2269" class="Symbol">(</a><a id="2270" href="Relation.Nullary.Decidable.Core.html#2136" class="InductiveConstructor">no</a> <a id="2273" href="Ledger.Dijkstra.Specification.Utxo.Properties.Computational.html#2273" class="Bound">¬p</a><a id="2275" class="Symbol">)</a> <a id="2277" class="Symbol">=</a> <a id="2279" href="Interface.ComputationalRelation.html#10560" class="InductiveConstructor">failure</a> <a id="2287" class="Symbol">(</a><a id="2288" href="stdlib-meta.Tactic.GenError.html#2066" class="Macro">genErrors</a> <a id="2298" href="Ledger.Dijkstra.Specification.Utxo.Properties.Computational.html#2273" class="Bound">¬p</a><a id="2300" class="Symbol">)</a>
 
@@ -12165,13 +12165,13 @@
       <a id="2587" class="Symbol">...</a> <a id="2591" class="Symbol">|</a> <a id="2593" href="Agda.Builtin.Bool.html#192" class="InductiveConstructor">false</a> <a id="2599" class="Symbol">|</a> <a id="2601" href="Relation.Binary.PropositionalEquality.html#4359" class="InductiveConstructor Operator">[</a> <a id="2603" href="Agda.Builtin.Equality.html#207" class="InductiveConstructor">refl</a> <a id="2608" href="Relation.Binary.PropositionalEquality.html#4359" class="InductiveConstructor Operator">]</a>
         <a id="2618" class="Keyword">with</a> <a id="2623" href="Class.Decidable.Core.html#470" class="Function Operator">¿</a> <a id="2625" href="Ledger.Dijkstra.Specification.Transaction.html#10637" class="Field">SpendInputsOf</a> <a id="2639" class="Bound">txSub</a> <a id="2645" href="Relation.Binary.PropositionalEquality.Core.html#1000" class="Function Operator">≢</a> <a id="2647" href="Class.HasEmptySet.html#287" class="Field">∅</a>
              <a id="2662" href="Data.Product.Base.html#1618" class="Function Operator">×</a> <a id="2664" href="Ledger.Dijkstra.Specification.Utxo.html#8066" class="Datatype">inInterval</a> <a id="2675" class="Symbol">(</a><a id="2676" href="Ledger.Dijkstra.Specification.Utxo.html#5337" class="Field">SlotOf</a> <a id="2683" class="Bound">Γ</a><a id="2684" class="Symbol">)</a> <a id="2686" class="Symbol">(</a><a id="2687" href="Ledger.Dijkstra.Specification.Transaction.html#10487" class="Field">ValidIntervalOf</a> <a id="2703" class="Bound">txSub</a><a id="2708" class="Symbol">)</a>
-             <a id="2723" href="Data.Product.Base.html#1618" class="Function Operator">×</a> <a id="2725" href="Ledger.Core.Specification.Address.html#2704" class="Field">MaybeNetworkIdOf</a> <a id="2742" class="Bound">txSub</a> <a id="2748" href="Prelude.html#3017" class="Function Operator">~</a> <a id="2750" href="Agda.Builtin.Maybe.html#173" class="InductiveConstructor">just</a> <a id="2755" href="Ledger.Core.Specification.Epoch.html#2799" class="Function">NetworkId</a> <a id="2765" href="Class.Decidable.Core.html#470" class="Function Operator">¿</a>
+             <a id="2723" href="Data.Product.Base.html#1618" class="Function Operator">×</a> <a id="2725" href="Ledger.Core.Specification.Address.html#2840" class="Field">MaybeNetworkIdOf</a> <a id="2742" class="Bound">txSub</a> <a id="2748" href="Prelude.html#3017" class="Function Operator">~</a> <a id="2750" href="Agda.Builtin.Maybe.html#173" class="InductiveConstructor">just</a> <a id="2755" href="Ledger.Core.Specification.Epoch.html#2799" class="Function">NetworkId</a> <a id="2765" href="Class.Decidable.Core.html#470" class="Function Operator">¿</a>
       <a id="2773" class="Symbol">...</a> <a id="2777" class="Symbol">|</a>  <a id="2780" class="Symbol">(</a><a id="2781" href="Relation.Nullary.Decidable.Core.html#2099" class="InductiveConstructor">yes</a> <a id="2785" href="Ledger.Dijkstra.Specification.Utxo.Properties.Computational.html#2785" class="Bound">p</a><a id="2786" class="Symbol">)</a> <a id="2788" class="Symbol">=</a> <a id="2790" href="Agda.Builtin.Equality.html#207" class="InductiveConstructor">refl</a>
       <a id="2801" class="Symbol">...</a> <a id="2805" class="Symbol">|</a>  <a id="2808" class="Symbol">(</a><a id="2809" href="Relation.Nullary.Decidable.Core.html#2136" class="InductiveConstructor">no</a> <a id="2812" href="Ledger.Dijkstra.Specification.Utxo.Properties.Computational.html#2812" class="Bound">¬p</a><a id="2814" class="Symbol">)</a> <a id="2816" class="Symbol">=</a> <a id="2818" href="Data.Empty.html#1069" class="Function">⊥-elim</a> <a id="2825" class="Symbol">(</a><a id="2826" href="Ledger.Dijkstra.Specification.Utxo.Properties.Computational.html#2812" class="Bound">¬p</a> <a id="2829" class="Bound">p</a><a id="2830" class="Symbol">)</a>
       <a id="2838" href="Ledger.Dijkstra.Specification.Utxo.Properties.Computational.html#2310" class="Function">completeness</a> <a id="2851" href="Ledger.Dijkstra.Specification.Utxo.Properties.Computational.html#2851" class="Bound">Γ</a> <a id="2853" href="Ledger.Dijkstra.Specification.Utxo.Properties.Computational.html#2853" class="Bound">s</a> <a id="2855" href="Ledger.Dijkstra.Specification.Utxo.Properties.Computational.html#2855" class="Bound">txSub</a> <a id="2861" href="Ledger.Dijkstra.Specification.Utxo.Properties.Computational.html#2861" class="Bound">s&#39;</a> <a id="2864" class="Symbol">(</a><a id="2865" href="Ledger.Dijkstra.Specification.Utxo.html#13534" class="InductiveConstructor">SUBUTXO</a> <a id="2873" href="Ledger.Dijkstra.Specification.Utxo.Properties.Computational.html#2873" class="Bound">p</a><a id="2874" class="Symbol">)</a> <a id="2876" class="Symbol">|</a> <a id="2878" href="Agda.Builtin.Bool.html#198" class="InductiveConstructor">true</a>  <a id="2884" class="Symbol">|</a> <a id="2886" href="Relation.Binary.PropositionalEquality.html#4359" class="InductiveConstructor Operator">[</a> <a id="2888" href="Agda.Builtin.Equality.html#207" class="InductiveConstructor">refl</a> <a id="2893" href="Relation.Binary.PropositionalEquality.html#4359" class="InductiveConstructor Operator">]</a>
         <a id="2903" class="Keyword">with</a> <a id="2908" href="Class.Decidable.Core.html#470" class="Function Operator">¿</a> <a id="2910" href="Ledger.Dijkstra.Specification.Transaction.html#10637" class="Field">SpendInputsOf</a> <a id="2924" href="Ledger.Dijkstra.Specification.Utxo.Properties.Computational.html#2855" class="Bound">txSub</a> <a id="2930" href="Relation.Binary.PropositionalEquality.Core.html#1000" class="Function Operator">≢</a> <a id="2932" href="Class.HasEmptySet.html#287" class="Field">∅</a>
              <a id="2947" href="Data.Product.Base.html#1618" class="Function Operator">×</a> <a id="2949" href="Ledger.Dijkstra.Specification.Utxo.html#8066" class="Datatype">inInterval</a> <a id="2960" class="Symbol">(</a><a id="2961" href="Ledger.Dijkstra.Specification.Utxo.html#5337" class="Field">SlotOf</a> <a id="2968" href="Ledger.Dijkstra.Specification.Utxo.Properties.Computational.html#2851" class="Bound">Γ</a><a id="2969" class="Symbol">)</a> <a id="2971" class="Symbol">(</a><a id="2972" href="Ledger.Dijkstra.Specification.Transaction.html#10487" class="Field">ValidIntervalOf</a> <a id="2988" href="Ledger.Dijkstra.Specification.Utxo.Properties.Computational.html#2855" class="Bound">txSub</a><a id="2993" class="Symbol">)</a>
-             <a id="3008" href="Data.Product.Base.html#1618" class="Function Operator">×</a> <a id="3010" href="Ledger.Core.Specification.Address.html#2704" class="Field">MaybeNetworkIdOf</a> <a id="3027" href="Ledger.Dijkstra.Specification.Utxo.Properties.Computational.html#2855" class="Bound">txSub</a> <a id="3033" href="Prelude.html#3017" class="Function Operator">~</a> <a id="3035" href="Agda.Builtin.Maybe.html#173" class="InductiveConstructor">just</a> <a id="3040" href="Ledger.Core.Specification.Epoch.html#2799" class="Function">NetworkId</a> <a id="3050" href="Class.Decidable.Core.html#470" class="Function Operator">¿</a>
+             <a id="3008" href="Data.Product.Base.html#1618" class="Function Operator">×</a> <a id="3010" href="Ledger.Core.Specification.Address.html#2840" class="Field">MaybeNetworkIdOf</a> <a id="3027" href="Ledger.Dijkstra.Specification.Utxo.Properties.Computational.html#2855" class="Bound">txSub</a> <a id="3033" href="Prelude.html#3017" class="Function Operator">~</a> <a id="3035" href="Agda.Builtin.Maybe.html#173" class="InductiveConstructor">just</a> <a id="3040" href="Ledger.Core.Specification.Epoch.html#2799" class="Function">NetworkId</a> <a id="3050" href="Class.Decidable.Core.html#470" class="Function Operator">¿</a>
       <a id="3058" class="Symbol">...</a> <a id="3062" class="Symbol">|</a>  <a id="3065" class="Symbol">(</a><a id="3066" href="Relation.Nullary.Decidable.Core.html#2099" class="InductiveConstructor">yes</a> <a id="3070" href="Ledger.Dijkstra.Specification.Utxo.Properties.Computational.html#3070" class="Bound">p</a><a id="3071" class="Symbol">)</a> <a id="3073" class="Symbol">=</a> <a id="3075" href="Agda.Builtin.Equality.html#207" class="InductiveConstructor">refl</a>
       <a id="3086" class="Symbol">...</a> <a id="3090" class="Symbol">|</a>  <a id="3093" class="Symbol">(</a><a id="3094" href="Relation.Nullary.Decidable.Core.html#2136" class="InductiveConstructor">no</a> <a id="3097" href="Ledger.Dijkstra.Specification.Utxo.Properties.Computational.html#3097" class="Bound">¬p</a><a id="3099" class="Symbol">)</a> <a id="3101" class="Symbol">=</a> <a id="3103" href="Data.Empty.html#1069" class="Function">⊥-elim</a> <a id="3110" class="Symbol">(</a><a id="3111" href="Ledger.Dijkstra.Specification.Utxo.Properties.Computational.html#3097" class="Bound">¬p</a> <a id="3114" class="Bound">p</a><a id="3115" class="Symbol">)</a>
 
@@ -12194,8 +12194,7 @@
       <a id="3897" class="Symbol">...</a> <a id="3901" class="Symbol">|</a> <a id="3903" href="Relation.Nullary.Decidable.Core.html#2099" class="InductiveConstructor">yes</a> <a id="3907" href="Ledger.Dijkstra.Specification.Utxo.Properties.Computational.html#3907" class="Bound">p</a> <a id="3909" class="Symbol">=</a> <a id="3911" href="Agda.Builtin.Equality.html#207" class="InductiveConstructor">refl</a>
       <a id="3922" class="Symbol">...</a> <a id="3926" class="Symbol">|</a> <a id="3928" href="Relation.Nullary.Decidable.Core.html#2136" class="InductiveConstructor">no</a> <a id="3931" href="Ledger.Dijkstra.Specification.Utxo.Properties.Computational.html#3931" class="Bound">¬p</a> <a id="3934" class="Symbol">=</a> <a id="3936" href="Data.Empty.html#1069" class="Function">⊥-elim</a> <a id="3943" class="Symbol">(</a><a id="3944" href="Ledger.Dijkstra.Specification.Utxo.Properties.Computational.html#3931" class="Bound">¬p</a> <a id="3947" class="Bound">p</a><a id="3948" class="Symbol">)</a>
 
-
-<a id="3952" class="Comment">{--
+<a id="3951" class="Comment">{--
   Computational-UTXO : Computational _⊢_⇀⦇_,UTXO⦈_ String
   Computational-UTXO = MkComputational computeProof completeness
     where
@@ -12203,46 +12202,89 @@
         renaming (computeProof to computeProof-UTXOS
                  ; completeness to completeness-UTXOS)
 
-      -- All UTXO premises except the UTXOS premise and the final s₁≡... equality.
-      H : (Γ : UTxOEnv) (txTop : TopLevelTx) (utxo : UTxO) (fees : Fees) (donations : Donations) → Type
-      H Γ txTop utxo fees donations =
-            (SpendInputsOf txTop ≢ ∅)
-          × (inInterval (SlotOf Γ) (ValidIntervalOf txTop))
-          × (minfee (PParamsOf Γ) txTop utxo ≤ TxFeesOf txTop)
-          × (consumed txTop (DepositsChangeOf Γ) (UTxOOf Γ) ≡ produced txTop (DepositsChangeOf Γ))
-          × (SizeOf txTop ≤ maxTxSize (PParamsOf Γ))
-          × (refScriptsSize txTop (UTxOOf Γ) ≤ (PParamsOf Γ) .maxRefScriptSizePerTx)
-          × (allSpendInputs txTop ⊆ dom (UTxOOf Γ))
-          × (allReferenceInputs txTop ⊆ dom (UTxOOf Γ))
-          × (NoOverlappingSpendInputs txTop)
-          × (requiredGuardsInTopLevel txTop (SubTransactionsOf txTop))
-          × ((RedeemersOf txTop ˢ ≢ ∅) → collateralCheck (PParamsOf Γ) txTop (UTxOOf Γ))
-          × (allMintedCoin txTop ≡ 0)
-          × (∀[ (_ , o) ∈ ∣ TxOutsOf txTop ∣ ]
-                (inject ((160 + utxoEntrySize o) * coinsPerUTxOByte (PParamsOf Γ)) ≤ᵗ txOutToValue o)
-              × (serializedSize (txOutToValue o) ≤ maxValSize (PParamsOf Γ)))
-          × (∀[ (a , _) ∈ range (TxOutsOf txTop) ]
-                (Sum.All (const ⊤) (λ a → AttrSizeOf a ≤ 64)) a × (netId a ≡ NetworkId))
-          × (∀[ a ∈ dom (WithdrawalsOf txTop)] NetworkIdOf a ≡ NetworkId)
-          × (MaybeNetworkIdOf txTop ~ just NetworkId)
-          × (CurrentTreasuryOf txTop  ~ just (TreasuryOf Γ))
+      -- All UTXO premises *except* the UTXOS premise and the final s₁≡... equality.
+      H₁ H₂ H₃ H₄ H₅ H₆ H₇ H₈ H₉ H₁₀ H₁₁ H₁₂ H₁₃ H₁₄ H₁₅ H₁₆ H₁₇ :
+        UTxOEnv → TopLevelTx → UTxO → Fees → Donations → Type
+
+      H₁ Γ txTop utxo fees donations = (SpendInputsOf txTop ≢ ∅)
+      H₂ Γ txTop utxo fees donations  = H₁ Γ txTop utxo fees donations  × (inInterval (SlotOf Γ) (ValidIntervalOf txTop))
+      H₃ Γ txTop utxo fees donations  = H₂ Γ txTop utxo fees donations  × (minfee (PParamsOf Γ) txTop utxo ≤ TxFeesOf txTop)
+      H₄ Γ txTop utxo fees donations  = H₃ Γ txTop utxo fees donations  × (consumed txTop (DepositsChangeOf Γ) (UTxOOf Γ) ≡ produced txTop (DepositsChangeOf Γ))
+      H₅ Γ txTop utxo fees donations  = H₄ Γ txTop utxo fees donations  × (SizeOf txTop ≤ maxTxSize (PParamsOf Γ))
+      H₆ Γ txTop utxo fees donations  = H₅ Γ txTop utxo fees donations  × (refScriptsSize txTop (UTxOOf Γ) ≤ (PParamsOf Γ) .maxRefScriptSizePerTx)
+      H₇ Γ txTop utxo fees donations  = H₆ Γ txTop utxo fees donations  × (allSpendInputs txTop ⊆ dom (UTxOOf Γ))
+      H₈ Γ txTop utxo fees donations  = H₇ Γ txTop utxo fees donations  × (allReferenceInputs txTop ⊆ dom (UTxOOf Γ))
+      H₉ Γ txTop utxo fees donations  = H₈ Γ txTop utxo fees donations  × (NoOverlappingSpendInputs txTop)
+      H₁₀ Γ txTop utxo fees donations = H₉ Γ txTop utxo fees donations  × (requiredGuardsInTopLevel txTop (SubTransactionsOf txTop))
+      H₁₁ Γ txTop utxo fees donations = H₁₀ Γ txTop utxo fees donations × ((RedeemersOf txTop ˢ ≢ ∅) → collateralCheck (PParamsOf Γ) txTop (UTxOOf Γ))
+      H₁₂ Γ txTop utxo fees donations = H₁₁ Γ txTop utxo fees donations × (allMintedCoin txTop ≡ 0)
+      H₁₃ Γ txTop utxo fees donations = H₁₂ Γ txTop utxo fees donations × (∀[ (_ , o) ∈ ∣ TxOutsOf txTop ∣ ] (inject ((160 + utxoEntrySize o) * coinsPerUTxOByte (PParamsOf Γ)) ≤ᵗ txOutToValue o) × (serializedSize (txOutToValue o) ≤ maxValSize (PParamsOf Γ)))
+      H₁₄ Γ txTop utxo fees donations = H₁₃ Γ txTop utxo fees donations × (∀[ (a , _) ∈ range (TxOutsOf txTop) ] (Sum.All (const ⊤) (λ a → AttrSizeOf a ≤ 64)) a × (netId a ≡ NetworkId))
+      H₁₅ Γ txTop utxo fees donations = H₁₄ Γ txTop utxo fees donations × (∀[ a ∈ dom (WithdrawalsOf txTop)] NetworkIdOf a ≡ NetworkId)
+      H₁₆ Γ txTop utxo fees donations = H₁₅ Γ txTop utxo fees donations × (MaybeNetworkIdOf txTop ~ just NetworkId)
+      H₁₇ Γ txTop utxo fees donations = H₁₆ Γ txTop utxo fees donations × (CurrentTreasuryOf txTop  ~ just (TreasuryOf Γ))
+
+
+      takeH₃ :  {Γ : UTxOEnv} {txTop : TopLevelTx} {s₁ : UTxOState} {utxo : UTxO} {fees : Fees} {donations : Donations}
+                → UTXO-Premises Γ txTop s₁ utxo fees donations
+                → H₃ Γ txTop utxo fees donations
+      takeH₃ prem = ((prem .proj₁) , (prem .proj₂ .proj₁)) , (prem .proj₂ .proj₂ .proj₁)
+
+      ConsumedProduced : UTxOEnv → TopLevelTx → Type
+      ConsumedProduced Γ txTop = consumed txTop (DepositsChangeOf Γ) (UTxOOf Γ) ≡ produced txTop (DepositsChangeOf Γ)
+
+      dec-ConsumedProduced : (Γ : UTxOEnv) (txTop : TopLevelTx) → Dec (ConsumedProduced Γ txTop)
+      dec-ConsumedProduced Γ txTop = (consumed txTop (DepositsChangeOf Γ) (UTxOOf Γ) ≟ produced txTop (DepositsChangeOf Γ))
 
       computeProof :  (Γ : UTxOEnv) (s : UTxOState) (txTop : TopLevelTx)
                       → ComputationResult String (∃[ s&#39; ] Γ ⊢ s ⇀⦇ txTop ,UTXO⦈ s&#39;)
-      computeProof Γ s txTop with ¿ H Γ txTop (UTxOOf s) (FeesOf s) (DonationsOf s) ¿
-      ... | no ¬h = failure (genErrors ¬h)
-      ... | yes h = Goal h
+
+      computeProof Γ (⟦ utxo , fees , donations ⟧ᵘ) txTop
+        with ¿ H₃ Γ txTop utxo fees donations ¿
+      ... | no ¬h₃ = failure (genErrors ¬h₃)
+      ... | yes h₃
+        with dec-ConsumedProduced Γ txTop
+      ... | no ¬eq = failure (genErrors ¬eq)
+      ... | yes eq
+        with computeProof-UTXOS Γ tt txTop
+      ... | failure es = failure es
+      ... | success (tt , utxosProof) = success (s₁ , UTXO-step premises)
         where
-        Goal : H Γ txTop (UTxOOf s) (FeesOf s) (DonationsOf s) → ComputationResult String (∃-syntax (_⊢_⇀⦇_,UTXO⦈_ Γ s txTop))
-        Goal h with (computeProof-UTXOS Γ tt txTop)
-        ... | (failure es) = failure es
-        ... | (success p) = success (getS₁ Γ s txTop , UTXO-step (h , proj₂ p , refl))
+          s₁ : UTxOState
+          s₁ = if IsValidFlagOf txTop
+               then ⟦ (utxo ∣ SpendInputsOf txTop ᶜ) ∪ˡ outs txTop
+                    , fees + TxFeesOf txTop
+                    , donations + DonationsOf txTop ⟧ᵘ
+               else ⟦ utxo ∣ (CollateralInputsOf txTop) ᶜ
+                    , fees + cbalance (utxo ∣ CollateralInputsOf txTop)
+                    , donations ⟧ᵘ
+
+          p5 : SizeOf txTop ≤ maxTxSize (PParamsOf Γ)
+          p5 = {!!}
+
+          premises : UTXO-Premises Γ txTop s₁ utxo fees donations
+          premises = h₃ .proj₁ .proj₁ , h₃ .proj₁ .proj₂ , h₃ .proj₂ , eq , p5 , {!!}
+
 
       completeness :  (Γ : UTxOEnv) (s : UTxOState) (txTop : TopLevelTx) (s&#39; : UTxOState)
                       → Γ ⊢ s ⇀⦇ txTop ,UTXO⦈ s&#39;
                       → (map proj₁ $ computeProof Γ s txTop) ≡ success s&#39;
-      completeness Γ s txTop s&#39; (UTXO premises) = ?
---}</a>
+
+      completeness Γ (⟦ utxo , fees , donations ⟧ᵘ) txTop s&#39; (UTXO premises)
+        with premises
+      ... | (h , utxosProof , eqS₁)
+        with ¿ H₃ Γ txTop utxo fees donations ¿
+      ... | no ¬h₃ = ⊥-elim (¬h₃ (takeH₃ {utxo = utxo} premises))
+      ... | yes h₃&#39;
+        with dec-ConsumedProduced Γ txTop
+      ... | no ¬eq = ⊥-elim (¬eq (premises .proj₂ .proj₂ .proj₂ .proj₁))
+      ... | yes eq&#39;
+        with computeProof-UTXOS Γ tt txTop |  completeness-UTXOS Γ tt txTop tt
+                                              (premises .proj₂ .proj₂ .proj₂ .proj₂ .proj₂ .proj₂ .proj₂ .proj₂ .proj₂
+                                                        .proj₂ .proj₂ .proj₂ .proj₂ .proj₂ .proj₂ .proj₂ .proj₂ .proj₁)
+      ... | failure es | ()   -- impossible: would imply failure ≡ success tt
+      ... | success (tt , _) | refl = {!!}
+-- --}</a>
 </pre>
 
 
