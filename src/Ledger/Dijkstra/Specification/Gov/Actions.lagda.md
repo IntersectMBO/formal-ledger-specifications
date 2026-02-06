@@ -193,6 +193,14 @@ record HasDReps {a} (A : Type a) : Type a where
   field DRepsOf : A → DReps
 open HasDReps ⦃...⦄ public
 
+record HasAnchor {a} (A : Type a) : Type a where
+  field AnchorOf : A → Anchor
+open HasAnchor ⦃...⦄ public
+
+record HasDeposit {a} (A : Type a) : Type a where
+  field DepositOf : A → Coin
+open HasDeposit ⦃...⦄ public
+
 instance
   HasGovActionType-GovAction : HasGovActionType GovAction
   HasGovActionType-GovAction .GovActionTypeOf = GovAction.gaType
@@ -215,6 +223,12 @@ instance
   HasPolicy-GovProposal : HasPolicy GovProposal
   HasPolicy-GovProposal .PolicyOf = GovProposal.policy
 
+  HasAnchor-GovProposal : HasAnchor GovProposal
+  HasAnchor-GovProposal .AnchorOf = GovProposal.anchor
+
+  HasDeposit-GovProposal : HasDeposit GovProposal
+  HasDeposit-GovProposal .DepositOf = GovProposal.deposit
+
   HasGovAction-GovProposal : HasGovAction GovProposal
   HasGovAction-GovProposal .GovActionOf = GovProposal.action
 
@@ -229,6 +243,12 @@ instance
 
   HasGovVotes-GovActionState : HasGovVotes GovActionState
   HasGovVotes-GovActionState .GovVotesOf = GovActionState.votes
+
+  HasRewardAddress-GovActionState : HasRewardAddress GovActionState
+  HasRewardAddress-GovActionState .RewardAddressOf = GovActionState.returnAddr
+
+  HasRewardAddress-GovProposal : HasRewardAddress GovProposal
+  HasRewardAddress-GovProposal .RewardAddressOf = GovProposal.returnAddr
 
   unquoteDecl Show-GovRole        = derive-Show [ (quote GovRole , Show-GovRole) ]
   unquoteDecl DecEq-GovActionType = derive-DecEq ((quote GovActionType , DecEq-GovActionType) ∷ [])
