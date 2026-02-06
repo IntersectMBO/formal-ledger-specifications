@@ -48,7 +48,7 @@ mutual
       txWithdrawals  : Withdrawals
       txVldt         : Maybe Slot × Maybe Slot
       vkKey          : ℙ KeyHash     -- native/phase-1/timelock signers
-      txGuards       : ℙ Credential  -- CIP-0112/0118 guards (required by tx body)
+      txGuards       : ℙ (Credential × Maybe Datum)  -- CIP-0112/0118 guards (required by tx body)
       txData         : ℙ Datum
       txId           : TxId
       txInfoSubTxs   : Maybe (List SubTxInfo)

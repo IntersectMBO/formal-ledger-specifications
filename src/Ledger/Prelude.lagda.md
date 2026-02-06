@@ -95,4 +95,7 @@ lookupHash h s =
 
 Is-∅ : {A : Type} → ℙ A → Type
 Is-∅ X = Is-[] (setToList X)
+
+concatMapˡ : {A B : Type} → (A → ℙ B) → List A → ℙ B
+concatMapˡ f as = proj₁ $ unions (fromList (map f as))
 ```
