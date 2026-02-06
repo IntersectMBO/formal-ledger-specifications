@@ -98,12 +98,6 @@ languages p2Scripts = mapˢ language p2Scripts
 
 allowedLanguagesLegacyMode : TopLevelTx → UTxO → ℙ Language
 allowedLanguagesLegacyMode tx utxo =
-  if UsesBootstrapAddress tx utxo
-    then ∅
-    else
-  if UsesV4Features tx
-    then ∅
-    else
   if UsesV3Features tx
     then fromList (PlutusV4 ∷ PlutusV3 ∷ [])
     else
