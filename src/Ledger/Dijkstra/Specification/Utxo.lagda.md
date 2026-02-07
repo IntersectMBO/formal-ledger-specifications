@@ -384,16 +384,6 @@ unquoteDecl UTXOS-premises = genPremises UTXOS-premises (quote UTXOS)
 
 ## The UTXO Transition System
 
-<!--
-```agda
--- private
---    variable
---     utxo : UTxO
---     fees : Fees
---     donations : Donations
-```
--->
-
 ### The <span class="AgdaDatatype">SUBUTXO</span> Rule
 
 ```agda

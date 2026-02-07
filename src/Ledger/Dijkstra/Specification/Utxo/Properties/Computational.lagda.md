@@ -90,123 +90,255 @@ instance
       ... | yes p = refl
       ... | no ¬p = ⊥-elim (¬p p)
 
-{--
   Computational-UTXO : Computational _⊢_⇀⦇_,UTXO⦈_ String
   Computational-UTXO = MkComputational computeProof completeness
     where
-      open Computational Computational-UTXOS
-        renaming (computeProof to computeProof-UTXOS
-                 ; completeness to completeness-UTXOS)
+    open Computational Computational-UTXOS renaming  ( computeProof to computeProof-UTXOS
+                                                     ; completeness to completeness-UTXOS)
 
-      -- All UTXO premises *except* the UTXOS premise and the final s₁≡... equality.
-      H₁ H₂ H₃ H₄ H₅ H₆ H₇ H₈ H₉ H₁₀ H₁₁ H₁₂ H₁₃ H₁₄ H₁₅ H₁₆ H₁₇ :
-        UTxOEnv → TopLevelTx → UTxO → Fees → Donations → Type
+    -- Premises 1, 2 and 3 are simple enough to bundle together, and they're all decidable.
+    P123 : UTxOEnv → TopLevelTx → UTxO → Fees → Donations → Type
+    P123 Γ txTop utxo fees donations =  SpendInputsOf txTop ≢ ∅
+                                        × inInterval (SlotOf Γ) (ValidIntervalOf txTop)
+                                        × minfee (PParamsOf Γ) txTop utxo ≤ TxFeesOf txTop
+    -- p₄
+    ConsumedProduced : UTxOEnv → TopLevelTx → Type
+    ConsumedProduced Γ txTop = consumed txTop (DepositsChangeOf Γ) (UTxOOf Γ) ≡ produced txTop (DepositsChangeOf Γ)
+    dec-ConsumedProduced : (Γ : UTxOEnv) (txTop : TopLevelTx) → Dec (ConsumedProduced Γ txTop)
+    dec-ConsumedProduced Γ txTop = consumed txTop (DepositsChangeOf Γ) (UTxOOf Γ) ≟ produced txTop (DepositsChangeOf Γ)
+    -- p₅
+    MaxTxSize : UTxOEnv → TopLevelTx → Type
+    MaxTxSize Γ txTop = SizeOf txTop ≤ maxTxSize (PParamsOf Γ)
+    dec-MaxTxSize : (Γ : UTxOEnv) (txTop : TopLevelTx) → Dec (MaxTxSize Γ txTop)
+    dec-MaxTxSize Γ txTop = SizeOf txTop ≤? maxTxSize (PParamsOf Γ)
+    -- p₆
+    MaxRefScriptSize : UTxOEnv → TopLevelTx → Type
+    MaxRefScriptSize  Γ txTop = refScriptsSize txTop (UTxOOf Γ) ≤ (PParamsOf Γ) .maxRefScriptSizePerTx
+    dec-MaxRefScriptSize : (Γ : UTxOEnv) (txTop : TopLevelTx) → Dec (MaxRefScriptSize Γ txTop)
+    dec-MaxRefScriptSize Γ txTop = refScriptsSize txTop (UTxOOf Γ) ≤? (PParamsOf Γ) .maxRefScriptSizePerTx
+    -- p₇
+    SpendInputsInDom : (Γ : UTxOEnv) (txTop : TopLevelTx) → Type
+    SpendInputsInDom Γ txTop = allSpendInputs txTop ⊆ dom (UTxOOf Γ)
+    dec-SpendInputsInDom : (Γ : UTxOEnv) (txTop : TopLevelTx) → Dec (SpendInputsInDom Γ txTop)
+    dec-SpendInputsInDom Γ txTop = ¿ SpendInputsInDom Γ txTop ¿
+    -- p₈
+    RefInputsInDom : (Γ : UTxOEnv) (txTop : TopLevelTx) → Type
+    RefInputsInDom Γ txTop = allReferenceInputs txTop ⊆ dom (UTxOOf Γ)
+    dec-RefInputsInDom : (Γ : UTxOEnv) (txTop : TopLevelTx) → Dec (RefInputsInDom Γ txTop)
+    dec-RefInputsInDom Γ txTop = ¿ RefInputsInDom Γ txTop ¿
+    -- p₉
+    NoOverlappingSpends : (txTop : TopLevelTx) → Type
+    NoOverlappingSpends txTop = NoOverlappingSpendInputs txTop
+    dec-NoOverlappingSpends : (txTop : TopLevelTx) → Dec (NoOverlappingSpends txTop)
+    dec-NoOverlappingSpends txTop = ¿ NoOverlappingSpends txTop ¿
+    -- p₁₀
+    ReqGuards : (txTop : TopLevelTx) → Type
+    ReqGuards txTop = requiredGuardsInTopLevel txTop (SubTransactionsOf txTop)
+    dec-ReqGuards : (txTop : TopLevelTx) → Dec (ReqGuards txTop)
+    dec-ReqGuards txTop = ¿ ReqGuards txTop ¿
+    -- p₁₁: we break this up because implication is a frequent source of trouble.
+    -- ∙ p₁₁ antecendent
+    RedeemersNonEmpty : (txTop : TopLevelTx) → Type
+    RedeemersNonEmpty txTop = RedeemersOf txTop ˢ ≢ ∅
+    dec-RedeemersNonEmpty : (txTop : TopLevelTx) → Dec (RedeemersNonEmpty txTop)
+    dec-RedeemersNonEmpty txTop = ¿ RedeemersNonEmpty txTop ¿
+    -- ∙ p₁₁ consequent
+    CollateralOK : (Γ : UTxOEnv) (txTop : TopLevelTx) → Type
+    CollateralOK Γ txTop = collateralCheck (PParamsOf Γ) txTop (UTxOOf Γ)
+    dec-CollateralOK : (Γ : UTxOEnv) (txTop : TopLevelTx) → Dec (CollateralOK Γ txTop)
+    dec-CollateralOK Γ txTop = ¿ CollateralOK Γ txTop ¿
+    -- ∙ p₁₁
+    CollateralImp : (Γ : UTxOEnv) (txTop : TopLevelTx) → Type
+    CollateralImp Γ txTop = RedeemersNonEmpty txTop → CollateralOK Γ txTop
+    dec-CollateralImp : (Γ : UTxOEnv) (txTop : TopLevelTx) → Dec (CollateralImp Γ txTop)
+    dec-CollateralImp Γ txTop with dec-RedeemersNonEmpty txTop
+    ... | no ¬A  = yes (λ a → ⊥-elim (¬A a))
+    ... | yes a  with dec-CollateralOK Γ txTop
+    ...   | yes b  = yes (λ _ → b)
+    ...   | no ¬b  = no  (λ f → ¬b (f a))
+    -- p₁₂
+    MintedZero : (txTop : TopLevelTx) → Type
+    MintedZero txTop = allMintedCoin txTop ≡ 0
+    dec-MintedZero : (txTop : TopLevelTx) → Dec (MintedZero txTop)
+    dec-MintedZero txTop = ¿ MintedZero txTop ¿
+    -- p₁₃
+    OutValueBounds : (Γ : UTxOEnv) (txTop : TopLevelTx) → Type
+    OutValueBounds Γ txTop =
+      ∀[ (_ , o) ∈ ∣ TxOutsOf txTop ∣ ]
+        ( (inject ((160 + utxoEntrySize o) * coinsPerUTxOByte (PParamsOf Γ)) ≤ᵗ txOutToValue o)
+          × (serializedSize (txOutToValue o) ≤ maxValSize (PParamsOf Γ)))
+    dec-OutValueBounds : (Γ : UTxOEnv) (txTop : TopLevelTx) → Dec (OutValueBounds Γ txTop)
+    dec-OutValueBounds Γ txTop = ¿ OutValueBounds Γ txTop ¿
+    -- p₁₄
+    OutAddrBounds : (Γ : UTxOEnv) (txTop : TopLevelTx) → Type
+    OutAddrBounds Γ txTop =
+      ∀[ (a , _) ∈ range (TxOutsOf txTop) ]
+        (Sum.All (const ⊤) (λ a → AttrSizeOf a ≤ 64)) a × (netId a ≡ NetworkId)
+    dec-OutAddrBounds : (Γ : UTxOEnv) (txTop : TopLevelTx) → Dec (OutAddrBounds Γ txTop)
+    dec-OutAddrBounds Γ txTop = ¿ OutAddrBounds Γ txTop ¿
+    -- p₁₅
+    WithdrawalsNetId : (txTop : TopLevelTx) → Type
+    WithdrawalsNetId txTop = ∀[ a ∈ dom (WithdrawalsOf txTop)] NetworkIdOf a ≡ NetworkId
+    dec-WithdrawalsNetId : (txTop : TopLevelTx) → Dec (WithdrawalsNetId txTop)
+    dec-WithdrawalsNetId txTop = ¿ WithdrawalsNetId txTop ¿
+    -- p₁₆
+    MaybeNetIdOK : (txTop : TopLevelTx) → Type
+    MaybeNetIdOK txTop = MaybeNetworkIdOf txTop ~ just NetworkId
+    dec-MaybeNetIdOK : (txTop : TopLevelTx) → Dec (MaybeNetIdOK txTop)
+    dec-MaybeNetIdOK txTop = ¿ MaybeNetIdOK txTop ¿
+    -- p₁₇
+    TreasuryOK : (Γ : UTxOEnv) (txTop : TopLevelTx) → Type
+    TreasuryOK Γ txTop = CurrentTreasuryOf txTop ~ just (TreasuryOf Γ)
+    dec-TreasuryOK : (Γ : UTxOEnv) (txTop : TopLevelTx) → Dec (TreasuryOK Γ txTop)
+    dec-TreasuryOK Γ txTop = ¿ TreasuryOK Γ txTop ¿
 
-      H₁ Γ txTop utxo fees donations = (SpendInputsOf txTop ≢ ∅)
-      H₂ Γ txTop utxo fees donations  = H₁ Γ txTop utxo fees donations  × (inInterval (SlotOf Γ) (ValidIntervalOf txTop))
-      H₃ Γ txTop utxo fees donations  = H₂ Γ txTop utxo fees donations  × (minfee (PParamsOf Γ) txTop utxo ≤ TxFeesOf txTop)
-      H₄ Γ txTop utxo fees donations  = H₃ Γ txTop utxo fees donations  × (consumed txTop (DepositsChangeOf Γ) (UTxOOf Γ) ≡ produced txTop (DepositsChangeOf Γ))
-      H₅ Γ txTop utxo fees donations  = H₄ Γ txTop utxo fees donations  × (SizeOf txTop ≤ maxTxSize (PParamsOf Γ))
-      H₆ Γ txTop utxo fees donations  = H₅ Γ txTop utxo fees donations  × (refScriptsSize txTop (UTxOOf Γ) ≤ (PParamsOf Γ) .maxRefScriptSizePerTx)
-      H₇ Γ txTop utxo fees donations  = H₆ Γ txTop utxo fees donations  × (allSpendInputs txTop ⊆ dom (UTxOOf Γ))
-      H₈ Γ txTop utxo fees donations  = H₇ Γ txTop utxo fees donations  × (allReferenceInputs txTop ⊆ dom (UTxOOf Γ))
-      H₉ Γ txTop utxo fees donations  = H₈ Γ txTop utxo fees donations  × (NoOverlappingSpendInputs txTop)
-      H₁₀ Γ txTop utxo fees donations = H₉ Γ txTop utxo fees donations  × (requiredGuardsInTopLevel txTop (SubTransactionsOf txTop))
-      H₁₁ Γ txTop utxo fees donations = H₁₀ Γ txTop utxo fees donations × ((RedeemersOf txTop ˢ ≢ ∅) → collateralCheck (PParamsOf Γ) txTop (UTxOOf Γ))
-      H₁₂ Γ txTop utxo fees donations = H₁₁ Γ txTop utxo fees donations × (allMintedCoin txTop ≡ 0)
-      H₁₃ Γ txTop utxo fees donations = H₁₂ Γ txTop utxo fees donations × (∀[ (_ , o) ∈ ∣ TxOutsOf txTop ∣ ] (inject ((160 + utxoEntrySize o) * coinsPerUTxOByte (PParamsOf Γ)) ≤ᵗ txOutToValue o) × (serializedSize (txOutToValue o) ≤ maxValSize (PParamsOf Γ)))
-      H₁₄ Γ txTop utxo fees donations = H₁₃ Γ txTop utxo fees donations × (∀[ (a , _) ∈ range (TxOutsOf txTop) ] (Sum.All (const ⊤) (λ a → AttrSizeOf a ≤ 64)) a × (netId a ≡ NetworkId))
-      H₁₅ Γ txTop utxo fees donations = H₁₄ Γ txTop utxo fees donations × (∀[ a ∈ dom (WithdrawalsOf txTop)] NetworkIdOf a ≡ NetworkId)
-      H₁₆ Γ txTop utxo fees donations = H₁₅ Γ txTop utxo fees donations × (MaybeNetworkIdOf txTop ~ just NetworkId)
-      H₁₇ Γ txTop utxo fees donations = H₁₆ Γ txTop utxo fees donations × (CurrentTreasuryOf txTop  ~ just (TreasuryOf Γ))
+    --------------------------------------------------------------------------
+    -- computeProof for UTXO
+    --------------------------------------------------------------------------
 
-      Hskip : UTxOEnv → TopLevelTx → UTxO → Fees → Donations → Type
-      Hskip Γ txTop utxo fees donations =
-            (SpendInputsOf txTop ≢ ∅)
-          × (inInterval (SlotOf Γ) (ValidIntervalOf txTop))
-          × (minfee (PParamsOf Γ) txTop utxo ≤ TxFeesOf txTop)
-          × (SizeOf txTop ≤ maxTxSize (PParamsOf Γ))
-          × (refScriptsSize txTop (UTxOOf Γ) ≤ (PParamsOf Γ) .maxRefScriptSizePerTx)
-          × (allSpendInputs txTop ⊆ dom (UTxOOf Γ))
-          × (allReferenceInputs txTop ⊆ dom (UTxOOf Γ))
-          × (NoOverlappingSpendInputs txTop)
-          × (requiredGuardsInTopLevel txTop (SubTransactionsOf txTop))
-          × ((RedeemersOf txTop ˢ ≢ ∅) → collateralCheck (PParamsOf Γ) txTop (UTxOOf Γ))
-          × (allMintedCoin txTop ≡ 0)
-          × (∀[ (_ , o) ∈ ∣ TxOutsOf txTop ∣ ]
-                (inject ((160 + utxoEntrySize o) * coinsPerUTxOByte (PParamsOf Γ)) ≤ᵗ txOutToValue o)
-              × (serializedSize (txOutToValue o) ≤ maxValSize (PParamsOf Γ)))
-          × (∀[ (a , _) ∈ range (TxOutsOf txTop) ]
-                (Sum.All (const ⊤) (λ a → AttrSizeOf a ≤ 64)) a × (netId a ≡ NetworkId))
-          × (∀[ a ∈ dom (WithdrawalsOf txTop)] NetworkIdOf a ≡ NetworkId)
-          × (MaybeNetworkIdOf txTop ~ just NetworkId)
-          × (CurrentTreasuryOf txTop ~ just (TreasuryOf Γ))
+    computeProof : (Γ : UTxOEnv) (s : UTxOState) (txTop : TopLevelTx)
+      → ComputationResult String (∃[ s' ] Γ ⊢ s ⇀⦇ txTop ,UTXO⦈ s')
 
-      takeH₃ :  {Γ : UTxOEnv} {txTop : TopLevelTx} {s₁ : UTxOState} {utxo : UTxO} {fees : Fees} {donations : Donations}
-                → UTXO-Premises Γ txTop s₁ utxo fees donations
-                → H₃ Γ txTop utxo fees donations
-      takeH₃ prem = ((prem .proj₁) , (prem .proj₂ .proj₁)) , (prem .proj₂ .proj₂ .proj₁)
+    computeProof Γ (⟦ utxo , fees , donations ⟧ᵘ) txTop
+      with ¿ P123 Γ txTop utxo fees donations ¿
+    ... | no ¬hs = failure (genErrors ¬hs)
+    ... | yes hs
+      with dec-ConsumedProduced Γ txTop
+    ... | no ¬p₄ = failure (genErrors ¬p₄)
+    ... | yes p₄
+      with dec-MaxTxSize Γ txTop
+    ... | no ¬p₅ = failure (genErrors ¬p₅)
+    ... | yes p₅
+      with dec-MaxRefScriptSize Γ txTop
+    ... | no ¬p₆ = failure (genErrors ¬p₆)
+    ... | yes p₆
+      with dec-SpendInputsInDom Γ txTop
+    ... | no ¬p₇ = failure (genErrors ¬p₇)
+    ... | yes p₇
+      with dec-RefInputsInDom Γ txTop
+    ... | no ¬p₈ = failure (genErrors ¬p₈)
+    ... | yes p₈
+      with dec-NoOverlappingSpends txTop
+    ... | no ¬p₉ = failure (genErrors ¬p₉)
+    ... | yes p₉
+      with dec-ReqGuards txTop
+    ... | no ¬p₁₀ = failure (genErrors ¬p₁₀)
+    ... | yes p₁₀
+      with dec-CollateralImp Γ txTop
+    ... | no ¬p₁₁ = failure (genErrors ¬p₁₁)
+    ... | yes p₁₁
+      with dec-MintedZero txTop
+    ... | no ¬p₁₂ = failure (genErrors ¬p₁₂)
+    ... | yes p₁₂
+      with dec-OutValueBounds Γ txTop
+    ... | no ¬p₁₃ = failure (genErrors ¬p₁₃)
+    ... | yes p₁₃
+      with dec-OutAddrBounds Γ txTop
+    ... | no ¬p₁₄ = failure (genErrors ¬p₁₄)
+    ... | yes p₁₄
+      with dec-WithdrawalsNetId txTop
+    ... | no ¬p₁₅ = failure (genErrors ¬p₁₅)
+    ... | yes p₁₅
+      with dec-MaybeNetIdOK txTop
+    ... | no ¬p₁₆ = failure (genErrors ¬p₁₆)
+    ... | yes p₁₆
+      with dec-TreasuryOK Γ txTop
+    ... | no ¬p₁₇ = failure (genErrors ¬p₁₇)
+    ... | yes p₁₇
+      with computeProof-UTXOS Γ tt txTop
+    ... | failure es = failure es
+    ... | success (tt , utxosProof) = success (s₁ , UTXO-step premises)
+      where
+        s₁ : UTxOState
+        s₁ = if IsValidFlagOf txTop
+             then ⟦ (utxo ∣ SpendInputsOf txTop ᶜ) ∪ˡ outs txTop
+                  , fees + TxFeesOf txTop
+                  , donations + DonationsOf txTop ⟧ᵘ
+             else ⟦ utxo ∣ (CollateralInputsOf txTop) ᶜ
+                  , fees + cbalance (utxo ∣ CollateralInputsOf txTop)
+                  , donations ⟧ᵘ
 
-      ConsumedProduced : UTxOEnv → TopLevelTx → Type
-      ConsumedProduced Γ txTop = consumed txTop (DepositsChangeOf Γ) (UTxOOf Γ) ≡ produced txTop (DepositsChangeOf Γ)
+        assemblePremises :  P123 Γ txTop utxo fees donations
+                            → ConsumedProduced     Γ txTop
+                            → MaxTxSize            Γ txTop
+                            → MaxRefScriptSize     Γ txTop
+                            → SpendInputsInDom     Γ txTop
+                            → RefInputsInDom       Γ txTop
+                            → NoOverlappingSpends    txTop
+                            → ReqGuards              txTop
+                            → CollateralImp        Γ txTop
+                            → MintedZero             txTop
+                            → OutValueBounds       Γ txTop
+                            → OutAddrBounds        Γ txTop
+                            → WithdrawalsNetId       txTop
+                            → MaybeNetIdOK           txTop
+                            → TreasuryOK           Γ txTop
+                            → (Γ ⊢ tt ⇀⦇ txTop ,UTXOS⦈ tt)
+                            → UTXO-Premises Γ txTop s₁ utxo fees donations
 
-      dec-ConsumedProduced : (Γ : UTxOEnv) (txTop : TopLevelTx) → Dec (ConsumedProduced Γ txTop)
-      dec-ConsumedProduced Γ txTop = (consumed txTop (DepositsChangeOf Γ) (UTxOOf Γ) ≟ produced txTop (DepositsChangeOf Γ))
+        assemblePremises (p₁ , p₂ , p₃) p₄ p₅ p₆ p₇ p₈ p₉ p₁₀ p₁₁ p₁₂ p₁₃ p₁₄ p₁₅ p₁₆ p₁₇ utxosProof =
+          p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , p₁₂ , p₁₃ , p₁₄ , p₁₅ , p₁₆ , p₁₇ , utxosProof , refl
 
-      computeProof :  (Γ : UTxOEnv) (s : UTxOState) (txTop : TopLevelTx)
-                      → ComputationResult String (∃[ s' ] Γ ⊢ s ⇀⦇ txTop ,UTXO⦈ s')
-
-      computeProof Γ (⟦ utxo , fees , donations ⟧ᵘ) txTop
-        with ¿ Hskip Γ txTop utxo fees donations ¿
-      ... | no ¬hs = failure (genErrors ¬hs)
-      ... | yes hs
-        with dec-ConsumedProduced Γ txTop
-      ... | no ¬eq = failure (genErrors ¬eq)
-      ... | yes eq
-        with computeProof-UTXOS Γ tt txTop
-      ... | failure es = failure es
-      ... | success (tt , utxosProof) = success (s₁ , UTXO-step premises)
-        where
-          s₁ : UTxOState
-          s₁ = if IsValidFlagOf txTop
-               then ⟦ (utxo ∣ SpendInputsOf txTop ᶜ) ∪ˡ outs txTop
-                    , fees + TxFeesOf txTop
-                    , donations + DonationsOf txTop ⟧ᵘ
-               else ⟦ utxo ∣ (CollateralInputsOf txTop) ᶜ
-                    , fees + cbalance (utxo ∣ CollateralInputsOf txTop)
-                    , donations ⟧ᵘ
-
-          assemblePremises :
-            Hskip Γ txTop utxo fees donations
-            → ConsumedProduced Γ txTop
-            → (Γ ⊢ tt ⇀⦇ txTop ,UTXOS⦈ tt)
-            → UTXO-Premises Γ txTop s₁ utxo fees donations
-          assemblePremises
-            ( p₁ , p₂ , p₃ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , p₁₂ , p₁₃ , p₁₄ , p₁₅ , p₁₆ , p₁₇ ) eq utxosProof =
-              p₁ , p₂ , p₃ , eq , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , p₁₂ , p₁₃ , p₁₄ , p₁₅ , p₁₆ , p₁₇ , utxosProof , refl
-
-          premises : UTXO-Premises Γ txTop s₁ utxo fees donations
-          premises = assemblePremises hs eq utxosProof
+        premises : UTXO-Premises Γ txTop s₁ utxo fees donations
+        premises = assemblePremises hs p₄ p₅ p₆ p₇ p₈ p₉ p₁₀ p₁₁ p₁₂ p₁₃ p₁₄ p₁₅ p₁₆ p₁₇ utxosProof
 
 
-      completeness :  (Γ : UTxOEnv) (s : UTxOState) (txTop : TopLevelTx) (s' : UTxOState)
-                      → Γ ⊢ s ⇀⦇ txTop ,UTXO⦈ s'
-                      → (map proj₁ $ computeProof Γ s txTop) ≡ success s'
+    --------------------------------------------------------------------------
+    -- completeness (mirrors computeProof)
+    --------------------------------------------------------------------------
 
-      completeness Γ (⟦ utxo , fees , donations ⟧ᵘ) txTop s' (UTXO premises)
-        with premises
-      ... | ( p₁ , p₂ , p₃ , eq , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , p₁₂ , p₁₃ , p₁₄ , p₁₅ , p₁₆ , p₁₇ , utxosProof , eqS₁ )
-        with ¿ Hskip Γ txTop utxo fees donations ¿
-      ... | no ¬hs =
-          ⊥-elim (¬hs ( p₁ , p₂ , p₃ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , p₁₂ , p₁₃ , p₁₄ , p₁₅ , p₁₆ , p₁₇))
-      ... | yes hs'
-        with dec-ConsumedProduced Γ txTop
-      ... | no ¬eq = ⊥-elim (¬eq eq)
-      ... | yes eq'
-        with computeProof-UTXOS Γ tt txTop
-           | completeness-UTXOS Γ tt txTop tt utxosProof
-      ... | failure es | ()   -- impossible: would imply failure ≡ success tt
-      ... | success (tt , _) | refl
-        rewrite sym eqS₁ = refl
---}
+    completeness : (Γ : UTxOEnv) (s : UTxOState) (txTop : TopLevelTx) (s' : UTxOState)
+      → Γ ⊢ s ⇀⦇ txTop ,UTXO⦈ s' → (map proj₁ $ computeProof Γ s txTop) ≡ success s'
+
+    completeness Γ (⟦ utxo , fees , donations ⟧ᵘ) txTop s' (UTXO prem)
+      with prem
+    ... | ( p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , p₁₂ , p₁₃ , p₁₄ , p₁₅ , p₁₆ , p₁₇ , utxosProof , eqS₁ )
+      with ¿ P123 Γ txTop utxo fees donations ¿
+    ... | no ¬hs = ⊥-elim (¬hs (p₁ , p₂ , p₃))
+    ... | yes _
+      with dec-ConsumedProduced Γ txTop
+    ... | no ¬p₄ = ⊥-elim (¬p₄ p₄)
+    ... | yes _
+      with dec-MaxTxSize Γ txTop
+    ... | no ¬p₅ = ⊥-elim (¬p₅ p₅)
+    ... | yes _
+      with dec-MaxRefScriptSize Γ txTop
+    ... | no ¬p₆ = ⊥-elim (¬p₆ p₆)
+    ... | yes _
+      with dec-SpendInputsInDom Γ txTop
+    ... | no ¬p₇ = ⊥-elim (¬p₇ p₇)
+    ... | yes _
+      with dec-RefInputsInDom Γ txTop
+    ... | no ¬p₈ = ⊥-elim (¬p₈ p₈)
+    ... | yes _
+      with dec-NoOverlappingSpends txTop
+    ... | no ¬p₉ = ⊥-elim (¬p₉ p₉)
+    ... | yes _
+      with dec-ReqGuards txTop
+    ... | no ¬p₁₀ = ⊥-elim (¬p₁₀ p₁₀)
+    ... | yes _
+      with dec-CollateralImp Γ txTop
+    ... | no ¬p₁₁ = ⊥-elim (¬p₁₁ p₁₁)
+    ... | yes _
+      with dec-MintedZero txTop
+    ... | no ¬p₁₂ = ⊥-elim (¬p₁₂ p₁₂)
+    ... | yes _
+      with dec-OutValueBounds Γ txTop
+    ... | no ¬p₁₃ = ⊥-elim (¬p₁₃ p₁₃)
+    ... | yes _
+      with dec-OutAddrBounds Γ txTop
+    ... | no ¬p₁₄ = ⊥-elim (¬p₁₄ p₁₄)
+    ... | yes _
+      with dec-WithdrawalsNetId txTop
+    ... | no ¬p₁₅ = ⊥-elim (¬p₁₅ p₁₅)
+    ... | yes _
+      with dec-MaybeNetIdOK txTop
+    ... | no ¬p₁₆ = ⊥-elim (¬p₁₆ p₁₆)
+    ... | yes _
+      with dec-TreasuryOK Γ txTop
+    ... | no ¬p₁₇ = ⊥-elim (¬p₁₇ p₁₇)
+    ... | yes _
+      with computeProof-UTXOS Γ tt txTop | completeness-UTXOS Γ tt txTop tt utxosProof
+    ... | failure es | ()
+    ... | success (tt , _) | refl rewrite sym eqS₁ = refl
 ```
