@@ -60,12 +60,13 @@ data _⊢_⇀⦇_,UTXOW⦈_ where
     ∙  inputsDataHashes ⊆ txdatsHashes
     ∙  txdatsHashes ⊆ inputsDataHashes ∪ outputsDataHashes ∪ refInputsDataHashes
     ∙  dom txrdmrs ≡ᵉ scriptRdrptrs
-    ∙  L.languages tx utxo ⊆ dom (PParams.costmdls (PParamsOf Γ)) ∩ L.allowedLanguages tx utxo
+    ∙  L.languages tx utxo neededScriptHashes ⊆
+         dom (PParams.costmdls (PParamsOf Γ)) ∩ L.allowedLanguages tx utxo
     ∙  txADhash ≡ map hash txAD
     ∙  scriptIntegrityHash ≡
          L.hashScriptIntegrity
            (UTxOEnv.pparams Γ)
-           (L.languages tx utxo)
+           (L.languages tx utxo neededScriptHashes)
            txrdmrs
            txdats
     ∙  Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s'
