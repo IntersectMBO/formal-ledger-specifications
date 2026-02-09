@@ -21,6 +21,7 @@ module Ledger.Conway.Specification.Utxow.Properties.Computational
 open import Ledger.Conway.Specification.Utxow txs abs
 open import Ledger.Conway.Specification.Utxo txs abs
 open import Ledger.Conway.Specification.Utxo.Properties.Computational txs abs
+open import stdlib-meta.Tactic.GenError using (genErrors)
 
 instance
   Computational-UTXOW : Computational _⊢_⇀⦇_,UTXOW⦈_ String
@@ -30,29 +31,12 @@ instance
     open Computational Computational-UTXO
       renaming (computeProof to computeProof'; completeness to completeness')
 
-    genErr : ¬ H → String
-    genErr  ¬p = case dec-de-morgan ¬p of λ where
-      (inj₁ a) → "¬ ∀[ (vk , σ) ∈ vkSigs ] isSigned vk (txidBytes txid) σ"
-      (inj₂ b) → case dec-de-morgan b of λ where
-        (inj₁ a₁) → "∀[ s ∈ scriptsP1 ] validP1Script witsKeyHashes txvldt s"
-        (inj₂ b₁) → case dec-de-morgan b₁ of λ where
-          (inj₁ a₂) → "witsVKeyNeeded utxo txb ⊆ witsKeyHashes"
-          (inj₂ b₂) → case dec-de-morgan b₂ of λ where
-            (inj₁ a₃) → "(neededHashes - refScriptHashes) ≡ᵉ witsScriptHashes"
-            (inj₂ b₃) → case dec-de-morgan b₃ of λ where
-              (inj₁ a₄) → "inputHashes ⊆ txdatsHashes"
-              (inj₂ b₄) → case dec-de-morgan b₄ of λ where
-                (inj₁ a₅) → "txdatsHashes ⊆ (inputHashes ∪ allOutHashes ∪ getDataHashes (range (utxo ∣ refInputs)))"
-                (inj₂ b₅) → case dec-de-morgan b₅ of λ where
-                  (inj₁ a₆) → "languages ⊆ allowedLanguages"
-                  (inj₂ b₆) → "txADhash ≡ map hash txAD"
-
     computeProof : ComputationResult String (∃ (Γ ⊢ s ⇀⦇ tx ,UTXOW⦈_))
     computeProof =
       case H? of λ where
         (yes (p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀)) →
           map (map₂′ (UTXOW-inductive⋯ p₁ p₂ p₃ p₄ p₅ p₆ p₇ p₈ p₉ p₁₀)) (computeProof' Γ s tx)
-        (no ¬p) → failure $ genErr ¬p
+        (no ¬p) → failure $ genErrors ¬p
 
     completeness : ∀ s' → Γ ⊢ s ⇀⦇ tx ,UTXOW⦈ s'
                         → map proj₁ computeProof ≡ success s'
