@@ -29,7 +29,10 @@ open import Data.List using (fromMaybe)
 ```agda
 private variable
   ℓ : TxLevel
+```
+-->
 
+```agda
 rdptr : Tx ℓ → ScriptPurpose → Maybe (RedeemerPtr ℓ)
 rdptr tx = λ where
   (Cert h)     → map (Cert     ,_) $ indexOfDCert           h (DCertsOf tx)
@@ -43,23 +46,29 @@ rdptr tx = λ where
 indexedRdmrs : Tx ℓ → ScriptPurpose → Maybe (Redeemer × ExUnits)
 indexedRdmrs tx sp = maybe (λ x → lookupᵐ? (RedeemersOf tx) x) nothing (rdptr tx sp)
 
--- Data lookup for spent outputs (Spend txin) and guards (Guard c)
-getData : Tx ℓ
-        → UTxO
-        → (DataHash ⇀ Datum)
-        → ScriptPurpose
-        → ℙ Datum
-getData tx utxo₀ allData (Spend txin)
+getDatumSpend
+  : Tx ℓ
+  → UTxO
+  → (DataHash ⇀ Datum)
+  → TxIn
+  → Maybe Datum
+getDatumSpend tx utxo₀ allData txin
   with lookupᵐ? utxo₀ txin
 ... | just (_ , _ , just d , _) =
   case d of λ where
-    (inj₁ d) → ❴ d ❵
-    (inj₂ h) → fromList (fromMaybe (lookupᵐ? allData h))
-... | _ = ∅
-getData tx utxo₀ _ (Guard c) = mapPartial (λ (c' , d) → if c ≡ c' then d else nothing) (GuardsOf tx)
-getData tx utxo₀ _ _         = ∅
+    (inj₁ d) → just d
+    (inj₂ h) → lookupᵐ? allData h
+... | _ = nothing
+
+getDataGuard
+  : Tx ℓ
+  → UTxO
+  → Credential
+  → ℙ Datum × Bool
+getDataGuard tx utxo₀ c
+  = mapPartial (λ (c' , d) → if c ≡ c' then d else nothing) (GuardsOf tx)
+    , ¿ (c , nothing) ∈ GuardsOf tx ¿ᵇ
 ```
--->
 
 ```agda
 txInfo : (ℓ : TxLevel) → UTxO → Tx ℓ → TxInfo
@@ -134,33 +143,39 @@ credsNeeded {TxLevelTop} utxo tx =
 credsNeeded {TxLevelSub} utxo tx = credsNeededMinusCollateral tx
   ∪ mapˢ (λ (i , o) → (Spend  i , payCred (proj₁ o))) ((utxo ∣ SpendInputsOf tx) ˢ)
 
-txOutToDataHash : TxOut → Maybe DataHash
-txOutToDataHash (_ , _ , d , _) = d >>= isInj₂
-
-txOutToP2Script : ℙ Script → TxOut → Maybe P2Script
-txOutToP2Script allScripts (a , _) =
-  do sh ← isScriptObj (payCred a)
-     s  ← lookupHash sh allScripts
-     toP2Script s
-
 opaque
   collectP2ScriptsWithContext : {ℓ : TxLevel} → PParams → Tx ℓ
     → UTxO → (DataHash ⇀ Datum) → ℙ Script
     → List (P2Script × List Data × ExUnits × CostModel)
   collectP2ScriptsWithContext pp tx utxo allData allScripts
-    = concat (setToList (mapˢ toScriptInput ( credsNeeded utxo tx )))
+    = concat (setToList (mapˢ toScript ( credsNeeded utxo tx )))
     where
-      toScriptInput
-        : ScriptPurpose × Credential
-        → List (P2Script × List Data × ExUnits × CostModel)
-      toScriptInput (sp , c) =
-        do (script , reedemer , exUnits , costModel) ← fromMaybe (do
+      context : ScriptPurpose → Data
+      context sp = valContext (txInfoForPurpose utxo tx sp) sp
+
+      getScript : Credential → ScriptPurpose → Maybe (P2Script × Redeemer × ExUnits × CostModel)
+      getScript c sp = do
              script               ← isScriptObj c >>= λ sh → lookupHash sh allScripts >>= toP2Script
              (reedemer , exUnits) ← indexedRdmrs tx sp
              costModel            ← lookupᵐ? (PParams.costmdls pp) (language script)
-             return (script , reedemer , exUnits , costModel))
-           datum ← setToList (getData tx utxo allData sp)
-           let data′ = datum ∷ reedemer ∷ [ valContext (txInfoForPurpose utxo tx sp) sp ]
+             return (script , reedemer , exUnits , costModel)
+
+      assembleData : Redeemer → ScriptPurpose → List (List Data)
+      assembleData redeemer sp@(Spend txin)
+        = [ fromMaybe (getDatumSpend tx utxo allData txin) ++ (redeemer ∷ [ context sp ]) ]
+      assembleData redeemer sp@(Guard c) =
+        let data′ , noDatum = getDataGuard tx utxo c
+        in  map (λ d → [ d ] ++ (redeemer ∷ [ context sp ])) (setToList data′)
+            ++ (if noDatum then [(redeemer ∷ [ context sp ])]
+                               else [])
+      assembleData redeemer sp           = [ redeemer ∷ [ context sp ] ]
+
+      toScript
+        : ScriptPurpose × Credential
+        → List (P2Script × List Data × ExUnits × CostModel)
+      toScript (sp , c) =
+        do (script , reedemer , exUnits , costModel) ← fromMaybe (getScript c sp)
+           data′ ← assembleData reedemer sp
            [ (script , data′ , exUnits , costModel) ]
 
 evalP2Scripts : List (P2Script × List Data × ExUnits × CostModel) → Bool
