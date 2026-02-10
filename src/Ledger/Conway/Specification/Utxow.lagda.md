@@ -67,15 +67,21 @@ instance
   Dec-UsesV3Features {record { txGovVotes = [] ; txGovProposals = x ∷ txGovProposals }} = ⁇ yes (HasProps (λ ()))
   Dec-UsesV3Features {record { txGovVotes = x ∷ txGovVotes }} = ⁇ yes (HasVotes (λ ()))
 
--- Unlike Alonzo and Babbage, we only retrieve the languages of needed scripts
--- (third parameter). This is how the Haskell implementation does it, which
--- makes conformance testing simpler. Moreover, there is no reason to impose
--- conditions on the languages of more scripts.
+-- See note "languages" below
 languages : Tx → UTxO → ℙ ScriptHash → ℙ Language
 languages tx utxo shs =
   mapPartial getLanguage $ filterˢ (λ s → hash s ∈ shs) $ txscripts tx utxo
 ```
 -->
+
+!!! note "languages"
+
+    Unlike in Alonzo and Babbage, the `languages`{.AgdaFunction} function only
+    yields the languages of needed scripts (third parameter). This is how the
+    Haskell implementation does it, which makes conformance testing simpler.
+    Moreover, there is no reason to impose conditions on the languages of more
+    scripts.
+
 
 We begin with the definition of `allowedLanguages`{.AgdaFunction}, which
 includes conditions for new features in Conway.  If a transaction contains any votes,
