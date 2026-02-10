@@ -4,6 +4,7 @@
 
 ### WIP
 
+- Retrieve languages of needed scripts only in UTXOW rule.
 - Add premise about maxBlockExUnits to BBODY
 - Added the validity interval as a `POSIXTimeRange` to `TxInfo`.
 - Added premise about `epochInfoSlotToUTCTime` to the UTXO rule.

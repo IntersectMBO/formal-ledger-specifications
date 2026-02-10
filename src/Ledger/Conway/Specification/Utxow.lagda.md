@@ -67,10 +67,21 @@ instance
   Dec-UsesV3Features {record { txGovVotes = [] ; txGovProposals = x ∷ txGovProposals }} = ⁇ yes (HasProps (λ ()))
   Dec-UsesV3Features {record { txGovVotes = x ∷ txGovVotes }} = ⁇ yes (HasVotes (λ ()))
 
-languages : Tx → UTxO → ℙ Language
-languages tx utxo = mapPartial getLanguage (txscripts tx utxo)
+-- See note "languages" below
+languages : Tx → UTxO → ℙ ScriptHash → ℙ Language
+languages tx utxo shs =
+  mapPartial getLanguage $ filterˢ (λ s → hash s ∈ shs) $ txscripts tx utxo
 ```
 -->
+
+!!! note "languages"
+
+    Unlike in Alonzo and Babbage, the `languages`{.AgdaFunction} function only
+    yields the languages of needed scripts (third parameter). This is how the
+    Haskell implementation does it, which makes conformance testing simpler.
+    Moreover, there is no reason to impose conditions on the languages of more
+    scripts.
+
 
 We begin with the definition of `allowedLanguages`{.AgdaFunction}, which
 includes conditions for new features in Conway.  If a transaction contains any votes,
@@ -165,12 +176,13 @@ data _⊢_⇀⦇_,UTXOW⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Typ
     ∙  inputsDataHashes ⊆ txdatsHashes
     ∙  txdatsHashes ⊆ inputsDataHashes ∪ outputsDataHashes ∪ refInputsDataHashes
     ∙  dom txrdmrs ≡ᵉ scriptRdrptrs
-    ∙  languages tx utxo ⊆ dom (PParams.costmdls (PParamsOf Γ)) ∩ allowedLanguages tx utxo
+    ∙  languages tx utxo neededScriptHashes ⊆
+         dom (PParams.costmdls (PParamsOf Γ)) ∩ allowedLanguages tx utxo
     ∙  txADhash ≡ map hash txAD
     ∙  scriptIntegrityHash ≡
           hashScriptIntegrity
             (PParamsOf Γ)
-            (languages tx utxo)
+            (languages tx utxo neededScriptHashes)
             txrdmrs
             txdats
     ∙  Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s'
