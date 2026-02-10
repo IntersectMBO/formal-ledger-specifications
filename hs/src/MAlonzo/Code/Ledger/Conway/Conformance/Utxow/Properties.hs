@@ -1220,7 +1220,7 @@ d_computeProof_2112 v0 v1 v2 v3 v4
                                                                                                                                   (coe
                                                                                                                                      v2))))
                                                                                                                          (coe
-                                                                                                                            MAlonzo.Code.Ledger.Conway.Specification.Utxow.du_allowedLanguages_2722
+                                                                                                                            MAlonzo.Code.Ledger.Conway.Specification.Utxow.du_allowedLanguages_2726
                                                                                                                             (coe
                                                                                                                                v0)
                                                                                                                             (coe
@@ -1238,14 +1238,38 @@ d_computeProof_2112 v0 v1 v2 v3 v4
                                                                                                                  (coe
                                                                                                                     MAlonzo.Code.Ledger.Conway.Specification.Utxo.d_utxo_2456
                                                                                                                     (coe
-                                                                                                                       v3))))
+                                                                                                                       v3))
+                                                                                                                 (coe
+                                                                                                                    MAlonzo.Code.Axiom.Set.du_mapPartial_604
+                                                                                                                    (MAlonzo.Code.Axiom.Set.d_th_1516
+                                                                                                                       (coe
+                                                                                                                          MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                                                                    (\ v22 ->
+                                                                                                                       coe
+                                                                                                                         MAlonzo.Code.Ledger.Core.Specification.Address.du_isScriptObj_56
+                                                                                                                         (coe
+                                                                                                                            MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
+                                                                                                                            (coe
+                                                                                                                               v22)))
+                                                                                                                    (coe
+                                                                                                                       MAlonzo.Code.Ledger.Conway.Specification.Script.Validation.du_credsNeeded_2766
+                                                                                                                       (coe
+                                                                                                                          v0)
+                                                                                                                       (coe
+                                                                                                                          MAlonzo.Code.Ledger.Conway.Specification.Utxo.d_utxo_2456
+                                                                                                                          (coe
+                                                                                                                             v3))
+                                                                                                                       (coe
+                                                                                                                          MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_body_3562
+                                                                                                                          (coe
+                                                                                                                             v4))))))
                                                                                                            erased in
                                                                                                  coe
                                                                                                    (case coe
                                                                                                            v22 of
                                                                                                       MAlonzo.Code.Data.Sum.Base.C_inj'8321'_38 v23
                                                                                                         -> coe
-                                                                                                             ("\172\n(HasSubset-Set HasSubset.\8838\n Ledger.Conway.Specification.Utxow.languages txs abs tx\n (.Ledger.Conway.Specification.Utxo.UTxOState.utxo s))\n((.Axiom.Set.Theory\7496.th List-Model\7496 Axiom.Set.Theory.Intersection.\8745\n  .Axiom.Set.Theory\7496.\8712-sp List-Model\7496)\n (Class.IsSet.dom (.Axiom.Set.Theory\7496.th List-Model\7496)\n  (Ledger.Conway.Specification.PParams.PParams.costmdls\n   (.Ledger.Conway.Specification.PParams.HasPParams.PParamsOf\n    (Ledger.Conway.Specification.Utxo.HasPParams-UTxOEnv txs abs) \915)))\n (Ledger.Conway.Specification.Utxow.allowedLanguages txs abs tx\n  (.Ledger.Conway.Specification.Utxo.UTxOState.utxo s)))"
+                                                                                                             ("\172\n(HasSubset-Set HasSubset.\8838\n Ledger.Conway.Specification.Utxow.languages txs abs tx\n (.Ledger.Conway.Specification.Utxo.UTxOState.utxo s)\n (Axiom.Set.Theory.mapPartial (.Axiom.Set.Theory\7496.th List-Model\7496)\n  (\955 x \8594\n     Ledger.Core.Specification.Address.isScriptObj\n     (.Ledger.Core.Specification.Epoch.GlobalConstants.Network\n      (.TransactionStructure.globalConstants txs))\n     (.isHashableSet.THash\n      (.CryptoStructure.khs (.TransactionStructure.cryptoStructure txs)))\n     (.CryptoStructure.ScriptHash\n      (.TransactionStructure.cryptoStructure txs))\n     (.proj\8322 x))\n  (Ledger.Conway.Specification.Script.Validation.credsNeeded txs abs\n   (.Ledger.Conway.Specification.Utxo.UTxOState.utxo s)\n   (.TransactionStructure.Tx.body tx))))\n((.Axiom.Set.Theory\7496.th List-Model\7496 Axiom.Set.Theory.Intersection.\8745\n  .Axiom.Set.Theory\7496.\8712-sp List-Model\7496)\n (Class.IsSet.dom (.Axiom.Set.Theory\7496.th List-Model\7496)\n  (Ledger.Conway.Specification.PParams.PParams.costmdls\n   (.Ledger.Conway.Specification.PParams.HasPParams.PParamsOf\n    (Ledger.Conway.Specification.Utxo.HasPParams-UTxOEnv txs abs) \915)))\n (Ledger.Conway.Specification.Utxow.allowedLanguages txs abs tx\n  (.Ledger.Conway.Specification.Utxo.UTxOState.utxo s)))"
                                                                                                               ::
                                                                                                               Data.Text.Text)
                                                                                                       MAlonzo.Code.Data.Sum.Base.C_inj'8322'_42 v23
@@ -1296,7 +1320,7 @@ d_computeProof_2112 v0 v1 v2 v3 v4
                                                                                                                         Data.Text.Text)
                                                                                                                 MAlonzo.Code.Data.Sum.Base.C_inj'8322'_42 v25
                                                                                                                   -> coe
-                                                                                                                       ("\172\n.TransactionStructure.TxBody.scriptIntegrityHash\n(.TransactionStructure.Tx.body tx)\n\8801\nLedger.Conway.Specification.Utxow.hashScriptIntegrity txs abs\n(.Ledger.Conway.Specification.Utxo.UTxOEnv.pparams \915)\n(Ledger.Conway.Specification.Utxow.languages txs abs tx\n (.Ledger.Conway.Specification.Utxo.UTxOState.utxo s))\n(.TransactionStructure.TxWitnesses.txrdmrs\n (.TransactionStructure.Tx.wits tx))\n(.TransactionStructure.TxWitnesses.txdats\n (.TransactionStructure.Tx.wits tx))"
+                                                                                                                       ("\172\n.TransactionStructure.TxBody.scriptIntegrityHash\n(.TransactionStructure.Tx.body tx)\n\8801\nLedger.Conway.Specification.Utxow.hashScriptIntegrity txs abs\n(.Ledger.Conway.Specification.Utxo.UTxOEnv.pparams \915)\n(Ledger.Conway.Specification.Utxow.languages txs abs tx\n (.Ledger.Conway.Specification.Utxo.UTxOState.utxo s)\n (Axiom.Set.Theory.mapPartial (.Axiom.Set.Theory\7496.th List-Model\7496)\n  (\955 x \8594\n     Ledger.Core.Specification.Address.isScriptObj\n     (.Ledger.Core.Specification.Epoch.GlobalConstants.Network\n      (.TransactionStructure.globalConstants txs))\n     (.isHashableSet.THash\n      (.CryptoStructure.khs (.TransactionStructure.cryptoStructure txs)))\n     (.CryptoStructure.ScriptHash\n      (.TransactionStructure.cryptoStructure txs))\n     (.proj\8322 x))\n  (Ledger.Conway.Specification.Script.Validation.credsNeeded txs abs\n   (.Ledger.Conway.Specification.Utxo.UTxOState.utxo s)\n   (.TransactionStructure.Tx.body tx))))\n(.TransactionStructure.TxWitnesses.txrdmrs\n (.TransactionStructure.Tx.wits tx))\n(.TransactionStructure.TxWitnesses.txdats\n (.TransactionStructure.Tx.wits tx))"
                                                                                                                         ::
                                                                                                                         Data.Text.Text)
                                                                                                                 _ -> MAlonzo.RTE.mazUnreachableError)
