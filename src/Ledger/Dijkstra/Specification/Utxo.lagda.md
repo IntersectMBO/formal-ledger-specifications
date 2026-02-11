@@ -508,7 +508,6 @@ UTXO-Premises Γ txTop s₁ utxo fees donations =
       × (allSpendInputs txTop ⊆ dom (UTxOOf Γ))
       × (allReferenceInputs txTop ⊆ dom (UTxOOf Γ))
       × (NoOverlappingSpendInputs txTop)
-      × (requiredGuardsInTopLevel txTop (SubTransactionsOf txTop))
       × ((RedeemersOf txTop ˢ ≢ ∅) → collateralCheck (PParamsOf Γ) txTop (UTxOOf Γ))
       × (allMintedCoin txTop ≡ 0)
       × (∀[ (_ , o) ∈ ∣ TxOutsOf txTop ∣ ]

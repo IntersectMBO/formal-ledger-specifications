@@ -131,23 +131,18 @@ instance
     NoOverlappingSpends txTop = NoOverlappingSpendInputs txTop
     dec-NoOverlappingSpends : (txTop : TopLevelTx) → Dec (NoOverlappingSpends txTop)
     dec-NoOverlappingSpends txTop = ¿ NoOverlappingSpends txTop ¿
-    -- p₁₀
-    ReqGuards : (txTop : TopLevelTx) → Type
-    ReqGuards txTop = requiredGuardsInTopLevel txTop (SubTransactionsOf txTop)
-    dec-ReqGuards : (txTop : TopLevelTx) → Dec (ReqGuards txTop)
-    dec-ReqGuards txTop = ¿ ReqGuards txTop ¿
-    -- p₁₁: we break this up because implication is a frequent source of trouble.
-    -- ∙ p₁₁ antecendent
+    -- p₁₀: we break this up because implication is a frequent source of trouble.
+    -- ∙ p₁₀ antecendent
     RedeemersNonEmpty : (txTop : TopLevelTx) → Type
     RedeemersNonEmpty txTop = RedeemersOf txTop ˢ ≢ ∅
     dec-RedeemersNonEmpty : (txTop : TopLevelTx) → Dec (RedeemersNonEmpty txTop)
     dec-RedeemersNonEmpty txTop = ¿ RedeemersNonEmpty txTop ¿
-    -- ∙ p₁₁ consequent
+    -- ∙ p₁₀ consequent
     CollateralOK : (Γ : UTxOEnv) (txTop : TopLevelTx) → Type
     CollateralOK Γ txTop = collateralCheck (PParamsOf Γ) txTop (UTxOOf Γ)
     dec-CollateralOK : (Γ : UTxOEnv) (txTop : TopLevelTx) → Dec (CollateralOK Γ txTop)
     dec-CollateralOK Γ txTop = ¿ CollateralOK Γ txTop ¿
-    -- ∙ p₁₁
+    -- ∙ p₁₀
     CollateralImp : (Γ : UTxOEnv) (txTop : TopLevelTx) → Type
     CollateralImp Γ txTop = RedeemersNonEmpty txTop → CollateralOK Γ txTop
     dec-CollateralImp : (Γ : UTxOEnv) (txTop : TopLevelTx) → Dec (CollateralImp Γ txTop)
@@ -156,12 +151,12 @@ instance
     ... | yes a  with dec-CollateralOK Γ txTop
     ...   | yes b  = yes (λ _ → b)
     ...   | no ¬b  = no  (λ f → ¬b (f a))
-    -- p₁₂
+    -- p₁₁
     MintedZero : (txTop : TopLevelTx) → Type
     MintedZero txTop = allMintedCoin txTop ≡ 0
     dec-MintedZero : (txTop : TopLevelTx) → Dec (MintedZero txTop)
     dec-MintedZero txTop = ¿ MintedZero txTop ¿
-    -- p₁₃
+    -- p₁₂
     OutValueBounds : (Γ : UTxOEnv) (txTop : TopLevelTx) → Type
     OutValueBounds Γ txTop =
       ∀[ (_ , o) ∈ ∣ TxOutsOf txTop ∣ ]
@@ -169,24 +164,24 @@ instance
           × (serializedSize (txOutToValue o) ≤ maxValSize (PParamsOf Γ)))
     dec-OutValueBounds : (Γ : UTxOEnv) (txTop : TopLevelTx) → Dec (OutValueBounds Γ txTop)
     dec-OutValueBounds Γ txTop = ¿ OutValueBounds Γ txTop ¿
-    -- p₁₄
+    -- p₁₃
     OutAddrBounds : (Γ : UTxOEnv) (txTop : TopLevelTx) → Type
     OutAddrBounds Γ txTop =
       ∀[ (a , _) ∈ range (TxOutsOf txTop) ]
         (Sum.All (const ⊤) (λ a → AttrSizeOf a ≤ 64)) a × (netId a ≡ NetworkId)
     dec-OutAddrBounds : (Γ : UTxOEnv) (txTop : TopLevelTx) → Dec (OutAddrBounds Γ txTop)
     dec-OutAddrBounds Γ txTop = ¿ OutAddrBounds Γ txTop ¿
-    -- p₁₅
+    -- p₁₄
     WithdrawalsNetId : (txTop : TopLevelTx) → Type
     WithdrawalsNetId txTop = ∀[ a ∈ dom (WithdrawalsOf txTop)] NetworkIdOf a ≡ NetworkId
     dec-WithdrawalsNetId : (txTop : TopLevelTx) → Dec (WithdrawalsNetId txTop)
     dec-WithdrawalsNetId txTop = ¿ WithdrawalsNetId txTop ¿
-    -- p₁₆
+    -- p₁₅
     MaybeNetIdOK : (txTop : TopLevelTx) → Type
     MaybeNetIdOK txTop = MaybeNetworkIdOf txTop ~ just NetworkId
     dec-MaybeNetIdOK : (txTop : TopLevelTx) → Dec (MaybeNetIdOK txTop)
     dec-MaybeNetIdOK txTop = ¿ MaybeNetIdOK txTop ¿
-    -- p₁₇
+    -- p₁₆
     TreasuryOK : (Γ : UTxOEnv) (txTop : TopLevelTx) → Type
     TreasuryOK Γ txTop = CurrentTreasuryOf txTop ~ just (TreasuryOf Γ)
     dec-TreasuryOK : (Γ : UTxOEnv) (txTop : TopLevelTx) → Dec (TreasuryOK Γ txTop)
@@ -221,30 +216,27 @@ instance
       with dec-NoOverlappingSpends txTop
     ... | no ¬p₉ = failure (genErrors ¬p₉)
     ... | yes p₉
-      with dec-ReqGuards txTop
+      with dec-CollateralImp Γ txTop
     ... | no ¬p₁₀ = failure (genErrors ¬p₁₀)
     ... | yes p₁₀
-      with dec-CollateralImp Γ txTop
+      with dec-MintedZero txTop
     ... | no ¬p₁₁ = failure (genErrors ¬p₁₁)
     ... | yes p₁₁
-      with dec-MintedZero txTop
+      with dec-OutValueBounds Γ txTop
     ... | no ¬p₁₂ = failure (genErrors ¬p₁₂)
     ... | yes p₁₂
-      with dec-OutValueBounds Γ txTop
+      with dec-OutAddrBounds Γ txTop
     ... | no ¬p₁₃ = failure (genErrors ¬p₁₃)
     ... | yes p₁₃
-      with dec-OutAddrBounds Γ txTop
+      with dec-WithdrawalsNetId txTop
     ... | no ¬p₁₄ = failure (genErrors ¬p₁₄)
     ... | yes p₁₄
-      with dec-WithdrawalsNetId txTop
+      with dec-MaybeNetIdOK txTop
     ... | no ¬p₁₅ = failure (genErrors ¬p₁₅)
     ... | yes p₁₅
-      with dec-MaybeNetIdOK txTop
+      with dec-TreasuryOK Γ txTop
     ... | no ¬p₁₆ = failure (genErrors ¬p₁₆)
     ... | yes p₁₆
-      with dec-TreasuryOK Γ txTop
-    ... | no ¬p₁₇ = failure (genErrors ¬p₁₇)
-    ... | yes p₁₇
       with computeProof-UTXOS Γ tt txTop
     ... | failure es = failure es
     ... | success (tt , utxosProof) = success (s₁ , UTXO-step premises)
@@ -265,7 +257,6 @@ instance
                             → SpendInputsInDom     Γ txTop
                             → RefInputsInDom       Γ txTop
                             → NoOverlappingSpends    txTop
-                            → ReqGuards              txTop
                             → CollateralImp        Γ txTop
                             → MintedZero             txTop
                             → OutValueBounds       Γ txTop
@@ -276,11 +267,11 @@ instance
                             → (Γ ⊢ tt ⇀⦇ txTop ,UTXOS⦈ tt)
                             → UTXO-Premises Γ txTop s₁ utxo fees donations
 
-        assemblePremises (p₁ , p₂ , p₃) p₄ p₅ p₆ p₇ p₈ p₉ p₁₀ p₁₁ p₁₂ p₁₃ p₁₄ p₁₅ p₁₆ p₁₇ utxosProof =
-          p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , p₁₂ , p₁₃ , p₁₄ , p₁₅ , p₁₆ , p₁₇ , utxosProof , refl
+        assemblePremises (p₁ , p₂ , p₃) p₄ p₅ p₆ p₇ p₈ p₉ p₁₀ p₁₁ p₁₂ p₁₃ p₁₄ p₁₅ p₁₆ utxosProof =
+          p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , p₁₂ , p₁₃ , p₁₄ , p₁₅ , p₁₆ , utxosProof , refl
 
         premises : UTXO-Premises Γ txTop s₁ utxo fees donations
-        premises = assemblePremises hs p₄ p₅ p₆ p₇ p₈ p₉ p₁₀ p₁₁ p₁₂ p₁₃ p₁₄ p₁₅ p₁₆ p₁₇ utxosProof
+        premises = assemblePremises hs p₄ p₅ p₆ p₇ p₈ p₉ p₁₀ p₁₁ p₁₂ p₁₃ p₁₄ p₁₅ p₁₆ utxosProof
 
 
     --------------------------------------------------------------------------
@@ -292,7 +283,7 @@ instance
 
     completeness Γ (⟦ utxo , fees , donations ⟧ᵘ) txTop s' (UTXO prem)
       with prem
-    ... | ( p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , p₁₂ , p₁₃ , p₁₄ , p₁₅ , p₁₆ , p₁₇ , utxosProof , eqS₁ )
+    ... | ( p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , p₁₂ , p₁₃ , p₁₄ , p₁₅ , p₁₆ , utxosProof , eqS₁ )
       with ¿ P123 Γ txTop utxo fees donations ¿
     ... | no ¬hs = ⊥-elim (¬hs (p₁ , p₂ , p₃))
     ... | yes _
@@ -314,29 +305,26 @@ instance
       with dec-NoOverlappingSpends txTop
     ... | no ¬p₉ = ⊥-elim (¬p₉ p₉)
     ... | yes _
-      with dec-ReqGuards txTop
+      with dec-CollateralImp Γ txTop
     ... | no ¬p₁₀ = ⊥-elim (¬p₁₀ p₁₀)
     ... | yes _
-      with dec-CollateralImp Γ txTop
+      with dec-MintedZero txTop
     ... | no ¬p₁₁ = ⊥-elim (¬p₁₁ p₁₁)
     ... | yes _
-      with dec-MintedZero txTop
+      with dec-OutValueBounds Γ txTop
     ... | no ¬p₁₂ = ⊥-elim (¬p₁₂ p₁₂)
     ... | yes _
-      with dec-OutValueBounds Γ txTop
+      with dec-OutAddrBounds Γ txTop
     ... | no ¬p₁₃ = ⊥-elim (¬p₁₃ p₁₃)
     ... | yes _
-      with dec-OutAddrBounds Γ txTop
+      with dec-WithdrawalsNetId txTop
     ... | no ¬p₁₄ = ⊥-elim (¬p₁₄ p₁₄)
     ... | yes _
-      with dec-WithdrawalsNetId txTop
+      with dec-MaybeNetIdOK txTop
     ... | no ¬p₁₅ = ⊥-elim (¬p₁₅ p₁₅)
     ... | yes _
-      with dec-MaybeNetIdOK txTop
-    ... | no ¬p₁₆ = ⊥-elim (¬p₁₆ p₁₆)
-    ... | yes _
       with dec-TreasuryOK Γ txTop
-    ... | no ¬p₁₇ = ⊥-elim (¬p₁₇ p₁₇)
+    ... | no ¬p₁₆ = ⊥-elim (¬p₁₆ p₁₆)
     ... | yes _
       with computeProof-UTXOS Γ tt txTop | completeness-UTXOS Γ tt txTop tt utxosProof
     ... | failure es | ()
