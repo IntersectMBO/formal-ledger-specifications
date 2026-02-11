@@ -18,6 +18,7 @@ import Ledger.Conway.Specification.PParams
 record GovStructure : Type₁ where
   field TxId DocHash : Type
         ⦃ DecEq-TxId ⦄ : DecEq TxId
+        ⦃ DecEq-DocHash ⦄ : DecEq DocHash
 
   field cryptoStructure : _
   open CryptoStructure cryptoStructure public

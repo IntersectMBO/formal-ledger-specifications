@@ -7,6 +7,7 @@ import      Data.Rational as ℚ using (pos) -- import an instance
 open import Ledger.Core.Specification.Crypto
 open import Ledger.Core.Specification.Epoch
 open import Ledger.Conway.Foreign.HSLedger.Core
+import Data.Fin
 
 HSGlobalConstants = GlobalConstants ∋ record {Implementation}
 instance
@@ -123,7 +124,8 @@ instance
       ; indexOfTxIn           = λ _ _ → nothing
       ; indexOfPolicyId       = λ _ _ → nothing
       ; indexOfVote           = λ _ _ → nothing
-      ; indexOfProposal       = λ _ _ → nothing
+      ; indexOfProposal       =
+          λ x xs → Data.Fin.toℕ <$> findIndexᵇ (==-GovProposal x) xs
       }
     ; runPLCScript = λ _ _ _ _ → false
     ; scriptSize = λ where
