@@ -45,7 +45,16 @@ rdptr tx = λ where
 
 indexedRdmrs : Tx ℓ → ScriptPurpose → Maybe (Redeemer × ExUnits)
 indexedRdmrs tx sp = maybe (λ x → lookupᵐ? (RedeemersOf tx) x) nothing (rdptr tx sp)
+```
 
+The function `getDatumSpend`{.AgdaFunction} (formerly `getDatum`{.AgdaFunction})
+retrieves the datum required by a phase-2 script associated to a spending input.
+Note that, even though this function formally returns an element of type `Maybe
+Datum`{.AgdaDatatype}, the preconditions of the `UTXOW`{.AgdaDatatype} rule
+ensure that the datum is always present (otherwise, it is a phase-1 validation
+failure).
+
+```agda
 getDatumSpend
   : Tx ℓ
   → UTxO
@@ -59,7 +68,14 @@ getDatumSpend tx utxo₀ allData txin
     (inj₁ d) → just d
     (inj₂ h) → lookupᵐ? allData h
 ... | _ = nothing
+```
 
+In Dijkstra, we introduce the function `getDataGuard`{.AgdaFunction}, which
+retrieves the set of data required by a guard script. In addition, the function
+returns a boolean that signals whether the guard script is also required without
+datum.
+
+```agda
 getDataGuard
   : Tx ℓ
   → UTxO
@@ -121,34 +137,48 @@ txInfoForPurpose {TxLevelTop} utxo tx sp with sp
 ... | _ = txInfo TxLevelTop utxo tx
 ```
 
+```agda
+credsNeeded : UTxO → Tx ℓ → ℙ (ScriptPurpose × Credential)
+credsNeeded utxo tx =
+    mapˢ        (λ (i , o) → (Spend  i , payCred (proj₁ o)))  ((utxo ∣ (SpendInputsOf tx ∪ collateralInputs tx)) ˢ)
+  ∪ mapˢ        (λ a →      (Rwrd a , CredentialOf a))        (dom ∣ WithdrawalsOf tx ∣)
+  ∪ mapPartial  (λ c →      (Cert c ,_) <$> cwitness c)       (fromList (DCertsOf tx))
+  ∪ mapˢ        (λ x →      (Mint x , ScriptObj x))           (policies (MintedValueOf tx))
+  ∪ mapˢ        (λ v →      (Vote v , govVoterCredential v))  (fromList (map GovVoterOf (ListOfGovVotesOf tx)))
+  ∪ mapPartial  (λ p →  if PolicyOf p then (λ {sh} → just (Propose  p , ScriptObj sh))
+                        else nothing)                         (fromList (ListOfGovProposalsOf tx))
+  ∪ mapˢ        (λ (c , d) → (Guard c , c))                  (GuardsOf tx)
+  where
+    collateralInputs : Tx ℓ → ℙ TxIn
+    collateralInputs {TxLevelTop} tx = CollateralInputsOf tx
+    collateralInputs {TxLevelSub} tx = ∅
+```
+
 <!--
 ```agda
-credsNeededMinusCollateral : {ℓ : TxLevel} → Tx ℓ → ℙ (ScriptPurpose × Credential)
-credsNeededMinusCollateral tx =
-    mapˢ        (λ a →  (Rwrd a , CredentialOf a))        (dom ∣ WithdrawalsOf tx ∣)
-  ∪ mapPartial  (λ c →  (Cert c ,_) <$> cwitness c)       (fromList (DCertsOf tx))
-  ∪ mapˢ        (λ x →  (Mint x , ScriptObj x))           (policies (MintedValueOf tx))
-  ∪ mapˢ        (λ v →  (Vote v , govVoterCredential v))  (fromList (map GovVoterOf (ListOfGovVotesOf tx)))
-  ∪ mapPartial  (λ p →  if PolicyOf p then (λ {sh} → just (Propose  p , ScriptObj sh))
-                        else nothing) (fromList (ListOfGovProposalsOf tx))
-  ∪ mapˢ       (λ (c , d) → (Guard c , c)) (GuardsOf tx) -- collectP2ScriptsWithContext should
-                                                        -- include scripts with creds in txGuards.
-
-credsNeeded : {ℓ : TxLevel} → UTxO → Tx ℓ → ℙ (ScriptPurpose × Credential)
-credsNeeded {TxLevelTop} utxo tx =
-  credsNeededMinusCollateral tx
-    ∪ mapˢ  (λ (i , o) → (Spend  i , payCred (proj₁ o)))
-            ((utxo ∣ (SpendInputsOf tx ∪ CollateralInputsOf tx)) ˢ)
-
-credsNeeded {TxLevelSub} utxo tx = credsNeededMinusCollateral tx
-  ∪ mapˢ (λ (i , o) → (Spend  i , payCred (proj₁ o))) ((utxo ∣ SpendInputsOf tx) ˢ)
-
 opaque
-  collectP2ScriptsWithContext : {ℓ : TxLevel} → PParams → Tx ℓ
-    → UTxO → (DataHash ⇀ Datum) → ℙ Script
+```
+-->
+
+The function `collectP2ScriptsWithContext`.{AgdaFunction} builds a list of
+phase-2 scripts paired with their contexts for phase-2 validation. The scripts
+that are needed for validation are retrieved from the transaction using the
+function `credsNeeded`{.AgdaFunction}.
+
+In Dijkstra, the execution of a guard script can require several (including
+none) data. The function `assembleData` accounts for this situation by returning
+a list of lists of data (a list of data is part of the context of a script).
+
+```agda
+  collectP2ScriptsWithContext
+    : PParams
+    → Tx ℓ
+    → UTxO
+    → (DataHash ⇀ Datum)
+    → ℙ Script
     → List (P2Script × List Data × ExUnits × CostModel)
   collectP2ScriptsWithContext pp tx utxo allData allScripts
-    = concat (setToList (mapˢ toScript ( credsNeeded utxo tx )))
+    = concat (setToList (mapˢ toScript (credsNeeded utxo tx)))
     where
       context : ScriptPurpose → Data
       context sp = valContext (txInfoForPurpose utxo tx sp) sp
@@ -164,10 +194,10 @@ opaque
       assembleData redeemer sp@(Spend txin)
         = [ fromMaybe (getDatumSpend tx utxo allData txin) ++ (redeemer ∷ [ context sp ]) ]
       assembleData redeemer sp@(Guard c) =
-        let data′ , noDatum = getDataGuard tx utxo c
+        let data′ , withoutDatum = getDataGuard tx utxo c
         in  map (λ d → [ d ] ++ (redeemer ∷ [ context sp ])) (setToList data′)
-            ++ (if noDatum then [(redeemer ∷ [ context sp ])]
-                               else [])
+            ++ (if withoutDatum then [(redeemer ∷ [ context sp ])]
+                                else [])
       assembleData redeemer sp           = [ redeemer ∷ [ context sp ] ]
 
       toScript

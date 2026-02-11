@@ -67,13 +67,15 @@ specifying which record fields of a transaction body are present at
 each `TxLevel`{.AgdaDatatype}:
 
 ```agda
+InLevel : ∀ {a} {A : Type a} → TxLevel → A → A → A
+InLevel TxLevelTop top _ = top
+InLevel TxLevelSub _ sub = sub
+
 InTopLevel : TxLevel → Type → Type
-InTopLevel TxLevelTop X = X
-InTopLevel TxLevelSub _ = ⊤
+InTopLevel ℓ X = InLevel ℓ X ⊤
 
 InSubLevel : TxLevel → Type → Type
-InSubLevel TxLevelSub X = X
-InSubLevel TxLevelTop _ = ⊤
+InSubLevel ℓ X = InLevel ℓ ⊤ X
 ```
 
 These functions discriminate on an argument of type
