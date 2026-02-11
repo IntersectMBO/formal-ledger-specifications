@@ -122,36 +122,50 @@ data _⊢_⇀⦇_,SUBUTXOW⦈_ : SubUTxOEnv → UTxOState → SubLevelTx → UTx
          open TxWitnesses txWitnesses
          open UTxOEnv
 
-         utxo₀               = UTxOOf Γ
-         utxo                = UTxOOf s
+         utxo₀ = UTxOOf Γ
+         utxo  = UTxOOf s
 
-         witsKeyHashes       : ℙ KeyHash
-         witsKeyHashes       = mapˢ hash (dom vKeySigs)
+         vKeyHashesProvided : ℙ KeyHash
+         vKeyHashesProvided = mapˢ hash (dom vKeySigs)
 
-         p1Scripts : ℙ P1Script
-         p1Scripts = mapPartial toP1Script (ScriptPoolOf Γ)
+         scriptsProvided : ℙ Script
+         scriptsProvided = ScriptPoolOf Γ
 
-         p2Scripts : ℙ P2Script
-         p2Scripts = mapPartial toP2Script (ScriptPoolOf Γ)
+         dataProvided : ℙ Data
+         dataProvided = range (DataPoolOf Γ)
 
-         neededScriptHashes  : ℙ ScriptHash
-         neededScriptHashes  = mapPartial (isScriptObj  ∘ proj₂) (credsNeeded utxo₀ txSub)
+         credentialsNeeded : ℙ Credential
+         credentialsNeeded = mapˢ proj₂ (credsNeeded utxo₀ txSub)
 
-         neededVKeyHashes : ℙ KeyHash
-         neededVKeyHashes = mapPartial (isKeyHashObj ∘ proj₂) (credsNeeded utxo₀ txSub)
+         vKeyHashesNeeded : ℙ KeyHash
+         vKeyHashesNeeded = mapPartial isKeyHashObj credentialsNeeded
 
-         neededDataHashes : ℙ DataHash
-         neededDataHashes = mapPartial (λ txOut@(a , _ , d , _) → do sh ← isScriptObj (payCred a)
-                                                                     _  ← lookupHash sh p2Scripts
-                                                                     d >>= isInj₂)
-                                       (range (utxo₀ ∣ txIns))
+         scriptHashesNeeded : ℙ ScriptHash
+         scriptHashesNeeded = mapPartial isScriptObj credentialsNeeded
+
+         scriptsNeeded : ℙ Script
+         scriptsNeeded = filterˢ (λ s → hash s ∈ scriptHashesNeeded) scriptsProvided
+
+         p1ScriptsNeeded : ℙ P1Script
+         p1ScriptsNeeded = mapPartial toP1Script scriptsNeeded
+
+         p2ScriptsNeeded : ℙ P2Script
+         p2ScriptsNeeded = mapPartial toP2Script scriptsNeeded
+
+         dataHashesNeeded : ℙ DataHash
+         dataHashesNeeded =
+           mapPartial (λ txOut@(a , _ , d , _) →
+                           do sh ← isScriptObj (payCred a)
+                              _  ← lookupHash sh p2ScriptsNeeded
+                              d >>= isInj₂)
+                      (range (utxo₀ ∣ txIns))
 
     in
     ∙  ∀[ (vk , σ) ∈ vKeySigs ] isSigned vk (txidBytes txId) σ
-    ∙  ∀[ s ∈ p1Scripts ] (hash s ∈ neededScriptHashes → validP1Script witsKeyHashes txVldt s)
-    ∙  neededVKeyHashes ⊆ witsKeyHashes
-    ∙  neededScriptHashes ⊆ mapˢ hash p1Scripts ∪ mapˢ hash p2Scripts
-    ∙  neededDataHashes ⊆ dom (DataPoolOf Γ)
+    ∙  ∀[ s ∈ p1ScriptsNeeded ] validP1Script vKeyHashesProvided txVldt s
+    ∙  vKeyHashesNeeded ⊆ vKeyHashesProvided
+    ∙  scriptHashesNeeded ⊆ mapˢ hash scriptsProvided
+    ∙  dataHashesNeeded ⊆ mapˢ hash dataProvided
     ∙  txADhash ≡ map hash txAuxData
     ∙  Γ ⊢ s ⇀⦇ txSub ,SUBUTXO⦈ s'
       ────────────────────────────────
@@ -173,38 +187,52 @@ data _⊢_⇀⦇_,UTXOW⦈_ : UTxOEnv → UTxOState → TopLevelTx → UTxOState
          open TxWitnesses txWitnesses
          open UTxOEnv
 
-         utxo₀               = UTxOOf Γ
-         utxo                = UTxOOf s
+         utxo₀ = Γ .utxo₀
+         utxo  = s .UTxOState.utxo
 
-         witsKeyHashes : ℙ KeyHash
-         witsKeyHashes = mapˢ hash (dom vKeySigs)
+         vKeyHashesProvided : ℙ KeyHash
+         vKeyHashesProvided = mapˢ hash (dom vKeySigs)
 
-         p1Scripts : ℙ P1Script
-         p1Scripts = mapPartial toP1Script (ScriptPoolOf Γ)
+         scriptsProvided : ℙ Script
+         scriptsProvided = ScriptPoolOf Γ
 
-         p2Scripts : ℙ P2Script
-         p2Scripts = mapPartial toP2Script (ScriptPoolOf Γ)
+         dataProvided : ℙ Data
+         dataProvided = range (DataPoolOf Γ)
 
-         neededScriptHashes : ℙ ScriptHash
-         neededScriptHashes = mapPartial (isScriptObj  ∘ proj₂) (credsNeeded utxo₀ txTop)
+         credentialsNeeded : ℙ Credential
+         credentialsNeeded = mapˢ proj₂ (credsNeeded utxo₀ txSub)
 
-         neededVKeyHashes : ℙ KeyHash
-         neededVKeyHashes = mapPartial (isKeyHashObj ∘ proj₂) (credsNeeded utxo₀ txTop)
+         vKeyHashesNeeded : ℙ KeyHash
+         vKeyHashesNeeded = mapPartial isKeyHashObj credentialsNeeded
 
-         neededDataHashes : ℙ DataHash
-         neededDataHashes = mapPartial (λ txOut@(a , _ , d , _) → do sh ← isScriptObj (payCred a)
-                                                                     _  ← lookupHash sh p2Scripts
-                                                                     d >>= isInj₂)
-                                       (range (utxo₀ ∣ txIns))
+         scriptHashesNeeded : ℙ ScriptHash
+         scriptHashesNeeded = mapPartial isScriptObj credentialsNeeded
+
+         scriptsNeeded : ℙ Script
+         scriptsNeeded = filterˢ (λ s → hash s ∈ scriptHashesNeeded) scriptsProvided
+
+         p1ScriptsNeeded : ℙ P1Script
+         p1ScriptsNeeded = mapPartial toP1Script scriptsNeeded
+
+         p2ScriptsNeeded : ℙ P2Script
+         p2ScriptsNeeded = mapPartial toP2Script scriptsNeeded
+
+         dataHashesNeeded : ℙ DataHash
+         dataHashesNeeded =
+           mapPartial (λ txOut@(a , _ , d , _) →
+                           do sh ← isScriptObj (payCred a)
+                              _  ← lookupHash sh p2ScriptsNeeded
+                              d >>= isInj₂)
+                      (range (utxo₀ ∣ txIns))
 
     in
     ∙  ∀[ (vk , σ) ∈ vKeySigs ] isSigned vk (txidBytes txId) σ
-    ∙  ∀[ s ∈ p1Scripts ] (hash s ∈ neededScriptHashes → validP1Script witsKeyHashes txVldt s)
-    ∙  neededVKeyHashes ⊆ witsKeyHashes
-    ∙  neededScriptHashes ⊆ mapˢ hash p1Scripts ∪ mapˢ hash p2Scripts
-    ∙  neededDataHashes ⊆ dom (DataPoolOf Γ)
+    ∙  ∀[ s ∈ p1ScriptsNeeded ] validP1Script vKeyHashesProvided txVldt s
+    ∙  vKeyHashesNeeded ⊆ vKeyHashesProvided
+    ∙  scriptHashesNeeded ⊆ mapˢ hash scriptsProvided
+    ∙  dataHashesNeeded ⊆ mapˢ hash dataProvided
     ∙  RequiredGuardsInTopLevel txTop -- (2)
-    ∙  languages p2Scripts ⊆ dom (PParams.costmdls (PParamsOf Γ)) ∩ allowedLanguages txTop utxo
+    ∙  languages p2ScriptsNeeded ⊆ dom (PParams.costmdls (PParamsOf Γ)) ∩ allowedLanguages txTop utxo
     ∙  txADhash ≡ map hash txAuxData
     ∙  Γ ⊢ s ⇀⦇ txTop ,UTXO⦈ s'
       ────────────────────────────────
