@@ -25,6 +25,8 @@ import qualified MAlonzo.Code.Axiom.Set
 import qualified MAlonzo.Code.Axiom.Set.Map
 import qualified MAlonzo.Code.Class.DecEq.Core
 import qualified MAlonzo.Code.Class.Decidable.Core
+import qualified MAlonzo.Code.Class.Functor.Core
+import qualified MAlonzo.Code.Class.Functor.Instances
 import qualified MAlonzo.Code.Class.ToBool
 import qualified MAlonzo.Code.Data.Irrelevant
 import qualified MAlonzo.Code.Data.List.Base
@@ -256,3 +258,28 @@ du_m_138 v0 v1 v2
 -- Ledger.Prelude.Is-∅
 d_Is'45''8709'_142 :: () -> [AgdaAny] -> ()
 d_Is'45''8709'_142 = erased
+-- Ledger.Prelude.concatMapˡ
+d_concatMap'737'_150 ::
+  () -> () -> (AgdaAny -> [AgdaAny]) -> [AgdaAny] -> [AgdaAny]
+d_concatMap'737'_150 ~v0 ~v1 v2 v3 = du_concatMap'737'_150 v2 v3
+du_concatMap'737'_150 ::
+  (AgdaAny -> [AgdaAny]) -> [AgdaAny] -> [AgdaAny]
+du_concatMap'737'_150 v0 v1
+  = coe
+      MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+      (coe
+         MAlonzo.Code.Axiom.Set.d_unions_224
+         (MAlonzo.Code.Axiom.Set.d_th_1516
+            (coe
+               MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+         erased
+         (coe
+            MAlonzo.Code.Axiom.Set.du_fromList_456
+            (coe
+               MAlonzo.Code.Axiom.Set.d_th_1516
+               (coe
+                  MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+            (coe
+               MAlonzo.Code.Class.Functor.Core.du_fmap_22
+               MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92 () erased
+               () erased v0 v1)))
