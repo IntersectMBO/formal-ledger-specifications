@@ -36,15 +36,15 @@ instance
         genErr  ¬p = case dec-de-morgan ¬p of λ where
           (inj₁ a) → "¬ ∀[ (vk , σ) ∈ vkSigs ] isSigned vk (txidBytes txid) σ"
           (inj₂ b) → case dec-de-morgan b of λ where
-            (inj₁ a) → "∀[ s ∈ p1Scripts ] (hash s ∈ neededScriptHashes → validP1Script witsKeyHashes txVldt s)"
+            (inj₁ a) → "∀[ s ∈ p1ScriptsNeeded ] validP1Script vKeyHashesProvided txVldt s"
             (inj₂ b) → case dec-de-morgan b of λ where
-              (inj₁ a) → "neededVKeyHashes ⊆ witsKeyHashes"
+              (inj₁ a) → "vKeyHashesNeeded ⊆ vKeyHashesProvided"
               (inj₂ b) → case dec-de-morgan b of λ where
-                (inj₁ a) → "∀[ s ∈   p2Scripts ] (hash s ∈ neededScriptHashes → language s ≡ PlutusV4)"
+                (inj₁ a) → "scriptHashesNeeded ⊆ mapˢ hash scriptsProvided"
                 (inj₂ b) → case dec-de-morgan b of λ where
-                  (inj₁ a) → "neededScriptHashes ⊆ mapˢ hash p1Scripts ∪ mapˢ hash p2Scripts"
+                  (inj₁ a) → "dataHashesNeeded ⊆ mapˢ hash dataProvided"
                   (inj₂ b) → case dec-de-morgan b of λ where
-                    (inj₁ a) → "neededDataHashes ⊆ dom (DataPoolOf Γ)"
+                    (inj₁ a) → "languages p2ScriptsNeeded ⊆ dom (PParams.costmdls (PParamsOf Γ)) ∩ ❴ PlutusV4 ❵"
                     (inj₂ b) → "txADhash ≡ map hash txAD"
 
         computeProof : ComputationResult String (∃ (Γ ⊢ s ⇀⦇ txSub ,SUBUTXOW⦈_))
