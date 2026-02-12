@@ -442,91 +442,73 @@ In addition, the `UTXO`{.AgdaDatatype} rule enforces:
    be pairwise disjoint.  This is enforced by the `NoOverlappingSpendInputs
    txTop` precondition.
 
+```agda
+UTXO-Premises : UTxOEnv → TopLevelTx → UTxO → Type
+UTXO-Premises Γ txTop utxo =
+  (SpendInputsOf txTop ≢ ∅)
+  × (inInterval (SlotOf Γ) (ValidIntervalOf txTop))
+  × (minfee (PParamsOf Γ) txTop utxo ≤ TxFeesOf txTop)
+  × (consumed txTop (DepositsChangeOf Γ) (UTxOOf Γ) ≡ produced txTop (DepositsChangeOf Γ))
+  × (SizeOf txTop ≤ maxTxSize (PParamsOf Γ))
+  × (refScriptsSize txTop (UTxOOf Γ) ≤ (PParamsOf Γ) .maxRefScriptSizePerTx)
+  × (allSpendInputs txTop ⊆ dom (UTxOOf Γ))
+  × (allReferenceInputs txTop ⊆ dom (UTxOOf Γ))
+  × (NoOverlappingSpendInputs txTop)
+  × ((RedeemersOf txTop ˢ ≢ ∅) → collateralCheck (PParamsOf Γ) txTop (UTxOOf Γ))
+  × (allMintedCoin txTop ≡ 0)
+  × (∀[ (_ , o) ∈ ∣ TxOutsOf txTop ∣ ] ( (inject ((160 + utxoEntrySize o) * coinsPerUTxOByte (PParamsOf Γ)) ≤ᵗ txOutToValue o)
+                                         × (serializedSize (txOutToValue o) ≤ maxValSize (PParamsOf Γ)) ))
+  × (∀[ (a , _) ∈ range (TxOutsOf txTop) ] ( ((Sum.All (const ⊤) (λ a → AttrSizeOf a ≤ 64)) a)
+                                             × (netId a ≡ NetworkId) ))
+  × (∀[ a ∈ dom (WithdrawalsOf txTop)] NetworkIdOf a ≡ NetworkId)
+  × (MaybeNetworkIdOf txTop ~ just NetworkId)
+  × (CurrentTreasuryOf txTop ~ just (TreasuryOf Γ))
 
 3. In Legacy Mode: The top-level transaction must be self-balancing.
 
-```agda
 data _⊢_⇀⦇_,UTXO⦈_ : UTxOEnv × Bool → UTxOState → TopLevelTx → UTxOState → Type where
 
-  UTXO :
-    {legacyMode : Bool}
-    {Γ : UTxOEnv} {txTop : TopLevelTx} {s₁ : UTxOState}
-    {utxo : UTxO} {fees : Fees} {donations : Donations} →
+  UTXO-valid :
 
-    ∙ (SpendInputsOf txTop ≢ ∅)
-    ∙ (inInterval (SlotOf Γ) (ValidIntervalOf txTop))
-    ∙ (minfee (PParamsOf Γ) txTop utxo ≤ TxFeesOf txTop)
-    ∙ (consumed txTop (DepositsChangeOf Γ) (UTxOOf Γ) ≡ produced txTop (DepositsChangeOf Γ))
-    ∙ (SizeOf txTop ≤ maxTxSize (PParamsOf Γ))
-    ∙ (refScriptsSize txTop (UTxOOf Γ) ≤ (PParamsOf Γ) .maxRefScriptSizePerTx)
-    ∙ (allSpendInputs txTop ⊆ dom (UTxOOf Γ))                     -- (1)
-    ∙ (allReferenceInputs txTop ⊆ dom (UTxOOf Γ))                 -- (1)
-    ∙ (NoOverlappingSpendInputs txTop)                            -- (2)
-    ∙ (RedeemersOf txTop ˢ ≢ ∅ → collateralCheck (PParamsOf Γ) txTop (UTxOOf Γ))
-    ∙ (allMintedCoin txTop ≡ 0)
+    {legacyMode  : Bool} 
+    {utxo        : UTxO} 
+    {fees        : Fees} 
+    {donations   : Donations} →
 
-    ∙ (∀[ (_ , o) ∈ ∣ TxOutsOf txTop ∣ ]
-      (inject ((160 + utxoEntrySize o) * coinsPerUTxOByte (PParamsOf Γ)) ≤ᵗ txOutToValue o)
-      × (serializedSize (txOutToValue o) ≤ maxValSize (PParamsOf Γ)))
-
-    ∙ (∀[ (a , _) ∈ range (TxOutsOf txTop) ]
-      (Sum.All (const ⊤) (λ a → AttrSizeOf a ≤ 64)) a × (netId a ≡ NetworkId))
-
-    ∙ (∀[ a ∈ dom (WithdrawalsOf txTop)] NetworkIdOf a ≡ NetworkId)
-    ∙ (MaybeNetworkIdOf txTop ~ just NetworkId)
-    ∙ (CurrentTreasuryOf txTop  ~ just (TreasuryOf Γ))
-    ∙ (Γ ⊢ tt ⇀⦇ txTop ,UTXOS⦈ tt)
-    ∙ (s₁ ≡ (if IsValidFlagOf txTop then ⟦ (utxo ∣ SpendInputsOf txTop ᶜ) ∪ˡ outs txTop , fees + TxFeesOf txTop , donations + DonationsOf txTop ⟧ else ⟦ utxo ∣ (CollateralInputsOf txTop) ᶜ , fees + cbalance (utxo ∣ CollateralInputsOf txTop) , donations ⟧))
+    ∙ IsValidFlagOf txTop ≡ true
+    ∙ Γ ⊢ _ ⇀⦇ txTop ,UTXOS⦈ _
+    ∙ UTXO-Premises Γ txTop utxo
     ∙ if legacyMode
          then
            ∙ consumed (DepositsChangeOf Γ) txTop utxo₀ ≡ produced (DepositsChangeOf Γ) txTop -- (3)
          else
            ⊤
       ────────────────────────────────
-    let
-         s₁ = if IsValidFlagOf txTop
-              then ⟦ (utxo ∣ SpendInputsOf txTop ᶜ) ∪ˡ outs txTop , fees + TxFeesOf txTop , donations + DonationsOf txTop ⟧ else ⟦ utxo ∣ (CollateralInputsOf txTop) ᶜ , fees + cbalance (utxo ∣ CollateralInputsOf txTop) , donations ⟧
-    in
-      (Γ , legacyMode)  ⊢ ⟦ utxo , fees , donations ⟧ ⇀⦇ txTop ,UTXO⦈ s₁
+      Γ ⊢ ⟦ utxo , fees , donations ⟧ ⇀⦇ txTop ,UTXO⦈ ⟦ (utxo ∣ SpendInputsOf txTop ᶜ) ∪ˡ outs txTop , fees + TxFeesOf txTop , donations + DonationsOf txTop ⟧
+
+  UTXO-invalid : 
+
+    {legacyMode  : Bool} 
+    {utxo        : UTxO} 
+    {fees        : Fees} 
+    {donations   : Donations} →
+
+    ∙ IsValidFlagOf txTop ≡ false
+    ∙ Γ ⊢ _ ⇀⦇ txTop ,UTXOS⦈ _
+    ∙ UTXO-Premises Γ txTop utxo
+    ∙ if legacyMode
+         then
+           ∙ consumed (DepositsChangeOf Γ) txTop utxo₀ ≡ produced (DepositsChangeOf Γ) txTop -- (3)
+         else
+           ⊤
+      ────────────────────────────────
+      (Γ , legacyMode)  ⊢ ⟦ utxo , fees , donations ⟧ ⇀⦇ txTop ,UTXO⦈ ⟦ utxo ∣ (CollateralInputsOf txTop) ᶜ , fees + cbalance (utxo ∣ CollateralInputsOf txTop) , donations ⟧
 
 ```
 <!--
 ```agda
--- unquoteDecl UTXO-premises = genPremises UTXO-premises (quote UTXO)
--- ^ this doesn't work right now:
--- "de Bruijn index 4 is not in scope in the context (txs : _) (abs : _) (Γ : _) (txTop : _)"
-
--- switching to manual mode for now...
-UTXO-Premises : UTxOEnv → TopLevelTx → UTxOState → UTxO → Fees → Donations → Type
-UTXO-Premises Γ txTop s₁ utxo fees donations =
-      (SpendInputsOf txTop ≢ ∅)
-      × (inInterval (SlotOf Γ) (ValidIntervalOf txTop))
-      × (minfee (PParamsOf Γ) txTop utxo ≤ TxFeesOf txTop)
-      × (consumed txTop (DepositsChangeOf Γ) (UTxOOf Γ) ≡ produced txTop (DepositsChangeOf Γ))
-      × (SizeOf txTop ≤ maxTxSize (PParamsOf Γ))
-      × (refScriptsSize txTop (UTxOOf Γ) ≤ (PParamsOf Γ) .maxRefScriptSizePerTx)
-      × (allSpendInputs txTop ⊆ dom (UTxOOf Γ))
-      × (allReferenceInputs txTop ⊆ dom (UTxOOf Γ))
-      × (NoOverlappingSpendInputs txTop)
-      × ((RedeemersOf txTop ˢ ≢ ∅) → collateralCheck (PParamsOf Γ) txTop (UTxOOf Γ))
-      × (allMintedCoin txTop ≡ 0)
-      × (∀[ (_ , o) ∈ ∣ TxOutsOf txTop ∣ ]
-        (inject ((160 + utxoEntrySize o) * coinsPerUTxOByte (PParamsOf Γ)) ≤ᵗ txOutToValue o)
-        × (serializedSize (txOutToValue o) ≤ maxValSize (PParamsOf Γ)))
-      × (∀[ (a , _) ∈ range (TxOutsOf txTop) ]
-        (Sum.All (const ⊤) (λ a → AttrSizeOf a ≤ 64)) a × (netId a ≡ NetworkId))
-      × (∀[ a ∈ dom (WithdrawalsOf txTop)] NetworkIdOf a ≡ NetworkId)
-      × (MaybeNetworkIdOf txTop ~ just NetworkId)
-      × (CurrentTreasuryOf txTop  ~ just (TreasuryOf Γ))
-      × (Γ ⊢ tt ⇀⦇ txTop ,UTXOS⦈ tt)
-      × (s₁ ≡ (if IsValidFlagOf txTop then ⟦ (utxo ∣ SpendInputsOf txTop ᶜ) ∪ˡ outs txTop , fees + TxFeesOf txTop , donations + DonationsOf txTop ⟧ else ⟦ utxo ∣ (CollateralInputsOf txTop) ᶜ , fees + cbalance (utxo ∣ CollateralInputsOf txTop) , donations ⟧))
-
-UTXO-step : {Γ : UTxOEnv} {txTop : TopLevelTx} {s₁ : UTxOState}
-            {utxo : UTxO} {fees : Fees} {donations : Donations}
-            → UTXO-Premises Γ txTop s₁ utxo fees donations
-            → Γ ⊢ ⟦ utxo , fees , donations ⟧ ⇀⦇ txTop ,UTXO⦈ s₁
-
-UTXO-step premises = UTXO premises
+unquoteDecl UTXO-valid-premises = genPremises UTXO-valid-premises (quote UTXO-valid)
+unquoteDecl UTXO-invalid-premises = genPremises UTXO-invalid-premises (quote UTXO-invalid)
 ```
 -->
 
