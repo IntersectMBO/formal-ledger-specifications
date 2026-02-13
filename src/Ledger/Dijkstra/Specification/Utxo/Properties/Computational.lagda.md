@@ -85,7 +85,6 @@ instance
       ... | no ¬p = ⊥-elim (¬p p)
 
 
-{--
 instance
   Computational-UTXO : Computational _⊢_⇀⦇_,UTXO⦈_ String
   Computational-UTXO = record {go} where
@@ -94,6 +93,12 @@ instance
       (let H-No  , ⁇ H-No?  = UTXO-invalid-premises  {txTop} {Γ} {UTxOOf s}) where
       open Computational Computational-UTXOS renaming  ( computeProof to computeProof-UTXOS
                                                      ; completeness to completeness-UTXOS)
+
+      utxo-valid-prems : Ledger.Prelude.∃⁇
+      utxo-valid-prems = UTXO-valid-premises {txTop} {Γ} {UTxOOf s}
+
+      utxo-invalid-prems : Ledger.Prelude.∃⁇
+      utxo-invalid-prems = UTXO-invalid-premises {txTop} {Γ} {UTxOOf s}
 
       --------------------------------------------------------------------------
       -- computeProof for UTXO
@@ -111,21 +116,40 @@ instance
       -- completeness for UTXO
       --------------------------------------------------------------------------
       completeness : ∀ s' → Γ ⊢ s ⇀⦇ txTop ,UTXO⦈ s' → map proj₁ computeProof ≡ success s'
-      completeness s' (UTXO-valid {utxo = utxo₁} {fees₁} {donations₁} p@(refl , utxosProof , q₂)) = Goal
+      completeness s' (UTXO-valid {utxo = utxo₁} {fees₁} {donations₁} (refl , utxosProof , q₂)) = Goal
         where
-        Goal : map proj₁ computeProof ≡ success ⟦ (utxo₁ ∣ SpendInputsOf txTop ᶜ) ∪ˡ outs txTop , fees₁ + TxFeesOf txTop , donations₁ + DonationsOf txTop ⟧
-        Goal with H-No? | H-Yes?
-        ... | yes () | _
-        ... | no _  | yes premises = {!!}
-        ... | no _   | no ¬q = ⊥-elim (¬q (refl , q₂))
+        Goal : map proj₁ computeProof
+             ≡ success ⟦ (utxo₁ ∣ SpendInputsOf txTop ᶜ) ∪ˡ outs txTop
+                       , fees₁ + TxFeesOf txTop
+                       , donations₁ + DonationsOf txTop ⟧
 
-      completeness _ (UTXO-invalid {utxo = utxo₁} {fees₁} {donations₁} p@(refl , utxosProof , q₂)) = Goal
+        Goal with H-No? in eqNo | H-Yes? in eqYes
+        ... | yes ()    | _  -- impossible: would require isValid ≡ false
+        ... | no _      | no ¬q = ⊥-elim (¬q (refl , q₂))
+        ... | no _      | yes premises with computeProof-UTXOS Γ tt txTop in eqU
+        ... | success (tt , _) rewrite eqNo | eqYes = refl  -- force the internal `case H-Yes? ,′ H-No?`
+                                                            -- to reduce (and keep the UTXOS success branch)
+        ... | failure es =  -- contradict UTXOS completeness:
+                            -- map proj₁ can't be both failure and success
+          ⊥-elim $ case trans (sym (map-failure {f = proj₁} eqU))
+                              (completeness-UTXOS Γ tt txTop tt utxosProof) of λ ()
+
+      completeness _ (UTXO-invalid {utxo = utxo₁} {fees₁} {donations₁} (refl , utxosProof , q₂)) = Goal
         where
-        Goal : map proj₁ computeProof ≡ success ⟦ utxo₁ ∣ CollateralInputsOf txTop ᶜ , fees₁ + cbalance (utxo₁ ∣ CollateralInputsOf txTop) , donations₁ ⟧ᵘ
-        Goal with H-Yes? | H-No?
+        Goal : map proj₁ computeProof
+             ≡ success ⟦ utxo₁ ∣ CollateralInputsOf txTop ᶜ
+                       , fees₁ + cbalance (utxo₁ ∣ CollateralInputsOf txTop)
+                       , donations₁ ⟧ᵘ
+
+        Goal with H-Yes? in eqYes | H-No? in eqNo
         ... | yes () | _
-        ... | no _  | yes premises = {!!}
         ... | no _  | no ¬q = ⊥-elim (¬q (refl , q₂))
-
--- --}
+        ... | no _  | yes premises with computeProof-UTXOS Γ tt txTop in eqU
+        ... | success (tt , _) rewrite eqYes | eqNo = refl
+        ... | failure es =
+          ⊥-elim $
+            case
+              trans (sym (map-failure {f = proj₁} eqU))
+                    (completeness-UTXOS Γ tt txTop tt utxosProof)
+            of λ ()
 ```
