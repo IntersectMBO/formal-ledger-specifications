@@ -4,68 +4,64 @@
 
   inputs = {
     nixpkgs.url = "github:NixOs/nixpkgs";
-    flake-utils.url = "github:numtide/flake-utils";
+
+    flake-parts = {
+      url = "github:hercules-ci/flake-parts";
+    };
 
     agda-nix = {
       url = "github:input-output-hk/agda.nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    fls-agda = {
-      url = "./build-tools/agda";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    fls-shake = {
-      url = "./build-tools/shake";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
   outputs =
-    { self, flake-utils, ... }@inputs:
+    {
+      self,
+      nixpkgs,
+      flake-parts,
+      ...
+    }@inputs:
     let
       systems = [
         "x86_64-linux"
         "x86_64-darwin"
         "aarch64-darwin"
       ];
+    in
+    flake-parts.lib.mkFlake { inherit inputs; } {
 
-      overlay-formal-ledger = final: prev: {
-        agdaPackages = prev.agdaPackages.overrideScope (
-          afinal: aprev: {
-            formal-ledger = afinal.callPackage ./build-tools/nix/formal-ledger.nix { };
-          }
-        );
-      };
+      inherit systems;
 
-      perSystem = flake-utils.lib.eachSystem systems (
-        system:
+      imports = [
+        ./build-tools/nix/fls-agda.nix
+        ./build-tools/nix/fls-shake.nix
+      ];
+
+      perSystem =
+        {
+          self',
+          pkgs,
+          system,
+          ...
+        }:
         let
-          nixpkgs = import inputs.nixpkgs {
-            inherit system;
-            overlays = [
-              # it's important to apply this overlay first
-              # (see https://github.com/NixOS/nixpkgs/issues/447012)
-              inputs.fls-agda.overlays.default
-              inputs.agda-nix.overlays.default
-              overlay-formal-ledger
-            ];
-          };
+          formal-ledger = pkgs.agdaPackages.callPackage ./build-tools/nix/formal-ledger.nix { };
 
-          # fls-agda with formal-ledger dependencies
-          fls-agdaWithPackages = nixpkgs.agda.withPackages (
-            builtins.filter (p: p ? isAgdaDerivation) nixpkgs.agdaPackages.formal-ledger.buildInputs
+          fls-agdaWithPackages = pkgs.agda.withPackages (
+            builtins.filter (p: p ? isAgdaDerivation) formal-ledger.buildInputs
           );
 
-          # Override fls-agda in fls-shake to use fls-agda with the formal-ledger dependencies
-          fls-shake = inputs.fls-shake.packages.${system}.default.override (_: {
+          hs-src = pkgs.callPackage ./build-tools/nix/hs-src.nix { inherit mkDerivation; };
+
+          cardano-ledger-executable-spec = pkgs.haskell.lib.compose.disableLibraryProfiling (
+            pkgs.haskellPackages.callCabal2nix "cardano-ledger-executable-spec" "${hs-src}/hs" { }
+          );
+
+          fls-shake = self'.packages.fls-shake.override (_: {
             fls-agda = fls-agdaWithPackages;
           });
 
-          formal-ledger = nixpkgs.agdaPackages.formal-ledger;
-
-          # Helper to create derivations that reuse _build from formal-ledger
           mkDerivation =
             args:
             let
@@ -85,89 +81,75 @@
                 preBuildPhases = (args.preBuildPhases or [ ]) ++ [ "copyAgdaBuild" ];
               };
             in
-            nixpkgs.stdenv.mkDerivation (args // default);
+            pkgs.stdenv.mkDerivation (args // default);
 
-          hs-src = nixpkgs.callPackage ./build-tools/nix/hs-src.nix { inherit mkDerivation; };
-
-          cardano-ledger-executable-spec = nixpkgs.haskell.lib.compose.disableLibraryProfiling (
-            nixpkgs.haskellPackages.callCabal2nix "cardano-ledger-executable-spec" "${hs-src}/hs" { }
-          );
-
-          pkgs = {
+          pkgs' = {
             inherit formal-ledger hs-src cardano-ledger-executable-spec;
-            html = nixpkgs.callPackage ./build-tools/nix/html.nix { inherit mkDerivation; };
-            mkdocs = nixpkgs.callPackage ./build-tools/nix/mkdocs.nix {
-              inherit (nixpkgs.stdenv) mkDerivation;
+            html = pkgs.callPackage ./build-tools/nix/html.nix { inherit mkDerivation; };
+            mkdocs = pkgs.callPackage ./build-tools/nix/mkdocs.nix {
+              inherit (pkgs.stdenv) mkDerivation;
               inherit fls-agdaWithPackages;
             };
           };
         in
         {
-          # ========================
-          # Packages
-          # ========================
-          packages = pkgs // {
+          _module.args.pkgs = import inputs.nixpkgs {
+            inherit system;
+            overlays = [
+              (final: prev: {
+                agdaPackages = prev.agdaPackages.override (_: {
+                  Agda = self'.packages.fls-agda;
+                });
+              })
+              inputs.agda-nix.overlays.default
+            ];
+          };
+
+          packages = pkgs' // {
             default = formal-ledger;
             inherit fls-agdaWithPackages;
           };
 
-          # ========================
-          # Developer shells
-          # ========================
-          devShells = with nixpkgs; {
+          devShells = with pkgs; {
+
             default = mkShell {
-              inputsFrom = builtins.attrValues (builtins.removeAttrs pkgs [ "cardano-ledger-executable-spec" ]) ;
+              inputsFrom = builtins.attrValues (removeAttrs pkgs' [ "cardano-ledger-executable-spec" ]);
             };
 
-            # Minimal environment for CI builds (see GH actions)
+            fls-shake-agdaWithPackages = self'.devShells.fls-shake.overrideAttrs (_: {
+              packages = [ fls-shake ];
+            });
+
             ci = mkShell {
               packages = [
                 fls-shake
               ];
             };
 
-            # Complete documentation pipeline (mkdocs)
             mkdocs = mkShell {
               inputsFrom = [
-                pkgs.mkdocs
+                mkdocs
               ];
             };
           };
 
-          # ========================
-          # Hydra jobs
-          # ========================
-          hydraJobs =
-            let
-              jobs = {
-                inherit fls-agdaWithPackages;
-                formal-ledger = nixpkgs.agdaPackages.formal-ledger;
-              }
-              // pkgs;
-            in
-            jobs
-            // {
-              required = nixpkgs.releaseTools.aggregate {
-                name = "${system}-required";
-                constituents = with nixpkgs.lib; collect isDerivation jobs;
-              };
-            };
-        }
-      );
-    in
-    perSystem
-    // {
-      hydraJobs = perSystem.hydraJobs // {
-        required =
-          let
-            nixpkgs = import inputs.nixpkgs {
-              system = builtins.head systems;
-            };
-          in
-          nixpkgs.releaseTools.aggregate {
-            name = "required";
-            constituents = map (system: perSystem.hydraJobs.${system}.required) systems;
-          };
+        };
+
+      flake = with nixpkgs; {
+        hydraJobs =
+          with nixpkgs;
+          lib.genAttrs [ "packages" "devShells" ] (
+            flakeOutput:
+            lib.foldl' lib.recursiveUpdate { } (
+              map (
+                system:
+                lib.genAttrs (builtins.attrNames self.${flakeOutput}.${system}) (drvName: {
+                  ${system} = self.${flakeOutput}.${system}.${drvName};
+                })
+              ) systems
+            )
+          );
       };
     };
+
 }
