@@ -23,19 +23,15 @@ theme:
     - navigation.sections
     - navigation.tabs
   palette:
-    # Dark Mode
-    - scheme: slate
-      toggle:
-        icon: material/weather-sunny
-        name: Dark mode
-      primary: black
-
-    # Light Mode
-    - scheme: default
-      toggle:
-        icon: material/weather-night
-        name: Light mode
-
+  - scheme: slate
+    toggle:
+      icon: material/weather-sunny
+      name: Dark mode
+    primary: black
+  - scheme: default
+    toggle:
+      icon: material/weather-night
+      name: Light mode
   icon:
     edit: fontawesome/brands/github    # <- octocat icon (link to file)
     view: fontawesome/brands/github    #
@@ -91,9 +87,6 @@ hooks:
 extra:
   source_branch: master
   source_overrides:
-    # Special cases in which source file name is hard to infer from doc file name.
-    # Syntax/Usage:
-    #   doc file name: source file name
     index.md: README.md
     Definitions.md: build-tools/static/md/common/src/Definitions.md
     Notation.md: build-tools/static/md/common/src/Notation.md

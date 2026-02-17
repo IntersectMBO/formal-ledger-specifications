@@ -64,8 +64,8 @@
                 meta = args.meta or { };
                 nativeBuildInputs = (args.nativeBuildInputs or [ ]) ++ [
                   formal-ledger
+                  fls-agdaWithPackages
                   fls-shake-agdaWithPackages
-                  pkgs.cowsay
                 ];
                 copyAgdaBuild = ''
                   cp -r "${formal-ledger}/_build" .
@@ -86,6 +86,7 @@
           pkgs' = {
             inherit
               formal-ledger
+              fls-shake-agdaWithPackages
               hs-src
               cardano-ledger-executable-spec
               ;
