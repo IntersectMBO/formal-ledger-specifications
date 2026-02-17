@@ -16,8 +16,8 @@ mkDerivation {
     fileset = lib.fileset.unions [
       ../../README.md
       ../../CONTRIBUTING.md
-      ../scripts/md
-      ../static/md
+      ../scripts
+      ../static/md/mkdocs
       ../static/latex
       ../../src
       ../../formal-ledger.agda-lib
