@@ -86,7 +86,7 @@ main = runAgda [Backend flsBackend']
 -- | Options for HTML generation
 data FlsOpts = FlsOpts
   { flsOptEnabled :: Bool
-  , flsOptHtmlDir :: FilePath
+  , flsOptMdDir :: FilePath
   , flsOptMainOnly :: Bool
   }
   deriving (Eq, Generic)
@@ -133,13 +133,13 @@ initialFlsOpts :: FlsOpts
 initialFlsOpts =
   FlsOpts
     { flsOptEnabled = False
-    , flsOptHtmlDir = defaultHTMLDir
+    , flsOptMdDir = defaultMdDir
     , flsOptMainOnly = False
     }
 
 -- | The default output directory for HTML.
-defaultHTMLDir :: FilePath
-defaultHTMLDir = "html"
+defaultMdDir :: FilePath
+defaultMdDir = "md"
 
 flsOpts :: [OptDescr (Flag FlsOpts)]
 flsOpts =
@@ -147,27 +147,27 @@ flsOpts =
       []
       ["fls"]
       (NoArg flsOpt)
-      "generate HTML files with highlighted source code"
+      "generate Markdown files with highlighted source code"
   , Option
       []
       ["fls-html-dir"]
-      (ReqArg flsHtmlDirOpt "DIR")
-      ( "directory in which HTML files are placed (default: "
-          ++ defaultHTMLDir
+      (ReqArg flsMdDirOpt "DIR")
+      ( "directory in which Markdown files are placed (default: "
+          ++ defaultMdDir
           ++ ")"
       )
   , Option
       []
       ["fls-main-only"]
       (NoArg flsMainOnly)
-      "generate HTML for the main file ONLY"
+      "generate Markdown for the main file ONLY"
   ]
 
 flsOpt :: Flag FlsOpts
 flsOpt o = return $ o{flsOptEnabled = True}
 
-flsHtmlDirOpt :: FilePath -> Flag FlsOpts
-flsHtmlDirOpt d o = return $ o{flsOptHtmlDir = d}
+flsMdDirOpt :: FilePath -> Flag FlsOpts
+flsMdDirOpt d o = return $ o{flsOptMdDir = d}
 
 flsMainOnly :: Flag FlsOpts
 flsMainOnly o = return $ o{flsOptMainOnly = True}
@@ -183,7 +183,7 @@ preCompileFls opts = runLogHtmlWithMonadDebug $ do
   unless (flsOptMainOnly opts) $ do
     logHtml $
       unlines
-        [ "Warning: HTML is currently generated for ALL files which can be"
+        [ "Warning: Markdown is currently generated for ALL files which can be"
         , "reached from the given module, including library files."
         ]
     prepareCommonDestinationAssets opts
@@ -218,8 +218,8 @@ postModuleFls ::
 postModuleFls env menv isMain _modName _defs = do
   when (isMain == IsMain || (not . flsOptMainOnly . flsCompileEnvOpts $ env)) $ do
     let generatePage = defaultPageGen . flsCompileEnvOpts . flsModEnvCompileEnv $ menv
-    htmlSrc <- srcFileOfInterface (flsModEnvName menv) <$> curIF
-    runLogHtmlWithMonadDebug $ generatePage htmlSrc
+    src <- srcFileOfInterface (flsModEnvName menv) <$> curIF
+    runLogHtmlWithMonadDebug $ generatePage src
   return FlsModule
 
 postCompileFls ::
@@ -229,19 +229,6 @@ postCompileFls ::
   Map TopLevelModuleName FlsModule ->
   m ()
 postCompileFls _cenv _isMain _modulesByName = pure ()
-
--- | The name of the default CSS file.
-defaultCSSFile :: FilePath
-defaultCSSFile = "Agda.css"
-
--- | The name of the default Agda KaTeX JS file.
-defaultAgdaKaTeXJsFile :: FilePath
-defaultAgdaKaTeXJsFile = "AgdaKaTeX.js"
-
--- | Determine the generated file extension
-highlightedFileExt :: FileType -> String
-highlightedFileExt AgdaFileType = "html"
-highlightedFileExt MdFileType = "md"
 
 -- | Internal type bundling the information related to a module source file
 data FlsInputSourceFile = FlsInputSourceFile
@@ -259,48 +246,41 @@ srcFileOfInterface ::
   TopLevelModuleName -> TCM.Interface -> FlsInputSourceFile
 srcFileOfInterface m i = FlsInputSourceFile m (TCM.iFileType i) (TCM.iSource i) (TCM.iHighlighting i)
 
--- | Logging during HTML generation
-type HtmlLogMessage = String
-
-type HtmlLogAction m = HtmlLogMessage -> m ()
-
 renderSourceFile :: FlsOpts -> FlsInputSourceFile -> Text
 renderSourceFile opts = renderSourcePage
  where
   renderSourcePage (FlsInputSourceFile moduleName fileType sourceCode hinfo) =
-    page fileType moduleName pageContents
+    page moduleName pageContents
    where
     tokens = tokenStream sourceCode hinfo
     pageContents = code fileType tokens
 
 defaultPageGen :: (MonadIO m, MonadLogHtml m) => FlsOpts -> FlsInputSourceFile -> m ()
 defaultPageGen opts srcFile@(FlsInputSourceFile moduleName ft _ _) = do
-  logHtml $ render $ "Generating HTML for" <+> pretty moduleName <+> (parens (pretty target) <> ".")
-  writeRenderedHtml html target
+  logHtml $ render $ "Generating Markdown for" <+> pretty moduleName <+> (parens (pretty target) <> ".")
+  writeRenderedMd md target
  where
-  ext = highlightedFileExt ft
-  target = flsOptHtmlDir opts </> modToFile moduleName ext
-  html = renderSourceFile opts srcFile
+  target = flsOptMdDir opts </> modToFile moduleName "md"
+  md = renderSourceFile opts srcFile
 
 prepareCommonDestinationAssets :: (MonadIO m) => FlsOpts -> m ()
 prepareCommonDestinationAssets options = liftIO $ do
-  -- There is a default directory given by 'defaultHTMLDir'
-  let htmlDir = flsOptHtmlDir options
-  createDirectoryIfMissing True htmlDir
+  -- There is a default directory given by 'defaultMdDir'
+  createDirectoryIfMissing True (flsOptMdDir options)
 
--- | Converts module names to the corresponding HTML file names.
+-- | Converts module names to the corresponding md file names.
 modToFile :: TopLevelModuleName -> String -> FilePath
 modToFile m ext = Network.URI.Encode.encode $ render (pretty m) <.> ext
 
 -- | Generates a highlighted, hyperlinked version of the given module.
-writeRenderedHtml ::
+writeRenderedMd ::
   (MonadIO m) =>
   -- | Rendered page
   Text ->
   -- | Output path.
   FilePath ->
   m ()
-writeRenderedHtml html target = liftIO $ UTF8.writeTextToFile target html
+writeRenderedMd html target = liftIO $ UTF8.writeTextToFile target html
 
 -- | Attach multiple Attributes
 (!!) :: Html -> [Attribute] -> Html
@@ -308,43 +288,13 @@ h !! as = h ! mconcat as
 
 -- | Constructs the web page, including headers.
 page ::
-  -- | Whether to reserve literate md
-  FileType ->
   -- | Module to be highlighted.
   TopLevelModuleName ->
   Html ->
   Text
 page
-  fileType
   modName
-  pageContent =
-    renderHtml $
-      case fileType of
-        AgdaFileType -> Html5.docTypeHtml $ hdr <> rest
-        MdFileType -> pageContent
-   where
-    hdr =
-      Html5.head $
-        mconcat
-          [ Html5.meta !! [Attr.charset "utf-8"]
-          , Html5.title (toHtml . render $ pretty modName)
-          , Html5.link
-              !! [ Attr.rel "stylesheet"
-                 , Attr.href $ stringValue "https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css"
-                 ]
-          , Html5.link
-              !! [ Attr.rel "stylesheet"
-                 , Attr.href $ stringValue defaultCSSFile
-                 ]
-          , Html5.script mempty !! [Attr.src "https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.js"]
-          , Html5.script mempty !! [Attr.src "https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/contrib/auto-render.min.js"]
-          , Html5.script mempty
-              !! [ Attr.src $ stringValue defaultAgdaKaTeXJsFile
-                 , Attr.defer mempty
-                 ]
-          ]
-
-    rest = Html5.body $ (Html5.pre ! Attr.class_ "Agda") pageContent
+  pageContent = renderHtml pageContent
 
 -- | Position, Contents, Infomation
 type TokenInfo =
@@ -377,10 +327,7 @@ code ::
   [TokenInfo] ->
   Html
 code fileType =
-  mconcat
-    . case fileType of
-      MdFileType -> map mkMd . splitByMarkup
-      AgdaFileType -> mkCustomHtml
+  mconcat . map mkMd . splitByMarkup
  where
   mkCustomHtml :: [TokenInfo] -> [Html]
   mkCustomHtml = goHtml
