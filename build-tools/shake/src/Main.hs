@@ -32,10 +32,9 @@ import qualified System.FSNotify as Watch
 main :: IO ()
 main = do
   let rules = do
-        pdfRule
         htmlRule
         hsRule
-        docsRule
+        mkdocsRule
 
       flags = [Option "" ["watch"] (NoArg $ Left "Watch mode is exclusive") "Watch mode (exclusive)"]
 
@@ -63,7 +62,7 @@ a target.
 watchMode :: IO ()
 watchMode = do
   root <- Dir.canonicalizePath "."
-  shakeWithDatabase shakeOptions (lagdamd2md >> md2mkdocs) $ \db -> do
+  shakeWithDatabase shakeOptions (lagdamd2md True) $ \db -> do
     _ <- Watch.withManager $ \mgr ->
       do
         changedFiles <- newChan
@@ -73,18 +72,18 @@ watchMode = do
                     map (\c -> if isPathSeparator c then '.' else c)
                       . (<.> "md")
                       . applyN 2 dropExtension
-                      . dropDirectory 4
+                      . dropDirectory 1
                       . makeRelative root
                       $ file
               (_, after) <-
                 shakeRunDatabase
                   db
                   [ withVerbosity Diagnostic $
-                      need [_md </> mkdocs </> "docs" </> srcfile]
+                      need [_mkdocs </> "docs" </> srcfile]
                   ]
               shakeRunAfter shakeOptions after
               loop
-        forkIO $ void $ Watch.watchTreeChan mgr "_build/md/md.in/src" isModified changedFiles
+        forkIO $ void $ Watch.watchTreeChan mgr "src" isModified changedFiles
         loop
     return ()
 
@@ -102,7 +101,6 @@ This depends on:
 1. the contents of hs-src/
 2. the Agda files which are transitively imported from the entrypoint
 module Ledger.Conway.Foreign.HSLedger
-
 Regarding 2), we don't declare its dependencies explicitly or traverse the
 Agda files in the repository to find what are those dependencies. Instead we
 let Agda do the work by declaring this rule as phony, which forces
@@ -180,7 +178,7 @@ htmlRule =
           ]
         agdamodules =
           sort . map (agdafile2module . dropDirectory 1) $
-            agdafiles ++ lagdafiles ++ lagdamdfiles
+            agdafiles ++ lagdamdfiles
         -- index file
         indexfile =
           [ "module index where"
@@ -215,12 +213,16 @@ libExts =
   ]
 
 {- | Process literate Markdown Agda files using Agda
-The target is a *.md file in _build/md/md.pp
-Its dependency is a .lagda.md file in _build/md/md.in
+The target is a *.md file in _build/md/mkdocs/docs
+Its dependency is a .lagda.md file in either src or src-lib-exts
+Main only is intended to use in filewatch mode
 -}
-lagdamd2md :: Rules ()
-lagdamd2md =
-  _md </> mdPP </> "*.md" %> \out -> do
+lagdamd2md ::
+  -- | Main only mode?
+  Bool ->
+  Rules ()
+lagdamd2md mainOnly =
+  _mkdocs </> "docs" </> "*.md" %> \out -> do
     let mdfile =
           joinPath
             . splitOn "."
@@ -235,32 +237,46 @@ lagdamd2md =
 
         srcfile = src </> mdfile <.> "lagda" <.> "md"
 
-    need [_md </> mdIn </> srcfile]
+    need [srcfile]
 
     command_
-      [Cwd $ _md </> mdIn]
+      []
       "agda"
-      [ "--fls"
-      , "--fls-main-only"
-      , "--fls-html-dir=" ++ "../" ++ mdPP
-      , srcfile
-      ]
+      $ ["--fls"]
+        ++ (if mainOnly then ["--fls-main-only"] else [])
+        ++ [ "--fls-html-dir=" ++ (_mkdocs </> "docs")
+           , srcfile
+           ]
 
--- | Copy files into the mkDocs docs directory
-md2mkdocs :: Rules ()
-md2mkdocs =
-  _md </> mkdocs </> "docs" </> "*.md" %> \out -> do
-    let mdfile =
-          (_md </>)
-            . (mdPP </>)
-            . dropDirectory 4
-            $ out
-    copyFileChanged mdfile out
+mkdocsRule :: Rules ()
+mkdocsRule = do
+  lagdamd2md False
+  phony "mkdocs" $ do
+    lagdamdfiles <- map ("src" </>) <$> getDirectoryFiles "src" ["//*.lagda.md"]
+    agdafiles <- map ("src" </>) <$> getDirectoryFiles "src" ["//*.agda"]
+    agdalibfiles <- map ("src-lib-exts" </>) <$> getDirectoryFiles "src-lib-exts" ["//*.agda"]
 
-docsRule :: Rules ()
-docsRule = do
-  lagdamd2md
-  md2mkdocs
+    need (lagdamdfiles ++ agdafiles ++ agdalibfiles)
+
+    need [_mkdocs </> "docs" </> "Ledger.md"]
+
+    staticfiles <- getDirectoryFiles "build-tools/static/md/mkdocs" ["//*"]
+
+    forM_ staticfiles $ \file ->
+      copyFileChanged ("build-tools/static/md/mkdocs" </> file) (_mkdocs </> file)
+
+    copyFileChanged "README.md" (_mkdocs </> "docs" </> "index.md")
+
+    liftIO $ Dir.createDirectoryIfMissing True mkdocsDist
+    root <- liftIO $ Dir.getCurrentDirectory >>= Dir.makeAbsolute
+
+    command_
+      [Cwd _mkdocs]
+      "mkdocs"
+      [ "build"
+      , "-s"
+      , "-d"
+      , root </> mkdocsDist ]
 
 ------------------------------------------------------------------------------
 -- Build directory paths
@@ -296,23 +312,18 @@ _html, _htmlPP :: FilePath
 _html = _build </> html
 _htmlPP = _html </> htmlPP
 
-md, mdIn, mdPP :: FilePath
-md = "md"
-mdIn = "md.in"
-mdPP = "md.pp"
-
-_md :: FilePath
-_md = _build </> md
-
 mkdocs :: FilePath
 mkdocs = "mkdocs"
+
+_mkdocs :: FilePath
+_mkdocs = _build </> mkdocs
 
 -- | Root output directory
 dist :: FilePath
 dist = "dist"
 
-pdfDist, htmlDist, hsDist :: FilePath
-pdfDist = dist </> "pdf"
+mkdocsDist, htmlDist, hsDist :: FilePath
+mkdocsDist = dist </> "mkdocs"
 htmlDist = dist </> "html"
 hsDist = dist </> "hs"
 

@@ -35,9 +35,6 @@ let
         shake
         split
         text
-        fls-agda
-        python3
-        hpack
       ];
       executableToolDepends = [
         makeWrapper
@@ -49,8 +46,16 @@ let
           --prefix PATH : ${
             lib.makeBinPath [
               fls-agda
-              python3
               hpack
+              (python3.withPackages (
+                ps: with ps; [
+                  mkdocs
+                  mkdocs-material
+                  pymdown-extensions
+                  pyyaml
+                  pybtex
+                ]
+              ))
             ]
           }
       '';
