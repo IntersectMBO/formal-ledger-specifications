@@ -27,7 +27,7 @@ import GHC.Generics (Generic)
 
 import qualified Network.URI.Encode
 
-import System.Directory (copyFile, createDirectoryIfMissing)
+import System.Directory (createDirectoryIfMissing)
 import System.FilePath ((<.>), (</>))
 
 import Text.Blaze.Html.Renderer.Text (renderHtml)
@@ -80,8 +80,6 @@ import qualified Agda.Utils.IO.UTF8 as UTF8
 import Agda.Utils.Impossible (__IMPOSSIBLE__)
 import Agda.Utils.List1 (String1, pattern (:|))
 import qualified Agda.Utils.List1 as List1
-
-import Paths_fls_agda (getDataFileName)
 
 main = runAgda [Backend flsBackend']
 
@@ -289,14 +287,6 @@ prepareCommonDestinationAssets options = liftIO $ do
   -- There is a default directory given by 'defaultHTMLDir'
   let htmlDir = flsOptHtmlDir options
   createDirectoryIfMissing True htmlDir
-
-  -- If the default CSS file should be used, then it is copied to
-  -- the output directory.
-  defCssFile <- getDataFileName $ "data" </> defaultCSSFile
-  copyFile defCssFile (htmlDir </> defaultCSSFile)
-
-  defAgdaKaTeXJsFile <- getDataFileName $ "data" </> defaultAgdaKaTeXJsFile
-  copyFile defAgdaKaTeXJsFile (htmlDir </> defaultAgdaKaTeXJsFile)
 
 -- | Converts module names to the corresponding HTML file names.
 modToFile :: TopLevelModuleName -> String -> FilePath
