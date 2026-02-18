@@ -135,6 +135,9 @@ txInfoForPurpose {TxLevelTop} utxo tx sp with sp
                  subInfos = map (txInfo TxLevelSub utxo) (SubTransactionsOf tx)
    -- · other top-level scripts see no subTx infos
 ... | _ = txInfo TxLevelTop utxo tx
+
+txOutToDataHash : TxOut → Maybe DataHash
+txOutToDataHash (_ , _ , d , _) = d >>= isInj₂
 ```
 
 ```agda
