@@ -105,7 +105,7 @@ record UTxOState : Type where
 ```
 <!--
 ```agda
-  constructor ⟦_,_,_,_,_,_⟧ᵘ
+  constructor ⟦_,_,_,_,_⟧ᵘ
 ```
 -->
 ```agda
@@ -114,7 +114,6 @@ record UTxOState : Type where
     fees       : Fees
     deposits   : Deposits
     donations  : Donations
-    tiers : TxTiers
     policyState : SDPolicy -- diversity policy and immature transactions
 ```
 
@@ -450,6 +449,28 @@ that their difference is the identity function.
                      + inject (txb .txFee)
                      + inject (newDeposits pp st txb)
                      + inject (txb .txDonation)
+
+  -- updates SDPolicy state with transaction being processed
+  processTxTiers : TxId → TxTier → ℕ → Fees → SDPolicy → SDPolicy
+  processTxTiers txid tier txsize minfee ⟦ dp , pn , ts , tf ⟧ˢᵈᵖ = ⟦ dp , pn' , ts' , tf' ⟧ˢᵈᵖ 
+    where 
+      -- dp is not updated here
+      -- txid is deleted from pending transactions
+      pn' = (pn ∣ (singleton txid) ᶜ)  
+      -- size-based tier occupancy is updated by adding size of tx to its tier
+      ts' = mapSingleValue (λ x → txsize + x) ts (tier .TxTier.tierNo) 
+      -- fee-based tier occupancy is updated by adding minfee of tx to its tier
+      tf' = mapSingleValue (λ x → minfee + x) tf (tier .TxTier.tierNo)
+      
+  -- checks if transaction being processed follows tier constraints
+  checkPolicyState : TxId → TxTier → ℕ → SDPolicy → Set
+  checkPolicyState txid tier txsize ⟦ dp , pn , ts , tf ⟧ˢᵈᵖ = isInPending 
+    where 
+      -- check if tx waited the mandatory wait time in pending set 
+      isInPending = tier .TxTier.timeToWait ∈ range (pn ∣ (singleton txid)) 
+      -- check if tx has correct tier coefficient
+      coeffOK = just (tier .TxTier.timeToWait) ≡ map (λ (x : PolicyClause) → x .PolicyClause.coeffRange) (lookupᵐ? dp (tier .TxTier.timeToWait))
+
 ```
 
 
@@ -466,7 +487,6 @@ private variable
   fees : Fees
   donations : Donations
   deposits : Deposits
-  tiers : TxTiers
   policyState : SDPolicy
 
 open UTxOEnv
@@ -481,37 +501,39 @@ data _⊢_⇀⦇_,UTXOS⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Typ
 ```
 <!--
 ```agda
-         open Tx tx renaming (body to txb); open TxBody txb
+         open Tx tx renaming (body to txb); open TxBody txb; open SDPolicy policyState
 ```
 -->
 ```agda
          p2Scripts  = collectP2ScriptsWithContext pp tx utxo
+         ps' = processTxTiers txId tier txsize (minfee pp utxo tx) policyState
       in
         ∙ ValidCertDeposits pp deposits txCerts
         ∙ evalP2Scripts p2Scripts ≡ isValid
         ∙ isValid ≡ true
           ────────────────────────────────
-          Γ ⊢ ⟦ utxo , fees , deposits , donations , tiers , policyState ⟧ᵘ ⇀⦇ tx ,UTXOS⦈ ⟦ (utxo ∣ txIns ᶜ) ∪ˡ (outs txb) , fees + txFee , updateDeposits pp txb deposits , donations + txDonation , ⟦ txId , tier , txsize ⟧ᵗˢ ∷ tiers , policyState ⟧ᵘ
+          Γ ⊢ ⟦ utxo , fees , deposits , donations , policyState ⟧ᵘ ⇀⦇ tx ,UTXOS⦈ ⟦ (utxo ∣ txIns ᶜ) ∪ˡ (outs txb) , fees + txFee , updateDeposits pp txb deposits , donations + txDonation , ps' ⟧ᵘ
   Scripts-No :
     let  pp         = Γ .pparams
 ```
 <!--
 ```agda
-         open Tx tx renaming (body to txb); open TxBody txb
+         open Tx tx renaming (body to txb); open TxBody txb; open SDPolicy policyState
 ```
 -->
 ```agda
          p2Scripts  = collectP2ScriptsWithContext pp tx utxo
-    in
+         ps' = processTxTiers txId tier txsize (minfee pp utxo tx) policyState
+      in
         ∙ evalP2Scripts p2Scripts ≡ isValid
         ∙ isValid ≡ false
           ────────────────────────────────
-          Γ ⊢ ⟦ utxo , fees , deposits , donations , tiers , policyState ⟧ᵘ  ⇀⦇ tx ,UTXOS⦈ ⟦ utxo ∣ collateralInputs ᶜ , fees + cbalance (utxo ∣ collateralInputs) , deposits , donations , ⟦ txId , tier , txsize ⟧ᵗˢ ∷ tiers , policyState ⟧ᵘ -- still added to tier list because tx pays fees
+          Γ ⊢ ⟦ utxo , fees , deposits , donations , policyState ⟧ᵘ  ⇀⦇ tx ,UTXOS⦈ ⟦ utxo ∣ collateralInputs ᶜ , fees + cbalance (utxo ∣ collateralInputs) , deposits , donations , ps' ⟧ᵘ -- still added to tier list because tx pays fees
 ```
 <!--
 ```agda
-unquoteDecl Scripts-Yes-premises = genPremises Scripts-Yes-premises (quote Scripts-Yes)
-unquoteDecl Scripts-No-premises  = genPremises Scripts-No-premises  (quote Scripts-No)
+-- unquoteDecl Scripts-Yes-premises = genPremises Scripts-Yes-premises (quote Scripts-Yes)
+-- unquoteDecl Scripts-No-premises  = genPremises Scripts-No-premises  (quote Scripts-No)
 ```
 -->
 
@@ -543,7 +565,8 @@ data _⊢_⇀⦇_,UTXO⦈_ where
     in
     ∙ txIns ≢ ∅                              ∙ txIns ∪ refInputs ⊆ dom utxo
     ∙ txIns ∩ refInputs ≡ ∅                  ∙ inInterval slot txVldt
-    ∙ minfee pp utxo tx ≤ txFee              ∙ (txrdmrs ˢ ≢ ∅ → collateralCheck pp tx utxo)
+    ∙ ((tier .TxTier.tierCoeff) * (minfee pp utxo tx)) ≤ txFee             
+    ∙ (txrdmrs ˢ ≢ ∅ → collateralCheck pp tx utxo)
     ∙ consumed pp s txb ≡ produced pp s txb  ∙ coin mint ≡ 0
     ∙ txsize ≤ maxTxSize pp
     ∙ refScriptsSize utxo tx ≤ pp .maxRefScriptSizePerTx
@@ -557,7 +580,7 @@ data _⊢_⇀⦇_,UTXO⦈_ where
     ∙ ∀[ a ∈ dom txWithdrawals ]    NetworkIdOf a  ≡ NetworkId
     ∙ txNetworkId  ~ just NetworkId
     ∙ currentTreasury  ~ just treasury
-    ∙ checkTiers txId tier tiers maturing diversityPolicy -- check that index in maturing of txid is right for the tier of the transaction and transaction has correct tier coefficient
+    ∙ checkPolicyState txId tier txsize policyState 
     ∙ Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ s'
       ────────────────────────────────
       Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s'
@@ -565,8 +588,8 @@ data _⊢_⇀⦇_,UTXO⦈_ where
 
 <!--
 ```agda
-pattern UTXO-inductive⋯ tx Γ s x y z w k l m c v j n o p q r t u h
-  = UTXO-inductive {Γ = Γ} {s = s} {tx = tx} (x , y , z , w , k , l , m , c , v , j , n , o , p , q , r , t , u , h)
+pattern UTXO-inductive⋯ tx Γ s x y z w k l m c v j n o p q r t u h i 
+  = UTXO-inductive {Γ = Γ} {s = s} {tx = tx} (x , y , z , w , k , l , m , c , v , j , n , o , p , q , r , t , u , h , i)
 unquoteDecl UTXO-premises = genPremises UTXO-premises (quote UTXO-inductive)
 ```
 -->

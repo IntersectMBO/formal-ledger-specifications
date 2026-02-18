@@ -142,17 +142,18 @@ record TransactionStructure : Type₁ where
   ProposedPPUpdates  = KeyHash ⇀ PParamsUpdate
   Update             = ProposedPPUpdates × Epoch
 
+  -- TODO should wait time be Block or Slot?
+  WaitTime = ℕ
+  TierNo = ℕ
+  topTier = 0
+  TierCoeff = ℕ -- TODO define correctly
+
   record TxTier : Set where
     constructor ⟦_,_,_⟧ᵗˢ
     field 
-      tid : TxId 
-      tierNo : ℕ -- tier number 
-      txsize : ℕ -- corresponding transaction size
-
-
-
-  TierCoeff = ℕ -- TODO define correctly
-  TxTiers = List TxTier
+      tierNo : TierNo -- tier number 
+      timeToWait : WaitTime -- blocks remaining to wait until tx is mature
+      tierCoeff : TierCoeff
 ```
 
 <!--
@@ -185,7 +186,7 @@ record TransactionStructure : Type₁ where
       mint                 : Value
       reqSignerHashes      : ℙ KeyHash
       scriptIntegrityHash  : Maybe ScriptHash
-      tier : TierCoeff
+      tier : TxTier
       -- txup              : Maybe Update   -- deprecated; leave for now
 ```
 

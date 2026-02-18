@@ -32,7 +32,7 @@ record BHBody : Type where
     slot    : Slot
     bhash   : KeyHash
     hBbsize : ℕ
-    incomingIds : ℙ TxId
+    incomingIds : ℙ TxId -- TODO should this go in Block
 
 record BHeader : Type where
   field
@@ -108,12 +108,13 @@ data _⊢_⇀⦇_,BBODY⦈_
       pp = PParamsOf es
       Γ  = ⟦ bhb .slot , ∣ es .constitution ∣ , pp , es , TreasuryOf acnt ⟧
       ls'' = record { LState ls' ; utxoSt = record { UTxOState (ls' .LState.utxoSt) ; policyState = ps' } }
-
+      -- TODO this is a bad way to do this
+      txr = foldr (λ trs (tm : TxId ⇀ TxTier) → tm ∪ˡ ❴ trs .Tx.body .TxBody.txId , trs .Tx.body .TxBody.tier ❵ᵐ ) ∅ᵐ txs 
      in
     ∙ block .bBodySize ≡ bhb .hBbsize
     ∙ block .bBodyHash ≡ bhb .bhash   
     ∙ Γ ⊢ ls ⇀⦇ txs ,LEDGERS⦈ ls'
-    ∙ ⊤ ⊢ (ls .LState.utxoSt .UTxOState.policyState) ⇀⦇ (ls' .LState.utxoSt .UTxOState.tiers , inIds) ,DIVUP⦈ ps'
+    ∙ pp ⊢ (ls .LState.utxoSt .UTxOState.policyState) ⇀⦇ (txr , inIds) ,DIVUP⦈ ps'
     ────────────────────────────────
     (es , acnt) ⊢ ls , b ⇀⦇ block ,BBODY⦈ ( ls'' , incrBlocks hk b)
 ```
