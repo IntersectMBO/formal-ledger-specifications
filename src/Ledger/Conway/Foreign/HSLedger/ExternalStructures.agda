@@ -127,7 +127,7 @@ instance
       ; indexOfProposal       =
           λ x xs → Data.Fin.toℕ <$> findIndexᵇ (==-GovProposal x) xs
       }
-    ; runPLCScript = λ _ _ _ _ → false
+    ; runPLCScript = λ _ _ _ _ → true
     ; scriptSize = λ where
         (inj₁ x) → HSTimelock.tlScriptSize x
         (inj₂ x) → HSPlutusScript.psScriptSize x
