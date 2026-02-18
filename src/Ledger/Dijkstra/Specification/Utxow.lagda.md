@@ -294,8 +294,8 @@ rules `UTXOW-normal` and `UTXOW-legacy`.
                            ∪ spendScripts txTop utxo₀
                            ∪ referenceScripts txTop utxo₀
 
-         dataProvided : ℙ Data
-         dataProvided = DataOf txTop
+         dataProvided : ℙ Datum
+         dataProvided = getTxData txTop utxo₀
 
          credentialsNeeded : ℙ Credential
          credentialsNeeded = mapˢ proj₂ (credsNeeded utxo₀ txTop)
