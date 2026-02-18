@@ -213,7 +213,7 @@ libExts =
   ]
 
 {- | Process literate Markdown Agda files using Agda
-The target is a *.md file in _build/md/mkdocs/docs
+The target is a *.md file in _build/mkdocs/docs
 Its dependency is a .lagda.md file in either src or src-lib-exts
 Main only is intended to use in filewatch mode
 -}
@@ -260,10 +260,10 @@ mkdocsRule = do
 
     need [_mkdocs </> "docs" </> "Ledger.md"]
 
-    staticfiles <- getDirectoryFiles "build-tools/static/md/mkdocs" ["//*"]
+    staticfiles <- getDirectoryFiles "build-tools/static/mkdocs" ["//*"]
 
     forM_ staticfiles $ \file ->
-      copyFileChanged ("build-tools/static/md/mkdocs" </> file) (_mkdocs </> file)
+      copyFileChanged ("build-tools/static/mkdocs" </> file) (_mkdocs </> file)
 
     copyFileChanged "README.md" (_mkdocs </> "docs" </> "index.md")
 
