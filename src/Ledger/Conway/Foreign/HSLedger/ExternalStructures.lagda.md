@@ -124,7 +124,8 @@ instance
     ; txscriptfee = λ tt y → 0
     ; serSize     = λ v → 0
     ; indexOfImp  = record
-      { indexOfDCert          = λ _ _ → nothing
+      { indexOfDCert          =
+          λ x xs → Data.Fin.toℕ <$> findIndexᵇ (_== x) xs
       ; indexOfRewardAddress  = λ _ _ → nothing
       ; indexOfTxIn           = λ _ _ → nothing
       ; indexOfPolicyId       = λ _ _ → nothing

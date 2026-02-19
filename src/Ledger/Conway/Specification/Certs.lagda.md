@@ -138,6 +138,12 @@ data DCert : Type where
   -- in the docs because it has been deprecated and we want to discourage people
   -- from using it.
   reg         : Credential → Coin → DCert
+
+instance
+  unquoteDecl DecEq-StakePoolParams = derive-DecEq
+    ((quote StakePoolParams , DecEq-StakePoolParams) ∷ [])
+  unquoteDecl DecEq-DCert = derive-DecEq
+    ((quote DCert , DecEq-DCert) ∷ [])
 ```
 -->
 
