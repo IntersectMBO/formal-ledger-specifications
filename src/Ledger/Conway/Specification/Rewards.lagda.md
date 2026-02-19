@@ -508,9 +508,42 @@ can move funds into “Reward accounts.”
 !!! note "Potential flows of funds during one transition step"
 
     <a id="fig:rewards-flowchart"></a>
-    <figure class="svg-card">
-      <img src="img/Rewards-Diagram.svg" alt="Rewards flowchart">
-    </figure>
+
+    ```mermaid
+    graph TD
+      %% Nodes
+      C[Circulation]
+      D[Deposits]
+      FR[Fees]
+      R[Reserves]
+      RA[Reward accounts]
+      T[Treasury]
+      TP((rewardPot))
+
+      %% Direct Flows
+      C --> D
+      D --> C
+      C --> FR
+      RA --> C
+
+      %% Implied Flows
+      FR -.-> T
+      FR -.-> RA
+      R -.-> T
+      R -.-> RA
+
+      %% Reward Pot Flows
+      FR -- "-Δf" --> TP
+      R -- "-Δr" --> TP
+      TP -- "rs" --> RA
+      TP -- "Δt" --> T
+
+      %% Blue Implied (Indices 4, 5, 6, 7)
+      linkStyle 4,5,6,7 stroke:#448aff,stroke-width:2px;
+
+      %% Red toTotPot (Indices 8, 9, 10, 11)
+      linkStyle 8,9,10,11 stroke:#ff5252,stroke-width:2px;
+    ```
 
     Value flows between accounting pots, but the total amount of value in the system
     remains constant.  In particular, the red subgraph represents the inputs and outputs
