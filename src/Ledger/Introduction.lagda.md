@@ -174,13 +174,87 @@ balanced, and several other conditions.
     output of the target node is an input to the source node, either as
     part of the source state, the environment or the event.
 
-    <span class="legend-box legend-Conway"></span> Rules added in Conway;
-    <span class="legend-box legend-Babbage"></span> Rules modified in Conway
+    <span style="background-color: #8a7a00;" class="legend-box"></span> Rules added in Conway;
+    <span style="background-color: #5d4037;" class="legend-box"></span> Rules modified in Conway
 
     <a id="fig:latest-sts-diagram"></a>
-    <figure class="svg-card">
-      <img src="img/STS-Diagram.svg"  alt="STS Diagram">
-    </figure>
+
+    ```mermaid
+    graph TD
+    %% Node Definitions
+    chain[CHAIN]
+    tickn((TICKN)):::missing
+    bbody((BBODY)):::missing
+    tick((TICK)):::missing
+
+    rupd[RUPD]:::modified
+    newepoch[NEWEPOCH]:::modified
+    epoch[EPOCH]:::modified
+    poolreap[POOLREAP]:::modified
+    utxos[UTXOS]:::modified
+    ledger_dcs[LEDGER]:::modified_dcs
+
+    ratifies[RATIFIES]:::conway
+    ratify_dcs[RATIFY]:::conway_dcs
+    enact[ENACT]:::conway
+    certs[CERTS]:::conway
+    govs[GOVS]:::conway
+    cert_dcs[CERT]:::conway_dcs
+    gov_dcs[GOV]:::conway_dcs
+    govcert[GOVCERT]:::conway
+
+    snap[SNAP]:::shelley
+    ledgers[LEDGERS]:::shelley
+    utxow[UTXOW]:::shelley
+    utxo[UTXO]:::shelley
+    deleg[DELEG]:::shelley
+    pool[POOL]:::shelley
+
+    %% Connections
+    chain --> tick
+    chain --> tickn
+    chain --> bbody
+    tickn -.-> tick
+    tick --> newepoch
+    tick --> rupd
+    bbody -.-> tick
+    bbody --> ledgers
+    rupd -.-> newepoch
+    newepoch --> epoch
+    epoch --> ratifies
+    epoch --> snap
+    epoch --> poolreap
+    ratifies --> ratify_dcs
+    ratify_dcs --> enact
+    ledgers --> ledger_dcs
+    ledger_dcs --> certs
+    ledger_dcs --> govs
+    govs --> gov_dcs
+    ledger_dcs --> utxow
+    certs --> cert_dcs
+    cert_dcs --> deleg
+    cert_dcs --> pool
+    cert_dcs --> govcert
+    utxow --> utxo
+    utxo --> utxos
+
+    %% Style
+    %% Shelley: Light Gray
+    classDef shelley fill:#454545,stroke:#b0b0b0,color:#ffffff;
+
+    %% Conway: Muted Yellow
+    classDef conway fill:#8a7a00,stroke:#fdd835,color:#ffffff;
+
+    %% Babbage/Modified: Muted Tan
+    classDef modified fill:#5d4037,stroke:#a1887f,color:#ffffff;
+
+    %% Missing/Dotted Rules
+    classDef missing fill:none,stroke:#b0b0b0,stroke-dasharray: 5 5;
+
+    %% Double Copy Shadow equivalent (Thick border)
+    classDef conway_dcs fill:#8a7a00,stroke:#fdd835,color:#ffffff,stroke-width:4px;
+    classDef modified_dcs fill:#5d4037,stroke:#a1887f,color:#ffffff,stroke-width:4px;
+    ```
 
 
 A brief description of each transition rule is provided below, with a
