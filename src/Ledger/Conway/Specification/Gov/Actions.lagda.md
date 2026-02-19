@@ -162,6 +162,7 @@ instance
 ==-GovActionData TreasuryWithdrawal w0 w1 = ==-Set (w0 ˢ) (w1 ˢ)
 ==-GovActionData Info = _==_
 
+-- See note "GovAction and GovProposal equality"
 ==-GovAction : GovAction → GovAction → Bool
 ==-GovAction ⟦ t0 , d0 ⟧ᵍᵃ ⟦ t1 , d1 ⟧ᵍᵃ
     with t0 ≟ t1
@@ -169,6 +170,17 @@ instance
 ... | P.no _ = false
 ```
 -->
+
+!!! note "GovAction and GovProposal equality"
+
+    `GovAction`{.AgdaDatatype} and `GovProposal` need a computable equality to
+    implement `indexOfProposal`{.AgdaFunction} later on. These types, however,
+    include fields of `Set`{.AgdaDatatype} and `Map`{.AgdaDatatype} types which
+    do not have the standard decidable equality. While it could be concibable to
+    define a decidable equality based on `_≡ᵉ_`{.AgdaFunction}, we don't need
+    the proof part to implement `indexOfProposal`{.AgdaFunction}, and therefore
+    we only implement the computation part as `==-GovAction`{.AgdaFunction} and
+    `==-GovProposal`{.AgdaFunction}.
 
 Governance actions are uniquely identified by a `GovActionID`. This type
 consists of the `TxId`{.AgdaDatatype} of the transaction that proposes the
@@ -455,6 +467,7 @@ DecEq-NeedsHash {ChangePParams} ._≟_ = _≟_ ⦃ DecEq-×′ ⦄
 DecEq-NeedsHash {TreasuryWithdrawal} ._≟_ = _≟_ ⦃ DecEq-⊤ ⦄
 DecEq-NeedsHash {Info} ._≟_ = _≟_ ⦃ DecEq-⊤ ⦄
 
+-- See note "GovAction and GovProposal equality"
 ==-GovProposal : GovProposal → GovProposal → Bool
 ==-GovProposal _gp0@(GovProposal.constructor a0 b0 c0 d0 e0 f0)
                _gp1@(GovProposal.constructor a1 b1 c1 d1 e1 f1)
