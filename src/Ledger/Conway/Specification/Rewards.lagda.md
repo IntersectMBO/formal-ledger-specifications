@@ -633,21 +633,21 @@ react to parameter changes, such as stake pool costs or performance.  But an epo
 also short enough so that changes to the stake distribution will be reflected in block
 production within a reasonable time frame.
 
-The rewards for the blocks produced during a given epoch $e_i$ involve the two epochs
+The rewards for the blocks produced during a given epoch e<sub>i</sub> involve the two epochs
 surrounding it.  In particular, the stake distribution will come from the previous
 epoch and the rewards will be calculated in the following epoch.  At each epoch
 boundary, one snapshot of the stake distribution is taken; changes to the stake
 distribution within an epoch are not considered until the next snapshot is taken.
 More concretely:
 
-1.  A stake distribution snapshot is taken at the begining of epoch $e_{i-1}$.
+1.  A stake distribution snapshot is taken at the begining of epoch e<sub>i-1</sub>.
 
-2.  The randomness for leader election is fixed during epoch $e_{i-1}$
+2.  The randomness for leader election is fixed during epoch e<sub>i-1</sub>
 
-3.  Epoch $e_{i}$ begins, blocks are produced using the snapshot taken at (A).
+3.  Epoch e<sub>i</sub> begins, blocks are produced using the snapshot taken at (A).
 
-4.  Epoch $e_{i}$ ends.  A snapshot is taken of the stake pool performance during
-    epoch $e_{i}$. A snapshot is also taken of the fee pot.
+4.  Epoch e<sub>i</sub> ends.  A snapshot is taken of the stake pool performance during
+    epoch e<sub>i</sub>. A snapshot is also taken of the fee pot.
 
 5.  The snapshots from (D) are stable and the reward calculation can begin.
 
@@ -659,19 +659,41 @@ More concretely:
 
 !!! note "Timeline of the rewards calculation"
 
-    The snapshot taken at (A) is labeled “mark” during epoch $e_{i-1}$, “set” during
-    epoch $e_i$ and “go” during epoch $e_{i+1}$.  At (G) the snapshot taken at (A) is
+    The snapshot taken at (A) is labeled “mark” during epoch e<sub>i-1</sub>, “set” during
+    epoch e<sub>i</sub> and “go” during epoch e<sub>i+1</sub>.  At (G) the snapshot taken at (A) is
     no longer needed and will be discarded.
 
     <a id="fig:reward-timing"></a>
-    <figure class="svg-card">
-      <img src="img/RewardsTiming-Diagram.svg" alt="Rewards timeline">
-    </figure>
+    ```mermaid
+    flowchart LR
+      A[A] --> B[B]
+      B --> C[C]
+      C --> D[D]
+      D --> E[E]
+      E --> F[F]
+      F --> G[G]
+
+      subgraph e_im1["e<sub>i-1</sub>"]
+        A
+        B
+      end
+
+      subgraph ei["e<sub>i</sub>"]
+        C
+        D
+      end
+
+      subgraph e_ip1["e<sub>i+1</sub>"]
+        E
+        F
+        G
+      end
+    ```
 
     **N.B.**  Between time D and E we are concerned with chain growth and stability.
-    Therefore this duration can be stated as 2k blocks (to state it in slots requires
+    Therefore this duration can be stated as $2k$ blocks (to state it in slots requires
     details about the particular version of the Ouroboros protocol). The duration
-    between F and G is also 2k blocks.  Between E and F a single honest block is
+    between F and G is also $2k$ blocks.  Between E and F a single honest block is
     enough to ensure a random nonce.
 
 In order to specify this logic, we store the last three snapshots of the stake
