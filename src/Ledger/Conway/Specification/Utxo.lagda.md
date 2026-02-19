@@ -464,7 +464,7 @@ that their difference is the identity function.
       
   -- checks if transaction being processed follows tier constraints
   checkPolicyState : TxId → TxTier → ℕ → SDPolicy → Set
-  checkPolicyState txid tier txsize ⟦ dp , pn , ts , tf ⟧ˢᵈᵖ = isInPending 
+  checkPolicyState txid tier txsize ⟦ dp , pn , ts , tf ⟧ˢᵈᵖ = isInPending × coeffOK
     where 
       -- check if tx waited the mandatory wait time in pending set 
       isInPending = tier .TxTier.timeToWait ∈ range (pn ∣ (singleton txid)) 

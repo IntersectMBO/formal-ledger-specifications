@@ -152,7 +152,7 @@ record TransactionStructure : Type₁ where
     constructor ⟦_,_,_⟧ᵗˢ
     field 
       tierNo : TierNo -- tier number 
-      timeToWait : WaitTime -- blocks remaining to wait until tx is mature
+      timeToWait : WaitTime -- blocks/slots to wait until tx is mature
       tierCoeff : TierCoeff
 ```
 

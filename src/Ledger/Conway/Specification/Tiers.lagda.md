@@ -54,18 +54,23 @@ cleanDP dp = dp
 -- TODO define this 
 -- compute a new policy clause plc based on PPs, current policy clauses, and data about tx tiers in this block
 -- returns 1-entry map (currentTime , plc)
-updateSD : PParams → SDPolicy → TxId ⇀ TxTier → DiversityPolicy
-updateSD pp sd trxs = (sd .SDPolicy.diversityPolicy)
+updateSD : PParams → SDPolicy → DiversityPolicy
+updateSD pp sd = (sd .SDPolicy.diversityPolicy)
+
+-- TODO cleanup functions should probably take pp's
+-- TODO do we need block size
+-- TODO deal with TierNo
+-- TODO block/slot equivalence (ok if tx is added into the block right after the desired slot, or in the same slot as a preceding block)
 
 -- TODO define
 -- check that current diversity policy is satisfied by block's tiers and can be updated
-sdChecks : PParams → SDPolicy → TxId ⇀ TxTier → Set
-sdChecks pp sd trxs = ⊤
+sdChecks : PParams → SDPolicy → Set
+sdChecks pp sd = ⊤
 
 -- TODO define
 -- clean up pending txs that have been waiting for more than the max delay
 -- increment all wait times by 1
--- include incoming IDs with wait times 0
+-- include incoming IDs with wait times 0 (or 1)
 updatePending : (TxId ⇀ WaitTime) → ℙ TxId → (TxId ⇀ WaitTime)
 updatePending m incoming  = m 
 
@@ -73,23 +78,23 @@ private variable
   incomingIds : ℙ TxId
   sd sd' : SDPolicy
   pp : PParams
-  trxs : TxId ⇀ TxTier
 
 -- Diversity policy and pending txs update rule
 -- input is IDs of txs in the block with the tier info
-data _⊢_⇀⦇_,DIVUP⦈_ : PParams → SDPolicy → ((TxId ⇀ TxTier) × ℙ TxId) → SDPolicy → Type where
+data _⊢_⇀⦇_,DIVUP⦈_ : PParams → SDPolicy → ℙ TxId → SDPolicy → Type where
 
   DIVUP-r :
     let open SDPolicy sd
     in
-    ∙ sdChecks pp sd trxs
+    ∙ sdChecks pp sd 
       ────────────────────────────────
-      pp ⊢ ⟦ diversityPolicy , pending , totalSize , totalFees ⟧ˢᵈᵖ ⇀⦇ (trxs , incomingIds) ,DIVUP⦈ ⟦ (cleanDP diversityPolicy) ∪ˡ (updateSD pp sd trxs) , updatePending pending incomingIds , totalSize , totalFees ⟧ˢᵈᵖ
+      pp ⊢ ⟦ diversityPolicy , pending , totalSize , totalFees ⟧ˢᵈᵖ ⇀⦇ incomingIds ,DIVUP⦈ ⟦ (cleanDP diversityPolicy) ∪ˡ (updateSD pp sd) , updatePending pending incomingIds , ∅ᵐ , ∅ᵐ ⟧ˢᵈᵖ
 ```
 
-
+New PPs
     -- Tier configuration
     k : ℕ  -- Maximum number of tiers
+    maxDelay : WaitTime -- max delay
     
     -- Update frequencies
     dFreq : ℕ  -- How often to update delays
