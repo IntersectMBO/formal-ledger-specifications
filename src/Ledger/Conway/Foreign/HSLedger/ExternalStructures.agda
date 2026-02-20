@@ -137,5 +137,8 @@ instance
     ; epochInfoSlotToUTCTime = λ _ → just 0
     ; transVITime = λ _ → tt
     }
+   where
+    open import Data.Product.Relation.Binary.Lex.NonStrict using (×-decTotalOrder)
+    open import Data.List.Sort using (sort)
 
 open import Ledger.Core.Specification.Address Network KeyHash ScriptHash using () public

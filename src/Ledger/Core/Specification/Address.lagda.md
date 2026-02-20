@@ -40,7 +40,15 @@ module Ledger.Core.Specification.Address (
 ```
 <!--
 ```agda
-  : Type)  ⦃ _ : DecEq Network ⦄ ⦃ _ : DecEq KeyHash ⦄ ⦃ _ : DecEq ScriptHash ⦄ where
+  : Type)
+  ⦃ _ : DecEq Network ⦄
+  ⦃ _ : DecEq KeyHash ⦄
+  ⦃ _ : DecEq ScriptHash ⦄
+  ⦃ _ : HasDecTotalOrder≡ {A = KeyHash} {0ℓ} {0ℓ} ⦄
+  ⦃ _ : HasDecTotalOrder≡ {A = ScriptHash} {0ℓ} {0ℓ} ⦄
+  where
+
+open import Relation.Binary using (IsEquivalence; IsPreorder)
 ```
 -->
  *Derived types*
@@ -54,6 +62,89 @@ data Credential : Type where
 record HasCredential {a} (A : Type a) : Type a where
   field CredentialOf : A → Credential
 open HasCredential ⦃...⦄ public
+
+
+fromHasPreorder≡
+  : {A B : Type}
+    ⦃ _ : HasPreorder≡ {A = A} {0ℓ} {0ℓ} ⦄
+  → A ↩ B
+  → HasPreorder≡ {A = B} {0ℓ} {0ℓ}
+fromHasPreorder≡ ⦃ pa ⦄ A↩B = record
+    { _≤_ = λ x y -> from x ≤ from y
+    ; _<_ = λ x y -> from x < from y
+    ; ≤-isPreorder = record
+        { isEquivalence = isEquivalence
+        ; reflexive = λ {x = x} → λ where
+            refl → IsPreorder.reflexive ≤-isPreorder {x = from x} refl
+        ; trans = λ {i = x} → IsPreorder.trans ≤-isPreorder {i = from x}
+        }
+    ; <-irrefl = λ where refl → <-irrefl ⦃ pa ⦄ refl
+    ; ≤⇔<∨≈ = λ {x = x} {y = y} → mk⇔
+        (λ fromx≤fromy →
+          case Equivalence.to ≤⇔<∨≈ fromx≤fromy of λ where
+            (inj₁ fromx<fromy) → inj₁ fromx<fromy
+            (inj₂ fromx≡fromy) → inj₂ $ begin
+              x
+                ≡⟨ sym $ inverseˡ {x = x} {y = from x} refl ⟩
+              to (from x)
+                ≡⟨ cong to fromx≡fromy ⟩
+              to (from y)
+                ≡⟨ inverseˡ {x = y} {y = from y} refl ⟩
+              y
+              ∎
+        )
+        (λ where
+          (inj₁ fromx<fromy) → Equivalence.from (≤⇔<∨≈ ⦃ pa ⦄) (inj₁ fromx<fromy)
+          (inj₂ refl) → IsPreorder.reflexive (≤-isPreorder ⦃ pa ⦄) refl
+        )
+    }
+  where
+    open LeftInverse A↩B
+    open ≡-Reasoning
+
+
+
+
+
+instance
+  HasPreorder≡-Credential = fromHasPreorder≡ $ mk↩
+    _ -- (λ y≡fromx )
+
+-- Inverseˡ f g = ∀ {x y} → y ≈₁ g x → f y ≈₂ x
+
+{-
+⊎-<-
+{A = Credential} {0ℓ} {0ℓ} ∋
+
+    record
+    { _≤_ = λ where
+        (KeyHashObj kh0) → λ where
+          (KeyHashObj kh1) → kh0 ≤ kh1
+          _ → ⊤
+        (ScriptObj sh0) →  λ where
+          (ScriptObj sh1) → sh0 ≤ sh1
+          _ → ⊥
+    ; _<_ = λ where
+        (KeyHashObj kh0) → λ where
+          (KeyHashObj kh1) → kh0 < kh1
+          _ → ⊤
+        (ScriptObj sh0) →  λ where
+          (ScriptObj sh1) → sh0 < sh1
+          _ → ⊥
+    }
+-}
+    {-
+        _≤_           : Rel A ℓ″
+        _<_           : Rel A ℓ‴
+        ≤-isPreorder  : IsPreorder _≈_ _≤_
+        <-irrefl      : Irreflexive _≈_ _<_
+        ≤⇔<∨≈         : ∀ {x y : A} → x ≤ y ⇔ (x < y ⊎ x ≈ y)
+-}
+
+--  HasPartialOrder-Credential = HasPartialOrder≡ {A = Credential} ∋ record {}
+--  HasTotalOrder-Credential = HasTotalOrder≡ {A = Credential} ∋ record {}
+--  HasDecTotalOrder-Credential = HasDecTotalOrder≡ {A = Credential} ∋ record {}
+
 
 isKeyHashObj : Credential → Maybe KeyHash
 isKeyHashObj (KeyHashObj h) = just h

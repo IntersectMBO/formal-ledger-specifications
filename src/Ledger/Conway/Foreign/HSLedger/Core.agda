@@ -60,9 +60,9 @@ unquoteDecl Show-HSVKey = derive-Show
   ((quote HSVKey , Show-HSVKey) ∷ [])
 
 module Implementation where
-  Network          = ℕ
+  Network = ℕ
   SlotsPerEpochᶜ   = 4320 -- TODO pass this externally instead of hardcoding
-  ActiveSlotCoeff  = ℤ.1ℤ ℚ./ 20  
+  ActiveSlotCoeff  = ℤ.1ℤ ℚ./ 20
   StabilityWindowᶜ = 10
   RandomnessStabilisationWindowᶜ = 10
   MaxLovelaceSupplyᶜ = 1

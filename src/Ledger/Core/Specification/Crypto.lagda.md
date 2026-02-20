@@ -74,8 +74,11 @@ record CryptoStructure : Type₁ where
 
   field ⦃ khs ⦄    : isHashableSet VKey
         ScriptHash : Type; ⦃ DecEq-ScriptHash ⦄ : DecEq ScriptHash ; ⦃ Show-ScriptHash ⦄ : Show ScriptHash
+        ⦃ HasDecTotalOrder≡-ScriptHash ⦄ : HasDecTotalOrder≡ {A = ScriptHash}
 
   open isHashableSet khs renaming (THash to KeyHash) hiding (DecEq-T) public
+
+  field ⦃ HasDecTotalOrder≡-KeyHash ⦄ : HasDecTotalOrder≡ {A = KeyHash}
 
 -- TODO: KES and VRF
 ```

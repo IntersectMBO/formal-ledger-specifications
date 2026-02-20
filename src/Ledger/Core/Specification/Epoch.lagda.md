@@ -17,6 +17,7 @@ open import Data.Rational using (ℚ)
 import      Data.Rational as ℚ
 import      Data.Rational.Properties as ℚ
 open import Data.Sum using ([_,_]′)
+open import Relation.Binary.Bundles using (DecTotalOrder)
 
 additionVia : ∀{A : Set} → (A → A) → ℕ → A → A
 additionVia sucFun zero r = r
@@ -85,6 +86,7 @@ record EpochStructure : Type₁ where
 
 record GlobalConstants : Type₁ where
   field  Network : Type; ⦃ DecEq-Netw ⦄ : DecEq Network; ⦃ Show-Network ⦄ : Show Network
+         ⦃ HasDecTotalOrder≡-Network ⦄ : HasDecTotalOrder≡ {A = Network}
          SlotsPerEpochᶜ   : ℕ; ⦃ NonZero-SlotsPerEpochᶜ ⦄ : NonZero SlotsPerEpochᶜ
          ActiveSlotCoeff  : ℚ; ⦃ Positive-ActiveSlotCoeff ⦄ : ℚ.Positive ActiveSlotCoeff
          RandomnessStabilisationWindowᶜ : ℕ
