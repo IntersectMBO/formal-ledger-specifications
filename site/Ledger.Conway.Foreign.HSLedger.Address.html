@@ -12134,7 +12134,7 @@
 
 
 
-  <a href="https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/src/Ledger/Conway/Foreign/HSLedger/Address.agda"
+  <a href="https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/src/Ledger/Conway/Foreign/HSLedger/Address.lagda.md?plain=1"
      class="md-content__button md-icon"
      title="View the source of this page"
      aria-label="View the source of this page">
@@ -12146,27 +12146,27 @@
 
   <h1>Address</h1>
 
-<pre class="Agda"><a id="101" class="Keyword">module</a> <a id="108" href="Ledger.Conway.Foreign.HSLedger.Address.html" class="Module">Ledger.Conway.Foreign.HSLedger.Address</a> <a id="147" class="Keyword">where</a>
+<pre class="Agda"><a id="104" class="Keyword">module</a> <a id="111" href="Ledger.Conway.Foreign.HSLedger.Address.html" class="Module">Ledger.Conway.Foreign.HSLedger.Address</a> <a id="150" class="Keyword">where</a>
 
-<a id="154" class="Keyword">open</a> <a id="159" class="Keyword">import</a> <a id="166" href="Ledger.Conway.Foreign.HSLedger.BaseTypes.html" class="Module">Ledger.Conway.Foreign.HSLedger.BaseTypes</a>
+<a id="157" class="Keyword">open</a> <a id="162" class="Keyword">import</a> <a id="169" href="Ledger.Conway.Foreign.HSLedger.BaseTypes.html" class="Module">Ledger.Conway.Foreign.HSLedger.BaseTypes</a>
 
-<a id="208" class="Keyword">instance</a>
-  <a id="HsTy-HSVKey"></a><a id="219" href="Ledger.Conway.Foreign.HSLedger.Address.html#219" class="Function">HsTy-HSVKey</a> <a id="231" class="Symbol">=</a> <a id="233" href="Foreign.HaskellTypes.Deriving.html#11901" class="Macro">autoHsType</a> <a id="244" href="Ledger.Conway.Foreign.HSLedger.Core.html#1053" class="Record">HSVKey</a>
-  <a id="Conv-HSVKey"></a><a id="253" href="Ledger.Conway.Foreign.HSLedger.Address.html#253" class="Function">Conv-HSVKey</a> <a id="265" class="Symbol">=</a> <a id="267" href="Foreign.Convertible.Deriving.html#6904" class="Macro">autoConvert</a> <a id="279" href="Ledger.Conway.Foreign.HSLedger.Core.html#1053" class="Record">HSVKey</a>
+<a id="211" class="Keyword">instance</a>
+  <a id="HsTy-HSVKey"></a><a id="222" href="Ledger.Conway.Foreign.HSLedger.Address.html#222" class="Function">HsTy-HSVKey</a> <a id="234" class="Symbol">=</a> <a id="236" href="Foreign.HaskellTypes.Deriving.html#11904" class="Macro">autoHsType</a> <a id="247" href="Ledger.Conway.Foreign.HSLedger.Core.html#1056" class="Record">HSVKey</a>
+  <a id="Conv-HSVKey"></a><a id="256" href="Ledger.Conway.Foreign.HSLedger.Address.html#256" class="Function">Conv-HSVKey</a> <a id="268" class="Symbol">=</a> <a id="270" href="Foreign.Convertible.Deriving.html#6907" class="Macro">autoConvert</a> <a id="282" href="Ledger.Conway.Foreign.HSLedger.Core.html#1056" class="Record">HSVKey</a>
 
-  <a id="HsTy-Credential"></a><a id="289" href="Ledger.Conway.Foreign.HSLedger.Address.html#289" class="Function">HsTy-Credential</a> <a id="305" class="Symbol">=</a> <a id="307" href="Foreign.HaskellTypes.Deriving.html#11901" class="Macro">autoHsType</a> <a id="318" href="Ledger.Core.Specification.Address.html#1214" class="Datatype">Credential</a>
-  <a id="Conv-Credential"></a><a id="331" href="Ledger.Conway.Foreign.HSLedger.Address.html#331" class="Function">Conv-Credential</a> <a id="347" class="Symbol">=</a> <a id="349" href="Foreign.Convertible.Deriving.html#6904" class="Macro">autoConvert</a> <a id="361" href="Ledger.Core.Specification.Address.html#1214" class="Datatype">Credential</a>
+  <a id="HsTy-Credential"></a><a id="292" href="Ledger.Conway.Foreign.HSLedger.Address.html#292" class="Function">HsTy-Credential</a> <a id="308" class="Symbol">=</a> <a id="310" href="Foreign.HaskellTypes.Deriving.html#11904" class="Macro">autoHsType</a> <a id="321" href="Ledger.Core.Specification.Address.html#1214" class="Datatype">Credential</a>
+  <a id="Conv-Credential"></a><a id="334" href="Ledger.Conway.Foreign.HSLedger.Address.html#334" class="Function">Conv-Credential</a> <a id="350" class="Symbol">=</a> <a id="352" href="Foreign.Convertible.Deriving.html#6907" class="Macro">autoConvert</a> <a id="364" href="Ledger.Core.Specification.Address.html#1214" class="Datatype">Credential</a>
 
-  <a id="HsTy-BaseAddr"></a><a id="375" href="Ledger.Conway.Foreign.HSLedger.Address.html#375" class="Function">HsTy-BaseAddr</a> <a id="389" class="Symbol">=</a> <a id="391" href="Foreign.HaskellTypes.Deriving.html#12027" class="Macro Operator">autoHsType</a> <a id="402" href="Ledger.Core.Specification.Address.html#2070" class="Record">BaseAddr</a> <a id="411" href="Foreign.HaskellTypes.Deriving.html#12027" class="Macro Operator">⊣</a> <a id="413" href="Foreign.HaskellTypes.Deriving.html#3706" class="Function">fieldPrefix</a> <a id="425" class="String">&quot;base&quot;</a>
-  <a id="Conv-BaseAddr"></a><a id="434" href="Ledger.Conway.Foreign.HSLedger.Address.html#434" class="Function">Conv-BaseAddr</a> <a id="448" class="Symbol">=</a> <a id="450" href="Foreign.Convertible.Deriving.html#6904" class="Macro">autoConvert</a> <a id="462" href="Ledger.Core.Specification.Address.html#2070" class="Record">BaseAddr</a>
+  <a id="HsTy-BaseAddr"></a><a id="378" href="Ledger.Conway.Foreign.HSLedger.Address.html#378" class="Function">HsTy-BaseAddr</a> <a id="392" class="Symbol">=</a> <a id="394" href="Foreign.HaskellTypes.Deriving.html#12030" class="Macro Operator">autoHsType</a> <a id="405" href="Ledger.Core.Specification.Address.html#2070" class="Record">BaseAddr</a> <a id="414" href="Foreign.HaskellTypes.Deriving.html#12030" class="Macro Operator">⊣</a> <a id="416" href="Foreign.HaskellTypes.Deriving.html#3709" class="Function">fieldPrefix</a> <a id="428" class="String">&quot;base&quot;</a>
+  <a id="Conv-BaseAddr"></a><a id="437" href="Ledger.Conway.Foreign.HSLedger.Address.html#437" class="Function">Conv-BaseAddr</a> <a id="451" class="Symbol">=</a> <a id="453" href="Foreign.Convertible.Deriving.html#6907" class="Macro">autoConvert</a> <a id="465" href="Ledger.Core.Specification.Address.html#2070" class="Record">BaseAddr</a>
 
-  <a id="HsTy-BootstrapAddr"></a><a id="474" href="Ledger.Conway.Foreign.HSLedger.Address.html#474" class="Function">HsTy-BootstrapAddr</a> <a id="493" class="Symbol">=</a> <a id="495" href="Foreign.HaskellTypes.Deriving.html#12027" class="Macro Operator">autoHsType</a> <a id="506" href="Ledger.Core.Specification.Address.html#2183" class="Record">BootstrapAddr</a> <a id="520" href="Foreign.HaskellTypes.Deriving.html#12027" class="Macro Operator">⊣</a> <a id="522" href="Foreign.HaskellTypes.Deriving.html#3706" class="Function">fieldPrefix</a> <a id="534" class="String">&quot;boot&quot;</a>
-  <a id="Conv-BootstrapAddr"></a><a id="543" href="Ledger.Conway.Foreign.HSLedger.Address.html#543" class="Function">Conv-BootstrapAddr</a> <a id="562" class="Symbol">=</a> <a id="564" href="Foreign.Convertible.Deriving.html#6904" class="Macro">autoConvert</a> <a id="576" href="Ledger.Core.Specification.Address.html#2183" class="Record">BootstrapAddr</a>
+  <a id="HsTy-BootstrapAddr"></a><a id="477" href="Ledger.Conway.Foreign.HSLedger.Address.html#477" class="Function">HsTy-BootstrapAddr</a> <a id="496" class="Symbol">=</a> <a id="498" href="Foreign.HaskellTypes.Deriving.html#12030" class="Macro Operator">autoHsType</a> <a id="509" href="Ledger.Core.Specification.Address.html#2183" class="Record">BootstrapAddr</a> <a id="523" href="Foreign.HaskellTypes.Deriving.html#12030" class="Macro Operator">⊣</a> <a id="525" href="Foreign.HaskellTypes.Deriving.html#3709" class="Function">fieldPrefix</a> <a id="537" class="String">&quot;boot&quot;</a>
+  <a id="Conv-BootstrapAddr"></a><a id="546" href="Ledger.Conway.Foreign.HSLedger.Address.html#546" class="Function">Conv-BootstrapAddr</a> <a id="565" class="Symbol">=</a> <a id="567" href="Foreign.Convertible.Deriving.html#6907" class="Macro">autoConvert</a> <a id="579" href="Ledger.Core.Specification.Address.html#2183" class="Record">BootstrapAddr</a>
 
-  <a id="HsTy-RewardAddress"></a><a id="593" href="Ledger.Conway.Foreign.HSLedger.Address.html#593" class="Function">HsTy-RewardAddress</a> <a id="612" class="Symbol">=</a> <a id="614" href="Foreign.HaskellTypes.Deriving.html#12027" class="Macro Operator">autoHsType</a> <a id="625" href="Ledger.Core.Specification.Address.html#2298" class="Record">RewardAddress</a> <a id="639" href="Foreign.HaskellTypes.Deriving.html#12027" class="Macro Operator">⊣</a> <a id="641" href="Foreign.HaskellTypes.Deriving.html#3706" class="Function">fieldPrefix</a> <a id="653" class="String">&quot;rwd&quot;</a>
-  <a id="Conv-RewardAddress"></a><a id="661" href="Ledger.Conway.Foreign.HSLedger.Address.html#661" class="Function">Conv-RewardAddress</a> <a id="680" class="Symbol">=</a> <a id="682" href="Foreign.Convertible.Deriving.html#6904" class="Macro">autoConvert</a> <a id="694" href="Ledger.Core.Specification.Address.html#2298" class="Record">RewardAddress</a>
+  <a id="HsTy-RewardAddress"></a><a id="596" href="Ledger.Conway.Foreign.HSLedger.Address.html#596" class="Function">HsTy-RewardAddress</a> <a id="615" class="Symbol">=</a> <a id="617" href="Foreign.HaskellTypes.Deriving.html#12030" class="Macro Operator">autoHsType</a> <a id="628" href="Ledger.Core.Specification.Address.html#2298" class="Record">RewardAddress</a> <a id="642" href="Foreign.HaskellTypes.Deriving.html#12030" class="Macro Operator">⊣</a> <a id="644" href="Foreign.HaskellTypes.Deriving.html#3709" class="Function">fieldPrefix</a> <a id="656" class="String">&quot;rwd&quot;</a>
+  <a id="Conv-RewardAddress"></a><a id="664" href="Ledger.Conway.Foreign.HSLedger.Address.html#664" class="Function">Conv-RewardAddress</a> <a id="683" class="Symbol">=</a> <a id="685" href="Foreign.Convertible.Deriving.html#6907" class="Macro">autoConvert</a> <a id="697" href="Ledger.Core.Specification.Address.html#2298" class="Record">RewardAddress</a>
 
-<a id="709" class="Keyword">unquoteDecl</a> <a id="721" class="Symbol">=</a> <a id="723" class="Keyword">do</a>
+<a id="712" class="Keyword">unquoteDecl</a> <a id="724" class="Symbol">=</a> <a id="726" class="Keyword">do</a>
   hsTypeAlias Addr
 </pre>
 

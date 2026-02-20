@@ -12134,7 +12134,7 @@
 
 
 
-  <a href="https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/src/Test/Examples/DEx/Datum.agda"
+  <a href="https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/src/Test/Examples/DEx/Datum.lagda.md?plain=1"
      class="md-content__button md-icon"
      title="View the source of this page"
      aria-label="View the source of this page">
@@ -12146,36 +12146,36 @@
 
   <h1>Datum</h1>
 
-<pre class="Agda"><a id="86" class="Symbol">{-#</a> <a id="90" class="Keyword">OPTIONS</a> <a id="98" class="Pragma">--safe</a> <a id="105" class="Symbol">#-}</a>
+<pre class="Agda"><a id="89" class="Symbol">{-#</a> <a id="93" class="Keyword">OPTIONS</a> <a id="101" class="Pragma">--safe</a> <a id="108" class="Symbol">#-}</a>
 
-<a id="110" class="Keyword">open</a> <a id="115" class="Keyword">import</a> <a id="122" href="Ledger.Prelude.html" class="Module">Ledger.Prelude</a> <a id="137" class="Keyword">hiding</a> <a id="144" class="Symbol">(</a><a id="145" href="Axiom.Set.html#5903" class="Function">fromList</a><a id="153" class="Symbol">;</a> <a id="155" href="Class.Monoid.Core.html#225" class="Field">ε</a><a id="156" class="Symbol">);</a> <a id="159" class="Keyword">open</a> <a id="164" href="Interface.ComputationalRelation.html#13270" class="Module">Computational</a>
+<a id="113" class="Keyword">open</a> <a id="118" class="Keyword">import</a> <a id="125" href="Ledger.Prelude.html" class="Module">Ledger.Prelude</a> <a id="140" class="Keyword">hiding</a> <a id="147" class="Symbol">(</a><a id="148" href="Axiom.Set.html#5903" class="Function">fromList</a><a id="156" class="Symbol">;</a> <a id="158" href="Class.Monoid.Core.html#225" class="Field">ε</a><a id="159" class="Symbol">);</a> <a id="162" class="Keyword">open</a> <a id="167" href="Interface.ComputationalRelation.html#13270" class="Module">Computational</a>
 
-<a id="179" class="Keyword">module</a> <a id="186" href="Test.Examples.DEx.Datum.html" class="Module">Test.Examples.DEx.Datum</a> <a id="210" class="Keyword">where</a>
+<a id="182" class="Keyword">module</a> <a id="189" href="Test.Examples.DEx.Datum.html" class="Module">Test.Examples.DEx.Datum</a> <a id="213" class="Keyword">where</a>
 
-<a id="217" class="Keyword">open</a> <a id="222" class="Keyword">import</a> <a id="229" href="Tactic.Derive.DecEq.html" class="Module">Tactic.Derive.DecEq</a>
-<a id="249" class="Keyword">open</a> <a id="254" class="Keyword">import</a> <a id="261" href="Data.Vec.html" class="Module">Data.Vec</a> <a id="270" class="Symbol">as</a> <a id="273" class="Module">Vec</a>
-  <a id="279" class="Keyword">hiding</a> <a id="286" class="Symbol">(</a><a id="287" href="Data.Vec.Base.html#8496" class="Function">fromList</a><a id="295" class="Symbol">)</a>
-<a id="297" class="Keyword">import</a> <a id="304" href="stdlib.Data.Vec.Instances.html" class="Module">stdlib.Data.Vec.Instances</a> <a id="330" class="Symbol">as</a> <a id="333" class="Module">Vec</a>
-<a id="337" class="Keyword">import</a> <a id="344" href="Data.Vec.Relation.Binary.Pointwise.Inductive.html" class="Module">Data.Vec.Relation.Binary.Pointwise.Inductive</a> <a id="389" class="Symbol">as</a> <a id="392" class="Module">Vec</a>
+<a id="220" class="Keyword">open</a> <a id="225" class="Keyword">import</a> <a id="232" href="Tactic.Derive.DecEq.html" class="Module">Tactic.Derive.DecEq</a>
+<a id="252" class="Keyword">open</a> <a id="257" class="Keyword">import</a> <a id="264" href="Data.Vec.html" class="Module">Data.Vec</a> <a id="273" class="Symbol">as</a> <a id="276" class="Module">Vec</a>
+  <a id="282" class="Keyword">hiding</a> <a id="289" class="Symbol">(</a><a id="290" href="Data.Vec.Base.html#8496" class="Function">fromList</a><a id="298" class="Symbol">)</a>
+<a id="300" class="Keyword">import</a> <a id="307" href="stdlib.Data.Vec.Instances.html" class="Module">stdlib.Data.Vec.Instances</a> <a id="333" class="Symbol">as</a> <a id="336" class="Module">Vec</a>
+<a id="340" class="Keyword">import</a> <a id="347" href="Data.Vec.Relation.Binary.Pointwise.Inductive.html" class="Module">Data.Vec.Relation.Binary.Pointwise.Inductive</a> <a id="392" class="Symbol">as</a> <a id="395" class="Module">Vec</a>
 
-<a id="397" class="Keyword">open</a> <a id="402" class="Keyword">import</a> <a id="409" href="Data.Rational.Base.html" class="Module">Data.Rational.Base</a>
+<a id="400" class="Keyword">open</a> <a id="405" class="Keyword">import</a> <a id="412" href="Data.Rational.Base.html" class="Module">Data.Rational.Base</a>
 
-<a id="429" class="Keyword">data</a> <a id="Label"></a><a id="434" href="Test.Examples.DEx.Datum.html#434" class="Datatype">Label</a> <a id="440" class="Symbol">:</a> <a id="442" href="Agda.Primitive.html#388" class="Primitive">Set</a> <a id="446" class="Keyword">where</a>
- <a id="453" class="Comment">-- Holding : Label</a>
-  <a id="Label.Always"></a><a id="474" href="Test.Examples.DEx.Datum.html#474" class="InductiveConstructor">Always</a> <a id="481" class="Symbol">:</a> <a id="483" href="Data.Rational.Base.html#1421" class="Record">ℚ</a> <a id="485" class="Symbol">-&gt;</a> <a id="488" href="Agda.Builtin.Nat.html#203" class="Datatype">ℕ</a> <a id="490" class="Symbol">-&gt;</a> <a id="493" href="Test.Examples.DEx.Datum.html#434" class="Datatype">Label</a> 
-<a id="500" class="Keyword">instance</a>
-  <a id="511" class="Keyword">unquoteDecl</a> <a id="DecEq-Label"></a><a id="523" href="Test.Examples.DEx.Datum.html#523" class="Function">DecEq-Label</a> <a id="535" class="Symbol">=</a> <a id="537" href="Tactic.Derive.DecEq.html#5150" class="Function">derive-DecEq</a>
-    <a id="554" class="Symbol">((</a><a id="556" class="Keyword">quote</a> <a id="562" href="Test.Examples.DEx.Datum.html#434" class="Datatype">Label</a> <a id="568" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="570" href="Test.Examples.DEx.Datum.html#523" class="Function">DecEq-Label</a><a id="581" class="Symbol">)</a> <a id="583" href="Agda.Builtin.List.html#199" class="InductiveConstructor Operator">∷</a> <a id="585" href="Agda.Builtin.List.html#184" class="InductiveConstructor">[]</a><a id="587" class="Symbol">)</a>
+<a id="432" class="Keyword">data</a> <a id="Label"></a><a id="437" href="Test.Examples.DEx.Datum.html#437" class="Datatype">Label</a> <a id="443" class="Symbol">:</a> <a id="445" href="Agda.Primitive.html#388" class="Primitive">Set</a> <a id="449" class="Keyword">where</a>
+ <a id="456" class="Comment">-- Holding : Label</a>
+  <a id="Label.Always"></a><a id="477" href="Test.Examples.DEx.Datum.html#477" class="InductiveConstructor">Always</a> <a id="484" class="Symbol">:</a> <a id="486" href="Data.Rational.Base.html#1421" class="Record">ℚ</a> <a id="488" class="Symbol">-&gt;</a> <a id="491" href="Agda.Builtin.Nat.html#203" class="Datatype">ℕ</a> <a id="493" class="Symbol">-&gt;</a> <a id="496" href="Test.Examples.DEx.Datum.html#437" class="Datatype">Label</a> 
+<a id="503" class="Keyword">instance</a>
+  <a id="514" class="Keyword">unquoteDecl</a> <a id="DecEq-Label"></a><a id="526" href="Test.Examples.DEx.Datum.html#526" class="Function">DecEq-Label</a> <a id="538" class="Symbol">=</a> <a id="540" href="Tactic.Derive.DecEq.html#5150" class="Function">derive-DecEq</a>
+    <a id="557" class="Symbol">((</a><a id="559" class="Keyword">quote</a> <a id="565" href="Test.Examples.DEx.Datum.html#437" class="Datatype">Label</a> <a id="571" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="573" href="Test.Examples.DEx.Datum.html#526" class="Function">DecEq-Label</a><a id="584" class="Symbol">)</a> <a id="586" href="Agda.Builtin.List.html#199" class="InductiveConstructor Operator">∷</a> <a id="588" href="Agda.Builtin.List.html#184" class="InductiveConstructor">[]</a><a id="590" class="Symbol">)</a>
 
-<a id="590" class="Keyword">data</a> <a id="Input"></a><a id="595" href="Test.Examples.DEx.Datum.html#595" class="Datatype">Input</a> <a id="601" class="Symbol">:</a> <a id="603" href="Agda.Primitive.html#388" class="Primitive">Set</a> <a id="607" class="Keyword">where</a>
-  <a id="Input.Update"></a><a id="615" href="Test.Examples.DEx.Datum.html#615" class="InductiveConstructor">Update</a>   <a id="624" class="Symbol">:</a> <a id="626" href="Agda.Builtin.Nat.html#203" class="Datatype">ℕ</a> <a id="628" class="Symbol">-&gt;</a> <a id="631" href="Data.Rational.Base.html#1421" class="Record">ℚ</a> <a id="633" class="Symbol">-&gt;</a> <a id="636" href="Test.Examples.DEx.Datum.html#595" class="Datatype">Input</a>
-  <a id="Input.Exchange"></a><a id="644" href="Test.Examples.DEx.Datum.html#644" class="InductiveConstructor">Exchange</a> <a id="653" class="Symbol">:</a> <a id="655" href="Agda.Builtin.Nat.html#203" class="Datatype">ℕ</a> <a id="657" class="Symbol">-&gt;</a> <a id="660" href="Agda.Builtin.Nat.html#203" class="Datatype">ℕ</a> <a id="662" class="Symbol">-&gt;</a> <a id="665" href="Test.Examples.DEx.Datum.html#595" class="Datatype">Input</a>
-  <a id="Input.Close"></a><a id="673" href="Test.Examples.DEx.Datum.html#673" class="InductiveConstructor">Close</a>    <a id="682" class="Symbol">:</a> <a id="684" href="Test.Examples.DEx.Datum.html#595" class="Datatype">Input</a>
-<a id="690" class="Keyword">instance</a>
-  <a id="701" class="Keyword">unquoteDecl</a> <a id="DecEq-Input"></a><a id="713" href="Test.Examples.DEx.Datum.html#713" class="Function">DecEq-Input</a> <a id="725" class="Symbol">=</a> <a id="727" href="Tactic.Derive.DecEq.html#5150" class="Function">derive-DecEq</a>
-    <a id="744" class="Symbol">((</a><a id="746" class="Keyword">quote</a> <a id="752" href="Test.Examples.DEx.Datum.html#595" class="Datatype">Input</a> <a id="758" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="760" href="Test.Examples.DEx.Datum.html#713" class="Function">DecEq-Input</a><a id="771" class="Symbol">)</a> <a id="773" href="Agda.Builtin.List.html#199" class="InductiveConstructor Operator">∷</a> <a id="775" href="Agda.Builtin.List.html#184" class="InductiveConstructor">[]</a><a id="777" class="Symbol">)</a>
+<a id="593" class="Keyword">data</a> <a id="Input"></a><a id="598" href="Test.Examples.DEx.Datum.html#598" class="Datatype">Input</a> <a id="604" class="Symbol">:</a> <a id="606" href="Agda.Primitive.html#388" class="Primitive">Set</a> <a id="610" class="Keyword">where</a>
+  <a id="Input.Update"></a><a id="618" href="Test.Examples.DEx.Datum.html#618" class="InductiveConstructor">Update</a>   <a id="627" class="Symbol">:</a> <a id="629" href="Agda.Builtin.Nat.html#203" class="Datatype">ℕ</a> <a id="631" class="Symbol">-&gt;</a> <a id="634" href="Data.Rational.Base.html#1421" class="Record">ℚ</a> <a id="636" class="Symbol">-&gt;</a> <a id="639" href="Test.Examples.DEx.Datum.html#598" class="Datatype">Input</a>
+  <a id="Input.Exchange"></a><a id="647" href="Test.Examples.DEx.Datum.html#647" class="InductiveConstructor">Exchange</a> <a id="656" class="Symbol">:</a> <a id="658" href="Agda.Builtin.Nat.html#203" class="Datatype">ℕ</a> <a id="660" class="Symbol">-&gt;</a> <a id="663" href="Agda.Builtin.Nat.html#203" class="Datatype">ℕ</a> <a id="665" class="Symbol">-&gt;</a> <a id="668" href="Test.Examples.DEx.Datum.html#598" class="Datatype">Input</a>
+  <a id="Input.Close"></a><a id="676" href="Test.Examples.DEx.Datum.html#676" class="InductiveConstructor">Close</a>    <a id="685" class="Symbol">:</a> <a id="687" href="Test.Examples.DEx.Datum.html#598" class="Datatype">Input</a>
+<a id="693" class="Keyword">instance</a>
+  <a id="704" class="Keyword">unquoteDecl</a> <a id="DecEq-Input"></a><a id="716" href="Test.Examples.DEx.Datum.html#716" class="Function">DecEq-Input</a> <a id="728" class="Symbol">=</a> <a id="730" href="Tactic.Derive.DecEq.html#5150" class="Function">derive-DecEq</a>
+    <a id="747" class="Symbol">((</a><a id="749" class="Keyword">quote</a> <a id="755" href="Test.Examples.DEx.Datum.html#598" class="Datatype">Input</a> <a id="761" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="763" href="Test.Examples.DEx.Datum.html#716" class="Function">DecEq-Input</a><a id="774" class="Symbol">)</a> <a id="776" href="Agda.Builtin.List.html#199" class="InductiveConstructor Operator">∷</a> <a id="778" href="Agda.Builtin.List.html#184" class="InductiveConstructor">[]</a><a id="780" class="Symbol">)</a>
 
-<a id="DExData"></a><a id="780" href="Test.Examples.DEx.Datum.html#780" class="Function">DExData</a> <a id="788" class="Symbol">=</a> <a id="790" href="Test.Examples.DEx.Datum.html#434" class="Datatype">Label</a> <a id="796" href="Data.Sum.Base.html#625" class="Datatype Operator">⊎</a> <a id="798" href="Test.Examples.DEx.Datum.html#595" class="Datatype">Input</a>
+<a id="DExData"></a><a id="783" href="Test.Examples.DEx.Datum.html#783" class="Function">DExData</a> <a id="791" class="Symbol">=</a> <a id="793" href="Test.Examples.DEx.Datum.html#437" class="Datatype">Label</a> <a id="799" href="Data.Sum.Base.html#625" class="Datatype Operator">⊎</a> <a id="801" href="Test.Examples.DEx.Datum.html#598" class="Datatype">Input</a>
 </pre>
 
 
