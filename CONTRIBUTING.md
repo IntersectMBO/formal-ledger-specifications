@@ -108,24 +108,20 @@ The main directories and files involved in the build process are as follows.
     │   ├── data/
     │   │   ├── Agda.css       # For styling Agda HTML output.
     │   │   └── AgdaKaTeX.js   # For integrating Agda's HTML with KaTeX.
-    │   ├── flake.nix          # Auxiliary Nix flake file.
     │   ├── fls-agda.cabal     # For building fls-agda Haskell package.
-    │   ├── nix/
-    │   │   └── fls-agda.nix   # Nix derivation for fls-agda package.
     │   └── src/
     │       └── Main.hs        # Main entry point for fls-agda executable.
     │
     ├── nix/                   # Nix derivations for exported packages.
+    │   ├── fls-agda.nix
+    │   ├── fls-shake.nix
     │   ├── formal-ledger.nix
     │   ├── hs-src.nix
     │   ├── html.nix
     │   └── mkdocs.nix
     │
     └── shake/
-        ├── flake.nix          # Auxiliary Nix flake file.
         ├── fls-shake.cabal    # For building fls-shake Haskell package.
-        ├── nix/
-        │   └── fls-shake.nix  # Nix derivation for fls-shake package.
         └── src/
             └── Main.hs        # Main entry point for fls-shake build system.
 ```
@@ -151,36 +147,8 @@ enter them using `nix develop`.
 
     + [`agda`][Agda] (with all project libraries)
     + `fls-shake` (our custom build tool)
-    + [`python311`][python311] (Python version 3.11)
-    + [`hpack`][hpack] (the Haskell package helper)
-
-
-+  🐚 **CI Shell**
-
-    A minimal environment designed for automated builds, containing only the `fls-shake` build tool and its runtime dependencies.
-
-    ```bash
-    # Enter the CI shell
-    nix develop .#ci
-    ```
-
-+  🐚 **Documentation Shell**
-
-    A comprehensive environment for working on documentation, including the full documentation generation pipeline.
-
-    ```bash
-    # Enter the documentation shell
-    nix develop .#mkdocs
-    ```
-
-    ⚒️ **Available Tools**
-
-    Everything from the default shell plus
-
-    + [`pandoc`][pandoc] (the document conversion tool)
-    + [`latex`][latex] (the typesetting language)
     + [`mkdocs`][mkdocs] (with Python dependencies)
-
+    + [`hpack`][hpack] (the Haskell package helper)
 
 ---
 
@@ -257,68 +225,13 @@ There are two ways to do this.
     then generates the HTML documentation.
 
     ```bash
-    nix develop .#mkdocs
-    python build-tools/scripts/md/build.py --run-agda
+    nix develop
+    fls-shake mkdocs
     cd _build/md/mkdocs
     mkdocs serve
     ```
 
     Then point your browser to  <http://127.0.0.1:8000/>.
-
-
-### Generating images
-
-The diagrams in our documentation come from legacy tikz source code files that live
-in the `build-tools/static/latex/Diagrams` directory.  To generate svg images from a tikz
-source code file, we create a standalone LaTeX document for it (e.g.,
-`build-tools/static/latex/STS-Diagram.tex`) and
-
-1.  run the following commands:
-
-    ```
-    lualatex -halt-on-error -interaction=batchmode STS-Diagram.tex
-    dvisvgm --pdf --page=1 -n -a -o STS-Diagram.svg STS-Diagram.pdf
-    ```
-
-2.  copy the resulting `.svg` file into the `build-tools/static/md/common/src/img/` directory.
-
-To include the diagram in the markdown documentation, we add it to a
-`.lagda.md` file as follows: `![STS-Diagram](img/STS-Diagram.svg)`.
-
-(The Python pipeline for markdown migration and mkdocs site generation
-can now handle steps 1 and 2 above.  Specifically, when you build the html
-documentation site using the second ("manual") method above, the program looks in the
-`build-tools/static/latex/` directory for LaTeX files with names matching the pattern
-`*-Diagram.tex`; it processes each such file with the `lualatex` and `dvisvgm`
-commands shown above and then copies the resulting `.svg` image file into the
-`build-tools/static/md/common/src/img` directory.)
-
-**Important Notes**
-
-+  For each tikz source file in `build-tools/static/latex/Diagrams`, to generate the
-   corresponding svg image file, we must create a standalone LaTeX file
-   `*-Diagram.tex` file that `\include`s the tikz source file.  Also, we need to
-   include the svg image in the appropriate `.lagda.md` file by hand, either
-
-    +  using the standard Markdown syntax for including images, that is, `![...](...)`; e.g.,
-
-        `![Rewards flowchart](img/Rewards-Diagram.svg "Rewards flowchart")`
-
-        OR
-
-    +  using our custom `svg-card` css class; e.g.,
-
-        ````html
-        <figure class="svg-card">
-          <img src="img/RewardsTiming-Diagram.svg" alt="Rewards timeline">
-        </figure>
-        ````
-
-+  Each `.tex` file in the `build-tools/static/latex/` directory that should not be
-   converted to Markdown by the pipeline must be added to the `excluded_prefixes`
-   list in the `convert_all_static_tex` function of the Python script
-   `build-tools/scripts/md/modules/static_tex_processor.py`.
-
 
 ### Browsing the source code
 
@@ -349,10 +262,6 @@ nix build ./#fls-agdaWithPackages -o ~/ledger-agda
 Then make sure that the `~/ledger-agda/bin` directory is in your `PATH` when starting your editor.
 
 ---
-
-### Setting up multiple versions with `update-alternatives` (OPTIONAL)
-
-**For Linux users**.
 
 If you have `update-alternatives` installed, then, instead of creating a symlink from
 your home directory (or some other directory that's in your `PATH`) to our version of
@@ -518,8 +427,8 @@ your changes to the code will have on the appearance of the corresponding web pa
     [Building and viewing the formal specification][] section):
 
     ```bash
-    nix develop .#mkdocs
-    python build-tools/scripts/md/build.py --run-agda
+    nix develop
+    fls-shake mkdocs
     cd _build/md/mkdocs
     mkdocs serve
     ```
@@ -616,9 +525,6 @@ prefer not to use Nix.
     ```bash
     # Type-check the formal specification
     AGDA_DIR=LIB agda src/Everything.agda
-
-    # Build artifacts (requires fls-shake, see below)
-    AGDA_DIR=LIB fls-shake cardano-ledger.pdf
     ```
 
 ### Building fls-shake Without Nix
@@ -648,11 +554,8 @@ described in this subsection.
 3.  **Run fls-shake:**
 
     ```bash
-    # Build PDF documents
-    cabal run fls-shake -- -C '../..' cardano-ledger.pdf
-    cabal run fls-shake -- -C '../..' conway-ledger.pdf
-
     # Build HTML and Haskell outputs
+    cabal run fls-shake -- -C '../..' mkdocs
     cabal run fls-shake -- -C '../..' html
     cabal run fls-shake -- -C '../..' hs
     ```
@@ -664,25 +567,11 @@ described in this subsection.
 
 For non-Nix users, you'll also need to install the following:
 
-+  **LaTeX** (for PDF generation)
-
-   ```bash
-   # Ubuntu/Debian
-   sudo apt install texlive-full latexmk
-
-   # Or minimal installation
-   sudo apt install texlive-latex-extra latexmk
-   ```
-
 +  **Python and dependencies** (for documentation tools)
 
    ```bash
    pip install mkdocs mkdocs-material pymdown-extensions pyyaml
    ```
-
-+  **Other tools**
-
-   pandoc, basic utilities (cp, mkdir, etc.)
 
 ---
 
@@ -830,7 +719,7 @@ This repository is maintained by [@carlostome][], [@WhatisRT][], and [@williamde
 [New Issue]: https://github.com/IntersectMBO/formal-ledger-specifications/issues/new/choose
 [niv]: https://github.com/nmattia/niv
 [Nix]: https://nixos.org/
-[Nix flakes]: https://nixos.wiki/wiki/Flakes 
+[Nix flakes]: https://nixos.wiki/wiki/Flakes
 [Nix download instructions]: https://nixos.org/download/
 [official Haskell instructions]: https://www.haskell.org/downloads/
 [pandoc]: https://pandoc.org/
