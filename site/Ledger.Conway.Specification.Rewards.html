@@ -59,7 +59,7 @@
     
       <link rel="stylesheet" href="css/custom.css">
     
-      <link rel="stylesheet" href="css/Agda.css">
+      <link rel="stylesheet" href="Agda.css">
     
     <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
@@ -12674,7 +12674,7 @@
 
 
 
-  <a href="https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/src/Ledger/Conway/Specification/Rewards.lagda.md?plain=1"
+  <a href="https://github.com/IntersectMBO/formal-ledger-specifications/blob/main/docs/Ledger.Conway.Specification.Rewards.md?plain=1"
      class="md-content__button md-icon"
      title="View the source of this page"
      aria-label="View the source of this page">
@@ -13187,10 +13187,40 @@ entire system that can happen during one transition step as described in this do
 can move funds into “Reward accounts.”</p>
 <div class="admonition note">
 <p class="admonition-title">Potential flows of funds during one transition step</p>
-<p><a id="fig:rewards-flowchart"></a>
-<figure class="svg-card">
-  <img src="img/Rewards-Diagram.svg" alt="Rewards flowchart">
-</figure></p>
+<p><a id="fig:rewards-flowchart"></a></p>
+<pre class="mermaid"><code>graph TD
+  %% Nodes
+  C[Circulation]
+  D[Deposits]
+  FR[Fees]
+  R[Reserves]
+  RA[Reward accounts]
+  T[Treasury]
+  TP((rewardPot))
+
+  %% Direct Flows
+  C --&gt; D
+  D --&gt; C
+  C --&gt; FR
+  RA --&gt; C
+
+  %% Implied Flows
+  FR -.-&gt; T
+  FR -.-&gt; RA
+  R -.-&gt; T
+  R -.-&gt; RA
+
+  %% Reward Pot Flows
+  FR -- "-Δf" --&gt; TP
+  R -- "-Δr" --&gt; TP
+  TP -- "rs" --&gt; RA
+  TP -- "Δt" --&gt; T
+
+  %% Blue Implied (Indices 4, 5, 6, 7)
+  linkStyle 4,5,6,7 stroke:#448aff,stroke-width:2px;
+
+  %% Red toTotPot (Indices 8, 9, 10, 11)
+  linkStyle 8,9,10,11 stroke:#ff5252,stroke-width:2px;</code></pre>
 <p>Value flows between accounting pots, but the total amount of value in the system
 remains constant.  In particular, the red subgraph represents the inputs and outputs
 to the <code class="AgdaFunction">rewardPot</code>, a temporary variable used during the reward update
@@ -13218,24 +13248,24 @@ rewards.</p>
 <p><code class="AgdaField">pools</code>: A mapping that stores the pool parameters of each stake pool.</p>
 </li>
 </ul>
-<pre class="Agda"><a id="20282" class="Keyword">record</a> <a id="Snapshot"></a><a id="20289" href="Ledger.Conway.Specification.Rewards.html#20289" class="Record">Snapshot</a> <a id="20298" class="Symbol">:</a> <a id="20300" href="Agda.Primitive.html#388" class="Primitive">Set</a> <a id="20304" class="Keyword">where</a>
-  <a id="20312" class="Keyword">field</a>
-    <a id="Snapshot.stake"></a><a id="20322" href="Ledger.Conway.Specification.Rewards.html#20322" class="Field">stake</a>        <a id="20335" class="Symbol">:</a> <a id="20337" href="Ledger.Conway.Specification.Certs.html#1612" class="Function">Stake</a>
-    <a id="Snapshot.delegations"></a><a id="20347" href="Ledger.Conway.Specification.Rewards.html#20347" class="Field">delegations</a>  <a id="20360" class="Symbol">:</a> <a id="20362" href="Ledger.Conway.Specification.Certs.html#1652" class="Function">StakeDelegs</a>
-    <a id="Snapshot.pools"></a><a id="20378" href="Ledger.Conway.Specification.Rewards.html#20378" class="Field">pools</a>        <a id="20391" class="Symbol">:</a> <a id="20393" href="Ledger.Conway.Specification.Certs.html#1476" class="Function">Pools</a>
+<pre class="Agda"><a id="20860" class="Keyword">record</a> <a id="Snapshot"></a><a id="20867" href="Ledger.Conway.Specification.Rewards.html#20867" class="Record">Snapshot</a> <a id="20876" class="Symbol">:</a> <a id="20878" href="Agda.Primitive.html#388" class="Primitive">Set</a> <a id="20882" class="Keyword">where</a>
+  <a id="20890" class="Keyword">field</a>
+    <a id="Snapshot.stake"></a><a id="20900" href="Ledger.Conway.Specification.Rewards.html#20900" class="Field">stake</a>        <a id="20913" class="Symbol">:</a> <a id="20915" href="Ledger.Conway.Specification.Certs.html#1612" class="Function">Stake</a>
+    <a id="Snapshot.delegations"></a><a id="20925" href="Ledger.Conway.Specification.Rewards.html#20925" class="Field">delegations</a>  <a id="20938" class="Symbol">:</a> <a id="20940" href="Ledger.Conway.Specification.Certs.html#1652" class="Function">StakeDelegs</a>
+    <a id="Snapshot.pools"></a><a id="20956" href="Ledger.Conway.Specification.Rewards.html#20956" class="Field">pools</a>        <a id="20969" class="Symbol">:</a> <a id="20971" href="Ledger.Conway.Specification.Certs.html#1476" class="Function">Pools</a>
 </pre>
-<pre class="Agda hidden-source"><a id="20417" class="Keyword">instance</a>
-  <a id="HasStake-Snapshot"></a><a id="20428" href="Ledger.Conway.Specification.Rewards.html#20428" class="Function">HasStake-Snapshot</a> <a id="20446" class="Symbol">:</a> <a id="20448" href="Ledger.Conway.Specification.Certs.html#2066" class="Record">HasStake</a> <a id="20457" href="Ledger.Conway.Specification.Rewards.html#20289" class="Record">Snapshot</a>
-  <a id="20468" href="Ledger.Conway.Specification.Rewards.html#20428" class="Function">HasStake-Snapshot</a> <a id="20486" class="Symbol">.</a><a id="20487" href="Ledger.Conway.Specification.Certs.html#2115" class="Field">StakeOf</a> <a id="20495" class="Symbol">=</a> <a id="20497" href="Ledger.Conway.Specification.Rewards.html#20322" class="Field">Snapshot.stake</a>
+<pre class="Agda hidden-source"><a id="20995" class="Keyword">instance</a>
+  <a id="HasStake-Snapshot"></a><a id="21006" href="Ledger.Conway.Specification.Rewards.html#21006" class="Function">HasStake-Snapshot</a> <a id="21024" class="Symbol">:</a> <a id="21026" href="Ledger.Conway.Specification.Certs.html#2066" class="Record">HasStake</a> <a id="21035" href="Ledger.Conway.Specification.Rewards.html#20867" class="Record">Snapshot</a>
+  <a id="21046" href="Ledger.Conway.Specification.Rewards.html#21006" class="Function">HasStake-Snapshot</a> <a id="21064" class="Symbol">.</a><a id="21065" href="Ledger.Conway.Specification.Certs.html#2115" class="Field">StakeOf</a> <a id="21073" class="Symbol">=</a> <a id="21075" href="Ledger.Conway.Specification.Rewards.html#20900" class="Field">Snapshot.stake</a>
 
-  <a id="HasStakeDelegs-Snapshot"></a><a id="20515" href="Ledger.Conway.Specification.Rewards.html#20515" class="Function">HasStakeDelegs-Snapshot</a> <a id="20539" class="Symbol">:</a> <a id="20541" href="Ledger.Conway.Specification.Certs.html#2144" class="Record">HasStakeDelegs</a> <a id="20556" href="Ledger.Conway.Specification.Rewards.html#20289" class="Record">Snapshot</a>
-  <a id="20567" href="Ledger.Conway.Specification.Rewards.html#20515" class="Function">HasStakeDelegs-Snapshot</a> <a id="20591" class="Symbol">.</a><a id="20592" href="Ledger.Conway.Specification.Certs.html#2199" class="Field">StakeDelegsOf</a> <a id="20606" class="Symbol">=</a> <a id="20608" href="Ledger.Conway.Specification.Rewards.html#20347" class="Field">Snapshot.delegations</a>
+  <a id="HasStakeDelegs-Snapshot"></a><a id="21093" href="Ledger.Conway.Specification.Rewards.html#21093" class="Function">HasStakeDelegs-Snapshot</a> <a id="21117" class="Symbol">:</a> <a id="21119" href="Ledger.Conway.Specification.Certs.html#2144" class="Record">HasStakeDelegs</a> <a id="21134" href="Ledger.Conway.Specification.Rewards.html#20867" class="Record">Snapshot</a>
+  <a id="21145" href="Ledger.Conway.Specification.Rewards.html#21093" class="Function">HasStakeDelegs-Snapshot</a> <a id="21169" class="Symbol">.</a><a id="21170" href="Ledger.Conway.Specification.Certs.html#2199" class="Field">StakeDelegsOf</a> <a id="21184" class="Symbol">=</a> <a id="21186" href="Ledger.Conway.Specification.Rewards.html#20925" class="Field">Snapshot.delegations</a>
 
-  <a id="HasPools-Snapshot"></a><a id="20632" href="Ledger.Conway.Specification.Rewards.html#20632" class="Function">HasPools-Snapshot</a> <a id="20650" class="Symbol">:</a> <a id="20652" href="Ledger.Conway.Specification.Certs.html#1820" class="Record">HasPools</a> <a id="20661" href="Ledger.Conway.Specification.Rewards.html#20289" class="Record">Snapshot</a>
-  <a id="20672" href="Ledger.Conway.Specification.Rewards.html#20632" class="Function">HasPools-Snapshot</a> <a id="20690" class="Symbol">.</a><a id="20691" href="Ledger.Conway.Specification.Certs.html#1869" class="Field">PoolsOf</a> <a id="20699" class="Symbol">=</a> <a id="20701" href="Ledger.Conway.Specification.Rewards.html#20378" class="Field">Snapshot.pools</a>
+  <a id="HasPools-Snapshot"></a><a id="21210" href="Ledger.Conway.Specification.Rewards.html#21210" class="Function">HasPools-Snapshot</a> <a id="21228" class="Symbol">:</a> <a id="21230" href="Ledger.Conway.Specification.Certs.html#1820" class="Record">HasPools</a> <a id="21239" href="Ledger.Conway.Specification.Rewards.html#20867" class="Record">Snapshot</a>
+  <a id="21250" href="Ledger.Conway.Specification.Rewards.html#21210" class="Function">HasPools-Snapshot</a> <a id="21268" class="Symbol">.</a><a id="21269" href="Ledger.Conway.Specification.Certs.html#1869" class="Field">PoolsOf</a> <a id="21277" class="Symbol">=</a> <a id="21279" href="Ledger.Conway.Specification.Rewards.html#20956" class="Field">Snapshot.pools</a>
 
-  <a id="20719" class="Keyword">unquoteDecl</a> <a id="HasCast-Snapshot"></a><a id="20731" href="Ledger.Conway.Specification.Rewards.html#20731" class="Function">HasCast-Snapshot</a> <a id="20748" class="Symbol">=</a>
-    <a id="20754" href="stdlib-classes.Class.HasCast.Derive.html#2690" class="Function">derive-HasCast</a> <a id="20769" href="Data.List.Base.html#4907" class="Function Operator">[</a> <a id="20771" class="Symbol">(</a><a id="20772" class="Keyword">quote</a> <a id="20778" href="Ledger.Conway.Specification.Rewards.html#20289" class="Record">Snapshot</a> <a id="20787" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="20789" href="Ledger.Conway.Specification.Rewards.html#20731" class="Function">HasCast-Snapshot</a><a id="20805" class="Symbol">)</a> <a id="20807" href="Data.List.Base.html#4907" class="Function Operator">]</a>
+  <a id="21297" class="Keyword">unquoteDecl</a> <a id="HasCast-Snapshot"></a><a id="21309" href="Ledger.Conway.Specification.Rewards.html#21309" class="Function">HasCast-Snapshot</a> <a id="21326" class="Symbol">=</a>
+    <a id="21332" href="stdlib-classes.Class.HasCast.Derive.html#2690" class="Function">derive-HasCast</a> <a id="21347" href="Data.List.Base.html#4907" class="Function Operator">[</a> <a id="21349" class="Symbol">(</a><a id="21350" class="Keyword">quote</a> <a id="21356" href="Ledger.Conway.Specification.Rewards.html#20867" class="Record">Snapshot</a> <a id="21365" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="21367" href="Ledger.Conway.Specification.Rewards.html#21309" class="Function">HasCast-Snapshot</a><a id="21383" class="Symbol">)</a> <a id="21385" href="Data.List.Base.html#4907" class="Function Operator">]</a>
 </pre>
 
 <h3 id="functions-for-computing-stake-distributions">Functions for Computing Stake Distributions<a class="headerlink" href="#functions-for-computing-stake-distributions" title="Permanent link">&para;</a></h3>
@@ -13261,30 +13291,30 @@ contained in a ledger state.  Here,</p>
    plus the reward account balance.</p>
 </li>
 </ul>
-<pre class="Agda hidden-source"><a id="21622" class="Keyword">private</a>
-  <a id="getStakeCred"></a><a id="21632" href="Ledger.Conway.Specification.Rewards.html#21632" class="Function">getStakeCred</a> <a id="21645" class="Symbol">:</a> <a id="21647" href="Ledger.Conway.Specification.Transaction.html#4371" class="Function">TxOut</a> <a id="21653" class="Symbol">→</a> <a id="21655" href="Agda.Builtin.Maybe.html#135" class="Datatype">Maybe</a> <a id="21661" href="Ledger.Core.Specification.Address.html#1214" class="Datatype">Credential</a>
-  <a id="21674" href="Ledger.Conway.Specification.Rewards.html#21632" class="Function">getStakeCred</a> <a id="21687" class="Symbol">(</a><a id="21688" href="Ledger.Conway.Specification.Rewards.html#21688" class="Bound">a</a> <a id="21690" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="21692" class="Symbol">_</a> <a id="21694" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="21696" class="Symbol">_</a> <a id="21698" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="21700" class="Symbol">_)</a> <a id="21703" class="Symbol">=</a> <a id="21705" href="Ledger.Core.Specification.Address.html#4272" class="Function">stakeCred</a> <a id="21715" href="Ledger.Conway.Specification.Rewards.html#21688" class="Bound">a</a>
+<pre class="Agda hidden-source"><a id="22200" class="Keyword">private</a>
+  <a id="getStakeCred"></a><a id="22210" href="Ledger.Conway.Specification.Rewards.html#22210" class="Function">getStakeCred</a> <a id="22223" class="Symbol">:</a> <a id="22225" href="Ledger.Conway.Specification.Transaction.html#4371" class="Function">TxOut</a> <a id="22231" class="Symbol">→</a> <a id="22233" href="Agda.Builtin.Maybe.html#135" class="Datatype">Maybe</a> <a id="22239" href="Ledger.Core.Specification.Address.html#1214" class="Datatype">Credential</a>
+  <a id="22252" href="Ledger.Conway.Specification.Rewards.html#22210" class="Function">getStakeCred</a> <a id="22265" class="Symbol">(</a><a id="22266" href="Ledger.Conway.Specification.Rewards.html#22266" class="Bound">a</a> <a id="22268" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="22270" class="Symbol">_</a> <a id="22272" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="22274" class="Symbol">_</a> <a id="22276" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="22278" class="Symbol">_)</a> <a id="22281" class="Symbol">=</a> <a id="22283" href="Ledger.Core.Specification.Address.html#4272" class="Function">stakeCred</a> <a id="22293" href="Ledger.Conway.Specification.Rewards.html#22266" class="Bound">a</a>
 
-<a id="21718" class="Keyword">opaque</a>
+<a id="22296" class="Keyword">opaque</a>
 </pre>
 
-<pre class="Agda">  <a id="stakeDistr"></a><a id="21744" href="Ledger.Conway.Specification.Rewards.html#21744" class="Function">stakeDistr</a> <a id="21755" class="Symbol">:</a> <a id="21757" href="Ledger.Conway.Specification.Transaction.html#4449" class="Function">UTxO</a> <a id="21762" class="Symbol">→</a> <a id="21764" href="Ledger.Conway.Specification.Certs.html#4190" class="Record">DState</a> <a id="21771" class="Symbol">→</a> <a id="21773" href="Ledger.Conway.Specification.Certs.html#4372" class="Record">PState</a> <a id="21780" class="Symbol">→</a> <a id="21782" href="Ledger.Conway.Specification.Rewards.html#20289" class="Record">Snapshot</a>
-  <a id="21793" href="Ledger.Conway.Specification.Rewards.html#21744" class="Function">stakeDistr</a> <a id="21804" href="Ledger.Conway.Specification.Rewards.html#21804" class="Bound">utxo</a> <a id="21809" href="Ledger.Conway.Specification.Rewards.html#21809" class="Bound">dState</a> <a id="21816" href="Ledger.Conway.Specification.Rewards.html#21816" class="Bound">pState</a> <a id="21823" class="Symbol">=</a> <a class="AgdaKaTeX">$\begin{pmatrix} \,\href{Ledger.Conway.Specification.Rewards.html#22254}{\htmlId{21827}{\htmlClass{Function}{\text{activeStake}}}}\, \\ \,\href{Ledger.Conway.Specification.Certs.html#2199}{\htmlId{21841}{\htmlClass{Field}{\text{StakeDelegsOf}}}}\, \,\href{Ledger.Conway.Specification.Rewards.html#21809}{\htmlId{21855}{\htmlClass{Bound}{\text{dState}}}}\, \\ \,\href{Ledger.Conway.Specification.Rewards.html#21886}{\htmlId{21864}{\htmlClass{Function}{\text{pools}}}}\, \end{pmatrix}$</a>
-    <a id="21876" class="Keyword">where</a>
-    <a id="21886" href="Ledger.Conway.Specification.Rewards.html#21886" class="Function">pools</a> <a id="21892" class="Symbol">:</a> <a id="21894" href="Ledger.Conway.Specification.Certs.html#1476" class="Function">Pools</a>
-    <a id="21904" href="Ledger.Conway.Specification.Rewards.html#21886" class="Function">pools</a> <a id="21910" class="Symbol">=</a> <a id="21912" href="Ledger.Conway.Specification.Certs.html#1869" class="Field">PoolsOf</a> <a id="21920" href="Ledger.Conway.Specification.Rewards.html#21816" class="Bound">pState</a>
+<pre class="Agda">  <a id="stakeDistr"></a><a id="22322" href="Ledger.Conway.Specification.Rewards.html#22322" class="Function">stakeDistr</a> <a id="22333" class="Symbol">:</a> <a id="22335" href="Ledger.Conway.Specification.Transaction.html#4449" class="Function">UTxO</a> <a id="22340" class="Symbol">→</a> <a id="22342" href="Ledger.Conway.Specification.Certs.html#4190" class="Record">DState</a> <a id="22349" class="Symbol">→</a> <a id="22351" href="Ledger.Conway.Specification.Certs.html#4372" class="Record">PState</a> <a id="22358" class="Symbol">→</a> <a id="22360" href="Ledger.Conway.Specification.Rewards.html#20867" class="Record">Snapshot</a>
+  <a id="22371" href="Ledger.Conway.Specification.Rewards.html#22322" class="Function">stakeDistr</a> <a id="22382" href="Ledger.Conway.Specification.Rewards.html#22382" class="Bound">utxo</a> <a id="22387" href="Ledger.Conway.Specification.Rewards.html#22387" class="Bound">dState</a> <a id="22394" href="Ledger.Conway.Specification.Rewards.html#22394" class="Bound">pState</a> <a id="22401" class="Symbol">=</a> <a class="AgdaKaTeX">$\begin{pmatrix} \,\href{Ledger.Conway.Specification.Rewards.html#22832}{\htmlId{22405}{\htmlClass{Function}{\text{activeStake}}}}\, \\ \,\href{Ledger.Conway.Specification.Certs.html#2199}{\htmlId{22419}{\htmlClass{Field}{\text{StakeDelegsOf}}}}\, \,\href{Ledger.Conway.Specification.Rewards.html#22387}{\htmlId{22433}{\htmlClass{Bound}{\text{dState}}}}\, \\ \,\href{Ledger.Conway.Specification.Rewards.html#22464}{\htmlId{22442}{\htmlClass{Function}{\text{pools}}}}\, \end{pmatrix}$</a>
+    <a id="22454" class="Keyword">where</a>
+    <a id="22464" href="Ledger.Conway.Specification.Rewards.html#22464" class="Function">pools</a> <a id="22470" class="Symbol">:</a> <a id="22472" href="Ledger.Conway.Specification.Certs.html#1476" class="Function">Pools</a>
+    <a id="22482" href="Ledger.Conway.Specification.Rewards.html#22464" class="Function">pools</a> <a id="22488" class="Symbol">=</a> <a id="22490" href="Ledger.Conway.Specification.Certs.html#1869" class="Field">PoolsOf</a> <a id="22498" href="Ledger.Conway.Specification.Rewards.html#22394" class="Bound">pState</a>
 
-    <a id="21932" href="Ledger.Conway.Specification.Rewards.html#21932" class="Function">utxoBalance</a> <a id="21944" class="Symbol">:</a> <a id="21946" href="Ledger.Core.Specification.Address.html#1214" class="Datatype">Credential</a> <a id="21957" class="Symbol">→</a> <a id="21959" href="Ledger.Prelude.Base.html#234" class="Function">Coin</a>
-    <a id="21968" href="Ledger.Conway.Specification.Rewards.html#21932" class="Function">utxoBalance</a> <a id="21980" class="Symbol">=</a> <a id="21982" class="Symbol">λ</a> <a id="21984" href="Ledger.Conway.Specification.Rewards.html#21984" class="Bound">cred</a> <a id="21989" class="Symbol">→</a> <a id="21991" href="Ledger.Conway.Specification.Utxo.html#5018" class="Function">cbalance</a> <a id="22000" class="Symbol">(</a><a id="22001" href="Ledger.Conway.Specification.Rewards.html#21804" class="Bound">utxo</a> <a id="22006" href="abstract-set-theory.FiniteSetTheory.html#4295" class="Function Operator">∣^&#39;</a> <a id="22010" class="Symbol">λ</a> <a id="22012" href="Ledger.Conway.Specification.Rewards.html#22012" class="Bound">txout</a> <a id="22018" class="Symbol">→</a> <a id="22020" href="Ledger.Conway.Specification.Rewards.html#21632" class="Function">getStakeCred</a> <a id="22033" href="Ledger.Conway.Specification.Rewards.html#22012" class="Bound">txout</a> <a id="22039" href="Agda.Builtin.Equality.html#150" class="Datatype Operator">≡</a> <a id="22041" href="Agda.Builtin.Maybe.html#173" class="InductiveConstructor">just</a> <a id="22046" href="Ledger.Conway.Specification.Rewards.html#21984" class="Bound">cred</a><a id="22050" class="Symbol">)</a>
+    <a id="22510" href="Ledger.Conway.Specification.Rewards.html#22510" class="Function">utxoBalance</a> <a id="22522" class="Symbol">:</a> <a id="22524" href="Ledger.Core.Specification.Address.html#1214" class="Datatype">Credential</a> <a id="22535" class="Symbol">→</a> <a id="22537" href="Ledger.Prelude.Base.html#234" class="Function">Coin</a>
+    <a id="22546" href="Ledger.Conway.Specification.Rewards.html#22510" class="Function">utxoBalance</a> <a id="22558" class="Symbol">=</a> <a id="22560" class="Symbol">λ</a> <a id="22562" href="Ledger.Conway.Specification.Rewards.html#22562" class="Bound">cred</a> <a id="22567" class="Symbol">→</a> <a id="22569" href="Ledger.Conway.Specification.Utxo.html#5018" class="Function">cbalance</a> <a id="22578" class="Symbol">(</a><a id="22579" href="Ledger.Conway.Specification.Rewards.html#22382" class="Bound">utxo</a> <a id="22584" href="abstract-set-theory.FiniteSetTheory.html#4295" class="Function Operator">∣^&#39;</a> <a id="22588" class="Symbol">λ</a> <a id="22590" href="Ledger.Conway.Specification.Rewards.html#22590" class="Bound">txout</a> <a id="22596" class="Symbol">→</a> <a id="22598" href="Ledger.Conway.Specification.Rewards.html#22210" class="Function">getStakeCred</a> <a id="22611" href="Ledger.Conway.Specification.Rewards.html#22590" class="Bound">txout</a> <a id="22617" href="Agda.Builtin.Equality.html#150" class="Datatype Operator">≡</a> <a id="22619" href="Agda.Builtin.Maybe.html#173" class="InductiveConstructor">just</a> <a id="22624" href="Ledger.Conway.Specification.Rewards.html#22562" class="Bound">cred</a><a id="22628" class="Symbol">)</a>
 
-    <a id="22057" href="Ledger.Conway.Specification.Rewards.html#22057" class="Function">activeDelegs</a> <a id="22070" class="Symbol">:</a> <a id="22072" href="Ledger.Conway.Specification.Certs.html#1652" class="Function">StakeDelegs</a>
-    <a id="22088" href="Ledger.Conway.Specification.Rewards.html#22057" class="Function">activeDelegs</a> <a id="22101" class="Symbol">=</a> <a id="22103" class="Symbol">(</a><a id="22104" href="Ledger.Conway.Specification.Certs.html#2199" class="Field">StakeDelegsOf</a> <a id="22118" href="Ledger.Conway.Specification.Rewards.html#21809" class="Bound">dState</a> <a id="22125" href="Axiom.Set.Map.html#13536" class="Function Operator">∣</a> <a id="22127" href="Class.IsSet.html#916" class="Function">dom</a> <a id="22131" class="Symbol">(</a><a id="22132" href="Ledger.Conway.Specification.Certs.html#2034" class="Field">RewardsOf</a> <a id="22142" href="Ledger.Conway.Specification.Rewards.html#21809" class="Bound">dState</a><a id="22148" class="Symbol">))</a> <a id="22151" href="Axiom.Set.Map.html#17775" class="Function Operator">∣^</a> <a id="22154" href="Class.IsSet.html#916" class="Function">dom</a> <a id="22158" href="Ledger.Conway.Specification.Rewards.html#21886" class="Function">pools</a>
+    <a id="22635" href="Ledger.Conway.Specification.Rewards.html#22635" class="Function">activeDelegs</a> <a id="22648" class="Symbol">:</a> <a id="22650" href="Ledger.Conway.Specification.Certs.html#1652" class="Function">StakeDelegs</a>
+    <a id="22666" href="Ledger.Conway.Specification.Rewards.html#22635" class="Function">activeDelegs</a> <a id="22679" class="Symbol">=</a> <a id="22681" class="Symbol">(</a><a id="22682" href="Ledger.Conway.Specification.Certs.html#2199" class="Field">StakeDelegsOf</a> <a id="22696" href="Ledger.Conway.Specification.Rewards.html#22387" class="Bound">dState</a> <a id="22703" href="Axiom.Set.Map.html#13536" class="Function Operator">∣</a> <a id="22705" href="Class.IsSet.html#916" class="Function">dom</a> <a id="22709" class="Symbol">(</a><a id="22710" href="Ledger.Conway.Specification.Certs.html#2034" class="Field">RewardsOf</a> <a id="22720" href="Ledger.Conway.Specification.Rewards.html#22387" class="Bound">dState</a><a id="22726" class="Symbol">))</a> <a id="22729" href="Axiom.Set.Map.html#17775" class="Function Operator">∣^</a> <a id="22732" href="Class.IsSet.html#916" class="Function">dom</a> <a id="22736" href="Ledger.Conway.Specification.Rewards.html#22464" class="Function">pools</a>
 
-    <a id="22169" href="Ledger.Conway.Specification.Rewards.html#22169" class="Function">activeRewards</a> <a id="22183" class="Symbol">:</a> <a id="22185" href="Ledger.Conway.Specification.Certs.html#1568" class="Function">Rewards</a>
-    <a id="22197" href="Ledger.Conway.Specification.Rewards.html#22169" class="Function">activeRewards</a> <a id="22211" class="Symbol">=</a> <a id="22213" href="Ledger.Conway.Specification.Certs.html#2034" class="Field">RewardsOf</a> <a id="22223" href="Ledger.Conway.Specification.Rewards.html#21809" class="Bound">dState</a> <a id="22230" href="Axiom.Set.Map.html#13536" class="Function Operator">∣</a> <a id="22232" href="Class.IsSet.html#916" class="Function">dom</a> <a id="22236" href="Ledger.Conway.Specification.Rewards.html#22057" class="Function">activeDelegs</a>
+    <a id="22747" href="Ledger.Conway.Specification.Rewards.html#22747" class="Function">activeRewards</a> <a id="22761" class="Symbol">:</a> <a id="22763" href="Ledger.Conway.Specification.Certs.html#1568" class="Function">Rewards</a>
+    <a id="22775" href="Ledger.Conway.Specification.Rewards.html#22747" class="Function">activeRewards</a> <a id="22789" class="Symbol">=</a> <a id="22791" href="Ledger.Conway.Specification.Certs.html#2034" class="Field">RewardsOf</a> <a id="22801" href="Ledger.Conway.Specification.Rewards.html#22387" class="Bound">dState</a> <a id="22808" href="Axiom.Set.Map.html#13536" class="Function Operator">∣</a> <a id="22810" href="Class.IsSet.html#916" class="Function">dom</a> <a id="22814" href="Ledger.Conway.Specification.Rewards.html#22635" class="Function">activeDelegs</a>
 
-    <a id="22254" href="Ledger.Conway.Specification.Rewards.html#22254" class="Function">activeStake</a> <a id="22266" class="Symbol">:</a> <a id="22268" href="Ledger.Conway.Specification.Certs.html#1612" class="Function">Stake</a>
-    <a id="22278" href="Ledger.Conway.Specification.Rewards.html#22254" class="Function">activeStake</a> <a id="22290" class="Symbol">=</a> <a id="22292" href="Axiom.Set.Map.html#11564" class="Function">mapWithKey</a> <a id="22303" class="Symbol">(λ</a> <a id="22306" href="Ledger.Conway.Specification.Rewards.html#22306" class="Bound">c</a> <a id="22308" href="Ledger.Conway.Specification.Rewards.html#22308" class="Bound">rewardBalance</a> <a id="22322" class="Symbol">→</a> <a id="22324" href="Ledger.Conway.Specification.Rewards.html#21932" class="Function">utxoBalance</a> <a id="22336" href="Ledger.Conway.Specification.Rewards.html#22306" class="Bound">c</a> <a id="22338" href="Class.HasAdd.Core.html#162" class="Field Operator">+</a> <a id="22340" href="Ledger.Conway.Specification.Rewards.html#22308" class="Bound">rewardBalance</a><a id="22353" class="Symbol">)</a> <a id="22355" href="Ledger.Conway.Specification.Rewards.html#22169" class="Function">activeRewards</a>
+    <a id="22832" href="Ledger.Conway.Specification.Rewards.html#22832" class="Function">activeStake</a> <a id="22844" class="Symbol">:</a> <a id="22846" href="Ledger.Conway.Specification.Certs.html#1612" class="Function">Stake</a>
+    <a id="22856" href="Ledger.Conway.Specification.Rewards.html#22832" class="Function">activeStake</a> <a id="22868" class="Symbol">=</a> <a id="22870" href="Axiom.Set.Map.html#11564" class="Function">mapWithKey</a> <a id="22881" class="Symbol">(λ</a> <a id="22884" href="Ledger.Conway.Specification.Rewards.html#22884" class="Bound">c</a> <a id="22886" href="Ledger.Conway.Specification.Rewards.html#22886" class="Bound">rewardBalance</a> <a id="22900" class="Symbol">→</a> <a id="22902" href="Ledger.Conway.Specification.Rewards.html#22510" class="Function">utxoBalance</a> <a id="22914" href="Ledger.Conway.Specification.Rewards.html#22884" class="Bound">c</a> <a id="22916" href="Class.HasAdd.Core.html#162" class="Field Operator">+</a> <a id="22918" href="Ledger.Conway.Specification.Rewards.html#22886" class="Bound">rewardBalance</a><a id="22931" class="Symbol">)</a> <a id="22933" href="Ledger.Conway.Specification.Rewards.html#22747" class="Function">activeRewards</a>
 </pre>
 
 <h2 id="sec:timing-of-rewards-payout">Timing of Rewards Payout<a class="headerlink" href="#sec:timing-of-rewards-payout" title="Permanent link">&para;</a></h2>
@@ -13302,7 +13332,7 @@ previous epoch has become stable.  An epoch is also long enough for human users 
 react to parameter changes, such as stake pool costs or performance.  But an epoch is
 also short enough so that changes to the stake distribution will be reflected in block
 production within a reasonable time frame.</p>
-<p>The rewards for the blocks produced during a given epoch <span class="arithmatex">\(e_i\)</span> involve the two epochs
+<p>The rewards for the blocks produced during a given epoch e<sub>i</sub> involve the two epochs
 surrounding it.  In particular, the stake distribution will come from the previous
 epoch and the rewards will be calculated in the following epoch.  At each epoch
 boundary, one snapshot of the stake distribution is taken; changes to the stake
@@ -13310,17 +13340,17 @@ distribution within an epoch are not considered until the next snapshot is taken
 More concretely:</p>
 <ol>
 <li>
-<p>A stake distribution snapshot is taken at the begining of epoch <span class="arithmatex">\(e_{i-1}\)</span>.</p>
+<p>A stake distribution snapshot is taken at the begining of epoch e<sub>i-1</sub>.</p>
 </li>
 <li>
-<p>The randomness for leader election is fixed during epoch <span class="arithmatex">\(e_{i-1}\)</span></p>
+<p>The randomness for leader election is fixed during epoch e<sub>i-1</sub></p>
 </li>
 <li>
-<p>Epoch <span class="arithmatex">\(e_{i}\)</span> begins, blocks are produced using the snapshot taken at (A).</p>
+<p>Epoch e<sub>i</sub> begins, blocks are produced using the snapshot taken at (A).</p>
 </li>
 <li>
-<p>Epoch <span class="arithmatex">\(e_{i}\)</span> ends.  A snapshot is taken of the stake pool performance during
-    epoch <span class="arithmatex">\(e_{i}\)</span>. A snapshot is also taken of the fee pot.</p>
+<p>Epoch e<sub>i</sub> ends.  A snapshot is taken of the stake pool performance during
+    epoch e<sub>i</sub>. A snapshot is also taken of the fee pot.</p>
 </li>
 <li>
 <p>The snapshots from (D) are stable and the reward calculation can begin.</p>
@@ -13335,17 +13365,37 @@ More concretely:</p>
 </ol>
 <div class="admonition note">
 <p class="admonition-title">Timeline of the rewards calculation</p>
-<p>The snapshot taken at (A) is labeled “mark” during epoch <span class="arithmatex">\(e_{i-1}\)</span>, “set” during
-epoch <span class="arithmatex">\(e_i\)</span> and “go” during epoch <span class="arithmatex">\(e_{i+1}\)</span>.  At (G) the snapshot taken at (A) is
+<p>The snapshot taken at (A) is labeled “mark” during epoch e<sub>i-1</sub>, “set” during
+epoch e<sub>i</sub> and “go” during epoch e<sub>i+1</sub>.  At (G) the snapshot taken at (A) is
 no longer needed and will be discarded.</p>
 <p><a id="fig:reward-timing"></a>
-<figure class="svg-card">
-  <img src="img/RewardsTiming-Diagram.svg" alt="Rewards timeline">
-</figure></p>
+<pre class="mermaid"><code>flowchart LR
+  A[A] --&gt; B[B]
+  B --&gt; C[C]
+  C --&gt; D[D]
+  D --&gt; E[E]
+  E --&gt; F[F]
+  F --&gt; G[G]
+
+  subgraph e_im1["e&lt;sub&gt;i-1&lt;/sub&gt;"]
+    A
+    B
+  end
+
+  subgraph ei["e&lt;sub&gt;i&lt;/sub&gt;"]
+    C
+    D
+  end
+
+  subgraph e_ip1["e&lt;sub&gt;i+1&lt;/sub&gt;"]
+    E
+    F
+    G
+  end</code></pre></p>
 <p><strong>N.B.</strong>  Between time D and E we are concerned with chain growth and stability.
-Therefore this duration can be stated as 2k blocks (to state it in slots requires
+Therefore this duration can be stated as <span class="arithmatex">\(2k\)</span> blocks (to state it in slots requires
 details about the particular version of the Ouroboros protocol). The duration
-between F and G is also 2k blocks.  Between E and F a single honest block is
+between F and G is also <span class="arithmatex">\(2k\)</span> blocks.  Between E and F a single honest block is
 enough to ensure a random nonce.</p>
 </div>
 <p>In order to specify this logic, we store the last three snapshots of the stake
@@ -13394,21 +13444,21 @@ needs to be saved at the end of an epoch.  This relevant data are:</p>
    from the fee pot on the epoch boundary.</p>
 </li>
 </ul>
-<pre class="Agda"><a id="27847" class="Keyword">record</a> <a id="Snapshots"></a><a id="27854" href="Ledger.Conway.Specification.Rewards.html#27854" class="Record">Snapshots</a> <a id="27864" class="Symbol">:</a> <a id="27866" href="Agda.Primitive.html#388" class="Primitive">Set</a> <a id="27870" class="Keyword">where</a>
-  <a id="27878" class="Keyword">field</a>
-    <a id="Snapshots.mark"></a><a id="27888" href="Ledger.Conway.Specification.Rewards.html#27888" class="Field">mark</a> <a id="Snapshots.set"></a><a id="27893" href="Ledger.Conway.Specification.Rewards.html#27893" class="Field">set</a> <a id="Snapshots.go"></a><a id="27897" href="Ledger.Conway.Specification.Rewards.html#27897" class="Field">go</a>  <a id="27901" class="Symbol">:</a> <a id="27903" href="Ledger.Conway.Specification.Rewards.html#20289" class="Record">Snapshot</a>
-    <a id="Snapshots.feeSS"></a><a id="27916" href="Ledger.Conway.Specification.Rewards.html#27916" class="Field">feeSS</a>        <a id="27929" class="Symbol">:</a> <a id="27931" href="Ledger.Prelude.Base.html#266" class="Function">Fees</a>
+<pre class="Agda"><a id="28735" class="Keyword">record</a> <a id="Snapshots"></a><a id="28742" href="Ledger.Conway.Specification.Rewards.html#28742" class="Record">Snapshots</a> <a id="28752" class="Symbol">:</a> <a id="28754" href="Agda.Primitive.html#388" class="Primitive">Set</a> <a id="28758" class="Keyword">where</a>
+  <a id="28766" class="Keyword">field</a>
+    <a id="Snapshots.mark"></a><a id="28776" href="Ledger.Conway.Specification.Rewards.html#28776" class="Field">mark</a> <a id="Snapshots.set"></a><a id="28781" href="Ledger.Conway.Specification.Rewards.html#28781" class="Field">set</a> <a id="Snapshots.go"></a><a id="28785" href="Ledger.Conway.Specification.Rewards.html#28785" class="Field">go</a>  <a id="28789" class="Symbol">:</a> <a id="28791" href="Ledger.Conway.Specification.Rewards.html#20867" class="Record">Snapshot</a>
+    <a id="Snapshots.feeSS"></a><a id="28804" href="Ledger.Conway.Specification.Rewards.html#28804" class="Field">feeSS</a>        <a id="28817" class="Symbol">:</a> <a id="28819" href="Ledger.Prelude.Base.html#266" class="Function">Fees</a>
 </pre>
-<pre class="Agda hidden-source"><a id="27954" class="Keyword">record</a> <a id="HasSnapshots"></a><a id="27961" href="Ledger.Conway.Specification.Rewards.html#27961" class="Record">HasSnapshots</a> <a id="27974" class="Symbol">{</a><a id="27975" href="Ledger.Conway.Specification.Rewards.html#27975" class="Bound">a</a><a id="27976" class="Symbol">}</a> <a id="27978" class="Symbol">(</a><a id="27979" href="Ledger.Conway.Specification.Rewards.html#27979" class="Bound">A</a> <a id="27981" class="Symbol">:</a> <a id="27983" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="27988" href="Ledger.Conway.Specification.Rewards.html#27975" class="Bound">a</a><a id="27989" class="Symbol">)</a> <a id="27991" class="Symbol">:</a> <a id="27993" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="27998" href="Ledger.Conway.Specification.Rewards.html#27975" class="Bound">a</a> <a id="28000" class="Keyword">where</a>
-  <a id="28008" class="Keyword">field</a> <a id="HasSnapshots.SnapshotsOf"></a><a id="28014" href="Ledger.Conway.Specification.Rewards.html#28014" class="Field">SnapshotsOf</a> <a id="28026" class="Symbol">:</a> <a id="28028" href="Ledger.Conway.Specification.Rewards.html#27979" class="Bound">A</a> <a id="28030" class="Symbol">→</a> <a id="28032" href="Ledger.Conway.Specification.Rewards.html#27854" class="Record">Snapshots</a>
-<a id="28042" class="Keyword">open</a> <a id="28047" href="Ledger.Conway.Specification.Rewards.html#27961" class="Module">HasSnapshots</a> <a id="28060" class="Symbol">⦃...⦄</a> <a id="28066" class="Keyword">public</a>
+<pre class="Agda hidden-source"><a id="28842" class="Keyword">record</a> <a id="HasSnapshots"></a><a id="28849" href="Ledger.Conway.Specification.Rewards.html#28849" class="Record">HasSnapshots</a> <a id="28862" class="Symbol">{</a><a id="28863" href="Ledger.Conway.Specification.Rewards.html#28863" class="Bound">a</a><a id="28864" class="Symbol">}</a> <a id="28866" class="Symbol">(</a><a id="28867" href="Ledger.Conway.Specification.Rewards.html#28867" class="Bound">A</a> <a id="28869" class="Symbol">:</a> <a id="28871" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="28876" href="Ledger.Conway.Specification.Rewards.html#28863" class="Bound">a</a><a id="28877" class="Symbol">)</a> <a id="28879" class="Symbol">:</a> <a id="28881" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="28886" href="Ledger.Conway.Specification.Rewards.html#28863" class="Bound">a</a> <a id="28888" class="Keyword">where</a>
+  <a id="28896" class="Keyword">field</a> <a id="HasSnapshots.SnapshotsOf"></a><a id="28902" href="Ledger.Conway.Specification.Rewards.html#28902" class="Field">SnapshotsOf</a> <a id="28914" class="Symbol">:</a> <a id="28916" href="Ledger.Conway.Specification.Rewards.html#28867" class="Bound">A</a> <a id="28918" class="Symbol">→</a> <a id="28920" href="Ledger.Conway.Specification.Rewards.html#28742" class="Record">Snapshots</a>
+<a id="28930" class="Keyword">open</a> <a id="28935" href="Ledger.Conway.Specification.Rewards.html#28849" class="Module">HasSnapshots</a> <a id="28948" class="Symbol">⦃...⦄</a> <a id="28954" class="Keyword">public</a>
 
-<a id="28074" class="Keyword">instance</a>
-  <a id="HasFees-Snapshots"></a><a id="28085" href="Ledger.Conway.Specification.Rewards.html#28085" class="Function">HasFees-Snapshots</a> <a id="28103" class="Symbol">:</a> <a id="28105" href="Ledger.Prelude.Base.html#717" class="Record">HasFees</a> <a id="28113" href="Ledger.Conway.Specification.Rewards.html#27854" class="Record">Snapshots</a>
-  <a id="28125" href="Ledger.Conway.Specification.Rewards.html#28085" class="Function">HasFees-Snapshots</a> <a id="28143" class="Symbol">.</a><a id="28144" href="Ledger.Prelude.Base.html#765" class="Field">FeesOf</a> <a id="28151" class="Symbol">=</a> <a id="28153" href="Ledger.Conway.Specification.Rewards.html#27916" class="Field">Snapshots.feeSS</a>
+<a id="28962" class="Keyword">instance</a>
+  <a id="HasFees-Snapshots"></a><a id="28973" href="Ledger.Conway.Specification.Rewards.html#28973" class="Function">HasFees-Snapshots</a> <a id="28991" class="Symbol">:</a> <a id="28993" href="Ledger.Prelude.Base.html#717" class="Record">HasFees</a> <a id="29001" href="Ledger.Conway.Specification.Rewards.html#28742" class="Record">Snapshots</a>
+  <a id="29013" href="Ledger.Conway.Specification.Rewards.html#28973" class="Function">HasFees-Snapshots</a> <a id="29031" class="Symbol">.</a><a id="29032" href="Ledger.Prelude.Base.html#765" class="Field">FeesOf</a> <a id="29039" class="Symbol">=</a> <a id="29041" href="Ledger.Conway.Specification.Rewards.html#28804" class="Field">Snapshots.feeSS</a>
 
-  <a id="28172" class="Keyword">unquoteDecl</a> <a id="HasCast-Snapshots"></a><a id="28184" href="Ledger.Conway.Specification.Rewards.html#28184" class="Function">HasCast-Snapshots</a> <a id="28202" class="Symbol">=</a>
-    <a id="28208" href="stdlib-classes.Class.HasCast.Derive.html#2690" class="Function">derive-HasCast</a> <a id="28223" href="Data.List.Base.html#4907" class="Function Operator">[</a> <a id="28225" class="Symbol">(</a><a id="28226" class="Keyword">quote</a> <a id="28232" href="Ledger.Conway.Specification.Rewards.html#27854" class="Record">Snapshots</a> <a id="28242" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="28244" href="Ledger.Conway.Specification.Rewards.html#28184" class="Function">HasCast-Snapshots</a><a id="28261" class="Symbol">)</a> <a id="28263" href="Data.List.Base.html#4907" class="Function Operator">]</a>
+  <a id="29060" class="Keyword">unquoteDecl</a> <a id="HasCast-Snapshots"></a><a id="29072" href="Ledger.Conway.Specification.Rewards.html#29072" class="Function">HasCast-Snapshots</a> <a id="29090" class="Symbol">=</a>
+    <a id="29096" href="stdlib-classes.Class.HasCast.Derive.html#2690" class="Function">derive-HasCast</a> <a id="29111" href="Data.List.Base.html#4907" class="Function Operator">[</a> <a id="29113" class="Symbol">(</a><a id="29114" class="Keyword">quote</a> <a id="29120" href="Ledger.Conway.Specification.Rewards.html#28742" class="Record">Snapshots</a> <a id="29130" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="29132" href="Ledger.Conway.Specification.Rewards.html#29072" class="Function">HasCast-Snapshots</a><a id="29149" class="Symbol">)</a> <a id="29151" href="Data.List.Base.html#4907" class="Function Operator">]</a>
 </pre>
 
 <h3 id="sec:snap-transition-system">The <span class="AgdaDatatype">SNAP</span> Transition System<a class="headerlink" href="#sec:snap-transition-system" title="Permanent link">&para;</a></h3>
@@ -13428,16 +13478,16 @@ needs to be saved at the end of an epoch.  This relevant data are:</p>
    not change during the epoch, unlike the <code class="AgdaField">fees</code> value in the UTxO state.</p>
 </li>
 </ul>
-<pre class="Agda hidden-source"><a id="28836" class="Keyword">private</a> <a id="28844" class="Keyword">variable</a>
-  <a id="28855" href="Ledger.Conway.Specification.Rewards.html#28855" class="Generalizable">ls</a> <a id="28858" class="Symbol">:</a> <a id="28860" href="Ledger.Conway.Specification.Ledger.html#1329" class="Record">LState</a>
-  <a id="28869" href="Ledger.Conway.Specification.Rewards.html#28869" class="Generalizable">mark</a> <a id="28874" href="Ledger.Conway.Specification.Rewards.html#28874" class="Generalizable">set</a> <a id="28878" href="Ledger.Conway.Specification.Rewards.html#28878" class="Generalizable">go</a> <a id="28881" class="Symbol">:</a> <a id="28883" href="Ledger.Conway.Specification.Rewards.html#20289" class="Record">Snapshot</a>
-  <a id="28894" href="Ledger.Conway.Specification.Rewards.html#28894" class="Generalizable">feeSS</a> <a id="28900" class="Symbol">:</a> <a id="28902" href="Ledger.Prelude.Base.html#234" class="Function">Coin</a>
+<pre class="Agda hidden-source"><a id="29724" class="Keyword">private</a> <a id="29732" class="Keyword">variable</a>
+  <a id="29743" href="Ledger.Conway.Specification.Rewards.html#29743" class="Generalizable">ls</a> <a id="29746" class="Symbol">:</a> <a id="29748" href="Ledger.Conway.Specification.Ledger.html#1329" class="Record">LState</a>
+  <a id="29757" href="Ledger.Conway.Specification.Rewards.html#29757" class="Generalizable">mark</a> <a id="29762" href="Ledger.Conway.Specification.Rewards.html#29762" class="Generalizable">set</a> <a id="29766" href="Ledger.Conway.Specification.Rewards.html#29766" class="Generalizable">go</a> <a id="29769" class="Symbol">:</a> <a id="29771" href="Ledger.Conway.Specification.Rewards.html#20867" class="Record">Snapshot</a>
+  <a id="29782" href="Ledger.Conway.Specification.Rewards.html#29782" class="Generalizable">feeSS</a> <a id="29788" class="Symbol">:</a> <a id="29790" href="Ledger.Prelude.Base.html#234" class="Function">Coin</a>
 </pre>
 
-<pre class="Agda"><a id="28924" class="Keyword">data</a> <a id="_⊢_⇀⦇_,SNAP⦈_"></a><a id="28929" href="Ledger.Conway.Specification.Rewards.html#28929" class="Datatype Operator">_⊢_⇀⦇_,SNAP⦈_</a> <a id="28943" class="Symbol">:</a> <a id="28945" href="Ledger.Conway.Specification.Ledger.html#1329" class="Record">LState</a> <a id="28952" class="Symbol">→</a> <a id="28954" href="Ledger.Conway.Specification.Rewards.html#27854" class="Record">Snapshots</a> <a id="28964" class="Symbol">→</a> <a id="28966" href="Agda.Builtin.Unit.html#175" class="Record">⊤</a> <a id="28968" class="Symbol">→</a> <a id="28970" href="Ledger.Conway.Specification.Rewards.html#27854" class="Record">Snapshots</a> <a id="28980" class="Symbol">→</a> <a id="28982" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="28987" class="Keyword">where</a>
-  <a id="_⊢_⇀⦇_,SNAP⦈_.SNAP"></a><a id="28995" href="Ledger.Conway.Specification.Rewards.html#28995" class="InductiveConstructor">SNAP</a> <a id="29000" class="Symbol">:</a>
-    <a id="29006" class="Keyword">let</a> <a id="29010" href="Ledger.Conway.Specification.Rewards.html#29010" class="Bound">stake</a> <a id="29016" class="Symbol">=</a> <a id="29018" href="Ledger.Conway.Specification.Rewards.html#21744" class="Function">stakeDistr</a> <a id="29029" class="Symbol">(</a><a id="29030" href="Ledger.Conway.Specification.Transaction.html#4688" class="Field">UTxOOf</a> <a id="29037" href="Ledger.Conway.Specification.Rewards.html#28855" class="Generalizable">ls</a><a id="29039" class="Symbol">)</a> <a id="29041" class="Symbol">(</a><a id="29042" href="Ledger.Conway.Specification.Certs.html#4996" class="Field">DStateOf</a> <a id="29051" href="Ledger.Conway.Specification.Rewards.html#28855" class="Generalizable">ls</a><a id="29053" class="Symbol">)</a> <a id="29055" class="Symbol">(</a><a id="29056" href="Ledger.Conway.Specification.Certs.html#5104" class="Field">PStateOf</a> <a id="29065" href="Ledger.Conway.Specification.Rewards.html#28855" class="Generalizable">ls</a><a id="29067" class="Symbol">)</a> <a id="29069" class="Keyword">in</a>
-    <a id="29076" href="Ledger.Conway.Specification.Rewards.html#28855" class="Generalizable">ls</a> <a id="29079" href="Ledger.Conway.Specification.Rewards.html#28929" class="Datatype Operator">⊢</a> <a class="AgdaKaTeX">$\begin{pmatrix} \,\href{Ledger.Conway.Specification.Rewards.html#28869}{\htmlId{29083}{\htmlClass{Generalizable}{\text{mark}}}}\, \\ \,\href{Ledger.Conway.Specification.Rewards.html#28874}{\htmlId{29090}{\htmlClass{Generalizable}{\text{set}}}}\, \\ \,\href{Ledger.Conway.Specification.Rewards.html#28878}{\htmlId{29096}{\htmlClass{Generalizable}{\text{go}}}}\, \\ \,\href{Ledger.Conway.Specification.Rewards.html#28894}{\htmlId{29101}{\htmlClass{Generalizable}{\text{feeSS}}}}\, \end{pmatrix}$</a> <a id="29109" href="Ledger.Conway.Specification.Rewards.html#28929" class="Datatype Operator">⇀⦇</a> <a id="29112" href="Agda.Builtin.Unit.html#212" class="InductiveConstructor">tt</a> <a id="29115" href="Ledger.Conway.Specification.Rewards.html#28929" class="Datatype Operator">,SNAP⦈</a> <a class="AgdaKaTeX">$\begin{pmatrix} \,\href{Ledger.Conway.Specification.Rewards.html#29010}{\htmlId{29124}{\htmlClass{Bound}{\text{stake}}}}\, \\ \,\href{Ledger.Conway.Specification.Rewards.html#28869}{\htmlId{29132}{\htmlClass{Generalizable}{\text{mark}}}}\, \\ \,\href{Ledger.Conway.Specification.Rewards.html#28874}{\htmlId{29139}{\htmlClass{Generalizable}{\text{set}}}}\, \\ \,\href{Ledger.Prelude.Base.html#765}{\htmlId{29145}{\htmlClass{Field}{\text{FeesOf}}}}\, \,\href{Ledger.Conway.Specification.Rewards.html#28855}{\htmlId{29152}{\htmlClass{Generalizable}{\text{ls}}}}\, \end{pmatrix}$</a>
+<pre class="Agda"><a id="29812" class="Keyword">data</a> <a id="_⊢_⇀⦇_,SNAP⦈_"></a><a id="29817" href="Ledger.Conway.Specification.Rewards.html#29817" class="Datatype Operator">_⊢_⇀⦇_,SNAP⦈_</a> <a id="29831" class="Symbol">:</a> <a id="29833" href="Ledger.Conway.Specification.Ledger.html#1329" class="Record">LState</a> <a id="29840" class="Symbol">→</a> <a id="29842" href="Ledger.Conway.Specification.Rewards.html#28742" class="Record">Snapshots</a> <a id="29852" class="Symbol">→</a> <a id="29854" href="Agda.Builtin.Unit.html#175" class="Record">⊤</a> <a id="29856" class="Symbol">→</a> <a id="29858" href="Ledger.Conway.Specification.Rewards.html#28742" class="Record">Snapshots</a> <a id="29868" class="Symbol">→</a> <a id="29870" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="29875" class="Keyword">where</a>
+  <a id="_⊢_⇀⦇_,SNAP⦈_.SNAP"></a><a id="29883" href="Ledger.Conway.Specification.Rewards.html#29883" class="InductiveConstructor">SNAP</a> <a id="29888" class="Symbol">:</a>
+    <a id="29894" class="Keyword">let</a> <a id="29898" href="Ledger.Conway.Specification.Rewards.html#29898" class="Bound">stake</a> <a id="29904" class="Symbol">=</a> <a id="29906" href="Ledger.Conway.Specification.Rewards.html#22322" class="Function">stakeDistr</a> <a id="29917" class="Symbol">(</a><a id="29918" href="Ledger.Conway.Specification.Transaction.html#4688" class="Field">UTxOOf</a> <a id="29925" href="Ledger.Conway.Specification.Rewards.html#29743" class="Generalizable">ls</a><a id="29927" class="Symbol">)</a> <a id="29929" class="Symbol">(</a><a id="29930" href="Ledger.Conway.Specification.Certs.html#4996" class="Field">DStateOf</a> <a id="29939" href="Ledger.Conway.Specification.Rewards.html#29743" class="Generalizable">ls</a><a id="29941" class="Symbol">)</a> <a id="29943" class="Symbol">(</a><a id="29944" href="Ledger.Conway.Specification.Certs.html#5104" class="Field">PStateOf</a> <a id="29953" href="Ledger.Conway.Specification.Rewards.html#29743" class="Generalizable">ls</a><a id="29955" class="Symbol">)</a> <a id="29957" class="Keyword">in</a>
+    <a id="29964" href="Ledger.Conway.Specification.Rewards.html#29743" class="Generalizable">ls</a> <a id="29967" href="Ledger.Conway.Specification.Rewards.html#29817" class="Datatype Operator">⊢</a> <a class="AgdaKaTeX">$\begin{pmatrix} \,\href{Ledger.Conway.Specification.Rewards.html#29757}{\htmlId{29971}{\htmlClass{Generalizable}{\text{mark}}}}\, \\ \,\href{Ledger.Conway.Specification.Rewards.html#29762}{\htmlId{29978}{\htmlClass{Generalizable}{\text{set}}}}\, \\ \,\href{Ledger.Conway.Specification.Rewards.html#29766}{\htmlId{29984}{\htmlClass{Generalizable}{\text{go}}}}\, \\ \,\href{Ledger.Conway.Specification.Rewards.html#29782}{\htmlId{29989}{\htmlClass{Generalizable}{\text{feeSS}}}}\, \end{pmatrix}$</a> <a id="29997" href="Ledger.Conway.Specification.Rewards.html#29817" class="Datatype Operator">⇀⦇</a> <a id="30000" href="Agda.Builtin.Unit.html#212" class="InductiveConstructor">tt</a> <a id="30003" href="Ledger.Conway.Specification.Rewards.html#29817" class="Datatype Operator">,SNAP⦈</a> <a class="AgdaKaTeX">$\begin{pmatrix} \,\href{Ledger.Conway.Specification.Rewards.html#29898}{\htmlId{30012}{\htmlClass{Bound}{\text{stake}}}}\, \\ \,\href{Ledger.Conway.Specification.Rewards.html#29757}{\htmlId{30020}{\htmlClass{Generalizable}{\text{mark}}}}\, \\ \,\href{Ledger.Conway.Specification.Rewards.html#29762}{\htmlId{30027}{\htmlClass{Generalizable}{\text{set}}}}\, \\ \,\href{Ledger.Prelude.Base.html#765}{\htmlId{30033}{\htmlClass{Field}{\text{FeesOf}}}}\, \,\href{Ledger.Conway.Specification.Rewards.html#29743}{\htmlId{30040}{\htmlClass{Generalizable}{\text{ls}}}}\, \end{pmatrix}$</a>
 </pre>
 <h1 class="unnumbered" id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h1>
 <p><strong>[Team18]</strong> <span id="shelley-delegation-design"
@@ -13450,9 +13500,6 @@ Deliverable SL-D1</em>. 2018.</p>
 
 
 
-
-  
-  
 
 
 
@@ -13544,6 +13591,8 @@ Deliverable SL-D1</em>. 2018.</p>
         <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
       
         <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+      
+        <script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
       
         <script src="js/katex-config.js"></script>
       

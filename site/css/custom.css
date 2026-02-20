@@ -296,6 +296,7 @@ body.reveal-agda-source pre.Agda.hidden-source {
 /* Tiny color swatch for figure legends                                    */
 /* ======================================================================= */
 /* legend boxes */
+
 .legend-box {
   display: inline-block;
   width: 1em;
@@ -304,24 +305,6 @@ body.reveal-agda-source pre.Agda.hidden-source {
   vertical-align: middle;
   border: 1px solid #333; /* optional border */
 }
-
-/* Map your LaTeX xcolor names */
-.legend-Alonzo { background-color: #CCCCFF; }   /* Periwinkle */
-.legend-Babbage { background-color: #db9470; }  /* Tan */
-.legend-Conway { background-color: #ffff80; }   /* yellow!50 ≈ 50% mix with white */
-.legend-Shelley { background-color: #D3D3D3; }  /* lightgray */
-
-/* Using these color classes in Markdown
-
-   MkDocs/Markdown allows inline HTML, so in your `.md` file you can write:
-   ```markdown
-    **Legend:**
-    <span class="legend-box legend-Alonzo"></span> Alonzo
-    <span class="legend-box legend-Babbage"></span> Babbage
-    <span class="legend-box legend-Conway"></span> Conway
-    <span class="legend-box legend-Shelley"></span> Shelley
-   ```
-*/
 
 /* A soft panel behind transparent SVGs */
 .svg-card {
