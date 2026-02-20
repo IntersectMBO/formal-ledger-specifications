@@ -18,6 +18,21 @@ let
       hpack,
       makeWrapper,
     }:
+    let
+      binDeps = [
+        fls-agda
+        hpack
+        (python3.withPackages (
+          ps: with ps; [
+            mkdocs
+            mkdocs-material
+            pymdown-extensions
+            pyyaml
+            pybtex
+          ]
+        ))
+      ];
+    in
     mkDerivation {
       pname = "fls-shake";
       version = "0.0.0.1";
@@ -36,6 +51,7 @@ let
         split
         text
       ];
+      executableSystemDepends = binDeps;
       executableToolDepends = [
         makeWrapper
       ];
@@ -43,21 +59,7 @@ let
       mainProgram = "fls-shake";
       postFixup = ''
         wrapProgram $out/bin/fls-shake \
-          --prefix PATH : ${
-            lib.makeBinPath [
-              fls-agda
-              hpack
-              (python3.withPackages (
-                ps: with ps; [
-                  mkdocs
-                  mkdocs-material
-                  pymdown-extensions
-                  pyyaml
-                  pybtex
-                ]
-              ))
-            ]
-          }
+          --prefix PATH : ${lib.makeBinPath binDeps}
       '';
     };
 in

@@ -52,12 +52,6 @@
             builtins.filter (p: p ? isAgdaDerivation) formal-ledger.buildInputs
           );
 
-          hs-src = pkgs.callPackage ./build-tools/nix/hs-src.nix { inherit mkDerivation; };
-
-          cardano-ledger-executable-spec = pkgs.haskell.lib.compose.disableLibraryProfiling (
-            pkgs.haskellPackages.callCabal2nix "cardano-ledger-executable-spec" "${hs-src}/hs" { }
-          );
-
           fls-shake-agdaWithPackages = self'.packages.fls-shake.override (_: {
             fls-agda = fls-agdaWithPackages;
           });
@@ -68,10 +62,10 @@
               default = {
                 version = "0.1";
                 meta = args.meta or { };
-                buildInputs = (args.buildInputs or [ ]) ++ [
+                nativeBuildInputs = (args.nativeBuildInputs or [ ]) ++ [
                   formal-ledger
-                  fls-agdaWithPackages
                   fls-shake-agdaWithPackages
+                  pkgs.cowsay
                 ];
                 copyAgdaBuild = ''
                   cp -r "${formal-ledger}/_build" .
@@ -83,18 +77,20 @@
             in
             pkgs.stdenv.mkDerivation (args // default);
 
+          hs-src = pkgs.callPackage ./build-tools/nix/hs-src.nix { inherit mkDerivation; };
+
+          cardano-ledger-executable-spec = pkgs.haskell.lib.compose.disableLibraryProfiling (
+            pkgs.haskellPackages.callCabal2nix "cardano-ledger-executable-spec" "${hs-src}/hs" { }
+          );
+
           pkgs' = {
             inherit
               formal-ledger
-              fls-shake-agdaWithPackages
               hs-src
               cardano-ledger-executable-spec
               ;
             html = pkgs.callPackage ./build-tools/nix/html.nix { inherit mkDerivation; };
-            mkdocs = pkgs.callPackage ./build-tools/nix/mkdocs.nix {
-              inherit (pkgs.stdenv) mkDerivation;
-              inherit fls-agdaWithPackages;
-            };
+            mkdocs = pkgs.callPackage ./build-tools/nix/mkdocs.nix { inherit mkDerivation; };
           };
         in
         {
@@ -113,29 +109,18 @@
           packages = pkgs' // {
             default = formal-ledger;
             inherit fls-agdaWithPackages;
+            inherit fls-shake-agdaWithPackages;
           };
 
           devShells = with pkgs; {
 
             default = mkShell {
-              inputsFrom = builtins.attrValues (removeAttrs pkgs' [ "cardano-ledger-executable-spec" ]);
+              inputsFrom = builtins.attrValues (builtins.removeAttrs pkgs' [ "cardano-ledger-executable-spec" ]);
             };
 
             fls-shake-agdaWithPackages = self'.devShells.fls-shake.overrideAttrs (_: {
               packages = [ fls-shake-agdaWithPackages ];
             });
-
-            ci = mkShell {
-              packages = [
-                fls-shake-agdaWithPackages
-              ];
-            };
-
-            mkdocs = mkShell {
-              inputsFrom = [
-                mkdocs
-              ];
-            };
           };
 
         };
