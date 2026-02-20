@@ -1,5 +1,5 @@
 ---
-source_path: build-tools/static/md/mkdocs/docs/Notation.md
+source_path: build-tools/static/mkdocs/docs/Notation.md
 ---
 
 # Notation {#sec:notation}

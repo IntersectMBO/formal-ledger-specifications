@@ -13,8 +13,7 @@ mkDerivation {
     root = ../../.;
     fileset = lib.fileset.unions [
       ../../README.md
-      ../static/md/mkdocs
-      ../static/latex
+      ../static/mkdocs
       ../../src
       ../../formal-ledger.agda-lib
       ../../src-lib-exts

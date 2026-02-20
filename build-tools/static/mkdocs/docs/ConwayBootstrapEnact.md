@@ -1,5 +1,5 @@
 ---
-source_path: build-tools/static/md/mkdocs/docs/ConwayBootstrapEnact.md
+source_path: build-tools/static/mkdocs/docs/ConwayBootstrapEnact.md
 ---
 
 # Bootstrapping EnactState {#sec:conway-bootstrap-enact}
