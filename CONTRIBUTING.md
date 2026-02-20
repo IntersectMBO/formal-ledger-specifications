@@ -227,7 +227,7 @@ There are two ways to do this.
     ```bash
     nix develop
     fls-shake mkdocs
-    cd _build/md/mkdocs
+    cd _build/mkdocs
     mkdocs serve
     ```
 
@@ -429,7 +429,7 @@ your changes to the code will have on the appearance of the corresponding web pa
     ```bash
     nix develop
     fls-shake mkdocs
-    cd _build/md/mkdocs
+    cd _build/mkdocs
     mkdocs serve
     ```
 2.  In another terminal window, enter the default Nix shell with `nix develop` and then

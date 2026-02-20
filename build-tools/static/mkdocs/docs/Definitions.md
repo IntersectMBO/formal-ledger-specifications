@@ -1,5 +1,5 @@
 ---
-source_path: build-tools/static/md/mkdocs/docs/Definitions.md
+source_path: build-tools/static/mkdocs/docs/Definitions.md
 ---
 
 # Definitions {#sec:definitions}

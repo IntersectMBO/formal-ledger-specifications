@@ -1,5 +1,5 @@
 ---
-source_path: build-tools/static/md/common/src/EarlierEras.md
+source_path: build-tools/static/mkdocs/docs/EarlierEras.md
 ---
 
 

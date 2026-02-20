@@ -86,9 +86,7 @@
           pkgs' = {
             inherit
               formal-ledger
-              fls-shake-agdaWithPackages
               hs-src
-              cardano-ledger-executable-spec
               ;
             html = pkgs.callPackage ./build-tools/nix/html.nix { inherit mkDerivation; };
             mkdocs = pkgs.callPackage ./build-tools/nix/mkdocs.nix { inherit mkDerivation; };
@@ -109,14 +107,17 @@
 
           packages = pkgs' // {
             default = formal-ledger;
-            inherit fls-agdaWithPackages;
-            inherit fls-shake-agdaWithPackages;
+            inherit
+              fls-agdaWithPackages
+              fls-shake-agdaWithPackages
+              cardano-ledger-executable-spec
+              ;
           };
 
           devShells = with pkgs; {
 
             default = mkShell {
-              inputsFrom = builtins.attrValues (builtins.removeAttrs pkgs' [ "cardano-ledger-executable-spec" ]);
+              inputsFrom = builtins.attrValues pkgs';
             };
 
             fls-shake-agdaWithPackages = self'.devShells.fls-shake.overrideAttrs (_: {

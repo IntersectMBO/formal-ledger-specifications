@@ -1,5 +1,5 @@
 ---
-source_path: build-tools/static/md/mkdocs/docs/ConwayBootstrap.md
+source_path: build-tools/static/mkdocs/docs/ConwayBootstrap.md
 ---
 
 
