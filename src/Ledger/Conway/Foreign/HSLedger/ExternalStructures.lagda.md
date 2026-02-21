@@ -13,6 +13,11 @@ open import Ledger.Core.Specification.Crypto
 open import Ledger.Core.Specification.Epoch
 open import Ledger.Conway.Foreign.HSLedger.Core
 import Data.Fin
+import Data.List.Sort
+open import Data.Nat.Instances using (ℕ-≤-isDecTotalOrder)
+open import Relation.Binary.Bundles
+open import Data.Product.Relation.Binary.Lex.NonStrict using (×-isDecTotalOrder)
+open import Data.Sum.Relation.Binary.LeftOrder using (⊎-<-isDecTotalOrder)
 
 HSGlobalConstants = GlobalConstants ∋ record {Implementation}
 instance
@@ -126,7 +131,16 @@ instance
     ; indexOfImp  = record
       { indexOfDCert          =
           λ x xs → Data.Fin.toℕ <$> findIndexᵇ (_== x) xs
-      ; indexOfRewardAddress  = λ _ _ → nothing
+      ; indexOfRewardAddress  =
+          λ x xs →
+            Data.Fin.toℕ <$>
+            findIndexᵇ
+              (_== rewardAddressToSOP x)
+              (Data.List.Sort.sort
+                DecTotalOrder-RewardAddressSOP
+                (setToList $ mapˢ rewardAddressToSOP $ dom xs)
+              )
+
       ; indexOfTxIn           = λ _ _ → nothing
       ; indexOfPolicyId       = λ _ _ → nothing
       ; indexOfVote           = λ _ _ → nothing
@@ -142,6 +156,21 @@ instance
     ; epochInfoSlotToUTCTime = λ _ → just 0
     ; transVITime = λ _ → tt
     }
+   where
+    rewardAddressToSOP : RewardAddress → Network × (KeyHash ⊎ ScriptHash)
+    rewardAddressToSOP ra@(RewardAddress.constructor n (KeyHashObj k)) =
+      (n , inj₁ k)
+    rewardAddressToSOP ra@(RewardAddress.constructor n (ScriptObj s)) =
+      (n , inj₂ s)
+
+    DecTotalOrder-RewardAddressSOP : DecTotalOrder _ _ _
+    DecTotalOrder-RewardAddressSOP = record
+      { isDecTotalOrder =
+          ×-isDecTotalOrder
+            ℕ-≤-isDecTotalOrder
+            (⊎-<-isDecTotalOrder ℕ-≤-isDecTotalOrder ℕ-≤-isDecTotalOrder)
+      }
+
 
 open import Ledger.Core.Specification.Address Network KeyHash ScriptHash using () public
 ```
