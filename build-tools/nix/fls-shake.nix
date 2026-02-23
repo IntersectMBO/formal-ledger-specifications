@@ -50,8 +50,8 @@ let
         shake
         split
         text
-      ];
-      executableSystemDepends = binDeps;
+      ]
+      ++ binDeps;
       executableToolDepends = [
         makeWrapper
       ];
