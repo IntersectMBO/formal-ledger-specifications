@@ -318,6 +318,7 @@ library
       MAlonzo.Code.Data.Nat.GCD.Lemmas
       MAlonzo.Code.Data.Nat.GeneralisedArithmetic
       MAlonzo.Code.Data.Nat.Induction
+      MAlonzo.Code.Data.Nat.Instances
       MAlonzo.Code.Data.Nat.ListAction
       MAlonzo.Code.Data.Nat.ListAction.Properties
       MAlonzo.Code.Data.Nat.Literals
@@ -336,6 +337,8 @@ library
       MAlonzo.Code.Data.Product.Nary.NonDependent
       MAlonzo.Code.Data.Product.Properties
       MAlonzo.Code.Data.Product.Properties.Ext
+      MAlonzo.Code.Data.Product.Relation.Binary.Lex.NonStrict
+      MAlonzo.Code.Data.Product.Relation.Binary.Lex.Strict
       MAlonzo.Code.Data.Product.Relation.Binary.Pointwise.NonDependent
       MAlonzo.Code.Data.Product.Relation.Unary.All
       MAlonzo.Code.Data.Rational
@@ -362,6 +365,7 @@ library
       MAlonzo.Code.Data.Sum.Function.Propositional
       MAlonzo.Code.Data.Sum.Function.Setoid
       MAlonzo.Code.Data.Sum.Properties
+      MAlonzo.Code.Data.Sum.Relation.Binary.LeftOrder
       MAlonzo.Code.Data.Sum.Relation.Binary.Pointwise
       MAlonzo.Code.Data.Sum.Relation.Unary.All
       MAlonzo.Code.Data.These

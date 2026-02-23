@@ -34,11 +34,13 @@ import qualified MAlonzo.Code.Class.Decidable.Core
 import qualified MAlonzo.Code.Class.HasAdd.Core
 import qualified MAlonzo.Code.Data.List.Base
 import qualified MAlonzo.Code.Data.List.Relation.Unary.Any
+import qualified MAlonzo.Code.Data.Maybe.Properties
 import qualified MAlonzo.Code.Data.Nat.Properties
 import qualified MAlonzo.Code.Data.Product.Nary.NonDependent
 import qualified MAlonzo.Code.Data.Product.Properties
 import qualified MAlonzo.Code.Data.Rational.Base
 import qualified MAlonzo.Code.Data.Refinement.Base
+import qualified MAlonzo.Code.Data.String.Properties
 import qualified MAlonzo.Code.Data.Sum.Base
 import qualified MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions
 import qualified MAlonzo.Code.Ledger.Conway.Specification.Gov.Base
@@ -1005,18 +1007,1316 @@ data T_DCert_1340
                        MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20) |
     C_reg_1356 MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20
                Integer
+-- Ledger.Conway.Specification.Certs.DecEq-StakePoolParams
+d_DecEq'45'StakePoolParams_1358 ::
+  MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.T_GovStructure_10 ->
+  MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
+d_DecEq'45'StakePoolParams_1358 v0
+  = coe
+      MAlonzo.Code.Class.DecEq.Core.C_constructor_32
+      (coe
+         (\ v1 ->
+            case coe v1 of
+              C_constructor_1170 v2 v3 v4 v5 v6
+                -> coe
+                     (\ v7 ->
+                        case coe v7 of
+                          C_constructor_1170 v8 v9 v10 v11 v12
+                            -> let v13
+                                     = coe
+                                         MAlonzo.Code.Class.DecEq.Core.d__'8799'__16
+                                         (coe
+                                            MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.du_DecEq'45'ℙ_1244
+                                            (coe
+                                               MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
+                                               (coe
+                                                  MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_206
+                                                  (coe
+                                                     MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.d_cryptoStructure_616
+                                                     (coe v0)))))
+                                         v2 v8 in
+                               coe
+                                 (case coe v13 of
+                                    MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v14 v15
+                                      -> if coe v14
+                                           then let v16
+                                                      = MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796
+                                                          (coe v3) (coe v9) in
+                                                coe
+                                                  (case coe v16 of
+                                                     MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v17 v18
+                                                       -> if coe v17
+                                                            then let v19
+                                                                       = coe
+                                                                           MAlonzo.Code.Class.DecEq.Core.d__'8799'__16
+                                                                           MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℚ_34
+                                                                           (MAlonzo.Code.Data.Refinement.Base.d_value_38
+                                                                              (coe v4))
+                                                                           (MAlonzo.Code.Data.Refinement.Base.d_value_38
+                                                                              (coe v10)) in
+                                                                 coe
+                                                                   (case coe v19 of
+                                                                      MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v20 v21
+                                                                        -> if coe v20
+                                                                             then let v22
+                                                                                        = seq
+                                                                                            (coe
+                                                                                               v21)
+                                                                                            (coe
+                                                                                               MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                                                                                               (coe
+                                                                                                  v20)
+                                                                                               (coe
+                                                                                                  MAlonzo.Code.Relation.Nullary.Reflects.C_of'696'_22
+                                                                                                  erased)) in
+                                                                                  coe
+                                                                                    (case coe v22 of
+                                                                                       MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v23 v24
+                                                                                         -> if coe
+                                                                                                 v23
+                                                                                              then let v25
+                                                                                                         = MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796
+                                                                                                             (coe
+                                                                                                                v5)
+                                                                                                             (coe
+                                                                                                                v11) in
+                                                                                                   coe
+                                                                                                     (case coe
+                                                                                                             v25 of
+                                                                                                        MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v26 v27
+                                                                                                          -> if coe
+                                                                                                                  v26
+                                                                                                               then let v28
+                                                                                                                          = coe
+                                                                                                                              MAlonzo.Code.Class.DecEq.Core.d__'8799'__16
+                                                                                                                              (coe
+                                                                                                                                 MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_284
+                                                                                                                                 (coe
+                                                                                                                                    MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
+                                                                                                                                    (coe
+                                                                                                                                       MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_206
+                                                                                                                                       (coe
+                                                                                                                                          MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.d_cryptoStructure_616
+                                                                                                                                          (coe
+                                                                                                                                             v0))))
+                                                                                                                                 (coe
+                                                                                                                                    MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_210
+                                                                                                                                    (coe
+                                                                                                                                       MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.d_cryptoStructure_616
+                                                                                                                                       (coe
+                                                                                                                                          v0))))
+                                                                                                                              v6
+                                                                                                                              v12 in
+                                                                                                                    coe
+                                                                                                                      (case coe
+                                                                                                                              v28 of
+                                                                                                                         MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v29 v30
+                                                                                                                           -> if coe
+                                                                                                                                   v29
+                                                                                                                                then coe
+                                                                                                                                       MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                                                                                                                                       (coe
+                                                                                                                                          v29)
+                                                                                                                                       (coe
+                                                                                                                                          MAlonzo.Code.Relation.Nullary.Reflects.C_of'696'_22
+                                                                                                                                          erased)
+                                                                                                                                else coe
+                                                                                                                                       MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                                                                                                                                       (coe
+                                                                                                                                          v29)
+                                                                                                                                       (coe
+                                                                                                                                          MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
+                                                                                                                         _ -> MAlonzo.RTE.mazUnreachableError)
+                                                                                                               else coe
+                                                                                                                      MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                                                                                                                      (coe
+                                                                                                                         v26)
+                                                                                                                      (coe
+                                                                                                                         MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
+                                                                                                        _ -> MAlonzo.RTE.mazUnreachableError)
+                                                                                              else coe
+                                                                                                     MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                                                                                                     (coe
+                                                                                                        v23)
+                                                                                                     (coe
+                                                                                                        MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
+                                                                                       _ -> MAlonzo.RTE.mazUnreachableError)
+                                                                             else (let v22
+                                                                                         = seq
+                                                                                             (coe
+                                                                                                v21)
+                                                                                             (coe
+                                                                                                MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                                                                                                (coe
+                                                                                                   v20)
+                                                                                                (coe
+                                                                                                   MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)) in
+                                                                                   coe
+                                                                                     (case coe
+                                                                                             v22 of
+                                                                                        MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v23 v24
+                                                                                          -> if coe
+                                                                                                  v23
+                                                                                               then let v25
+                                                                                                          = MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796
+                                                                                                              (coe
+                                                                                                                 v5)
+                                                                                                              (coe
+                                                                                                                 v11) in
+                                                                                                    coe
+                                                                                                      (case coe
+                                                                                                              v25 of
+                                                                                                         MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v26 v27
+                                                                                                           -> if coe
+                                                                                                                   v26
+                                                                                                                then let v28
+                                                                                                                           = coe
+                                                                                                                               MAlonzo.Code.Class.DecEq.Core.d__'8799'__16
+                                                                                                                               (coe
+                                                                                                                                  MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_284
+                                                                                                                                  (coe
+                                                                                                                                     MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
+                                                                                                                                     (coe
+                                                                                                                                        MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_206
+                                                                                                                                        (coe
+                                                                                                                                           MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.d_cryptoStructure_616
+                                                                                                                                           (coe
+                                                                                                                                              v0))))
+                                                                                                                                  (coe
+                                                                                                                                     MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_210
+                                                                                                                                     (coe
+                                                                                                                                        MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.d_cryptoStructure_616
+                                                                                                                                        (coe
+                                                                                                                                           v0))))
+                                                                                                                               v6
+                                                                                                                               v12 in
+                                                                                                                     coe
+                                                                                                                       (case coe
+                                                                                                                               v28 of
+                                                                                                                          MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v29 v30
+                                                                                                                            -> if coe
+                                                                                                                                    v29
+                                                                                                                                 then coe
+                                                                                                                                        MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                                                                                                                                        (coe
+                                                                                                                                           v29)
+                                                                                                                                        (coe
+                                                                                                                                           MAlonzo.Code.Relation.Nullary.Reflects.C_of'696'_22
+                                                                                                                                           erased)
+                                                                                                                                 else coe
+                                                                                                                                        MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                                                                                                                                        (coe
+                                                                                                                                           v29)
+                                                                                                                                        (coe
+                                                                                                                                           MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
+                                                                                                                          _ -> MAlonzo.RTE.mazUnreachableError)
+                                                                                                                else coe
+                                                                                                                       MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                                                                                                                       (coe
+                                                                                                                          v26)
+                                                                                                                       (coe
+                                                                                                                          MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
+                                                                                                         _ -> MAlonzo.RTE.mazUnreachableError)
+                                                                                               else coe
+                                                                                                      MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                                                                                                      (coe
+                                                                                                         v23)
+                                                                                                      (coe
+                                                                                                         MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
+                                                                                        _ -> MAlonzo.RTE.mazUnreachableError))
+                                                                      _ -> MAlonzo.RTE.mazUnreachableError)
+                                                            else coe
+                                                                   MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                                                                   (coe v17)
+                                                                   (coe
+                                                                      MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
+                                                     _ -> MAlonzo.RTE.mazUnreachableError)
+                                           else coe
+                                                  MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                                                  (coe v14)
+                                                  (coe
+                                                     MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
+                                    _ -> MAlonzo.RTE.mazUnreachableError)
+                          _ -> MAlonzo.RTE.mazUnreachableError)
+              _ -> MAlonzo.RTE.mazUnreachableError))
+-- Ledger.Conway.Specification.Certs.DecEq-DCert
+d_DecEq'45'DCert_1360 ::
+  MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.T_GovStructure_10 ->
+  MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
+d_DecEq'45'DCert_1360 v0
+  = coe
+      MAlonzo.Code.Class.DecEq.Core.C_constructor_32
+      (coe
+         (\ v1 ->
+            case coe v1 of
+              C_delegate_1342 v2 v3 v4 v5
+                -> coe
+                     (\ v6 ->
+                        case coe v6 of
+                          C_delegate_1342 v7 v8 v9 v10
+                            -> let v11
+                                     = coe
+                                         MAlonzo.Code.Class.DecEq.Core.d__'8799'__16
+                                         (coe
+                                            MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_284
+                                            (coe
+                                               MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
+                                               (coe
+                                                  MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_206
+                                                  (coe
+                                                     MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.d_cryptoStructure_616
+                                                     (coe v0))))
+                                            (coe
+                                               MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_210
+                                               (coe
+                                                  MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.d_cryptoStructure_616
+                                                  (coe v0))))
+                                         v2 v7 in
+                               coe
+                                 (case coe v11 of
+                                    MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v12 v13
+                                      -> if coe v12
+                                           then let v14
+                                                      = coe
+                                                          MAlonzo.Code.Data.Maybe.Properties.du_'8801''45'dec_24
+                                                          (coe
+                                                             MAlonzo.Code.Class.DecEq.Core.d__'8799'__16
+                                                             (coe
+                                                                MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_DecEq'45'VDeleg_1218
+                                                                (coe v0)))
+                                                          (coe v3) (coe v8) in
+                                                coe
+                                                  (case coe v14 of
+                                                     MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v15 v16
+                                                       -> if coe v15
+                                                            then let v17
+                                                                       = coe
+                                                                           MAlonzo.Code.Data.Maybe.Properties.du_'8801''45'dec_24
+                                                                           (coe
+                                                                              MAlonzo.Code.Class.DecEq.Core.d__'8799'__16
+                                                                              (coe
+                                                                                 MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
+                                                                                 (coe
+                                                                                    MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_206
+                                                                                    (coe
+                                                                                       MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.d_cryptoStructure_616
+                                                                                       (coe v0)))))
+                                                                           (coe v4) (coe v9) in
+                                                                 coe
+                                                                   (case coe v17 of
+                                                                      MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v18 v19
+                                                                        -> if coe v18
+                                                                             then let v20
+                                                                                        = MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796
+                                                                                            (coe v5)
+                                                                                            (coe
+                                                                                               v10) in
+                                                                                  coe
+                                                                                    (case coe v20 of
+                                                                                       MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v21 v22
+                                                                                         -> if coe
+                                                                                                 v21
+                                                                                              then coe
+                                                                                                     MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                                                                                                     (coe
+                                                                                                        v21)
+                                                                                                     (coe
+                                                                                                        MAlonzo.Code.Relation.Nullary.Reflects.C_of'696'_22
+                                                                                                        erased)
+                                                                                              else coe
+                                                                                                     MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                                                                                                     (coe
+                                                                                                        v21)
+                                                                                                     (coe
+                                                                                                        MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
+                                                                                       _ -> MAlonzo.RTE.mazUnreachableError)
+                                                                             else coe
+                                                                                    MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                                                                                    (coe v18)
+                                                                                    (coe
+                                                                                       MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
+                                                                      _ -> MAlonzo.RTE.mazUnreachableError)
+                                                            else coe
+                                                                   MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                                                                   (coe v15)
+                                                                   (coe
+                                                                      MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
+                                                     _ -> MAlonzo.RTE.mazUnreachableError)
+                                           else coe
+                                                  MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                                                  (coe v12)
+                                                  (coe
+                                                     MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
+                                    _ -> MAlonzo.RTE.mazUnreachableError)
+                          C_dereg_1344 v7 v8
+                            -> coe
+                                 MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                                 (coe MAlonzo.Code.Agda.Builtin.Bool.C_false_8)
+                                 (coe MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
+                          C_regpool_1346 v7 v8
+                            -> coe
+                                 MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                                 (coe MAlonzo.Code.Agda.Builtin.Bool.C_false_8)
+                                 (coe MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
+                          C_retirepool_1348 v7 v8
+                            -> coe
+                                 MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                                 (coe MAlonzo.Code.Agda.Builtin.Bool.C_false_8)
+                                 (coe MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
+                          C_regdrep_1350 v7 v8 v9
+                            -> coe
+                                 MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                                 (coe MAlonzo.Code.Agda.Builtin.Bool.C_false_8)
+                                 (coe MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
+                          C_deregdrep_1352 v7 v8
+                            -> coe
+                                 MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                                 (coe MAlonzo.Code.Agda.Builtin.Bool.C_false_8)
+                                 (coe MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
+                          C_ccreghot_1354 v7 v8
+                            -> coe
+                                 MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                                 (coe MAlonzo.Code.Agda.Builtin.Bool.C_false_8)
+                                 (coe MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
+                          C_reg_1356 v7 v8
+                            -> coe
+                                 MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                                 (coe MAlonzo.Code.Agda.Builtin.Bool.C_false_8)
+                                 (coe MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
+                          _ -> MAlonzo.RTE.mazUnreachableError)
+              C_dereg_1344 v2 v3
+                -> coe
+                     (\ v4 ->
+                        case coe v4 of
+                          C_delegate_1342 v5 v6 v7 v8
+                            -> coe
+                                 MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                                 (coe MAlonzo.Code.Agda.Builtin.Bool.C_false_8)
+                                 (coe MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
+                          C_dereg_1344 v5 v6
+                            -> let v7
+                                     = coe
+                                         MAlonzo.Code.Class.DecEq.Core.d__'8799'__16
+                                         (coe
+                                            MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_284
+                                            (coe
+                                               MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
+                                               (coe
+                                                  MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_206
+                                                  (coe
+                                                     MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.d_cryptoStructure_616
+                                                     (coe v0))))
+                                            (coe
+                                               MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_210
+                                               (coe
+                                                  MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.d_cryptoStructure_616
+                                                  (coe v0))))
+                                         v2 v5 in
+                               coe
+                                 (case coe v7 of
+                                    MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v8 v9
+                                      -> if coe v8
+                                           then let v10
+                                                      = coe
+                                                          MAlonzo.Code.Data.Maybe.Properties.du_'8801''45'dec_24
+                                                          (coe
+                                                             MAlonzo.Code.Class.DecEq.Core.d__'8799'__16
+                                                             (coe
+                                                                MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22))
+                                                          (coe v3) (coe v6) in
+                                                coe
+                                                  (case coe v10 of
+                                                     MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v11 v12
+                                                       -> if coe v11
+                                                            then coe
+                                                                   MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                                                                   (coe v11)
+                                                                   (coe
+                                                                      MAlonzo.Code.Relation.Nullary.Reflects.C_of'696'_22
+                                                                      erased)
+                                                            else coe
+                                                                   MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                                                                   (coe v11)
+                                                                   (coe
+                                                                      MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
+                                                     _ -> MAlonzo.RTE.mazUnreachableError)
+                                           else coe
+                                                  MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                                                  (coe v8)
+                                                  (coe
+                                                     MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
+                                    _ -> MAlonzo.RTE.mazUnreachableError)
+                          C_regpool_1346 v5 v6
+                            -> coe
+                                 MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                                 (coe MAlonzo.Code.Agda.Builtin.Bool.C_false_8)
+                                 (coe MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
+                          C_retirepool_1348 v5 v6
+                            -> coe
+                                 MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                                 (coe MAlonzo.Code.Agda.Builtin.Bool.C_false_8)
+                                 (coe MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
+                          C_regdrep_1350 v5 v6 v7
+                            -> coe
+                                 MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                                 (coe MAlonzo.Code.Agda.Builtin.Bool.C_false_8)
+                                 (coe MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
+                          C_deregdrep_1352 v5 v6
+                            -> coe
+                                 MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                                 (coe MAlonzo.Code.Agda.Builtin.Bool.C_false_8)
+                                 (coe MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
+                          C_ccreghot_1354 v5 v6
+                            -> coe
+                                 MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                                 (coe MAlonzo.Code.Agda.Builtin.Bool.C_false_8)
+                                 (coe MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
+                          C_reg_1356 v5 v6
+                            -> coe
+                                 MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                                 (coe MAlonzo.Code.Agda.Builtin.Bool.C_false_8)
+                                 (coe MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
+                          _ -> MAlonzo.RTE.mazUnreachableError)
+              C_regpool_1346 v2 v3
+                -> coe
+                     (\ v4 ->
+                        case coe v4 of
+                          C_delegate_1342 v5 v6 v7 v8
+                            -> coe
+                                 MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                                 (coe MAlonzo.Code.Agda.Builtin.Bool.C_false_8)
+                                 (coe MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
+                          C_dereg_1344 v5 v6
+                            -> coe
+                                 MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                                 (coe MAlonzo.Code.Agda.Builtin.Bool.C_false_8)
+                                 (coe MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
+                          C_regpool_1346 v5 v6
+                            -> let v7
+                                     = coe
+                                         MAlonzo.Code.Class.DecEq.Core.d__'8799'__16
+                                         (MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
+                                            (coe
+                                               MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_206
+                                               (coe
+                                                  MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.d_cryptoStructure_616
+                                                  (coe v0))))
+                                         v2 v5 in
+                               coe
+                                 (case coe v7 of
+                                    MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v8 v9
+                                      -> if coe v8
+                                           then let v10 = d_cost_1162 (coe v3) in
+                                                coe
+                                                  (let v11 = d_margin_1164 (coe v3) in
+                                                   coe
+                                                     (let v12 = d_pledge_1166 (coe v3) in
+                                                      coe
+                                                        (let v13 = d_rewardAccount_1168 (coe v3) in
+                                                         coe
+                                                           (let v14 = d_cost_1162 (coe v6) in
+                                                            coe
+                                                              (let v15 = d_margin_1164 (coe v6) in
+                                                               coe
+                                                                 (let v16
+                                                                        = d_pledge_1166 (coe v6) in
+                                                                  coe
+                                                                    (let v17
+                                                                           = d_rewardAccount_1168
+                                                                               (coe v6) in
+                                                                     coe
+                                                                       (let v18
+                                                                              = coe
+                                                                                  MAlonzo.Code.Class.DecEq.Core.d__'8799'__16
+                                                                                  (coe
+                                                                                     MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.du_DecEq'45'ℙ_1244
+                                                                                     (coe
+                                                                                        MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
+                                                                                        (coe
+                                                                                           MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_206
+                                                                                           (coe
+                                                                                              MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.d_cryptoStructure_616
+                                                                                              (coe
+                                                                                                 v0)))))
+                                                                                  (d_owners_1160
+                                                                                     (coe v3))
+                                                                                  (d_owners_1160
+                                                                                     (coe v6)) in
+                                                                        coe
+                                                                          (case coe v18 of
+                                                                             MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v19 v20
+                                                                               -> if coe v19
+                                                                                    then let v21
+                                                                                               = MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796
+                                                                                                   (coe
+                                                                                                      v10)
+                                                                                                   (coe
+                                                                                                      v14) in
+                                                                                         coe
+                                                                                           (case coe
+                                                                                                   v21 of
+                                                                                              MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v22 v23
+                                                                                                -> if coe
+                                                                                                        v22
+                                                                                                     then let v24
+                                                                                                                = coe
+                                                                                                                    MAlonzo.Code.Class.DecEq.Core.d__'8799'__16
+                                                                                                                    MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℚ_34
+                                                                                                                    (MAlonzo.Code.Data.Refinement.Base.d_value_38
+                                                                                                                       (coe
+                                                                                                                          v11))
+                                                                                                                    (MAlonzo.Code.Data.Refinement.Base.d_value_38
+                                                                                                                       (coe
+                                                                                                                          v15)) in
+                                                                                                          coe
+                                                                                                            (case coe
+                                                                                                                    v24 of
+                                                                                                               MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v25 v26
+                                                                                                                 -> if coe
+                                                                                                                         v25
+                                                                                                                      then let v27
+                                                                                                                                 = seq
+                                                                                                                                     (coe
+                                                                                                                                        v26)
+                                                                                                                                     (coe
+                                                                                                                                        MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                                                                                                                                        (coe
+                                                                                                                                           v25)
+                                                                                                                                        (coe
+                                                                                                                                           MAlonzo.Code.Relation.Nullary.Reflects.C_of'696'_22
+                                                                                                                                           erased)) in
+                                                                                                                           coe
+                                                                                                                             (case coe
+                                                                                                                                     v27 of
+                                                                                                                                MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v28 v29
+                                                                                                                                  -> if coe
+                                                                                                                                          v28
+                                                                                                                                       then let v30
+                                                                                                                                                  = MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796
+                                                                                                                                                      (coe
+                                                                                                                                                         v12)
+                                                                                                                                                      (coe
+                                                                                                                                                         v16) in
+                                                                                                                                            coe
+                                                                                                                                              (case coe
+                                                                                                                                                      v30 of
+                                                                                                                                                 MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v31 v32
+                                                                                                                                                   -> if coe
+                                                                                                                                                           v31
+                                                                                                                                                        then let v33
+                                                                                                                                                                   = coe
+                                                                                                                                                                       MAlonzo.Code.Class.DecEq.Core.d__'8799'__16
+                                                                                                                                                                       (coe
+                                                                                                                                                                          MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_284
+                                                                                                                                                                          (coe
+                                                                                                                                                                             MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
+                                                                                                                                                                             (coe
+                                                                                                                                                                                MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_206
+                                                                                                                                                                                (coe
+                                                                                                                                                                                   MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.d_cryptoStructure_616
+                                                                                                                                                                                   (coe
+                                                                                                                                                                                      v0))))
+                                                                                                                                                                          (coe
+                                                                                                                                                                             MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_210
+                                                                                                                                                                             (coe
+                                                                                                                                                                                MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.d_cryptoStructure_616
+                                                                                                                                                                                (coe
+                                                                                                                                                                                   v0))))
+                                                                                                                                                                       v13
+                                                                                                                                                                       v17 in
+                                                                                                                                                             coe
+                                                                                                                                                               (case coe
+                                                                                                                                                                       v33 of
+                                                                                                                                                                  MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v34 v35
+                                                                                                                                                                    -> coe
+                                                                                                                                                                         seq
+                                                                                                                                                                         (coe
+                                                                                                                                                                            v34)
+                                                                                                                                                                         (if coe
+                                                                                                                                                                               v34
+                                                                                                                                                                            then coe
+                                                                                                                                                                                   MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                                                                                                                                                                                   (coe
+                                                                                                                                                                                      v34)
+                                                                                                                                                                                   (coe
+                                                                                                                                                                                      MAlonzo.Code.Relation.Nullary.Reflects.C_of'696'_22
+                                                                                                                                                                                      erased)
+                                                                                                                                                                            else coe
+                                                                                                                                                                                   MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                                                                                                                                                                                   (coe
+                                                                                                                                                                                      v34)
+                                                                                                                                                                                   (coe
+                                                                                                                                                                                      MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26))
+                                                                                                                                                                  _ -> MAlonzo.RTE.mazUnreachableError)
+                                                                                                                                                        else coe
+                                                                                                                                                               MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                                                                                                                                                               (coe
+                                                                                                                                                                  v31)
+                                                                                                                                                               (coe
+                                                                                                                                                                  MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
+                                                                                                                                                 _ -> MAlonzo.RTE.mazUnreachableError)
+                                                                                                                                       else coe
+                                                                                                                                              MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                                                                                                                                              (coe
+                                                                                                                                                 v28)
+                                                                                                                                              (coe
+                                                                                                                                                 MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
+                                                                                                                                _ -> MAlonzo.RTE.mazUnreachableError)
+                                                                                                                      else (let v27
+                                                                                                                                  = seq
+                                                                                                                                      (coe
+                                                                                                                                         v26)
+                                                                                                                                      (coe
+                                                                                                                                         MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                                                                                                                                         (coe
+                                                                                                                                            v25)
+                                                                                                                                         (coe
+                                                                                                                                            MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)) in
+                                                                                                                            coe
+                                                                                                                              (case coe
+                                                                                                                                      v27 of
+                                                                                                                                 MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v28 v29
+                                                                                                                                   -> if coe
+                                                                                                                                           v28
+                                                                                                                                        then let v30
+                                                                                                                                                   = MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796
+                                                                                                                                                       (coe
+                                                                                                                                                          v12)
+                                                                                                                                                       (coe
+                                                                                                                                                          v16) in
+                                                                                                                                             coe
+                                                                                                                                               (case coe
+                                                                                                                                                       v30 of
+                                                                                                                                                  MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v31 v32
+                                                                                                                                                    -> if coe
+                                                                                                                                                            v31
+                                                                                                                                                         then let v33
+                                                                                                                                                                    = coe
+                                                                                                                                                                        MAlonzo.Code.Class.DecEq.Core.d__'8799'__16
+                                                                                                                                                                        (coe
+                                                                                                                                                                           MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_284
+                                                                                                                                                                           (coe
+                                                                                                                                                                              MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
+                                                                                                                                                                              (coe
+                                                                                                                                                                                 MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_206
+                                                                                                                                                                                 (coe
+                                                                                                                                                                                    MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.d_cryptoStructure_616
+                                                                                                                                                                                    (coe
+                                                                                                                                                                                       v0))))
+                                                                                                                                                                           (coe
+                                                                                                                                                                              MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_210
+                                                                                                                                                                              (coe
+                                                                                                                                                                                 MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.d_cryptoStructure_616
+                                                                                                                                                                                 (coe
+                                                                                                                                                                                    v0))))
+                                                                                                                                                                        v13
+                                                                                                                                                                        v17 in
+                                                                                                                                                              coe
+                                                                                                                                                                (case coe
+                                                                                                                                                                        v33 of
+                                                                                                                                                                   MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v34 v35
+                                                                                                                                                                     -> coe
+                                                                                                                                                                          seq
+                                                                                                                                                                          (coe
+                                                                                                                                                                             v34)
+                                                                                                                                                                          (if coe
+                                                                                                                                                                                v34
+                                                                                                                                                                             then coe
+                                                                                                                                                                                    MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                                                                                                                                                                                    (coe
+                                                                                                                                                                                       v34)
+                                                                                                                                                                                    (coe
+                                                                                                                                                                                       MAlonzo.Code.Relation.Nullary.Reflects.C_of'696'_22
+                                                                                                                                                                                       erased)
+                                                                                                                                                                             else coe
+                                                                                                                                                                                    MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                                                                                                                                                                                    (coe
+                                                                                                                                                                                       v34)
+                                                                                                                                                                                    (coe
+                                                                                                                                                                                       MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26))
+                                                                                                                                                                   _ -> MAlonzo.RTE.mazUnreachableError)
+                                                                                                                                                         else coe
+                                                                                                                                                                MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                                                                                                                                                                (coe
+                                                                                                                                                                   v31)
+                                                                                                                                                                (coe
+                                                                                                                                                                   MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
+                                                                                                                                                  _ -> MAlonzo.RTE.mazUnreachableError)
+                                                                                                                                        else coe
+                                                                                                                                               MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                                                                                                                                               (coe
+                                                                                                                                                  v28)
+                                                                                                                                               (coe
+                                                                                                                                                  MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
+                                                                                                                                 _ -> MAlonzo.RTE.mazUnreachableError))
+                                                                                                               _ -> MAlonzo.RTE.mazUnreachableError)
+                                                                                                     else coe
+                                                                                                            MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                                                                                                            (coe
+                                                                                                               v22)
+                                                                                                            (coe
+                                                                                                               MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
+                                                                                              _ -> MAlonzo.RTE.mazUnreachableError)
+                                                                                    else coe
+                                                                                           MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                                                                                           (coe v19)
+                                                                                           (coe
+                                                                                              MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
+                                                                             _ -> MAlonzo.RTE.mazUnreachableError)))))))))
+                                           else coe
+                                                  MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                                                  (coe v8)
+                                                  (coe
+                                                     MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
+                                    _ -> MAlonzo.RTE.mazUnreachableError)
+                          C_retirepool_1348 v5 v6
+                            -> coe
+                                 MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                                 (coe MAlonzo.Code.Agda.Builtin.Bool.C_false_8)
+                                 (coe MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
+                          C_regdrep_1350 v5 v6 v7
+                            -> coe
+                                 MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                                 (coe MAlonzo.Code.Agda.Builtin.Bool.C_false_8)
+                                 (coe MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
+                          C_deregdrep_1352 v5 v6
+                            -> coe
+                                 MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                                 (coe MAlonzo.Code.Agda.Builtin.Bool.C_false_8)
+                                 (coe MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
+                          C_ccreghot_1354 v5 v6
+                            -> coe
+                                 MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                                 (coe MAlonzo.Code.Agda.Builtin.Bool.C_false_8)
+                                 (coe MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
+                          C_reg_1356 v5 v6
+                            -> coe
+                                 MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                                 (coe MAlonzo.Code.Agda.Builtin.Bool.C_false_8)
+                                 (coe MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
+                          _ -> MAlonzo.RTE.mazUnreachableError)
+              C_retirepool_1348 v2 v3
+                -> coe
+                     (\ v4 ->
+                        case coe v4 of
+                          C_delegate_1342 v5 v6 v7 v8
+                            -> coe
+                                 MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                                 (coe MAlonzo.Code.Agda.Builtin.Bool.C_false_8)
+                                 (coe MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
+                          C_dereg_1344 v5 v6
+                            -> coe
+                                 MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                                 (coe MAlonzo.Code.Agda.Builtin.Bool.C_false_8)
+                                 (coe MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
+                          C_regpool_1346 v5 v6
+                            -> coe
+                                 MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                                 (coe MAlonzo.Code.Agda.Builtin.Bool.C_false_8)
+                                 (coe MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
+                          C_retirepool_1348 v5 v6
+                            -> let v7
+                                     = coe
+                                         MAlonzo.Code.Class.DecEq.Core.d__'8799'__16
+                                         (MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
+                                            (coe
+                                               MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_206
+                                               (coe
+                                                  MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.d_cryptoStructure_616
+                                                  (coe v0))))
+                                         v2 v5 in
+                               coe
+                                 (case coe v7 of
+                                    MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v8 v9
+                                      -> if coe v8
+                                           then let v10
+                                                      = coe
+                                                          MAlonzo.Code.Class.DecEq.Core.d__'8799'__16
+                                                          (MAlonzo.Code.Ledger.Core.Specification.Epoch.d_DecEq'45'Epoch_80
+                                                             (coe
+                                                                MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.d_epochStructure_662
+                                                                (coe v0)))
+                                                          v3 v6 in
+                                                coe
+                                                  (case coe v10 of
+                                                     MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v11 v12
+                                                       -> if coe v11
+                                                            then coe
+                                                                   MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                                                                   (coe v11)
+                                                                   (coe
+                                                                      MAlonzo.Code.Relation.Nullary.Reflects.C_of'696'_22
+                                                                      erased)
+                                                            else coe
+                                                                   MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                                                                   (coe v11)
+                                                                   (coe
+                                                                      MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
+                                                     _ -> MAlonzo.RTE.mazUnreachableError)
+                                           else coe
+                                                  MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                                                  (coe v8)
+                                                  (coe
+                                                     MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
+                                    _ -> MAlonzo.RTE.mazUnreachableError)
+                          C_regdrep_1350 v5 v6 v7
+                            -> coe
+                                 MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                                 (coe MAlonzo.Code.Agda.Builtin.Bool.C_false_8)
+                                 (coe MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
+                          C_deregdrep_1352 v5 v6
+                            -> coe
+                                 MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                                 (coe MAlonzo.Code.Agda.Builtin.Bool.C_false_8)
+                                 (coe MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
+                          C_ccreghot_1354 v5 v6
+                            -> coe
+                                 MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                                 (coe MAlonzo.Code.Agda.Builtin.Bool.C_false_8)
+                                 (coe MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
+                          C_reg_1356 v5 v6
+                            -> coe
+                                 MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                                 (coe MAlonzo.Code.Agda.Builtin.Bool.C_false_8)
+                                 (coe MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
+                          _ -> MAlonzo.RTE.mazUnreachableError)
+              C_regdrep_1350 v2 v3 v4
+                -> coe
+                     (\ v5 ->
+                        case coe v5 of
+                          C_delegate_1342 v6 v7 v8 v9
+                            -> coe
+                                 MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                                 (coe MAlonzo.Code.Agda.Builtin.Bool.C_false_8)
+                                 (coe MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
+                          C_dereg_1344 v6 v7
+                            -> coe
+                                 MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                                 (coe MAlonzo.Code.Agda.Builtin.Bool.C_false_8)
+                                 (coe MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
+                          C_regpool_1346 v6 v7
+                            -> coe
+                                 MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                                 (coe MAlonzo.Code.Agda.Builtin.Bool.C_false_8)
+                                 (coe MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
+                          C_retirepool_1348 v6 v7
+                            -> coe
+                                 MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                                 (coe MAlonzo.Code.Agda.Builtin.Bool.C_false_8)
+                                 (coe MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
+                          C_regdrep_1350 v6 v7 v8
+                            -> let v9
+                                     = coe
+                                         MAlonzo.Code.Class.DecEq.Core.d__'8799'__16
+                                         (coe
+                                            MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_284
+                                            (coe
+                                               MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
+                                               (coe
+                                                  MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_206
+                                                  (coe
+                                                     MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.d_cryptoStructure_616
+                                                     (coe v0))))
+                                            (coe
+                                               MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_210
+                                               (coe
+                                                  MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.d_cryptoStructure_616
+                                                  (coe v0))))
+                                         v2 v6 in
+                               coe
+                                 (case coe v9 of
+                                    MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v10 v11
+                                      -> if coe v10
+                                           then let v12
+                                                      = MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796
+                                                          (coe v3) (coe v7) in
+                                                coe
+                                                  (case coe v12 of
+                                                     MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v13 v14
+                                                       -> if coe v13
+                                                            then let v15
+                                                                       = MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_hash_1004
+                                                                           (coe v4) in
+                                                                 coe
+                                                                   (let v16
+                                                                          = MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_hash_1004
+                                                                              (coe v8) in
+                                                                    coe
+                                                                      (let v17
+                                                                             = MAlonzo.Code.Data.String.Properties.d__'8799'__54
+                                                                                 (coe
+                                                                                    MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_url_1002
+                                                                                    (coe v4))
+                                                                                 (coe
+                                                                                    MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_url_1002
+                                                                                    (coe v8)) in
+                                                                       coe
+                                                                         (case coe v17 of
+                                                                            MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v18 v19
+                                                                              -> if coe v18
+                                                                                   then let v20
+                                                                                              = coe
+                                                                                                  MAlonzo.Code.Class.DecEq.Core.d__'8799'__16
+                                                                                                  (MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.d_DecEq'45'DocHash_614
+                                                                                                     (coe
+                                                                                                        v0))
+                                                                                                  v15
+                                                                                                  v16 in
+                                                                                        coe
+                                                                                          (case coe
+                                                                                                  v20 of
+                                                                                             MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v21 v22
+                                                                                               -> coe
+                                                                                                    seq
+                                                                                                    (coe
+                                                                                                       v21)
+                                                                                                    (if coe
+                                                                                                          v21
+                                                                                                       then coe
+                                                                                                              MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                                                                                                              (coe
+                                                                                                                 v21)
+                                                                                                              (coe
+                                                                                                                 MAlonzo.Code.Relation.Nullary.Reflects.C_of'696'_22
+                                                                                                                 erased)
+                                                                                                       else coe
+                                                                                                              MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                                                                                                              (coe
+                                                                                                                 v21)
+                                                                                                              (coe
+                                                                                                                 MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26))
+                                                                                             _ -> MAlonzo.RTE.mazUnreachableError)
+                                                                                   else coe
+                                                                                          MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                                                                                          (coe v18)
+                                                                                          (coe
+                                                                                             MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
+                                                                            _ -> MAlonzo.RTE.mazUnreachableError)))
+                                                            else coe
+                                                                   MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                                                                   (coe v13)
+                                                                   (coe
+                                                                      MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
+                                                     _ -> MAlonzo.RTE.mazUnreachableError)
+                                           else coe
+                                                  MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                                                  (coe v10)
+                                                  (coe
+                                                     MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
+                                    _ -> MAlonzo.RTE.mazUnreachableError)
+                          C_deregdrep_1352 v6 v7
+                            -> coe
+                                 MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                                 (coe MAlonzo.Code.Agda.Builtin.Bool.C_false_8)
+                                 (coe MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
+                          C_ccreghot_1354 v6 v7
+                            -> coe
+                                 MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                                 (coe MAlonzo.Code.Agda.Builtin.Bool.C_false_8)
+                                 (coe MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
+                          C_reg_1356 v6 v7
+                            -> coe
+                                 MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                                 (coe MAlonzo.Code.Agda.Builtin.Bool.C_false_8)
+                                 (coe MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
+                          _ -> MAlonzo.RTE.mazUnreachableError)
+              C_deregdrep_1352 v2 v3
+                -> coe
+                     (\ v4 ->
+                        case coe v4 of
+                          C_delegate_1342 v5 v6 v7 v8
+                            -> coe
+                                 MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                                 (coe MAlonzo.Code.Agda.Builtin.Bool.C_false_8)
+                                 (coe MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
+                          C_dereg_1344 v5 v6
+                            -> coe
+                                 MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                                 (coe MAlonzo.Code.Agda.Builtin.Bool.C_false_8)
+                                 (coe MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
+                          C_regpool_1346 v5 v6
+                            -> coe
+                                 MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                                 (coe MAlonzo.Code.Agda.Builtin.Bool.C_false_8)
+                                 (coe MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
+                          C_retirepool_1348 v5 v6
+                            -> coe
+                                 MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                                 (coe MAlonzo.Code.Agda.Builtin.Bool.C_false_8)
+                                 (coe MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
+                          C_regdrep_1350 v5 v6 v7
+                            -> coe
+                                 MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                                 (coe MAlonzo.Code.Agda.Builtin.Bool.C_false_8)
+                                 (coe MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
+                          C_deregdrep_1352 v5 v6
+                            -> let v7
+                                     = coe
+                                         MAlonzo.Code.Class.DecEq.Core.d__'8799'__16
+                                         (coe
+                                            MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_284
+                                            (coe
+                                               MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
+                                               (coe
+                                                  MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_206
+                                                  (coe
+                                                     MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.d_cryptoStructure_616
+                                                     (coe v0))))
+                                            (coe
+                                               MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_210
+                                               (coe
+                                                  MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.d_cryptoStructure_616
+                                                  (coe v0))))
+                                         v2 v5 in
+                               coe
+                                 (case coe v7 of
+                                    MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v8 v9
+                                      -> if coe v8
+                                           then let v10
+                                                      = MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796
+                                                          (coe v3) (coe v6) in
+                                                coe
+                                                  (case coe v10 of
+                                                     MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v11 v12
+                                                       -> if coe v11
+                                                            then coe
+                                                                   MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                                                                   (coe v11)
+                                                                   (coe
+                                                                      MAlonzo.Code.Relation.Nullary.Reflects.C_of'696'_22
+                                                                      erased)
+                                                            else coe
+                                                                   MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                                                                   (coe v11)
+                                                                   (coe
+                                                                      MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
+                                                     _ -> MAlonzo.RTE.mazUnreachableError)
+                                           else coe
+                                                  MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                                                  (coe v8)
+                                                  (coe
+                                                     MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
+                                    _ -> MAlonzo.RTE.mazUnreachableError)
+                          C_ccreghot_1354 v5 v6
+                            -> coe
+                                 MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                                 (coe MAlonzo.Code.Agda.Builtin.Bool.C_false_8)
+                                 (coe MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
+                          C_reg_1356 v5 v6
+                            -> coe
+                                 MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                                 (coe MAlonzo.Code.Agda.Builtin.Bool.C_false_8)
+                                 (coe MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
+                          _ -> MAlonzo.RTE.mazUnreachableError)
+              C_ccreghot_1354 v2 v3
+                -> coe
+                     (\ v4 ->
+                        case coe v4 of
+                          C_delegate_1342 v5 v6 v7 v8
+                            -> coe
+                                 MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                                 (coe MAlonzo.Code.Agda.Builtin.Bool.C_false_8)
+                                 (coe MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
+                          C_dereg_1344 v5 v6
+                            -> coe
+                                 MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                                 (coe MAlonzo.Code.Agda.Builtin.Bool.C_false_8)
+                                 (coe MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
+                          C_regpool_1346 v5 v6
+                            -> coe
+                                 MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                                 (coe MAlonzo.Code.Agda.Builtin.Bool.C_false_8)
+                                 (coe MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
+                          C_retirepool_1348 v5 v6
+                            -> coe
+                                 MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                                 (coe MAlonzo.Code.Agda.Builtin.Bool.C_false_8)
+                                 (coe MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
+                          C_regdrep_1350 v5 v6 v7
+                            -> coe
+                                 MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                                 (coe MAlonzo.Code.Agda.Builtin.Bool.C_false_8)
+                                 (coe MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
+                          C_deregdrep_1352 v5 v6
+                            -> coe
+                                 MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                                 (coe MAlonzo.Code.Agda.Builtin.Bool.C_false_8)
+                                 (coe MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
+                          C_ccreghot_1354 v5 v6
+                            -> let v7
+                                     = coe
+                                         MAlonzo.Code.Class.DecEq.Core.d__'8799'__16
+                                         (coe
+                                            MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_284
+                                            (coe
+                                               MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
+                                               (coe
+                                                  MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_206
+                                                  (coe
+                                                     MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.d_cryptoStructure_616
+                                                     (coe v0))))
+                                            (coe
+                                               MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_210
+                                               (coe
+                                                  MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.d_cryptoStructure_616
+                                                  (coe v0))))
+                                         v2 v5 in
+                               coe
+                                 (case coe v7 of
+                                    MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v8 v9
+                                      -> if coe v8
+                                           then let v10
+                                                      = coe
+                                                          MAlonzo.Code.Data.Maybe.Properties.du_'8801''45'dec_24
+                                                          (coe
+                                                             MAlonzo.Code.Class.DecEq.Core.d__'8799'__16
+                                                             (let v10
+                                                                    = MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
+                                                                        (coe
+                                                                           MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_206
+                                                                           (coe
+                                                                              MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.d_cryptoStructure_616
+                                                                              (coe v0))) in
+                                                              coe
+                                                                (let v11
+                                                                       = MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_210
+                                                                           (coe
+                                                                              MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.d_cryptoStructure_616
+                                                                              (coe v0)) in
+                                                                 coe
+                                                                   (coe
+                                                                      MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_284
+                                                                      (coe v10) (coe v11)))))
+                                                          (coe v3) (coe v6) in
+                                                coe
+                                                  (case coe v10 of
+                                                     MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v11 v12
+                                                       -> if coe v11
+                                                            then coe
+                                                                   MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                                                                   (coe v11)
+                                                                   (coe
+                                                                      MAlonzo.Code.Relation.Nullary.Reflects.C_of'696'_22
+                                                                      erased)
+                                                            else coe
+                                                                   MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                                                                   (coe v11)
+                                                                   (coe
+                                                                      MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
+                                                     _ -> MAlonzo.RTE.mazUnreachableError)
+                                           else coe
+                                                  MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                                                  (coe v8)
+                                                  (coe
+                                                     MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
+                                    _ -> MAlonzo.RTE.mazUnreachableError)
+                          C_reg_1356 v5 v6
+                            -> coe
+                                 MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                                 (coe MAlonzo.Code.Agda.Builtin.Bool.C_false_8)
+                                 (coe MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
+                          _ -> MAlonzo.RTE.mazUnreachableError)
+              C_reg_1356 v2 v3
+                -> coe
+                     (\ v4 ->
+                        case coe v4 of
+                          C_delegate_1342 v5 v6 v7 v8
+                            -> coe
+                                 MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                                 (coe MAlonzo.Code.Agda.Builtin.Bool.C_false_8)
+                                 (coe MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
+                          C_dereg_1344 v5 v6
+                            -> coe
+                                 MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                                 (coe MAlonzo.Code.Agda.Builtin.Bool.C_false_8)
+                                 (coe MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
+                          C_regpool_1346 v5 v6
+                            -> coe
+                                 MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                                 (coe MAlonzo.Code.Agda.Builtin.Bool.C_false_8)
+                                 (coe MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
+                          C_retirepool_1348 v5 v6
+                            -> coe
+                                 MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                                 (coe MAlonzo.Code.Agda.Builtin.Bool.C_false_8)
+                                 (coe MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
+                          C_regdrep_1350 v5 v6 v7
+                            -> coe
+                                 MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                                 (coe MAlonzo.Code.Agda.Builtin.Bool.C_false_8)
+                                 (coe MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
+                          C_deregdrep_1352 v5 v6
+                            -> coe
+                                 MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                                 (coe MAlonzo.Code.Agda.Builtin.Bool.C_false_8)
+                                 (coe MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
+                          C_ccreghot_1354 v5 v6
+                            -> coe
+                                 MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                                 (coe MAlonzo.Code.Agda.Builtin.Bool.C_false_8)
+                                 (coe MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
+                          C_reg_1356 v5 v6
+                            -> let v7
+                                     = coe
+                                         MAlonzo.Code.Class.DecEq.Core.d__'8799'__16
+                                         (coe
+                                            MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_284
+                                            (coe
+                                               MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
+                                               (coe
+                                                  MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_206
+                                                  (coe
+                                                     MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.d_cryptoStructure_616
+                                                     (coe v0))))
+                                            (coe
+                                               MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_210
+                                               (coe
+                                                  MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.d_cryptoStructure_616
+                                                  (coe v0))))
+                                         v2 v5 in
+                               coe
+                                 (case coe v7 of
+                                    MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v8 v9
+                                      -> if coe v8
+                                           then let v10
+                                                      = MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796
+                                                          (coe v3) (coe v6) in
+                                                coe
+                                                  (case coe v10 of
+                                                     MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v11 v12
+                                                       -> if coe v11
+                                                            then coe
+                                                                   MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                                                                   (coe v11)
+                                                                   (coe
+                                                                      MAlonzo.Code.Relation.Nullary.Reflects.C_of'696'_22
+                                                                      erased)
+                                                            else coe
+                                                                   MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                                                                   (coe v11)
+                                                                   (coe
+                                                                      MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
+                                                     _ -> MAlonzo.RTE.mazUnreachableError)
+                                           else coe
+                                                  MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                                                  (coe v8)
+                                                  (coe
+                                                     MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
+                                    _ -> MAlonzo.RTE.mazUnreachableError)
+                          _ -> MAlonzo.RTE.mazUnreachableError)
+              _ -> MAlonzo.RTE.mazUnreachableError))
 -- Ledger.Conway.Specification.Certs.cwitness
-d_cwitness_1358 ::
+d_cwitness_1362 ::
   MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.T_GovStructure_10 ->
   T_DCert_1340 ->
   Maybe
     MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20
-d_cwitness_1358 ~v0 v1 = du_cwitness_1358 v1
-du_cwitness_1358 ::
+d_cwitness_1362 ~v0 v1 = du_cwitness_1362 v1
+du_cwitness_1362 ::
   T_DCert_1340 ->
   Maybe
     MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20
-du_cwitness_1358 v0
+du_cwitness_1362 v0
   = case coe v0 of
       C_delegate_1342 v1 v2 v3 v4
         -> coe MAlonzo.Code.Agda.Builtin.Maybe.C_just_16 (coe v1)
@@ -1046,412 +2346,412 @@ du_cwitness_1358 v0
              _ -> coe MAlonzo.Code.Agda.Builtin.Maybe.C_just_16 (coe v1)
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Conway.Specification.Certs.CertEnv
-d_CertEnv_1376 a0 = ()
-data T_CertEnv_1376
-  = C_constructor_1398 AgdaAny
+d_CertEnv_1380 a0 = ()
+data T_CertEnv_1380
+  = C_constructor_1402 AgdaAny
                        MAlonzo.Code.Ledger.Conway.Specification.PParams.T_PParams_282
                        [MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovVote_1008]
                        MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
                        [MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20]
 -- Ledger.Conway.Specification.Certs.CertEnv.epoch
-d_epoch_1388 :: T_CertEnv_1376 -> AgdaAny
-d_epoch_1388 v0
+d_epoch_1392 :: T_CertEnv_1380 -> AgdaAny
+d_epoch_1392 v0
   = case coe v0 of
-      C_constructor_1398 v1 v2 v3 v4 v5 -> coe v1
+      C_constructor_1402 v1 v2 v3 v4 v5 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Conway.Specification.Certs.CertEnv.pp
-d_pp_1390 ::
-  T_CertEnv_1376 ->
+d_pp_1394 ::
+  T_CertEnv_1380 ->
   MAlonzo.Code.Ledger.Conway.Specification.PParams.T_PParams_282
-d_pp_1390 v0
+d_pp_1394 v0
   = case coe v0 of
-      C_constructor_1398 v1 v2 v3 v4 v5 -> coe v2
+      C_constructor_1402 v1 v2 v3 v4 v5 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Conway.Specification.Certs.CertEnv.votes
-d_votes_1392 ::
-  T_CertEnv_1376 ->
+d_votes_1396 ::
+  T_CertEnv_1380 ->
   [MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovVote_1008]
-d_votes_1392 v0
+d_votes_1396 v0
   = case coe v0 of
-      C_constructor_1398 v1 v2 v3 v4 v5 -> coe v3
+      C_constructor_1402 v1 v2 v3 v4 v5 -> coe v3
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Conway.Specification.Certs.CertEnv.wdrls
-d_wdrls_1394 ::
-  T_CertEnv_1376 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_wdrls_1394 v0
+d_wdrls_1398 ::
+  T_CertEnv_1380 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_wdrls_1398 v0
   = case coe v0 of
-      C_constructor_1398 v1 v2 v3 v4 v5 -> coe v4
+      C_constructor_1402 v1 v2 v3 v4 v5 -> coe v4
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Conway.Specification.Certs.CertEnv.coldCreds
-d_coldCreds_1396 ::
-  T_CertEnv_1376 ->
+d_coldCreds_1400 ::
+  T_CertEnv_1380 ->
   [MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20]
-d_coldCreds_1396 v0
+d_coldCreds_1400 v0
   = case coe v0 of
-      C_constructor_1398 v1 v2 v3 v4 v5 -> coe v5
+      C_constructor_1402 v1 v2 v3 v4 v5 -> coe v5
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Conway.Specification.Certs.DState
-d_DState_1400 a0 = ()
-data T_DState_1400
-  = C_'10214'_'44'_'44'_'10215''7496'_1414 MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_DState_1404 a0 = ()
+data T_DState_1404
+  = C_'10214'_'44'_'44'_'10215''7496'_1418 MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
                                            MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
                                            MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 -- Ledger.Conway.Specification.Certs.DState.voteDelegs
-d_voteDelegs_1408 ::
-  T_DState_1400 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_voteDelegs_1408 v0
+d_voteDelegs_1412 ::
+  T_DState_1404 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_voteDelegs_1412 v0
   = case coe v0 of
-      C_'10214'_'44'_'44'_'10215''7496'_1414 v1 v2 v3 -> coe v1
+      C_'10214'_'44'_'44'_'10215''7496'_1418 v1 v2 v3 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Conway.Specification.Certs.DState.stakeDelegs
-d_stakeDelegs_1410 ::
-  T_DState_1400 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_stakeDelegs_1410 v0
+d_stakeDelegs_1414 ::
+  T_DState_1404 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_stakeDelegs_1414 v0
   = case coe v0 of
-      C_'10214'_'44'_'44'_'10215''7496'_1414 v1 v2 v3 -> coe v2
+      C_'10214'_'44'_'44'_'10215''7496'_1418 v1 v2 v3 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Conway.Specification.Certs.DState.rewards
-d_rewards_1412 ::
-  T_DState_1400 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_rewards_1412 v0
+d_rewards_1416 ::
+  T_DState_1404 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_rewards_1416 v0
   = case coe v0 of
-      C_'10214'_'44'_'44'_'10215''7496'_1414 v1 v2 v3 -> coe v3
+      C_'10214'_'44'_'44'_'10215''7496'_1418 v1 v2 v3 -> coe v3
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Conway.Specification.Certs.PState
-d_PState_1416 a0 = ()
-data T_PState_1416
-  = C_constructor_1430 MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_PState_1420 a0 = ()
+data T_PState_1420
+  = C_constructor_1434 MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
                        MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
                        MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 -- Ledger.Conway.Specification.Certs.PState.pools
-d_pools_1424 ::
-  T_PState_1416 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_pools_1424 v0
+d_pools_1428 ::
+  T_PState_1420 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_pools_1428 v0
   = case coe v0 of
-      C_constructor_1430 v1 v2 v3 -> coe v1
+      C_constructor_1434 v1 v2 v3 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Conway.Specification.Certs.PState.fPools
-d_fPools_1426 ::
-  T_PState_1416 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_fPools_1426 v0
+d_fPools_1430 ::
+  T_PState_1420 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_fPools_1430 v0
   = case coe v0 of
-      C_constructor_1430 v1 v2 v3 -> coe v2
+      C_constructor_1434 v1 v2 v3 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Conway.Specification.Certs.PState.retiring
-d_retiring_1428 ::
-  T_PState_1416 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_retiring_1428 v0
+d_retiring_1432 ::
+  T_PState_1420 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_retiring_1432 v0
   = case coe v0 of
-      C_constructor_1430 v1 v2 v3 -> coe v3
+      C_constructor_1434 v1 v2 v3 -> coe v3
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Conway.Specification.Certs.GState
-d_GState_1432 a0 = ()
-data T_GState_1432
-  = C_'10214'_'44'_'10215''7515'_1442 MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_GState_1436 a0 = ()
+data T_GState_1436
+  = C_'10214'_'44'_'10215''7515'_1446 MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
                                       MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 -- Ledger.Conway.Specification.Certs.GState.dreps
-d_dreps_1438 ::
-  T_GState_1432 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_dreps_1438 v0
+d_dreps_1442 ::
+  T_GState_1436 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_dreps_1442 v0
   = case coe v0 of
-      C_'10214'_'44'_'10215''7515'_1442 v1 v2 -> coe v1
+      C_'10214'_'44'_'10215''7515'_1446 v1 v2 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Conway.Specification.Certs.GState.ccHotKeys
-d_ccHotKeys_1440 ::
-  T_GState_1432 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_ccHotKeys_1440 v0
+d_ccHotKeys_1444 ::
+  T_GState_1436 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_ccHotKeys_1444 v0
   = case coe v0 of
-      C_'10214'_'44'_'10215''7515'_1442 v1 v2 -> coe v2
+      C_'10214'_'44'_'10215''7515'_1446 v1 v2 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Conway.Specification.Certs.CertState
-d_CertState_1444 a0 = ()
-data T_CertState_1444
-  = C_'10214'_'44'_'44'_'10215''7580''738'_1458 T_DState_1400
-                                                T_PState_1416 T_GState_1432
+d_CertState_1448 a0 = ()
+data T_CertState_1448
+  = C_'10214'_'44'_'44'_'10215''7580''738'_1462 T_DState_1404
+                                                T_PState_1420 T_GState_1436
 -- Ledger.Conway.Specification.Certs.CertState.dState
-d_dState_1452 :: T_CertState_1444 -> T_DState_1400
-d_dState_1452 v0
+d_dState_1456 :: T_CertState_1448 -> T_DState_1404
+d_dState_1456 v0
   = case coe v0 of
-      C_'10214'_'44'_'44'_'10215''7580''738'_1458 v1 v2 v3 -> coe v1
+      C_'10214'_'44'_'44'_'10215''7580''738'_1462 v1 v2 v3 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Conway.Specification.Certs.CertState.pState
-d_pState_1454 :: T_CertState_1444 -> T_PState_1416
-d_pState_1454 v0
+d_pState_1458 :: T_CertState_1448 -> T_PState_1420
+d_pState_1458 v0
   = case coe v0 of
-      C_'10214'_'44'_'44'_'10215''7580''738'_1458 v1 v2 v3 -> coe v2
+      C_'10214'_'44'_'44'_'10215''7580''738'_1462 v1 v2 v3 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Conway.Specification.Certs.CertState.gState
-d_gState_1456 :: T_CertState_1444 -> T_GState_1432
-d_gState_1456 v0
+d_gState_1460 :: T_CertState_1448 -> T_GState_1436
+d_gState_1460 v0
   = case coe v0 of
-      C_'10214'_'44'_'44'_'10215''7580''738'_1458 v1 v2 v3 -> coe v3
+      C_'10214'_'44'_'44'_'10215''7580''738'_1462 v1 v2 v3 -> coe v3
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Conway.Specification.Certs.DelegEnv
-d_DelegEnv_1460 a0 = ()
-data T_DelegEnv_1460
-  = C_constructor_1474 MAlonzo.Code.Ledger.Conway.Specification.PParams.T_PParams_282
+d_DelegEnv_1464 a0 = ()
+data T_DelegEnv_1464
+  = C_constructor_1478 MAlonzo.Code.Ledger.Conway.Specification.PParams.T_PParams_282
                        MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
                        [MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20]
 -- Ledger.Conway.Specification.Certs.DelegEnv.pparams
-d_pparams_1468 ::
-  T_DelegEnv_1460 ->
+d_pparams_1472 ::
+  T_DelegEnv_1464 ->
   MAlonzo.Code.Ledger.Conway.Specification.PParams.T_PParams_282
-d_pparams_1468 v0
+d_pparams_1472 v0
   = case coe v0 of
-      C_constructor_1474 v1 v2 v3 -> coe v1
+      C_constructor_1478 v1 v2 v3 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Conway.Specification.Certs.DelegEnv.pools
-d_pools_1470 ::
-  T_DelegEnv_1460 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_pools_1470 v0
+d_pools_1474 ::
+  T_DelegEnv_1464 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_pools_1474 v0
   = case coe v0 of
-      C_constructor_1474 v1 v2 v3 -> coe v2
+      C_constructor_1478 v1 v2 v3 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Conway.Specification.Certs.DelegEnv.delegatees
-d_delegatees_1472 ::
-  T_DelegEnv_1460 ->
+d_delegatees_1476 ::
+  T_DelegEnv_1464 ->
   [MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20]
-d_delegatees_1472 v0
+d_delegatees_1476 v0
   = case coe v0 of
-      C_constructor_1474 v1 v2 v3 -> coe v3
+      C_constructor_1478 v1 v2 v3 -> coe v3
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Conway.Specification.Certs.HasDState
-d_HasDState_1480 a0 a1 a2 = ()
-newtype T_HasDState_1480
-  = C_constructor_1490 (AgdaAny -> T_DState_1400)
+d_HasDState_1484 a0 a1 a2 = ()
+newtype T_HasDState_1484
+  = C_constructor_1494 (AgdaAny -> T_DState_1404)
 -- Ledger.Conway.Specification.Certs.HasDState.DStateOf
-d_DStateOf_1488 :: T_HasDState_1480 -> AgdaAny -> T_DState_1400
-d_DStateOf_1488 v0
+d_DStateOf_1492 :: T_HasDState_1484 -> AgdaAny -> T_DState_1404
+d_DStateOf_1492 v0
   = case coe v0 of
-      C_constructor_1490 v1 -> coe v1
+      C_constructor_1494 v1 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Conway.Specification.Certs._.DStateOf
-d_DStateOf_1494 :: T_HasDState_1480 -> AgdaAny -> T_DState_1400
-d_DStateOf_1494 v0 = coe d_DStateOf_1488 (coe v0)
+d_DStateOf_1498 :: T_HasDState_1484 -> AgdaAny -> T_DState_1404
+d_DStateOf_1498 v0 = coe d_DStateOf_1492 (coe v0)
 -- Ledger.Conway.Specification.Certs.HasPState
-d_HasPState_1500 a0 a1 a2 = ()
-newtype T_HasPState_1500
-  = C_constructor_1510 (AgdaAny -> T_PState_1416)
+d_HasPState_1504 a0 a1 a2 = ()
+newtype T_HasPState_1504
+  = C_constructor_1514 (AgdaAny -> T_PState_1420)
 -- Ledger.Conway.Specification.Certs.HasPState.PStateOf
-d_PStateOf_1508 :: T_HasPState_1500 -> AgdaAny -> T_PState_1416
-d_PStateOf_1508 v0
+d_PStateOf_1512 :: T_HasPState_1504 -> AgdaAny -> T_PState_1420
+d_PStateOf_1512 v0
   = case coe v0 of
-      C_constructor_1510 v1 -> coe v1
+      C_constructor_1514 v1 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Conway.Specification.Certs._.PStateOf
-d_PStateOf_1514 :: T_HasPState_1500 -> AgdaAny -> T_PState_1416
-d_PStateOf_1514 v0 = coe d_PStateOf_1508 (coe v0)
+d_PStateOf_1518 :: T_HasPState_1504 -> AgdaAny -> T_PState_1420
+d_PStateOf_1518 v0 = coe d_PStateOf_1512 (coe v0)
 -- Ledger.Conway.Specification.Certs.HasGState
-d_HasGState_1520 a0 a1 a2 = ()
-newtype T_HasGState_1520
-  = C_constructor_1530 (AgdaAny -> T_GState_1432)
+d_HasGState_1524 a0 a1 a2 = ()
+newtype T_HasGState_1524
+  = C_constructor_1534 (AgdaAny -> T_GState_1436)
 -- Ledger.Conway.Specification.Certs.HasGState.GStateOf
-d_GStateOf_1528 :: T_HasGState_1520 -> AgdaAny -> T_GState_1432
-d_GStateOf_1528 v0
+d_GStateOf_1532 :: T_HasGState_1524 -> AgdaAny -> T_GState_1436
+d_GStateOf_1532 v0
   = case coe v0 of
-      C_constructor_1530 v1 -> coe v1
+      C_constructor_1534 v1 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Conway.Specification.Certs._.GStateOf
-d_GStateOf_1534 :: T_HasGState_1520 -> AgdaAny -> T_GState_1432
-d_GStateOf_1534 v0 = coe d_GStateOf_1528 (coe v0)
+d_GStateOf_1538 :: T_HasGState_1524 -> AgdaAny -> T_GState_1436
+d_GStateOf_1538 v0 = coe d_GStateOf_1532 (coe v0)
 -- Ledger.Conway.Specification.Certs.HasCertState
-d_HasCertState_1540 a0 a1 a2 = ()
-newtype T_HasCertState_1540
-  = C_constructor_1550 (AgdaAny -> T_CertState_1444)
+d_HasCertState_1544 a0 a1 a2 = ()
+newtype T_HasCertState_1544
+  = C_constructor_1554 (AgdaAny -> T_CertState_1448)
 -- Ledger.Conway.Specification.Certs.HasCertState.CertStateOf
-d_CertStateOf_1548 ::
-  T_HasCertState_1540 -> AgdaAny -> T_CertState_1444
-d_CertStateOf_1548 v0
+d_CertStateOf_1552 ::
+  T_HasCertState_1544 -> AgdaAny -> T_CertState_1448
+d_CertStateOf_1552 v0
   = case coe v0 of
-      C_constructor_1550 v1 -> coe v1
+      C_constructor_1554 v1 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Conway.Specification.Certs._.CertStateOf
-d_CertStateOf_1554 ::
-  T_HasCertState_1540 -> AgdaAny -> T_CertState_1444
-d_CertStateOf_1554 v0 = coe d_CertStateOf_1548 (coe v0)
+d_CertStateOf_1558 ::
+  T_HasCertState_1544 -> AgdaAny -> T_CertState_1448
+d_CertStateOf_1558 v0 = coe d_CertStateOf_1552 (coe v0)
 -- Ledger.Conway.Specification.Certs.HasPParams-CertEnv
-d_HasPParams'45'CertEnv_1556 ::
+d_HasPParams'45'CertEnv_1560 ::
   MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.T_GovStructure_10 ->
   MAlonzo.Code.Ledger.Conway.Specification.PParams.T_HasPParams_432
-d_HasPParams'45'CertEnv_1556 ~v0 = du_HasPParams'45'CertEnv_1556
-du_HasPParams'45'CertEnv_1556 ::
+d_HasPParams'45'CertEnv_1560 ~v0 = du_HasPParams'45'CertEnv_1560
+du_HasPParams'45'CertEnv_1560 ::
   MAlonzo.Code.Ledger.Conway.Specification.PParams.T_HasPParams_432
-du_HasPParams'45'CertEnv_1556
+du_HasPParams'45'CertEnv_1560
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.PParams.C_constructor_442
-      (coe (\ v0 -> d_pp_1390 (coe v0)))
+      (coe (\ v0 -> d_pp_1394 (coe v0)))
 -- Ledger.Conway.Specification.Certs.HasWithdrawals-CertEnv
-d_HasWithdrawals'45'CertEnv_1558 ::
+d_HasWithdrawals'45'CertEnv_1562 ::
   MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.T_GovStructure_10 ->
   MAlonzo.Code.Ledger.Core.Specification.Address.T_HasWithdrawals_182
-d_HasWithdrawals'45'CertEnv_1558 ~v0
-  = du_HasWithdrawals'45'CertEnv_1558
-du_HasWithdrawals'45'CertEnv_1558 ::
+d_HasWithdrawals'45'CertEnv_1562 ~v0
+  = du_HasWithdrawals'45'CertEnv_1562
+du_HasWithdrawals'45'CertEnv_1562 ::
   MAlonzo.Code.Ledger.Core.Specification.Address.T_HasWithdrawals_182
-du_HasWithdrawals'45'CertEnv_1558
+du_HasWithdrawals'45'CertEnv_1562
   = coe
       MAlonzo.Code.Ledger.Core.Specification.Address.C_constructor_192
-      (coe (\ v0 -> d_wdrls_1394 (coe v0)))
+      (coe (\ v0 -> d_wdrls_1398 (coe v0)))
 -- Ledger.Conway.Specification.Certs.HasVoteDelegs-DState
-d_HasVoteDelegs'45'DState_1560 ::
+d_HasVoteDelegs'45'DState_1564 ::
   MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.T_GovStructure_10 ->
   MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_HasVoteDelegs_1058
-d_HasVoteDelegs'45'DState_1560 ~v0
-  = du_HasVoteDelegs'45'DState_1560
-du_HasVoteDelegs'45'DState_1560 ::
+d_HasVoteDelegs'45'DState_1564 ~v0
+  = du_HasVoteDelegs'45'DState_1564
+du_HasVoteDelegs'45'DState_1564 ::
   MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_HasVoteDelegs_1058
-du_HasVoteDelegs'45'DState_1560
+du_HasVoteDelegs'45'DState_1564
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.C_constructor_1068
-      (coe (\ v0 -> d_voteDelegs_1408 (coe v0)))
+      (coe (\ v0 -> d_voteDelegs_1412 (coe v0)))
 -- Ledger.Conway.Specification.Certs.HasStakeDelegs-DState
-d_HasStakeDelegs'45'DState_1562 ::
+d_HasStakeDelegs'45'DState_1566 ::
   MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.T_GovStructure_10 ->
   T_HasStakeDelegs_1304
-d_HasStakeDelegs'45'DState_1562 ~v0
-  = du_HasStakeDelegs'45'DState_1562
-du_HasStakeDelegs'45'DState_1562 :: T_HasStakeDelegs_1304
-du_HasStakeDelegs'45'DState_1562
+d_HasStakeDelegs'45'DState_1566 ~v0
+  = du_HasStakeDelegs'45'DState_1566
+du_HasStakeDelegs'45'DState_1566 :: T_HasStakeDelegs_1304
+du_HasStakeDelegs'45'DState_1566
   = coe
-      C_constructor_1314 (coe (\ v0 -> d_stakeDelegs_1410 (coe v0)))
+      C_constructor_1314 (coe (\ v0 -> d_stakeDelegs_1414 (coe v0)))
 -- Ledger.Conway.Specification.Certs.HasRewards-DState
-d_HasRewards'45'DState_1564 ::
+d_HasRewards'45'DState_1568 ::
   MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.T_GovStructure_10 ->
   T_HasRewards_1272
-d_HasRewards'45'DState_1564 ~v0 = du_HasRewards'45'DState_1564
-du_HasRewards'45'DState_1564 :: T_HasRewards_1272
-du_HasRewards'45'DState_1564
-  = coe C_constructor_1282 (coe (\ v0 -> d_rewards_1412 (coe v0)))
+d_HasRewards'45'DState_1568 ~v0 = du_HasRewards'45'DState_1568
+du_HasRewards'45'DState_1568 :: T_HasRewards_1272
+du_HasRewards'45'DState_1568
+  = coe C_constructor_1282 (coe (\ v0 -> d_rewards_1416 (coe v0)))
 -- Ledger.Conway.Specification.Certs.HasPools-PState
-d_HasPools'45'PState_1566 ::
+d_HasPools'45'PState_1570 ::
   MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.T_GovStructure_10 ->
   T_HasPools_1240
-d_HasPools'45'PState_1566 ~v0 = du_HasPools'45'PState_1566
-du_HasPools'45'PState_1566 :: T_HasPools_1240
-du_HasPools'45'PState_1566
-  = coe C_constructor_1250 (coe (\ v0 -> d_pools_1424 (coe v0)))
+d_HasPools'45'PState_1570 ~v0 = du_HasPools'45'PState_1570
+du_HasPools'45'PState_1570 :: T_HasPools_1240
+du_HasPools'45'PState_1570
+  = coe C_constructor_1250 (coe (\ v0 -> d_pools_1428 (coe v0)))
 -- Ledger.Conway.Specification.Certs.HasRetiring-PState
-d_HasRetiring'45'PState_1568 ::
+d_HasRetiring'45'PState_1572 ::
   MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.T_GovStructure_10 ->
   T_HasRetiring_1256
-d_HasRetiring'45'PState_1568 ~v0 = du_HasRetiring'45'PState_1568
-du_HasRetiring'45'PState_1568 :: T_HasRetiring_1256
-du_HasRetiring'45'PState_1568
-  = coe C_constructor_1266 (coe (\ v0 -> d_retiring_1428 (coe v0)))
+d_HasRetiring'45'PState_1572 ~v0 = du_HasRetiring'45'PState_1572
+du_HasRetiring'45'PState_1572 :: T_HasRetiring_1256
+du_HasRetiring'45'PState_1572
+  = coe C_constructor_1266 (coe (\ v0 -> d_retiring_1432 (coe v0)))
 -- Ledger.Conway.Specification.Certs.HasDReps-GState
-d_HasDReps'45'GState_1570 ::
+d_HasDReps'45'GState_1574 ::
   MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.T_GovStructure_10 ->
   MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_HasDReps_1446
-d_HasDReps'45'GState_1570 ~v0 = du_HasDReps'45'GState_1570
-du_HasDReps'45'GState_1570 ::
+d_HasDReps'45'GState_1574 ~v0 = du_HasDReps'45'GState_1574
+du_HasDReps'45'GState_1574 ::
   MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_HasDReps_1446
-du_HasDReps'45'GState_1570
+du_HasDReps'45'GState_1574
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.C_constructor_1456
-      (coe (\ v0 -> d_dreps_1438 (coe v0)))
+      (coe (\ v0 -> d_dreps_1442 (coe v0)))
 -- Ledger.Conway.Specification.Certs.HasCCHotKeys-GState
-d_HasCCHotKeys'45'GState_1572 ::
+d_HasCCHotKeys'45'GState_1576 ::
   MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.T_GovStructure_10 ->
   T_HasCCHotKeys_1224
-d_HasCCHotKeys'45'GState_1572 ~v0 = du_HasCCHotKeys'45'GState_1572
-du_HasCCHotKeys'45'GState_1572 :: T_HasCCHotKeys_1224
-du_HasCCHotKeys'45'GState_1572
-  = coe C_constructor_1234 (coe (\ v0 -> d_ccHotKeys_1440 (coe v0)))
+d_HasCCHotKeys'45'GState_1576 ~v0 = du_HasCCHotKeys'45'GState_1576
+du_HasCCHotKeys'45'GState_1576 :: T_HasCCHotKeys_1224
+du_HasCCHotKeys'45'GState_1576
+  = coe C_constructor_1234 (coe (\ v0 -> d_ccHotKeys_1444 (coe v0)))
 -- Ledger.Conway.Specification.Certs.HasDState-CertState
-d_HasDState'45'CertState_1574 ::
+d_HasDState'45'CertState_1578 ::
   MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.T_GovStructure_10 ->
-  T_HasDState_1480
-d_HasDState'45'CertState_1574 ~v0 = du_HasDState'45'CertState_1574
-du_HasDState'45'CertState_1574 :: T_HasDState_1480
-du_HasDState'45'CertState_1574
-  = coe C_constructor_1490 (coe (\ v0 -> d_dState_1452 (coe v0)))
+  T_HasDState_1484
+d_HasDState'45'CertState_1578 ~v0 = du_HasDState'45'CertState_1578
+du_HasDState'45'CertState_1578 :: T_HasDState_1484
+du_HasDState'45'CertState_1578
+  = coe C_constructor_1494 (coe (\ v0 -> d_dState_1456 (coe v0)))
 -- Ledger.Conway.Specification.Certs.HasPState-CertState
-d_HasPState'45'CertState_1576 ::
+d_HasPState'45'CertState_1580 ::
   MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.T_GovStructure_10 ->
-  T_HasPState_1500
-d_HasPState'45'CertState_1576 ~v0 = du_HasPState'45'CertState_1576
-du_HasPState'45'CertState_1576 :: T_HasPState_1500
-du_HasPState'45'CertState_1576
-  = coe C_constructor_1510 (coe (\ v0 -> d_pState_1454 (coe v0)))
+  T_HasPState_1504
+d_HasPState'45'CertState_1580 ~v0 = du_HasPState'45'CertState_1580
+du_HasPState'45'CertState_1580 :: T_HasPState_1504
+du_HasPState'45'CertState_1580
+  = coe C_constructor_1514 (coe (\ v0 -> d_pState_1458 (coe v0)))
 -- Ledger.Conway.Specification.Certs.HasGState-CertState
-d_HasGState'45'CertState_1578 ::
+d_HasGState'45'CertState_1582 ::
   MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.T_GovStructure_10 ->
-  T_HasGState_1520
-d_HasGState'45'CertState_1578 ~v0 = du_HasGState'45'CertState_1578
-du_HasGState'45'CertState_1578 :: T_HasGState_1520
-du_HasGState'45'CertState_1578
-  = coe C_constructor_1530 (coe (\ v0 -> d_gState_1456 (coe v0)))
+  T_HasGState_1524
+d_HasGState'45'CertState_1582 ~v0 = du_HasGState'45'CertState_1582
+du_HasGState'45'CertState_1582 :: T_HasGState_1524
+du_HasGState'45'CertState_1582
+  = coe C_constructor_1534 (coe (\ v0 -> d_gState_1460 (coe v0)))
 -- Ledger.Conway.Specification.Certs.HasRewards-CertState
-d_HasRewards'45'CertState_1580 ::
+d_HasRewards'45'CertState_1584 ::
   MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.T_GovStructure_10 ->
   T_HasRewards_1272
-d_HasRewards'45'CertState_1580 ~v0
-  = du_HasRewards'45'CertState_1580
-du_HasRewards'45'CertState_1580 :: T_HasRewards_1272
-du_HasRewards'45'CertState_1580
+d_HasRewards'45'CertState_1584 ~v0
+  = du_HasRewards'45'CertState_1584
+du_HasRewards'45'CertState_1584 :: T_HasRewards_1272
+du_HasRewards'45'CertState_1584
   = coe
       C_constructor_1282
-      (coe (\ v0 -> d_rewards_1412 (coe d_dState_1452 (coe v0))))
+      (coe (\ v0 -> d_rewards_1416 (coe d_dState_1456 (coe v0))))
 -- Ledger.Conway.Specification.Certs.HasDReps-CertState
-d_HasDReps'45'CertState_1582 ::
+d_HasDReps'45'CertState_1586 ::
   MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.T_GovStructure_10 ->
   MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_HasDReps_1446
-d_HasDReps'45'CertState_1582 ~v0 = du_HasDReps'45'CertState_1582
-du_HasDReps'45'CertState_1582 ::
+d_HasDReps'45'CertState_1586 ~v0 = du_HasDReps'45'CertState_1586
+du_HasDReps'45'CertState_1586 ::
   MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_HasDReps_1446
-du_HasDReps'45'CertState_1582
+du_HasDReps'45'CertState_1586
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.C_constructor_1456
-      (coe (\ v0 -> d_dreps_1438 (coe d_gState_1456 (coe v0))))
+      (coe (\ v0 -> d_dreps_1442 (coe d_gState_1460 (coe v0))))
 -- Ledger.Conway.Specification.Certs.HasCCHotKeys-CertState
-d_HasCCHotKeys'45'CertState_1584 ::
+d_HasCCHotKeys'45'CertState_1588 ::
   MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.T_GovStructure_10 ->
   T_HasCCHotKeys_1224
-d_HasCCHotKeys'45'CertState_1584 ~v0
-  = du_HasCCHotKeys'45'CertState_1584
-du_HasCCHotKeys'45'CertState_1584 :: T_HasCCHotKeys_1224
-du_HasCCHotKeys'45'CertState_1584
+d_HasCCHotKeys'45'CertState_1588 ~v0
+  = du_HasCCHotKeys'45'CertState_1588
+du_HasCCHotKeys'45'CertState_1588 :: T_HasCCHotKeys_1224
+du_HasCCHotKeys'45'CertState_1588
   = coe
       C_constructor_1234
-      (coe (\ v0 -> d_ccHotKeys_1440 (coe d_gState_1456 (coe v0))))
+      (coe (\ v0 -> d_ccHotKeys_1444 (coe d_gState_1460 (coe v0))))
 -- Ledger.Conway.Specification.Certs.HasPools-CertState
-d_HasPools'45'CertState_1586 ::
+d_HasPools'45'CertState_1590 ::
   MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.T_GovStructure_10 ->
   T_HasPools_1240
-d_HasPools'45'CertState_1586 ~v0 = du_HasPools'45'CertState_1586
-du_HasPools'45'CertState_1586 :: T_HasPools_1240
-du_HasPools'45'CertState_1586
+d_HasPools'45'CertState_1590 ~v0 = du_HasPools'45'CertState_1590
+du_HasPools'45'CertState_1590 :: T_HasPools_1240
+du_HasPools'45'CertState_1590
   = coe
       C_constructor_1250
-      (coe (\ v0 -> d_pools_1424 (coe d_pState_1454 (coe v0))))
+      (coe (\ v0 -> d_pools_1428 (coe d_pState_1458 (coe v0))))
 -- Ledger.Conway.Specification.Certs.HasVoteDelegs-CertState
-d_HasVoteDelegs'45'CertState_1588 ::
+d_HasVoteDelegs'45'CertState_1592 ::
   MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.T_GovStructure_10 ->
   MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_HasVoteDelegs_1058
-d_HasVoteDelegs'45'CertState_1588 ~v0
-  = du_HasVoteDelegs'45'CertState_1588
-du_HasVoteDelegs'45'CertState_1588 ::
+d_HasVoteDelegs'45'CertState_1592 ~v0
+  = du_HasVoteDelegs'45'CertState_1592
+du_HasVoteDelegs'45'CertState_1592 ::
   MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_HasVoteDelegs_1058
-du_HasVoteDelegs'45'CertState_1588
+du_HasVoteDelegs'45'CertState_1592
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.C_constructor_1068
-      (coe (\ v0 -> d_voteDelegs_1408 (coe d_dState_1452 (coe v0))))
+      (coe (\ v0 -> d_voteDelegs_1412 (coe d_dState_1456 (coe v0))))
 -- Ledger.Conway.Specification.Certs.HasStakeDelegs-CertState
-d_HasStakeDelegs'45'CertState_1590 ::
+d_HasStakeDelegs'45'CertState_1594 ::
   MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.T_GovStructure_10 ->
   T_HasStakeDelegs_1304
-d_HasStakeDelegs'45'CertState_1590 ~v0
-  = du_HasStakeDelegs'45'CertState_1590
-du_HasStakeDelegs'45'CertState_1590 :: T_HasStakeDelegs_1304
-du_HasStakeDelegs'45'CertState_1590
+d_HasStakeDelegs'45'CertState_1594 ~v0
+  = du_HasStakeDelegs'45'CertState_1594
+du_HasStakeDelegs'45'CertState_1594 :: T_HasStakeDelegs_1304
+du_HasStakeDelegs'45'CertState_1594
   = coe
       C_constructor_1314
-      (coe (\ v0 -> d_stakeDelegs_1410 (coe d_dState_1452 (coe v0))))
+      (coe (\ v0 -> d_stakeDelegs_1414 (coe d_dState_1456 (coe v0))))
 -- Ledger.Conway.Specification.Certs.rewardsBalance
-d_rewardsBalance_1592 ::
+d_rewardsBalance_1596 ::
   MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.T_GovStructure_10 ->
-  T_DState_1400 -> Integer
-d_rewardsBalance_1592 v0 v1
+  T_DState_1404 -> Integer
+d_rewardsBalance_1596 v0 v1
   = coe
       MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.du_indexedSum'7515'''_1446
       (coe
@@ -1475,25 +2775,25 @@ d_rewardsBalance_1592 v0 v1
          MAlonzo.Code.Class.CommutativeMonoid.Core.du_fromBundle_64
          (coe
             MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3476))
-      (coe (\ v2 -> v2)) (coe d_rewards_1412 (coe v1))
+      (coe (\ v2 -> v2)) (coe d_rewards_1416 (coe v1))
 -- Ledger.Conway.Specification.Certs.HasCoin-CertState
-d_HasCoin'45'CertState_1598 ::
+d_HasCoin'45'CertState_1602 ::
   MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.T_GovStructure_10 ->
   MAlonzo.Code.Ledger.Prelude.HasCoin.T_HasCoin_10
-d_HasCoin'45'CertState_1598 v0
+d_HasCoin'45'CertState_1602 v0
   = coe
       MAlonzo.Code.Ledger.Prelude.HasCoin.C_constructor_20
       (coe
          (\ v1 ->
-            d_rewardsBalance_1592 (coe v0) (coe d_dState_1452 (coe v1))))
+            d_rewardsBalance_1596 (coe v0) (coe d_dState_1456 (coe v1))))
 -- Ledger.Conway.Specification.Certs.HasCast-CertEnv
-d_HasCast'45'CertEnv_1600 ::
+d_HasCast'45'CertEnv_1604 ::
   MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.T_GovStructure_10 ->
   MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.T_HasCast_16
-d_HasCast'45'CertEnv_1600 ~v0 = du_HasCast'45'CertEnv_1600
-du_HasCast'45'CertEnv_1600 ::
+d_HasCast'45'CertEnv_1604 ~v0 = du_HasCast'45'CertEnv_1604
+du_HasCast'45'CertEnv_1604 ::
   MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.T_HasCast_16
-du_HasCast'45'CertEnv_1600
+du_HasCast'45'CertEnv_1604
   = coe
       MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.C_constructor_30
       (coe
@@ -1519,7 +2819,7 @@ du_HasCast'45'CertEnv_1600
                            MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                            (coe
                               (MAlonzo.RTE.QName
-                                 (1376 :: Integer) (3005244792873517680 :: Integer)
+                                 (1380 :: Integer) (3005244792873517680 :: Integer)
                                  "Ledger.Conway.Specification.Certs.CertEnv"
                                  (MAlonzo.RTE.Fixity MAlonzo.RTE.NonAssoc MAlonzo.RTE.Unrelated)))
                            (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))
@@ -1552,7 +2852,7 @@ du_HasCast'45'CertEnv_1600
                               MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                               (coe
                                  (MAlonzo.RTE.QName
-                                    (1376 :: Integer) (3005244792873517680 :: Integer)
+                                    (1380 :: Integer) (3005244792873517680 :: Integer)
                                     "Ledger.Conway.Specification.Certs.CertEnv"
                                     (MAlonzo.RTE.Fixity
                                        MAlonzo.RTE.NonAssoc MAlonzo.RTE.Unrelated)))
@@ -1587,7 +2887,7 @@ du_HasCast'45'CertEnv_1600
                                  MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                  (coe
                                     (MAlonzo.RTE.QName
-                                       (1376 :: Integer) (3005244792873517680 :: Integer)
+                                       (1380 :: Integer) (3005244792873517680 :: Integer)
                                        "Ledger.Conway.Specification.Certs.CertEnv"
                                        (MAlonzo.RTE.Fixity
                                           MAlonzo.RTE.NonAssoc MAlonzo.RTE.Unrelated)))
@@ -1668,7 +2968,7 @@ du_HasCast'45'CertEnv_1600
                                     MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                     (coe
                                        (MAlonzo.RTE.QName
-                                          (1376 :: Integer) (3005244792873517680 :: Integer)
+                                          (1380 :: Integer) (3005244792873517680 :: Integer)
                                           "Ledger.Conway.Specification.Certs.CertEnv"
                                           (MAlonzo.RTE.Fixity
                                              MAlonzo.RTE.NonAssoc MAlonzo.RTE.Unrelated)))
@@ -1960,7 +3260,7 @@ du_HasCast'45'CertEnv_1600
                                        MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                        (coe
                                           (MAlonzo.RTE.QName
-                                             (1376 :: Integer) (3005244792873517680 :: Integer)
+                                             (1380 :: Integer) (3005244792873517680 :: Integer)
                                              "Ledger.Conway.Specification.Certs.CertEnv"
                                              (MAlonzo.RTE.Fixity
                                                 MAlonzo.RTE.NonAssoc MAlonzo.RTE.Unrelated)))
@@ -2268,15 +3568,15 @@ du_HasCast'45'CertEnv_1600
                                                             MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))))
                                           (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))))
                            (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))))))
-         (coe C_constructor_1398))
+         (coe C_constructor_1402))
 -- Ledger.Conway.Specification.Certs.HasCast-DState
-d_HasCast'45'DState_1602 ::
+d_HasCast'45'DState_1606 ::
   MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.T_GovStructure_10 ->
   MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.T_HasCast_16
-d_HasCast'45'DState_1602 ~v0 = du_HasCast'45'DState_1602
-du_HasCast'45'DState_1602 ::
+d_HasCast'45'DState_1606 ~v0 = du_HasCast'45'DState_1606
+du_HasCast'45'DState_1606 ::
   MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.T_HasCast_16
-du_HasCast'45'DState_1602
+du_HasCast'45'DState_1606
   = coe
       MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.C_constructor_30
       (coe
@@ -2302,7 +3602,7 @@ du_HasCast'45'DState_1602
                            MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                            (coe
                               (MAlonzo.RTE.QName
-                                 (1400 :: Integer) (3005244792873517680 :: Integer)
+                                 (1404 :: Integer) (3005244792873517680 :: Integer)
                                  "Ledger.Conway.Specification.Certs.DState"
                                  (MAlonzo.RTE.Fixity MAlonzo.RTE.NonAssoc MAlonzo.RTE.Unrelated)))
                            (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))
@@ -2336,7 +3636,7 @@ du_HasCast'45'DState_1602
                               MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                               (coe
                                  (MAlonzo.RTE.QName
-                                    (1400 :: Integer) (3005244792873517680 :: Integer)
+                                    (1404 :: Integer) (3005244792873517680 :: Integer)
                                     "Ledger.Conway.Specification.Certs.DState"
                                     (MAlonzo.RTE.Fixity
                                        MAlonzo.RTE.NonAssoc MAlonzo.RTE.Unrelated)))
@@ -2372,7 +3672,7 @@ du_HasCast'45'DState_1602
                                  MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                  (coe
                                     (MAlonzo.RTE.QName
-                                       (1400 :: Integer) (3005244792873517680 :: Integer)
+                                       (1404 :: Integer) (3005244792873517680 :: Integer)
                                        "Ledger.Conway.Specification.Certs.DState"
                                        (MAlonzo.RTE.Fixity
                                           MAlonzo.RTE.NonAssoc MAlonzo.RTE.Unrelated)))
@@ -2390,15 +3690,15 @@ du_HasCast'45'DState_1602
                                           MAlonzo.RTE.NonAssoc MAlonzo.RTE.Unrelated)))
                                  (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))))
                      (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))))
-         (coe C_'10214'_'44'_'44'_'10215''7496'_1414))
+         (coe C_'10214'_'44'_'44'_'10215''7496'_1418))
 -- Ledger.Conway.Specification.Certs.HasCast-PState
-d_HasCast'45'PState_1604 ::
+d_HasCast'45'PState_1608 ::
   MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.T_GovStructure_10 ->
   MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.T_HasCast_16
-d_HasCast'45'PState_1604 ~v0 = du_HasCast'45'PState_1604
-du_HasCast'45'PState_1604 ::
+d_HasCast'45'PState_1608 ~v0 = du_HasCast'45'PState_1608
+du_HasCast'45'PState_1608 ::
   MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.T_HasCast_16
-du_HasCast'45'PState_1604
+du_HasCast'45'PState_1608
   = coe
       MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.C_constructor_30
       (coe
@@ -2424,7 +3724,7 @@ du_HasCast'45'PState_1604
                            MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                            (coe
                               (MAlonzo.RTE.QName
-                                 (1416 :: Integer) (3005244792873517680 :: Integer)
+                                 (1420 :: Integer) (3005244792873517680 :: Integer)
                                  "Ledger.Conway.Specification.Certs.PState"
                                  (MAlonzo.RTE.Fixity MAlonzo.RTE.NonAssoc MAlonzo.RTE.Unrelated)))
                            (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))
@@ -2458,7 +3758,7 @@ du_HasCast'45'PState_1604
                               MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                               (coe
                                  (MAlonzo.RTE.QName
-                                    (1416 :: Integer) (3005244792873517680 :: Integer)
+                                    (1420 :: Integer) (3005244792873517680 :: Integer)
                                     "Ledger.Conway.Specification.Certs.PState"
                                     (MAlonzo.RTE.Fixity
                                        MAlonzo.RTE.NonAssoc MAlonzo.RTE.Unrelated)))
@@ -2494,7 +3794,7 @@ du_HasCast'45'PState_1604
                                  MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                  (coe
                                     (MAlonzo.RTE.QName
-                                       (1416 :: Integer) (3005244792873517680 :: Integer)
+                                       (1420 :: Integer) (3005244792873517680 :: Integer)
                                        "Ledger.Conway.Specification.Certs.PState"
                                        (MAlonzo.RTE.Fixity
                                           MAlonzo.RTE.NonAssoc MAlonzo.RTE.Unrelated)))
@@ -2557,15 +3857,15 @@ du_HasCast'45'PState_1604
                                              (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))
                                        (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))))))
                      (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))))
-         (coe C_constructor_1430))
+         (coe C_constructor_1434))
 -- Ledger.Conway.Specification.Certs.HasCast-GState
-d_HasCast'45'GState_1606 ::
+d_HasCast'45'GState_1610 ::
   MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.T_GovStructure_10 ->
   MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.T_HasCast_16
-d_HasCast'45'GState_1606 ~v0 = du_HasCast'45'GState_1606
-du_HasCast'45'GState_1606 ::
+d_HasCast'45'GState_1610 ~v0 = du_HasCast'45'GState_1610
+du_HasCast'45'GState_1610 ::
   MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.T_HasCast_16
-du_HasCast'45'GState_1606
+du_HasCast'45'GState_1610
   = coe
       MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.C_constructor_30
       (coe
@@ -2591,7 +3891,7 @@ du_HasCast'45'GState_1606
                            MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                            (coe
                               (MAlonzo.RTE.QName
-                                 (1432 :: Integer) (3005244792873517680 :: Integer)
+                                 (1436 :: Integer) (3005244792873517680 :: Integer)
                                  "Ledger.Conway.Specification.Certs.GState"
                                  (MAlonzo.RTE.Fixity MAlonzo.RTE.NonAssoc MAlonzo.RTE.Unrelated)))
                            (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))
@@ -2625,7 +3925,7 @@ du_HasCast'45'GState_1606
                               MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                               (coe
                                  (MAlonzo.RTE.QName
-                                    (1432 :: Integer) (3005244792873517680 :: Integer)
+                                    (1436 :: Integer) (3005244792873517680 :: Integer)
                                     "Ledger.Conway.Specification.Certs.GState"
                                     (MAlonzo.RTE.Fixity
                                        MAlonzo.RTE.NonAssoc MAlonzo.RTE.Unrelated)))
@@ -3267,15 +4567,15 @@ du_HasCast'45'GState_1606
                                                    MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))))
                                     (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))))))
                   (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))
-         (coe C_'10214'_'44'_'10215''7515'_1442))
+         (coe C_'10214'_'44'_'10215''7515'_1446))
 -- Ledger.Conway.Specification.Certs.HasCast-CertState
-d_HasCast'45'CertState_1608 ::
+d_HasCast'45'CertState_1612 ::
   MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.T_GovStructure_10 ->
   MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.T_HasCast_16
-d_HasCast'45'CertState_1608 ~v0 = du_HasCast'45'CertState_1608
-du_HasCast'45'CertState_1608 ::
+d_HasCast'45'CertState_1612 ~v0 = du_HasCast'45'CertState_1612
+du_HasCast'45'CertState_1612 ::
   MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.T_HasCast_16
-du_HasCast'45'CertState_1608
+du_HasCast'45'CertState_1612
   = coe
       MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.C_constructor_30
       (coe
@@ -3301,7 +4601,7 @@ du_HasCast'45'CertState_1608
                            MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                            (coe
                               (MAlonzo.RTE.QName
-                                 (1444 :: Integer) (3005244792873517680 :: Integer)
+                                 (1448 :: Integer) (3005244792873517680 :: Integer)
                                  "Ledger.Conway.Specification.Certs.CertState"
                                  (MAlonzo.RTE.Fixity MAlonzo.RTE.NonAssoc MAlonzo.RTE.Unrelated)))
                            (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))
@@ -3312,7 +4612,7 @@ du_HasCast'45'CertState_1608
                            MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                            (coe
                               (MAlonzo.RTE.QName
-                                 (1400 :: Integer) (3005244792873517680 :: Integer)
+                                 (1404 :: Integer) (3005244792873517680 :: Integer)
                                  "Ledger.Conway.Specification.Certs.DState"
                                  (MAlonzo.RTE.Fixity MAlonzo.RTE.NonAssoc MAlonzo.RTE.Unrelated)))
                            (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))))
@@ -3335,7 +4635,7 @@ du_HasCast'45'CertState_1608
                               MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                               (coe
                                  (MAlonzo.RTE.QName
-                                    (1444 :: Integer) (3005244792873517680 :: Integer)
+                                    (1448 :: Integer) (3005244792873517680 :: Integer)
                                     "Ledger.Conway.Specification.Certs.CertState"
                                     (MAlonzo.RTE.Fixity
                                        MAlonzo.RTE.NonAssoc MAlonzo.RTE.Unrelated)))
@@ -3347,7 +4647,7 @@ du_HasCast'45'CertState_1608
                               MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                               (coe
                                  (MAlonzo.RTE.QName
-                                    (1416 :: Integer) (3005244792873517680 :: Integer)
+                                    (1420 :: Integer) (3005244792873517680 :: Integer)
                                     "Ledger.Conway.Specification.Certs.PState"
                                     (MAlonzo.RTE.Fixity
                                        MAlonzo.RTE.NonAssoc MAlonzo.RTE.Unrelated)))
@@ -3371,7 +4671,7 @@ du_HasCast'45'CertState_1608
                                  MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                  (coe
                                     (MAlonzo.RTE.QName
-                                       (1444 :: Integer) (3005244792873517680 :: Integer)
+                                       (1448 :: Integer) (3005244792873517680 :: Integer)
                                        "Ledger.Conway.Specification.Certs.CertState"
                                        (MAlonzo.RTE.Fixity
                                           MAlonzo.RTE.NonAssoc MAlonzo.RTE.Unrelated)))
@@ -3383,21 +4683,21 @@ du_HasCast'45'CertState_1608
                                  MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                  (coe
                                     (MAlonzo.RTE.QName
-                                       (1432 :: Integer) (3005244792873517680 :: Integer)
+                                       (1436 :: Integer) (3005244792873517680 :: Integer)
                                        "Ledger.Conway.Specification.Certs.GState"
                                        (MAlonzo.RTE.Fixity
                                           MAlonzo.RTE.NonAssoc MAlonzo.RTE.Unrelated)))
                                  (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))))
                      (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))))
-         (coe C_'10214'_'44'_'44'_'10215''7580''738'_1458))
+         (coe C_'10214'_'44'_'44'_'10215''7580''738'_1462))
 -- Ledger.Conway.Specification.Certs.HasCast-DelegEnv
-d_HasCast'45'DelegEnv_1610 ::
+d_HasCast'45'DelegEnv_1614 ::
   MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.T_GovStructure_10 ->
   MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.T_HasCast_16
-d_HasCast'45'DelegEnv_1610 ~v0 = du_HasCast'45'DelegEnv_1610
-du_HasCast'45'DelegEnv_1610 ::
+d_HasCast'45'DelegEnv_1614 ~v0 = du_HasCast'45'DelegEnv_1614
+du_HasCast'45'DelegEnv_1614 ::
   MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.T_HasCast_16
-du_HasCast'45'DelegEnv_1610
+du_HasCast'45'DelegEnv_1614
   = coe
       MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.C_constructor_30
       (coe
@@ -3423,7 +4723,7 @@ du_HasCast'45'DelegEnv_1610
                            MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                            (coe
                               (MAlonzo.RTE.QName
-                                 (1460 :: Integer) (3005244792873517680 :: Integer)
+                                 (1464 :: Integer) (3005244792873517680 :: Integer)
                                  "Ledger.Conway.Specification.Certs.DelegEnv"
                                  (MAlonzo.RTE.Fixity MAlonzo.RTE.NonAssoc MAlonzo.RTE.Unrelated)))
                            (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))
@@ -3456,7 +4756,7 @@ du_HasCast'45'DelegEnv_1610
                               MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                               (coe
                                  (MAlonzo.RTE.QName
-                                    (1460 :: Integer) (3005244792873517680 :: Integer)
+                                    (1464 :: Integer) (3005244792873517680 :: Integer)
                                     "Ledger.Conway.Specification.Certs.DelegEnv"
                                     (MAlonzo.RTE.Fixity
                                        MAlonzo.RTE.NonAssoc MAlonzo.RTE.Unrelated)))
@@ -3492,7 +4792,7 @@ du_HasCast'45'DelegEnv_1610
                                  MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                  (coe
                                     (MAlonzo.RTE.QName
-                                       (1460 :: Integer) (3005244792873517680 :: Integer)
+                                       (1464 :: Integer) (3005244792873517680 :: Integer)
                                        "Ledger.Conway.Specification.Certs.DelegEnv"
                                        (MAlonzo.RTE.Fixity
                                           MAlonzo.RTE.NonAssoc MAlonzo.RTE.Unrelated)))
@@ -3793,19 +5093,19 @@ du_HasCast'45'DelegEnv_1610
                                                       MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))))
                                     (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))))
                      (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))))
-         (coe C_constructor_1474))
+         (coe C_constructor_1478))
 -- Ledger.Conway.Specification.Certs._⊢_⇀⦇_,DELEG⦈_
-d__'8866'_'8640''10631'_'44'DELEG'10632'__1682 a0 a1 a2 a3 a4 = ()
-data T__'8866'_'8640''10631'_'44'DELEG'10632'__1682
-  = C_DELEG'45'delegate_1684 MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 |
-    C_DELEG'45'dereg_1686 MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34 |
-    C_DELEG'45'reg_1688 MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d__'8866'_'8640''10631'_'44'DELEG'10632'__1686 a0 a1 a2 a3 a4 = ()
+data T__'8866'_'8640''10631'_'44'DELEG'10632'__1686
+  = C_DELEG'45'delegate_1688 MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 |
+    C_DELEG'45'dereg_1690 MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34 |
+    C_DELEG'45'reg_1692 MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 -- Ledger.Conway.Specification.Certs.isPoolRegistered
-d_isPoolRegistered_1690 ::
+d_isPoolRegistered_1694 ::
   MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.T_GovStructure_10 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   AgdaAny -> Maybe T_StakePoolParams_1148
-d_isPoolRegistered_1690 v0 v1 v2
+d_isPoolRegistered_1694 v0 v1 v2
   = coe
       MAlonzo.Code.Axiom.Set.Map.du_lookup'7504''63'_2048
       (coe
@@ -3835,36 +5135,36 @@ d_isPoolRegistered_1690 v0 v1 v2
                MAlonzo.Code.Axiom.Set.Rel.du_dom_354 v3
                (coe MAlonzo.Code.Axiom.Set.Map.du__'738'_570 (coe v1)))))
 -- Ledger.Conway.Specification.Certs._⊢_⇀⦇_,POOL⦈_
-d__'8866'_'8640''10631'_'44'POOL'10632'__1696 a0 a1 a2 a3 a4 = ()
-data T__'8866'_'8640''10631'_'44'POOL'10632'__1696
-  = C_POOL'45'regpool_1700 | C_POOL'45'retirepool_1702
+d__'8866'_'8640''10631'_'44'POOL'10632'__1700 a0 a1 a2 a3 a4 = ()
+data T__'8866'_'8640''10631'_'44'POOL'10632'__1700
+  = C_POOL'45'regpool_1704 | C_POOL'45'retirepool_1706
 -- Ledger.Conway.Specification.Certs._⊢_⇀⦇_,GOVCERT⦈_
-d__'8866'_'8640''10631'_'44'GOVCERT'10632'__1704 a0 a1 a2 a3 a4
+d__'8866'_'8640''10631'_'44'GOVCERT'10632'__1708 a0 a1 a2 a3 a4
   = ()
-data T__'8866'_'8640''10631'_'44'GOVCERT'10632'__1704
-  = C_GOVCERT'45'regdrep_1706 MAlonzo.Code.Data.Sum.Base.T__'8846'__30 |
-    C_GOVCERT'45'deregdrep_1708 MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34 |
-    C_GOVCERT'45'ccreghot_1710 MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+data T__'8866'_'8640''10631'_'44'GOVCERT'10632'__1708
+  = C_GOVCERT'45'regdrep_1710 MAlonzo.Code.Data.Sum.Base.T__'8846'__30 |
+    C_GOVCERT'45'deregdrep_1712 MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34 |
+    C_GOVCERT'45'ccreghot_1714 MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 -- Ledger.Conway.Specification.Certs._⊢_⇀⦇_,CERT⦈_
-d__'8866'_'8640''10631'_'44'CERT'10632'__1712 a0 a1 a2 a3 a4 = ()
-data T__'8866'_'8640''10631'_'44'CERT'10632'__1712
-  = C_CERT'45'deleg_1714 T__'8866'_'8640''10631'_'44'DELEG'10632'__1682 |
-    C_CERT'45'pool_1716 T__'8866'_'8640''10631'_'44'POOL'10632'__1696 |
-    C_CERT'45'vdel_1718 T__'8866'_'8640''10631'_'44'GOVCERT'10632'__1704
+d__'8866'_'8640''10631'_'44'CERT'10632'__1716 a0 a1 a2 a3 a4 = ()
+data T__'8866'_'8640''10631'_'44'CERT'10632'__1716
+  = C_CERT'45'deleg_1718 T__'8866'_'8640''10631'_'44'DELEG'10632'__1686 |
+    C_CERT'45'pool_1720 T__'8866'_'8640''10631'_'44'POOL'10632'__1700 |
+    C_CERT'45'vdel_1722 T__'8866'_'8640''10631'_'44'GOVCERT'10632'__1708
 -- Ledger.Conway.Specification.Certs._⊢_⇀⦇_,PRE-CERT⦈_
-d__'8866'_'8640''10631'_'44'PRE'45'CERT'10632'__1720 a0 a1 a2 a3 a4
+d__'8866'_'8640''10631'_'44'PRE'45'CERT'10632'__1724 a0 a1 a2 a3 a4
   = ()
-newtype T__'8866'_'8640''10631'_'44'PRE'45'CERT'10632'__1720
-  = C_CERT'45'pre_1728 MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+newtype T__'8866'_'8640''10631'_'44'PRE'45'CERT'10632'__1724
+  = C_CERT'45'pre_1732 MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 -- Ledger.Conway.Specification.Certs._⊢_⇀⦇_,POST-CERT⦈_
-d__'8866'_'8640''10631'_'44'POST'45'CERT'10632'__1730 a0 a1 a2 a3
+d__'8866'_'8640''10631'_'44'POST'45'CERT'10632'__1734 a0 a1 a2 a3
                                                       a4
   = ()
-data T__'8866'_'8640''10631'_'44'POST'45'CERT'10632'__1730
-  = C_CERT'45'post_1734
+data T__'8866'_'8640''10631'_'44'POST'45'CERT'10632'__1734
+  = C_CERT'45'post_1738
 -- Ledger.Conway.Specification.Certs._⊢_⇀⦇_,CERTS⦈_
-d__'8866'_'8640''10631'_'44'CERTS'10632'__1736 ::
+d__'8866'_'8640''10631'_'44'CERTS'10632'__1740 ::
   MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.T_GovStructure_10 ->
-  T_CertEnv_1376 ->
-  T_CertState_1444 -> [T_DCert_1340] -> T_CertState_1444 -> ()
-d__'8866'_'8640''10631'_'44'CERTS'10632'__1736 = erased
+  T_CertEnv_1380 ->
+  T_CertState_1448 -> [T_DCert_1340] -> T_CertState_1448 -> ()
+d__'8866'_'8640''10631'_'44'CERTS'10632'__1740 = erased
