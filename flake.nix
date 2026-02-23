@@ -116,9 +116,15 @@
 
           devShells = with pkgs; {
 
-            default = mkShell {
-              inputsFrom = builtins.attrValues pkgs';
-            };
+            default =
+              (mkShell {
+                inputsFrom = builtins.attrValues pkgs';
+              }).overrideAttrs
+                (oldAttrs: {
+                  buildInputs = oldAttrs.buildInputs ++ [
+                    fls-shake-agdaWithPackages.buildInputs
+                  ];
+                });
 
             fls-shake-agdaWithPackages = self'.devShells.fls-shake.overrideAttrs (_: {
               packages = [ fls-shake-agdaWithPackages ];
