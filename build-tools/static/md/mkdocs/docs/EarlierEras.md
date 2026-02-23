@@ -81,9 +81,8 @@ We describe changes to the specification [VK21](#alonzo-ledger-spec) by rule typ
 
 #### `UTXOS`{.AgdaDatatype} (Figure 9)
 
-The constants `EI`{.AgdaBound} and `SysSt`{.AgdaBound} are not declared. Instead,
-the abstract functions that need them, must grab them from somewhere not in the ledger
-specification.
+The constants `EI`{.AgdaBound} and `SysSt`{.AgdaBound} are not declared within the ledger specification. Instead,
+any abstract functions that require these constants must obtain them from the surrounding state modeled beyond the ledger specification.
 
 #### `UTXO`{.AgdaDatatype} (Figure 11)
 
@@ -100,7 +99,7 @@ The `isTwoPhaseScriptAddress`{.AgdaFunction} function is replaced with the
 #### `DELEG`{.AgdaDatatype} (Figure 18)
 
 The `Deleg-Mir`{.AgdaBound} and `Deleg-Mir-Trans`{.AgdaBound} cases, and the
-`MIR`{.AgdaDatatype} relation were phased out in Conway.
+`MIR`{.AgdaDatatype} relation were phased out in the Conway era.
 
 
 ## References {#references .unnumbered}
