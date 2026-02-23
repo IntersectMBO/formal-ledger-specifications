@@ -261,54 +261,11 @@ nix build ./#fls-agdaWithPackages -o ~/ledger-agda
 
 Then make sure that the `~/ledger-agda/bin` directory is in your `PATH` when starting your editor.
 
----
-
-If you have `update-alternatives` installed, then, instead of creating a symlink from
-your home directory (or some other directory that's in your `PATH`) to our version of
-agda in `~/ledger-agda/bin/agda`, you can configure multiple versions of `agda` and
-`agda-mode` as follows:
-
-```bash
-sudo update-alternatives --install /usr/bin/agda agda ~/ledger-agda/bin/agda 1
-```
-
-Do the same for any other versions of Agda that you have installed, and want to make
-available, on your system.
-
-For example,
-
-```bash
-sudo update-alternatives --install /usr/bin/agda agda ~/.cabal/bin/agda-2.8.0 10
-```
-
-Now, install the associated version of `agda-mode`, which is required for using Agda
-(versions < 2.8.0) in Emacs:
-
-```bash
-sudo update-alternatives --install /usr/bin/agda-mode agda-mode ~/ledger-agda/bin/agda-mode 1
-```
-
-Finally, choose which Agda version you want to use:
-
-```bash
-sudo update-alternatives --config agda
-```
-
-and, if you choose a version below 2.8.0, be sure to select the appropriate
-`agda-mode` version to accompany it!
-
-```bash
-sudo update-alternatives --config agda-mode
-```
+**Tip**. You can manage multiple versions of Agda with `update-alternatives`.  See [Using `update-alternatives`](#using-update-alternatives-to-manage-agda-versions).
 
 ---
 
 ### Emacs
-
-(This section does not assume you followed the optional `update-alternative`
-setup instructions above.  However, even if you did, you can still carry out
-the customization instructions in the present section, which do not conflict with
-the `update-alternatives` approach.)
 
 1.  **Configure Emacs for version switching**.
 
@@ -624,6 +581,41 @@ Frome the git repository, run,
 python scripts/plot_typecheck_time.py > index.html
 ```
 and open `index.html` in your browser.
+
+---
+
+<a id="using-update-alternatives-to-manage-agda-versions"></a>
+### Using `update-alternatives` to manage Agda versions
+
+If you have the `update-alternatives` program installed, then instead of creating a
+symlink from your home directory to our version of Agda in `~/ledger-agda/bin/agda`,
+you can configure multiple versions of `agda` (and `agda-mode`) as follows:
+
+```bash
+sudo update-alternatives --install /usr/bin/agda agda ~/ledger-agda/bin/agda 1
+```
+
+Do the same for any other versions of Agda that you have installed, and want to make
+available, on your system. For example,
+
+```bash
+sudo update-alternatives --install /usr/bin/agda agda ~/.cabal/bin/agda-2.8.0 10
+```
+
+Install the associated version of `agda-mode`, which is required for using Agda
+(versions < 2.8.0) in Emacs.
+
+```bash
+sudo update-alternatives --install /usr/bin/agda-mode agda-mode ~/ledger-agda/bin/agda-mode 1
+```
+
+Choose which Agda version you want to use; if that version below 2.8.0, select the
+appropriate `agda-mode` version to accompany it!
+
+```bash
+sudo update-alternatives --config agda
+sudo update-alternatives --config agda-mode
+```
 
 ---
 
