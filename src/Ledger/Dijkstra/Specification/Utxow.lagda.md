@@ -111,6 +111,178 @@ allowedLanguagesLegacyMode tx utxo =
     else fromList (PlutusV3 ∷ PlutusV2 ∷ PlutusV1 ∷ [])
 ```
 
+<!--
+```agda
+------------------------------------------------------------------
+-- Simplifying assumptions for the computational properties
+------------------------------------------------------------------
+
+-- 1. Consolidate Witnessing Logic into a single Record
+record WitnessData (tx : Tx ℓ) (Γ : UTxOEnv) : Type where
+  constructor mkWitnessData
+  open Tx tx; open TxBody txBody; open TxWitnesses txWitnesses
+
+  field
+    vKeyHashesProvided : ℙ KeyHash
+    scriptsProvided    : ℙ Script
+    dataProvided       : ℙ Data
+    credentialsNeeded  : ℙ Credential
+
+  vKeyHashesNeeded : ℙ KeyHash
+  vKeyHashesNeeded = mapPartial isKeyHashObj credentialsNeeded
+
+  scriptHashesNeeded : ℙ ScriptHash
+  scriptHashesNeeded = mapPartial isScriptObj credentialsNeeded
+
+  scriptsNeeded : ℙ Script
+  scriptsNeeded = filterˢ (λ s → hash s ∈ scriptHashesNeeded) scriptsProvided
+
+  p1ScriptsNeeded : ℙ P1Script
+  p1ScriptsNeeded = mapPartial toP1Script scriptsNeeded
+
+  p2ScriptsNeeded : ℙ P2Script
+  p2ScriptsNeeded = mapPartial toP2Script scriptsNeeded
+
+  dataHashesNeeded : ℙ DataHash
+  dataHashesNeeded =
+    mapPartial (λ txOut@(a , _ , d , _) → do
+                  sh ← isScriptObj (payCred a)
+                  _  ← lookupHash sh p2ScriptsNeeded
+                  d >>= isInj₂) (range (UTxOOf Γ ∣ txIns))
+
+collectWitnessData : (tx : Tx ℓ) (Γ : UTxOEnv) → WitnessData tx Γ
+collectWitnessData tx Γ = record
+  { vKeyHashesProvided = mapˢ hash (dom (TxWitnesses.vKeySigs (Tx.txWitnesses tx) ))
+  ; scriptsProvided = ScriptPoolOf Γ
+  ; dataProvided = range (DataPoolOf Γ)
+  ; credentialsNeeded = mapˢ proj₂ (credsNeeded (UTxOOf Γ) tx)
+  }
+
+-- Define Named Premise Records (replaces long tuples and makes Computational instance much faster).
+record UTXOW-Normal-Premises (V1-V3-allowed : Bool) (Γ : UTxOEnv) (s : UTxOState) (txTop : TopLevelTx) : Type where
+  constructor mkNormalPremises
+
+  -- Re-use our centralized witness collector
+  wd = collectWitnessData txTop Γ
+  open WitnessData wd
+
+  field
+    -- (2) No bootstrap addresses if using scripts
+    bootstrap           : UsesBootstrapAddress (UTxOOf Γ) txTop → Is-∅ p2ScriptsNeeded
+    -- (3) Subtransaction guards are present at top-level
+    guardsPolicy        : RequiredGuardsInTopLevel txTop
+    -- Witnessing logic
+    sigsValid           : ∀[ (vk , σ) ∈ TxWitnesses.vKeySigs (Tx.txWitnesses txTop) ] isSigned vk (txidBytes (TxIdOf txTop)) σ
+    p1ScriptsValid      : ∀[ s ∈ p1ScriptsNeeded ] validP1Script vKeyHashesProvided (TxBody.txVldt (Tx.txBody txTop)) s
+    vKeyHashesSubset    : vKeyHashesNeeded ⊆ vKeyHashesProvided
+    scriptHashesSubset  : scriptHashesNeeded ⊆ mapˢ hash scriptsProvided
+    dataHashesSubset    : dataHashesNeeded ⊆ mapˢ hash dataProvided
+    -- (1) Plutus V4 Enforcement
+    languageV4Only      : languages p2ScriptsNeeded ⊆ dom (PParams.costmdls (PParamsOf Γ)) ∩ ❴ PlutusV4 ❵
+    v1-v3-allowed       : V1-V3-allowed ≡ false -- Era toggle
+    auxDataHashValid    : TxBody.txADhash (Tx.txBody txTop) ≡ map hash (Tx.txAuxData txTop)
+
+
+-- Need another version for legacy because of different definition of scriptsProvided.
+collectWitnessDataLegacy : (tx : Tx ℓ) (Γ : UTxOEnv) → WitnessData tx Γ
+collectWitnessDataLegacy tx Γ = record
+  { vKeyHashesProvided = mapˢ hash (dom (TxWitnesses.vKeySigs (Tx.txWitnesses tx) ))
+  ; scriptsProvided = witnessScripts tx ∪ spendScripts tx (UTxOOf Γ) ∪ referenceScripts tx (UTxOOf Γ)
+  ; dataProvided = getTxData tx (UTxOOf Γ)
+  ; credentialsNeeded = mapˢ proj₂ (credsNeeded (UTxOOf Γ) tx)
+  }
+
+
+-- Define Named Premise Records (replaces long tuples and makes Computational instance much faster).
+record UTXOW-Legacy-Premises (V1-V3-allowed : Bool) (Γ : UTxOEnv) (s : UTxOState) (txTop : TopLevelTx) : Type where
+  constructor mkLegacyPremises
+
+  wd = collectWitnessDataLegacy txTop Γ
+  open WitnessData wd
+
+  field
+    -- (1) At least one legacy script must exist to trigger this mode
+    legacyScripts       : ∃[ s ∈ p2ScriptsNeeded ] language s ∈ fromList (PlutusV1 ∷ PlutusV2 ∷ PlutusV3 ∷ [])
+    -- (3) Legacy mode cannot handle bootstrap addresses
+    noBootstrap         : ¬ (UsesBootstrapAddress (UTxOOf Γ) txTop)
+    -- (4) Guard sets must be empty
+    noGuards            : Is-∅ (GuardsOf txTop)
+    guardsPolicy        : RequiredGuardsInTopLevel txTop
+    -- Witnessing logic (Same as normal)
+    sigsValid           : ∀[ (vk , σ) ∈ TxWitnesses.vKeySigs (Tx.txWitnesses txTop) ] isSigned vk (txidBytes (TxIdOf txTop)) σ
+    p1ScriptsValid      : ∀[ s ∈ p1ScriptsNeeded ] validP1Script vKeyHashesProvided (TxBody.txVldt (Tx.txBody txTop)) s
+    vKeyHashesSubset    : vKeyHashesNeeded ⊆ vKeyHashesProvided
+    scriptHashesSubset  : scriptHashesNeeded ⊆ mapˢ hash scriptsProvided
+    dataHashesSubset    : dataHashesNeeded ⊆ mapˢ hash dataProvided
+    -- (2) Version-restricted languages
+    legacyLanguages     : languages p2ScriptsNeeded ⊆ dom (PParams.costmdls (PParamsOf Γ)) ∩ allowedLanguagesLegacyMode txTop (UTxOOf Γ)
+    v1-v3-allowed       : V1-V3-allowed ≡ true -- Era toggle
+    auxDataHashValid    : TxBody.txADhash (Tx.txBody txTop) ≡ map hash (Tx.txAuxData txTop)
+
+record WitnessDataSubTx (tx : Tx ℓ) (utxo₀ : UTxO) (Γ : SubUTxOEnv) : Type where
+  constructor mkWitnessDataSubTx
+  open Tx tx; open TxBody txBody; open TxWitnesses txWitnesses
+
+  field
+    vKeyHashesProvided : ℙ KeyHash
+    scriptsProvided    : ℙ Script
+    dataProvided       : ℙ Data
+    credentialsNeeded  : ℙ Credential
+
+  vKeyHashesNeeded : ℙ KeyHash
+  vKeyHashesNeeded = mapPartial isKeyHashObj credentialsNeeded
+
+  scriptHashesNeeded : ℙ ScriptHash
+  scriptHashesNeeded = mapPartial isScriptObj credentialsNeeded
+
+  scriptsNeeded : ℙ Script
+  scriptsNeeded = filterˢ (λ s → hash s ∈ scriptHashesNeeded) scriptsProvided
+
+  p1ScriptsNeeded    : ℙ P1Script
+  p1ScriptsNeeded = mapPartial toP1Script scriptsNeeded
+
+  p2ScriptsNeeded : ℙ P2Script
+  p2ScriptsNeeded = mapPartial toP2Script scriptsNeeded
+
+  dataHashesNeeded   : ℙ DataHash
+  dataHashesNeeded =
+    mapPartial (λ txOut@(a , _ , d , _) →
+                    do sh ← isScriptObj (payCred a)
+                       _  ← lookupHash sh p2ScriptsNeeded
+                       d >>= isInj₂)
+               (range (utxo₀ ∣ txIns))
+
+collectWitnessDataSubTx : (tx : Tx ℓ) (Γ : SubUTxOEnv) → WitnessDataSubTx tx (UTxOOf Γ) Γ
+collectWitnessDataSubTx tx Γ = record
+  { vKeyHashesProvided = mapˢ hash (dom (TxWitnesses.vKeySigs (Tx.txWitnesses tx)))
+  ; scriptsProvided    = ScriptPoolOf Γ
+  ; dataProvided       = range (DataPoolOf Γ)
+  ; credentialsNeeded  = mapˢ proj₂ (credsNeeded (UTxOOf Γ) tx) }
+  where open WitnessData; open Tx tx; open TxBody txBody; open TxWitnesses txWitnesses; open SubUTxOEnv Γ
+
+-- Define Named Premise Records (replaces long tuples and makes Computational instance much faster).
+record SUBUTXOW-Premises (Γ : SubUTxOEnv) (s : UTxOState) (tx : SubLevelTx) : Type where
+  constructor mkSUBUTXOWPremises
+  -- Re-use our centralized witness collector
+  wd = collectWitnessDataSubTx tx Γ
+  open WitnessDataSubTx wd
+
+  field
+    sigsValid          : ∀[ (vk , σ) ∈ TxWitnesses.vKeySigs (Tx.txWitnesses tx) ] isSigned vk (txidBytes (TxIdOf tx)) σ
+    p1ScriptsValid     : ∀[ s ∈ p1ScriptsNeeded ] validP1Script vKeyHashesProvided (TxBody.txVldt (Tx.txBody tx)) s
+    vKeyHashesSubset   : vKeyHashesNeeded ⊆ vKeyHashesProvided
+    scriptHashesSubset : scriptHashesNeeded ⊆ mapˢ hash scriptsProvided
+    dataHashesSubset   : dataHashesNeeded ⊆ mapˢ hash dataProvided
+    languageV4Only     : languages p2ScriptsNeeded ⊆ dom (PParams.costmdls (PParamsOf Γ)) ∩ ❴ PlutusV4 ❵
+    auxDataHashValid   : TxBody.txADhash (Tx.txBody tx) ≡ map hash (Tx.txAuxData tx)
+
+-- These deciders use the ¿ _ ¿ syntax from the Ledger prelude to decide each field.
+-- Since the WitnessData is computed once at the start, these are very efficient.
+
+```
+-->
+
+
 ## The <span class="AgdaDatatype">SUBUTXOW</span> Transition System {#sec:the-subutxow-transition-system}
 
 - Sub-transactions cannot reference or use bootstrap addresses
@@ -121,61 +293,10 @@ allowedLanguagesLegacyMode tx utxo =
 data _⊢_⇀⦇_,SUBUTXOW⦈_ : SubUTxOEnv → UTxOState → SubLevelTx → UTxOState → Type where
 
   SUBUTXOW :
-    let
-         open Tx txSub
-         open TxBody txBody
-         open TxWitnesses txWitnesses
-         open UTxOEnv
-
-         utxo₀ = UTxOOf Γ
-         utxo  = UTxOOf s
-
-         vKeyHashesProvided : ℙ KeyHash
-         vKeyHashesProvided = mapˢ hash (dom vKeySigs)
-
-         scriptsProvided : ℙ Script
-         scriptsProvided = ScriptPoolOf Γ
-
-         dataProvided : ℙ Data
-         dataProvided = range (DataPoolOf Γ)
-
-         credentialsNeeded : ℙ Credential
-         credentialsNeeded = mapˢ proj₂ (credsNeeded utxo₀ txSub)
-
-         vKeyHashesNeeded : ℙ KeyHash
-         vKeyHashesNeeded = mapPartial isKeyHashObj credentialsNeeded
-
-         scriptHashesNeeded : ℙ ScriptHash
-         scriptHashesNeeded = mapPartial isScriptObj credentialsNeeded
-
-         scriptsNeeded : ℙ Script
-         scriptsNeeded = filterˢ (λ s → hash s ∈ scriptHashesNeeded) scriptsProvided
-
-         p1ScriptsNeeded : ℙ P1Script
-         p1ScriptsNeeded = mapPartial toP1Script scriptsNeeded
-
-         p2ScriptsNeeded : ℙ P2Script
-         p2ScriptsNeeded = mapPartial toP2Script scriptsNeeded
-
-         dataHashesNeeded : ℙ DataHash
-         dataHashesNeeded =
-           mapPartial (λ txOut@(a , _ , d , _) →
-                           do sh ← isScriptObj (payCred a)
-                              _  ← lookupHash sh p2ScriptsNeeded
-                              d >>= isInj₂)
-                      (range (utxo₀ ∣ txIns))
-
-    in
-    ∙  ∀[ (vk , σ) ∈ vKeySigs ] isSigned vk (txidBytes txId) σ
-    ∙  ∀[ s ∈ p1ScriptsNeeded ] validP1Script vKeyHashesProvided txVldt s
-    ∙  vKeyHashesNeeded ⊆ vKeyHashesProvided
-    ∙  scriptHashesNeeded ⊆ mapˢ hash scriptsProvided
-    ∙  dataHashesNeeded ⊆ mapˢ hash dataProvided
-    ∙  languages p2ScriptsNeeded ⊆ dom (PParams.costmdls (PParamsOf Γ)) ∩ ❴ PlutusV4 ❵ -- (1)
-    ∙  txADhash ≡ map hash txAuxData
-    ∙  Γ ⊢ s ⇀⦇ txSub ,SUBUTXO⦈ s'
-       ────────────────────────────────
-       Γ ⊢ s ⇀⦇ txSub ,SUBUTXOW⦈ s'
+    ∙ SUBUTXOW-Premises Γ s txSub
+    ∙ Γ ⊢ s ⇀⦇ txSub ,SUBUTXO⦈ s'
+      ────────────────────────────────
+      Γ ⊢ s ⇀⦇ txSub ,SUBUTXOW⦈ s'
 ```
 
 ## The <span class="AgdaDatatype">UTXOW</span> Transition System {#sec:the-utxow-transition-system}
@@ -199,61 +320,8 @@ rules `UTXOW-normal` and `UTXOW-legacy`.
    guards at the top-level.
 
 ```agda
-  UTXOW-normal :
-    let
-         open Tx txTop
-         open TxBody txBody
-         open TxWitnesses txWitnesses
-         open UTxOEnv
-
-         utxo₀ = Γ .utxo₀
-         utxo  = s .UTxOState.utxo
-
-         vKeyHashesProvided : ℙ KeyHash
-         vKeyHashesProvided = mapˢ hash (dom vKeySigs)
-
-         scriptsProvided : ℙ Script
-         scriptsProvided = ScriptPoolOf Γ
-
-         dataProvided : ℙ Data
-         dataProvided = range (DataPoolOf Γ)
-
-         credentialsNeeded : ℙ Credential
-         credentialsNeeded = mapˢ proj₂ (credsNeeded utxo₀ txTop)
-
-         vKeyHashesNeeded : ℙ KeyHash
-         vKeyHashesNeeded = mapPartial isKeyHashObj credentialsNeeded
-
-         scriptHashesNeeded : ℙ ScriptHash
-         scriptHashesNeeded = mapPartial isScriptObj credentialsNeeded
-
-         scriptsNeeded : ℙ Script
-         scriptsNeeded = filterˢ (λ s → hash s ∈ scriptHashesNeeded) scriptsProvided
-
-         p1ScriptsNeeded : ℙ P1Script
-         p1ScriptsNeeded = mapPartial toP1Script scriptsNeeded
-
-         p2ScriptsNeeded : ℙ P2Script
-         p2ScriptsNeeded = mapPartial toP2Script scriptsNeeded
-
-         dataHashesNeeded : ℙ DataHash
-         dataHashesNeeded =
-           mapPartial (λ txOut@(a , _ , d , _) →
-                           do sh ← isScriptObj (payCred a)
-                              _  ← lookupHash sh p2ScriptsNeeded
-                              d >>= isInj₂)
-                      (range (utxo₀ ∣ txIns))
-
-    in
-    ∙  (UsesBootstrapAddress utxo₀ txTop → Is-∅ p2ScriptsNeeded) -- (2)
-    ∙  RequiredGuardsInTopLevel txTop -- (3)
-    ∙  ∀[ (vk , σ) ∈ vKeySigs ] isSigned vk (txidBytes txId) σ
-    ∙  ∀[ s ∈ p1ScriptsNeeded ] validP1Script vKeyHashesProvided txVldt s
-    ∙  vKeyHashesNeeded ⊆ vKeyHashesProvided
-    ∙  scriptHashesNeeded ⊆ mapˢ hash scriptsProvided
-    ∙  dataHashesNeeded ⊆ mapˢ hash dataProvided
-    ∙  languages p2ScriptsNeeded ⊆ dom (PParams.costmdls (PParamsOf Γ)) ∩ ❴ PlutusV4 ❵ -- (1)
-    ∙  txADhash ≡ map hash txAuxData
+  UTXOW-normal : ∀{b} →
+    ∙  UTXOW-Normal-Premises b Γ s txTop
     ∙  (Γ , false) ⊢ s ⇀⦇ txTop ,UTXO⦈ s'
        ────────────────────────────────
        Γ ⊢ s ⇀⦇ txTop ,UTXOW⦈ s'
@@ -276,65 +344,8 @@ rules `UTXOW-normal` and `UTXOW-legacy`.
    are also the empty set.
 
 ```agda
-  UTXOW-legacy :
-    let
-         open Tx txTop
-         open TxBody txBody
-         open TxWitnesses txWitnesses
-         open UTxOEnv
-
-         utxo₀ = UTxOOf Γ
-         utxo  = UTxOOf s
-
-         vKeyHashesProvided : ℙ KeyHash
-         vKeyHashesProvided = mapˢ hash (dom vKeySigs)
-
-         scriptsProvided : ℙ Script
-         scriptsProvided = witnessScripts txTop
-                           ∪ spendScripts txTop utxo₀
-                           ∪ referenceScripts txTop utxo₀
-
-         dataProvided : ℙ Datum
-         dataProvided = getTxData txTop utxo₀
-
-         credentialsNeeded : ℙ Credential
-         credentialsNeeded = mapˢ proj₂ (credsNeeded utxo₀ txTop)
-
-         vKeyHashesNeeded : ℙ KeyHash
-         vKeyHashesNeeded = mapPartial isKeyHashObj credentialsNeeded
-
-         scriptHashesNeeded : ℙ ScriptHash
-         scriptHashesNeeded = mapPartial isScriptObj credentialsNeeded
-
-         scriptsNeeded : ℙ Script
-         scriptsNeeded = filterˢ (λ s → hash s ∈ scriptHashesNeeded) scriptsProvided
-
-         p1ScriptsNeeded : ℙ P1Script
-         p1ScriptsNeeded = mapPartial toP1Script scriptsNeeded
-
-         p2ScriptsNeeded : ℙ P2Script
-         p2ScriptsNeeded = mapPartial toP2Script scriptsNeeded
-
-         dataHashesNeeded : ℙ DataHash
-         dataHashesNeeded =
-           mapPartial (λ txOut@(a , _ , d , _) →
-                           do sh ← isScriptObj (payCred a)
-                              _  ← lookupHash sh p2ScriptsNeeded
-                              d >>= isInj₂)
-                      (range (utxo₀ ∣ txIns))
-    in
-    ∙  ∃[ s ∈ p2ScriptsNeeded ]
-         language s ∈ fromList (PlutusV1 ∷ PlutusV2 ∷ PlutusV3 ∷ []) -- (1)
-    ∙  ¬ (UsesBootstrapAddress utxo₀ txTop) -- (3)
-    ∙  Is-∅ (GuardsOf txTop) -- (4)
-    ∙  RequiredGuardsInTopLevel txTop -- (4)
-    ∙  ∀[ (vk , σ) ∈ vKeySigs ] isSigned vk (txidBytes txId) σ
-    ∙  ∀[ s ∈ p1ScriptsNeeded ] validP1Script vKeyHashesProvided txVldt s
-    ∙  vKeyHashesNeeded ⊆ vKeyHashesProvided
-    ∙  scriptHashesNeeded ⊆ mapˢ hash scriptsProvided
-    ∙  dataHashesNeeded ⊆ mapˢ hash dataProvided
-    ∙  languages p2ScriptsNeeded ⊆ dom (PParams.costmdls (PParamsOf Γ)) ∩ allowedLanguagesLegacyMode txTop utxo -- (2)
-    ∙  txADhash ≡ map hash txAuxData
+  UTXOW-legacy : ∀{b} →
+    ∙  UTXOW-Legacy-Premises b Γ s txTop
     ∙  (Γ , true) ⊢ s ⇀⦇ txTop ,UTXO⦈ s'
       ────────────────────────────────
       Γ ⊢ s ⇀⦇ txTop ,UTXOW⦈ s'
