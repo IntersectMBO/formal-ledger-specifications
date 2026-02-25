@@ -57,7 +57,7 @@ decide-SUBUTXOW-Premises Γ s tx =
 
 decide-Normal-Premises : ∀ Γ s tx → Dec (UTXOW-Normal-Premises Γ s tx)
 decide-Normal-Premises Γ s tx =
-  let wd = collectWitnessData tx Γ in
+  let wd = collectWitnessData false tx Γ in
   let open WitnessData wd in
     case ¿ (UsesBootstrapAddress (UTxOOf Γ) tx → Is-∅ p2ScriptsNeeded) ¿ of λ where
       (no ¬p) → no (λ where (record { bootstrap = p }) → ¬p p)
@@ -87,7 +87,7 @@ decide-Normal-Premises Γ s tx =
 
 decide-Legacy-Premises : ∀ Γ s tx → Dec (UTXOW-Legacy-Premises Γ s tx)
 decide-Legacy-Premises Γ s tx =
-  let wd = collectWitnessDataLegacy tx Γ in
+  let wd = collectWitnessData true tx Γ in
   let open WitnessData wd in
     case ¿ ∃[ s ∈ p2ScriptsNeeded ] language s ∈ fromList (PlutusV1 ∷ PlutusV2 ∷ PlutusV3 ∷ []) ¿ of λ where
       (no ¬p) → no (λ where (record { legacyScripts = p }) → ¬p p)
