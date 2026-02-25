@@ -718,6 +718,67 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#changes-to-alonzo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Changes to Alonzo
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Changes to Alonzo">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#utxos-figure-9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        UTXOS (Figure 9)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#utxo-figure-11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        UTXO (Figure 11)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#utxow-figure-13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        UTXOW (Figure 13)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deleg-figure-18" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DELEG (Figure 18)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -12395,6 +12456,67 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#changes-to-alonzo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Changes to Alonzo
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Changes to Alonzo">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#utxos-figure-9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        UTXOS (Figure 9)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#utxo-figure-11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        UTXO (Figure 11)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#utxow-figure-13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        UTXOW (Figure 13)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deleg-figure-18" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DELEG (Figure 18)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -12475,8 +12597,8 @@ era [[link]][babbage-spec].</p>
 out in the Conway era.</p>
 <h4 id="ledger-figure-31"><code class="AgdaDatatype">LEDGER</code> (Figure 31)<a class="headerlink" href="#ledger-figure-31" title="Permanent link">&para;</a></h4>
 <p>Shelley assumes the transaction is valid</p>
-<p>A use of rule <code class="AgdaDatatype">DELEGS</code> was added in the Conway era.</p>
-<p>A use of rule <code class="AgdaDatatype">CERTS</code> was added in Conway.</p>
+<p>The <code class="AgdaDatatype">DELEGS</code> rule was removed in the Conway era.</p>
+<p>The <code class="AgdaDatatype">CERTS</code> rule was added in Conway.</p>
 <h4 id="utxow-figure-20"><code class="AgdaDatatype">UTXOW</code> (Figure 20)<a class="headerlink" href="#utxow-figure-20" title="Permanent link">&para;</a></h4>
 <p>The quorum check was removed in the Conway era, superseded by
 the new governance mechanism <a href="https://github.com/cardano-foundation/CIPs/tree/master/CIP-1694">[link]</a>.</p>
@@ -12484,11 +12606,30 @@ the new governance mechanism <a href="https://github.com/cardano-foundation/CIPs
 <h4 id="utxo-figure-16"><code class="AgdaDatatype">UTXO</code> (Figure 16)<a class="headerlink" href="#utxo-figure-16" title="Permanent link">&para;</a></h4>
 <p>The use of the <code class="AgdaDataype">PPUP</code> rule was removed in Conway, superseded by
 the new governance mechanism <a href="https://github.com/cardano-foundation/CIPs/tree/master/CIP-1694">[link]</a>.</p>
+<h3 id="changes-to-alonzo">Changes to Alonzo<a class="headerlink" href="#changes-to-alonzo" title="Permanent link">&para;</a></h3>
+<p>We describe changes to the specification <a href="#alonzo-ledger-spec">VK21</a> by rule type.</p>
+<h4 id="utxos-figure-9"><code class="AgdaDatatype">UTXOS</code> (Figure 9)<a class="headerlink" href="#utxos-figure-9" title="Permanent link">&para;</a></h4>
+<p>The constants <code class="AgdaBound">EI</code> and <code class="AgdaBound">SysSt</code> are not declared within the ledger specification. Instead,
+any abstract functions that require these constants must obtain them from the surrounding state, modeled outside the ledger specification.</p>
+<h4 id="utxo-figure-11"><code class="AgdaDatatype">UTXO</code> (Figure 11)<a class="headerlink" href="#utxo-figure-11" title="Permanent link">&para;</a></h4>
+<p>The <code class="AgdaFunction">feesOK</code> function has been inlined in the premises of the rule.</p>
+<p>For the same reasons as in the Shelley specification, the
+<code class="AgdaDatatype">PPUP</code> rule has been removed.</p>
+<h4 id="utxow-figure-13"><code class="AgdaDatatype">UTXOW</code> (Figure 13)<a class="headerlink" href="#utxow-figure-13" title="Permanent link">&para;</a></h4>
+<p>The <code class="AgdaFunction">isTwoPhaseScriptAddress</code> function is replaced with the
+<code class="AgdaFunction">txOutToP2Script</code> function in the premises of the rule.</p>
+<h4 id="deleg-figure-18"><code class="AgdaDatatype">DELEG</code> (Figure 18)<a class="headerlink" href="#deleg-figure-18" title="Permanent link">&para;</a></h4>
+<p>The <code class="AgdaBound">Deleg-Mir</code> and <code class="AgdaBound">Deleg-Mir-Trans</code> cases, and the
+<code class="AgdaDatatype">MIR</code> relation were phased out in the Conway era.</p>
 <h2 class="unnumbered" id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
 <p><strong>[CVG19]</strong> <span id="shelley-ledger-spec"
 label="shelley-ledger-spec"></span> Jared Corduan and Polina Vinogradova
 and Matthias Güdemann. <em>A Formal Specification of the Cardano Ledger</em>.
 2019.</p>
+<p><strong>[VK21]</strong> <span id="alonzo-ledger-spec"
+label="alonzo-ledger-spec"></span> Polina Vinogradova and Andre Knispel.
+<em>A Formal Specification of the Cardano Ledger integrating Plutus Core</em>.
+2021.</p>
 
 
 
