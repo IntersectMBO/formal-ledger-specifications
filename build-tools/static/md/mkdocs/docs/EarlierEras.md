@@ -59,9 +59,9 @@ out in the Conway era.
 
 Shelley assumes the transaction is valid
 
-The use of rule `DELEGS`{.AgdaDatatype} was removed in the Conway era.
+The `DELEGS`{.AgdaDatatype} rule was removed in the Conway era.
 
-A use of rule `CERTS`{.AgdaDatatype} was added in Conway.
+The `CERTS`{.AgdaDatatype} rule was added in Conway.
 
 #### `UTXOW`{.AgdaDatatype} (Figure 20)
 
@@ -82,13 +82,13 @@ We describe changes to the specification [VK21](#alonzo-ledger-spec) by rule typ
 #### `UTXOS`{.AgdaDatatype} (Figure 9)
 
 The constants `EI`{.AgdaBound} and `SysSt`{.AgdaBound} are not declared within the ledger specification. Instead,
-any abstract functions that require these constants must obtain them from the surrounding state modeled beyond the ledger specification.
+any abstract functions that require these constants must obtain them from the surrounding state, modeled outside the ledger specification.
 
 #### `UTXO`{.AgdaDatatype} (Figure 11)
 
 The `feesOK`{.AgdaFunction} function has been inlined in the premises of the rule.
 
-For the same reasons as in the case of the Shelley specification, the
+For the same reasons as in the Shelley specification, the
 `PPUP`{.AgdaDatatype} rule has been removed.
 
 #### `UTXOW`{.AgdaDatatype} (Figure 13)
