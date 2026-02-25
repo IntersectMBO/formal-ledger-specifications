@@ -9,18 +9,76 @@ open import Ledger.Conway.Foreign.HSLedger.BaseTypes
 open import Ledger.Conway.Foreign.HSLedger.NewEpoch
 open import Ledger.Conway.Foreign.HSLedger.Transaction
 
-open import Ledger.Conway.Conformance.Chain it it
-open import Ledger.Conway.Conformance.Chain.Properties it it
+open import Ledger.Conway.Specification.Chain it it using (BHBody; BHeader; Block)
+import Ledger.Conway.Specification.Chain it it as ChainSpec using (ChainState)
+open import Ledger.Conway.Specification.Chain.Properties.Computational it it
+open import Ledger.Conway.Conformance.Epoch it it
+open import Ledger.Conway.Conformance.Equivalence.Convert
+open import Data.String using () renaming (_++_ to _+ˢ_)
+
+record ChainState : Type where
+  field
+    newEpochState  : NewEpochState
+
+
+record HSBlock : Type where
+  field
+    bheader     : BHeader
+    ts          : List Tx
+    bBodySize   : ℕ
+    bBodyHash   : KeyHash
 
 instance
+  HsTy-VKey = autoHsType HSVKey
+  Conv-VKey = autoConvert HSVKey
+
   HsTy-ChainState = autoHsType ChainState
   Conv-ChainState = autoConvert ChainState
 
-  HsTy-Block = autoHsType Block
-  Conv-Block = autoConvert Block
+  HsTy-BHBody = autoHsType BHBody
+  HsTy-BHeader = autoHsType BHeader
+  HsTy-HSBlock = autoHsType HSBlock
+  Conv-BHBody = autoConvert BHBody
+  Conv-BHeader = autoConvert BHeader
+  Conv-HSBlock = autoConvert HSBlock
 
-chain-step : HsType (⊤ → ChainState → Block → ComputationResult String ChainState)
-chain-step = to (compute Computational-CHAIN)
+  ChainStateFromConf : ChainState ⭆ ChainSpec.ChainState
+  ChainStateFromConf .convⁱ _ chainSt =
+    record {newEpochState = conv $ ChainState.newEpochState chainSt}
+
+  ChainStateToConf : ChainSpec.ChainState ⭆ ChainState
+  ChainStateToConf .convⁱ deposits chainSt =
+    record {newEpochState = conv $ ChainSpec.ChainState.newEpochState chainSt}
+
+
+open HSBlock
+
+convBlock : HSBlock → Block
+convBlock b
+  with bBodySize b ≟ BHBody.hBbsize (BHeader.bhbody (bheader b))
+... | no _ = error $ "bBodySize check failed: " +ˢ
+               show (bBodySize b) +ˢ " ≠ " +ˢ
+               show (BHBody.hBbsize (BHeader.bhbody (bheader b)))
+... | yes p
+  with bBodyHash b ≟ BHBody.bhash (BHeader.bhbody (bheader b))
+... | no _ = error $ "BBodyHash check failed: " +ˢ
+               show (bBodyHash b) +ˢ " ≠ " +ˢ
+               show (BHBody.bhash (BHeader.bhbody (bheader b)))
+... | yes q = record
+  { bheader = bheader b
+  ; ts = ts b
+  ; bBodySize = bBodySize b
+  ; ≡-bBodySize = p
+  ; ≡-bBodyHash = q
+  }
+
+chain-step₀ : ⊤ → ChainState → HSBlock → ComputationResult String ChainState
+chain-step₀ t record{newEpochState = nes} hsb =
+  let b = convBlock hsb
+   in conv <$> compute Computational-CHAIN t (ChainSpec.ChainState.constructor (conv nes)) b
+
+chain-step : HsType (⊤ → ChainState → HSBlock → ComputationResult String ChainState)
+chain-step = to chain-step₀
 
 {-# COMPILE GHC chain-step as chainStep #-}
 ```

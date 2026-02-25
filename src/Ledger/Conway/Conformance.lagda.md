@@ -59,8 +59,6 @@ module Ledger.Conway.Conformance where
 
 import Ledger.Conway.Conformance.Certs
 import Ledger.Conway.Conformance.Certs.Properties
-import Ledger.Conway.Conformance.Chain
-import Ledger.Conway.Conformance.Chain.Properties
 import Ledger.Conway.Conformance.Equivalence
 import Ledger.Conway.Conformance.Epoch
 import Ledger.Conway.Conformance.Epoch.Properties

@@ -291,9 +291,6 @@
         - Certs: Ledger.Conway.Conformance.Certs.md
         - Certs/:
           - Properties: Ledger.Conway.Conformance.Certs.Properties.md
-        - Chain: Ledger.Conway.Conformance.Chain.md
-        - Chain/:
-          - Properties: Ledger.Conway.Conformance.Chain.Properties.md
         - Epoch: Ledger.Conway.Conformance.Epoch.md
         - Epoch/:
           - Properties: Ledger.Conway.Conformance.Epoch.Properties.md

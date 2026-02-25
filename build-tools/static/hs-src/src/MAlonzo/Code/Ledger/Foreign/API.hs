@@ -16,7 +16,7 @@ import MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Transaction       as X
 import MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Cert              as X
   (certStep, certsStep, CertState(..))
 import MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Chain             as X
-  (ChainState(..), Block(..), chainStep)
+  (ChainState(..), HSBlock(..), chainStep)
 import MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs             as X
   ( StakePoolParams(..), PState(..), DelegEnv(..), CertEnv(..), DState(..), DCert(..), GState(..)
   , delegStep, govCertStep, poolStep, DepositPurpose(..))
