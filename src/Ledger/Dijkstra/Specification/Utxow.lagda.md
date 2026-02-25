@@ -193,8 +193,6 @@ record UTXOW-Normal-Premises (Γ : UTxOEnv) (s : UTxOState) (txTop : TopLevelTx)
     languageV4Only      : languages p2ScriptsNeeded ⊆ dom (PParams.costmdls (PParamsOf Γ)) ∩ ❴ PlutusV4 ❵
     auxDataHashValid    : TxBody.txADhash (Tx.txBody txTop) ≡ map hash (Tx.txAuxData txTop)
 
-(??)         p2ScriptsNeeded : ℙ P2Script
-(??)         p2ScriptsNeeded = mapPartial toP2Script scriptsNeeded
 
 -- Define Named Premise Records (replaces long tuples and makes Computational instance much faster).
 record UTXOW-Legacy-Premises (Γ : UTxOEnv) (s : UTxOState) (txTop : TopLevelTx) : Type where
