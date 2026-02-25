@@ -59,9 +59,9 @@ out in the Conway era.
 
 Shelley assumes the transaction is valid
 
-A use of rule `DELEGS`{.AgdaDatatype} was added in the Conway era.
+The `DELEGS`{.AgdaDatatype} rule was removed in the Conway era.
 
-A use of rule `CERTS`{.AgdaDatatype} was added in Conway.
+The `CERTS`{.AgdaDatatype} rule was added in Conway.
 
 #### `UTXOW`{.AgdaDatatype} (Figure 20)
 
@@ -75,12 +75,44 @@ The checks about required scripts now account for reference scripts.
 The use of the `PPUP`{.AgdaDataype} rule was removed in Conway, superseded by
 the new governance mechanism [[link]][conway-cip].
 
+### Changes to Alonzo
+
+We describe changes to the specification [VK21](#alonzo-ledger-spec) by rule type.
+
+#### `UTXOS`{.AgdaDatatype} (Figure 9)
+
+The constants `EI`{.AgdaBound} and `SysSt`{.AgdaBound} are not declared within the ledger specification. Instead,
+any abstract functions that require these constants must obtain them from the surrounding state, modeled outside the ledger specification.
+
+#### `UTXO`{.AgdaDatatype} (Figure 11)
+
+The `feesOK`{.AgdaFunction} function has been inlined in the premises of the rule.
+
+For the same reasons as in the Shelley specification, the
+`PPUP`{.AgdaDatatype} rule has been removed.
+
+#### `UTXOW`{.AgdaDatatype} (Figure 13)
+
+The `isTwoPhaseScriptAddress`{.AgdaFunction} function is replaced with the
+`txOutToP2Script`{.AgdaFunction} function in the premises of the rule.
+
+#### `DELEG`{.AgdaDatatype} (Figure 18)
+
+The `Deleg-Mir`{.AgdaBound} and `Deleg-Mir-Trans`{.AgdaBound} cases, and the
+`MIR`{.AgdaDatatype} relation were phased out in the Conway era.
+
+
 ## References {#references .unnumbered}
 
 **\[CVG19\]** <span id="shelley-ledger-spec"
 label="shelley-ledger-spec"></span> Jared Corduan and Polina Vinogradova
 and Matthias Güdemann. *A Formal Specification of the Cardano Ledger*.
 2019.
+
+**\[VK21\]** <span id="alonzo-ledger-spec"
+label="alonzo-ledger-spec"></span> Polina Vinogradova and Andre Knispel.
+*A Formal Specification of the Cardano Ledger integrating Plutus Core*.
+2021.
 
 [consensus-spec]: https://github.com/IntersectMBO/ouroboros-consensus/tree/d3fa7ecf1e230d54b08bcd6aa96c4c65db5f08e7/docs/agda-spec
 [babagge-spec]: https://github.com/intersectmbo/cardano-ledger/releases/latest/download/babbage-ledger.pdf
