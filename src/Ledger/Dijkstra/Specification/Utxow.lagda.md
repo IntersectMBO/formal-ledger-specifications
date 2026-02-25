@@ -159,7 +159,7 @@ collectWitnessData tx Γ = record
   }
 
 -- Define Named Premise Records (replaces long tuples and makes Computational instance much faster).
-record UTXOW-Normal-Premises (V1-V3-allowed : Bool) (Γ : UTxOEnv) (s : UTxOState) (txTop : TopLevelTx) : Type where
+record UTXOW-Normal-Premises (Γ : UTxOEnv) (s : UTxOState) (txTop : TopLevelTx) : Type where
   constructor mkNormalPremises
 
   -- Re-use our centralized witness collector
@@ -179,7 +179,6 @@ record UTXOW-Normal-Premises (V1-V3-allowed : Bool) (Γ : UTxOEnv) (s : UTxOStat
     dataHashesSubset    : dataHashesNeeded ⊆ mapˢ hash dataProvided
     -- (1) Plutus V4 Enforcement
     languageV4Only      : languages p2ScriptsNeeded ⊆ dom (PParams.costmdls (PParamsOf Γ)) ∩ ❴ PlutusV4 ❵
-    v1-v3-allowed       : V1-V3-allowed ≡ false -- Era toggle
     auxDataHashValid    : TxBody.txADhash (Tx.txBody txTop) ≡ map hash (Tx.txAuxData txTop)
 
 
@@ -194,7 +193,7 @@ collectWitnessDataLegacy tx Γ = record
 
 
 -- Define Named Premise Records (replaces long tuples and makes Computational instance much faster).
-record UTXOW-Legacy-Premises (V1-V3-allowed : Bool) (Γ : UTxOEnv) (s : UTxOState) (txTop : TopLevelTx) : Type where
+record UTXOW-Legacy-Premises (Γ : UTxOEnv) (s : UTxOState) (txTop : TopLevelTx) : Type where
   constructor mkLegacyPremises
 
   wd = collectWitnessDataLegacy txTop Γ
@@ -216,7 +215,6 @@ record UTXOW-Legacy-Premises (V1-V3-allowed : Bool) (Γ : UTxOEnv) (s : UTxOStat
     dataHashesSubset    : dataHashesNeeded ⊆ mapˢ hash dataProvided
     -- (2) Version-restricted languages
     legacyLanguages     : languages p2ScriptsNeeded ⊆ dom (PParams.costmdls (PParamsOf Γ)) ∩ allowedLanguagesLegacyMode txTop (UTxOOf Γ)
-    v1-v3-allowed       : V1-V3-allowed ≡ true -- Era toggle
     auxDataHashValid    : TxBody.txADhash (Tx.txBody txTop) ≡ map hash (Tx.txAuxData txTop)
 
 record WitnessDataSubTx (tx : Tx ℓ) (utxo₀ : UTxO) (Γ : SubUTxOEnv) : Type where
@@ -285,7 +283,7 @@ record SUBUTXOW-Premises (Γ : SubUTxOEnv) (s : UTxOState) (tx : SubLevelTx) : T
 
 ## The <span class="AgdaDatatype">SUBUTXOW</span> Transition System {#sec:the-subutxow-transition-system}
 
-- Sub-transactions cannot reference or use bootstrap addresses
+Sub-transactions cannot reference or use bootstrap addresses
 
 1. All needed phase-2 scripts use Plutus language V4.
 
@@ -302,12 +300,17 @@ data _⊢_⇀⦇_,SUBUTXOW⦈_ : SubUTxOEnv → UTxOState → SubLevelTx → UTx
 ## The <span class="AgdaDatatype">UTXOW</span> Transition System {#sec:the-utxow-transition-system}
 
 ```agda
-data _⊢_⇀⦇_,UTXOW⦈_ : UTxOEnv → UTxOState → TopLevelTx → UTxOState → Type where
+data _⊢_⇀⦇_,UTXOW⦈_ : UTxOEnv × Bool → UTxOState → TopLevelTx → UTxOState → Type where
 ```
 
 In Dijkstra, the UTXOW transition system for the top-level transaction has two
-different operating modes, normal mode and legacy mode. These correspond to the
-rules `UTXOW-normal` and `UTXOW-legacy`.
+different operating modes, **normal mode** and **legacy mode**. These correspond to
+the rules `UTXOW-normal`{.AgdaInductiveConstructor} and
+`UTXOW-legacy`{.AgdaInductiveConstructor}.
+
+The mode is denoted by a Boolean in the second component of the environment,
+(`Γ`{.AgdaBound} , `legacyMode`{.AgdaBound}), so a computation can select one
+mode up front rather than deciding both.
 
 ### Normal Mode
 
@@ -320,11 +323,11 @@ rules `UTXOW-normal` and `UTXOW-legacy`.
    guards at the top-level.
 
 ```agda
-  UTXOW-normal : ∀{b} →
-    ∙  UTXOW-Normal-Premises b Γ s txTop
-    ∙  (Γ , false) ⊢ s ⇀⦇ txTop ,UTXO⦈ s'
-       ────────────────────────────────
-       Γ ⊢ s ⇀⦇ txTop ,UTXOW⦈ s'
+  UTXOW-normal :
+    ∙ UTXOW-Normal-Premises Γ s txTop
+    ∙ (Γ , false) ⊢ s ⇀⦇ txTop ,UTXO⦈ s'
+      ────────────────────────────────
+      (Γ , false) ⊢ s ⇀⦇ txTop ,UTXOW⦈ s'
 ```
 
 ### Legacy mode
@@ -344,11 +347,11 @@ rules `UTXOW-normal` and `UTXOW-legacy`.
    are also the empty set.
 
 ```agda
-  UTXOW-legacy : ∀{b} →
-    ∙  UTXOW-Legacy-Premises b Γ s txTop
-    ∙  (Γ , true) ⊢ s ⇀⦇ txTop ,UTXO⦈ s'
+  UTXOW-legacy :
+    ∙ UTXOW-Legacy-Premises Γ s txTop
+    ∙ (Γ , true) ⊢ s ⇀⦇ txTop ,UTXO⦈ s'
       ────────────────────────────────
-      Γ ⊢ s ⇀⦇ txTop ,UTXOW⦈ s'
+      (Γ , true) ⊢ s ⇀⦇ txTop ,UTXOW⦈ s'
 ```
 
 <!--
