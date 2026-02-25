@@ -113,20 +113,19 @@ allowedLanguagesLegacyMode tx utxo =
 
 <!--
 ```agda
-------------------------------------------------------------------
--- Simplifying assumptions for the computational properties
-------------------------------------------------------------------
-
--- 1. Consolidate Witnessing Logic into a single Record
+-- Consolidate Witnessing Logic into a single Record
 record WitnessData (tx : Tx ℓ) (Γ : UTxOEnv) : Type where
   constructor mkWitnessData
   open Tx tx; open TxBody txBody; open TxWitnesses txWitnesses
 
   field
-    vKeyHashesProvided : ℙ KeyHash
-    scriptsProvided    : ℙ Script
-    dataProvided       : ℙ Data
-    credentialsNeeded  : ℙ Credential
+    dataProvided     : ℙ Data
+    scriptsProvided  : ℙ Script
+
+  credentialsNeeded : ℙ Credential
+  credentialsNeeded = mapˢ proj₂ (credsNeeded (UTxOOf Γ) tx)
+  vKeyHashesProvided : ℙ KeyHash
+  vKeyHashesProvided = mapˢ hash (dom (TxWitnesses.vKeySigs (Tx.txWitnesses tx) ))
 
   vKeyHashesNeeded : ℙ KeyHash
   vKeyHashesNeeded = mapPartial isKeyHashObj credentialsNeeded
@@ -150,20 +149,23 @@ record WitnessData (tx : Tx ℓ) (Γ : UTxOEnv) : Type where
                   _  ← lookupHash sh p2ScriptsNeeded
                   d >>= isInj₂) (range (UTxOOf Γ ∣ txIns))
 
-collectWitnessData : (tx : Tx ℓ) (Γ : UTxOEnv) → WitnessData tx Γ
-collectWitnessData tx Γ = record
-  { vKeyHashesProvided = mapˢ hash (dom (TxWitnesses.vKeySigs (Tx.txWitnesses tx) ))
-  ; scriptsProvided = ScriptPoolOf Γ
-  ; dataProvided = range (DataPoolOf Γ)
-  ; credentialsNeeded = mapˢ proj₂ (credsNeeded (UTxOOf Γ) tx)
-  }
+-- The WitnessData record type is inhabited in one of two ways:
+-- 1. Normal mode (legacy=false) uses the DataPool and ScriptPool;
+-- 2. Legacy mode (legacy=true) uses the UTxO to determine data and scripts.
+collectWitnessData : (legacy : Bool) (tx : Tx ℓ) (Γ : UTxOEnv) → WitnessData tx Γ
+collectWitnessData legacy tx Γ .WitnessData.dataProvided =
+  if legacy  then getTxData tx (UTxOOf Γ)
+             else range (DataPoolOf Γ)
+collectWitnessData legacy tx Γ .WitnessData.scriptsProvided =
+  if legacy  then witnessScripts tx ∪ spendScripts tx (UTxOOf Γ) ∪ referenceScripts tx (UTxOOf Γ)
+             else ScriptPoolOf Γ
 
 -- Define Named Premise Records (replaces long tuples and makes Computational instance much faster).
 record UTXOW-Normal-Premises (Γ : UTxOEnv) (s : UTxOState) (txTop : TopLevelTx) : Type where
   constructor mkNormalPremises
 
-  -- Re-use our centralized witness collector
-  wd = collectWitnessData txTop Γ
+  -- centralized witness collector with legacy=false
+  wd = collectWitnessData false txTop Γ
   open WitnessData wd
 
   field
@@ -182,21 +184,12 @@ record UTXOW-Normal-Premises (Γ : UTxOEnv) (s : UTxOState) (txTop : TopLevelTx)
     auxDataHashValid    : TxBody.txADhash (Tx.txBody txTop) ≡ map hash (Tx.txAuxData txTop)
 
 
--- Need another version for legacy because of different definition of scriptsProvided.
-collectWitnessDataLegacy : (tx : Tx ℓ) (Γ : UTxOEnv) → WitnessData tx Γ
-collectWitnessDataLegacy tx Γ = record
-  { vKeyHashesProvided = mapˢ hash (dom (TxWitnesses.vKeySigs (Tx.txWitnesses tx) ))
-  ; scriptsProvided = witnessScripts tx ∪ spendScripts tx (UTxOOf Γ) ∪ referenceScripts tx (UTxOOf Γ)
-  ; dataProvided = getTxData tx (UTxOOf Γ)
-  ; credentialsNeeded = mapˢ proj₂ (credsNeeded (UTxOOf Γ) tx)
-  }
-
-
 -- Define Named Premise Records (replaces long tuples and makes Computational instance much faster).
 record UTXOW-Legacy-Premises (Γ : UTxOEnv) (s : UTxOState) (txTop : TopLevelTx) : Type where
   constructor mkLegacyPremises
 
-  wd = collectWitnessDataLegacy txTop Γ
+  -- centralized witness collector with legacy=true
+  wd = collectWitnessData true txTop Γ
   open WitnessData wd
 
   field
