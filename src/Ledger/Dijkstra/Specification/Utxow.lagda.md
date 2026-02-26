@@ -160,6 +160,15 @@ collectWitnessData legacy tx Γ .WitnessData.scriptsProvided =
   if legacy  then witnessScripts tx ∪ spendScripts tx (UTxOOf Γ) ∪ referenceScripts tx (UTxOOf Γ)
              else ScriptPoolOf Γ
 
+-- Mode trigger: legacy mode is selected iff at least one *needed* phase-2 script
+-- (based on legacy=true witness collection) uses PlutusV1–V3.
+LegacyTrigger : UTxOEnv → TopLevelTx → Type
+LegacyTrigger Γ txTop = ∃[ s ∈ p2ScriptsNeeded ] language s ∈ fromList (PlutusV1 ∷ PlutusV2 ∷ PlutusV3 ∷ [])
+  where
+  wd : WitnessData txTop Γ
+  wd = collectWitnessData true txTop Γ
+  open WitnessData wd
+
 -- Define Named Premise Records (replaces long tuples and makes Computational instance much faster).
 record UTXOW-Normal-Premises (Γ : UTxOEnv) (s : UTxOState) (txTop : TopLevelTx) : Type where
   constructor mkNormalPremises
@@ -193,8 +202,6 @@ record UTXOW-Legacy-Premises (Γ : UTxOEnv) (s : UTxOState) (txTop : TopLevelTx)
   open WitnessData wd
 
   field
-    -- (1) At least one legacy script must exist to trigger this mode
-    legacyScripts       : ∃[ s ∈ p2ScriptsNeeded ] language s ∈ fromList (PlutusV1 ∷ PlutusV2 ∷ PlutusV3 ∷ [])
     -- (3) Legacy mode cannot handle bootstrap addresses
     noBootstrap         : ¬ (UsesBootstrapAddress (UTxOOf Γ) txTop)
     -- (4) Guard sets must be empty
@@ -293,7 +300,7 @@ data _⊢_⇀⦇_,SUBUTXOW⦈_ : SubUTxOEnv → UTxOState → SubLevelTx → UTx
 ## The <span class="AgdaDatatype">UTXOW</span> Transition System {#sec:the-utxow-transition-system}
 
 ```agda
-data _⊢_⇀⦇_,UTXOW⦈_ : UTxOEnv × Bool → UTxOState → TopLevelTx → UTxOState → Type where
+data _⊢_⇀⦇_,UTXOW⦈_ : UTxOEnv → UTxOState → TopLevelTx → UTxOState → Type where
 ```
 
 In Dijkstra, the UTXOW transition system for the top-level transaction has two
@@ -316,11 +323,13 @@ mode up front rather than deciding both.
    guards at the top-level.
 
 ```agda
+  -- Normal branch is taken exactly when LegacyTrigger does *not* hold.
   UTXOW-normal :
+    ∙ (¬ LegacyTrigger Γ txTop)
     ∙ UTXOW-Normal-Premises Γ s txTop
     ∙ (Γ , false) ⊢ s ⇀⦇ txTop ,UTXO⦈ s'
       ────────────────────────────────
-      (Γ , false) ⊢ s ⇀⦇ txTop ,UTXOW⦈ s'
+      Γ ⊢ s ⇀⦇ txTop ,UTXOW⦈ s'
 ```
 
 ### Legacy mode
@@ -340,11 +349,13 @@ mode up front rather than deciding both.
    are also the empty set.
 
 ```agda
+  -- Legacy branch is taken exactly when LegacyTrigger holds.
   UTXOW-legacy :
+    ∙ LegacyTrigger Γ txTop
     ∙ UTXOW-Legacy-Premises Γ s txTop
     ∙ (Γ , true) ⊢ s ⇀⦇ txTop ,UTXO⦈ s'
       ────────────────────────────────
-      (Γ , true) ⊢ s ⇀⦇ txTop ,UTXOW⦈ s'
+      Γ ⊢ s ⇀⦇ txTop ,UTXOW⦈ s'
 ```
 
 <!--
@@ -352,6 +363,7 @@ mode up front rather than deciding both.
 unquoteDecl UTXOW-normal-premises = genPremises UTXOW-normal-premises (quote UTXOW-normal)
 unquoteDecl UTXOW-legacy-premises = genPremises UTXOW-legacy-premises (quote UTXOW-legacy)
 unquoteDecl SUBUTXOW-premises = genPremises SUBUTXOW-premises (quote SUBUTXOW)
+pattern UTXOW-normal-⋯ p₁ p₂ h = UTXOW-normal (p₁ , p₂ , h)
 pattern SUBUTXOW-⋯ p₁ p₂ p₃ p₄ p₅ p₆ p₇ h = SUBUTXOW (p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , h)
 ```
 -->

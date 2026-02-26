@@ -55,6 +55,14 @@ decide-SUBUTXOW-Premises Γ s tx =
                                            ; auxDataHashValid = adOk })
 
 
+decide-LegacyTrigger : (Γ : UTxOEnv) (txTop : TopLevelTx) → Dec (LegacyTrigger Γ txTop)
+decide-LegacyTrigger Γ txTop = ¿ ∃[ s ∈ p2ScriptsNeeded ] language s ∈ fromList (PlutusV1 ∷ PlutusV2 ∷ PlutusV3 ∷ []) ¿
+  where
+  wd : WitnessData txTop Γ
+  wd = collectWitnessData true txTop Γ
+  open WitnessData wd
+
+
 decide-Normal-Premises : ∀ Γ s tx → Dec (UTXOW-Normal-Premises Γ s tx)
 decide-Normal-Premises Γ s tx =
   let wd = collectWitnessData false tx Γ in
@@ -89,9 +97,7 @@ decide-Legacy-Premises : ∀ Γ s tx → Dec (UTXOW-Legacy-Premises Γ s tx)
 decide-Legacy-Premises Γ s tx =
   let wd = collectWitnessData true tx Γ in
   let open WitnessData wd in
-    case ¿ ∃[ s ∈ p2ScriptsNeeded ] language s ∈ fromList (PlutusV1 ∷ PlutusV2 ∷ PlutusV3 ∷ []) ¿ of λ where
-      (no ¬p) → no (λ where (record { legacyScripts = p }) → ¬p p)
-      (yes legOk) → case ¿ ¬ (UsesBootstrapAddress (UTxOOf Γ) tx) ¿ of λ where
+    case ¿ ¬ (UsesBootstrapAddress (UTxOOf Γ) tx) ¿ of λ where
         (no ¬p) → no (λ where (record { noBootstrap = p }) → ¬p p)
         (yes noBootOk) → case ¿ Is-∅ (GuardsOf tx) ¿ of λ where
           (no ¬p) → no (λ where (record { noGuards = p }) → ¬p p)
@@ -111,7 +117,7 @@ decide-Legacy-Premises Γ s tx =
                         (no ¬p) → no (λ where (record { legacyLanguages = p }) → ¬p (λ {a} → p))
                         (yes legLangOk) → case ¿ TxBody.txADhash (Tx.txBody tx) ≡ map hash (Tx.txAuxData tx) ¿ of λ where
                           (no ¬p) → no (λ where (record { auxDataHashValid = p }) → ¬p p)
-                          (yes adOk) → yes (record { legacyScripts = legOk ; noBootstrap = noBootOk
+                          (yes adOk) → yes (record { noBootstrap = noBootOk
                                                    ; noGuards = noGuardsOk ; guardsPolicy = guardsOk
                                                    ; sigsValid = sigsOk ; p1ScriptsValid = p1Ok
                                                    ; vKeyHashesSubset = λ {a} → vkhOk {a}
@@ -150,32 +156,35 @@ instance
     open Computational Computational-UTXO
       renaming (computeProof to computeP; completeness to completeP)
 
-    computeProof : (Γ×b : UTxOEnv × Bool) (s : UTxOState) (tx : TopLevelTx)
-      → ComputationResult String (∃[ s' ] (Γ×b ⊢ s ⇀⦇ tx ,UTXOW⦈ s'))
+    computeProof : (Γ : UTxOEnv) (s : UTxOState) (tx : TopLevelTx)
+      → ComputationResult String (∃[ s' ] (Γ ⊢ s ⇀⦇ tx ,UTXOW⦈ s'))
 
-    computeProof (Γ , false) s tx with decide-Normal-Premises Γ s tx
-    ... | no  _  = failure "UTXOW failed: normal premises"
-    ... | yes pN =
-      map (λ where (s' , hU) → s' , UTXOW-normal (pN , hU)) (computeP (Γ , false) s tx)
+    computeProof Γ s tx with decide-LegacyTrigger Γ tx
+    ... | no notrig = case (decide-Normal-Premises Γ s tx) of λ where
+      (no  _) → failure "UTXOW failed: normal premises"
+      (yes pN) → map (λ where (s' , hU) → s' , UTXOW-normal (notrig , pN , hU)) (computeP (Γ , false) s tx)
+    ... | yes trig = case (decide-Legacy-Premises Γ s tx) of λ where
+      (no  _) → failure "UTXOW failed: legacy premises"
+      (yes pL) → map (λ where (s' , hU) → s' , UTXOW-legacy (trig , pL , hU)) (computeP (Γ , true) s tx)
 
-    computeProof (Γ , true) s tx with decide-Legacy-Premises Γ s tx
-    ... | no  _  = failure "UTXOW failed: legacy premises"
-    ... | yes pL =
-      map (λ where (s' , hU) → s' , UTXOW-legacy (pL , hU)) (computeP (Γ , true) s tx)
+    completeness : (Γ : UTxOEnv) (s : UTxOState) (tx : TopLevelTx) (s' : UTxOState)
+      → Γ ⊢ s ⇀⦇ tx ,UTXOW⦈ s' → map proj₁ (computeProof Γ s tx) ≡ success s'
 
-
-    completeness : (Γ×b : UTxOEnv × Bool) (s : UTxOState) (tx : TopLevelTx) (s' : UTxOState)
-      → Γ×b ⊢ s ⇀⦇ tx ,UTXOW⦈ s' → map proj₁ (computeProof Γ×b s tx) ≡ success s'
-
-    completeness (Γ , false) s tx s' (UTXOW-normal (pN , hU)) with decide-Normal-Premises Γ s tx
-    ... | no ¬pN = ⊥-elim (¬pN pN)
-    ... | yes _ with computeP (Γ , false) s tx | completeP (Γ , false) s tx s' hU
+    completeness Γ s tx s' (UTXOW-legacy (trig , pL , hU))
+      with decide-LegacyTrigger Γ tx
+    ... | no notrig = ⊥-elim (notrig trig)
+    ... | yes _ with decide-Legacy-Premises Γ s tx
+    ... | no ¬pL = ⊥-elim (¬pL pL)
+    ... | yes _ with computeP (Γ , true) s tx | completeP (Γ , true) s tx s' hU
     ... | success _ | refl = refl
     ... | failure _ | ()
 
-    completeness (Γ , true) s tx s' (UTXOW-legacy (pL , hU)) with decide-Legacy-Premises Γ s tx
-    ... | no ¬pL = ⊥-elim (¬pL pL)
-    ... | yes _ with computeP (Γ , true) s tx | completeP (Γ , true) s tx s' hU
+    completeness Γ s tx s' (UTXOW-normal (notrig , pN , hU))
+      with decide-LegacyTrigger Γ tx
+    ... | yes trig = ⊥-elim (notrig trig)
+    ... | no _ with decide-Normal-Premises Γ s tx
+    ... | no ¬pN = ⊥-elim (¬pN pN)
+    ... | yes _ with computeP (Γ , false) s tx | completeP (Γ , false) s tx s' hU
     ... | success _ | refl = refl
     ... | failure _ | ()
 ```
