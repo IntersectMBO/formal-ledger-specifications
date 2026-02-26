@@ -210,13 +210,13 @@ There are two ways to do this.
 1.  **With Nix**
 
     Enter the command `nix build .#mkdocs` then open the
-    file `result/site/index.html` in a browser. This type-checks the
+    file `result/mkdocs/index.html` in a browser. This type-checks the
     Agda code, and generates the HTML documentation from scratch.
 
     **Note**. This currently works in Chrome but may not work in Brave or
     Firefox.  If you want to use one of those browsers to view the generated
     documentation, you can run a local server on the result,
-    `cd result/site; python3 -m http.server`, and then point your browser
+    `cd result/mkdocs; python3 -m http.server`, and then point your browser
     to <http://127.0.0.1:8000/>.
 
 2.  **Manually**
@@ -423,7 +423,9 @@ Our CI/CD pipeline, defined in `.github/workflows/`, automates the building and 
 
 + **PDF Generation Note**
 
-   The CI workflow **does not** build PDFs from the current source. Instead, it checks out the `legacy-latex-artifacts` branch and copies the PDFs from there. This is a temporary measure to ensure the stability of the published documents. You can still build PDFs locally from source using the commands described above.
+   The CI workflow **does not** build PDFs from the current source. Instead, it
+   checks out the `legacy-latex-artifacts` branch and copies the PDFs from
+   there.
 
 ---
 
