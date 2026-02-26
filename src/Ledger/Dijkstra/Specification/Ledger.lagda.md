@@ -65,8 +65,19 @@ instance
   HasPParams-LedgerEnv : HasPParams LedgerEnv
   HasPParams-LedgerEnv .PParamsOf = LedgerEnv.pparams
 
-  HasPParams-SubLedgerEnv : HasPParams LedgerEnv
-  HasPParams-SubLedgerEnv .PParamsOf = LedgerEnv.pparams
+  HasEnactState-LedgerEnv : HasEnactState LedgerEnv
+  HasEnactState-LedgerEnv .EnactStateOf = LedgerEnv.enactState
+
+  HasPParams-SubLedgerEnv : HasPParams SubLedgerEnv
+  HasPParams-SubLedgerEnv .PParamsOf = SubLedgerEnv.pparams
+
+  HasEnactState-SubLedgerEnv : HasEnactState SubLedgerEnv
+  HasEnactState-SubLedgerEnv .EnactStateOf = SubLedgerEnv.enactState
+
+  HasUTxO-SubLedgerEnv : HasUTxO SubLedgerEnv
+  HasUTxO-SubLedgerEnv .UTxOOf = SubLedgerEnv.utxo₀
+
+
 ```
 -->
 ```agda
@@ -89,54 +100,46 @@ record HasLedgerState {a} (A : Type a) : Type a where
   field LedgerStateOf : A → LedgerState
 open HasLedgerState ⦃...⦄ public
 
--- instance
---   HasUTxOState-LedgerState : HasUTxOState LedgerState
---   HasUTxOState-LedgerState .UTxOStateOf = LedgerState.utxoSt
-
---   HasUTxO-LedgerState : HasUTxO LedgerState
---   HasUTxO-LedgerState .UTxOOf = UTxOOf ∘ UTxOStateOf
-
---   HasGovState-LedgerState : HasGovState LedgerState
---   HasGovState-LedgerState .GovStateOf = LedgerState.govSt
-
---   HasCertState-LedgerState : HasCertState LedgerState
---   HasCertState-LedgerState .CertStateOf = LedgerState.certState
-
---   HasDeposits-LedgerState : HasDeposits LedgerState
---   HasDeposits-LedgerState .DepositsOf = DepositsOf ∘ UTxOStateOf
-
---   HasPools-LedgerState : HasPools LedgerState
---   HasPools-LedgerState .PoolsOf = PoolsOf ∘ CertStateOf
-
---   HasGState-LedgerState : HasGState LedgerState
---   HasGState-LedgerState .GStateOf = GStateOf ∘ CertStateOf
-
---   HasDState-LedgerState : HasDState LedgerState
---   HasDState-LedgerState .DStateOf = DStateOf ∘ CertStateOf
-
---   HasPState-LedgerState : HasPState LedgerState
---   HasPState-LedgerState .PStateOf = PStateOf ∘ CertStateOf
-
---   HasVoteDelegs-LedgerState : HasVoteDelegs LedgerState
---   HasVoteDelegs-LedgerState .VoteDelegsOf = VoteDelegsOf ∘ DStateOf ∘ CertStateOf
-
---   HasDonations-LedgerState : HasDonations LedgerState
---   HasDonations-LedgerState .DonationsOf = DonationsOf ∘ UTxOStateOf
-
---   HasFees-LedgerState : HasFees LedgerState
---   HasFees-LedgerState .FeesOf = FeesOf ∘ UTxOStateOf
-
---   HasCCHotKeys-LedgerState : HasCCHotKeys LedgerState
---   HasCCHotKeys-LedgerState .CCHotKeysOf = CCHotKeysOf ∘ GStateOf
-
---   HasDReps-LedgerState : HasDReps LedgerState
---   HasDReps-LedgerState .DRepsOf = DRepsOf ∘ CertStateOf
-
--- open CertState
--- open DState
--- open GovVotes
-
 instance
+  HasUTxOState-LedgerState : HasUTxOState LedgerState
+  HasUTxOState-LedgerState .UTxOStateOf = LedgerState.utxoSt
+
+  HasUTxO-LedgerState : HasUTxO LedgerState
+  HasUTxO-LedgerState .UTxOOf = UTxOOf ∘ UTxOStateOf
+
+  HasGovState-LedgerState : HasGovState LedgerState
+  HasGovState-LedgerState .GovStateOf = LedgerState.govSt
+
+  HasCertState-LedgerState : HasCertState LedgerState
+  HasCertState-LedgerState .CertStateOf = LedgerState.certState
+
+  HasPools-LedgerState : HasPools LedgerState
+  HasPools-LedgerState .PoolsOf = PoolsOf ∘ CertStateOf
+
+  HasGState-LedgerState : HasGState LedgerState
+  HasGState-LedgerState .GStateOf = GStateOf ∘ CertStateOf
+
+  HasDState-LedgerState : HasDState LedgerState
+  HasDState-LedgerState .DStateOf = DStateOf ∘ CertStateOf
+
+  HasPState-LedgerState : HasPState LedgerState
+  HasPState-LedgerState .PStateOf = PStateOf ∘ CertStateOf
+
+  HasVoteDelegs-LedgerState : HasVoteDelegs LedgerState
+  HasVoteDelegs-LedgerState .VoteDelegsOf = VoteDelegsOf ∘ DStateOf ∘ CertStateOf
+
+  HasDonations-LedgerState : HasDonations LedgerState
+  HasDonations-LedgerState .DonationsOf = DonationsOf ∘ UTxOStateOf
+
+  HasFees-LedgerState : HasFees LedgerState
+  HasFees-LedgerState .FeesOf = FeesOf ∘ UTxOStateOf
+
+  HasCCHotKeys-LedgerState : HasCCHotKeys LedgerState
+  HasCCHotKeys-LedgerState .CCHotKeysOf = CCHotKeysOf ∘ GStateOf
+
+  HasDReps-LedgerState : HasDReps LedgerState
+  HasDReps-LedgerState .DRepsOf = DRepsOf ∘ CertStateOf
+
   unquoteDecl HasCast-LedgerState = derive-HasCast
     ((quote LedgerState , HasCast-LedgerState) ∷ [])
 ```
@@ -289,7 +292,9 @@ data _⊢_⇀⦇_,SUBLEDGER⦈_ : SubLedgerEnv → LedgerState → SubLevelTx �
 
   SUBLEDGER-I :
       ∙ isTopLevelValid ≡ false
-      ∙ ⟦ slot , pp , treasury , utxo₀ , isTopLevelValid , allScripts , allData ⟧ ⊢ utxoState₀ ⇀⦇ stx ,SUBUTXOW⦈ utxoState₀
+        -- When `isTopLevelValid ≡ false`, `SUBLEDGER` is definitionally a no-op, so
+        -- remove the following premise:
+        -- ∙ ⟦ slot , pp , treasury , utxo₀ , isTopLevelValid , allScripts , allData ⟧ ⊢ utxoState₀ ⇀⦇ stx ,SUBUTXOW⦈ utxoState₀
         ────────────────────────────────
         ⟦ slot , ppolicy , pp , enactState , treasury , utxo₀ , isTopLevelValid , allScripts , allData ⟧ ⊢ ⟦ utxoState₀ , govState₀ , certState₀ ⟧ ⇀⦇ stx ,SUBLEDGER⦈ ⟦ utxoState₀ , govState₀ , certState₀ ⟧
 
@@ -332,7 +337,9 @@ data _⊢_⇀⦇_,LEDGER⦈_ : LedgerEnv → LedgerState → TopLevelTx → Ledg
          allData = setToMap (mapˢ < hash , id > (getAllData tx utxo₀))
     in
       ∙ IsValidFlagOf tx ≡ false
-      ∙ ⟦ slot , ppolicy , pp , enactState , treasury , utxo₀ , IsValidFlagOf tx , allScripts , allData ⟧ ⊢ ⟦ utxoState₀ , govState₀ , certState₀ ⟧ ⇀⦇ SubTransactionsOf tx ,SUBLEDGERS⦈ ⟦ utxoState₀ , govState₀ , certState₀ ⟧
+        -- When `IsValidFlagOf tx ≡ false`, `LEDGER` skips `SUBLEDGERS` entirely (equivalent to “no-op on subtx list”),
+        -- so remove the following premise:
+        -- ∙ ⟦ slot , ppolicy , pp , enactState , treasury , utxo₀ , IsValidFlagOf tx , allScripts , allData ⟧ ⊢ ⟦ utxoState₀ , govState₀ , certState₀ ⟧ ⇀⦇ SubTransactionsOf tx ,SUBLEDGERS⦈ ⟦ utxoState₀ , govState₀ , certState₀ ⟧
       ∙ ⟦ slot , pp , treasury , utxo₀ , ⟦ 0ℤ , 0ℤ ⟧ , allScripts , allData ⟧ ⊢ utxoState₀ ⇀⦇ tx ,UTXOW⦈ utxoState₁
         ────────────────────────────────
         ⟦ slot , ppolicy , pp , enactState , treasury ⟧ ⊢ ⟦ utxoState₀ , govState₀ , certState₀ ⟧ ⇀⦇ tx ,LEDGER⦈ ⟦ utxoState₁ , govState₀ , certState₀ ⟧
