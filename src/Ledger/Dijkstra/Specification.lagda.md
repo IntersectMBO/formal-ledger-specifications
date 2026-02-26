@@ -38,12 +38,14 @@ import Ledger.Dijkstra.Specification.Certs.Properties
 ```agda
 import Ledger.Dijkstra.Specification.Gov.Base
 import Ledger.Dijkstra.Specification.Gov.Actions
+import Ledger.Dijkstra.Specification.Gov.Properties
 ```
 
 ## Ledger
 
 ```agda
 import Ledger.Dijkstra.Specification.Ledger
+import Ledger.Dijkstra.Specification.Ledger.Properties
 ```
 
 ## Protocol Parameters
