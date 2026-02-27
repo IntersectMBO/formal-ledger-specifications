@@ -14,11 +14,15 @@ module Ledger.Conway.Conformance.Properties
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
 
-open import Ledger.Conway.Conformance.Chain txs abs
+open import Ledger.Conway.Conformance.Equivalence txs abs
+open import Ledger.Conway.Conformance.Equivalence.Convert
+open import Ledger.Conway.Conformance.Equivalence.Deposits txs abs
 open import Ledger.Conway.Conformance.Utxo txs abs
-open import Ledger.Conway.Conformance.Epoch txs abs
 open import Ledger.Conway.Conformance.Ledger txs abs
+open import Ledger.Conway.Specification.BlockBody txs abs using (BHBody; BHeader; Block)
+open import Ledger.Conway.Specification.Chain txs abs using (_⊢_⇀⦇_,CHAIN⦈_; ChainState)
 open import Ledger.Conway.Specification.Enact govStructure
+open import Ledger.Conway.Specification.Epoch txs abs
 open import Ledger.Conway.Specification.Gov govStructure
 open import Ledger.Conway.Conformance.Certs govStructure
 
@@ -44,6 +48,7 @@ instance
   isGADeposit? {DRepDeposit x} = ⁇ (no λ ())
   isGADeposit? {GovActionDeposit x} = ⁇ (yes tt)
 
+{-
 getLState : NewEpochState → LState
 getLState = EpochState.ls ∘ NewEpochState.epochState
 
@@ -55,7 +60,7 @@ allDReps = GState.dreps ∘ CertState.gState ∘ LState.certState ∘ getLState
 
 getGovState : NewEpochState → GovState
 getGovState = LState.govSt ∘ getLState
-
+-}
 instance
   _ : IsSet Block Tx
   _ = record { toSet = fromList ∘ Block.ts }
@@ -99,7 +104,7 @@ module _ (s : ChainState) (slot : Slot) where
     ledgerEnv = ⟦ slot , constitution .proj₁ .proj₂ , pparams .proj₁ , es , Acnt.treasury acnt ⟧
 
   validTxIn₂ : Tx → Type
-  validTxIn₂ tx = ∃[ ls' ] ledgerEnv ⊢ ls ⇀⦇ tx ,LEDGER⦈ ls'
+  validTxIn₂ tx = ∃[ ls' ] ledgerEnv ⊢ (certDeposits ls ⊢conv ls) ⇀⦇ tx ,LEDGER⦈ ls'
 
 validTx₁ : Tx → Type
 validTx₁ tx = ∃[ s ] validTxIn₁ s tx
@@ -109,7 +114,7 @@ ChainInvariant P = ∀ b s s' → _ ⊢ s ⇀⦇ b ,CHAIN⦈ s' → P s → P s'
 
 module _ (s : ChainState) where
   open ChainState s; open NewEpochState newEpochState; open EpochState epochState
-  open LState ls
+  open LState (certDeposits ls ⊢conv ls)
   open EnactState es renaming (pparams to pparams')
   open CertState certState; open DState dState
   pparams = ∣ pparams' ∣
@@ -133,7 +138,11 @@ module _ (s : ChainState) where
 
   -- Block properties
 
-  module _ {b} (valid : validBlockIn s b) (let open Block b) where
+  module _
+      {b}
+      (valid : validBlockIn s b)
+      (let open Block b; open BHeader bheader; open BHBody bhbody)
+      where
     isNewEpochBlock : Type
     isNewEpochBlock = epoch slot ≡ sucᵉ lastEpoch
 
