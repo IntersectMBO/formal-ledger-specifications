@@ -214,6 +214,10 @@ nav:
   - Introduction: Ledger.Dijkstra.Specification.md
   - Abstract: Ledger.Dijkstra.Specification.Abstract.md
   - Certs: Ledger.Dijkstra.Specification.Certs.md
+  - Certs/:
+    - Properties: Ledger.Dijkstra.Specification.Certs.Properties.md
+    - Properties/:
+      - Ledger.Dijkstra.Specification.Certs.Properties.Computational.md
   - Enact: Ledger.Dijkstra.Specification.Enact.md
   - Fees: Ledger.Dijkstra.Specification.Fees.md
   - Gov: Ledger.Dijkstra.Specification.Gov.md
@@ -231,7 +235,15 @@ nav:
   - TokenAlgebra: Ledger.Dijkstra.Specification.TokenAlgebra.Base.md
   - Transaction: Ledger.Dijkstra.Specification.Transaction.md
   - Utxo: Ledger.Dijkstra.Specification.Utxo.md
+  - Utxo/:
+    - Properties: Ledger.Dijkstra.Specification.Utxo.Properties.md
+    - Properties/:
+      - Computational: Ledger.Dijkstra.Specification.Utxo.Properties.Computational.md
   - Utxow: Ledger.Dijkstra.Specification.Utxow.md
+  - Utxow/:
+    - Properties: Ledger.Dijkstra.Specification.Utxow.Properties.md
+    - Properties/:
+      - Computational: Ledger.Dijkstra.Specification.Utxow.Properties.Computational.md
 - Appendix:
   - Background:
     - Definitions: Definitions.md
