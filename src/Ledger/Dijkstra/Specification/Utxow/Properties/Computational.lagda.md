@@ -25,8 +25,8 @@ open import Ledger.Dijkstra.Specification.Utxo.Properties.Computational txs abs
 
 decide-SUBUTXOW-Premises : ∀ Γ s tx → Dec (SUBUTXOW-Premises Γ s tx)
 decide-SUBUTXOW-Premises Γ s tx =
-  let wd = collectWitnessDataSubTx tx Γ in
-  let open WitnessDataSubTx wd in
+  let wd = collectWitnessLogicSubTx tx Γ in
+  let open WitnessLogicSubTx wd in
   case ¿ ∀[ (vk , σ) ∈ TxWitnesses.vKeySigs (Tx.txWitnesses tx) ] isSigned vk (txidBytes (TxIdOf tx)) σ ¿ of λ where
     (no ¬p) → no (λ where (record { sigsValid = p }) → ¬p p)
     (yes sigsOk) →
@@ -55,18 +55,18 @@ decide-SUBUTXOW-Premises Γ s tx =
                                            ; auxDataHashValid = adOk })
 
 
-decide-LegacyTrigger : (Γ : UTxOEnv) (txTop : TopLevelTx) → Dec (LegacyTrigger Γ txTop)
-decide-LegacyTrigger Γ txTop = ¿ ∃[ s ∈ p2ScriptsNeeded ] language s ∈ fromList (PlutusV1 ∷ PlutusV2 ∷ PlutusV3 ∷ []) ¿
+decide-Legacy : (Γ : UTxOEnv) (txTop : TopLevelTx) → Dec (Legacy Γ txTop)
+decide-Legacy Γ txTop = ¿ ∃[ s ∈ p2ScriptsNeeded ] language s ∈ fromList (PlutusV1 ∷ PlutusV2 ∷ PlutusV3 ∷ []) ¿
   where
-  wd : WitnessData txTop Γ
-  wd = collectWitnessData true txTop Γ
-  open WitnessData wd
+  wd : WitnessLogic txTop Γ
+  wd = collectWitnessLogic true txTop Γ
+  open WitnessLogic wd
 
 
 decide-Normal-Premises : ∀ Γ s tx → Dec (UTXOW-Normal-Premises Γ s tx)
 decide-Normal-Premises Γ s tx =
-  let wd = collectWitnessData false tx Γ in
-  let open WitnessData wd in
+  let wd = collectWitnessLogic false tx Γ in
+  let open WitnessLogic wd in
     case ¿ (UsesBootstrapAddress (UTxOOf Γ) tx → Is-∅ p2ScriptsNeeded) ¿ of λ where
       (no ¬p) → no (λ where (record { bootstrap = p }) → ¬p p)
       (yes bootOk) → case ¿ RequiredGuardsInTopLevel tx ¿ of λ where
@@ -95,8 +95,8 @@ decide-Normal-Premises Γ s tx =
 
 decide-Legacy-Premises : ∀ Γ s tx → Dec (UTXOW-Legacy-Premises Γ s tx)
 decide-Legacy-Premises Γ s tx =
-  let wd = collectWitnessData true tx Γ in
-  let open WitnessData wd in
+  let wd = collectWitnessLogic true tx Γ in
+  let open WitnessLogic wd in
     case ¿ ¬ (UsesBootstrapAddress (UTxOOf Γ) tx) ¿ of λ where
         (no ¬p) → no (λ where (record { noBootstrap = p }) → ¬p p)
         (yes noBootOk) → case ¿ Is-∅ (GuardsOf tx) ¿ of λ where
@@ -159,7 +159,7 @@ instance
     computeProof : (Γ : UTxOEnv) (s : UTxOState) (tx : TopLevelTx)
       → ComputationResult String (∃[ s' ] (Γ ⊢ s ⇀⦇ tx ,UTXOW⦈ s'))
 
-    computeProof Γ s tx with decide-LegacyTrigger Γ tx
+    computeProof Γ s tx with decide-Legacy Γ tx
     ... | no notrig = case (decide-Normal-Premises Γ s tx) of λ where
       (no  _) → failure "UTXOW failed: normal premises"
       (yes pN) → map (λ where (s' , hU) → s' , UTXOW-normal (notrig , pN , hU)) (computeP (Γ , false) s tx)
@@ -171,7 +171,7 @@ instance
       → Γ ⊢ s ⇀⦇ tx ,UTXOW⦈ s' → map proj₁ (computeProof Γ s tx) ≡ success s'
 
     completeness Γ s tx s' (UTXOW-legacy (trig , pL , hU))
-      with decide-LegacyTrigger Γ tx
+      with decide-Legacy Γ tx
     ... | no notrig = ⊥-elim (notrig trig)
     ... | yes _ with decide-Legacy-Premises Γ s tx
     ... | no ¬pL = ⊥-elim (¬pL pL)
@@ -180,7 +180,7 @@ instance
     ... | failure _ | ()
 
     completeness Γ s tx s' (UTXOW-normal (notrig , pN , hU))
-      with decide-LegacyTrigger Γ tx
+      with decide-Legacy Γ tx
     ... | yes trig = ⊥-elim (notrig trig)
     ... | no _ with decide-Normal-Premises Γ s tx
     ... | no ¬pN = ⊥-elim (¬pN pN)
