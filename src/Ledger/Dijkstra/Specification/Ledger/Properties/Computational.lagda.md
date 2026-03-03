@@ -34,6 +34,42 @@ open import Data.Bool.Properties using (¬-not)
 
 instance
   _ = Monad-ComputationResult
+
+-- When isTopLevelValid ≡ false, SUBUTXO is a UTxO no-op,
+-- so SUBUTXOW leaves the UTxOState unchanged.
+private
+  SUBUTXOW-noop
+    : ∀ {Γ : SubUTxOEnv} {s s' : UTxOState} {stx : SubLevelTx}
+    → IsTopLevelValidFlagOf Γ ≡ false
+    → Γ ⊢ s ⇀⦇ stx ,SUBUTXOW⦈ s'
+    → s' ≡ s
+  SUBUTXOW-noop isI (SUBUTXOW (_ , SUBUTXO _)) rewrite isI = refl
+  -- After `rewrite isI`, `IsTopLevelValidFlagOf Γ` reduces to `false`,
+  -- so the SUBUTXO post-state index reduces to `⟦ UTxOOf s , FeesOf s , DonationsOf s ⟧`
+  -- which is s by eta-expansion of the UTxOState record, giving refl.
+
+-- When isTopLevelValid ≡ false, a single SUBLEDGER step is a no-op.
+-- SUBLEDGER-V is impossible (its first premise is isTopLevelValid ≡ true).
+  SUBLEDGER-step-noop
+    : ∀ {Γ : SubLedgerEnv} {s s' : LedgerState} {stx : SubLevelTx}
+    → Γ ⊢ s ⇀⦇ stx ,SUBLEDGER⦈ s'
+    → SubLedgerEnv.isTopLevelValid Γ ≡ false
+    → s' ≡ s
+  SUBLEDGER-step-noop (SUBLEDGER-I _)         _   = refl
+  SUBLEDGER-step-noop (SUBLEDGER-V (isV , _)) isI =
+    ⊥-elim (case trans (sym isV) isI of λ ())
+
+-- The reflexive-transitive closure of no-ops is a no-op.
+  SUBLEDGERS-noop
+    : ∀ {Γ : SubLedgerEnv} {s s' : LedgerState} {stxs : List SubLevelTx}
+    → SubLedgerEnv.isTopLevelValid Γ ≡ false
+    → Γ ⊢ s ⇀⦇ stxs ,SUBLEDGERS⦈ s'
+    → s' ≡ s
+  SUBLEDGERS-noop _   (BS-base Id-nop)   = refl
+  SUBLEDGERS-noop isI (BS-ind step rest) =
+    trans (SUBLEDGERS-noop isI rest) (SUBLEDGER-step-noop step isI)
+
+instance
 ```
 -->
 
@@ -100,13 +136,17 @@ instance
                           , SUBLEDGER-V (isV , utxoStep , certStep , govStep))
 
     ... | no ¬isV =
-      let open SubLedgerEnv Γ
-          open LedgerState s
+      let open SubLedgerEnv Γ; open LedgerState s
           isI : isTopLevelValid ≡ false
           isI = ¬-not ¬isV
-      in
-      -- Structural no-op: no SUBUTXOW computation needed.
-      success ( ⟦ utxoSt , govSt , certState ⟧ˡ , SUBLEDGER-I isI)
+          subUtxoΓ : SubUTxOEnv
+          subUtxoΓ = ⟦ slot , pparams , treasury , utxo₀ , isTopLevelValid , allScripts , allData ⟧
+      in case computeSubutxow subUtxoΓ utxoSt stx of λ where
+        (failure e) → failure e
+        (success (utxoSt' , utxoStep)) →
+          success ( ⟦ utxoSt , govSt , certState ⟧ˡ
+                  , SUBLEDGER-I ( isI , subst (subUtxoΓ ⊢ utxoSt ⇀⦇ stx ,SUBUTXOW⦈_) (SUBUTXOW-noop isI utxoStep) utxoStep ))
+
 ```
 -->
 
@@ -136,10 +176,14 @@ instance
              (govΓ Γ stx certSt₁) (LedgerState.govSt s) (GovProposals+Votes stx) govSt₁ govStep
     ... | success (govSt₁ , _) | refl = refl
 
-    completeness Γ s stx s' (SUBLEDGER-I isI)
+    completeness Γ s stx s' (SUBLEDGER-I (isI , utxoStep))
       with SubLedgerEnv.isTopLevelValid Γ ≟ true
     ... | yes isV = case trans (sym isV) isI of λ ()
-    ... | no ¬isV = refl  -- computeProof is definitionally `success` with the same state in this branch.
+    ... | no ¬isV
+      with computeSubutxow (subUtxoΓ Γ) (LedgerState.utxoSt s) stx
+         | complete {STS = _⊢_⇀⦇_,SUBUTXOW⦈_}
+             (subUtxoΓ Γ) (LedgerState.utxoSt s) stx (LedgerState.utxoSt s) utxoStep
+    ... | success _ | refl = refl
 
 Computational-SUBLEDGERS : Computational _⊢_⇀⦇_,SUBLEDGERS⦈_ String
 Computational-SUBLEDGERS = it
@@ -147,6 +191,8 @@ Computational-SUBLEDGERS = it
 instance
 ```
 -->
+
+## Ledger: Computational {#sec:ledger-computational}
 
 ```agda
   Computational-LEDGER : Computational _⊢_⇀⦇_,LEDGER⦈_ String
@@ -286,17 +332,21 @@ instance
                                   , LEDGER-V (isV , subStep , certStep , govStep , utxoStep))
 
         (no ¬isV) →
-          let dc0 : DepositsChange
-              dc0 = ⟦ 0ℤ , 0ℤ ⟧
-              utxoΓ : UTxOEnv
-              utxoΓ = ⟦ slot , pparams , treasury , utxo₀ , dc0 , allScripts , allData ⟧
-              isI : IsValidFlagOf txTop ≡ false
+          let isI : IsValidFlagOf txTop ≡ false
               isI = ¬-not ¬isV
-          in
-          computeUtxow utxoΓ utxoSt txTop >>= λ where
-            (utxoSt₁ , utxoStep) →
-              success ( ⟦ utxoSt₁ , govSt , certState ⟧ˡ
-                      , LEDGER-I (isI , utxoStep))
+          in case computeSubledgers (subΓOf Γ s txTop) s (SubTransactionsOf txTop) of λ where
+            (failure e) → failure e
+            (success (s₁ , subStep)) →
+              computeUtxow (utxoΓ-invalid Γ s txTop) (LedgerState.utxoSt s) txTop >>= λ where
+                (utxoSt₁ , utxoStep) →
+                  success ( ⟦ utxoSt₁ , LedgerState.govSt s , LedgerState.certState s ⟧ˡ
+                          , LEDGER-I
+                              ( isI
+                              , subst (subΓOf Γ s txTop ⊢ s ⇀⦇ SubTransactionsOf txTop ,SUBLEDGERS⦈_)
+                                  (SUBLEDGERS-noop isI subStep)
+                                  subStep
+                              , utxoStep
+                              ))
 ```
 -->
 
@@ -331,13 +381,18 @@ instance
              (utxoΓ-valid Γ s txTop certSt₁ certSt₂) utxoSt₁ txTop utxoSt₂ utxoStep
     ... | success (utxoSt₂ , _) | refl = refl
 
-    completeness Γ s txTop s' (LEDGER-I {utxoState₁ = utxoSt₁} (isI , utxoStep))
+    completeness Γ s txTop s' (LEDGER-I {utxoState₁ = utxoSt₁} (isI , subStep , utxoStep))
       with IsValidFlagOf txTop ≟ true
     ... | yes isV = case trans (sym isV) isI of λ ()
     ... | no ¬isV
+      with computeSubledgers (subΓOf Γ s txTop) s (SubTransactionsOf txTop)
+         | complete {STS = _⊢_⇀⦇_,SUBLEDGERS⦈_}
+             (subΓOf Γ s txTop) s (SubTransactionsOf txTop) s subStep
+    ... | success _ | refl
       with computeUtxow (utxoΓ-invalid Γ s txTop) (LedgerState.utxoSt s) txTop
-             | complete {STS = _⊢_⇀⦇_,UTXOW⦈_} (utxoΓ-invalid Γ s txTop) (LedgerState.utxoSt s) txTop utxoSt₁ utxoStep
-    ... | success (utxoSt₁ , _) | refl = refl
+         | complete {STS = _⊢_⇀⦇_,UTXOW⦈_}
+             (utxoΓ-invalid Γ s txTop) (LedgerState.utxoSt s) txTop utxoSt₁ utxoStep
+    ... | success _ | refl = refl
 
 Computational-LEDGERS : Computational _⊢_⇀⦇_,LEDGERS⦈_ String
 Computational-LEDGERS = it

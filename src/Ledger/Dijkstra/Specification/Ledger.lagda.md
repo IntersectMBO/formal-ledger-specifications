@@ -77,7 +77,8 @@ instance
   HasUTxO-SubLedgerEnv : HasUTxO SubLedgerEnv
   HasUTxO-SubLedgerEnv .UTxOOf = SubLedgerEnv.utxo₀
 
-
+  HasTreasury-SubLedgerEnv : HasTreasury SubLedgerEnv
+  HasTreasury-SubLedgerEnv .TreasuryOf = SubLedgerEnv.treasury
 ```
 -->
 ```agda
@@ -292,9 +293,7 @@ data _⊢_⇀⦇_,SUBLEDGER⦈_ : SubLedgerEnv → LedgerState → SubLevelTx �
 
   SUBLEDGER-I :
       ∙ isTopLevelValid ≡ false
-        -- When `isTopLevelValid ≡ false`, `SUBLEDGER` is definitionally a no-op, so
-        -- remove the following premise:
-        -- ∙ ⟦ slot , pp , treasury , utxo₀ , isTopLevelValid , allScripts , allData ⟧ ⊢ utxoState₀ ⇀⦇ stx ,SUBUTXOW⦈ utxoState₀
+      ∙ ⟦ slot , pp , treasury , utxo₀ , isTopLevelValid , allScripts , allData ⟧ ⊢ utxoState₀ ⇀⦇ stx ,SUBUTXOW⦈ utxoState₀
         ────────────────────────────────
         ⟦ slot , ppolicy , pp , enactState , treasury , utxo₀ , isTopLevelValid , allScripts , allData ⟧ ⊢ ⟦ utxoState₀ , govState₀ , certState₀ ⟧ ⇀⦇ stx ,SUBLEDGER⦈ ⟦ utxoState₀ , govState₀ , certState₀ ⟧
 
@@ -337,9 +336,7 @@ data _⊢_⇀⦇_,LEDGER⦈_ : LedgerEnv → LedgerState → TopLevelTx → Ledg
          allData = setToMap (mapˢ < hash , id > (getAllData tx utxo₀))
     in
       ∙ IsValidFlagOf tx ≡ false
-        -- When `IsValidFlagOf tx ≡ false`, `LEDGER` skips `SUBLEDGERS` entirely (equivalent to “no-op on subtx list”),
-        -- so remove the following premise:
-        -- ∙ ⟦ slot , ppolicy , pp , enactState , treasury , utxo₀ , IsValidFlagOf tx , allScripts , allData ⟧ ⊢ ⟦ utxoState₀ , govState₀ , certState₀ ⟧ ⇀⦇ SubTransactionsOf tx ,SUBLEDGERS⦈ ⟦ utxoState₀ , govState₀ , certState₀ ⟧
+      ∙ ⟦ slot , ppolicy , pp , enactState , treasury , utxo₀ , IsValidFlagOf tx , allScripts , allData ⟧ ⊢ ⟦ utxoState₀ , govState₀ , certState₀ ⟧ ⇀⦇ SubTransactionsOf tx ,SUBLEDGERS⦈ ⟦ utxoState₀ , govState₀ , certState₀ ⟧
       ∙ ⟦ slot , pp , treasury , utxo₀ , ⟦ 0ℤ , 0ℤ ⟧ , allScripts , allData ⟧ ⊢ utxoState₀ ⇀⦇ tx ,UTXOW⦈ utxoState₁
         ────────────────────────────────
         ⟦ slot , ppolicy , pp , enactState , treasury ⟧ ⊢ ⟦ utxoState₀ , govState₀ , certState₀ ⟧ ⇀⦇ tx ,LEDGER⦈ ⟦ utxoState₁ , govState₀ , certState₀ ⟧
