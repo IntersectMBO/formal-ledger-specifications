@@ -114,8 +114,8 @@ allowedLanguagesLegacyMode tx utxo =
 <!--
 ```agda
 -- Consolidate Witnessing Logic into a single Record
-record WitnessData (tx : Tx ℓ) (Γ : UTxOEnv) : Type where
-  constructor mkWitnessData
+record WitnessLogic (tx : Tx ℓ) (Γ : UTxOEnv) : Type where
+  constructor mkWitnessLogic
   open Tx tx; open TxBody txBody; open TxWitnesses txWitnesses
 
   field
@@ -149,33 +149,33 @@ record WitnessData (tx : Tx ℓ) (Γ : UTxOEnv) : Type where
                   _  ← lookupHash sh p2ScriptsNeeded
                   d >>= isInj₂) (range (UTxOOf Γ ∣ txIns))
 
--- The WitnessData record type is inhabited in one of two ways:
+-- The WitnessLogic record type is inhabited in one of two ways:
 -- 1. Normal mode (legacy=false) uses the DataPool and ScriptPool;
 -- 2. Legacy mode (legacy=true) uses the UTxO to determine data and scripts.
-collectWitnessData : (legacy : Bool) (tx : Tx ℓ) (Γ : UTxOEnv) → WitnessData tx Γ
-collectWitnessData legacy tx Γ .WitnessData.dataProvided =
+collectWitnessLogic : (legacy : Bool) (tx : Tx ℓ) (Γ : UTxOEnv) → WitnessLogic tx Γ
+collectWitnessLogic legacy tx Γ .WitnessLogic.dataProvided =
   if legacy  then getTxData tx (UTxOOf Γ)
              else range (DataPoolOf Γ)
-collectWitnessData legacy tx Γ .WitnessData.scriptsProvided =
+collectWitnessLogic legacy tx Γ .WitnessLogic.scriptsProvided =
   if legacy  then witnessScripts tx ∪ spendScripts tx (UTxOOf Γ) ∪ referenceScripts tx (UTxOOf Γ)
              else ScriptPoolOf Γ
 
 -- Mode trigger: legacy mode is selected iff at least one *needed* phase-2 script
 -- (based on legacy=true witness collection) uses PlutusV1–V3.
-LegacyTrigger : UTxOEnv → TopLevelTx → Type
-LegacyTrigger Γ txTop = ∃[ s ∈ p2ScriptsNeeded ] language s ∈ fromList (PlutusV1 ∷ PlutusV2 ∷ PlutusV3 ∷ [])
+Legacy : UTxOEnv → TopLevelTx → Type
+Legacy Γ txTop = ∃[ s ∈ p2ScriptsNeeded ] language s ∈ fromList (PlutusV1 ∷ PlutusV2 ∷ PlutusV3 ∷ [])
   where
-  wd : WitnessData txTop Γ
-  wd = collectWitnessData true txTop Γ
-  open WitnessData wd
+  wd : WitnessLogic txTop Γ
+  wd = collectWitnessLogic true txTop Γ
+  open WitnessLogic wd
 
 -- Define Named Premise Records (replaces long tuples and makes Computational instance much faster).
 record UTXOW-Normal-Premises (Γ : UTxOEnv) (s : UTxOState) (txTop : TopLevelTx) : Type where
   constructor mkNormalPremises
 
   -- centralized witness collector with legacy=false
-  wd = collectWitnessData false txTop Γ
-  open WitnessData wd
+  wd = collectWitnessLogic false txTop Γ
+  open WitnessLogic wd
 
   field
     -- (2) No bootstrap addresses if using scripts
@@ -198,8 +198,8 @@ record UTXOW-Legacy-Premises (Γ : UTxOEnv) (s : UTxOState) (txTop : TopLevelTx)
   constructor mkLegacyPremises
 
   -- centralized witness collector with legacy=true
-  wd = collectWitnessData true txTop Γ
-  open WitnessData wd
+  wd = collectWitnessLogic true txTop Γ
+  open WitnessLogic wd
 
   field
     -- (3) Legacy mode cannot handle bootstrap addresses
@@ -217,8 +217,8 @@ record UTXOW-Legacy-Premises (Γ : UTxOEnv) (s : UTxOState) (txTop : TopLevelTx)
     legacyLanguages     : languages p2ScriptsNeeded ⊆ dom (PParams.costmdls (PParamsOf Γ)) ∩ allowedLanguagesLegacyMode txTop (UTxOOf Γ)
     auxDataHashValid    : TxBody.txADhash (Tx.txBody txTop) ≡ map hash (Tx.txAuxData txTop)
 
-record WitnessDataSubTx (tx : Tx ℓ) (utxo₀ : UTxO) (Γ : SubUTxOEnv) : Type where
-  constructor mkWitnessDataSubTx
+record WitnessLogicSubTx (tx : Tx ℓ) (utxo₀ : UTxO) (Γ : SubUTxOEnv) : Type where
+  constructor mkWitnessLogicSubTx
   open Tx tx; open TxBody txBody; open TxWitnesses txWitnesses
 
   field
@@ -250,20 +250,20 @@ record WitnessDataSubTx (tx : Tx ℓ) (utxo₀ : UTxO) (Γ : SubUTxOEnv) : Type 
                        d >>= isInj₂)
                (range (utxo₀ ∣ txIns))
 
-collectWitnessDataSubTx : (tx : Tx ℓ) (Γ : SubUTxOEnv) → WitnessDataSubTx tx (UTxOOf Γ) Γ
-collectWitnessDataSubTx tx Γ = record
+collectWitnessLogicSubTx : (tx : Tx ℓ) (Γ : SubUTxOEnv) → WitnessLogicSubTx tx (UTxOOf Γ) Γ
+collectWitnessLogicSubTx tx Γ = record
   { vKeyHashesProvided = mapˢ hash (dom (TxWitnesses.vKeySigs (Tx.txWitnesses tx)))
   ; scriptsProvided    = ScriptPoolOf Γ
   ; dataProvided       = range (DataPoolOf Γ)
   ; credentialsNeeded  = mapˢ proj₂ (credsNeeded (UTxOOf Γ) tx) }
-  where open WitnessData; open Tx tx; open TxBody txBody; open TxWitnesses txWitnesses; open SubUTxOEnv Γ
+  where open WitnessLogic; open Tx tx; open TxBody txBody; open TxWitnesses txWitnesses; open SubUTxOEnv Γ
 
 -- Define Named Premise Records (replaces long tuples and makes Computational instance much faster).
 record SUBUTXOW-Premises (Γ : SubUTxOEnv) (s : UTxOState) (tx : SubLevelTx) : Type where
   constructor mkSUBUTXOWPremises
   -- Re-use our centralized witness collector
-  wd = collectWitnessDataSubTx tx Γ
-  open WitnessDataSubTx wd
+  wd = collectWitnessLogicSubTx tx Γ
+  open WitnessLogicSubTx wd
 
   field
     sigsValid          : ∀[ (vk , σ) ∈ TxWitnesses.vKeySigs (Tx.txWitnesses tx) ] isSigned vk (txidBytes (TxIdOf tx)) σ
@@ -275,8 +275,7 @@ record SUBUTXOW-Premises (Γ : SubUTxOEnv) (s : UTxOState) (tx : SubLevelTx) : T
     auxDataHashValid   : TxBody.txADhash (Tx.txBody tx) ≡ map hash (Tx.txAuxData tx)
 
 -- These deciders use the ¿ _ ¿ syntax from the Ledger prelude to decide each field.
--- Since the WitnessData is computed once at the start, these are very efficient.
-
+-- Since the WitnessLogic is computed once at the start, these are very efficient.
 ```
 -->
 
@@ -323,9 +322,9 @@ mode up front rather than deciding both.
    guards at the top-level.
 
 ```agda
-  -- Normal branch is taken exactly when LegacyTrigger does *not* hold.
+  -- Normal branch is taken exactly when Legacy does *not* hold.
   UTXOW-normal :
-    ∙ (¬ LegacyTrigger Γ txTop)
+    ∙ ¬ Legacy Γ txTop
     ∙ UTXOW-Normal-Premises Γ s txTop
     ∙ (Γ , false) ⊢ s ⇀⦇ txTop ,UTXO⦈ s'
       ────────────────────────────────
@@ -349,9 +348,9 @@ mode up front rather than deciding both.
    are also the empty set.
 
 ```agda
-  -- Legacy branch is taken exactly when LegacyTrigger holds.
+  -- Legacy branch is taken exactly when Legacy holds.
   UTXOW-legacy :
-    ∙ LegacyTrigger Γ txTop
+    ∙ Legacy Γ txTop
     ∙ UTXOW-Legacy-Premises Γ s txTop
     ∙ (Γ , true) ⊢ s ⇀⦇ txTop ,UTXO⦈ s'
       ────────────────────────────────
