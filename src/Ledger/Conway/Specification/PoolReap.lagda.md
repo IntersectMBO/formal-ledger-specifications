@@ -1,4 +1,9 @@
-# Pool Reaping Transition {sec:pool-reaping-transition}
+---
+source_branch: master
+source_path: src/Ledger/Conway/Specification/PoolReap.lagda.md
+---
+
+# Pool Reaping Transition {#sec:pool-reaping-transition}
 
 <!--
 ```agda
