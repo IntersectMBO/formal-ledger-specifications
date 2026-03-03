@@ -461,8 +461,6 @@ library
       MAlonzo.Code.IO.Primitive.Core
       MAlonzo.Code.Ledger.Conway.Conformance.Certs
       MAlonzo.Code.Ledger.Conway.Conformance.Certs.Properties
-      MAlonzo.Code.Ledger.Conway.Conformance.Chain
-      MAlonzo.Code.Ledger.Conway.Conformance.Chain.Properties
       MAlonzo.Code.Ledger.Conway.Conformance.Epoch
       MAlonzo.Code.Ledger.Conway.Conformance.Epoch.Properties
       MAlonzo.Code.Ledger.Conway.Conformance.Equivalence
@@ -503,8 +501,12 @@ library
       MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Transaction
       MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Utxo
       MAlonzo.Code.Ledger.Conway.Specification.Abstract
+      MAlonzo.Code.Ledger.Conway.Specification.BlockBody
+      MAlonzo.Code.Ledger.Conway.Specification.BlockBody.Properties.Computational
       MAlonzo.Code.Ledger.Conway.Specification.Certs
       MAlonzo.Code.Ledger.Conway.Specification.Certs.Properties.Computational
+      MAlonzo.Code.Ledger.Conway.Specification.Chain
+      MAlonzo.Code.Ledger.Conway.Specification.Chain.Properties.Computational
       MAlonzo.Code.Ledger.Conway.Specification.Enact
       MAlonzo.Code.Ledger.Conway.Specification.Enact.Properties.Computational
       MAlonzo.Code.Ledger.Conway.Specification.Epoch
@@ -515,6 +517,7 @@ library
       MAlonzo.Code.Ledger.Conway.Specification.Gov.Base
       MAlonzo.Code.Ledger.Conway.Specification.Gov.Properties.Computational
       MAlonzo.Code.Ledger.Conway.Specification.Ledger
+      MAlonzo.Code.Ledger.Conway.Specification.Ledger.Properties.Computational
       MAlonzo.Code.Ledger.Conway.Specification.PoolReap
       MAlonzo.Code.Ledger.Conway.Specification.PoolReap.Properties.Computational
       MAlonzo.Code.Ledger.Conway.Specification.PParams
@@ -522,6 +525,8 @@ library
       MAlonzo.Code.Ledger.Conway.Specification.Ratify.Properties.Computational
       MAlonzo.Code.Ledger.Conway.Specification.Rewards
       MAlonzo.Code.Ledger.Conway.Specification.Rewards.Properties.Computational
+      MAlonzo.Code.Ledger.Conway.Specification.RewardUpdate
+      MAlonzo.Code.Ledger.Conway.Specification.RewardUpdate.Properties.Computational
       MAlonzo.Code.Ledger.Conway.Specification.Script
       MAlonzo.Code.Ledger.Conway.Specification.Script.Base
       MAlonzo.Code.Ledger.Conway.Specification.Script.ScriptPurpose
@@ -531,7 +536,9 @@ library
       MAlonzo.Code.Ledger.Conway.Specification.TokenAlgebra.Coin
       MAlonzo.Code.Ledger.Conway.Specification.Transaction
       MAlonzo.Code.Ledger.Conway.Specification.Utxo
+      MAlonzo.Code.Ledger.Conway.Specification.Utxo.Properties.Computational
       MAlonzo.Code.Ledger.Conway.Specification.Utxow
+      MAlonzo.Code.Ledger.Conway.Specification.Utxow.Properties.Computational
       MAlonzo.Code.Ledger.Core.Specification.Address
       MAlonzo.Code.Ledger.Core.Specification.Crypto
       MAlonzo.Code.Ledger.Core.Specification.Epoch
@@ -566,6 +573,7 @@ library
       MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Derive
       MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Instances
       MAlonzo.Code.QstdlibZ45Zmeta.Tactic.GenError
+      MAlonzo.Code.QstdlibZ45Zmeta.Tactic.MonoidSolver.NonNormalising
       MAlonzo.Code.Reflection
       MAlonzo.Code.Reflection.AST
       MAlonzo.Code.Reflection.AST.Abstraction
@@ -593,6 +601,7 @@ library
       MAlonzo.Code.Reflection.TCM
       MAlonzo.Code.Reflection.TCM.Format
       MAlonzo.Code.Reflection.TCM.Syntax
+      MAlonzo.Code.Reflection.TCM.Utilities
       MAlonzo.Code.Reflection.Utils
       MAlonzo.Code.Reflection.Utils.Args
       MAlonzo.Code.Reflection.Utils.Core
@@ -674,13 +683,16 @@ library
       MAlonzo.Code.Tactic.Assumption
       MAlonzo.Code.Tactic.ByEq
       MAlonzo.Code.Tactic.ClauseBuilder
+      MAlonzo.Code.Tactic.Cong
       MAlonzo.Code.Tactic.Constrs
       MAlonzo.Code.Tactic.Defaults
       MAlonzo.Code.Tactic.Derive
       MAlonzo.Code.Tactic.Derive.DecEq
       MAlonzo.Code.Tactic.Derive.Show
       MAlonzo.Code.Tactic.Derive.TestTypes
+      MAlonzo.Code.Tactic.EquationalReasoning
       MAlonzo.Code.Tactic.Inline
+      MAlonzo.Code.Tactic.MonoidSolver
       MAlonzo.Code.Tactic.ReduceDec
       MAlonzo.Code.Tactic.RingSolver
       MAlonzo.Code.Tactic.RingSolver.Core.AlmostCommutativeRing
