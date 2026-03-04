@@ -106,6 +106,12 @@ instance
 ```agda
 ProtVer : Type
 ProtVer = ℕ × ℕ
+
+pvMajor : ProtVer → ℕ
+pvMajor = proj₁
+
+pvMinor : ProtVer → ℕ
+pvMinor = proj₂
 ```
 
 <!--
@@ -117,9 +123,14 @@ instance
 -->
 
 ```agda
-data pvCanFollow : ProtVer → ProtVer → Type where
-  canFollowMajor : pvCanFollow (m , n) (m + 1 , 0)
-  canFollowMinor : pvCanFollow (m , n) (m , n + 1)
+data pvCanFollowMajor : ProtVer → ProtVer → Type where
+  canFollowMajor : pvCanFollowMajor (m , n) (m + 1 , 0)
+
+data pvCanFollowMinor : ProtVer → ProtVer → Type where
+  canFollowMinor : pvCanFollowMinor (m , n) (m , n + 1)
+
+pvCanFollow : ProtVer → ProtVer → Type
+pvCanFollow v₁ v₂ = pvCanFollowMajor v₁ v₂ ⊎ pvCanFollowMinor v₁ v₂
 ```
 
 <!--
@@ -515,13 +526,24 @@ module PParamsUpdate where
       ((quote PParamsUpdate , DecEq-PParamsUpdate) ∷ [])
 
 instance
-  pvCanFollow? : ∀ {pv} {pv'} → Dec (pvCanFollow pv pv')
-  pvCanFollow? {m , n} {pv} with pv ≟ (m + 1 , 0) | pv ≟ (m , n + 1)
-  ... | no ¬p    | no ¬p₁   = no $ λ where canFollowMajor → ¬p  refl
-                                           canFollowMinor → ¬p₁ refl
-  ... | no ¬p    | yes refl = yes canFollowMinor
-  ... | yes refl | no ¬p    = yes canFollowMajor
-  ... | yes refl | yes p    = ⊥-elim $ m+1+n≢m m $ ×-≡,≡←≡ p .proj₁
+  Dec-pvCanFollowMajor : ∀ {pv} {pv'} → Dec (pvCanFollowMajor pv pv')
+  Dec-pvCanFollowMajor {m , n} {pv} with pv ≟ (m + 1 , 0)
+  ... | yes refl = yes canFollowMajor
+  ... | no ¬p = no (λ { canFollowMajor → ¬p refl })
+
+  Dec-pvCanFollowMinor : ∀ {pv} {pv'} → Dec (pvCanFollowMinor pv pv')
+  Dec-pvCanFollowMinor {m , n} {pv} with pv ≟ (m , n + 1)
+  ... | yes refl = yes canFollowMinor
+  ... | no ¬p = no (λ { canFollowMinor → ¬p refl })
+
+  pvCanFollowMajor? : pvCanFollowMajor ⁇²
+  pvCanFollowMajor? = ⁇ Dec-pvCanFollowMajor
+
+  pvCanFollowMinor? : pvCanFollowMinor ⁇²
+  pvCanFollowMinor? = ⁇ Dec-pvCanFollowMinor
+
+pvCanFollow? : ∀ {pv} {pv'} → Dec (pvCanFollow pv pv')
+pvCanFollow? = Dec-pvCanFollowMajor ⊎-dec Dec-pvCanFollowMinor
 ```
 -->
 

@@ -51,15 +51,6 @@ private variable
   e : Epoch
   pup pupˢ fpupˢ : ProposedPPUpdates
 
-instance
-  Dec-pvCanFollow : pvCanFollow ⁇²
-  Dec-pvCanFollow {(m , n)} {pv} .dec with pv ≟ (m + 1 , 0) | pv ≟ (m , n + 1)
-  ... | no ¬p    | no ¬p₁   = no $ λ where canFollowMajor → ¬p  refl
-                                           canFollowMinor → ¬p₁ refl
-  ... | no ¬p    | yes refl = yes canFollowMinor
-  ... | yes refl | no ¬p    = yes canFollowMajor
-  ... | yes refl | yes p    = ⊥-elim $ ℕ.m+1+n≢m m $ ×.×-≡,≡←≡ p .proj₁
-
 data _⊢_⇀⦇_,PPUP⦈_ : PPUpdateEnv → PPUpdateState → Maybe Update → PPUpdateState → Type where
 
   PPUpdateEmpty : Γ ⊢ s ⇀⦇ nothing ,PPUP⦈ s
