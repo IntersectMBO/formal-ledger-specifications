@@ -53,11 +53,11 @@ private
   isUpdateCommittee ⟦ TreasuryWithdrawal , _                ⟧ᵍᵃ = no λ()
   isUpdateCommittee ⟦ Info               , _                ⟧ᵍᵃ = no λ()
 
-  hasPrev : ∀ x v → Dec (∃[ v' ] x .action ≡ ⟦ TriggerHardFork , v' ⟧ᵍᵃ × pvCanFollow v' v)
+  hasPrev : ∀ x v → Dec (∃[ v' ] x .action ≡ ⟦ TriggerHardFork , v' ⟧ᵍᵃ × pvCanFollowMinor v' v)
   hasPrev record { action = ⟦ NoConfidence        , _   ⟧ᵍᵃ} v = no λ ()
   hasPrev record { action = ⟦ UpdateCommittee     , _   ⟧ᵍᵃ} v = no λ ()
   hasPrev record { action = ⟦ NewConstitution     , _   ⟧ᵍᵃ} v = no λ ()
-  hasPrev record { action = ⟦ TriggerHardFork     , v'  ⟧ᵍᵃ} v = case pvCanFollow? {v'} {v} of λ where
+  hasPrev record { action = ⟦ TriggerHardFork     , v'  ⟧ᵍᵃ} v = case ¿ pvCanFollowMinor v' v ¿ of λ where
     (yes p) → yes (-, refl , p)
     (no ¬p) → no  (λ where (_ , refl , h) → ¬p h)
   hasPrev record { action = ⟦ ChangePParams       , _   ⟧ᵍᵃ} v = no λ ()
@@ -74,8 +74,8 @@ opaque
     validHFAction? {record { action = ⟦ NewConstitution     , _ ⟧ᵍᵃ}} = Dec-⊤
     validHFAction? {record { action = ⟦ TriggerHardFork     , v ⟧ᵍᵃ ; prevAction = prev }} {s} {record { pv = (v' , aid') }}
       with aid' ≟ prev ×-dec pvCanFollow? {v'} {v} | any? (λ (aid , x) → aid ≟ prev ×-dec hasPrev x v) s
-    ... | yes p | _ = ⁇ yes (inj₁ p)
-    ... | no _ | yes p with ((aid , x) , x∈xs , (refl , v , h)) ← P.find p = ⁇ yes (inj₂
+    ... | yes p' | _ = ⁇ yes (inj₁ p')
+    ... | no _ | yes p' with ((aid , x) , x∈xs , (refl , v , h)) ← P.find p' = ⁇ yes (inj₂
       (x , v , to ∈-fromList x∈xs , h))
     ... | no ¬p₁ | no ¬p₂ = ⁇ no λ
       { (inj₁ x) → ¬p₁ x
