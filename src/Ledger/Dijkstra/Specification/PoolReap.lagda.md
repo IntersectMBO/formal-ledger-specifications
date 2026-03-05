@@ -56,8 +56,6 @@ private variable
 
 data _⊢_⇀⦇_,POOLREAP⦈_ : ⊤ → PoolReapState → Epoch → PoolReapState → Type where
   POOLREAP :
-    -- Use explicit field access throughout to avoid namespace clashes:
-    -- DState, PState, and GState all have a field named `deposits`.
     let cs = PoolReapState.certState prs
         ps = CertState.pState cs
         ds = CertState.dState cs
@@ -67,36 +65,50 @@ data _⊢_⇀⦇_,POOLREAP⦈_ : ⊤ → PoolReapState → Epoch → PoolReapSta
         retired : ℙ KeyHash
         retired = PState.retiring ps ⁻¹ e
 
-        -- Redirect pool deposits to the reward address of each retiring pool.
-        -- toRewardAddress looks up the rewardAccount in StakePoolParams.
-        -- aggregate₊ sums coins going to the same reward address.
-        poolPayout : Credential ⇀ Coin
-        poolPayout = {!!}
-        -- aggregate₊ ( mapˢ (λ (kh , c) → (PoolsOf ps) , c)
-        --                      ((DepositsOf ps ∣ retired) ˢ)
-        --                ᶠˢ )
+        -- For each retiring pool kh with deposit c, look up its reward-account
+        -- credential from PState.pools and convert to a RewardAddress.
+        -- mapPartial handles the case where kh might not be in pools (invariant:
+        -- retiring pools are always registered, so lookupᵐ? always succeeds).
+        poolPayoutPairs : ℙ (RewardAddress × Coin)
+        poolPayoutPairs =
+          mapPartial
+            (λ (kh , c) →
+              (λ params →
+                toRewardAddress (StakePoolParams.rewardAccount params) , c)
+              <$> lookupᵐ? (PState.pools ps) kh)
+            ((PState.deposits ps ∣ retired) ˢ)
 
-        refunds  : Credential ⇀ Coin
-        refunds  = poolPayout ∣ dom (RewardsOf ds)
+        -- Aggregate by reward address (multiple retiring pools may share one).
+        poolPayout : RewardAddress ⇀ Coin
+        poolPayout = aggregate₊ (poolPayoutPairs ᶠˢ)
+
+        -- Registered reward accounts receive a refund; unregistered amounts go
+        -- to the treasury as unclaimed.  Mirrors Conway's pullbackMap pattern.
+        refunds : Credential ⇀ Coin
+        refunds = pullbackMap poolPayout toRewardAddress (dom (DState.rewards ds))
 
         unclaimed : Coin
         unclaimed = getCoin poolPayout - getCoin refunds
 
-        -- Updated DState: credit refunds to registered reward accounts
+        -- Updated DState: credit refunds to registered reward accounts.
         dState' : DState
-        dState' = record ds { rewards = RewardsOf ds ∪⁺ refunds }
+        dState' = record ds { rewards = DState.rewards ds ∪⁺ refunds }
 
-        -- Updated PState: remove retired pools and their deposits
+        -- Updated PState: remove retired pools and their deposits.
         pState' : PState
-        pState' = ⟦ PoolsOf ps ∣ retired ᶜ , PState.fPools ps ∣ retired ᶜ , RetiringOf ps ∣ retired ᶜ , DepositsOf ps ∣ retired ᶜ ⟧
+        pState' = record ps
+          { pools    = PState.pools    ps ∣ retired ᶜ
+          ; fPools   = PState.fPools   ps ∣ retired ᶜ
+          ; retiring = PState.retiring ps ∣ retired ᶜ
+          ; deposits = PState.deposits ps ∣ retired ᶜ
+          }
 
         certState' : CertState
         certState' = record cs { dState = dState' ; pState = pState' }
 
         acnt' : Acnt
-        acnt' = record a { treasury = TreasuryOf a + unclaimed }
+        acnt' = record a { treasury = Acnt.treasury a + unclaimed }
     in
       ────────────────────────────────
       _ ⊢ prs ⇀⦇ e ,POOLREAP⦈ ⟦ certState' , acnt' ⟧ᵖ
-
 ```
