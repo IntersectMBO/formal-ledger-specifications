@@ -393,6 +393,7 @@ nav:
           - Ratify: Ledger.Conway.Foreign.HSLedger.Ratify.md
           - Rewards: Ledger.Conway.Foreign.HSLedger.Rewards.md
           - Transaction: Ledger.Conway.Foreign.HSLedger.Transaction.md
+          - Script: Ledger.Conway.Foreign.HSLedger.Script.md
           - Utxo: Ledger.Conway.Foreign.HSLedger.Utxo.md
       - Conformance: Ledger.Conway.Conformance.md
       - Conformance/:
@@ -416,7 +417,6 @@ nav:
           - Properties: Ledger.Conway.Conformance.Ledger.Properties.md
         - Properties: Ledger.Conway.Conformance.Properties.md
         - Rewards: Ledger.Conway.Conformance.Rewards.md
-        - Script: Ledger.Conway.Conformance.Script.md
         - Utxo: Ledger.Conway.Conformance.Utxo.md
         - Utxo/:
           - Properties: Ledger.Conway.Conformance.Utxo.Properties.md

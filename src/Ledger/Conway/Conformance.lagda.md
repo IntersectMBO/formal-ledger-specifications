@@ -70,5 +70,4 @@ import Ledger.Conway.Conformance.Utxo
 import Ledger.Conway.Conformance.Utxo.Properties
 import Ledger.Conway.Conformance.Utxow
 import Ledger.Conway.Conformance.Utxow.Properties
-import Ledger.Conway.Conformance.Script
 ```
