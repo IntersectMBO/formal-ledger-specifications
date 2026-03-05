@@ -16,7 +16,9 @@ open import Ledger.Conway.Foreign.HSLedger.Utxo
 open import Ledger.Conway.Foreign.HSLedger.Cert
 
 open import Ledger.Conway.Conformance.Ledger it it
-open import Ledger.Conway.Conformance.Ledger.Properties it it
+
+open import Ledger.Conway.Foreign.ExternalFunctions
+open import Foreign.Haskell.Coerce
 
 instance
   HsTy-LEnv = autoHsType LEnv ⊣ withConstructor "MkLEnv"
@@ -26,13 +28,21 @@ instance
   HsTy-LState = autoHsType LState ⊣ withConstructor "MkLState"
   Conv-LState = autoConvert LState
 
-ledger-step : HsType (LEnv → LState → Tx → ComputationResult String LState)
-ledger-step = to (compute Computational-LEDGER)
+module _ (ext : ExternalFunctions) where
+  open import Ledger.Conway.Foreign.HSLedger.ExternalStructures ext hiding (Tx; TxBody; inject)
+  open import Ledger.Conway.Conformance.Ledger.Properties HSTransactionStructure HSAbstractFunctions
 
-{-# COMPILE GHC ledger-step as ledgerStep #-}
+  ledger-step : HsType (LEnv → LState → Tx → ComputationResult String LState)
+  ledger-step = to (coerce ⦃ TrustMe ⦄ $ compute Computational-LEDGER)
 
-ledgers-step : HsType (LEnv → LState → List Tx → ComputationResult String LState)
-ledgers-step = to (compute Computational-LEDGERS)
+  {-# COMPILE GHC ledger-step as ledgerStep #-}
 
-{-# COMPILE GHC ledgers-step as ledgersStep #-}
+  ledgers-step : HsType (LEnv → LState → List Tx → ComputationResult String LState)
+  ledgers-step = λ lenv lst txs →
+    to (coerce ⦃ TrustMe ⦄ $ compute Computational-LEDGERS
+                                     (coerce ⦃ TrustMe ⦄ lenv)
+                                     (coerce ⦃ TrustMe ⦄ lst)
+                                     (coerce ⦃ TrustMe ⦄ txs))
+
+  {-# COMPILE GHC ledgers-step as ledgersStep #-}
 ```

@@ -40,8 +40,6 @@ instance
       ; Dec-isSigned     = ⁇ (_ ≟ _)
       }
 
--- No P2 scripts for now
-
 open import Ledger.Conway.Specification.Script it it
 open import Ledger.Conway.Specification.Script.Timelock it it public
 open import Ledger.Conway.Conformance.Script it it public
@@ -60,10 +58,11 @@ instance
       hashRespectsUnion a _ .hash (inj₁ x) = hash ⦃ a ⦄ x
       hashRespectsUnion _ b .hash (inj₂ y) = hash ⦃ b ⦄ y
 
+      open ExternalFunctions externalFunctions
       HSP2ScriptStructure : PlutusStructure
       HSP2ScriptStructure = record
         { Implementation
-        ; validPlutusScript = λ _ _ _ _ → ⊤
+        ; validPlutusScript = λ _ _ _ _ → extValidPlutusScript ≡ true
         ; PlutusScript = HSPlutusScript
         }
 
