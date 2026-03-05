@@ -140,7 +140,7 @@ instance
                 (setToList $ mapˢ rewardAddressToSOP $ dom xs)
               )
 
-      ; indexOfTxIn           = λ _ _ → nothing
+      ; indexOfTxIn           = λ x xs → Data.Fin.toℕ <$> findIndexᵇ (_== x) (setToList xs)
       ; indexOfPolicyId       = λ _ _ → nothing
       ; indexOfVote           = λ _ _ → nothing
       ; indexOfProposal       =
