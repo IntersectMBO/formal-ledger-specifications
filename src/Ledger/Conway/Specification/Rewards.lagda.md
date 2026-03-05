@@ -1,3 +1,8 @@
+---
+source_branch: master
+source_path: src/Ledger/Conway/Specification/Rewards.lagda.md
+---
+
 # Rewards {#sec:rewards}
 
 In this section we define how rewards for stake pools and their delegators
