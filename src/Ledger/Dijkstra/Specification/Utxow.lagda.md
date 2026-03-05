@@ -147,8 +147,7 @@ record WitnessLogic (tx : Tx ℓ) (Γ : UTxOEnv) : Type where
     mapPartial (λ txOut@(a , _ , d , _) → do
                   sh ← isScriptObj (payCred a)
                   _  ← lookupHash sh p2ScriptsNeeded
-                  x  ← d
-                  isInj₂ x) (range (UTxOOf Γ ∣ txIns))
+                  d >>= isInj₂) (range (UTxOOf Γ ∣ txIns))
 
 -- The WitnessLogic record type is inhabited in one of two ways:
 -- 1. Normal mode (legacy=false) uses the DataPool and ScriptPool;
