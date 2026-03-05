@@ -45,7 +45,7 @@ import Ledger.Dijkstra.Specification.Enact.Properties
 ```agda
 import Ledger.Core.Specification.Epoch
 import Ledger.Dijkstra.Specification.Epoch
-import Ledger.Dijkstra.Specification.Epoch.Properties
+-- import Ledger.Dijkstra.Specification.Epoch.Properties
 ```
 
 ## Fees
@@ -57,6 +57,7 @@ import Ledger.Dijkstra.Specification.Fees
 ## Governance
 
 ```agda
+import Ledger.Dijkstra.Specification.Gov
 import Ledger.Dijkstra.Specification.Gov.Base
 import Ledger.Dijkstra.Specification.Gov.Actions
 import Ledger.Dijkstra.Specification.Gov.Properties
@@ -93,12 +94,15 @@ import Ledger.Dijkstra.Specification.Ratify.Properties
 
 ```agda
 import Ledger.Dijkstra.Specification.Rewards
+import Ledger.Dijkstra.Specification.Rewards.Properties
 ```
 
 ## Scripts
 
 ```agda
 import Ledger.Dijkstra.Specification.Script
+import Ledger.Dijkstra.Specification.Script.Base
+import Ledger.Dijkstra.Specification.Script.ScriptPurpose
 import Ledger.Dijkstra.Specification.Script.Validation
 ```
 
