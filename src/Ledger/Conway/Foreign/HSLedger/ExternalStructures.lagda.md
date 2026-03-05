@@ -19,7 +19,10 @@ open import Relation.Binary.Bundles
 open import Data.Product.Relation.Binary.Lex.NonStrict using (×-isDecTotalOrder)
 open import Data.Sum.Relation.Binary.LeftOrder using (⊎-<-isDecTotalOrder)
 
+open import Tactic.Derive.Show
+
 HSGlobalConstants = GlobalConstants ∋ record {Implementation}
+
 instance
   HSEpochStructure = EpochStructure  ∋ ℕEpochStructure HSGlobalConstants
 
@@ -40,9 +43,37 @@ instance
       ; Dec-isSigned     = ⁇ (_ ≟ _)
       }
 
-open import Ledger.Conway.Specification.Script it it
+open import Ledger.Conway.Specification.Script.Base it it 
 open import Ledger.Conway.Specification.Script.Timelock it it public
-open import Ledger.Conway.Conformance.Script it it public
+
+record HSTimelock : Type where
+  field
+    timelock     : Timelock
+    tlScriptHash : ℕ
+    tlScriptSize : ℕ
+
+instance
+  Hashable-HSTimelock : Hashable HSTimelock ℕ
+  Hashable-HSTimelock .hash = HSTimelock.tlScriptHash
+
+unquoteDecl DecEq-HSTimelock = derive-DecEq ((quote HSTimelock , DecEq-HSTimelock) ∷ [])
+
+open import Ledger.Conway.Foreign.HSLedger.Script public
+
+P1ScriptStructure-HTL : P1ScriptStructure
+P1ScriptStructure-HTL = record
+  { P1Script = HSTimelock
+  ; validP1Script = λ x y → evalTimelock x y ∘ HSTimelock.timelock }
+
+record HSPlutusScript : Type where
+  constructor MkHSPlutusScript
+  field psScriptHash : ℕ
+        psScriptSize : ℕ
+        psScriptLanguage : HSLanguage
+
+instance
+  Hashable-HSPlutusScript : Hashable HSPlutusScript ℕ
+  Hashable-HSPlutusScript .hash = HSPlutusScript.psScriptHash
 
 instance
   HSScriptStructure : ScriptStructure
@@ -62,6 +93,11 @@ instance
       HSP2ScriptStructure : PlutusStructure
       HSP2ScriptStructure = record
         { Implementation
+        ; Language = HSLanguage
+        ; PlutusV1 = PV1
+        ; PlutusV2 = PV2
+        ; PlutusV3 = PV3
+        ; language = λ z → HSPlutusScript.psScriptLanguage z
         ; validPlutusScript = λ _ _ _ _ → extValidPlutusScript ≡ true
         ; PlutusScript = HSPlutusScript
         }

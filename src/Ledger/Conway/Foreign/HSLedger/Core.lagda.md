@@ -100,7 +100,6 @@ module Implementation where
     Show-ExUnits = Show-×
 
   CostModel    = ⊤
-  Language     = ⊤
   LangDepView  = ⊤
   Prices       = ⊤
 

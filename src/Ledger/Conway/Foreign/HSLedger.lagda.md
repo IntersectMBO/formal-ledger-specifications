@@ -15,4 +15,5 @@ open import Ledger.Conway.Foreign.HSLedger.Ledger public
 open import Ledger.Conway.Foreign.HSLedger.NewEpoch public
 open import Ledger.Conway.Foreign.HSLedger.Ratify public
 open import Ledger.Conway.Foreign.HSLedger.Utxo public
+open import Ledger.Conway.Foreign.HSLedger.Script public
 ```

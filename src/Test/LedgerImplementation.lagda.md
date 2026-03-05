@@ -108,7 +108,22 @@ SVCrypto = record
 instance _ = SVCrypto
 
 open import Ledger.Conway.Specification.Script it it
-open import Ledger.Conway.Conformance.Script it it public using (P1ScriptStructure-HTL)
+record HSTimelock : Type where
+  field
+    timelock     : Timelock
+    tlScriptHash : ℕ
+    tlScriptSize : ℕ
+
+instance
+  Hashable-HSTimelock : Hashable HSTimelock ℕ
+  Hashable-HSTimelock .hash = HSTimelock.tlScriptHash
+
+unquoteDecl DecEq-HSTimelock = derive-DecEq ((quote HSTimelock , DecEq-HSTimelock) ∷ [])
+
+P1ScriptStructure-HTL : P1ScriptStructure
+P1ScriptStructure-HTL = record
+  { P1Script = HSTimelock
+  ; validP1Script = λ x y → evalTimelock x y ∘ HSTimelock.timelock }
 ```
 -->
 ```agda
