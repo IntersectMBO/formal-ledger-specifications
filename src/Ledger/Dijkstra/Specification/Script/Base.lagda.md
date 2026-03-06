@@ -49,6 +49,7 @@ record PlutusStructure : Type₁ where
         ⦃ Show-CostModel           ⦄ : Show CostModel
 
   field  _≥ᵉ_              : ExUnits → ExUnits → Type
+         ⦃ ≥ᵉ-Dec ⦄        : _≥ᵉ_ ⁇²
          ⦃ DecEq-ExUnits ⦄ : DecEq ExUnits
          ⦃ DecEQ-Prices  ⦄ : DecEq Prices
          ⦃ Show-ExUnits  ⦄ : Show ExUnits
