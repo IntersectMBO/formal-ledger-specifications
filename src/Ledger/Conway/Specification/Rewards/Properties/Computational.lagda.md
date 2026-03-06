@@ -18,6 +18,8 @@ module Ledger.Conway.Specification.Rewards.Properties.Computational
 open import Ledger.Conway.Specification.Ledger txs abs
 open import Ledger.Conway.Specification.Rewards txs abs
 
+open Computational ⦃...⦄
+
 module _ {lstate : LState} {ss : Snapshots} where
   SNAP-total : ∃[ ss' ] lstate ⊢ ss ⇀⦇ tt ,SNAP⦈ ss'
   SNAP-total = -, SNAP
@@ -29,4 +31,9 @@ module _ {lstate : LState} {ss : Snapshots} where
                      → lstate ⊢ ss ⇀⦇ tt ,SNAP⦈ ss'
                      → lstate ⊢ ss ⇀⦇ tt ,SNAP⦈ ss'' → ss' ≡ ss''
   SNAP-deterministic SNAP SNAP = refl
+
+instance
+  Computational-SNAP : Computational _⊢_⇀⦇_,SNAP⦈_ ⊥
+  Computational-SNAP .computeProof _ ss lstate = success SNAP-total
+  Computational-SNAP .completeness _ ss lstate ss' h = cong success (SNAP-complete ss' h)
 ```

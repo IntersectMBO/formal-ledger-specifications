@@ -18,6 +18,8 @@ open import Ledger.Prelude
 open import Ledger.Dijkstra.Specification.Ledger txs abs
 open import Ledger.Dijkstra.Specification.Rewards txs abs
 
+open Computational ⦃...⦄
+
 module _ {lstate : LedgerState} {ss : Snapshots} where
   SNAP-total : ∃[ ss' ] lstate ⊢ ss ⇀⦇ tt ,SNAP⦈ ss'
   SNAP-total = -, SNAP
@@ -29,4 +31,9 @@ module _ {lstate : LedgerState} {ss : Snapshots} where
                      → lstate ⊢ ss ⇀⦇ tt ,SNAP⦈ ss'
                      → lstate ⊢ ss ⇀⦇ tt ,SNAP⦈ ss'' → ss' ≡ ss''
   SNAP-deterministic SNAP SNAP = refl
+
+instance
+  Computational-SNAP : Computational _⊢_⇀⦇_,SNAP⦈_ ⊥
+  Computational-SNAP .computeProof _ ss lstate = success SNAP-total
+  Computational-SNAP .completeness _ ss lstate ss' h = cong success (SNAP-complete ss' h)
 ```
