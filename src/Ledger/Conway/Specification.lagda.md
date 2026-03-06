@@ -113,6 +113,7 @@ import Ledger.Conway.Specification.Ratify.Properties
 
 ```agda
 import Ledger.Conway.Specification.Rewards
+import Ledger.Conway.Specification.Rewards.Properties
 import Ledger.Conway.Specification.RewardUpdate
 import Ledger.Conway.Specification.RewardUpdate.Properties
 ```
