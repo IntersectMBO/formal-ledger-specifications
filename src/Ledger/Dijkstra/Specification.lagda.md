@@ -105,6 +105,8 @@ import Ledger.Dijkstra.Specification.Ratify.Properties
 ```agda
 import Ledger.Dijkstra.Specification.Rewards
 import Ledger.Dijkstra.Specification.Rewards.Properties
+import Ledger.Dijkstra.Specification.RewardUpdate
+import Ledger.Dijkstra.Specification.RewardUpdate.Properties
 ```
 
 ## Scripts
