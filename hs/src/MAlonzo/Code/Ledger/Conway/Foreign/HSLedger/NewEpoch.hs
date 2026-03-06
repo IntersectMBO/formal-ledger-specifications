@@ -4986,7 +4986,7 @@ du_newepoch'45'step_146 ::
 du_newepoch'45'step_146 v0 v1
   = let v2
           = coe
-              MAlonzo.Code.Ledger.Conway.Specification.Epoch.Properties.Computational.du_NEWEPOCH'45'total_3428
+              MAlonzo.Code.Ledger.Conway.Specification.Epoch.Properties.Computational.du_NEWEPOCH'45'total_3430
               (coe
                  MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.ExternalStructures.d_HSTransactionStructure_812
                  (coe

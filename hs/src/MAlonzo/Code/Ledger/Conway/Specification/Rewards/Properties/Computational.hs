@@ -20,6 +20,7 @@ import qualified Data.Text
 import qualified MAlonzo.Code.Agda.Builtin.Equality
 import qualified MAlonzo.Code.Agda.Builtin.Sigma
 import qualified MAlonzo.Code.Data.Product.Base
+import qualified MAlonzo.Code.Interface.ComputationalRelation
 import qualified MAlonzo.Code.Ledger.Conway.Specification.Abstract
 import qualified MAlonzo.Code.Ledger.Conway.Specification.Certs
 import qualified MAlonzo.Code.Ledger.Conway.Specification.Ledger
@@ -91,20 +92,40 @@ d_set_2216 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_set_3102
       (coe v0)
+-- Ledger.Conway.Specification.Rewards.Properties.Computational._.completeness
+d_completeness_2220 ::
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_232 ->
+  AgdaAny ->
+  AgdaAny ->
+  AgdaAny ->
+  AgdaAny ->
+  AgdaAny -> MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
+d_completeness_2220 = erased
+-- Ledger.Conway.Specification.Rewards.Properties.Computational._.computeProof
+d_computeProof_2226 ::
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_232 ->
+  AgdaAny ->
+  AgdaAny ->
+  AgdaAny ->
+  MAlonzo.Code.Interface.ComputationalRelation.T_ComputationResult_34
+d_computeProof_2226 v0
+  = coe
+      MAlonzo.Code.Interface.ComputationalRelation.d_computeProof_272
+      (coe v0)
 -- Ledger.Conway.Specification.Rewards.Properties.Computational._.SNAP-total
-d_SNAP'45'total_2228 ::
+d_SNAP'45'total_2248 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_2496 ->
   MAlonzo.Code.Ledger.Conway.Specification.Ledger.T_LState_2932 ->
   MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_Snapshots_3090 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_SNAP'45'total_2228 v0 ~v1 v2 v3 = du_SNAP'45'total_2228 v0 v2 v3
-du_SNAP'45'total_2228 ::
+d_SNAP'45'total_2248 v0 ~v1 v2 v3 = du_SNAP'45'total_2248 v0 v2 v3
+du_SNAP'45'total_2248 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   MAlonzo.Code.Ledger.Conway.Specification.Ledger.T_LState_2932 ->
   MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_Snapshots_3090 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-du_SNAP'45'total_2228 v0 v1 v2
+du_SNAP'45'total_2248 v0 v1 v2
   = coe
       MAlonzo.Code.Data.Product.Base.du_'45''44'__92
       (coe
@@ -148,7 +169,7 @@ du_SNAP'45'total_2228 v0 v1 v2
                      v1)))))
       (coe MAlonzo.Code.Ledger.Conway.Specification.Rewards.C_SNAP_3148)
 -- Ledger.Conway.Specification.Rewards.Properties.Computational._.SNAP-complete
-d_SNAP'45'complete_2232 ::
+d_SNAP'45'complete_2252 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_2496 ->
   MAlonzo.Code.Ledger.Conway.Specification.Ledger.T_LState_2932 ->
@@ -156,9 +177,9 @@ d_SNAP'45'complete_2232 ::
   MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_Snapshots_3090 ->
   MAlonzo.Code.Ledger.Conway.Specification.Rewards.T__'8866'_'8640''10631'_'44'SNAP'10632'__3144 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_SNAP'45'complete_2232 = erased
+d_SNAP'45'complete_2252 = erased
 -- Ledger.Conway.Specification.Rewards.Properties.Computational._.SNAP-deterministic
-d_SNAP'45'deterministic_2240 ::
+d_SNAP'45'deterministic_2260 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_2496 ->
   MAlonzo.Code.Ledger.Conway.Specification.Ledger.T_LState_2932 ->
@@ -168,4 +189,21 @@ d_SNAP'45'deterministic_2240 ::
   MAlonzo.Code.Ledger.Conway.Specification.Rewards.T__'8866'_'8640''10631'_'44'SNAP'10632'__3144 ->
   MAlonzo.Code.Ledger.Conway.Specification.Rewards.T__'8866'_'8640''10631'_'44'SNAP'10632'__3144 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_SNAP'45'deterministic_2240 = erased
+d_SNAP'45'deterministic_2260 = erased
+-- Ledger.Conway.Specification.Rewards.Properties.Computational.Computational-SNAP
+d_Computational'45'SNAP_2262 ::
+  MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_2496 ->
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_232
+d_Computational'45'SNAP_2262 v0 ~v1
+  = du_Computational'45'SNAP_2262 v0
+du_Computational'45'SNAP_2262 ::
+  MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_232
+du_Computational'45'SNAP_2262 v0
+  = coe
+      MAlonzo.Code.Interface.ComputationalRelation.C_MkComputational_412
+      (\ v1 v2 v3 ->
+         coe
+           MAlonzo.Code.Interface.ComputationalRelation.C_success_42
+           (coe du_SNAP'45'total_2248 (coe v0) (coe v1) (coe v2)))
