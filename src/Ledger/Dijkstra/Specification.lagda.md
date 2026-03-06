@@ -45,7 +45,7 @@ import Ledger.Dijkstra.Specification.Enact.Properties
 ```agda
 import Ledger.Core.Specification.Epoch
 import Ledger.Dijkstra.Specification.Epoch
--- import Ledger.Dijkstra.Specification.Epoch.Properties
+import Ledger.Dijkstra.Specification.Epoch.Properties
 ```
 
 ## Fees
