@@ -26,6 +26,16 @@ import Ledger.Dijkstra.Specification.Abstract
 import Ledger.Core.Specification.Address renaming (RewardAddress to RewardAddress)
 ```
 
+## Block Body
+
+The Block Body Transition updates the block body state which comprises the
+ledger state and the map describing the produced blocks.
+
+```agda
+import Ledger.Dijkstra.Specification.BlockBody
+import Ledger.Dijkstra.Specification.BlockBody.Properties
+```
+
 ## Certificates
 
 ```agda
