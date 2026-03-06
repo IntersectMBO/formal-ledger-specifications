@@ -25,8 +25,6 @@ module Ledger.Dijkstra.Specification.Computational
 open import Ledger.Prelude
 open import Interface.ComputationalRelation
 
--- ── Import all Computational instances ───────────────────────
-
 open import Ledger.Dijkstra.Specification.BlockBody txs abs using (_⊢_⇀⦇_,BBODY⦈_)
 open import Ledger.Dijkstra.Specification.BlockBody.Properties.Computational txs abs
 
@@ -62,6 +60,10 @@ open import Ledger.Dijkstra.Specification.Rewards txs abs
   using (_⊢_⇀⦇_,SNAP⦈_)
 open import Ledger.Dijkstra.Specification.Rewards.Properties.Computational txs abs
 
+open import Ledger.Dijkstra.Specification.RewardUpdate txs abs
+  using (_⊢_⇀⦇_,RUPD⦈_ ; _⊢_⇀⦇_,TICK⦈_)
+open import Ledger.Dijkstra.Specification.RewardUpdate.Properties.Computational txs abs
+
 open import Ledger.Dijkstra.Specification.Utxo txs abs
   using (_⊢_⇀⦇_,UTXO⦈_ ; _⊢_⇀⦇_,UTXOS⦈_ ; _⊢_⇀⦇_,SUBUTXO⦈_)
 open import Ledger.Dijkstra.Specification.Utxo.Properties.Computational txs abs
@@ -93,7 +95,9 @@ _ = Computational _⊢_⇀⦇_,NEWEPOCH⦈_    ⊥       ∋ it
 _ = Computational _⊢_⇀⦇_,POOLREAP⦈_    ⊥       ∋ it
 _ = Computational _⊢_⇀⦇_,RATIFY⦈_      ⊥       ∋ it
 _ = Computational _⊢_⇀⦇_,RATIFIES⦈_    ⊥       ∋ it
+_ = Computational _⊢_⇀⦇_,RUPD⦈_        ⊥       ∋ it
 _ = Computational _⊢_⇀⦇_,SNAP⦈_        ⊥       ∋ it
+_ = Computational _⊢_⇀⦇_,TICK⦈_        ⊥       ∋ it
 _ = Computational _⊢_⇀⦇_,SUBLEDGER⦈_   String  ∋ it
 _ = Computational _⊢_⇀⦇_,SUBLEDGERS⦈_  String  ∋ it
 _ = Computational _⊢_⇀⦇_,SUBUTXO⦈_     String  ∋ it
@@ -101,11 +105,4 @@ _ = Computational _⊢_⇀⦇_,SUBUTXOW⦈_    String  ∋ it
 _ = Computational _⊢_⇀⦇_,UTXO⦈_        String  ∋ it
 _ = Computational _⊢_⇀⦇_,UTXOS⦈_       String  ∋ it
 _ = Computational _⊢_⇀⦇_,UTXOW⦈_       String  ∋ it
-
--- ── Rules still TODO ─────────────────────────────────────────
--- Uncomment each line once the corresponding instance is proved:
---
--- open import Ledger.Dijkstra.Specification.RewardUpdate.Properties.Computational txs abs
--- _ = Computational _⊢_⇀⦇_,RUPD⦈_   ⊥ ∋ it
--- _ = Computational _⊢_⇀⦇_,TICK⦈_   ⊥ ∋ it
 ```
