@@ -12,6 +12,7 @@ Modelled on the `Conway.Conformance.Epoch`{.AgdaModule} module, adapted for Dijk
    and `Acnt`{.AgdaRecord} rather than `UTxOState`{.AgdaRecord} and `CertState`{.AgdaRecord}.
 +  govAction deposit returns are taken from `GState.deposits`{.AgdaField}.
 
+<!--
 ```agda
 {-# OPTIONS --safe #-}
 
@@ -23,9 +24,20 @@ module Ledger.Dijkstra.Specification.Epoch
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
 
-open import Ledger.Prelude hiding (iterate)
-open import Data.Integer using () renaming (+_ to pos)
 import Data.Integer as ℤ
+open import Data.Integer using () renaming (+_ to pos)
+open import Data.Integer.Properties         using (module ≤-Reasoning; +-mono-≤; neg-mono-≤; +-identityˡ)
+                                            renaming (nonNegative⁻¹ to nonNegative⁻¹ℤ)
+open import Data.Integer.Tactic.RingSolver  using (solve-∀)
+open import Data.Rational                   using (ℚ; floor; _*_; _÷_; _/_; _⊓_; _≟_; ≢-nonZero)
+open import Data.Rational.Literals          using (number; fromℤ)
+open import Data.Rational.Properties        using (nonNegative⁻¹; pos⇒nonNeg; ⊓-glb)
+
+open import stdlib.Data.Rational.Properties using (0≤⇒0≤floor; ÷-0≤⇒0≤; fromℕ-0≤; *-0≤⇒0≤; fromℤ-0≤)
+
+
+open import Ledger.Prelude hiding (iterate; _/_; _*_; _⊓_; _≟_; ≢-nonZero)
+open import Ledger.Prelude.Numeric.UnitInterval using (fromUnitInterval; UnitInterval-*-0≤)
 
 open import Data.Nat.Properties using (+-0-monoid; +-0-commutativeMonoid)
 open import Data.List using (filter)
@@ -44,6 +56,11 @@ open import Ledger.Dijkstra.Specification.Ratify govStructure
 open import Ledger.Dijkstra.Specification.Rewards txs abs
 open import Ledger.Dijkstra.Specification.Utxo txs abs
 
+open Number number renaming (fromNat to fromℕ)
+```
+-->
+
+```agda
 getOrphans : EnactState → GovState → GovState
 getOrphans es govSt = proj₁ $ iterate step ([] , govSt) (length govSt)
   where
@@ -61,7 +78,6 @@ getStakeCred : TxOut → Maybe Credential
 getStakeCred (a , _ , _ , _) = stakeCred a
 
 open GovActionState using (returnAddr)
-open RewardAddress using (stake)
 
 PoolDelegatedStake : Type
 PoolDelegatedStake = KeyHash ⇀ Coin
@@ -74,7 +90,51 @@ record EpochState : Type where
     ls         : LedgerState
     es         : EnactState
     fut        : RatifyState
+```
 
+<!--
+```agda
+record HasEpochState {a} (A : Type a) : Type a where
+  field EpochStateOf : A → EpochState
+open HasEpochState ⦃...⦄ public
+
+instance
+  HasSnapshots-EpochState : HasSnapshots EpochState
+  HasSnapshots-EpochState .SnapshotsOf = EpochState.ss
+
+  HasLedgerState-EpochState : HasLedgerState EpochState
+  HasLedgerState-EpochState .LedgerStateOf = EpochState.ls
+
+  HasGovState-EpochState : HasGovState EpochState
+  HasGovState-EpochState .GovStateOf = GovStateOf ∘ LedgerStateOf
+
+  HasEnactState-EpochState : HasEnactState EpochState
+  HasEnactState-EpochState .EnactStateOf = EpochState.es
+
+  HasDReps-EpochState : HasDReps EpochState
+  HasDReps-EpochState .DRepsOf = DRepsOf ∘ CertStateOf ∘ LedgerStateOf
+
+  HasTreasury-EpochState : HasTreasury EpochState
+  HasTreasury-EpochState .TreasuryOf = Acnt.treasury ∘ EpochState.acnt
+
+  HasReserves-EpochState : HasReserves EpochState
+  HasReserves-EpochState .ReservesOf = Acnt.reserves ∘ EpochState.acnt
+
+  HasPParams-EpochState : HasPParams EpochState
+  HasPParams-EpochState .PParamsOf = PParamsOf ∘ EnactStateOf
+
+  HasRatifyState-EpochState : HasRatifyState EpochState
+  HasRatifyState-EpochState .RatifyStateOf = EpochState.fut
+
+  HasPState-EpochState : HasPState EpochState
+  HasPState-EpochState .PStateOf = PStateOf ∘ CertStateOf ∘ LedgerStateOf
+
+  HasRetiring-EpochState : HasRetiring EpochState
+  HasRetiring-EpochState .RetiringOf = RetiringOf ∘ PStateOf
+```
+-->
+
+```agda
 record NewEpochState : Type where
   field
     lastEpoch   : Epoch
@@ -83,13 +143,125 @@ record NewEpochState : Type where
     epochState  : EpochState
     ru          : Maybe RewardUpdate
     pd          : PoolDelegatedStake
+```
 
+<!--
+```agda
 instance
   unquoteDecl HasCast-EpochState HasCast-NewEpochState = derive-HasCast
     ( (quote EpochState     , HasCast-EpochState)
     ∷ [ (quote NewEpochState  , HasCast-NewEpochState)])
 
+opaque
+  createRUpd : ℕ → BlocksMade → EpochState → Coin → RewardUpdate
+  createRUpd slotsPerEpoch b es total =
+    record  { Δt = Δt₁
+            ; Δr = 0 - Δr₁ + Δr₂
+            ; Δf = 0 - pos feeSS
+            ; rs = rs
+            ; flowConservation = flowConservation
+            ; Δt-nonnegative = Δt-nonneg
+            ; Δf-nonpositive = Δf-nonpos
+            }
+    where
+      prevPp : PParams
+      prevPp = PParamsOf es
 
+      reserves : Reserves
+      reserves = ReservesOf es
+
+      pstakego : Snapshot
+      pstakego = (SnapshotsOf es) .Snapshots.go
+
+      feeSS : Fees
+      feeSS = FeesOf (SnapshotsOf es)
+
+      stake : Stake
+      stake = StakeOf pstakego
+
+      delegs : StakeDelegs
+      delegs = StakeDelegsOf pstakego
+
+      poolParams : Pools
+      poolParams = PoolsOf pstakego
+
+      blocksMade : ℕ
+      blocksMade = ∑[ m ← b ] m
+
+      ρ η τ : ℚ
+      ρ = fromUnitInterval (prevPp .PParams.monetaryExpansion)
+      η = fromℕ blocksMade ÷₀ (fromℕ slotsPerEpoch * ActiveSlotCoeff)
+      τ = fromUnitInterval (prevPp .PParams.treasuryCut)
+
+      Δr₁ rewardPot Δt₁ R : ℤ
+      Δr₁ = floor (1 ⊓ η * ρ * fromℕ reserves)
+      rewardPot = pos feeSS + Δr₁
+      Δt₁ = floor (fromℤ rewardPot * τ)
+      R = rewardPot - Δt₁
+
+      circulation : Coin
+      circulation = total - reserves
+
+      rs : Rewards
+      rs = reward prevPp b (posPart R) poolParams stake delegs circulation
+
+      Δr₂ : ℤ
+      Δr₂ = R - pos (∑[ c ← rs ] c)
+
+      -- Proofs
+      -- Note: Overloading of + and - seems to interfere with the ring solver.
+      lemmaFlow : ∀ (t₁ r₁ f z : ℤ)
+        → (t₁ ℤ.+ (0 ℤ.- r₁ ℤ.+ ((f ℤ.+ r₁ ℤ.- t₁) ℤ.- z)) ℤ.+ (0 ℤ.- f) ℤ.+ z) ≡ 0
+      lemmaFlow = solve-∀
+      flowConservation :
+        let t₁ = Δt₁
+            r₁ = Δr₁
+            f  = pos feeSS
+            z  = pos (∑[ c ← rs ] c)
+         in
+            (t₁ ℤ.+ (0 ℤ.- r₁ ℤ.+ ((f ℤ.+ r₁ ℤ.- t₁) ℤ.- z)) ℤ.+ (0 ℤ.- f) ℤ.+ z) ≡ 0
+      flowConservation = lemmaFlow Δt₁ Δr₁ (pos feeSS) (pos (∑[ c ← rs ] c))
+
+      ÷₀-0≤⇒0≤ : ∀ (x y : ℚ) → 0 ≤ x → 0 ≤ y → 0 ≤ (x ÷₀ y)
+      ÷₀-0≤⇒0≤ x y 0≤x 0≤y with y ≟ 0
+      ... | (yes y≡0) = nonNegative⁻¹ 0
+      ... | (no y≢0)  = ÷-0≤⇒0≤ x y {{≢-nonZero y≢0}} 0≤x 0≤y
+
+      η-nonneg : 0 ≤ η
+      η-nonneg = ÷₀-0≤⇒0≤ _ _ (fromℕ-0≤ blocksMade)
+        (*-0≤⇒0≤ _ _
+          (fromℕ-0≤ slotsPerEpoch)
+          (nonNegative⁻¹ ActiveSlotCoeff {{pos⇒nonNeg ActiveSlotCoeff}}))
+
+      min1η-nonneg : 0 ≤ 1 ⊓ η
+      min1η-nonneg = ⊓-glb (nonNegative⁻¹ 1) η-nonneg
+
+      Δr₁-nonneg : 0 ≤ Δr₁
+      Δr₁-nonneg = 0≤⇒0≤floor _
+        (*-0≤⇒0≤ (1 ⊓ η * ρ) (fromℕ reserves)
+          (UnitInterval-*-0≤ (1 ⊓ η) (prevPp .PParams.monetaryExpansion) min1η-nonneg)
+          (fromℕ-0≤ reserves))
+
+      rewardPot-nonneg : 0 ≤ rewardPot
+      rewardPot-nonneg = +-mono-≤ (nonNegative⁻¹ℤ (pos feeSS)) Δr₁-nonneg
+
+      Δt-nonneg : 0 ≤ Δt₁
+      Δt-nonneg = 0≤⇒0≤floor _
+        (UnitInterval-*-0≤ (fromℤ rewardPot) (prevPp .PParams.treasuryCut)
+          (fromℤ-0≤ rewardPot rewardPot-nonneg))
+
+      Δf-nonpos : (0 - pos feeSS) ≤ 0
+      Δf-nonpos = begin
+          0 - pos feeSS ≡⟨ +-identityˡ _ ⟩
+          ℤ.- pos feeSS ≤⟨ neg-mono-≤ (ℤ.+≤+ z≤n) ⟩
+          0             ∎
+        where open ≤-Reasoning
+
+open RewardAddress using (stake)
+```
+-->
+
+```agda
 applyRUpd : RewardUpdate → EpochState → EpochState
 applyRUpd rewardUpdate
   ⟦ ⟦ treasury , reserves ⟧ᵃ , ss , ⟦ ⟦ utxo , fees , donations ⟧ᵘ , govSt , ⟦ ⟦ voteDelegs , stakeDelegs , rewards , deposits ⟧ᵈ , pState , gState ⟧ᶜˢ ⟧ˡ , es , fut ⟧ᵉ' = ⟦  ⟦ posPart (pos treasury + Δt + pos unregRU') , posPart (pos reserves + Δr) ⟧ , ss , ⟦ ⟦ utxo , posPart (pos fees + Δf) , donations ⟧ , govSt , ⟦ ⟦ voteDelegs , stakeDelegs , rewards ∪⁺ regRU , deposits ⟧ᵈ , pState , gState ⟧ᶜˢ  ⟧ˡ , es , fut ⟧ᵉ'
@@ -98,7 +270,10 @@ applyRUpd rewardUpdate
   regRU     = rs ∣ dom rewards
   unregRU   = rs ∣ dom rewards ᶜ
   unregRU'  = ∑[ x ← unregRU ] x
+```
 
+<!--
+```agda
 opaque
   calculatePoolDelegatedStake : Snapshot → PoolDelegatedStake
   calculatePoolDelegatedStake ss = sd ∣ dom (ss .pools)
@@ -179,7 +354,10 @@ private variable
   ss ss' : Snapshots
   ru : RewardUpdate
   mru : Maybe RewardUpdate
+```
+-->
 
+```agda
 data _⊢_⇀⦇_,EPOCH⦈_ : ⊤ → EpochState → Epoch → EpochState → Type where
 
   EPOCH : let
