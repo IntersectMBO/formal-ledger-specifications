@@ -83,7 +83,7 @@ record CertEnv : Type where
     coldCreds : ℙ Credential
 
 record DState : Type where
-  constructor ⟦_,_,_⟧ᵈ
+  constructor ⟦_,_,_,_⟧ᵈ
   field
     voteDelegs   : VoteDelegs
     stakeDelegs  : StakeDelegs
@@ -98,7 +98,7 @@ record PState : Type where
     deposits  : KeyHash ⇀ Coin
 
 record GState : Type where
-  constructor ⟦_,_⟧ᵛ
+  constructor ⟦_,_,_⟧ᵛ
   field
     dreps      : DReps
     ccHotKeys  : Credential ⇀ Maybe Credential

@@ -65,12 +65,24 @@ instance
   HasPParams-LedgerEnv : HasPParams LedgerEnv
   HasPParams-LedgerEnv .PParamsOf = LedgerEnv.pparams
 
-  HasPParams-SubLedgerEnv : HasPParams LedgerEnv
-  HasPParams-SubLedgerEnv .PParamsOf = LedgerEnv.pparams
+  HasEnactState-LedgerEnv : HasEnactState LedgerEnv
+  HasEnactState-LedgerEnv .EnactStateOf = LedgerEnv.enactState
+
+  HasPParams-SubLedgerEnv : HasPParams SubLedgerEnv
+  HasPParams-SubLedgerEnv .PParamsOf = SubLedgerEnv.pparams
+
+  HasEnactState-SubLedgerEnv : HasEnactState SubLedgerEnv
+  HasEnactState-SubLedgerEnv .EnactStateOf = SubLedgerEnv.enactState
+
+  HasUTxO-SubLedgerEnv : HasUTxO SubLedgerEnv
+  HasUTxO-SubLedgerEnv .UTxOOf = SubLedgerEnv.utxo₀
+
+  HasTreasury-SubLedgerEnv : HasTreasury SubLedgerEnv
+  HasTreasury-SubLedgerEnv .TreasuryOf = SubLedgerEnv.treasury
 ```
 -->
 ```agda
-record LState : Type where
+record LedgerState : Type where
 ```
 <!--
 ```agda
@@ -85,60 +97,52 @@ record LState : Type where
 ```
 <!--
 ```agda
-record HasLState {a} (A : Type a) : Type a where
-  field LStateOf : A → LState
-open HasLState ⦃...⦄ public
-
--- instance
---   HasUTxOState-LState : HasUTxOState LState
---   HasUTxOState-LState .UTxOStateOf = LState.utxoSt
-
---   HasUTxO-LState : HasUTxO LState
---   HasUTxO-LState .UTxOOf = UTxOOf ∘ UTxOStateOf
-
---   HasGovState-LState : HasGovState LState
---   HasGovState-LState .GovStateOf = LState.govSt
-
---   HasCertState-LState : HasCertState LState
---   HasCertState-LState .CertStateOf = LState.certState
-
---   HasDeposits-LState : HasDeposits LState
---   HasDeposits-LState .DepositsOf = DepositsOf ∘ UTxOStateOf
-
---   HasPools-LState : HasPools LState
---   HasPools-LState .PoolsOf = PoolsOf ∘ CertStateOf
-
---   HasGState-LState : HasGState LState
---   HasGState-LState .GStateOf = GStateOf ∘ CertStateOf
-
---   HasDState-LState : HasDState LState
---   HasDState-LState .DStateOf = DStateOf ∘ CertStateOf
-
---   HasPState-LState : HasPState LState
---   HasPState-LState .PStateOf = PStateOf ∘ CertStateOf
-
---   HasVoteDelegs-LState : HasVoteDelegs LState
---   HasVoteDelegs-LState .VoteDelegsOf = VoteDelegsOf ∘ DStateOf ∘ CertStateOf
-
---   HasDonations-LState : HasDonations LState
---   HasDonations-LState .DonationsOf = DonationsOf ∘ UTxOStateOf
-
---   HasFees-LState : HasFees LState
---   HasFees-LState .FeesOf = FeesOf ∘ UTxOStateOf
-
---   HasCCHotKeys-LState : HasCCHotKeys LState
---   HasCCHotKeys-LState .CCHotKeysOf = CCHotKeysOf ∘ GStateOf
-
---   HasDReps-LState : HasDReps LState
---   HasDReps-LState .DRepsOf = DRepsOf ∘ CertStateOf
-
--- open CertState
--- open DState
--- open GovVotes
+record HasLedgerState {a} (A : Type a) : Type a where
+  field LedgerStateOf : A → LedgerState
+open HasLedgerState ⦃...⦄ public
 
 instance
-  unquoteDecl HasCast-LState = derive-HasCast
-    ((quote LState , HasCast-LState) ∷ [])
+  HasUTxOState-LedgerState : HasUTxOState LedgerState
+  HasUTxOState-LedgerState .UTxOStateOf = LedgerState.utxoSt
+
+  HasUTxO-LedgerState : HasUTxO LedgerState
+  HasUTxO-LedgerState .UTxOOf = UTxOOf ∘ UTxOStateOf
+
+  HasGovState-LedgerState : HasGovState LedgerState
+  HasGovState-LedgerState .GovStateOf = LedgerState.govSt
+
+  HasCertState-LedgerState : HasCertState LedgerState
+  HasCertState-LedgerState .CertStateOf = LedgerState.certState
+
+  HasPools-LedgerState : HasPools LedgerState
+  HasPools-LedgerState .PoolsOf = PoolsOf ∘ CertStateOf
+
+  HasGState-LedgerState : HasGState LedgerState
+  HasGState-LedgerState .GStateOf = GStateOf ∘ CertStateOf
+
+  HasDState-LedgerState : HasDState LedgerState
+  HasDState-LedgerState .DStateOf = DStateOf ∘ CertStateOf
+
+  HasPState-LedgerState : HasPState LedgerState
+  HasPState-LedgerState .PStateOf = PStateOf ∘ CertStateOf
+
+  HasVoteDelegs-LedgerState : HasVoteDelegs LedgerState
+  HasVoteDelegs-LedgerState .VoteDelegsOf = VoteDelegsOf ∘ DStateOf ∘ CertStateOf
+
+  HasDonations-LedgerState : HasDonations LedgerState
+  HasDonations-LedgerState .DonationsOf = DonationsOf ∘ UTxOStateOf
+
+  HasFees-LedgerState : HasFees LedgerState
+  HasFees-LedgerState .FeesOf = FeesOf ∘ UTxOStateOf
+
+  HasCCHotKeys-LedgerState : HasCCHotKeys LedgerState
+  HasCCHotKeys-LedgerState .CCHotKeysOf = CCHotKeysOf ∘ GStateOf
+
+  HasDReps-LedgerState : HasDReps LedgerState
+  HasDReps-LedgerState .DRepsOf = DRepsOf ∘ CertStateOf
+
+  unquoteDecl HasCast-LedgerState = derive-HasCast
+    ((quote LedgerState , HasCast-LedgerState) ∷ [])
 ```
 -->
 
@@ -277,7 +281,7 @@ UTxOEnv{.AgdaDatatype}/SubUTxOEnv{.AgdaDatatype}.
    the final (post-subtransaction processing) `GovState`{.AgdaRecord}.
 
 ```agda
-data _⊢_⇀⦇_,SUBLEDGER⦈_ : SubLedgerEnv → LState → SubLevelTx → LState → Type where
+data _⊢_⇀⦇_,SUBLEDGER⦈_ : SubLedgerEnv → LedgerState → SubLevelTx → LedgerState → Type where
 
   SUBLEDGER-V :
       ∙ isTopLevelValid ≡ true
@@ -293,11 +297,11 @@ data _⊢_⇀⦇_,SUBLEDGER⦈_ : SubLedgerEnv → LState → SubLevelTx → LSt
         ────────────────────────────────
         ⟦ slot , ppolicy , pp , enactState , treasury , utxo₀ , isTopLevelValid , allScripts , allData ⟧ ⊢ ⟦ utxoState₀ , govState₀ , certState₀ ⟧ ⇀⦇ stx ,SUBLEDGER⦈ ⟦ utxoState₀ , govState₀ , certState₀ ⟧
 
-_⊢_⇀⦇_,SUBLEDGERS⦈_ : SubLedgerEnv → LState → List SubLevelTx → LState → Type
+_⊢_⇀⦇_,SUBLEDGERS⦈_ : SubLedgerEnv → LedgerState → List SubLevelTx → LedgerState → Type
 _⊢_⇀⦇_,SUBLEDGERS⦈_ = ReflexiveTransitiveClosure {sts = _⊢_⇀⦇_,SUBLEDGER⦈_}
 
 
-data _⊢_⇀⦇_,LEDGER⦈_ : LedgerEnv → LState → TopLevelTx → LState → Type where
+data _⊢_⇀⦇_,LEDGER⦈_ : LedgerEnv → LedgerState → TopLevelTx → LedgerState → Type where
 
   LEDGER-V :
     let  utxo₀ : UTxO
@@ -337,6 +341,6 @@ data _⊢_⇀⦇_,LEDGER⦈_ : LedgerEnv → LState → TopLevelTx → LState �
         ────────────────────────────────
         ⟦ slot , ppolicy , pp , enactState , treasury ⟧ ⊢ ⟦ utxoState₀ , govState₀ , certState₀ ⟧ ⇀⦇ tx ,LEDGER⦈ ⟦ utxoState₁ , govState₀ , certState₀ ⟧
 
-_⊢_⇀⦇_,LEDGERS⦈_ : LedgerEnv → LState → List TopLevelTx → LState → Type
+_⊢_⇀⦇_,LEDGERS⦈_ : LedgerEnv → LedgerState → List TopLevelTx → LedgerState → Type
 _⊢_⇀⦇_,LEDGERS⦈_ = ReflexiveTransitiveClosure {sts = _⊢_⇀⦇_,LEDGER⦈_}
 ```
