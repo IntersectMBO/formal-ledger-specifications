@@ -149,7 +149,7 @@ d_fut_2162 v0
 -- Ledger.Conway.Specification.RewardUpdate._.EpochState.ls
 d_ls_2164 ::
   MAlonzo.Code.Ledger.Conway.Specification.Epoch.T_EpochState_3270 ->
-  MAlonzo.Code.Ledger.Conway.Specification.Ledger.T_LState_2932
+  MAlonzo.Code.Ledger.Conway.Specification.Ledger.T_LState_2938
 d_ls_2164 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Epoch.d_ls_3286 (coe v0)
