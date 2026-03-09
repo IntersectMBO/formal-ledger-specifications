@@ -26,6 +26,7 @@ module Ledger.Conway.Specification.Utxow
 open import Ledger.Conway.Specification.Utxo txs abs
 open import Ledger.Conway.Specification.Script.Validation txs abs
 open import Ledger.Conway.Specification.Certs govStructure
+import Data.List.Relation.Unary.Any as L
 ```
 -->
 
@@ -46,20 +47,47 @@ instance
   Dec-HasInlineDatum {_ , _ , nothing , _} = ⁇ no λ where
     (InlineDatum x) → case x of λ ()
 
+IsConwayCert : DCert → Type
+IsConwayCert (regdrep _ _ _) = ⊤
+IsConwayCert (deregdrep _ _) = ⊤
+IsConwayCert (ccreghot _ _)  = ⊤
+IsConwayCert (delegate _ (just _) _ _) = ⊤
+IsConwayCert _               = ⊥
+
+private
+  instance
+    IsConwayCert? : IsConwayCert ⁇¹
+    IsConwayCert? {x} .dec with x
+    ... | regdrep _ _ _ = yes tt
+    ... | deregdrep _ _ = yes tt
+    ... | ccreghot _ _  = yes tt
+    ... | delegate _ (just _) _ _ = yes tt
+    ... | delegate _ nothing  _ _ = no (λ ())
+    ... | dereg _ _ = no (λ ())
+    ... | regpool _ _ = no (λ ())
+    ... | retirepool _ _ = no (λ ())
+    ... | reg _ _ = no (λ ())
+
 module _ (txb : TxBody) (let open TxBody txb) where
+
   data UsesV3Features : Set where
     HasVotes : txGovVotes ≢ [] → UsesV3Features
     HasProps : txGovProposals ≢ [] → UsesV3Features
     HasDonation : txDonation ≢ 0 → UsesV3Features
     HasTreasure : currentTreasury ≢ nothing → UsesV3Features
+    HasConwayCerts : L.Any IsConwayCert txCerts → UsesV3Features
 
 instance
   Dec-UsesV3Features : ∀ {txb} → UsesV3Features txb ⁇
-  Dec-UsesV3Features {record { txGovVotes = [] ; txGovProposals = [] ; txDonation = zero ; currentTreasury = nothing }}
+  Dec-UsesV3Features {record { txCerts = txCerts; txGovVotes = [] ; txGovProposals = [] ; txDonation = zero ; currentTreasury = nothing }}
+    with ¿ L.Any IsConwayCert txCerts ¿
+  ... | yes p = ⁇ yes (HasConwayCerts p)
+  ... | no ¬p
     = ⁇ no λ where (HasVotes x)    → x refl
                    (HasProps x)    → x refl
                    (HasDonation x) → x refl
                    (HasTreasure x) → x refl
+                   (HasConwayCerts x) → ¬p x
   Dec-UsesV3Features {record { txGovVotes = [] ; txGovProposals = [] ; txDonation = zero ; currentTreasury = just x }}
     = ⁇ yes (HasTreasure (λ ()))
   Dec-UsesV3Features {record { txGovVotes = [] ; txGovProposals = [] ; txDonation = suc txDonation }}
