@@ -9343,7 +9343,22 @@ d_HSAbstractFunctions_3264 v0
                                 (coe
                                    MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                              (coe MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_594) (coe v2)))))))
-         (coe (\ v1 v2 -> coe MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18))
+         (coe
+            (\ v1 v2 ->
+               coe
+                 MAlonzo.Code.Data.Maybe.Base.du_map_64
+                 (coe MAlonzo.Code.Data.Fin.Base.du_toℕ_18)
+                 (coe
+                    MAlonzo.Code.Data.List.Base.du_findIndex'7495'_928
+                    (\ v3 ->
+                       coe
+                         MAlonzo.Code.Class.DecEq.Core.du__'61''61'__18 (coe ())
+                         (coe
+                            MAlonzo.Code.Prelude.d_DecEq'45''215''8242'_4 () erased () erased
+                            MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22
+                            MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
+                         (coe v3) (coe v1))
+                    v2)))
          (coe (\ v1 v2 -> coe MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18))
          (coe (\ v1 v2 -> coe MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18))
          (coe
