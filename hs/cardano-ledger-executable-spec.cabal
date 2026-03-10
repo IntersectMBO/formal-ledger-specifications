@@ -474,7 +474,6 @@ library
       MAlonzo.Code.Ledger.Conway.Conformance.Ledger
       MAlonzo.Code.Ledger.Conway.Conformance.Ledger.Properties
       MAlonzo.Code.Ledger.Conway.Conformance.Rewards
-      MAlonzo.Code.Ledger.Conway.Conformance.Script
       MAlonzo.Code.Ledger.Conway.Conformance.Utxo
       MAlonzo.Code.Ledger.Conway.Conformance.Utxo.Properties
       MAlonzo.Code.Ledger.Conway.Conformance.Utxow
@@ -498,6 +497,7 @@ library
       MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.PParams
       MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Ratify
       MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Rewards
+      MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Script
       MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Transaction
       MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Utxo
       MAlonzo.Code.Ledger.Conway.Specification.Abstract
@@ -527,7 +527,6 @@ library
       MAlonzo.Code.Ledger.Conway.Specification.Rewards.Properties.Computational
       MAlonzo.Code.Ledger.Conway.Specification.RewardUpdate
       MAlonzo.Code.Ledger.Conway.Specification.RewardUpdate.Properties.Computational
-      MAlonzo.Code.Ledger.Conway.Specification.Script
       MAlonzo.Code.Ledger.Conway.Specification.Script.Base
       MAlonzo.Code.Ledger.Conway.Specification.Script.ScriptPurpose
       MAlonzo.Code.Ledger.Conway.Specification.Script.Timelock

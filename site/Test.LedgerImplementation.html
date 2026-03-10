@@ -11412,6 +11412,34 @@
   
   
     <li class="md-nav__item">
+      <a href="Ledger.Conway.Foreign.HSLedger.Script.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Script
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="Ledger.Conway.Foreign.HSLedger.Utxo.html" class="md-nav__link">
         
   
@@ -12224,34 +12252,6 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Conformance.Script.html" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Script
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="Ledger.Conway.Conformance.Utxo.html" class="md-nav__link">
         
   
@@ -12293,10 +12293,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_3_3_4_14" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_3_3_4_13" >
         
           
-          <label class="md-nav__link" for="__nav_6_3_3_4_14" id="__nav_6_3_3_4_14_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_6_3_3_4_13" id="__nav_6_3_3_4_13_label" tabindex="0">
             
   
   
@@ -12314,8 +12314,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_6_3_3_4_14_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_6_3_3_4_14">
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_6_3_3_4_13_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_3_3_4_13">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -12409,10 +12409,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_3_3_4_16" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_3_3_4_15" >
         
           
-          <label class="md-nav__link" for="__nav_6_3_3_4_16" id="__nav_6_3_3_4_16_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_6_3_3_4_15" id="__nav_6_3_3_4_15_label" tabindex="0">
             
   
   
@@ -12430,8 +12430,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_6_3_3_4_16_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_6_3_3_4_16">
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_6_3_3_4_15_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_3_3_4_15">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -12653,82 +12653,97 @@
 <pre class="Agda hidden-source"><a id="2740" class="Keyword">instance</a> <a id="2749" href="Test.LedgerImplementation.html#2749" class="Function">_</a> <a id="2751" class="Symbol">=</a> <a id="2753" href="Test.LedgerImplementation.html#2378" class="Function">SVCrypto</a>
 
 <a id="2763" class="Keyword">open</a> <a id="2768" class="Keyword">import</a> <a id="2775" href="Ledger.Conway.Specification.Script.html" class="Module">Ledger.Conway.Specification.Script</a> <a id="2810" href="Function.Base.html#4755" class="Function">it</a> <a id="2813" href="Function.Base.html#4755" class="Function">it</a>
-<a id="2816" class="Keyword">open</a> <a id="2821" class="Keyword">import</a> <a id="2828" href="Ledger.Conway.Conformance.Script.html" class="Module">Ledger.Conway.Conformance.Script</a> <a id="2861" href="Function.Base.html#4755" class="Function">it</a> <a id="2864" href="Function.Base.html#4755" class="Function">it</a> <a id="2867" class="Keyword">public</a> <a id="2874" class="Keyword">using</a> <a id="2880" class="Symbol">(</a><a id="2881" href="Ledger.Conway.Conformance.Script.html#1364" class="Function">P1ScriptStructure-HTL</a><a id="2902" class="Symbol">)</a>
+<a id="2816" class="Keyword">record</a> <a id="HSTimelock"></a><a id="2823" href="Test.LedgerImplementation.html#2823" class="Record">HSTimelock</a> <a id="2834" class="Symbol">:</a> <a id="2836" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="2841" class="Keyword">where</a>
+  <a id="2849" class="Keyword">field</a>
+    <a id="HSTimelock.timelock"></a><a id="2859" href="Test.LedgerImplementation.html#2859" class="Field">timelock</a>     <a id="2872" class="Symbol">:</a> <a id="2874" href="Ledger.Conway.Specification.Script.Timelock.html#1397" class="Datatype">Timelock</a>
+    <a id="HSTimelock.tlScriptHash"></a><a id="2887" href="Test.LedgerImplementation.html#2887" class="Field">tlScriptHash</a> <a id="2900" class="Symbol">:</a> <a id="2902" href="Agda.Builtin.Nat.html#203" class="Datatype">ℕ</a>
+    <a id="HSTimelock.tlScriptSize"></a><a id="2908" href="Test.LedgerImplementation.html#2908" class="Field">tlScriptSize</a> <a id="2921" class="Symbol">:</a> <a id="2923" href="Agda.Builtin.Nat.html#203" class="Datatype">ℕ</a>
+
+<a id="2926" class="Keyword">instance</a>
+  <a id="Hashable-HSTimelock"></a><a id="2937" href="Test.LedgerImplementation.html#2937" class="Function">Hashable-HSTimelock</a> <a id="2957" class="Symbol">:</a> <a id="2959" href="Interface.TypeClasses.Hashable.html#287" class="Record">Hashable</a> <a id="2968" href="Test.LedgerImplementation.html#2823" class="Record">HSTimelock</a> <a id="2979" href="Agda.Builtin.Nat.html#203" class="Datatype">ℕ</a>
+  <a id="2983" href="Test.LedgerImplementation.html#2937" class="Function">Hashable-HSTimelock</a> <a id="3003" class="Symbol">.</a><a id="3004" href="Interface.TypeClasses.Hashable.html#334" class="Field">hash</a> <a id="3009" class="Symbol">=</a> <a id="3011" href="Test.LedgerImplementation.html#2887" class="Field">HSTimelock.tlScriptHash</a>
+
+<a id="3036" class="Keyword">unquoteDecl</a> <a id="DecEq-HSTimelock"></a><a id="3048" href="Test.LedgerImplementation.html#3048" class="Function">DecEq-HSTimelock</a> <a id="3065" class="Symbol">=</a> <a id="3067" href="Tactic.Derive.DecEq.html#5150" class="Function">derive-DecEq</a> <a id="3080" class="Symbol">((</a><a id="3082" class="Keyword">quote</a> <a id="3088" href="Test.LedgerImplementation.html#2823" class="Record">HSTimelock</a> <a id="3099" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="3101" href="Test.LedgerImplementation.html#3048" class="Function">DecEq-HSTimelock</a><a id="3117" class="Symbol">)</a> <a id="3119" href="Agda.Builtin.List.html#199" class="InductiveConstructor Operator">∷</a> <a id="3121" href="Agda.Builtin.List.html#184" class="InductiveConstructor">[]</a><a id="3123" class="Symbol">)</a>
+
+<a id="P1ScriptStructure-HTL"></a><a id="3126" href="Test.LedgerImplementation.html#3126" class="Function">P1ScriptStructure-HTL</a> <a id="3148" class="Symbol">:</a> <a id="3150" href="Ledger.Conway.Specification.Script.Base.html#726" class="Record">P1ScriptStructure</a>
+<a id="3168" href="Test.LedgerImplementation.html#3126" class="Function">P1ScriptStructure-HTL</a> <a id="3190" class="Symbol">=</a> <a id="3192" class="Keyword">record</a>
+  <a id="3201" class="Symbol">{</a> <a id="3203" href="Ledger.Conway.Specification.Script.Base.html#766" class="Field">P1Script</a> <a id="3212" class="Symbol">=</a> <a id="3214" href="Test.LedgerImplementation.html#2823" class="Record">HSTimelock</a>
+  <a id="3227" class="Symbol">;</a> <a id="3229" href="Ledger.Conway.Specification.Script.Base.html#790" class="Field">validP1Script</a> <a id="3243" class="Symbol">=</a> <a id="3245" class="Symbol">λ</a> <a id="3247" href="Test.LedgerImplementation.html#3247" class="Bound">x</a> <a id="3249" href="Test.LedgerImplementation.html#3249" class="Bound">y</a> <a id="3251" class="Symbol">→</a> <a id="3253" href="Ledger.Conway.Specification.Script.Timelock.html#2152" class="Datatype">evalTimelock</a> <a id="3266" href="Test.LedgerImplementation.html#3247" class="Bound">x</a> <a id="3268" href="Test.LedgerImplementation.html#3249" class="Bound">y</a> <a id="3270" href="Function.Base.html#1134" class="Function Operator">∘</a> <a id="3272" href="Test.LedgerImplementation.html#2859" class="Field">HSTimelock.timelock</a> <a id="3292" class="Symbol">}</a>
 </pre>
-<pre class="Agda"><a id="SVScriptStructure"></a><a id="2920" href="Test.LedgerImplementation.html#2920" class="Function">SVScriptStructure</a> <a id="2938" class="Symbol">:</a> <a id="2940" href="Ledger.Conway.Specification.Script.Base.html#2264" class="Record">ScriptStructure</a>
-<a id="2956" href="Test.LedgerImplementation.html#2920" class="Function">SVScriptStructure</a> <a id="2974" class="Symbol">=</a> <a id="2976" class="Keyword">record</a>
-  <a id="2985" class="Symbol">{</a> <a id="2987" href="Ledger.Conway.Specification.Script.Base.html#2303" class="Field">p1s</a> <a id="2991" class="Symbol">=</a> <a id="2993" href="Ledger.Conway.Conformance.Script.html#1364" class="Function">P1ScriptStructure-HTL</a>
-  <a id="3017" class="Symbol">;</a> <a id="3019" href="Ledger.Conway.Specification.Script.Base.html#2373" class="Field">hashRespectsUnion</a> <a id="3037" class="Symbol">=</a> <a id="3039" href="Test.LedgerImplementation.html#3249" class="Function">hashRespectsUnion</a>
-  <a id="3059" class="Symbol">;</a> <a id="3061" href="Ledger.Conway.Specification.Script.Base.html#2490" class="Field">ps</a> <a id="3064" class="Symbol">=</a> <a id="3066" href="Test.LedgerImplementation.html#3462" class="Function">SVP2ScriptStructure</a>
-  <a id="3088" class="Symbol">}</a>
-  <a id="3092" class="Keyword">where</a>
+<pre class="Agda"><a id="SVScriptStructure"></a><a id="3310" href="Test.LedgerImplementation.html#3310" class="Function">SVScriptStructure</a> <a id="3328" class="Symbol">:</a> <a id="3330" href="Ledger.Conway.Specification.Script.Base.html#2264" class="Record">ScriptStructure</a>
+<a id="3346" href="Test.LedgerImplementation.html#3310" class="Function">SVScriptStructure</a> <a id="3364" class="Symbol">=</a> <a id="3366" class="Keyword">record</a>
+  <a id="3375" class="Symbol">{</a> <a id="3377" href="Ledger.Conway.Specification.Script.Base.html#2303" class="Field">p1s</a> <a id="3381" class="Symbol">=</a> <a id="3383" href="Test.LedgerImplementation.html#3126" class="Function">P1ScriptStructure-HTL</a>
+  <a id="3407" class="Symbol">;</a> <a id="3409" href="Ledger.Conway.Specification.Script.Base.html#2373" class="Field">hashRespectsUnion</a> <a id="3427" class="Symbol">=</a> <a id="3429" href="Test.LedgerImplementation.html#3639" class="Function">hashRespectsUnion</a>
+  <a id="3449" class="Symbol">;</a> <a id="3451" href="Ledger.Conway.Specification.Script.Base.html#2490" class="Field">ps</a> <a id="3454" class="Symbol">=</a> <a id="3456" href="Test.LedgerImplementation.html#3852" class="Function">SVP2ScriptStructure</a>
+  <a id="3478" class="Symbol">}</a>
+  <a id="3482" class="Keyword">where</a>
 
-    <a id="3103" class="Keyword">instance</a> <a id="3112" href="Test.LedgerImplementation.html#3112" class="Function">Hashable-PlutusScript</a> <a id="3134" class="Symbol">:</a> <a id="3136" href="Interface.TypeClasses.Hashable.html#287" class="Record">Hashable</a> <a id="3145" href="Test.LedgerImplementation.html#1556" class="Function">Implementation.PlutusScript</a> <a id="3173" href="Agda.Builtin.Nat.html#203" class="Datatype">ℕ</a>
-             <a id="3188" href="Test.LedgerImplementation.html#3112" class="Function">Hashable-PlutusScript</a> <a id="3210" class="Symbol">=</a> <a id="3212" class="Keyword">record</a> <a id="3219" class="Symbol">{</a> <a id="3221" href="Interface.TypeClasses.Hashable.html#334" class="Field">hash</a> <a id="3226" class="Symbol">=</a> <a id="3228" class="Symbol">λ</a> <a id="3230" href="Test.LedgerImplementation.html#3230" class="Bound">x</a> <a id="3232" class="Symbol">→</a> <a id="3234" href="Data.Product.Base.html#636" class="Field">proj₁</a> <a id="3240" href="Test.LedgerImplementation.html#3230" class="Bound">x</a> <a id="3242" class="Symbol">}</a>
+    <a id="3493" class="Keyword">instance</a> <a id="3502" href="Test.LedgerImplementation.html#3502" class="Function">Hashable-PlutusScript</a> <a id="3524" class="Symbol">:</a> <a id="3526" href="Interface.TypeClasses.Hashable.html#287" class="Record">Hashable</a> <a id="3535" href="Test.LedgerImplementation.html#1556" class="Function">Implementation.PlutusScript</a> <a id="3563" href="Agda.Builtin.Nat.html#203" class="Datatype">ℕ</a>
+             <a id="3578" href="Test.LedgerImplementation.html#3502" class="Function">Hashable-PlutusScript</a> <a id="3600" class="Symbol">=</a> <a id="3602" class="Keyword">record</a> <a id="3609" class="Symbol">{</a> <a id="3611" href="Interface.TypeClasses.Hashable.html#334" class="Field">hash</a> <a id="3616" class="Symbol">=</a> <a id="3618" class="Symbol">λ</a> <a id="3620" href="Test.LedgerImplementation.html#3620" class="Bound">x</a> <a id="3622" class="Symbol">→</a> <a id="3624" href="Data.Product.Base.html#636" class="Field">proj₁</a> <a id="3630" href="Test.LedgerImplementation.html#3620" class="Bound">x</a> <a id="3632" class="Symbol">}</a>
 
-    <a id="3249" href="Test.LedgerImplementation.html#3249" class="Function">hashRespectsUnion</a> <a id="3267" class="Symbol">:</a> <a id="3269" class="Symbol">∀</a> <a id="3271" class="Symbol">{</a><a id="3272" href="Test.LedgerImplementation.html#3272" class="Bound">A</a> <a id="3274" href="Test.LedgerImplementation.html#3274" class="Bound">B</a> <a id="3276" href="Test.LedgerImplementation.html#3276" class="Bound">ℍ</a><a id="3277" class="Symbol">}</a>
-      <a id="3285" class="Symbol">→</a> <a id="3287" href="Interface.TypeClasses.Hashable.html#287" class="Record">Hashable</a> <a id="3296" href="Test.LedgerImplementation.html#3272" class="Bound">A</a> <a id="3298" href="Test.LedgerImplementation.html#3276" class="Bound">ℍ</a> <a id="3300" class="Symbol">→</a> <a id="3302" href="Interface.TypeClasses.Hashable.html#287" class="Record">Hashable</a> <a id="3311" href="Test.LedgerImplementation.html#3274" class="Bound">B</a> <a id="3313" href="Test.LedgerImplementation.html#3276" class="Bound">ℍ</a>
-      <a id="3321" class="Symbol">→</a> <a id="3323" href="Interface.TypeClasses.Hashable.html#287" class="Record">Hashable</a> <a id="3332" class="Symbol">(</a><a id="3333" href="Test.LedgerImplementation.html#3272" class="Bound">A</a> <a id="3335" href="Data.Sum.Base.html#625" class="Datatype Operator">⊎</a> <a id="3337" href="Test.LedgerImplementation.html#3274" class="Bound">B</a><a id="3338" class="Symbol">)</a> <a id="3340" href="Test.LedgerImplementation.html#3276" class="Bound">ℍ</a>
-    <a id="3346" href="Test.LedgerImplementation.html#3249" class="Function">hashRespectsUnion</a> <a id="3364" href="Test.LedgerImplementation.html#3364" class="Bound">ha</a> <a id="3367" href="Test.LedgerImplementation.html#3367" class="Bound">hb</a> <a id="3370" class="Symbol">=</a> <a id="3372" class="Keyword">record</a> <a id="3379" class="Symbol">{</a> <a id="3381" href="Interface.TypeClasses.Hashable.html#334" class="Field">hash</a> <a id="3386" class="Symbol">=</a> <a id="3388" class="Symbol">λ</a> <a id="3390" class="Symbol">{</a> <a id="3392" class="Symbol">(</a><a id="3393" href="Data.Sum.Base.html#675" class="InductiveConstructor">inj₁</a> <a id="3398" href="Test.LedgerImplementation.html#3398" class="Bound">x</a><a id="3399" class="Symbol">)</a> <a id="3401" class="Symbol">→</a> <a id="3403" href="Interface.TypeClasses.Hashable.html#334" class="Field">Hashable.hash</a> <a id="3417" href="Test.LedgerImplementation.html#3364" class="Bound">ha</a> <a id="3420" href="Test.LedgerImplementation.html#3398" class="Bound">x</a> <a id="3422" class="Symbol">;</a> <a id="3424" class="Symbol">(</a><a id="3425" href="Data.Sum.Base.html#700" class="InductiveConstructor">inj₂</a> <a id="3430" href="Test.LedgerImplementation.html#3430" class="Bound">y</a><a id="3431" class="Symbol">)</a> <a id="3433" class="Symbol">→</a> <a id="3435" href="Interface.TypeClasses.Hashable.html#334" class="Field">Hashable.hash</a> <a id="3449" href="Test.LedgerImplementation.html#3367" class="Bound">hb</a> <a id="3452" href="Test.LedgerImplementation.html#3430" class="Bound">y</a> <a id="3454" class="Symbol">}}</a>
+    <a id="3639" href="Test.LedgerImplementation.html#3639" class="Function">hashRespectsUnion</a> <a id="3657" class="Symbol">:</a> <a id="3659" class="Symbol">∀</a> <a id="3661" class="Symbol">{</a><a id="3662" href="Test.LedgerImplementation.html#3662" class="Bound">A</a> <a id="3664" href="Test.LedgerImplementation.html#3664" class="Bound">B</a> <a id="3666" href="Test.LedgerImplementation.html#3666" class="Bound">ℍ</a><a id="3667" class="Symbol">}</a>
+      <a id="3675" class="Symbol">→</a> <a id="3677" href="Interface.TypeClasses.Hashable.html#287" class="Record">Hashable</a> <a id="3686" href="Test.LedgerImplementation.html#3662" class="Bound">A</a> <a id="3688" href="Test.LedgerImplementation.html#3666" class="Bound">ℍ</a> <a id="3690" class="Symbol">→</a> <a id="3692" href="Interface.TypeClasses.Hashable.html#287" class="Record">Hashable</a> <a id="3701" href="Test.LedgerImplementation.html#3664" class="Bound">B</a> <a id="3703" href="Test.LedgerImplementation.html#3666" class="Bound">ℍ</a>
+      <a id="3711" class="Symbol">→</a> <a id="3713" href="Interface.TypeClasses.Hashable.html#287" class="Record">Hashable</a> <a id="3722" class="Symbol">(</a><a id="3723" href="Test.LedgerImplementation.html#3662" class="Bound">A</a> <a id="3725" href="Data.Sum.Base.html#625" class="Datatype Operator">⊎</a> <a id="3727" href="Test.LedgerImplementation.html#3664" class="Bound">B</a><a id="3728" class="Symbol">)</a> <a id="3730" href="Test.LedgerImplementation.html#3666" class="Bound">ℍ</a>
+    <a id="3736" href="Test.LedgerImplementation.html#3639" class="Function">hashRespectsUnion</a> <a id="3754" href="Test.LedgerImplementation.html#3754" class="Bound">ha</a> <a id="3757" href="Test.LedgerImplementation.html#3757" class="Bound">hb</a> <a id="3760" class="Symbol">=</a> <a id="3762" class="Keyword">record</a> <a id="3769" class="Symbol">{</a> <a id="3771" href="Interface.TypeClasses.Hashable.html#334" class="Field">hash</a> <a id="3776" class="Symbol">=</a> <a id="3778" class="Symbol">λ</a> <a id="3780" class="Symbol">{</a> <a id="3782" class="Symbol">(</a><a id="3783" href="Data.Sum.Base.html#675" class="InductiveConstructor">inj₁</a> <a id="3788" href="Test.LedgerImplementation.html#3788" class="Bound">x</a><a id="3789" class="Symbol">)</a> <a id="3791" class="Symbol">→</a> <a id="3793" href="Interface.TypeClasses.Hashable.html#334" class="Field">Hashable.hash</a> <a id="3807" href="Test.LedgerImplementation.html#3754" class="Bound">ha</a> <a id="3810" href="Test.LedgerImplementation.html#3788" class="Bound">x</a> <a id="3812" class="Symbol">;</a> <a id="3814" class="Symbol">(</a><a id="3815" href="Data.Sum.Base.html#700" class="InductiveConstructor">inj₂</a> <a id="3820" href="Test.LedgerImplementation.html#3820" class="Bound">y</a><a id="3821" class="Symbol">)</a> <a id="3823" class="Symbol">→</a> <a id="3825" href="Interface.TypeClasses.Hashable.html#334" class="Field">Hashable.hash</a> <a id="3839" href="Test.LedgerImplementation.html#3757" class="Bound">hb</a> <a id="3842" href="Test.LedgerImplementation.html#3820" class="Bound">y</a> <a id="3844" class="Symbol">}}</a>
 
-    <a id="3462" href="Test.LedgerImplementation.html#3462" class="Function">SVP2ScriptStructure</a> <a id="3482" class="Symbol">:</a> <a id="3484" href="Ledger.Conway.Specification.Script.Base.html#1025" class="Record">PlutusStructure</a>
-    <a id="3504" href="Test.LedgerImplementation.html#3462" class="Function">SVP2ScriptStructure</a> <a id="3524" class="Symbol">=</a>  <a id="3527" class="Keyword">record</a>
-      <a id="3540" class="Symbol">{</a> <a id="3542" href="Test.LedgerImplementation.html#1164" class="Module">Implementation</a>
-      <a id="3563" class="Symbol">;</a> <a id="3565" href="Ledger.Conway.Specification.Script.Base.html#2027" class="Field">validPlutusScript</a> <a id="3583" class="Symbol">=</a> <a id="3585" class="Symbol">λ</a> <a id="3587" href="Test.LedgerImplementation.html#3587" class="Bound">_</a> <a id="3589" href="Test.LedgerImplementation.html#3589" class="Bound">_</a> <a id="3591" href="Test.LedgerImplementation.html#3591" class="Bound">_</a> <a id="3593" href="Test.LedgerImplementation.html#3593" class="Bound">_</a> <a id="3595" class="Symbol">→</a> <a id="3597" href="Agda.Builtin.Unit.html#175" class="Record">⊤</a>
-      <a id="3605" class="Symbol">}</a>
+    <a id="3852" href="Test.LedgerImplementation.html#3852" class="Function">SVP2ScriptStructure</a> <a id="3872" class="Symbol">:</a> <a id="3874" href="Ledger.Conway.Specification.Script.Base.html#1025" class="Record">PlutusStructure</a>
+    <a id="3894" href="Test.LedgerImplementation.html#3852" class="Function">SVP2ScriptStructure</a> <a id="3914" class="Symbol">=</a>  <a id="3917" class="Keyword">record</a>
+      <a id="3930" class="Symbol">{</a> <a id="3932" href="Test.LedgerImplementation.html#1164" class="Module">Implementation</a>
+      <a id="3953" class="Symbol">;</a> <a id="3955" href="Ledger.Conway.Specification.Script.Base.html#2027" class="Field">validPlutusScript</a> <a id="3973" class="Symbol">=</a> <a id="3975" class="Symbol">λ</a> <a id="3977" href="Test.LedgerImplementation.html#3977" class="Bound">_</a> <a id="3979" href="Test.LedgerImplementation.html#3979" class="Bound">_</a> <a id="3981" href="Test.LedgerImplementation.html#3981" class="Bound">_</a> <a id="3983" href="Test.LedgerImplementation.html#3983" class="Bound">_</a> <a id="3985" class="Symbol">→</a> <a id="3987" href="Agda.Builtin.Unit.html#175" class="Record">⊤</a>
+      <a id="3995" class="Symbol">}</a>
 </pre>
-<pre class="Agda hidden-source"><a id="3624" class="Keyword">instance</a> <a id="3633" href="Test.LedgerImplementation.html#3633" class="Function">_</a> <a id="3635" class="Symbol">=</a> <a id="3637" href="Test.LedgerImplementation.html#2920" class="Function">SVScriptStructure</a>
+<pre class="Agda hidden-source"><a id="4014" class="Keyword">instance</a> <a id="4023" href="Test.LedgerImplementation.html#4023" class="Function">_</a> <a id="4025" class="Symbol">=</a> <a id="4027" href="Test.LedgerImplementation.html#3310" class="Function">SVScriptStructure</a>
 
-<a id="3656" class="Keyword">open</a> <a id="3661" class="Keyword">import</a> <a id="3668" href="Ledger.Conway.Specification.PParams.html" class="Module">Ledger.Conway.Specification.PParams</a> <a id="3704" href="Function.Base.html#4755" class="Function">it</a> <a id="3707" href="Function.Base.html#4755" class="Function">it</a> <a id="3710" href="Function.Base.html#4755" class="Function">it</a> <a id="3713" class="Keyword">hiding</a> <a id="3720" class="Symbol">(</a><a id="3721" href="Ledger.Conway.Specification.PParams.html#5873" class="Record">PParams</a><a id="3728" class="Symbol">)</a>
+<a id="4046" class="Keyword">open</a> <a id="4051" class="Keyword">import</a> <a id="4058" href="Ledger.Conway.Specification.PParams.html" class="Module">Ledger.Conway.Specification.PParams</a> <a id="4094" href="Function.Base.html#4755" class="Function">it</a> <a id="4097" href="Function.Base.html#4755" class="Function">it</a> <a id="4100" href="Function.Base.html#4755" class="Function">it</a> <a id="4103" class="Keyword">hiding</a> <a id="4110" class="Symbol">(</a><a id="4111" href="Ledger.Conway.Specification.PParams.html#5873" class="Record">PParams</a><a id="4118" class="Symbol">)</a>
 </pre>
-<pre class="Agda"><a id="SVGovParams"></a><a id="3746" href="Test.LedgerImplementation.html#3746" class="Function">SVGovParams</a> <a id="3758" class="Symbol">:</a> <a id="3760" href="Ledger.Conway.Specification.PParams.html#20139" class="Record">GovParams</a>
-<a id="3770" href="Test.LedgerImplementation.html#3746" class="Function">SVGovParams</a> <a id="3782" class="Symbol">=</a> <a id="3784" class="Keyword">record</a>
-  <a id="3793" class="Symbol">{</a> <a id="3795" href="Test.LedgerImplementation.html#1164" class="Module">Implementation</a>
-  <a id="3812" class="Symbol">;</a> <a id="3814" href="Ledger.Conway.Specification.PParams.html#20171" class="Field">ppUpd</a> <a id="3820" class="Symbol">=</a> <a id="3822" class="Keyword">let</a> <a id="3826" class="Keyword">open</a> <a id="3831" href="Ledger.Conway.Specification.PParams.html#19612" class="Module">PParamsDiff</a> <a id="3843" class="Keyword">in</a> <a id="3846" class="Symbol">λ</a> <a id="3848" class="Keyword">where</a>
-      <a id="3860" class="Symbol">.</a><a id="3861" href="Ledger.Conway.Specification.PParams.html#19698" class="Field">UpdateT</a>                <a id="3884" class="Symbol">→</a> <a id="3886" href="Agda.Builtin.Unit.html#175" class="Record">⊤</a>
-      <a id="3894" class="Symbol">.</a><a id="3895" href="Ledger.Conway.Specification.PParams.html#19771" class="Field">updateGroups</a>           <a id="3918" class="Symbol">→</a> <a id="3920" class="Symbol">λ</a> <a id="3922" href="Test.LedgerImplementation.html#3922" class="Bound">_</a> <a id="3924" class="Symbol">→</a> <a id="3926" href="Class.HasEmptySet.html#287" class="Field">∅</a>
-      <a id="3934" class="Symbol">.</a><a id="3935" href="Ledger.Conway.Specification.PParams.html#19723" class="Field">applyUpdate</a>            <a id="3958" class="Symbol">→</a> <a id="3960" class="Symbol">λ</a> <a id="3962" href="Test.LedgerImplementation.html#3962" class="Bound">p</a> <a id="3964" href="Test.LedgerImplementation.html#3964" class="Bound">_</a> <a id="3966" class="Symbol">→</a> <a id="3968" href="Test.LedgerImplementation.html#3962" class="Bound">p</a>
-      <a id="3976" class="Symbol">.</a><a id="3977" href="Ledger.Conway.Specification.PParams.html#19835" class="Field">ppWF?</a>                  <a id="4000" class="Symbol">→</a> <a id="4002" href="Class.Decidable.Core.html#262" class="InductiveConstructor Operator">⁇</a> <a id="4004" href="Relation.Nullary.Decidable.Core.html#2099" class="InductiveConstructor">yes</a> <a id="4008" class="Symbol">λ</a> <a id="4010" href="Test.LedgerImplementation.html#4010" class="Bound">_</a> <a id="4012" class="Symbol">→</a> <a id="4014" href="Function.Base.html#704" class="Function">id</a>
-  <a id="4019" class="Symbol">}</a>
+<pre class="Agda"><a id="SVGovParams"></a><a id="4136" href="Test.LedgerImplementation.html#4136" class="Function">SVGovParams</a> <a id="4148" class="Symbol">:</a> <a id="4150" href="Ledger.Conway.Specification.PParams.html#20139" class="Record">GovParams</a>
+<a id="4160" href="Test.LedgerImplementation.html#4136" class="Function">SVGovParams</a> <a id="4172" class="Symbol">=</a> <a id="4174" class="Keyword">record</a>
+  <a id="4183" class="Symbol">{</a> <a id="4185" href="Test.LedgerImplementation.html#1164" class="Module">Implementation</a>
+  <a id="4202" class="Symbol">;</a> <a id="4204" href="Ledger.Conway.Specification.PParams.html#20171" class="Field">ppUpd</a> <a id="4210" class="Symbol">=</a> <a id="4212" class="Keyword">let</a> <a id="4216" class="Keyword">open</a> <a id="4221" href="Ledger.Conway.Specification.PParams.html#19612" class="Module">PParamsDiff</a> <a id="4233" class="Keyword">in</a> <a id="4236" class="Symbol">λ</a> <a id="4238" class="Keyword">where</a>
+      <a id="4250" class="Symbol">.</a><a id="4251" href="Ledger.Conway.Specification.PParams.html#19698" class="Field">UpdateT</a>                <a id="4274" class="Symbol">→</a> <a id="4276" href="Agda.Builtin.Unit.html#175" class="Record">⊤</a>
+      <a id="4284" class="Symbol">.</a><a id="4285" href="Ledger.Conway.Specification.PParams.html#19771" class="Field">updateGroups</a>           <a id="4308" class="Symbol">→</a> <a id="4310" class="Symbol">λ</a> <a id="4312" href="Test.LedgerImplementation.html#4312" class="Bound">_</a> <a id="4314" class="Symbol">→</a> <a id="4316" href="Class.HasEmptySet.html#287" class="Field">∅</a>
+      <a id="4324" class="Symbol">.</a><a id="4325" href="Ledger.Conway.Specification.PParams.html#19723" class="Field">applyUpdate</a>            <a id="4348" class="Symbol">→</a> <a id="4350" class="Symbol">λ</a> <a id="4352" href="Test.LedgerImplementation.html#4352" class="Bound">p</a> <a id="4354" href="Test.LedgerImplementation.html#4354" class="Bound">_</a> <a id="4356" class="Symbol">→</a> <a id="4358" href="Test.LedgerImplementation.html#4352" class="Bound">p</a>
+      <a id="4366" class="Symbol">.</a><a id="4367" href="Ledger.Conway.Specification.PParams.html#19835" class="Field">ppWF?</a>                  <a id="4390" class="Symbol">→</a> <a id="4392" href="Class.Decidable.Core.html#262" class="InductiveConstructor Operator">⁇</a> <a id="4394" href="Relation.Nullary.Decidable.Core.html#2099" class="InductiveConstructor">yes</a> <a id="4398" class="Symbol">λ</a> <a id="4400" href="Test.LedgerImplementation.html#4400" class="Bound">_</a> <a id="4402" class="Symbol">→</a> <a id="4404" href="Function.Base.html#704" class="Function">id</a>
+  <a id="4409" class="Symbol">}</a>
 
-<a id="SVGovStructure"></a><a id="4022" href="Test.LedgerImplementation.html#4022" class="Function">SVGovStructure</a> <a id="4037" class="Symbol">:</a> <a id="4039" href="Ledger.Conway.Specification.Gov.Base.html#427" class="Record">GovStructure</a>
-<a id="4052" href="Test.LedgerImplementation.html#4022" class="Function">SVGovStructure</a> <a id="4067" class="Symbol">=</a> <a id="4069" class="Keyword">record</a>
-  <a id="4078" class="Symbol">{</a> <a id="4080" href="Test.LedgerImplementation.html#1164" class="Module">Implementation</a>
-  <a id="4097" class="Symbol">;</a> <a id="4099" href="Ledger.Conway.Specification.Gov.Base.html#644" class="Field">epochStructure</a>  <a id="4115" class="Symbol">=</a> <a id="4117" href="Test.LedgerImplementation.html#2275" class="Function">SVEpochStructure</a>
-  <a id="4136" class="Symbol">;</a> <a id="4138" href="Ledger.Conway.Specification.Gov.Base.html#934" class="Field">govParams</a>       <a id="4154" class="Symbol">=</a> <a id="4156" href="Test.LedgerImplementation.html#3746" class="Function">SVGovParams</a>
-  <a id="4170" class="Symbol">;</a> <a id="4172" href="Ledger.Conway.Specification.Gov.Base.html#569" class="Field">cryptoStructure</a> <a id="4188" class="Symbol">=</a> <a id="4190" href="Test.LedgerImplementation.html#2378" class="Function">SVCrypto</a>
-  <a id="4201" class="Symbol">;</a> <a id="4203" href="Ledger.Conway.Specification.Gov.Base.html#999" class="Field">globalConstants</a> <a id="4219" class="Symbol">=</a> <a id="4221" href="Test.LedgerImplementation.html#2213" class="Function">SVGlobalConstants</a>
-  <a id="4241" class="Symbol">}</a>
-<a id="4243" class="Keyword">instance</a> <a id="4252" href="Test.LedgerImplementation.html#4252" class="Function">_</a> <a id="4254" class="Symbol">=</a> <a id="4256" href="Test.LedgerImplementation.html#4022" class="Function">SVGovStructure</a>
+<a id="SVGovStructure"></a><a id="4412" href="Test.LedgerImplementation.html#4412" class="Function">SVGovStructure</a> <a id="4427" class="Symbol">:</a> <a id="4429" href="Ledger.Conway.Specification.Gov.Base.html#427" class="Record">GovStructure</a>
+<a id="4442" href="Test.LedgerImplementation.html#4412" class="Function">SVGovStructure</a> <a id="4457" class="Symbol">=</a> <a id="4459" class="Keyword">record</a>
+  <a id="4468" class="Symbol">{</a> <a id="4470" href="Test.LedgerImplementation.html#1164" class="Module">Implementation</a>
+  <a id="4487" class="Symbol">;</a> <a id="4489" href="Ledger.Conway.Specification.Gov.Base.html#644" class="Field">epochStructure</a>  <a id="4505" class="Symbol">=</a> <a id="4507" href="Test.LedgerImplementation.html#2275" class="Function">SVEpochStructure</a>
+  <a id="4526" class="Symbol">;</a> <a id="4528" href="Ledger.Conway.Specification.Gov.Base.html#934" class="Field">govParams</a>       <a id="4544" class="Symbol">=</a> <a id="4546" href="Test.LedgerImplementation.html#4136" class="Function">SVGovParams</a>
+  <a id="4560" class="Symbol">;</a> <a id="4562" href="Ledger.Conway.Specification.Gov.Base.html#569" class="Field">cryptoStructure</a> <a id="4578" class="Symbol">=</a> <a id="4580" href="Test.LedgerImplementation.html#2378" class="Function">SVCrypto</a>
+  <a id="4591" class="Symbol">;</a> <a id="4593" href="Ledger.Conway.Specification.Gov.Base.html#999" class="Field">globalConstants</a> <a id="4609" class="Symbol">=</a> <a id="4611" href="Test.LedgerImplementation.html#2213" class="Function">SVGlobalConstants</a>
+  <a id="4631" class="Symbol">}</a>
+<a id="4633" class="Keyword">instance</a> <a id="4642" href="Test.LedgerImplementation.html#4642" class="Function">_</a> <a id="4644" class="Symbol">=</a> <a id="4646" href="Test.LedgerImplementation.html#4412" class="Function">SVGovStructure</a>
 
-<a id="4272" class="Keyword">open</a> <a id="4277" class="Keyword">import</a> <a id="4284" href="Ledger.Conway.Specification.Gov.Actions.html" class="Module">Ledger.Conway.Specification.Gov.Actions</a> <a id="4324" href="Function.Base.html#4755" class="Function">it</a> <a id="4327" class="Keyword">hiding</a> <a id="4334" class="Symbol">(</a><a id="4335" href="Ledger.Conway.Specification.Gov.Actions.html#6593" class="Datatype">Vote</a><a id="4339" class="Symbol">;</a> <a id="4341" href="Ledger.Conway.Specification.Gov.Actions.html#947" class="Datatype">GovRole</a><a id="4348" class="Symbol">;</a> <a id="4350" href="Ledger.Conway.Specification.Gov.Actions.html#8374" class="Datatype">VDeleg</a><a id="4356" class="Symbol">;</a> <a id="4358" href="Ledger.Conway.Specification.Gov.Actions.html#7186" class="Record">Anchor</a><a id="4364" class="Symbol">)</a>
-<a id="4366" class="Keyword">open</a> <a id="4371" class="Keyword">import</a> <a id="4378" href="Ledger.Conway.Conformance.Certs.html" class="Module">Ledger.Conway.Conformance.Certs</a> <a id="4410" href="Function.Base.html#4755" class="Function">it</a> <a id="4413" class="Keyword">hiding</a> <a id="4420" class="Symbol">(</a><a id="4421" href="Ledger.Conway.Specification.Certs.html#565" class="Record">StakePoolParams</a><a id="4436" class="Symbol">;</a> <a id="4438" href="Ledger.Conway.Specification.Certs.html#2461" class="Datatype">DCert</a><a id="4443" class="Symbol">)</a>
+<a id="4662" class="Keyword">open</a> <a id="4667" class="Keyword">import</a> <a id="4674" href="Ledger.Conway.Specification.Gov.Actions.html" class="Module">Ledger.Conway.Specification.Gov.Actions</a> <a id="4714" href="Function.Base.html#4755" class="Function">it</a> <a id="4717" class="Keyword">hiding</a> <a id="4724" class="Symbol">(</a><a id="4725" href="Ledger.Conway.Specification.Gov.Actions.html#6593" class="Datatype">Vote</a><a id="4729" class="Symbol">;</a> <a id="4731" href="Ledger.Conway.Specification.Gov.Actions.html#947" class="Datatype">GovRole</a><a id="4738" class="Symbol">;</a> <a id="4740" href="Ledger.Conway.Specification.Gov.Actions.html#8374" class="Datatype">VDeleg</a><a id="4746" class="Symbol">;</a> <a id="4748" href="Ledger.Conway.Specification.Gov.Actions.html#7186" class="Record">Anchor</a><a id="4754" class="Symbol">)</a>
+<a id="4756" class="Keyword">open</a> <a id="4761" class="Keyword">import</a> <a id="4768" href="Ledger.Conway.Conformance.Certs.html" class="Module">Ledger.Conway.Conformance.Certs</a> <a id="4800" href="Function.Base.html#4755" class="Function">it</a> <a id="4803" class="Keyword">hiding</a> <a id="4810" class="Symbol">(</a><a id="4811" href="Ledger.Conway.Specification.Certs.html#565" class="Record">StakePoolParams</a><a id="4826" class="Symbol">;</a> <a id="4828" href="Ledger.Conway.Specification.Certs.html#2461" class="Datatype">DCert</a><a id="4833" class="Symbol">)</a>
 
-<a id="SVTransactionStructure"></a><a id="4446" href="Test.LedgerImplementation.html#4446" class="Function">SVTransactionStructure</a> <a id="4469" class="Symbol">:</a> <a id="4471" href="Ledger.Conway.Specification.Transaction.html#2459" class="Record">TransactionStructure</a>
-<a id="4492" href="Test.LedgerImplementation.html#4446" class="Function">SVTransactionStructure</a> <a id="4515" class="Symbol">=</a> <a id="4517" class="Keyword">record</a>
-  <a id="4526" class="Symbol">{</a> <a id="4528" href="Test.LedgerImplementation.html#1164" class="Module">Implementation</a>
-  <a id="4545" class="Symbol">;</a> <a id="4547" href="Ledger.Conway.Specification.Transaction.html#2558" class="Field">POSIXTimeRange</a> <a id="4562" class="Symbol">=</a> <a id="4564" href="Agda.Builtin.Unit.html#175" class="Record">⊤</a>
-  <a id="4568" class="Symbol">;</a> <a id="4570" href="Ledger.Conway.Specification.Transaction.html#3107" class="Field">epochStructure</a>  <a id="4586" class="Symbol">=</a> <a id="4588" href="Test.LedgerImplementation.html#2275" class="Function">SVEpochStructure</a>
-  <a id="4607" class="Symbol">;</a> <a id="4609" href="Ledger.Conway.Specification.Transaction.html#2790" class="Field">globalConstants</a> <a id="4625" class="Symbol">=</a> <a id="4627" href="Test.LedgerImplementation.html#2213" class="Function">SVGlobalConstants</a>
-  <a id="4647" class="Symbol">;</a> <a id="4649" href="Ledger.Conway.Specification.Transaction.html#2664" class="Field">adHashingScheme</a> <a id="4665" class="Symbol">=</a> <a id="4667" href="Function.Base.html#4755" class="Function">it</a>
-  <a id="4672" class="Symbol">;</a> <a id="4674" href="Ledger.Conway.Specification.Transaction.html#2865" class="Field">cryptoStructure</a> <a id="4690" class="Symbol">=</a> <a id="4692" href="Test.LedgerImplementation.html#2378" class="Function">SVCrypto</a>
-  <a id="4703" class="Symbol">;</a> <a id="4705" href="Ledger.Conway.Specification.Transaction.html#3436" class="Field">govParams</a>       <a id="4721" class="Symbol">=</a> <a id="4723" href="Test.LedgerImplementation.html#3746" class="Function">SVGovParams</a>
-  <a id="4737" class="Symbol">;</a> <a id="4739" href="Ledger.Conway.Specification.Transaction.html#3574" class="Field">txidBytes</a>       <a id="4755" class="Symbol">=</a> <a id="4757" href="Function.Base.html#704" class="Function">id</a>
-  <a id="4762" class="Symbol">;</a> <a id="4764" href="Ledger.Conway.Specification.Transaction.html#3264" class="Field">scriptStructure</a> <a id="4780" class="Symbol">=</a> <a id="4782" href="Test.LedgerImplementation.html#2920" class="Function">SVScriptStructure</a>
-    <a id="4804" class="Comment">-- This value is inconsequential while scriptIntegrityHash is set to</a>
-    <a id="4877" class="Comment">-- nothing</a>
-  <a id="4890" class="Symbol">;</a> <a id="4892" href="Ledger.Conway.Specification.Transaction.html#3603" class="Field">Hashable-ScriptIntegrity</a> <a id="4917" class="Symbol">=</a> <a id="4919" class="Keyword">record</a> <a id="4926" class="Symbol">{</a> <a id="4928" href="Interface.TypeClasses.Hashable.html#334" class="Field">hash</a> <a id="4933" class="Symbol">=</a> <a id="4935" class="Symbol">λ</a> <a id="4937" href="Test.LedgerImplementation.html#4937" class="Bound">x</a> <a id="4939" class="Symbol">→</a> <a id="4941" class="Number">0</a> <a id="4943" class="Symbol">}</a>
-  <a id="4947" class="Symbol">}</a>
+<a id="SVTransactionStructure"></a><a id="4836" href="Test.LedgerImplementation.html#4836" class="Function">SVTransactionStructure</a> <a id="4859" class="Symbol">:</a> <a id="4861" href="Ledger.Conway.Specification.Transaction.html#2459" class="Record">TransactionStructure</a>
+<a id="4882" href="Test.LedgerImplementation.html#4836" class="Function">SVTransactionStructure</a> <a id="4905" class="Symbol">=</a> <a id="4907" class="Keyword">record</a>
+  <a id="4916" class="Symbol">{</a> <a id="4918" href="Test.LedgerImplementation.html#1164" class="Module">Implementation</a>
+  <a id="4935" class="Symbol">;</a> <a id="4937" href="Ledger.Conway.Specification.Transaction.html#2558" class="Field">POSIXTimeRange</a> <a id="4952" class="Symbol">=</a> <a id="4954" href="Agda.Builtin.Unit.html#175" class="Record">⊤</a>
+  <a id="4958" class="Symbol">;</a> <a id="4960" href="Ledger.Conway.Specification.Transaction.html#3107" class="Field">epochStructure</a>  <a id="4976" class="Symbol">=</a> <a id="4978" href="Test.LedgerImplementation.html#2275" class="Function">SVEpochStructure</a>
+  <a id="4997" class="Symbol">;</a> <a id="4999" href="Ledger.Conway.Specification.Transaction.html#2790" class="Field">globalConstants</a> <a id="5015" class="Symbol">=</a> <a id="5017" href="Test.LedgerImplementation.html#2213" class="Function">SVGlobalConstants</a>
+  <a id="5037" class="Symbol">;</a> <a id="5039" href="Ledger.Conway.Specification.Transaction.html#2664" class="Field">adHashingScheme</a> <a id="5055" class="Symbol">=</a> <a id="5057" href="Function.Base.html#4755" class="Function">it</a>
+  <a id="5062" class="Symbol">;</a> <a id="5064" href="Ledger.Conway.Specification.Transaction.html#2865" class="Field">cryptoStructure</a> <a id="5080" class="Symbol">=</a> <a id="5082" href="Test.LedgerImplementation.html#2378" class="Function">SVCrypto</a>
+  <a id="5093" class="Symbol">;</a> <a id="5095" href="Ledger.Conway.Specification.Transaction.html#3436" class="Field">govParams</a>       <a id="5111" class="Symbol">=</a> <a id="5113" href="Test.LedgerImplementation.html#4136" class="Function">SVGovParams</a>
+  <a id="5127" class="Symbol">;</a> <a id="5129" href="Ledger.Conway.Specification.Transaction.html#3574" class="Field">txidBytes</a>       <a id="5145" class="Symbol">=</a> <a id="5147" href="Function.Base.html#704" class="Function">id</a>
+  <a id="5152" class="Symbol">;</a> <a id="5154" href="Ledger.Conway.Specification.Transaction.html#3264" class="Field">scriptStructure</a> <a id="5170" class="Symbol">=</a> <a id="5172" href="Test.LedgerImplementation.html#3310" class="Function">SVScriptStructure</a>
+    <a id="5194" class="Comment">-- This value is inconsequential while scriptIntegrityHash is set to</a>
+    <a id="5267" class="Comment">-- nothing</a>
+  <a id="5280" class="Symbol">;</a> <a id="5282" href="Ledger.Conway.Specification.Transaction.html#3603" class="Field">Hashable-ScriptIntegrity</a> <a id="5307" class="Symbol">=</a> <a id="5309" class="Keyword">record</a> <a id="5316" class="Symbol">{</a> <a id="5318" href="Interface.TypeClasses.Hashable.html#334" class="Field">hash</a> <a id="5323" class="Symbol">=</a> <a id="5325" class="Symbol">λ</a> <a id="5327" href="Test.LedgerImplementation.html#5327" class="Bound">x</a> <a id="5329" class="Symbol">→</a> <a id="5331" class="Number">0</a> <a id="5333" class="Symbol">}</a>
+  <a id="5337" class="Symbol">}</a>
 </pre>
-<pre class="Agda hidden-source"><a id="4966" class="Keyword">instance</a> <a id="4975" href="Test.LedgerImplementation.html#4975" class="Function">_</a> <a id="4977" class="Symbol">=</a> <a id="4979" href="Test.LedgerImplementation.html#4446" class="Function">SVTransactionStructure</a>
+<pre class="Agda hidden-source"><a id="5356" class="Keyword">instance</a> <a id="5365" href="Test.LedgerImplementation.html#5365" class="Function">_</a> <a id="5367" class="Symbol">=</a> <a id="5369" href="Test.LedgerImplementation.html#4836" class="Function">SVTransactionStructure</a>
 
-<a id="5003" class="Keyword">open</a> <a id="5008" class="Keyword">import</a> <a id="5015" href="Ledger.Conway.Specification.Abstract.html" class="Module">Ledger.Conway.Specification.Abstract</a> <a id="5052" href="Function.Base.html#4755" class="Function">it</a>
-<a id="5055" class="Keyword">open</a> <a id="5060" class="Keyword">import</a> <a id="5067" href="Ledger.Conway.Conformance.Gov.html" class="Module">Ledger.Conway.Conformance.Gov</a> <a id="5097" href="Function.Base.html#4755" class="Function">it</a>
+<a id="5393" class="Keyword">open</a> <a id="5398" class="Keyword">import</a> <a id="5405" href="Ledger.Conway.Specification.Abstract.html" class="Module">Ledger.Conway.Specification.Abstract</a> <a id="5442" href="Function.Base.html#4755" class="Function">it</a>
+<a id="5445" class="Keyword">open</a> <a id="5450" class="Keyword">import</a> <a id="5457" href="Ledger.Conway.Conformance.Gov.html" class="Module">Ledger.Conway.Conformance.Gov</a> <a id="5487" href="Function.Base.html#4755" class="Function">it</a>
 
-<a id="5101" class="Keyword">open</a> <a id="5106" href="Ledger.Conway.Specification.Transaction.html#2459" class="Module">TransactionStructure</a> <a id="5127" href="Function.Base.html#4755" class="Function">it</a>
+<a id="5491" class="Keyword">open</a> <a id="5496" href="Ledger.Conway.Specification.Transaction.html#2459" class="Module">TransactionStructure</a> <a id="5517" href="Function.Base.html#4755" class="Function">it</a>
 </pre>
-<pre class="Agda"><a id="indexOfTxInImp"></a><a id="5146" href="Test.LedgerImplementation.html#5146" class="Function">indexOfTxInImp</a> <a id="5161" class="Symbol">:</a> <a id="5163" href="Ledger.Conway.Specification.Transaction.html#4338" class="Function">TxIn</a> <a id="5168" class="Symbol">→</a> <a id="5170" href="abstract-set-theory.FiniteSetTheory.html#488" class="Function Operator">ℙ</a> <a id="5172" href="Ledger.Conway.Specification.Transaction.html#4338" class="Function">TxIn</a> <a id="5177" class="Symbol">→</a> <a id="5179" href="Agda.Builtin.Maybe.html#135" class="Datatype">Maybe</a> <a id="5185" href="Ledger.Conway.Specification.Transaction.html#2536" class="Function">Ix</a>
-<a id="5188" href="Test.LedgerImplementation.html#5146" class="Function">indexOfTxInImp</a> <a id="5203" href="Test.LedgerImplementation.html#5203" class="Bound">x</a> <a id="5205" href="Test.LedgerImplementation.html#5205" class="Bound">y</a> <a id="5207" class="Symbol">=</a> <a id="5209" href="Axiom.Set.Map.html#17169" class="Function">lookupᵐ?</a> <a id="5218" class="Symbol">(</a><a id="5219" href="Axiom.Set.Map.html#2713" class="Function">fromListᵐ</a> <a id="5229" class="Symbol">(</a><a id="5230" href="abstract-set-theory.FiniteSetTheory.html#2617" class="Function">setToList</a> <a id="5240" href="Test.LedgerImplementation.html#5205" class="Bound">y</a><a id="5241" class="Symbol">))</a> <a id="5244" class="Symbol">(</a><a id="5245" href="Data.Product.Base.html#636" class="Field">proj₁</a> <a id="5251" href="Test.LedgerImplementation.html#5203" class="Bound">x</a><a id="5252" class="Symbol">)</a>
+<pre class="Agda"><a id="indexOfTxInImp"></a><a id="5536" href="Test.LedgerImplementation.html#5536" class="Function">indexOfTxInImp</a> <a id="5551" class="Symbol">:</a> <a id="5553" href="Ledger.Conway.Specification.Transaction.html#4338" class="Function">TxIn</a> <a id="5558" class="Symbol">→</a> <a id="5560" href="abstract-set-theory.FiniteSetTheory.html#488" class="Function Operator">ℙ</a> <a id="5562" href="Ledger.Conway.Specification.Transaction.html#4338" class="Function">TxIn</a> <a id="5567" class="Symbol">→</a> <a id="5569" href="Agda.Builtin.Maybe.html#135" class="Datatype">Maybe</a> <a id="5575" href="Ledger.Conway.Specification.Transaction.html#2536" class="Function">Ix</a>
+<a id="5578" href="Test.LedgerImplementation.html#5536" class="Function">indexOfTxInImp</a> <a id="5593" href="Test.LedgerImplementation.html#5593" class="Bound">x</a> <a id="5595" href="Test.LedgerImplementation.html#5595" class="Bound">y</a> <a id="5597" class="Symbol">=</a> <a id="5599" href="Axiom.Set.Map.html#17169" class="Function">lookupᵐ?</a> <a id="5608" class="Symbol">(</a><a id="5609" href="Axiom.Set.Map.html#2713" class="Function">fromListᵐ</a> <a id="5619" class="Symbol">(</a><a id="5620" href="abstract-set-theory.FiniteSetTheory.html#2617" class="Function">setToList</a> <a id="5630" href="Test.LedgerImplementation.html#5595" class="Bound">y</a><a id="5631" class="Symbol">))</a> <a id="5634" class="Symbol">(</a><a id="5635" href="Data.Product.Base.html#636" class="Field">proj₁</a> <a id="5641" href="Test.LedgerImplementation.html#5593" class="Bound">x</a><a id="5642" class="Symbol">)</a>
 </pre>
 
 

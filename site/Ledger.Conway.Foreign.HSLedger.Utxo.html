@@ -15,7 +15,7 @@
         <link rel="canonical" href="https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Conway.Foreign.HSLedger.Utxo.html">
       
       
-        <link rel="prev" href="Ledger.Conway.Foreign.HSLedger.Transaction.html">
+        <link rel="prev" href="Ledger.Conway.Foreign.HSLedger.Script.html">
       
       
         <link rel="next" href="Ledger.Conway.Conformance.html">
@@ -11405,6 +11405,34 @@
                 
   
   
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Conway.Foreign.HSLedger.Script.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Script
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
     
   
   
@@ -12228,34 +12256,6 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Conformance.Script.html" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Script
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="Ledger.Conway.Conformance.Utxo.html" class="md-nav__link">
         
   
@@ -12297,10 +12297,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_3_3_4_14" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_3_3_4_13" >
         
           
-          <label class="md-nav__link" for="__nav_6_3_3_4_14" id="__nav_6_3_3_4_14_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_6_3_3_4_13" id="__nav_6_3_3_4_13_label" tabindex="0">
             
   
   
@@ -12318,8 +12318,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_6_3_3_4_14_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_6_3_3_4_14">
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_6_3_3_4_13_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_3_3_4_13">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -12413,10 +12413,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_3_3_4_16" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_3_3_4_15" >
         
           
-          <label class="md-nav__link" for="__nav_6_3_3_4_16" id="__nav_6_3_3_4_16_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_6_3_3_4_15" id="__nav_6_3_3_4_15_label" tabindex="0">
             
   
   
@@ -12434,8 +12434,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_6_3_3_4_16_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_6_3_3_4_16">
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_6_3_3_4_15_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_3_3_4_15">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -12595,8 +12595,8 @@
 
 <a id="1404" class="Keyword">module</a> <a id="1411" href="Ledger.Conway.Foreign.HSLedger.Utxo.html#1411" class="Module">_</a> <a id="1413" class="Symbol">(</a><a id="1414" href="Ledger.Conway.Foreign.HSLedger.Utxo.html#1414" class="Bound">ext</a> <a id="1418" class="Symbol">:</a> <a id="1420" href="Ledger.Conway.Foreign.ExternalFunctions.html#236" class="Record">ExternalFunctions</a><a id="1437" class="Symbol">)</a> <a id="1439" class="Keyword">where</a>
   <a id="1447" class="Keyword">open</a> <a id="1452" class="Keyword">import</a> <a id="1459" href="Ledger.Conway.Foreign.HSLedger.ExternalStructures.html" class="Module">Ledger.Conway.Foreign.HSLedger.ExternalStructures</a> <a id="1509" href="Ledger.Conway.Foreign.HSLedger.Utxo.html#1414" class="Bound">ext</a> <a id="1513" class="Keyword">hiding</a> <a id="1520" class="Symbol">(</a><a id="1521" href="Ledger.Conway.Specification.Transaction.html#6498" class="Record">Tx</a><a id="1523" class="Symbol">;</a> <a id="1525" href="Ledger.Conway.Specification.Transaction.html#4780" class="Record">TxBody</a><a id="1531" class="Symbol">;</a> <a id="1533" href="Ledger.Conway.Specification.TokenAlgebra.Base.html#1188" class="Function">inject</a><a id="1539" class="Symbol">)</a>
-  <a id="1543" class="Keyword">open</a> <a id="1548" class="Keyword">import</a> <a id="1555" href="Ledger.Conway.Conformance.Utxow.Properties.html" class="Module">Ledger.Conway.Conformance.Utxow.Properties</a> <a id="1598" href="Ledger.Conway.Foreign.HSLedger.ExternalStructures.html#3412" class="Function">HSTransactionStructure</a> <a id="1621" href="Ledger.Conway.Foreign.HSLedger.ExternalStructures.html#4061" class="Function">HSAbstractFunctions</a>
-  <a id="1643" class="Keyword">open</a> <a id="1648" class="Keyword">import</a> <a id="1655" href="Ledger.Conway.Conformance.Utxo.Properties.html" class="Module">Ledger.Conway.Conformance.Utxo.Properties</a> <a id="1697" href="Ledger.Conway.Foreign.HSLedger.ExternalStructures.html#3412" class="Function">HSTransactionStructure</a> <a id="1720" href="Ledger.Conway.Foreign.HSLedger.ExternalStructures.html#4061" class="Function">HSAbstractFunctions</a>
+  <a id="1543" class="Keyword">open</a> <a id="1548" class="Keyword">import</a> <a id="1555" href="Ledger.Conway.Conformance.Utxow.Properties.html" class="Module">Ledger.Conway.Conformance.Utxow.Properties</a> <a id="1598" href="Ledger.Conway.Foreign.HSLedger.ExternalStructures.html#4379" class="Function">HSTransactionStructure</a> <a id="1621" href="Ledger.Conway.Foreign.HSLedger.ExternalStructures.html#5028" class="Function">HSAbstractFunctions</a>
+  <a id="1643" class="Keyword">open</a> <a id="1648" class="Keyword">import</a> <a id="1655" href="Ledger.Conway.Conformance.Utxo.Properties.html" class="Module">Ledger.Conway.Conformance.Utxo.Properties</a> <a id="1697" href="Ledger.Conway.Foreign.HSLedger.ExternalStructures.html#4379" class="Function">HSTransactionStructure</a> <a id="1720" href="Ledger.Conway.Foreign.HSLedger.ExternalStructures.html#5028" class="Function">HSAbstractFunctions</a>
 
   <a id="1743" href="Ledger.Conway.Foreign.HSLedger.Utxo.html#1743" class="Function">utxo-step</a> <a id="1753" class="Symbol">:</a> <a id="1755" href="Foreign.HaskellTypes.html#678" class="Function">HsType</a> <a id="1762" class="Symbol">(</a><a id="1763" href="Ledger.Conway.Specification.Utxo.html#2857" class="Record">UTxOEnv</a> <a id="1771" class="Symbol">→</a> <a id="1773" href="Ledger.Conway.Specification.Utxo.html#2991" class="Record">UTxOState</a> <a id="1783" class="Symbol">→</a> <a id="1785" href="Ledger.Conway.Specification.Transaction.html#6498" class="Record">Tx</a> <a id="1788" class="Symbol">→</a> <a id="1790" href="Interface.ComputationalRelation.html#10445" class="Datatype">ComputationResult</a> <a id="1808" href="Agda.Builtin.String.html#335" class="Postulate">String</a> <a id="1815" href="Ledger.Conway.Specification.Utxo.html#2991" class="Record">UTxOState</a><a id="1824" class="Symbol">)</a>
   <a id="1828" href="Ledger.Conway.Foreign.HSLedger.Utxo.html#1743" class="Function">utxo-step</a> <a id="1838" class="Symbol">=</a> <a id="1840" href="Foreign.Convertible.html#233" class="Field">to</a> <a id="1843" class="Symbol">(</a><a id="1844" href="Foreign.Haskell.Coerce.html#2740" class="Postulate">coerce</a> <a id="1851" class="Symbol">⦃</a> <a id="1853" href="Foreign.Haskell.Coerce.html#2408" class="InductiveConstructor">TrustMe</a> <a id="1861" class="Symbol">⦄</a> <a id="1863" href="Function.Base.html#1993" class="Function Operator">$</a> <a id="1865" href="Interface.ComputationalRelation.html#13447" class="Function">compute</a> <a id="1873" href="Ledger.Conway.Conformance.Utxo.Properties.html#2343" class="Function">Computational-UTXO</a><a id="1891" class="Symbol">)</a>
@@ -12694,7 +12694,7 @@
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="Ledger.Conway.Foreign.HSLedger.Transaction.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: Transaction">
+          <a href="Ledger.Conway.Foreign.HSLedger.Script.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: Script">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
@@ -12704,7 +12704,7 @@
                 Previous
               </span>
               <div class="md-ellipsis">
-                Transaction
+                Script
               </div>
             </div>
           </a>

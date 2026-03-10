@@ -327,30 +327,27 @@ d_Show'45'ExUnits_94
 -- Ledger.Conway.Foreign.HSLedger.Core.Implementation.CostModel
 d_CostModel_96 :: ()
 d_CostModel_96 = erased
--- Ledger.Conway.Foreign.HSLedger.Core.Implementation.Language
-d_Language_98 :: ()
-d_Language_98 = erased
 -- Ledger.Conway.Foreign.HSLedger.Core.Implementation.LangDepView
-d_LangDepView_100 :: ()
-d_LangDepView_100 = erased
+d_LangDepView_98 :: ()
+d_LangDepView_98 = erased
 -- Ledger.Conway.Foreign.HSLedger.Core.Implementation.Prices
-d_Prices_102 :: ()
-d_Prices_102 = erased
+d_Prices_100 :: ()
+d_Prices_100 = erased
 -- Ledger.Conway.Foreign.HSLedger.Core.Implementation.TxId
-d_TxId_104 :: ()
-d_TxId_104 = erased
+d_TxId_102 :: ()
+d_TxId_102 = erased
 -- Ledger.Conway.Foreign.HSLedger.Core.Implementation.Ix
-d_Ix_106 :: ()
-d_Ix_106 = erased
+d_Ix_104 :: ()
+d_Ix_104 = erased
 -- Ledger.Conway.Foreign.HSLedger.Core.Implementation.AuxiliaryData
-d_AuxiliaryData_108 :: ()
-d_AuxiliaryData_108 = erased
+d_AuxiliaryData_106 :: ()
+d_AuxiliaryData_106 = erased
 -- Ledger.Conway.Foreign.HSLedger.Core.Implementation.DocHash
-d_DocHash_110 :: ()
-d_DocHash_110 = erased
+d_DocHash_108 :: ()
+d_DocHash_108 = erased
 -- Ledger.Conway.Foreign.HSLedger.Core.Implementation.tokenAlgebra
-d_tokenAlgebra_112 ::
+d_tokenAlgebra_110 ::
   MAlonzo.Code.Ledger.Conway.Specification.TokenAlgebra.Base.T_TokenAlgebra_14
-d_tokenAlgebra_112
+d_tokenAlgebra_110
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.TokenAlgebra.Coin.du_Coin'45'TokenAlgebra_132

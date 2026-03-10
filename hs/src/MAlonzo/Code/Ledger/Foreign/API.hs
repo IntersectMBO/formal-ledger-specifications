@@ -44,6 +44,8 @@ import MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Utxo              as X
   , utxoDebug, utxowDebug)
 import MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes         as X
   (Coin, ExUnits, Epoch)
+import MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Script         as X
+  (HSLanguage (..))
 import MAlonzo.Code.Ledger.Conway.Foreign.ExternalFunctions          as X
   (ExternalFunctions(..), dummyExternalFunctions)
 
