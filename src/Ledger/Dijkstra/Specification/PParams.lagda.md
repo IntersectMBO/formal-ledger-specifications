@@ -54,6 +54,10 @@ record Acnt : Type where
 
 <!--
 ```agda
+record HasAccount {a} (A : Type a) : Type a where
+  field AccountOf : A → Acnt
+open HasAccount ⦃...⦄ public
+
 instance
   HasTreasury-Acnt : HasTreasury Acnt
   HasTreasury-Acnt .TreasuryOf = Acnt.treasury

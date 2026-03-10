@@ -153,8 +153,10 @@ record NewEpochState : Type where
 record HasNewEpochState {a} (A : Type a) : Type a where
   field NewEpochStateOf : A → NewEpochState
 open HasNewEpochState ⦃...⦄ public
-record HasLastEpoch     {a} (A : Type a) : Type a where field LastEpochOf     : A → Epoch
-open HasLastEpoch     ⦃...⦄ public
+
+record HasLastEpoch {a} (A : Type a) : Type a where
+  field LastEpochOf : A → Epoch
+open HasLastEpoch ⦃...⦄ public
 
 instance
   HasLastEpoch-NewEpochState : HasLastEpoch NewEpochState
