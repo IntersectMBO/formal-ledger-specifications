@@ -3,6 +3,11 @@ source_branch: master
 source_path: src/Ledger/Dijkstra/Specification/Chain/Properties/Computational.lagda.md
 ---
 
+# CHAIN: Computational {#sec:chain-computational}
+
+This module proves that the `CHAIN`{.AgdaDatatype} transition rule is computational.
+
+<!--
 ```agda
 {-# OPTIONS --safe #-}
 
@@ -35,6 +40,10 @@ module _
   refScriptSize≤?Bound = totalRefScriptsSize ls ts ≤? maxRefScriptSizePerBlock
 
 instance
+```
+-->
+
+```agda
   Computational-CHAIN : Computational _⊢_⇀⦇_,CHAIN⦈_ String
   Computational-CHAIN .computeProof Γ s b = do
     nes , tickStep ← map₁ ⊥-elim $ computeProof {STS = _⊢_⇀⦇_,TICK⦈_} _ _ _

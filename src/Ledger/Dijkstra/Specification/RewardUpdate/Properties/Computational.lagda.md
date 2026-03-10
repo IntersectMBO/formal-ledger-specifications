@@ -3,6 +3,11 @@ source_branch: master
 source_path: src/Ledger/Dijkstra/Specification/RewardUpdate/Properties/Computational.lagda.md
 ---
 
+# RUPD: Computational {#sec:snap-computational}
+
+This module proves that the `RUPD`{.AgdaDatatype} and `TICK`{.AgdaDatatype} transition rules are computational.
+
+<!--
 ```agda
 {-# OPTIONS --safe #-}
 
@@ -21,6 +26,10 @@ open import Ledger.Prelude
 open Computational ⦃...⦄
 
 instance
+```
+-->
+
+```agda
   Computational-RUPD : Computational _⊢_⇀⦇_,RUPD⦈_ ⊥
   Computational-RUPD .computeProof _ (just ru) _ =
     success (just ru , RUPD-Reward-Update-Exists)

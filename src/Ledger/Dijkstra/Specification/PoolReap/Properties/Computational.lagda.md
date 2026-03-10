@@ -7,6 +7,7 @@ source_path: src/Ledger/Dijkstra/Specification/PoolReap/Properties/Computational
 
 This module proves that the `POOLREAP`{.AgdaDatatype} transition rule is computational.
 
+<!--
 ```agda
 {-# OPTIONS --safe #-}
 
@@ -24,7 +25,10 @@ open import Ledger.Dijkstra.Specification.PoolReap txs abs
 open Computational ⦃...⦄
 
 module _ {e : Epoch} {prs : PoolReapState} where
+```
+-->
 
+```agda
   POOLREAP-total : ∃[ prs' ] _ ⊢ prs ⇀⦇ e ,POOLREAP⦈ prs'
   POOLREAP-total = -, POOLREAP
 

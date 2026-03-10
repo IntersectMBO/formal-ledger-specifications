@@ -3,10 +3,11 @@ source_branch: master
 source_path: src/Ledger/Dijkstra/Specification/Ratify/Properties/Computational.lagda.md
 ---
 
-# Ratify: Computational {#sec:ratify-computational}
+# RATIFY: Computational {#sec:ratify-computational}
 
-This module proves that the `RATIFY`{.AgdaDatatype} transition rule is computational.
+This module proves that the `RATIFY`{.AgdaDatatype} and `RATIFIES`{.AgdaDatatype} transition rules are computational.
 
+<!--
 ```agda
 {-# OPTIONS --safe #-}
 open import Ledger.Dijkstra.Specification.Transaction
@@ -65,12 +66,19 @@ private
     completeness = cong (success {Err = ⊥}) ∘₂ RATIFY-completeness
 
 instance
+```
+-->
+
+```agda
   Computational-RATIFY : Computational _⊢_⇀⦇_,RATIFY⦈_ ⊥
   Computational-RATIFY = record {Implementation}
 
 Computational-RATIFIES : Computational _⊢_⇀⦇_,RATIFIES⦈_ ⊥
 Computational-RATIFIES = it
+```
 
+<!--
+```agda
 RATIFIES-total : ∀ {Γ s sig} → ∃[ s' ] Γ ⊢ s ⇀⦇ sig ,RATIFIES⦈ s'
 RATIFIES-total = ReflexiveTransitiveClosure-total (Implementation.RATIFY-total _ _ _)
 
@@ -99,3 +107,4 @@ opaque
     → s'' ≡ s'''
   RATIFIES-deterministic-≡ refl refl refl = RATIFIES-deterministic
 ```
+-->

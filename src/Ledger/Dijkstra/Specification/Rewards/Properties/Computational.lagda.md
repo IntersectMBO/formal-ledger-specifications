@@ -3,6 +3,11 @@ source_branch: master
 source_path: src/Ledger/Dijkstra/Specification/Rewards/Properties/Computational.lagda.md
 ---
 
+# SNAP: Computational {#sec:snap-computational}
+
+This module proves that the `SNAP`{.AgdaDatatype} transition rule is computational.
+
+<!--
 ```agda
 {-# OPTIONS --safe #-}
 
@@ -21,6 +26,10 @@ open import Ledger.Dijkstra.Specification.Rewards txs abs
 open Computational ⦃...⦄
 
 module _ {lstate : LedgerState} {ss : Snapshots} where
+```
+-->
+
+```agda
   SNAP-total : ∃[ ss' ] lstate ⊢ ss ⇀⦇ tt ,SNAP⦈ ss'
   SNAP-total = -, SNAP
 

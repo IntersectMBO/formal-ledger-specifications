@@ -3,10 +3,11 @@ source_branch: master
 source_path: src/Ledger/Dijkstra/Specification/Enact/Properties/Computational.lagda.md
 ---
 
-# Enact: Computational {#sec:enact-computational}
+# ENACT: Computational {#sec:enact-computational}
 
 This module proves that the `ENACT`{.AgdaDatatype} transition rule is computational.
 
+<!--
 ```agda
 {-# OPTIONS --safe #-}
 open import Ledger.Dijkstra.Specification.Gov.Base
@@ -18,7 +19,6 @@ open import Ledger.Dijkstra.Specification.Gov.Actions gs hiding (yes; no)
 open import Ledger.Dijkstra.Specification.Enact gs
 open EnactState
 open Computational ⦃...⦄
-
 
 -- NOTE: The Dijkstra ENACT transition system has the same constructors as Conway
 --       (Enact-NoConf, Enact-UpdComm, Enact-NewConst, Enact-HF, Enact-PParams,
@@ -39,6 +39,10 @@ module _ {Γ : EnactEnv} {eSt : EnactState} {ga : GovAction} where
   ENACT-deterministic Enact-Info      Enact-Info      = refl
 
 instance
+```
+-->
+
+```agda
   Computational-ENACT : Computational _⊢_⇀⦇_,ENACT⦈_ String
   Computational-ENACT .computeProof Γᵉ s =
     let open EnactEnv Γᵉ renaming (treasury to t; epoch to e) in
