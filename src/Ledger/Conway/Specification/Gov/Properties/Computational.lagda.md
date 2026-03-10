@@ -53,16 +53,24 @@ private
   isUpdateCommittee ⟦ TreasuryWithdrawal , _                ⟧ᵍᵃ = no λ()
   isUpdateCommittee ⟦ Info               , _                ⟧ᵍᵃ = no λ()
 
-  hasPrev : ∀ x v → Dec (∃[ v' ] x .action ≡ ⟦ TriggerHardFork , v' ⟧ᵍᵃ × pvCanFollowMinor v' v)
-  hasPrev record { action = ⟦ NoConfidence        , _   ⟧ᵍᵃ} v = no λ ()
-  hasPrev record { action = ⟦ UpdateCommittee     , _   ⟧ᵍᵃ} v = no λ ()
-  hasPrev record { action = ⟦ NewConstitution     , _   ⟧ᵍᵃ} v = no λ ()
-  hasPrev record { action = ⟦ TriggerHardFork     , v'  ⟧ᵍᵃ} v = case ¿ pvCanFollowMinor v' v ¿ of λ where
-    (yes p) → yes (-, refl , p)
-    (no ¬p) → no  (λ where (_ , refl , h) → ¬p h)
-  hasPrev record { action = ⟦ ChangePParams       , _   ⟧ᵍᵃ} v = no λ ()
-  hasPrev record { action = ⟦ TreasuryWithdrawal  , _   ⟧ᵍᵃ} v = no λ ()
-  hasPrev record { action = ⟦ Info                , _   ⟧ᵍᵃ} v = no λ ()
+  pvFollows : ∀ v' ver v → Dec (if pvMajor ver ≡ pvMajor v' then pvCanFollow v' v else pvCanFollowMinor v' v)
+  pvFollows v' ver v with pvMajor ver ≟ pvMajor v'
+  ... | yes p = ¿ pvCanFollow v' v ¿
+  ... | no ¬p = ¿ pvCanFollowMinor v' v ¿
+
+  hasPrev : ∀ x ver v → Dec (∃[ v' ] x .action ≡ ⟦ TriggerHardFork , v' ⟧ᵍᵃ × (if pvMajor ver ≡ pvMajor v'
+                                                                                 then pvCanFollow v' v
+                                                                                 else pvCanFollowMinor v' v))
+  hasPrev record { action = ⟦ NoConfidence        , _   ⟧ᵍᵃ} _ v = no λ ()
+  hasPrev record { action = ⟦ UpdateCommittee     , _   ⟧ᵍᵃ} _ v = no λ ()
+  hasPrev record { action = ⟦ NewConstitution     , _   ⟧ᵍᵃ} _ v = no λ ()
+  hasPrev record { action = ⟦ TriggerHardFork     , v'  ⟧ᵍᵃ} ver v
+    with pvFollows v' ver v
+  ... | yes p = yes (v' , refl , p)
+  ... | no ¬p = no (λ where (_ , refl , h) → ¬p h)
+  hasPrev record { action = ⟦ ChangePParams       , _   ⟧ᵍᵃ} _ v = no λ ()
+  hasPrev record { action = ⟦ TreasuryWithdrawal  , _   ⟧ᵍᵃ} _ v = no λ ()
+  hasPrev record { action = ⟦ Info                , _   ⟧ᵍᵃ} _ v = no λ ()
 
 opaque
   unfolding validHFAction isRegistered
@@ -73,7 +81,7 @@ opaque
     validHFAction? {record { action = ⟦ UpdateCommittee     , _ ⟧ᵍᵃ}} = Dec-⊤
     validHFAction? {record { action = ⟦ NewConstitution     , _ ⟧ᵍᵃ}} = Dec-⊤
     validHFAction? {record { action = ⟦ TriggerHardFork     , v ⟧ᵍᵃ ; prevAction = prev }} {s} {record { pv = (v' , aid') }}
-      with aid' ≟ prev ×-dec pvCanFollow? {v'} {v} | any? (λ (aid , x) → aid ≟ prev ×-dec hasPrev x v) s
+      with aid' ≟ prev ×-dec pvCanFollow? {v'} {v} | any? (λ (aid , x) → aid ≟ prev ×-dec hasPrev x v' v) s
     ... | yes p' | _ = ⁇ yes (inj₁ p')
     ... | no _ | yes p' with ((aid , x) , x∈xs , (refl , v , h)) ← P.find p' = ⁇ yes (inj₂
       (x , v , to ∈-fromList x∈xs , h))

@@ -256,7 +256,9 @@ opaque
   validHFAction (record { action = ⟦ TriggerHardFork , v ⟧ᵍᵃ ; prevAction = prev }) s e =
     (aid' ≡ prev × pvCanFollow ver v) ⊎ ∃₂[ x , v' ]  (prev , x) ∈ fromList s
                                                       × x .action ≡ ⟦ TriggerHardFork , v' ⟧ᵍᵃ
-                                                      × pvCanFollowMinor v' v
+                                                      × (if pvMajor ver ≡ pvMajor v'
+                                                            then pvCanFollow v' v
+                                                            else pvCanFollowMinor v' v)
     where
       ver : ProtVer
       ver = EnactState.pv e .proj₁
