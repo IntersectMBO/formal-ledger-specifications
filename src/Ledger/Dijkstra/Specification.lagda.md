@@ -43,6 +43,13 @@ import Ledger.Dijkstra.Specification.Certs
 import Ledger.Dijkstra.Specification.Certs.Properties
 ```
 
+## Chain
+
+```agda
+import Ledger.Dijkstra.Specification.Chain
+import Ledger.Dijkstra.Specification.Chain.Properties
+```
+
 ## Enactment
 
 ```agda
