@@ -7,7 +7,7 @@ source_path: src/Ledger/Dijkstra/Specification/BlockBody.lagda.md
 {-# OPTIONS --safe #-}
 open import Ledger.Dijkstra.Specification.Abstract
 open import Ledger.Dijkstra.Specification.Transaction
- 
+
 module Ledger.Dijkstra.Specification.BlockBody
   (txs : _) (open TransactionStructure txs)
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)

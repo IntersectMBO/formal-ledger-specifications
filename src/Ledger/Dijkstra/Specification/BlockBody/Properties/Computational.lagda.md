@@ -3,6 +3,11 @@ source_branch: master
 source_path: src/Ledger/Dijkstra/Specification/BlockBody/Properties/Computational.lagda.md
 ---
 
+# BBODY: Computational {#sec:bbody-computational}
+
+This module proves that the `BBODY`{.AgdaDatatype} transition rule is computational.
+
+<!--
 ```agda
 {-# OPTIONS --safe #-}
 open import Ledger.Dijkstra.Specification.Transaction using (TransactionStructure)
@@ -19,14 +24,18 @@ open import Ledger.Dijkstra.Specification.Enact govStructure
 open import Ledger.Core.Specification.Epoch
 open import Ledger.Dijkstra.Specification.Ledger.Properties.Computational txs abs
 open import Ledger.Dijkstra.Specification.Utxo txs abs
--- open import Ledger.Dijkstra.Specification.Script.Base
 open Computational ⦃...⦄
 open Block
+```
+-->
 
--- open PlutusStructure
-
+```agda
 BBODY-computeProof : (Γ : BBodyEnv) (s : BBodyState) (block : Block)
   → ComputationResult String (∃[ s' ] Γ ⊢ s ⇀⦇ block ,BBODY⦈ s')
+```
+
+<!--
+```agda
 BBODY-computeProof Γ (ls , _) block
   using maxBlockExUnits ← PParams.maxBlockExUnits (PParamsOf (proj₁ Γ))
   using sumTotExUnits   ← (∑ˡ[ tx ← block .ts ] totExUnits tx)
@@ -43,10 +52,17 @@ BBODY-computeProof Γ (ls , _) block
           )
       )
 ... | no _ = failure $ "¬ (" +ˢ show sumTotExUnits +ˢ ", " +ˢ show maxBlockExUnits +ˢ ")"
+```
+-->
 
+```agda
 BBODY-completeness : (Γ : BBodyEnv) (s : BBodyState) (block : Block) (s' : BBodyState)
   → Γ ⊢ s ⇀⦇ block ,BBODY⦈ s'
   → map proj₁ (BBODY-computeProof Γ s block) ≡ success s'
+```
+
+<!--
+```agda
 BBODY-completeness Γ s block _ (BBODY-Block-Body (_ , _ , p , lsStep))
   using maxBlockExUnits ← PParams.maxBlockExUnits (PParamsOf (proj₁ Γ))
   using sumTotExUnits   ← (∑ˡ[ tx ← block .ts ] totExUnits tx)
@@ -57,6 +73,10 @@ BBODY-completeness Γ s block _ (BBODY-Block-Body (_ , _ , p , lsStep))
 ...    | success _ | refl = refl
 
 instance
+```
+-->
+
+```agda
   Computational-BBODY : Computational _⊢_⇀⦇_,BBODY⦈_ String
   Computational-BBODY .computeProof = BBODY-computeProof
   Computational-BBODY .completeness = BBODY-completeness

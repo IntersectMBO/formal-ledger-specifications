@@ -3,6 +3,12 @@ source_branch: master
 source_path: src/Ledger/Dijkstra/Specification/Epoch/Properties/Computational.lagda.md
 ---
 
+# EPOCH: Computational {#sec:epoch-computational}
+
+This module proves that the `EPOCH`{.AgdaDatatype} and `NEWEPOCH`{.AgdaDatatype}
+transition rules are computational.
+
+<!--
 ```agda
 {-# OPTIONS --safe #-}
 open import Ledger.Dijkstra.Specification.Abstract
@@ -66,10 +72,17 @@ module _ {eps : EpochState} {e : Epoch} where
       EPOCH-deterministic (proj₁ EPOCH-total') eps' (proj₂ EPOCH-total') h
 
 instance
+```
+-->
+
+```agda
   Computational-EPOCH : Computational _⊢_⇀⦇_,EPOCH⦈_ ⊥
   Computational-EPOCH .computeProof _ _ _ = success EPOCH-total'
   Computational-EPOCH .completeness _ _ _ s' h = cong success (EPOCH-complete' s' h)
+```
 
+<!--
+```agda
 module _ {e : Epoch} where
   NEWEPOCH-total : ∀ nes → ∃[ nes' ] _ ⊢ nes ⇀⦇ e ,NEWEPOCH⦈ nes'
   NEWEPOCH-total nes
@@ -102,6 +115,10 @@ module _ {e : Epoch} where
       = ⊥-elim (¬p x)
 
 instance
+```
+-->
+
+```agda
   Computational-NEWEPOCH : Computational _⊢_⇀⦇_,NEWEPOCH⦈_ ⊥
   Computational-NEWEPOCH .computeProof _ s _ = success (NEWEPOCH-total _)
   Computational-NEWEPOCH .completeness _ s _ s' h =
