@@ -28,7 +28,7 @@ instance
     with firstSlot (epoch slot) + RandomnessStabilisationWindow <? slot
   ... | yes p  =
     let ru' = _
-     in success (just ru' , RUPD-Create-Reward-Update {ru' = ru'} p)
+     in success (just ru' , RUPD-Create-Reward-Update p)
   ... | no ¬p = success (nothing , RUPD-Reward-Too-Early ¬p)
 
   Computational-RUPD .completeness _ s slot s' RUPD-Reward-Update-Exists
