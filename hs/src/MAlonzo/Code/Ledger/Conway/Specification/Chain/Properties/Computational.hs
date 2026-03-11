@@ -309,7 +309,7 @@ d_Computational'45'CHAIN_2544 v0 v1
                   coe
                     (let v7
                            = coe
-                               MAlonzo.Code.Ledger.Conway.Specification.Epoch.Properties.Computational.du_NEWEPOCH'45'total_3392
+                               MAlonzo.Code.Ledger.Conway.Specification.Epoch.Properties.Computational.du_NEWEPOCH'45'total_3394
                                (coe v0)
                                (coe
                                   MAlonzo.Code.Ledger.Core.Specification.Epoch.d_epoch_90
@@ -374,7 +374,7 @@ d_Computational'45'CHAIN_2544 v0 v1
                                                       MAlonzo.Code.Ledger.Conway.Specification.Epoch.d_pd_3328
                                                       (coe v8)))
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Conway.Specification.RewardUpdate.C_TICK_2378
+                                                   MAlonzo.Code.Ledger.Conway.Specification.RewardUpdate.C_TICK_2376
                                                    v8
                                                    (coe
                                                       MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32

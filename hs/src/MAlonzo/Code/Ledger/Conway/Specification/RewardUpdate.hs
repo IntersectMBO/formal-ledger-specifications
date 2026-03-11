@@ -206,6 +206,12 @@ d_ru_2176 ::
 d_ru_2176 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Epoch.d_ru_3326 (coe v0)
+-- Ledger.Conway.Specification.RewardUpdate._.BlocksMade
+d_BlocksMade_2234 ::
+  MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_2460 ->
+  ()
+d_BlocksMade_2234 = erased
 -- Ledger.Conway.Specification.RewardUpdate._.RewardUpdate
 d_RewardUpdate_2252 a0 a1 = ()
 -- Ledger.Conway.Specification.RewardUpdate._.RewardUpdate.flowConservation
@@ -267,13 +273,12 @@ d_RUpdEnv_2334 = erased
 d__'8866'_'8640''10631'_'44'RUPD'10632'__2336 a0 a1 a2 a3 a4 a5
   = ()
 data T__'8866'_'8640''10631'_'44'RUPD'10632'__2336
-  = C_RUPD'45'Create'45'Reward'45'Update_2348 MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_RewardUpdate_2960
-                                              AgdaAny |
-    C_RUPD'45'Reward'45'Update'45'Exists_2358 |
-    C_RUPD'45'Reward'45'Too'45'Early_2366
+  = C_RUPD'45'Create'45'Reward'45'Update_2346 AgdaAny |
+    C_RUPD'45'Reward'45'Update'45'Exists_2356 |
+    C_RUPD'45'Reward'45'Too'45'Early_2364
 -- Ledger.Conway.Specification.RewardUpdate._⊢_⇀⦇_,TICK⦈_
-d__'8866'_'8640''10631'_'44'TICK'10632'__2368 a0 a1 a2 a3 a4 a5
+d__'8866'_'8640''10631'_'44'TICK'10632'__2366 a0 a1 a2 a3 a4 a5
   = ()
-data T__'8866'_'8640''10631'_'44'TICK'10632'__2368
-  = C_TICK_2378 MAlonzo.Code.Ledger.Conway.Specification.Epoch.T_NewEpochState_3304
+data T__'8866'_'8640''10631'_'44'TICK'10632'__2366
+  = C_TICK_2376 MAlonzo.Code.Ledger.Conway.Specification.Epoch.T_NewEpochState_3304
                 MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14

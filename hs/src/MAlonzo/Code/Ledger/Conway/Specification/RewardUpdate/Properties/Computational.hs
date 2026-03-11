@@ -88,7 +88,7 @@ du_Computational'45'RUPD_2302 v0
                        (coe
                           MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 (coe v2)
                           (coe
-                             MAlonzo.Code.Ledger.Conway.Specification.RewardUpdate.C_RUPD'45'Reward'45'Update'45'Exists_2358)))
+                             MAlonzo.Code.Ledger.Conway.Specification.RewardUpdate.C_RUPD'45'Reward'45'Update'45'Exists_2356)))
            MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18
              -> coe
                   (\ v3 ->
@@ -152,26 +152,7 @@ du_Computational'45'RUPD_2302 v0
                                                               MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_globalConstants_1324
                                                               (coe v0)))))
                                                   (coe
-                                                     MAlonzo.Code.Ledger.Conway.Specification.RewardUpdate.C_RUPD'45'Create'45'Reward'45'Update_2348
-                                                     (coe
-                                                        MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_createRUpd_3404
-                                                        (coe v0)
-                                                        (coe
-                                                           MAlonzo.Code.Ledger.Core.Specification.Epoch.d_SlotsPerEpoch'7580'_324
-                                                           (coe
-                                                              MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_globalConstants_1324
-                                                              (coe v0)))
-                                                        (coe
-                                                           MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
-                                                           (coe v1))
-                                                        (coe
-                                                           MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
-                                                           (coe v1))
-                                                        (coe
-                                                           MAlonzo.Code.Ledger.Core.Specification.Epoch.d_MaxLovelaceSupply'7580'_336
-                                                           (coe
-                                                              MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_globalConstants_1324
-                                                              (coe v0))))
+                                                     MAlonzo.Code.Ledger.Conway.Specification.RewardUpdate.C_RUPD'45'Create'45'Reward'45'Update_2346
                                                      v7))
                                         _ -> MAlonzo.RTE.mazUnreachableError
                                  else coe
@@ -181,7 +162,7 @@ du_Computational'45'RUPD_2302 v0
                                            (coe
                                               MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 (coe v2)
                                               (coe
-                                                 MAlonzo.Code.Ledger.Conway.Specification.RewardUpdate.C_RUPD'45'Reward'45'Too'45'Early_2366)))
+                                                 MAlonzo.Code.Ledger.Conway.Specification.RewardUpdate.C_RUPD'45'Reward'45'Too'45'Early_2364)))
                           _ -> MAlonzo.RTE.mazUnreachableError))
            _ -> MAlonzo.RTE.mazUnreachableError)
 -- Ledger.Conway.Specification.RewardUpdate.Properties.Computational.Computational-TICK
@@ -200,7 +181,7 @@ du_Computational'45'TICK_2382 v0
       (\ v1 v2 v3 ->
          let v4
                = coe
-                   MAlonzo.Code.Ledger.Conway.Specification.Epoch.Properties.Computational.du_NEWEPOCH'45'total_3392
+                   MAlonzo.Code.Ledger.Conway.Specification.Epoch.Properties.Computational.du_NEWEPOCH'45'total_3394
                    (coe v0)
                    (coe
                       MAlonzo.Code.Ledger.Core.Specification.Epoch.d_epoch_90
@@ -255,7 +236,7 @@ du_Computational'45'TICK_2382 v0
                                           MAlonzo.Code.Ledger.Conway.Specification.Epoch.d_pd_3328
                                           (coe v5)))
                                     (coe
-                                       MAlonzo.Code.Ledger.Conway.Specification.RewardUpdate.C_TICK_2378
+                                       MAlonzo.Code.Ledger.Conway.Specification.RewardUpdate.C_TICK_2376
                                        v5
                                        (coe
                                           MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 (coe v6)
