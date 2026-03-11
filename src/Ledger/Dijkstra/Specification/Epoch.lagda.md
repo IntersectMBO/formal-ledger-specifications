@@ -465,16 +465,16 @@ data _⊢_⇀⦇_,EPOCH⦈_ : ⊤ → EpochState → Epoch → EpochState → Ty
         { treasury  = TreasuryOf acnt ∸ totWithdrawals + DonationsOf utxoSt + unclaimed }
 
       stakeDistrs : StakeDistrs
-      stakeDistrs = mkStakeDistrs (Snapshots.mark ss') e utxoSt' govSt' (record { GState (GStateOf ls) })
-                                                                        (record { DState (DStateOf ls) })
+      stakeDistrs = mkStakeDistrs (Snapshots.mark ss') e utxoSt' govSt' (GStateOf ls) (DStateOf ls)
 
       ratifyΓ : RatifyEnv
-      ratifyΓ = record { currentEpoch = e
-                       ; stakeDistrs  = stakeDistrs
+      ratifyΓ = record { stakeDistrs  = stakeDistrs
+                       ; currentEpoch = e
+                       ; dreps        = DRepsOf ls
+                       ; ccHotKeys    = CCHotKeysOf ls
                        ; treasury     = TreasuryOf acnt
-                       ; GState (GStateOf ls)
-                       ; pools        = PoolsOf (PStateOf ls)
-                       ; delegatees   = VoteDelegsOf (DStateOf ls) }
+                       ; pools        = PoolsOf ls
+                       ; delegatees   = VoteDelegsOf ls }
 
     in
     ∙ ratifyΓ ⊢ ⟦ es , ∅ , false ⟧ ⇀⦇ govSt' ,RATIFIES⦈ fut'

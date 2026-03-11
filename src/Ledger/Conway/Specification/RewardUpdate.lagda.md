@@ -51,7 +51,7 @@ RUpdEnv = BlocksMade × EpochState
 data _⊢_⇀⦇_,RUPD⦈_
   : RUpdEnv → Maybe RewardUpdate → Slot → Maybe RewardUpdate → Type where
 
-  RUPD-Create-Reward-Update : ∀ {b es s} {ru' : RewardUpdate} →
+  RUPD-Create-Reward-Update : {b : BlocksMade} {es : EpochState} {s : Slot} →
     let
       ru' = createRUpd SlotsPerEpochᶜ b es MaxLovelaceSupplyᶜ
     in

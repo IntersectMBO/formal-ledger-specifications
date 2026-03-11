@@ -41,17 +41,13 @@ BBODY-computeProof Γ (ls , _) block
   using sumTotExUnits   ← (∑ˡ[ tx ← block .ts ] totExUnits tx)
   with ¿ maxBlockExUnits ≥ᵉ sumTotExUnits ¿
 ... | yes p = do
-    _ , lsStep ← computeProof _ ls (block .ts)
-    success
-      ( _
-      , BBODY-Block-Body
-          ( block .≡-bBodySize
-          , block .≡-bBodyHash
-          , p
-          , lsStep
-          )
-      )
-... | no _ = failure $ "¬ (" +ˢ show sumTotExUnits +ˢ ", " +ˢ show maxBlockExUnits +ˢ ")"
+  _ , lsStep ← computeProof _ ls (block .ts)
+  success (_ , BBODY-Block-Body (block .≡-bBodySize , block .≡-bBodyHash , p , lsStep))
+... | no _ = failure $
+  "Block ExUnits constraint failed: total tx ExUnits "
+  +ˢ show sumTotExUnits
+  +ˢ " exceeds maxBlockExUnits "
+  +ˢ show maxBlockExUnits
 ```
 -->
 
