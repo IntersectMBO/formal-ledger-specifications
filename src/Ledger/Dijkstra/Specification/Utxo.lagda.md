@@ -436,7 +436,7 @@ unquoteDecl SUBUTXO-premises = genPremises SUBUTXO-premises (quote SUBUTXO)
 
 ### The <span class="AgdaDatatype">UTXO</span> Rule
 
-The [CIP]([1]) states:
+The [CIP][1] states:
 
 > All inputs of all transactions in a single batch must be contained in the UTxO
   set before any of the batch transactions are applied. This ensures that

@@ -176,6 +176,7 @@ nav:
         - Computational: Ledger.Conway.Specification.Ratify.Properties.Computational.md
     - Rewards: Ledger.Conway.Specification.Rewards.md
     - Rewards/:
+      - Properties: Ledger.Conway.Specification.Rewards.Properties.md
       - Properties/:
         - Computational: Ledger.Conway.Specification.Rewards.Properties.Computational.md
     - RewardUpdate: Ledger.Conway.Specification.RewardUpdate.md
@@ -214,20 +215,68 @@ nav:
 - Dijkstra:
   - Introduction: Ledger.Dijkstra.Specification.md
   - Abstract: Ledger.Dijkstra.Specification.Abstract.md
+  - BlockBody: Ledger.Dijkstra.Specification.BlockBody.md
+  - BlockBody/:
+    - Properties: Ledger.Dijkstra.Specification.BlockBody.Properties.md
+    - Properties/:
+      - Computational: Ledger.Dijkstra.Specification.BlockBody.Properties.Computational.md
   - Certs: Ledger.Dijkstra.Specification.Certs.md
   - Certs/:
     - Properties: Ledger.Dijkstra.Specification.Certs.Properties.md
     - Properties/:
-      - Ledger.Dijkstra.Specification.Certs.Properties.Computational.md
+      - Computational: Ledger.Dijkstra.Specification.Certs.Properties.Computational.md
+
+  - Chain: Ledger.Dijkstra.Specification.Chain.md
+  - Chain/:
+    - Properties: Ledger.Dijkstra.Specification.Chain.Properties.md
+    - Properties/:
+      - Computational: Ledger.Dijkstra.Specification.Chain.Properties.Computational.md
   - Enact: Ledger.Dijkstra.Specification.Enact.md
+  - Enact/:
+    - Properties: Ledger.Dijkstra.Specification.Enact.Properties.md
+    - Properties/:
+      - Computational: Ledger.Dijkstra.Specification.Enact.Properties.Computational.md
+
+  - Epoch: Ledger.Dijkstra.Specification.Epoch.md
+  - Epoch/:
+    - Properties: Ledger.Dijkstra.Specification.Epoch.Properties.md
+    - Properties/:
+      - Computational: Ledger.Dijkstra.Specification.Epoch.Properties.Computational.md
   - Fees: Ledger.Dijkstra.Specification.Fees.md
   - Gov: Ledger.Dijkstra.Specification.Gov.md
   - Gov/:
     - Actions: Ledger.Dijkstra.Specification.Gov.Actions.md
     - Base: Ledger.Dijkstra.Specification.Gov.Base.md
+    - Properties: Ledger.Dijkstra.Specification.Gov.Properties.md
+    - Properties/:
+      - Computational: Ledger.Dijkstra.Specification.Gov.Properties.Computational.md
   - Ledger: Ledger.Dijkstra.Specification.Ledger.md
+  - Ledger/:
+    - Properties: Ledger.Dijkstra.Specification.Ledger.Properties.md
+    - Properties/:
+      - Computational: Ledger.Dijkstra.Specification.Ledger.Properties.Computational.md
+  - PoolReap: Ledger.Dijkstra.Specification.PoolReap.md
+  - PoolReap/:
+    - Properties: Ledger.Dijkstra.Specification.PoolReap.Properties.md
+    - Properties/:
+      - Computational: Ledger.Dijkstra.Specification.PoolReap.Properties.Computational.md
   - PParams: Ledger.Dijkstra.Specification.PParams.md
   - Ratify: Ledger.Dijkstra.Specification.Ratify.md
+  - Ratify/:
+    - Properties: Ledger.Dijkstra.Specification.Ratify.Properties.md
+    - Properties/:
+      - Computational: Ledger.Dijkstra.Specification.Ratify.Properties.Computational.md
+
+  - Rewards: Ledger.Dijkstra.Specification.Rewards.md
+  - Rewards/:
+    - Properties: Ledger.Dijkstra.Specification.Rewards.Properties.md
+    - Properties/:
+      - Computational: Ledger.Dijkstra.Specification.Rewards.Properties.Computational.md
+  - RewardUpdate: Ledger.Dijkstra.Specification.RewardUpdate.md
+  - RewardUpdate/:
+    - Properties: Ledger.Dijkstra.Specification.RewardUpdate.Properties.md
+    - Properties/:
+      - Computational: Ledger.Dijkstra.Specification.RewardUpdate.Properties.Computational.md
   - Script: Ledger.Dijkstra.Specification.Script.md
   - Script/:
     - Base: Ledger.Dijkstra.Specification.Script.Base.md
