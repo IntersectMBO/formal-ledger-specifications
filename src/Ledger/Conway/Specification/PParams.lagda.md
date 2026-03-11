@@ -21,8 +21,9 @@ open import Tactic.Derive.Show
 
 open import Ledger.Prelude
 open import Ledger.Core.Specification.Crypto
-open import Ledger.Conway.Specification.Script.Base
 open import Ledger.Core.Specification.Epoch
+open import Ledger.Core.Specification.ProtocolVersion
+open import Ledger.Conway.Specification.Script.Base
 open import Ledger.Prelude.Numeric using (UnitInterval; ℕ⁺)
 
 module Ledger.Conway.Specification.PParams
@@ -100,42 +101,7 @@ instance
 
   HasReserves-Acnt : HasReserves Acnt
   HasReserves-Acnt .ReservesOf = Acnt.reserves
-```
--->
 
-```agda
-ProtVer : Type
-ProtVer = ℕ × ℕ
-
-pvMajor : ProtVer → ℕ
-pvMajor = proj₁
-
-pvMinor : ProtVer → ℕ
-pvMinor = proj₂
-```
-
-<!--
-```agda
-instance
-  Show-ProtVer : Show ProtVer
-  Show-ProtVer = Show-×
-```
--->
-
-```agda
-data pvCanFollowMajor : ProtVer → ProtVer → Type where
-  canFollowMajor : pvCanFollowMajor (m , n) (m + 1 , 0)
-
-data pvCanFollowMinor : ProtVer → ProtVer → Type where
-  canFollowMinor : pvCanFollowMinor (m , n) (m , n + 1)
-
-pvCanFollow : ProtVer → ProtVer → Type
-pvCanFollow v₁ v₂ = pvCanFollowMajor v₁ v₂ ⊎ pvCanFollowMinor v₁ v₂
-```
-
-<!--
-```agda
-instance
   unquoteDecl HasCast-Acnt = derive-HasCast
     [ (quote Acnt , HasCast-Acnt) ]
 ```
@@ -525,26 +491,6 @@ module PParamsUpdate where
   instance
     unquoteDecl DecEq-PParamsUpdate  = derive-DecEq
       ((quote PParamsUpdate , DecEq-PParamsUpdate) ∷ [])
-
-instance
-  Dec-pvCanFollowMajor : ∀ {pv} {pv'} → Dec (pvCanFollowMajor pv pv')
-  Dec-pvCanFollowMajor {m , n} {pv} with pv ≟ (m + 1 , 0)
-  ... | yes refl = yes canFollowMajor
-  ... | no ¬p = no (λ { canFollowMajor → ¬p refl })
-
-  Dec-pvCanFollowMinor : ∀ {pv} {pv'} → Dec (pvCanFollowMinor pv pv')
-  Dec-pvCanFollowMinor {m , n} {pv} with pv ≟ (m , n + 1)
-  ... | yes refl = yes canFollowMinor
-  ... | no ¬p = no (λ { canFollowMinor → ¬p refl })
-
-  pvCanFollowMajor? : pvCanFollowMajor ⁇²
-  pvCanFollowMajor? = ⁇ Dec-pvCanFollowMajor
-
-  pvCanFollowMinor? : pvCanFollowMinor ⁇²
-  pvCanFollowMinor? = ⁇ Dec-pvCanFollowMinor
-
-pvCanFollow? : ∀ {pv} {pv'} → Dec (pvCanFollow pv pv')
-pvCanFollow? = Dec-pvCanFollowMajor ⊎-dec Dec-pvCanFollowMinor
 ```
 -->
 

@@ -11,6 +11,7 @@ open import Ledger.Conway.Foreign.HSLedger.Address
 open import Ledger.Conway.Foreign.HSLedger.BaseTypes
 open import Ledger.Conway.Foreign.HSLedger.PParams
 
+open import Ledger.Core.Specification.ProtocolVersion
 open import Ledger.Conway.Specification.Gov.Base
 open import Ledger.Conway.Specification.Gov.Actions govStructure using (Vote) public
 

@@ -21,6 +21,7 @@ open import Data.Rational using (ℚ; 0ℚ; 1ℚ)
 open import Tactic.Derive.Show
 
 open import Ledger.Prelude as P hiding (yes; no)
+open import Ledger.Core.Specification.ProtocolVersion
 ```
 -->
 

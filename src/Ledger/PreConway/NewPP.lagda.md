@@ -13,6 +13,7 @@ open import Relation.Nullary.Decidable
 
 open import Ledger.Prelude
 open import Ledger.Conway.Specification.Transaction
+open import Ledger.Core.Specification.ProtocolVersion
 
 module Ledger.PreConway.NewPP (txs : _) (open TransactionStructure txs) where
 
