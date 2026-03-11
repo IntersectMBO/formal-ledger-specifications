@@ -541,6 +541,7 @@ library
       MAlonzo.Code.Ledger.Core.Specification.Address
       MAlonzo.Code.Ledger.Core.Specification.Crypto
       MAlonzo.Code.Ledger.Core.Specification.Epoch
+      MAlonzo.Code.Ledger.Core.Specification.ProtocolVersion
       MAlonzo.Code.Ledger.Prelude
       MAlonzo.Code.Ledger.Prelude.Base
       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes
