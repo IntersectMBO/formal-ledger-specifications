@@ -17,6 +17,7 @@ open import Ledger.Prelude hiding (any?; Any; all?; All; Rel; lookup; ∈-filter
 
 open import Axiom.Set.Properties th using (∃-sublist-⇔)
 
+open import Ledger.Core.Specification.ProtocolVersion
 open import Ledger.Dijkstra.Specification.Gov.Actions govStructure hiding (yes; no)
 open import Ledger.Dijkstra.Specification.Enact govStructure
 open import Ledger.Dijkstra.Specification.Ratify govStructure

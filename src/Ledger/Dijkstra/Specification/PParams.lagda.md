@@ -13,6 +13,7 @@ This section defines the adjustable protocol parameters of the Cardano ledger.
 
 open import Ledger.Core.Specification.Crypto using (CryptoStructure)
 open import Ledger.Core.Specification.Epoch using (EpochStructure)
+open import Ledger.Core.Specification.ProtocolVersion
 open import Ledger.Dijkstra.Specification.Script.Base
 
 module Ledger.Dijkstra.Specification.PParams
@@ -49,13 +50,6 @@ record Acnt : Type where
   constructor ⟦_,_⟧ᵃ
   field
     treasury reserves : Coin
-
-ProtVer : Type
-ProtVer = ℕ × ℕ
-
-data pvCanFollow : ProtVer → ProtVer → Type where
-  canFollowMajor : pvCanFollow (m , n) (m + 1 , 0)
-  canFollowMinor : pvCanFollow (m , n) (m , n + 1)
 ```
 
 <!--
@@ -66,10 +60,6 @@ instance
 
   HasReserves-Acnt : HasReserves Acnt
   HasReserves-Acnt .ReservesOf = Acnt.reserves
-
-instance
-  Show-ProtVer : Show ProtVer
-  Show-ProtVer = Show-×
 
   unquoteDecl HasCast-Acnt = derive-HasCast
     [ (quote Acnt , HasCast-Acnt) ]
@@ -409,15 +399,6 @@ module PParamsUpdate where
   instance
     unquoteDecl DecEq-PParamsUpdate  = derive-DecEq
       ((quote PParamsUpdate , DecEq-PParamsUpdate) ∷ [])
-
-instance
-  pvCanFollow? : ∀ {pv} {pv'} → Dec (pvCanFollow pv pv')
-  pvCanFollow? {m , n} {pv} with pv ≟ (m + 1 , 0) | pv ≟ (m , n + 1)
-  ... | no ¬p    | no ¬p₁   = no $ λ where canFollowMajor → ¬p  refl
-                                           canFollowMinor → ¬p₁ refl
-  ... | no ¬p    | yes refl = yes canFollowMinor
-  ... | yes refl | no ¬p    = yes canFollowMajor
-  ... | yes refl | yes p    = ⊥-elim $ m+1+n≢m m $ ×-≡,≡←≡ p .proj₁
 ```
 -->
 

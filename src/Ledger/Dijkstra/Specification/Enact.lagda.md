@@ -14,6 +14,7 @@ open import Data.Rational using (ℚ)
 
 open import Ledger.Prelude
 open import Ledger.Dijkstra.Specification.Gov.Base
+open import Ledger.Core.Specification.ProtocolVersion
 
 module Ledger.Dijkstra.Specification.Enact (gs : _) (open GovStructure gs) where
 

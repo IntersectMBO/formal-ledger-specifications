@@ -8,6 +8,7 @@ source_path: src/Ledger/Conway/Specification/Gov/Properties/Computational.lagda.
 
 open import Ledger.Conway.Specification.Gov.Base
 open import Ledger.Conway.Specification.Transaction using (TransactionStructure)
+open import Ledger.Core.Specification.ProtocolVersion
 
 module Ledger.Conway.Specification.Gov.Properties.Computational
   (txs : _) (open TransactionStructure txs using (govStructure))
@@ -53,14 +54,14 @@ private
   isUpdateCommittee ⟦ TreasuryWithdrawal , _                ⟧ᵍᵃ = no λ()
   isUpdateCommittee ⟦ Info               , _                ⟧ᵍᵃ = no λ()
 
-  pvFollows : ∀ v' ver v → Dec (if pvMajor ver ≡ pvMajor v' then pvCanFollow v' v else pvCanFollowMinor v' v)
+  pvFollows : ∀ v' ver v → Dec (if pvMajor ver ≡ pvMajor v' then pvCanFollow v v' else pvCanFollowMinor v v')
   pvFollows v' ver v with pvMajor ver ≟ pvMajor v'
-  ... | yes p = ¿ pvCanFollow v' v ¿
-  ... | no ¬p = ¿ pvCanFollowMinor v' v ¿
+  ... | yes p = ¿ pvCanFollow v v' ¿
+  ... | no ¬p = ¿ pvCanFollowMinor v v' ¿
 
   hasPrev : ∀ x ver v → Dec (∃[ v' ] x .action ≡ ⟦ TriggerHardFork , v' ⟧ᵍᵃ × (if pvMajor ver ≡ pvMajor v'
-                                                                                 then pvCanFollow v' v
-                                                                                 else pvCanFollowMinor v' v))
+                                                                                 then pvCanFollow v v'
+                                                                                 else pvCanFollowMinor v v'))
   hasPrev record { action = ⟦ NoConfidence        , _   ⟧ᵍᵃ} _ v = no λ ()
   hasPrev record { action = ⟦ UpdateCommittee     , _   ⟧ᵍᵃ} _ v = no λ ()
   hasPrev record { action = ⟦ NewConstitution     , _   ⟧ᵍᵃ} _ v = no λ ()
@@ -81,7 +82,7 @@ opaque
     validHFAction? {record { action = ⟦ UpdateCommittee     , _ ⟧ᵍᵃ}} = Dec-⊤
     validHFAction? {record { action = ⟦ NewConstitution     , _ ⟧ᵍᵃ}} = Dec-⊤
     validHFAction? {record { action = ⟦ TriggerHardFork     , v ⟧ᵍᵃ ; prevAction = prev }} {s} {record { pv = (v' , aid') }}
-      with aid' ≟ prev ×-dec pvCanFollow? {v'} {v} | any? (λ (aid , x) → aid ≟ prev ×-dec hasPrev x v' v) s
+      with aid' ≟ prev ×-dec pvCanFollow? {v} {v'} | any? (λ (aid , x) → aid ≟ prev ×-dec hasPrev x v' v) s
     ... | yes p' | _ = ⁇ yes (inj₁ p')
     ... | no _ | yes p' with ((aid , x) , x∈xs , (refl , v , h)) ← P.find p' = ⁇ yes (inj₂
       (x , v , to ∈-fromList x∈xs , h))

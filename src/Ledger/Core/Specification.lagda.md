@@ -30,11 +30,18 @@ The `Crypto`{.AgdaModule} module defines cryptographic primitives and structures
 import Ledger.Core.Specification.Crypto
 ```
 
-
 ## Epoch
 
 The `Epoch`{.AgdaModule} module defines epoch-related concepts and structures.
 
 ```agda
 import Ledger.Core.Specification.Epoch
+```
+
+## Protocol Version
+
+The `ProtocolVersion{.AgdaModule} module defines protocol versions.
+
+```agda
+import Ledger.Core.Specification.ProtocolVersion
 ```

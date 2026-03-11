@@ -24,6 +24,7 @@ open import Ledger.Prelude hiding (any?; Any; all?; All; Rel; lookup; ∈-filter
 
 open import Axiom.Set.Properties th using (∃-sublist-⇔)
 
+open import Ledger.Core.Specification.ProtocolVersion
 open import Ledger.Conway.Specification.Gov.Actions govStructure hiding (yes; no)
 open import Ledger.Conway.Specification.Enact govStructure
 open import Ledger.Conway.Specification.Ratify govStructure
@@ -254,11 +255,11 @@ opaque
 
   validHFAction : GovProposal → GovState → EnactState → Type
   validHFAction (record { action = ⟦ TriggerHardFork , v ⟧ᵍᵃ ; prevAction = prev }) s e =
-    (aid' ≡ prev × pvCanFollow ver v) ⊎ ∃₂[ x , v' ]  (prev , x) ∈ fromList s
+    (aid' ≡ prev × pvCanFollow v ver) ⊎ ∃₂[ x , v' ]  (prev , x) ∈ fromList s
                                                       × x .action ≡ ⟦ TriggerHardFork , v' ⟧ᵍᵃ
                                                       × (if pvMajor ver ≡ pvMajor v'
-                                                            then pvCanFollow v' v
-                                                            else pvCanFollowMinor v' v)
+                                                            then pvCanFollow v v'
+                                                            else pvCanFollowMinor v v')
     where
       ver : ProtVer
       ver = EnactState.pv e .proj₁

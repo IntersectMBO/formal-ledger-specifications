@@ -8,6 +8,7 @@ source_path: src/Ledger/PreConway/Conformance/PPUp/Properties.lagda.md
 open import Ledger.Prelude hiding (_*_)
 open Computational ⦃...⦄; open HasDecPartialOrder ⦃...⦄
 open import Ledger.Conway.Specification.Transaction
+open import Ledger.Core.Specification.ProtocolVersion
 
 module Ledger.PreConway.Conformance.PPUp.Properties (txs : _) (open TransactionStructure txs) where
 

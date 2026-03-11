@@ -105,6 +105,7 @@ nav:
     - Address: Ledger.Core.Specification.Address.md
     - Crypto: Ledger.Core.Specification.Crypto.md
     - Epoch: Ledger.Core.Specification.Epoch.md
+    - ProtocolVersion: Ledger.Core.Specification.ProtocolVersion.md
 - Conway:
   - Introduction: Ledger.Conway.Specification.md
   - Modules/:
