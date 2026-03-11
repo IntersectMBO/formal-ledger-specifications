@@ -8,7 +8,7 @@ import MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes                   as X
 import MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address           as X
   (Credential(..), BaseAddr(..), BootstrapAddr(..), RewardAddress(..), Addr, HSVKey (..))
 import MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.PParams           as X
-  (DrepThresholds(..), PoolThresholds(..), Acnt(..), PParams(..), PParamsUpdate(..))
+  (LanguageCostModels, DrepThresholds(..), PoolThresholds(..), Acnt(..), PParams(..), PParamsUpdate(..))
 import MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Transaction       as X
   ( Tag(..), Timelock(..), TxWitnesses(..), TxBody(..), Tx(..), TxId, Ix, TxIn, P1Script, P2Script
   , Script, Datum, DataHash, Value, TxOut, RdmrPtr, ScriptHash, AuxiliaryData, Withdrawals
