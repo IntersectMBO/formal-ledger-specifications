@@ -507,7 +507,8 @@ module PParamsUpdate where
       ; Emax                        = U.Emax ?↗ P.Emax
       ; nopt                        = U.nopt ?↗ P.nopt
       ; collateralPercentage        = U.collateralPercentage ?↗ P.collateralPercentage
-      ; costmdlsAssoc               = U.costmdls ?↗ P.costmdlsAssoc
+      ; costmdlsAssoc               = if U.costmdls then (λ {cm} → setToList (fromListᵐ (cm ++ P.costmdlsAssoc) ˢ))
+                                                    else P.costmdlsAssoc
       ; drepThresholds              = U.drepThresholds ?↗ P.drepThresholds
       ; poolThresholds              = U.poolThresholds ?↗ P.poolThresholds
       ; govActionLifetime           = U.govActionLifetime ?↗ P.govActionLifetime
