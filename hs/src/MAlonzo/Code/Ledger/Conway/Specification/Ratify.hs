@@ -998,8 +998,8 @@ du_P'47'Q5_1850 v0 v1 v2
                MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                  (coe du_pparamThreshold_1848 (coe v1) (coe v3)))
             (coe
-               MAlonzo.Code.Ledger.Conway.Specification.PParams.d_updateGroups_1532
-               (MAlonzo.Code.Ledger.Conway.Specification.PParams.d_ppUpd_1566
+               MAlonzo.Code.Ledger.Conway.Specification.PParams.d_updateGroups_1534
+               (MAlonzo.Code.Ledger.Conway.Specification.PParams.d_ppUpd_1568
                   (coe
                      MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.d_govParams_1220
                      (coe v0)))
@@ -1015,8 +1015,8 @@ du_P'47'Q5_1850 v0 v1 v2
                MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
                  (coe du_pparamThreshold_1848 (coe v1) (coe v3)))
             (coe
-               MAlonzo.Code.Ledger.Conway.Specification.PParams.d_updateGroups_1532
-               (MAlonzo.Code.Ledger.Conway.Specification.PParams.d_ppUpd_1566
+               MAlonzo.Code.Ledger.Conway.Specification.PParams.d_updateGroups_1534
+               (MAlonzo.Code.Ledger.Conway.Specification.PParams.d_ppUpd_1568
                   (coe
                      MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.d_govParams_1220
                      (coe v0)))

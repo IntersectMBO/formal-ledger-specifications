@@ -766,7 +766,7 @@ du_hasPrev_1638 v0 v1
                     MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.C_TriggerHardFork_866
                       -> let v9
                                = coe
-                                   MAlonzo.Code.Ledger.Conway.Specification.PParams.du_Dec'45'pvCanFollowMinor_1476
+                                   MAlonzo.Code.Ledger.Conway.Specification.PParams.du_Dec'45'pvCanFollowMinor_1478
                                    (coe v8) (coe v1) in
                          coe
                            (case coe v9 of
@@ -853,7 +853,7 @@ d_validHFAction'63'_1672 v0 v1 v2 v3
                                                                MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)))
                                                     (coe v18) (coe v5))
                                                  (coe
-                                                    MAlonzo.Code.Ledger.Conway.Specification.PParams.du_pvCanFollow'63'_1512
+                                                    MAlonzo.Code.Ledger.Conway.Specification.PParams.du_pvCanFollow'63'_1514
                                                     (coe v17) (coe v11)) in
                                        coe
                                          (let v20

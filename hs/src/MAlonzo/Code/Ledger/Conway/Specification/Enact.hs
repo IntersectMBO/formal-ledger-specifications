@@ -157,9 +157,9 @@ d_applyUpdate_370 ::
   MAlonzo.Code.Ledger.Conway.Specification.PParams.T_PParams_294
 d_applyUpdate_370 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Specification.PParams.d_applyUpdate_1530
+      MAlonzo.Code.Ledger.Conway.Specification.PParams.d_applyUpdate_1532
       (coe
-         MAlonzo.Code.Ledger.Conway.Specification.PParams.d_ppUpd_1566
+         MAlonzo.Code.Ledger.Conway.Specification.PParams.d_ppUpd_1568
          (coe
             MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.d_govParams_1220
             (coe v0)))

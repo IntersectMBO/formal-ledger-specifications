@@ -3152,8 +3152,8 @@ d_actionWellFormed'63'_2514 v0 v1
                              (coe
                                 MAlonzo.Code.Ledger.Conway.Specification.PParams.du_DecEq'45'PParamGroup_596))
                           (coe
-                             MAlonzo.Code.Ledger.Conway.Specification.PParams.d_updateGroups_1532
-                             (MAlonzo.Code.Ledger.Conway.Specification.PParams.d_ppUpd_1566
+                             MAlonzo.Code.Ledger.Conway.Specification.PParams.d_updateGroups_1534
+                             (MAlonzo.Code.Ledger.Conway.Specification.PParams.d_ppUpd_1568
                                 (coe
                                    MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.d_govParams_1220
                                    (coe v0)))
@@ -3166,8 +3166,8 @@ d_actionWellFormed'63'_2514 v0 v1
                                    MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))))
                        (coe MAlonzo.Code.Class.Decidable.Instances.d_Dec'45''8869'_8))
                     (coe
-                       MAlonzo.Code.Ledger.Conway.Specification.PParams.d_ppWF'63'_1538
-                       (MAlonzo.Code.Ledger.Conway.Specification.PParams.d_ppUpd_1566
+                       MAlonzo.Code.Ledger.Conway.Specification.PParams.d_ppWF'63'_1540
+                       (MAlonzo.Code.Ledger.Conway.Specification.PParams.d_ppUpd_1568
                           (coe
                              MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.d_govParams_1220
                              (coe v0)))

@@ -1352,7 +1352,7 @@ d_Conv'45'EpochState_418
                 -> coe
                      C_MkEpochState_4235
                      (coe
-                        MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.PParams.C_MkAcnt_10575
+                        MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.PParams.C_MkAcnt_10677
                         (coe
                            MAlonzo.Code.Ledger.Conway.Specification.PParams.d_treasury_178
                            (coe v1))
@@ -2176,13 +2176,13 @@ d_Conv'45'EpochState_418
                                  case coe v6 of
                                    MAlonzo.Code.Ledger.Conway.Specification.PParams.C_'10214'_'44'_'10215''7491'_182 v7 v8
                                      -> coe
-                                          MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.PParams.C_MkAcnt_10575
+                                          MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.PParams.C_MkAcnt_10677
                                           (coe v7) (coe v8)
                                    _ -> MAlonzo.RTE.mazUnreachableError))
                            (coe
                               (\ v6 ->
                                  case coe v6 of
-                                   MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.PParams.C_MkAcnt_10575 v7 v8
+                                   MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.PParams.C_MkAcnt_10677 v7 v8
                                      -> coe
                                           MAlonzo.Code.Ledger.Conway.Specification.PParams.C_'10214'_'44'_'10215''7491'_182
                                           (coe v7) (coe v8)
@@ -4791,7 +4791,7 @@ du_epoch'45'step_420 v0 v1
                                  -> coe
                                       C_MkEpochState_4235
                                       (coe
-                                         MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.PParams.C_MkAcnt_10575
+                                         MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.PParams.C_MkAcnt_10677
                                          (coe
                                             MAlonzo.Code.Ledger.Conway.Specification.PParams.d_treasury_178
                                             (coe v3))
@@ -5631,13 +5631,13 @@ du_epoch'45'step_420 v0 v1
                                                   case coe v8 of
                                                     MAlonzo.Code.Ledger.Conway.Specification.PParams.C_'10214'_'44'_'10215''7491'_182 v9 v10
                                                       -> coe
-                                                           MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.PParams.C_MkAcnt_10575
+                                                           MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.PParams.C_MkAcnt_10677
                                                            (coe v9) (coe v10)
                                                     _ -> MAlonzo.RTE.mazUnreachableError))
                                             (coe
                                                (\ v8 ->
                                                   case coe v8 of
-                                                    MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.PParams.C_MkAcnt_10575 v9 v10
+                                                    MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.PParams.C_MkAcnt_10677 v9 v10
                                                       -> coe
                                                            MAlonzo.Code.Ledger.Conway.Specification.PParams.C_'10214'_'44'_'10215''7491'_182
                                                            (coe v9) (coe v10)
@@ -8292,7 +8292,7 @@ d_EpochState_4233 = ()
 type T_EpochState_4233 = EpochState
 pattern C_MkEpochState_4235 a0 a1 a2 a3 a4 = MkEpochState a0 a1 a2 a3 a4
 check_MkEpochState_4235 ::
-  MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.PParams.T_Acnt_10573 ->
+  MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.PParams.T_Acnt_10675 ->
   MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Rewards.T_Snapshots_4281 ->
   MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Ledger.T_LState_2855 ->
   MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Enact.T_EnactState_159 ->
