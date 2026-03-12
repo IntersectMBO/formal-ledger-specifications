@@ -40,59 +40,46 @@ instance
 <!--
 ```agda
   Computational-SUBUTXO = record {go} where
-    module go where
+    module go (Γ : SubUTxOEnv) (s₀ : UTxOState) (txSub : SubLevelTx)
+      (let H , ⁇ H? = SUBUTXO-premises {txSub = txSub} {Γ = Γ} {s₀ = s₀})
+      where
 
       --------------------------------------------------------------------------
       -- computeProof for SubUTXO
       --------------------------------------------------------------------------
-      computeProof : (Γ : SubUTxOEnv) (s : UTxOState) (txSub : SubLevelTx)
-        → ComputationResult String (Σ UTxOState (_⊢_⇀⦇_,SUBUTXO⦈_ Γ s txSub))
-
-      computeProof Γ s txSub
+      computeProof : ComputationResult String (Σ UTxOState (_⊢_⇀⦇_,SUBUTXO⦈_ Γ s₀ txSub))
+      computeProof
         with IsTopLevelValidFlagOf Γ | inspect IsTopLevelValidFlagOf Γ
       ... | false | [ refl ]
-        with ¿ SpendInputsOf txSub ≢ ∅
-             × inInterval (SlotOf Γ) (ValidIntervalOf txSub)
-             × MaybeNetworkIdOf txSub ~ just NetworkId ¿
-      ... | (yes p) = success (⟦ UTxOOf s , FeesOf s , DonationsOf s ⟧ , SUBUTXO {txSub = txSub} p)
-      ... | (no ¬p) = failure (genErrors ¬p)
+        with H?
+      ... | (yes p) = success (⟦ UTxOOf s₀ , FeesOf s₀ , DonationsOf s₀ ⟧ , SUBUTXO {txSub = txSub} p)
+      ... | (no ¬p) = failure "genErrors" -- (genErrors ¬p)
+      computeProof | true | [ refl ]
+        with H?
+      ... | (yes p) = success ( ⟦ (UTxOOf s₀ ∣ SpendInputsOf txSub ᶜ) ∪ˡ outs txSub
 
-      computeProof Γ s txSub | true | [ refl ]
-        with ¿ SpendInputsOf txSub ≢ ∅
-             × inInterval (SlotOf Γ) (ValidIntervalOf txSub)
-             × MaybeNetworkIdOf txSub ~ just NetworkId ¿
-      ... | (yes p) = success ( ⟦ (UTxOOf s ∣ SpendInputsOf txSub ᶜ) ∪ˡ outs txSub
-                                , FeesOf s
-                                , DonationsOf s + DonationsOf txSub
+                                , FeesOf s₀
+                                , DonationsOf s₀ + DonationsOf txSub
                                 ⟧
                               , SUBUTXO {txSub = txSub} p
                               )
-      ... | (no ¬p) = failure (genErrors ¬p)
+      ... | (no ¬p) = failure "genErrors" -- (genErrors ¬p)
 
 
       --------------------------------------------------------------------------
       -- completeness for SubUTXO
       --------------------------------------------------------------------------
-      completeness : (Γ : SubUTxOEnv) (s : UTxOState) (txSub : SubLevelTx)
-        → ∀ s' → Γ ⊢ s ⇀⦇ txSub ,SUBUTXO⦈ s' → map proj₁ (computeProof Γ s txSub) ≡ success s'
-
-      completeness Γ s txSub s' (SUBUTXO p)
+      completeness : ∀ s₁ → Γ ⊢ s₀ ⇀⦇ txSub ,SUBUTXO⦈ s₁ → map proj₁ computeProof ≡ success s₁
+      completeness s₁ (SUBUTXO p)
         with IsTopLevelValidFlagOf Γ | inspect IsTopLevelValidFlagOf Γ
       ... | false | [ refl ]
-        with ¿ SpendInputsOf txSub ≢ ∅
-             × inInterval (SlotOf Γ) (ValidIntervalOf txSub)
-             × MaybeNetworkIdOf txSub ~ just NetworkId ¿
-      ... |  (yes p) = refl
-      ... |  (no ¬p) = ⊥-elim (¬p p)
-
-      completeness Γ s txSub s' (SUBUTXO p) | true  | [ refl ]
-        with ¿ SpendInputsOf txSub ≢ ∅
-             × inInterval (SlotOf Γ) (ValidIntervalOf txSub)
-             × MaybeNetworkIdOf txSub ~ just NetworkId ¿
-      ... |  (yes p) = refl
-      ... |  (no ¬p) = ⊥-elim (¬p p)
-
-
+        with H?
+      ... | (yes p) = refl
+      ... | (no ¬p) = ⊥-elim (¬p p)
+      completeness s₁ (SUBUTXO p) | true  | [ refl ]
+        with H?
+      ... | (yes p) = refl
+      ... | (no ¬p) = ⊥-elim (¬p p)
 ```
 -->
 

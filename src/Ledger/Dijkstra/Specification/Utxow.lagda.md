@@ -38,7 +38,7 @@ private variable
 ```agda
 UsesBootstrapAddress : UTxO → Tx ℓ → Type
 UsesBootstrapAddress utxo tx
-  = ∃[ o ∈ (range txOuts) ∪ range (utxo ∣ (txIns ∪ referenceInputs)) ] isBootstrapAddr (proj₁ o)
+  = ∃[ o ∈ (range txOuts) ∪ range (utxo ∣ (txIns ∪ referenceInputs)) ] IsBootstrapAddr (proj₁ o)
   where
     open Tx tx; open TxBody txBody
 

@@ -177,13 +177,11 @@ stakeCred (inj₂ _) = nothing
 netId (inj₁ record {net = net}) = net
 netId (inj₂ record {net = net}) = net
 
-data isBootstrapAddr : Addr → Set where
- IsBootstrapAddr : ∀ a → isBootstrapAddr (inj₂ a)
+data IsBootstrapAddr : Addr → Type where
+  AddrIsBootstrapAddr : ∀ a → IsBootstrapAddr (inj₂ a)
 
-instance
-  isBootstrapAddr? : ∀ {a} → isBootstrapAddr a ⁇
-  isBootstrapAddr? {inj₁ _} = ⁇ no λ ()
-  isBootstrapAddr? {inj₂ a} = ⁇ yes (IsBootstrapAddr a)
+isBootstrapAddr : Addr → Maybe BootstrapAddr
+isBootstrapAddr = isInj₂
 
 instance
   unquoteDecl DecEq-Credential = derive-DecEq ((quote Credential , DecEq-Credential) ∷ [])
@@ -197,6 +195,10 @@ instance
   Dec-isScript {x = x} .dec with x
   ... | KeyHashObj _ = no λ ()
   ... | ScriptObj  y = yes (SHisScript y)
+
+  IsBootstrapAddr? : IsBootstrapAddr ⁇¹
+  IsBootstrapAddr? {inj₁ x} .dec = no (λ ())
+  IsBootstrapAddr? {inj₂ y} .dec = yes (AddrIsBootstrapAddr y)
 
 _ = isVKey ⁇¹ ∋ it
 _ = isVKeyAddr ⁇¹ ∋ it

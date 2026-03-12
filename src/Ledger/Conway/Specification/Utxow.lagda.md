@@ -121,7 +121,7 @@ Only inline datums are now disallowed from appearing together with a Plutus V1 s
 ```agda
 allowedLanguages : Tx → UTxO → ℙ Language
 allowedLanguages tx utxo =
-  if (∃[ o ∈ os ] isBootstrapAddr (proj₁ o))
+  if (∃[ o ∈ os ] IsBootstrapAddr (proj₁ o))
     then ∅
   else if UsesV3Features txb
     then fromList (PlutusV3 ∷ [])

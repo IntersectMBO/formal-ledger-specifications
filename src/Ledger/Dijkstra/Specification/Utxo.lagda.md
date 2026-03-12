@@ -237,9 +237,9 @@ balance utxo = ∑ˢ[ v ← valuesOfUTxO utxo ] v
 cbalance : UTxO → Coin
 cbalance utxo = coin (balance utxo)
 
-refScriptsSize : TopLevelTx → UTxO → ℕ
-refScriptsSize txTop utxo =
- ∑ˡ[ x ← setToList (allReferenceScripts txTop utxo) ] scriptSize x
+refScriptsSize : Tx ℓ → UTxO → ℕ
+refScriptsSize tx utxo =
+ ∑ˡ[ x ← setToList (referenceScripts tx utxo) ] scriptSize x
 
 minfee : PParams → TopLevelTx → UTxO → Coin
 minfee pp txTop utxo = pp .a * (SizeOf txTop) + pp .b
@@ -411,15 +411,49 @@ unquoteDecl UTXOS-premises = genPremises UTXOS-premises (quote UTXOS)
 
 ## The UTXO Transition System
 
+The [CIP][1] states:
+
+> All inputs of all transactions in a single batch must be contained in the UTxO
+  set before any of the batch transactions are applied. This ensures that
+  operation of scripts is not disrupted, for example, by temporarily duplicating
+  thread tokens, or falsifying access to assets via flash loans.
+
 ### The <span class="AgdaDatatype">SUBUTXO</span> Rule
+
+1. The set of spending inputs must be nonempty. This prevents replay
+   attacks.
+
+2. The set of spending and reference inputs must exist in the UTxO _before_
+   applying the transaction (or partially applying any part of it).
+
+3. The set of spending inputs must exist in the UTXO state, which has
+   been updated by other sub-transactions in the batch. This prevents
+   sub/top-level transactions from spending inputs twice. In other
+   words, spending inputs across all top- and sub-level transactions
+   are disjoint.
 
 ```agda
 data _⊢_⇀⦇_,SUBUTXO⦈_ : SubUTxOEnv → UTxOState → SubLevelTx → UTxOState → Type where
 
   SUBUTXO :
-    ∙ SpendInputsOf txSub ≢ ∅
+    let
+      UTxOOverhead = 160
+      maxBootstrapAddrSize = 64
+    in
+    ∙ SpendInputsOf txSub ≢ ∅ -- (1)
+    ∙ SpendInputsOf txSub ⊆ dom (UTxOOf Γ) -- (2)
+    ∙ ReferenceInputsOf txSub ⊆ dom (UTxOOf Γ) -- (2)
+    ∙ SpendInputsOf txSub ⊆ dom (UTxOOf s₀) -- (3)
     ∙ inInterval (SlotOf Γ) (ValidIntervalOf txSub)
+    ∙ coin (MintedValueOf txSub) ≡ 0
+    ∙ ∀[ (_ , o) ∈ ∣ TxOutsOf txSub ∣ ]
+       (inject ((UTxOOverhead + utxoEntrySize o) * coinsPerUTxOByte (PParamsOf Γ)) ≤ᵗ txOutToValue o)
+    ∙ ∀[ (_ , o) ∈ ∣ TxOutsOf txSub ∣ ] (serializedSize (txOutToValue o) ≤ maxValSize (PParamsOf Γ))
+    ∙ ∀[ (a , _) ∈ range (TxOutsOf txSub) ] (Sum.All (const ⊤) (λ a → AttrSizeOf a ≤ maxBootstrapAddrSize) a)
+    ∙ ∀[ (a , _) ∈ range (TxOutsOf txSub) ] (netId a ≡ NetworkId)
+    ∙ ∀[ a ∈ dom (WithdrawalsOf txSub)] (NetworkIdOf a ≡ NetworkId)
     ∙ MaybeNetworkIdOf txSub ~ just NetworkId
+    ∙ CurrentTreasuryOf txSub ~ just (TreasuryOf Γ)
       ────────────────────────────────
     let
        s₁ = if IsTopLevelValidFlagOf Γ
@@ -435,15 +469,6 @@ unquoteDecl SUBUTXO-premises = genPremises SUBUTXO-premises (quote SUBUTXO)
 -->
 
 ### The <span class="AgdaDatatype">UTXO</span> Rule
-
-The [CIP][1] states:
-
-> All inputs of all transactions in a single batch must be contained in the UTxO
-  set before any of the batch transactions are applied. This ensures that
-  operation of scripts is not disrupted, for example, by temporarily duplicating
-  thread tokens, or falsifying access to assets via flash loans.
-
-This is achieved by the following precondition in the `UTXO`{.AgdaDatatype} rule:
 
 1. The set of spending and reference inputs must exist in the UTxO _before_
    applying the transaction (or partially applying any part of it).
