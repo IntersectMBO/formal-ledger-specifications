@@ -134,11 +134,6 @@ AccountBalanceIntervals : Type
 AccountBalanceIntervals = Credential ⇀ BalanceInterval
 ```
 
-??? info "Implementation Note: Phase 2 upgrade"
-
-    In Phase 2, per-asset intervals will be added.
-
-    `AccountBalanceIntervals = Credential ⇀ (BalanceInterval × Maybe (PolicyId ⇀ (AssetName ⇀ BalanceInterval)))`
 
 
 [CIP 159]: https://github.com/cardano-foundation/CIPs/tree/master/CIP-0159
