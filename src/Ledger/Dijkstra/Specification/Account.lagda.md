@@ -13,8 +13,6 @@ Enhancement).
     In Phase 1 (ADA-only), we define `DirectDeposits`, `BalanceInterval`,
     `AccountBalanceIntervals`, and the `inBalanceInterval` predicate.
 
-    Phase 2 (multi-asset) extensions are marked with comments but left
-    for a future issue.
 
 <!--
 ```agda
