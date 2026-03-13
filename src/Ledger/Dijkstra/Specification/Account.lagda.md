@@ -6,17 +6,13 @@ source_path: src/Ledger/Dijkstra/Specification/Account.lagda.md
 # Account Types {#sec:account-types}
 
 This module defines the core types introduced by [CIP 159][] (Account Address
-Enhancement).  These types are shared across multiple modules
-(`Transaction`{.AgdaModule}, `Certs`{.AgdaModule}, `Utxo`{.AgdaModule},
-`Script.Validation`{.AgdaModule}) and are therefore factored out here.
+Enhancement).
 
 ??? info "Implementation Note: Phase 1 (ADA-only)"
 
     In Phase 1 (ADA-only), we define `DirectDeposits`, `BalanceInterval`,
     `AccountBalanceIntervals`, and the `inBalanceInterval` predicate.
 
-    Phase 2 (multi-asset) extensions are marked with comments but left
-    for a future issue.
 
 <!--
 ```agda
@@ -46,7 +42,6 @@ DirectDeposits = Credential ⇀ Coin
 
     **Phase 2 upgrade.** In Phase 2, `DirectDeposits` will be upgraded
     to `Credential ⇀ Value` to support multi-asset deposits.
-
 ## Balance Intervals {#sec:balance-intervals}
 
 [CIP 159][] allows a transaction to assert that an account's balance falls within a
@@ -137,11 +132,6 @@ AccountBalanceIntervals : Type
 AccountBalanceIntervals = Credential ⇀ BalanceInterval
 ```
 
-??? info "Implementation Note: Phase 2 upgrade"
-
-    In Phase 2, per-asset intervals will be added.
-
-    `AccountBalanceIntervals = Credential ⇀ (BalanceInterval × Maybe (PolicyId ⇀ (AssetName ⇀ BalanceInterval)))`
 
 
 [CIP 159]: https://github.com/cardano-foundation/CIPs/tree/master/CIP-0159
