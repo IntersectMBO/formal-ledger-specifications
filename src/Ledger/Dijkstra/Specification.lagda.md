@@ -20,6 +20,12 @@ module Ledger.Dijkstra.Specification where
 import Ledger.Dijkstra.Specification.Abstract
 ```
 
+## Accounts
+
+```agda
+import Ledger.Dijkstra.Specification.Account
+```
+
 ## Addresses
 
 ```agda

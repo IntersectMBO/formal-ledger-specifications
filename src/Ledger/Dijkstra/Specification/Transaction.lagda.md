@@ -162,6 +162,7 @@ record TransactionStructure : Type₁ where
   open GovernanceActions hiding (Vote; yes; no; abstain) public
 
   open import Ledger.Dijkstra.Specification.Certs govStructure
+  open import Ledger.Dijkstra.Specification.Account govStructure
 ```
 -->
 ```agda
@@ -218,6 +219,11 @@ Of particular note in the Dijkstra era are
    this field collects the guards (credential, optional datum) required by a
    subtransaction.
 
++  `txDirectDeposits` and `txBalanceIntervals`, both of which are present at both
+   transaction levels because CIP-159 explicitly envisions direct deposits inside
+   sub-transactions (to isolate them from older Plutus scripts running at the top
+   level).
+
 ```agda
   mutual
     record Tx (txLevel : TxLevel) : Type where
@@ -254,6 +260,8 @@ Of particular note in the Dijkstra era are
         txSubTransactions         : InTopLevel txLevel (List (Tx TxLevelSub))
         txGuards                  : ℙ (Credential × Maybe Datum)
         txRequiredTopLevelGuards  : InSubLevel txLevel (ℙ (Credential × Maybe Datum))
+        txDirectDeposits          : DirectDeposits
+        txBalanceIntervals        : AccountBalanceIntervals
         ---------------------
 
       requiredSignerHashes : ℙ KeyHash
@@ -390,6 +398,14 @@ could be either of them.
     field CurrentTreasuryOf : A → Maybe Coin
   open HasCurrentTreasury ⦃...⦄ public
 
+  record HasDirectDeposits {a} (A : Type a) : Type a where
+    field DirectDepositsOf : A → DirectDeposits
+  open HasDirectDeposits ⦃...⦄ public
+
+  record HasBalanceIntervals {a} (A : Type a) : Type a where
+    field BalanceIntervalsOf : A → AccountBalanceIntervals
+  open HasBalanceIntervals ⦃...⦄ public
+
   record HasIsValidFlag {a} (A : Type a) : Type a where
     field IsValidFlagOf : A → Bool
   open HasIsValidFlag ⦃...⦄ public
@@ -433,6 +449,16 @@ could be either of them.
     HasWithdrawals-TxBody .WithdrawalsOf = TxBody.txWithdrawals
     HasWithdrawals-Tx : HasWithdrawals (Tx txLevel)
     HasWithdrawals-Tx .WithdrawalsOf = WithdrawalsOf ∘ TxBodyOf
+
+    HasDirectDeposits-TxBody : HasDirectDeposits (TxBody txLevel)
+    HasDirectDeposits-TxBody .DirectDepositsOf = TxBody.txDirectDeposits
+    HasDirectDeposits-Tx : HasDirectDeposits (Tx txLevel)
+    HasDirectDeposits-Tx .DirectDepositsOf = DirectDepositsOf ∘ TxBodyOf
+
+    HasBalanceIntervals-TxBody : HasBalanceIntervals (TxBody txLevel)
+    HasBalanceIntervals-TxBody .BalanceIntervalsOf = TxBody.txBalanceIntervals
+    HasBalanceIntervals-Tx : HasBalanceIntervals (Tx txLevel)
+    HasBalanceIntervals-Tx .BalanceIntervalsOf = BalanceIntervalsOf ∘ TxBodyOf
 
     HasValidInterval-TxBody : HasValidInterval (TxBody txLevel)
     HasValidInterval-TxBody .ValidIntervalOf = TxBody.txVldt
@@ -664,6 +690,25 @@ allowed to inspect utxo for its inputs.
 
   lookupScriptHash : ScriptHash → Tx txLevel → UTxO → Maybe Script
   lookupScriptHash sh tx utxo = lookupHash sh (getTxScripts tx utxo)
+
+  -- Direct deposits from different sub-transactions targeting the same credential
+  -- should be summed using ∪⁺ (union-with-addition).
+  allDirectDeposits : TopLevelTx → DirectDeposits
+  allDirectDeposits txTop =
+    foldl (λ acc txSub → acc ∪⁺ DirectDepositsOf txSub)
+          (DirectDepositsOf txTop)
+          (SubTransactionsOf txTop)
+
+  -- Balance interval assertions should not overlap for the same credential across
+  -- the batch; this is a well-formedness constraint that will be enforced by the
+  -- UTxO rules (Issue #1117).  For the aggregation helper, we use ∪ˡ (left-biased
+  -- union), which preserves the first binding for any duplicate key. The UTxO rules
+  -- will separately assert disjointness of the domains.
+  allBalanceIntervals : TopLevelTx → AccountBalanceIntervals
+  allBalanceIntervals txTop =
+    foldl (λ acc txSub → acc ∪ˡ BalanceIntervalsOf txSub)
+          (BalanceIntervalsOf txTop)
+          (SubTransactionsOf txTop)
 ```
 
 CIP-0118 models "required top-level guards" as a list of requirements coming
