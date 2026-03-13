@@ -17,6 +17,7 @@ module Ledger.Dijkstra.Specification.Certs
 open import Ledger.Prelude renaming (filterˢ to filter)
 open import Ledger.Prelude.Numeric.UnitInterval
 open import Ledger.Dijkstra.Specification.Gov.Actions gs hiding (yes; no)
+open import Ledger.Dijkstra.Specification.Account gs
 open RewardAddress
 open PParams
 ```
@@ -44,7 +45,15 @@ Pools = KeyHash ⇀ StakePoolParams
 
 Retiring : Type
 Retiring = KeyHash ⇀ Epoch
+```
 
+In the Dijkstra era, the `Rewards`{.AgdaDatatype} map represents
+**account balances**, not just staking rewards.  An account's balance may increase
+via staking rewards (at epoch boundaries) or via **direct deposits** (CIP-159).
+Withdrawals decrease the balance.  The name `Rewards` is retained for backwards
+compatibility.
+
+```agda
 Rewards : Type
 Rewards = Credential ⇀ Coin
 
@@ -81,7 +90,17 @@ record CertEnv : Type where
     votes     : List GovVote
     wdrls     : Withdrawals
     coldCreds : ℙ Credential
+```
 
+??? info "Implementation Note"
+
+    In Phase 1, the `rewards`{.AgdaField} field of `DState`{.AgdaRecord} represents
+    the current **ADA** account balance for each registered stake credential.
+
+    In Phase 2 (multi-asset), this will be upgraded to `Credential ⇀ Value` to
+    support multi-assets.
+
+```agda
 record DState : Type where
   constructor ⟦_,_,_,_⟧ᵈ
   field
@@ -276,6 +295,22 @@ private variable
 ```agda
 rewardsBalance : DState → Coin
 rewardsBalance ds = ∑[ x ← RewardsOf ds ] x
+```
+
+??? info "Implementation Note: where `applyDirectDeposits` will be called"
+
+    **Issue #1122**.  The `LEDGER`{.AgdaDatatype} rule will call this function to
+    credit direct deposits to account balances as part of processing a transaction
+    batch.  The exact integration point is where the `DState`{.AgdaRecord} is
+    threaded through the batch.
+
+    **Phase 2**.  When `Rewards` changes to `Credential ⇀ Value`,
+    `applyDirectDeposits` will need `DirectDeposits = Credential ⇀ Value` and
+    `∪⁺` must work for `Value`-valued maps.
+
+```agda
+applyDirectDeposits : DirectDeposits → DState → DState
+applyDirectDeposits dd ds = record ds { rewards = RewardsOf ds ∪⁺ dd }
 ```
 
 <!--
