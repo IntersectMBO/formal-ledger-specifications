@@ -57,7 +57,7 @@ import qualified MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base
 -- Ledger.Conway.Specification.Gov.Base.GovStructure
 d_GovStructure_10 = ()
 data T_GovStructure_10
-  = C_constructor_1400 MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
+  = C_constructor_1402 MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
                        MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
                        MAlonzo.Code.Ledger.Core.Specification.Crypto.T_CryptoStructure_140
                        MAlonzo.Code.Ledger.Core.Specification.Epoch.T_EpochStructure_22
@@ -93,14 +93,14 @@ d_DecEq'45'TxId_594 ::
   T_GovStructure_10 -> MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 d_DecEq'45'TxId_594 v0
   = case coe v0 of
-      C_constructor_1400 v3 v4 v5 v6 v7 v8 v9 -> coe v3
+      C_constructor_1402 v3 v4 v5 v6 v7 v8 v9 -> coe v3
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Conway.Specification.Gov.Base.GovStructure.DecEq-DocHash
 d_DecEq'45'DocHash_596 ::
   T_GovStructure_10 -> MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 d_DecEq'45'DocHash_596 v0
   = case coe v0 of
-      C_constructor_1400 v3 v4 v5 v6 v7 v8 v9 -> coe v4
+      C_constructor_1402 v3 v4 v5 v6 v7 v8 v9 -> coe v4
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Conway.Specification.Gov.Base.GovStructure.cryptoStructure
 d_cryptoStructure_598 ::
@@ -108,7 +108,7 @@ d_cryptoStructure_598 ::
   MAlonzo.Code.Ledger.Core.Specification.Crypto.T_CryptoStructure_140
 d_cryptoStructure_598 v0
   = case coe v0 of
-      C_constructor_1400 v3 v4 v5 v6 v7 v8 v9 -> coe v5
+      C_constructor_1402 v3 v4 v5 v6 v7 v8 v9 -> coe v5
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Conway.Specification.Gov.Base.GovStructure._.Dec-isSigned
 d_Dec'45'isSigned_602 ::
@@ -261,7 +261,7 @@ d_epochStructure_644 ::
   MAlonzo.Code.Ledger.Core.Specification.Epoch.T_EpochStructure_22
 d_epochStructure_644 v0
   = case coe v0 of
-      C_constructor_1400 v3 v4 v5 v6 v7 v8 v9 -> coe v6
+      C_constructor_1402 v3 v4 v5 v6 v7 v8 v9 -> coe v6
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Conway.Specification.Gov.Base.GovStructure._._+ᵉ_
 d__'43''7497'__648 ::
@@ -413,7 +413,7 @@ d_scriptStructure_692 ::
   MAlonzo.Code.Ledger.Conway.Specification.Script.Base.T_ScriptStructure_280
 d_scriptStructure_692 v0
   = case coe v0 of
-      C_constructor_1400 v3 v4 v5 v6 v7 v8 v9 -> coe v7
+      C_constructor_1402 v3 v4 v5 v6 v7 v8 v9 -> coe v7
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Conway.Specification.Gov.Base.GovStructure._._≥ᵉ_
 d__'8805''7497'__696 ::
@@ -2039,7 +2039,7 @@ d_govParams_1148 ::
   MAlonzo.Code.Ledger.Conway.Specification.PParams.T_GovParams_1454
 d_govParams_1148 v0
   = case coe v0 of
-      C_constructor_1400 v3 v4 v5 v6 v7 v8 v9 -> coe v8
+      C_constructor_1402 v3 v4 v5 v6 v7 v8 v9 -> coe v8
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Conway.Specification.Gov.Base.GovStructure._.DecEq-UpdT
 d_DecEq'45'UpdT_1152 ::
@@ -2101,7 +2101,7 @@ d_globalConstants_1166 ::
   MAlonzo.Code.Ledger.Core.Specification.Epoch.T_GlobalConstants_292
 d_globalConstants_1166 v0
   = case coe v0 of
-      C_constructor_1400 v3 v4 v5 v6 v7 v8 v9 -> coe v9
+      C_constructor_1402 v3 v4 v5 v6 v7 v8 v9 -> coe v9
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Conway.Specification.Gov.Base.GovStructure._.ActiveSlotCoeff
 d_ActiveSlotCoeff_1170 ::
@@ -2207,261 +2207,279 @@ d_Addr_1202 ::
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 -> ()
 d_Addr_1202 = erased
 -- Ledger.Conway.Specification.Gov.Base.GovStructure._.AttrSizeOf
-d_AttrSizeOf_1204 ::
+d_AttrSizeOf_1206 ::
   MAlonzo.Code.Ledger.Core.Specification.Address.T_HasAttrSize_202 ->
   AgdaAny -> Integer
-d_AttrSizeOf_1204 v0
+d_AttrSizeOf_1206 v0
   = coe
       MAlonzo.Code.Ledger.Core.Specification.Address.d_AttrSizeOf_210
       (coe v0)
 -- Ledger.Conway.Specification.Gov.Base.GovStructure._.BaseAddr
-d_BaseAddr_1206 a0 a1 a2 a3 = ()
+d_BaseAddr_1208 a0 a1 a2 a3 = ()
 -- Ledger.Conway.Specification.Gov.Base.GovStructure._.BootstrapAddr
-d_BootstrapAddr_1210 a0 a1 a2 a3 = ()
+d_BootstrapAddr_1212 a0 a1 a2 a3 = ()
 -- Ledger.Conway.Specification.Gov.Base.GovStructure._.Credential
-d_Credential_1214 a0 a1 a2 a3 = ()
+d_Credential_1216 a0 a1 a2 a3 = ()
 -- Ledger.Conway.Specification.Gov.Base.GovStructure._.CredentialOf
-d_CredentialOf_1216 ::
+d_CredentialOf_1218 ::
   MAlonzo.Code.Ledger.Core.Specification.Address.T_HasCredential_30 ->
   AgdaAny ->
   MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20
-d_CredentialOf_1216 v0
+d_CredentialOf_1218 v0
   = coe
       MAlonzo.Code.Ledger.Core.Specification.Address.d_CredentialOf_38
       (coe v0)
 -- Ledger.Conway.Specification.Gov.Base.GovStructure._.Dec-isScript
-d_Dec'45'isScript_1218 ::
+d_Dec'45'isScript_1220 ::
   T_GovStructure_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20 ->
   MAlonzo.Code.Class.Decidable.Core.T__'8263'_10
-d_Dec'45'isScript_1218 ~v0 ~v1 ~v2 ~v3 = du_Dec'45'isScript_1218
-du_Dec'45'isScript_1218 ::
+d_Dec'45'isScript_1220 ~v0 ~v1 ~v2 ~v3 = du_Dec'45'isScript_1220
+du_Dec'45'isScript_1220 ::
   MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20 ->
   MAlonzo.Code.Class.Decidable.Core.T__'8263'_10
-du_Dec'45'isScript_1218
+du_Dec'45'isScript_1220
   = coe
-      MAlonzo.Code.Ledger.Core.Specification.Address.du_Dec'45'isScript_300
+      MAlonzo.Code.Ledger.Core.Specification.Address.du_Dec'45'isScript_296
 -- Ledger.Conway.Specification.Gov.Base.GovStructure._.Dec-isVKey
-d_Dec'45'isVKey_1220 ::
+d_Dec'45'isVKey_1222 ::
   T_GovStructure_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20 ->
   MAlonzo.Code.Class.Decidable.Core.T__'8263'_10
-d_Dec'45'isVKey_1220 ~v0 ~v1 ~v2 ~v3 = du_Dec'45'isVKey_1220
-du_Dec'45'isVKey_1220 ::
+d_Dec'45'isVKey_1222 ~v0 ~v1 ~v2 ~v3 = du_Dec'45'isVKey_1222
+du_Dec'45'isVKey_1222 ::
   MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20 ->
   MAlonzo.Code.Class.Decidable.Core.T__'8263'_10
-du_Dec'45'isVKey_1220
+du_Dec'45'isVKey_1222
   = coe
-      MAlonzo.Code.Ledger.Core.Specification.Address.du_Dec'45'isVKey_286
+      MAlonzo.Code.Ledger.Core.Specification.Address.du_Dec'45'isVKey_282
 -- Ledger.Conway.Specification.Gov.Base.GovStructure._.DecEq-BaseAddr
-d_DecEq'45'BaseAddr_1222 ::
+d_DecEq'45'BaseAddr_1224 ::
   T_GovStructure_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
-d_DecEq'45'BaseAddr_1222 ~v0 v1 v2 v3
-  = du_DecEq'45'BaseAddr_1222 v1 v2 v3
-du_DecEq'45'BaseAddr_1222 ::
+d_DecEq'45'BaseAddr_1224 ~v0 v1 v2 v3
+  = du_DecEq'45'BaseAddr_1224 v1 v2 v3
+du_DecEq'45'BaseAddr_1224 ::
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
-du_DecEq'45'BaseAddr_1222 v0 v1 v2
+du_DecEq'45'BaseAddr_1224 v0 v1 v2
   = coe
-      MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'BaseAddr_332
+      MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'BaseAddr_334
       (coe v0) (coe v1) (coe v2)
 -- Ledger.Conway.Specification.Gov.Base.GovStructure._.DecEq-BootstrapAddr
-d_DecEq'45'BootstrapAddr_1224 ::
+d_DecEq'45'BootstrapAddr_1226 ::
   T_GovStructure_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
-d_DecEq'45'BootstrapAddr_1224 ~v0 v1 v2 v3
-  = du_DecEq'45'BootstrapAddr_1224 v1 v2 v3
-du_DecEq'45'BootstrapAddr_1224 ::
+d_DecEq'45'BootstrapAddr_1226 ~v0 v1 v2 v3
+  = du_DecEq'45'BootstrapAddr_1226 v1 v2 v3
+du_DecEq'45'BootstrapAddr_1226 ::
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
-du_DecEq'45'BootstrapAddr_1224 v0 v1 v2
+du_DecEq'45'BootstrapAddr_1226 v0 v1 v2
   = coe
-      MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'BootstrapAddr_334
+      MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'BootstrapAddr_336
       (coe v0) (coe v1) (coe v2)
 -- Ledger.Conway.Specification.Gov.Base.GovStructure._.DecEq-Credential
-d_DecEq'45'Credential_1226 ::
+d_DecEq'45'Credential_1228 ::
   T_GovStructure_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
-d_DecEq'45'Credential_1226 ~v0 ~v1 v2 v3
-  = du_DecEq'45'Credential_1226 v2 v3
-du_DecEq'45'Credential_1226 ::
+d_DecEq'45'Credential_1228 ~v0 ~v1 v2 v3
+  = du_DecEq'45'Credential_1228 v2 v3
+du_DecEq'45'Credential_1228 ::
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
-du_DecEq'45'Credential_1226 v0 v1
+du_DecEq'45'Credential_1228 v0 v1
   = coe
-      MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_284
+      MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_280
       (coe v0) (coe v1)
 -- Ledger.Conway.Specification.Gov.Base.GovStructure._.DecEq-RewardAddress
-d_DecEq'45'RewardAddress_1228 ::
+d_DecEq'45'RewardAddress_1230 ::
   T_GovStructure_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
-d_DecEq'45'RewardAddress_1228 ~v0 v1 v2 v3
-  = du_DecEq'45'RewardAddress_1228 v1 v2 v3
-du_DecEq'45'RewardAddress_1228 ::
+d_DecEq'45'RewardAddress_1230 ~v0 v1 v2 v3
+  = du_DecEq'45'RewardAddress_1230 v1 v2 v3
+du_DecEq'45'RewardAddress_1230 ::
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
-du_DecEq'45'RewardAddress_1228 v0 v1 v2
+du_DecEq'45'RewardAddress_1230 v0 v1 v2
   = coe
-      MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'RewardAddress_336
+      MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'RewardAddress_338
       (coe v0) (coe v1) (coe v2)
 -- Ledger.Conway.Specification.Gov.Base.GovStructure._.HasAttrSize
-d_HasAttrSize_1230 a0 a1 a2 a3 a4 a5 = ()
+d_HasAttrSize_1232 a0 a1 a2 a3 a4 a5 = ()
 -- Ledger.Conway.Specification.Gov.Base.GovStructure._.HasAttrSize-BootstrapAddr
-d_HasAttrSize'45'BootstrapAddr_1234 ::
+d_HasAttrSize'45'BootstrapAddr_1236 ::
   T_GovStructure_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Ledger.Core.Specification.Address.T_HasAttrSize_202
-d_HasAttrSize'45'BootstrapAddr_1234 ~v0 ~v1 ~v2 ~v3
-  = du_HasAttrSize'45'BootstrapAddr_1234
-du_HasAttrSize'45'BootstrapAddr_1234 ::
+d_HasAttrSize'45'BootstrapAddr_1236 ~v0 ~v1 ~v2 ~v3
+  = du_HasAttrSize'45'BootstrapAddr_1236
+du_HasAttrSize'45'BootstrapAddr_1236 ::
   MAlonzo.Code.Ledger.Core.Specification.Address.T_HasAttrSize_202
-du_HasAttrSize'45'BootstrapAddr_1234
+du_HasAttrSize'45'BootstrapAddr_1236
   = coe
       MAlonzo.Code.Ledger.Core.Specification.Address.du_HasAttrSize'45'BootstrapAddr_226
 -- Ledger.Conway.Specification.Gov.Base.GovStructure._.HasCredential
-d_HasCredential_1236 a0 a1 a2 a3 a4 a5 = ()
+d_HasCredential_1238 a0 a1 a2 a3 a4 a5 = ()
 -- Ledger.Conway.Specification.Gov.Base.GovStructure._.HasCredential-RewardAddress
-d_HasCredential'45'RewardAddress_1240 ::
+d_HasCredential'45'RewardAddress_1242 ::
   T_GovStructure_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Ledger.Core.Specification.Address.T_HasCredential_30
-d_HasCredential'45'RewardAddress_1240 ~v0 ~v1 ~v2 ~v3
-  = du_HasCredential'45'RewardAddress_1240
-du_HasCredential'45'RewardAddress_1240 ::
+d_HasCredential'45'RewardAddress_1242 ~v0 ~v1 ~v2 ~v3
+  = du_HasCredential'45'RewardAddress_1242
+du_HasCredential'45'RewardAddress_1242 ::
   MAlonzo.Code.Ledger.Core.Specification.Address.T_HasCredential_30
-du_HasCredential'45'RewardAddress_1240
+du_HasCredential'45'RewardAddress_1242
   = coe
       MAlonzo.Code.Ledger.Core.Specification.Address.du_HasCredential'45'RewardAddress_224
 -- Ledger.Conway.Specification.Gov.Base.GovStructure._.HasMaybeNetworkId
-d_HasMaybeNetworkId_1242 a0 a1 a2 a3 a4 a5 = ()
+d_HasMaybeNetworkId_1244 a0 a1 a2 a3 a4 a5 = ()
 -- Ledger.Conway.Specification.Gov.Base.GovStructure._.HasNetworkId
-d_HasNetworkId_1246 a0 a1 a2 a3 a4 a5 = ()
+d_HasNetworkId_1248 a0 a1 a2 a3 a4 a5 = ()
 -- Ledger.Conway.Specification.Gov.Base.GovStructure._.HasNetworkId-BaseAddr
-d_HasNetworkId'45'BaseAddr_1250 ::
+d_HasNetworkId'45'BaseAddr_1252 ::
   T_GovStructure_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Ledger.Core.Specification.Address.T_HasNetworkId_142
-d_HasNetworkId'45'BaseAddr_1250 ~v0 ~v1 ~v2 ~v3
-  = du_HasNetworkId'45'BaseAddr_1250
-du_HasNetworkId'45'BaseAddr_1250 ::
+d_HasNetworkId'45'BaseAddr_1252 ~v0 ~v1 ~v2 ~v3
+  = du_HasNetworkId'45'BaseAddr_1252
+du_HasNetworkId'45'BaseAddr_1252 ::
   MAlonzo.Code.Ledger.Core.Specification.Address.T_HasNetworkId_142
-du_HasNetworkId'45'BaseAddr_1250
+du_HasNetworkId'45'BaseAddr_1252
   = coe
       MAlonzo.Code.Ledger.Core.Specification.Address.du_HasNetworkId'45'BaseAddr_218
 -- Ledger.Conway.Specification.Gov.Base.GovStructure._.HasNetworkId-BootstrapAddr
-d_HasNetworkId'45'BootstrapAddr_1252 ::
+d_HasNetworkId'45'BootstrapAddr_1254 ::
   T_GovStructure_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Ledger.Core.Specification.Address.T_HasNetworkId_142
-d_HasNetworkId'45'BootstrapAddr_1252 ~v0 ~v1 ~v2 ~v3
-  = du_HasNetworkId'45'BootstrapAddr_1252
-du_HasNetworkId'45'BootstrapAddr_1252 ::
+d_HasNetworkId'45'BootstrapAddr_1254 ~v0 ~v1 ~v2 ~v3
+  = du_HasNetworkId'45'BootstrapAddr_1254
+du_HasNetworkId'45'BootstrapAddr_1254 ::
   MAlonzo.Code.Ledger.Core.Specification.Address.T_HasNetworkId_142
-du_HasNetworkId'45'BootstrapAddr_1252
+du_HasNetworkId'45'BootstrapAddr_1254
   = coe
       MAlonzo.Code.Ledger.Core.Specification.Address.du_HasNetworkId'45'BootstrapAddr_220
 -- Ledger.Conway.Specification.Gov.Base.GovStructure._.HasNetworkId-RewardAddress
-d_HasNetworkId'45'RewardAddress_1254 ::
+d_HasNetworkId'45'RewardAddress_1256 ::
   T_GovStructure_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Ledger.Core.Specification.Address.T_HasNetworkId_142
-d_HasNetworkId'45'RewardAddress_1254 ~v0 ~v1 ~v2 ~v3
-  = du_HasNetworkId'45'RewardAddress_1254
-du_HasNetworkId'45'RewardAddress_1254 ::
+d_HasNetworkId'45'RewardAddress_1256 ~v0 ~v1 ~v2 ~v3
+  = du_HasNetworkId'45'RewardAddress_1256
+du_HasNetworkId'45'RewardAddress_1256 ::
   MAlonzo.Code.Ledger.Core.Specification.Address.T_HasNetworkId_142
-du_HasNetworkId'45'RewardAddress_1254
+du_HasNetworkId'45'RewardAddress_1256
   = coe
       MAlonzo.Code.Ledger.Core.Specification.Address.du_HasNetworkId'45'RewardAddress_222
 -- Ledger.Conway.Specification.Gov.Base.GovStructure._.HasRewardAddress
-d_HasRewardAddress_1256 a0 a1 a2 a3 a4 a5 = ()
+d_HasRewardAddress_1258 a0 a1 a2 a3 a4 a5 = ()
 -- Ledger.Conway.Specification.Gov.Base.GovStructure._.HasWithdrawals
-d_HasWithdrawals_1260 a0 a1 a2 a3 a4 a5 = ()
+d_HasWithdrawals_1262 a0 a1 a2 a3 a4 a5 = ()
+-- Ledger.Conway.Specification.Gov.Base.GovStructure._.IsBootstrapAddr
+d_IsBootstrapAddr_1266 a0 a1 a2 a3 a4 = ()
+-- Ledger.Conway.Specification.Gov.Base.GovStructure._.IsBootstrapAddr?
+d_IsBootstrapAddr'63'_1268 ::
+  T_GovStructure_10 ->
+  MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
+  MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
+  MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
+  MAlonzo.Code.Data.Sum.Base.T__'8846'__30 ->
+  MAlonzo.Code.Class.Decidable.Core.T__'8263'_10
+d_IsBootstrapAddr'63'_1268 ~v0 ~v1 ~v2 ~v3
+  = du_IsBootstrapAddr'63'_1268
+du_IsBootstrapAddr'63'_1268 ::
+  MAlonzo.Code.Data.Sum.Base.T__'8846'__30 ->
+  MAlonzo.Code.Class.Decidable.Core.T__'8263'_10
+du_IsBootstrapAddr'63'_1268
+  = coe
+      MAlonzo.Code.Ledger.Core.Specification.Address.du_IsBootstrapAddr'63'_310
 -- Ledger.Conway.Specification.Gov.Base.GovStructure._.MaybeNetworkIdOf
-d_MaybeNetworkIdOf_1268 ::
+d_MaybeNetworkIdOf_1272 ::
   MAlonzo.Code.Ledger.Core.Specification.Address.T_HasMaybeNetworkId_162 ->
   AgdaAny -> Maybe AgdaAny
-d_MaybeNetworkIdOf_1268 v0
+d_MaybeNetworkIdOf_1272 v0
   = coe
       MAlonzo.Code.Ledger.Core.Specification.Address.d_MaybeNetworkIdOf_170
       (coe v0)
 -- Ledger.Conway.Specification.Gov.Base.GovStructure._.NetworkIdOf
-d_NetworkIdOf_1270 ::
+d_NetworkIdOf_1274 ::
   MAlonzo.Code.Ledger.Core.Specification.Address.T_HasNetworkId_142 ->
   AgdaAny -> AgdaAny
-d_NetworkIdOf_1270 v0
+d_NetworkIdOf_1274 v0
   = coe
       MAlonzo.Code.Ledger.Core.Specification.Address.d_NetworkIdOf_150
       (coe v0)
 -- Ledger.Conway.Specification.Gov.Base.GovStructure._.RewardAddress
-d_RewardAddress_1272 a0 a1 a2 a3 = ()
+d_RewardAddress_1276 a0 a1 a2 a3 = ()
 -- Ledger.Conway.Specification.Gov.Base.GovStructure._.RewardAddressOf
-d_RewardAddressOf_1276 ::
+d_RewardAddressOf_1280 ::
   MAlonzo.Code.Ledger.Core.Specification.Address.T_HasRewardAddress_122 ->
   AgdaAny ->
   MAlonzo.Code.Ledger.Core.Specification.Address.T_RewardAddress_104
-d_RewardAddressOf_1276 v0
+d_RewardAddressOf_1280 v0
   = coe
       MAlonzo.Code.Ledger.Core.Specification.Address.d_RewardAddressOf_130
       (coe v0)
 -- Ledger.Conway.Specification.Gov.Base.GovStructure._.ScriptAddr
-d_ScriptAddr_1280 ::
+d_ScriptAddr_1284 ::
   T_GovStructure_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 -> ()
-d_ScriptAddr_1280 = erased
+d_ScriptAddr_1284 = erased
 -- Ledger.Conway.Specification.Gov.Base.GovStructure._.ScriptBaseAddr
-d_ScriptBaseAddr_1282 ::
+d_ScriptBaseAddr_1286 ::
   T_GovStructure_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 -> ()
-d_ScriptBaseAddr_1282 = erased
+d_ScriptBaseAddr_1286 = erased
 -- Ledger.Conway.Specification.Gov.Base.GovStructure._.ScriptBootstrapAddr
-d_ScriptBootstrapAddr_1284 ::
+d_ScriptBootstrapAddr_1288 ::
   T_GovStructure_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 -> ()
-d_ScriptBootstrapAddr_1284 = erased
+d_ScriptBootstrapAddr_1288 = erased
 -- Ledger.Conway.Specification.Gov.Base.GovStructure._.Show-Credential
-d_Show'45'Credential_1288 ::
+d_Show'45'Credential_1292 ::
   T_GovStructure_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
@@ -2470,19 +2488,19 @@ d_Show'45'Credential_1288 ::
   MAlonzo.Code.Class.Show.Core.T_Show_10 ->
   MAlonzo.Code.Class.Show.Core.T_Show_10 ->
   MAlonzo.Code.Class.Show.Core.T_Show_10
-d_Show'45'Credential_1288 ~v0 ~v1 ~v2 ~v3
-  = du_Show'45'Credential_1288
-du_Show'45'Credential_1288 ::
+d_Show'45'Credential_1292 ~v0 ~v1 ~v2 ~v3
+  = du_Show'45'Credential_1292
+du_Show'45'Credential_1292 ::
   MAlonzo.Code.Class.Show.Core.T_Show_10 ->
   MAlonzo.Code.Class.Show.Core.T_Show_10 ->
   MAlonzo.Code.Class.Show.Core.T_Show_10 ->
   MAlonzo.Code.Class.Show.Core.T_Show_10
-du_Show'45'Credential_1288 v0 v1 v2
+du_Show'45'Credential_1292 v0 v1 v2
   = coe
-      MAlonzo.Code.Ledger.Core.Specification.Address.du_Show'45'Credential_348
+      MAlonzo.Code.Ledger.Core.Specification.Address.du_Show'45'Credential_350
       v1 v2
 -- Ledger.Conway.Specification.Gov.Base.GovStructure._.Show-Credential×Coin
-d_Show'45'Credential'215'Coin_1290 ::
+d_Show'45'Credential'215'Coin_1294 ::
   T_GovStructure_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
@@ -2491,19 +2509,19 @@ d_Show'45'Credential'215'Coin_1290 ::
   MAlonzo.Code.Class.Show.Core.T_Show_10 ->
   MAlonzo.Code.Class.Show.Core.T_Show_10 ->
   MAlonzo.Code.Class.Show.Core.T_Show_10
-d_Show'45'Credential'215'Coin_1290 ~v0 ~v1 ~v2 ~v3
-  = du_Show'45'Credential'215'Coin_1290
-du_Show'45'Credential'215'Coin_1290 ::
+d_Show'45'Credential'215'Coin_1294 ~v0 ~v1 ~v2 ~v3
+  = du_Show'45'Credential'215'Coin_1294
+du_Show'45'Credential'215'Coin_1294 ::
   MAlonzo.Code.Class.Show.Core.T_Show_10 ->
   MAlonzo.Code.Class.Show.Core.T_Show_10 ->
   MAlonzo.Code.Class.Show.Core.T_Show_10 ->
   MAlonzo.Code.Class.Show.Core.T_Show_10
-du_Show'45'Credential'215'Coin_1290 v0 v1 v2
+du_Show'45'Credential'215'Coin_1294 v0 v1 v2
   = coe
-      MAlonzo.Code.Ledger.Core.Specification.Address.du_Show'45'Credential'215'Coin_352
+      MAlonzo.Code.Ledger.Core.Specification.Address.du_Show'45'Credential'215'Coin_354
       v1 v2
 -- Ledger.Conway.Specification.Gov.Base.GovStructure._.Show-RewardAddress
-d_Show'45'RewardAddress_1292 ::
+d_Show'45'RewardAddress_1296 ::
   T_GovStructure_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
@@ -2512,54 +2530,54 @@ d_Show'45'RewardAddress_1292 ::
   MAlonzo.Code.Class.Show.Core.T_Show_10 ->
   MAlonzo.Code.Class.Show.Core.T_Show_10 ->
   MAlonzo.Code.Class.Show.Core.T_Show_10
-d_Show'45'RewardAddress_1292 ~v0 ~v1 ~v2 ~v3
-  = du_Show'45'RewardAddress_1292
-du_Show'45'RewardAddress_1292 ::
+d_Show'45'RewardAddress_1296 ~v0 ~v1 ~v2 ~v3
+  = du_Show'45'RewardAddress_1296
+du_Show'45'RewardAddress_1296 ::
   MAlonzo.Code.Class.Show.Core.T_Show_10 ->
   MAlonzo.Code.Class.Show.Core.T_Show_10 ->
   MAlonzo.Code.Class.Show.Core.T_Show_10 ->
   MAlonzo.Code.Class.Show.Core.T_Show_10
-du_Show'45'RewardAddress_1292
+du_Show'45'RewardAddress_1296
   = coe
-      MAlonzo.Code.Ledger.Core.Specification.Address.du_Show'45'RewardAddress_350
+      MAlonzo.Code.Ledger.Core.Specification.Address.du_Show'45'RewardAddress_352
 -- Ledger.Conway.Specification.Gov.Base.GovStructure._.VKeyAddr
-d_VKeyAddr_1294 ::
+d_VKeyAddr_1298 ::
   T_GovStructure_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 -> ()
-d_VKeyAddr_1294 = erased
+d_VKeyAddr_1298 = erased
 -- Ledger.Conway.Specification.Gov.Base.GovStructure._.VKeyBaseAddr
-d_VKeyBaseAddr_1296 ::
+d_VKeyBaseAddr_1300 ::
   T_GovStructure_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 -> ()
-d_VKeyBaseAddr_1296 = erased
+d_VKeyBaseAddr_1300 = erased
 -- Ledger.Conway.Specification.Gov.Base.GovStructure._.VKeyBootstrapAddr
-d_VKeyBootstrapAddr_1298 ::
+d_VKeyBootstrapAddr_1302 ::
   T_GovStructure_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 -> ()
-d_VKeyBootstrapAddr_1298 = erased
+d_VKeyBootstrapAddr_1302 = erased
 -- Ledger.Conway.Specification.Gov.Base.GovStructure._.Withdrawals
-d_Withdrawals_1302 ::
+d_Withdrawals_1306 ::
   T_GovStructure_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 -> ()
-d_Withdrawals_1302 = erased
+d_Withdrawals_1306 = erased
 -- Ledger.Conway.Specification.Gov.Base.GovStructure._.WithdrawalsOf
-d_WithdrawalsOf_1304 ::
+d_WithdrawalsOf_1308 ::
   MAlonzo.Code.Ledger.Core.Specification.Address.T_HasWithdrawals_182 ->
   AgdaAny -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_WithdrawalsOf_1304 v0
+d_WithdrawalsOf_1308 v0
   = coe
       MAlonzo.Code.Ledger.Core.Specification.Address.d_WithdrawalsOf_190
       (coe v0)
 -- Ledger.Conway.Specification.Gov.Base.GovStructure._.getScriptHash
-d_getScriptHash_1306 ::
+d_getScriptHash_1310 ::
   T_GovStructure_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
@@ -2567,144 +2585,143 @@ d_getScriptHash_1306 ::
   MAlonzo.Code.Data.Sum.Base.T__'8846'__30 ->
   MAlonzo.Code.Ledger.Core.Specification.Address.T_isScript_66 ->
   AgdaAny
-d_getScriptHash_1306 ~v0 ~v1 ~v2 ~v3 = du_getScriptHash_1306
-du_getScriptHash_1306 ::
+d_getScriptHash_1310 ~v0 ~v1 ~v2 ~v3 = du_getScriptHash_1310
+du_getScriptHash_1310 ::
   MAlonzo.Code.Data.Sum.Base.T__'8846'__30 ->
   MAlonzo.Code.Ledger.Core.Specification.Address.T_isScript_66 ->
   AgdaAny
-du_getScriptHash_1306
+du_getScriptHash_1310
   = coe
-      MAlonzo.Code.Ledger.Core.Specification.Address.du_getScriptHash_326
+      MAlonzo.Code.Ledger.Core.Specification.Address.du_getScriptHash_328
 -- Ledger.Conway.Specification.Gov.Base.GovStructure._.isBootstrapAddr
-d_isBootstrapAddr_1308 a0 a1 a2 a3 a4 = ()
--- Ledger.Conway.Specification.Gov.Base.GovStructure._.isBootstrapAddr?
-d_isBootstrapAddr'63'_1310 ::
+d_isBootstrapAddr_1312 ::
   T_GovStructure_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Data.Sum.Base.T__'8846'__30 ->
-  MAlonzo.Code.Class.Decidable.Core.T__'8263'_10
-d_isBootstrapAddr'63'_1310 ~v0 ~v1 ~v2 ~v3
-  = du_isBootstrapAddr'63'_1310
-du_isBootstrapAddr'63'_1310 ::
+  Maybe
+    MAlonzo.Code.Ledger.Core.Specification.Address.T_BootstrapAddr_88
+d_isBootstrapAddr_1312 ~v0 ~v1 ~v2 ~v3 = du_isBootstrapAddr_1312
+du_isBootstrapAddr_1312 ::
   MAlonzo.Code.Data.Sum.Base.T__'8846'__30 ->
-  MAlonzo.Code.Class.Decidable.Core.T__'8263'_10
-du_isBootstrapAddr'63'_1310
+  Maybe
+    MAlonzo.Code.Ledger.Core.Specification.Address.T_BootstrapAddr_88
+du_isBootstrapAddr_1312
   = coe
-      MAlonzo.Code.Ledger.Core.Specification.Address.du_isBootstrapAddr'63'_280
+      MAlonzo.Code.Ledger.Core.Specification.Address.du_isBootstrapAddr_278
 -- Ledger.Conway.Specification.Gov.Base.GovStructure._.isKeyHash
-d_isKeyHash_1312 ::
+d_isKeyHash_1314 ::
   T_GovStructure_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20 ->
   ()
-d_isKeyHash_1312 = erased
+d_isKeyHash_1314 = erased
 -- Ledger.Conway.Specification.Gov.Base.GovStructure._.isKeyHashObj
-d_isKeyHashObj_1314 ::
+d_isKeyHashObj_1316 ::
   T_GovStructure_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20 ->
   Maybe AgdaAny
-d_isKeyHashObj_1314 ~v0 ~v1 ~v2 ~v3 = du_isKeyHashObj_1314
-du_isKeyHashObj_1314 ::
+d_isKeyHashObj_1316 ~v0 ~v1 ~v2 ~v3 = du_isKeyHashObj_1316
+du_isKeyHashObj_1316 ::
   MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20 ->
   Maybe AgdaAny
-du_isKeyHashObj_1314
+du_isKeyHashObj_1316
   = coe
       MAlonzo.Code.Ledger.Core.Specification.Address.du_isKeyHashObj_46
 -- Ledger.Conway.Specification.Gov.Base.GovStructure._.isKeyHashObjᵇ
-d_isKeyHashObj'7495'_1316 ::
+d_isKeyHashObj'7495'_1318 ::
   T_GovStructure_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20 ->
   Bool
-d_isKeyHashObj'7495'_1316 ~v0 ~v1 ~v2 ~v3
-  = du_isKeyHashObj'7495'_1316
-du_isKeyHashObj'7495'_1316 ::
+d_isKeyHashObj'7495'_1318 ~v0 ~v1 ~v2 ~v3
+  = du_isKeyHashObj'7495'_1318
+du_isKeyHashObj'7495'_1318 ::
   MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20 ->
   Bool
-du_isKeyHashObj'7495'_1316
+du_isKeyHashObj'7495'_1318
   = coe
       MAlonzo.Code.Ledger.Core.Specification.Address.du_isKeyHashObj'7495'_50
 -- Ledger.Conway.Specification.Gov.Base.GovStructure._.isScript
-d_isScript_1318 a0 a1 a2 a3 a4 = ()
+d_isScript_1320 a0 a1 a2 a3 a4 = ()
 -- Ledger.Conway.Specification.Gov.Base.GovStructure._.isScriptAddr
-d_isScriptAddr_1320 ::
+d_isScriptAddr_1322 ::
   T_GovStructure_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Data.Sum.Base.T__'8846'__30 -> ()
-d_isScriptAddr_1320 = erased
+d_isScriptAddr_1322 = erased
 -- Ledger.Conway.Specification.Gov.Base.GovStructure._.isScriptObj
-d_isScriptObj_1322 ::
+d_isScriptObj_1324 ::
   T_GovStructure_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20 ->
   Maybe AgdaAny
-d_isScriptObj_1322 ~v0 ~v1 ~v2 ~v3 = du_isScriptObj_1322
-du_isScriptObj_1322 ::
+d_isScriptObj_1324 ~v0 ~v1 ~v2 ~v3 = du_isScriptObj_1324
+du_isScriptObj_1324 ::
   MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20 ->
   Maybe AgdaAny
-du_isScriptObj_1322
+du_isScriptObj_1324
   = coe
       MAlonzo.Code.Ledger.Core.Specification.Address.du_isScriptObj_56
 -- Ledger.Conway.Specification.Gov.Base.GovStructure._.isScriptRewardAddress
-d_isScriptRewardAddress_1324 ::
+d_isScriptRewardAddress_1326 ::
   T_GovStructure_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Ledger.Core.Specification.Address.T_RewardAddress_104 ->
   ()
-d_isScriptRewardAddress_1324 = erased
+d_isScriptRewardAddress_1326 = erased
 -- Ledger.Conway.Specification.Gov.Base.GovStructure._.isVKey
-d_isVKey_1326 a0 a1 a2 a3 a4 = ()
+d_isVKey_1328 a0 a1 a2 a3 a4 = ()
 -- Ledger.Conway.Specification.Gov.Base.GovStructure._.isVKeyAddr
-d_isVKeyAddr_1328 ::
+d_isVKeyAddr_1330 ::
   T_GovStructure_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Data.Sum.Base.T__'8846'__30 -> ()
-d_isVKeyAddr_1328 = erased
+d_isVKeyAddr_1330 = erased
 -- Ledger.Conway.Specification.Gov.Base.GovStructure._.netId
-d_netId_1330 ::
+d_netId_1332 ::
   T_GovStructure_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Data.Sum.Base.T__'8846'__30 -> AgdaAny
-d_netId_1330 ~v0 ~v1 ~v2 ~v3 = du_netId_1330
-du_netId_1330 ::
+d_netId_1332 ~v0 ~v1 ~v2 ~v3 = du_netId_1332
+du_netId_1332 ::
   MAlonzo.Code.Data.Sum.Base.T__'8846'__30 -> AgdaAny
-du_netId_1330
+du_netId_1332
   = coe MAlonzo.Code.Ledger.Core.Specification.Address.du_netId_254
 -- Ledger.Conway.Specification.Gov.Base.GovStructure._.payCred
-d_payCred_1332 ::
+d_payCred_1334 ::
   T_GovStructure_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Data.Sum.Base.T__'8846'__30 ->
   MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20
-d_payCred_1332 ~v0 ~v1 ~v2 ~v3 = du_payCred_1332
-du_payCred_1332 ::
+d_payCred_1334 ~v0 ~v1 ~v2 ~v3 = du_payCred_1334
+du_payCred_1334 ::
   MAlonzo.Code.Data.Sum.Base.T__'8846'__30 ->
   MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20
-du_payCred_1332
+du_payCred_1334
   = coe MAlonzo.Code.Ledger.Core.Specification.Address.du_payCred_250
 -- Ledger.Conway.Specification.Gov.Base.GovStructure._.stakeCred
-d_stakeCred_1334 ::
+d_stakeCred_1336 ::
   T_GovStructure_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
@@ -2712,119 +2729,119 @@ d_stakeCred_1334 ::
   MAlonzo.Code.Data.Sum.Base.T__'8846'__30 ->
   Maybe
     MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20
-d_stakeCred_1334 ~v0 ~v1 ~v2 ~v3 = du_stakeCred_1334
-du_stakeCred_1334 ::
+d_stakeCred_1336 ~v0 ~v1 ~v2 ~v3 = du_stakeCred_1336
+du_stakeCred_1336 ::
   MAlonzo.Code.Data.Sum.Base.T__'8846'__30 ->
   Maybe
     MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20
-du_stakeCred_1334
+du_stakeCred_1336
   = coe
       MAlonzo.Code.Ledger.Core.Specification.Address.du_stakeCred_252
 -- Ledger.Conway.Specification.Gov.Base.GovStructure._.BaseAddr.net
-d_net_1338 ::
+d_net_1340 ::
   MAlonzo.Code.Ledger.Core.Specification.Address.T_BaseAddr_72 ->
   AgdaAny
-d_net_1338 v0
+d_net_1340 v0
   = coe
       MAlonzo.Code.Ledger.Core.Specification.Address.d_net_80 (coe v0)
 -- Ledger.Conway.Specification.Gov.Base.GovStructure._.BaseAddr.pay
-d_pay_1340 ::
+d_pay_1342 ::
   MAlonzo.Code.Ledger.Core.Specification.Address.T_BaseAddr_72 ->
   MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20
-d_pay_1340 v0
+d_pay_1342 v0
   = coe
       MAlonzo.Code.Ledger.Core.Specification.Address.d_pay_82 (coe v0)
 -- Ledger.Conway.Specification.Gov.Base.GovStructure._.BaseAddr.stake
-d_stake_1342 ::
+d_stake_1344 ::
   MAlonzo.Code.Ledger.Core.Specification.Address.T_BaseAddr_72 ->
   Maybe
     MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20
-d_stake_1342 v0
+d_stake_1344 v0
   = coe
       MAlonzo.Code.Ledger.Core.Specification.Address.d_stake_84 (coe v0)
 -- Ledger.Conway.Specification.Gov.Base.GovStructure._.BootstrapAddr.attrsSize
-d_attrsSize_1346 ::
+d_attrsSize_1348 ::
   MAlonzo.Code.Ledger.Core.Specification.Address.T_BootstrapAddr_88 ->
   Integer
-d_attrsSize_1346 v0
+d_attrsSize_1348 v0
   = coe
       MAlonzo.Code.Ledger.Core.Specification.Address.d_attrsSize_100
       (coe v0)
 -- Ledger.Conway.Specification.Gov.Base.GovStructure._.BootstrapAddr.net
-d_net_1348 ::
+d_net_1350 ::
   MAlonzo.Code.Ledger.Core.Specification.Address.T_BootstrapAddr_88 ->
   AgdaAny
-d_net_1348 v0
+d_net_1350 v0
   = coe
       MAlonzo.Code.Ledger.Core.Specification.Address.d_net_96 (coe v0)
 -- Ledger.Conway.Specification.Gov.Base.GovStructure._.BootstrapAddr.pay
-d_pay_1350 ::
+d_pay_1352 ::
   MAlonzo.Code.Ledger.Core.Specification.Address.T_BootstrapAddr_88 ->
   MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20
-d_pay_1350 v0
+d_pay_1352 v0
   = coe
       MAlonzo.Code.Ledger.Core.Specification.Address.d_pay_98 (coe v0)
 -- Ledger.Conway.Specification.Gov.Base.GovStructure._.HasAttrSize.AttrSizeOf
-d_AttrSizeOf_1360 ::
+d_AttrSizeOf_1362 ::
   MAlonzo.Code.Ledger.Core.Specification.Address.T_HasAttrSize_202 ->
   AgdaAny -> Integer
-d_AttrSizeOf_1360 v0
+d_AttrSizeOf_1362 v0
   = coe
       MAlonzo.Code.Ledger.Core.Specification.Address.d_AttrSizeOf_210
       (coe v0)
 -- Ledger.Conway.Specification.Gov.Base.GovStructure._.HasCredential.CredentialOf
-d_CredentialOf_1364 ::
+d_CredentialOf_1366 ::
   MAlonzo.Code.Ledger.Core.Specification.Address.T_HasCredential_30 ->
   AgdaAny ->
   MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20
-d_CredentialOf_1364 v0
+d_CredentialOf_1366 v0
   = coe
       MAlonzo.Code.Ledger.Core.Specification.Address.d_CredentialOf_38
       (coe v0)
 -- Ledger.Conway.Specification.Gov.Base.GovStructure._.HasMaybeNetworkId.MaybeNetworkIdOf
-d_MaybeNetworkIdOf_1368 ::
+d_MaybeNetworkIdOf_1370 ::
   MAlonzo.Code.Ledger.Core.Specification.Address.T_HasMaybeNetworkId_162 ->
   AgdaAny -> Maybe AgdaAny
-d_MaybeNetworkIdOf_1368 v0
+d_MaybeNetworkIdOf_1370 v0
   = coe
       MAlonzo.Code.Ledger.Core.Specification.Address.d_MaybeNetworkIdOf_170
       (coe v0)
 -- Ledger.Conway.Specification.Gov.Base.GovStructure._.HasNetworkId.NetworkIdOf
-d_NetworkIdOf_1372 ::
+d_NetworkIdOf_1374 ::
   MAlonzo.Code.Ledger.Core.Specification.Address.T_HasNetworkId_142 ->
   AgdaAny -> AgdaAny
-d_NetworkIdOf_1372 v0
+d_NetworkIdOf_1374 v0
   = coe
       MAlonzo.Code.Ledger.Core.Specification.Address.d_NetworkIdOf_150
       (coe v0)
 -- Ledger.Conway.Specification.Gov.Base.GovStructure._.HasRewardAddress.RewardAddressOf
-d_RewardAddressOf_1376 ::
+d_RewardAddressOf_1378 ::
   MAlonzo.Code.Ledger.Core.Specification.Address.T_HasRewardAddress_122 ->
   AgdaAny ->
   MAlonzo.Code.Ledger.Core.Specification.Address.T_RewardAddress_104
-d_RewardAddressOf_1376 v0
+d_RewardAddressOf_1378 v0
   = coe
       MAlonzo.Code.Ledger.Core.Specification.Address.d_RewardAddressOf_130
       (coe v0)
 -- Ledger.Conway.Specification.Gov.Base.GovStructure._.HasWithdrawals.WithdrawalsOf
-d_WithdrawalsOf_1380 ::
+d_WithdrawalsOf_1382 ::
   MAlonzo.Code.Ledger.Core.Specification.Address.T_HasWithdrawals_182 ->
   AgdaAny -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_WithdrawalsOf_1380 v0
+d_WithdrawalsOf_1382 v0
   = coe
       MAlonzo.Code.Ledger.Core.Specification.Address.d_WithdrawalsOf_190
       (coe v0)
 -- Ledger.Conway.Specification.Gov.Base.GovStructure._.RewardAddress.net
-d_net_1384 ::
+d_net_1390 ::
   MAlonzo.Code.Ledger.Core.Specification.Address.T_RewardAddress_104 ->
   AgdaAny
-d_net_1384 v0
+d_net_1390 v0
   = coe
       MAlonzo.Code.Ledger.Core.Specification.Address.d_net_110 (coe v0)
 -- Ledger.Conway.Specification.Gov.Base.GovStructure._.RewardAddress.stake
-d_stake_1386 ::
+d_stake_1392 ::
   MAlonzo.Code.Ledger.Core.Specification.Address.T_RewardAddress_104 ->
   MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20
-d_stake_1386 v0
+d_stake_1392 v0
   = coe
       MAlonzo.Code.Ledger.Core.Specification.Address.d_stake_112 (coe v0)

@@ -29,6 +29,7 @@ import qualified MAlonzo.Code.Data.Maybe.Properties
 import qualified MAlonzo.Code.Data.Nat.Properties
 import qualified MAlonzo.Code.Data.Nat.Show
 import qualified MAlonzo.Code.Data.String.Base
+import qualified MAlonzo.Code.Data.Sum
 import qualified MAlonzo.Code.Data.Sum.Base
 import qualified MAlonzo.Code.Relation.Nullary.Decidable.Core
 import qualified MAlonzo.Code.Relation.Nullary.Reflects
@@ -487,11 +488,11 @@ d_isScriptRewardAddress_260 ::
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   T_RewardAddress_104 -> ()
 d_isScriptRewardAddress_260 = erased
+-- Ledger.Core.Specification.Address.IsBootstrapAddr
+d_IsBootstrapAddr_272 a0 a1 a2 a3 a4 a5 a6 = ()
+data T_IsBootstrapAddr_272 = C_AddrIsBootstrapAddr_276
 -- Ledger.Core.Specification.Address.isBootstrapAddr
-d_isBootstrapAddr_272 a0 a1 a2 a3 a4 a5 a6 = ()
-data T_isBootstrapAddr_272 = C_IsBootstrapAddr_276
--- Ledger.Core.Specification.Address.isBootstrapAddr?
-d_isBootstrapAddr'63'_280 ::
+d_isBootstrapAddr_278 ::
   () ->
   () ->
   () ->
@@ -499,33 +500,16 @@ d_isBootstrapAddr'63'_280 ::
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Data.Sum.Base.T__'8846'__30 ->
-  MAlonzo.Code.Class.Decidable.Core.T__'8263'_10
-d_isBootstrapAddr'63'_280 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 v6
-  = du_isBootstrapAddr'63'_280 v6
-du_isBootstrapAddr'63'_280 ::
+  Maybe T_BootstrapAddr_88
+d_isBootstrapAddr_278 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5
+  = du_isBootstrapAddr_278
+du_isBootstrapAddr_278 ::
   MAlonzo.Code.Data.Sum.Base.T__'8846'__30 ->
-  MAlonzo.Code.Class.Decidable.Core.T__'8263'_10
-du_isBootstrapAddr'63'_280 v0
-  = case coe v0 of
-      MAlonzo.Code.Data.Sum.Base.C_inj'8321'_38 v1
-        -> coe
-             MAlonzo.Code.Class.Decidable.Core.C_'8263'__30
-             (coe
-                MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
-                (coe MAlonzo.Code.Agda.Builtin.Bool.C_false_8)
-                (coe MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26))
-      MAlonzo.Code.Data.Sum.Base.C_inj'8322'_42 v1
-        -> coe
-             MAlonzo.Code.Class.Decidable.Core.C_'8263'__30
-             (coe
-                MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
-                (coe MAlonzo.Code.Agda.Builtin.Bool.C_true_10)
-                (coe
-                   MAlonzo.Code.Relation.Nullary.Reflects.C_of'696'_22
-                   (coe C_IsBootstrapAddr_276)))
-      _ -> MAlonzo.RTE.mazUnreachableError
+  Maybe T_BootstrapAddr_88
+du_isBootstrapAddr_278
+  = coe MAlonzo.Code.Data.Sum.du_isInj'8322'_30
 -- Ledger.Core.Specification.Address.DecEq-Credential
-d_DecEq'45'Credential_284 ::
+d_DecEq'45'Credential_280 ::
   () ->
   () ->
   () ->
@@ -533,13 +517,13 @@ d_DecEq'45'Credential_284 ::
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
-d_DecEq'45'Credential_284 ~v0 ~v1 ~v2 ~v3 v4 v5
-  = du_DecEq'45'Credential_284 v4 v5
-du_DecEq'45'Credential_284 ::
+d_DecEq'45'Credential_280 ~v0 ~v1 ~v2 ~v3 v4 v5
+  = du_DecEq'45'Credential_280 v4 v5
+du_DecEq'45'Credential_280 ::
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
-du_DecEq'45'Credential_284 v0 v1
+du_DecEq'45'Credential_280 v0 v1
   = coe
       MAlonzo.Code.Class.DecEq.Core.C_constructor_32
       (coe
@@ -605,7 +589,7 @@ du_DecEq'45'Credential_284 v0 v1
                           _ -> MAlonzo.RTE.mazUnreachableError)
               _ -> MAlonzo.RTE.mazUnreachableError))
 -- Ledger.Core.Specification.Address.Dec-isVKey
-d_Dec'45'isVKey_286 ::
+d_Dec'45'isVKey_282 ::
   () ->
   () ->
   () ->
@@ -613,11 +597,11 @@ d_Dec'45'isVKey_286 ::
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   T_Credential_20 -> MAlonzo.Code.Class.Decidable.Core.T__'8263'_10
-d_Dec'45'isVKey_286 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 v6
-  = du_Dec'45'isVKey_286 v6
-du_Dec'45'isVKey_286 ::
+d_Dec'45'isVKey_282 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 v6
+  = du_Dec'45'isVKey_282 v6
+du_Dec'45'isVKey_282 ::
   T_Credential_20 -> MAlonzo.Code.Class.Decidable.Core.T__'8263'_10
-du_Dec'45'isVKey_286 v0
+du_Dec'45'isVKey_282 v0
   = coe
       MAlonzo.Code.Class.Decidable.Core.C_'8263'__30
       (case coe v0 of
@@ -635,7 +619,7 @@ du_Dec'45'isVKey_286 v0
                 (coe MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
          _ -> MAlonzo.RTE.mazUnreachableError)
 -- Ledger.Core.Specification.Address.Dec-isScript
-d_Dec'45'isScript_300 ::
+d_Dec'45'isScript_296 ::
   () ->
   () ->
   () ->
@@ -643,11 +627,11 @@ d_Dec'45'isScript_300 ::
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   T_Credential_20 -> MAlonzo.Code.Class.Decidable.Core.T__'8263'_10
-d_Dec'45'isScript_300 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 v6
-  = du_Dec'45'isScript_300 v6
-du_Dec'45'isScript_300 ::
+d_Dec'45'isScript_296 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 v6
+  = du_Dec'45'isScript_296 v6
+du_Dec'45'isScript_296 ::
   T_Credential_20 -> MAlonzo.Code.Class.Decidable.Core.T__'8263'_10
-du_Dec'45'isScript_300 v0
+du_Dec'45'isScript_296 v0
   = coe
       MAlonzo.Code.Class.Decidable.Core.C_'8263'__30
       (case coe v0 of
@@ -664,8 +648,40 @@ du_Dec'45'isScript_300 v0
                    MAlonzo.Code.Relation.Nullary.Reflects.C_of'696'_22
                    (coe C_SHisScript_70))
          _ -> MAlonzo.RTE.mazUnreachableError)
+-- Ledger.Core.Specification.Address.IsBootstrapAddr?
+d_IsBootstrapAddr'63'_310 ::
+  () ->
+  () ->
+  () ->
+  MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
+  MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
+  MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
+  MAlonzo.Code.Data.Sum.Base.T__'8846'__30 ->
+  MAlonzo.Code.Class.Decidable.Core.T__'8263'_10
+d_IsBootstrapAddr'63'_310 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 v6
+  = du_IsBootstrapAddr'63'_310 v6
+du_IsBootstrapAddr'63'_310 ::
+  MAlonzo.Code.Data.Sum.Base.T__'8846'__30 ->
+  MAlonzo.Code.Class.Decidable.Core.T__'8263'_10
+du_IsBootstrapAddr'63'_310 v0
+  = coe
+      MAlonzo.Code.Class.Decidable.Core.C_'8263'__30
+      (case coe v0 of
+         MAlonzo.Code.Data.Sum.Base.C_inj'8321'_38 v1
+           -> coe
+                MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                (coe MAlonzo.Code.Agda.Builtin.Bool.C_false_8)
+                (coe MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
+         MAlonzo.Code.Data.Sum.Base.C_inj'8322'_42 v1
+           -> coe
+                MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                (coe MAlonzo.Code.Agda.Builtin.Bool.C_true_10)
+                (coe
+                   MAlonzo.Code.Relation.Nullary.Reflects.C_of'696'_22
+                   (coe C_AddrIsBootstrapAddr_276))
+         _ -> MAlonzo.RTE.mazUnreachableError)
 -- Ledger.Core.Specification.Address.getScriptHash
-d_getScriptHash_326 ::
+d_getScriptHash_328 ::
   () ->
   () ->
   () ->
@@ -674,12 +690,12 @@ d_getScriptHash_326 ::
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Data.Sum.Base.T__'8846'__30 ->
   T_isScript_66 -> AgdaAny
-d_getScriptHash_326 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 v6 v7
-  = du_getScriptHash_326 v6 v7
-du_getScriptHash_326 ::
+d_getScriptHash_328 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 v6 v7
+  = du_getScriptHash_328 v6 v7
+du_getScriptHash_328 ::
   MAlonzo.Code.Data.Sum.Base.T__'8846'__30 ->
   T_isScript_66 -> AgdaAny
-du_getScriptHash_326 v0 v1
+du_getScriptHash_328 v0 v1
   = case coe v0 of
       MAlonzo.Code.Data.Sum.Base.C_inj'8321'_38 v2
         -> coe
@@ -701,7 +717,7 @@ du_getScriptHash_326 v0 v1
                 _ -> MAlonzo.RTE.mazUnreachableError)
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Core.Specification.Address.DecEq-BaseAddr
-d_DecEq'45'BaseAddr_332 ::
+d_DecEq'45'BaseAddr_334 ::
   () ->
   () ->
   () ->
@@ -709,14 +725,14 @@ d_DecEq'45'BaseAddr_332 ::
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
-d_DecEq'45'BaseAddr_332 ~v0 ~v1 ~v2 v3 v4 v5
-  = du_DecEq'45'BaseAddr_332 v3 v4 v5
-du_DecEq'45'BaseAddr_332 ::
+d_DecEq'45'BaseAddr_334 ~v0 ~v1 ~v2 v3 v4 v5
+  = du_DecEq'45'BaseAddr_334 v3 v4 v5
+du_DecEq'45'BaseAddr_334 ::
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
-du_DecEq'45'BaseAddr_332 v0 v1 v2
+du_DecEq'45'BaseAddr_334 v0 v1 v2
   = coe
       MAlonzo.Code.Class.DecEq.Core.C_constructor_32
       (coe
@@ -737,7 +753,7 @@ du_DecEq'45'BaseAddr_332 v0 v1 v2
                                                       = coe
                                                           MAlonzo.Code.Class.DecEq.Core.d__'8799'__16
                                                           (coe
-                                                             du_DecEq'45'Credential_284 (coe v1)
+                                                             du_DecEq'45'Credential_280 (coe v1)
                                                              (coe v2))
                                                           v5 v9 in
                                                 coe
@@ -750,7 +766,7 @@ du_DecEq'45'BaseAddr_332 v0 v1 v2
                                                                            (coe
                                                                               MAlonzo.Code.Class.DecEq.Core.d__'8799'__16
                                                                               (coe
-                                                                                 du_DecEq'45'Credential_284
+                                                                                 du_DecEq'45'Credential_280
                                                                                  (coe v1) (coe v2)))
                                                                            (coe v6) (coe v10) in
                                                                  coe
@@ -784,7 +800,7 @@ du_DecEq'45'BaseAddr_332 v0 v1 v2
                           _ -> MAlonzo.RTE.mazUnreachableError)
               _ -> MAlonzo.RTE.mazUnreachableError))
 -- Ledger.Core.Specification.Address.DecEq-BootstrapAddr
-d_DecEq'45'BootstrapAddr_334 ::
+d_DecEq'45'BootstrapAddr_336 ::
   () ->
   () ->
   () ->
@@ -792,14 +808,14 @@ d_DecEq'45'BootstrapAddr_334 ::
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
-d_DecEq'45'BootstrapAddr_334 ~v0 ~v1 ~v2 v3 v4 v5
-  = du_DecEq'45'BootstrapAddr_334 v3 v4 v5
-du_DecEq'45'BootstrapAddr_334 ::
+d_DecEq'45'BootstrapAddr_336 ~v0 ~v1 ~v2 v3 v4 v5
+  = du_DecEq'45'BootstrapAddr_336 v3 v4 v5
+du_DecEq'45'BootstrapAddr_336 ::
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
-du_DecEq'45'BootstrapAddr_334 v0 v1 v2
+du_DecEq'45'BootstrapAddr_336 v0 v1 v2
   = coe
       MAlonzo.Code.Class.DecEq.Core.C_constructor_32
       (coe
@@ -820,7 +836,7 @@ du_DecEq'45'BootstrapAddr_334 v0 v1 v2
                                                       = coe
                                                           MAlonzo.Code.Class.DecEq.Core.d__'8799'__16
                                                           (coe
-                                                             du_DecEq'45'Credential_284 (coe v1)
+                                                             du_DecEq'45'Credential_280 (coe v1)
                                                              (coe v2))
                                                           v5 v9 in
                                                 coe
@@ -861,7 +877,7 @@ du_DecEq'45'BootstrapAddr_334 v0 v1 v2
                           _ -> MAlonzo.RTE.mazUnreachableError)
               _ -> MAlonzo.RTE.mazUnreachableError))
 -- Ledger.Core.Specification.Address.DecEq-RewardAddress
-d_DecEq'45'RewardAddress_336 ::
+d_DecEq'45'RewardAddress_338 ::
   () ->
   () ->
   () ->
@@ -869,14 +885,14 @@ d_DecEq'45'RewardAddress_336 ::
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
-d_DecEq'45'RewardAddress_336 ~v0 ~v1 ~v2 v3 v4 v5
-  = du_DecEq'45'RewardAddress_336 v3 v4 v5
-du_DecEq'45'RewardAddress_336 ::
+d_DecEq'45'RewardAddress_338 ~v0 ~v1 ~v2 v3 v4 v5
+  = du_DecEq'45'RewardAddress_338 v3 v4 v5
+du_DecEq'45'RewardAddress_338 ::
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
-du_DecEq'45'RewardAddress_336 v0 v1 v2
+du_DecEq'45'RewardAddress_338 v0 v1 v2
   = coe
       MAlonzo.Code.Class.DecEq.Core.C_constructor_32
       (coe
@@ -897,7 +913,7 @@ du_DecEq'45'RewardAddress_336 v0 v1 v2
                                                       = coe
                                                           MAlonzo.Code.Class.DecEq.Core.d__'8799'__16
                                                           (coe
-                                                             du_DecEq'45'Credential_284 (coe v1)
+                                                             du_DecEq'45'Credential_280 (coe v1)
                                                              (coe v2))
                                                           v5 v8 in
                                                 coe
@@ -925,7 +941,7 @@ du_DecEq'45'RewardAddress_336 v0 v1 v2
                           _ -> MAlonzo.RTE.mazUnreachableError)
               _ -> MAlonzo.RTE.mazUnreachableError))
 -- Ledger.Core.Specification.Address._.Show-Credential
-d_Show'45'Credential_348 ::
+d_Show'45'Credential_350 ::
   () ->
   () ->
   () ->
@@ -936,13 +952,13 @@ d_Show'45'Credential_348 ::
   MAlonzo.Code.Class.Show.Core.T_Show_10 ->
   MAlonzo.Code.Class.Show.Core.T_Show_10 ->
   MAlonzo.Code.Class.Show.Core.T_Show_10
-d_Show'45'Credential_348 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7 v8
-  = du_Show'45'Credential_348 v7 v8
-du_Show'45'Credential_348 ::
+d_Show'45'Credential_350 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7 v8
+  = du_Show'45'Credential_350 v7 v8
+du_Show'45'Credential_350 ::
   MAlonzo.Code.Class.Show.Core.T_Show_10 ->
   MAlonzo.Code.Class.Show.Core.T_Show_10 ->
   MAlonzo.Code.Class.Show.Core.T_Show_10
-du_Show'45'Credential_348 v0 v1
+du_Show'45'Credential_350 v0 v1
   = coe
       MAlonzo.Code.Class.Show.Core.C_mkShow_18
       (coe
@@ -964,7 +980,7 @@ du_Show'45'Credential_348 v0 v1
                         (coe MAlonzo.Code.Class.Show.Core.d_show_16 v1 v3))
               _ -> MAlonzo.RTE.mazUnreachableError))
 -- Ledger.Core.Specification.Address._.Show-RewardAddress
-d_Show'45'RewardAddress_350 ::
+d_Show'45'RewardAddress_352 ::
   () ->
   () ->
   () ->
@@ -975,14 +991,14 @@ d_Show'45'RewardAddress_350 ::
   MAlonzo.Code.Class.Show.Core.T_Show_10 ->
   MAlonzo.Code.Class.Show.Core.T_Show_10 ->
   MAlonzo.Code.Class.Show.Core.T_Show_10
-d_Show'45'RewardAddress_350 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 v6 v7 v8
-  = du_Show'45'RewardAddress_350 v6 v7 v8
-du_Show'45'RewardAddress_350 ::
+d_Show'45'RewardAddress_352 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 v6 v7 v8
+  = du_Show'45'RewardAddress_352 v6 v7 v8
+du_Show'45'RewardAddress_352 ::
   MAlonzo.Code.Class.Show.Core.T_Show_10 ->
   MAlonzo.Code.Class.Show.Core.T_Show_10 ->
   MAlonzo.Code.Class.Show.Core.T_Show_10 ->
   MAlonzo.Code.Class.Show.Core.T_Show_10
-du_Show'45'RewardAddress_350 v0 v1 v2
+du_Show'45'RewardAddress_352 v0 v1 v2
   = coe
       MAlonzo.Code.Class.Show.Core.C_mkShow_18
       (coe
@@ -1001,10 +1017,10 @@ du_Show'45'RewardAddress_350 v0 v1 v2
                         MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_40
                         (coe
                            MAlonzo.Code.Class.Show.Core.d_show_16
-                           (coe du_Show'45'Credential_348 (coe v1) (coe v2)) v5))
+                           (coe du_Show'45'Credential_350 (coe v1) (coe v2)) v5))
               _ -> MAlonzo.RTE.mazUnreachableError))
 -- Ledger.Core.Specification.Address._.Show-Credential×Coin
-d_Show'45'Credential'215'Coin_352 ::
+d_Show'45'Credential'215'Coin_354 ::
   () ->
   () ->
   () ->
@@ -1015,16 +1031,16 @@ d_Show'45'Credential'215'Coin_352 ::
   MAlonzo.Code.Class.Show.Core.T_Show_10 ->
   MAlonzo.Code.Class.Show.Core.T_Show_10 ->
   MAlonzo.Code.Class.Show.Core.T_Show_10
-d_Show'45'Credential'215'Coin_352 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7 v8
-  = du_Show'45'Credential'215'Coin_352 v7 v8
-du_Show'45'Credential'215'Coin_352 ::
+d_Show'45'Credential'215'Coin_354 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7 v8
+  = du_Show'45'Credential'215'Coin_354 v7 v8
+du_Show'45'Credential'215'Coin_354 ::
   MAlonzo.Code.Class.Show.Core.T_Show_10 ->
   MAlonzo.Code.Class.Show.Core.T_Show_10 ->
   MAlonzo.Code.Class.Show.Core.T_Show_10
-du_Show'45'Credential'215'Coin_352 v0 v1
+du_Show'45'Credential'215'Coin_354 v0 v1
   = coe
       MAlonzo.Code.Class.Show.Instances.du_Show'45''215'_6
-      (coe du_Show'45'Credential_348 (coe v0) (coe v1))
+      (coe du_Show'45'Credential_350 (coe v0) (coe v1))
       (coe
          MAlonzo.Code.Class.Show.Core.C_mkShow_18
          (coe MAlonzo.Code.Data.Nat.Show.d_show_56))
