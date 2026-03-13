@@ -54,14 +54,17 @@ private
   isUpdateCommittee ⟦ TreasuryWithdrawal , _                ⟧ᵍᵃ = no λ()
   isUpdateCommittee ⟦ Info               , _                ⟧ᵍᵃ = no λ()
 
-  pvFollows : ∀ v' ver v → Dec (if pvMajor ver ≡ pvMajor v' then pvCanFollow v v' else pvCanFollowMinor v v')
-  pvFollows v' ver v with pvMajor ver ≟ pvMajor v'
-  ... | yes p = ¿ pvCanFollow v v' ¿
-  ... | no ¬p = ¿ pvCanFollowMinor v v' ¿
+  pvFollows : ∀ v' ver v → Dec (if pvCanFollowMajor v' ver
+                                   then pvCanFollowMinor v v'
+                                   else pvCanFollow v v')
+  pvFollows v' ver v with ¿ pvCanFollowMajor v' ver ¿
+  ... | yes p = ¿ pvCanFollowMinor v v' ¿
+  ... | no ¬p = ¿ pvCanFollow v v' ¿
 
-  hasPrev : ∀ x ver v → Dec (∃[ v' ] x .action ≡ ⟦ TriggerHardFork , v' ⟧ᵍᵃ × (if pvMajor ver ≡ pvMajor v'
-                                                                                 then pvCanFollow v v'
-                                                                                 else pvCanFollowMinor v v'))
+  hasPrev : ∀ x ver v → Dec (∃[ v' ] x .action ≡ ⟦ TriggerHardFork , v' ⟧ᵍᵃ
+                                                      × (if pvCanFollowMajor v' ver
+                                                            then pvCanFollowMinor v v'
+                                                            else pvCanFollow v v'))
   hasPrev record { action = ⟦ NoConfidence        , _   ⟧ᵍᵃ} _ v = no λ ()
   hasPrev record { action = ⟦ UpdateCommittee     , _   ⟧ᵍᵃ} _ v = no λ ()
   hasPrev record { action = ⟦ NewConstitution     , _   ⟧ᵍᵃ} _ v = no λ ()
