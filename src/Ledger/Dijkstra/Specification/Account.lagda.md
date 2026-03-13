@@ -6,9 +6,7 @@ source_path: src/Ledger/Dijkstra/Specification/Account.lagda.md
 # Account Types {#sec:account-types}
 
 This module defines the core types introduced by [CIP 159][] (Account Address
-Enhancement).  These types are shared across multiple modules
-(`Transaction`{.AgdaModule}, `Certs`{.AgdaModule}, `Utxo`{.AgdaModule},
-`Script.Validation`{.AgdaModule}) and are therefore factored out here.
+Enhancement).
 
 ??? info "Implementation Note: Phase 1 (ADA-only)"
 
