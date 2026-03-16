@@ -7,10 +7,11 @@ module Ledger.Conway.Foreign.HSLedger.PParams where
 
 open import Ledger.Conway.Foreign.HSLedger.BaseTypes
 
-unquoteDecl = do
-  hsTypeAlias LanguageCostModels
-
 instance
+  HsTy-LanguageCostModels = autoHsType LanguageCostModels ⊣ withConstructor "MkLanguageCostModels"
+                                                          • fieldPrefix "lcm"
+  Conv-LanguageCostModels = autoConvert LanguageCostModels
+
   HsTy-DrepThresholds = autoHsType DrepThresholds
     ⊣ withConstructor "MkDrepThresholds"
   Conv-DrepThresholds = autoConvert DrepThresholds
