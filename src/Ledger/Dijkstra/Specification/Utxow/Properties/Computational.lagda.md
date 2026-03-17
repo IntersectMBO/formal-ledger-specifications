@@ -23,38 +23,6 @@ open import Ledger.Dijkstra.Specification.Utxow txs abs
 open import Ledger.Dijkstra.Specification.Utxo txs abs
 open import Ledger.Dijkstra.Specification.Utxo.Properties.Computational txs abs
 
-decide-SUBUTXOW-Premises : ∀ Γ s tx → Dec (SUBUTXOW-Premises Γ s tx)
-decide-SUBUTXOW-Premises Γ s tx =
-  let wd = collectWitnessLogicSubTx tx Γ in
-  let open WitnessLogicSubTx wd in
-  case ¿ ∀[ (vk , σ) ∈ TxWitnesses.vKeySigs (Tx.txWitnesses tx) ] isSigned vk (txidBytes (TxIdOf tx)) σ ¿ of λ where
-    (no ¬p) → no (λ where (record { sigsValid = p }) → ¬p p)
-    (yes sigsOk) →
-      case ¿ ∀[ s ∈ p1ScriptsNeeded ] validP1Script vKeyHashesProvided (TxBody.txVldt (Tx.txBody tx)) s ¿ of λ where
-      (no ¬p) → no (λ where (record { p1ScriptsValid = p }) → ¬p p)
-      (yes p1Ok) →
-        case ¿ vKeyHashesNeeded ⊆ vKeyHashesProvided ¿ of λ where
-        (no ¬p) → no (λ where (record { vKeyHashesSubset = p }) → ¬p (λ {a} → p))
-        (yes vkhOk) →
-          case ¿ scriptHashesNeeded ⊆ mapˢ hash scriptsProvided ¿ of λ where
-          (no ¬p) → no (λ where (record { scriptHashesSubset = p }) → ¬p (λ {a} → p))
-          (yes shOk) →
-            case ¿ dataHashesNeeded ⊆ mapˢ hash dataProvided ¿ of λ where
-              (no ¬p) → no (λ where (record { dataHashesSubset = p }) → ¬p (λ {a} → p))
-              (yes dhOk) →
-                case ¿ languages p2ScriptsNeeded ⊆ dom (PParams.costmdls (PParamsOf Γ)) ∩ ❴ PlutusV4 ❵ ¿ of λ where
-                (no ¬p) → no (λ where (record { languageV4Only = p }) → ¬p (λ {a} → p))
-                (yes langOk) →
-                  case ¿ TxBody.txADhash (Tx.txBody tx) ≡ map hash (Tx.txAuxData tx) ¿ of λ where
-                  (no ¬p) → no (λ where (record { auxDataHashValid = p }) → ¬p p)
-                  (yes adOk) → yes (record { sigsValid = sigsOk ; p1ScriptsValid = p1Ok
-                                           ; vKeyHashesSubset = λ {a} → vkhOk {a}
-                                           ; scriptHashesSubset = λ {a} → shOk {a}
-                                           ; dataHashesSubset = λ {a} → dhOk {a}
-                                           ; languageV4Only = λ {a} → langOk {a}
-                                           ; auxDataHashValid = adOk })
-
-
 decide-Legacy : (Γ : UTxOEnv) (txTop : TopLevelTx) → Dec (Legacy Γ txTop)
 decide-Legacy Γ txTop = ¿ ∃[ s ∈ p2ScriptsNeeded ] language s ∈ fromList (PlutusV1 ∷ PlutusV2 ∷ PlutusV3 ∷ []) ¿
   where
@@ -132,23 +100,25 @@ instance
 
 ```agda
   Computational-SUBUTXOW : Computational _⊢_⇀⦇_,SUBUTXOW⦈_ String
-  Computational-SUBUTXOW = MkComputational computeProof completeness
-    where
-    open Computational Computational-SUBUTXO
-      renaming (computeProof to computeP; completeness to completeP)
+  Computational-SUBUTXOW = record {go} where
+    module go (Γ : SubUTxOEnv) (s₀ : UTxOState) (txSub : SubLevelTx)
+      (let H , ⁇ H? = SUBUTXOW-premises {txSub = txSub} {Γ = Γ})
+      where
 
-    computeProof : (Γ : SubUTxOEnv) (s : UTxOState) (txSub : SubLevelTx)
-      → ComputationResult String (∃[ s' ] (Γ ⊢ s ⇀⦇ txSub ,SUBUTXOW⦈ s'))
-    computeProof Γ s txSub with decide-SUBUTXOW-Premises Γ s txSub
-    ... | no ¬p = failure "SUBUTXOW premises failed"
-    ... | yes p = map (λ where (s' , h) → s' , SUBUTXOW (p , h)) (computeP Γ s txSub)
+      module SUBUTXO = Computational Computational-SUBUTXO
 
-    completeness : (Γ : SubUTxOEnv) (s : UTxOState) (txSub : SubLevelTx) (s' : UTxOState)
-      → Γ ⊢ s ⇀⦇ txSub ,SUBUTXOW⦈ s' → map proj₁ (computeProof Γ s txSub) ≡ success s'
-    completeness Γ s txSub s' (SUBUTXOW (p , h)) with decide-SUBUTXOW-Premises Γ s txSub
-    ... | no ¬p = ⊥-elim (¬p p)
-    ... | yes _ with computeP Γ s txSub | completeP Γ s txSub s' h
-    ... | success _ | refl = refl
+      computeProof : ComputationResult String (∃[ s₁ ] (Γ ⊢ s₀ ⇀⦇ txSub ,SUBUTXOW⦈ s₁))
+      computeProof with H?
+      ... | no ¬p = failure "SUBUTXOW"
+      ... | yes (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇) =
+          map (map₂′ (λ h → SUBUTXOW {txSub = txSub} {Γ = Γ} (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , h)))
+              (SUBUTXO.computeProof Γ s₀ txSub)
+
+      completeness : ∀ s₁ → Γ ⊢ s₀ ⇀⦇ txSub ,SUBUTXOW⦈ s₁ → map proj₁ computeProof ≡ success s₁
+      completeness s₁ (SUBUTXOW-⋯ p₀ p₁ p₂ p₃ p₄ p₅ p₆ p₇ h) with H?
+      ... | no ¬p = ⊥-elim $ ¬p ((p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇))
+      ... | yes _ with SUBUTXO.computeProof Γ s₀ txSub | SUBUTXO.completeness _ _ _ _ h
+      ... | success _ | refl = refl
 
   Computational-UTXOW : Computational _⊢_⇀⦇_,UTXOW⦈_ String
   Computational-UTXOW = MkComputational computeProof completeness
