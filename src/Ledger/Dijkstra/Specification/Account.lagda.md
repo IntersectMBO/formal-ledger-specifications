@@ -8,12 +8,6 @@ source_path: src/Ledger/Dijkstra/Specification/Account.lagda.md
 This module defines the core types introduced by [CIP 159][] (Account Address
 Enhancement).
 
-??? info "Implementation Note: Phase 1 (ADA-only)"
-
-    In Phase 1 (ADA-only), we define `DirectDeposits`, `BalanceInterval`,
-    `AccountBalanceIntervals`, and the `inBalanceInterval` predicate.
-
-
 <!--
 ```agda
 {-# OPTIONS --safe #-}
@@ -30,18 +24,14 @@ open import Ledger.Prelude
 ## Direct Deposits {#sec:direct-deposits}
 
 A `DirectDeposits`{.AgdaDatatype} map records the ADA being deposited into account
-(reward) addresses within a single transaction.  Each entry maps the stake credential
-of the receiving reward address to a `Coin` amount.
+addresses within a single transaction.  Each entry maps the stake credential of the
+receiving account address to a `Coin`{.AgdaDatatype} amount.
 
 ```agda
 DirectDeposits : Type
 DirectDeposits = Credential ⇀ Coin
 ```
 
-??? info "Implementation Note"
-
-    **Phase 2 upgrade.** In Phase 2, `DirectDeposits` will be upgraded
-    to `Credential ⇀ Value` to support multi-asset deposits.
 ## Balance Intervals {#sec:balance-intervals}
 
 [CIP 159][] allows a transaction to assert that an account's balance falls within a
