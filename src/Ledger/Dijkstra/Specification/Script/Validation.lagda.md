@@ -138,6 +138,13 @@ txInfoForPurpose {TxLevelTop} utxo tx sp with sp
 
 txOutToDataHash : TxOut → Maybe DataHash
 txOutToDataHash (_ , _ , d , _) = d >>= isInj₂
+
+credentialToP2Script
+  : Credential → ℙ Script → Maybe P2Script
+credentialToP2Script c scripts =
+  do sh ← isScriptObj c
+     s  ← lookupHash sh scripts
+     toP2Script s
 ```
 
 ```agda
@@ -212,6 +219,6 @@ a list of lists of data (a list of data is part of the context of a script).
            [ (script , data′ , exUnits , costModel) ]
 
 evalP2Scripts : List (P2Script × List Data × ExUnits × CostModel) → Bool
-evalP2Scripts = all (λ (s , d , eu , cm) → runPLCScript cm s eu d)
+evalP2Scripts = all (λ (s , d , eu , cm) → ¿ validP2Script cm d eu s ¿ᵇ)
 ```
 -->
