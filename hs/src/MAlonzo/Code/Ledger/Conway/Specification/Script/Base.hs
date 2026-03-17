@@ -20,19 +20,26 @@ import qualified Data.Text
 import qualified MAlonzo.Code.Agda.Builtin.Bool
 import qualified MAlonzo.Code.Agda.Builtin.Sigma
 import qualified MAlonzo.Code.Agda.Builtin.Unit
+import qualified MAlonzo.Code.Agda.Primitive
 import qualified MAlonzo.Code.Class.CommutativeMonoid.Core
 import qualified MAlonzo.Code.Class.DecEq.Core
 import qualified MAlonzo.Code.Class.Decidable.Core
 import qualified MAlonzo.Code.Class.Functor.Core
 import qualified MAlonzo.Code.Class.Functor.Instances
 import qualified MAlonzo.Code.Class.Show.Core
+import qualified MAlonzo.Code.Class.Show.Instances
+import qualified MAlonzo.Code.Data.List.Base
+import qualified MAlonzo.Code.Data.List.Properties
+import qualified MAlonzo.Code.Data.String.Base
 import qualified MAlonzo.Code.Data.Sum
 import qualified MAlonzo.Code.Data.Sum.Base
 import qualified MAlonzo.Code.Interface.TypeClasses.Hashable
 import qualified MAlonzo.Code.Ledger.Core.Specification.Crypto
 import qualified MAlonzo.Code.Ledger.Core.Specification.Epoch
+import qualified MAlonzo.Code.Prelude
 import qualified MAlonzo.Code.Relation.Nullary.Decidable.Core
 import qualified MAlonzo.Code.Relation.Nullary.Reflects
+import qualified MAlonzo.Code.Tactic.Derive.Show
 
 -- _.THash
 d_THash_24 ::
@@ -389,7 +396,7 @@ d_language_276 v0
 -- Ledger.Conway.Specification.Script.Base.ScriptStructure
 d_ScriptStructure_280 a0 a1 = ()
 data T_ScriptStructure_280
-  = C_constructor_436 T_P1ScriptStructure_104
+  = C_constructor_452 T_P1ScriptStructure_104
                       (() ->
                        () ->
                        () ->
@@ -428,7 +435,7 @@ d_validP1Script_294 = erased
 d_p1s_306 :: T_ScriptStructure_280 -> T_P1ScriptStructure_104
 d_p1s_306 v0
   = case coe v0 of
-      C_constructor_436 v1 v2 v3 -> coe v1
+      C_constructor_452 v1 v2 v3 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Conway.Specification.Script.Base.ScriptStructure._.Dec-validP1Script
 d_Dec'45'validP1Script_310 ::
@@ -469,13 +476,13 @@ d_hashRespectsUnion_326 ::
   MAlonzo.Code.Interface.TypeClasses.Hashable.T_Hashable_10
 d_hashRespectsUnion_326 v0
   = case coe v0 of
-      C_constructor_436 v1 v2 v3 -> coe v2
+      C_constructor_452 v1 v2 v3 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Conway.Specification.Script.Base.ScriptStructure.ps
 d_ps_328 :: T_ScriptStructure_280 -> T_PlutusStructure_128
 d_ps_328 v0
   = case coe v0 of
-      C_constructor_436 v1 v2 v3 -> coe v3
+      C_constructor_452 v1 v2 v3 -> coe v3
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Conway.Specification.Script.Base.ScriptStructure._._≥ᵉ_
 d__'8805''7497'__332 ::
@@ -799,3 +806,123 @@ du_getLanguage_432 v0 v1
       (coe MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
       (coe ()) (coe ()) (coe du_toP2Script_430 v1)
       (coe d_language_276 (coe d_ps_328 (coe v0)))
+-- Ledger.Conway.Specification.Script.Base.ScriptStructure.LanguageCostModels
+d_LanguageCostModels_436 a0 a1 a2 = ()
+newtype T_LanguageCostModels_436
+  = C_mkLanguageCostModels_442 [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
+-- Ledger.Conway.Specification.Script.Base.ScriptStructure.LanguageCostModels.languageCostModels
+d_languageCostModels_440 ::
+  T_LanguageCostModels_436 ->
+  [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
+d_languageCostModels_440 v0
+  = case coe v0 of
+      C_mkLanguageCostModels_442 v1 -> coe v1
+      _ -> MAlonzo.RTE.mazUnreachableError
+-- Ledger.Conway.Specification.Script.Base.ScriptStructure.DecEq-LanguageCostModels
+d_DecEq'45'LanguageCostModels_444 ::
+  MAlonzo.Code.Ledger.Core.Specification.Crypto.T_CryptoStructure_140 ->
+  MAlonzo.Code.Ledger.Core.Specification.Epoch.T_EpochStructure_22 ->
+  T_ScriptStructure_280 -> MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
+d_DecEq'45'LanguageCostModels_444 ~v0 ~v1 v2
+  = du_DecEq'45'LanguageCostModels_444 v2
+du_DecEq'45'LanguageCostModels_444 ::
+  T_ScriptStructure_280 -> MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
+du_DecEq'45'LanguageCostModels_444 v0
+  = coe
+      MAlonzo.Code.Class.DecEq.Core.C_constructor_32
+      (coe
+         (\ v1 ->
+            case coe v1 of
+              C_mkLanguageCostModels_442 v2
+                -> coe
+                     (\ v3 ->
+                        case coe v3 of
+                          C_mkLanguageCostModels_442 v4
+                            -> let v5
+                                     = coe
+                                         MAlonzo.Code.Data.List.Properties.du_'8801''45'dec_60
+                                         (coe
+                                            MAlonzo.Code.Class.DecEq.Core.d__'8799'__16
+                                            (coe
+                                               MAlonzo.Code.Prelude.d_DecEq'45''215''8242'_4 ()
+                                               erased () erased
+                                               (d_DecEq'45'Language_228 (coe d_ps_328 (coe v0)))
+                                               (d_DecEq'45'CostModel_230 (coe d_ps_328 (coe v0)))))
+                                         (coe v2) (coe v4) in
+                               coe
+                                 (case coe v5 of
+                                    MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v6 v7
+                                      -> if coe v6
+                                           then coe
+                                                  MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                                                  (coe v6)
+                                                  (coe
+                                                     MAlonzo.Code.Relation.Nullary.Reflects.C_of'696'_22
+                                                     erased)
+                                           else coe
+                                                  MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                                                  (coe v6)
+                                                  (coe
+                                                     MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
+                                    _ -> MAlonzo.RTE.mazUnreachableError)
+                          _ -> MAlonzo.RTE.mazUnreachableError)
+              _ -> MAlonzo.RTE.mazUnreachableError))
+-- Ledger.Conway.Specification.Script.Base.ScriptStructure._
+d___448 ::
+  MAlonzo.Code.Ledger.Core.Specification.Crypto.T_CryptoStructure_140 ->
+  MAlonzo.Code.Ledger.Core.Specification.Epoch.T_EpochStructure_22 ->
+  T_ScriptStructure_280 ->
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  () ->
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  () ->
+  MAlonzo.Code.Class.Show.Core.T_Show_10 ->
+  MAlonzo.Code.Class.Show.Core.T_Show_10 ->
+  MAlonzo.Code.Class.Show.Core.T_Show_10
+d___448 ~v0 ~v1 ~v2 = du___448
+du___448 ::
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  () ->
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  () ->
+  MAlonzo.Code.Class.Show.Core.T_Show_10 ->
+  MAlonzo.Code.Class.Show.Core.T_Show_10 ->
+  MAlonzo.Code.Class.Show.Core.T_Show_10
+du___448 v0 v1 v2 v3 v4 v5
+  = coe MAlonzo.Code.Class.Show.Instances.du_Show'45''215'_6 v4 v5
+-- Ledger.Conway.Specification.Script.Base.ScriptStructure.Show-LanguageCostModels
+d_Show'45'LanguageCostModels_450 ::
+  MAlonzo.Code.Ledger.Core.Specification.Crypto.T_CryptoStructure_140 ->
+  MAlonzo.Code.Ledger.Core.Specification.Epoch.T_EpochStructure_22 ->
+  T_ScriptStructure_280 -> MAlonzo.Code.Class.Show.Core.T_Show_10
+d_Show'45'LanguageCostModels_450 ~v0 ~v1 v2
+  = du_Show'45'LanguageCostModels_450 v2
+du_Show'45'LanguageCostModels_450 ::
+  T_ScriptStructure_280 -> MAlonzo.Code.Class.Show.Core.T_Show_10
+du_Show'45'LanguageCostModels_450 v0
+  = coe
+      MAlonzo.Code.Class.Show.Core.C_mkShow_18
+      (coe
+         (\ v1 ->
+            case coe v1 of
+              C_mkLanguageCostModels_442 v2
+                -> coe
+                     MAlonzo.Code.Data.String.Base.d__'60''43''62'__50
+                     (coe ("mkLanguageCostModels" :: Data.Text.Text))
+                     (coe
+                        MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_40
+                        (coe
+                           MAlonzo.Code.Data.String.Base.d_braces_48
+                           (coe
+                              MAlonzo.Code.Data.String.Base.d_intersperse_30
+                              (", " :: Data.Text.Text)
+                              (coe
+                                 MAlonzo.Code.Data.List.Base.du_map_22
+                                 (coe
+                                    MAlonzo.Code.Class.Show.Core.d_show_16
+                                    (coe
+                                       du___448 () erased () erased
+                                       (d_Show'45'Language_234 (coe d_ps_328 (coe v0)))
+                                       (d_Show'45'CostModel_236 (coe d_ps_328 (coe v0)))))
+                                 (coe v2)))))
+              _ -> MAlonzo.RTE.mazUnreachableError))

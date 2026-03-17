@@ -37,135 +37,135 @@ import qualified MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory
 import qualified MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base
 
 -- _.GovActionID
-d_GovActionID_198 ::
+d_GovActionID_200 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   ()
-d_GovActionID_198 = erased
+d_GovActionID_200 = erased
 -- Ledger.Conway.Specification.Ratify.Properties.Computational._._⊢_⇀⦇_,RATIFIES⦈_
-d__'8866'_'8640''10631'_'44'RATIFIES'10632'__2194 ::
+d__'8866'_'8640''10631'_'44'RATIFIES'10632'__2224 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
-  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyEnv_1844 ->
-  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyState_1876 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyEnv_1858 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyState_1890 ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] ->
-  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyState_1876 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyState_1890 ->
   ()
-d__'8866'_'8640''10631'_'44'RATIFIES'10632'__2194 = erased
+d__'8866'_'8640''10631'_'44'RATIFIES'10632'__2224 = erased
 -- Ledger.Conway.Specification.Ratify.Properties.Computational._._⊢_⇀⦇_,RATIFY⦈_
-d__'8866'_'8640''10631'_'44'RATIFY'10632'__2196 a0 a1 a2 a3 a4 = ()
+d__'8866'_'8640''10631'_'44'RATIFY'10632'__2226 a0 a1 a2 a3 a4 = ()
 -- Ledger.Conway.Specification.Ratify.Properties.Computational._.HasCast-RatifyState
-d_HasCast'45'RatifyState_2200 ::
+d_HasCast'45'RatifyState_2230 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.T_HasCast_16
-d_HasCast'45'RatifyState_2200 ~v0 = du_HasCast'45'RatifyState_2200
-du_HasCast'45'RatifyState_2200 ::
+d_HasCast'45'RatifyState_2230 ~v0 = du_HasCast'45'RatifyState_2230
+du_HasCast'45'RatifyState_2230 ::
   MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.T_HasCast_16
-du_HasCast'45'RatifyState_2200
+du_HasCast'45'RatifyState_2230
   = coe
-      MAlonzo.Code.Ledger.Conway.Specification.Ratify.du_HasCast'45'RatifyState_1922
+      MAlonzo.Code.Ledger.Conway.Specification.Ratify.du_HasCast'45'RatifyState_1936
 -- Ledger.Conway.Specification.Ratify.Properties.Computational._.RatifyState
-d_RatifyState_2228 a0 = ()
+d_RatifyState_2258 a0 = ()
 -- Ledger.Conway.Specification.Ratify.Properties.Computational._.acceptConds
-d_acceptConds_2238 ::
+d_acceptConds_2268 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
-  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyEnv_1844 ->
-  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyState_1876 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyEnv_1858 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyState_1890 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 -> ()
-d_acceptConds_2238 = erased
+d_acceptConds_2268 = erased
 -- Ledger.Conway.Specification.Ratify.Properties.Computational._.RatifyState.delay
-d_delay_2362 ::
-  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyState_1876 ->
+d_delay_2392 ::
+  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyState_1890 ->
   Bool
-d_delay_2362 v0
+d_delay_2392 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_delay_1888
+      MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_delay_1902
       (coe v0)
 -- Ledger.Conway.Specification.Ratify.Properties.Computational._.RatifyState.es
-d_es_2364 ::
-  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyState_1876 ->
-  MAlonzo.Code.Ledger.Conway.Specification.Enact.T_EnactState_1152
-d_es_2364 v0
+d_es_2394 ::
+  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyState_1890 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Enact.T_EnactState_1166
+d_es_2394 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_es_1884 (coe v0)
+      MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_es_1898 (coe v0)
 -- Ledger.Conway.Specification.Ratify.Properties.Computational._.RatifyState.removed
-d_removed_2366 ::
-  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyState_1876 ->
+d_removed_2396 ::
+  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyState_1890 ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
-d_removed_2366 v0
+d_removed_2396 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_removed_1886
+      MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_removed_1900
       (coe v0)
 -- Ledger.Conway.Specification.Ratify.Properties.Computational.Implementation.exp?
-d_exp'63'_2442 ::
+d_exp'63'_2472 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
-  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyEnv_1844 ->
-  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyState_1876 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyEnv_1858 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyState_1890 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20
-d_exp'63'_2442 v0 v1 ~v2 v3 = du_exp'63'_2442 v0 v1 v3
-du_exp'63'_2442 ::
+d_exp'63'_2472 v0 v1 ~v2 v3 = du_exp'63'_2472 v0 v1 v3
+du_exp'63'_2472 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
-  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyEnv_1844 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyEnv_1858 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20
-du_exp'63'_2442 v0 v1 v2
+du_exp'63'_2472 v0 v1 v2
   = coe
-      MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_expired'63'_2510
+      MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_expired'63'_2524
       (coe
-         MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_govStructure_2574
+         MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_govStructure_2634
          (coe v0))
       (coe
-         MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_currentEpoch_1862
+         MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_currentEpoch_1876
          (coe v1))
       (coe MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30 (coe v2))
 -- Ledger.Conway.Specification.Ratify.Properties.Computational.Implementation.acceptConds?
-d_acceptConds'63'_2448 ::
+d_acceptConds'63'_2478 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
-  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyEnv_1844 ->
-  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyState_1876 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyEnv_1858 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyState_1890 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20
-d_acceptConds'63'_2448 v0 v1 v2 ~v3 v4
-  = du_acceptConds'63'_2448 v0 v1 v2 v4
-du_acceptConds'63'_2448 ::
+d_acceptConds'63'_2478 v0 v1 v2 ~v3 v4
+  = du_acceptConds'63'_2478 v0 v1 v2 v4
+du_acceptConds'63'_2478 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
-  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyEnv_1844 ->
-  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyState_1876 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyEnv_1858 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyState_1890 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20
-du_acceptConds'63'_2448 v0 v1 v2 v3
+du_acceptConds'63'_2478 v0 v1 v2 v3
   = coe
       MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'215''45'dec__84
       (coe
-         MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_accepted'63'_2498
+         MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_accepted'63'_2512
          (coe
-            MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_govStructure_2574
+            MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_govStructure_2634
             (coe v0))
          (coe v1)
          (coe
-            MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_es_1884 (coe v2))
+            MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_es_1898 (coe v2))
          (coe MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30 (coe v3)))
       (coe
          MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'215''45'dec__84
          (coe
             MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'8594''45'dec__106
             (coe
-               MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_delayed'63'_2386
+               MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_delayed'63'_2400
                (coe
-                  MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_govStructure_2574
+                  MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_govStructure_2634
                   (coe v0))
                (coe
-                  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_gaType_864
+                  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_gaType_878
                   (coe
-                     MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_action_1118
+                     MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_action_1132
                      (coe MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30 (coe v3))))
                (coe
-                  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_prevAction_1120
+                  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_prevAction_1134
                   (coe MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30 (coe v3)))
                (coe
-                  MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_es_1884 (coe v2))
+                  MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_es_1898 (coe v2))
                (coe
-                  MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_delay_1888
+                  MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_delay_1902
                   (coe v2)))
             (coe
                MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
@@ -176,47 +176,47 @@ du_acceptConds'63'_2448 v0 v1 v2 v3
             (coe
                MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
                (coe
-                  MAlonzo.Code.Ledger.Conway.Specification.Enact.du_HasCast'45'EnactEnv_1202)
+                  MAlonzo.Code.Ledger.Conway.Specification.Enact.du_HasCast'45'EnactEnv_1216)
                (coe
                   MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                   (coe MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe v3))
                   (coe
                      MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                      (coe
-                        MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_treasury_1868
+                        MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_treasury_1882
                         (coe v1))
                      (coe
-                        MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_currentEpoch_1862
+                        MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_currentEpoch_1876
                         (coe v1)))))
             (coe
-               MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_es_1884 (coe v2))
+               MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_es_1898 (coe v2))
             (coe
-               MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_action_1118
+               MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_action_1132
                (coe MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30 (coe v3)))
             (coe
-               MAlonzo.Code.Ledger.Conway.Specification.Enact.Properties.Computational.d_Computational'45'ENACT_1258
+               MAlonzo.Code.Ledger.Conway.Specification.Enact.Properties.Computational.d_Computational'45'ENACT_1272
                (coe
-                  MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_govStructure_2574
+                  MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_govStructure_2634
                   (coe v0)))))
 -- Ledger.Conway.Specification.Ratify.Properties.Computational.Implementation.RATIFY-total
-d_RATIFY'45'total_2452 ::
+d_RATIFY'45'total_2482 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
-  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyEnv_1844 ->
-  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyState_1876 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyEnv_1858 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyState_1890 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_RATIFY'45'total_2452 v0 v1 v2 v3
+d_RATIFY'45'total_2482 v0 v1 v2 v3
   = let v4
           = coe
-              du_acceptConds'63'_2448 (coe v0) (coe v1) (coe v2) (coe v3) in
+              du_acceptConds'63'_2478 (coe v0) (coe v1) (coe v2) (coe v3) in
     coe
       (let v5
-             = MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_expired'63'_2510
+             = MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_expired'63'_2524
                  (coe
-                    MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_govStructure_2574
+                    MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_govStructure_2634
                     (coe v0))
                  (coe
-                    MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_currentEpoch_1862
+                    MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_currentEpoch_1876
                     (coe v1))
                  (coe MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30 (coe v3)) in
        coe
@@ -236,7 +236,7 @@ d_RATIFY'45'total_2452 v0 v1 v2 v3
                                                       (coe
                                                          MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Conway.Specification.Ratify.du_HasCast'45'RatifyState_1922)
+                                                            MAlonzo.Code.Ledger.Conway.Specification.Ratify.du_HasCast'45'RatifyState_1936)
                                                          (coe
                                                             MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                             (coe v13)
@@ -260,20 +260,20 @@ d_RATIFY'45'total_2452 v0 v1 v2 v3
                                                                                  MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8)))
                                                                         v3)
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_removed_1886
+                                                                        MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_removed_1900
                                                                         (coe v2))))
                                                                (coe
-                                                                  MAlonzo.Code.Ledger.Conway.Specification.Ratify.du_delayingAction_2276
+                                                                  MAlonzo.Code.Ledger.Conway.Specification.Ratify.du_delayingAction_2290
                                                                   (coe
-                                                                     MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_gaType_864
+                                                                     MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_gaType_878
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_GovActionOf_878
+                                                                        MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_GovActionOf_892
                                                                         (coe
-                                                                           MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.du_HasGovAction'45'GovActionState_1192)
+                                                                           MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.du_HasGovAction'45'GovActionState_1206)
                                                                         (MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
                                                                            (coe v3))))))))
                                                       (coe
-                                                         MAlonzo.Code.Ledger.Conway.Specification.Ratify.C_RATIFY'45'Accept_2540
+                                                         MAlonzo.Code.Ledger.Conway.Specification.Ratify.C_RATIFY'45'Accept_2554
                                                          (coe
                                                             MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                             (coe v8) (coe v14)))
@@ -293,11 +293,11 @@ d_RATIFY'45'total_2452 v0 v1 v2 v3
                                                   (coe
                                                      MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
                                                      (coe
-                                                        MAlonzo.Code.Ledger.Conway.Specification.Ratify.du_HasCast'45'RatifyState_1922)
+                                                        MAlonzo.Code.Ledger.Conway.Specification.Ratify.du_HasCast'45'RatifyState_1936)
                                                      (coe
                                                         MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                         (coe
-                                                           MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_es_1884
+                                                           MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_es_1898
                                                            (coe v2))
                                                         (coe
                                                            MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
@@ -319,13 +319,13 @@ d_RATIFY'45'total_2452 v0 v1 v2 v3
                                                                              MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8)))
                                                                     v3)
                                                                  (coe
-                                                                    MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_removed_1886
+                                                                    MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_removed_1900
                                                                     (coe v2))))
                                                            (coe
-                                                              MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_delay_1888
+                                                              MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_delay_1902
                                                               (coe v2)))))
                                                   (coe
-                                                     MAlonzo.Code.Ledger.Conway.Specification.Ratify.C_RATIFY'45'Reject_2548
+                                                     MAlonzo.Code.Ledger.Conway.Specification.Ratify.C_RATIFY'45'Reject_2562
                                                      (coe
                                                         MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                         erased (coe v10)))
@@ -337,150 +337,150 @@ d_RATIFY'45'total_2452 v0 v1 v2 v3
                                               (coe
                                                  MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
                                                  (coe
-                                                    MAlonzo.Code.Ledger.Conway.Specification.Ratify.du_HasCast'45'RatifyState_1922)
+                                                    MAlonzo.Code.Ledger.Conway.Specification.Ratify.du_HasCast'45'RatifyState_1936)
                                                  (coe
                                                     MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                     (coe
-                                                       MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_es_1884
+                                                       MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_es_1898
                                                        (coe v2))
                                                     (coe
                                                        MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                        (coe
-                                                          MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_removed_1886
+                                                          MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_removed_1900
                                                           (coe v2))
                                                        (coe
-                                                          MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_delay_1888
+                                                          MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_delay_1902
                                                           (coe v2)))))
                                               (coe
-                                                 MAlonzo.Code.Ledger.Conway.Specification.Ratify.C_RATIFY'45'Continue_2556
+                                                 MAlonzo.Code.Ledger.Conway.Specification.Ratify.C_RATIFY'45'Continue_2570
                                                  (coe
                                                     MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                     erased erased)))
                              _ -> MAlonzo.RTE.mazUnreachableError)
             _ -> MAlonzo.RTE.mazUnreachableError))
 -- Ledger.Conway.Specification.Ratify.Properties.Computational.Implementation.computeProof
-d_computeProof_2470 ::
+d_computeProof_2500 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
-  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyEnv_1844 ->
-  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyState_1876 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyEnv_1858 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyState_1890 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Interface.ComputationalRelation.T_ComputationResult_34
-d_computeProof_2470 v0 v1 v2 v3
+d_computeProof_2500 v0 v1 v2 v3
   = coe
       MAlonzo.Code.Interface.ComputationalRelation.C_success_42
-      (coe d_RATIFY'45'total_2452 (coe v0) (coe v1) (coe v2) (coe v3))
+      (coe d_RATIFY'45'total_2482 (coe v0) (coe v1) (coe v2) (coe v3))
 -- Ledger.Conway.Specification.Ratify.Properties.Computational.Implementation.RATIFY-completeness
-d_RATIFY'45'completeness_2474 ::
+d_RATIFY'45'completeness_2504 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
-  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyEnv_1844 ->
-  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyState_1876 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyEnv_1858 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyState_1890 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
-  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyState_1876 ->
-  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T__'8866'_'8640''10631'_'44'RATIFY'10632'__2528 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyState_1890 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T__'8866'_'8640''10631'_'44'RATIFY'10632'__2542 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_RATIFY'45'completeness_2474 = erased
+d_RATIFY'45'completeness_2504 = erased
 -- Ledger.Conway.Specification.Ratify.Properties.Computational.Implementation.completeness
-d_completeness_2532 ::
+d_completeness_2562 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
-  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyEnv_1844 ->
-  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyState_1876 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyEnv_1858 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyState_1890 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
-  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyState_1876 ->
-  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T__'8866'_'8640''10631'_'44'RATIFY'10632'__2528 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyState_1890 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T__'8866'_'8640''10631'_'44'RATIFY'10632'__2542 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_completeness_2532 = erased
+d_completeness_2562 = erased
 -- Ledger.Conway.Specification.Ratify.Properties.Computational.Computational-RATIFY
-d_Computational'45'RATIFY_2534 ::
+d_Computational'45'RATIFY_2564 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   MAlonzo.Code.Interface.ComputationalRelation.T_Computational_232
-d_Computational'45'RATIFY_2534 v0
+d_Computational'45'RATIFY_2564 v0
   = coe
       MAlonzo.Code.Interface.ComputationalRelation.C_MkComputational_412
-      (d_computeProof_2470 (coe v0))
+      (d_computeProof_2500 (coe v0))
 -- Ledger.Conway.Specification.Ratify.Properties.Computational.Computational-RATIFIES
-d_Computational'45'RATIFIES_2536 ::
+d_Computational'45'RATIFIES_2566 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   MAlonzo.Code.Interface.ComputationalRelation.T_Computational_232
-d_Computational'45'RATIFIES_2536 v0
+d_Computational'45'RATIFIES_2566 v0
   = coe
       MAlonzo.Code.Interface.ComputationalRelation.du_Computational'45'ReflexiveTransitiveClosure'7495'_776
       (coe
          MAlonzo.Code.Interface.ComputationalRelation.du_Computational'45'Id_740)
-      (coe d_Computational'45'RATIFY_2534 (coe v0))
+      (coe d_Computational'45'RATIFY_2564 (coe v0))
       (coe
          MAlonzo.Code.Interface.ComputationalRelation.du_InjectError'45''8869'_728)
       (coe
          MAlonzo.Code.Interface.ComputationalRelation.du_InjectError'45''8869'_728)
 -- Ledger.Conway.Specification.Ratify.Properties.Computational.RATIFIES-total
-d_RATIFIES'45'total_2546 ::
+d_RATIFIES'45'total_2576 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
-  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyEnv_1844 ->
-  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyState_1876 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyEnv_1858 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyState_1890 ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_RATIFIES'45'total_2546 v0 v1 v2 v3
+d_RATIFIES'45'total_2576 v0 v1 v2 v3
   = coe
       MAlonzo.Code.Interface.STS.du_ReflexiveTransitiveClosure'45'total_152
       (coe
          (\ v4 v5 v6 ->
-            d_RATIFY'45'total_2452 (coe v0) (coe v4) (coe v5) (coe v6)))
+            d_RATIFY'45'total_2482 (coe v0) (coe v4) (coe v5) (coe v6)))
       (coe v1) (coe v2) (coe v3)
 -- Ledger.Conway.Specification.Ratify.Properties.Computational.RATIFIES-complete
-d_RATIFIES'45'complete_2556 ::
+d_RATIFIES'45'complete_2586 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
-  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyEnv_1844 ->
-  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyState_1876 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyEnv_1858 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyState_1890 ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] ->
-  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyState_1876 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyState_1890 ->
   MAlonzo.Code.Interface.STS.T__'8866'_'8640''10214'_'10215''42'__80 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_RATIFIES'45'complete_2556 = erased
+d_RATIFIES'45'complete_2586 = erased
 -- Ledger.Conway.Specification.Ratify.Properties.Computational.RATIFIES-total'
-d_RATIFIES'45'total''_2566 ::
+d_RATIFIES'45'total''_2596 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
-  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyEnv_1844 ->
-  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyState_1876 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyEnv_1858 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyState_1890 ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_RATIFIES'45'total''_2566 v0 v1 v2 v3
-  = coe d_RATIFIES'45'total_2546 (coe v0) (coe v1) (coe v2) (coe v3)
+d_RATIFIES'45'total''_2596 v0 v1 v2 v3
+  = coe d_RATIFIES'45'total_2576 (coe v0) (coe v1) (coe v2) (coe v3)
 -- Ledger.Conway.Specification.Ratify.Properties.Computational.RATIFIES-complete'
-d_RATIFIES'45'complete''_2576 ::
+d_RATIFIES'45'complete''_2606 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
-  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyEnv_1844 ->
-  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyState_1876 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyEnv_1858 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyState_1890 ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] ->
-  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyState_1876 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyState_1890 ->
   MAlonzo.Code.Interface.STS.T__'8866'_'8640''10214'_'10215''42'__80 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_RATIFIES'45'complete''_2576 = erased
+d_RATIFIES'45'complete''_2606 = erased
 -- Ledger.Conway.Specification.Ratify.Properties.Computational.RATIFIES-deterministic
-d_RATIFIES'45'deterministic_2588 ::
+d_RATIFIES'45'deterministic_2618 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
-  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyEnv_1844 ->
-  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyState_1876 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyEnv_1858 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyState_1890 ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] ->
-  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyState_1876 ->
-  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyState_1876 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyState_1890 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyState_1890 ->
   MAlonzo.Code.Interface.STS.T__'8866'_'8640''10214'_'10215''42'__80 ->
   MAlonzo.Code.Interface.STS.T__'8866'_'8640''10214'_'10215''42'__80 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_RATIFIES'45'deterministic_2588 = erased
+d_RATIFIES'45'deterministic_2618 = erased
 -- Ledger.Conway.Specification.Ratify.Properties.Computational.RATIFIES-deterministic-≡
-d_RATIFIES'45'deterministic'45''8801'_2610 ::
+d_RATIFIES'45'deterministic'45''8801'_2640 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
-  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyEnv_1844 ->
-  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyEnv_1844 ->
-  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyState_1876 ->
-  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyState_1876 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyEnv_1858 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyEnv_1858 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyState_1890 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyState_1890 ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] ->
-  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyState_1876 ->
-  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyState_1876 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyState_1890 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyState_1890 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 ->
   MAlonzo.Code.Interface.STS.T__'8866'_'8640''10214'_'10215''42'__80 ->
   MAlonzo.Code.Interface.STS.T__'8866'_'8640''10214'_'10215''42'__80 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_RATIFIES'45'deterministic'45''8801'_2610 = erased
+d_RATIFIES'45'deterministic'45''8801'_2640 = erased
