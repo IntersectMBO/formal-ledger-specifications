@@ -90,17 +90,7 @@ record CertEnv : Type where
     votes     : List GovVote
     wdrls     : Withdrawals
     coldCreds : ℙ Credential
-```
 
-??? info "Implementation Note"
-
-    In Phase 1, the `rewards`{.AgdaField} field of `DState`{.AgdaRecord} represents
-    the current **ADA** account balance for each registered stake credential.
-
-    In Phase 2 (multi-asset), this will be upgraded to `Credential ⇀ Value` to
-    support multi-assets.
-
-```agda
 record DState : Type where
   constructor ⟦_,_,_,_⟧ᵈ
   field
@@ -295,23 +285,13 @@ private variable
 ```agda
 rewardsBalance : DState → Coin
 rewardsBalance ds = ∑[ x ← RewardsOf ds ] x
-```
 
-??? info "Implementation Note: where `applyDirectDeposits` will be called"
-
-    **Issue #1122**.  The `LEDGER`{.AgdaDatatype} rule will call this function to
-    credit direct deposits to account balances as part of processing a transaction
-    batch.  The exact integration point is where the `DState`{.AgdaRecord} is
-    threaded through the batch.
-
-    **Phase 2**.  When `Rewards` changes to `Credential ⇀ Value`,
-    `applyDirectDeposits` will need `DirectDeposits = Credential ⇀ Value` and
-    `∪⁺` must work for `Value`-valued maps.
-
-```agda
 applyDirectDeposits : DirectDeposits → DState → DState
 applyDirectDeposits dd ds = record ds { rewards = RewardsOf ds ∪⁺ dd }
 ```
+
+The `LEDGER`{.AgdaDatatype} rule will call `applyDirectDeposits`{.AgdaFunction} to
+credit direct deposits to account balances as part of processing a transaction batch.
 
 <!--
 ```agda
