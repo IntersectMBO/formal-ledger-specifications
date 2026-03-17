@@ -4,6 +4,7 @@
 
 ### WIP
 
+- Add `Account` module with CIP-159 core types: `DirectDeposits`, `BalanceInterval`, `AccountBalanceIntervals`, `inBalanceInterval` predicate.
 - Retrieve languages of needed scripts only in UTXOW rule.
 - Add premise about maxBlockExUnits to BBODY
 - Added the validity interval as a `POSIXTimeRange` to `TxInfo`.
