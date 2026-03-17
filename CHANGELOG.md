@@ -4,6 +4,7 @@
 
 ### WIP
 
+- Add `TxBody.txDirectDeposits` and `TxBody.txBalanceIntervals` fields (CIP-159).
 - Add `Account` module with CIP-159 core types: `DirectDeposits`, `BalanceInterval`, `AccountBalanceIntervals`, `inBalanceInterval` predicate.
 - Retrieve languages of needed scripts only in UTXOW rule.
 - Add premise about maxBlockExUnits to BBODY
