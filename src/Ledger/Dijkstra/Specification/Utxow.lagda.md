@@ -28,6 +28,7 @@ private variable
   A     : Type
   Γ     : A
   s s'  : UTxOState
+  s₀ s₁ : UTxOState
   txTop : TopLevelTx
   txSub : SubLevelTx
 ```
@@ -217,84 +218,71 @@ record UTXOW-Legacy-Premises (Γ : UTxOEnv) (s : UTxOState) (txTop : TopLevelTx)
     -- (2) Version-restricted languages
     legacyLanguages     : languages p2ScriptsNeeded ⊆ dom (PParams.costmdls (PParamsOf Γ)) ∩ allowedLanguagesLegacyMode txTop (UTxOOf Γ)
     auxDataHashValid    : TxBody.txADhash (Tx.txBody txTop) ≡ map hash (Tx.txAuxData txTop)
-
-record WitnessLogicSubTx (tx : Tx ℓ) (utxo₀ : UTxO) (Γ : SubUTxOEnv) : Type where
-  constructor mkWitnessLogicSubTx
-  open Tx tx; open TxBody txBody; open TxWitnesses txWitnesses
-
-  field
-    vKeyHashesProvided : ℙ KeyHash
-    scriptsProvided    : ℙ Script
-    dataProvided       : ℙ Data
-    credentialsNeeded  : ℙ Credential
-
-  vKeyHashesNeeded : ℙ KeyHash
-  vKeyHashesNeeded = mapPartial isKeyHashObj credentialsNeeded
-
-  scriptHashesNeeded : ℙ ScriptHash
-  scriptHashesNeeded = mapPartial isScriptObj credentialsNeeded
-
-  scriptsNeeded : ℙ Script
-  scriptsNeeded = filterˢ (λ s → hash s ∈ scriptHashesNeeded) scriptsProvided
-
-  p1ScriptsNeeded    : ℙ P1Script
-  p1ScriptsNeeded = mapPartial toP1Script scriptsNeeded
-
-  p2ScriptsNeeded : ℙ P2Script
-  p2ScriptsNeeded = mapPartial toP2Script scriptsNeeded
-
-  dataHashesNeeded   : ℙ DataHash
-  dataHashesNeeded =
-    mapPartial (λ txOut@(a , _ , d , _) →
-                    do sh ← isScriptObj (payCred a)
-                       _  ← lookupHash sh p2ScriptsNeeded
-                       d >>= isInj₂)
-               (range (utxo₀ ∣ txIns))
-
-collectWitnessLogicSubTx : (tx : Tx ℓ) (Γ : SubUTxOEnv) → WitnessLogicSubTx tx (UTxOOf Γ) Γ
-collectWitnessLogicSubTx tx Γ = record
-  { vKeyHashesProvided = mapˢ hash (dom (TxWitnesses.vKeySigs (Tx.txWitnesses tx)))
-  ; scriptsProvided    = ScriptPoolOf Γ
-  ; dataProvided       = range (DataPoolOf Γ)
-  ; credentialsNeeded  = mapˢ proj₂ (credsNeeded (UTxOOf Γ) tx) }
-  where open WitnessLogic; open Tx tx; open TxBody txBody; open TxWitnesses txWitnesses; open SubUTxOEnv Γ
-
--- Define Named Premise Records (replaces long tuples and makes Computational instance much faster).
-record SUBUTXOW-Premises (Γ : SubUTxOEnv) (s : UTxOState) (tx : SubLevelTx) : Type where
-  constructor mkSUBUTXOWPremises
-  -- Re-use our centralized witness collector
-  wd = collectWitnessLogicSubTx tx Γ
-  open WitnessLogicSubTx wd
-
-  field
-    sigsValid          : ∀[ (vk , σ) ∈ TxWitnesses.vKeySigs (Tx.txWitnesses tx) ] isSigned vk (txidBytes (TxIdOf tx)) σ
-    p1ScriptsValid     : ∀[ s ∈ p1ScriptsNeeded ] validP1Script vKeyHashesProvided (TxBody.txVldt (Tx.txBody tx)) s
-    vKeyHashesSubset   : vKeyHashesNeeded ⊆ vKeyHashesProvided
-    scriptHashesSubset : scriptHashesNeeded ⊆ mapˢ hash scriptsProvided
-    dataHashesSubset   : dataHashesNeeded ⊆ mapˢ hash dataProvided
-    languageV4Only     : languages p2ScriptsNeeded ⊆ dom (PParams.costmdls (PParamsOf Γ)) ∩ ❴ PlutusV4 ❵
-    auxDataHashValid   : TxBody.txADhash (Tx.txBody tx) ≡ map hash (Tx.txAuxData tx)
-
--- These deciders use the ¿ _ ¿ syntax from the Ledger prelude to decide each field.
--- Since the WitnessLogic is computed once at the start, these are very efficient.
 ```
 -->
 
-
 ## The <span class="AgdaDatatype">SUBUTXOW</span> Transition System {#sec:the-subutxow-transition-system}
 
-Sub-transactions cannot reference or use bootstrap addresses
-
 1. All needed phase-2 scripts use Plutus language V4.
+2. Sub-transactions cannot reference or use bootstrap addresses
 
 ```agda
 data _⊢_⇀⦇_,SUBUTXOW⦈_ : SubUTxOEnv → UTxOState → SubLevelTx → UTxOState → Type where
 
   SUBUTXOW :
-    ∙ SUBUTXOW-Premises Γ s txSub
-    ∙ Γ ⊢ s ⇀⦇ txSub ,SUBUTXO⦈ s'
+    let
+      open Tx txSub
+      open TxBody txBody
+      open TxWitnesses txWitnesses
+
+      utxo₀ = UTxOOf Γ
+
+      vKeyHashesProvided : ℙ KeyHash
+      vKeyHashesProvided = mapˢ hash (dom vKeySigs)
+
+      scriptsProvided : ℙ Script
+      scriptsProvided = ScriptPoolOf Γ
+
+      dataProvided : ℙ Data
+      dataProvided = range (DataPoolOf Γ)
+
+      credentialsNeeded : ℙ Credential
+      credentialsNeeded = mapˢ proj₂ (credsNeeded utxo₀ txSub)
+
+      vKeyHashesNeeded : ℙ KeyHash
+      vKeyHashesNeeded = mapPartial isKeyHashObj credentialsNeeded
+
+      scriptHashesNeeded : ℙ ScriptHash
+      scriptHashesNeeded = mapPartial isScriptObj credentialsNeeded
+
+      scriptsNeeded : ℙ Script
+      scriptsNeeded = filterˢ (λ s → hash s ∈ scriptHashesNeeded) scriptsProvided
+
+      p1ScriptsNeeded : ℙ P1Script
+      p1ScriptsNeeded = mapPartial toP1Script scriptsNeeded
+
+      p2ScriptsNeeded : ℙ P2Script
+      p2ScriptsNeeded = mapPartial toP2Script scriptsNeeded
+
+      dataHashesNeeded : ℙ DataHash
+      dataHashesNeeded =
+        mapPartial (λ txOut@(a , _ , d , _) →
+                        do sh ← isScriptObj (payCred a)
+                           _  ← lookupHash sh p2ScriptsNeeded
+                           d >>= isInj₂)
+                   (range (utxo₀ ∣ txIns))
+    in
+    ∙ ∀[ (vk , σ) ∈ vKeySigs ] isSigned vk (txidBytes txId) σ
+    ∙ ∀[ s ∈ p1ScriptsNeeded ] validP1Script vKeyHashesProvided txVldt s
+    ∙ vKeyHashesNeeded ⊆ vKeyHashesProvided
+    ∙ scriptHashesNeeded ⊆ mapˢ hash scriptsProvided
+    ∙ dataHashesNeeded ⊆ mapˢ hash dataProvided
+    ∙ languages p2ScriptsNeeded ⊆ dom (PParams.costmdls (PParamsOf Γ)) ∩ ❴ PlutusV4 ❵ -- (1)
+    ∙ txADhash ≡ map hash txAuxData
+    ∙ (¬ UsesBootstrapAddress utxo₀ txSub) -- (2)
+    ∙ Γ ⊢ s₀ ⇀⦇ txSub ,SUBUTXO⦈ s₁
       ────────────────────────────────
-      Γ ⊢ s ⇀⦇ txSub ,SUBUTXOW⦈ s'
+      Γ ⊢ s₀ ⇀⦇ txSub ,SUBUTXOW⦈ s₁
 ```
 
 ## The <span class="AgdaDatatype">UTXOW</span> Transition System {#sec:the-utxow-transition-system}
@@ -364,6 +352,6 @@ unquoteDecl UTXOW-normal-premises = genPremises UTXOW-normal-premises (quote UTX
 unquoteDecl UTXOW-legacy-premises = genPremises UTXOW-legacy-premises (quote UTXOW-legacy)
 unquoteDecl SUBUTXOW-premises = genPremises SUBUTXOW-premises (quote SUBUTXOW)
 pattern UTXOW-normal-⋯ p₁ p₂ h = UTXOW-normal (p₁ , p₂ , h)
-pattern SUBUTXOW-⋯ p₁ p₂ p₃ p₄ p₅ p₆ p₇ h = SUBUTXOW (p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , h)
+pattern SUBUTXOW-⋯ p₀ p₁ p₂ p₃ p₄ p₅ p₆ p₇ h = SUBUTXOW (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , h)
 ```
 -->
