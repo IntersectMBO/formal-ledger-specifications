@@ -112,6 +112,29 @@ allowedLanguagesLegacyMode tx utxo =
     else fromList (PlutusV3 ∷ PlutusV2 ∷ PlutusV1 ∷ [])
 ```
 
+## Checking the script integrity hash
+
+The script integrity hash helps determining that the cost model for execution
+of a script hasn't changed since the transaction was submitted. Otherwise,
+evaluation of the script could yield a different value than expected. It also
+helps checking that the same datums and redeemers are provided every time
+a transaction is validated. See Section 2.2, Propery C.8 and the proof of
+Lemma C.10 in [VK21,](#alonzo-ledger-spec) for the details.
+
+```agda
+hashScriptIntegrity
+  : PParams
+  → ℙ Language
+  → RedeemerPtr ℓ ⇀ (Redeemer × ExUnits)
+  → ℙ Datum
+  → Maybe ScriptHash
+hashScriptIntegrity pp langs rdrms dats = nothing
+--   with rdrms ˢ ≟ ∅ˢ | langs ≟ ∅ˢ | dats ≟ ∅ˢ
+-- ...  | yes _        | yes _      | yes _ = nothing
+-- ...  | _            | _          | _     =
+--     just $ hash (dats , rdrms , mapˢ (getLanguageView pp) langs)
+```
+
 <!--
 ```agda
 -- Consolidate Witnessing Logic into a single Record
@@ -271,15 +294,22 @@ data _⊢_⇀⦇_,SUBUTXOW⦈_ : SubUTxOEnv → UTxOState → SubLevelTx → UTx
                            _  ← lookupHash sh p2ScriptsNeeded
                            d >>= isInj₂)
                    (range (utxo₀ ∣ txIns))
+
+      scriptRedeemerPtrs : ℙ (RedeemerPtr TxLevelSub)
+      scriptRedeemerPtrs = mapPartial (λ (sp , c) → if credentialToP2Script c scriptsNeeded
+                                                  then rdptr txSub sp
+                                                  else nothing) (credsNeeded utxo₀ txSub)
     in
     ∙ ∀[ (vk , σ) ∈ vKeySigs ] isSigned vk (txidBytes txId) σ
     ∙ ∀[ s ∈ p1ScriptsNeeded ] validP1Script vKeyHashesProvided txVldt s
+    ∙ (¬ UsesBootstrapAddress utxo₀ txSub) -- (2)
     ∙ vKeyHashesNeeded ⊆ vKeyHashesProvided
     ∙ scriptHashesNeeded ⊆ mapˢ hash scriptsProvided
     ∙ dataHashesNeeded ⊆ mapˢ hash dataProvided
+    ∙ dom txRedeemers ≡ᵉ scriptRedeemerPtrs
     ∙ languages p2ScriptsNeeded ⊆ dom (PParams.costmdls (PParamsOf Γ)) ∩ ❴ PlutusV4 ❵ -- (1)
     ∙ txADhash ≡ map hash txAuxData
-    ∙ (¬ UsesBootstrapAddress utxo₀ txSub) -- (2)
+    ∙ scriptIntegrityHash ≡ hashScriptIntegrity (PParamsOf Γ) (languages p2ScriptsNeeded) txRedeemers txData
     ∙ Γ ⊢ s₀ ⇀⦇ txSub ,SUBUTXO⦈ s₁
       ────────────────────────────────
       Γ ⊢ s₀ ⇀⦇ txSub ,SUBUTXOW⦈ s₁
@@ -352,6 +382,6 @@ unquoteDecl UTXOW-normal-premises = genPremises UTXOW-normal-premises (quote UTX
 unquoteDecl UTXOW-legacy-premises = genPremises UTXOW-legacy-premises (quote UTXOW-legacy)
 unquoteDecl SUBUTXOW-premises = genPremises SUBUTXOW-premises (quote SUBUTXOW)
 pattern UTXOW-normal-⋯ p₁ p₂ h = UTXOW-normal (p₁ , p₂ , h)
-pattern SUBUTXOW-⋯ p₀ p₁ p₂ p₃ p₄ p₅ p₆ p₇ h = SUBUTXOW (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , h)
+pattern SUBUTXOW-⋯ p₀ p₁ p₂ p₃ p₄ p₅ p₆ p₇ p₈ p₉ h = SUBUTXOW (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , h)
 ```
 -->

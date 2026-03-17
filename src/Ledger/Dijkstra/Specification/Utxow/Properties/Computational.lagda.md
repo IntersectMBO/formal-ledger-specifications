@@ -110,13 +110,13 @@ instance
       computeProof : ComputationResult String (∃[ s₁ ] (Γ ⊢ s₀ ⇀⦇ txSub ,SUBUTXOW⦈ s₁))
       computeProof with H?
       ... | no ¬p = failure "SUBUTXOW"
-      ... | yes (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇) =
-          map (map₂′ (λ h → SUBUTXOW {txSub = txSub} {Γ = Γ} (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , h)))
+      ... | yes (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉) =
+          map (map₂′ (λ h → SUBUTXOW {txSub = txSub} {Γ = Γ} (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , h)))
               (SUBUTXO.computeProof Γ s₀ txSub)
 
       completeness : ∀ s₁ → Γ ⊢ s₀ ⇀⦇ txSub ,SUBUTXOW⦈ s₁ → map proj₁ computeProof ≡ success s₁
-      completeness s₁ (SUBUTXOW-⋯ p₀ p₁ p₂ p₃ p₄ p₅ p₆ p₇ h) with H?
-      ... | no ¬p = ⊥-elim $ ¬p ((p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇))
+      completeness s₁ (SUBUTXOW-⋯ p₀ p₁ p₂ p₃ p₄ p₅ p₆ p₇ p₈ p₉ h) with H?
+      ... | no ¬p = ⊥-elim $ ¬p ((p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉))
       ... | yes _ with SUBUTXO.computeProof Γ s₀ txSub | SUBUTXO.completeness _ _ _ _ h
       ... | success _ | refl = refl
 

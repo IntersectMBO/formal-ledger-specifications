@@ -24,8 +24,8 @@ record indexOf : Type where
 record AbstractFunctions : Type where
   field txScriptFee     : Prices → ExUnits → Fees
         serializedSize  : Value → MemoryEstimate
+        getLanguageView : PParams → Language → LangDepView
         indexOfImp      : indexOf
-        runPLCScript    : CostModel → P2Script → ExUnits → List Data → Bool
         scriptSize      : Script → ℕ
         valContext      : TxInfo → ScriptPurpose → Data
 ```
