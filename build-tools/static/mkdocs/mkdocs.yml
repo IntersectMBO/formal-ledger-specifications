@@ -305,6 +305,16 @@ nav:
     - Prelude: Prelude.md
     - Ledger: Ledger.md
     - Ledger.Core: Ledger.Core.md
+    - Ledger.Core/:
+      - Foreign: Ledger.Core.Foreign.md
+      - Foreign/:
+        - Address: Ledger.Core.Foreign.Address.md
+        - Crypto: Ledger.Core.Foreign.Crypto.md
+        - Crypto/:
+          - Base: Ledger.Core.Foreign.Crypto.Base.md
+          - Structure: Ledger.Core.Foreign.Crypto.Structure.md
+        - Epoch: Ledger.Core.Foreign.Epoch.md
+        - ExternalFunctions: Ledger.Core.Foreign.ExternalFunctions.md
     - Ledger.Prelude: Ledger.Prelude.md
     - Ledger.Prelude/:
       - Base: Ledger.Prelude.Base.md
@@ -421,14 +431,12 @@ nav:
     - Conway:
       - Ledger.Conway: Ledger.Conway.md
       - Foreign:
-        - ExternalFunctions: Ledger.Conway.Foreign.ExternalFunctions.md
         - Foreign: Ledger.Conway.Foreign.md
         - Foreign/:
-          - BaseTypes: Ledger.Conway.Foreign.BaseTypes.md
+          - HSStructures: Ledger.Conway.Foreign.HSStructures.md
           - Cert: Ledger.Conway.Foreign.Cert.md
           - Certs: Ledger.Conway.Foreign.Certs.md
           - Chain: Ledger.Conway.Foreign.Chain.md
-          - Core: Ledger.Conway.Foreign.Core.md
           - Enact: Ledger.Conway.Foreign.Enact.md
           - Epoch: Ledger.Conway.Foreign.Epoch.md
           - ExternalStructures: Ledger.Conway.Foreign.ExternalStructures.md
@@ -443,6 +451,9 @@ nav:
           - Rewards: Ledger.Conway.Foreign.Rewards.md
           - Transaction: Ledger.Conway.Foreign.Transaction.md
           - Script: Ledger.Conway.Foreign.Script.md
+          - Script/:
+            - Base: Ledger.Conway.Foreign.Script.Base.md
+            - Structure: Ledger.Conway.Foreign.Script.Structure.md
           - Utxo: Ledger.Conway.Foreign.Utxo.md
       - Conformance: Ledger.Conway.Conformance.md
       - Conformance/:

@@ -7,4 +7,5 @@ source_path: src/Ledger/Core.lagda.md
 module Ledger.Core where
 
 import Ledger.Core.Specification
+import Ledger.Core.Foreign
 ```

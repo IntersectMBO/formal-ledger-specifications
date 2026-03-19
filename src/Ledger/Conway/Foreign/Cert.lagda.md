@@ -13,7 +13,7 @@ open import Foreign.HaskellTypes.Deriving
 open import Ledger.Prelude
 open import Ledger.Prelude.Foreign.HSTypes
 
-open import Ledger.Conway.Foreign.BaseTypes hiding (CertEnv; DCert) renaming (⟦_,_,_⟧ᶜˢ to ⟦_,_,_⟧ᶜˢ'; CertState to CertState')
+open import Ledger.Conway.Foreign.HSStructures hiding (CertEnv; DCert) renaming (⟦_,_,_⟧ᶜˢ to ⟦_,_,_⟧ᶜˢ'; CertState to CertState')
 open import Ledger.Conway.Foreign.Certs
 open import Ledger.Conway.Conformance.Certs.Properties govStructure
   using ( Computational-CERT

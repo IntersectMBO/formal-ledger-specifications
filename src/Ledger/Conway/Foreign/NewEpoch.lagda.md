@@ -13,7 +13,7 @@ open import Foreign.HaskellTypes.Deriving
 open import Ledger.Prelude
 open import Ledger.Prelude.Foreign.HSTypes
 
-open import Ledger.Conway.Foreign.BaseTypes
+open import Ledger.Conway.Foreign.HSStructures
 open import Ledger.Conway.Foreign.Epoch
 open import Ledger.Conway.Foreign.Rewards
 open import Ledger.Conway.Conformance.Equivalence.Convert
