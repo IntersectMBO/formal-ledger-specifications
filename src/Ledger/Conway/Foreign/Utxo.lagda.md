@@ -21,13 +21,13 @@ open import Data.String.Base renaming (_++_ to _+ˢ_) hiding (show; length; map;
 
 open import Ledger.Core.Foreign.Address
 open import Ledger.Core.Foreign.Crypto
-open import Ledger.Conway.Foreign.BaseTypes hiding (TxWitnesses; isScriptObj; isKeyHashObj; refScripts)
+open import Ledger.Conway.Foreign.HSStructures hiding (TxWitnesses; isScriptObj; isKeyHashObj; refScripts)
 open import Ledger.Conway.Foreign.Certs
 open import Ledger.Conway.Foreign.PParams
 open import Ledger.Conway.Foreign.Transaction
 open import Ledger.Core.Foreign.ExternalFunctions
 
-open import Ledger.Conway.Foreign.BaseTypes hiding (TxWitnesses; refScripts; isScriptObj; isKeyHashObj)
+open import Ledger.Conway.Foreign.HSStructures hiding (TxWitnesses; refScripts; isScriptObj; isKeyHashObj)
 open import Ledger.Conway.Specification.Script.Validation DummyTransactionStructure DummyAbstractFunctions
 open import Ledger.Conway.Conformance.Utxo DummyTransactionStructure DummyAbstractFunctions
 open import Ledger.Conway.Conformance.Utxow DummyTransactionStructure DummyAbstractFunctions

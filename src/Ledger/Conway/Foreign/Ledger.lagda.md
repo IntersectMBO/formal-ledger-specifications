@@ -16,7 +16,7 @@ open import Ledger.Prelude
 open import Ledger.Prelude.Foreign.HSTypes
 
 open import Ledger.Core.Foreign.ExternalFunctions
-open import Ledger.Conway.Foreign.BaseTypes
+open import Ledger.Conway.Foreign.HSStructures
 open import Ledger.Conway.Foreign.Enact
 open import Ledger.Conway.Foreign.Gov
 open import Ledger.Conway.Foreign.PParams

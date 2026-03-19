@@ -1,9 +1,9 @@
 ---
 source_branch: master
-source_path: src/Ledger/Conway/Foreign/BaseTypes.lagda.md
+source_path: src/Ledger/Conway/Foreign/HSStructures.lagda.md
 ---
 ```agda
-module Ledger.Conway.Foreign.BaseTypes where
+module Ledger.Conway.Foreign.HSStructures where
 
 open import Ledger.Core.Foreign.ExternalFunctions
 open import Ledger.Conway.Foreign.ExternalStructures dummyExternalFunctions

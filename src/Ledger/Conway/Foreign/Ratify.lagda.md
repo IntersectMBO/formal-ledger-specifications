@@ -18,7 +18,7 @@ open import Ledger.Prelude
 open import Ledger.Prelude.Foreign.HSTypes
 
 open import Ledger.Core.Foreign.Address
-open import Ledger.Conway.Foreign.BaseTypes
+open import Ledger.Conway.Foreign.HSStructures
 open import Ledger.Conway.Foreign.Certs
 open import Ledger.Conway.Foreign.Enact
 open import Ledger.Conway.Foreign.Gov.Core

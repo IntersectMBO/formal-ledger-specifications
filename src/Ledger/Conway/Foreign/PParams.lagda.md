@@ -12,7 +12,7 @@ open import Foreign.HaskellTypes.Deriving
 open import Ledger.Prelude
 open import Ledger.Prelude.Foreign.HSTypes
 
-open import Ledger.Conway.Foreign.BaseTypes
+open import Ledger.Conway.Foreign.HSStructures
 
 instance
   HsTy-LanguageCostModels = autoHsType LanguageCostModels ⊣ withConstructor "MkLanguageCostModels"

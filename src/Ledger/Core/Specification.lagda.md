@@ -1,8 +1,7 @@
 ---
 source_branch: master
-source_path: src/Ledger/Core.Specification.lagda.md
+source_path: src/Ledger/Core/Specification.lagda.md
 ---
-
 
 The submodules collected here, under the `Ledger.Core.Specification`{.AgdaModule}
 module, define some of the core types of the ledger that remain unchanged across

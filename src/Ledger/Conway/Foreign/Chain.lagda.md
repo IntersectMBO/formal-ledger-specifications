@@ -16,7 +16,7 @@ open import Ledger.Prelude.Foreign.HSTypes
 open import Ledger.Prelude.Foreign.Util
 
 open import Ledger.Core.Foreign.Crypto
-open import Ledger.Conway.Foreign.BaseTypes
+open import Ledger.Conway.Foreign.HSStructures
 open import Ledger.Conway.Foreign.NewEpoch
 open import Ledger.Conway.Foreign.Transaction
 open import Ledger.Conway.Specification.Chain it it using (BHBody; BHeader; Block)

@@ -14,7 +14,7 @@ open import Ledger.Prelude.Foreign.HSTypes
 open import Ledger.Prelude.Foreign.Util
 
 open import Ledger.Core.Foreign.Address
-open import Ledger.Conway.Foreign.BaseTypes hiding (Vote)
+open import Ledger.Conway.Foreign.HSStructures hiding (Vote)
 open import Ledger.Conway.Specification.Gov.Actions govStructure using (Vote)
 
 instance

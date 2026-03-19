@@ -14,7 +14,7 @@ open import Foreign.HaskellTypes.Deriving
 open import Ledger.Prelude
 open import Ledger.Prelude.Foreign.HSTypes
 
-open import Ledger.Conway.Foreign.BaseTypes
+open import Ledger.Conway.Foreign.HSStructures
 open import Ledger.Conway.Foreign.PParams
 open import Ledger.Core.Foreign.Address
 open import Ledger.Conway.Specification.Gov.Base

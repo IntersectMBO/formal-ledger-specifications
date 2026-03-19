@@ -13,7 +13,7 @@ open import Ledger.Prelude
 open import Ledger.Prelude.Foreign.HSTypes
 
 open import Ledger.Core.Foreign.Address
-open import Ledger.Conway.Foreign.BaseTypes
+open import Ledger.Conway.Foreign.HSStructures
 open import Ledger.Conway.Foreign.PParams
 open import Ledger.Conway.Foreign.Gov.Actions
 
