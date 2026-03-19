@@ -1,9 +1,9 @@
 ---
 source_branch: master
-source_path: src/Ledger/Conway/Foreign/HSLedger/Ledger.lagda.md
+source_path: src/Ledger/Conway/Foreign/Ledger.lagda.md
 ---
 ```agda
-module Ledger.Conway.Foreign.HSLedger.Ledger where
+module Ledger.Conway.Foreign.Ledger where
 
 open import Foreign.Convertible 
 open import Foreign.Convertible.Deriving
@@ -16,13 +16,13 @@ open import Ledger.Prelude
 open import Ledger.Prelude.Foreign.HSTypes
 
 open import Ledger.Core.Foreign.ExternalFunctions
-open import Ledger.Conway.Foreign.HSLedger.BaseTypes
-open import Ledger.Conway.Foreign.HSLedger.Enact
-open import Ledger.Conway.Foreign.HSLedger.Gov
-open import Ledger.Conway.Foreign.HSLedger.PParams
-open import Ledger.Conway.Foreign.HSLedger.Transaction
-open import Ledger.Conway.Foreign.HSLedger.Utxo
-open import Ledger.Conway.Foreign.HSLedger.Cert
+open import Ledger.Conway.Foreign.BaseTypes
+open import Ledger.Conway.Foreign.Enact
+open import Ledger.Conway.Foreign.Gov
+open import Ledger.Conway.Foreign.PParams
+open import Ledger.Conway.Foreign.Transaction
+open import Ledger.Conway.Foreign.Utxo
+open import Ledger.Conway.Foreign.Cert
 open import Ledger.Conway.Conformance.Ledger it it
 
 open Computational
@@ -36,7 +36,7 @@ instance
   Conv-LState = autoConvert LState
 
 module _ (ext : ExternalFunctions) where
-  open import Ledger.Conway.Foreign.HSLedger.ExternalStructures ext hiding (Tx; TxBody; inject)
+  open import Ledger.Conway.Foreign.ExternalStructures ext hiding (Tx; TxBody; inject)
   open import Ledger.Conway.Conformance.Ledger.Properties HSTransactionStructure HSAbstractFunctions
 
   ledger-step : HsType (LEnv → LState → Tx → ComputationResult String LState)

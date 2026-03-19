@@ -1,9 +1,9 @@
 ---
 source_branch: master
-source_path: src/Ledger/Conway/Foreign/HSLedger/Chain.lagda.md
+source_path: src/Ledger/Conway/Foreign/Chain.lagda.md
 ---
 ```agda
-module Ledger.Conway.Foreign.HSLedger.Chain where
+module Ledger.Conway.Foreign.Chain where
 
 open import Data.String using () renaming (_++_ to _+ˢ_)
 open import Foreign.Convertible
@@ -16,9 +16,9 @@ open import Ledger.Prelude.Foreign.HSTypes
 open import Ledger.Prelude.Foreign.Util
 
 open import Ledger.Core.Foreign.Crypto
-open import Ledger.Conway.Foreign.HSLedger.BaseTypes
-open import Ledger.Conway.Foreign.HSLedger.NewEpoch
-open import Ledger.Conway.Foreign.HSLedger.Transaction
+open import Ledger.Conway.Foreign.BaseTypes
+open import Ledger.Conway.Foreign.NewEpoch
+open import Ledger.Conway.Foreign.Transaction
 open import Ledger.Conway.Specification.Chain it it using (BHBody; BHeader; Block)
 import Ledger.Conway.Specification.Chain it it as ChainSpec using (ChainState)
 open import Ledger.Conway.Specification.Chain.Properties.Computational it it

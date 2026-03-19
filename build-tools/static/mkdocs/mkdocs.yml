@@ -422,29 +422,28 @@ nav:
       - Ledger.Conway: Ledger.Conway.md
       - Foreign:
         - ExternalFunctions: Ledger.Conway.Foreign.ExternalFunctions.md
-        - HSLedger: Ledger.Conway.Foreign.HSLedger.md
-        - HSLedger/:
-          - Address: Ledger.Conway.Foreign.HSLedger.Address.md
-          - BaseTypes: Ledger.Conway.Foreign.HSLedger.BaseTypes.md
-          - Cert: Ledger.Conway.Foreign.HSLedger.Cert.md
-          - Certs: Ledger.Conway.Foreign.HSLedger.Certs.md
-          - Chain: Ledger.Conway.Foreign.HSLedger.Chain.md
-          - Core: Ledger.Conway.Foreign.HSLedger.Core.md
-          - Enact: Ledger.Conway.Foreign.HSLedger.Enact.md
-          - Epoch: Ledger.Conway.Foreign.HSLedger.Epoch.md
-          - ExternalStructures: Ledger.Conway.Foreign.HSLedger.ExternalStructures.md
-          - Gov: Ledger.Conway.Foreign.HSLedger.Gov.md
+        - Foreign: Ledger.Conway.Foreign.md
+        - Foreign/:
+          - BaseTypes: Ledger.Conway.Foreign.BaseTypes.md
+          - Cert: Ledger.Conway.Foreign.Cert.md
+          - Certs: Ledger.Conway.Foreign.Certs.md
+          - Chain: Ledger.Conway.Foreign.Chain.md
+          - Core: Ledger.Conway.Foreign.Core.md
+          - Enact: Ledger.Conway.Foreign.Enact.md
+          - Epoch: Ledger.Conway.Foreign.Epoch.md
+          - ExternalStructures: Ledger.Conway.Foreign.ExternalStructures.md
+          - Gov: Ledger.Conway.Foreign.Gov.md
           - Gov/:
-            - Core: Ledger.Conway.Foreign.HSLedger.Gov.Core.md
-            - Actions: Ledger.Conway.Foreign.HSLedger.Gov.Actions.md
-          - Ledger: Ledger.Conway.Foreign.HSLedger.Ledger.md
-          - NewEpoch: Ledger.Conway.Foreign.HSLedger.NewEpoch.md
-          - PParams: Ledger.Conway.Foreign.HSLedger.PParams.md
-          - Ratify: Ledger.Conway.Foreign.HSLedger.Ratify.md
-          - Rewards: Ledger.Conway.Foreign.HSLedger.Rewards.md
-          - Transaction: Ledger.Conway.Foreign.HSLedger.Transaction.md
-          - Script: Ledger.Conway.Foreign.HSLedger.Script.md
-          - Utxo: Ledger.Conway.Foreign.HSLedger.Utxo.md
+            - Core: Ledger.Conway.Foreign.Gov.Core.md
+            - Actions: Ledger.Conway.Foreign.Gov.Actions.md
+          - Ledger: Ledger.Conway.Foreign.Ledger.md
+          - NewEpoch: Ledger.Conway.Foreign.NewEpoch.md
+          - PParams: Ledger.Conway.Foreign.PParams.md
+          - Ratify: Ledger.Conway.Foreign.Ratify.md
+          - Rewards: Ledger.Conway.Foreign.Rewards.md
+          - Transaction: Ledger.Conway.Foreign.Transaction.md
+          - Script: Ledger.Conway.Foreign.Script.md
+          - Utxo: Ledger.Conway.Foreign.Utxo.md
       - Conformance: Ledger.Conway.Conformance.md
       - Conformance/:
         - Certs: Ledger.Conway.Conformance.Certs.md

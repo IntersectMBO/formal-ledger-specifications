@@ -1,9 +1,9 @@
 ---
 source_branch: master
-source_path: src/Ledger/Conway/Foreign/HSLedger/PParams.lagda.md
+source_path: src/Ledger/Conway/Foreign/PParams.lagda.md
 ---
 ```agda
-module Ledger.Conway.Foreign.HSLedger.PParams where
+module Ledger.Conway.Foreign.PParams where
 
 open import Foreign.Convertible
 open import Foreign.Convertible.Deriving
@@ -12,7 +12,7 @@ open import Foreign.HaskellTypes.Deriving
 open import Ledger.Prelude
 open import Ledger.Prelude.Foreign.HSTypes
 
-open import Ledger.Conway.Foreign.HSLedger.BaseTypes
+open import Ledger.Conway.Foreign.BaseTypes
 
 instance
   HsTy-LanguageCostModels = autoHsType LanguageCostModels ⊣ withConstructor "MkLanguageCostModels"

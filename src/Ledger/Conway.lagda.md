@@ -13,7 +13,7 @@ import Ledger.Conway.Specification
 import Ledger.Conway.Conformance
 
 -- ** Haskell code extraction
-import Ledger.Conway.Foreign.HSLedger
+import Ledger.Conway.Foreign
 
 -- ** Not currently used
 import Foreign.Convertible.DerivingTest

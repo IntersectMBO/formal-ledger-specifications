@@ -1,9 +1,9 @@
 ---
 source_branch: master
-source_path: src/Ledger/Conway/Foreign/HSLedger/Rewards.lagda.md
+source_path: src/Ledger/Conway/Foreign/Rewards.lagda.md
 ---
 ```agda
-module Ledger.Conway.Foreign.HSLedger.Rewards where
+module Ledger.Conway.Foreign.Rewards where
 
 import Data.Integer as ℤ
 import Data.String as S
@@ -15,9 +15,9 @@ open import Ledger.Prelude
 open import Ledger.Prelude.Foreign.HSTypes
 open import Ledger.Prelude.Foreign.Util
 
-open import Ledger.Conway.Foreign.HSLedger.BaseTypes
+open import Ledger.Conway.Foreign.BaseTypes
 open import Ledger.Core.Foreign.Address
-open import Ledger.Conway.Foreign.HSLedger.Certs
+open import Ledger.Conway.Foreign.Certs
 
 open import Ledger.Conway.Conformance.Rewards it it
 

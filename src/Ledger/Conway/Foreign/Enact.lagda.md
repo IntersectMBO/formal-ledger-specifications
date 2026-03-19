@@ -1,9 +1,9 @@
 ---
 source_branch: master
-source_path: src/Ledger/Conway/Foreign/HSLedger/Enact.lagda.md
+source_path: src/Ledger/Conway/Foreign/Enact.lagda.md
 ---
 ```agda
-module Ledger.Conway.Foreign.HSLedger.Enact where
+module Ledger.Conway.Foreign.Enact where
 
 open import Foreign.Convertible
 open import Foreign.Convertible.Deriving
@@ -13,9 +13,9 @@ open import Ledger.Prelude
 open import Ledger.Prelude.Foreign.HSTypes
 
 open import Ledger.Core.Foreign.Address
-open import Ledger.Conway.Foreign.HSLedger.BaseTypes
-open import Ledger.Conway.Foreign.HSLedger.PParams
-open import Ledger.Conway.Foreign.HSLedger.Gov.Actions
+open import Ledger.Conway.Foreign.BaseTypes
+open import Ledger.Conway.Foreign.PParams
+open import Ledger.Conway.Foreign.Gov.Actions
 
 open import Ledger.Conway.Specification.Enact govStructure
 open import Ledger.Conway.Specification.Enact.Properties.Computational govStructure

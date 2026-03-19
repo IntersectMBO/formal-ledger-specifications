@@ -1,9 +1,9 @@
 ---
 source_branch: master
-source_path: src/Ledger/Conway/Foreign/HSLedger/Epoch.lagda.md
+source_path: src/Ledger/Conway/Foreign/Epoch.lagda.md
 ---
 ```agda
-module Ledger.Conway.Foreign.HSLedger.Epoch where
+module Ledger.Conway.Foreign.Epoch where
 
 open import Foreign.Convertible
 open import Foreign.Convertible.Deriving
@@ -12,12 +12,12 @@ open import Foreign.HaskellTypes.Deriving
 open import Ledger.Prelude
 open import Ledger.Prelude.Foreign.HSTypes
 
-open import Ledger.Conway.Foreign.HSLedger.BaseTypes
-open import Ledger.Conway.Foreign.HSLedger.Enact
-open import Ledger.Conway.Foreign.HSLedger.Ledger
-open import Ledger.Conway.Foreign.HSLedger.PParams
-open import Ledger.Conway.Foreign.HSLedger.Ratify
-open import Ledger.Conway.Foreign.HSLedger.Rewards
+open import Ledger.Conway.Foreign.BaseTypes
+open import Ledger.Conway.Foreign.Enact
+open import Ledger.Conway.Foreign.Ledger
+open import Ledger.Conway.Foreign.PParams
+open import Ledger.Conway.Foreign.Ratify
+open import Ledger.Conway.Foreign.Rewards
 open import Ledger.Conway.Conformance.Equivalence.Convert
 open import Ledger.Conway.Conformance.Epoch it it
 open import Ledger.Conway.Conformance.Epoch.Properties it it

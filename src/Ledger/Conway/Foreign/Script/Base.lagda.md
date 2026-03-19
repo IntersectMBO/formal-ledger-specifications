@@ -1,10 +1,10 @@
 ---
 source_branch: master
-source_path: src/Ledger/Conway/Foreign/HSLedger/Script/Base.lagda.md
+source_path: src/Ledger/Conway/Foreign/Script/Base.lagda.md
 ---
 ```agda
 
-module Ledger.Conway.Foreign.HSLedger.Script.Base
+module Ledger.Conway.Foreign.Script.Base
   where
 
 open import Foreign.HaskellTypes.Deriving
