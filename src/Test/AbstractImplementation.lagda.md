@@ -36,7 +36,6 @@ SVAbstractFunctions = record
     ; indexOfVote           = λ _ _ → nothing
     ; indexOfProposal       = λ _ _ → nothing
     }
-  ; runPLCScript = λ { x (sh , script) x₂ x₃ → script x₃ }
   ; scriptSize = λ _ → 0
   ; valContext = valContext'
   ; UTCTime = ℕ

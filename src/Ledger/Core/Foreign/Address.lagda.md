@@ -1,16 +1,20 @@
 ---
 source_branch: master
-source_path: src/Ledger/Conway/Foreign/HSLedger/Address.lagda.md
+source_path: src/Ledger/Core/Foreign/Address.lagda.md
 ---
 ```agda
-module Ledger.Conway.Foreign.HSLedger.Address where
+module Ledger.Core.Foreign.Address where
 
-open import Ledger.Conway.Foreign.HSLedger.BaseTypes
+open import Ledger.Prelude
+open import Ledger.Prelude.Foreign.HSTypes
+open import Ledger.Core.Specification.Address ℕ ℕ ℕ ⦃ it ⦄ ⦃ it ⦄ ⦃ it ⦄
+
+open import Foreign.Convertible 
+open import Foreign.Convertible.Deriving
+open import Foreign.HaskellTypes.Deriving
+open import stdlib.Foreign.Haskell.Empty
 
 instance
-  HsTy-HSVKey = autoHsType HSVKey
-  Conv-HSVKey = autoConvert HSVKey
-
   HsTy-Credential = autoHsType Credential
   Conv-Credential = autoConvert Credential
 

@@ -4,13 +4,17 @@ module MAlonzo.Code.Ledger.Foreign.API
   ) where
 
 import MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes                   as X
-  (HSSet(..), HSMap(..), ComputationResult(..), Rational(..))
-import MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address           as X
-  (Credential(..), BaseAddr(..), BootstrapAddr(..), RewardAddress(..), Addr, HSVKey (..))
+  (HSSet(..), HSMap(..), ComputationResult(..), Rational(..), Coin)
+import MAlonzo.Code.Ledger.Core.Foreign.Address           as X
+  (Credential(..), BaseAddr(..), BootstrapAddr(..), RewardAddress(..), Addr)
+import MAlonzo.Code.Ledger.Core.Foreign.Crypto.Base           as X
+  (HSVKey(..))
+import MAlonzo.Code.Ledger.Core.Foreign.Epoch           as X
+  (Epoch)
 import MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.PParams           as X
   (LanguageCostModels(..), DrepThresholds(..), PoolThresholds(..), Acnt(..), PParams(..), PParamsUpdate(..))
 import MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Transaction       as X
-  ( Tag(..), Timelock(..), TxWitnesses(..), TxBody(..), Tx(..), TxId, Ix, TxIn, P1Script, P2Script
+  ( Tag(..), Timelock(..), TxWitnesses(..), TxBody(..), Tx(..), TxId, Ix, TxIn, ExUnits, P1Script, P2Script
   , Script, Datum, DataHash, Value, TxOut, RdmrPtr, ScriptHash, AuxiliaryData, Withdrawals
   , HSTimelock (..), HSPlutusScript (..))
 import MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Cert              as X
@@ -42,10 +46,8 @@ import MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Rewards           as X
 import MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Utxo              as X
   ( UTxOEnv(..), UTxOState(..), UTxO, utxoStep, utxowStep, Redeemer
   , utxoDebug, utxowDebug)
-import MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes         as X
-  (Coin, ExUnits, Epoch)
-import MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Script         as X
-  (HSLanguage (..))
-import MAlonzo.Code.Ledger.Conway.Foreign.ExternalFunctions          as X
+import MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Script.Base      as X
+  (HSLanguage(..))
+import MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions           as X
   (ExternalFunctions(..), dummyExternalFunctions)
 

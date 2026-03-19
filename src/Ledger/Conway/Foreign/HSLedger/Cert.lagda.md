@@ -5,15 +5,23 @@ source_path: src/Ledger/Conway/Foreign/HSLedger/Cert.lagda.md
 ```agda
 module Ledger.Conway.Foreign.HSLedger.Cert where
 
+open import Foreign.Convertible
+open import Foreign.Convertible.Deriving
+open import Foreign.HaskellTypes
+open import Foreign.HaskellTypes.Deriving
+
+open import Ledger.Prelude
+open import Ledger.Prelude.Foreign.HSTypes
+
 open import Ledger.Conway.Foreign.HSLedger.BaseTypes hiding (CertEnv; DCert) renaming (⟦_,_,_⟧ᶜˢ to ⟦_,_,_⟧ᶜˢ'; CertState to CertState')
 open import Ledger.Conway.Foreign.HSLedger.Certs
-
 open import Ledger.Conway.Conformance.Certs.Properties govStructure
   using ( Computational-CERT
         ; Computational-CERTS
         )
-
 open import Ledger.Conway.Conformance.Certs govStructure
+
+open Computational
 
 instance
   HsTy-CertState = autoHsType CertState ⊣ withConstructor "MkCertState"

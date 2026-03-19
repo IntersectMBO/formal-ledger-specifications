@@ -48,7 +48,6 @@ record AbstractFunctions : Type₁ where
         txscriptfee  : Prices → ExUnits → Coin
         serSize      : Value → MemoryEstimate
         indexOfImp   : indexOf
-        runPLCScript : CostModel → P2Script → ExUnits → List Data → Bool
         scriptSize   : Script → ℕ
         valContext   : TxInfo → ScriptPurpose → Data
         getLanguageView : PParams → Language → LangDepView

@@ -7,9 +7,16 @@ module Ledger.Conway.Foreign.HSLedger.Rewards where
 
 import Data.Integer as ℤ
 import Data.String as S
+open import Foreign.Convertible
+open import Foreign.Convertible.Deriving
+open import Foreign.HaskellTypes.Deriving
 
-open import Ledger.Conway.Foreign.HSLedger.Address
+open import Ledger.Prelude
+open import Ledger.Prelude.Foreign.HSTypes
+open import Ledger.Prelude.Foreign.Util
+
 open import Ledger.Conway.Foreign.HSLedger.BaseTypes
+open import Ledger.Core.Foreign.Address
 open import Ledger.Conway.Foreign.HSLedger.Certs
 
 open import Ledger.Conway.Conformance.Rewards it it
@@ -35,6 +42,7 @@ instance
 record HsRewardUpdate : Type where
   field Δt Δr Δf : ℤ
         rs : HsType (Credential ⇀ Coin)
+
 {-# FOREIGN GHC
   data HsRewardUpdate = MkRewardUpdate
     { deltaT  :: Integer
@@ -42,7 +50,7 @@ record HsRewardUpdate : Type where
     , deltaF  :: Integer
     , rs      ::
         MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.HSMap
-          MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.Credential
+          MAlonzo.Code.Ledger.Core.Foreign.Address.Credential
           Integer
     }
     deriving (Eq, Show)

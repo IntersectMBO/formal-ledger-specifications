@@ -7,24 +7,32 @@ source_path: src/Ledger/Conway/Foreign/HSLedger/Utxo.lagda.md
 
 module Ledger.Conway.Foreign.HSLedger.Utxo where
 
-open import Ledger.Prelude
+open import Foreign.Convertible 
+open import Foreign.Convertible.Deriving
+open import Foreign.Haskell
+open import Foreign.Haskell.Coerce
+open import Foreign.HaskellTypes
+open import Foreign.HaskellTypes.Deriving
 
-open import Ledger.Conway.Foreign.ExternalFunctions
+open import Ledger.Prelude
+open import Ledger.Prelude.Foreign.HSTypes
 
 open import Data.String.Base renaming (_++_ to _+ˢ_) hiding (show; length; map; fromList)
 
-open import Ledger.Conway.Foreign.HSLedger.Core
-open import Ledger.Conway.Foreign.HSLedger.Address
+open import Ledger.Core.Foreign.Address
+open import Ledger.Core.Foreign.Crypto
+open import Ledger.Conway.Foreign.HSLedger.BaseTypes hiding (TxWitnesses; isScriptObj; isKeyHashObj; refScripts)
 open import Ledger.Conway.Foreign.HSLedger.Certs
 open import Ledger.Conway.Foreign.HSLedger.PParams
 open import Ledger.Conway.Foreign.HSLedger.Transaction
-
-open import Foreign.Haskell.Coerce
+open import Ledger.Core.Foreign.ExternalFunctions
 
 open import Ledger.Conway.Foreign.HSLedger.BaseTypes hiding (TxWitnesses; refScripts; isScriptObj; isKeyHashObj)
 open import Ledger.Conway.Specification.Script.Validation DummyTransactionStructure DummyAbstractFunctions
 open import Ledger.Conway.Conformance.Utxo DummyTransactionStructure DummyAbstractFunctions
 open import Ledger.Conway.Conformance.Utxow DummyTransactionStructure DummyAbstractFunctions
+
+open Computational
 
 instance
   HsTy-UTxOEnv = autoHsType UTxOEnv ⊣ withConstructor "MkUTxOEnv"

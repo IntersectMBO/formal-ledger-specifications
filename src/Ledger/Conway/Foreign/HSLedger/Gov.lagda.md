@@ -5,21 +5,28 @@ source_path: src/Ledger/Conway/Foreign/HSLedger/Gov.lagda.md
 ```agda
 module Ledger.Conway.Foreign.HSLedger.Gov where
 
-open import Ledger.Prelude using (Type)
+open import Foreign.Convertible
+open import Foreign.Convertible.Deriving
+open import Foreign.HaskellTypes
+open import Foreign.HaskellTypes.Deriving
 
-open import Ledger.Conway.Foreign.HSLedger.Address
+open import Ledger.Prelude
+open import Ledger.Prelude.Foreign.HSTypes
+
+open import Ledger.Core.Foreign.Address
 open import Ledger.Conway.Foreign.HSLedger.BaseTypes
 open import Ledger.Conway.Foreign.HSLedger.Enact
 open import Ledger.Conway.Foreign.HSLedger.PParams
 open import Ledger.Conway.Foreign.HSLedger.Gov.Core
 open import Ledger.Conway.Foreign.HSLedger.Gov.Actions
 open import Ledger.Conway.Foreign.HSLedger.Cert
-
 open import Ledger.Conway.Conformance.Certs govStructure
 open import Ledger.Conway.Specification.Enact govStructure
 open import Ledger.Conway.Conformance.Gov it it
 import Ledger.Conway.Specification.Gov govStructure as L
 open import Ledger.Conway.Specification.Gov.Properties.Computational it
+
+open Computational
 
 instance
 

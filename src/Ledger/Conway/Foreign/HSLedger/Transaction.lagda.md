@@ -5,7 +5,15 @@ source_path: src/Ledger/Conway/Foreign/HSLedger/Transaction.lagda.md
 ```agda
 module Ledger.Conway.Foreign.HSLedger.Transaction where
 
-open import Ledger.Conway.Foreign.HSLedger.Address
+open import Foreign.Convertible
+open import Foreign.Convertible.Deriving
+open import Foreign.HaskellTypes.Deriving
+
+open import Ledger.Prelude
+open import Ledger.Prelude.Foreign.HSTypes
+
+open import Ledger.Core.Foreign.Address
+open import Ledger.Core.Foreign.Crypto.Base
 open import Ledger.Conway.Foreign.HSLedger.BaseTypes
 open import Ledger.Conway.Foreign.HSLedger.Certs
 open import Ledger.Conway.Foreign.HSLedger.Gov.Core
@@ -42,6 +50,7 @@ unquoteDecl = do
   hsTypeAlias TxId
   hsTypeAlias Ix
   hsTypeAlias TxIn
+  hsTypeAlias ExUnits
   hsTypeAlias P1Script
   hsTypeAlias P2Script ⊣ withName "P2Script"
   hsTypeAlias Script
