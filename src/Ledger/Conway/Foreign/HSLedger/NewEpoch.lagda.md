@@ -5,15 +5,22 @@ source_path: src/Ledger/Conway/Foreign/HSLedger/NewEpoch.lagda.md
 ```agda
 module Ledger.Conway.Foreign.HSLedger.NewEpoch where
 
+import Data.String as S
+open import Foreign.Convertible
+open import Foreign.Convertible.Deriving
+open import Foreign.HaskellTypes.Deriving
+
+open import Ledger.Prelude
+open import Ledger.Prelude.Foreign.HSTypes
+
 open import Ledger.Conway.Foreign.HSLedger.BaseTypes
 open import Ledger.Conway.Foreign.HSLedger.Epoch
 open import Ledger.Conway.Foreign.HSLedger.Rewards
-
 open import Ledger.Conway.Conformance.Equivalence.Convert
 open import Ledger.Conway.Conformance.Epoch it it
 open import Ledger.Conway.Conformance.Epoch.Properties it it
 
-import Data.String as S
+open Computational
 
 instance
   Show-NEWEPOCH : ∀ {eps e eps'} → Show (_ EpochSpec.⊢ eps ⇀⦇ e ,NEWEPOCH⦈ eps')

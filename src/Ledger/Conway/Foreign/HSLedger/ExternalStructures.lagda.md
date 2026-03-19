@@ -3,111 +3,38 @@ source_branch: master
 source_path: src/Ledger/Conway/Foreign/HSLedger/ExternalStructures.lagda.md
 ---
 ```agda
-open import Ledger.Conway.Foreign.ExternalFunctions
+open import Ledger.Core.Foreign.ExternalFunctions
 
 module Ledger.Conway.Foreign.HSLedger.ExternalStructures (externalFunctions : ExternalFunctions) where
 
-import      Data.Rational as ℚ using (pos) -- import an instance
-
-open import Ledger.Core.Specification.Crypto
-open import Ledger.Core.Specification.Epoch
-open import Ledger.Conway.Foreign.HSLedger.Core
-import Data.Fin
-import Data.List.Sort
 open import Data.Nat.Instances using (ℕ-≤-isDecTotalOrder)
 open import Relation.Binary.Bundles
 open import Data.Product.Relation.Binary.Lex.NonStrict using (×-isDecTotalOrder)
 open import Data.Sum.Relation.Binary.LeftOrder using (⊎-<-isDecTotalOrder)
-
 open import Tactic.Derive.Show
+import Data.Fin
+import Data.List.Sort
 
-HSGlobalConstants = GlobalConstants ∋ record {Implementation}
+open import Ledger.Prelude
 
-instance
-  HSEpochStructure = EpochStructure  ∋ ℕEpochStructure HSGlobalConstants
-
-  HSCryptoStructure : CryptoStructure
-  HSCryptoStructure = record
-    { Implementation
-    ; pkk = HSPKKScheme
-    }
-    where
-    open ExternalFunctions externalFunctions
-    HSPKKScheme : PKKScheme
-    HSPKKScheme = record
-      { Implementation
-      ; isSigned         = λ a b m → extIsSigned (HSVKey.hvkVKey a) b m ≡ true
-      ; sign             = λ _ _ → zero
-        -- we can't prove correctness since the function is provided by the Haskell implementation
-      ; isSigned-correct = error "isSigned-correct evaluated"
-      ; Dec-isSigned     = ⁇ (_ ≟ _)
-      }
-
-open import Ledger.Conway.Specification.Script.Base it it 
-open import Ledger.Conway.Specification.Script.Timelock it it public
-
-record HSTimelock : Type where
-  field
-    timelock     : Timelock
-    tlScriptHash : ℕ
-    tlScriptSize : ℕ
+open import Ledger.Core.Foreign.Epoch
+open import Ledger.Core.Foreign.Address
+open import Ledger.Conway.Specification.Transaction public
+open import Ledger.Core.Foreign.Crypto externalFunctions
+open import Ledger.Conway.Foreign.HSLedger.Script externalFunctions public
 
 instance
-  Hashable-HSTimelock : Hashable HSTimelock ℕ
-  Hashable-HSTimelock .hash = HSTimelock.tlScriptHash
+  _ = HSCryptoStructure
+  _ = HSEpochStructure
+  _ = HSGlobalConstants
+  _ = HSScriptStructure
 
-unquoteDecl DecEq-HSTimelock = derive-DecEq ((quote HSTimelock , DecEq-HSTimelock) ∷ [])
-
-open import Ledger.Conway.Foreign.HSLedger.Script public
-
-P1ScriptStructure-HTL : P1ScriptStructure
-P1ScriptStructure-HTL = record
-  { P1Script = HSTimelock
-  ; validP1Script = λ x y → evalTimelock x y ∘ HSTimelock.timelock }
-
-record HSPlutusScript : Type where
-  constructor MkHSPlutusScript
-  field psScriptHash : ℕ
-        psScriptSize : ℕ
-        psScriptLanguage : HSLanguage
-
-instance
-  Hashable-HSPlutusScript : Hashable HSPlutusScript ℕ
-  Hashable-HSPlutusScript .hash = HSPlutusScript.psScriptHash
-
-instance
-  HSScriptStructure : ScriptStructure
-  HSScriptStructure = record
-    { p1s = P1ScriptStructure-HTL
-    ; hashRespectsUnion = hashRespectsUnion
-    ; ps = HSP2ScriptStructure
-    }
-    where
-      hashRespectsUnion : ∀ {A B ℍ}
-        → Hashable A ℍ → Hashable B ℍ
-        → Hashable (A ⊎ B) ℍ
-      hashRespectsUnion a _ .hash (inj₁ x) = hash ⦃ a ⦄ x
-      hashRespectsUnion _ b .hash (inj₂ y) = hash ⦃ b ⦄ y
-
-      open ExternalFunctions externalFunctions
-      HSP2ScriptStructure : PlutusStructure
-      HSP2ScriptStructure = record
-        { Implementation
-        ; Language = HSLanguage
-        ; PlutusV1 = PV1
-        ; PlutusV2 = PV2
-        ; PlutusV3 = PV3
-        ; language = λ z → HSPlutusScript.psScriptLanguage z
-        ; validPlutusScript = λ _ _ _ _ → extValidPlutusScript ≡ true
-        ; PlutusScript = HSPlutusScript
-        }
-
+module Crypto = CryptoStructure it
 open import Ledger.Conway.Specification.PParams it it it hiding (Acnt; DrepThresholds; PoolThresholds)
 
 HsGovParams : GovParams
 HsGovParams = record
-  { Implementation
-  ; ppUpd = let open PParamsDiff in λ where
+  { ppUpd = let open PParamsDiff in λ where
       .UpdateT      → PParamsUpdate
       .updateGroups → modifiedUpdateGroups
       .applyUpdate  → applyPParamsUpdate
@@ -137,19 +64,25 @@ HsGovParams = record
             paramsWellFormed pp →
             paramsWellFormed (applyPParamsUpdate pp u))
 
+open import Ledger.Conway.Specification.TokenAlgebra.Coin Crypto.ScriptHash
+   using (Coin-TokenAlgebra)
+
 instance
   HSTransactionStructure : TransactionStructure
   HSTransactionStructure = record
-    { Implementation
-    ; POSIXTimeRange = ⊤
-    ; epochStructure  = HSEpochStructure
-    ; globalConstants = HSGlobalConstants
-    ; cryptoStructure = HSCryptoStructure
+    { TxId            = ℕ
+    ; Ix              = ℕ
+    ; AuxiliaryData   = ℕ
+    ; POSIXTimeRange  = ⊤
+    ; epochStructure  = it
+    ; globalConstants = it
+    ; cryptoStructure = it
     ; govParams       = HsGovParams
     ; txidBytes       = id
-    ; scriptStructure = HSScriptStructure
+    ; scriptStructure = it
     ; adHashingScheme = isHashableSet-ℕ
     ; Hashable-ScriptIntegrity = record { hash = λ x → 0 }
+    ; tokenAlgebra    = Coin-TokenAlgebra
     }
 
 open TransactionStructure HSTransactionStructure public
@@ -160,8 +93,7 @@ open import Ledger.Conway.Specification.Abstract it
 instance
   HSAbstractFunctions : AbstractFunctions
   HSAbstractFunctions = record
-    { Implementation
-    ; txscriptfee = λ tt y → 0
+    { txscriptfee = λ tt y → 0
     ; serSize     = λ v → 0
     ; indexOfImp  = record
       { indexOfDCert          =
@@ -182,7 +114,6 @@ instance
       ; indexOfProposal       =
           λ x xs → Data.Fin.toℕ <$> findIndexᵇ (==-GovProposal x) xs
       }
-    ; runPLCScript = λ _ _ _ _ → true
     ; scriptSize = λ where
         (inj₁ x) → HSTimelock.tlScriptSize x
         (inj₂ x) → HSPlutusScript.psScriptSize x
@@ -205,7 +136,4 @@ instance
             ℕ-≤-isDecTotalOrder
             (⊎-<-isDecTotalOrder ℕ-≤-isDecTotalOrder ℕ-≤-isDecTotalOrder)
       }
-
-
-open import Ledger.Core.Specification.Address Network KeyHash ScriptHash using () public
 ```

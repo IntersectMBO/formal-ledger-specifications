@@ -5,16 +5,27 @@ source_path: src/Ledger/Conway/Foreign/HSLedger/Chain.lagda.md
 ```agda
 module Ledger.Conway.Foreign.HSLedger.Chain where
 
+open import Data.String using () renaming (_++_ to _+ˢ_)
+open import Foreign.Convertible
+open import Foreign.Convertible.Deriving
+open import Foreign.HaskellTypes
+open import Foreign.HaskellTypes.Deriving
+
+open import Ledger.Prelude
+open import Ledger.Prelude.Foreign.HSTypes
+open import Ledger.Prelude.Foreign.Util
+
+open import Ledger.Core.Foreign.Crypto
 open import Ledger.Conway.Foreign.HSLedger.BaseTypes
 open import Ledger.Conway.Foreign.HSLedger.NewEpoch
 open import Ledger.Conway.Foreign.HSLedger.Transaction
-
 open import Ledger.Conway.Specification.Chain it it using (BHBody; BHeader; Block)
 import Ledger.Conway.Specification.Chain it it as ChainSpec using (ChainState)
 open import Ledger.Conway.Specification.Chain.Properties.Computational it it
 open import Ledger.Conway.Conformance.Epoch it it
 open import Ledger.Conway.Conformance.Equivalence.Convert
-open import Data.String using () renaming (_++_ to _+ˢ_)
+
+open Computational
 
 record ChainState : Type where
   field
@@ -29,9 +40,6 @@ record HSBlock : Type where
     bBodyHash   : KeyHash
 
 instance
-  HsTy-VKey = autoHsType HSVKey
-  Conv-VKey = autoConvert HSVKey
-
   HsTy-ChainState = autoHsType ChainState
   Conv-ChainState = autoConvert ChainState
 

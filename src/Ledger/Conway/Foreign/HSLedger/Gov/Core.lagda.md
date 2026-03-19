@@ -5,8 +5,16 @@ source_path: src/Ledger/Conway/Foreign/HSLedger/Gov/Core.lagda.md
 ```agda
 module Ledger.Conway.Foreign.HSLedger.Gov.Core where
 
-open import Ledger.Conway.Foreign.HSLedger.Address
-open import Ledger.Conway.Foreign.HSLedger.BaseTypes
+open import Foreign.Convertible
+open import Foreign.Convertible.Deriving
+open import Foreign.HaskellTypes.Deriving
+
+open import Ledger.Prelude
+open import Ledger.Prelude.Foreign.HSTypes
+open import Ledger.Prelude.Foreign.Util
+
+open import Ledger.Core.Foreign.Address
+open import Ledger.Conway.Foreign.HSLedger.BaseTypes hiding (Vote)
 open import Ledger.Conway.Specification.Gov.Actions govStructure using (Vote)
 
 instance

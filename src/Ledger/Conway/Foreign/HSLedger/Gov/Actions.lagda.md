@@ -6,14 +6,20 @@ source_path: src/Ledger/Conway/Foreign/HSLedger/Gov/Actions.lagda.md
 module Ledger.Conway.Foreign.HSLedger.Gov.Actions where
 
 open import Data.Rational using (ℚ)
+open import Foreign.Convertible
+open import Foreign.Convertible.Deriving
+open import Foreign.HaskellTypes
+open import Foreign.HaskellTypes.Deriving
 
-open import Ledger.Conway.Foreign.HSLedger.Address
+open import Ledger.Prelude
+open import Ledger.Prelude.Foreign.HSTypes
+
 open import Ledger.Conway.Foreign.HSLedger.BaseTypes
 open import Ledger.Conway.Foreign.HSLedger.PParams
-
-open import Ledger.Core.Specification.ProtocolVersion
+open import Ledger.Core.Foreign.Address
 open import Ledger.Conway.Specification.Gov.Base
 open import Ledger.Conway.Specification.Gov.Actions govStructure using (Vote) public
+open import Ledger.Core.Specification.ProtocolVersion
 
 DocHash = GovStructure.DocHash govStructure
 

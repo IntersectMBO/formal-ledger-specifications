@@ -5,20 +5,27 @@ source_path: src/Ledger/Conway/Foreign/HSLedger/Ledger.lagda.md
 ```agda
 module Ledger.Conway.Foreign.HSLedger.Ledger where
 
-open import Ledger.Conway.Foreign.HSLedger.Address
+open import Foreign.Convertible 
+open import Foreign.Convertible.Deriving
+open import Foreign.Haskell
+open import Foreign.Haskell.Coerce
+open import Foreign.HaskellTypes
+open import Foreign.HaskellTypes.Deriving
+
+open import Ledger.Prelude
+open import Ledger.Prelude.Foreign.HSTypes
+
+open import Ledger.Core.Foreign.ExternalFunctions
 open import Ledger.Conway.Foreign.HSLedger.BaseTypes
-open import Ledger.Conway.Foreign.HSLedger.Certs
 open import Ledger.Conway.Foreign.HSLedger.Enact
 open import Ledger.Conway.Foreign.HSLedger.Gov
 open import Ledger.Conway.Foreign.HSLedger.PParams
 open import Ledger.Conway.Foreign.HSLedger.Transaction
 open import Ledger.Conway.Foreign.HSLedger.Utxo
 open import Ledger.Conway.Foreign.HSLedger.Cert
-
 open import Ledger.Conway.Conformance.Ledger it it
 
-open import Ledger.Conway.Foreign.ExternalFunctions
-open import Foreign.Haskell.Coerce
+open Computational
 
 instance
   HsTy-LEnv = autoHsType LEnv ⊣ withConstructor "MkLEnv"

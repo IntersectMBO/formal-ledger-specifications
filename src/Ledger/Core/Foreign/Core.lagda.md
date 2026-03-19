@@ -1,13 +1,11 @@
 ---
 source_branch: master
-source_path: src/Ledger/Conway/Foreign/HSLedger/Core.lagda.md
+source_path: src/Ledger/Core/Foreign/Core.lagda.md
 ---
 ```agda
-module Ledger.Conway.Foreign.HSLedger.Core where
+module Ledger.Core.Foreign.Core where
 
 open import Ledger.Prelude hiding (ε) renaming (fromList to fromListˢ) public
-
-open Computational public
 
 open import Algebra.Construct.DirectProduct using (commutativeMonoid)
 open import Algebra.Morphism    using (module MonoidMorphisms)
@@ -23,11 +21,44 @@ open import Foreign.HaskellTypes.Deriving public
 open import Ledger.Core.Specification.Crypto
 open import Ledger.Core.Specification.Epoch
 
-open import Ledger.Conway.Specification.Transaction renaming (Vote to VoteTag) public
-
 open import Ledger.Prelude.Foreign.Util public
 
 open import Tactic.Derive.Show
+
+instance
+  Hashable-⊤ : Hashable ⊤ ℕ
+  Hashable-⊤ = λ where .hash tt → 0
+
+record HSVKey : Type where
+  constructor MkHSVKey
+  field hvkVKey       : ℕ
+        hvkStoredHash : ℕ
+
+{-# FOREIGN GHC
+  data HSVKey = MkHSVKey
+    { hvkVKey :: Integer
+    , hvkStoredHash :: Integer
+    }
+#-}
+{-# COMPILE GHC HSVKey = data HSVKey (MkHSVKey) #-}
+
+unquoteDecl DecEq-HSVKey = derive-DecEq ((quote HSVKey , DecEq-HSVKey) ∷ [])
+
+instance
+  Hashable-HSVKey : Hashable HSVKey ℕ
+  Hashable-HSVKey = λ where .hash → HSVKey.hvkStoredHash
+
+  isHashableSet-HSVKey : isHashableSet HSVKey
+  isHashableSet-HSVKey = mkIsHashableSet ℕ
+
+  Hashable-ℕ : Hashable ℕ ℕ
+  Hashable-ℕ = λ where .hash → id
+
+  isHashableSet-ℕ : isHashableSet ℕ
+  isHashableSet-ℕ = mkIsHashableSet ℕ
+
+unquoteDecl Show-HSVKey = derive-Show
+  ((quote HSVKey , Show-HSVKey) ∷ [])
 
 module Implementation where
   Network          = ℕ
@@ -40,13 +71,16 @@ module Implementation where
   NetworkId        = 0 -- Testnet
 
   SKey = ℕ
+  VKey = HSVKey
   Sig  = ℕ
   Ser  = ℕ
 
+  isKeyPair  = λ sk vk → sk ≡ HSVKey.hvkVKey vk
   sign       = _+_
   ScriptHash = ℕ
 
   Data         = ℕ
+  Dataʰ        = mkHashableSet ℕ
   toData : ∀ {A : Type} → A → Data
   toData _ = 0
 

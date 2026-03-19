@@ -5,16 +5,24 @@ source_path: src/Ledger/Conway/Foreign/HSLedger/Epoch.lagda.md
 ```agda
 module Ledger.Conway.Foreign.HSLedger.Epoch where
 
+open import Foreign.Convertible
+open import Foreign.Convertible.Deriving
+open import Foreign.HaskellTypes.Deriving
+
+open import Ledger.Prelude
+open import Ledger.Prelude.Foreign.HSTypes
+
 open import Ledger.Conway.Foreign.HSLedger.BaseTypes
 open import Ledger.Conway.Foreign.HSLedger.Enact
 open import Ledger.Conway.Foreign.HSLedger.Ledger
 open import Ledger.Conway.Foreign.HSLedger.PParams
 open import Ledger.Conway.Foreign.HSLedger.Ratify
 open import Ledger.Conway.Foreign.HSLedger.Rewards
-
 open import Ledger.Conway.Conformance.Equivalence.Convert
 open import Ledger.Conway.Conformance.Epoch it it
 open import Ledger.Conway.Conformance.Epoch.Properties it it
+
+open Computational
 
 module EpochSpec where
   open import Ledger.Conway.Specification.Epoch it it public

@@ -3,25 +3,12 @@ source_branch: master
 source_path: src/Ledger/Conway/Foreign/HSLedger/Script.lagda.md
 ---
 ```agda
-
-open import Ledger.Prelude
-
-open import Tactic.Derive.Show
-
-open import Foreign.HaskellTypes.Deriving
-open import Foreign.Convertible.Deriving
+open import Ledger.Core.Foreign.ExternalFunctions
 
 module Ledger.Conway.Foreign.HSLedger.Script
+  (externalFunctions : ExternalFunctions)
   where
 
-data HSLanguage : Type where
-  PV1 PV2 PV3 : HSLanguage
-
-instance
-  HsType-HSLanguage = autoHsType HSLanguage
-  Convert-HSLanguage = autoConvert HSLanguage
-
-instance
-  unquoteDecl DecEq-HSLanguage = derive-DecEq ((quote HSLanguage , DecEq-HSLanguage) ∷ [])
-  unquoteDecl Show-HSLanguage = derive-Show ((quote HSLanguage , Show-HSLanguage) ∷ [])
+open import Ledger.Conway.Foreign.HSLedger.Script.Base public
+open import Ledger.Conway.Foreign.HSLedger.Script.Structure externalFunctions public
 ```

@@ -5,6 +5,13 @@ source_path: src/Ledger/Conway/Foreign/HSLedger/PParams.lagda.md
 ```agda
 module Ledger.Conway.Foreign.HSLedger.PParams where
 
+open import Foreign.Convertible
+open import Foreign.Convertible.Deriving
+open import Foreign.HaskellTypes.Deriving
+
+open import Ledger.Prelude
+open import Ledger.Prelude.Foreign.HSTypes
+
 open import Ledger.Conway.Foreign.HSLedger.BaseTypes
 
 instance

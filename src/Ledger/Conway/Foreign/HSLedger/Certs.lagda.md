@@ -5,20 +5,27 @@ source_path: src/Ledger/Conway/Foreign/HSLedger/Certs.lagda.md
 ```agda
 module Ledger.Conway.Foreign.HSLedger.Certs where
 
-open import Ledger.Conway.Foreign.HSLedger.Address
+open import Foreign.Convertible
+open import Foreign.Convertible.Deriving
+open import Foreign.HaskellTypes.Deriving
+
+open import Ledger.Prelude
+open import Ledger.Prelude.Foreign.HSTypes
+
+open import Ledger.Core.Foreign.Address
 open import Ledger.Conway.Foreign.HSLedger.BaseTypes renaming (⟦_,_,_⟧ᵈ to ⟦_,_,_⟧ᵈ'; DState to DState'
                                                               ; ⟦_,_⟧ᵛ to ⟦_,_⟧ᵛ'; GState to GState') hiding (CertEnv)
 open import Ledger.Conway.Foreign.HSLedger.Gov.Core
 open import Ledger.Conway.Foreign.HSLedger.PParams
-
 open import Ledger.Conway.Conformance.Certs govStructure using (⟦_,_,_,_⟧ᵈ; ⟦_,_,_⟧ᵛ; DState; GState; CertEnv)
-
 open import Ledger.Conway.Specification.Certs.Properties.Computational govStructure
   using (Computational-POOL)
 open import Ledger.Conway.Conformance.Certs.Properties govStructure
   using ( Computational-DELEG
         ; Computational-GOVCERT
         )
+
+open Computational
 
 instance
   HsTy-StakePoolParams = autoHsType StakePoolParams

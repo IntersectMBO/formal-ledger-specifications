@@ -146,7 +146,7 @@ SVScriptStructure = record
     SVP2ScriptStructure : PlutusStructure
     SVP2ScriptStructure =  record
       { Implementation
-      ; validPlutusScript = λ _ _ _ _ → ⊤
+      ; validPlutusScript = λ _ d _ (_ , script) → script d ≡ true
       }
 ```
 <!--

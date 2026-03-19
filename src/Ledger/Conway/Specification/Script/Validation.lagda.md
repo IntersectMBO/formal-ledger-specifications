@@ -120,5 +120,5 @@ opaque
            just (p2s , data' , exunits , costModel)
 
 evalP2Scripts : List (P2Script × List Data × ExUnits × CostModel) → Bool
-evalP2Scripts = all (λ (s , d , eu , cm) → runPLCScript cm s eu d)
+evalP2Scripts = all (λ (s , d , eu , cm) → ¿ validP2Script cm d eu s ¿ᵇ)
 ```
