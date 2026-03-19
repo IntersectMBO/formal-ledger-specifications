@@ -1,9 +1,9 @@
 ---
 source_branch: master
-source_path: src/Ledger/Conway/Foreign/HSLedger/Core.lagda.md
+source_path: src/Ledger/Conway/Foreign/Core.lagda.md
 ---
 ```agda
-module Ledger.Conway.Foreign.HSLedger.Core where
+module Ledger.Conway.Foreign.Core where
 
 open import Ledger.Prelude hiding (ε) renaming (fromList to fromListˢ) public
 

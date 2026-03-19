@@ -1,9 +1,9 @@
 ---
 source_branch: master
-source_path: src/Ledger/Conway/Foreign/HSLedger/Gov.lagda.md
+source_path: src/Ledger/Conway/Foreign/Gov.lagda.md
 ---
 ```agda
-module Ledger.Conway.Foreign.HSLedger.Gov where
+module Ledger.Conway.Foreign.Gov where
 
 open import Foreign.Convertible
 open import Foreign.Convertible.Deriving
@@ -14,12 +14,12 @@ open import Ledger.Prelude
 open import Ledger.Prelude.Foreign.HSTypes
 
 open import Ledger.Core.Foreign.Address
-open import Ledger.Conway.Foreign.HSLedger.BaseTypes
-open import Ledger.Conway.Foreign.HSLedger.Enact
-open import Ledger.Conway.Foreign.HSLedger.PParams
-open import Ledger.Conway.Foreign.HSLedger.Gov.Core
-open import Ledger.Conway.Foreign.HSLedger.Gov.Actions
-open import Ledger.Conway.Foreign.HSLedger.Cert
+open import Ledger.Conway.Foreign.BaseTypes
+open import Ledger.Conway.Foreign.Enact
+open import Ledger.Conway.Foreign.PParams
+open import Ledger.Conway.Foreign.Gov.Core
+open import Ledger.Conway.Foreign.Gov.Actions
+open import Ledger.Conway.Foreign.Cert
 open import Ledger.Conway.Conformance.Certs govStructure
 open import Ledger.Conway.Specification.Enact govStructure
 open import Ledger.Conway.Conformance.Gov it it

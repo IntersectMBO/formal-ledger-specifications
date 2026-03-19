@@ -1,9 +1,9 @@
 ---
 source_branch: master
-source_path: src/Ledger/Conway/Foreign/HSLedger/Ratify.lagda.md
+source_path: src/Ledger/Conway/Foreign/Ratify.lagda.md
 ---
 ```agda
-module Ledger.Conway.Foreign.HSLedger.Ratify where
+module Ledger.Conway.Foreign.Ratify where
 
 open import Data.String.Base renaming (_++_ to _+ˢ_) hiding (show; length)
 import Data.Rational.Show as Rational
@@ -18,11 +18,11 @@ open import Ledger.Prelude
 open import Ledger.Prelude.Foreign.HSTypes
 
 open import Ledger.Core.Foreign.Address
-open import Ledger.Conway.Foreign.HSLedger.BaseTypes
-open import Ledger.Conway.Foreign.HSLedger.Certs
-open import Ledger.Conway.Foreign.HSLedger.Enact
-open import Ledger.Conway.Foreign.HSLedger.Gov.Core
-open import Ledger.Conway.Foreign.HSLedger.Gov
+open import Ledger.Conway.Foreign.BaseTypes
+open import Ledger.Conway.Foreign.Certs
+open import Ledger.Conway.Foreign.Enact
+open import Ledger.Conway.Foreign.Gov.Core
+open import Ledger.Conway.Foreign.Gov
 open import Ledger.Conway.Specification.Enact govStructure
 open import Ledger.Conway.Specification.Ratify govStructure
   hiding (acceptedByCC; acceptedByDRep; acceptedBySPO)

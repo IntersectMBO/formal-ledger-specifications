@@ -1,11 +1,11 @@
 ---
 source_branch: master
-source_path: src/Ledger/Conway/Foreign/HSLedger/ExternalStructures.lagda.md
+source_path: src/Ledger/Conway/Foreign/ExternalStructures.lagda.md
 ---
 ```agda
 open import Ledger.Core.Foreign.ExternalFunctions
 
-module Ledger.Conway.Foreign.HSLedger.ExternalStructures (externalFunctions : ExternalFunctions) where
+module Ledger.Conway.Foreign.ExternalStructures (externalFunctions : ExternalFunctions) where
 
 open import Data.Nat.Instances using (ℕ-≤-isDecTotalOrder)
 open import Relation.Binary.Bundles
@@ -21,7 +21,7 @@ open import Ledger.Core.Foreign.Epoch
 open import Ledger.Core.Foreign.Address
 open import Ledger.Conway.Specification.Transaction public
 open import Ledger.Core.Foreign.Crypto externalFunctions
-open import Ledger.Conway.Foreign.HSLedger.Script externalFunctions public
+open import Ledger.Conway.Foreign.Script externalFunctions public
 
 instance
   _ = HSCryptoStructure

@@ -100,7 +100,7 @@ isModified _ = False
 This depends on:
 1. the contents of hs-src/
 2. the Agda files which are transitively imported from the entrypoint
-module Ledger.Conway.Foreign.HSLedger
+module Ledger.Conway.Foreign
 Regarding 2), we don't declare its dependencies explicitly or traverse the
 Agda files in the repository to find what are those dependencies. Instead we
 let Agda do the work by declaring this rule as phony, which forces
@@ -121,7 +121,7 @@ hsRule = phony "hs" $ do
     , "--no-main"
     , "--compile-dir=" ++ _build
     ]
-    ["src/Ledger/Conway/Foreign/HSLedger.lagda.md"]
+    ["src/Ledger/Conway/Foreign.lagda.md"]
 
   -- copy over the Agda-generated MAlonzo files to _hs
   malonzofiles <- map ("MAlonzo" </>) <$> getDirectoryFiles _malonzo ["//*.hs"]

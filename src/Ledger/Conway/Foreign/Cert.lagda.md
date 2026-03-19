@@ -1,9 +1,9 @@
 ---
 source_branch: master
-source_path: src/Ledger/Conway/Foreign/HSLedger/Cert.lagda.md
+source_path: src/Ledger/Conway/Foreign/Cert.lagda.md
 ---
 ```agda
-module Ledger.Conway.Foreign.HSLedger.Cert where
+module Ledger.Conway.Foreign.Cert where
 
 open import Foreign.Convertible
 open import Foreign.Convertible.Deriving
@@ -13,8 +13,8 @@ open import Foreign.HaskellTypes.Deriving
 open import Ledger.Prelude
 open import Ledger.Prelude.Foreign.HSTypes
 
-open import Ledger.Conway.Foreign.HSLedger.BaseTypes hiding (CertEnv; DCert) renaming (⟦_,_,_⟧ᶜˢ to ⟦_,_,_⟧ᶜˢ'; CertState to CertState')
-open import Ledger.Conway.Foreign.HSLedger.Certs
+open import Ledger.Conway.Foreign.BaseTypes hiding (CertEnv; DCert) renaming (⟦_,_,_⟧ᶜˢ to ⟦_,_,_⟧ᶜˢ'; CertState to CertState')
+open import Ledger.Conway.Foreign.Certs
 open import Ledger.Conway.Conformance.Certs.Properties govStructure
   using ( Computational-CERT
         ; Computational-CERTS

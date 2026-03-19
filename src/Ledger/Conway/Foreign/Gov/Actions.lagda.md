@@ -1,9 +1,9 @@
 ---
 source_branch: master
-source_path: src/Ledger/Conway/Foreign/HSLedger/Gov/Actions.lagda.md
+source_path: src/Ledger/Conway/Foreign/Gov/Actions.lagda.md
 ---
 ```agda
-module Ledger.Conway.Foreign.HSLedger.Gov.Actions where
+module Ledger.Conway.Foreign.Gov.Actions where
 
 open import Data.Rational using (ℚ)
 open import Foreign.Convertible
@@ -14,8 +14,8 @@ open import Foreign.HaskellTypes.Deriving
 open import Ledger.Prelude
 open import Ledger.Prelude.Foreign.HSTypes
 
-open import Ledger.Conway.Foreign.HSLedger.BaseTypes
-open import Ledger.Conway.Foreign.HSLedger.PParams
+open import Ledger.Conway.Foreign.BaseTypes
+open import Ledger.Conway.Foreign.PParams
 open import Ledger.Core.Foreign.Address
 open import Ledger.Conway.Specification.Gov.Base
 open import Ledger.Conway.Specification.Gov.Actions govStructure using (Vote) public
