@@ -140,6 +140,15 @@ record TransactionStructure : Type₁ where
 ```
 <!--
 ```agda
+  field
+    ⦃ Hashable-ScriptIntegrity ⦄ : ∀ {ℓ} →
+        Hashable
+          ( ℙ Datum
+          × ((Tag ℓ × Ix) ⇀ (Redeemer × ExUnits))
+          × ℙ LangDepView
+          )
+          ScriptHash
+
   open GovParams govParams public
   open TokenAlgebra tokenAlgebra public
 ```
@@ -175,7 +184,7 @@ record TransactionStructure : Type₁ where
   UTxO = TxIn ⇀ TxOut
 
   RedeemerPtr : TxLevel → Type
-  RedeemerPtr txLevel  = Tag txLevel × Ix
+  RedeemerPtr ℓ = Tag ℓ × Ix
 
   ProposedPPUpdates : Type
   ProposedPPUpdates = KeyHash ⇀ PParamsUpdate

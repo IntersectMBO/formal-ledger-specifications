@@ -128,11 +128,11 @@ hashScriptIntegrity
   → RedeemerPtr ℓ ⇀ (Redeemer × ExUnits)
   → ℙ Datum
   → Maybe ScriptHash
-hashScriptIntegrity pp langs rdrms dats = nothing
---   with rdrms ˢ ≟ ∅ˢ | langs ≟ ∅ˢ | dats ≟ ∅ˢ
--- ...  | yes _        | yes _      | yes _ = nothing
--- ...  | _            | _          | _     =
---     just $ hash (dats , rdrms , mapˢ (getLanguageView pp) langs)
+hashScriptIntegrity pp langs rdrms dats
+  with rdrms ˢ ≟ ∅ˢ | langs ≟ ∅ˢ | dats ≟ ∅ˢ
+...  | yes _        | yes _      | yes _ = nothing
+...  | _            | _          | _     =
+    just $ hash (dats , rdrms , mapˢ (getLanguageView pp) langs)
 ```
 
 <!--
