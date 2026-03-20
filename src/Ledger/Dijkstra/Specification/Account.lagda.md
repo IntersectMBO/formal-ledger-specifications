@@ -36,46 +36,48 @@ DirectDeposits = Credential ⇀ Coin
 ## Balance Intervals {#sec:balance-intervals}
 
 [CIP 159][] allows a transaction to assert that an account's balance falls within a
-given interval.  The interval is half-open: `[lower, upper)`.  Either bound may be
-omitted, but not both.  The three constructors correspond to the three cases in the
-CIP's CDDL `required_balance_interval` type.
+given interval.  The interval is half-open: `[lb, ub)`.  Either bound may be omitted,
+but not both.  The three constructors correspond to the three cases in the CIP's CDDL
+`required_balance_interval` type.
 
 ```agda
 data BalanceInterval : Type where
-  both   : Coin → Coin → BalanceInterval   -- [lo, hi)
-  lower  : Coin → BalanceInterval          -- [lo, ∞)
-  upper  : Coin → BalanceInterval          -- [0, hi)
+  ⟦_,_⦆ : Coin → Coin → BalanceInterval
+  ⟦_,∞⦆ : Coin → BalanceInterval
+  ⟦0,_⦆ : Coin → BalanceInterval
 ```
 
 
-### The `inBalanceInterval` Predicate {#sec:in-balance-interval}
+### The `InBalanceInterval` Predicate {#sec:in-balance-interval}
 
-The `inBalanceInterval` predicate checks whether a given `Coin` value `c` falls
-within a `BalanceInterval`.  Unlike the existing `inInterval` for slots (which uses
-closed bounds `[l, r]`), balance intervals are **half-open**; the lower bound is
-inclusive (`lo ≤ c`) and the upper bound is exclusive (`c < hi`, i.e., `suc c ≤ hi`).
+The `InBalanceInterval` predicate checks whether a given `Coin` value `c` falls
+within a `BalanceInterval`.  (Unlike `inInterval` for slots, which uses closed
+intervals, balance intervals are **half-open**.)
 
 ```agda
-data inBalanceInterval (c : Coin) : BalanceInterval → Type where
-  inBoth   : ∀ {lo hi}  → lo ≤ c × suc c ≤ hi   → inBalanceInterval c (both lo hi)
-  inLower  : ∀ {lo}     → lo ≤ c                → inBalanceInterval c (lower lo)
-  inUpper  : ∀ {hi}     → suc c ≤ hi            → inBalanceInterval c (upper hi)
+data InBalanceInterval (c : Coin) : BalanceInterval → Type where
+  bounded       : {lb ub : Coin}  → lb ≤ c → suc c ≤ ub  → InBalanceInterval c ⟦ lb , ub ⦆
+  lowerBounded  : {lb : Coin}     → lb ≤ c               → InBalanceInterval c ⟦ lb ,∞⦆
+  upperBounded  : {ub : Coin}     → suc c ≤ ub           → InBalanceInterval c ⟦0, ub ⦆
 ```
+
+Note that in the `upperBounded` case, `c` is not only upper-bounded (by `ub`), but
+also lower-bounded (by `0`); thus `lowerBounded` is the only *truly* "half-open" case.
 
 <!--
 ```agda
 instance
-  Dec-inBalanceInterval : inBalanceInterval ⁇²
-  Dec-inBalanceInterval {c} {both lo hi} .dec with lo ≤? c | suc c ≤? hi
-  ... | no ¬p  | _      = no λ where (inBoth (h₁ , h₂)) → ¬p h₁
-  ... | yes p₁ | no ¬p₂ = no λ where (inBoth (h₁ , h₂)) → ¬p₂ h₂
-  ... | yes p₁ | yes p₂ = yes (inBoth (p₁ , p₂))
-  Dec-inBalanceInterval {c} {lower lo} .dec with lo ≤? c
-  ... | no ¬p = no  (λ where (inLower h) → ¬p h)
-  ... | yes p = yes (inLower p)
-  Dec-inBalanceInterval {c} {upper hi} .dec with suc c ≤? hi
-  ... | no ¬p = no  (λ where (inUpper h) → ¬p h)
-  ... | yes p = yes (inUpper p)
+  Dec-InBalanceInterval : InBalanceInterval ⁇²
+  Dec-InBalanceInterval {c} {⟦ lb , ub ⦆} .dec with lb ≤? c | suc c ≤? ub
+  ... | no ¬p  | _      = no λ where (bounded lbp ubp) → ¬p lbp
+  ... | yes p₁ | no ¬p₂ = no λ where (bounded lbp ubp) → ¬p₂ ubp
+  ... | yes p₁ | yes p₂ = yes (bounded p₁ p₂)
+  Dec-InBalanceInterval {c} {⟦ lo ,∞⦆} .dec with lo ≤? c
+  ... | no ¬p = no  (λ where (lowerBounded lbp) → ¬p lbp)
+  ... | yes p = yes (lowerBounded p)
+  Dec-InBalanceInterval {c} {⟦0, hi ⦆} .dec with suc c ≤? hi
+  ... | no ¬p = no  (λ where (upperBounded ubp) → ¬p ubp)
+  ... | yes p = yes (upperBounded p)
 
   unquoteDecl DecEq-BalanceInterval = derive-DecEq
     ((quote BalanceInterval , DecEq-BalanceInterval) ∷ [])
