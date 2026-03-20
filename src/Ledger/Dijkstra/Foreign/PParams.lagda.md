@@ -1,0 +1,40 @@
+---
+source_branch: master
+source_path: src/Ledger/Dijkstra/Foreign/PParams.lagda.md
+---
+```agda
+module Ledger.Dijkstra.Foreign.PParams where
+
+open import Foreign.Convertible
+open import Foreign.Convertible.Deriving
+open import Foreign.HaskellTypes.Deriving
+
+open import Ledger.Prelude
+open import Ledger.Prelude.Foreign.HSTypes
+
+open import Ledger.Dijkstra.Foreign.HSStructures
+
+instance
+  HsTy-LanguageCostModels = autoHsType LanguageCostModels ⊣ withConstructor "MkLanguageCostModels"
+                                                          • fieldPrefix "lcm"
+  Conv-LanguageCostModels = autoConvert LanguageCostModels
+
+  HsTy-DrepThresholds = autoHsType DrepThresholds
+    ⊣ withConstructor "MkDrepThresholds"
+  Conv-DrepThresholds = autoConvert DrepThresholds
+
+  HsTy-PoolThresholds = autoHsType PoolThresholds
+    ⊣ withConstructor "MkPoolThresholds"
+  Conv-PoolThresholds = autoConvert PoolThresholds
+
+  HsTy-Acnt = autoHsType Acnt ⊣ withConstructor "MkAcnt"
+  Conv-Acnt = autoConvert Acnt
+
+  HsTy-PParams = autoHsType PParams ⊣ withConstructor "MkPParams"
+                                    • fieldPrefix "pp"
+  Conv-PParams = autoConvert PParams
+
+  HsTy-PParamsUpdate = autoHsType PParamsUpdate.PParamsUpdate ⊣ withConstructor "MkPParamsUpdate"
+                                                              • fieldPrefix "ppu"
+  Conv-PParamsUpdate = autoConvert PParamsUpdate.PParamsUpdate
+```

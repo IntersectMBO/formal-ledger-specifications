@@ -244,7 +244,7 @@ Of particular note in the Dijkstra era are
       inductive
       field
         txBody       : TxBody txLevel
-        txWitnesses  : TxWitnesses txLevel
+        txWitnesses  : TxWitnesses
         txSize       : ℕ
         isValid      : InTopLevel txLevel Bool
         txAuxData    : Maybe AuxiliaryData
@@ -282,7 +282,7 @@ Of particular note in the Dijkstra era are
       requiredSignerHashes = mapPartial isKeyHashObj txGuards
 
 
-    record TxWitnesses (txLevel : TxLevel) : Type where
+    record TxWitnesses : Type where
       inductive
       field
         vKeySigs     : VKey ⇀ Sig
@@ -320,8 +320,8 @@ could be either of them.
     field TxBodyOf : A → TxBody txLevel
   open HasTxBody  ⦃...⦄ public
 
-  record HasTxWitnesses {txLevel} {a} (A : Type a) : Type a where
-    field TxWitnessesOf : A → TxWitnesses txLevel
+  record HasTxWitnesses {a} (A : Type a) : Type a where
+    field TxWitnessesOf : A → TxWitnesses
   open HasTxWitnesses ⦃...⦄ public
 
   record HasRedeemers {a} (A : Type a) : Type a where
@@ -437,7 +437,7 @@ could be either of them.
     HasIsValidFlag-Tx : HasIsValidFlag TopLevelTx
     HasIsValidFlag-Tx .IsValidFlagOf = Tx.isValid
 
-    HasRedeemers-TxWitnesses : HasRedeemers (TxWitnesses txLevel)
+    HasRedeemers-TxWitnesses : HasRedeemers TxWitnesses
     HasRedeemers-TxWitnesses .RedeemersOf = TxWitnesses.txRedeemers
     HasRedeemers-Tx : HasRedeemers (Tx txLevel)
     HasRedeemers-Tx .RedeemersOf = RedeemersOf ∘ TxWitnessesOf
@@ -528,7 +528,7 @@ could be either of them.
     HasCoin-TxOut : HasCoin TxOut
     HasCoin-TxOut .getCoin = coin ∘ proj₁ ∘ proj₂
 
-    HasData-TxWitnesses : HasData (TxWitnesses txLevel)
+    HasData-TxWitnesses : HasData TxWitnesses
     HasData-TxWitnesses .DataOf = TxWitnesses.txData
     HasData-Tx : HasData (Tx txLevel)
     HasData-Tx .DataOf = DataOf ∘ TxWitnessesOf
@@ -538,7 +538,7 @@ could be either of them.
     HasGuards-Tx : HasGuards (Tx txLevel)
     HasGuards-Tx .GuardsOf = GuardsOf ∘ TxBodyOf
 
-    HasScripts-TxWitnesses : HasScripts (TxWitnesses txLevel)
+    HasScripts-TxWitnesses : HasScripts TxWitnesses
     HasScripts-TxWitnesses .ScriptsOf = TxWitnesses.scripts
     HasScripts-Tx : HasScripts (Tx txLevel)
     HasScripts-Tx .ScriptsOf = ScriptsOf ∘ TxWitnessesOf

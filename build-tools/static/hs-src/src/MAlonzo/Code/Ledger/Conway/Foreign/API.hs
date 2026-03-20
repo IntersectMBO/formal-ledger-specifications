@@ -1,16 +1,10 @@
-module MAlonzo.Code.Ledger.Foreign.API
+module MAlonzo.Code.Ledger.Conway.Foreign.API
   ( module X
-  , module MAlonzo.Code.Ledger.Foreign.API
+  , module MAlonzo.Code.Ledger.Core.Foreign.API
+  , module MAlonzo.Code.Ledger.Conway.Foreign.API
   ) where
 
-import MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes                   as X
-  (HSSet(..), HSMap(..), ComputationResult(..), Rational(..), Coin)
-import MAlonzo.Code.Ledger.Core.Foreign.Address           as X
-  (Credential(..), BaseAddr(..), BootstrapAddr(..), RewardAddress(..), Addr)
-import MAlonzo.Code.Ledger.Core.Foreign.Crypto.Base           as X
-  (HSVKey(..))
-import MAlonzo.Code.Ledger.Core.Foreign.Epoch           as X
-  (Epoch)
+import MAlonzo.Code.Ledger.Core.Foreign.API
 import MAlonzo.Code.Ledger.Conway.Foreign.PParams           as X
   (LanguageCostModels(..), DrepThresholds(..), PoolThresholds(..), Acnt(..), PParams(..), PParamsUpdate(..))
 import MAlonzo.Code.Ledger.Conway.Foreign.Transaction       as X
@@ -48,6 +42,3 @@ import MAlonzo.Code.Ledger.Conway.Foreign.Utxo              as X
   , utxoDebug, utxowDebug)
 import MAlonzo.Code.Ledger.Conway.Foreign.Script.Base      as X
   (HSLanguage(..))
-import MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions           as X
-  (ExternalFunctions(..), dummyExternalFunctions)
-

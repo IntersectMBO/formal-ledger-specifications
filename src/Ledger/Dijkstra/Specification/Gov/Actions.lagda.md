@@ -279,6 +279,55 @@ instance
 
   unquoteDecl HasCast-GovVote = derive-HasCast [ (quote GovVote , HasCast-GovVote) ]
   unquoteDecl Show-VDeleg = derive-Show [ (quote VDeleg , Show-VDeleg) ]
+  unquoteDecl DecEq-Anchor        = derive-DecEq ((quote Anchor  , DecEq-Anchor)  ∷ [])
+
+==-Set : ∀ {A} ⦃ dA : DecEq A ⦄ → ℙ A → ℙ A → Bool
+==-Set xs ys =
+    all (λ x → ⌊ x ∈? ys ⌋) (setToList xs) ∧
+    all (λ y → ⌊ y ∈? xs ⌋) (setToList ys)
+
+==-GovActionData : ∀ A → GovActionData A → GovActionData A → Bool
+==-GovActionData NoConfidence = _==_
+==-GovActionData UpdateCommittee (m0 , s0 , q0) (m1 , s1 , q1) =
+    (==-Set (m0 ˢ) (m1 ˢ)) ∧ (s0 == s1) ∧ (q0 == q1)
+==-GovActionData NewConstitution = _==_
+==-GovActionData TriggerHardFork = _==_
+==-GovActionData ChangePParams = _==_
+==-GovActionData TreasuryWithdrawal w0 w1 = ==-Set (w0 ˢ) (w1 ˢ)
+==-GovActionData Info = _==_
+
+-- See note "GovAction and GovProposal equality"
+==-GovAction : GovAction → GovAction → Bool
+==-GovAction ⟦ t0 , d0 ⟧ᵍᵃ ⟦ t1 , d1 ⟧ᵍᵃ
+    with t0 ≟ t1
+... | P.yes refl = ==-GovActionData t1 d0 d1
+... | P.no _ = false
+
+DecEq-NeedsHash : ∀ {A} → DecEq (NeedsHash A)
+DecEq-NeedsHash {NoConfidence} ._≟_ = _≟_ ⦃ DecEq-×′ ⦄
+DecEq-NeedsHash {UpdateCommittee} ._≟_ = _≟_ ⦃ DecEq-×′ ⦄
+DecEq-NeedsHash {NewConstitution} ._≟_ = _≟_ ⦃ DecEq-×′ ⦄
+DecEq-NeedsHash {TriggerHardFork} ._≟_ = _≟_ ⦃ DecEq-×′ ⦄
+DecEq-NeedsHash {ChangePParams} ._≟_ = _≟_ ⦃ DecEq-×′ ⦄
+DecEq-NeedsHash {TreasuryWithdrawal} ._≟_ = _≟_ ⦃ DecEq-⊤ ⦄
+DecEq-NeedsHash {Info} ._≟_ = _≟_ ⦃ DecEq-⊤ ⦄
+
+-- See note "GovAction and GovProposal equality"
+==-GovProposal : GovProposal → GovProposal → Bool
+==-GovProposal _gp0@(GovProposal.constructor a0 b0 c0 d0 e0 f0)
+               _gp1@(GovProposal.constructor a1 b1 c1 d1 e1 f1)
+  with GovAction.gaType a0 ≟ GovAction.gaType a1
+... | P.yes refl =
+    ==-GovAction a0 a1
+    ∧ (b0 == b1)
+    ∧ (c0 == c1)
+    ∧ (d0 == d1)
+    ∧ (e0 == e1)
+    ∧ (f0 == f1)
+  where
+    open GovProposal
+    instance _ = DecEq-NeedsHash
+... | P.no _ = false
 ```
 -->
 

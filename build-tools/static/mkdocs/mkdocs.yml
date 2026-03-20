@@ -349,6 +349,31 @@ nav:
   - Era-dependent Modules:
     - Dijkstra:
       - Ledger.Dijkstra: Ledger.Dijkstra.md
+      - Foreign:
+        - Foreign: Ledger.Dijkstra.Foreign.md
+        - Foreign/:
+          - HSStructures: Ledger.Dijkstra.Foreign.HSStructures.md
+          - Cert: Ledger.Dijkstra.Foreign.Cert.md
+          - Certs: Ledger.Dijkstra.Foreign.Certs.md
+          - Chain: Ledger.Dijkstra.Foreign.Chain.md
+          - Enact: Ledger.Dijkstra.Foreign.Enact.md
+          - Epoch: Ledger.Dijkstra.Foreign.Epoch.md
+          - ExternalStructures: Ledger.Dijkstra.Foreign.ExternalStructures.md
+          - Gov: Ledger.Dijkstra.Foreign.Gov.md
+          - Gov/:
+            - Core: Ledger.Dijkstra.Foreign.Gov.Core.md
+            - Actions: Ledger.Dijkstra.Foreign.Gov.Actions.md
+          - Ledger: Ledger.Dijkstra.Foreign.Ledger.md
+          - NewEpoch: Ledger.Dijkstra.Foreign.NewEpoch.md
+          - PParams: Ledger.Dijkstra.Foreign.PParams.md
+          - Ratify: Ledger.Dijkstra.Foreign.Ratify.md
+          - Rewards: Ledger.Dijkstra.Foreign.Rewards.md
+          - Transaction: Ledger.Dijkstra.Foreign.Transaction.md
+          - Script: Ledger.Dijkstra.Foreign.Script.md
+          - Script/:
+            - Base: Ledger.Dijkstra.Foreign.Script.Base.md
+            - Structure: Ledger.Dijkstra.Foreign.Script.Structure.md
+          - Utxo: Ledger.Dijkstra.Foreign.Utxo.md
     - PreConway:
       - Ledger.PreConway: Ledger.PreConway.md
       - Ledger.PreConway/:

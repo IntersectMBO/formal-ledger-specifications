@@ -100,9 +100,6 @@ record PoolThresholds : Type where
 
 
 ```agda
-LanguageCostModels : Type
-LanguageCostModels = List (Language × CostModel)
-
 record PParams : Type where
   field
 
@@ -151,7 +148,7 @@ record PParams : Type where
     drepActivity                  : Epoch
 
   costmdls : Language ⇀ CostModel
-  costmdls = fromListᵐ costmdlsAssoc
+  costmdls = fromListᵐ (languageCostModels costmdlsAssoc)
 ```
 
 *Security group*
@@ -205,9 +202,6 @@ instance
     ((quote DrepThresholds , Show-DrepThresholds) ∷ [])
   unquoteDecl Show-PoolThresholds = derive-Show
     ((quote PoolThresholds , Show-PoolThresholds) ∷ [])
-  Show-LanguageCostModels : Show LanguageCostModels
-  Show-LanguageCostModels =
-    Show-List ⦃ Show-× ⦃ Show-Language ⦄ ⦃ Show-CostModel ⦄ ⦄
   unquoteDecl Show-PParams        = derive-Show
     ((quote PParams , Show-PParams) ∷ [])
 ```
@@ -240,7 +234,7 @@ module PParamsUpdate where
           Emax                          : Maybe Epoch
           nopt                          : Maybe ℕ
           collateralPercentage          : Maybe ℕ
-          costmdls                      : Maybe (List (Language × CostModel))
+          costmdls                      : Maybe LanguageCostModels
           drepThresholds                : Maybe DrepThresholds
           poolThresholds                : Maybe PoolThresholds
           govActionLifetime             : Maybe ℕ
@@ -359,6 +353,9 @@ module PParamsUpdate where
       from (inj₁ refl) = refl
       from (inj₂ (refl , refl)) = refl
 
+  _∪ˡᶜᵐ_ : LanguageCostModels → LanguageCostModels → LanguageCostModels
+  l ∪ˡᶜᵐ l' = mkLanguageCostModels (setToList (fromListᵐ (languageCostModels l ++ languageCostModels l') ˢ))
+
   applyPParamsUpdate : PParams → PParamsUpdate → PParams
   applyPParamsUpdate pp ppu =
     record
@@ -388,7 +385,8 @@ module PParamsUpdate where
       ; Emax                        = U.Emax ?↗ P.Emax
       ; nopt                        = U.nopt ?↗ P.nopt
       ; collateralPercentage        = U.collateralPercentage ?↗ P.collateralPercentage
-      ; costmdlsAssoc               = U.costmdls ?↗ P.costmdlsAssoc
+      ; costmdlsAssoc               = if U.costmdls then (λ {cm} → cm ∪ˡᶜᵐ P.costmdlsAssoc)
+                                                    else P.costmdlsAssoc
       ; drepThresholds              = U.drepThresholds ?↗ P.drepThresholds
       ; poolThresholds              = U.poolThresholds ?↗ P.poolThresholds
       ; govActionLifetime           = U.govActionLifetime ?↗ P.govActionLifetime

@@ -324,6 +324,11 @@ to process withdrawals as part of certificate processing.
 instance
   HasCoin-CertState : HasCoin CertState
   HasCoin-CertState .getCoin = rewardsBalance ∘ DStateOf
+
+  unquoteDecl DecEq-StakePoolParams = derive-DecEq
+    ((quote StakePoolParams , DecEq-StakePoolParams) ∷ [])
+  unquoteDecl DecEq-DCert = derive-DecEq
+    ((quote DCert , DecEq-DCert) ∷ [])
 ```
 -->
 
