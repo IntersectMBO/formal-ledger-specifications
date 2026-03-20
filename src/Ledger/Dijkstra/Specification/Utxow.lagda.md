@@ -297,8 +297,9 @@ data _⊢_⇀⦇_,SUBUTXOW⦈_ : SubUTxOEnv → UTxOState → SubLevelTx → UTx
 
       scriptRedeemerPtrs : ℙ (RedeemerPtr TxLevelSub)
       scriptRedeemerPtrs = mapPartial (λ (sp , c) → if credentialToP2Script c scriptsNeeded
-                                                  then rdptr txSub sp
-                                                  else nothing) (credsNeeded utxo₀ txSub)
+                                                       then rdptr txSub sp
+                                                       else nothing)
+                                      (credsNeeded utxo₀ txSub)
     in
     ∙ ∀[ (vk , σ) ∈ vKeySigs ] isSigned vk (txidBytes txId) σ
     ∙ ∀[ s ∈ p1ScriptsNeeded ] validP1Script vKeyHashesProvided txVldt s
