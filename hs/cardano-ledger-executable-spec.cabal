@@ -478,28 +478,27 @@ library
       MAlonzo.Code.Ledger.Conway.Conformance.Utxo.Properties
       MAlonzo.Code.Ledger.Conway.Conformance.Utxow
       MAlonzo.Code.Ledger.Conway.Conformance.Utxow.Properties
-      MAlonzo.Code.Ledger.Conway.Foreign.ExternalFunctions
-      MAlonzo.Code.Ledger.Conway.Foreign.HSLedger
-      MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address
-      MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes
-      MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Cert
-      MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs
-      MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Chain
-      MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core
-      MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Enact
-      MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Epoch
-      MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.ExternalStructures
-      MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov
-      MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.Actions
-      MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.Core
-      MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Ledger
-      MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.NewEpoch
-      MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.PParams
-      MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Ratify
-      MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Rewards
-      MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Script
-      MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Transaction
-      MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Utxo
+      MAlonzo.Code.Ledger.Conway.Foreign
+      MAlonzo.Code.Ledger.Conway.Foreign.Cert
+      MAlonzo.Code.Ledger.Conway.Foreign.Certs
+      MAlonzo.Code.Ledger.Conway.Foreign.Chain
+      MAlonzo.Code.Ledger.Conway.Foreign.Enact
+      MAlonzo.Code.Ledger.Conway.Foreign.Epoch
+      MAlonzo.Code.Ledger.Conway.Foreign.ExternalStructures
+      MAlonzo.Code.Ledger.Conway.Foreign.Gov
+      MAlonzo.Code.Ledger.Conway.Foreign.Gov.Actions
+      MAlonzo.Code.Ledger.Conway.Foreign.Gov.Core
+      MAlonzo.Code.Ledger.Conway.Foreign.HSStructures
+      MAlonzo.Code.Ledger.Conway.Foreign.Ledger
+      MAlonzo.Code.Ledger.Conway.Foreign.NewEpoch
+      MAlonzo.Code.Ledger.Conway.Foreign.PParams
+      MAlonzo.Code.Ledger.Conway.Foreign.Ratify
+      MAlonzo.Code.Ledger.Conway.Foreign.Rewards
+      MAlonzo.Code.Ledger.Conway.Foreign.Script
+      MAlonzo.Code.Ledger.Conway.Foreign.Script.Base
+      MAlonzo.Code.Ledger.Conway.Foreign.Script.Structure
+      MAlonzo.Code.Ledger.Conway.Foreign.Transaction
+      MAlonzo.Code.Ledger.Conway.Foreign.Utxo
       MAlonzo.Code.Ledger.Conway.Specification.Abstract
       MAlonzo.Code.Ledger.Conway.Specification.BlockBody
       MAlonzo.Code.Ledger.Conway.Specification.BlockBody.Properties.Computational
@@ -538,6 +537,12 @@ library
       MAlonzo.Code.Ledger.Conway.Specification.Utxo.Properties.Computational
       MAlonzo.Code.Ledger.Conway.Specification.Utxow
       MAlonzo.Code.Ledger.Conway.Specification.Utxow.Properties.Computational
+      MAlonzo.Code.Ledger.Core.Foreign.Address
+      MAlonzo.Code.Ledger.Core.Foreign.Crypto
+      MAlonzo.Code.Ledger.Core.Foreign.Crypto.Base
+      MAlonzo.Code.Ledger.Core.Foreign.Crypto.Structure
+      MAlonzo.Code.Ledger.Core.Foreign.Epoch
+      MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions
       MAlonzo.Code.Ledger.Core.Specification.Address
       MAlonzo.Code.Ledger.Core.Specification.Crypto
       MAlonzo.Code.Ledger.Core.Specification.Epoch
