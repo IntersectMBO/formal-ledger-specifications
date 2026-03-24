@@ -56,9 +56,9 @@ intervals, balance intervals are **half-open**.)
 
 ```agda
 data InBalanceInterval (c : Coin) : BalanceInterval → Type where
-  bounded       : {lb ub : Coin}  → lb ≤ c → suc c ≤ ub  → InBalanceInterval c ⟦ lb , ub ⦆
-  lowerBounded  : {lb : Coin}     → lb ≤ c               → InBalanceInterval c ⟦ lb ,∞⦆
-  upperBounded  : {ub : Coin}     → suc c ≤ ub           → InBalanceInterval c ⟦0, ub ⦆
+  bounded       : {lb ub : Coin}  → lb ≤ c → c < ub  → InBalanceInterval c ⟦ lb , ub ⦆
+  lowerBounded  : {lb : Coin}     → lb ≤ c           → InBalanceInterval c ⟦ lb ,∞⦆
+  upperBounded  : {ub : Coin}     → c < ub           → InBalanceInterval c ⟦0, ub ⦆
 ```
 
 Note that in the `upperBounded` case, `c` is not only upper-bounded (by `ub`), but
@@ -68,14 +68,14 @@ also lower-bounded (by `0`); thus `lowerBounded` is the only *truly* "half-open"
 ```agda
 instance
   Dec-InBalanceInterval : InBalanceInterval ⁇²
-  Dec-InBalanceInterval {c} {⟦ lb , ub ⦆} .dec with lb ≤? c | suc c ≤? ub
+  Dec-InBalanceInterval {c} {⟦ lb , ub ⦆} .dec with lb ≤? c | c <? ub
   ... | no ¬p  | _      = no λ where (bounded lbp ubp) → ¬p lbp
   ... | yes p₁ | no ¬p₂ = no λ where (bounded lbp ubp) → ¬p₂ ubp
   ... | yes p₁ | yes p₂ = yes (bounded p₁ p₂)
   Dec-InBalanceInterval {c} {⟦ lo ,∞⦆} .dec with lo ≤? c
   ... | no ¬p = no  (λ where (lowerBounded lbp) → ¬p lbp)
   ... | yes p = yes (lowerBounded p)
-  Dec-InBalanceInterval {c} {⟦0, hi ⦆} .dec with suc c ≤? hi
+  Dec-InBalanceInterval {c} {⟦0, hi ⦆} .dec with c <? hi
   ... | no ¬p = no  (λ where (upperBounded ubp) → ¬p ubp)
   ... | yes p = yes (upperBounded p)
 

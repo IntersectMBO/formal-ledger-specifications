@@ -228,10 +228,16 @@ Of particular note in the Dijkstra era are
    this field collects the guards (credential, optional datum) required by a
    subtransaction.
 
-+  `txDirectDeposits` and `txBalanceIntervals`, both of which are present at both
-   transaction levels because CIP-159 explicitly envisions direct deposits inside
-   sub-transactions (to isolate them from older Plutus scripts running at the top
-   level).
++  `txDirectDeposits`{.AgdaField}: present at both transaction levels, this field
+   records the ADA being deposited into account addresses by this transaction.
+   CIP-159 explicitly envisions direct deposits inside sub-transactions so that
+   they can be isolated from older Plutus scripts (v1–v3) running at the top level.
+
++  `txBalanceIntervals`{.AgdaField}: present at both transaction levels, this field
+   records the account balance interval assertions that this transaction makes.
+   Each assertion requires that the account's balance falls within the specified
+   interval as a Phase-1 validity condition, analogous to how slot validity
+   intervals constrain the time at which a transaction may be processed.
 
 ```agda
   mutual
