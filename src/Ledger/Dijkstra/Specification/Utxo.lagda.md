@@ -470,63 +470,62 @@ unquoteDecl SUBUTXO-premises = genPremises SUBUTXO-premises (quote SUBUTXO)
 
 ### The <span class="AgdaDatatype">UTXO</span> Rule
 
-1. The set of spending and reference inputs must exist in the UTxO _before_
+1. The set of spending inputs must be nonempty. This prevents replay
+   attacks.
+
+2. The set of spending and reference inputs must exist in the UTxO _before_
    applying the transaction (or partially applying any part of it).
 
-In addition, the `UTXO`{.AgdaDatatype} rule enforces:
+3. The set of spending inputs must exist in the UTXO state, which has
+   been updated by other sub-transactions in the batch. This prevents
+   sub/top-level transactions from spending inputs twice. In other
+   words, spending inputs across all top- and sub-level transactions
+   are disjoint.
 
-2. No double spending: To prevent double spending across a batch of
-   transactions, all spending input sets (top-level and subtransactions) must
-   be pairwise disjoint.  This is enforced by the `NoOverlappingSpendInputs
-   txTop` precondition.
-
-3. In Legacy Mode: The top-level transaction must be self-balancing.
+4. In Legacy Mode: The top-level transaction must be self-balancing.
 
 ```agda
-UTXO-Premises : (UTxOEnv × Bool) → UTxOState → TopLevelTx → Type
-UTXO-Premises (Γ , legacyMode) s₀ txTop =
-    SpendInputsOf txTop ≢ ∅
-    × inInterval (SlotOf Γ) (ValidIntervalOf txTop)
-    × minfee (PParamsOf Γ) txTop (UTxOOf s₀) ≤ TxFeesOf txTop
-    × consumedBatch (DepositsChangeOf Γ) txTop (UTxOOf Γ) ≡ producedBatch (DepositsChangeOf Γ) txTop
-    × (legacyMode ≡ true → consumed (DepositsChangeOf Γ) txTop (UTxOOf Γ) ≡ produced (DepositsChangeOf Γ) txTop)  -- (3)
-    × (SizeOf txTop ≤ maxTxSize (PParamsOf Γ))
-    × (refScriptsSize txTop (UTxOOf Γ) ≤ (PParamsOf Γ) .maxRefScriptSizePerTx)
-    × (allSpendInputs txTop ⊆ dom (UTxOOf Γ)) -- (1)
-    × (allReferenceInputs txTop ⊆ dom (UTxOOf Γ)) -- (1)
-    × NoOverlappingSpendInputs txTop -- (2)
-    × (RedeemersOf txTop ˢ ≢ ∅ → collateralCheck (PParamsOf Γ) txTop (UTxOOf Γ))
-    × (allMintedCoin txTop ≡ 0)
-    × (∀[ (_ , o) ∈ ∣ TxOutsOf txTop ∣ ]
-       (inject ((160 + utxoEntrySize o) * coinsPerUTxOByte (PParamsOf Γ)) ≤ᵗ txOutToValue o)
-       × (serializedSize (txOutToValue o) ≤ maxValSize (PParamsOf Γ)))
-    × (∀[ (a , _) ∈ range (TxOutsOf txTop) ]
-       (Sum.All (const ⊤) (λ a → AttrSizeOf a ≤ 64)) a × (netId a ≡ NetworkId))
-    × (∀[ a ∈ dom (WithdrawalsOf txTop)] NetworkIdOf a ≡ NetworkId)
-    × (MaybeNetworkIdOf txTop ~ just NetworkId)
-    × (CurrentTreasuryOf txTop  ~ just (TreasuryOf Γ))
-
 data _⊢_⇀⦇_,UTXO⦈_ : UTxOEnv × Bool → UTxOState → TopLevelTx → UTxOState → Type where
 
-  UTXO-valid :
-    ∙ IsValidFlagOf txTop ≡ true
+  UTXO :
+    let
+      UTxOOverhead = 160
+      maxBootstrapAddrSize = 64
+    in
+    ∙ SpendInputsOf txTop ≢ ∅
+    ∙ SpendInputsOf txTop ⊆ dom (UTxOOf Γ) -- (2)
+    ∙ ReferenceInputsOf txTop ⊆ dom (UTxOOf Γ) -- (2)
+    ∙ SpendInputsOf txTop ⊆ dom (UTxOOf s₀) -- (3)
+    ∙ inInterval (SlotOf Γ) (ValidIntervalOf txTop)
+    ∙ minfee (PParamsOf Γ) txTop (UTxOOf s₀) ≤ TxFeesOf txTop
+    ∙ coin (MintedValueOf txTop) ≡ 0
+    ∙ consumedBatch (DepositsChangeOf Γ) txTop (UTxOOf Γ) ≡ producedBatch (DepositsChangeOf Γ) txTop
+    ∙ (legacyMode ≡ true → consumed (DepositsChangeOf Γ) txTop (UTxOOf Γ) ≡ produced (DepositsChangeOf Γ) txTop)  -- (4)
+    ∙ SizeOf txTop ≤ maxTxSize (PParamsOf Γ)
+    ∙ ∑ˡ[ x ← setToList (allReferenceScripts txTop (UTxOOf Γ)) ] scriptSize x ≤ (PParamsOf Γ) .maxRefScriptSizePerTx
+    ∙ (RedeemersOf txTop ˢ ≢ ∅ → collateralCheck (PParamsOf Γ) txTop (UTxOOf Γ))
+    ∙ ∀[ (_ , o) ∈ ∣ TxOutsOf txTop ∣ ]
+         (inject ((UTxOOverhead + utxoEntrySize o) * coinsPerUTxOByte (PParamsOf Γ)) ≤ᵗ txOutToValue o)
+    ∙ ∀[ (_ , o) ∈ ∣ TxOutsOf txTop ∣ ] (serializedSize (txOutToValue o) ≤ maxValSize (PParamsOf Γ))
+    ∙ ∀[ (a , _) ∈ range (TxOutsOf txTop) ] (Sum.All (const ⊤) (λ a → AttrSizeOf a ≤ maxBootstrapAddrSize)) a
+    ∙ ∀[ (a , _) ∈ range (TxOutsOf txTop) ] (netId a ≡ NetworkId)
+    ∙ ∀[ a ∈ dom (WithdrawalsOf txTop)] NetworkIdOf a ≡ NetworkId
+    ∙ MaybeNetworkIdOf txTop ~ just NetworkId
+    ∙ CurrentTreasuryOf txTop  ~ just (TreasuryOf Γ)
     ∙ Γ ⊢ _ ⇀⦇ txTop ,UTXOS⦈ _
-    ∙ UTXO-Premises (Γ , legacyMode) s₀ txTop
       ────────────────────────────────
-      (Γ , legacyMode)  ⊢ s₀ ⇀⦇ txTop ,UTXO⦈ ⟦ (UTxOOf s₀ ∣ SpendInputsOf txTop ᶜ) ∪ˡ outs txTop , FeesOf s₀ + TxFeesOf txTop , DonationsOf s₀ + DonationsOf txTop ⟧
-
-  UTXO-invalid :
-    ∙ IsValidFlagOf txTop ≡ false
-    ∙ Γ ⊢ _ ⇀⦇ txTop ,UTXOS⦈ _
-    ∙ UTXO-Premises (Γ , legacyMode) s₀ txTop
-      ────────────────────────────────
-      (Γ , legacyMode)  ⊢ s₀ ⇀⦇ txTop ,UTXO⦈ ⟦ UTxOOf s₀ ∣ (CollateralInputsOf txTop) ᶜ , FeesOf s₀ + cbalance (UTxOOf s₀ ∣ CollateralInputsOf txTop) , DonationsOf s₀ ⟧
+    let
+       s₁ = if IsValidFlagOf txTop
+            then ⟦ (UTxOOf s₀ ∣ SpendInputsOf txTop ᶜ) ∪ˡ outs txTop , FeesOf s₀ + TxFeesOf txTop , DonationsOf s₀ + DonationsOf txTop ⟧ else ⟦ UTxOOf s₀ ∣ (CollateralInputsOf txTop) ᶜ , FeesOf s₀ + cbalance (UTxOOf s₀ ∣ CollateralInputsOf txTop) , DonationsOf s₀ ⟧
+    in
+      (Γ , legacyMode)  ⊢ s₀ ⇀⦇ txTop ,UTXO⦈ s₁
 
 ```
 <!--
 ```agda
-unquoteDecl UTXO-valid-premises = genPremises UTXO-valid-premises (quote UTXO-valid)
-unquoteDecl UTXO-invalid-premises = genPremises UTXO-invalid-premises (quote UTXO-invalid)
+unquoteDecl UTXO-premises = genPremises UTXO-premises (quote UTXO)
+pattern UTXO-⋯ p₀  p₁  p₂  p₃  p₄  p₅  p₆  p₇  p₈  p₉  p₁₀  p₁₁  p₁₂  p₁₃  p₁₄  p₁₅  p₁₆  p₁₇  p₁₈ h
+  = UTXO (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , p₁₂ , p₁₃ , p₁₄ , p₁₅ , p₁₆ , p₁₇ , p₁₈ , h)
 ```
 -->
 
