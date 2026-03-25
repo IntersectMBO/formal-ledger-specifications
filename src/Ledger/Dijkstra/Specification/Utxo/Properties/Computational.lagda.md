@@ -44,9 +44,6 @@ instance
       (let H , ⁇ H? = SUBUTXO-premises {txSub = txSub} {Γ = Γ} {s₀ = s₀})
       where
 
-      --------------------------------------------------------------------------
-      -- computeProof for SubUTXO
-      --------------------------------------------------------------------------
       computeProof : ComputationResult String (Σ UTxOState (_⊢_⇀⦇_,SUBUTXO⦈_ Γ s₀ txSub))
       computeProof
         with IsTopLevelValidFlagOf Γ | inspect IsTopLevelValidFlagOf Γ
@@ -66,9 +63,6 @@ instance
       ... | (no ¬p) = failure "genErrors" -- (genErrors ¬p)
 
 
-      --------------------------------------------------------------------------
-      -- completeness for SubUTXO
-      --------------------------------------------------------------------------
       completeness : ∀ s₁ → Γ ⊢ s₀ ⇀⦇ txSub ,SUBUTXO⦈ s₁ → map proj₁ computeProof ≡ success s₁
       completeness s₁ (SUBUTXO p)
         with IsTopLevelValidFlagOf Γ | inspect IsTopLevelValidFlagOf Γ
@@ -123,91 +117,44 @@ instance
 
 <!--
 ```agda
-  Computational-UTXO = MkComputational computeProof completeness
-    where
-      open Computational Computational-UTXOS renaming  ( computeProof to computeProof-UTXOS
-                                                       ; completeness to completeness-UTXOS)
+  Computational-UTXO = record {go} where
+    module go (Γ,legacyMode : UTxOEnv × Bool) (s₀ : UTxOState) (txTop : TopLevelTx)
+      (let H , ⁇ H? = UTXO-premises {txTop = txTop} {Γ = proj₁ Γ,legacyMode} {s₀ = s₀} {legacyMode = proj₂ Γ,legacyMode})
+      where
 
-      genErr-prem : (Γ×lm : UTxOEnv × Bool)(s₀ : UTxOState)(txTop : TopLevelTx)
-        → ¬ (UTXO-Premises Γ×lm s₀ txTop) → String
-      genErr-prem Γ×lm s₀ txTop ¬p = case dec-de-morgan ¬p of λ where
-        (inj₁ _) → "¬ (SpendInputsOf txTop ≢ ∅)"
-        (inj₂ b) → case dec-de-morgan b of λ where
-          (inj₁ _) → "¬ (inInterval (SlotOf Γ) (ValidIntervalOf txTop))"
-          (inj₂ b) → case dec-de-morgan b of λ where
-              (inj₁ _) → "¬ (minfee (PParamsOf Γ) txTop (UTxOOf s₀) ≤ TxFeesOf txTop)"
-              (inj₂ b) → case dec-de-morgan b of λ where
-                (inj₁ _) → "¬ (consumedBatch (DepositsChangeOf Γ) txTop (UTxOOf Γ) ≡ producedBatch (DepositsChangeOf Γ) txTop)"
-                (inj₂ b) → case dec-de-morgan b of λ where
-                  (inj₁ _) →  "¬ (legacyMode ≡ true → consumed (DepositsChangeOf Γ) txTop (UTxOOf Γ) ≡ produced (DepositsChangeOf Γ) txTop)"
-                  (inj₂ b) → case dec-de-morgan b of λ where
-                    (inj₁ _) → "¬ (SizeOf txTop ≤ maxTxSize (PParamsOf Γ))"
-                    (inj₂ b) → case dec-de-morgan b of λ where
-                        (inj₁ _) → "¬ (refScriptsSize txTop (UTxOOf Γ) ≤ (PParamsOf Γ) .maxRefScriptSizePerTx)"
-                        (inj₂ b) → case dec-de-morgan b of λ where
-                          (inj₁ _) → "¬ (allSpendInputs txTop ⊆ dom (UTxOOf Γ))"
-                          (inj₂ b) → case dec-de-morgan b of λ where
-                            (inj₁ _) → "¬ (allReferenceInputs txTop ⊆ dom (UTxOOf Γ))"
-                            (inj₂ b) → case dec-de-morgan b of λ where
-                              (inj₁ _) → "¬ (NoOverlappingSpendInputs txTop)"
-                              (inj₂ b) → case dec-de-morgan b of λ where
-                                (inj₁ _) → "¬ ((RedeemersOf txTop ˢ ≢ ∅) → collateralCheck (PParamsOf Γ) txTop (UTxOOf Γ))"
-                                (inj₂ b) → case dec-de-morgan b of λ where
-                                  (inj₁ _) → "¬ (allMintedCoin txTop ≡ 0)"
-                                  (inj₂ b) → case dec-de-morgan b of λ where
-                                    (inj₁ _) → "¬ (∀[ (_ , o) ∈ ∣ TxOutsOf txTop ∣ ] ( (inject ((160 + utxoEntrySize o) * coinsPerUTxOByte (PParamsOf Γ)) ≤ᵗ txOutToValue o) × (serializedSize (txOutToValue o) ≤ maxValSize (PParamsOf Γ)) ))"
-                                    (inj₂ b) → case dec-de-morgan b of λ where
-                                        (inj₁ _) → "¬ (∀[ (a , _) ∈ range (TxOutsOf txTop) ] ( ((Sum.All (const ⊤) (λ a → AttrSizeOf a ≤ 64)) a) × (netId a ≡ NetworkId) ))"
-                                        (inj₂ b) → case dec-de-morgan b of λ where
-                                          (inj₁ _) → "¬ (∀[ a ∈ dom (WithdrawalsOf txTop)] NetworkIdOf a ≡ NetworkId)"
-                                          (inj₂ b) → case dec-de-morgan b of λ where
-                                            (inj₁ _) → "¬ (MaybeNetworkIdOf txTop ~ just NetworkId)"
-                                            (inj₂ b) → "¬ (CurrentTreasuryOf txTop ~ just (TreasuryOf Γ))"
+      module UTXOS = Computational Computational-UTXOS
 
-      --------------------------------------------------------------------------
-      -- computeProof for UTXO
-      --------------------------------------------------------------------------
-      computeProof : (Γ×lm : UTxOEnv × Bool) (s : UTxOState) (txTop : TopLevelTx)
-        → ComputationResult String (∃[ s' ] Γ×lm ⊢ s ⇀⦇ txTop ,UTXO⦈ s')
+      computeProof : ComputationResult String (∃[ s₁ ] Γ,legacyMode ⊢ s₀ ⇀⦇ txTop ,UTXO⦈ s₁)
+      computeProof
+        with IsValidFlagOf txTop | inspect IsValidFlagOf txTop
+      ... | false | [ refl ]
+        with H?
+      ... | (no ¬p) = failure "UTXO" -- (genErrors ¬p)
+      ... | yes (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , p₁₂ , p₁₃ , p₁₄ , p₁₅ , p₁₆ , p₁₇ , p₁₈)
+        with UTXOS.computeProof (Γ,legacyMode .proj₁) tt txTop
+      ... | success h  = success (-, UTXO (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , p₁₂ , p₁₃ , p₁₄ , p₁₅ , p₁₆ , p₁₇ , p₁₈ , proj₂ h))
+      ... | failure ¬h = failure "UTXOS"
+      computeProof | true | [ refl ]
+        with H?
+      ... | (no ¬p) = failure "UTXO" -- (genErrors ¬p)
+      ... | yes (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , p₁₂ , p₁₃ , p₁₄ , p₁₅ , p₁₆ , p₁₇ , p₁₈)
+        with UTXOS.computeProof (Γ,legacyMode .proj₁) tt txTop
+      ... | success h  = success (-, UTXO (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , p₁₂ , p₁₃ , p₁₄ , p₁₅ , p₁₆ , p₁₇ , p₁₈ , proj₂ h))
+      ... | failure ¬h = failure "UTXOS"
 
-      computeProof (Γ , lm) s txTop
-        with IsValidFlagOf txTop in isValid | computeProof-UTXOS Γ tt txTop | ¿ UTXO-Premises (Γ , lm) s txTop ¿
-
-      ... | true   | success (tt , utxosProof)  | yes prem = success ( ⟦ (UTxOOf s ∣ SpendInputsOf txTop ᶜ) ∪ˡ outs txTop
-                                                                       , FeesOf s + TxFeesOf txTop
-                                                                       , DonationsOf s + DonationsOf txTop
-                                                                       ⟧
-                                                                     , UTXO-valid (isValid , utxosProof , prem )
-                                                                     )
-      ... | false  | success (tt , utxosProof)  | yes prem = success ( ⟦ (UTxOOf s ∣ CollateralInputsOf txTop ᶜ)
-                                                                       , FeesOf s + cbalance (UTxOOf s ∣ CollateralInputsOf txTop)
-                                                                       , DonationsOf s
-                                                                       ⟧
-                                                                     , UTXO-invalid (isValid , utxosProof , prem)
-                                                                     )
-      ... | _      | _                          | no ¬prem  = failure (genErr-prem (Γ , lm) s txTop ¬prem)
-      ... | _      | failure es                 | _         = failure es
-
-
-      --------------------------------------------------------------------------
-      -- completeness for UTXO
-      --------------------------------------------------------------------------
-      completeness : (Γ×lm : UTxOEnv × Bool) (s : UTxOState) (txTop : TopLevelTx)
-        → ∀ s' → Γ×lm ⊢ s ⇀⦇ txTop ,UTXO⦈ s' → (map proj₁ $ computeProof Γ×lm s txTop) ≡ success s'
-
-      completeness (Γ , lm) s txTop s' (UTXO-valid (refl , h-utxos , h-prem))
-        with computeProof-UTXOS Γ tt txTop in eqU | ¿ UTXO-Premises (Γ , lm) s txTop  ¿
-      ... | success (tt , utxosProof) | yes prem = refl
-      ... | success (tt , utxosProof) | no ¬prem = ⊥-elim (¬prem h-prem)
-      ... | failure es | _ = ⊥-elim $ case trans (sym (map-failure {f = proj₁} eqU))
-                                                 (completeness-UTXOS Γ tt txTop tt h-utxos)
-                                      of λ ()
-
-      completeness (Γ , lm) s txTop s' (UTXO-invalid (refl , h-utxos , h-prem))
-        with computeProof-UTXOS Γ tt txTop in eqU | ¿ UTXO-Premises (Γ , lm) s txTop ¿
-      ... | success (tt , utxosProof) | yes prem = refl
-      ... | success (tt , utxosProof) | no ¬prem = ⊥-elim (¬prem h-prem)
-      ... | failure es                | _ = ⊥-elim $ case trans  (sym (map-failure {f = proj₁} eqU))
-                                                                 (completeness-UTXOS Γ tt txTop tt h-utxos)
-                                                     of λ ()
+      completeness : ∀ s₁ → Γ,legacyMode ⊢ s₀ ⇀⦇ txTop ,UTXO⦈ s₁ → map proj₁ computeProof ≡ success s₁
+      completeness s₁ (UTXO-⋯ p₀  p₁  p₂  p₃  p₄  p₅  p₆  p₇  p₈  p₉  p₁₀  p₁₁  p₁₂  p₁₃  p₁₄  p₁₅  p₁₆  p₁₇  p₁₈ h)
+        with IsValidFlagOf txTop | inspect IsValidFlagOf txTop
+      ... | false | [ refl ]
+        with H?
+      ... | no ¬p = ⊥-elim (¬p ((p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , p₁₂ , p₁₃ , p₁₄ , p₁₅ , p₁₆ , p₁₇ , p₁₈)))
+      ... | yes _
+        with UTXOS.computeProof (Γ,legacyMode .proj₁) tt txTop | UTXOS.completeness _ _ _ _ h
+      ... | success h | refl = refl
+      completeness s₁ (UTXO-⋯ p₀  p₁  p₂  p₃  p₄  p₅  p₆  p₇  p₈  p₉  p₁₀  p₁₁  p₁₂  p₁₃  p₁₄  p₁₅  p₁₆  p₁₇  p₁₈ h) | true | [ refl ]
+        with H?
+      ... | no ¬p = ⊥-elim (¬p ((p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , p₁₂ , p₁₃ , p₁₄ , p₁₅ , p₁₆ , p₁₇ , p₁₈)))
+      ... | yes _
+        with UTXOS.computeProof (Γ,legacyMode .proj₁) tt txTop | UTXOS.completeness _ _ _ _ h
+      ... | success h | refl = refl
 ```
