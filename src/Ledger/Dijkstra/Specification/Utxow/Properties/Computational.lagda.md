@@ -19,80 +19,11 @@ module Ledger.Dijkstra.Specification.Utxow.Properties.Computational
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
 
+import Data.List.Relation.Unary.Any as L
+open import Ledger.Dijkstra.Specification.Script.Validation txs abs
 open import Ledger.Dijkstra.Specification.Utxow txs abs
 open import Ledger.Dijkstra.Specification.Utxo txs abs
 open import Ledger.Dijkstra.Specification.Utxo.Properties.Computational txs abs
-
-decide-Legacy : (Γ : UTxOEnv) (txTop : TopLevelTx) → Dec (Legacy Γ txTop)
-decide-Legacy Γ txTop = ¿ ∃[ s ∈ p2ScriptsNeeded ] language s ∈ fromList (PlutusV1 ∷ PlutusV2 ∷ PlutusV3 ∷ []) ¿
-  where
-  wd : WitnessLogic txTop Γ
-  wd = collectWitnessLogic true txTop Γ
-  open WitnessLogic wd
-
-
-decide-Normal-Premises : ∀ Γ s tx → Dec (UTXOW-Normal-Premises Γ s tx)
-decide-Normal-Premises Γ s tx =
-  let wd = collectWitnessLogic false tx Γ in
-  let open WitnessLogic wd in
-    case ¿ (UsesBootstrapAddress (UTxOOf Γ) tx → Is-∅ p2ScriptsNeeded) ¿ of λ where
-      (no ¬p) → no (λ where (record { bootstrap = p }) → ¬p p)
-      (yes bootOk) → case ¿ RequiredGuardsInTopLevel tx ¿ of λ where
-        (no ¬p) → no (λ where (record { guardsPolicy = p }) → ¬p p)
-        (yes guardsOk) → case ¿ ∀[ (vk , σ) ∈ TxWitnesses.vKeySigs (Tx.txWitnesses tx) ] isSigned vk (txidBytes (TxIdOf tx)) σ ¿ of λ where
-          (no ¬p) → no (λ where (record { sigsValid = p }) → ¬p p)
-          (yes sigsOk) → case ¿ ∀[ s ∈ p1ScriptsNeeded ] validP1Script vKeyHashesProvided (TxBody.txVldt (Tx.txBody tx)) s ¿ of λ where
-            (no ¬p) → no (λ where (record { p1ScriptsValid = p }) → ¬p p)
-            (yes p1Ok) → case ¿ vKeyHashesNeeded ⊆ vKeyHashesProvided ¿ of λ where
-              (no ¬p) → no (λ where (record { vKeyHashesSubset = p }) → ¬p (λ {a} → p))
-              (yes vkhOk) → case ¿ scriptHashesNeeded ⊆ mapˢ hash scriptsProvided ¿ of λ where
-                (no ¬p) → no (λ where (record { scriptHashesSubset = p }) → ¬p (λ {a} → p))
-                (yes shOk) → case ¿ dataHashesNeeded ⊆ mapˢ hash dataProvided ¿ of λ where
-                  (no ¬p) → no (λ where (record { dataHashesSubset = p }) → ¬p (λ {a} → p))
-                  (yes dhOk) → case ¿ languages p2ScriptsNeeded ⊆ dom (PParams.costmdls (PParamsOf Γ)) ∩ ❴ PlutusV4 ❵ ¿ of λ where
-                    (no ¬p) → no (λ where (record { languageV4Only = p }) → ¬p (λ {a} → p))
-                    (yes langOk) → case ¿ TxBody.txADhash (Tx.txBody tx) ≡ map hash (Tx.txAuxData tx) ¿ of λ where
-                      (no ¬p) → no (λ where (record { auxDataHashValid = p }) → ¬p p)
-                      (yes adOk) → yes (record { bootstrap = bootOk ; guardsPolicy = guardsOk
-                                               ; sigsValid = sigsOk ; p1ScriptsValid = p1Ok
-                                               ; vKeyHashesSubset = λ {a} → vkhOk {a}
-                                               ; scriptHashesSubset = λ {a} → shOk {a}
-                                               ; dataHashesSubset = λ {a} → dhOk {a}
-                                               ; languageV4Only = λ {a} → langOk {a}
-                                               ; auxDataHashValid = adOk })
-
-decide-Legacy-Premises : ∀ Γ s tx → Dec (UTXOW-Legacy-Premises Γ s tx)
-decide-Legacy-Premises Γ s tx =
-  let wd = collectWitnessLogic true tx Γ in
-  let open WitnessLogic wd in
-    case ¿ ¬ (UsesBootstrapAddress (UTxOOf Γ) tx) ¿ of λ where
-        (no ¬p) → no (λ where (record { noBootstrap = p }) → ¬p p)
-        (yes noBootOk) → case ¿ Is-∅ (GuardsOf tx) ¿ of λ where
-          (no ¬p) → no (λ where (record { noGuards = p }) → ¬p p)
-          (yes noGuardsOk) → case ¿ RequiredGuardsInTopLevel tx ¿ of λ where
-            (no ¬p) → no (λ where (record { guardsPolicy = p }) → ¬p p)
-            (yes guardsOk) → case ¿ ∀[ (vk , σ) ∈ TxWitnesses.vKeySigs (Tx.txWitnesses tx) ] isSigned vk (txidBytes (TxIdOf tx)) σ ¿ of λ where
-              (no ¬p) → no (λ where (record { sigsValid = p }) → ¬p p)
-              (yes sigsOk) → case ¿ ∀[ s ∈ p1ScriptsNeeded ] validP1Script vKeyHashesProvided (TxBody.txVldt (Tx.txBody tx)) s ¿ of λ where
-                (no ¬p) → no (λ where (record { p1ScriptsValid = p }) → ¬p p)
-                (yes p1Ok) → case ¿ vKeyHashesNeeded ⊆ vKeyHashesProvided ¿ of λ where
-                  (no ¬p) → no (λ where (record { vKeyHashesSubset = p }) → ¬p (λ {a} → p))
-                  (yes vkhOk) → case ¿ scriptHashesNeeded ⊆ mapˢ hash scriptsProvided ¿ of λ where
-                    (no ¬p) → no (λ where (record { scriptHashesSubset = p }) → ¬p (λ {a} → p))
-                    (yes shOk) → case ¿ dataHashesNeeded ⊆ mapˢ hash dataProvided ¿ of λ where
-                      (no ¬p) → no (λ where (record { dataHashesSubset = p }) → ¬p (λ {a} → p))
-                      (yes dhOk) → case ¿ languages p2ScriptsNeeded ⊆ dom (PParams.costmdls (PParamsOf Γ)) ∩ allowedLanguagesLegacyMode tx (UTxOOf Γ) ¿ of λ where
-                        (no ¬p) → no (λ where (record { legacyLanguages = p }) → ¬p (λ {a} → p))
-                        (yes legLangOk) → case ¿ TxBody.txADhash (Tx.txBody tx) ≡ map hash (Tx.txAuxData tx) ¿ of λ where
-                          (no ¬p) → no (λ where (record { auxDataHashValid = p }) → ¬p p)
-                          (yes adOk) → yes (record { noBootstrap = noBootOk
-                                                   ; noGuards = noGuardsOk ; guardsPolicy = guardsOk
-                                                   ; sigsValid = sigsOk ; p1ScriptsValid = p1Ok
-                                                   ; vKeyHashesSubset = λ {a} → vkhOk {a}
-                                                   ; scriptHashesSubset = λ {a} → shOk {a}
-                                                   ; dataHashesSubset = λ {a} → dhOk {a}
-                                                   ; legacyLanguages  = λ {a} → legLangOk {a}
-                                                   ; auxDataHashValid  = adOk })
 
 instance
 ```
@@ -121,40 +52,61 @@ instance
       ... | success _ | refl = refl
 
   Computational-UTXOW : Computational _⊢_⇀⦇_,UTXOW⦈_ String
-  Computational-UTXOW = MkComputational computeProof completeness
-    where
-    open Computational Computational-UTXO
-      renaming (computeProof to computeP; completeness to completeP)
+  Computational-UTXOW = record {go} where
+    module go (Γ : UTxOEnv) (s₀ : UTxOState) (txTop : TopLevelTx)
+      (let H-normal , ⁇ H?-normal = UTXOW-normal-premises {txTop = txTop} {Γ = Γ}
+           H-legacy , ⁇ H?-legacy = UTXOW-legacy-premises {txTop = txTop} {Γ = Γ}
 
-    computeProof : (Γ : UTxOEnv) (s : UTxOState) (tx : TopLevelTx)
-      → ComputationResult String (∃[ s' ] (Γ ⊢ s ⇀⦇ tx ,UTXOW⦈ s'))
+           scriptsProvided = ScriptPoolOf Γ
+           credentialsNeeded = mapˢ proj₂ (credsNeeded (UTxOOf Γ) txTop)
+           scriptHashesNeeded = mapPartial isScriptObj credentialsNeeded
+           scriptsNeeded = filterˢ (λ s → hash s ∈ scriptHashesNeeded) scriptsProvided
+           p2ScriptsNeeded = mapPartial toP2Script scriptsNeeded)
+      where
 
-    computeProof Γ s tx with decide-Legacy Γ tx
-    ... | no notrig = case (decide-Normal-Premises Γ s tx) of λ where
-      (no  _) → failure "UTXOW failed: normal premises"
-      (yes pN) → map (λ where (s' , hU) → s' , UTXOW-normal (notrig , pN , hU)) (computeP (Γ , false) s tx)
-    ... | yes trig = case (decide-Legacy-Premises Γ s tx) of λ where
-      (no  _) → failure "UTXOW failed: legacy premises"
-      (yes pL) → map (λ where (s' , hU) → s' , UTXOW-legacy (trig , pL , hU)) (computeP (Γ , true) s tx)
+      private
+        V1,V2,V3∩V4⊆∅ : fromList (PlutusV1 ∷ PlutusV2 ∷ PlutusV3 ∷ []) ∩ fromList (PlutusV4 ∷ []) ⊆ ∅
+        V1,V2,V3∩V4⊆∅ x with ∈-filter .Equivalence.from x
+        ... | (a , b) with ∈-fromList .Equivalence.from a | ∈-fromList .Equivalence.from b
+        V1,V2,V3∩V4⊆∅ x | (a , b) | L.here refl | L.there (L.here p)
+          with fromPlutusLanguage .Injection.injective p
+        ... | ()
+        V1,V2,V3∩V4⊆∅ x | a , b | L.here refl | L.there (L.there (L.here p))
+          with fromPlutusLanguage .Injection.injective p
+        ... | ()
+        V1,V2,V3∩V4⊆∅ x | a , b | L.here refl | L.here p
+          with fromPlutusLanguage .Injection.injective p
+        ... | ()
 
-    completeness : (Γ : UTxOEnv) (s : UTxOState) (tx : TopLevelTx) (s' : UTxOState)
-      → Γ ⊢ s ⇀⦇ tx ,UTXOW⦈ s' → map proj₁ (computeProof Γ s tx) ≡ success s'
+      module UTXO = Computational Computational-UTXO
 
-    completeness Γ s tx s' (UTXOW-legacy (trig , pL , hU))
-      with decide-Legacy Γ tx
-    ... | no notrig = ⊥-elim (notrig trig)
-    ... | yes _ with decide-Legacy-Premises Γ s tx
-    ... | no ¬pL = ⊥-elim (¬pL pL)
-    ... | yes _ with computeP (Γ , true) s tx | completeP (Γ , true) s tx s' hU
-    ... | success _ | refl = refl
-    ... | failure _ | ()
+      computeProof : ComputationResult String (∃[ s₁ ] (Γ ⊢ s₀ ⇀⦇ txTop ,UTXOW⦈ s₁))
+      computeProof
+        with ¿ ∃[ s ∈ p2ScriptsNeeded ] language s ∈ fromList (PlutusV1 ∷ PlutusV2 ∷ PlutusV3 ∷ []) ¿
+      ... | yes p with H?-legacy
+      ... | no ¬p = failure "UTXOW"
+      ... | yes (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀) =
+        map (map₂′ (λ h → UTXOW-legacy {txTop = txTop} {Γ = Γ} (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , h)))
+            (UTXO.computeProof (Γ , true) s₀ txTop)
+      computeProof | no ¬p with H?-normal
+      ... | no ¬p = failure "UTXOW"
+      ... | yes (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉) =
+        map (map₂′ (λ h → UTXOW-normal {txTop = txTop} {Γ = Γ} (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , h)))
+            (UTXO.computeProof (Γ , false) s₀ txTop)
 
-    completeness Γ s tx s' (UTXOW-normal (notrig , pN , hU))
-      with decide-Legacy Γ tx
-    ... | yes trig = ⊥-elim (notrig trig)
-    ... | no _ with decide-Normal-Premises Γ s tx
-    ... | no ¬pN = ⊥-elim (¬pN pN)
-    ... | yes _ with computeP (Γ , false) s tx | completeP (Γ , false) s tx s' hU
-    ... | success _ | refl = refl
-    ... | failure _ | ()
+      completeness : ∀ s₁ → Γ ⊢ s₀ ⇀⦇ txTop ,UTXOW⦈ s₁ → map proj₁ computeProof ≡ success s₁
+      completeness s₁ (UTXOW-normal-⋯ p₀ p₁ p₂ p₃ p₄ p₅ p₆ p₇ p₈ p₉ h) 
+        with ¿ ∃[ s ∈ p2ScriptsNeeded ] language s ∈ fromList (PlutusV1 ∷ PlutusV2 ∷ PlutusV3 ∷ []) ¿
+      ... | yes (s , p , q) = ⊥-elim (Properties.∉-∅ (V1,V2,V3∩V4⊆∅ (∈-∩ .Equivalence.to (q , (p₀ p)))))
+      ... | no ¬p  with H?-normal
+      ... | no ¬p = ⊥-elim (¬p (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉))
+      ... | yes _ with UTXO.computeProof (Γ , false) s₀ txTop | UTXO.completeness _ _ _ _ h
+      ... | success _ | refl = refl
+      completeness s₁ (UTXOW-legacy-⋯ p₀ p₁ p₂ p₃ p₄ p₅ p₆ p₇ p₈ p₉ p₁₀ h)
+        with ¿ ∃[ s ∈ p2ScriptsNeeded ] language s ∈ fromList (PlutusV1 ∷ PlutusV2 ∷ PlutusV3 ∷ []) ¿
+      ... | no ¬p  = ⊥-elim (¬p p₀)
+      ... | yes p with H?-legacy
+      ... | no ¬p = ⊥-elim (¬p (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀))
+      ... | yes _ with UTXO.computeProof (Γ , true) s₀ txTop | UTXO.completeness _ _ _ _ h
+      ... | success _ | refl = refl
 ```

@@ -20,14 +20,15 @@ open import Data.List.Relation.Unary.All using (All; []; _∷_; all?; uncons)
 open import Data.List.Relation.Unary.Any
 open import Data.Nat.Properties using (+-0-commutativeMonoid; suc-injective)
 
+open import Function.Bundles
 open import stdlib.Data.List.Relation.Unary.MOf
+open Injection
 
 open import Ledger.Prelude hiding (All; Any; all?; any?; _∷ʳ_; uncons; _⊆_)
 
 
 ```
 -->
-
 ```agda
 record P1ScriptStructure : Type₁ where
   field P1Script : Type
@@ -36,17 +37,20 @@ record P1ScriptStructure : Type₁ where
         ⦃ Hashable-P1Script ⦄ : Hashable P1Script ScriptHash
         ⦃ DecEq-P1Script    ⦄ : DecEq P1Script
 
+data PlutusLanguage : Type where
+  V1 V2 V3 V4 : PlutusLanguage
+
 record PlutusStructure : Type₁ where
   field Dataʰ : HashableSet
         Language PlutusScript CostModel Prices LangDepView ExUnits : Type
-        PlutusV1 PlutusV2 PlutusV3 PlutusV4 : Language
+        fromPlutusLanguage :  PlutusLanguage ↣ Language
         ⦃ ExUnit-CommutativeMonoid ⦄ : CommutativeMonoid 0ℓ 0ℓ ExUnits
         ⦃ Hashable-PlutusScript    ⦄ : Hashable PlutusScript ScriptHash
-        ⦃ DecEq-Language           ⦄ : DecEq Language
         ⦃ DecEq-CostModel          ⦄ : DecEq CostModel
         ⦃ DecEq-LangDepView        ⦄ : DecEq LangDepView
-        ⦃ Show-Language            ⦄ : Show Language
         ⦃ Show-CostModel           ⦄ : Show CostModel
+        ⦃ DecEq-Language           ⦄ : DecEq Language
+        ⦃ Show-Language            ⦄ : Show Language
 
   field  _≥ᵉ_              : ExUnits → ExUnits → Type
          ⦃ ≥ᵉ-Dec ⦄        : _≥ᵉ_ ⁇²
@@ -54,6 +58,11 @@ record PlutusStructure : Type₁ where
          ⦃ DecEQ-Prices  ⦄ : DecEq Prices
          ⦃ Show-ExUnits  ⦄ : Show ExUnits
          ⦃ Show-Prices   ⦄ : Show Prices
+
+  PlutusV1 = fromPlutusLanguage .to V1
+  PlutusV2 = fromPlutusLanguage .to V2
+  PlutusV3 = fromPlutusLanguage .to V3
+  PlutusV4 = fromPlutusLanguage .to V4
 
   open HashableSet Dataʰ renaming (T to Data; THash to DataHash) public
 

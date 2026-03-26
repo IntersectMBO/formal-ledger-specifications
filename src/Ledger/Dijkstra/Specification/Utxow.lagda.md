@@ -344,8 +344,56 @@ mode up front rather than deciding both.
 ```agda
   -- Normal branch is taken exactly when Legacy does *not* hold.
   UTXOW-normal :
-    ∙ ¬ Legacy Γ txTop
-    ∙ UTXOW-Normal-Premises Γ s txTop
+    let
+      open Tx txTop
+      open TxBody txBody
+      open TxWitnesses txWitnesses
+
+      scriptsProvided : ℙ Script
+      scriptsProvided = ScriptPoolOf Γ
+
+      dataProvided : ℙ Data
+      dataProvided = range (DataPoolOf Γ)
+
+      credentialsNeeded : ℙ Credential
+      credentialsNeeded = mapˢ proj₂ (credsNeeded (UTxOOf Γ) txTop)
+
+      vKeyHashesProvided : ℙ KeyHash
+      vKeyHashesProvided = mapˢ hash (dom vKeySigs)
+
+      vKeyHashesNeeded : ℙ KeyHash
+      vKeyHashesNeeded = mapPartial isKeyHashObj credentialsNeeded
+
+      scriptHashesNeeded : ℙ ScriptHash
+      scriptHashesNeeded = mapPartial isScriptObj credentialsNeeded
+
+      scriptsNeeded : ℙ Script
+      scriptsNeeded = filterˢ (λ s → hash s ∈ scriptHashesNeeded) scriptsProvided
+
+      p1ScriptsNeeded : ℙ P1Script
+      p1ScriptsNeeded = mapPartial toP1Script scriptsNeeded
+
+      p2ScriptsNeeded : ℙ P2Script
+      p2ScriptsNeeded = mapPartial toP2Script scriptsNeeded
+
+      dataHashesNeeded : ℙ DataHash
+      dataHashesNeeded =
+        mapPartial (λ txOut@(a , _ , d , _) → do
+                      sh ← isScriptObj (payCred a)
+                      _  ← lookupHash sh p2ScriptsNeeded
+                      x  ← d
+                      isInj₂ x) (range (UTxOOf Γ ∣ txIns))
+    in
+    ∙ ∀[ s ∈ p2ScriptsNeeded ] language s ∈ fromList (PlutusV4 ∷ [])
+    ∙ (UsesBootstrapAddress (UTxOOf Γ) txTop → Is-∅ p2ScriptsNeeded) -- (2)
+    ∙ RequiredGuardsInTopLevel txTop -- (3)
+    ∙ ∀[ (vk , σ) ∈ TxWitnesses.vKeySigs (Tx.txWitnesses txTop) ] isSigned vk (txidBytes (TxIdOf txTop)) σ
+    ∙ ∀[ s ∈ p1ScriptsNeeded ] validP1Script vKeyHashesProvided txVldt s
+    ∙ vKeyHashesNeeded ⊆ vKeyHashesProvided
+    ∙ scriptHashesNeeded ⊆ mapˢ hash scriptsProvided
+    ∙ dataHashesNeeded ⊆ mapˢ hash dataProvided
+    ∙ languages p2ScriptsNeeded ⊆ dom (PParams.costmdls (PParamsOf Γ)) ∩ ❴ PlutusV4 ❵ -- (1)
+    ∙ txADhash ≡ map hash txAuxData
     ∙ (Γ , false) ⊢ s ⇀⦇ txTop ,UTXO⦈ s'
       ────────────────────────────────
       Γ ⊢ s ⇀⦇ txTop ,UTXOW⦈ s'
@@ -368,10 +416,58 @@ mode up front rather than deciding both.
    are also the empty set.
 
 ```agda
-  -- Legacy branch is taken exactly when Legacy holds.
   UTXOW-legacy :
-    ∙ Legacy Γ txTop
-    ∙ UTXOW-Legacy-Premises Γ s txTop
+    let
+      open Tx txTop
+      open TxBody txBody
+      open TxWitnesses txWitnesses
+
+      scriptsProvided : ℙ Script
+      scriptsProvided = ScriptPoolOf Γ
+
+      dataProvided : ℙ Data
+      dataProvided = range (DataPoolOf Γ)
+
+      credentialsNeeded : ℙ Credential
+      credentialsNeeded = mapˢ proj₂ (credsNeeded (UTxOOf Γ) txTop)
+
+      vKeyHashesProvided : ℙ KeyHash
+      vKeyHashesProvided = mapˢ hash (dom vKeySigs)
+
+      vKeyHashesNeeded : ℙ KeyHash
+      vKeyHashesNeeded = mapPartial isKeyHashObj credentialsNeeded
+
+      scriptHashesNeeded : ℙ ScriptHash
+      scriptHashesNeeded = mapPartial isScriptObj credentialsNeeded
+
+      scriptsNeeded : ℙ Script
+      scriptsNeeded = filterˢ (λ s → hash s ∈ scriptHashesNeeded) scriptsProvided
+
+      p1ScriptsNeeded : ℙ P1Script
+      p1ScriptsNeeded = mapPartial toP1Script scriptsNeeded
+
+      p2ScriptsNeeded : ℙ P2Script
+      p2ScriptsNeeded = mapPartial toP2Script scriptsNeeded
+
+      dataHashesNeeded : ℙ DataHash
+      dataHashesNeeded =
+        mapPartial (λ txOut@(a , _ , d , _) → do
+                      sh ← isScriptObj (payCred a)
+                      _  ← lookupHash sh p2ScriptsNeeded
+                      x  ← d
+                      isInj₂ x) (range (UTxOOf Γ ∣ txIns))
+    in
+    ∙ ∃[ s ∈ p2ScriptsNeeded ] language s ∈ fromList (PlutusV1 ∷ PlutusV2 ∷ PlutusV3 ∷ [])
+    ∙ ¬ (UsesBootstrapAddress (UTxOOf Γ) txTop)
+    ∙ Is-∅ (GuardsOf txTop)
+    ∙ RequiredGuardsInTopLevel txTop
+    ∙ ∀[ (vk , σ) ∈ TxWitnesses.vKeySigs (Tx.txWitnesses txTop) ] isSigned vk (txidBytes (TxIdOf txTop)) σ
+    ∙ ∀[ s ∈ p1ScriptsNeeded ] validP1Script vKeyHashesProvided txVldt s
+    ∙ vKeyHashesNeeded ⊆ vKeyHashesProvided
+    ∙ scriptHashesNeeded ⊆ mapˢ hash scriptsProvided
+    ∙ dataHashesNeeded ⊆ mapˢ hash dataProvided
+    ∙ languages p2ScriptsNeeded ⊆ dom (PParams.costmdls (PParamsOf Γ)) ∩ allowedLanguagesLegacyMode txTop (UTxOOf Γ)
+    ∙ txADhash ≡ map hash txAuxData
     ∙ (Γ , true) ⊢ s ⇀⦇ txTop ,UTXO⦈ s'
       ────────────────────────────────
       Γ ⊢ s ⇀⦇ txTop ,UTXOW⦈ s'
@@ -382,7 +478,8 @@ mode up front rather than deciding both.
 unquoteDecl UTXOW-normal-premises = genPremises UTXOW-normal-premises (quote UTXOW-normal)
 unquoteDecl UTXOW-legacy-premises = genPremises UTXOW-legacy-premises (quote UTXOW-legacy)
 unquoteDecl SUBUTXOW-premises = genPremises SUBUTXOW-premises (quote SUBUTXOW)
-pattern UTXOW-normal-⋯ p₁ p₂ h = UTXOW-normal (p₁ , p₂ , h)
+pattern UTXOW-normal-⋯ p₀ p₁ p₂ p₃ p₄ p₅ p₆ p₇ p₈ p₉ h = UTXOW-normal (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , h)
+pattern UTXOW-legacy-⋯ p₀ p₁ p₂ p₃ p₄ p₅ p₆ p₇ p₈ p₉ p₁₀ h = UTXOW-legacy (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , h)
 pattern SUBUTXOW-⋯ p₀ p₁ p₂ p₃ p₄ p₅ p₆ p₇ p₈ p₉ h = SUBUTXOW (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , h)
 ```
 -->
