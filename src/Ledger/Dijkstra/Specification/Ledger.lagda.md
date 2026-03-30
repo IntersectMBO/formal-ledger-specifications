@@ -311,7 +311,7 @@ data _⊢_⇀⦇_,LEDGER⦈_ : LedgerEnv → LedgerState → TopLevelTx → Ledg
          allScripts = getAllScripts tx utxo₀
 
          allData : DataHash ⇀ Datum
-         allData = setToMap (mapˢ < hash , id > (getAllData tx utxo₀))
+         allData = setToMap (mapˢ < hash , id > (getAllData tx))
 
          depositsChange : DepositsChange
          depositsChange = calculateDepositsChange certState₀ certState₁ certState₂
@@ -333,7 +333,7 @@ data _⊢_⇀⦇_,LEDGER⦈_ : LedgerEnv → LedgerState → TopLevelTx → Ledg
          allScripts = getAllScripts tx utxo₀
 
          allData : DataHash ⇀ Datum
-         allData = setToMap (mapˢ < hash , id > (getAllData tx utxo₀))
+         allData = setToMap (mapˢ < hash , id > (getAllData tx))
     in
       ∙ IsValidFlagOf tx ≡ false
       ∙ ⟦ slot , ppolicy , pp , enactState , treasury , utxo₀ , IsValidFlagOf tx , allScripts , allData ⟧ ⊢ ⟦ utxoState₀ , govState₀ , certState₀ ⟧ ⇀⦇ SubTransactionsOf tx ,SUBLEDGERS⦈ ⟦ utxoState₀ , govState₀ , certState₀ ⟧
