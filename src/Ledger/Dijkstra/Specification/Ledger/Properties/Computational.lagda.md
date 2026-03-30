@@ -216,7 +216,7 @@ instance
     allScriptsOf tx s = getAllScripts tx (utxo₀Of s)
 
     allDataOf : TopLevelTx → LedgerState → DataHash ⇀ Datum
-    allDataOf tx s = setToMap (mapˢ < hash , id > (getAllData tx (utxo₀Of s)))
+    allDataOf tx s = setToMap (mapˢ < hash , id > (getAllData tx))
 
     subΓOf : LedgerEnv → LedgerState → TopLevelTx → SubLedgerEnv
     subΓOf Γ s tx =
@@ -291,7 +291,7 @@ instance
           allScripts : ℙ Script
           allScripts = getAllScripts txTop utxo₀
           allData : DataHash ⇀ Datum
-          allData = setToMap (mapˢ < hash , id > (getAllData txTop utxo₀))
+          allData = setToMap (mapˢ < hash , id > (getAllData txTop))
           subΓ : SubLedgerEnv
           subΓ = ⟦ slot , ppolicy , pparams , enactState , treasury
                 , utxo₀ , IsValidFlagOf txTop , allScripts , allData ⟧

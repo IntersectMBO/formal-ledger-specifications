@@ -679,17 +679,14 @@ allowed to inspect utxo for its inputs.
   witnessData = DataOf
 
   --| Set of data from a transaction
-  getTxData : Tx txLevel → UTxO → ℙ Datum
-  getTxData tx utxo =  dataOfTx tx
-                       ∪ spendData tx utxo
-                       ∪ referenceData tx utxo
-                       ∪ witnessData tx
+  getTxData : Tx txLevel → ℙ Datum
+  getTxData tx = witnessData tx
 
   --| Set of data from a batch
-  getAllData : TopLevelTx → UTxO → ℙ Datum
-  getAllData txTop utxo = foldl  (λ acc txSub → acc ∪ getTxData txSub utxo)
-                                 (getTxData txTop utxo)
-                                 (SubTransactionsOf txTop)
+  getAllData : TopLevelTx → ℙ Datum
+  getAllData txTop = foldl  (λ acc txSub → acc ∪ getTxData txSub)
+                            (getTxData txTop)
+                            (SubTransactionsOf txTop)
 
   NoOverlappingSpendInputs : TopLevelTx → Type
   NoOverlappingSpendInputs topTx =
