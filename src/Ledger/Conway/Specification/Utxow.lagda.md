@@ -27,6 +27,7 @@ open import Ledger.Conway.Specification.Utxo txs abs
 open import Ledger.Conway.Specification.Script.Validation txs abs
 open import Ledger.Conway.Specification.Certs govStructure
 import Data.List.Relation.Unary.Any as L
+import Data.Maybe.Relation.Unary.All as Maybe
 ```
 -->
 
@@ -36,8 +37,12 @@ import Data.List.Relation.Unary.Any as L
 ```agda
 module _ (o : TxOut) where
   d = proj₁ (proj₂ (proj₂ o))
+
   data HasInlineDatum : Set where
     InlineDatum  : ∀ {d'} → d ≡ just (inj₁ d') → HasInlineDatum
+
+  data HasDataHash : Set where
+    hasDataHash  : ∀ {d'} → d ≡ just (inj₂ d') → HasDataHash
 
 instance
   Dec-HasInlineDatum : ∀ {o} → HasInlineDatum o ⁇
@@ -46,6 +51,13 @@ instance
     (InlineDatum x) → case x of λ ()
   Dec-HasInlineDatum {_ , _ , nothing , _} = ⁇ no λ where
     (InlineDatum x) → case x of λ ()
+
+  Dec-HasDataHash : ∀ {o} → HasDataHash o ⁇
+  Dec-HasDataHash {_ , _ , just (inj₁ x) , _} = ⁇ no λ where
+    (hasDataHash x) → case x of λ ()
+  Dec-HasDataHash {_ , _ , just (inj₂ x) , _} = ⁇ yes (hasDataHash refl)
+  Dec-HasDataHash {_ , _ , nothing , _} = ⁇ no λ where
+    (hasDataHash x) → case x of λ ()
 
 IsConwayCert : DCert → Type
 IsConwayCert (regdrep _ _ _) = ⊤
@@ -157,6 +169,29 @@ hashScriptIntegrity pp langs rdrms dats
     just $ hash (dats , rdrms , mapˢ (getLanguageView pp) langs)
 ```
 
+## Missing data in spending scripts
+
+In Alonzo and Babbage, a UTxO output that is locked by a phase-2
+script is considered unspendable if the output doesn't have an
+associated datahash (corresponding to the datum passed as an argument
+to a Plutus V1 script) [VK21,](#alonzo-ledger-spec) or an associated
+inline datum (for Plutus V2 scripts). This amounts to a phase-1
+validation failure.  In Conway, this restriction is removed so that
+UTxO outputs locked by Plutus V3 scripts are spendable even if an
+inline datum or datahash is missing (see
+[CIP-0069](https://cips.cardano.org/cip-0069)).
+
+```agda
+TxOutSpendable-PlutusV1 : ∀ utxo tx txOut → Type
+TxOutSpendable-PlutusV1 utxo tx txOut
+  = Maybe.All (λ s → language s ≡ PlutusV1 → HasDataHash txOut) (txOutToP2Script utxo tx txOut)
+
+TxOutSpendable-PlutusV2 : ∀ utxo tx txOut → Type
+TxOutSpendable-PlutusV2 utxo tx txOut
+  = Maybe.All (λ s → language s ≡ PlutusV2 → HasDataHash txOut ⊎ HasInlineDatum txOut)
+              (txOutToP2Script utxo tx txOut)
+```
+
 ## The <span class="AgdaDatatype">UTXOW</span> Transition System {#sec:the-utxow-transition-system}
 
 <!--
@@ -206,6 +241,8 @@ data _⊢_⇀⦇_,UTXOW⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Typ
     ∙  dom txrdmrs ≡ᵉ scriptRdrptrs
     ∙  languages tx utxo neededScriptHashes ⊆
          dom (PParams.costmdls (PParamsOf Γ)) ∩ allowedLanguages tx utxo
+    ∙  ∀[ txOut ∈ range (utxo ∣ txIns) ] TxOutSpendable-PlutusV1 utxo tx txOut
+    ∙  ∀[ txOut ∈ range (utxo ∣ txIns) ] TxOutSpendable-PlutusV2 utxo tx txOut
     ∙  txADhash ≡ map hash txAD
     ∙  scriptIntegrityHash ≡
           hashScriptIntegrity
@@ -233,9 +270,9 @@ data _⊢_⇀⦇_,UTXOW⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Typ
 
 <!--
 ```agda
-pattern UTXOW-inductive⋯ p₁ p₂ p₃ p₄ p₅ p₆ p₇ p₈ p₉ p₁₀ h
-      = UTXOW-inductive (p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , h)
-pattern UTXOW⇒UTXO x = UTXOW-inductive⋯ _ _ _ _ _ _ _ _ _ _ x
+pattern UTXOW-inductive⋯ p₁ p₂ p₃ p₄ p₅ p₆ p₇ p₈ p₉ p₁₀ p₁₁ p₁₂ h
+      = UTXOW-inductive (p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , p₁₂ , h)
+pattern UTXOW⇒UTXO x = UTXOW-inductive⋯ _ _ _ _ _ _ _ _ _ _ _ _ x
 
 unquoteDecl UTXOW-inductive-premises =
   genPremises UTXOW-inductive-premises (quote UTXOW-inductive)

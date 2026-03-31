@@ -60,7 +60,7 @@ module _ {Γ s tx s'} where
   utxoDeposits (C.UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ h) = utxoSDeposits h
 
   utxowDeposits : Γ C.⊢ s ⇀⦇ tx ,UTXOW⦈ s' → L.Deposits
-  utxowDeposits (C.UTXOW-inductive⋯ _ _ _ _ _ _ _ _ _ _ h) = utxoDeposits h
+  utxowDeposits (C.UTXOW-inductive⋯ _ _ _ _ _ _ _ _ _ _ _ _ h) = utxoDeposits h
 
 instance
   -- Here we pass in the ValidCertDeposits proof explicitly and
@@ -99,8 +99,8 @@ instance
     L.UTXO-inductive (a , b , c , d , e , f , g , r , h , i , j , k , l , m , n , o , p , q , (validCerts ⊢conv utxo))
 
   UTXOWToConf : ∀ {Γ s tx s'} → Γ L.⊢ s ⇀⦇ tx ,UTXOW⦈ s' ⭆ Γ C.⊢ s ⇀⦇ tx ,UTXOW⦈ (withDepositsFrom s s')
-  UTXOWToConf .convⁱ _ (L.UTXOW-inductive⋯ a b c d e f g h i j utxo) =
-    C.UTXOW-inductive⋯ a b c d e f g h i j (conv utxo)
+  UTXOWToConf .convⁱ _ (L.UTXOW-inductive⋯ a b c d e f g h i j k l utxo) =
+    C.UTXOW-inductive⋯ a b c d e f g h i j k l (conv utxo)
 
   UTXOWFromConf : ∀ {Γ s tx s'}
                     (let open L.UTxOEnv Γ using () renaming (pparams to pp)
@@ -110,6 +110,6 @@ instance
                 → (isValid tx ≡ false ⊎ L.ValidCertDeposits pp deposits txCerts)
                   ⊢ Γ C.⊢ s ⇀⦇ tx ,UTXOW⦈ s' ⭆ⁱ λ _ h →
                     Γ L.⊢ s ⇀⦇ tx ,UTXOW⦈ (setDeposits (utxowDeposits h) s')  -- Conformance doesn't update deposits in UTXOW
-  UTXOWFromConf .convⁱ validCerts (C.UTXOW-inductive⋯ a b c d e f g h i j utxo) =
-    L.UTXOW-inductive⋯ a b c d e f g h i j (validCerts ⊢conv utxo)
+  UTXOWFromConf .convⁱ validCerts (C.UTXOW-inductive⋯ a b c d e f g h i j k l utxo) =
+    L.UTXOW-inductive⋯ a b c d e f g h i j k l (validCerts ⊢conv utxo)
 ```
