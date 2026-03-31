@@ -3,7 +3,6 @@ source_branch: master
 source_path: src/Ledger/Conway/Conformance/Utxow.lagda.md
 ---
 ```agda
-
 {-# OPTIONS --safe #-}
 
 open import Ledger.Prelude
@@ -67,6 +66,8 @@ data _⊢_⇀⦇_,UTXOW⦈_ where
     ∙  dom txrdmrs ≡ᵉ scriptRdrptrs
     ∙  L.languages tx utxo neededScriptHashes ⊆
          dom (PParams.costmdls (PParamsOf Γ)) ∩ L.allowedLanguages tx utxo
+    ∙  ∀[ txOut ∈ range (utxo ∣ txIns) ] L.TxOutSpendable-PlutusV1 utxo tx txOut
+    ∙  ∀[ txOut ∈ range (utxo ∣ txIns) ] L.TxOutSpendable-PlutusV2 utxo tx txOut
     ∙  txADhash ≡ map hash txAD
     ∙  scriptIntegrityHash ≡
          L.hashScriptIntegrity
@@ -78,9 +79,9 @@ data _⊢_⇀⦇_,UTXOW⦈_ where
        ────────────────────────────────
        Γ ⊢ s ⇀⦇ tx ,UTXOW⦈ s'
 
-pattern UTXOW-inductive⋯ p₁ p₂ p₃ p₄ p₅ p₆ p₇ p₈ p₉ p₁₀ h
-      = UTXOW-inductive (p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , h)
-pattern UTXOW⇒UTXO x = UTXOW-inductive⋯ _ _ _ _ _ _ _ _ _ _ x
+pattern UTXOW-inductive⋯ p₁ p₂ p₃ p₄ p₅ p₆ p₇ p₈ p₉ p₁₀ p₁₁ p₁₂ h
+      = UTXOW-inductive (p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , p₁₂ , h)
+pattern UTXOW⇒UTXO x = UTXOW-inductive⋯ _ _ _ _ _ _ _ _ _ _ _ _ x
 
 unquoteDecl UTXOW-inductive-premises =
   genPremises UTXOW-inductive-premises (quote UTXOW-inductive)
