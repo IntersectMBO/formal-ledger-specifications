@@ -45,6 +45,7 @@ open import Ledger.Dijkstra.Specification.Fees using (scriptsCost)
 
 import Data.List.Relation.Unary.All as List
 import Data.List.Relation.Unary.AllPairs as List
+import Data.List.Relation.Unary.Any as List
 import Data.Sum.Relation.Unary.All as Sum
 
 
@@ -503,7 +504,8 @@ data _⊢_⇀⦇_,UTXO⦈_ : UTxOEnv × Bool → UTxOState → TopLevelTx → UT
     ∙ (legacyMode ≡ true → consumed (DepositsChangeOf Γ) txTop (UTxOOf Γ) ≡ produced (DepositsChangeOf Γ) txTop)  -- (4)
     ∙ SizeOf txTop ≤ maxTxSize (PParamsOf Γ)
     ∙ ∑ˡ[ x ← setToList (allReferenceScripts txTop (UTxOOf Γ)) ] scriptSize x ≤ (PParamsOf Γ) .maxRefScriptSizePerTx
-    ∙ (RedeemersOf txTop ˢ ≢ ∅ → collateralCheck (PParamsOf Γ) txTop (UTxOOf Γ))
+    ∙ ((RedeemersOf txTop ˢ ≢ ∅) ⊎ (List.Any (λ txSub → RedeemersOf txSub ˢ ≢ ∅) (SubTransactionsOf txTop))
+        → collateralCheck (PParamsOf Γ) txTop (UTxOOf Γ))
     ∙ ∀[ (_ , o) ∈ ∣ TxOutsOf txTop ∣ ]
          (inject ((UTxOOverhead + utxoEntrySize o) * coinsPerUTxOByte (PParamsOf Γ)) ≤ᵗ txOutToValue o)
     ∙ ∀[ (_ , o) ∈ ∣ TxOutsOf txTop ∣ ] (serializedSize (txOutToValue o) ≤ maxValSize (PParamsOf Γ))
