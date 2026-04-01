@@ -20,14 +20,20 @@ open import Ledger.Dijkstra.Specification.Certs govStructure
 -->
 
 ```agda
-data ScriptPurpose : Type where
-  Cert     : DCert          → ScriptPurpose
-  Rwrd     : RewardAddress  → ScriptPurpose
-  Mint     : ScriptHash     → ScriptPurpose
-  Spend    : TxIn           → ScriptPurpose
-  Vote     : GovVoter       → ScriptPurpose
-  Propose  : GovProposal    → ScriptPurpose
-  Guard    : Credential     → ScriptPurpose
+ScriptPurposeData : Tag → Type
+ScriptPurposeData Spend         = TxIn
+ScriptPurposeData Mint          = ScriptHash
+ScriptPurposeData Cert          = DCert
+ScriptPurposeData Reward        = RewardAddress
+ScriptPurposeData Vote          = GovVoter
+ScriptPurposeData Propose       = GovProposal
+ScriptPurposeData Guard         = Credential
+
+record ScriptPurpose : Type where
+  constructor ⟦_,_⟧ˢᵖ
+  field
+    tag   : Tag
+    data′ : ScriptPurposeData tag
 ```
 
 Note that `Guard c` always indexes into *the current `tx`'s* `txGuards`:
@@ -48,7 +54,7 @@ mutual
       txWithdrawals  : Withdrawals
       txVldt         : Maybe Slot × Maybe Slot
       vkKey          : ℙ KeyHash     -- native/phase-1/timelock signers
-      txGuards       : ℙ (Credential × Maybe Datum)  -- CIP-0112/0118 guards (required by tx body)
+      txGuards       : ℙ Credential  -- CIP-0112/0118 guards (required by tx body)
       txData         : ℙ Datum
       txId           : TxId
       txInfoSubTxs   : Maybe (List SubTxInfo)
