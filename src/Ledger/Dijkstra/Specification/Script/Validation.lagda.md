@@ -33,15 +33,15 @@ private variable
 -->
 
 ```agda
-rdptr : Tx ℓ → ScriptPurpose → Maybe (RedeemerPtr ℓ)
+rdptr : Tx ℓ → ScriptPurpose → Maybe RedeemerPtr
 rdptr tx = λ where
-  (Cert h)     → map (Cert     ,_) $ indexOfDCert           h (DCertsOf tx)
-  (Rwrd h)     → map (Reward   ,_) $ indexOfRewardAddress   h (WithdrawalsOf tx)
-  (Mint h)     → map (Mint     ,_) $ indexOfPolicyId        h (policies (MintedValueOf tx))
-  (Spend h)    → map (Spend    ,_) $ indexOfTxIn            h (SpendInputsOf tx)
-  (Vote h)     → map (Vote     ,_) $ indexOfVote            h (map GovVote.voter (ListOfGovVotesOf tx))
-  (Propose h)  → map (Propose  ,_) $ indexOfProposal        h (ListOfGovProposalsOf tx)
-  (Guard c)    → map (Guard    ,_) $ indexOfGuard           c (map proj₁ (setToList (GuardsOf tx)))
+  ⟦ Cert          , h ⟧ˢᵖ → map (Cert           ,_) $ indexOfDCert          h (DCertsOf tx)
+  ⟦ Reward        , h ⟧ˢᵖ → map (Reward         ,_) $ indexOfRewardAddress  h (WithdrawalsOf tx)
+  ⟦ Mint          , h ⟧ˢᵖ → map (Mint           ,_) $ indexOfPolicyId       h (policies (MintedValueOf tx))
+  ⟦ Spend         , h ⟧ˢᵖ → map (Spend          ,_) $ indexOfTxIn           h (SpendInputsOf tx)
+  ⟦ Vote          , h ⟧ˢᵖ → map (Vote           ,_) $ indexOfVote           h (map GovVote.voter (ListOfGovVotesOf tx))
+  ⟦ Propose       , h ⟧ˢᵖ → map (Propose        ,_) $ indexOfProposal       h (ListOfGovProposalsOf tx)
+  ⟦ Guard         , h ⟧ˢᵖ → map (Guard          ,_) $ indexOfGuard          h (setToList (GuardsOf tx))
 
 indexedRdmrs : Tx ℓ → ScriptPurpose → Maybe (Redeemer × ExUnits)
 indexedRdmrs tx sp = maybe (λ x → lookupᵐ? (RedeemersOf tx) x) nothing (rdptr tx sp)
@@ -68,22 +68,6 @@ getDatumSpend tx utxo₀ allData txin
     (inj₁ d) → just d
     (inj₂ h) → lookupᵐ? allData h
 ... | _ = nothing
-```
-
-In Dijkstra, we introduce the function `getDataGuard`{.AgdaFunction}, which
-retrieves the set of data required by a guard script. In addition, the function
-returns a boolean that signals whether the guard script is also required without
-datum.
-
-```agda
-getDataGuard
-  : Tx ℓ
-  → UTxO
-  → Credential
-  → ℙ Datum × Bool
-getDataGuard tx utxo₀ c
-  = mapPartial (λ (c' , d) → if c ≡ c' then d else nothing) (GuardsOf tx)
-    , ¿ (c , nothing) ∈ GuardsOf tx ¿ᵇ
 ```
 
 ```agda
@@ -127,7 +111,7 @@ txInfoForPurpose {TxLevelSub} utxo tx _ = txInfo TxLevelSub utxo tx
 -- top-level transactions:
 txInfoForPurpose {TxLevelTop} utxo tx sp with sp
    -- · guard scripts see subTx infos
-... | Guard _ =  record base { txInfoSubTxs = just subInfos }
+... | ⟦ Guard , _ ⟧ˢᵖ =  record base { txInfoSubTxs = just subInfos }
                  where
                  base : TxInfo
                  base = txInfo TxLevelTop utxo tx
@@ -150,14 +134,16 @@ credentialToP2Script c scripts =
 ```agda
 credsNeeded : UTxO → Tx ℓ → ℙ (ScriptPurpose × Credential)
 credsNeeded utxo tx =
-    mapˢ        (λ (i , o) → (Spend  i , payCred (proj₁ o)))  ((utxo ∣ (SpendInputsOf tx ∪ collateralInputs tx)) ˢ)
-  ∪ mapˢ        (λ a →      (Rwrd a , CredentialOf a))        (dom ∣ WithdrawalsOf tx ∣)
-  ∪ mapPartial  (λ c →      (Cert c ,_) <$> cwitness c)       (fromList (DCertsOf tx))
-  ∪ mapˢ        (λ x →      (Mint x , ScriptObj x))           (policies (MintedValueOf tx))
-  ∪ mapˢ        (λ v →      (Vote v , govVoterCredential v))  (fromList (map GovVoterOf (ListOfGovVotesOf tx)))
-  ∪ mapPartial  (λ p →  if PolicyOf p then (λ {sh} → just (Propose  p , ScriptObj sh))
-                        else nothing)                         (fromList (ListOfGovProposalsOf tx))
-  ∪ mapˢ        (λ (c , d) → (Guard c , c))                  (GuardsOf tx)
+    mapˢ        (λ (i , o) → (⟦ Spend  , i ⟧ˢᵖ , payCred (proj₁ o)))     ((utxo ∣ (SpendInputsOf tx ∪ collateralInputs tx)) ˢ)
+  ∪ mapˢ        (λ a       → (⟦ Reward , a ⟧ˢᵖ , CredentialOf a))        (dom ∣ WithdrawalsOf tx ∣)
+  ∪ mapPartial  (λ c       → ((⟦ Cert  , c ⟧ˢᵖ ,_) <$> cwitness c))      (fromList (DCertsOf tx))
+  ∪ mapˢ        (λ x       → (⟦ Mint   , x ⟧ˢᵖ , ScriptObj x))           (policies (MintedValueOf tx))
+  ∪ mapˢ        (λ v       → (⟦ Vote   , v ⟧ˢᵖ , govVoterCredential v))  (fromList (map GovVoterOf (ListOfGovVotesOf tx)))
+  ∪ mapPartial  (λ p       →  if PolicyOf p
+                                 then (λ {sh} → just (⟦ Propose , p ⟧ˢᵖ , ScriptObj sh))
+                                 else nothing)                           (fromList (ListOfGovProposalsOf tx))
+  ∪ mapˢ        (λ c       → (⟦ Guard , c ⟧ˢᵖ , c))                      (GuardsOf tx)
+
   where
     collateralInputs : Tx ℓ → ℙ TxIn
     collateralInputs {TxLevelTop} tx = CollateralInputsOf tx
@@ -201,13 +187,8 @@ a list of lists of data (a list of data is part of the context of a script).
              return (script , reedemer , exUnits , costModel)
 
       assembleData : Redeemer → ScriptPurpose → List (List Data)
-      assembleData redeemer sp@(Spend txin)
+      assembleData redeemer sp@(⟦ Spend , txin ⟧ˢᵖ)
         = [ fromMaybe (getDatumSpend tx utxo allData txin) ++ (redeemer ∷ [ context sp ]) ]
-      assembleData redeemer sp@(Guard c) =
-        let data′ , withoutDatum = getDataGuard tx utxo c
-        in  map (λ d → [ d ] ++ (redeemer ∷ [ context sp ])) (setToList data′)
-            ++ (if withoutDatum then [(redeemer ∷ [ context sp ])]
-                                else [])
       assembleData redeemer sp           = [ redeemer ∷ [ context sp ] ]
 
       toScript

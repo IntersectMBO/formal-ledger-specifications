@@ -125,7 +125,7 @@ Lemma C.10 in [VK21,](#alonzo-ledger-spec) for the details.
 hashScriptIntegrity
   : PParams
   → ℙ Language
-  → RedeemerPtr ℓ ⇀ (Redeemer × ExUnits)
+  → RedeemerPtr ⇀ (Redeemer × ExUnits)
   → ℙ Datum
   → Maybe ScriptHash
 hashScriptIntegrity pp langs rdrms dats
@@ -186,7 +186,7 @@ data _⊢_⇀⦇_,SUBUTXOW⦈_ : SubUTxOEnv → UTxOState → SubLevelTx → UTx
                            d >>= isInj₂)
                    (range (utxo₀ ∣ txIns))
 
-      scriptRedeemerPtrs : ℙ (RedeemerPtr TxLevelSub)
+      scriptRedeemerPtrs : ℙ RedeemerPtr
       scriptRedeemerPtrs = mapPartial (λ (sp , c) → if credentialToP2Script c scriptsNeeded
                                                        then rdptr txSub sp
                                                        else nothing)
@@ -275,9 +275,9 @@ mode up front rather than deciding both.
                       x  ← d
                       isInj₂ x) (range (UTxOOf Γ ∣ txIns))
     in
-    ∙ ∀[ s ∈ p2ScriptsNeeded ] language s ∈ fromList (PlutusV4 ∷ [])
+    ∙ ∀[ s ∈ p2ScriptsNeeded ] language s ∈ fromList (PlutusV4 ∷ []) -- (1)
     ∙ (UsesBootstrapAddress (UTxOOf Γ) txTop → Is-∅ p2ScriptsNeeded) -- (2)
-    ∙ RequiredGuardsInTopLevel txTop -- (3)
+    ∙ concatMapˡ (λ txSub → mapˢ proj₁ (TopLevelGuardsOf txSub)) (SubTransactionsOf txTop) ⊆ GuardsOf txTop -- (3)
     ∙ ∀[ (vk , σ) ∈ TxWitnesses.vKeySigs (Tx.txWitnesses txTop) ] isSigned vk (txidBytes (TxIdOf txTop)) σ
     ∙ ∀[ s ∈ p1ScriptsNeeded ] validP1Script vKeyHashesProvided txVldt s
     ∙ vKeyHashesNeeded ⊆ vKeyHashesProvided
@@ -351,8 +351,8 @@ mode up front rather than deciding both.
     ∙ ∃[ s ∈ p2ScriptsNeeded ] language s ∈ fromList (PlutusV1 ∷ PlutusV2 ∷ PlutusV3 ∷ [])
     ∙ ¬ (UsesBootstrapAddress (UTxOOf Γ) txTop)
     ∙ Is-∅ (GuardsOf txTop)
-    ∙ RequiredGuardsInTopLevel txTop
-    ∙ ∀[ (vk , σ) ∈ TxWitnesses.vKeySigs (Tx.txWitnesses txTop) ] isSigned vk (txidBytes (TxIdOf txTop)) σ
+    ∙ concatMapˡ (λ txSub → mapˢ proj₁ (TopLevelGuardsOf txSub)) (SubTransactionsOf txTop) ⊆ GuardsOf txTop -- (3)
+    ∙ ∀[ (vk , σ) ∈ vKeySigs ] isSigned vk (txidBytes (TxIdOf txTop)) σ
     ∙ ∀[ s ∈ p1ScriptsNeeded ] validP1Script vKeyHashesProvided txVldt s
     ∙ vKeyHashesNeeded ⊆ vKeyHashesProvided
     ∙ scriptHashesNeeded ⊆ mapˢ hash scriptsProvided

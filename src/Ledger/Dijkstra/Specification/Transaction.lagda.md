@@ -90,9 +90,8 @@ private
   variable
     txLevel : TxLevel
 
-data Tag : TxLevel → Type where
-  Spend Mint Cert Reward Vote Propose Guard : Tag txLevel
-  SubGuard : Tag TxLevelSub
+data Tag : Type where
+  Spend Mint Cert Reward Vote Propose Guard : Tag
 
 unquoteDecl DecEq-Tag = derive-DecEq ((quote Tag , DecEq-Tag) ∷ [])
 ```
@@ -141,10 +140,10 @@ record TransactionStructure : Type₁ where
 <!--
 ```agda
   field
-    ⦃ Hashable-ScriptIntegrity ⦄ : ∀ {ℓ} →
+    ⦃ Hashable-ScriptIntegrity ⦄ :
         Hashable
           ( ℙ Datum
-          × ((Tag ℓ × Ix) ⇀ (Redeemer × ExUnits))
+          × ((Tag × Ix) ⇀ (Redeemer × ExUnits))
           × ℙ LangDepView
           )
           ScriptHash
@@ -184,8 +183,8 @@ record TransactionStructure : Type₁ where
   UTxO : Type
   UTxO = TxIn ⇀ TxOut
 
-  RedeemerPtr : TxLevel → Type
-  RedeemerPtr ℓ = Tag ℓ × Ix
+  RedeemerPtr : Type
+  RedeemerPtr = Tag × Ix
 
   ProposedPPUpdates : Type
   ProposedPPUpdates = KeyHash ⇀ PParamsUpdate
@@ -273,14 +272,14 @@ Of particular note in the Dijkstra era are
 
         -- New in Dijkstra --
         txSubTransactions         : InTopLevel txLevel (List (Tx TxLevelSub))
-        txGuards                  : ℙ (Credential × Maybe Datum)
+        txGuards                  : ℙ Credential
         txRequiredTopLevelGuards  : InSubLevel txLevel (ℙ (Credential × Maybe Datum))
         txDirectDeposits          : DirectDeposits
         txBalanceIntervals        : AccountBalanceIntervals
         ---------------------
 
       requiredSignerHashes : ℙ KeyHash
-      requiredSignerHashes = mapPartial (isKeyHashObj ∘ proj₁) txGuards
+      requiredSignerHashes = mapPartial isKeyHashObj txGuards
 
 
     record TxWitnesses (txLevel : TxLevel) : Type where
@@ -289,7 +288,7 @@ Of particular note in the Dijkstra era are
         vKeySigs     : VKey ⇀ Sig
         scripts      : ℙ Script
         txData       : ℙ Datum
-        txRedeemers  : RedeemerPtr txLevel ⇀ Redeemer × ExUnits
+        txRedeemers  : RedeemerPtr ⇀ Redeemer × ExUnits
 
       scriptsP1 : ℙ P1Script
       scriptsP1 = mapPartial isInj₁ scripts
@@ -325,8 +324,8 @@ could be either of them.
     field TxWitnessesOf : A → TxWitnesses txLevel
   open HasTxWitnesses ⦃...⦄ public
 
-  record HasRedeemers {txLevel} {a} (A : Type a) : Type a where
-    field RedeemersOf : A → RedeemerPtr txLevel ⇀ Redeemer × ExUnits
+  record HasRedeemers {a} (A : Type a) : Type a where
+    field RedeemersOf : A → RedeemerPtr ⇀ Redeemer × ExUnits
   open HasRedeemers ⦃...⦄ public
 
   -- (top-level only) --
@@ -394,7 +393,7 @@ could be either of them.
   open HasListOfGovVotes ⦃...⦄ public
 
   record HasGuards {a} (A : Type a) : Type a where
-    field GuardsOf : A → ℙ (Credential × Maybe Datum)
+    field GuardsOf : A → ℙ (Credential)
   open HasGuards ⦃...⦄ public
 
   record HasScripts {a} (A : Type a) : Type a where
@@ -721,72 +720,6 @@ allowed to inspect utxo for its inputs.
     foldl (λ acc txSub → acc ∪ˡ BalanceIntervalsOf txSub)
           (BalanceIntervalsOf txTop)
           (SubTransactionsOf txTop)
-```
-
-CIP-0118 models "required top-level guards" as a list of requirements coming
-from subtransaction bodies. The list can contain duplicates, and later logic
-needs to run each distinct guard credential once while still providing it with
-all arguments (and knowing which subtransaction required them).
-
-Because they are new and their meaning may be slightly less obvious than that of the
-functions defined above, we'll provide a one-line description for each of the
-remaining helper functions of this section.
-
-+  `TaggedTopLevelGuard`{.AgdaDatatype} is the type of "tagged"
-   top-level guards (tagged by the id of the subtransaction requiring it);
-   an inhabitant of `TaggedTopLevelGuard`{.AgdaDatatype} represents a guard as
-   a triple comprised of *subtransaction id*, *guard credential*, and *optional datum
-   argument*; *the subtransaction id should be that of the subtransaction requiring
-   the guard*.
-
-+  `GroupedTopLevelGuards`{.AgdaDatatype} is the type of lists of guard groups,
-   grouped by credential; each element of such a list is a guard credential paired
-   with a list of all subtransaction ids and optional datum arguments requiring that
-   the guard with that credential. (We use a simple association list for now to avoid
-   committing to a particular Map interface.)
-
-+  `groupTopLevelGuards`{.AgdaFunction}: a function that takes a list of tagged
-   top-level guards and groups them into `GroupedTopLevelGuards`{.AgdaDatatype} by
-   folding an insertion function over the list.
-
-+  `subTxTaggedGuards`{.AgdaFunction}: a function that takes a
-   subtransaction and produces a set of tagged top-level guards required by that
-   subtransaction, by mapping over its `txRequiredTopLevelGuards` field and attaching
-   the subtransaction's id to each guard.  (We attach the id of the subTx requiring
-   the guard so later execution logic can attribute arguments to the right
-   subtransaction.)
-
-```agda
-  TaggedTopLevelGuard : Type
-  TaggedTopLevelGuard = TxId × Credential × Maybe Datum
-                     -- (subTxId, guard credential, optional datum argument)
-
-  GroupedTopLevelGuards : Type
-  GroupedTopLevelGuards = List (Credential × List (TxId × Maybe Datum))
-
-  groupTopLevelGuards : List TaggedTopLevelGuard → GroupedTopLevelGuards
-  groupTopLevelGuards = foldr insertGuard []
-    where
-    -- Insert one tagged guard into an existing group:
-    --   + if the credential already has a group, cons (subTxId, datum?) onto its list
-    --   + otherwise create a new group for that credential.
-    insertGuard : TaggedTopLevelGuard → GroupedTopLevelGuards → GroupedTopLevelGuards
-    insertGuard (tid , cred , md) [] = (cred , (tid , md) ∷ []) ∷ []
-    insertGuard (tid , cred , md) ((c , xs) ∷ rest) with c ≟ cred
-    ... | yes _ = (c , (tid , md) ∷ xs) ∷ rest
-    ... | no  _ = (c , xs) ∷ insertGuard (tid , cred , md) rest
-
-  subTxTaggedGuards : SubLevelTx → ℙ TaggedTopLevelGuard
-  subTxTaggedGuards subtx =
-    mapˢ (λ (cred , md) → (TxIdOf subtx , cred , md)) (TopLevelGuardsOf subtx)
-
-  -- Phase-1 condition (CIP-0118):
-  -- every credential required by a subTx body must appear in the top-level txGuards set.
-  RequiredGuardsInTopLevel : TopLevelTx → Type
-  RequiredGuardsInTopLevel txTop = requiredGuards ⊆ GuardsOf txTop
-    where
-    requiredGuards : ℙ (Credential × Maybe Datum)
-    requiredGuards = concatMapˡ GuardsOf (SubTransactionsOf txTop)
 ```
 
 ## Changes to Transaction Validity
