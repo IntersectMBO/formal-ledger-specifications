@@ -117,7 +117,7 @@ d__'8866'_'8640''10631'_'44'CHAIN'10632'__2024 a0 a1 a2 a3 a4 a5
 d_totalRefScriptsSize_2072 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_2492 ->
-  MAlonzo.Code.Ledger.Conway.Specification.Ledger.T_LState_2932 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Ledger.T_LState_2946 ->
   [MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_Tx_3594] ->
   Integer
 d_totalRefScriptsSize_2072 v0 v1
@@ -128,11 +128,11 @@ d_totalRefScriptsSize_2072 v0 v1
 d_HasLState'45'NewEpochState_2184 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_2492 ->
-  MAlonzo.Code.Ledger.Conway.Specification.Ledger.T_HasLState_2952
+  MAlonzo.Code.Ledger.Conway.Specification.Ledger.T_HasLState_2966
 d_HasLState'45'NewEpochState_2184 ~v0 ~v1
   = du_HasLState'45'NewEpochState_2184
 du_HasLState'45'NewEpochState_2184 ::
-  MAlonzo.Code.Ledger.Conway.Specification.Ledger.T_HasLState_2952
+  MAlonzo.Code.Ledger.Conway.Specification.Ledger.T_HasLState_2966
 du_HasLState'45'NewEpochState_2184
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_HasLState'45'NewEpochState_3410
@@ -210,7 +210,7 @@ d_computeProof_2526 v0
 -- Ledger.Conway.Specification.Chain.Properties.Computational._._.ls
 d_ls_2552 ::
   MAlonzo.Code.Ledger.Conway.Specification.Epoch.T_NewEpochState_3334 ->
-  MAlonzo.Code.Ledger.Conway.Specification.Ledger.T_LState_2932
+  MAlonzo.Code.Ledger.Conway.Specification.Ledger.T_LState_2946
 d_ls_2552 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Epoch.d_ls_3280
@@ -408,7 +408,7 @@ d_Computational'45'CHAIN_2574 v0 v1
                           (coe
                              MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                              (coe
-                                MAlonzo.Code.Ledger.Conway.Specification.Ledger.d_LStateOf_2960
+                                MAlonzo.Code.Ledger.Conway.Specification.Ledger.d_LStateOf_2974
                                 (coe
                                    MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_HasLState'45'NewEpochState_3410)
                                 v6)

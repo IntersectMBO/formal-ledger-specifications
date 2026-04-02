@@ -380,27 +380,27 @@ d_wits_1926 v0
 d_LState_2064 a0 a1 = ()
 -- Ledger.Conway.Conformance.Equivalence.Deposits.L._.LState.certState
 d_certState_2102 ::
-  MAlonzo.Code.Ledger.Conway.Specification.Ledger.T_LState_2932 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Ledger.T_LState_2946 ->
   MAlonzo.Code.Ledger.Conway.Specification.Certs.T_CertState_1446
 d_certState_2102 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Specification.Ledger.d_certState_2944
+      MAlonzo.Code.Ledger.Conway.Specification.Ledger.d_certState_2958
       (coe v0)
 -- Ledger.Conway.Conformance.Equivalence.Deposits.L._.LState.govSt
 d_govSt_2104 ::
-  MAlonzo.Code.Ledger.Conway.Specification.Ledger.T_LState_2932 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Ledger.T_LState_2946 ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
 d_govSt_2104 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Specification.Ledger.d_govSt_2942
+      MAlonzo.Code.Ledger.Conway.Specification.Ledger.d_govSt_2956
       (coe v0)
 -- Ledger.Conway.Conformance.Equivalence.Deposits.L._.LState.utxoSt
 d_utxoSt_2106 ::
-  MAlonzo.Code.Ledger.Conway.Specification.Ledger.T_LState_2932 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Ledger.T_LState_2946 ->
   MAlonzo.Code.Ledger.Conway.Specification.Utxo.T_UTxOState_2486
 d_utxoSt_2106 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Specification.Ledger.d_utxoSt_2940
+      MAlonzo.Code.Ledger.Conway.Specification.Ledger.d_utxoSt_2954
       (coe v0)
 -- Ledger.Conway.Conformance.Equivalence.Deposits.L._.ValidCertDeposits
 d_ValidCertDeposits_2162 a0 a1 a2 a3 a4 = ()
@@ -4302,11 +4302,11 @@ d_lem'45'gdeps_4132 = erased
 d_certDeposits_4204 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_2492 ->
-  MAlonzo.Code.Ledger.Conway.Specification.Ledger.T_LState_2932 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Ledger.T_LState_2946 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_certDeposits_4204 ~v0 ~v1 v2 = du_certDeposits_4204 v2
 du_certDeposits_4204 ::
-  MAlonzo.Code.Ledger.Conway.Specification.Ledger.T_LState_2932 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Ledger.T_LState_2946 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 du_certDeposits_4204 v0
   = coe
@@ -4317,17 +4317,17 @@ du_certDeposits_4204 v0
 d_deps_4212 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_2492 ->
-  MAlonzo.Code.Ledger.Conway.Specification.Ledger.T_LState_2932 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Ledger.T_LState_2946 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_deps_4212 ~v0 ~v1 v2 = du_deps_4212 v2
 du_deps_4212 ::
-  MAlonzo.Code.Ledger.Conway.Specification.Ledger.T_LState_2932 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Ledger.T_LState_2946 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 du_deps_4212 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Utxo.d_deposits_2500
       (coe
-         MAlonzo.Code.Ledger.Conway.Specification.Ledger.d_utxoSt_2940
+         MAlonzo.Code.Ledger.Conway.Specification.Ledger.d_utxoSt_2954
          (coe v0))
 -- Ledger.Conway.Conformance.Equivalence.Deposits._≡ᵈ_
 d__'8801''7496'__4218 ::

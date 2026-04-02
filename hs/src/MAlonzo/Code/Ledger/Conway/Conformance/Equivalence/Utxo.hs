@@ -76,33 +76,33 @@ d_utxo_2172 v0
 d__'8866'_'8640''10631'_'44'UTXOW'10632'__2206 a0 a1 a2 a3 a4 a5
   = ()
 -- Ledger.Conway.Conformance.Equivalence.Utxo.L._.Deposits
-d_Deposits_2332 ::
+d_Deposits_2346 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_2492 ->
   ()
-d_Deposits_2332 = erased
+d_Deposits_2346 = erased
 -- Ledger.Conway.Conformance.Equivalence.Utxo.C._._⊢_⇀⦇_,UTXOS⦈_
-d__'8866'_'8640''10631'_'44'UTXOS'10632'__2686 a0 a1 a2 a3 a4 a5
+d__'8866'_'8640''10631'_'44'UTXOS'10632'__2700 a0 a1 a2 a3 a4 a5
   = ()
 -- Ledger.Conway.Conformance.Equivalence.Utxo.C._._⊢_⇀⦇_,UTXO⦈_
-d__'8866'_'8640''10631'_'44'UTXO'10632'__2688 a0 a1 a2 a3 a4 a5
+d__'8866'_'8640''10631'_'44'UTXO'10632'__2702 a0 a1 a2 a3 a4 a5
   = ()
 -- Ledger.Conway.Conformance.Equivalence.Utxo.C._._⊢_⇀⦇_,UTXOW⦈_
-d__'8866'_'8640''10631'_'44'UTXOW'10632'__2762 a0 a1 a2 a3 a4 a5
+d__'8866'_'8640''10631'_'44'UTXOW'10632'__2776 a0 a1 a2 a3 a4 a5
   = ()
 -- Ledger.Conway.Conformance.Equivalence.Utxo.setDeposits
-d_setDeposits_3228 ::
+d_setDeposits_3242 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_2492 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Ledger.Conway.Specification.Utxo.T_UTxOState_2486 ->
   MAlonzo.Code.Ledger.Conway.Specification.Utxo.T_UTxOState_2486
-d_setDeposits_3228 ~v0 ~v1 v2 v3 = du_setDeposits_3228 v2 v3
-du_setDeposits_3228 ::
+d_setDeposits_3242 ~v0 ~v1 v2 v3 = du_setDeposits_3242 v2 v3
+du_setDeposits_3242 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Ledger.Conway.Specification.Utxo.T_UTxOState_2486 ->
   MAlonzo.Code.Ledger.Conway.Specification.Utxo.T_UTxOState_2486
-du_setDeposits_3228 v0 v1
+du_setDeposits_3242 v0 v1
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Utxo.C_'10214'_'44'_'44'_'44'_'10215''7512'_2504
       (coe
@@ -114,25 +114,25 @@ du_setDeposits_3228 v0 v1
          MAlonzo.Code.Ledger.Conway.Specification.Utxo.d_donations_2502
          (coe v1))
 -- Ledger.Conway.Conformance.Equivalence.Utxo.withDepositsFrom
-d_withDepositsFrom_3234 ::
+d_withDepositsFrom_3248 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_2492 ->
   MAlonzo.Code.Ledger.Conway.Specification.Utxo.T_UTxOState_2486 ->
   MAlonzo.Code.Ledger.Conway.Specification.Utxo.T_UTxOState_2486 ->
   MAlonzo.Code.Ledger.Conway.Specification.Utxo.T_UTxOState_2486
-d_withDepositsFrom_3234 ~v0 ~v1 v2 = du_withDepositsFrom_3234 v2
-du_withDepositsFrom_3234 ::
+d_withDepositsFrom_3248 ~v0 ~v1 v2 = du_withDepositsFrom_3248 v2
+du_withDepositsFrom_3248 ::
   MAlonzo.Code.Ledger.Conway.Specification.Utxo.T_UTxOState_2486 ->
   MAlonzo.Code.Ledger.Conway.Specification.Utxo.T_UTxOState_2486 ->
   MAlonzo.Code.Ledger.Conway.Specification.Utxo.T_UTxOState_2486
-du_withDepositsFrom_3234 v0
+du_withDepositsFrom_3248 v0
   = coe
-      du_setDeposits_3228
+      du_setDeposits_3242
       (coe
          MAlonzo.Code.Ledger.Conway.Specification.Utxo.d_deposits_2500
          (coe v0))
 -- Ledger.Conway.Conformance.Equivalence.Utxo.UTXOSToConf
-d_UTXOSToConf_3246 ::
+d_UTXOSToConf_3260 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_2492 ->
   MAlonzo.Code.Ledger.Conway.Specification.Utxo.T_UTxOEnv_2470 ->
@@ -140,10 +140,10 @@ d_UTXOSToConf_3246 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_Tx_3594 ->
   MAlonzo.Code.Ledger.Conway.Specification.Utxo.T_UTxOState_2486 ->
   MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.T__'8866'_'11078''8305'__16
-d_UTXOSToConf_3246 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 = du_UTXOSToConf_3246
-du_UTXOSToConf_3246 ::
+d_UTXOSToConf_3260 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 = du_UTXOSToConf_3260
+du_UTXOSToConf_3260 ::
   MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.T__'8866'_'11078''8305'__16
-du_UTXOSToConf_3246
+du_UTXOSToConf_3260
   = coe
       MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.C_constructor_36
       (coe
@@ -163,7 +163,7 @@ du_UTXOSToConf_3246
                      MAlonzo.Code.Ledger.Conway.Conformance.Utxo.C_Scripts'45'No_2846 v8
               _ -> MAlonzo.RTE.mazUnreachableError))
 -- Ledger.Conway.Conformance.Equivalence.Utxo._.utxoSDeposits
-d_utxoSDeposits_3292 ::
+d_utxoSDeposits_3306 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_2492 ->
   MAlonzo.Code.Ledger.Conway.Specification.Utxo.T_UTxOEnv_2470 ->
@@ -172,16 +172,16 @@ d_utxoSDeposits_3292 ::
   MAlonzo.Code.Ledger.Conway.Specification.Utxo.T_UTxOState_2486 ->
   MAlonzo.Code.Ledger.Conway.Conformance.Utxo.T__'8866'_'8640''10631'_'44'UTXOS'10632'__2690 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_utxoSDeposits_3292 v0 ~v1 v2 v3 v4 ~v5 v6
-  = du_utxoSDeposits_3292 v0 v2 v3 v4 v6
-du_utxoSDeposits_3292 ::
+d_utxoSDeposits_3306 v0 ~v1 v2 v3 v4 ~v5 v6
+  = du_utxoSDeposits_3306 v0 v2 v3 v4 v6
+du_utxoSDeposits_3306 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   MAlonzo.Code.Ledger.Conway.Specification.Utxo.T_UTxOEnv_2470 ->
   MAlonzo.Code.Ledger.Conway.Specification.Utxo.T_UTxOState_2486 ->
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_Tx_3594 ->
   MAlonzo.Code.Ledger.Conway.Conformance.Utxo.T__'8866'_'8640''10631'_'44'UTXOS'10632'__2690 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-du_utxoSDeposits_3292 v0 v1 v2 v3 v4
+du_utxoSDeposits_3306 v0 v1 v2 v3 v4
   = case coe v4 of
       MAlonzo.Code.Ledger.Conway.Conformance.Utxo.C_Scripts'45'Yes_2768 v8
         -> coe
@@ -202,7 +202,7 @@ du_utxoSDeposits_3292 v0 v1 v2 v3 v4
              (coe v2)
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Conway.Conformance.Equivalence.Utxo._.utxoDeposits
-d_utxoDeposits_3294 ::
+d_utxoDeposits_3308 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_2492 ->
   MAlonzo.Code.Ledger.Conway.Specification.Utxo.T_UTxOEnv_2470 ->
@@ -211,16 +211,16 @@ d_utxoDeposits_3294 ::
   MAlonzo.Code.Ledger.Conway.Specification.Utxo.T_UTxOState_2486 ->
   MAlonzo.Code.Ledger.Conway.Conformance.Utxo.T__'8866'_'8640''10631'_'44'UTXO'10632'__2852 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_utxoDeposits_3294 v0 ~v1 v2 v3 v4 ~v5 v6
-  = du_utxoDeposits_3294 v0 v2 v3 v4 v6
-du_utxoDeposits_3294 ::
+d_utxoDeposits_3308 v0 ~v1 v2 v3 v4 ~v5 v6
+  = du_utxoDeposits_3308 v0 v2 v3 v4 v6
+du_utxoDeposits_3308 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   MAlonzo.Code.Ledger.Conway.Specification.Utxo.T_UTxOEnv_2470 ->
   MAlonzo.Code.Ledger.Conway.Specification.Utxo.T_UTxOState_2486 ->
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_Tx_3594 ->
   MAlonzo.Code.Ledger.Conway.Conformance.Utxo.T__'8866'_'8640''10631'_'44'UTXO'10632'__2852 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-du_utxoDeposits_3294 v0 v1 v2 v3 v4
+du_utxoDeposits_3308 v0 v1 v2 v3 v4
   = case coe v4 of
       MAlonzo.Code.Ledger.Conway.Conformance.Utxo.C_UTXO'45'inductive_2958 v9
         -> case coe v9 of
@@ -267,7 +267,7 @@ du_utxoDeposits_3294 v0 v1 v2 v3 v4
                                                                                                                                          v43 of
                                                                                                                                     MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v44 v45
                                                                                                                                       -> coe
-                                                                                                                                           du_utxoSDeposits_3292
+                                                                                                                                           du_utxoSDeposits_3306
                                                                                                                                            (coe
                                                                                                                                               v0)
                                                                                                                                            (coe
@@ -298,27 +298,27 @@ du_utxoDeposits_3294 v0 v1 v2 v3 v4
              _ -> MAlonzo.RTE.mazUnreachableError
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Conway.Conformance.Equivalence.Utxo._.utxowDeposits
-d_utxowDeposits_3298 ::
+d_utxowDeposits_3312 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_2492 ->
   MAlonzo.Code.Ledger.Conway.Specification.Utxo.T_UTxOEnv_2470 ->
   MAlonzo.Code.Ledger.Conway.Specification.Utxo.T_UTxOState_2486 ->
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_Tx_3594 ->
   MAlonzo.Code.Ledger.Conway.Specification.Utxo.T_UTxOState_2486 ->
-  MAlonzo.Code.Ledger.Conway.Conformance.Utxow.T__'8866'_'8640''10631'_'44'UTXOW'10632'__2778 ->
+  MAlonzo.Code.Ledger.Conway.Conformance.Utxow.T__'8866'_'8640''10631'_'44'UTXOW'10632'__2792 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_utxowDeposits_3298 v0 ~v1 v2 v3 v4 ~v5 v6
-  = du_utxowDeposits_3298 v0 v2 v3 v4 v6
-du_utxowDeposits_3298 ::
+d_utxowDeposits_3312 v0 ~v1 v2 v3 v4 ~v5 v6
+  = du_utxowDeposits_3312 v0 v2 v3 v4 v6
+du_utxowDeposits_3312 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   MAlonzo.Code.Ledger.Conway.Specification.Utxo.T_UTxOEnv_2470 ->
   MAlonzo.Code.Ledger.Conway.Specification.Utxo.T_UTxOState_2486 ->
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_Tx_3594 ->
-  MAlonzo.Code.Ledger.Conway.Conformance.Utxow.T__'8866'_'8640''10631'_'44'UTXOW'10632'__2778 ->
+  MAlonzo.Code.Ledger.Conway.Conformance.Utxow.T__'8866'_'8640''10631'_'44'UTXOW'10632'__2792 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-du_utxowDeposits_3298 v0 v1 v2 v3 v4
+du_utxowDeposits_3312 v0 v1 v2 v3 v4
   = case coe v4 of
-      MAlonzo.Code.Ledger.Conway.Conformance.Utxow.C_UTXOW'45'inductive_2898 v9
+      MAlonzo.Code.Ledger.Conway.Conformance.Utxow.C_UTXOW'45'inductive_2916 v9
         -> case coe v9 of
              MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v10 v11
                -> case coe v11 of
@@ -339,11 +339,25 @@ du_utxowDeposits_3298 v0 v1 v2 v3 v4
                                                                      MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v26 v27
                                                                        -> case coe v27 of
                                                                             MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v28 v29
-                                                                              -> coe
-                                                                                   du_utxoDeposits_3294
-                                                                                   (coe v0) (coe v1)
-                                                                                   (coe v2) (coe v3)
-                                                                                   (coe v29)
+                                                                              -> case coe v29 of
+                                                                                   MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v30 v31
+                                                                                     -> case coe
+                                                                                               v31 of
+                                                                                          MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v32 v33
+                                                                                            -> coe
+                                                                                                 du_utxoDeposits_3308
+                                                                                                 (coe
+                                                                                                    v0)
+                                                                                                 (coe
+                                                                                                    v1)
+                                                                                                 (coe
+                                                                                                    v2)
+                                                                                                 (coe
+                                                                                                    v3)
+                                                                                                 (coe
+                                                                                                    v33)
+                                                                                          _ -> MAlonzo.RTE.mazUnreachableError
+                                                                                   _ -> MAlonzo.RTE.mazUnreachableError
                                                                             _ -> MAlonzo.RTE.mazUnreachableError
                                                                      _ -> MAlonzo.RTE.mazUnreachableError
                                                               _ -> MAlonzo.RTE.mazUnreachableError
@@ -356,73 +370,73 @@ du_utxowDeposits_3298 v0 v1 v2 v3 v4
              _ -> MAlonzo.RTE.mazUnreachableError
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Conway.Conformance.Equivalence.Utxo._.pparams
-d_pparams_3312 ::
+d_pparams_3326 ::
   MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_2492 ->
   MAlonzo.Code.Ledger.Conway.Specification.Utxo.T_UTxOEnv_2470 ->
   MAlonzo.Code.Ledger.Conway.Specification.Utxo.T_UTxOState_2486 ->
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_Tx_3594 ->
   MAlonzo.Code.Ledger.Conway.Specification.Utxo.T_UTxOState_2486 ->
   MAlonzo.Code.Ledger.Conway.Specification.PParams.T_PParams_286
-d_pparams_3312 ~v0 v1 ~v2 ~v3 ~v4 = du_pparams_3312 v1
-du_pparams_3312 ::
+d_pparams_3326 ~v0 v1 ~v2 ~v3 ~v4 = du_pparams_3326 v1
+du_pparams_3326 ::
   MAlonzo.Code.Ledger.Conway.Specification.Utxo.T_UTxOEnv_2470 ->
   MAlonzo.Code.Ledger.Conway.Specification.PParams.T_PParams_286
-du_pparams_3312 v0
+du_pparams_3326 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Utxo.d_pparams_2480
       (coe v0)
 -- Ledger.Conway.Conformance.Equivalence.Utxo._.deposits
-d_deposits_3316 ::
+d_deposits_3330 ::
   MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_2492 ->
   MAlonzo.Code.Ledger.Conway.Specification.Utxo.T_UTxOEnv_2470 ->
   MAlonzo.Code.Ledger.Conway.Specification.Utxo.T_UTxOState_2486 ->
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_Tx_3594 ->
   MAlonzo.Code.Ledger.Conway.Specification.Utxo.T_UTxOState_2486 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_deposits_3316 ~v0 ~v1 v2 ~v3 ~v4 = du_deposits_3316 v2
-du_deposits_3316 ::
+d_deposits_3330 ~v0 ~v1 v2 ~v3 ~v4 = du_deposits_3330 v2
+du_deposits_3330 ::
   MAlonzo.Code.Ledger.Conway.Specification.Utxo.T_UTxOState_2486 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-du_deposits_3316 v0
+du_deposits_3330 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Utxo.d_deposits_2500
       (coe v0)
 -- Ledger.Conway.Conformance.Equivalence.Utxo._.body
-d_body_3324 ::
+d_body_3338 ::
   MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_2492 ->
   MAlonzo.Code.Ledger.Conway.Specification.Utxo.T_UTxOEnv_2470 ->
   MAlonzo.Code.Ledger.Conway.Specification.Utxo.T_UTxOState_2486 ->
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_Tx_3594 ->
   MAlonzo.Code.Ledger.Conway.Specification.Utxo.T_UTxOState_2486 ->
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TxBody_3414
-d_body_3324 ~v0 ~v1 ~v2 v3 ~v4 = du_body_3324 v3
-du_body_3324 ::
+d_body_3338 ~v0 ~v1 ~v2 v3 ~v4 = du_body_3338 v3
+du_body_3338 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_Tx_3594 ->
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TxBody_3414
-du_body_3324 v0
+du_body_3338 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_body_3606
       (coe v0)
 -- Ledger.Conway.Conformance.Equivalence.Utxo._.txCerts
-d_txCerts_3332 ::
+d_txCerts_3346 ::
   MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_2492 ->
   MAlonzo.Code.Ledger.Conway.Specification.Utxo.T_UTxOEnv_2470 ->
   MAlonzo.Code.Ledger.Conway.Specification.Utxo.T_UTxOState_2486 ->
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_Tx_3594 ->
   MAlonzo.Code.Ledger.Conway.Specification.Utxo.T_UTxOState_2486 ->
   [MAlonzo.Code.Ledger.Conway.Specification.Certs.T_DCert_1338]
-d_txCerts_3332 ~v0 ~v1 ~v2 v3 ~v4 = du_txCerts_3332 v3
-du_txCerts_3332 ::
+d_txCerts_3346 ~v0 ~v1 ~v2 v3 ~v4 = du_txCerts_3346 v3
+du_txCerts_3346 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_Tx_3594 ->
   [MAlonzo.Code.Ledger.Conway.Specification.Certs.T_DCert_1338]
-du_txCerts_3332 v0
+du_txCerts_3346 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_txCerts_3462
       (coe
          MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_body_3606
          (coe v0))
 -- Ledger.Conway.Conformance.Equivalence.Utxo.UTXOSFromConf
-d_UTXOSFromConf_3338 ::
+d_UTXOSFromConf_3352 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_2492 ->
   MAlonzo.Code.Ledger.Conway.Specification.Utxo.T_UTxOEnv_2470 ->
@@ -430,11 +444,11 @@ d_UTXOSFromConf_3338 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_Tx_3594 ->
   MAlonzo.Code.Ledger.Conway.Specification.Utxo.T_UTxOState_2486 ->
   MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.T__'8866'_'11078''8305'__16
-d_UTXOSFromConf_3338 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5
-  = du_UTXOSFromConf_3338
-du_UTXOSFromConf_3338 ::
+d_UTXOSFromConf_3352 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5
+  = du_UTXOSFromConf_3352
+du_UTXOSFromConf_3352 ::
   MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.T__'8866'_'11078''8305'__16
-du_UTXOSFromConf_3338
+du_UTXOSFromConf_3352
   = coe
       MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.C_constructor_36
       (coe
@@ -478,7 +492,7 @@ du_UTXOSFromConf_3338
                           _ -> MAlonzo.RTE.mazUnreachableError)
               _ -> MAlonzo.RTE.mazUnreachableError))
 -- Ledger.Conway.Conformance.Equivalence.Utxo.UTXOToConf
-d_UTXOToConf_3358 ::
+d_UTXOToConf_3372 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_2492 ->
   MAlonzo.Code.Ledger.Conway.Specification.Utxo.T_UTxOEnv_2470 ->
@@ -486,10 +500,10 @@ d_UTXOToConf_3358 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_Tx_3594 ->
   MAlonzo.Code.Ledger.Conway.Specification.Utxo.T_UTxOState_2486 ->
   MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.T__'8866'_'11078''8305'__16
-d_UTXOToConf_3358 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 = du_UTXOToConf_3358
-du_UTXOToConf_3358 ::
+d_UTXOToConf_3372 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 = du_UTXOToConf_3372
+du_UTXOToConf_3372 ::
   MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.T__'8866'_'11078''8305'__16
-du_UTXOToConf_3358
+du_UTXOToConf_3372
   = coe
       MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.C_constructor_36
       (coe
@@ -617,7 +631,7 @@ du_UTXOToConf_3358
                                                                                                                                                                                                          (coe
                                                                                                                                                                                                             MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.du_conv_86
                                                                                                                                                                                                             (coe
-                                                                                                                                                                                                               du_UTXOSToConf_3246)
+                                                                                                                                                                                                               du_UTXOSToConf_3260)
                                                                                                                                                                                                             (coe
                                                                                                                                                                                                                v42))))))))))))))))))))
                                                                                                                                             _ -> MAlonzo.RTE.mazUnreachableError
@@ -640,73 +654,73 @@ du_UTXOToConf_3358
                      _ -> MAlonzo.RTE.mazUnreachableError
               _ -> MAlonzo.RTE.mazUnreachableError))
 -- Ledger.Conway.Conformance.Equivalence.Utxo._.pparams
-d_pparams_3412 ::
+d_pparams_3426 ::
   MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_2492 ->
   MAlonzo.Code.Ledger.Conway.Specification.Utxo.T_UTxOEnv_2470 ->
   MAlonzo.Code.Ledger.Conway.Specification.Utxo.T_UTxOState_2486 ->
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_Tx_3594 ->
   MAlonzo.Code.Ledger.Conway.Specification.Utxo.T_UTxOState_2486 ->
   MAlonzo.Code.Ledger.Conway.Specification.PParams.T_PParams_286
-d_pparams_3412 ~v0 v1 ~v2 ~v3 ~v4 = du_pparams_3412 v1
-du_pparams_3412 ::
+d_pparams_3426 ~v0 v1 ~v2 ~v3 ~v4 = du_pparams_3426 v1
+du_pparams_3426 ::
   MAlonzo.Code.Ledger.Conway.Specification.Utxo.T_UTxOEnv_2470 ->
   MAlonzo.Code.Ledger.Conway.Specification.PParams.T_PParams_286
-du_pparams_3412 v0
+du_pparams_3426 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Utxo.d_pparams_2480
       (coe v0)
 -- Ledger.Conway.Conformance.Equivalence.Utxo._.deposits
-d_deposits_3416 ::
+d_deposits_3430 ::
   MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_2492 ->
   MAlonzo.Code.Ledger.Conway.Specification.Utxo.T_UTxOEnv_2470 ->
   MAlonzo.Code.Ledger.Conway.Specification.Utxo.T_UTxOState_2486 ->
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_Tx_3594 ->
   MAlonzo.Code.Ledger.Conway.Specification.Utxo.T_UTxOState_2486 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_deposits_3416 ~v0 ~v1 v2 ~v3 ~v4 = du_deposits_3416 v2
-du_deposits_3416 ::
+d_deposits_3430 ~v0 ~v1 v2 ~v3 ~v4 = du_deposits_3430 v2
+du_deposits_3430 ::
   MAlonzo.Code.Ledger.Conway.Specification.Utxo.T_UTxOState_2486 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-du_deposits_3416 v0
+du_deposits_3430 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Utxo.d_deposits_2500
       (coe v0)
 -- Ledger.Conway.Conformance.Equivalence.Utxo._.body
-d_body_3424 ::
+d_body_3438 ::
   MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_2492 ->
   MAlonzo.Code.Ledger.Conway.Specification.Utxo.T_UTxOEnv_2470 ->
   MAlonzo.Code.Ledger.Conway.Specification.Utxo.T_UTxOState_2486 ->
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_Tx_3594 ->
   MAlonzo.Code.Ledger.Conway.Specification.Utxo.T_UTxOState_2486 ->
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TxBody_3414
-d_body_3424 ~v0 ~v1 ~v2 v3 ~v4 = du_body_3424 v3
-du_body_3424 ::
+d_body_3438 ~v0 ~v1 ~v2 v3 ~v4 = du_body_3438 v3
+du_body_3438 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_Tx_3594 ->
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TxBody_3414
-du_body_3424 v0
+du_body_3438 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_body_3606
       (coe v0)
 -- Ledger.Conway.Conformance.Equivalence.Utxo._.txCerts
-d_txCerts_3432 ::
+d_txCerts_3446 ::
   MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_2492 ->
   MAlonzo.Code.Ledger.Conway.Specification.Utxo.T_UTxOEnv_2470 ->
   MAlonzo.Code.Ledger.Conway.Specification.Utxo.T_UTxOState_2486 ->
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_Tx_3594 ->
   MAlonzo.Code.Ledger.Conway.Specification.Utxo.T_UTxOState_2486 ->
   [MAlonzo.Code.Ledger.Conway.Specification.Certs.T_DCert_1338]
-d_txCerts_3432 ~v0 ~v1 ~v2 v3 ~v4 = du_txCerts_3432 v3
-du_txCerts_3432 ::
+d_txCerts_3446 ~v0 ~v1 ~v2 v3 ~v4 = du_txCerts_3446 v3
+du_txCerts_3446 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_Tx_3594 ->
   [MAlonzo.Code.Ledger.Conway.Specification.Certs.T_DCert_1338]
-du_txCerts_3432 v0
+du_txCerts_3446 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_txCerts_3462
       (coe
          MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_body_3606
          (coe v0))
 -- Ledger.Conway.Conformance.Equivalence.Utxo.UTXOFromConf
-d_UTXOFromConf_3438 ::
+d_UTXOFromConf_3452 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_2492 ->
   MAlonzo.Code.Ledger.Conway.Specification.Utxo.T_UTxOEnv_2470 ->
@@ -714,10 +728,10 @@ d_UTXOFromConf_3438 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_Tx_3594 ->
   MAlonzo.Code.Ledger.Conway.Specification.Utxo.T_UTxOState_2486 ->
   MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.T__'8866'_'11078''8305'__16
-d_UTXOFromConf_3438 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 = du_UTXOFromConf_3438
-du_UTXOFromConf_3438 ::
+d_UTXOFromConf_3452 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 = du_UTXOFromConf_3452
+du_UTXOFromConf_3452 ::
   MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.T__'8866'_'11078''8305'__16
-du_UTXOFromConf_3438
+du_UTXOFromConf_3452
   = coe
       MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.C_constructor_36
       (coe
@@ -845,7 +859,7 @@ du_UTXOFromConf_3438
                                                                                                                                                                                                          (coe
                                                                                                                                                                                                             MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.d_conv'8305'_34
                                                                                                                                                                                                             (coe
-                                                                                                                                                                                                               du_UTXOSFromConf_3338)
+                                                                                                                                                                                                               du_UTXOSFromConf_3352)
                                                                                                                                                                                                             v0
                                                                                                                                                                                                             v42)))))))))))))))))))
                                                                                                                                             _ -> MAlonzo.RTE.mazUnreachableError
@@ -868,7 +882,7 @@ du_UTXOFromConf_3438
                      _ -> MAlonzo.RTE.mazUnreachableError
               _ -> MAlonzo.RTE.mazUnreachableError))
 -- Ledger.Conway.Conformance.Equivalence.Utxo.UTXOWToConf
-d_UTXOWToConf_3492 ::
+d_UTXOWToConf_3506 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_2492 ->
   MAlonzo.Code.Ledger.Conway.Specification.Utxo.T_UTxOEnv_2470 ->
@@ -876,16 +890,16 @@ d_UTXOWToConf_3492 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_Tx_3594 ->
   MAlonzo.Code.Ledger.Conway.Specification.Utxo.T_UTxOState_2486 ->
   MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.T__'8866'_'11078''8305'__16
-d_UTXOWToConf_3492 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 = du_UTXOWToConf_3492
-du_UTXOWToConf_3492 ::
+d_UTXOWToConf_3506 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 = du_UTXOWToConf_3506
+du_UTXOWToConf_3506 ::
   MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.T__'8866'_'11078''8305'__16
-du_UTXOWToConf_3492
+du_UTXOWToConf_3506
   = coe
       MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.C_constructor_36
       (coe
          (\ v0 v1 ->
             case coe v1 of
-              MAlonzo.Code.Ledger.Conway.Specification.Utxow.C_UTXOW'45'inductive_3010 v6
+              MAlonzo.Code.Ledger.Conway.Specification.Utxow.C_UTXOW'45'inductive_3068 v6
                 -> case coe v6 of
                      MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v7 v8
                        -> case coe v8 of
@@ -906,54 +920,70 @@ du_UTXOWToConf_3492
                                                                              MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v23 v24
                                                                                -> case coe v24 of
                                                                                     MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v25 v26
-                                                                                      -> coe
-                                                                                           MAlonzo.Code.Ledger.Conway.Conformance.Utxow.C_UTXOW'45'inductive_2898
-                                                                                           (coe
-                                                                                              MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
-                                                                                              (coe
-                                                                                                 v7)
-                                                                                              (coe
-                                                                                                 MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
-                                                                                                 (coe
-                                                                                                    v9)
-                                                                                                 (coe
-                                                                                                    MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
-                                                                                                    (coe
-                                                                                                       v11)
-                                                                                                    (coe
-                                                                                                       MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
-                                                                                                       (coe
-                                                                                                          v13)
-                                                                                                       (coe
-                                                                                                          MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
-                                                                                                          (coe
-                                                                                                             v15)
-                                                                                                          (coe
-                                                                                                             MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
-                                                                                                             (coe
-                                                                                                                v17)
-                                                                                                             (coe
-                                                                                                                MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
-                                                                                                                (coe
-                                                                                                                   v19)
-                                                                                                                (coe
-                                                                                                                   MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
-                                                                                                                   (coe
-                                                                                                                      v21)
-                                                                                                                   (coe
-                                                                                                                      MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
-                                                                                                                      (coe
-                                                                                                                         v23)
-                                                                                                                      (coe
-                                                                                                                         MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
-                                                                                                                         (coe
-                                                                                                                            v25)
-                                                                                                                         (coe
-                                                                                                                            MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.du_conv_86
-                                                                                                                            (coe
-                                                                                                                               du_UTXOToConf_3358)
-                                                                                                                            (coe
-                                                                                                                               v26))))))))))))
+                                                                                      -> case coe
+                                                                                                v26 of
+                                                                                           MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v27 v28
+                                                                                             -> case coe
+                                                                                                       v28 of
+                                                                                                  MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v29 v30
+                                                                                                    -> coe
+                                                                                                         MAlonzo.Code.Ledger.Conway.Conformance.Utxow.C_UTXOW'45'inductive_2916
+                                                                                                         (coe
+                                                                                                            MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
+                                                                                                            (coe
+                                                                                                               v7)
+                                                                                                            (coe
+                                                                                                               MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
+                                                                                                               (coe
+                                                                                                                  v9)
+                                                                                                               (coe
+                                                                                                                  MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
+                                                                                                                  (coe
+                                                                                                                     v11)
+                                                                                                                  (coe
+                                                                                                                     MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
+                                                                                                                     (coe
+                                                                                                                        v13)
+                                                                                                                     (coe
+                                                                                                                        MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
+                                                                                                                        (coe
+                                                                                                                           v15)
+                                                                                                                        (coe
+                                                                                                                           MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
+                                                                                                                           (coe
+                                                                                                                              v17)
+                                                                                                                           (coe
+                                                                                                                              MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
+                                                                                                                              (coe
+                                                                                                                                 v19)
+                                                                                                                              (coe
+                                                                                                                                 MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
+                                                                                                                                 (coe
+                                                                                                                                    v21)
+                                                                                                                                 (coe
+                                                                                                                                    MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
+                                                                                                                                    (coe
+                                                                                                                                       v23)
+                                                                                                                                    (coe
+                                                                                                                                       MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
+                                                                                                                                       (coe
+                                                                                                                                          v25)
+                                                                                                                                       (coe
+                                                                                                                                          MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
+                                                                                                                                          (coe
+                                                                                                                                             v27)
+                                                                                                                                          (coe
+                                                                                                                                             MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
+                                                                                                                                             (coe
+                                                                                                                                                v29)
+                                                                                                                                             (coe
+                                                                                                                                                MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.du_conv_86
+                                                                                                                                                (coe
+                                                                                                                                                   du_UTXOToConf_3372)
+                                                                                                                                                (coe
+                                                                                                                                                   v30))))))))))))))
+                                                                                                  _ -> MAlonzo.RTE.mazUnreachableError
+                                                                                           _ -> MAlonzo.RTE.mazUnreachableError
                                                                                     _ -> MAlonzo.RTE.mazUnreachableError
                                                                              _ -> MAlonzo.RTE.mazUnreachableError
                                                                       _ -> MAlonzo.RTE.mazUnreachableError
@@ -966,73 +996,73 @@ du_UTXOWToConf_3492
                      _ -> MAlonzo.RTE.mazUnreachableError
               _ -> MAlonzo.RTE.mazUnreachableError))
 -- Ledger.Conway.Conformance.Equivalence.Utxo._.pparams
-d_pparams_3526 ::
+d_pparams_3544 ::
   MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_2492 ->
   MAlonzo.Code.Ledger.Conway.Specification.Utxo.T_UTxOEnv_2470 ->
   MAlonzo.Code.Ledger.Conway.Specification.Utxo.T_UTxOState_2486 ->
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_Tx_3594 ->
   MAlonzo.Code.Ledger.Conway.Specification.Utxo.T_UTxOState_2486 ->
   MAlonzo.Code.Ledger.Conway.Specification.PParams.T_PParams_286
-d_pparams_3526 ~v0 v1 ~v2 ~v3 ~v4 = du_pparams_3526 v1
-du_pparams_3526 ::
+d_pparams_3544 ~v0 v1 ~v2 ~v3 ~v4 = du_pparams_3544 v1
+du_pparams_3544 ::
   MAlonzo.Code.Ledger.Conway.Specification.Utxo.T_UTxOEnv_2470 ->
   MAlonzo.Code.Ledger.Conway.Specification.PParams.T_PParams_286
-du_pparams_3526 v0
+du_pparams_3544 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Utxo.d_pparams_2480
       (coe v0)
 -- Ledger.Conway.Conformance.Equivalence.Utxo._.deposits
-d_deposits_3530 ::
+d_deposits_3548 ::
   MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_2492 ->
   MAlonzo.Code.Ledger.Conway.Specification.Utxo.T_UTxOEnv_2470 ->
   MAlonzo.Code.Ledger.Conway.Specification.Utxo.T_UTxOState_2486 ->
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_Tx_3594 ->
   MAlonzo.Code.Ledger.Conway.Specification.Utxo.T_UTxOState_2486 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_deposits_3530 ~v0 ~v1 v2 ~v3 ~v4 = du_deposits_3530 v2
-du_deposits_3530 ::
+d_deposits_3548 ~v0 ~v1 v2 ~v3 ~v4 = du_deposits_3548 v2
+du_deposits_3548 ::
   MAlonzo.Code.Ledger.Conway.Specification.Utxo.T_UTxOState_2486 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-du_deposits_3530 v0
+du_deposits_3548 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Utxo.d_deposits_2500
       (coe v0)
 -- Ledger.Conway.Conformance.Equivalence.Utxo._.body
-d_body_3538 ::
+d_body_3556 ::
   MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_2492 ->
   MAlonzo.Code.Ledger.Conway.Specification.Utxo.T_UTxOEnv_2470 ->
   MAlonzo.Code.Ledger.Conway.Specification.Utxo.T_UTxOState_2486 ->
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_Tx_3594 ->
   MAlonzo.Code.Ledger.Conway.Specification.Utxo.T_UTxOState_2486 ->
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TxBody_3414
-d_body_3538 ~v0 ~v1 ~v2 v3 ~v4 = du_body_3538 v3
-du_body_3538 ::
+d_body_3556 ~v0 ~v1 ~v2 v3 ~v4 = du_body_3556 v3
+du_body_3556 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_Tx_3594 ->
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TxBody_3414
-du_body_3538 v0
+du_body_3556 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_body_3606
       (coe v0)
 -- Ledger.Conway.Conformance.Equivalence.Utxo._.txCerts
-d_txCerts_3546 ::
+d_txCerts_3564 ::
   MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_2492 ->
   MAlonzo.Code.Ledger.Conway.Specification.Utxo.T_UTxOEnv_2470 ->
   MAlonzo.Code.Ledger.Conway.Specification.Utxo.T_UTxOState_2486 ->
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_Tx_3594 ->
   MAlonzo.Code.Ledger.Conway.Specification.Utxo.T_UTxOState_2486 ->
   [MAlonzo.Code.Ledger.Conway.Specification.Certs.T_DCert_1338]
-d_txCerts_3546 ~v0 ~v1 ~v2 v3 ~v4 = du_txCerts_3546 v3
-du_txCerts_3546 ::
+d_txCerts_3564 ~v0 ~v1 ~v2 v3 ~v4 = du_txCerts_3564 v3
+du_txCerts_3564 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_Tx_3594 ->
   [MAlonzo.Code.Ledger.Conway.Specification.Certs.T_DCert_1338]
-du_txCerts_3546 v0
+du_txCerts_3564 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_txCerts_3462
       (coe
          MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_body_3606
          (coe v0))
 -- Ledger.Conway.Conformance.Equivalence.Utxo.UTXOWFromConf
-d_UTXOWFromConf_3552 ::
+d_UTXOWFromConf_3570 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_2492 ->
   MAlonzo.Code.Ledger.Conway.Specification.Utxo.T_UTxOEnv_2470 ->
@@ -1040,17 +1070,17 @@ d_UTXOWFromConf_3552 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_Tx_3594 ->
   MAlonzo.Code.Ledger.Conway.Specification.Utxo.T_UTxOState_2486 ->
   MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.T__'8866'_'11078''8305'__16
-d_UTXOWFromConf_3552 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5
-  = du_UTXOWFromConf_3552
-du_UTXOWFromConf_3552 ::
+d_UTXOWFromConf_3570 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5
+  = du_UTXOWFromConf_3570
+du_UTXOWFromConf_3570 ::
   MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.T__'8866'_'11078''8305'__16
-du_UTXOWFromConf_3552
+du_UTXOWFromConf_3570
   = coe
       MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.C_constructor_36
       (coe
          (\ v0 v1 ->
             case coe v1 of
-              MAlonzo.Code.Ledger.Conway.Conformance.Utxow.C_UTXOW'45'inductive_2898 v6
+              MAlonzo.Code.Ledger.Conway.Conformance.Utxow.C_UTXOW'45'inductive_2916 v6
                 -> case coe v6 of
                      MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v7 v8
                        -> case coe v8 of
@@ -1071,54 +1101,70 @@ du_UTXOWFromConf_3552
                                                                              MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v23 v24
                                                                                -> case coe v24 of
                                                                                     MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v25 v26
-                                                                                      -> coe
-                                                                                           MAlonzo.Code.Ledger.Conway.Specification.Utxow.C_UTXOW'45'inductive_3010
-                                                                                           (coe
-                                                                                              MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
-                                                                                              (coe
-                                                                                                 v7)
-                                                                                              (coe
-                                                                                                 MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
-                                                                                                 (coe
-                                                                                                    v9)
-                                                                                                 (coe
-                                                                                                    MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
-                                                                                                    (coe
-                                                                                                       v11)
-                                                                                                    (coe
-                                                                                                       MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
-                                                                                                       (coe
-                                                                                                          v13)
-                                                                                                       (coe
-                                                                                                          MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
-                                                                                                          (coe
-                                                                                                             v15)
-                                                                                                          (coe
-                                                                                                             MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
-                                                                                                             (coe
-                                                                                                                v17)
-                                                                                                             (coe
-                                                                                                                MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
-                                                                                                                (coe
-                                                                                                                   v19)
-                                                                                                                (coe
-                                                                                                                   MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
-                                                                                                                   (coe
-                                                                                                                      v21)
-                                                                                                                   (coe
-                                                                                                                      MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
-                                                                                                                      (coe
-                                                                                                                         v23)
-                                                                                                                      (coe
-                                                                                                                         MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
-                                                                                                                         (coe
-                                                                                                                            v25)
-                                                                                                                         (coe
-                                                                                                                            MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.d_conv'8305'_34
-                                                                                                                            (coe
-                                                                                                                               du_UTXOFromConf_3438)
-                                                                                                                            v0
-                                                                                                                            v26)))))))))))
+                                                                                      -> case coe
+                                                                                                v26 of
+                                                                                           MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v27 v28
+                                                                                             -> case coe
+                                                                                                       v28 of
+                                                                                                  MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v29 v30
+                                                                                                    -> coe
+                                                                                                         MAlonzo.Code.Ledger.Conway.Specification.Utxow.C_UTXOW'45'inductive_3068
+                                                                                                         (coe
+                                                                                                            MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
+                                                                                                            (coe
+                                                                                                               v7)
+                                                                                                            (coe
+                                                                                                               MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
+                                                                                                               (coe
+                                                                                                                  v9)
+                                                                                                               (coe
+                                                                                                                  MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
+                                                                                                                  (coe
+                                                                                                                     v11)
+                                                                                                                  (coe
+                                                                                                                     MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
+                                                                                                                     (coe
+                                                                                                                        v13)
+                                                                                                                     (coe
+                                                                                                                        MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
+                                                                                                                        (coe
+                                                                                                                           v15)
+                                                                                                                        (coe
+                                                                                                                           MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
+                                                                                                                           (coe
+                                                                                                                              v17)
+                                                                                                                           (coe
+                                                                                                                              MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
+                                                                                                                              (coe
+                                                                                                                                 v19)
+                                                                                                                              (coe
+                                                                                                                                 MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
+                                                                                                                                 (coe
+                                                                                                                                    v21)
+                                                                                                                                 (coe
+                                                                                                                                    MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
+                                                                                                                                    (coe
+                                                                                                                                       v23)
+                                                                                                                                    (coe
+                                                                                                                                       MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
+                                                                                                                                       (coe
+                                                                                                                                          v25)
+                                                                                                                                       (coe
+                                                                                                                                          MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
+                                                                                                                                          (coe
+                                                                                                                                             v27)
+                                                                                                                                          (coe
+                                                                                                                                             MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
+                                                                                                                                             (coe
+                                                                                                                                                v29)
+                                                                                                                                             (coe
+                                                                                                                                                MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.d_conv'8305'_34
+                                                                                                                                                (coe
+                                                                                                                                                   du_UTXOFromConf_3452)
+                                                                                                                                                v0
+                                                                                                                                                v30)))))))))))))
+                                                                                                  _ -> MAlonzo.RTE.mazUnreachableError
+                                                                                           _ -> MAlonzo.RTE.mazUnreachableError
                                                                                     _ -> MAlonzo.RTE.mazUnreachableError
                                                                              _ -> MAlonzo.RTE.mazUnreachableError
                                                                       _ -> MAlonzo.RTE.mazUnreachableError
