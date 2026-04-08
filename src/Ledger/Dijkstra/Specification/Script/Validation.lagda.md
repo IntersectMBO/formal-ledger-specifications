@@ -74,33 +74,37 @@ getDatumSpend tx utxo₀ allData txin
 txInfo : (ℓ : TxLevel) → UTxO → Tx ℓ → TxInfo
 
 txInfo TxLevelTop utxo tx =
-  record  { realizedInputs  = utxo ∣ (SpendInputsOf tx)
-          ; txOuts          = TxOutsOf tx
-          ; txFee           = FeesOf? tx
-          ; mint            = MintedValueOf tx
-          ; txCerts         = DCertsOf tx
-          ; txWithdrawals   = WithdrawalsOf tx
-          ; txVldt          = ValidIntervalOf tx
-          ; vkKey           = RequiredSignerHashesOf tx
-          ; txGuards        = GuardsOf tx
-          ; txData          = DataOf tx
-          ; txId            = TxIdOf tx
-          ; txInfoSubTxs    = nothing
+  record  { realizedInputs      = utxo ∣ (SpendInputsOf tx)
+          ; txOuts              = TxOutsOf tx
+          ; txFee               = FeesOf? tx
+          ; mint                = MintedValueOf tx
+          ; txCerts             = DCertsOf tx
+          ; txWithdrawals       = WithdrawalsOf tx
+          ; txVldt              = ValidIntervalOf tx
+          ; vkKey               = RequiredSignerHashesOf tx
+          ; txGuards            = GuardsOf tx
+          ; txData              = DataOf tx
+          ; txId                = TxIdOf tx
+          ; txInfoSubTxs        = nothing
+          ; txDirectDeposits    = DirectDepositsOf tx
+          ; txBalanceIntervals  = BalanceIntervalsOf tx
           }
 
 txInfo TxLevelSub utxo tx =
-  record  { realizedInputs  = utxo ∣ (TxBody.txIns txBody)
-          ; txOuts          = TxBody.txOuts txBody
-          ; txFee           = nothing
-          ; mint            = TxBody.mint txBody
-          ; txCerts         = TxBody.txCerts txBody
-          ; txWithdrawals   = TxBody.txWithdrawals txBody
-          ; txVldt          = TxBody.txVldt txBody
-          ; vkKey           = TxBody.requiredSignerHashes txBody
-          ; txGuards        = TxBody.txGuards txBody
-          ; txData          = DataOf tx
-          ; txId            = TxBody.txId txBody
-          ; txInfoSubTxs    = nothing
+  record  { realizedInputs      = utxo ∣ (TxBody.txIns txBody)
+          ; txOuts              = TxBody.txOuts txBody
+          ; txFee               = nothing
+          ; mint                = TxBody.mint txBody
+          ; txCerts             = TxBody.txCerts txBody
+          ; txWithdrawals       = TxBody.txWithdrawals txBody
+          ; txVldt              = TxBody.txVldt txBody
+          ; vkKey               = TxBody.requiredSignerHashes txBody
+          ; txGuards            = TxBody.txGuards txBody
+          ; txData              = DataOf tx
+          ; txId                = TxBody.txId txBody
+          ; txInfoSubTxs        = nothing
+          ; txDirectDeposits    = DirectDepositsOf tx
+          ; txBalanceIntervals  = BalanceIntervalsOf tx
           } where open Tx tx
 
 txInfoForPurpose : {ℓ : TxLevel} → UTxO → Tx ℓ → ScriptPurpose → TxInfo
@@ -149,6 +153,14 @@ credsNeeded utxo tx =
     collateralInputs {TxLevelTop} tx = CollateralInputsOf tx
     collateralInputs {TxLevelSub} tx = ∅
 ```
+
+**CIP-159 and `credsNeeded`**.  CIP-159 does not introduce new `ScriptPurpose` values
+for direct deposits or balance intervals, so `credsNeeded` requires no changes.
+Direct deposits do not require a witness from the receiving credential.  Balance
+intervals are Phase-1 validity conditions that do not trigger script execution.  The
+existing `Reward` case already handles partial withdrawals; it generates a `Reward`
+script purpose for each entry in `txWithdrawals`, regardless of whether the
+withdrawal is full or partial.
 
 <!--
 ```agda
