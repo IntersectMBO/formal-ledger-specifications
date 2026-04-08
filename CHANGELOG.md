@@ -4,6 +4,7 @@
 
 ### WIP
 
+- Extend `TxInfo` with `txDirectDeposits` and `txBalanceIntervals` fields (CIP-159).
 - Remove `allBalanceIntervals` batch-level aggregation helper; balance interval
   assertions will be checked per-(sub)transaction in `UTXO`/`SUBUTXO` rules (see #1117).
 - Add `TxBody.txDirectDeposits` and `TxBody.txBalanceIntervals` fields (CIP-159).

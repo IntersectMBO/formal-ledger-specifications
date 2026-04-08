@@ -46,20 +46,34 @@ mutual
   record TxInfo : Type where
     inductive
     field
-      realizedInputs : UTxO
-      txOuts         : Ix ⇀ TxOut
-      txFee          : Maybe Fees
-      mint           : Value
-      txCerts        : List DCert
-      txWithdrawals  : Withdrawals
-      txVldt         : Maybe Slot × Maybe Slot
-      vkKey          : ℙ KeyHash     -- native/phase-1/timelock signers
-      txGuards       : ℙ Credential  -- CIP-0112/0118 guards (required by tx body)
-      txData         : ℙ Datum
-      txId           : TxId
-      txInfoSubTxs   : Maybe (List SubTxInfo)
+      realizedInputs      : UTxO
+      txOuts              : Ix ⇀ TxOut
+      txFee               : Maybe Fees
+      mint                : Value
+      txCerts             : List DCert
+      txWithdrawals       : Withdrawals
+      txVldt              : Maybe Slot × Maybe Slot
+      vkKey               : ℙ KeyHash     -- native/phase-1/timelock signers
+      txGuards            : ℙ Credential  -- CIP-0112/0118 guards (required by tx body)
+      txData              : ℙ Datum
+      txId                : TxId
+      txInfoSubTxs        : Maybe (List SubTxInfo)
+      txDirectDeposits    : DirectDeposits
+      txBalanceIntervals  : AccountBalanceIntervals
 
   SubTxInfo : Type
   SubTxInfo = TxInfo
-
 ```
+
+The `txDirectDeposits`{.AgdaField} and `txBalanceIntervals`{.AgdaField} fields
+expose the CIP-159 transaction fields to Plutus scripts via the script context.
+CIP-159 specifies that the Plutus script context is "pre-emptively upgraded" to
+include these fields from the start, even though only ADA direct deposits are
+supported in Dijkstra.  This ensures scripts written for Dijkstra do not need
+recompilation when multi-asset support is added in a future era.
+
+CIP-159 does **not** introduce new `ScriptPurpose`{.AgdaDatatype} values for
+direct deposits or balance intervals.  Direct deposits do not require a witness
+from the receiving credential (mirroring how UTxOs can be sent to a script
+address without executing the spending script).  Balance intervals are Phase-1
+validity conditions that do not trigger script execution.

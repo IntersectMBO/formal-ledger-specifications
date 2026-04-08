@@ -170,7 +170,7 @@ record TransactionStructure : Type₁ where
   open GovernanceActions hiding (Vote; yes; no; abstain) public
 
   open import Ledger.Dijkstra.Specification.Certs govStructure
-  open import Ledger.Dijkstra.Specification.Account govStructure
+  open import Ledger.Dijkstra.Specification.Account govStructure public
 ```
 -->
 ```agda
