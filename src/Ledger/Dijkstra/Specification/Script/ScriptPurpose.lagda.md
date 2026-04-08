@@ -68,7 +68,8 @@ mutual
 The `txDirectDeposits`{.AgdaField} and `txBalanceIntervals`{.AgdaField} fields
 expose the CIP-159 transaction fields to Plutus scripts via the script context.
 CIP-159 specifies that the Plutus script context is "pre-emptively upgraded" to
-include these fields from the start, even though only ADA direct deposits are
-supported in Dijkstra.  This ensures scripts written for Dijkstra do not need
-recompilation when multi-asset support is added in a future era.
+include these fields from the start.  In Dijkstra, direct deposits are
+currently ADA-only, so the pre-emptive upgrade here is about the *presence* of
+these fields in the script context rather than guaranteeing that the concrete
+direct-deposit representation is already the final multi-asset one.
 
