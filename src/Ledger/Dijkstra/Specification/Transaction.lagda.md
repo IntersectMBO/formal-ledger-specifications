@@ -105,7 +105,7 @@ record TransactionStructure : Type₁ where
     Ix TxId AuxiliaryData  : Type
     adHashingScheme        : isHashableSet AuxiliaryData
     globalConstants        : GlobalConstants
-    crypto                 : CryptoStructure
+    cryptoStructure        : CryptoStructure
     epochStructure         : EpochStructure
 ```
 <!--
@@ -114,11 +114,11 @@ record TransactionStructure : Type₁ where
     ⦃ DecEq-TxId ⦄ : DecEq TxId
   open isHashableSet adHashingScheme renaming (THash to ADHash) public
   open GlobalConstants globalConstants public
-  open CryptoStructure crypto public
+  open CryptoStructure cryptoStructure public
   open Ledger.Dijkstra.Specification.TokenAlgebra.Base ScriptHash public
   open Ledger.Core.Specification.Address Network KeyHash ScriptHash ⦃ it ⦄ ⦃ it ⦄ ⦃ it ⦄ public
   open EpochStructure epochStructure public
-  open Ledger.Dijkstra.Specification.Script crypto epochStructure public
+  open Ledger.Dijkstra.Specification.Script cryptoStructure epochStructure Network public
   field
 ```
 -->
@@ -128,7 +128,7 @@ record TransactionStructure : Type₁ where
 <!--
 ```agda
   open ScriptStructure scriptStructure public
-  open Ledger.Dijkstra.Specification.PParams crypto epochStructure scriptStructure public
+  open Ledger.Dijkstra.Specification.PParams cryptoStructure epochStructure Network scriptStructure public
   field
 ```
 -->
@@ -157,7 +157,7 @@ record TransactionStructure : Type₁ where
   govStructure = record
     -- TODO: figure out what to do with the hash
     { TxId = TxId; DocHash = ADHash
-    ; cryptoStructure = crypto
+    ; cryptoStructure = cryptoStructure
     ; epochStructure = epochStructure
     ; scriptStructure = scriptStructure
     ; govParams = govParams

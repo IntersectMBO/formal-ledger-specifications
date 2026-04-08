@@ -127,6 +127,7 @@ import Ledger.Dijkstra.Specification.RewardUpdate.Properties
 ```agda
 import Ledger.Dijkstra.Specification.Script
 import Ledger.Dijkstra.Specification.Script.Base
+import Ledger.Dijkstra.Specification.Script.Native
 import Ledger.Dijkstra.Specification.Script.ScriptPurpose
 import Ledger.Dijkstra.Specification.Script.Validation
 ```

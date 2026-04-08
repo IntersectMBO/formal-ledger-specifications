@@ -11,6 +11,7 @@ This section defines the adjustable protocol parameters of the Cardano ledger.
 ```agda
 {-# OPTIONS --safe #-}
 
+open import Ledger.Prelude
 open import Ledger.Core.Specification.Crypto using (CryptoStructure)
 open import Ledger.Core.Specification.Epoch using (EpochStructure)
 open import Ledger.Core.Specification.ProtocolVersion
@@ -19,7 +20,8 @@ open import Ledger.Dijkstra.Specification.Script.Base
 module Ledger.Dijkstra.Specification.PParams
   (cs : CryptoStructure )
   (es : EpochStructure) (open EpochStructure es)
-  (ss : ScriptStructure cs es) (open ScriptStructure ss)
+  (Network : Type) ⦃ _ : DecEq Network ⦄
+  (ss : ScriptStructure cs es Network) (open ScriptStructure ss)
   where
 
 open import Data.Product.Properties
