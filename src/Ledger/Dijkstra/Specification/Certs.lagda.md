@@ -293,6 +293,32 @@ applyDirectDeposits dd ds = record ds { rewards = RewardsOf ds ∪⁺ dd }
 The `LEDGER`{.AgdaDatatype} rule will call `applyDirectDeposits`{.AgdaFunction} to
 credit direct deposits to account balances as part of processing a transaction batch.
 
+```agda
+applyWithdrawals : Withdrawals → Rewards → Rewards
+applyWithdrawals wdrls rwds =
+  foldl applyOne rwds (setToList (wdrls ˢ))
+  where
+    -- For each withdrawal entry `(addr, amt)`, look up `stake addr` in the acc,
+    -- compute `bal ∸ amt`, create a singleton map with the new balance, and
+    -- merge it with the rest (complement-restricted, to remove the old entry).
+    applyOne : Rewards → RewardAddress × Coin → Rewards
+    applyOne acc (addr , amt) =
+      case lookupᵐ? acc (stake addr) of λ where
+        (just bal) → ❴ stake addr , bal ∸ amt ❵ ∪ˡ (acc ∣ ❴ stake addr ❵ ᶜ)
+        nothing    → acc
+        -- `nothing` case is defensive; the PRE-CERT precondition guarantees the
+        -- credential is registered, but handling it makes the function total.
+```
+
+In the Dijkstra era, CIP-159 allows **partial withdrawals**: a transaction may
+withdraw any amount up to the current account balance.
+`applyWithdrawals`{.AgdaFunction} subtracts each withdrawal amount from the
+corresponding account balance.  Full withdrawals remain valid as a special case
+(where the withdrawn amount equals the balance, leaving a zero balance).
+
+The `PRE-CERT`{.AgdaDatatype} rule calls `applyWithdrawals`{.AgdaFunction}
+to process withdrawals as part of certificate processing.
+
 <!--
 ```agda
 instance
@@ -407,12 +433,30 @@ data _⊢_⇀⦇_,CERT⦈_  : CertEnv → CertState → DCert → CertState → 
     ∙ Γ ⊢ stᵍ ⇀⦇ dCert ,GOVCERT⦈ stᵍ'
       ────────────────────────────────
       Γ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ , stᵖ , stᵍ' ⟧
+```
 
+## PRE-CERT Transition Rule
 
--- PRE-CERT Transition Rule --
+### Withdrawal Processing
 
+The `PRE-CERT`{.AgdaDatatype} rule processes withdrawals before certificate
+evaluation.  In the Dijkstra era, CIP-159 extends the withdrawal semantics from an
+"all-or-nothing" model (where the withdrawn amount must equal the full account
+balance) to a "partial withdrawal" model (where any amount up to the full balance
+may be withdrawn).
+
+The precondition checks that each withdrawal targets a registered account and that
+the withdrawal amount does not exceed the account's current balance.  The effect
+subtracts the withdrawal amounts from the corresponding account balances via
+`applyWithdrawals`{.AgdaFunction}.
+
+<!--
+```agda
 open GovVote using (voter)
+```
+-->
 
+```agda
 data _⊢_⇀⦇_,PRE-CERT⦈_ : CertEnv → CertState → ⊤ → CertState → Type where
 
   CERT-pre :
@@ -421,13 +465,24 @@ data _⊢_⇀⦇_,PRE-CERT⦈_ : CertEnv → CertState → ⊤ → CertState →
         wdrlCreds       = mapˢ stake (dom wdrls)
     in
     ∙ filter isKeyHash wdrlCreds ⊆ dom voteDelegs
-    ∙ mapˢ (map₁ stake) (wdrls ˢ) ⊆ rewards ˢ
+    ∙ wdrlCreds ⊆ dom rewards
+    ∙ ∀[ (addr , amt) ∈ wdrls ˢ ] amt ≤ᵐ lookupᵐ? rewards (stake addr)
       ────────────────────────────────
-      ⟦ e , pp , vs , wdrls , cc ⟧ ⊢ ⟦ ⟦ voteDelegs , stakeDelegs , rewards , deposits ⟧ , stᵖ , ⟦ dReps , ccHotKeys , deposits' ⟧ ⟧ ⇀⦇ _ ,PRE-CERT⦈ ⟦ ⟦ voteDelegs , stakeDelegs , constMap wdrlCreds 0 ∪ˡ rewards , deposits ⟧ , stᵖ , ⟦ refreshedDReps , ccHotKeys , deposits' ⟧ ⟧
+      ⟦ e , pp , vs , wdrls , cc ⟧ ⊢
+        ⟦ ⟦ voteDelegs , stakeDelegs , rewards , deposits ⟧ , stᵖ , ⟦ dReps , ccHotKeys , deposits' ⟧ ⟧
+          ⇀⦇ _ ,PRE-CERT⦈
+        ⟦ ⟦ voteDelegs , stakeDelegs , applyWithdrawals wdrls rewards , deposits ⟧ , stᵖ , ⟦ refreshedDReps , ccHotKeys , deposits' ⟧ ⟧
+```
 
+**TODO**: Version restriction (deferred).  CIP-159 specifies that partial withdrawals are
+only permitted in transactions without Plutus v1–v3 scripts (i.e., `legacyMode ≡ false`).
+Enforcing this requires threading `legacyMode` into `CertEnv`, which in turn requires
+changes to the `SUBLEDGER` and `LEDGER` rules.  This restriction will be added in a
+follow-up issue.
 
--- POST-CERT Transition Rule --
+## POST-CERT Transition Rule
 
+```agda
 data _⊢_⇀⦇_,POST-CERT⦈_ : CertEnv → CertState → ⊤ → CertState → Type where
 
   CERT-post :

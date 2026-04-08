@@ -4,6 +4,7 @@
 
 ### WIP
 
+- Allow partial withdrawals in `PRE-CERT` rule; define `applyWithdrawals` and `_≤ᵐ_` (CIP-159).
 - Extend `TxInfo` with `txDirectDeposits` and `txBalanceIntervals` fields (CIP-159).
 - Remove `allBalanceIntervals` batch-level aggregation helper; balance interval
   assertions will be checked per-(sub)transaction in `UTXO`/`SUBUTXO` rules (see #1117).
