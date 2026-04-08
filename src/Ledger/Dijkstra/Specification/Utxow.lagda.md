@@ -61,8 +61,11 @@ module _ (tx : TopLevelTx) where
     hasTreasure  : Is-just currentTreasury  → UsesV3Features
 
   data UsesV4Features : Set where
-    hasSubtransactions  : ¬ (Is-[] txSubTransactions) → UsesV4Features
-    hasGuards           : ¬ (Is-∅ txGuards)           → UsesV4Features
+    hasSubtransactions   : ¬ (Is-[] txSubTransactions)        → UsesV4Features
+    hasGuards            : ¬ (Is-∅ txGuards)                  → UsesV4Features
+    hasDirectDeposits    : ¬ (Is-∅ (dom txDirectDeposits))    → UsesV4Features
+    hasBalanceIntervals  : ¬ (Is-∅ (dom txBalanceIntervals))  → UsesV4Features
+
 ```
 
 <!--
@@ -91,12 +94,30 @@ module _ {tx : TopLevelTx} where
     Dec-UsesV4Features : UsesV4Features tx ⁇
     Dec-UsesV4Features .dec
       with ¿ ¬ (Is-[] txSubTransactions) ¿ | ¿ ¬ (Is-∅ txGuards) ¿
-    ... | yes p | _ = yes (hasSubtransactions p)
-    ... | _ | yes p = yes (hasGuards p)
-    ... | no p₁ | no p₂
-      = no λ { (hasSubtransactions x) → p₁ x ; (hasGuards x) → p₂ x}
+         | ¿ ¬ (Is-∅ (dom txDirectDeposits)) ¿ | ¿ ¬ (Is-∅ (dom txBalanceIntervals)) ¿
+    ... | yes p | _ | _ | _ = yes (hasSubtransactions p)
+    ... | _ | yes p | _ | _ = yes (hasGuards p)
+    ... | _ | _ | yes p | _ = yes (hasDirectDeposits p)
+    ... | _ | _ | _ | yes p = yes (hasBalanceIntervals p)
+    ... | no p₁ | no p₂ | no p₃ | no p₄
+      = no λ { (hasSubtransactions x) → p₁ x ; (hasGuards x) → p₂ x
+             ; (hasDirectDeposits x) → p₃ x ; (hasBalanceIntervals x) → p₄ x }
 ```
 -->
+
+CIP-159 fields (`txDirectDeposits`{.AgdaField} and `txBalanceIntervals`{.AgdaField})
+require at least PlutusV4.  When either field is non-empty,
+`UsesV4Features`{.AgdaDatatype} holds and `allowedLanguagesLegacyMode`{.AgdaFunction}
+returns `∅`, making the legacy rule's language premise unsatisfiable.
+This forces such transactions into normal mode (PlutusV4-only), which is precisely
+the CIP-159/CIP-118 design:
+
+> When backward compatibility with older Plutus scripts (v1–v3) is needed, CIP-159
+> fields can appear in sub-transactions, while older scripts run at the top level
+> (the CIP-118 escape hatch).
+
+The version gating here ensures that a top-level transaction with non-empty CIP-159
+fields cannot enter legacy mode.
 
 ```agda
 languages :  ℙ P2Script → ℙ Language
@@ -104,6 +125,9 @@ languages p2Scripts = mapˢ language p2Scripts
 
 allowedLanguagesLegacyMode : TopLevelTx → UTxO → ℙ Language
 allowedLanguagesLegacyMode tx utxo =
+  if UsesV4Features tx
+    then ∅
+    else
   if UsesV3Features tx
     then fromList (PlutusV3 ∷ [])
     else
