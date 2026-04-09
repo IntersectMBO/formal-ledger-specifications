@@ -154,12 +154,13 @@ credsNeeded utxo tx =
     collateralInputs {TxLevelSub} tx = ∅
 ```
 
-**CIP-159 and `credsNeeded`**.  CIP-159 does not introduce new `ScriptPurpose` values
-for direct deposits or balance intervals, so `credsNeeded` requires no changes.
-Direct deposits do not require a witness from the receiving credential.  Balance
-intervals are Phase-1 validity conditions that do not trigger script execution.  The
-existing `Reward` case already handles partial withdrawals; it generates a `Reward`
-script purpose for each entry in `txWithdrawals`, regardless of whether the
+**CIP-159 and `credsNeeded`**.
+CIP-159 does not introduce new `ScriptPurpose`{.AgdaDatatype} values for direct
+deposits or balance intervals, so `credsNeeded`{.AgdaFunction} requires no changes.
+Direct deposits do not require a witness from the receiving credential.
+Balance intervals are Phase-1 validity conditions that do not trigger script execution.
+The existing `Reward` case already handles partial withdrawals; it generates a
+`Reward` script purpose for each entry in `txWithdrawals`, regardless of whether the
 withdrawal is full or partial.
 
 <!--

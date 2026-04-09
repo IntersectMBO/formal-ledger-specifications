@@ -72,8 +72,3 @@ include these fields from the start, even though only ADA direct deposits are
 supported in Dijkstra.  This ensures scripts written for Dijkstra do not need
 recompilation when multi-asset support is added in a future era.
 
-CIP-159 does **not** introduce new `ScriptPurpose`{.AgdaDatatype} values for
-direct deposits or balance intervals.  Direct deposits do not require a witness
-from the receiving credential (mirroring how UTxOs can be sent to a script
-address without executing the spending script).  Balance intervals are Phase-1
-validity conditions that do not trigger script execution.
