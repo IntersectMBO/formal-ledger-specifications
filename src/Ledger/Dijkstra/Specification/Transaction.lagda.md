@@ -711,34 +711,6 @@ allowed to inspect utxo for its inputs.
           (SubTransactionsOf txTop)
 ```
 
-#### Account Balance Intervals
-
-Balance interval assertions for the same credential must not appear in more than one
-transaction within the batch (enforced by the UTxO rules).[^2]
-
-Each balance interval assertion is a Phase-1 validity precondition: "this transaction
-is only valid if the credential's account balance lies in this range."  When two
-sub-transactions both assert an interval for the same credential, the natural
-semantic reading is that *both* conditions must hold, which corresponds to
-*intersection* of intervals, not union.  (Besides, a union here would require a
-richer `BalanceInterval` representation; the current one cannot express
-non-contiguous sets such as [100, 500) ∪ [800, 1200).)
-
-An intersection-based approach would be sound but would require a `BalanceInterval`
-intersection function together with an emptiness decision procedure (to reject the
-batch when the intersection is empty).  For simplicity, we instead require
-domain-disjointness across the batch: no two transactions may assert an interval for
-the same credential.  Under this constraint the aggregation helper `∪ˡ` (left-biased
-union) behaves as a true disjoint union and the result is independent of
-sub-transaction ordering.
-
-```agda
-  allBalanceIntervals : TopLevelTx → AccountBalanceIntervals
-  allBalanceIntervals txTop =
-    foldl (λ acc txSub → acc ∪ˡ BalanceIntervalsOf txSub)
-          (BalanceIntervalsOf txTop)
-          (SubTransactionsOf txTop)
-```
 
 ## Changes to Transaction Validity
 
@@ -822,4 +794,3 @@ can be done with a shared, batch-scoped witness pool.
 [^1]:  See CIP 0118; once finalized and merged, CIP 0118 will appear in the
        main branch of [the CIP repository][CIPs]; until then, it can be found
        at <https://github.com/polinavino/CIPs/tree/polina/CIP0118/CIP-0118>.
-[^2]:  See Issue #1117.
