@@ -4,6 +4,8 @@
 
 ### WIP
 
+- Remove `allBalanceIntervals` batch-level aggregation helper; balance interval
+  assertions will be checked per-(sub)transaction in `UTXO`/`SUBUTXO` rules (see #1117).
 - Add `TxBody.txDirectDeposits` and `TxBody.txBalanceIntervals` fields (CIP-159).
 - Add `Account` module with CIP-159 core types: `DirectDeposits`, `BalanceInterval`, `AccountBalanceIntervals`, `inBalanceInterval` predicate.
 - Retrieve languages of needed scripts only in UTXOW rule.
