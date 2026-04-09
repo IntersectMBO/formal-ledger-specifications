@@ -41,7 +41,7 @@ instance
       computeProof-aux : Dec H → ComputationResult String (∃[ s₁ ] (Γ ⊢ s₀ ⇀⦇ txSub ,SUBUTXOW⦈ s₁))
       computeProof-aux (no ¬p) = failure "SUBUTXOW"
       computeProof-aux (yes (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉)) =
-          map (map₂′ (λ h → SUBUTXOW {txSub = txSub} {Γ = Γ} (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , h)))
+          map (map₂′ (λ h → SUBUTXOW {txSub = txSub} {Γ = Γ} (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , h)))
               (SUBUTXO.computeProof Γ s₀ txSub)
 
       computeProof : ComputationResult String (∃[ s₁ ] (Γ ⊢ s₀ ⇀⦇ txSub ,SUBUTXOW⦈ s₁))
@@ -50,9 +50,9 @@ instance
       completeness-aux : (d : Dec H) (s₁ : UTxOState)
                        → Γ ⊢ s₀ ⇀⦇ txSub ,SUBUTXOW⦈ s₁
                        → map proj₁ (computeProof-aux d) ≡ success s₁
-      completeness-aux (no ¬p) _ (SUBUTXOW-⋯ p₀ p₁ p₂ p₃ p₄ p₅ p₆ p₇ p₈ p₉ h) =
+      completeness-aux (no ¬p) _ (SUBUTXOW-⋯ p₀ p₁ p₂ p₃ p₄ p₅ p₆ p₇ p₈ p₉ p₁₀ h) =
         ⊥-elim $ ¬p (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉)
-      completeness-aux (yes _) _ (SUBUTXOW-⋯ _ _ _ _ _ _ _ _ _ _ h)
+      completeness-aux (yes _) _ (SUBUTXOW-⋯ _ _ _ _ _ _ _ _ _ _ _ h)
         with SUBUTXO.computeProof Γ s₀ txSub | SUBUTXO.completeness _ _ _ _ h
       ... | success _ | refl = refl
 
@@ -97,8 +97,8 @@ instance
         map (map₂′ (λ h → UTXOW-legacy {txTop = txTop} {Γ = Γ} (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , p₁₂ , h)))
             (UTXO.computeProof (Γ , true) s₀ txTop)
       computeProof-aux (no _) _ (no _) = failure "UTXOW"
-      computeProof-aux (no _) _ (yes (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉)) =
-        map (map₂′ (λ h → UTXOW-normal {txTop = txTop} {Γ = Γ} (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , h)))
+      computeProof-aux (no _) _ (yes (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀)) =
+        map (map₂′ (λ h → UTXOW-normal {txTop = txTop} {Γ = Γ} (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , h)))
             (UTXO.computeProof (Γ , false) s₀ txTop)
 
       computeProof : ComputationResult String (∃[ s₁ ] (Γ ⊢ s₀ ⇀⦇ txTop ,UTXOW⦈ s₁))

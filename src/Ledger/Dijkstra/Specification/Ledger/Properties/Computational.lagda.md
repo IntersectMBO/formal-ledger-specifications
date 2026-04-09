@@ -43,7 +43,7 @@ private
     → IsTopLevelValidFlagOf Γ ≡ false
     → Γ ⊢ s ⇀⦇ stx ,SUBUTXOW⦈ s'
     → s' ≡ s
-  SUBUTXOW-noop isI (SUBUTXOW (_ , _ , _ , _ , _ , _ , _ , _ , _ , _ , SUBUTXO _)) rewrite isI = refl
+  SUBUTXOW-noop isI (SUBUTXOW (_ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , SUBUTXO _)) rewrite isI = refl
   -- After `rewrite isI`, `IsTopLevelValidFlagOf Γ` reduces to `false`,
   -- so the SUBUTXO post-state index reduces to `⟦ UTxOOf s , FeesOf s , DonationsOf s ⟧`
   -- which is s by eta-expansion of the UTxOState record, giving refl.
@@ -92,7 +92,7 @@ instance
 
     -- Helper env constructors (avoid `let ... in with ...` parse issues)
     subUtxoΓ : SubLedgerEnv → SubUTxOEnv
-    subUtxoΓ Γ = ⟦ slot , pparams , treasury , utxo₀ , isTopLevelValid , allScripts , allData ⟧
+    subUtxoΓ Γ = ⟦ slot , pparams , treasury , utxo₀ , isTopLevelValid , allScripts ⟧
       where open SubLedgerEnv Γ
 
     certΓ : SubLedgerEnv → LedgerState → SubLevelTx → CertEnv
@@ -117,7 +117,7 @@ instance
       let open SubLedgerEnv Γ
           open LedgerState s
           subUtxoΓ : SubUTxOEnv
-          subUtxoΓ = ⟦ slot , pparams , treasury , utxo₀ , isTopLevelValid , allScripts , allData ⟧
+          subUtxoΓ = ⟦ slot , pparams , treasury , utxo₀ , isTopLevelValid , allScripts ⟧
           certΓ : CertEnv
           certΓ = ⟦ epoch slot , pparams , ListOfGovVotesOf stx , WithdrawalsOf stx
                   , allColdCreds govSt enactState ⟧
@@ -140,7 +140,7 @@ instance
           isI : isTopLevelValid ≡ false
           isI = ¬-not ¬isV
           subUtxoΓ : SubUTxOEnv
-          subUtxoΓ = ⟦ slot , pparams , treasury , utxo₀ , isTopLevelValid , allScripts , allData ⟧
+          subUtxoΓ = ⟦ slot , pparams , treasury , utxo₀ , isTopLevelValid , allScripts ⟧
       in case computeSubutxow subUtxoΓ utxoSt stx of λ where
         (failure e) → failure e
         (success (utxoSt' , utxoStep)) →
@@ -215,9 +215,6 @@ instance
     allScriptsOf : TopLevelTx → LedgerState → ℙ Script
     allScriptsOf tx s = getAllScripts tx (utxo₀Of s)
 
-    allDataOf : TopLevelTx → LedgerState → DataHash ⇀ Datum
-    allDataOf tx s = setToMap (mapˢ < hash , id > (getAllData tx))
-
     subΓOf : LedgerEnv → LedgerState → TopLevelTx → SubLedgerEnv
     subΓOf Γ s tx =
       ⟦ LedgerEnv.slot Γ
@@ -228,7 +225,6 @@ instance
       , utxo₀Of s
       , IsValidFlagOf tx
       , allScriptsOf tx s
-      , allDataOf tx s
       ⟧
 
     certΓOf : LedgerEnv → TopLevelTx → GovState → CertEnv
@@ -260,7 +256,6 @@ instance
          , utxo₀Of s
          , depositsChange
          , allScriptsOf tx s
-         , allDataOf tx s
          ⟧
 
     utxoΓ-invalid : LedgerEnv → LedgerState → TopLevelTx → UTxOEnv
@@ -271,7 +266,6 @@ instance
       , utxo₀Of s
       , ⟦ 0ℤ , 0ℤ ⟧
       , allScriptsOf tx s
-      , allDataOf tx s
       ⟧
 ```
 -->
@@ -290,11 +284,9 @@ instance
           utxo₀ = UTxOOf utxoSt
           allScripts : ℙ Script
           allScripts = getAllScripts txTop utxo₀
-          allData : DataHash ⇀ Datum
-          allData = setToMap (mapˢ < hash , id > (getAllData txTop))
           subΓ : SubLedgerEnv
           subΓ = ⟦ slot , ppolicy , pparams , enactState , treasury
-                , utxo₀ , IsValidFlagOf txTop , allScripts , allData ⟧
+                , utxo₀ , IsValidFlagOf txTop , allScripts ⟧
       in
       case IsValidFlagOf txTop ≟ true of λ where
         (yes isV) →
@@ -321,7 +313,7 @@ instance
                           depositsChange : DepositsChange
                           depositsChange = calculateDepositsChange certState₀ certState₁ certSt₂
                           utxoΓ : UTxOEnv
-                          utxoΓ = ⟦ slot , pparams , treasury , utxo₀ , depositsChange , allScripts , allData ⟧
+                          utxoΓ = ⟦ slot , pparams , treasury , utxo₀ , depositsChange , allScripts ⟧
                       in
                       -- UTXOW must run from the post-SUBLEDGERS UTxOState (utxoSt₁)
                       computeUtxow utxoΓ utxoSt₁ txTop >>= λ where
