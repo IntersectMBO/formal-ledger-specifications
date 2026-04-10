@@ -5,10 +5,11 @@ source_path: src/Ledger/Dijkstra/Specification/Script/Native.lagda.md
 
 # Native Scripts {#sec:native-scripts}
 
-This section defines `Native`{.AgdaDatatype} scripts, which verify the
-presence of verification keys, whether a transaction happens in a
-certain slot interval, and the presence of guarding credentials.
-Native scripts are evaluated as part of the phase-1 validation.
+This section defines native scripts, which verify the presence of
+verification keys, whether a transaction happens in a certain slot
+interval, and the presence of guarding credentials.  Native scripts
+are evaluated as part of the phase-1 validation. Native scripts
+replace Timelock scripts in Conway era.
 
 <!--
 ```agda
@@ -40,6 +41,10 @@ import Data.Maybe.Relation.Unary.Any as M
 
 ## The <span class="AgdaDatatype">NativeScript</span> Type {#sec:the-nativescript-type}
 
+Native scripts are defined by the type `NativeScript`{.AgdaDatatype}.
+`NativeScript`{.AgdaDatatype} introduce a new type of
+script,`RequireGuard`, to require a transaction to include a guard.
+
 ```agda
 data NativeScript : Type where
   RequireAllOf       : List NativeScript      → NativeScript
@@ -65,7 +70,13 @@ private variable
 ```
 -->
 
-## The <span class="AgdaDatatype">evalNativeScript</span> Type {#sec:the-evaltimelock-type}
+## The <span class="AgdaDatatype">EvalNativeScript</span> Type {#sec:the-evalnative-type}
+
+In contrast to Conway, evaluation of `Native`{.AgdaDatatype} scripts
+takes as an additional argument a set of `Credential`. The evaluation
+of a `Native`{.AgdaDatatype} checks that any required guard belongs to
+the set of `Credential`.
+
 
 ```agda
 data EvalNativeScript (khs : ℙ KeyHash) (gcs : ℙ Credential) (I : Maybe Slot × Maybe Slot) : NativeScript → Type where
