@@ -1,0 +1,10 @@
+name: formal-ledger-conformance
+depend:
+  standard-library
+  standard-library-classes
+  standard-library-meta
+  abstract-set-theory
+  iog-prelude
+  formal-ledger
+include:
+  src

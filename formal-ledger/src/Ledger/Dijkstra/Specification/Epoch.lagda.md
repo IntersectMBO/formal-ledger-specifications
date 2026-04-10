@@ -5,7 +5,7 @@ source_path: src/Ledger/Dijkstra/Specification/Epoch.lagda.md
 
 # Epoch and NewEpoch transition systems for Dijkstra
 
-Modelled on the `Conway.Conformance.Epoch`{.AgdaModule} module, adapted for Dijkstra:
+In Dijkstra:
 
 +  Deposits live in `CertState`{.AgdaRecord} (not `UTxOState`{.AgdaRecord})
 +  `SNAP`{.AgdaDatatype} and `POOLREAP`{.AgdaDatatype} operate on `CertState`{.AgdaRecord}

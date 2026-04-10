@@ -178,7 +178,7 @@ SVGovStructure = record
 instance _ = SVGovStructure
 
 open import Ledger.Conway.Specification.Gov.Actions it hiding (Vote; GovRole; VDeleg; Anchor)
-open import Ledger.Conway.Conformance.Certs it hiding (StakePoolParams; DCert)
+open import Ledger.Conway.Specification.Certs it hiding (StakePoolParams; DCert)
 
 SVTransactionStructure : TransactionStructure
 SVTransactionStructure = record
@@ -201,7 +201,7 @@ SVTransactionStructure = record
 instance _ = SVTransactionStructure
 
 open import Ledger.Conway.Specification.Abstract it
-open import Ledger.Conway.Conformance.Gov it
+open import Ledger.Conway.Specification.Gov it
 
 open TransactionStructure it
 ```

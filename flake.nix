@@ -48,6 +48,16 @@
         let
           formal-ledger = pkgs.agdaPackages.callPackage ./build-tools/nix/formal-ledger.nix { };
 
+          formal-ledger-conformance = pkgs.agdaPackages.callPackage ./build-tools/nix/formal-ledger-lib.nix {
+            name = "conformance";
+            inherit formal-ledger;
+          };
+
+          formal-ledger-test = pkgs.agdaPackages.callPackage ./build-tools/nix/formal-ledger-lib.nix {
+            name = "test";
+            inherit formal-ledger;
+          };
+
           fls-agdaWithPackages = pkgs.agda.withPackages (
             builtins.filter (p: p ? isAgdaDerivation) formal-ledger.buildInputs
           );
@@ -86,6 +96,8 @@
           pkgs' = {
             inherit
               formal-ledger
+              formal-ledger-test
+              formal-ledger-conformance
               hs-src
               ;
             html = pkgs.callPackage ./build-tools/nix/html.nix { inherit mkDerivation; };
