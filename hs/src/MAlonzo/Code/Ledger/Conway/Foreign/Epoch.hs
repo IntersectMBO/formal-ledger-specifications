@@ -1,0 +1,8299 @@
+{-# LANGUAGE BangPatterns #-}
+{-# LANGUAGE EmptyCase #-}
+{-# LANGUAGE EmptyDataDecls #-}
+{-# LANGUAGE ExistentialQuantification #-}
+{-# LANGUAGE NoMonomorphismRestriction #-}
+{-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE PatternSynonyms #-}
+{-# LANGUAGE RankNTypes #-}
+{-# LANGUAGE ScopedTypeVariables #-}
+
+{-# OPTIONS_GHC -Wno-overlapping-patterns #-}
+
+module MAlonzo.Code.Ledger.Conway.Foreign.Epoch where
+
+import MAlonzo.RTE (coe, erased, AgdaAny, addInt, subInt, mulInt,
+                    quotInt, remInt, geqInt, ltInt, eqInt, add64, sub64, mul64, quot64,
+                    rem64, lt64, eq64, word64FromNat, word64ToNat)
+import qualified MAlonzo.RTE
+import qualified Data.Text
+import qualified MAlonzo.Code.Agda.Builtin.Equality
+import qualified MAlonzo.Code.Agda.Builtin.Sigma
+import qualified MAlonzo.Code.Agda.Builtin.String
+import qualified MAlonzo.Code.Agda.Builtin.Unit
+import qualified MAlonzo.Code.Agda.Primitive
+import qualified MAlonzo.Code.Axiom.Set
+import qualified MAlonzo.Code.Class.DecEq.Instances
+import qualified MAlonzo.Code.Class.Functor.Core
+import qualified MAlonzo.Code.Class.Functor.Instances
+import qualified MAlonzo.Code.Class.Show.Core
+import qualified MAlonzo.Code.Data.Irrelevant
+import qualified MAlonzo.Code.Data.Product.Base
+import qualified MAlonzo.Code.Data.String.Base
+import qualified MAlonzo.Code.Foreign.Convertible
+import qualified MAlonzo.Code.Foreign.Haskell.Coerce
+import qualified MAlonzo.Code.Foreign.Haskell.Pair
+import qualified MAlonzo.Code.Foreign.HaskellTypes
+import qualified MAlonzo.Code.Interface.ComputationalRelation
+import qualified MAlonzo.Code.Interface.STS
+import qualified MAlonzo.Code.Ledger.Conway.Conformance.Certs
+import qualified MAlonzo.Code.Ledger.Conway.Conformance.Epoch
+import qualified MAlonzo.Code.Ledger.Conway.Conformance.Epoch.Properties
+import qualified MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert
+import qualified MAlonzo.Code.Ledger.Conway.Conformance.Ledger
+import qualified MAlonzo.Code.Ledger.Conway.Conformance.Rewards
+import qualified MAlonzo.Code.Ledger.Conway.Foreign.Cert
+import qualified MAlonzo.Code.Ledger.Conway.Foreign.Certs
+import qualified MAlonzo.Code.Ledger.Conway.Foreign.Enact
+import qualified MAlonzo.Code.Ledger.Conway.Foreign.ExternalStructures
+import qualified MAlonzo.Code.Ledger.Conway.Foreign.Gov
+import qualified MAlonzo.Code.Ledger.Conway.Foreign.Gov.Core
+import qualified MAlonzo.Code.Ledger.Conway.Foreign.Ledger
+import qualified MAlonzo.Code.Ledger.Conway.Foreign.PParams
+import qualified MAlonzo.Code.Ledger.Conway.Foreign.Ratify
+import qualified MAlonzo.Code.Ledger.Conway.Foreign.Rewards
+import qualified MAlonzo.Code.Ledger.Conway.Foreign.Transaction
+import qualified MAlonzo.Code.Ledger.Conway.Foreign.Utxo
+import qualified MAlonzo.Code.Ledger.Conway.Specification.Certs
+import qualified MAlonzo.Code.Ledger.Conway.Specification.Enact
+import qualified MAlonzo.Code.Ledger.Conway.Specification.Epoch
+import qualified MAlonzo.Code.Ledger.Conway.Specification.Epoch.Properties.Computational
+import qualified MAlonzo.Code.Ledger.Conway.Specification.Gov
+import qualified MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions
+import qualified MAlonzo.Code.Ledger.Conway.Specification.Ledger
+import qualified MAlonzo.Code.Ledger.Conway.Specification.PParams
+import qualified MAlonzo.Code.Ledger.Conway.Specification.Ratify
+import qualified MAlonzo.Code.Ledger.Conway.Specification.Rewards
+import qualified MAlonzo.Code.Ledger.Conway.Specification.Transaction
+import qualified MAlonzo.Code.Ledger.Conway.Specification.Utxo
+import qualified MAlonzo.Code.Ledger.Core.Foreign.Address
+import qualified MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions
+import qualified MAlonzo.Code.Ledger.Core.Specification.Address
+import qualified MAlonzo.Code.Ledger.Core.Specification.Crypto
+import qualified MAlonzo.Code.Ledger.Core.Specification.Epoch
+import qualified MAlonzo.Code.Ledger.Prelude.Base
+import qualified MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes
+import qualified MAlonzo.Code.Prelude
+import qualified MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory
+import qualified MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base
+import qualified MAlonzo.Code.Qstdlib.Foreign.Haskell.Empty
+
+import GHC.Generics (Generic)
+data EpochState = MkEpochState {esAcnt :: MAlonzo.Code.Ledger.Conway.Foreign.PParams.Acnt, esSs :: MAlonzo.Code.Ledger.Conway.Foreign.Rewards.Snapshots, esLs :: MAlonzo.Code.Ledger.Conway.Foreign.Ledger.LState, esEs :: MAlonzo.Code.Ledger.Conway.Foreign.Enact.EnactState, esFut :: MAlonzo.Code.Ledger.Conway.Foreign.Ratify.RatifyState}
+ deriving (Show, Eq, Generic)
+-- Ledger.Conway.Foreign.Epoch._._⊢_⇀⦇_,EPOCH⦈_
+d__'8866'_'8640''10631'_'44'EPOCH'10632'__10 a0 a1 a2 a3 = ()
+-- Ledger.Conway.Foreign.Epoch._._⊢_⇀⦇_,NEWEPOCH⦈_
+d__'8866'_'8640''10631'_'44'NEWEPOCH'10632'__12 a0 a1 a2 a3 = ()
+-- Ledger.Conway.Foreign.Epoch._.EpochState
+d_EpochState_16 = ()
+-- Ledger.Conway.Foreign.Epoch._.EpochStateFromConf
+d_EpochStateFromConf_20 ::
+  MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.T__'8866'_'11078''8305'__16
+d_EpochStateFromConf_20
+  = coe
+      MAlonzo.Code.Ledger.Conway.Conformance.Epoch.du_EpochStateFromConf_4942
+-- Ledger.Conway.Foreign.Epoch._.EpochStateToConf
+d_EpochStateToConf_22 ::
+  MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.T__'8866'_'11078''8305'__16
+d_EpochStateToConf_22
+  = coe
+      MAlonzo.Code.Ledger.Conway.Conformance.Epoch.du_EpochStateToConf_4958
+-- Ledger.Conway.Foreign.Epoch._.HasCast-EpochState
+d_HasCast'45'EpochState_24 ::
+  MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.T_HasCast_16
+d_HasCast'45'EpochState_24
+  = coe
+      MAlonzo.Code.Ledger.Conway.Conformance.Epoch.du_HasCast'45'EpochState_4938
+-- Ledger.Conway.Foreign.Epoch._.HasCast-NewEpochState
+d_HasCast'45'NewEpochState_26 ::
+  MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.T_HasCast_16
+d_HasCast'45'NewEpochState_26
+  = coe
+      MAlonzo.Code.Ledger.Conway.Conformance.Epoch.du_HasCast'45'NewEpochState_4940
+-- Ledger.Conway.Foreign.Epoch._.NewEpochState
+d_NewEpochState_34 = ()
+-- Ledger.Conway.Foreign.Epoch._.NewEpochStateFromConf
+d_NewEpochStateFromConf_38 ::
+  MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.T__'8866'_'11078''8305'__16
+d_NewEpochStateFromConf_38
+  = coe
+      MAlonzo.Code.Ledger.Conway.Conformance.Epoch.du_NewEpochStateFromConf_4976
+-- Ledger.Conway.Foreign.Epoch._.NewEpochStateToConf
+d_NewEpochStateToConf_40 ::
+  MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.T__'8866'_'11078''8305'__16
+d_NewEpochStateToConf_40
+  = coe
+      MAlonzo.Code.Ledger.Conway.Conformance.Epoch.du_NewEpochStateToConf_4994
+-- Ledger.Conway.Foreign.Epoch._.PoolDelegatedStake
+d_PoolDelegatedStake_42 :: ()
+d_PoolDelegatedStake_42 = erased
+-- Ledger.Conway.Foreign.Epoch._.applyRUpd
+d_applyRUpd_44 ::
+  MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_RewardUpdate_2992 ->
+  MAlonzo.Code.Ledger.Conway.Conformance.Epoch.T_EpochState_4884 ->
+  MAlonzo.Code.Ledger.Conway.Conformance.Epoch.T_EpochState_4884
+d_applyRUpd_44
+  = coe
+      MAlonzo.Code.Ledger.Conway.Conformance.Epoch.du_applyRUpd_5014
+      (coe
+         MAlonzo.Code.Ledger.Conway.Foreign.ExternalStructures.d_HSTransactionStructure_682
+         (coe
+            MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20))
+-- Ledger.Conway.Foreign.Epoch._.calculatePoolDelegatedStake
+d_calculatePoolDelegatedStake_46 ::
+  MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_Snapshot_3028 ->
+  MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_calculatePoolDelegatedStake_46
+  = coe
+      MAlonzo.Code.Ledger.Conway.Conformance.Epoch.du_calculatePoolDelegatedStake_5072
+      (coe
+         MAlonzo.Code.Ledger.Conway.Foreign.ExternalStructures.d_HSTransactionStructure_682
+         (coe
+            MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20))
+-- Ledger.Conway.Foreign.Epoch._.getOrphans
+d_getOrphans_48 ::
+  MAlonzo.Code.Ledger.Conway.Specification.Enact.T_EnactState_1166 ->
+  [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] ->
+  [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
+d_getOrphans_48
+  = let v0
+          = MAlonzo.Code.Ledger.Conway.Foreign.ExternalStructures.d_HSTransactionStructure_682
+              (coe
+                 MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20) in
+    coe
+      (coe
+         MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_getOrphans_3774
+         (coe v0))
+-- Ledger.Conway.Foreign.Epoch._.getStakeCred
+d_getStakeCred_50 ::
+  MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
+  Maybe
+    MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20
+d_getStakeCred_50
+  = coe
+      MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_getStakeCred_3430
+-- Ledger.Conway.Foreign.Epoch._.mkStakeDistrs
+d_mkStakeDistrs_52 ::
+  MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_Snapshot_3028 ->
+  Integer ->
+  MAlonzo.Code.Ledger.Conway.Specification.Utxo.T_UTxOState_2486 ->
+  [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] ->
+  MAlonzo.Code.Ledger.Conway.Specification.Certs.T_GState_1434 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Certs.T_DState_1402 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_StakeDistrs_1846
+d_mkStakeDistrs_52
+  = let v0
+          = MAlonzo.Code.Ledger.Conway.Foreign.ExternalStructures.d_HSTransactionStructure_682
+              (coe
+                 MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20) in
+    coe
+      (coe
+         MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3710
+         (coe v0))
+-- Ledger.Conway.Foreign.Epoch._.toRewardAddress
+d_toRewardAddress_54 ::
+  MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20 ->
+  MAlonzo.Code.Ledger.Core.Specification.Address.T_RewardAddress_104
+d_toRewardAddress_54
+  = let v0
+          = MAlonzo.Code.Ledger.Conway.Foreign.ExternalStructures.d_HSTransactionStructure_682
+              (coe
+                 MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20) in
+    coe
+      (coe
+         MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_toRewardAddress_3426
+         (coe v0))
+-- Ledger.Conway.Foreign.Epoch._.EpochState.acnt
+d_acnt_72 ::
+  MAlonzo.Code.Ledger.Conway.Conformance.Epoch.T_EpochState_4884 ->
+  MAlonzo.Code.Ledger.Conway.Specification.PParams.T_Acnt_188
+d_acnt_72 v0
+  = coe
+      MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_acnt_4896 (coe v0)
+-- Ledger.Conway.Foreign.Epoch._.EpochState.es
+d_es_74 ::
+  MAlonzo.Code.Ledger.Conway.Conformance.Epoch.T_EpochState_4884 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Enact.T_EnactState_1166
+d_es_74 v0
+  = coe
+      MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_es_4902 (coe v0)
+-- Ledger.Conway.Foreign.Epoch._.EpochState.fut
+d_fut_76 ::
+  MAlonzo.Code.Ledger.Conway.Conformance.Epoch.T_EpochState_4884 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyState_1890
+d_fut_76 v0
+  = coe
+      MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_fut_4904 (coe v0)
+-- Ledger.Conway.Foreign.Epoch._.EpochState.ls
+d_ls_78 ::
+  MAlonzo.Code.Ledger.Conway.Conformance.Epoch.T_EpochState_4884 ->
+  MAlonzo.Code.Ledger.Conway.Conformance.Ledger.T_LState_2692
+d_ls_78 v0
+  = coe
+      MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_ls_4900 (coe v0)
+-- Ledger.Conway.Foreign.Epoch._.EpochState.ss
+d_ss_80 ::
+  MAlonzo.Code.Ledger.Conway.Conformance.Epoch.T_EpochState_4884 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_Snapshots_3086
+d_ss_80 v0
+  = coe
+      MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_ss_4898 (coe v0)
+-- Ledger.Conway.Foreign.Epoch._.NewEpochState.bcur
+d_bcur_84 ::
+  MAlonzo.Code.Ledger.Conway.Conformance.Epoch.T_NewEpochState_4910 ->
+  MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_bcur_84 v0
+  = coe
+      MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_bcur_4928 (coe v0)
+-- Ledger.Conway.Foreign.Epoch._.NewEpochState.bprev
+d_bprev_86 ::
+  MAlonzo.Code.Ledger.Conway.Conformance.Epoch.T_NewEpochState_4910 ->
+  MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_bprev_86 v0
+  = coe
+      MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_bprev_4926 (coe v0)
+-- Ledger.Conway.Foreign.Epoch._.NewEpochState.epochState
+d_epochState_88 ::
+  MAlonzo.Code.Ledger.Conway.Conformance.Epoch.T_NewEpochState_4910 ->
+  MAlonzo.Code.Ledger.Conway.Conformance.Epoch.T_EpochState_4884
+d_epochState_88 v0
+  = coe
+      MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_epochState_4930
+      (coe v0)
+-- Ledger.Conway.Foreign.Epoch._.NewEpochState.lastEpoch
+d_lastEpoch_90 ::
+  MAlonzo.Code.Ledger.Conway.Conformance.Epoch.T_NewEpochState_4910 ->
+  Integer
+d_lastEpoch_90 v0
+  = coe
+      MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_lastEpoch_4924
+      (coe v0)
+-- Ledger.Conway.Foreign.Epoch._.NewEpochState.pd
+d_pd_92 ::
+  MAlonzo.Code.Ledger.Conway.Conformance.Epoch.T_NewEpochState_4910 ->
+  MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_pd_92 v0
+  = coe
+      MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_pd_4934 (coe v0)
+-- Ledger.Conway.Foreign.Epoch._.NewEpochState.ru
+d_ru_94 ::
+  MAlonzo.Code.Ledger.Conway.Conformance.Epoch.T_NewEpochState_4910 ->
+  Maybe
+    MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_RewardUpdate_2992
+d_ru_94 v0
+  = coe
+      MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_ru_4932 (coe v0)
+-- Ledger.Conway.Foreign.Epoch._.Computational-EPOCH
+d_Computational'45'EPOCH_98 ::
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_232
+d_Computational'45'EPOCH_98
+  = coe
+      MAlonzo.Code.Ledger.Conway.Conformance.Epoch.Properties.du_Computational'45'EPOCH_3064
+      (coe
+         MAlonzo.Code.Ledger.Conway.Foreign.ExternalStructures.d_HSTransactionStructure_682
+         (coe
+            MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20))
+-- Ledger.Conway.Foreign.Epoch._.Computational-NEWEPOCH
+d_Computational'45'NEWEPOCH_100 ::
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_232
+d_Computational'45'NEWEPOCH_100
+  = coe
+      MAlonzo.Code.Ledger.Conway.Conformance.Epoch.Properties.du_Computational'45'NEWEPOCH_3214
+      (coe
+         MAlonzo.Code.Ledger.Conway.Foreign.ExternalStructures.d_HSTransactionStructure_682
+         (coe
+            MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20))
+-- Ledger.Conway.Foreign.Epoch._.EPOCH-complete
+d_EPOCH'45'complete_102 ::
+  MAlonzo.Code.Ledger.Conway.Conformance.Epoch.T_EpochState_4884 ->
+  Integer ->
+  MAlonzo.Code.Ledger.Conway.Conformance.Epoch.T_EpochState_4884 ->
+  MAlonzo.Code.Ledger.Conway.Conformance.Epoch.T__'8866'_'8640''10631'_'44'EPOCH'10632'__5128 ->
+  MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
+d_EPOCH'45'complete_102 = erased
+-- Ledger.Conway.Foreign.Epoch._.EPOCH-complete'
+d_EPOCH'45'complete''_104 ::
+  MAlonzo.Code.Ledger.Conway.Conformance.Epoch.T_EpochState_4884 ->
+  Integer ->
+  MAlonzo.Code.Ledger.Conway.Conformance.Epoch.T_EpochState_4884 ->
+  MAlonzo.Code.Ledger.Conway.Conformance.Epoch.T__'8866'_'8640''10631'_'44'EPOCH'10632'__5128 ->
+  MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
+d_EPOCH'45'complete''_104 = erased
+-- Ledger.Conway.Foreign.Epoch._.EPOCH-deterministic
+d_EPOCH'45'deterministic_106 ::
+  MAlonzo.Code.Ledger.Conway.Conformance.Epoch.T_EpochState_4884 ->
+  Integer ->
+  MAlonzo.Code.Ledger.Conway.Conformance.Epoch.T_EpochState_4884 ->
+  MAlonzo.Code.Ledger.Conway.Conformance.Epoch.T_EpochState_4884 ->
+  MAlonzo.Code.Ledger.Conway.Conformance.Epoch.T__'8866'_'8640''10631'_'44'EPOCH'10632'__5128 ->
+  MAlonzo.Code.Ledger.Conway.Conformance.Epoch.T__'8866'_'8640''10631'_'44'EPOCH'10632'__5128 ->
+  MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
+d_EPOCH'45'deterministic_106 = erased
+-- Ledger.Conway.Foreign.Epoch._.EPOCH-total
+d_EPOCH'45'total_108 ::
+  MAlonzo.Code.Ledger.Conway.Conformance.Epoch.T_EpochState_4884 ->
+  Integer -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_EPOCH'45'total_108
+  = coe
+      MAlonzo.Code.Ledger.Conway.Conformance.Epoch.Properties.du_EPOCH'45'total_3014
+      (coe
+         MAlonzo.Code.Ledger.Conway.Foreign.ExternalStructures.d_HSTransactionStructure_682
+         (coe
+            MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20))
+-- Ledger.Conway.Foreign.Epoch._.EPOCH-total'
+d_EPOCH'45'total''_110 ::
+  MAlonzo.Code.Ledger.Conway.Conformance.Epoch.T_EpochState_4884 ->
+  Integer -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_EPOCH'45'total''_110
+  = coe
+      MAlonzo.Code.Ledger.Conway.Conformance.Epoch.Properties.du_EPOCH'45'total''_3058
+      (coe
+         MAlonzo.Code.Ledger.Conway.Foreign.ExternalStructures.d_HSTransactionStructure_682
+         (coe
+            MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20))
+-- Ledger.Conway.Foreign.Epoch._.NEWEPOCH-complete
+d_NEWEPOCH'45'complete_112 ::
+  Integer ->
+  MAlonzo.Code.Ledger.Conway.Conformance.Epoch.T_NewEpochState_4910 ->
+  MAlonzo.Code.Ledger.Conway.Conformance.Epoch.T_NewEpochState_4910 ->
+  MAlonzo.Code.Ledger.Conway.Conformance.Epoch.T__'8866'_'8640''10631'_'44'NEWEPOCH'10632'__5252 ->
+  MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
+d_NEWEPOCH'45'complete_112 = erased
+-- Ledger.Conway.Foreign.Epoch._.NEWEPOCH-total
+d_NEWEPOCH'45'total_114 ::
+  Integer ->
+  MAlonzo.Code.Ledger.Conway.Conformance.Epoch.T_NewEpochState_4910 ->
+  MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_NEWEPOCH'45'total_114
+  = coe
+      MAlonzo.Code.Ledger.Conway.Conformance.Epoch.Properties.du_NEWEPOCH'45'total_3092
+      (coe
+         MAlonzo.Code.Ledger.Conway.Foreign.ExternalStructures.d_HSTransactionStructure_682
+         (coe
+            MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20))
+-- Ledger.Conway.Foreign.Epoch._.SNAP-complete
+d_SNAP'45'complete_116 ::
+  MAlonzo.Code.Ledger.Conway.Conformance.Ledger.T_LState_2692 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_Snapshots_3086 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_Snapshots_3086 ->
+  MAlonzo.Code.Ledger.Conway.Conformance.Rewards.T__'8866'_'8640''10631'_'44'SNAP'10632'__2682 ->
+  MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
+d_SNAP'45'complete_116 = erased
+-- Ledger.Conway.Foreign.Epoch._.SNAP-deterministic
+d_SNAP'45'deterministic_118 ::
+  MAlonzo.Code.Ledger.Conway.Conformance.Ledger.T_LState_2692 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_Snapshots_3086 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_Snapshots_3086 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_Snapshots_3086 ->
+  MAlonzo.Code.Ledger.Conway.Conformance.Rewards.T__'8866'_'8640''10631'_'44'SNAP'10632'__2682 ->
+  MAlonzo.Code.Ledger.Conway.Conformance.Rewards.T__'8866'_'8640''10631'_'44'SNAP'10632'__2682 ->
+  MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
+d_SNAP'45'deterministic_118 = erased
+-- Ledger.Conway.Foreign.Epoch._.SNAP-total
+d_SNAP'45'total_120 ::
+  MAlonzo.Code.Ledger.Conway.Conformance.Ledger.T_LState_2692 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_Snapshots_3086 ->
+  MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_SNAP'45'total_120
+  = coe
+      MAlonzo.Code.Ledger.Conway.Conformance.Epoch.Properties.du_SNAP'45'total_2946
+      (coe
+         MAlonzo.Code.Ledger.Conway.Foreign.ExternalStructures.d_HSTransactionStructure_682
+         (coe
+            MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20))
+-- Ledger.Conway.Foreign.Epoch._.es
+d_es_122 ::
+  MAlonzo.Code.Ledger.Conway.Conformance.Epoch.T_EpochState_4884 ->
+  Integer ->
+  MAlonzo.Code.Ledger.Conway.Specification.Enact.T_EnactState_1166
+d_es_122 v0 v1
+  = coe
+      MAlonzo.Code.Ledger.Conway.Conformance.Epoch.Properties.du_es_3006
+      v0
+-- Ledger.Conway.Foreign.Epoch._.govSt'
+d_govSt''_124 ::
+  MAlonzo.Code.Ledger.Conway.Conformance.Epoch.T_EpochState_4884 ->
+  Integer -> [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
+d_govSt''_124 v0 v1
+  = coe
+      MAlonzo.Code.Ledger.Conway.Conformance.Epoch.Properties.du_govSt''_3008
+      (coe
+         MAlonzo.Code.Ledger.Conway.Foreign.ExternalStructures.d_HSTransactionStructure_682
+         (coe
+            MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20))
+      v0
+-- Ledger.Conway.Foreign.Epoch.EpochSpec._._⊢_⇀⦇_,EPOCH⦈_
+d__'8866'_'8640''10631'_'44'EPOCH'10632'__130 a0 a1 a2 a3 = ()
+-- Ledger.Conway.Foreign.Epoch.EpochSpec._._⊢_⇀⦇_,NEWEPOCH⦈_
+d__'8866'_'8640''10631'_'44'NEWEPOCH'10632'__132 a0 a1 a2 a3 = ()
+-- Ledger.Conway.Foreign.Epoch.EpochSpec._.EpochState
+d_EpochState_136 = ()
+-- Ledger.Conway.Foreign.Epoch.EpochSpec._.EpochStateOf
+d_EpochStateOf_140 ::
+  MAlonzo.Code.Ledger.Conway.Specification.Epoch.T_HasEpochState_3292 ->
+  AgdaAny ->
+  MAlonzo.Code.Ledger.Conway.Specification.Epoch.T_EpochState_3264
+d_EpochStateOf_140 v0
+  = coe
+      MAlonzo.Code.Ledger.Conway.Specification.Epoch.d_EpochStateOf_3300
+      (coe v0)
+-- Ledger.Conway.Foreign.Epoch.EpochSpec._.Governance-Update
+d_Governance'45'Update_142 = ()
+-- Ledger.Conway.Foreign.Epoch.EpochSpec._.HasCast-EpochState
+d_HasCast'45'EpochState_148 ::
+  MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.T_HasCast_16
+d_HasCast'45'EpochState_148
+  = coe
+      MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_HasCast'45'EpochState_3422
+-- Ledger.Conway.Foreign.Epoch.EpochSpec._.HasCast-NewEpochState
+d_HasCast'45'NewEpochState_150 ::
+  MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.T_HasCast_16
+d_HasCast'45'NewEpochState_150
+  = coe
+      MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_HasCast'45'NewEpochState_3424
+-- Ledger.Conway.Foreign.Epoch.EpochSpec._.HasCertState-NewEpochState
+d_HasCertState'45'NewEpochState_152 ::
+  MAlonzo.Code.Ledger.Conway.Specification.Certs.T_HasCertState_1542
+d_HasCertState'45'NewEpochState_152
+  = coe
+      MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_HasCertState'45'NewEpochState_3414
+-- Ledger.Conway.Foreign.Epoch.EpochSpec._.HasDReps-EpochState
+d_HasDReps'45'EpochState_154 ::
+  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_HasDReps_1444
+d_HasDReps'45'EpochState_154
+  = coe
+      MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_HasDReps'45'EpochState_3318
+-- Ledger.Conway.Foreign.Epoch.EpochSpec._.HasDReps-NewEpochState
+d_HasDReps'45'NewEpochState_156 ::
+  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_HasDReps_1444
+d_HasDReps'45'NewEpochState_156
+  = coe
+      MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_HasDReps'45'NewEpochState_3416
+-- Ledger.Conway.Foreign.Epoch.EpochSpec._.HasDeposits-EpochState
+d_HasDeposits'45'EpochState_158 ::
+  MAlonzo.Code.Ledger.Conway.Specification.Certs.T_HasDeposits_1186
+d_HasDeposits'45'EpochState_158
+  = coe
+      MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_HasDeposits'45'EpochState_3316
+-- Ledger.Conway.Foreign.Epoch.EpochSpec._.HasEnactState-EpochState
+d_HasEnactState'45'EpochState_160 ::
+  MAlonzo.Code.Ledger.Conway.Specification.Enact.T_HasEnactState_1194
+d_HasEnactState'45'EpochState_160
+  = coe
+      MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_HasEnactState'45'EpochState_3314
+-- Ledger.Conway.Foreign.Epoch.EpochSpec._.HasEnactState-NewEpochState
+d_HasEnactState'45'NewEpochState_162 ::
+  MAlonzo.Code.Ledger.Conway.Specification.Enact.T_HasEnactState_1194
+d_HasEnactState'45'NewEpochState_162
+  = coe
+      MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_HasEnactState'45'NewEpochState_3406
+-- Ledger.Conway.Foreign.Epoch.EpochSpec._.HasEpochState
+d_HasEpochState_164 a0 a1 = ()
+-- Ledger.Conway.Foreign.Epoch.EpochSpec._.HasEpochState-NewEpochState
+d_HasEpochState'45'NewEpochState_168 ::
+  MAlonzo.Code.Ledger.Conway.Specification.Epoch.T_HasEpochState_3292
+d_HasEpochState'45'NewEpochState_168
+  = coe
+      MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_HasEpochState'45'NewEpochState_3404
+-- Ledger.Conway.Foreign.Epoch.EpochSpec._.HasGovState-EpochState
+d_HasGovState'45'EpochState_170 ::
+  MAlonzo.Code.Ledger.Conway.Specification.Gov.T_HasGovState_1844
+d_HasGovState'45'EpochState_170
+  = coe
+      MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_HasGovState'45'EpochState_3312
+-- Ledger.Conway.Foreign.Epoch.EpochSpec._.HasGovState-NewEpochState
+d_HasGovState'45'NewEpochState_172 ::
+  MAlonzo.Code.Ledger.Conway.Specification.Gov.T_HasGovState_1844
+d_HasGovState'45'NewEpochState_172
+  = coe
+      MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_HasGovState'45'NewEpochState_3412
+-- Ledger.Conway.Foreign.Epoch.EpochSpec._.HasLState-EpochState
+d_HasLState'45'EpochState_174 ::
+  MAlonzo.Code.Ledger.Conway.Specification.Ledger.T_HasLState_2966
+d_HasLState'45'EpochState_174
+  = coe
+      MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_HasLState'45'EpochState_3310
+-- Ledger.Conway.Foreign.Epoch.EpochSpec._.HasLState-NewEpochState
+d_HasLState'45'NewEpochState_176 ::
+  MAlonzo.Code.Ledger.Conway.Specification.Ledger.T_HasLState_2966
+d_HasLState'45'NewEpochState_176
+  = coe
+      MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_HasLState'45'NewEpochState_3410
+-- Ledger.Conway.Foreign.Epoch.EpochSpec._.HasLastEpoch
+d_HasLastEpoch_178 a0 a1 = ()
+-- Ledger.Conway.Foreign.Epoch.EpochSpec._.HasLastEpoch-NewEpochState
+d_HasLastEpoch'45'NewEpochState_182 ::
+  MAlonzo.Code.Ledger.Conway.Specification.Epoch.T_HasLastEpoch_3386
+d_HasLastEpoch'45'NewEpochState_182
+  = coe
+      MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_HasLastEpoch'45'NewEpochState_3402
+-- Ledger.Conway.Foreign.Epoch.EpochSpec._.HasNewEpochState
+d_HasNewEpochState_184 a0 a1 = ()
+-- Ledger.Conway.Foreign.Epoch.EpochSpec._.HasPParams-EpochState
+d_HasPParams'45'EpochState_188 ::
+  MAlonzo.Code.Ledger.Conway.Specification.PParams.T_HasPParams_436
+d_HasPParams'45'EpochState_188
+  = coe
+      MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_HasPParams'45'EpochState_3324
+-- Ledger.Conway.Foreign.Epoch.EpochSpec._.HasPParams-NewEpochState
+d_HasPParams'45'NewEpochState_190 ::
+  MAlonzo.Code.Ledger.Conway.Specification.PParams.T_HasPParams_436
+d_HasPParams'45'NewEpochState_190
+  = coe
+      MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_HasPParams'45'NewEpochState_3420
+-- Ledger.Conway.Foreign.Epoch.EpochSpec._.HasPState-EpochState
+d_HasPState'45'EpochState_192 ::
+  MAlonzo.Code.Ledger.Conway.Specification.Certs.T_HasPState_1502
+d_HasPState'45'EpochState_192
+  = coe
+      MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_HasPState'45'EpochState_3328
+-- Ledger.Conway.Foreign.Epoch.EpochSpec._.HasRatifyState-EpochState
+d_HasRatifyState'45'EpochState_194 ::
+  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_HasRatifyState_1910
+d_HasRatifyState'45'EpochState_194
+  = coe
+      MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_HasRatifyState'45'EpochState_3326
+-- Ledger.Conway.Foreign.Epoch.EpochSpec._.HasReserves-EpochState
+d_HasReserves'45'EpochState_196 ::
+  MAlonzo.Code.Ledger.Prelude.Base.T_HasReserves_60
+d_HasReserves'45'EpochState_196
+  = coe
+      MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_HasReserves'45'EpochState_3322
+-- Ledger.Conway.Foreign.Epoch.EpochSpec._.HasRetiring-EpochState
+d_HasRetiring'45'EpochState_198 ::
+  MAlonzo.Code.Ledger.Conway.Specification.Certs.T_HasRetiring_1254
+d_HasRetiring'45'EpochState_198
+  = coe
+      MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_HasRetiring'45'EpochState_3330
+-- Ledger.Conway.Foreign.Epoch.EpochSpec._.HasRewards-NewEpochState
+d_HasRewards'45'NewEpochState_200 ::
+  MAlonzo.Code.Ledger.Conway.Specification.Certs.T_HasRewards_1270
+d_HasRewards'45'NewEpochState_200
+  = coe
+      MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_HasRewards'45'NewEpochState_3418
+-- Ledger.Conway.Foreign.Epoch.EpochSpec._.HasSnapshots-EpochState
+d_HasSnapshots'45'EpochState_202 ::
+  MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_HasSnapshots_3110
+d_HasSnapshots'45'EpochState_202
+  = coe
+      MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_HasSnapshots'45'EpochState_3308
+-- Ledger.Conway.Foreign.Epoch.EpochSpec._.HasTreasury-EpochState
+d_HasTreasury'45'EpochState_204 ::
+  MAlonzo.Code.Ledger.Prelude.Base.T_HasTreasury_80
+d_HasTreasury'45'EpochState_204
+  = coe
+      MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_HasTreasury'45'EpochState_3320
+-- Ledger.Conway.Foreign.Epoch.EpochSpec._.Hastreasury-NewEpochState
+d_Hastreasury'45'NewEpochState_206 ::
+  MAlonzo.Code.Ledger.Prelude.Base.T_HasTreasury_80
+d_Hastreasury'45'NewEpochState_206
+  = coe
+      MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_Hastreasury'45'NewEpochState_3408
+-- Ledger.Conway.Foreign.Epoch.EpochSpec._.LastEpochOf
+d_LastEpochOf_208 ::
+  MAlonzo.Code.Ledger.Conway.Specification.Epoch.T_HasLastEpoch_3386 ->
+  AgdaAny -> Integer
+d_LastEpochOf_208 v0
+  = coe
+      MAlonzo.Code.Ledger.Conway.Specification.Epoch.d_LastEpochOf_3394
+      (coe v0)
+-- Ledger.Conway.Foreign.Epoch.EpochSpec._.NewEpochState
+d_NewEpochState_216 = ()
+-- Ledger.Conway.Foreign.Epoch.EpochSpec._.NewEpochStateOf
+d_NewEpochStateOf_220 ::
+  MAlonzo.Code.Ledger.Conway.Specification.Epoch.T_HasNewEpochState_3366 ->
+  AgdaAny ->
+  MAlonzo.Code.Ledger.Conway.Specification.Epoch.T_NewEpochState_3334
+d_NewEpochStateOf_220 v0
+  = coe
+      MAlonzo.Code.Ledger.Conway.Specification.Epoch.d_NewEpochStateOf_3374
+      (coe v0)
+-- Ledger.Conway.Foreign.Epoch.EpochSpec._.PoolDelegatedStake
+d_PoolDelegatedStake_222 :: ()
+d_PoolDelegatedStake_222 = erased
+-- Ledger.Conway.Foreign.Epoch.EpochSpec._.Post-POOLREAP-Update
+d_Post'45'POOLREAP'45'Update_224 = ()
+-- Ledger.Conway.Foreign.Epoch.EpochSpec._.Pre-POOLREAP-Update
+d_Pre'45'POOLREAP'45'Update_230 = ()
+-- Ledger.Conway.Foreign.Epoch.EpochSpec._.applyRUpd
+d_applyRUpd_236 ::
+  MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_RewardUpdate_2992 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Epoch.T_EpochState_3264 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Epoch.T_EpochState_3264
+d_applyRUpd_236
+  = coe
+      MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_applyRUpd_3566
+      (coe
+         MAlonzo.Code.Ledger.Conway.Foreign.ExternalStructures.d_HSTransactionStructure_682
+         (coe
+            MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20))
+-- Ledger.Conway.Foreign.Epoch.EpochSpec._.calculatePoolDelegatedStake
+d_calculatePoolDelegatedStake_238 ::
+  MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_Snapshot_3028 ->
+  MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_calculatePoolDelegatedStake_238
+  = coe
+      MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_calculatePoolDelegatedStake_3622
+      (coe
+         MAlonzo.Code.Ledger.Conway.Foreign.ExternalStructures.d_HSTransactionStructure_682
+         (coe
+            MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20))
+-- Ledger.Conway.Foreign.Epoch.EpochSpec._.calculatePoolDelegatedStakeForVoting
+d_calculatePoolDelegatedStakeForVoting_240 ::
+  MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_Snapshot_3028 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Utxo.T_UTxOState_2486 ->
+  [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] ->
+  MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_calculatePoolDelegatedStakeForVoting_240
+  = coe
+      MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_calculatePoolDelegatedStakeForVoting_3696
+      (coe
+         MAlonzo.Code.Ledger.Conway.Foreign.ExternalStructures.d_HSTransactionStructure_682
+         (coe
+            MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20))
+-- Ledger.Conway.Foreign.Epoch.EpochSpec._.calculateVDelegDelegatedStake
+d_calculateVDelegDelegatedStake_242 ::
+  Integer ->
+  MAlonzo.Code.Ledger.Conway.Specification.Utxo.T_UTxOState_2486 ->
+  [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] ->
+  MAlonzo.Code.Ledger.Conway.Specification.Certs.T_GState_1434 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Certs.T_DState_1402 ->
+  MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_calculateVDelegDelegatedStake_242
+  = coe
+      MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_calculateVDelegDelegatedStake_3694
+      (coe
+         MAlonzo.Code.Ledger.Conway.Foreign.ExternalStructures.d_HSTransactionStructure_682
+         (coe
+            MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20))
+-- Ledger.Conway.Foreign.Epoch.EpochSpec._.createRUpd
+d_createRUpd_244 ::
+  Integer ->
+  MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Epoch.T_EpochState_3264 ->
+  Integer ->
+  MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_RewardUpdate_2992
+d_createRUpd_244
+  = coe
+      MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_createRUpd_3434
+      (coe
+         MAlonzo.Code.Ledger.Conway.Foreign.ExternalStructures.d_HSTransactionStructure_682
+         (coe
+            MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20))
+-- Ledger.Conway.Foreign.Epoch.EpochSpec._.getOrphans
+d_getOrphans_246 ::
+  MAlonzo.Code.Ledger.Conway.Specification.Enact.T_EnactState_1166 ->
+  [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] ->
+  [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
+d_getOrphans_246
+  = coe
+      MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_getOrphans_3774
+      (coe
+         MAlonzo.Code.Ledger.Conway.Foreign.ExternalStructures.d_HSTransactionStructure_682
+         (coe
+            MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20))
+-- Ledger.Conway.Foreign.Epoch.EpochSpec._.getStakeCred
+d_getStakeCred_248 ::
+  MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
+  Maybe
+    MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20
+d_getStakeCred_248
+  = coe
+      MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_getStakeCred_3430
+-- Ledger.Conway.Foreign.Epoch.EpochSpec._.mkStakeDistrs
+d_mkStakeDistrs_250 ::
+  MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_Snapshot_3028 ->
+  Integer ->
+  MAlonzo.Code.Ledger.Conway.Specification.Utxo.T_UTxOState_2486 ->
+  [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] ->
+  MAlonzo.Code.Ledger.Conway.Specification.Certs.T_GState_1434 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Certs.T_DState_1402 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_StakeDistrs_1846
+d_mkStakeDistrs_250
+  = coe
+      MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3710
+      (coe
+         MAlonzo.Code.Ledger.Conway.Foreign.ExternalStructures.d_HSTransactionStructure_682
+         (coe
+            MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20))
+-- Ledger.Conway.Foreign.Epoch.EpochSpec._.stakeFromGADeposits
+d_stakeFromGADeposits_252 ::
+  [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] ->
+  MAlonzo.Code.Ledger.Conway.Specification.Utxo.T_UTxOState_2486 ->
+  MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_stakeFromGADeposits_252
+  = coe
+      MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_stakeFromGADeposits_3634
+      (coe
+         MAlonzo.Code.Ledger.Conway.Foreign.ExternalStructures.d_HSTransactionStructure_682
+         (coe
+            MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20))
+-- Ledger.Conway.Foreign.Epoch.EpochSpec._.toRewardAddress
+d_toRewardAddress_254 ::
+  MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20 ->
+  MAlonzo.Code.Ledger.Core.Specification.Address.T_RewardAddress_104
+d_toRewardAddress_254
+  = coe
+      MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_toRewardAddress_3426
+      (coe
+         MAlonzo.Code.Ledger.Conway.Foreign.ExternalStructures.d_HSTransactionStructure_682
+         (coe
+            MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20))
+-- Ledger.Conway.Foreign.Epoch.EpochSpec._.EpochState.acnt
+d_acnt_272 ::
+  MAlonzo.Code.Ledger.Conway.Specification.Epoch.T_EpochState_3264 ->
+  MAlonzo.Code.Ledger.Conway.Specification.PParams.T_Acnt_188
+d_acnt_272 v0
+  = coe
+      MAlonzo.Code.Ledger.Conway.Specification.Epoch.d_acnt_3276 (coe v0)
+-- Ledger.Conway.Foreign.Epoch.EpochSpec._.EpochState.es
+d_es_274 ::
+  MAlonzo.Code.Ledger.Conway.Specification.Epoch.T_EpochState_3264 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Enact.T_EnactState_1166
+d_es_274 v0
+  = coe
+      MAlonzo.Code.Ledger.Conway.Specification.Epoch.d_es_3282 (coe v0)
+-- Ledger.Conway.Foreign.Epoch.EpochSpec._.EpochState.fut
+d_fut_276 ::
+  MAlonzo.Code.Ledger.Conway.Specification.Epoch.T_EpochState_3264 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyState_1890
+d_fut_276 v0
+  = coe
+      MAlonzo.Code.Ledger.Conway.Specification.Epoch.d_fut_3284 (coe v0)
+-- Ledger.Conway.Foreign.Epoch.EpochSpec._.EpochState.ls
+d_ls_278 ::
+  MAlonzo.Code.Ledger.Conway.Specification.Epoch.T_EpochState_3264 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Ledger.T_LState_2946
+d_ls_278 v0
+  = coe
+      MAlonzo.Code.Ledger.Conway.Specification.Epoch.d_ls_3280 (coe v0)
+-- Ledger.Conway.Foreign.Epoch.EpochSpec._.EpochState.ss
+d_ss_280 ::
+  MAlonzo.Code.Ledger.Conway.Specification.Epoch.T_EpochState_3264 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_Snapshots_3086
+d_ss_280 v0
+  = coe
+      MAlonzo.Code.Ledger.Conway.Specification.Epoch.d_ss_3278 (coe v0)
+-- Ledger.Conway.Foreign.Epoch.EpochSpec._.Governance-Update.govSt'
+d_govSt''_284 ::
+  MAlonzo.Code.Ledger.Conway.Specification.Epoch.T_Governance'45'Update_3806 ->
+  [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
+d_govSt''_284 v0
+  = coe
+      MAlonzo.Code.Ledger.Conway.Specification.Epoch.d_govSt''_3814
+      (coe v0)
+-- Ledger.Conway.Foreign.Epoch.EpochSpec._.Governance-Update.removedGovActions
+d_removedGovActions_286 ::
+  MAlonzo.Code.Ledger.Conway.Specification.Epoch.T_Governance'45'Update_3806 ->
+  [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
+d_removedGovActions_286 v0
+  = coe
+      MAlonzo.Code.Ledger.Conway.Specification.Epoch.d_removedGovActions_3812
+      (coe v0)
+-- Ledger.Conway.Foreign.Epoch.EpochSpec._.GovernanceUpdate.govSt'
+d_govSt''_290 ::
+  MAlonzo.Code.Ledger.Conway.Specification.Ledger.T_LState_2946 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyState_1890 ->
+  [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
+d_govSt''_290
+  = coe
+      MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_govSt''_3858
+      (coe
+         MAlonzo.Code.Ledger.Conway.Foreign.ExternalStructures.d_HSTransactionStructure_682
+         (coe
+            MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20))
+-- Ledger.Conway.Foreign.Epoch.EpochSpec._.GovernanceUpdate.orphans
+d_orphans_292 ::
+  MAlonzo.Code.Ledger.Conway.Specification.Ledger.T_LState_2946 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyState_1890 ->
+  [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
+d_orphans_292
+  = coe
+      MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_orphans_3844
+      (coe
+         MAlonzo.Code.Ledger.Conway.Foreign.ExternalStructures.d_HSTransactionStructure_682
+         (coe
+            MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20))
+-- Ledger.Conway.Foreign.Epoch.EpochSpec._.GovernanceUpdate.removed'
+d_removed''_294 ::
+  MAlonzo.Code.Ledger.Conway.Specification.Ledger.T_LState_2946 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyState_1890 ->
+  [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
+d_removed''_294
+  = coe
+      MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_removed''_3846
+      (coe
+         MAlonzo.Code.Ledger.Conway.Foreign.ExternalStructures.d_HSTransactionStructure_682
+         (coe
+            MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20))
+-- Ledger.Conway.Foreign.Epoch.EpochSpec._.GovernanceUpdate.removedGovActions
+d_removedGovActions_296 ::
+  MAlonzo.Code.Ledger.Conway.Specification.Ledger.T_LState_2946 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyState_1890 ->
+  [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
+d_removedGovActions_296
+  = coe
+      MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_removedGovActions_3848
+      (coe
+         MAlonzo.Code.Ledger.Conway.Foreign.ExternalStructures.d_HSTransactionStructure_682
+         (coe
+            MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20))
+-- Ledger.Conway.Foreign.Epoch.EpochSpec._.GovernanceUpdate.tmpGovSt
+d_tmpGovSt_298 ::
+  MAlonzo.Code.Ledger.Conway.Specification.Ledger.T_LState_2946 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyState_1890 ->
+  [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
+d_tmpGovSt_298
+  = coe
+      MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_tmpGovSt_3840
+      (coe
+         MAlonzo.Code.Ledger.Conway.Foreign.ExternalStructures.d_HSTransactionStructure_682
+         (coe
+            MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20))
+-- Ledger.Conway.Foreign.Epoch.EpochSpec._.GovernanceUpdate.updates
+d_updates_300 ::
+  MAlonzo.Code.Ledger.Conway.Specification.Ledger.T_LState_2946 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyState_1890 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Epoch.T_Governance'45'Update_3806
+d_updates_300
+  = coe
+      MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_updates_3862
+      (coe
+         MAlonzo.Code.Ledger.Conway.Foreign.ExternalStructures.d_HSTransactionStructure_682
+         (coe
+            MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20))
+-- Ledger.Conway.Foreign.Epoch.EpochSpec._.HasEpochState.EpochStateOf
+d_EpochStateOf_304 ::
+  MAlonzo.Code.Ledger.Conway.Specification.Epoch.T_HasEpochState_3292 ->
+  AgdaAny ->
+  MAlonzo.Code.Ledger.Conway.Specification.Epoch.T_EpochState_3264
+d_EpochStateOf_304 v0
+  = coe
+      MAlonzo.Code.Ledger.Conway.Specification.Epoch.d_EpochStateOf_3300
+      (coe v0)
+-- Ledger.Conway.Foreign.Epoch.EpochSpec._.HasLastEpoch.LastEpochOf
+d_LastEpochOf_308 ::
+  MAlonzo.Code.Ledger.Conway.Specification.Epoch.T_HasLastEpoch_3386 ->
+  AgdaAny -> Integer
+d_LastEpochOf_308 v0
+  = coe
+      MAlonzo.Code.Ledger.Conway.Specification.Epoch.d_LastEpochOf_3394
+      (coe v0)
+-- Ledger.Conway.Foreign.Epoch.EpochSpec._.HasNewEpochState.NewEpochStateOf
+d_NewEpochStateOf_312 ::
+  MAlonzo.Code.Ledger.Conway.Specification.Epoch.T_HasNewEpochState_3366 ->
+  AgdaAny ->
+  MAlonzo.Code.Ledger.Conway.Specification.Epoch.T_NewEpochState_3334
+d_NewEpochStateOf_312 v0
+  = coe
+      MAlonzo.Code.Ledger.Conway.Specification.Epoch.d_NewEpochStateOf_3374
+      (coe v0)
+-- Ledger.Conway.Foreign.Epoch.EpochSpec._.NewEpochState.bcur
+d_bcur_316 ::
+  MAlonzo.Code.Ledger.Conway.Specification.Epoch.T_NewEpochState_3334 ->
+  MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_bcur_316 v0
+  = coe
+      MAlonzo.Code.Ledger.Conway.Specification.Epoch.d_bcur_3352 (coe v0)
+-- Ledger.Conway.Foreign.Epoch.EpochSpec._.NewEpochState.bprev
+d_bprev_318 ::
+  MAlonzo.Code.Ledger.Conway.Specification.Epoch.T_NewEpochState_3334 ->
+  MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_bprev_318 v0
+  = coe
+      MAlonzo.Code.Ledger.Conway.Specification.Epoch.d_bprev_3350
+      (coe v0)
+-- Ledger.Conway.Foreign.Epoch.EpochSpec._.NewEpochState.epochState
+d_epochState_320 ::
+  MAlonzo.Code.Ledger.Conway.Specification.Epoch.T_NewEpochState_3334 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Epoch.T_EpochState_3264
+d_epochState_320 v0
+  = coe
+      MAlonzo.Code.Ledger.Conway.Specification.Epoch.d_epochState_3354
+      (coe v0)
+-- Ledger.Conway.Foreign.Epoch.EpochSpec._.NewEpochState.lastEpoch
+d_lastEpoch_322 ::
+  MAlonzo.Code.Ledger.Conway.Specification.Epoch.T_NewEpochState_3334 ->
+  Integer
+d_lastEpoch_322 v0
+  = coe
+      MAlonzo.Code.Ledger.Conway.Specification.Epoch.d_lastEpoch_3348
+      (coe v0)
+-- Ledger.Conway.Foreign.Epoch.EpochSpec._.NewEpochState.pd
+d_pd_324 ::
+  MAlonzo.Code.Ledger.Conway.Specification.Epoch.T_NewEpochState_3334 ->
+  MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_pd_324 v0
+  = coe
+      MAlonzo.Code.Ledger.Conway.Specification.Epoch.d_pd_3358 (coe v0)
+-- Ledger.Conway.Foreign.Epoch.EpochSpec._.NewEpochState.ru
+d_ru_326 ::
+  MAlonzo.Code.Ledger.Conway.Specification.Epoch.T_NewEpochState_3334 ->
+  Maybe
+    MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_RewardUpdate_2992
+d_ru_326 v0
+  = coe
+      MAlonzo.Code.Ledger.Conway.Specification.Epoch.d_ru_3356 (coe v0)
+-- Ledger.Conway.Foreign.Epoch.EpochSpec._.Post-POOLREAP-Update.acnt''
+d_acnt''''_330 ::
+  MAlonzo.Code.Ledger.Conway.Specification.Epoch.T_Post'45'POOLREAP'45'Update_3924 ->
+  MAlonzo.Code.Ledger.Conway.Specification.PParams.T_Acnt_188
+d_acnt''''_330 v0
+  = coe
+      MAlonzo.Code.Ledger.Conway.Specification.Epoch.d_acnt''''_3932
+      (coe v0)
+-- Ledger.Conway.Foreign.Epoch.EpochSpec._.Post-POOLREAP-Update.dState''
+d_dState''''_332 ::
+  MAlonzo.Code.Ledger.Conway.Specification.Epoch.T_Post'45'POOLREAP'45'Update_3924 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Certs.T_DState_1402
+d_dState''''_332 v0
+  = coe
+      MAlonzo.Code.Ledger.Conway.Specification.Epoch.d_dState''''_3930
+      (coe v0)
+-- Ledger.Conway.Foreign.Epoch.EpochSpec._.Post-POOLREAPUpdate.acnt''
+d_acnt''''_336 ::
+  MAlonzo.Code.Ledger.Conway.Specification.Enact.T_EnactState_1166 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Ledger.T_LState_2946 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Certs.T_DState_1402 ->
+  MAlonzo.Code.Ledger.Conway.Specification.PParams.T_Acnt_188 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Epoch.T_Governance'45'Update_3806 ->
+  MAlonzo.Code.Ledger.Conway.Specification.PParams.T_Acnt_188
+d_acnt''''_336
+  = coe
+      MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_acnt''''_3974
+      (coe
+         MAlonzo.Code.Ledger.Conway.Foreign.ExternalStructures.d_HSTransactionStructure_682
+         (coe
+            MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20))
+-- Ledger.Conway.Foreign.Epoch.EpochSpec._.Post-POOLREAPUpdate.dState''
+d_dState''''_338 ::
+  MAlonzo.Code.Ledger.Conway.Specification.Enact.T_EnactState_1166 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Ledger.T_LState_2946 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Certs.T_DState_1402 ->
+  MAlonzo.Code.Ledger.Conway.Specification.PParams.T_Acnt_188 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Epoch.T_Governance'45'Update_3806 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Certs.T_DState_1402
+d_dState''''_338 v0 v1 v2 v3 v4
+  = coe
+      MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_dState''''_3966
+      (coe
+         MAlonzo.Code.Ledger.Conway.Foreign.ExternalStructures.d_HSTransactionStructure_682
+         (coe
+            MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20))
+      v0 v2 v4
+-- Ledger.Conway.Foreign.Epoch.EpochSpec._.Post-POOLREAPUpdate.govActionReturns
+d_govActionReturns_340 ::
+  MAlonzo.Code.Ledger.Conway.Specification.Enact.T_EnactState_1166 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Ledger.T_LState_2946 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Certs.T_DState_1402 ->
+  MAlonzo.Code.Ledger.Conway.Specification.PParams.T_Acnt_188 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Epoch.T_Governance'45'Update_3806 ->
+  MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_govActionReturns_340 v0 v1 v2 v3 v4
+  = coe
+      MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_govActionReturns_3954
+      (coe
+         MAlonzo.Code.Ledger.Conway.Foreign.ExternalStructures.d_HSTransactionStructure_682
+         (coe
+            MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20))
+      v4
+-- Ledger.Conway.Foreign.Epoch.EpochSpec._.Post-POOLREAPUpdate.payout
+d_payout_342 ::
+  MAlonzo.Code.Ledger.Conway.Specification.Enact.T_EnactState_1166 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Ledger.T_LState_2946 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Certs.T_DState_1402 ->
+  MAlonzo.Code.Ledger.Conway.Specification.PParams.T_Acnt_188 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Epoch.T_Governance'45'Update_3806 ->
+  MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_payout_342 v0 v1 v2 v3 v4
+  = coe
+      MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_payout_3962
+      (coe
+         MAlonzo.Code.Ledger.Conway.Foreign.ExternalStructures.d_HSTransactionStructure_682
+         (coe
+            MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20))
+      v0 v4
+-- Ledger.Conway.Foreign.Epoch.EpochSpec._.Post-POOLREAPUpdate.refunds
+d_refunds_344 ::
+  MAlonzo.Code.Ledger.Conway.Specification.Enact.T_EnactState_1166 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Ledger.T_LState_2946 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Certs.T_DState_1402 ->
+  MAlonzo.Code.Ledger.Conway.Specification.PParams.T_Acnt_188 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Epoch.T_Governance'45'Update_3806 ->
+  MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_refunds_344 v0 v1 v2 v3 v4
+  = coe
+      MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_refunds_3964
+      (coe
+         MAlonzo.Code.Ledger.Conway.Foreign.ExternalStructures.d_HSTransactionStructure_682
+         (coe
+            MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20))
+      v0 v2 v4
+-- Ledger.Conway.Foreign.Epoch.EpochSpec._.Post-POOLREAPUpdate.totWithdrawals
+d_totWithdrawals_346 ::
+  MAlonzo.Code.Ledger.Conway.Specification.Enact.T_EnactState_1166 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Ledger.T_LState_2946 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Certs.T_DState_1402 ->
+  MAlonzo.Code.Ledger.Conway.Specification.PParams.T_Acnt_188 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Epoch.T_Governance'45'Update_3806 ->
+  Integer
+d_totWithdrawals_346 v0 v1 v2 v3 v4
+  = coe
+      MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_totWithdrawals_3970
+      (coe
+         MAlonzo.Code.Ledger.Conway.Foreign.ExternalStructures.d_HSTransactionStructure_682
+         (coe
+            MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20))
+      v0
+-- Ledger.Conway.Foreign.Epoch.EpochSpec._.Post-POOLREAPUpdate.unclaimed
+d_unclaimed_348 ::
+  MAlonzo.Code.Ledger.Conway.Specification.Enact.T_EnactState_1166 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Ledger.T_LState_2946 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Certs.T_DState_1402 ->
+  MAlonzo.Code.Ledger.Conway.Specification.PParams.T_Acnt_188 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Epoch.T_Governance'45'Update_3806 ->
+  Integer
+d_unclaimed_348 v0 v1 v2 v3 v4
+  = coe
+      MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_unclaimed_3968
+      (coe
+         MAlonzo.Code.Ledger.Conway.Foreign.ExternalStructures.d_HSTransactionStructure_682
+         (coe
+            MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20))
+      v0 v2 v4
+-- Ledger.Conway.Foreign.Epoch.EpochSpec._.Post-POOLREAPUpdate.updates
+d_updates_350 ::
+  MAlonzo.Code.Ledger.Conway.Specification.Enact.T_EnactState_1166 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Ledger.T_LState_2946 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Certs.T_DState_1402 ->
+  MAlonzo.Code.Ledger.Conway.Specification.PParams.T_Acnt_188 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Epoch.T_Governance'45'Update_3806 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Epoch.T_Post'45'POOLREAP'45'Update_3924
+d_updates_350
+  = coe
+      MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_updates_3976
+      (coe
+         MAlonzo.Code.Ledger.Conway.Foreign.ExternalStructures.d_HSTransactionStructure_682
+         (coe
+            MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20))
+-- Ledger.Conway.Foreign.Epoch.EpochSpec._.Pre-POOLREAP-Update.gState'
+d_gState''_354 ::
+  MAlonzo.Code.Ledger.Conway.Specification.Epoch.T_Pre'45'POOLREAP'45'Update_3864 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Certs.T_GState_1434
+d_gState''_354 v0
+  = coe
+      MAlonzo.Code.Ledger.Conway.Specification.Epoch.d_gState''_3874
+      (coe v0)
+-- Ledger.Conway.Foreign.Epoch.EpochSpec._.Pre-POOLREAP-Update.pState'
+d_pState''_356 ::
+  MAlonzo.Code.Ledger.Conway.Specification.Epoch.T_Pre'45'POOLREAP'45'Update_3864 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Certs.T_PState_1418
+d_pState''_356 v0
+  = coe
+      MAlonzo.Code.Ledger.Conway.Specification.Epoch.d_pState''_3872
+      (coe v0)
+-- Ledger.Conway.Foreign.Epoch.EpochSpec._.Pre-POOLREAP-Update.utxoSt'
+d_utxoSt''_358 ::
+  MAlonzo.Code.Ledger.Conway.Specification.Epoch.T_Pre'45'POOLREAP'45'Update_3864 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Utxo.T_UTxOState_2486
+d_utxoSt''_358 v0
+  = coe
+      MAlonzo.Code.Ledger.Conway.Specification.Epoch.d_utxoSt''_3876
+      (coe v0)
+-- Ledger.Conway.Foreign.Epoch.EpochSpec._.Pre-POOLREAPUpdate.gState'
+d_gState''_362 ::
+  MAlonzo.Code.Ledger.Conway.Specification.Ledger.T_LState_2946 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Enact.T_EnactState_1166 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Epoch.T_Governance'45'Update_3806 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Certs.T_GState_1434
+d_gState''_362
+  = coe
+      MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_gState''_3920
+      (coe
+         MAlonzo.Code.Ledger.Conway.Foreign.ExternalStructures.d_HSTransactionStructure_682
+         (coe
+            MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20))
+-- Ledger.Conway.Foreign.Epoch.EpochSpec._.Pre-POOLREAPUpdate.pState'
+d_pState''_364 ::
+  MAlonzo.Code.Ledger.Conway.Specification.Ledger.T_LState_2946 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Enact.T_EnactState_1166 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Epoch.T_Governance'45'Update_3806 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Certs.T_PState_1418
+d_pState''_364 v0 v1 v2
+  = coe
+      MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_pState''_3918
+      (coe
+         MAlonzo.Code.Ledger.Conway.Foreign.ExternalStructures.d_HSTransactionStructure_682
+         (coe
+            MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20))
+      v0
+-- Ledger.Conway.Foreign.Epoch.EpochSpec._.Pre-POOLREAPUpdate.updates
+d_updates_366 ::
+  MAlonzo.Code.Ledger.Conway.Specification.Ledger.T_LState_2946 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Enact.T_EnactState_1166 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Epoch.T_Governance'45'Update_3806 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Epoch.T_Pre'45'POOLREAP'45'Update_3864
+d_updates_366
+  = coe
+      MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_updates_3922
+      (coe
+         MAlonzo.Code.Ledger.Conway.Foreign.ExternalStructures.d_HSTransactionStructure_682
+         (coe
+            MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20))
+-- Ledger.Conway.Foreign.Epoch.EpochSpec._.Pre-POOLREAPUpdate.utxoSt'
+d_utxoSt''_368 ::
+  MAlonzo.Code.Ledger.Conway.Specification.Ledger.T_LState_2946 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Enact.T_EnactState_1166 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Epoch.T_Governance'45'Update_3806 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Utxo.T_UTxOState_2486
+d_utxoSt''_368 v0 v1 v2
+  = coe
+      MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_utxoSt''_3916
+      (coe
+         MAlonzo.Code.Ledger.Conway.Foreign.ExternalStructures.d_HSTransactionStructure_682
+         (coe
+            MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20))
+      v0 v2
+-- Ledger.Conway.Foreign.Epoch.EpochSpec._.VDelegDelegatedStake.activeDReps
+d_activeDReps_372 ::
+  Integer ->
+  MAlonzo.Code.Ledger.Conway.Specification.Utxo.T_UTxOState_2486 ->
+  [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] ->
+  MAlonzo.Code.Ledger.Conway.Specification.Certs.T_GState_1434 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Certs.T_DState_1402 ->
+  [MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20]
+d_activeDReps_372 v0 v1 v2 v3 v4
+  = coe
+      MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_activeDReps_3678
+      (coe
+         MAlonzo.Code.Ledger.Conway.Foreign.ExternalStructures.d_HSTransactionStructure_682
+         (coe
+            MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20))
+      v0 v3
+-- Ledger.Conway.Foreign.Epoch.EpochSpec._.VDelegDelegatedStake.activeVDelegs
+d_activeVDelegs_374 ::
+  Integer ->
+  MAlonzo.Code.Ledger.Conway.Specification.Utxo.T_UTxOState_2486 ->
+  [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] ->
+  MAlonzo.Code.Ledger.Conway.Specification.Certs.T_GState_1434 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Certs.T_DState_1402 ->
+  [MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_VDeleg_1042]
+d_activeVDelegs_374 v0 v1 v2 v3 v4
+  = coe
+      MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_activeVDelegs_3680
+      (coe
+         MAlonzo.Code.Ledger.Conway.Foreign.ExternalStructures.d_HSTransactionStructure_682
+         (coe
+            MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20))
+      v0 v3
+-- Ledger.Conway.Foreign.Epoch.EpochSpec._.VDelegDelegatedStake.calculate
+d_calculate_376 ::
+  Integer ->
+  MAlonzo.Code.Ledger.Conway.Specification.Utxo.T_UTxOState_2486 ->
+  [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] ->
+  MAlonzo.Code.Ledger.Conway.Specification.Certs.T_GState_1434 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Certs.T_DState_1402 ->
+  MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_calculate_376
+  = coe
+      MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_calculate_3688
+      (coe
+         MAlonzo.Code.Ledger.Conway.Foreign.ExternalStructures.d_HSTransactionStructure_682
+         (coe
+            MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20))
+-- Ledger.Conway.Foreign.Epoch.EpochSpec._.VDelegDelegatedStake.stakePerCredential
+d_stakePerCredential_378 ::
+  Integer ->
+  MAlonzo.Code.Ledger.Conway.Specification.Utxo.T_UTxOState_2486 ->
+  [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] ->
+  MAlonzo.Code.Ledger.Conway.Specification.Certs.T_GState_1434 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Certs.T_DState_1402 ->
+  MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20 ->
+  Integer
+d_stakePerCredential_378 v0 v1 v2 v3 v4 v5
+  = coe
+      MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_stakePerCredential_3682
+      (coe
+         MAlonzo.Code.Ledger.Conway.Foreign.ExternalStructures.d_HSTransactionStructure_682
+         (coe
+            MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20))
+      v1 v2 v4 v5
+-- Ledger.Conway.Foreign.Epoch.EpochSpec._.Computational-EPOCH
+d_Computational'45'EPOCH_382 ::
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_232
+d_Computational'45'EPOCH_382
+  = coe
+      MAlonzo.Code.Ledger.Conway.Specification.Epoch.Properties.Computational.du_Computational'45'EPOCH_3396
+      (coe
+         MAlonzo.Code.Ledger.Conway.Foreign.ExternalStructures.d_HSTransactionStructure_682
+         (coe
+            MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20))
+-- Ledger.Conway.Foreign.Epoch.EpochSpec._.Computational-NEWEPOCH
+d_Computational'45'NEWEPOCH_384 ::
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_232
+d_Computational'45'NEWEPOCH_384
+  = coe
+      MAlonzo.Code.Ledger.Conway.Specification.Epoch.Properties.Computational.du_Computational'45'NEWEPOCH_3546
+      (coe
+         MAlonzo.Code.Ledger.Conway.Foreign.ExternalStructures.d_HSTransactionStructure_682
+         (coe
+            MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20))
+-- Ledger.Conway.Foreign.Epoch.EpochSpec._.EPOCH-complete
+d_EPOCH'45'complete_386 ::
+  MAlonzo.Code.Ledger.Conway.Specification.Epoch.T_EpochState_3264 ->
+  Integer ->
+  MAlonzo.Code.Ledger.Conway.Specification.Epoch.T_EpochState_3264 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Epoch.T__'8866'_'8640''10631'_'44'EPOCH'10632'__3978 ->
+  MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
+d_EPOCH'45'complete_386 = erased
+-- Ledger.Conway.Foreign.Epoch.EpochSpec._.EPOCH-complete'
+d_EPOCH'45'complete''_388 ::
+  MAlonzo.Code.Ledger.Conway.Specification.Epoch.T_EpochState_3264 ->
+  Integer ->
+  MAlonzo.Code.Ledger.Conway.Specification.Epoch.T_EpochState_3264 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Epoch.T__'8866'_'8640''10631'_'44'EPOCH'10632'__3978 ->
+  MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
+d_EPOCH'45'complete''_388 = erased
+-- Ledger.Conway.Foreign.Epoch.EpochSpec._.EPOCH-deterministic
+d_EPOCH'45'deterministic_390 ::
+  MAlonzo.Code.Ledger.Conway.Specification.Epoch.T_EpochState_3264 ->
+  Integer ->
+  MAlonzo.Code.Ledger.Conway.Specification.Epoch.T_EpochState_3264 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Epoch.T_EpochState_3264 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Epoch.T__'8866'_'8640''10631'_'44'EPOCH'10632'__3978 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Epoch.T__'8866'_'8640''10631'_'44'EPOCH'10632'__3978 ->
+  MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
+d_EPOCH'45'deterministic_390 = erased
+-- Ledger.Conway.Foreign.Epoch.EpochSpec._.EPOCH-total
+d_EPOCH'45'total_392 ::
+  MAlonzo.Code.Ledger.Conway.Specification.Epoch.T_EpochState_3264 ->
+  Integer -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_EPOCH'45'total_392
+  = coe
+      MAlonzo.Code.Ledger.Conway.Specification.Epoch.Properties.Computational.du_EPOCH'45'total_3248
+      (coe
+         MAlonzo.Code.Ledger.Conway.Foreign.ExternalStructures.d_HSTransactionStructure_682
+         (coe
+            MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20))
+-- Ledger.Conway.Foreign.Epoch.EpochSpec._.EPOCH-total'
+d_EPOCH'45'total''_394 ::
+  MAlonzo.Code.Ledger.Conway.Specification.Epoch.T_EpochState_3264 ->
+  Integer -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_EPOCH'45'total''_394
+  = coe
+      MAlonzo.Code.Ledger.Conway.Specification.Epoch.Properties.Computational.du_EPOCH'45'total''_3390
+      (coe
+         MAlonzo.Code.Ledger.Conway.Foreign.ExternalStructures.d_HSTransactionStructure_682
+         (coe
+            MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20))
+-- Ledger.Conway.Foreign.Epoch.EpochSpec._.NEWEPOCH-complete
+d_NEWEPOCH'45'complete_396 ::
+  Integer ->
+  MAlonzo.Code.Ledger.Conway.Specification.Epoch.T_NewEpochState_3334 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Epoch.T_NewEpochState_3334 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Epoch.T__'8866'_'8640''10631'_'44'NEWEPOCH'10632'__4004 ->
+  MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
+d_NEWEPOCH'45'complete_396 = erased
+-- Ledger.Conway.Foreign.Epoch.EpochSpec._.NEWEPOCH-total
+d_NEWEPOCH'45'total_398 ::
+  Integer ->
+  MAlonzo.Code.Ledger.Conway.Specification.Epoch.T_NewEpochState_3334 ->
+  MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_NEWEPOCH'45'total_398
+  = coe
+      MAlonzo.Code.Ledger.Conway.Specification.Epoch.Properties.Computational.du_NEWEPOCH'45'total_3424
+      (coe
+         MAlonzo.Code.Ledger.Conway.Foreign.ExternalStructures.d_HSTransactionStructure_682
+         (coe
+            MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20))
+-- Ledger.Conway.Foreign.Epoch.Show-EPOCH
+d_Show'45'EPOCH_406 ::
+  MAlonzo.Code.Ledger.Conway.Specification.Epoch.T_EpochState_3264 ->
+  Integer ->
+  MAlonzo.Code.Ledger.Conway.Specification.Epoch.T_EpochState_3264 ->
+  MAlonzo.Code.Class.Show.Core.T_Show_10
+d_Show'45'EPOCH_406 ~v0 ~v1 ~v2 = du_Show'45'EPOCH_406
+du_Show'45'EPOCH_406 :: MAlonzo.Code.Class.Show.Core.T_Show_10
+du_Show'45'EPOCH_406
+  = coe
+      MAlonzo.Code.Class.Show.Core.C_mkShow_18
+      (coe
+         (\ v0 ->
+            case coe v0 of
+              MAlonzo.Code.Ledger.Conway.Specification.Epoch.C_EPOCH_4002 v3 v4 v13
+                -> case coe v13 of
+                     MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v14 v15
+                       -> coe
+                            seq (coe v15)
+                            (coe
+                               MAlonzo.Code.Data.String.Base.d__'43''43'__20
+                               ("EPOCH\n" :: Data.Text.Text)
+                               (coe
+                                  MAlonzo.Code.Data.String.Base.d__'43''43'__20
+                                  ("SNAP" :: Data.Text.Text) (" POOLREAP" :: Data.Text.Text)))
+                     _ -> MAlonzo.RTE.mazUnreachableError
+              _ -> MAlonzo.RTE.mazUnreachableError))
+-- Ledger.Conway.Foreign.Epoch.HsTy-EpochState
+d_HsTy'45'EpochState_414 ::
+  MAlonzo.Code.Foreign.HaskellTypes.T_HasHsType_14
+d_HsTy'45'EpochState_414 = erased
+-- Ledger.Conway.Foreign.Epoch.Conv-EpochState
+d_Conv'45'EpochState_416 ::
+  MAlonzo.Code.Foreign.Convertible.T_Convertible_8
+d_Conv'45'EpochState_416
+  = coe
+      MAlonzo.Code.Foreign.Convertible.C_constructor_22
+      (coe
+         (\ v0 ->
+            case coe v0 of
+              MAlonzo.Code.Ledger.Conway.Conformance.Epoch.C_'10214'_'44'_'44'_'44'_'44'_'10215''7497'''_4906 v1 v2 v3 v4 v5
+                -> coe
+                     C_MkEpochState_4235
+                     (coe
+                        MAlonzo.Code.Ledger.Conway.Foreign.PParams.C_MkAcnt_11365
+                        (coe
+                           MAlonzo.Code.Ledger.Conway.Specification.PParams.d_treasury_194
+                           (coe v1))
+                        (coe
+                           MAlonzo.Code.Ledger.Conway.Specification.PParams.d_reserves_196
+                           (coe v1)))
+                     (coe
+                        MAlonzo.Code.Ledger.Conway.Foreign.Rewards.C_MkSnapshots_4323
+                        (coe
+                           MAlonzo.Code.Ledger.Conway.Foreign.Rewards.C_MkSnapshot_1435
+                           (coe
+                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                              (coe
+                                 MAlonzo.Code.Foreign.Convertible.d_to_18
+                                 (coe
+                                    MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                    (coe
+                                       MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                       (coe
+                                          MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)
+                                       (coe
+                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                 (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                    (coe
+                                       MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_stake_3036
+                                       (coe
+                                          MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_mark_3096
+                                          (coe v2))))))
+                           (coe
+                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                              (coe
+                                 MAlonzo.Code.Foreign.Convertible.d_to_18
+                                 (coe
+                                    MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                    (coe
+                                       MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                       (coe
+                                          MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)
+                                       (coe
+                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                 (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                    (coe
+                                       MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_delegations_3038
+                                       (coe
+                                          MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_mark_3096
+                                          (coe v2))))))
+                           (coe
+                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                              (coe
+                                 MAlonzo.Code.Foreign.Convertible.d_to_18
+                                 (coe
+                                    MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                    (coe
+                                       MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                       (coe
+                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                       (coe
+                                          MAlonzo.Code.Ledger.Conway.Foreign.Certs.d_Conv'45'StakePoolParams_68)))
+                                 (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                    (coe
+                                       MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_pools_3040
+                                       (coe
+                                          MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_mark_3096
+                                          (coe v2)))))))
+                        (coe
+                           MAlonzo.Code.Ledger.Conway.Foreign.Rewards.C_MkSnapshot_1435
+                           (coe
+                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                              (coe
+                                 MAlonzo.Code.Foreign.Convertible.d_to_18
+                                 (coe
+                                    MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                    (coe
+                                       MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                       (coe
+                                          MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)
+                                       (coe
+                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                 (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                    (coe
+                                       MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_stake_3036
+                                       (coe
+                                          MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_set_3098
+                                          (coe v2))))))
+                           (coe
+                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                              (coe
+                                 MAlonzo.Code.Foreign.Convertible.d_to_18
+                                 (coe
+                                    MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                    (coe
+                                       MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                       (coe
+                                          MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)
+                                       (coe
+                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                 (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                    (coe
+                                       MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_delegations_3038
+                                       (coe
+                                          MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_set_3098
+                                          (coe v2))))))
+                           (coe
+                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                              (coe
+                                 MAlonzo.Code.Foreign.Convertible.d_to_18
+                                 (coe
+                                    MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                    (coe
+                                       MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                       (coe
+                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                       (coe
+                                          MAlonzo.Code.Ledger.Conway.Foreign.Certs.d_Conv'45'StakePoolParams_68)))
+                                 (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                    (coe
+                                       MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_pools_3040
+                                       (coe
+                                          MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_set_3098
+                                          (coe v2)))))))
+                        (coe
+                           MAlonzo.Code.Ledger.Conway.Foreign.Rewards.C_MkSnapshot_1435
+                           (coe
+                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                              (coe
+                                 MAlonzo.Code.Foreign.Convertible.d_to_18
+                                 (coe
+                                    MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                    (coe
+                                       MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                       (coe
+                                          MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)
+                                       (coe
+                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                 (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                    (coe
+                                       MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_stake_3036
+                                       (coe
+                                          MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_go_3100
+                                          (coe v2))))))
+                           (coe
+                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                              (coe
+                                 MAlonzo.Code.Foreign.Convertible.d_to_18
+                                 (coe
+                                    MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                    (coe
+                                       MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                       (coe
+                                          MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)
+                                       (coe
+                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                 (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                    (coe
+                                       MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_delegations_3038
+                                       (coe
+                                          MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_go_3100
+                                          (coe v2))))))
+                           (coe
+                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                              (coe
+                                 MAlonzo.Code.Foreign.Convertible.d_to_18
+                                 (coe
+                                    MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                    (coe
+                                       MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                       (coe
+                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                       (coe
+                                          MAlonzo.Code.Ledger.Conway.Foreign.Certs.d_Conv'45'StakePoolParams_68)))
+                                 (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                    (coe
+                                       MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_pools_3040
+                                       (coe
+                                          MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_go_3100
+                                          (coe v2)))))))
+                        (coe
+                           MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_feeSS_3102
+                           (coe v2)))
+                     (coe
+                        MAlonzo.Code.Ledger.Conway.Foreign.Ledger.C_MkLState_2857
+                        (coe
+                           MAlonzo.Code.Ledger.Conway.Foreign.Utxo.C_MkUTxOState_1173
+                           (coe
+                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                              (coe
+                                 MAlonzo.Code.Foreign.Convertible.d_to_18
+                                 (coe
+                                    MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                    (coe
+                                       MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                       (coe
+                                          MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                          (coe
+                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                          (coe
+                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
+                                       (coe
+                                          MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                          (coe
+                                             MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Either_100
+                                             (coe
+                                                MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'BaseAddr_216)
+                                             (coe
+                                                MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'BootstrapAddr_220))
+                                          (coe
+                                             MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                             (coe
+                                                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                             (coe
+                                                MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                (coe
+                                                   MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Maybe_90
+                                                   (coe
+                                                      MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Either_100
+                                                      (coe
+                                                         MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                      (coe
+                                                         MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                (coe
+                                                   MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Maybe_90
+                                                   (coe
+                                                      MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Either_100
+                                                      (coe
+                                                         MAlonzo.Code.Ledger.Conway.Foreign.Transaction.d_Conv'45'HSTimelock_18)
+                                                      (coe
+                                                         MAlonzo.Code.Ledger.Conway.Foreign.Transaction.d_Conv'45'HSPlutusScript_22))))))))
+                                 (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                    (coe
+                                       MAlonzo.Code.Ledger.Conway.Specification.Utxo.d_utxo_2496
+                                       (coe
+                                          MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_utxoSt_2700
+                                          (coe v3))))))
+                           (coe
+                              MAlonzo.Code.Ledger.Conway.Specification.Utxo.d_fees_2498
+                              (coe
+                                 MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_utxoSt_2700
+                                 (coe v3)))
+                           (coe
+                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                              (coe
+                                 MAlonzo.Code.Foreign.Convertible.d_to_18
+                                 (coe
+                                    MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                    (coe
+                                       MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                       (coe
+                                          MAlonzo.Code.Ledger.Conway.Foreign.Certs.d_Conv'45'DepositPurpose_72)
+                                       (coe
+                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                 (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                    (coe
+                                       MAlonzo.Code.Ledger.Conway.Specification.Utxo.d_deposits_2500
+                                       (coe
+                                          MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_utxoSt_2700
+                                          (coe v3))))))
+                           (coe
+                              MAlonzo.Code.Ledger.Conway.Specification.Utxo.d_donations_2502
+                              (coe
+                                 MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_utxoSt_2700
+                                 (coe v3))))
+                        (coe
+                           MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                           MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92 () erased
+                           () erased
+                           (MAlonzo.Code.Foreign.Convertible.d_to_18
+                              (coe
+                                 MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                 (coe
+                                    MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                    (coe MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                    (coe MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
+                                 (coe
+                                    MAlonzo.Code.Ledger.Conway.Foreign.Gov.d_Conv'45'GovActionState_908)))
+                           (MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_govSt_2702
+                              (coe v3)))
+                        (coe
+                           MAlonzo.Code.Ledger.Conway.Foreign.Cert.C_MkCertState_713
+                           (coe
+                              MAlonzo.Code.Ledger.Conway.Foreign.Certs.C_MkDState_13305
+                              (coe
+                                 MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                 (coe
+                                    MAlonzo.Code.Foreign.Convertible.d_to_18
+                                    (coe
+                                       MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                       (coe
+                                          MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                          (coe
+                                             MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)
+                                          (coe
+                                             MAlonzo.Code.Ledger.Conway.Foreign.Gov.Core.d_Conv'45'VDeleg_32)))
+                                    (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                       (coe
+                                          MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_voteDelegs_1580
+                                          (coe
+                                             MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dState_1614
+                                             (coe
+                                                MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_certState_2704
+                                                (coe v3)))))))
+                              (coe
+                                 MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                 (coe
+                                    MAlonzo.Code.Foreign.Convertible.d_to_18
+                                    (coe
+                                       MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                       (coe
+                                          MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                          (coe
+                                             MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)
+                                          (coe
+                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                    (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                       (coe
+                                          MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_stakeDelegs_1582
+                                          (coe
+                                             MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dState_1614
+                                             (coe
+                                                MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_certState_2704
+                                                (coe v3)))))))
+                              (coe
+                                 MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                 (coe
+                                    MAlonzo.Code.Foreign.Convertible.d_to_18
+                                    (coe
+                                       MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                       (coe
+                                          MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                          (coe
+                                             MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)
+                                          (coe
+                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                    (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                       (coe
+                                          MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_rewards_1584
+                                          (coe
+                                             MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dState_1614
+                                             (coe
+                                                MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_certState_2704
+                                                (coe v3)))))))
+                              (coe
+                                 MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                 (coe
+                                    MAlonzo.Code.Foreign.Convertible.d_to_18
+                                    (coe
+                                       MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                       (coe
+                                          MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                          (coe
+                                             MAlonzo.Code.Ledger.Conway.Foreign.Certs.d_Conv'45'DepositPurpose_72)
+                                          (coe
+                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                    (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                       (coe
+                                          MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_deposits_1586
+                                          (coe
+                                             MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dState_1614
+                                             (coe
+                                                MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_certState_2704
+                                                (coe v3))))))))
+                           (coe
+                              MAlonzo.Code.Ledger.Conway.Foreign.Certs.C_MkPState_6189
+                              (coe
+                                 MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                 (coe
+                                    MAlonzo.Code.Foreign.Convertible.d_to_18
+                                    (coe
+                                       MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                       (coe
+                                          MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                          (coe
+                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                          (coe
+                                             MAlonzo.Code.Ledger.Conway.Foreign.Certs.d_Conv'45'StakePoolParams_68)))
+                                    (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                       (coe
+                                          MAlonzo.Code.Ledger.Conway.Specification.Certs.d_pools_1426
+                                          (coe
+                                             MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_pState_1616
+                                             (coe
+                                                MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_certState_2704
+                                                (coe v3)))))))
+                              (coe
+                                 MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                 (coe
+                                    MAlonzo.Code.Foreign.Convertible.d_to_18
+                                    (coe
+                                       MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                       (coe
+                                          MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                          (coe
+                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                          (coe
+                                             MAlonzo.Code.Ledger.Conway.Foreign.Certs.d_Conv'45'StakePoolParams_68)))
+                                    (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                       (coe
+                                          MAlonzo.Code.Ledger.Conway.Specification.Certs.d_fPools_1428
+                                          (coe
+                                             MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_pState_1616
+                                             (coe
+                                                MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_certState_2704
+                                                (coe v3)))))))
+                              (coe
+                                 MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                 (coe
+                                    MAlonzo.Code.Foreign.Convertible.d_to_18
+                                    (coe
+                                       MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                       (coe
+                                          MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                          (coe
+                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                          (coe
+                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                    (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                       (coe
+                                          MAlonzo.Code.Ledger.Conway.Specification.Certs.d_retiring_1430
+                                          (coe
+                                             MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_pState_1616
+                                             (coe
+                                                MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_certState_2704
+                                                (coe v3))))))))
+                           (coe
+                              MAlonzo.Code.Ledger.Conway.Foreign.Certs.C_MkGState_25129
+                              (coe
+                                 MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                 (coe
+                                    MAlonzo.Code.Foreign.Convertible.d_to_18
+                                    (coe
+                                       MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                       (coe
+                                          MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                          (coe
+                                             MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)
+                                          (coe
+                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                    (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                       (coe
+                                          MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dreps_1598
+                                          (coe
+                                             MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_gState_1618
+                                             (coe
+                                                MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_certState_2704
+                                                (coe v3)))))))
+                              (coe
+                                 MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                 (coe
+                                    MAlonzo.Code.Foreign.Convertible.d_to_18
+                                    (coe
+                                       MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                       (coe
+                                          MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                          (coe
+                                             MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)
+                                          (coe
+                                             MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Maybe_90
+                                             (coe
+                                                MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212))))
+                                    (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                       (coe
+                                          MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_ccHotKeys_1600
+                                          (coe
+                                             MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_gState_1618
+                                             (coe
+                                                MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_certState_2704
+                                                (coe v3)))))))
+                              (coe
+                                 MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                 (coe
+                                    MAlonzo.Code.Foreign.Convertible.d_to_18
+                                    (coe
+                                       MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                       (coe
+                                          MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                          (coe
+                                             MAlonzo.Code.Ledger.Conway.Foreign.Certs.d_Conv'45'DepositPurpose_72)
+                                          (coe
+                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                    (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                       (coe
+                                          MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_deposits_1602
+                                          (coe
+                                             MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_gState_1618
+                                             (coe
+                                                MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_certState_2704
+                                                (coe v3))))))))))
+                     (coe
+                        MAlonzo.Code.Ledger.Conway.Foreign.Enact.C_MkEnactState_161
+                        (coe
+                           MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44 () erased () erased
+                           (coe MAlonzo.Code.Foreign.Haskell.Coerce.du_pair'45'toFFI_92)
+                           (coe
+                              MAlonzo.Code.Data.Product.Base.du_map_128
+                              (coe
+                                 MAlonzo.Code.Foreign.Convertible.d_to_18
+                                 (coe
+                                    MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Maybe_90
+                                    (coe
+                                       MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                       (coe
+                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.du_Conv'45'HSMap_102
+                                          (let v6
+                                                 = MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20 in
+                                           coe
+                                             (let v7
+                                                    = MAlonzo.Code.Ledger.Conway.Foreign.ExternalStructures.d_HSTransactionStructure_682
+                                                        (coe v6) in
+                                              coe
+                                                (coe
+                                                   MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_280
+                                                   (coe
+                                                      MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
+                                                      (coe
+                                                         MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_206
+                                                         (coe
+                                                            MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1390
+                                                            (coe v7))))
+                                                   (coe
+                                                      MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_210
+                                                      (coe
+                                                         MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1390
+                                                         (coe v7))))))
+                                          (coe
+                                             MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)
+                                          (coe
+                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
+                                       (coe
+                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_28))))
+                              (coe
+                                 (\ v6 ->
+                                    MAlonzo.Code.Foreign.Convertible.d_to_18
+                                      (coe
+                                         MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                         (coe
+                                            MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                         (coe
+                                            MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
+                              (coe
+                                 MAlonzo.Code.Ledger.Conway.Specification.Enact.d_cc_1178
+                                 (coe v4))))
+                        (coe
+                           MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44 () erased () erased
+                           (coe MAlonzo.Code.Foreign.Haskell.Coerce.du_pair'45'toFFI_92)
+                           (coe
+                              MAlonzo.Code.Data.Product.Base.du_map_128
+                              (coe
+                                 MAlonzo.Code.Foreign.Convertible.d_to_18
+                                 (coe
+                                    MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                    (coe MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                    (coe
+                                       MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Maybe_90
+                                       (coe
+                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
+                              (coe
+                                 (\ v6 ->
+                                    MAlonzo.Code.Foreign.Convertible.d_to_18
+                                      (coe
+                                         MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                         (coe
+                                            MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                         (coe
+                                            MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
+                              (coe
+                                 MAlonzo.Code.Ledger.Conway.Specification.Enact.d_constitution_1180
+                                 (coe v4))))
+                        (coe
+                           MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44 () erased () erased
+                           (coe MAlonzo.Code.Foreign.Haskell.Coerce.du_pair'45'toFFI_92)
+                           (coe
+                              MAlonzo.Code.Data.Product.Base.du_map_128
+                              (coe
+                                 MAlonzo.Code.Foreign.Convertible.d_to_18
+                                 (coe
+                                    MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                    (coe MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                    (coe
+                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                              (coe
+                                 (\ v6 ->
+                                    MAlonzo.Code.Foreign.Convertible.d_to_18
+                                      (coe
+                                         MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                         (coe
+                                            MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                         (coe
+                                            MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
+                              (coe
+                                 MAlonzo.Code.Ledger.Conway.Specification.Enact.d_pv_1182
+                                 (coe v4))))
+                        (coe
+                           MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44 () erased () erased
+                           (coe MAlonzo.Code.Foreign.Haskell.Coerce.du_pair'45'toFFI_92)
+                           (coe
+                              MAlonzo.Code.Data.Product.Base.du_map_128
+                              (coe
+                                 MAlonzo.Code.Foreign.Convertible.d_to_18
+                                 (coe
+                                    MAlonzo.Code.Ledger.Conway.Foreign.PParams.d_Conv'45'PParams_26))
+                              (coe
+                                 (\ v6 ->
+                                    MAlonzo.Code.Foreign.Convertible.d_to_18
+                                      (coe
+                                         MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                         (coe
+                                            MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                         (coe
+                                            MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
+                              (coe
+                                 MAlonzo.Code.Ledger.Conway.Specification.Enact.d_pparams_1184
+                                 (coe v4))))
+                        (coe
+                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                           (coe
+                              MAlonzo.Code.Foreign.Convertible.d_to_18
+                              (coe
+                                 MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                 (coe
+                                    MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                    (coe
+                                       MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'RewardAddress_224)
+                                    (coe
+                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                              (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                 (coe
+                                    MAlonzo.Code.Ledger.Conway.Specification.Enact.d_withdrawals_1186
+                                    (coe v4))))))
+                     (coe
+                        MAlonzo.Code.Ledger.Conway.Foreign.Ratify.C_MkRatifyState_12499
+                        (coe
+                           MAlonzo.Code.Ledger.Conway.Foreign.Enact.C_MkEnactState_161
+                           (coe
+                              MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44 () erased () erased
+                              (coe MAlonzo.Code.Foreign.Haskell.Coerce.du_pair'45'toFFI_92)
+                              (coe
+                                 MAlonzo.Code.Data.Product.Base.du_map_128
+                                 (coe
+                                    MAlonzo.Code.Foreign.Convertible.d_to_18
+                                    (coe
+                                       MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Maybe_90
+                                       (coe
+                                          MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                          (coe
+                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.du_Conv'45'HSMap_102
+                                             (let v6
+                                                    = MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20 in
+                                              coe
+                                                (let v7
+                                                       = MAlonzo.Code.Ledger.Conway.Foreign.ExternalStructures.d_HSTransactionStructure_682
+                                                           (coe v6) in
+                                                 coe
+                                                   (coe
+                                                      MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_280
+                                                      (coe
+                                                         MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
+                                                         (coe
+                                                            MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_206
+                                                            (coe
+                                                               MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1390
+                                                               (coe v7))))
+                                                      (coe
+                                                         MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_210
+                                                         (coe
+                                                            MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1390
+                                                            (coe v7))))))
+                                             (coe
+                                                MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)
+                                             (coe
+                                                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
+                                          (coe
+                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_28))))
+                                 (coe
+                                    (\ v6 ->
+                                       MAlonzo.Code.Foreign.Convertible.d_to_18
+                                         (coe
+                                            MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                            (coe
+                                               MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                            (coe
+                                               MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
+                                 (coe
+                                    MAlonzo.Code.Ledger.Conway.Specification.Enact.d_cc_1178
+                                    (coe
+                                       MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_es_1898
+                                       (coe v5)))))
+                           (coe
+                              MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44 () erased () erased
+                              (coe MAlonzo.Code.Foreign.Haskell.Coerce.du_pair'45'toFFI_92)
+                              (coe
+                                 MAlonzo.Code.Data.Product.Base.du_map_128
+                                 (coe
+                                    MAlonzo.Code.Foreign.Convertible.d_to_18
+                                    (coe
+                                       MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                       (coe
+                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                       (coe
+                                          MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Maybe_90
+                                          (coe
+                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
+                                 (coe
+                                    (\ v6 ->
+                                       MAlonzo.Code.Foreign.Convertible.d_to_18
+                                         (coe
+                                            MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                            (coe
+                                               MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                            (coe
+                                               MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
+                                 (coe
+                                    MAlonzo.Code.Ledger.Conway.Specification.Enact.d_constitution_1180
+                                    (coe
+                                       MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_es_1898
+                                       (coe v5)))))
+                           (coe
+                              MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44 () erased () erased
+                              (coe MAlonzo.Code.Foreign.Haskell.Coerce.du_pair'45'toFFI_92)
+                              (coe
+                                 MAlonzo.Code.Data.Product.Base.du_map_128
+                                 (coe
+                                    MAlonzo.Code.Foreign.Convertible.d_to_18
+                                    (coe
+                                       MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                       (coe
+                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                       (coe
+                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                 (coe
+                                    (\ v6 ->
+                                       MAlonzo.Code.Foreign.Convertible.d_to_18
+                                         (coe
+                                            MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                            (coe
+                                               MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                            (coe
+                                               MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
+                                 (coe
+                                    MAlonzo.Code.Ledger.Conway.Specification.Enact.d_pv_1182
+                                    (coe
+                                       MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_es_1898
+                                       (coe v5)))))
+                           (coe
+                              MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44 () erased () erased
+                              (coe MAlonzo.Code.Foreign.Haskell.Coerce.du_pair'45'toFFI_92)
+                              (coe
+                                 MAlonzo.Code.Data.Product.Base.du_map_128
+                                 (coe
+                                    MAlonzo.Code.Foreign.Convertible.d_to_18
+                                    (coe
+                                       MAlonzo.Code.Ledger.Conway.Foreign.PParams.d_Conv'45'PParams_26))
+                                 (coe
+                                    (\ v6 ->
+                                       MAlonzo.Code.Foreign.Convertible.d_to_18
+                                         (coe
+                                            MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                            (coe
+                                               MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                            (coe
+                                               MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
+                                 (coe
+                                    MAlonzo.Code.Ledger.Conway.Specification.Enact.d_pparams_1184
+                                    (coe
+                                       MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_es_1898
+                                       (coe v5)))))
+                           (coe
+                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                              (coe
+                                 MAlonzo.Code.Foreign.Convertible.d_to_18
+                                 (coe
+                                    MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                    (coe
+                                       MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                       (coe
+                                          MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'RewardAddress_224)
+                                       (coe
+                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                 (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                    (coe
+                                       MAlonzo.Code.Ledger.Conway.Specification.Enact.d_withdrawals_1186
+                                       (coe
+                                          MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_es_1898
+                                          (coe v5)))))))
+                        (coe
+                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSSet_68
+                           (coe
+                              MAlonzo.Code.Foreign.Convertible.d_to_18
+                              (coe
+                                 MAlonzo.Code.Foreign.Convertible.du_Convertible'45'List_120
+                                 (coe
+                                    MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                    (coe
+                                       MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                       (coe
+                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                       (coe
+                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
+                                    (coe
+                                       MAlonzo.Code.Ledger.Conway.Foreign.Gov.d_Conv'45'GovActionState_908)))
+                              (MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_removed_1900
+                                 (coe v5))))
+                        (coe
+                           MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_delay_1902
+                           (coe v5)))
+              _ -> MAlonzo.RTE.mazUnreachableError))
+      (coe
+         (\ v0 ->
+            case coe v0 of
+              C_MkEpochState_4235 v1 v2 v3 v4 v5
+                -> coe
+                     MAlonzo.Code.Ledger.Conway.Conformance.Epoch.C_'10214'_'44'_'44'_'44'_'44'_'10215''7497'''_4906
+                     (coe
+                        MAlonzo.Code.Foreign.Convertible.d_from_20
+                        (coe
+                           MAlonzo.Code.Foreign.Convertible.C_constructor_22
+                           (coe
+                              (\ v6 ->
+                                 case coe v6 of
+                                   MAlonzo.Code.Ledger.Conway.Specification.PParams.C_'10214'_'44'_'10215''7491'_198 v7 v8
+                                     -> coe
+                                          MAlonzo.Code.Ledger.Conway.Foreign.PParams.C_MkAcnt_11365
+                                          (coe v7) (coe v8)
+                                   _ -> MAlonzo.RTE.mazUnreachableError))
+                           (coe
+                              (\ v6 ->
+                                 case coe v6 of
+                                   MAlonzo.Code.Ledger.Conway.Foreign.PParams.C_MkAcnt_11365 v7 v8
+                                     -> coe
+                                          MAlonzo.Code.Ledger.Conway.Specification.PParams.C_'10214'_'44'_'10215''7491'_198
+                                          (coe v7) (coe v8)
+                                   _ -> MAlonzo.RTE.mazUnreachableError)))
+                        v1)
+                     (coe
+                        MAlonzo.Code.Foreign.Convertible.d_from_20
+                        (coe
+                           MAlonzo.Code.Foreign.Convertible.C_constructor_22
+                           (coe
+                              (\ v6 ->
+                                 case coe v6 of
+                                   MAlonzo.Code.Ledger.Conway.Specification.Rewards.C_constructor_3104 v7 v8 v9 v10
+                                     -> coe
+                                          MAlonzo.Code.Ledger.Conway.Foreign.Rewards.C_MkSnapshots_4323
+                                          (coe
+                                             MAlonzo.Code.Ledger.Conway.Foreign.Rewards.C_MkSnapshot_1435
+                                             (coe
+                                                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                (coe
+                                                   MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                   (coe
+                                                      MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                      (coe
+                                                         MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                         (coe
+                                                            MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)
+                                                         (coe
+                                                            MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                   (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                      (coe
+                                                         MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_stake_3036
+                                                         (coe v7)))))
+                                             (coe
+                                                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                (coe
+                                                   MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                   (coe
+                                                      MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                      (coe
+                                                         MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                         (coe
+                                                            MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)
+                                                         (coe
+                                                            MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                   (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                      (coe
+                                                         MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_delegations_3038
+                                                         (coe v7)))))
+                                             (coe
+                                                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                (coe
+                                                   MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                   (coe
+                                                      MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                      (coe
+                                                         MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                         (coe
+                                                            MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                         (coe
+                                                            MAlonzo.Code.Ledger.Conway.Foreign.Certs.d_Conv'45'StakePoolParams_68)))
+                                                   (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                      (coe
+                                                         MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_pools_3040
+                                                         (coe v7))))))
+                                          (coe
+                                             MAlonzo.Code.Ledger.Conway.Foreign.Rewards.C_MkSnapshot_1435
+                                             (coe
+                                                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                (coe
+                                                   MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                   (coe
+                                                      MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                      (coe
+                                                         MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                         (coe
+                                                            MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)
+                                                         (coe
+                                                            MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                   (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                      (coe
+                                                         MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_stake_3036
+                                                         (coe v8)))))
+                                             (coe
+                                                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                (coe
+                                                   MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                   (coe
+                                                      MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                      (coe
+                                                         MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                         (coe
+                                                            MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)
+                                                         (coe
+                                                            MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                   (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                      (coe
+                                                         MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_delegations_3038
+                                                         (coe v8)))))
+                                             (coe
+                                                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                (coe
+                                                   MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                   (coe
+                                                      MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                      (coe
+                                                         MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                         (coe
+                                                            MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                         (coe
+                                                            MAlonzo.Code.Ledger.Conway.Foreign.Certs.d_Conv'45'StakePoolParams_68)))
+                                                   (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                      (coe
+                                                         MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_pools_3040
+                                                         (coe v8))))))
+                                          (coe
+                                             MAlonzo.Code.Ledger.Conway.Foreign.Rewards.C_MkSnapshot_1435
+                                             (coe
+                                                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                (coe
+                                                   MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                   (coe
+                                                      MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                      (coe
+                                                         MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                         (coe
+                                                            MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)
+                                                         (coe
+                                                            MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                   (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                      (coe
+                                                         MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_stake_3036
+                                                         (coe v9)))))
+                                             (coe
+                                                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                (coe
+                                                   MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                   (coe
+                                                      MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                      (coe
+                                                         MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                         (coe
+                                                            MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)
+                                                         (coe
+                                                            MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                   (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                      (coe
+                                                         MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_delegations_3038
+                                                         (coe v9)))))
+                                             (coe
+                                                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                (coe
+                                                   MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                   (coe
+                                                      MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                      (coe
+                                                         MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                         (coe
+                                                            MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                         (coe
+                                                            MAlonzo.Code.Ledger.Conway.Foreign.Certs.d_Conv'45'StakePoolParams_68)))
+                                                   (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                      (coe
+                                                         MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_pools_3040
+                                                         (coe v9))))))
+                                          (coe v10)
+                                   _ -> MAlonzo.RTE.mazUnreachableError))
+                           (coe
+                              (\ v6 ->
+                                 case coe v6 of
+                                   MAlonzo.Code.Ledger.Conway.Foreign.Rewards.C_MkSnapshots_4323 v7 v8 v9 v10
+                                     -> coe
+                                          MAlonzo.Code.Ledger.Conway.Specification.Rewards.C_constructor_3104
+                                          (coe
+                                             MAlonzo.Code.Foreign.Convertible.d_from_20
+                                             (coe
+                                                MAlonzo.Code.Foreign.Convertible.C_constructor_22
+                                                (coe
+                                                   (\ v11 ->
+                                                      case coe v11 of
+                                                        MAlonzo.Code.Ledger.Conway.Specification.Rewards.C_constructor_3042 v12 v13 v14
+                                                          -> coe
+                                                               MAlonzo.Code.Ledger.Conway.Foreign.Rewards.C_MkSnapshot_1435
+                                                               (coe
+                                                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                                  (coe
+                                                                     MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                     (coe
+                                                                        MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                        (coe
+                                                                           MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                           (coe
+                                                                              MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)
+                                                                           (coe
+                                                                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                                     (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                                        (coe v12))))
+                                                               (coe
+                                                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                                  (coe
+                                                                     MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                     (coe
+                                                                        MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                        (coe
+                                                                           MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                           (coe
+                                                                              MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)
+                                                                           (coe
+                                                                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                                     (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                                        (coe v13))))
+                                                               (coe
+                                                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                                  (coe
+                                                                     MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                     (coe
+                                                                        MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                        (coe
+                                                                           MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                           (coe
+                                                                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                                           (coe
+                                                                              MAlonzo.Code.Ledger.Conway.Foreign.Certs.d_Conv'45'StakePoolParams_68)))
+                                                                     (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                                        (coe v14))))
+                                                        _ -> MAlonzo.RTE.mazUnreachableError))
+                                                (coe
+                                                   (\ v11 ->
+                                                      case coe v11 of
+                                                        MAlonzo.Code.Ledger.Conway.Foreign.Rewards.C_MkSnapshot_1435 v12 v13 v14
+                                                          -> coe
+                                                               MAlonzo.Code.Ledger.Conway.Specification.Rewards.C_constructor_3042
+                                                               (coe
+                                                                  MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                  (coe
+                                                                     MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Map_116
+                                                                     (let v15
+                                                                            = MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20 in
+                                                                      coe
+                                                                        (let v16
+                                                                               = MAlonzo.Code.Ledger.Conway.Foreign.ExternalStructures.d_HSTransactionStructure_682
+                                                                                   (coe v15) in
+                                                                         coe
+                                                                           (coe
+                                                                              MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_280
+                                                                              (coe
+                                                                                 MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
+                                                                                 (coe
+                                                                                    MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_206
+                                                                                    (coe
+                                                                                       MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1390
+                                                                                       (coe v16))))
+                                                                              (coe
+                                                                                 MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_210
+                                                                                 (coe
+                                                                                    MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1390
+                                                                                    (coe v16))))))
+                                                                     (coe
+                                                                        MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)
+                                                                     (coe
+                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
+                                                                  (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
+                                                                     (coe v12)))
+                                                               (coe
+                                                                  MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                  (coe
+                                                                     MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Map_116
+                                                                     (let v15
+                                                                            = MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20 in
+                                                                      coe
+                                                                        (let v16
+                                                                               = MAlonzo.Code.Ledger.Conway.Foreign.ExternalStructures.d_HSTransactionStructure_682
+                                                                                   (coe v15) in
+                                                                         coe
+                                                                           (coe
+                                                                              MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_280
+                                                                              (coe
+                                                                                 MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
+                                                                                 (coe
+                                                                                    MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_206
+                                                                                    (coe
+                                                                                       MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1390
+                                                                                       (coe v16))))
+                                                                              (coe
+                                                                                 MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_210
+                                                                                 (coe
+                                                                                    MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1390
+                                                                                    (coe v16))))))
+                                                                     (coe
+                                                                        MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)
+                                                                     (coe
+                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
+                                                                  (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
+                                                                     (coe v13)))
+                                                               (coe
+                                                                  MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                  (coe
+                                                                     MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Map_116
+                                                                     (coe
+                                                                        MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
+                                                                     (coe
+                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                                     (coe
+                                                                        MAlonzo.Code.Ledger.Conway.Foreign.Certs.d_Conv'45'StakePoolParams_68))
+                                                                  (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
+                                                                     (coe v14)))
+                                                        _ -> MAlonzo.RTE.mazUnreachableError)))
+                                             v7)
+                                          (coe
+                                             MAlonzo.Code.Foreign.Convertible.d_from_20
+                                             (coe
+                                                MAlonzo.Code.Foreign.Convertible.C_constructor_22
+                                                (coe
+                                                   (\ v11 ->
+                                                      case coe v11 of
+                                                        MAlonzo.Code.Ledger.Conway.Specification.Rewards.C_constructor_3042 v12 v13 v14
+                                                          -> coe
+                                                               MAlonzo.Code.Ledger.Conway.Foreign.Rewards.C_MkSnapshot_1435
+                                                               (coe
+                                                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                                  (coe
+                                                                     MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                     (coe
+                                                                        MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                        (coe
+                                                                           MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                           (coe
+                                                                              MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)
+                                                                           (coe
+                                                                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                                     (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                                        (coe v12))))
+                                                               (coe
+                                                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                                  (coe
+                                                                     MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                     (coe
+                                                                        MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                        (coe
+                                                                           MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                           (coe
+                                                                              MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)
+                                                                           (coe
+                                                                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                                     (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                                        (coe v13))))
+                                                               (coe
+                                                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                                  (coe
+                                                                     MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                     (coe
+                                                                        MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                        (coe
+                                                                           MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                           (coe
+                                                                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                                           (coe
+                                                                              MAlonzo.Code.Ledger.Conway.Foreign.Certs.d_Conv'45'StakePoolParams_68)))
+                                                                     (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                                        (coe v14))))
+                                                        _ -> MAlonzo.RTE.mazUnreachableError))
+                                                (coe
+                                                   (\ v11 ->
+                                                      case coe v11 of
+                                                        MAlonzo.Code.Ledger.Conway.Foreign.Rewards.C_MkSnapshot_1435 v12 v13 v14
+                                                          -> coe
+                                                               MAlonzo.Code.Ledger.Conway.Specification.Rewards.C_constructor_3042
+                                                               (coe
+                                                                  MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                  (coe
+                                                                     MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Map_116
+                                                                     (let v15
+                                                                            = MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20 in
+                                                                      coe
+                                                                        (let v16
+                                                                               = MAlonzo.Code.Ledger.Conway.Foreign.ExternalStructures.d_HSTransactionStructure_682
+                                                                                   (coe v15) in
+                                                                         coe
+                                                                           (coe
+                                                                              MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_280
+                                                                              (coe
+                                                                                 MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
+                                                                                 (coe
+                                                                                    MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_206
+                                                                                    (coe
+                                                                                       MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1390
+                                                                                       (coe v16))))
+                                                                              (coe
+                                                                                 MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_210
+                                                                                 (coe
+                                                                                    MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1390
+                                                                                    (coe v16))))))
+                                                                     (coe
+                                                                        MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)
+                                                                     (coe
+                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
+                                                                  (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
+                                                                     (coe v12)))
+                                                               (coe
+                                                                  MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                  (coe
+                                                                     MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Map_116
+                                                                     (let v15
+                                                                            = MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20 in
+                                                                      coe
+                                                                        (let v16
+                                                                               = MAlonzo.Code.Ledger.Conway.Foreign.ExternalStructures.d_HSTransactionStructure_682
+                                                                                   (coe v15) in
+                                                                         coe
+                                                                           (coe
+                                                                              MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_280
+                                                                              (coe
+                                                                                 MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
+                                                                                 (coe
+                                                                                    MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_206
+                                                                                    (coe
+                                                                                       MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1390
+                                                                                       (coe v16))))
+                                                                              (coe
+                                                                                 MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_210
+                                                                                 (coe
+                                                                                    MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1390
+                                                                                    (coe v16))))))
+                                                                     (coe
+                                                                        MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)
+                                                                     (coe
+                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
+                                                                  (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
+                                                                     (coe v13)))
+                                                               (coe
+                                                                  MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                  (coe
+                                                                     MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Map_116
+                                                                     (coe
+                                                                        MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
+                                                                     (coe
+                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                                     (coe
+                                                                        MAlonzo.Code.Ledger.Conway.Foreign.Certs.d_Conv'45'StakePoolParams_68))
+                                                                  (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
+                                                                     (coe v14)))
+                                                        _ -> MAlonzo.RTE.mazUnreachableError)))
+                                             v8)
+                                          (coe
+                                             MAlonzo.Code.Foreign.Convertible.d_from_20
+                                             (coe
+                                                MAlonzo.Code.Foreign.Convertible.C_constructor_22
+                                                (coe
+                                                   (\ v11 ->
+                                                      case coe v11 of
+                                                        MAlonzo.Code.Ledger.Conway.Specification.Rewards.C_constructor_3042 v12 v13 v14
+                                                          -> coe
+                                                               MAlonzo.Code.Ledger.Conway.Foreign.Rewards.C_MkSnapshot_1435
+                                                               (coe
+                                                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                                  (coe
+                                                                     MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                     (coe
+                                                                        MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                        (coe
+                                                                           MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                           (coe
+                                                                              MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)
+                                                                           (coe
+                                                                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                                     (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                                        (coe v12))))
+                                                               (coe
+                                                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                                  (coe
+                                                                     MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                     (coe
+                                                                        MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                        (coe
+                                                                           MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                           (coe
+                                                                              MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)
+                                                                           (coe
+                                                                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                                     (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                                        (coe v13))))
+                                                               (coe
+                                                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                                  (coe
+                                                                     MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                     (coe
+                                                                        MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                        (coe
+                                                                           MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                           (coe
+                                                                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                                           (coe
+                                                                              MAlonzo.Code.Ledger.Conway.Foreign.Certs.d_Conv'45'StakePoolParams_68)))
+                                                                     (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                                        (coe v14))))
+                                                        _ -> MAlonzo.RTE.mazUnreachableError))
+                                                (coe
+                                                   (\ v11 ->
+                                                      case coe v11 of
+                                                        MAlonzo.Code.Ledger.Conway.Foreign.Rewards.C_MkSnapshot_1435 v12 v13 v14
+                                                          -> coe
+                                                               MAlonzo.Code.Ledger.Conway.Specification.Rewards.C_constructor_3042
+                                                               (coe
+                                                                  MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                  (coe
+                                                                     MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Map_116
+                                                                     (let v15
+                                                                            = MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20 in
+                                                                      coe
+                                                                        (let v16
+                                                                               = MAlonzo.Code.Ledger.Conway.Foreign.ExternalStructures.d_HSTransactionStructure_682
+                                                                                   (coe v15) in
+                                                                         coe
+                                                                           (coe
+                                                                              MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_280
+                                                                              (coe
+                                                                                 MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
+                                                                                 (coe
+                                                                                    MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_206
+                                                                                    (coe
+                                                                                       MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1390
+                                                                                       (coe v16))))
+                                                                              (coe
+                                                                                 MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_210
+                                                                                 (coe
+                                                                                    MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1390
+                                                                                    (coe v16))))))
+                                                                     (coe
+                                                                        MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)
+                                                                     (coe
+                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
+                                                                  (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
+                                                                     (coe v12)))
+                                                               (coe
+                                                                  MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                  (coe
+                                                                     MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Map_116
+                                                                     (let v15
+                                                                            = MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20 in
+                                                                      coe
+                                                                        (let v16
+                                                                               = MAlonzo.Code.Ledger.Conway.Foreign.ExternalStructures.d_HSTransactionStructure_682
+                                                                                   (coe v15) in
+                                                                         coe
+                                                                           (coe
+                                                                              MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_280
+                                                                              (coe
+                                                                                 MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
+                                                                                 (coe
+                                                                                    MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_206
+                                                                                    (coe
+                                                                                       MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1390
+                                                                                       (coe v16))))
+                                                                              (coe
+                                                                                 MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_210
+                                                                                 (coe
+                                                                                    MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1390
+                                                                                    (coe v16))))))
+                                                                     (coe
+                                                                        MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)
+                                                                     (coe
+                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
+                                                                  (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
+                                                                     (coe v13)))
+                                                               (coe
+                                                                  MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                  (coe
+                                                                     MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Map_116
+                                                                     (coe
+                                                                        MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
+                                                                     (coe
+                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                                     (coe
+                                                                        MAlonzo.Code.Ledger.Conway.Foreign.Certs.d_Conv'45'StakePoolParams_68))
+                                                                  (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
+                                                                     (coe v14)))
+                                                        _ -> MAlonzo.RTE.mazUnreachableError)))
+                                             v9)
+                                          (coe v10)
+                                   _ -> MAlonzo.RTE.mazUnreachableError)))
+                        v2)
+                     (coe
+                        MAlonzo.Code.Foreign.Convertible.d_from_20
+                        (coe
+                           MAlonzo.Code.Foreign.Convertible.C_constructor_22
+                           (coe
+                              (\ v6 ->
+                                 case coe v6 of
+                                   MAlonzo.Code.Ledger.Conway.Conformance.Ledger.C_'10214'_'44'_'44'_'10215''737'_2706 v7 v8 v9
+                                     -> coe
+                                          MAlonzo.Code.Ledger.Conway.Foreign.Ledger.C_MkLState_2857
+                                          (coe
+                                             MAlonzo.Code.Ledger.Conway.Foreign.Utxo.C_MkUTxOState_1173
+                                             (coe
+                                                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                (coe
+                                                   MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                   (coe
+                                                      MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                      (coe
+                                                         MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                         (coe
+                                                            MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                            (coe
+                                                               MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                            (coe
+                                                               MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
+                                                         (coe
+                                                            MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                            (coe
+                                                               MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Either_100
+                                                               (coe
+                                                                  MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'BaseAddr_216)
+                                                               (coe
+                                                                  MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'BootstrapAddr_220))
+                                                            (coe
+                                                               MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                               (coe
+                                                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                               (coe
+                                                                  MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                  (coe
+                                                                     MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Maybe_90
+                                                                     (coe
+                                                                        MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Either_100
+                                                                        (coe
+                                                                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                                        (coe
+                                                                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                                  (coe
+                                                                     MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Maybe_90
+                                                                     (coe
+                                                                        MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Either_100
+                                                                        (coe
+                                                                           MAlonzo.Code.Ledger.Conway.Foreign.Transaction.d_Conv'45'HSTimelock_18)
+                                                                        (coe
+                                                                           MAlonzo.Code.Ledger.Conway.Foreign.Transaction.d_Conv'45'HSPlutusScript_22))))))))
+                                                   (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                      (coe
+                                                         MAlonzo.Code.Ledger.Conway.Specification.Utxo.d_utxo_2496
+                                                         (coe v7)))))
+                                             (coe
+                                                MAlonzo.Code.Ledger.Conway.Specification.Utxo.d_fees_2498
+                                                (coe v7))
+                                             (coe
+                                                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                (coe
+                                                   MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                   (coe
+                                                      MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                      (coe
+                                                         MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                         (coe
+                                                            MAlonzo.Code.Ledger.Conway.Foreign.Certs.d_Conv'45'DepositPurpose_72)
+                                                         (coe
+                                                            MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                   (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                      (coe
+                                                         MAlonzo.Code.Ledger.Conway.Specification.Utxo.d_deposits_2500
+                                                         (coe v7)))))
+                                             (coe
+                                                MAlonzo.Code.Ledger.Conway.Specification.Utxo.d_donations_2502
+                                                (coe v7)))
+                                          (coe
+                                             MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                                             MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92
+                                             () erased () erased
+                                             (MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                (coe
+                                                   MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                   (coe
+                                                      MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                      (coe
+                                                         MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                      (coe
+                                                         MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
+                                                   (coe
+                                                      MAlonzo.Code.Ledger.Conway.Foreign.Gov.d_Conv'45'GovActionState_908)))
+                                             v8)
+                                          (coe
+                                             MAlonzo.Code.Ledger.Conway.Foreign.Cert.C_MkCertState_713
+                                             (coe
+                                                MAlonzo.Code.Ledger.Conway.Foreign.Certs.C_MkDState_13305
+                                                (coe
+                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                   (coe
+                                                      MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                      (coe
+                                                         MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                         (coe
+                                                            MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                            (coe
+                                                               MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)
+                                                            (coe
+                                                               MAlonzo.Code.Ledger.Conway.Foreign.Gov.Core.d_Conv'45'VDeleg_32)))
+                                                      (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                         (coe
+                                                            MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_voteDelegs_1580
+                                                            (coe
+                                                               MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dState_1614
+                                                               (coe v9))))))
+                                                (coe
+                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                   (coe
+                                                      MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                      (coe
+                                                         MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                         (coe
+                                                            MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                            (coe
+                                                               MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)
+                                                            (coe
+                                                               MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                      (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                         (coe
+                                                            MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_stakeDelegs_1582
+                                                            (coe
+                                                               MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dState_1614
+                                                               (coe v9))))))
+                                                (coe
+                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                   (coe
+                                                      MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                      (coe
+                                                         MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                         (coe
+                                                            MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                            (coe
+                                                               MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)
+                                                            (coe
+                                                               MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                      (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                         (coe
+                                                            MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_rewards_1584
+                                                            (coe
+                                                               MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dState_1614
+                                                               (coe v9))))))
+                                                (coe
+                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                   (coe
+                                                      MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                      (coe
+                                                         MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                         (coe
+                                                            MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                            (coe
+                                                               MAlonzo.Code.Ledger.Conway.Foreign.Certs.d_Conv'45'DepositPurpose_72)
+                                                            (coe
+                                                               MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                      (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                         (coe
+                                                            MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_deposits_1586
+                                                            (coe
+                                                               MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dState_1614
+                                                               (coe v9)))))))
+                                             (coe
+                                                MAlonzo.Code.Ledger.Conway.Foreign.Certs.C_MkPState_6189
+                                                (coe
+                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                   (coe
+                                                      MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                      (coe
+                                                         MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                         (coe
+                                                            MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                            (coe
+                                                               MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                            (coe
+                                                               MAlonzo.Code.Ledger.Conway.Foreign.Certs.d_Conv'45'StakePoolParams_68)))
+                                                      (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                         (coe
+                                                            MAlonzo.Code.Ledger.Conway.Specification.Certs.d_pools_1426
+                                                            (coe
+                                                               MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_pState_1616
+                                                               (coe v9))))))
+                                                (coe
+                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                   (coe
+                                                      MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                      (coe
+                                                         MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                         (coe
+                                                            MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                            (coe
+                                                               MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                            (coe
+                                                               MAlonzo.Code.Ledger.Conway.Foreign.Certs.d_Conv'45'StakePoolParams_68)))
+                                                      (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                         (coe
+                                                            MAlonzo.Code.Ledger.Conway.Specification.Certs.d_fPools_1428
+                                                            (coe
+                                                               MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_pState_1616
+                                                               (coe v9))))))
+                                                (coe
+                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                   (coe
+                                                      MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                      (coe
+                                                         MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                         (coe
+                                                            MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                            (coe
+                                                               MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                            (coe
+                                                               MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                      (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                         (coe
+                                                            MAlonzo.Code.Ledger.Conway.Specification.Certs.d_retiring_1430
+                                                            (coe
+                                                               MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_pState_1616
+                                                               (coe v9)))))))
+                                             (coe
+                                                MAlonzo.Code.Ledger.Conway.Foreign.Certs.C_MkGState_25129
+                                                (coe
+                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                   (coe
+                                                      MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                      (coe
+                                                         MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                         (coe
+                                                            MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                            (coe
+                                                               MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)
+                                                            (coe
+                                                               MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                      (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                         (coe
+                                                            MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dreps_1598
+                                                            (coe
+                                                               MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_gState_1618
+                                                               (coe v9))))))
+                                                (coe
+                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                   (coe
+                                                      MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                      (coe
+                                                         MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                         (coe
+                                                            MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                            (coe
+                                                               MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)
+                                                            (coe
+                                                               MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Maybe_90
+                                                               (coe
+                                                                  MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212))))
+                                                      (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                         (coe
+                                                            MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_ccHotKeys_1600
+                                                            (coe
+                                                               MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_gState_1618
+                                                               (coe v9))))))
+                                                (coe
+                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                   (coe
+                                                      MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                      (coe
+                                                         MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                         (coe
+                                                            MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                            (coe
+                                                               MAlonzo.Code.Ledger.Conway.Foreign.Certs.d_Conv'45'DepositPurpose_72)
+                                                            (coe
+                                                               MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                      (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                         (coe
+                                                            MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_deposits_1602
+                                                            (coe
+                                                               MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_gState_1618
+                                                               (coe v9))))))))
+                                   _ -> MAlonzo.RTE.mazUnreachableError))
+                           (coe
+                              (\ v6 ->
+                                 case coe v6 of
+                                   MAlonzo.Code.Ledger.Conway.Foreign.Ledger.C_MkLState_2857 v7 v8 v9
+                                     -> coe
+                                          MAlonzo.Code.Ledger.Conway.Conformance.Ledger.C_'10214'_'44'_'44'_'10215''737'_2706
+                                          (coe
+                                             MAlonzo.Code.Foreign.Convertible.d_from_20
+                                             (coe
+                                                MAlonzo.Code.Foreign.Convertible.C_constructor_22
+                                                (coe
+                                                   (\ v10 ->
+                                                      case coe v10 of
+                                                        MAlonzo.Code.Ledger.Conway.Specification.Utxo.C_'10214'_'44'_'44'_'44'_'10215''7512'_2504 v11 v12 v13 v14
+                                                          -> coe
+                                                               MAlonzo.Code.Ledger.Conway.Foreign.Utxo.C_MkUTxOState_1173
+                                                               (coe
+                                                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                                  (coe
+                                                                     MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                     (coe
+                                                                        MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                        (coe
+                                                                           MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                           (coe
+                                                                              MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                              (coe
+                                                                                 MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                                              (coe
+                                                                                 MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
+                                                                           (coe
+                                                                              MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                              (coe
+                                                                                 MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Either_100
+                                                                                 (coe
+                                                                                    MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'BaseAddr_216)
+                                                                                 (coe
+                                                                                    MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'BootstrapAddr_220))
+                                                                              (coe
+                                                                                 MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                 (coe
+                                                                                    MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                                                 (coe
+                                                                                    MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                    (coe
+                                                                                       MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Maybe_90
+                                                                                       (coe
+                                                                                          MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Either_100
+                                                                                          (coe
+                                                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                                                          (coe
+                                                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                                                    (coe
+                                                                                       MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Maybe_90
+                                                                                       (coe
+                                                                                          MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Either_100
+                                                                                          (coe
+                                                                                             MAlonzo.Code.Ledger.Conway.Foreign.Transaction.d_Conv'45'HSTimelock_18)
+                                                                                          (coe
+                                                                                             MAlonzo.Code.Ledger.Conway.Foreign.Transaction.d_Conv'45'HSPlutusScript_22))))))))
+                                                                     (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                                        (coe v11))))
+                                                               (coe v12)
+                                                               (coe
+                                                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                                  (coe
+                                                                     MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                     (coe
+                                                                        MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                        (coe
+                                                                           MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                           (coe
+                                                                              MAlonzo.Code.Ledger.Conway.Foreign.Certs.d_Conv'45'DepositPurpose_72)
+                                                                           (coe
+                                                                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                                     (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                                        (coe v13))))
+                                                               (coe v14)
+                                                        _ -> MAlonzo.RTE.mazUnreachableError))
+                                                (coe
+                                                   (\ v10 ->
+                                                      case coe v10 of
+                                                        MAlonzo.Code.Ledger.Conway.Foreign.Utxo.C_MkUTxOState_1173 v11 v12 v13 v14
+                                                          -> coe
+                                                               MAlonzo.Code.Ledger.Conway.Specification.Utxo.C_'10214'_'44'_'44'_'44'_'10215''7512'_2504
+                                                               (coe
+                                                                  MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                  (coe
+                                                                     MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Map_116
+                                                                     (coe
+                                                                        MAlonzo.Code.Prelude.d_DecEq'45''215''8242'_4
+                                                                        () erased () erased
+                                                                        MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22
+                                                                        MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
+                                                                     (coe
+                                                                        MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                        (coe
+                                                                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                                        (coe
+                                                                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
+                                                                     (coe
+                                                                        MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                        (coe
+                                                                           MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Either_100
+                                                                           (coe
+                                                                              MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'BaseAddr_216)
+                                                                           (coe
+                                                                              MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'BootstrapAddr_220))
+                                                                        (coe
+                                                                           MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                           (coe
+                                                                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                                           (coe
+                                                                              MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                              (coe
+                                                                                 MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Maybe_90
+                                                                                 (coe
+                                                                                    MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Either_100
+                                                                                    (coe
+                                                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                                                    (coe
+                                                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                                              (coe
+                                                                                 MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Maybe_90
+                                                                                 (coe
+                                                                                    MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Either_100
+                                                                                    (coe
+                                                                                       MAlonzo.Code.Ledger.Conway.Foreign.Transaction.d_Conv'45'HSTimelock_18)
+                                                                                    (coe
+                                                                                       MAlonzo.Code.Ledger.Conway.Foreign.Transaction.d_Conv'45'HSPlutusScript_22)))))))
+                                                                  (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
+                                                                     (coe v11)))
+                                                               (coe v12)
+                                                               (coe
+                                                                  MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                  (coe
+                                                                     MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Map_116
+                                                                     (let v15
+                                                                            = MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20 in
+                                                                      coe
+                                                                        (coe
+                                                                           MAlonzo.Code.Ledger.Conway.Specification.Certs.d_DecEq'45'DepositPurpose_1202
+                                                                           (coe
+                                                                              MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_govStructure_2634
+                                                                              (coe
+                                                                                 MAlonzo.Code.Ledger.Conway.Foreign.ExternalStructures.d_HSTransactionStructure_682
+                                                                                 (coe v15)))))
+                                                                     (coe
+                                                                        MAlonzo.Code.Ledger.Conway.Foreign.Certs.d_Conv'45'DepositPurpose_72)
+                                                                     (coe
+                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
+                                                                  (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
+                                                                     (coe v13)))
+                                                               (coe v14)
+                                                        _ -> MAlonzo.RTE.mazUnreachableError)))
+                                             v7)
+                                          (coe
+                                             MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                                             MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92
+                                             () erased () erased
+                                             (MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                (coe
+                                                   MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                   (coe
+                                                      MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                      (coe
+                                                         MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                      (coe
+                                                         MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
+                                                   (coe
+                                                      MAlonzo.Code.Ledger.Conway.Foreign.Gov.d_Conv'45'GovActionState_908)))
+                                             v8)
+                                          (coe
+                                             MAlonzo.Code.Foreign.Convertible.d_from_20
+                                             (coe
+                                                MAlonzo.Code.Foreign.Convertible.C_constructor_22
+                                                (coe
+                                                   (\ v10 ->
+                                                      case coe v10 of
+                                                        MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_'10214'_'44'_'44'_'10215''7580''738'_1620 v11 v12 v13
+                                                          -> coe
+                                                               MAlonzo.Code.Ledger.Conway.Foreign.Cert.C_MkCertState_713
+                                                               (coe
+                                                                  MAlonzo.Code.Ledger.Conway.Foreign.Certs.C_MkDState_13305
+                                                                  (coe
+                                                                     MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                                     (coe
+                                                                        MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                        (coe
+                                                                           MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                           (coe
+                                                                              MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                              (coe
+                                                                                 MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)
+                                                                              (coe
+                                                                                 MAlonzo.Code.Ledger.Conway.Foreign.Gov.Core.d_Conv'45'VDeleg_32)))
+                                                                        (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                                           (coe
+                                                                              MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_voteDelegs_1580
+                                                                              (coe v11)))))
+                                                                  (coe
+                                                                     MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                                     (coe
+                                                                        MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                        (coe
+                                                                           MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                           (coe
+                                                                              MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                              (coe
+                                                                                 MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)
+                                                                              (coe
+                                                                                 MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                                        (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                                           (coe
+                                                                              MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_stakeDelegs_1582
+                                                                              (coe v11)))))
+                                                                  (coe
+                                                                     MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                                     (coe
+                                                                        MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                        (coe
+                                                                           MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                           (coe
+                                                                              MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                              (coe
+                                                                                 MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)
+                                                                              (coe
+                                                                                 MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                                        (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                                           (coe
+                                                                              MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_rewards_1584
+                                                                              (coe v11)))))
+                                                                  (coe
+                                                                     MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                                     (coe
+                                                                        MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                        (coe
+                                                                           MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                           (coe
+                                                                              MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                              (coe
+                                                                                 MAlonzo.Code.Ledger.Conway.Foreign.Certs.d_Conv'45'DepositPurpose_72)
+                                                                              (coe
+                                                                                 MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                                        (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                                           (coe
+                                                                              MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_deposits_1586
+                                                                              (coe v11))))))
+                                                               (coe
+                                                                  MAlonzo.Code.Ledger.Conway.Foreign.Certs.C_MkPState_6189
+                                                                  (coe
+                                                                     MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                                     (coe
+                                                                        MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                        (coe
+                                                                           MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                           (coe
+                                                                              MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                              (coe
+                                                                                 MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                                              (coe
+                                                                                 MAlonzo.Code.Ledger.Conway.Foreign.Certs.d_Conv'45'StakePoolParams_68)))
+                                                                        (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                                           (coe
+                                                                              MAlonzo.Code.Ledger.Conway.Specification.Certs.d_pools_1426
+                                                                              (coe v12)))))
+                                                                  (coe
+                                                                     MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                                     (coe
+                                                                        MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                        (coe
+                                                                           MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                           (coe
+                                                                              MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                              (coe
+                                                                                 MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                                              (coe
+                                                                                 MAlonzo.Code.Ledger.Conway.Foreign.Certs.d_Conv'45'StakePoolParams_68)))
+                                                                        (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                                           (coe
+                                                                              MAlonzo.Code.Ledger.Conway.Specification.Certs.d_fPools_1428
+                                                                              (coe v12)))))
+                                                                  (coe
+                                                                     MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                                     (coe
+                                                                        MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                        (coe
+                                                                           MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                           (coe
+                                                                              MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                              (coe
+                                                                                 MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                                              (coe
+                                                                                 MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                                        (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                                           (coe
+                                                                              MAlonzo.Code.Ledger.Conway.Specification.Certs.d_retiring_1430
+                                                                              (coe v12))))))
+                                                               (coe
+                                                                  MAlonzo.Code.Ledger.Conway.Foreign.Certs.C_MkGState_25129
+                                                                  (coe
+                                                                     MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                                     (coe
+                                                                        MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                        (coe
+                                                                           MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                           (coe
+                                                                              MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                              (coe
+                                                                                 MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)
+                                                                              (coe
+                                                                                 MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                                        (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                                           (coe
+                                                                              MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dreps_1598
+                                                                              (coe v13)))))
+                                                                  (coe
+                                                                     MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                                     (coe
+                                                                        MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                        (coe
+                                                                           MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                           (coe
+                                                                              MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                              (coe
+                                                                                 MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)
+                                                                              (coe
+                                                                                 MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Maybe_90
+                                                                                 (coe
+                                                                                    MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212))))
+                                                                        (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                                           (coe
+                                                                              MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_ccHotKeys_1600
+                                                                              (coe v13)))))
+                                                                  (coe
+                                                                     MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                                     (coe
+                                                                        MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                        (coe
+                                                                           MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                           (coe
+                                                                              MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                              (coe
+                                                                                 MAlonzo.Code.Ledger.Conway.Foreign.Certs.d_Conv'45'DepositPurpose_72)
+                                                                              (coe
+                                                                                 MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                                        (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                                           (coe
+                                                                              MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_deposits_1602
+                                                                              (coe v13))))))
+                                                        _ -> MAlonzo.RTE.mazUnreachableError))
+                                                (coe
+                                                   (\ v10 ->
+                                                      case coe v10 of
+                                                        MAlonzo.Code.Ledger.Conway.Foreign.Cert.C_MkCertState_713 v11 v12 v13
+                                                          -> coe
+                                                               MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_'10214'_'44'_'44'_'10215''7580''738'_1620
+                                                               (coe
+                                                                  MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                  (coe
+                                                                     MAlonzo.Code.Foreign.Convertible.C_constructor_22
+                                                                     (coe
+                                                                        (\ v14 ->
+                                                                           case coe v14 of
+                                                                             MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_'10214'_'44'_'44'_'44'_'10215''7496'_1588 v15 v16 v17 v18
+                                                                               -> coe
+                                                                                    MAlonzo.Code.Ledger.Conway.Foreign.Certs.C_MkDState_13305
+                                                                                    (coe
+                                                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                                                       (coe
+                                                                                          MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                          (coe
+                                                                                             MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                                             (coe
+                                                                                                MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                (coe
+                                                                                                   MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)
+                                                                                                (coe
+                                                                                                   MAlonzo.Code.Ledger.Conway.Foreign.Gov.Core.d_Conv'45'VDeleg_32)))
+                                                                                          (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                                                             (coe
+                                                                                                v15))))
+                                                                                    (coe
+                                                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                                                       (coe
+                                                                                          MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                          (coe
+                                                                                             MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                                             (coe
+                                                                                                MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                (coe
+                                                                                                   MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)
+                                                                                                (coe
+                                                                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                                                          (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                                                             (coe
+                                                                                                v16))))
+                                                                                    (coe
+                                                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                                                       (coe
+                                                                                          MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                          (coe
+                                                                                             MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                                             (coe
+                                                                                                MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                (coe
+                                                                                                   MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)
+                                                                                                (coe
+                                                                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                                                          (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                                                             (coe
+                                                                                                v17))))
+                                                                                    (coe
+                                                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                                                       (coe
+                                                                                          MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                          (coe
+                                                                                             MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                                             (coe
+                                                                                                MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                (coe
+                                                                                                   MAlonzo.Code.Ledger.Conway.Foreign.Certs.d_Conv'45'DepositPurpose_72)
+                                                                                                (coe
+                                                                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                                                          (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                                                             (coe
+                                                                                                v18))))
+                                                                             _ -> MAlonzo.RTE.mazUnreachableError))
+                                                                     (coe
+                                                                        (\ v14 ->
+                                                                           case coe v14 of
+                                                                             MAlonzo.Code.Ledger.Conway.Foreign.Certs.C_MkDState_13305 v15 v16 v17 v18
+                                                                               -> coe
+                                                                                    MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_'10214'_'44'_'44'_'44'_'10215''7496'_1588
+                                                                                    (coe
+                                                                                       MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                                       (coe
+                                                                                          MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Map_116
+                                                                                          (let v19
+                                                                                                 = MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20 in
+                                                                                           coe
+                                                                                             (let v20
+                                                                                                    = MAlonzo.Code.Ledger.Conway.Foreign.ExternalStructures.d_HSTransactionStructure_682
+                                                                                                        (coe
+                                                                                                           v19) in
+                                                                                              coe
+                                                                                                (coe
+                                                                                                   MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_280
+                                                                                                   (coe
+                                                                                                      MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
+                                                                                                      (coe
+                                                                                                         MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_206
+                                                                                                         (coe
+                                                                                                            MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1390
+                                                                                                            (coe
+                                                                                                               v20))))
+                                                                                                   (coe
+                                                                                                      MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_210
+                                                                                                      (coe
+                                                                                                         MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1390
+                                                                                                         (coe
+                                                                                                            v20))))))
+                                                                                          (coe
+                                                                                             MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)
+                                                                                          (coe
+                                                                                             MAlonzo.Code.Ledger.Conway.Foreign.Gov.Core.d_Conv'45'VDeleg_32))
+                                                                                       (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
+                                                                                          (coe
+                                                                                             v15)))
+                                                                                    (coe
+                                                                                       MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                                       (coe
+                                                                                          MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Map_116
+                                                                                          (let v19
+                                                                                                 = MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20 in
+                                                                                           coe
+                                                                                             (let v20
+                                                                                                    = MAlonzo.Code.Ledger.Conway.Foreign.ExternalStructures.d_HSTransactionStructure_682
+                                                                                                        (coe
+                                                                                                           v19) in
+                                                                                              coe
+                                                                                                (coe
+                                                                                                   MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_280
+                                                                                                   (coe
+                                                                                                      MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
+                                                                                                      (coe
+                                                                                                         MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_206
+                                                                                                         (coe
+                                                                                                            MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1390
+                                                                                                            (coe
+                                                                                                               v20))))
+                                                                                                   (coe
+                                                                                                      MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_210
+                                                                                                      (coe
+                                                                                                         MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1390
+                                                                                                         (coe
+                                                                                                            v20))))))
+                                                                                          (coe
+                                                                                             MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)
+                                                                                          (coe
+                                                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
+                                                                                       (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
+                                                                                          (coe
+                                                                                             v16)))
+                                                                                    (coe
+                                                                                       MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                                       (coe
+                                                                                          MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Map_116
+                                                                                          (let v19
+                                                                                                 = MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20 in
+                                                                                           coe
+                                                                                             (let v20
+                                                                                                    = MAlonzo.Code.Ledger.Conway.Foreign.ExternalStructures.d_HSTransactionStructure_682
+                                                                                                        (coe
+                                                                                                           v19) in
+                                                                                              coe
+                                                                                                (coe
+                                                                                                   MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_280
+                                                                                                   (coe
+                                                                                                      MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
+                                                                                                      (coe
+                                                                                                         MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_206
+                                                                                                         (coe
+                                                                                                            MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1390
+                                                                                                            (coe
+                                                                                                               v20))))
+                                                                                                   (coe
+                                                                                                      MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_210
+                                                                                                      (coe
+                                                                                                         MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1390
+                                                                                                         (coe
+                                                                                                            v20))))))
+                                                                                          (coe
+                                                                                             MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)
+                                                                                          (coe
+                                                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
+                                                                                       (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
+                                                                                          (coe
+                                                                                             v17)))
+                                                                                    (coe
+                                                                                       MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                                       (coe
+                                                                                          MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Map_116
+                                                                                          (let v19
+                                                                                                 = MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20 in
+                                                                                           coe
+                                                                                             (coe
+                                                                                                MAlonzo.Code.Ledger.Conway.Specification.Certs.d_DecEq'45'DepositPurpose_1202
+                                                                                                (coe
+                                                                                                   MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_govStructure_2634
+                                                                                                   (coe
+                                                                                                      MAlonzo.Code.Ledger.Conway.Foreign.ExternalStructures.d_HSTransactionStructure_682
+                                                                                                      (coe
+                                                                                                         v19)))))
+                                                                                          (coe
+                                                                                             MAlonzo.Code.Ledger.Conway.Foreign.Certs.d_Conv'45'DepositPurpose_72)
+                                                                                          (coe
+                                                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
+                                                                                       (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
+                                                                                          (coe
+                                                                                             v18)))
+                                                                             _ -> MAlonzo.RTE.mazUnreachableError)))
+                                                                  v11)
+                                                               (coe
+                                                                  MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                  (coe
+                                                                     MAlonzo.Code.Foreign.Convertible.C_constructor_22
+                                                                     (coe
+                                                                        (\ v14 ->
+                                                                           case coe v14 of
+                                                                             MAlonzo.Code.Ledger.Conway.Specification.Certs.C_constructor_1432 v15 v16 v17
+                                                                               -> coe
+                                                                                    MAlonzo.Code.Ledger.Conway.Foreign.Certs.C_MkPState_6189
+                                                                                    (coe
+                                                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                                                       (coe
+                                                                                          MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                          (coe
+                                                                                             MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                                             (coe
+                                                                                                MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                (coe
+                                                                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                                                                (coe
+                                                                                                   MAlonzo.Code.Ledger.Conway.Foreign.Certs.d_Conv'45'StakePoolParams_68)))
+                                                                                          (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                                                             (coe
+                                                                                                v15))))
+                                                                                    (coe
+                                                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                                                       (coe
+                                                                                          MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                          (coe
+                                                                                             MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                                             (coe
+                                                                                                MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                (coe
+                                                                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                                                                (coe
+                                                                                                   MAlonzo.Code.Ledger.Conway.Foreign.Certs.d_Conv'45'StakePoolParams_68)))
+                                                                                          (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                                                             (coe
+                                                                                                v16))))
+                                                                                    (coe
+                                                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                                                       (coe
+                                                                                          MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                          (coe
+                                                                                             MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                                             (coe
+                                                                                                MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                (coe
+                                                                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                                                                (coe
+                                                                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                                                          (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                                                             (coe
+                                                                                                v17))))
+                                                                             _ -> MAlonzo.RTE.mazUnreachableError))
+                                                                     (coe
+                                                                        (\ v14 ->
+                                                                           case coe v14 of
+                                                                             MAlonzo.Code.Ledger.Conway.Foreign.Certs.C_MkPState_6189 v15 v16 v17
+                                                                               -> coe
+                                                                                    MAlonzo.Code.Ledger.Conway.Specification.Certs.C_constructor_1432
+                                                                                    (coe
+                                                                                       MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                                       (coe
+                                                                                          MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Map_116
+                                                                                          (coe
+                                                                                             MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
+                                                                                          (coe
+                                                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                                                          (coe
+                                                                                             MAlonzo.Code.Ledger.Conway.Foreign.Certs.d_Conv'45'StakePoolParams_68))
+                                                                                       (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
+                                                                                          (coe
+                                                                                             v15)))
+                                                                                    (coe
+                                                                                       MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                                       (coe
+                                                                                          MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Map_116
+                                                                                          (coe
+                                                                                             MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
+                                                                                          (coe
+                                                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                                                          (coe
+                                                                                             MAlonzo.Code.Ledger.Conway.Foreign.Certs.d_Conv'45'StakePoolParams_68))
+                                                                                       (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
+                                                                                          (coe
+                                                                                             v16)))
+                                                                                    (coe
+                                                                                       MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                                       (coe
+                                                                                          MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Map_116
+                                                                                          (coe
+                                                                                             MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
+                                                                                          (coe
+                                                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                                                          (coe
+                                                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
+                                                                                       (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
+                                                                                          (coe
+                                                                                             v17)))
+                                                                             _ -> MAlonzo.RTE.mazUnreachableError)))
+                                                                  v12)
+                                                               (coe
+                                                                  MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                  (coe
+                                                                     MAlonzo.Code.Foreign.Convertible.C_constructor_22
+                                                                     (coe
+                                                                        (\ v14 ->
+                                                                           case coe v14 of
+                                                                             MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_'10214'_'44'_'44'_'10215''7515'_1604 v15 v16 v17
+                                                                               -> coe
+                                                                                    MAlonzo.Code.Ledger.Conway.Foreign.Certs.C_MkGState_25129
+                                                                                    (coe
+                                                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                                                       (coe
+                                                                                          MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                          (coe
+                                                                                             MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                                             (coe
+                                                                                                MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                (coe
+                                                                                                   MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)
+                                                                                                (coe
+                                                                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                                                          (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                                                             (coe
+                                                                                                v15))))
+                                                                                    (coe
+                                                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                                                       (coe
+                                                                                          MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                          (coe
+                                                                                             MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                                             (coe
+                                                                                                MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                (coe
+                                                                                                   MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)
+                                                                                                (coe
+                                                                                                   MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Maybe_90
+                                                                                                   (coe
+                                                                                                      MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212))))
+                                                                                          (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                                                             (coe
+                                                                                                v16))))
+                                                                                    (coe
+                                                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                                                       (coe
+                                                                                          MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                          (coe
+                                                                                             MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                                             (coe
+                                                                                                MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                (coe
+                                                                                                   MAlonzo.Code.Ledger.Conway.Foreign.Certs.d_Conv'45'DepositPurpose_72)
+                                                                                                (coe
+                                                                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                                                          (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                                                             (coe
+                                                                                                v17))))
+                                                                             _ -> MAlonzo.RTE.mazUnreachableError))
+                                                                     (coe
+                                                                        (\ v14 ->
+                                                                           case coe v14 of
+                                                                             MAlonzo.Code.Ledger.Conway.Foreign.Certs.C_MkGState_25129 v15 v16 v17
+                                                                               -> coe
+                                                                                    MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_'10214'_'44'_'44'_'10215''7515'_1604
+                                                                                    (coe
+                                                                                       MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                                       (coe
+                                                                                          MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Map_116
+                                                                                          (let v18
+                                                                                                 = MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20 in
+                                                                                           coe
+                                                                                             (let v19
+                                                                                                    = MAlonzo.Code.Ledger.Conway.Foreign.ExternalStructures.d_HSTransactionStructure_682
+                                                                                                        (coe
+                                                                                                           v18) in
+                                                                                              coe
+                                                                                                (coe
+                                                                                                   MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_280
+                                                                                                   (coe
+                                                                                                      MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
+                                                                                                      (coe
+                                                                                                         MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_206
+                                                                                                         (coe
+                                                                                                            MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1390
+                                                                                                            (coe
+                                                                                                               v19))))
+                                                                                                   (coe
+                                                                                                      MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_210
+                                                                                                      (coe
+                                                                                                         MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1390
+                                                                                                         (coe
+                                                                                                            v19))))))
+                                                                                          (coe
+                                                                                             MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)
+                                                                                          (coe
+                                                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
+                                                                                       (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
+                                                                                          (coe
+                                                                                             v15)))
+                                                                                    (coe
+                                                                                       MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                                       (coe
+                                                                                          MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Map_116
+                                                                                          (let v18
+                                                                                                 = MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20 in
+                                                                                           coe
+                                                                                             (let v19
+                                                                                                    = MAlonzo.Code.Ledger.Conway.Foreign.ExternalStructures.d_HSTransactionStructure_682
+                                                                                                        (coe
+                                                                                                           v18) in
+                                                                                              coe
+                                                                                                (coe
+                                                                                                   MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_280
+                                                                                                   (coe
+                                                                                                      MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
+                                                                                                      (coe
+                                                                                                         MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_206
+                                                                                                         (coe
+                                                                                                            MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1390
+                                                                                                            (coe
+                                                                                                               v19))))
+                                                                                                   (coe
+                                                                                                      MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_210
+                                                                                                      (coe
+                                                                                                         MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1390
+                                                                                                         (coe
+                                                                                                            v19))))))
+                                                                                          (coe
+                                                                                             MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)
+                                                                                          (coe
+                                                                                             MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Maybe_90
+                                                                                             (coe
+                                                                                                MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)))
+                                                                                       (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
+                                                                                          (coe
+                                                                                             v16)))
+                                                                                    (coe
+                                                                                       MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                                       (coe
+                                                                                          MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Map_116
+                                                                                          (let v18
+                                                                                                 = MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20 in
+                                                                                           coe
+                                                                                             (coe
+                                                                                                MAlonzo.Code.Ledger.Conway.Specification.Certs.d_DecEq'45'DepositPurpose_1202
+                                                                                                (coe
+                                                                                                   MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_govStructure_2634
+                                                                                                   (coe
+                                                                                                      MAlonzo.Code.Ledger.Conway.Foreign.ExternalStructures.d_HSTransactionStructure_682
+                                                                                                      (coe
+                                                                                                         v18)))))
+                                                                                          (coe
+                                                                                             MAlonzo.Code.Ledger.Conway.Foreign.Certs.d_Conv'45'DepositPurpose_72)
+                                                                                          (coe
+                                                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
+                                                                                       (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
+                                                                                          (coe
+                                                                                             v17)))
+                                                                             _ -> MAlonzo.RTE.mazUnreachableError)))
+                                                                  v13)
+                                                        _ -> MAlonzo.RTE.mazUnreachableError)))
+                                             v9)
+                                   _ -> MAlonzo.RTE.mazUnreachableError)))
+                        v3)
+                     (coe
+                        MAlonzo.Code.Foreign.Convertible.d_from_20
+                        (coe
+                           MAlonzo.Code.Foreign.Convertible.C_constructor_22
+                           (coe
+                              (\ v6 ->
+                                 case coe v6 of
+                                   MAlonzo.Code.Ledger.Conway.Specification.Enact.C_constructor_1188 v7 v8 v9 v10 v11
+                                     -> coe
+                                          MAlonzo.Code.Ledger.Conway.Foreign.Enact.C_MkEnactState_161
+                                          (coe
+                                             MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44 ()
+                                             erased () erased
+                                             (coe
+                                                MAlonzo.Code.Foreign.Haskell.Coerce.du_pair'45'toFFI_92)
+                                             (coe
+                                                MAlonzo.Code.Data.Product.Base.du_map_128
+                                                (coe
+                                                   MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                   (coe
+                                                      MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Maybe_90
+                                                      (coe
+                                                         MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                         (coe
+                                                            MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.du_Conv'45'HSMap_102
+                                                            (let v12
+                                                                   = MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20 in
+                                                             coe
+                                                               (let v13
+                                                                      = MAlonzo.Code.Ledger.Conway.Foreign.ExternalStructures.d_HSTransactionStructure_682
+                                                                          (coe v12) in
+                                                                coe
+                                                                  (coe
+                                                                     MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_280
+                                                                     (coe
+                                                                        MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
+                                                                        (coe
+                                                                           MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_206
+                                                                           (coe
+                                                                              MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1390
+                                                                              (coe v13))))
+                                                                     (coe
+                                                                        MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_210
+                                                                        (coe
+                                                                           MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1390
+                                                                           (coe v13))))))
+                                                            (coe
+                                                               MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)
+                                                            (coe
+                                                               MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
+                                                         (coe
+                                                            MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_28))))
+                                                (coe
+                                                   (\ v12 ->
+                                                      MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                        (coe
+                                                           MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                           (coe
+                                                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                           (coe
+                                                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
+                                                (coe v7)))
+                                          (coe
+                                             MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44 ()
+                                             erased () erased
+                                             (coe
+                                                MAlonzo.Code.Foreign.Haskell.Coerce.du_pair'45'toFFI_92)
+                                             (coe
+                                                MAlonzo.Code.Data.Product.Base.du_map_128
+                                                (coe
+                                                   MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                   (coe
+                                                      MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                      (coe
+                                                         MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                      (coe
+                                                         MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Maybe_90
+                                                         (coe
+                                                            MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
+                                                (coe
+                                                   (\ v12 ->
+                                                      MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                        (coe
+                                                           MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                           (coe
+                                                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                           (coe
+                                                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
+                                                (coe v8)))
+                                          (coe
+                                             MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44 ()
+                                             erased () erased
+                                             (coe
+                                                MAlonzo.Code.Foreign.Haskell.Coerce.du_pair'45'toFFI_92)
+                                             (coe
+                                                MAlonzo.Code.Data.Product.Base.du_map_128
+                                                (coe
+                                                   MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                   (coe
+                                                      MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                      (coe
+                                                         MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                      (coe
+                                                         MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                (coe
+                                                   (\ v12 ->
+                                                      MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                        (coe
+                                                           MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                           (coe
+                                                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                           (coe
+                                                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
+                                                (coe v9)))
+                                          (coe
+                                             MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44 ()
+                                             erased () erased
+                                             (coe
+                                                MAlonzo.Code.Foreign.Haskell.Coerce.du_pair'45'toFFI_92)
+                                             (coe
+                                                MAlonzo.Code.Data.Product.Base.du_map_128
+                                                (coe
+                                                   MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                   (coe
+                                                      MAlonzo.Code.Ledger.Conway.Foreign.PParams.d_Conv'45'PParams_26))
+                                                (coe
+                                                   (\ v12 ->
+                                                      MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                        (coe
+                                                           MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                           (coe
+                                                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                           (coe
+                                                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
+                                                (coe v10)))
+                                          (coe
+                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                             (coe
+                                                MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                (coe
+                                                   MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                   (coe
+                                                      MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                      (coe
+                                                         MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'RewardAddress_224)
+                                                      (coe
+                                                         MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                   (coe v11))))
+                                   _ -> MAlonzo.RTE.mazUnreachableError))
+                           (coe
+                              (\ v6 ->
+                                 case coe v6 of
+                                   MAlonzo.Code.Ledger.Conway.Foreign.Enact.C_MkEnactState_161 v7 v8 v9 v10 v11
+                                     -> coe
+                                          MAlonzo.Code.Ledger.Conway.Specification.Enact.C_constructor_1188
+                                          (coe
+                                             MAlonzo.Code.Data.Product.Base.du_map_128
+                                             (coe
+                                                MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                (coe
+                                                   MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Maybe_90
+                                                   (coe
+                                                      MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                      (coe
+                                                         MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.du_Conv'45'HSMap_102
+                                                         (let v12
+                                                                = MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20 in
+                                                          coe
+                                                            (let v13
+                                                                   = MAlonzo.Code.Ledger.Conway.Foreign.ExternalStructures.d_HSTransactionStructure_682
+                                                                       (coe v12) in
+                                                             coe
+                                                               (coe
+                                                                  MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_280
+                                                                  (coe
+                                                                     MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
+                                                                     (coe
+                                                                        MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_206
+                                                                        (coe
+                                                                           MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1390
+                                                                           (coe v13))))
+                                                                  (coe
+                                                                     MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_210
+                                                                     (coe
+                                                                        MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1390
+                                                                        (coe v13))))))
+                                                         (coe
+                                                            MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)
+                                                         (coe
+                                                            MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
+                                                      (coe
+                                                         MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_28))))
+                                             (coe
+                                                (\ v12 ->
+                                                   MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                     (coe
+                                                        MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                        (coe
+                                                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                        (coe
+                                                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
+                                             (coe
+                                                MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44 ()
+                                                erased () erased
+                                                (coe
+                                                   MAlonzo.Code.Foreign.Haskell.Coerce.C_TrustMe_40)
+                                                v7))
+                                          (coe
+                                             MAlonzo.Code.Data.Product.Base.du_map_128
+                                             (coe
+                                                MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                (coe
+                                                   MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                   (coe
+                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                   (coe
+                                                      MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Maybe_90
+                                                      (coe
+                                                         MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
+                                             (coe
+                                                (\ v12 ->
+                                                   MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                     (coe
+                                                        MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                        (coe
+                                                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                        (coe
+                                                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
+                                             (coe
+                                                MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44 ()
+                                                erased () erased
+                                                (coe
+                                                   MAlonzo.Code.Foreign.Haskell.Coerce.C_TrustMe_40)
+                                                v8))
+                                          (coe
+                                             MAlonzo.Code.Data.Product.Base.du_map_128
+                                             (coe
+                                                MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                (coe
+                                                   MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                   (coe
+                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                   (coe
+                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                             (coe
+                                                (\ v12 ->
+                                                   MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                     (coe
+                                                        MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                        (coe
+                                                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                        (coe
+                                                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
+                                             (coe
+                                                MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44 ()
+                                                erased () erased
+                                                (coe
+                                                   MAlonzo.Code.Foreign.Haskell.Coerce.C_TrustMe_40)
+                                                v9))
+                                          (coe
+                                             MAlonzo.Code.Data.Product.Base.du_map_128
+                                             (coe
+                                                MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                (coe
+                                                   MAlonzo.Code.Ledger.Conway.Foreign.PParams.d_Conv'45'PParams_26))
+                                             (coe
+                                                (\ v12 ->
+                                                   MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                     (coe
+                                                        MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                        (coe
+                                                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                        (coe
+                                                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
+                                             (coe
+                                                MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44 ()
+                                                erased () erased
+                                                (coe
+                                                   MAlonzo.Code.Foreign.Haskell.Coerce.C_TrustMe_40)
+                                                v10))
+                                          (coe
+                                             MAlonzo.Code.Foreign.Convertible.d_from_20
+                                             (coe
+                                                MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Map_116
+                                                (let v12
+                                                       = MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20 in
+                                                 coe
+                                                   (let v13
+                                                          = MAlonzo.Code.Ledger.Conway.Foreign.ExternalStructures.d_HSTransactionStructure_682
+                                                              (coe v12) in
+                                                    coe
+                                                      (coe
+                                                         MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'RewardAddress_338
+                                                         (coe
+                                                            MAlonzo.Code.Ledger.Core.Specification.Epoch.d_DecEq'45'Netw_320
+                                                            (coe
+                                                               MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_globalConstants_1356
+                                                               (coe v13)))
+                                                         (coe
+                                                            MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
+                                                            (coe
+                                                               MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_206
+                                                               (coe
+                                                                  MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1390
+                                                                  (coe v13))))
+                                                         (coe
+                                                            MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_210
+                                                            (coe
+                                                               MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1390
+                                                               (coe v13))))))
+                                                (coe
+                                                   MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'RewardAddress_224)
+                                                (coe
+                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
+                                             (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
+                                                (coe v11)))
+                                   _ -> MAlonzo.RTE.mazUnreachableError)))
+                        v4)
+                     (coe
+                        MAlonzo.Code.Foreign.Convertible.d_from_20
+                        (coe
+                           MAlonzo.Code.Foreign.Convertible.C_constructor_22
+                           (coe
+                              (\ v6 ->
+                                 case coe v6 of
+                                   MAlonzo.Code.Ledger.Conway.Specification.Ratify.C_constructor_1904 v7 v8 v9
+                                     -> coe
+                                          MAlonzo.Code.Ledger.Conway.Foreign.Ratify.C_MkRatifyState_12499
+                                          (coe
+                                             MAlonzo.Code.Ledger.Conway.Foreign.Enact.C_MkEnactState_161
+                                             (coe
+                                                MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44 ()
+                                                erased () erased
+                                                (coe
+                                                   MAlonzo.Code.Foreign.Haskell.Coerce.du_pair'45'toFFI_92)
+                                                (coe
+                                                   MAlonzo.Code.Data.Product.Base.du_map_128
+                                                   (coe
+                                                      MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                      (coe
+                                                         MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Maybe_90
+                                                         (coe
+                                                            MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                            (coe
+                                                               MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.du_Conv'45'HSMap_102
+                                                               (let v10
+                                                                      = MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20 in
+                                                                coe
+                                                                  (let v11
+                                                                         = MAlonzo.Code.Ledger.Conway.Foreign.ExternalStructures.d_HSTransactionStructure_682
+                                                                             (coe v10) in
+                                                                   coe
+                                                                     (coe
+                                                                        MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_280
+                                                                        (coe
+                                                                           MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
+                                                                           (coe
+                                                                              MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_206
+                                                                              (coe
+                                                                                 MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1390
+                                                                                 (coe v11))))
+                                                                        (coe
+                                                                           MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_210
+                                                                           (coe
+                                                                              MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1390
+                                                                              (coe v11))))))
+                                                               (coe
+                                                                  MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)
+                                                               (coe
+                                                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
+                                                            (coe
+                                                               MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_28))))
+                                                   (coe
+                                                      (\ v10 ->
+                                                         MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                           (coe
+                                                              MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                              (coe
+                                                                 MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                              (coe
+                                                                 MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
+                                                   (coe
+                                                      MAlonzo.Code.Ledger.Conway.Specification.Enact.d_cc_1178
+                                                      (coe v7))))
+                                             (coe
+                                                MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44 ()
+                                                erased () erased
+                                                (coe
+                                                   MAlonzo.Code.Foreign.Haskell.Coerce.du_pair'45'toFFI_92)
+                                                (coe
+                                                   MAlonzo.Code.Data.Product.Base.du_map_128
+                                                   (coe
+                                                      MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                      (coe
+                                                         MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                         (coe
+                                                            MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                         (coe
+                                                            MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Maybe_90
+                                                            (coe
+                                                               MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
+                                                   (coe
+                                                      (\ v10 ->
+                                                         MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                           (coe
+                                                              MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                              (coe
+                                                                 MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                              (coe
+                                                                 MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
+                                                   (coe
+                                                      MAlonzo.Code.Ledger.Conway.Specification.Enact.d_constitution_1180
+                                                      (coe v7))))
+                                             (coe
+                                                MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44 ()
+                                                erased () erased
+                                                (coe
+                                                   MAlonzo.Code.Foreign.Haskell.Coerce.du_pair'45'toFFI_92)
+                                                (coe
+                                                   MAlonzo.Code.Data.Product.Base.du_map_128
+                                                   (coe
+                                                      MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                      (coe
+                                                         MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                         (coe
+                                                            MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                         (coe
+                                                            MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                   (coe
+                                                      (\ v10 ->
+                                                         MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                           (coe
+                                                              MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                              (coe
+                                                                 MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                              (coe
+                                                                 MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
+                                                   (coe
+                                                      MAlonzo.Code.Ledger.Conway.Specification.Enact.d_pv_1182
+                                                      (coe v7))))
+                                             (coe
+                                                MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44 ()
+                                                erased () erased
+                                                (coe
+                                                   MAlonzo.Code.Foreign.Haskell.Coerce.du_pair'45'toFFI_92)
+                                                (coe
+                                                   MAlonzo.Code.Data.Product.Base.du_map_128
+                                                   (coe
+                                                      MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                      (coe
+                                                         MAlonzo.Code.Ledger.Conway.Foreign.PParams.d_Conv'45'PParams_26))
+                                                   (coe
+                                                      (\ v10 ->
+                                                         MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                           (coe
+                                                              MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                              (coe
+                                                                 MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                              (coe
+                                                                 MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
+                                                   (coe
+                                                      MAlonzo.Code.Ledger.Conway.Specification.Enact.d_pparams_1184
+                                                      (coe v7))))
+                                             (coe
+                                                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                (coe
+                                                   MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                   (coe
+                                                      MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                      (coe
+                                                         MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                         (coe
+                                                            MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'RewardAddress_224)
+                                                         (coe
+                                                            MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                   (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                      (coe
+                                                         MAlonzo.Code.Ledger.Conway.Specification.Enact.d_withdrawals_1186
+                                                         (coe v7))))))
+                                          (coe
+                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSSet_68
+                                             (coe
+                                                MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                (coe
+                                                   MAlonzo.Code.Foreign.Convertible.du_Convertible'45'List_120
+                                                   (coe
+                                                      MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                      (coe
+                                                         MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                         (coe
+                                                            MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                         (coe
+                                                            MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
+                                                      (coe
+                                                         MAlonzo.Code.Ledger.Conway.Foreign.Gov.d_Conv'45'GovActionState_908)))
+                                                v8))
+                                          (coe v9)
+                                   _ -> MAlonzo.RTE.mazUnreachableError))
+                           (coe
+                              (\ v6 ->
+                                 case coe v6 of
+                                   MAlonzo.Code.Ledger.Conway.Foreign.Ratify.C_MkRatifyState_12499 v7 v8 v9
+                                     -> coe
+                                          MAlonzo.Code.Ledger.Conway.Specification.Ratify.C_constructor_1904
+                                          (coe
+                                             MAlonzo.Code.Foreign.Convertible.d_from_20
+                                             (coe
+                                                MAlonzo.Code.Foreign.Convertible.C_constructor_22
+                                                (coe
+                                                   (\ v10 ->
+                                                      case coe v10 of
+                                                        MAlonzo.Code.Ledger.Conway.Specification.Enact.C_constructor_1188 v11 v12 v13 v14 v15
+                                                          -> coe
+                                                               MAlonzo.Code.Ledger.Conway.Foreign.Enact.C_MkEnactState_161
+                                                               (coe
+                                                                  MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44
+                                                                  () erased () erased
+                                                                  (coe
+                                                                     MAlonzo.Code.Foreign.Haskell.Coerce.du_pair'45'toFFI_92)
+                                                                  (coe
+                                                                     MAlonzo.Code.Data.Product.Base.du_map_128
+                                                                     (coe
+                                                                        MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                        (coe
+                                                                           MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Maybe_90
+                                                                           (coe
+                                                                              MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                              (coe
+                                                                                 MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.du_Conv'45'HSMap_102
+                                                                                 (let v16
+                                                                                        = MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20 in
+                                                                                  coe
+                                                                                    (let v17
+                                                                                           = MAlonzo.Code.Ledger.Conway.Foreign.ExternalStructures.d_HSTransactionStructure_682
+                                                                                               (coe
+                                                                                                  v16) in
+                                                                                     coe
+                                                                                       (coe
+                                                                                          MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_280
+                                                                                          (coe
+                                                                                             MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
+                                                                                             (coe
+                                                                                                MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_206
+                                                                                                (coe
+                                                                                                   MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1390
+                                                                                                   (coe
+                                                                                                      v17))))
+                                                                                          (coe
+                                                                                             MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_210
+                                                                                             (coe
+                                                                                                MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1390
+                                                                                                (coe
+                                                                                                   v17))))))
+                                                                                 (coe
+                                                                                    MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)
+                                                                                 (coe
+                                                                                    MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
+                                                                              (coe
+                                                                                 MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_28))))
+                                                                     (coe
+                                                                        (\ v16 ->
+                                                                           MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                             (coe
+                                                                                MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                (coe
+                                                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                                                (coe
+                                                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
+                                                                     (coe v11)))
+                                                               (coe
+                                                                  MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44
+                                                                  () erased () erased
+                                                                  (coe
+                                                                     MAlonzo.Code.Foreign.Haskell.Coerce.du_pair'45'toFFI_92)
+                                                                  (coe
+                                                                     MAlonzo.Code.Data.Product.Base.du_map_128
+                                                                     (coe
+                                                                        MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                        (coe
+                                                                           MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                           (coe
+                                                                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                                           (coe
+                                                                              MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Maybe_90
+                                                                              (coe
+                                                                                 MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
+                                                                     (coe
+                                                                        (\ v16 ->
+                                                                           MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                             (coe
+                                                                                MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                (coe
+                                                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                                                (coe
+                                                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
+                                                                     (coe v12)))
+                                                               (coe
+                                                                  MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44
+                                                                  () erased () erased
+                                                                  (coe
+                                                                     MAlonzo.Code.Foreign.Haskell.Coerce.du_pair'45'toFFI_92)
+                                                                  (coe
+                                                                     MAlonzo.Code.Data.Product.Base.du_map_128
+                                                                     (coe
+                                                                        MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                        (coe
+                                                                           MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                           (coe
+                                                                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                                           (coe
+                                                                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                                     (coe
+                                                                        (\ v16 ->
+                                                                           MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                             (coe
+                                                                                MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                (coe
+                                                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                                                (coe
+                                                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
+                                                                     (coe v13)))
+                                                               (coe
+                                                                  MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44
+                                                                  () erased () erased
+                                                                  (coe
+                                                                     MAlonzo.Code.Foreign.Haskell.Coerce.du_pair'45'toFFI_92)
+                                                                  (coe
+                                                                     MAlonzo.Code.Data.Product.Base.du_map_128
+                                                                     (coe
+                                                                        MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                        (coe
+                                                                           MAlonzo.Code.Ledger.Conway.Foreign.PParams.d_Conv'45'PParams_26))
+                                                                     (coe
+                                                                        (\ v16 ->
+                                                                           MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                             (coe
+                                                                                MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                (coe
+                                                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                                                (coe
+                                                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
+                                                                     (coe v14)))
+                                                               (coe
+                                                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                                  (coe
+                                                                     MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                     (coe
+                                                                        MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                        (coe
+                                                                           MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                           (coe
+                                                                              MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'RewardAddress_224)
+                                                                           (coe
+                                                                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                                     (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                                        (coe v15))))
+                                                        _ -> MAlonzo.RTE.mazUnreachableError))
+                                                (coe
+                                                   (\ v10 ->
+                                                      case coe v10 of
+                                                        MAlonzo.Code.Ledger.Conway.Foreign.Enact.C_MkEnactState_161 v11 v12 v13 v14 v15
+                                                          -> coe
+                                                               MAlonzo.Code.Ledger.Conway.Specification.Enact.C_constructor_1188
+                                                               (coe
+                                                                  MAlonzo.Code.Data.Product.Base.du_map_128
+                                                                  (coe
+                                                                     MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                     (coe
+                                                                        MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Maybe_90
+                                                                        (coe
+                                                                           MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                           (coe
+                                                                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.du_Conv'45'HSMap_102
+                                                                              (let v16
+                                                                                     = MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20 in
+                                                                               coe
+                                                                                 (let v17
+                                                                                        = MAlonzo.Code.Ledger.Conway.Foreign.ExternalStructures.d_HSTransactionStructure_682
+                                                                                            (coe
+                                                                                               v16) in
+                                                                                  coe
+                                                                                    (coe
+                                                                                       MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_280
+                                                                                       (coe
+                                                                                          MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
+                                                                                          (coe
+                                                                                             MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_206
+                                                                                             (coe
+                                                                                                MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1390
+                                                                                                (coe
+                                                                                                   v17))))
+                                                                                       (coe
+                                                                                          MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_210
+                                                                                          (coe
+                                                                                             MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1390
+                                                                                             (coe
+                                                                                                v17))))))
+                                                                              (coe
+                                                                                 MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)
+                                                                              (coe
+                                                                                 MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
+                                                                           (coe
+                                                                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_28))))
+                                                                  (coe
+                                                                     (\ v16 ->
+                                                                        MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                          (coe
+                                                                             MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                             (coe
+                                                                                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                                             (coe
+                                                                                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
+                                                                  (coe
+                                                                     MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44
+                                                                     () erased () erased
+                                                                     (coe
+                                                                        MAlonzo.Code.Foreign.Haskell.Coerce.C_TrustMe_40)
+                                                                     v11))
+                                                               (coe
+                                                                  MAlonzo.Code.Data.Product.Base.du_map_128
+                                                                  (coe
+                                                                     MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                     (coe
+                                                                        MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                        (coe
+                                                                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                                        (coe
+                                                                           MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Maybe_90
+                                                                           (coe
+                                                                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
+                                                                  (coe
+                                                                     (\ v16 ->
+                                                                        MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                          (coe
+                                                                             MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                             (coe
+                                                                                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                                             (coe
+                                                                                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
+                                                                  (coe
+                                                                     MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44
+                                                                     () erased () erased
+                                                                     (coe
+                                                                        MAlonzo.Code.Foreign.Haskell.Coerce.C_TrustMe_40)
+                                                                     v12))
+                                                               (coe
+                                                                  MAlonzo.Code.Data.Product.Base.du_map_128
+                                                                  (coe
+                                                                     MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                     (coe
+                                                                        MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                        (coe
+                                                                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                                        (coe
+                                                                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                                  (coe
+                                                                     (\ v16 ->
+                                                                        MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                          (coe
+                                                                             MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                             (coe
+                                                                                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                                             (coe
+                                                                                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
+                                                                  (coe
+                                                                     MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44
+                                                                     () erased () erased
+                                                                     (coe
+                                                                        MAlonzo.Code.Foreign.Haskell.Coerce.C_TrustMe_40)
+                                                                     v13))
+                                                               (coe
+                                                                  MAlonzo.Code.Data.Product.Base.du_map_128
+                                                                  (coe
+                                                                     MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                     (coe
+                                                                        MAlonzo.Code.Ledger.Conway.Foreign.PParams.d_Conv'45'PParams_26))
+                                                                  (coe
+                                                                     (\ v16 ->
+                                                                        MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                          (coe
+                                                                             MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                             (coe
+                                                                                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                                             (coe
+                                                                                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
+                                                                  (coe
+                                                                     MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44
+                                                                     () erased () erased
+                                                                     (coe
+                                                                        MAlonzo.Code.Foreign.Haskell.Coerce.C_TrustMe_40)
+                                                                     v14))
+                                                               (coe
+                                                                  MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                  (coe
+                                                                     MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Map_116
+                                                                     (let v16
+                                                                            = MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20 in
+                                                                      coe
+                                                                        (let v17
+                                                                               = MAlonzo.Code.Ledger.Conway.Foreign.ExternalStructures.d_HSTransactionStructure_682
+                                                                                   (coe v16) in
+                                                                         coe
+                                                                           (coe
+                                                                              MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'RewardAddress_338
+                                                                              (coe
+                                                                                 MAlonzo.Code.Ledger.Core.Specification.Epoch.d_DecEq'45'Netw_320
+                                                                                 (coe
+                                                                                    MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_globalConstants_1356
+                                                                                    (coe v17)))
+                                                                              (coe
+                                                                                 MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
+                                                                                 (coe
+                                                                                    MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_206
+                                                                                    (coe
+                                                                                       MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1390
+                                                                                       (coe v17))))
+                                                                              (coe
+                                                                                 MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_210
+                                                                                 (coe
+                                                                                    MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1390
+                                                                                    (coe v17))))))
+                                                                     (coe
+                                                                        MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'RewardAddress_224)
+                                                                     (coe
+                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
+                                                                  (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
+                                                                     (coe v15)))
+                                                        _ -> MAlonzo.RTE.mazUnreachableError)))
+                                             v7)
+                                          (coe
+                                             MAlonzo.Code.Axiom.Set.du_fromList_456
+                                             (coe
+                                                MAlonzo.Code.Axiom.Set.d_th_1516
+                                                (coe
+                                                   MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                             (coe
+                                                MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                (coe
+                                                   MAlonzo.Code.Foreign.Convertible.du_Convertible'45'List_120
+                                                   (coe
+                                                      MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                      (coe
+                                                         MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                         (coe
+                                                            MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                         (coe
+                                                            MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
+                                                      (coe
+                                                         MAlonzo.Code.Ledger.Conway.Foreign.Gov.d_Conv'45'GovActionState_908)))
+                                                (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_elems_66
+                                                   (coe v8))))
+                                          (coe v9)
+                                   _ -> MAlonzo.RTE.mazUnreachableError)))
+                        v5)
+              _ -> MAlonzo.RTE.mazUnreachableError))
+-- Ledger.Conway.Foreign.Epoch.epoch-step
+epochStep ::
+  MAlonzo.Code.Agda.Builtin.Unit.T_'8868'_6 ->
+  T_EpochState_4233 ->
+  Integer ->
+  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.T_HSComputationResult_110
+    MAlonzo.Code.Qstdlib.Foreign.Haskell.Empty.T_Empty_8
+    (MAlonzo.Code.Foreign.Haskell.Pair.T_Pair_22
+       () () T_EpochState_4233
+       MAlonzo.Code.Agda.Builtin.String.T_String_6)
+epochStep = coe d_epoch'45'step_418
+d_epoch'45'step_418 ::
+  MAlonzo.Code.Agda.Builtin.Unit.T_'8868'_6 ->
+  T_EpochState_4233 ->
+  Integer ->
+  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.T_HSComputationResult_110
+    MAlonzo.Code.Qstdlib.Foreign.Haskell.Empty.T_Empty_8
+    (MAlonzo.Code.Foreign.Haskell.Pair.T_Pair_22
+       AgdaAny AgdaAny T_EpochState_4233
+       MAlonzo.Code.Agda.Builtin.String.T_String_6)
+d_epoch'45'step_418 ~v0 v1 v2 = du_epoch'45'step_418 v1 v2
+du_epoch'45'step_418 ::
+  T_EpochState_4233 ->
+  Integer ->
+  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.T_HSComputationResult_110
+    MAlonzo.Code.Qstdlib.Foreign.Haskell.Empty.T_Empty_8
+    (MAlonzo.Code.Foreign.Haskell.Pair.T_Pair_22
+       AgdaAny AgdaAny T_EpochState_4233
+       MAlonzo.Code.Agda.Builtin.String.T_String_6)
+du_epoch'45'step_418 v0 v1
+  = let v2
+          = coe
+              MAlonzo.Code.Ledger.Conway.Specification.Epoch.Properties.Computational.du_EPOCH'45'total''_3390
+              (coe
+                 MAlonzo.Code.Ledger.Conway.Foreign.ExternalStructures.d_HSTransactionStructure_682
+                 (coe
+                    MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20))
+              (coe
+                 MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.du_conv_86
+                 (coe
+                    MAlonzo.Code.Ledger.Conway.Conformance.Epoch.du_EpochStateFromConf_4942)
+                 (coe
+                    MAlonzo.Code.Foreign.Convertible.d_from_20
+                    (coe
+                       MAlonzo.Code.Foreign.Convertible.C_constructor_22
+                       (coe
+                          (\ v2 ->
+                             case coe v2 of
+                               MAlonzo.Code.Ledger.Conway.Conformance.Epoch.C_'10214'_'44'_'44'_'44'_'44'_'10215''7497'''_4906 v3 v4 v5 v6 v7
+                                 -> coe
+                                      C_MkEpochState_4235
+                                      (coe
+                                         MAlonzo.Code.Ledger.Conway.Foreign.PParams.C_MkAcnt_11365
+                                         (coe
+                                            MAlonzo.Code.Ledger.Conway.Specification.PParams.d_treasury_194
+                                            (coe v3))
+                                         (coe
+                                            MAlonzo.Code.Ledger.Conway.Specification.PParams.d_reserves_196
+                                            (coe v3)))
+                                      (coe
+                                         MAlonzo.Code.Ledger.Conway.Foreign.Rewards.C_MkSnapshots_4323
+                                         (coe
+                                            MAlonzo.Code.Ledger.Conway.Foreign.Rewards.C_MkSnapshot_1435
+                                            (coe
+                                               MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                               (coe
+                                                  MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                  (coe
+                                                     MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                     (coe
+                                                        MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                        (coe
+                                                           MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)
+                                                        (coe
+                                                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                  (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                     (coe
+                                                        MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_stake_3036
+                                                        (coe
+                                                           MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_mark_3096
+                                                           (coe v4))))))
+                                            (coe
+                                               MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                               (coe
+                                                  MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                  (coe
+                                                     MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                     (coe
+                                                        MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                        (coe
+                                                           MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)
+                                                        (coe
+                                                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                  (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                     (coe
+                                                        MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_delegations_3038
+                                                        (coe
+                                                           MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_mark_3096
+                                                           (coe v4))))))
+                                            (coe
+                                               MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                               (coe
+                                                  MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                  (coe
+                                                     MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                     (coe
+                                                        MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                        (coe
+                                                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                        (coe
+                                                           MAlonzo.Code.Ledger.Conway.Foreign.Certs.d_Conv'45'StakePoolParams_68)))
+                                                  (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                     (coe
+                                                        MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_pools_3040
+                                                        (coe
+                                                           MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_mark_3096
+                                                           (coe v4)))))))
+                                         (coe
+                                            MAlonzo.Code.Ledger.Conway.Foreign.Rewards.C_MkSnapshot_1435
+                                            (coe
+                                               MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                               (coe
+                                                  MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                  (coe
+                                                     MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                     (coe
+                                                        MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                        (coe
+                                                           MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)
+                                                        (coe
+                                                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                  (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                     (coe
+                                                        MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_stake_3036
+                                                        (coe
+                                                           MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_set_3098
+                                                           (coe v4))))))
+                                            (coe
+                                               MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                               (coe
+                                                  MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                  (coe
+                                                     MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                     (coe
+                                                        MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                        (coe
+                                                           MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)
+                                                        (coe
+                                                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                  (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                     (coe
+                                                        MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_delegations_3038
+                                                        (coe
+                                                           MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_set_3098
+                                                           (coe v4))))))
+                                            (coe
+                                               MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                               (coe
+                                                  MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                  (coe
+                                                     MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                     (coe
+                                                        MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                        (coe
+                                                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                        (coe
+                                                           MAlonzo.Code.Ledger.Conway.Foreign.Certs.d_Conv'45'StakePoolParams_68)))
+                                                  (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                     (coe
+                                                        MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_pools_3040
+                                                        (coe
+                                                           MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_set_3098
+                                                           (coe v4)))))))
+                                         (coe
+                                            MAlonzo.Code.Ledger.Conway.Foreign.Rewards.C_MkSnapshot_1435
+                                            (coe
+                                               MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                               (coe
+                                                  MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                  (coe
+                                                     MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                     (coe
+                                                        MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                        (coe
+                                                           MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)
+                                                        (coe
+                                                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                  (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                     (coe
+                                                        MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_stake_3036
+                                                        (coe
+                                                           MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_go_3100
+                                                           (coe v4))))))
+                                            (coe
+                                               MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                               (coe
+                                                  MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                  (coe
+                                                     MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                     (coe
+                                                        MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                        (coe
+                                                           MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)
+                                                        (coe
+                                                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                  (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                     (coe
+                                                        MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_delegations_3038
+                                                        (coe
+                                                           MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_go_3100
+                                                           (coe v4))))))
+                                            (coe
+                                               MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                               (coe
+                                                  MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                  (coe
+                                                     MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                     (coe
+                                                        MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                        (coe
+                                                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                        (coe
+                                                           MAlonzo.Code.Ledger.Conway.Foreign.Certs.d_Conv'45'StakePoolParams_68)))
+                                                  (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                     (coe
+                                                        MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_pools_3040
+                                                        (coe
+                                                           MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_go_3100
+                                                           (coe v4)))))))
+                                         (coe
+                                            MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_feeSS_3102
+                                            (coe v4)))
+                                      (coe
+                                         MAlonzo.Code.Ledger.Conway.Foreign.Ledger.C_MkLState_2857
+                                         (coe
+                                            MAlonzo.Code.Ledger.Conway.Foreign.Utxo.C_MkUTxOState_1173
+                                            (coe
+                                               MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                               (coe
+                                                  MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                  (coe
+                                                     MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                     (coe
+                                                        MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                        (coe
+                                                           MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                           (coe
+                                                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                           (coe
+                                                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
+                                                        (coe
+                                                           MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                           (coe
+                                                              MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Either_100
+                                                              (coe
+                                                                 MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'BaseAddr_216)
+                                                              (coe
+                                                                 MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'BootstrapAddr_220))
+                                                           (coe
+                                                              MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                              (coe
+                                                                 MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                              (coe
+                                                                 MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                 (coe
+                                                                    MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Maybe_90
+                                                                    (coe
+                                                                       MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Either_100
+                                                                       (coe
+                                                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                                       (coe
+                                                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                                 (coe
+                                                                    MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Maybe_90
+                                                                    (coe
+                                                                       MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Either_100
+                                                                       (coe
+                                                                          MAlonzo.Code.Ledger.Conway.Foreign.Transaction.d_Conv'45'HSTimelock_18)
+                                                                       (coe
+                                                                          MAlonzo.Code.Ledger.Conway.Foreign.Transaction.d_Conv'45'HSPlutusScript_22))))))))
+                                                  (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                     (coe
+                                                        MAlonzo.Code.Ledger.Conway.Specification.Utxo.d_utxo_2496
+                                                        (coe
+                                                           MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_utxoSt_2700
+                                                           (coe v5))))))
+                                            (coe
+                                               MAlonzo.Code.Ledger.Conway.Specification.Utxo.d_fees_2498
+                                               (coe
+                                                  MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_utxoSt_2700
+                                                  (coe v5)))
+                                            (coe
+                                               MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                               (coe
+                                                  MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                  (coe
+                                                     MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                     (coe
+                                                        MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                        (coe
+                                                           MAlonzo.Code.Ledger.Conway.Foreign.Certs.d_Conv'45'DepositPurpose_72)
+                                                        (coe
+                                                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                  (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                     (coe
+                                                        MAlonzo.Code.Ledger.Conway.Specification.Utxo.d_deposits_2500
+                                                        (coe
+                                                           MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_utxoSt_2700
+                                                           (coe v5))))))
+                                            (coe
+                                               MAlonzo.Code.Ledger.Conway.Specification.Utxo.d_donations_2502
+                                               (coe
+                                                  MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_utxoSt_2700
+                                                  (coe v5))))
+                                         (coe
+                                            MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                                            MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92
+                                            () erased () erased
+                                            (MAlonzo.Code.Foreign.Convertible.d_to_18
+                                               (coe
+                                                  MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                  (coe
+                                                     MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                     (coe
+                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                     (coe
+                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
+                                                  (coe
+                                                     MAlonzo.Code.Ledger.Conway.Foreign.Gov.d_Conv'45'GovActionState_908)))
+                                            (MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_govSt_2702
+                                               (coe v5)))
+                                         (coe
+                                            MAlonzo.Code.Ledger.Conway.Foreign.Cert.C_MkCertState_713
+                                            (coe
+                                               MAlonzo.Code.Ledger.Conway.Foreign.Certs.C_MkDState_13305
+                                               (coe
+                                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                  (coe
+                                                     MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                     (coe
+                                                        MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                        (coe
+                                                           MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                           (coe
+                                                              MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)
+                                                           (coe
+                                                              MAlonzo.Code.Ledger.Conway.Foreign.Gov.Core.d_Conv'45'VDeleg_32)))
+                                                     (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                        (coe
+                                                           MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_voteDelegs_1580
+                                                           (coe
+                                                              MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dState_1614
+                                                              (coe
+                                                                 MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_certState_2704
+                                                                 (coe v5)))))))
+                                               (coe
+                                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                  (coe
+                                                     MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                     (coe
+                                                        MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                        (coe
+                                                           MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                           (coe
+                                                              MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)
+                                                           (coe
+                                                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                     (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                        (coe
+                                                           MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_stakeDelegs_1582
+                                                           (coe
+                                                              MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dState_1614
+                                                              (coe
+                                                                 MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_certState_2704
+                                                                 (coe v5)))))))
+                                               (coe
+                                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                  (coe
+                                                     MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                     (coe
+                                                        MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                        (coe
+                                                           MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                           (coe
+                                                              MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)
+                                                           (coe
+                                                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                     (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                        (coe
+                                                           MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_rewards_1584
+                                                           (coe
+                                                              MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dState_1614
+                                                              (coe
+                                                                 MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_certState_2704
+                                                                 (coe v5)))))))
+                                               (coe
+                                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                  (coe
+                                                     MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                     (coe
+                                                        MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                        (coe
+                                                           MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                           (coe
+                                                              MAlonzo.Code.Ledger.Conway.Foreign.Certs.d_Conv'45'DepositPurpose_72)
+                                                           (coe
+                                                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                     (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                        (coe
+                                                           MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_deposits_1586
+                                                           (coe
+                                                              MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dState_1614
+                                                              (coe
+                                                                 MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_certState_2704
+                                                                 (coe v5))))))))
+                                            (coe
+                                               MAlonzo.Code.Ledger.Conway.Foreign.Certs.C_MkPState_6189
+                                               (coe
+                                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                  (coe
+                                                     MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                     (coe
+                                                        MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                        (coe
+                                                           MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                           (coe
+                                                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                           (coe
+                                                              MAlonzo.Code.Ledger.Conway.Foreign.Certs.d_Conv'45'StakePoolParams_68)))
+                                                     (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                        (coe
+                                                           MAlonzo.Code.Ledger.Conway.Specification.Certs.d_pools_1426
+                                                           (coe
+                                                              MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_pState_1616
+                                                              (coe
+                                                                 MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_certState_2704
+                                                                 (coe v5)))))))
+                                               (coe
+                                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                  (coe
+                                                     MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                     (coe
+                                                        MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                        (coe
+                                                           MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                           (coe
+                                                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                           (coe
+                                                              MAlonzo.Code.Ledger.Conway.Foreign.Certs.d_Conv'45'StakePoolParams_68)))
+                                                     (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                        (coe
+                                                           MAlonzo.Code.Ledger.Conway.Specification.Certs.d_fPools_1428
+                                                           (coe
+                                                              MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_pState_1616
+                                                              (coe
+                                                                 MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_certState_2704
+                                                                 (coe v5)))))))
+                                               (coe
+                                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                  (coe
+                                                     MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                     (coe
+                                                        MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                        (coe
+                                                           MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                           (coe
+                                                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                           (coe
+                                                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                     (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                        (coe
+                                                           MAlonzo.Code.Ledger.Conway.Specification.Certs.d_retiring_1430
+                                                           (coe
+                                                              MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_pState_1616
+                                                              (coe
+                                                                 MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_certState_2704
+                                                                 (coe v5))))))))
+                                            (coe
+                                               MAlonzo.Code.Ledger.Conway.Foreign.Certs.C_MkGState_25129
+                                               (coe
+                                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                  (coe
+                                                     MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                     (coe
+                                                        MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                        (coe
+                                                           MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                           (coe
+                                                              MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)
+                                                           (coe
+                                                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                     (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                        (coe
+                                                           MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dreps_1598
+                                                           (coe
+                                                              MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_gState_1618
+                                                              (coe
+                                                                 MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_certState_2704
+                                                                 (coe v5)))))))
+                                               (coe
+                                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                  (coe
+                                                     MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                     (coe
+                                                        MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                        (coe
+                                                           MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                           (coe
+                                                              MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)
+                                                           (coe
+                                                              MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Maybe_90
+                                                              (coe
+                                                                 MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212))))
+                                                     (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                        (coe
+                                                           MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_ccHotKeys_1600
+                                                           (coe
+                                                              MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_gState_1618
+                                                              (coe
+                                                                 MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_certState_2704
+                                                                 (coe v5)))))))
+                                               (coe
+                                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                  (coe
+                                                     MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                     (coe
+                                                        MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                        (coe
+                                                           MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                           (coe
+                                                              MAlonzo.Code.Ledger.Conway.Foreign.Certs.d_Conv'45'DepositPurpose_72)
+                                                           (coe
+                                                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                     (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                        (coe
+                                                           MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_deposits_1602
+                                                           (coe
+                                                              MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_gState_1618
+                                                              (coe
+                                                                 MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_certState_2704
+                                                                 (coe v5))))))))))
+                                      (coe
+                                         MAlonzo.Code.Ledger.Conway.Foreign.Enact.C_MkEnactState_161
+                                         (coe
+                                            MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44 ()
+                                            erased () erased
+                                            (coe
+                                               MAlonzo.Code.Foreign.Haskell.Coerce.du_pair'45'toFFI_92)
+                                            (coe
+                                               MAlonzo.Code.Data.Product.Base.du_map_128
+                                               (coe
+                                                  MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                  (coe
+                                                     MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Maybe_90
+                                                     (coe
+                                                        MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                        (coe
+                                                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.du_Conv'45'HSMap_102
+                                                           (let v8
+                                                                  = MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20 in
+                                                            coe
+                                                              (let v9
+                                                                     = MAlonzo.Code.Ledger.Conway.Foreign.ExternalStructures.d_HSTransactionStructure_682
+                                                                         (coe v8) in
+                                                               coe
+                                                                 (coe
+                                                                    MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_280
+                                                                    (coe
+                                                                       MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
+                                                                       (coe
+                                                                          MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_206
+                                                                          (coe
+                                                                             MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1390
+                                                                             (coe v9))))
+                                                                    (coe
+                                                                       MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_210
+                                                                       (coe
+                                                                          MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1390
+                                                                          (coe v9))))))
+                                                           (coe
+                                                              MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)
+                                                           (coe
+                                                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
+                                                        (coe
+                                                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_28))))
+                                               (coe
+                                                  (\ v8 ->
+                                                     MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                       (coe
+                                                          MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                          (coe
+                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                          (coe
+                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
+                                               (coe
+                                                  MAlonzo.Code.Ledger.Conway.Specification.Enact.d_cc_1178
+                                                  (coe v6))))
+                                         (coe
+                                            MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44 ()
+                                            erased () erased
+                                            (coe
+                                               MAlonzo.Code.Foreign.Haskell.Coerce.du_pair'45'toFFI_92)
+                                            (coe
+                                               MAlonzo.Code.Data.Product.Base.du_map_128
+                                               (coe
+                                                  MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                  (coe
+                                                     MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                     (coe
+                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                     (coe
+                                                        MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Maybe_90
+                                                        (coe
+                                                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
+                                               (coe
+                                                  (\ v8 ->
+                                                     MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                       (coe
+                                                          MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                          (coe
+                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                          (coe
+                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
+                                               (coe
+                                                  MAlonzo.Code.Ledger.Conway.Specification.Enact.d_constitution_1180
+                                                  (coe v6))))
+                                         (coe
+                                            MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44 ()
+                                            erased () erased
+                                            (coe
+                                               MAlonzo.Code.Foreign.Haskell.Coerce.du_pair'45'toFFI_92)
+                                            (coe
+                                               MAlonzo.Code.Data.Product.Base.du_map_128
+                                               (coe
+                                                  MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                  (coe
+                                                     MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                     (coe
+                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                     (coe
+                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                               (coe
+                                                  (\ v8 ->
+                                                     MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                       (coe
+                                                          MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                          (coe
+                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                          (coe
+                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
+                                               (coe
+                                                  MAlonzo.Code.Ledger.Conway.Specification.Enact.d_pv_1182
+                                                  (coe v6))))
+                                         (coe
+                                            MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44 ()
+                                            erased () erased
+                                            (coe
+                                               MAlonzo.Code.Foreign.Haskell.Coerce.du_pair'45'toFFI_92)
+                                            (coe
+                                               MAlonzo.Code.Data.Product.Base.du_map_128
+                                               (coe
+                                                  MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                  (coe
+                                                     MAlonzo.Code.Ledger.Conway.Foreign.PParams.d_Conv'45'PParams_26))
+                                               (coe
+                                                  (\ v8 ->
+                                                     MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                       (coe
+                                                          MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                          (coe
+                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                          (coe
+                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
+                                               (coe
+                                                  MAlonzo.Code.Ledger.Conway.Specification.Enact.d_pparams_1184
+                                                  (coe v6))))
+                                         (coe
+                                            MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                            (coe
+                                               MAlonzo.Code.Foreign.Convertible.d_to_18
+                                               (coe
+                                                  MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                  (coe
+                                                     MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                     (coe
+                                                        MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'RewardAddress_224)
+                                                     (coe
+                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                               (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                  (coe
+                                                     MAlonzo.Code.Ledger.Conway.Specification.Enact.d_withdrawals_1186
+                                                     (coe v6))))))
+                                      (coe
+                                         MAlonzo.Code.Ledger.Conway.Foreign.Ratify.C_MkRatifyState_12499
+                                         (coe
+                                            MAlonzo.Code.Ledger.Conway.Foreign.Enact.C_MkEnactState_161
+                                            (coe
+                                               MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44 ()
+                                               erased () erased
+                                               (coe
+                                                  MAlonzo.Code.Foreign.Haskell.Coerce.du_pair'45'toFFI_92)
+                                               (coe
+                                                  MAlonzo.Code.Data.Product.Base.du_map_128
+                                                  (coe
+                                                     MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                     (coe
+                                                        MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Maybe_90
+                                                        (coe
+                                                           MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                           (coe
+                                                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.du_Conv'45'HSMap_102
+                                                              (let v8
+                                                                     = MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20 in
+                                                               coe
+                                                                 (let v9
+                                                                        = MAlonzo.Code.Ledger.Conway.Foreign.ExternalStructures.d_HSTransactionStructure_682
+                                                                            (coe v8) in
+                                                                  coe
+                                                                    (coe
+                                                                       MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_280
+                                                                       (coe
+                                                                          MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
+                                                                          (coe
+                                                                             MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_206
+                                                                             (coe
+                                                                                MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1390
+                                                                                (coe v9))))
+                                                                       (coe
+                                                                          MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_210
+                                                                          (coe
+                                                                             MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1390
+                                                                             (coe v9))))))
+                                                              (coe
+                                                                 MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)
+                                                              (coe
+                                                                 MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
+                                                           (coe
+                                                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_28))))
+                                                  (coe
+                                                     (\ v8 ->
+                                                        MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                          (coe
+                                                             MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                             (coe
+                                                                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                             (coe
+                                                                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
+                                                  (coe
+                                                     MAlonzo.Code.Ledger.Conway.Specification.Enact.d_cc_1178
+                                                     (coe
+                                                        MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_es_1898
+                                                        (coe v7)))))
+                                            (coe
+                                               MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44 ()
+                                               erased () erased
+                                               (coe
+                                                  MAlonzo.Code.Foreign.Haskell.Coerce.du_pair'45'toFFI_92)
+                                               (coe
+                                                  MAlonzo.Code.Data.Product.Base.du_map_128
+                                                  (coe
+                                                     MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                     (coe
+                                                        MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                        (coe
+                                                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                        (coe
+                                                           MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Maybe_90
+                                                           (coe
+                                                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
+                                                  (coe
+                                                     (\ v8 ->
+                                                        MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                          (coe
+                                                             MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                             (coe
+                                                                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                             (coe
+                                                                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
+                                                  (coe
+                                                     MAlonzo.Code.Ledger.Conway.Specification.Enact.d_constitution_1180
+                                                     (coe
+                                                        MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_es_1898
+                                                        (coe v7)))))
+                                            (coe
+                                               MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44 ()
+                                               erased () erased
+                                               (coe
+                                                  MAlonzo.Code.Foreign.Haskell.Coerce.du_pair'45'toFFI_92)
+                                               (coe
+                                                  MAlonzo.Code.Data.Product.Base.du_map_128
+                                                  (coe
+                                                     MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                     (coe
+                                                        MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                        (coe
+                                                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                        (coe
+                                                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                  (coe
+                                                     (\ v8 ->
+                                                        MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                          (coe
+                                                             MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                             (coe
+                                                                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                             (coe
+                                                                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
+                                                  (coe
+                                                     MAlonzo.Code.Ledger.Conway.Specification.Enact.d_pv_1182
+                                                     (coe
+                                                        MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_es_1898
+                                                        (coe v7)))))
+                                            (coe
+                                               MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44 ()
+                                               erased () erased
+                                               (coe
+                                                  MAlonzo.Code.Foreign.Haskell.Coerce.du_pair'45'toFFI_92)
+                                               (coe
+                                                  MAlonzo.Code.Data.Product.Base.du_map_128
+                                                  (coe
+                                                     MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                     (coe
+                                                        MAlonzo.Code.Ledger.Conway.Foreign.PParams.d_Conv'45'PParams_26))
+                                                  (coe
+                                                     (\ v8 ->
+                                                        MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                          (coe
+                                                             MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                             (coe
+                                                                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                             (coe
+                                                                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
+                                                  (coe
+                                                     MAlonzo.Code.Ledger.Conway.Specification.Enact.d_pparams_1184
+                                                     (coe
+                                                        MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_es_1898
+                                                        (coe v7)))))
+                                            (coe
+                                               MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                               (coe
+                                                  MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                  (coe
+                                                     MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                     (coe
+                                                        MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                        (coe
+                                                           MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'RewardAddress_224)
+                                                        (coe
+                                                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                  (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                     (coe
+                                                        MAlonzo.Code.Ledger.Conway.Specification.Enact.d_withdrawals_1186
+                                                        (coe
+                                                           MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_es_1898
+                                                           (coe v7)))))))
+                                         (coe
+                                            MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSSet_68
+                                            (coe
+                                               MAlonzo.Code.Foreign.Convertible.d_to_18
+                                               (coe
+                                                  MAlonzo.Code.Foreign.Convertible.du_Convertible'45'List_120
+                                                  (coe
+                                                     MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                     (coe
+                                                        MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                        (coe
+                                                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                        (coe
+                                                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
+                                                     (coe
+                                                        MAlonzo.Code.Ledger.Conway.Foreign.Gov.d_Conv'45'GovActionState_908)))
+                                               (MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_removed_1900
+                                                  (coe v7))))
+                                         (coe
+                                            MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_delay_1902
+                                            (coe v7)))
+                               _ -> MAlonzo.RTE.mazUnreachableError))
+                       (coe
+                          (\ v2 ->
+                             case coe v2 of
+                               C_MkEpochState_4235 v3 v4 v5 v6 v7
+                                 -> coe
+                                      MAlonzo.Code.Ledger.Conway.Conformance.Epoch.C_'10214'_'44'_'44'_'44'_'44'_'10215''7497'''_4906
+                                      (coe
+                                         MAlonzo.Code.Foreign.Convertible.d_from_20
+                                         (coe
+                                            MAlonzo.Code.Foreign.Convertible.C_constructor_22
+                                            (coe
+                                               (\ v8 ->
+                                                  case coe v8 of
+                                                    MAlonzo.Code.Ledger.Conway.Specification.PParams.C_'10214'_'44'_'10215''7491'_198 v9 v10
+                                                      -> coe
+                                                           MAlonzo.Code.Ledger.Conway.Foreign.PParams.C_MkAcnt_11365
+                                                           (coe v9) (coe v10)
+                                                    _ -> MAlonzo.RTE.mazUnreachableError))
+                                            (coe
+                                               (\ v8 ->
+                                                  case coe v8 of
+                                                    MAlonzo.Code.Ledger.Conway.Foreign.PParams.C_MkAcnt_11365 v9 v10
+                                                      -> coe
+                                                           MAlonzo.Code.Ledger.Conway.Specification.PParams.C_'10214'_'44'_'10215''7491'_198
+                                                           (coe v9) (coe v10)
+                                                    _ -> MAlonzo.RTE.mazUnreachableError)))
+                                         v3)
+                                      (coe
+                                         MAlonzo.Code.Foreign.Convertible.d_from_20
+                                         (coe
+                                            MAlonzo.Code.Foreign.Convertible.C_constructor_22
+                                            (coe
+                                               (\ v8 ->
+                                                  case coe v8 of
+                                                    MAlonzo.Code.Ledger.Conway.Specification.Rewards.C_constructor_3104 v9 v10 v11 v12
+                                                      -> coe
+                                                           MAlonzo.Code.Ledger.Conway.Foreign.Rewards.C_MkSnapshots_4323
+                                                           (coe
+                                                              MAlonzo.Code.Ledger.Conway.Foreign.Rewards.C_MkSnapshot_1435
+                                                              (coe
+                                                                 MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                                 (coe
+                                                                    MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                    (coe
+                                                                       MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                       (coe
+                                                                          MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                          (coe
+                                                                             MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)
+                                                                          (coe
+                                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                                    (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                                       (coe
+                                                                          MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_stake_3036
+                                                                          (coe v9)))))
+                                                              (coe
+                                                                 MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                                 (coe
+                                                                    MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                    (coe
+                                                                       MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                       (coe
+                                                                          MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                          (coe
+                                                                             MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)
+                                                                          (coe
+                                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                                    (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                                       (coe
+                                                                          MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_delegations_3038
+                                                                          (coe v9)))))
+                                                              (coe
+                                                                 MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                                 (coe
+                                                                    MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                    (coe
+                                                                       MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                       (coe
+                                                                          MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                          (coe
+                                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                                          (coe
+                                                                             MAlonzo.Code.Ledger.Conway.Foreign.Certs.d_Conv'45'StakePoolParams_68)))
+                                                                    (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                                       (coe
+                                                                          MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_pools_3040
+                                                                          (coe v9))))))
+                                                           (coe
+                                                              MAlonzo.Code.Ledger.Conway.Foreign.Rewards.C_MkSnapshot_1435
+                                                              (coe
+                                                                 MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                                 (coe
+                                                                    MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                    (coe
+                                                                       MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                       (coe
+                                                                          MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                          (coe
+                                                                             MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)
+                                                                          (coe
+                                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                                    (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                                       (coe
+                                                                          MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_stake_3036
+                                                                          (coe v10)))))
+                                                              (coe
+                                                                 MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                                 (coe
+                                                                    MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                    (coe
+                                                                       MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                       (coe
+                                                                          MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                          (coe
+                                                                             MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)
+                                                                          (coe
+                                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                                    (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                                       (coe
+                                                                          MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_delegations_3038
+                                                                          (coe v10)))))
+                                                              (coe
+                                                                 MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                                 (coe
+                                                                    MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                    (coe
+                                                                       MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                       (coe
+                                                                          MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                          (coe
+                                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                                          (coe
+                                                                             MAlonzo.Code.Ledger.Conway.Foreign.Certs.d_Conv'45'StakePoolParams_68)))
+                                                                    (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                                       (coe
+                                                                          MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_pools_3040
+                                                                          (coe v10))))))
+                                                           (coe
+                                                              MAlonzo.Code.Ledger.Conway.Foreign.Rewards.C_MkSnapshot_1435
+                                                              (coe
+                                                                 MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                                 (coe
+                                                                    MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                    (coe
+                                                                       MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                       (coe
+                                                                          MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                          (coe
+                                                                             MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)
+                                                                          (coe
+                                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                                    (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                                       (coe
+                                                                          MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_stake_3036
+                                                                          (coe v11)))))
+                                                              (coe
+                                                                 MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                                 (coe
+                                                                    MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                    (coe
+                                                                       MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                       (coe
+                                                                          MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                          (coe
+                                                                             MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)
+                                                                          (coe
+                                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                                    (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                                       (coe
+                                                                          MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_delegations_3038
+                                                                          (coe v11)))))
+                                                              (coe
+                                                                 MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                                 (coe
+                                                                    MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                    (coe
+                                                                       MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                       (coe
+                                                                          MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                          (coe
+                                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                                          (coe
+                                                                             MAlonzo.Code.Ledger.Conway.Foreign.Certs.d_Conv'45'StakePoolParams_68)))
+                                                                    (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                                       (coe
+                                                                          MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_pools_3040
+                                                                          (coe v11))))))
+                                                           (coe v12)
+                                                    _ -> MAlonzo.RTE.mazUnreachableError))
+                                            (coe
+                                               (\ v8 ->
+                                                  case coe v8 of
+                                                    MAlonzo.Code.Ledger.Conway.Foreign.Rewards.C_MkSnapshots_4323 v9 v10 v11 v12
+                                                      -> coe
+                                                           MAlonzo.Code.Ledger.Conway.Specification.Rewards.C_constructor_3104
+                                                           (coe
+                                                              MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                              (coe
+                                                                 MAlonzo.Code.Foreign.Convertible.C_constructor_22
+                                                                 (coe
+                                                                    (\ v13 ->
+                                                                       case coe v13 of
+                                                                         MAlonzo.Code.Ledger.Conway.Specification.Rewards.C_constructor_3042 v14 v15 v16
+                                                                           -> coe
+                                                                                MAlonzo.Code.Ledger.Conway.Foreign.Rewards.C_MkSnapshot_1435
+                                                                                (coe
+                                                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                                                   (coe
+                                                                                      MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                      (coe
+                                                                                         MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                                         (coe
+                                                                                            MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                            (coe
+                                                                                               MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)
+                                                                                            (coe
+                                                                                               MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                                                      (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                                                         (coe
+                                                                                            v14))))
+                                                                                (coe
+                                                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                                                   (coe
+                                                                                      MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                      (coe
+                                                                                         MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                                         (coe
+                                                                                            MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                            (coe
+                                                                                               MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)
+                                                                                            (coe
+                                                                                               MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                                                      (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                                                         (coe
+                                                                                            v15))))
+                                                                                (coe
+                                                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                                                   (coe
+                                                                                      MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                      (coe
+                                                                                         MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                                         (coe
+                                                                                            MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                            (coe
+                                                                                               MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                                                            (coe
+                                                                                               MAlonzo.Code.Ledger.Conway.Foreign.Certs.d_Conv'45'StakePoolParams_68)))
+                                                                                      (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                                                         (coe
+                                                                                            v16))))
+                                                                         _ -> MAlonzo.RTE.mazUnreachableError))
+                                                                 (coe
+                                                                    (\ v13 ->
+                                                                       case coe v13 of
+                                                                         MAlonzo.Code.Ledger.Conway.Foreign.Rewards.C_MkSnapshot_1435 v14 v15 v16
+                                                                           -> coe
+                                                                                MAlonzo.Code.Ledger.Conway.Specification.Rewards.C_constructor_3042
+                                                                                (coe
+                                                                                   MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                                   (coe
+                                                                                      MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Map_116
+                                                                                      (let v17
+                                                                                             = MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20 in
+                                                                                       coe
+                                                                                         (let v18
+                                                                                                = MAlonzo.Code.Ledger.Conway.Foreign.ExternalStructures.d_HSTransactionStructure_682
+                                                                                                    (coe
+                                                                                                       v17) in
+                                                                                          coe
+                                                                                            (coe
+                                                                                               MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_280
+                                                                                               (coe
+                                                                                                  MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
+                                                                                                  (coe
+                                                                                                     MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_206
+                                                                                                     (coe
+                                                                                                        MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1390
+                                                                                                        (coe
+                                                                                                           v18))))
+                                                                                               (coe
+                                                                                                  MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_210
+                                                                                                  (coe
+                                                                                                     MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1390
+                                                                                                     (coe
+                                                                                                        v18))))))
+                                                                                      (coe
+                                                                                         MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)
+                                                                                      (coe
+                                                                                         MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
+                                                                                   (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
+                                                                                      (coe v14)))
+                                                                                (coe
+                                                                                   MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                                   (coe
+                                                                                      MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Map_116
+                                                                                      (let v17
+                                                                                             = MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20 in
+                                                                                       coe
+                                                                                         (let v18
+                                                                                                = MAlonzo.Code.Ledger.Conway.Foreign.ExternalStructures.d_HSTransactionStructure_682
+                                                                                                    (coe
+                                                                                                       v17) in
+                                                                                          coe
+                                                                                            (coe
+                                                                                               MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_280
+                                                                                               (coe
+                                                                                                  MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
+                                                                                                  (coe
+                                                                                                     MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_206
+                                                                                                     (coe
+                                                                                                        MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1390
+                                                                                                        (coe
+                                                                                                           v18))))
+                                                                                               (coe
+                                                                                                  MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_210
+                                                                                                  (coe
+                                                                                                     MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1390
+                                                                                                     (coe
+                                                                                                        v18))))))
+                                                                                      (coe
+                                                                                         MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)
+                                                                                      (coe
+                                                                                         MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
+                                                                                   (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
+                                                                                      (coe v15)))
+                                                                                (coe
+                                                                                   MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                                   (coe
+                                                                                      MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Map_116
+                                                                                      (coe
+                                                                                         MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
+                                                                                      (coe
+                                                                                         MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                                                      (coe
+                                                                                         MAlonzo.Code.Ledger.Conway.Foreign.Certs.d_Conv'45'StakePoolParams_68))
+                                                                                   (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
+                                                                                      (coe v16)))
+                                                                         _ -> MAlonzo.RTE.mazUnreachableError)))
+                                                              v9)
+                                                           (coe
+                                                              MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                              (coe
+                                                                 MAlonzo.Code.Foreign.Convertible.C_constructor_22
+                                                                 (coe
+                                                                    (\ v13 ->
+                                                                       case coe v13 of
+                                                                         MAlonzo.Code.Ledger.Conway.Specification.Rewards.C_constructor_3042 v14 v15 v16
+                                                                           -> coe
+                                                                                MAlonzo.Code.Ledger.Conway.Foreign.Rewards.C_MkSnapshot_1435
+                                                                                (coe
+                                                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                                                   (coe
+                                                                                      MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                      (coe
+                                                                                         MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                                         (coe
+                                                                                            MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                            (coe
+                                                                                               MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)
+                                                                                            (coe
+                                                                                               MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                                                      (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                                                         (coe
+                                                                                            v14))))
+                                                                                (coe
+                                                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                                                   (coe
+                                                                                      MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                      (coe
+                                                                                         MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                                         (coe
+                                                                                            MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                            (coe
+                                                                                               MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)
+                                                                                            (coe
+                                                                                               MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                                                      (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                                                         (coe
+                                                                                            v15))))
+                                                                                (coe
+                                                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                                                   (coe
+                                                                                      MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                      (coe
+                                                                                         MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                                         (coe
+                                                                                            MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                            (coe
+                                                                                               MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                                                            (coe
+                                                                                               MAlonzo.Code.Ledger.Conway.Foreign.Certs.d_Conv'45'StakePoolParams_68)))
+                                                                                      (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                                                         (coe
+                                                                                            v16))))
+                                                                         _ -> MAlonzo.RTE.mazUnreachableError))
+                                                                 (coe
+                                                                    (\ v13 ->
+                                                                       case coe v13 of
+                                                                         MAlonzo.Code.Ledger.Conway.Foreign.Rewards.C_MkSnapshot_1435 v14 v15 v16
+                                                                           -> coe
+                                                                                MAlonzo.Code.Ledger.Conway.Specification.Rewards.C_constructor_3042
+                                                                                (coe
+                                                                                   MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                                   (coe
+                                                                                      MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Map_116
+                                                                                      (let v17
+                                                                                             = MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20 in
+                                                                                       coe
+                                                                                         (let v18
+                                                                                                = MAlonzo.Code.Ledger.Conway.Foreign.ExternalStructures.d_HSTransactionStructure_682
+                                                                                                    (coe
+                                                                                                       v17) in
+                                                                                          coe
+                                                                                            (coe
+                                                                                               MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_280
+                                                                                               (coe
+                                                                                                  MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
+                                                                                                  (coe
+                                                                                                     MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_206
+                                                                                                     (coe
+                                                                                                        MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1390
+                                                                                                        (coe
+                                                                                                           v18))))
+                                                                                               (coe
+                                                                                                  MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_210
+                                                                                                  (coe
+                                                                                                     MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1390
+                                                                                                     (coe
+                                                                                                        v18))))))
+                                                                                      (coe
+                                                                                         MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)
+                                                                                      (coe
+                                                                                         MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
+                                                                                   (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
+                                                                                      (coe v14)))
+                                                                                (coe
+                                                                                   MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                                   (coe
+                                                                                      MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Map_116
+                                                                                      (let v17
+                                                                                             = MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20 in
+                                                                                       coe
+                                                                                         (let v18
+                                                                                                = MAlonzo.Code.Ledger.Conway.Foreign.ExternalStructures.d_HSTransactionStructure_682
+                                                                                                    (coe
+                                                                                                       v17) in
+                                                                                          coe
+                                                                                            (coe
+                                                                                               MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_280
+                                                                                               (coe
+                                                                                                  MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
+                                                                                                  (coe
+                                                                                                     MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_206
+                                                                                                     (coe
+                                                                                                        MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1390
+                                                                                                        (coe
+                                                                                                           v18))))
+                                                                                               (coe
+                                                                                                  MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_210
+                                                                                                  (coe
+                                                                                                     MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1390
+                                                                                                     (coe
+                                                                                                        v18))))))
+                                                                                      (coe
+                                                                                         MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)
+                                                                                      (coe
+                                                                                         MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
+                                                                                   (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
+                                                                                      (coe v15)))
+                                                                                (coe
+                                                                                   MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                                   (coe
+                                                                                      MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Map_116
+                                                                                      (coe
+                                                                                         MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
+                                                                                      (coe
+                                                                                         MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                                                      (coe
+                                                                                         MAlonzo.Code.Ledger.Conway.Foreign.Certs.d_Conv'45'StakePoolParams_68))
+                                                                                   (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
+                                                                                      (coe v16)))
+                                                                         _ -> MAlonzo.RTE.mazUnreachableError)))
+                                                              v10)
+                                                           (coe
+                                                              MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                              (coe
+                                                                 MAlonzo.Code.Foreign.Convertible.C_constructor_22
+                                                                 (coe
+                                                                    (\ v13 ->
+                                                                       case coe v13 of
+                                                                         MAlonzo.Code.Ledger.Conway.Specification.Rewards.C_constructor_3042 v14 v15 v16
+                                                                           -> coe
+                                                                                MAlonzo.Code.Ledger.Conway.Foreign.Rewards.C_MkSnapshot_1435
+                                                                                (coe
+                                                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                                                   (coe
+                                                                                      MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                      (coe
+                                                                                         MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                                         (coe
+                                                                                            MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                            (coe
+                                                                                               MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)
+                                                                                            (coe
+                                                                                               MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                                                      (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                                                         (coe
+                                                                                            v14))))
+                                                                                (coe
+                                                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                                                   (coe
+                                                                                      MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                      (coe
+                                                                                         MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                                         (coe
+                                                                                            MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                            (coe
+                                                                                               MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)
+                                                                                            (coe
+                                                                                               MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                                                      (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                                                         (coe
+                                                                                            v15))))
+                                                                                (coe
+                                                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                                                   (coe
+                                                                                      MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                      (coe
+                                                                                         MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                                         (coe
+                                                                                            MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                            (coe
+                                                                                               MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                                                            (coe
+                                                                                               MAlonzo.Code.Ledger.Conway.Foreign.Certs.d_Conv'45'StakePoolParams_68)))
+                                                                                      (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                                                         (coe
+                                                                                            v16))))
+                                                                         _ -> MAlonzo.RTE.mazUnreachableError))
+                                                                 (coe
+                                                                    (\ v13 ->
+                                                                       case coe v13 of
+                                                                         MAlonzo.Code.Ledger.Conway.Foreign.Rewards.C_MkSnapshot_1435 v14 v15 v16
+                                                                           -> coe
+                                                                                MAlonzo.Code.Ledger.Conway.Specification.Rewards.C_constructor_3042
+                                                                                (coe
+                                                                                   MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                                   (coe
+                                                                                      MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Map_116
+                                                                                      (let v17
+                                                                                             = MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20 in
+                                                                                       coe
+                                                                                         (let v18
+                                                                                                = MAlonzo.Code.Ledger.Conway.Foreign.ExternalStructures.d_HSTransactionStructure_682
+                                                                                                    (coe
+                                                                                                       v17) in
+                                                                                          coe
+                                                                                            (coe
+                                                                                               MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_280
+                                                                                               (coe
+                                                                                                  MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
+                                                                                                  (coe
+                                                                                                     MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_206
+                                                                                                     (coe
+                                                                                                        MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1390
+                                                                                                        (coe
+                                                                                                           v18))))
+                                                                                               (coe
+                                                                                                  MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_210
+                                                                                                  (coe
+                                                                                                     MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1390
+                                                                                                     (coe
+                                                                                                        v18))))))
+                                                                                      (coe
+                                                                                         MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)
+                                                                                      (coe
+                                                                                         MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
+                                                                                   (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
+                                                                                      (coe v14)))
+                                                                                (coe
+                                                                                   MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                                   (coe
+                                                                                      MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Map_116
+                                                                                      (let v17
+                                                                                             = MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20 in
+                                                                                       coe
+                                                                                         (let v18
+                                                                                                = MAlonzo.Code.Ledger.Conway.Foreign.ExternalStructures.d_HSTransactionStructure_682
+                                                                                                    (coe
+                                                                                                       v17) in
+                                                                                          coe
+                                                                                            (coe
+                                                                                               MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_280
+                                                                                               (coe
+                                                                                                  MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
+                                                                                                  (coe
+                                                                                                     MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_206
+                                                                                                     (coe
+                                                                                                        MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1390
+                                                                                                        (coe
+                                                                                                           v18))))
+                                                                                               (coe
+                                                                                                  MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_210
+                                                                                                  (coe
+                                                                                                     MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1390
+                                                                                                     (coe
+                                                                                                        v18))))))
+                                                                                      (coe
+                                                                                         MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)
+                                                                                      (coe
+                                                                                         MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
+                                                                                   (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
+                                                                                      (coe v15)))
+                                                                                (coe
+                                                                                   MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                                   (coe
+                                                                                      MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Map_116
+                                                                                      (coe
+                                                                                         MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
+                                                                                      (coe
+                                                                                         MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                                                      (coe
+                                                                                         MAlonzo.Code.Ledger.Conway.Foreign.Certs.d_Conv'45'StakePoolParams_68))
+                                                                                   (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
+                                                                                      (coe v16)))
+                                                                         _ -> MAlonzo.RTE.mazUnreachableError)))
+                                                              v11)
+                                                           (coe v12)
+                                                    _ -> MAlonzo.RTE.mazUnreachableError)))
+                                         v4)
+                                      (coe
+                                         MAlonzo.Code.Foreign.Convertible.d_from_20
+                                         (coe
+                                            MAlonzo.Code.Foreign.Convertible.C_constructor_22
+                                            (coe
+                                               (\ v8 ->
+                                                  case coe v8 of
+                                                    MAlonzo.Code.Ledger.Conway.Conformance.Ledger.C_'10214'_'44'_'44'_'10215''737'_2706 v9 v10 v11
+                                                      -> coe
+                                                           MAlonzo.Code.Ledger.Conway.Foreign.Ledger.C_MkLState_2857
+                                                           (coe
+                                                              MAlonzo.Code.Ledger.Conway.Foreign.Utxo.C_MkUTxOState_1173
+                                                              (coe
+                                                                 MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                                 (coe
+                                                                    MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                    (coe
+                                                                       MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                       (coe
+                                                                          MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                          (coe
+                                                                             MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                             (coe
+                                                                                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                                             (coe
+                                                                                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
+                                                                          (coe
+                                                                             MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                             (coe
+                                                                                MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Either_100
+                                                                                (coe
+                                                                                   MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'BaseAddr_216)
+                                                                                (coe
+                                                                                   MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'BootstrapAddr_220))
+                                                                             (coe
+                                                                                MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                (coe
+                                                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                                                (coe
+                                                                                   MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                   (coe
+                                                                                      MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Maybe_90
+                                                                                      (coe
+                                                                                         MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Either_100
+                                                                                         (coe
+                                                                                            MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                                                         (coe
+                                                                                            MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                                                   (coe
+                                                                                      MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Maybe_90
+                                                                                      (coe
+                                                                                         MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Either_100
+                                                                                         (coe
+                                                                                            MAlonzo.Code.Ledger.Conway.Foreign.Transaction.d_Conv'45'HSTimelock_18)
+                                                                                         (coe
+                                                                                            MAlonzo.Code.Ledger.Conway.Foreign.Transaction.d_Conv'45'HSPlutusScript_22))))))))
+                                                                    (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                                       (coe
+                                                                          MAlonzo.Code.Ledger.Conway.Specification.Utxo.d_utxo_2496
+                                                                          (coe v9)))))
+                                                              (coe
+                                                                 MAlonzo.Code.Ledger.Conway.Specification.Utxo.d_fees_2498
+                                                                 (coe v9))
+                                                              (coe
+                                                                 MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                                 (coe
+                                                                    MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                    (coe
+                                                                       MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                       (coe
+                                                                          MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                          (coe
+                                                                             MAlonzo.Code.Ledger.Conway.Foreign.Certs.d_Conv'45'DepositPurpose_72)
+                                                                          (coe
+                                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                                    (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                                       (coe
+                                                                          MAlonzo.Code.Ledger.Conway.Specification.Utxo.d_deposits_2500
+                                                                          (coe v9)))))
+                                                              (coe
+                                                                 MAlonzo.Code.Ledger.Conway.Specification.Utxo.d_donations_2502
+                                                                 (coe v9)))
+                                                           (coe
+                                                              MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                                                              MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92
+                                                              () erased () erased
+                                                              (MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                 (coe
+                                                                    MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                    (coe
+                                                                       MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                       (coe
+                                                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                                       (coe
+                                                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
+                                                                    (coe
+                                                                       MAlonzo.Code.Ledger.Conway.Foreign.Gov.d_Conv'45'GovActionState_908)))
+                                                              v10)
+                                                           (coe
+                                                              MAlonzo.Code.Ledger.Conway.Foreign.Cert.C_MkCertState_713
+                                                              (coe
+                                                                 MAlonzo.Code.Ledger.Conway.Foreign.Certs.C_MkDState_13305
+                                                                 (coe
+                                                                    MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                                    (coe
+                                                                       MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                       (coe
+                                                                          MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                          (coe
+                                                                             MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                             (coe
+                                                                                MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)
+                                                                             (coe
+                                                                                MAlonzo.Code.Ledger.Conway.Foreign.Gov.Core.d_Conv'45'VDeleg_32)))
+                                                                       (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                                          (coe
+                                                                             MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_voteDelegs_1580
+                                                                             (coe
+                                                                                MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dState_1614
+                                                                                (coe v11))))))
+                                                                 (coe
+                                                                    MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                                    (coe
+                                                                       MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                       (coe
+                                                                          MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                          (coe
+                                                                             MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                             (coe
+                                                                                MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)
+                                                                             (coe
+                                                                                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                                       (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                                          (coe
+                                                                             MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_stakeDelegs_1582
+                                                                             (coe
+                                                                                MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dState_1614
+                                                                                (coe v11))))))
+                                                                 (coe
+                                                                    MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                                    (coe
+                                                                       MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                       (coe
+                                                                          MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                          (coe
+                                                                             MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                             (coe
+                                                                                MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)
+                                                                             (coe
+                                                                                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                                       (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                                          (coe
+                                                                             MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_rewards_1584
+                                                                             (coe
+                                                                                MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dState_1614
+                                                                                (coe v11))))))
+                                                                 (coe
+                                                                    MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                                    (coe
+                                                                       MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                       (coe
+                                                                          MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                          (coe
+                                                                             MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                             (coe
+                                                                                MAlonzo.Code.Ledger.Conway.Foreign.Certs.d_Conv'45'DepositPurpose_72)
+                                                                             (coe
+                                                                                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                                       (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                                          (coe
+                                                                             MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_deposits_1586
+                                                                             (coe
+                                                                                MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dState_1614
+                                                                                (coe v11)))))))
+                                                              (coe
+                                                                 MAlonzo.Code.Ledger.Conway.Foreign.Certs.C_MkPState_6189
+                                                                 (coe
+                                                                    MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                                    (coe
+                                                                       MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                       (coe
+                                                                          MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                          (coe
+                                                                             MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                             (coe
+                                                                                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                                             (coe
+                                                                                MAlonzo.Code.Ledger.Conway.Foreign.Certs.d_Conv'45'StakePoolParams_68)))
+                                                                       (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                                          (coe
+                                                                             MAlonzo.Code.Ledger.Conway.Specification.Certs.d_pools_1426
+                                                                             (coe
+                                                                                MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_pState_1616
+                                                                                (coe v11))))))
+                                                                 (coe
+                                                                    MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                                    (coe
+                                                                       MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                       (coe
+                                                                          MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                          (coe
+                                                                             MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                             (coe
+                                                                                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                                             (coe
+                                                                                MAlonzo.Code.Ledger.Conway.Foreign.Certs.d_Conv'45'StakePoolParams_68)))
+                                                                       (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                                          (coe
+                                                                             MAlonzo.Code.Ledger.Conway.Specification.Certs.d_fPools_1428
+                                                                             (coe
+                                                                                MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_pState_1616
+                                                                                (coe v11))))))
+                                                                 (coe
+                                                                    MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                                    (coe
+                                                                       MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                       (coe
+                                                                          MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                          (coe
+                                                                             MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                             (coe
+                                                                                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                                             (coe
+                                                                                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                                       (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                                          (coe
+                                                                             MAlonzo.Code.Ledger.Conway.Specification.Certs.d_retiring_1430
+                                                                             (coe
+                                                                                MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_pState_1616
+                                                                                (coe v11)))))))
+                                                              (coe
+                                                                 MAlonzo.Code.Ledger.Conway.Foreign.Certs.C_MkGState_25129
+                                                                 (coe
+                                                                    MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                                    (coe
+                                                                       MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                       (coe
+                                                                          MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                          (coe
+                                                                             MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                             (coe
+                                                                                MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)
+                                                                             (coe
+                                                                                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                                       (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                                          (coe
+                                                                             MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dreps_1598
+                                                                             (coe
+                                                                                MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_gState_1618
+                                                                                (coe v11))))))
+                                                                 (coe
+                                                                    MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                                    (coe
+                                                                       MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                       (coe
+                                                                          MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                          (coe
+                                                                             MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                             (coe
+                                                                                MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)
+                                                                             (coe
+                                                                                MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Maybe_90
+                                                                                (coe
+                                                                                   MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212))))
+                                                                       (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                                          (coe
+                                                                             MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_ccHotKeys_1600
+                                                                             (coe
+                                                                                MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_gState_1618
+                                                                                (coe v11))))))
+                                                                 (coe
+                                                                    MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                                    (coe
+                                                                       MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                       (coe
+                                                                          MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                          (coe
+                                                                             MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                             (coe
+                                                                                MAlonzo.Code.Ledger.Conway.Foreign.Certs.d_Conv'45'DepositPurpose_72)
+                                                                             (coe
+                                                                                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                                       (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                                          (coe
+                                                                             MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_deposits_1602
+                                                                             (coe
+                                                                                MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_gState_1618
+                                                                                (coe v11))))))))
+                                                    _ -> MAlonzo.RTE.mazUnreachableError))
+                                            (coe
+                                               (\ v8 ->
+                                                  case coe v8 of
+                                                    MAlonzo.Code.Ledger.Conway.Foreign.Ledger.C_MkLState_2857 v9 v10 v11
+                                                      -> coe
+                                                           MAlonzo.Code.Ledger.Conway.Conformance.Ledger.C_'10214'_'44'_'44'_'10215''737'_2706
+                                                           (coe
+                                                              MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                              (coe
+                                                                 MAlonzo.Code.Foreign.Convertible.C_constructor_22
+                                                                 (coe
+                                                                    (\ v12 ->
+                                                                       case coe v12 of
+                                                                         MAlonzo.Code.Ledger.Conway.Specification.Utxo.C_'10214'_'44'_'44'_'44'_'10215''7512'_2504 v13 v14 v15 v16
+                                                                           -> coe
+                                                                                MAlonzo.Code.Ledger.Conway.Foreign.Utxo.C_MkUTxOState_1173
+                                                                                (coe
+                                                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                                                   (coe
+                                                                                      MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                      (coe
+                                                                                         MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                                         (coe
+                                                                                            MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                            (coe
+                                                                                               MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                               (coe
+                                                                                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                                                               (coe
+                                                                                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
+                                                                                            (coe
+                                                                                               MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                               (coe
+                                                                                                  MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Either_100
+                                                                                                  (coe
+                                                                                                     MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'BaseAddr_216)
+                                                                                                  (coe
+                                                                                                     MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'BootstrapAddr_220))
+                                                                                               (coe
+                                                                                                  MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                  (coe
+                                                                                                     MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                                                                  (coe
+                                                                                                     MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                     (coe
+                                                                                                        MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Maybe_90
+                                                                                                        (coe
+                                                                                                           MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Either_100
+                                                                                                           (coe
+                                                                                                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                                                                           (coe
+                                                                                                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                                                                     (coe
+                                                                                                        MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Maybe_90
+                                                                                                        (coe
+                                                                                                           MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Either_100
+                                                                                                           (coe
+                                                                                                              MAlonzo.Code.Ledger.Conway.Foreign.Transaction.d_Conv'45'HSTimelock_18)
+                                                                                                           (coe
+                                                                                                              MAlonzo.Code.Ledger.Conway.Foreign.Transaction.d_Conv'45'HSPlutusScript_22))))))))
+                                                                                      (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                                                         (coe
+                                                                                            v13))))
+                                                                                (coe v14)
+                                                                                (coe
+                                                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                                                   (coe
+                                                                                      MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                      (coe
+                                                                                         MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                                         (coe
+                                                                                            MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                            (coe
+                                                                                               MAlonzo.Code.Ledger.Conway.Foreign.Certs.d_Conv'45'DepositPurpose_72)
+                                                                                            (coe
+                                                                                               MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                                                      (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                                                         (coe
+                                                                                            v15))))
+                                                                                (coe v16)
+                                                                         _ -> MAlonzo.RTE.mazUnreachableError))
+                                                                 (coe
+                                                                    (\ v12 ->
+                                                                       case coe v12 of
+                                                                         MAlonzo.Code.Ledger.Conway.Foreign.Utxo.C_MkUTxOState_1173 v13 v14 v15 v16
+                                                                           -> coe
+                                                                                MAlonzo.Code.Ledger.Conway.Specification.Utxo.C_'10214'_'44'_'44'_'44'_'10215''7512'_2504
+                                                                                (coe
+                                                                                   MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                                   (coe
+                                                                                      MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Map_116
+                                                                                      (coe
+                                                                                         MAlonzo.Code.Prelude.d_DecEq'45''215''8242'_4
+                                                                                         () erased
+                                                                                         () erased
+                                                                                         MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22
+                                                                                         MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
+                                                                                      (coe
+                                                                                         MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                         (coe
+                                                                                            MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                                                         (coe
+                                                                                            MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
+                                                                                      (coe
+                                                                                         MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                         (coe
+                                                                                            MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Either_100
+                                                                                            (coe
+                                                                                               MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'BaseAddr_216)
+                                                                                            (coe
+                                                                                               MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'BootstrapAddr_220))
+                                                                                         (coe
+                                                                                            MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                            (coe
+                                                                                               MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                                                            (coe
+                                                                                               MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                               (coe
+                                                                                                  MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Maybe_90
+                                                                                                  (coe
+                                                                                                     MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Either_100
+                                                                                                     (coe
+                                                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                                                                     (coe
+                                                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                                                               (coe
+                                                                                                  MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Maybe_90
+                                                                                                  (coe
+                                                                                                     MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Either_100
+                                                                                                     (coe
+                                                                                                        MAlonzo.Code.Ledger.Conway.Foreign.Transaction.d_Conv'45'HSTimelock_18)
+                                                                                                     (coe
+                                                                                                        MAlonzo.Code.Ledger.Conway.Foreign.Transaction.d_Conv'45'HSPlutusScript_22)))))))
+                                                                                   (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
+                                                                                      (coe v13)))
+                                                                                (coe v14)
+                                                                                (coe
+                                                                                   MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                                   (coe
+                                                                                      MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Map_116
+                                                                                      (let v17
+                                                                                             = MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20 in
+                                                                                       coe
+                                                                                         (coe
+                                                                                            MAlonzo.Code.Ledger.Conway.Specification.Certs.d_DecEq'45'DepositPurpose_1202
+                                                                                            (coe
+                                                                                               MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_govStructure_2634
+                                                                                               (coe
+                                                                                                  MAlonzo.Code.Ledger.Conway.Foreign.ExternalStructures.d_HSTransactionStructure_682
+                                                                                                  (coe
+                                                                                                     v17)))))
+                                                                                      (coe
+                                                                                         MAlonzo.Code.Ledger.Conway.Foreign.Certs.d_Conv'45'DepositPurpose_72)
+                                                                                      (coe
+                                                                                         MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
+                                                                                   (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
+                                                                                      (coe v15)))
+                                                                                (coe v16)
+                                                                         _ -> MAlonzo.RTE.mazUnreachableError)))
+                                                              v9)
+                                                           (coe
+                                                              MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                                                              MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92
+                                                              () erased () erased
+                                                              (MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                 (coe
+                                                                    MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                    (coe
+                                                                       MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                       (coe
+                                                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                                       (coe
+                                                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
+                                                                    (coe
+                                                                       MAlonzo.Code.Ledger.Conway.Foreign.Gov.d_Conv'45'GovActionState_908)))
+                                                              v10)
+                                                           (coe
+                                                              MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                              (coe
+                                                                 MAlonzo.Code.Foreign.Convertible.C_constructor_22
+                                                                 (coe
+                                                                    (\ v12 ->
+                                                                       case coe v12 of
+                                                                         MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_'10214'_'44'_'44'_'10215''7580''738'_1620 v13 v14 v15
+                                                                           -> coe
+                                                                                MAlonzo.Code.Ledger.Conway.Foreign.Cert.C_MkCertState_713
+                                                                                (coe
+                                                                                   MAlonzo.Code.Ledger.Conway.Foreign.Certs.C_MkDState_13305
+                                                                                   (coe
+                                                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                                                      (coe
+                                                                                         MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                         (coe
+                                                                                            MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                                            (coe
+                                                                                               MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                               (coe
+                                                                                                  MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)
+                                                                                               (coe
+                                                                                                  MAlonzo.Code.Ledger.Conway.Foreign.Gov.Core.d_Conv'45'VDeleg_32)))
+                                                                                         (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                                                            (coe
+                                                                                               MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_voteDelegs_1580
+                                                                                               (coe
+                                                                                                  v13)))))
+                                                                                   (coe
+                                                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                                                      (coe
+                                                                                         MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                         (coe
+                                                                                            MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                                            (coe
+                                                                                               MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                               (coe
+                                                                                                  MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)
+                                                                                               (coe
+                                                                                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                                                         (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                                                            (coe
+                                                                                               MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_stakeDelegs_1582
+                                                                                               (coe
+                                                                                                  v13)))))
+                                                                                   (coe
+                                                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                                                      (coe
+                                                                                         MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                         (coe
+                                                                                            MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                                            (coe
+                                                                                               MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                               (coe
+                                                                                                  MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)
+                                                                                               (coe
+                                                                                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                                                         (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                                                            (coe
+                                                                                               MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_rewards_1584
+                                                                                               (coe
+                                                                                                  v13)))))
+                                                                                   (coe
+                                                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                                                      (coe
+                                                                                         MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                         (coe
+                                                                                            MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                                            (coe
+                                                                                               MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                               (coe
+                                                                                                  MAlonzo.Code.Ledger.Conway.Foreign.Certs.d_Conv'45'DepositPurpose_72)
+                                                                                               (coe
+                                                                                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                                                         (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                                                            (coe
+                                                                                               MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_deposits_1586
+                                                                                               (coe
+                                                                                                  v13))))))
+                                                                                (coe
+                                                                                   MAlonzo.Code.Ledger.Conway.Foreign.Certs.C_MkPState_6189
+                                                                                   (coe
+                                                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                                                      (coe
+                                                                                         MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                         (coe
+                                                                                            MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                                            (coe
+                                                                                               MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                               (coe
+                                                                                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                                                               (coe
+                                                                                                  MAlonzo.Code.Ledger.Conway.Foreign.Certs.d_Conv'45'StakePoolParams_68)))
+                                                                                         (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                                                            (coe
+                                                                                               MAlonzo.Code.Ledger.Conway.Specification.Certs.d_pools_1426
+                                                                                               (coe
+                                                                                                  v14)))))
+                                                                                   (coe
+                                                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                                                      (coe
+                                                                                         MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                         (coe
+                                                                                            MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                                            (coe
+                                                                                               MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                               (coe
+                                                                                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                                                               (coe
+                                                                                                  MAlonzo.Code.Ledger.Conway.Foreign.Certs.d_Conv'45'StakePoolParams_68)))
+                                                                                         (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                                                            (coe
+                                                                                               MAlonzo.Code.Ledger.Conway.Specification.Certs.d_fPools_1428
+                                                                                               (coe
+                                                                                                  v14)))))
+                                                                                   (coe
+                                                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                                                      (coe
+                                                                                         MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                         (coe
+                                                                                            MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                                            (coe
+                                                                                               MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                               (coe
+                                                                                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                                                               (coe
+                                                                                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                                                         (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                                                            (coe
+                                                                                               MAlonzo.Code.Ledger.Conway.Specification.Certs.d_retiring_1430
+                                                                                               (coe
+                                                                                                  v14))))))
+                                                                                (coe
+                                                                                   MAlonzo.Code.Ledger.Conway.Foreign.Certs.C_MkGState_25129
+                                                                                   (coe
+                                                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                                                      (coe
+                                                                                         MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                         (coe
+                                                                                            MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                                            (coe
+                                                                                               MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                               (coe
+                                                                                                  MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)
+                                                                                               (coe
+                                                                                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                                                         (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                                                            (coe
+                                                                                               MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dreps_1598
+                                                                                               (coe
+                                                                                                  v15)))))
+                                                                                   (coe
+                                                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                                                      (coe
+                                                                                         MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                         (coe
+                                                                                            MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                                            (coe
+                                                                                               MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                               (coe
+                                                                                                  MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)
+                                                                                               (coe
+                                                                                                  MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Maybe_90
+                                                                                                  (coe
+                                                                                                     MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212))))
+                                                                                         (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                                                            (coe
+                                                                                               MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_ccHotKeys_1600
+                                                                                               (coe
+                                                                                                  v15)))))
+                                                                                   (coe
+                                                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                                                      (coe
+                                                                                         MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                         (coe
+                                                                                            MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                                            (coe
+                                                                                               MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                               (coe
+                                                                                                  MAlonzo.Code.Ledger.Conway.Foreign.Certs.d_Conv'45'DepositPurpose_72)
+                                                                                               (coe
+                                                                                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                                                         (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                                                            (coe
+                                                                                               MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_deposits_1602
+                                                                                               (coe
+                                                                                                  v15))))))
+                                                                         _ -> MAlonzo.RTE.mazUnreachableError))
+                                                                 (coe
+                                                                    (\ v12 ->
+                                                                       case coe v12 of
+                                                                         MAlonzo.Code.Ledger.Conway.Foreign.Cert.C_MkCertState_713 v13 v14 v15
+                                                                           -> coe
+                                                                                MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_'10214'_'44'_'44'_'10215''7580''738'_1620
+                                                                                (coe
+                                                                                   MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                                   (coe
+                                                                                      MAlonzo.Code.Foreign.Convertible.C_constructor_22
+                                                                                      (coe
+                                                                                         (\ v16 ->
+                                                                                            case coe
+                                                                                                   v16 of
+                                                                                              MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_'10214'_'44'_'44'_'44'_'10215''7496'_1588 v17 v18 v19 v20
+                                                                                                -> coe
+                                                                                                     MAlonzo.Code.Ledger.Conway.Foreign.Certs.C_MkDState_13305
+                                                                                                     (coe
+                                                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                                                                        (coe
+                                                                                                           MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                                           (coe
+                                                                                                              MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                                                              (coe
+                                                                                                                 MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                                 (coe
+                                                                                                                    MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)
+                                                                                                                 (coe
+                                                                                                                    MAlonzo.Code.Ledger.Conway.Foreign.Gov.Core.d_Conv'45'VDeleg_32)))
+                                                                                                           (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                                                                              (coe
+                                                                                                                 v17))))
+                                                                                                     (coe
+                                                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                                                                        (coe
+                                                                                                           MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                                           (coe
+                                                                                                              MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                                                              (coe
+                                                                                                                 MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                                 (coe
+                                                                                                                    MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)
+                                                                                                                 (coe
+                                                                                                                    MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                                                                           (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                                                                              (coe
+                                                                                                                 v18))))
+                                                                                                     (coe
+                                                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                                                                        (coe
+                                                                                                           MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                                           (coe
+                                                                                                              MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                                                              (coe
+                                                                                                                 MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                                 (coe
+                                                                                                                    MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)
+                                                                                                                 (coe
+                                                                                                                    MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                                                                           (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                                                                              (coe
+                                                                                                                 v19))))
+                                                                                                     (coe
+                                                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                                                                        (coe
+                                                                                                           MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                                           (coe
+                                                                                                              MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                                                              (coe
+                                                                                                                 MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                                 (coe
+                                                                                                                    MAlonzo.Code.Ledger.Conway.Foreign.Certs.d_Conv'45'DepositPurpose_72)
+                                                                                                                 (coe
+                                                                                                                    MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                                                                           (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                                                                              (coe
+                                                                                                                 v20))))
+                                                                                              _ -> MAlonzo.RTE.mazUnreachableError))
+                                                                                      (coe
+                                                                                         (\ v16 ->
+                                                                                            case coe
+                                                                                                   v16 of
+                                                                                              MAlonzo.Code.Ledger.Conway.Foreign.Certs.C_MkDState_13305 v17 v18 v19 v20
+                                                                                                -> coe
+                                                                                                     MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_'10214'_'44'_'44'_'44'_'10215''7496'_1588
+                                                                                                     (coe
+                                                                                                        MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                                                        (coe
+                                                                                                           MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Map_116
+                                                                                                           (let v21
+                                                                                                                  = MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20 in
+                                                                                                            coe
+                                                                                                              (let v22
+                                                                                                                     = MAlonzo.Code.Ledger.Conway.Foreign.ExternalStructures.d_HSTransactionStructure_682
+                                                                                                                         (coe
+                                                                                                                            v21) in
+                                                                                                               coe
+                                                                                                                 (coe
+                                                                                                                    MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_280
+                                                                                                                    (coe
+                                                                                                                       MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
+                                                                                                                       (coe
+                                                                                                                          MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_206
+                                                                                                                          (coe
+                                                                                                                             MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1390
+                                                                                                                             (coe
+                                                                                                                                v22))))
+                                                                                                                    (coe
+                                                                                                                       MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_210
+                                                                                                                       (coe
+                                                                                                                          MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1390
+                                                                                                                          (coe
+                                                                                                                             v22))))))
+                                                                                                           (coe
+                                                                                                              MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)
+                                                                                                           (coe
+                                                                                                              MAlonzo.Code.Ledger.Conway.Foreign.Gov.Core.d_Conv'45'VDeleg_32))
+                                                                                                        (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
+                                                                                                           (coe
+                                                                                                              v17)))
+                                                                                                     (coe
+                                                                                                        MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                                                        (coe
+                                                                                                           MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Map_116
+                                                                                                           (let v21
+                                                                                                                  = MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20 in
+                                                                                                            coe
+                                                                                                              (let v22
+                                                                                                                     = MAlonzo.Code.Ledger.Conway.Foreign.ExternalStructures.d_HSTransactionStructure_682
+                                                                                                                         (coe
+                                                                                                                            v21) in
+                                                                                                               coe
+                                                                                                                 (coe
+                                                                                                                    MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_280
+                                                                                                                    (coe
+                                                                                                                       MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
+                                                                                                                       (coe
+                                                                                                                          MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_206
+                                                                                                                          (coe
+                                                                                                                             MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1390
+                                                                                                                             (coe
+                                                                                                                                v22))))
+                                                                                                                    (coe
+                                                                                                                       MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_210
+                                                                                                                       (coe
+                                                                                                                          MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1390
+                                                                                                                          (coe
+                                                                                                                             v22))))))
+                                                                                                           (coe
+                                                                                                              MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)
+                                                                                                           (coe
+                                                                                                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
+                                                                                                        (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
+                                                                                                           (coe
+                                                                                                              v18)))
+                                                                                                     (coe
+                                                                                                        MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                                                        (coe
+                                                                                                           MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Map_116
+                                                                                                           (let v21
+                                                                                                                  = MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20 in
+                                                                                                            coe
+                                                                                                              (let v22
+                                                                                                                     = MAlonzo.Code.Ledger.Conway.Foreign.ExternalStructures.d_HSTransactionStructure_682
+                                                                                                                         (coe
+                                                                                                                            v21) in
+                                                                                                               coe
+                                                                                                                 (coe
+                                                                                                                    MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_280
+                                                                                                                    (coe
+                                                                                                                       MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
+                                                                                                                       (coe
+                                                                                                                          MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_206
+                                                                                                                          (coe
+                                                                                                                             MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1390
+                                                                                                                             (coe
+                                                                                                                                v22))))
+                                                                                                                    (coe
+                                                                                                                       MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_210
+                                                                                                                       (coe
+                                                                                                                          MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1390
+                                                                                                                          (coe
+                                                                                                                             v22))))))
+                                                                                                           (coe
+                                                                                                              MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)
+                                                                                                           (coe
+                                                                                                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
+                                                                                                        (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
+                                                                                                           (coe
+                                                                                                              v19)))
+                                                                                                     (coe
+                                                                                                        MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                                                        (coe
+                                                                                                           MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Map_116
+                                                                                                           (let v21
+                                                                                                                  = MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20 in
+                                                                                                            coe
+                                                                                                              (coe
+                                                                                                                 MAlonzo.Code.Ledger.Conway.Specification.Certs.d_DecEq'45'DepositPurpose_1202
+                                                                                                                 (coe
+                                                                                                                    MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_govStructure_2634
+                                                                                                                    (coe
+                                                                                                                       MAlonzo.Code.Ledger.Conway.Foreign.ExternalStructures.d_HSTransactionStructure_682
+                                                                                                                       (coe
+                                                                                                                          v21)))))
+                                                                                                           (coe
+                                                                                                              MAlonzo.Code.Ledger.Conway.Foreign.Certs.d_Conv'45'DepositPurpose_72)
+                                                                                                           (coe
+                                                                                                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
+                                                                                                        (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
+                                                                                                           (coe
+                                                                                                              v20)))
+                                                                                              _ -> MAlonzo.RTE.mazUnreachableError)))
+                                                                                   v13)
+                                                                                (coe
+                                                                                   MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                                   (coe
+                                                                                      MAlonzo.Code.Foreign.Convertible.C_constructor_22
+                                                                                      (coe
+                                                                                         (\ v16 ->
+                                                                                            case coe
+                                                                                                   v16 of
+                                                                                              MAlonzo.Code.Ledger.Conway.Specification.Certs.C_constructor_1432 v17 v18 v19
+                                                                                                -> coe
+                                                                                                     MAlonzo.Code.Ledger.Conway.Foreign.Certs.C_MkPState_6189
+                                                                                                     (coe
+                                                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                                                                        (coe
+                                                                                                           MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                                           (coe
+                                                                                                              MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                                                              (coe
+                                                                                                                 MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                                 (coe
+                                                                                                                    MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                                                                                 (coe
+                                                                                                                    MAlonzo.Code.Ledger.Conway.Foreign.Certs.d_Conv'45'StakePoolParams_68)))
+                                                                                                           (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                                                                              (coe
+                                                                                                                 v17))))
+                                                                                                     (coe
+                                                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                                                                        (coe
+                                                                                                           MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                                           (coe
+                                                                                                              MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                                                              (coe
+                                                                                                                 MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                                 (coe
+                                                                                                                    MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                                                                                 (coe
+                                                                                                                    MAlonzo.Code.Ledger.Conway.Foreign.Certs.d_Conv'45'StakePoolParams_68)))
+                                                                                                           (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                                                                              (coe
+                                                                                                                 v18))))
+                                                                                                     (coe
+                                                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                                                                        (coe
+                                                                                                           MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                                           (coe
+                                                                                                              MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                                                              (coe
+                                                                                                                 MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                                 (coe
+                                                                                                                    MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                                                                                 (coe
+                                                                                                                    MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                                                                           (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                                                                              (coe
+                                                                                                                 v19))))
+                                                                                              _ -> MAlonzo.RTE.mazUnreachableError))
+                                                                                      (coe
+                                                                                         (\ v16 ->
+                                                                                            case coe
+                                                                                                   v16 of
+                                                                                              MAlonzo.Code.Ledger.Conway.Foreign.Certs.C_MkPState_6189 v17 v18 v19
+                                                                                                -> coe
+                                                                                                     MAlonzo.Code.Ledger.Conway.Specification.Certs.C_constructor_1432
+                                                                                                     (coe
+                                                                                                        MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                                                        (coe
+                                                                                                           MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Map_116
+                                                                                                           (coe
+                                                                                                              MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
+                                                                                                           (coe
+                                                                                                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                                                                           (coe
+                                                                                                              MAlonzo.Code.Ledger.Conway.Foreign.Certs.d_Conv'45'StakePoolParams_68))
+                                                                                                        (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
+                                                                                                           (coe
+                                                                                                              v17)))
+                                                                                                     (coe
+                                                                                                        MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                                                        (coe
+                                                                                                           MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Map_116
+                                                                                                           (coe
+                                                                                                              MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
+                                                                                                           (coe
+                                                                                                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                                                                           (coe
+                                                                                                              MAlonzo.Code.Ledger.Conway.Foreign.Certs.d_Conv'45'StakePoolParams_68))
+                                                                                                        (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
+                                                                                                           (coe
+                                                                                                              v18)))
+                                                                                                     (coe
+                                                                                                        MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                                                        (coe
+                                                                                                           MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Map_116
+                                                                                                           (coe
+                                                                                                              MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
+                                                                                                           (coe
+                                                                                                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                                                                           (coe
+                                                                                                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
+                                                                                                        (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
+                                                                                                           (coe
+                                                                                                              v19)))
+                                                                                              _ -> MAlonzo.RTE.mazUnreachableError)))
+                                                                                   v14)
+                                                                                (coe
+                                                                                   MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                                   (coe
+                                                                                      MAlonzo.Code.Foreign.Convertible.C_constructor_22
+                                                                                      (coe
+                                                                                         (\ v16 ->
+                                                                                            case coe
+                                                                                                   v16 of
+                                                                                              MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_'10214'_'44'_'44'_'10215''7515'_1604 v17 v18 v19
+                                                                                                -> coe
+                                                                                                     MAlonzo.Code.Ledger.Conway.Foreign.Certs.C_MkGState_25129
+                                                                                                     (coe
+                                                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                                                                        (coe
+                                                                                                           MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                                           (coe
+                                                                                                              MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                                                              (coe
+                                                                                                                 MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                                 (coe
+                                                                                                                    MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)
+                                                                                                                 (coe
+                                                                                                                    MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                                                                           (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                                                                              (coe
+                                                                                                                 v17))))
+                                                                                                     (coe
+                                                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                                                                        (coe
+                                                                                                           MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                                           (coe
+                                                                                                              MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                                                              (coe
+                                                                                                                 MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                                 (coe
+                                                                                                                    MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)
+                                                                                                                 (coe
+                                                                                                                    MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Maybe_90
+                                                                                                                    (coe
+                                                                                                                       MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212))))
+                                                                                                           (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                                                                              (coe
+                                                                                                                 v18))))
+                                                                                                     (coe
+                                                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                                                                        (coe
+                                                                                                           MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                                           (coe
+                                                                                                              MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                                                              (coe
+                                                                                                                 MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                                 (coe
+                                                                                                                    MAlonzo.Code.Ledger.Conway.Foreign.Certs.d_Conv'45'DepositPurpose_72)
+                                                                                                                 (coe
+                                                                                                                    MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                                                                           (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                                                                              (coe
+                                                                                                                 v19))))
+                                                                                              _ -> MAlonzo.RTE.mazUnreachableError))
+                                                                                      (coe
+                                                                                         (\ v16 ->
+                                                                                            case coe
+                                                                                                   v16 of
+                                                                                              MAlonzo.Code.Ledger.Conway.Foreign.Certs.C_MkGState_25129 v17 v18 v19
+                                                                                                -> coe
+                                                                                                     MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_'10214'_'44'_'44'_'10215''7515'_1604
+                                                                                                     (coe
+                                                                                                        MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                                                        (coe
+                                                                                                           MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Map_116
+                                                                                                           (let v20
+                                                                                                                  = MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20 in
+                                                                                                            coe
+                                                                                                              (let v21
+                                                                                                                     = MAlonzo.Code.Ledger.Conway.Foreign.ExternalStructures.d_HSTransactionStructure_682
+                                                                                                                         (coe
+                                                                                                                            v20) in
+                                                                                                               coe
+                                                                                                                 (coe
+                                                                                                                    MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_280
+                                                                                                                    (coe
+                                                                                                                       MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
+                                                                                                                       (coe
+                                                                                                                          MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_206
+                                                                                                                          (coe
+                                                                                                                             MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1390
+                                                                                                                             (coe
+                                                                                                                                v21))))
+                                                                                                                    (coe
+                                                                                                                       MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_210
+                                                                                                                       (coe
+                                                                                                                          MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1390
+                                                                                                                          (coe
+                                                                                                                             v21))))))
+                                                                                                           (coe
+                                                                                                              MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)
+                                                                                                           (coe
+                                                                                                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
+                                                                                                        (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
+                                                                                                           (coe
+                                                                                                              v17)))
+                                                                                                     (coe
+                                                                                                        MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                                                        (coe
+                                                                                                           MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Map_116
+                                                                                                           (let v20
+                                                                                                                  = MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20 in
+                                                                                                            coe
+                                                                                                              (let v21
+                                                                                                                     = MAlonzo.Code.Ledger.Conway.Foreign.ExternalStructures.d_HSTransactionStructure_682
+                                                                                                                         (coe
+                                                                                                                            v20) in
+                                                                                                               coe
+                                                                                                                 (coe
+                                                                                                                    MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_280
+                                                                                                                    (coe
+                                                                                                                       MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
+                                                                                                                       (coe
+                                                                                                                          MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_206
+                                                                                                                          (coe
+                                                                                                                             MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1390
+                                                                                                                             (coe
+                                                                                                                                v21))))
+                                                                                                                    (coe
+                                                                                                                       MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_210
+                                                                                                                       (coe
+                                                                                                                          MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1390
+                                                                                                                          (coe
+                                                                                                                             v21))))))
+                                                                                                           (coe
+                                                                                                              MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)
+                                                                                                           (coe
+                                                                                                              MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Maybe_90
+                                                                                                              (coe
+                                                                                                                 MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)))
+                                                                                                        (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
+                                                                                                           (coe
+                                                                                                              v18)))
+                                                                                                     (coe
+                                                                                                        MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                                                        (coe
+                                                                                                           MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Map_116
+                                                                                                           (let v20
+                                                                                                                  = MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20 in
+                                                                                                            coe
+                                                                                                              (coe
+                                                                                                                 MAlonzo.Code.Ledger.Conway.Specification.Certs.d_DecEq'45'DepositPurpose_1202
+                                                                                                                 (coe
+                                                                                                                    MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_govStructure_2634
+                                                                                                                    (coe
+                                                                                                                       MAlonzo.Code.Ledger.Conway.Foreign.ExternalStructures.d_HSTransactionStructure_682
+                                                                                                                       (coe
+                                                                                                                          v20)))))
+                                                                                                           (coe
+                                                                                                              MAlonzo.Code.Ledger.Conway.Foreign.Certs.d_Conv'45'DepositPurpose_72)
+                                                                                                           (coe
+                                                                                                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
+                                                                                                        (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
+                                                                                                           (coe
+                                                                                                              v19)))
+                                                                                              _ -> MAlonzo.RTE.mazUnreachableError)))
+                                                                                   v15)
+                                                                         _ -> MAlonzo.RTE.mazUnreachableError)))
+                                                              v11)
+                                                    _ -> MAlonzo.RTE.mazUnreachableError)))
+                                         v5)
+                                      (coe
+                                         MAlonzo.Code.Foreign.Convertible.d_from_20
+                                         (coe
+                                            MAlonzo.Code.Foreign.Convertible.C_constructor_22
+                                            (coe
+                                               (\ v8 ->
+                                                  case coe v8 of
+                                                    MAlonzo.Code.Ledger.Conway.Specification.Enact.C_constructor_1188 v9 v10 v11 v12 v13
+                                                      -> coe
+                                                           MAlonzo.Code.Ledger.Conway.Foreign.Enact.C_MkEnactState_161
+                                                           (coe
+                                                              MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44
+                                                              () erased () erased
+                                                              (coe
+                                                                 MAlonzo.Code.Foreign.Haskell.Coerce.du_pair'45'toFFI_92)
+                                                              (coe
+                                                                 MAlonzo.Code.Data.Product.Base.du_map_128
+                                                                 (coe
+                                                                    MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                    (coe
+                                                                       MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Maybe_90
+                                                                       (coe
+                                                                          MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                          (coe
+                                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.du_Conv'45'HSMap_102
+                                                                             (let v14
+                                                                                    = MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20 in
+                                                                              coe
+                                                                                (let v15
+                                                                                       = MAlonzo.Code.Ledger.Conway.Foreign.ExternalStructures.d_HSTransactionStructure_682
+                                                                                           (coe
+                                                                                              v14) in
+                                                                                 coe
+                                                                                   (coe
+                                                                                      MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_280
+                                                                                      (coe
+                                                                                         MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
+                                                                                         (coe
+                                                                                            MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_206
+                                                                                            (coe
+                                                                                               MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1390
+                                                                                               (coe
+                                                                                                  v15))))
+                                                                                      (coe
+                                                                                         MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_210
+                                                                                         (coe
+                                                                                            MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1390
+                                                                                            (coe
+                                                                                               v15))))))
+                                                                             (coe
+                                                                                MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)
+                                                                             (coe
+                                                                                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
+                                                                          (coe
+                                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_28))))
+                                                                 (coe
+                                                                    (\ v14 ->
+                                                                       MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                         (coe
+                                                                            MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                            (coe
+                                                                               MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                                            (coe
+                                                                               MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
+                                                                 (coe v9)))
+                                                           (coe
+                                                              MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44
+                                                              () erased () erased
+                                                              (coe
+                                                                 MAlonzo.Code.Foreign.Haskell.Coerce.du_pair'45'toFFI_92)
+                                                              (coe
+                                                                 MAlonzo.Code.Data.Product.Base.du_map_128
+                                                                 (coe
+                                                                    MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                    (coe
+                                                                       MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                       (coe
+                                                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                                       (coe
+                                                                          MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Maybe_90
+                                                                          (coe
+                                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
+                                                                 (coe
+                                                                    (\ v14 ->
+                                                                       MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                         (coe
+                                                                            MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                            (coe
+                                                                               MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                                            (coe
+                                                                               MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
+                                                                 (coe v10)))
+                                                           (coe
+                                                              MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44
+                                                              () erased () erased
+                                                              (coe
+                                                                 MAlonzo.Code.Foreign.Haskell.Coerce.du_pair'45'toFFI_92)
+                                                              (coe
+                                                                 MAlonzo.Code.Data.Product.Base.du_map_128
+                                                                 (coe
+                                                                    MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                    (coe
+                                                                       MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                       (coe
+                                                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                                       (coe
+                                                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                                 (coe
+                                                                    (\ v14 ->
+                                                                       MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                         (coe
+                                                                            MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                            (coe
+                                                                               MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                                            (coe
+                                                                               MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
+                                                                 (coe v11)))
+                                                           (coe
+                                                              MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44
+                                                              () erased () erased
+                                                              (coe
+                                                                 MAlonzo.Code.Foreign.Haskell.Coerce.du_pair'45'toFFI_92)
+                                                              (coe
+                                                                 MAlonzo.Code.Data.Product.Base.du_map_128
+                                                                 (coe
+                                                                    MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                    (coe
+                                                                       MAlonzo.Code.Ledger.Conway.Foreign.PParams.d_Conv'45'PParams_26))
+                                                                 (coe
+                                                                    (\ v14 ->
+                                                                       MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                         (coe
+                                                                            MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                            (coe
+                                                                               MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                                            (coe
+                                                                               MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
+                                                                 (coe v12)))
+                                                           (coe
+                                                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                              (coe
+                                                                 MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                 (coe
+                                                                    MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                    (coe
+                                                                       MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                       (coe
+                                                                          MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'RewardAddress_224)
+                                                                       (coe
+                                                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                                 (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                                    (coe v13))))
+                                                    _ -> MAlonzo.RTE.mazUnreachableError))
+                                            (coe
+                                               (\ v8 ->
+                                                  case coe v8 of
+                                                    MAlonzo.Code.Ledger.Conway.Foreign.Enact.C_MkEnactState_161 v9 v10 v11 v12 v13
+                                                      -> coe
+                                                           MAlonzo.Code.Ledger.Conway.Specification.Enact.C_constructor_1188
+                                                           (coe
+                                                              MAlonzo.Code.Data.Product.Base.du_map_128
+                                                              (coe
+                                                                 MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                 (coe
+                                                                    MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Maybe_90
+                                                                    (coe
+                                                                       MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                       (coe
+                                                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.du_Conv'45'HSMap_102
+                                                                          (let v14
+                                                                                 = MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20 in
+                                                                           coe
+                                                                             (let v15
+                                                                                    = MAlonzo.Code.Ledger.Conway.Foreign.ExternalStructures.d_HSTransactionStructure_682
+                                                                                        (coe v14) in
+                                                                              coe
+                                                                                (coe
+                                                                                   MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_280
+                                                                                   (coe
+                                                                                      MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
+                                                                                      (coe
+                                                                                         MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_206
+                                                                                         (coe
+                                                                                            MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1390
+                                                                                            (coe
+                                                                                               v15))))
+                                                                                   (coe
+                                                                                      MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_210
+                                                                                      (coe
+                                                                                         MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1390
+                                                                                         (coe
+                                                                                            v15))))))
+                                                                          (coe
+                                                                             MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)
+                                                                          (coe
+                                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
+                                                                       (coe
+                                                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_28))))
+                                                              (coe
+                                                                 (\ v14 ->
+                                                                    MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                      (coe
+                                                                         MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                         (coe
+                                                                            MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                                         (coe
+                                                                            MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
+                                                              (coe
+                                                                 MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44
+                                                                 () erased () erased
+                                                                 (coe
+                                                                    MAlonzo.Code.Foreign.Haskell.Coerce.C_TrustMe_40)
+                                                                 v9))
+                                                           (coe
+                                                              MAlonzo.Code.Data.Product.Base.du_map_128
+                                                              (coe
+                                                                 MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                 (coe
+                                                                    MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                    (coe
+                                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                                    (coe
+                                                                       MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Maybe_90
+                                                                       (coe
+                                                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
+                                                              (coe
+                                                                 (\ v14 ->
+                                                                    MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                      (coe
+                                                                         MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                         (coe
+                                                                            MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                                         (coe
+                                                                            MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
+                                                              (coe
+                                                                 MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44
+                                                                 () erased () erased
+                                                                 (coe
+                                                                    MAlonzo.Code.Foreign.Haskell.Coerce.C_TrustMe_40)
+                                                                 v10))
+                                                           (coe
+                                                              MAlonzo.Code.Data.Product.Base.du_map_128
+                                                              (coe
+                                                                 MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                 (coe
+                                                                    MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                    (coe
+                                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                                    (coe
+                                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                              (coe
+                                                                 (\ v14 ->
+                                                                    MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                      (coe
+                                                                         MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                         (coe
+                                                                            MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                                         (coe
+                                                                            MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
+                                                              (coe
+                                                                 MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44
+                                                                 () erased () erased
+                                                                 (coe
+                                                                    MAlonzo.Code.Foreign.Haskell.Coerce.C_TrustMe_40)
+                                                                 v11))
+                                                           (coe
+                                                              MAlonzo.Code.Data.Product.Base.du_map_128
+                                                              (coe
+                                                                 MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                 (coe
+                                                                    MAlonzo.Code.Ledger.Conway.Foreign.PParams.d_Conv'45'PParams_26))
+                                                              (coe
+                                                                 (\ v14 ->
+                                                                    MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                      (coe
+                                                                         MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                         (coe
+                                                                            MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                                         (coe
+                                                                            MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
+                                                              (coe
+                                                                 MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44
+                                                                 () erased () erased
+                                                                 (coe
+                                                                    MAlonzo.Code.Foreign.Haskell.Coerce.C_TrustMe_40)
+                                                                 v12))
+                                                           (coe
+                                                              MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                              (coe
+                                                                 MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Map_116
+                                                                 (let v14
+                                                                        = MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20 in
+                                                                  coe
+                                                                    (let v15
+                                                                           = MAlonzo.Code.Ledger.Conway.Foreign.ExternalStructures.d_HSTransactionStructure_682
+                                                                               (coe v14) in
+                                                                     coe
+                                                                       (coe
+                                                                          MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'RewardAddress_338
+                                                                          (coe
+                                                                             MAlonzo.Code.Ledger.Core.Specification.Epoch.d_DecEq'45'Netw_320
+                                                                             (coe
+                                                                                MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_globalConstants_1356
+                                                                                (coe v15)))
+                                                                          (coe
+                                                                             MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
+                                                                             (coe
+                                                                                MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_206
+                                                                                (coe
+                                                                                   MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1390
+                                                                                   (coe v15))))
+                                                                          (coe
+                                                                             MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_210
+                                                                             (coe
+                                                                                MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1390
+                                                                                (coe v15))))))
+                                                                 (coe
+                                                                    MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'RewardAddress_224)
+                                                                 (coe
+                                                                    MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
+                                                              (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
+                                                                 (coe v13)))
+                                                    _ -> MAlonzo.RTE.mazUnreachableError)))
+                                         v6)
+                                      (coe
+                                         MAlonzo.Code.Foreign.Convertible.d_from_20
+                                         (coe
+                                            MAlonzo.Code.Foreign.Convertible.C_constructor_22
+                                            (coe
+                                               (\ v8 ->
+                                                  case coe v8 of
+                                                    MAlonzo.Code.Ledger.Conway.Specification.Ratify.C_constructor_1904 v9 v10 v11
+                                                      -> coe
+                                                           MAlonzo.Code.Ledger.Conway.Foreign.Ratify.C_MkRatifyState_12499
+                                                           (coe
+                                                              MAlonzo.Code.Ledger.Conway.Foreign.Enact.C_MkEnactState_161
+                                                              (coe
+                                                                 MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44
+                                                                 () erased () erased
+                                                                 (coe
+                                                                    MAlonzo.Code.Foreign.Haskell.Coerce.du_pair'45'toFFI_92)
+                                                                 (coe
+                                                                    MAlonzo.Code.Data.Product.Base.du_map_128
+                                                                    (coe
+                                                                       MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                       (coe
+                                                                          MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Maybe_90
+                                                                          (coe
+                                                                             MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                             (coe
+                                                                                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.du_Conv'45'HSMap_102
+                                                                                (let v12
+                                                                                       = MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20 in
+                                                                                 coe
+                                                                                   (let v13
+                                                                                          = MAlonzo.Code.Ledger.Conway.Foreign.ExternalStructures.d_HSTransactionStructure_682
+                                                                                              (coe
+                                                                                                 v12) in
+                                                                                    coe
+                                                                                      (coe
+                                                                                         MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_280
+                                                                                         (coe
+                                                                                            MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
+                                                                                            (coe
+                                                                                               MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_206
+                                                                                               (coe
+                                                                                                  MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1390
+                                                                                                  (coe
+                                                                                                     v13))))
+                                                                                         (coe
+                                                                                            MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_210
+                                                                                            (coe
+                                                                                               MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1390
+                                                                                               (coe
+                                                                                                  v13))))))
+                                                                                (coe
+                                                                                   MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)
+                                                                                (coe
+                                                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
+                                                                             (coe
+                                                                                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_28))))
+                                                                    (coe
+                                                                       (\ v12 ->
+                                                                          MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                            (coe
+                                                                               MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                               (coe
+                                                                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                                               (coe
+                                                                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
+                                                                    (coe
+                                                                       MAlonzo.Code.Ledger.Conway.Specification.Enact.d_cc_1178
+                                                                       (coe v9))))
+                                                              (coe
+                                                                 MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44
+                                                                 () erased () erased
+                                                                 (coe
+                                                                    MAlonzo.Code.Foreign.Haskell.Coerce.du_pair'45'toFFI_92)
+                                                                 (coe
+                                                                    MAlonzo.Code.Data.Product.Base.du_map_128
+                                                                    (coe
+                                                                       MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                       (coe
+                                                                          MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                          (coe
+                                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                                          (coe
+                                                                             MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Maybe_90
+                                                                             (coe
+                                                                                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
+                                                                    (coe
+                                                                       (\ v12 ->
+                                                                          MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                            (coe
+                                                                               MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                               (coe
+                                                                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                                               (coe
+                                                                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
+                                                                    (coe
+                                                                       MAlonzo.Code.Ledger.Conway.Specification.Enact.d_constitution_1180
+                                                                       (coe v9))))
+                                                              (coe
+                                                                 MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44
+                                                                 () erased () erased
+                                                                 (coe
+                                                                    MAlonzo.Code.Foreign.Haskell.Coerce.du_pair'45'toFFI_92)
+                                                                 (coe
+                                                                    MAlonzo.Code.Data.Product.Base.du_map_128
+                                                                    (coe
+                                                                       MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                       (coe
+                                                                          MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                          (coe
+                                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                                          (coe
+                                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                                    (coe
+                                                                       (\ v12 ->
+                                                                          MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                            (coe
+                                                                               MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                               (coe
+                                                                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                                               (coe
+                                                                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
+                                                                    (coe
+                                                                       MAlonzo.Code.Ledger.Conway.Specification.Enact.d_pv_1182
+                                                                       (coe v9))))
+                                                              (coe
+                                                                 MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44
+                                                                 () erased () erased
+                                                                 (coe
+                                                                    MAlonzo.Code.Foreign.Haskell.Coerce.du_pair'45'toFFI_92)
+                                                                 (coe
+                                                                    MAlonzo.Code.Data.Product.Base.du_map_128
+                                                                    (coe
+                                                                       MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                       (coe
+                                                                          MAlonzo.Code.Ledger.Conway.Foreign.PParams.d_Conv'45'PParams_26))
+                                                                    (coe
+                                                                       (\ v12 ->
+                                                                          MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                            (coe
+                                                                               MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                               (coe
+                                                                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                                               (coe
+                                                                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
+                                                                    (coe
+                                                                       MAlonzo.Code.Ledger.Conway.Specification.Enact.d_pparams_1184
+                                                                       (coe v9))))
+                                                              (coe
+                                                                 MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                                 (coe
+                                                                    MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                    (coe
+                                                                       MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                       (coe
+                                                                          MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                          (coe
+                                                                             MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'RewardAddress_224)
+                                                                          (coe
+                                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                                    (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                                       (coe
+                                                                          MAlonzo.Code.Ledger.Conway.Specification.Enact.d_withdrawals_1186
+                                                                          (coe v9))))))
+                                                           (coe
+                                                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSSet_68
+                                                              (coe
+                                                                 MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                 (coe
+                                                                    MAlonzo.Code.Foreign.Convertible.du_Convertible'45'List_120
+                                                                    (coe
+                                                                       MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                       (coe
+                                                                          MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                          (coe
+                                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                                          (coe
+                                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
+                                                                       (coe
+                                                                          MAlonzo.Code.Ledger.Conway.Foreign.Gov.d_Conv'45'GovActionState_908)))
+                                                                 v10))
+                                                           (coe v11)
+                                                    _ -> MAlonzo.RTE.mazUnreachableError))
+                                            (coe
+                                               (\ v8 ->
+                                                  case coe v8 of
+                                                    MAlonzo.Code.Ledger.Conway.Foreign.Ratify.C_MkRatifyState_12499 v9 v10 v11
+                                                      -> coe
+                                                           MAlonzo.Code.Ledger.Conway.Specification.Ratify.C_constructor_1904
+                                                           (coe
+                                                              MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                              (coe
+                                                                 MAlonzo.Code.Foreign.Convertible.C_constructor_22
+                                                                 (coe
+                                                                    (\ v12 ->
+                                                                       case coe v12 of
+                                                                         MAlonzo.Code.Ledger.Conway.Specification.Enact.C_constructor_1188 v13 v14 v15 v16 v17
+                                                                           -> coe
+                                                                                MAlonzo.Code.Ledger.Conway.Foreign.Enact.C_MkEnactState_161
+                                                                                (coe
+                                                                                   MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44
+                                                                                   () erased ()
+                                                                                   erased
+                                                                                   (coe
+                                                                                      MAlonzo.Code.Foreign.Haskell.Coerce.du_pair'45'toFFI_92)
+                                                                                   (coe
+                                                                                      MAlonzo.Code.Data.Product.Base.du_map_128
+                                                                                      (coe
+                                                                                         MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                         (coe
+                                                                                            MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Maybe_90
+                                                                                            (coe
+                                                                                               MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                               (coe
+                                                                                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.du_Conv'45'HSMap_102
+                                                                                                  (let v18
+                                                                                                         = MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20 in
+                                                                                                   coe
+                                                                                                     (let v19
+                                                                                                            = MAlonzo.Code.Ledger.Conway.Foreign.ExternalStructures.d_HSTransactionStructure_682
+                                                                                                                (coe
+                                                                                                                   v18) in
+                                                                                                      coe
+                                                                                                        (coe
+                                                                                                           MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_280
+                                                                                                           (coe
+                                                                                                              MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
+                                                                                                              (coe
+                                                                                                                 MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_206
+                                                                                                                 (coe
+                                                                                                                    MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1390
+                                                                                                                    (coe
+                                                                                                                       v19))))
+                                                                                                           (coe
+                                                                                                              MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_210
+                                                                                                              (coe
+                                                                                                                 MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1390
+                                                                                                                 (coe
+                                                                                                                    v19))))))
+                                                                                                  (coe
+                                                                                                     MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)
+                                                                                                  (coe
+                                                                                                     MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
+                                                                                               (coe
+                                                                                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_28))))
+                                                                                      (coe
+                                                                                         (\ v18 ->
+                                                                                            MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                              (coe
+                                                                                                 MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                 (coe
+                                                                                                    MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                                                                 (coe
+                                                                                                    MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
+                                                                                      (coe v13)))
+                                                                                (coe
+                                                                                   MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44
+                                                                                   () erased ()
+                                                                                   erased
+                                                                                   (coe
+                                                                                      MAlonzo.Code.Foreign.Haskell.Coerce.du_pair'45'toFFI_92)
+                                                                                   (coe
+                                                                                      MAlonzo.Code.Data.Product.Base.du_map_128
+                                                                                      (coe
+                                                                                         MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                         (coe
+                                                                                            MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                            (coe
+                                                                                               MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                                                            (coe
+                                                                                               MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Maybe_90
+                                                                                               (coe
+                                                                                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
+                                                                                      (coe
+                                                                                         (\ v18 ->
+                                                                                            MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                              (coe
+                                                                                                 MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                 (coe
+                                                                                                    MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                                                                 (coe
+                                                                                                    MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
+                                                                                      (coe v14)))
+                                                                                (coe
+                                                                                   MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44
+                                                                                   () erased ()
+                                                                                   erased
+                                                                                   (coe
+                                                                                      MAlonzo.Code.Foreign.Haskell.Coerce.du_pair'45'toFFI_92)
+                                                                                   (coe
+                                                                                      MAlonzo.Code.Data.Product.Base.du_map_128
+                                                                                      (coe
+                                                                                         MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                         (coe
+                                                                                            MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                            (coe
+                                                                                               MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                                                            (coe
+                                                                                               MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                                                      (coe
+                                                                                         (\ v18 ->
+                                                                                            MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                              (coe
+                                                                                                 MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                 (coe
+                                                                                                    MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                                                                 (coe
+                                                                                                    MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
+                                                                                      (coe v15)))
+                                                                                (coe
+                                                                                   MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44
+                                                                                   () erased ()
+                                                                                   erased
+                                                                                   (coe
+                                                                                      MAlonzo.Code.Foreign.Haskell.Coerce.du_pair'45'toFFI_92)
+                                                                                   (coe
+                                                                                      MAlonzo.Code.Data.Product.Base.du_map_128
+                                                                                      (coe
+                                                                                         MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                         (coe
+                                                                                            MAlonzo.Code.Ledger.Conway.Foreign.PParams.d_Conv'45'PParams_26))
+                                                                                      (coe
+                                                                                         (\ v18 ->
+                                                                                            MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                              (coe
+                                                                                                 MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                 (coe
+                                                                                                    MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                                                                 (coe
+                                                                                                    MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
+                                                                                      (coe v16)))
+                                                                                (coe
+                                                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                                                   (coe
+                                                                                      MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                      (coe
+                                                                                         MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                                         (coe
+                                                                                            MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                            (coe
+                                                                                               MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'RewardAddress_224)
+                                                                                            (coe
+                                                                                               MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                                                      (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                                                         (coe
+                                                                                            v17))))
+                                                                         _ -> MAlonzo.RTE.mazUnreachableError))
+                                                                 (coe
+                                                                    (\ v12 ->
+                                                                       case coe v12 of
+                                                                         MAlonzo.Code.Ledger.Conway.Foreign.Enact.C_MkEnactState_161 v13 v14 v15 v16 v17
+                                                                           -> coe
+                                                                                MAlonzo.Code.Ledger.Conway.Specification.Enact.C_constructor_1188
+                                                                                (coe
+                                                                                   MAlonzo.Code.Data.Product.Base.du_map_128
+                                                                                   (coe
+                                                                                      MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                                      (coe
+                                                                                         MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Maybe_90
+                                                                                         (coe
+                                                                                            MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                            (coe
+                                                                                               MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.du_Conv'45'HSMap_102
+                                                                                               (let v18
+                                                                                                      = MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20 in
+                                                                                                coe
+                                                                                                  (let v19
+                                                                                                         = MAlonzo.Code.Ledger.Conway.Foreign.ExternalStructures.d_HSTransactionStructure_682
+                                                                                                             (coe
+                                                                                                                v18) in
+                                                                                                   coe
+                                                                                                     (coe
+                                                                                                        MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_280
+                                                                                                        (coe
+                                                                                                           MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
+                                                                                                           (coe
+                                                                                                              MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_206
+                                                                                                              (coe
+                                                                                                                 MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1390
+                                                                                                                 (coe
+                                                                                                                    v19))))
+                                                                                                        (coe
+                                                                                                           MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_210
+                                                                                                           (coe
+                                                                                                              MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1390
+                                                                                                              (coe
+                                                                                                                 v19))))))
+                                                                                               (coe
+                                                                                                  MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_212)
+                                                                                               (coe
+                                                                                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
+                                                                                            (coe
+                                                                                               MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_28))))
+                                                                                   (coe
+                                                                                      (\ v18 ->
+                                                                                         MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                                           (coe
+                                                                                              MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                              (coe
+                                                                                                 MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                                                              (coe
+                                                                                                 MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
+                                                                                   (coe
+                                                                                      MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44
+                                                                                      () erased ()
+                                                                                      erased
+                                                                                      (coe
+                                                                                         MAlonzo.Code.Foreign.Haskell.Coerce.C_TrustMe_40)
+                                                                                      v13))
+                                                                                (coe
+                                                                                   MAlonzo.Code.Data.Product.Base.du_map_128
+                                                                                   (coe
+                                                                                      MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                                      (coe
+                                                                                         MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                         (coe
+                                                                                            MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                                                         (coe
+                                                                                            MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Maybe_90
+                                                                                            (coe
+                                                                                               MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
+                                                                                   (coe
+                                                                                      (\ v18 ->
+                                                                                         MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                                           (coe
+                                                                                              MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                              (coe
+                                                                                                 MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                                                              (coe
+                                                                                                 MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
+                                                                                   (coe
+                                                                                      MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44
+                                                                                      () erased ()
+                                                                                      erased
+                                                                                      (coe
+                                                                                         MAlonzo.Code.Foreign.Haskell.Coerce.C_TrustMe_40)
+                                                                                      v14))
+                                                                                (coe
+                                                                                   MAlonzo.Code.Data.Product.Base.du_map_128
+                                                                                   (coe
+                                                                                      MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                                      (coe
+                                                                                         MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                         (coe
+                                                                                            MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                                                         (coe
+                                                                                            MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                                                   (coe
+                                                                                      (\ v18 ->
+                                                                                         MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                                           (coe
+                                                                                              MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                              (coe
+                                                                                                 MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                                                              (coe
+                                                                                                 MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
+                                                                                   (coe
+                                                                                      MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44
+                                                                                      () erased ()
+                                                                                      erased
+                                                                                      (coe
+                                                                                         MAlonzo.Code.Foreign.Haskell.Coerce.C_TrustMe_40)
+                                                                                      v15))
+                                                                                (coe
+                                                                                   MAlonzo.Code.Data.Product.Base.du_map_128
+                                                                                   (coe
+                                                                                      MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                                      (coe
+                                                                                         MAlonzo.Code.Ledger.Conway.Foreign.PParams.d_Conv'45'PParams_26))
+                                                                                   (coe
+                                                                                      (\ v18 ->
+                                                                                         MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                                           (coe
+                                                                                              MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                              (coe
+                                                                                                 MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                                                              (coe
+                                                                                                 MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
+                                                                                   (coe
+                                                                                      MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44
+                                                                                      () erased ()
+                                                                                      erased
+                                                                                      (coe
+                                                                                         MAlonzo.Code.Foreign.Haskell.Coerce.C_TrustMe_40)
+                                                                                      v16))
+                                                                                (coe
+                                                                                   MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                                   (coe
+                                                                                      MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Map_116
+                                                                                      (let v18
+                                                                                             = MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20 in
+                                                                                       coe
+                                                                                         (let v19
+                                                                                                = MAlonzo.Code.Ledger.Conway.Foreign.ExternalStructures.d_HSTransactionStructure_682
+                                                                                                    (coe
+                                                                                                       v18) in
+                                                                                          coe
+                                                                                            (coe
+                                                                                               MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'RewardAddress_338
+                                                                                               (coe
+                                                                                                  MAlonzo.Code.Ledger.Core.Specification.Epoch.d_DecEq'45'Netw_320
+                                                                                                  (coe
+                                                                                                     MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_globalConstants_1356
+                                                                                                     (coe
+                                                                                                        v19)))
+                                                                                               (coe
+                                                                                                  MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
+                                                                                                  (coe
+                                                                                                     MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_206
+                                                                                                     (coe
+                                                                                                        MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1390
+                                                                                                        (coe
+                                                                                                           v19))))
+                                                                                               (coe
+                                                                                                  MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_210
+                                                                                                  (coe
+                                                                                                     MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1390
+                                                                                                     (coe
+                                                                                                        v19))))))
+                                                                                      (coe
+                                                                                         MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'RewardAddress_224)
+                                                                                      (coe
+                                                                                         MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
+                                                                                   (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
+                                                                                      (coe v17)))
+                                                                         _ -> MAlonzo.RTE.mazUnreachableError)))
+                                                              v9)
+                                                           (coe
+                                                              MAlonzo.Code.Axiom.Set.du_fromList_456
+                                                              (coe
+                                                                 MAlonzo.Code.Axiom.Set.d_th_1516
+                                                                 (coe
+                                                                    MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                              (coe
+                                                                 MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                 (coe
+                                                                    MAlonzo.Code.Foreign.Convertible.du_Convertible'45'List_120
+                                                                    (coe
+                                                                       MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                       (coe
+                                                                          MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                          (coe
+                                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                                          (coe
+                                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
+                                                                       (coe
+                                                                          MAlonzo.Code.Ledger.Conway.Foreign.Gov.d_Conv'45'GovActionState_908)))
+                                                                 (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_elems_66
+                                                                    (coe v10))))
+                                                           (coe v11)
+                                                    _ -> MAlonzo.RTE.mazUnreachableError)))
+                                         v7)
+                               _ -> MAlonzo.RTE.mazUnreachableError)))
+                    v0))
+              (coe v1) in
+    coe
+      (case coe v2 of
+         MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v3 v4
+           -> coe
+                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_Success_116
+                (coe
+                   MAlonzo.Code.Foreign.Convertible.d_to_18
+                   (coe
+                      MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                      (coe d_Conv'45'EpochState_416)
+                      (coe MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvString_12))
+                   (coe
+                      MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
+                      (coe
+                         MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.du_conv_86
+                         (coe
+                            MAlonzo.Code.Ledger.Conway.Conformance.Epoch.du_EpochStateToConf_4958)
+                         (coe v3))
+                      (coe
+                         MAlonzo.Code.Class.Show.Core.d_show_16 (coe du_Show'45'EPOCH_406)
+                         v4)))
+         _ -> MAlonzo.RTE.mazUnreachableError)
+-- Ledger.Conway.Foreign.Epoch.EpochState
+d_EpochState_4233 = ()
+type T_EpochState_4233 = EpochState
+pattern C_MkEpochState_4235 a0 a1 a2 a3 a4 = MkEpochState a0 a1 a2 a3 a4
+check_MkEpochState_4235 ::
+  MAlonzo.Code.Ledger.Conway.Foreign.PParams.T_Acnt_11363 ->
+  MAlonzo.Code.Ledger.Conway.Foreign.Rewards.T_Snapshots_4321 ->
+  MAlonzo.Code.Ledger.Conway.Foreign.Ledger.T_LState_2855 ->
+  MAlonzo.Code.Ledger.Conway.Foreign.Enact.T_EnactState_159 ->
+  MAlonzo.Code.Ledger.Conway.Foreign.Ratify.T_RatifyState_12497 ->
+  T_EpochState_4233
+check_MkEpochState_4235 = MkEpochState
+cover_EpochState_4233 :: EpochState -> ()
+cover_EpochState_4233 x
+  = case x of
+      MkEpochState _ _ _ _ _ -> ()
