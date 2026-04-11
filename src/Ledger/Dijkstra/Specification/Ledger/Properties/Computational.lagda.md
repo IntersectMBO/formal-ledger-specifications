@@ -92,7 +92,7 @@ instance
 
     -- Helper env constructors (avoid `let ... in with ...` parse issues)
     subUtxoΓ : SubLedgerEnv → SubUTxOEnv
-    subUtxoΓ Γ = ⟦ slot , pparams , treasury , utxo₀ , isTopLevelValid , allScripts ⟧
+    subUtxoΓ Γ = ⟦ slot , pparams , treasury , utxo₀ , isTopLevelValid , allScripts , accountBalances ⟧
       where open SubLedgerEnv Γ
 
     certΓ : SubLedgerEnv → LedgerState → SubLevelTx → CertEnv
@@ -117,7 +117,7 @@ instance
       let open SubLedgerEnv Γ
           open LedgerState s
           subUtxoΓ : SubUTxOEnv
-          subUtxoΓ = ⟦ slot , pparams , treasury , utxo₀ , isTopLevelValid , allScripts ⟧
+          subUtxoΓ = ⟦ slot , pparams , treasury , utxo₀ , isTopLevelValid , allScripts , accountBalances ⟧
           certΓ : CertEnv
           certΓ = ⟦ epoch slot , pparams , ListOfGovVotesOf stx , WithdrawalsOf stx
                   , allColdCreds govSt enactState ⟧
@@ -140,7 +140,7 @@ instance
           isI : isTopLevelValid ≡ false
           isI = ¬-not ¬isV
           subUtxoΓ : SubUTxOEnv
-          subUtxoΓ = ⟦ slot , pparams , treasury , utxo₀ , isTopLevelValid , allScripts ⟧
+          subUtxoΓ = ⟦ slot , pparams , treasury , utxo₀ , isTopLevelValid , allScripts , accountBalances ⟧
       in case computeSubutxow subUtxoΓ utxoSt stx of λ where
         (failure e) → failure e
         (success (utxoSt' , utxoStep)) →
@@ -225,6 +225,7 @@ instance
       , utxo₀Of s
       , IsValidFlagOf tx
       , allScriptsOf tx s
+      , RewardsOf (CertStateOf s)
       ⟧
 
     certΓOf : LedgerEnv → TopLevelTx → GovState → CertEnv
@@ -256,6 +257,7 @@ instance
          , utxo₀Of s
          , depositsChange
          , allScriptsOf tx s
+         , RewardsOf (CertStateOf s)
          ⟧
 
     utxoΓ-invalid : LedgerEnv → LedgerState → TopLevelTx → UTxOEnv
@@ -266,6 +268,7 @@ instance
       , utxo₀Of s
       , ⟦ 0ℤ , 0ℤ ⟧
       , allScriptsOf tx s
+      , RewardsOf (CertStateOf s)
       ⟧
 ```
 -->
@@ -286,7 +289,7 @@ instance
           allScripts = getAllScripts txTop utxo₀
           subΓ : SubLedgerEnv
           subΓ = ⟦ slot , ppolicy , pparams , enactState , treasury
-                , utxo₀ , IsValidFlagOf txTop , allScripts ⟧
+                 , utxo₀ , IsValidFlagOf txTop , allScripts , RewardsOf certState ⟧
       in
       case IsValidFlagOf txTop ≟ true of λ where
         (yes isV) →
@@ -313,7 +316,7 @@ instance
                           depositsChange : DepositsChange
                           depositsChange = calculateDepositsChange certState₀ certState₁ certSt₂
                           utxoΓ : UTxOEnv
-                          utxoΓ = ⟦ slot , pparams , treasury , utxo₀ , depositsChange , allScripts ⟧
+                          utxoΓ = ⟦ slot , pparams , treasury , utxo₀ , depositsChange , allScripts , RewardsOf certState ⟧
                       in
                       -- UTXOW must run from the post-SUBLEDGERS UTxOState (utxoSt₁)
                       computeUtxow utxoΓ utxoSt₁ txTop >>= λ where
