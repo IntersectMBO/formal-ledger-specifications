@@ -85,8 +85,8 @@ instance
         with ¿ ∃[ s ∈ p2ScriptsNeeded ] language s ∈ fromList (PlutusV1 ∷ PlutusV2 ∷ PlutusV3 ∷ []) ¿
       ... | yes p with H?-legacy
       ... | no ¬p = failure "UTXOW"
-      ... | yes (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀) =
-        map (map₂′ (λ h → UTXOW-legacy {txTop = txTop} {Γ = Γ} (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , h)))
+      ... | yes (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , p₁₂) =
+        map (map₂′ (λ h → UTXOW-legacy {txTop = txTop} {Γ = Γ} (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , p₁₂ , h)))
             (UTXO.computeProof (Γ , true) s₀ txTop)
       computeProof | no ¬p with H?-normal
       ... | no ¬p = failure "UTXOW"
@@ -102,11 +102,11 @@ instance
       ... | no ¬p = ⊥-elim (¬p (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉))
       ... | yes _ with UTXO.computeProof (Γ , false) s₀ txTop | UTXO.completeness _ _ _ _ h
       ... | success _ | refl = refl
-      completeness s₁ (UTXOW-legacy-⋯ p₀ p₁ p₂ p₃ p₄ p₅ p₆ p₇ p₈ p₉ p₁₀ h)
+      completeness s₁ (UTXOW-legacy-⋯ p₀ p₁ p₂ p₃ p₄ p₅ p₆ p₇ p₈ p₉ p₁₀ p₁₁ p₁₂ h)
         with ¿ ∃[ s ∈ p2ScriptsNeeded ] language s ∈ fromList (PlutusV1 ∷ PlutusV2 ∷ PlutusV3 ∷ []) ¿
       ... | no ¬p  = ⊥-elim (¬p p₀)
       ... | yes p with H?-legacy
-      ... | no ¬p = ⊥-elim (¬p (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀))
+      ... | no ¬p = ⊥-elim (¬p (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , p₁₂))
       ... | yes _ with UTXO.computeProof (Γ , true) s₀ txTop | UTXO.completeness _ _ _ _ h
       ... | success _ | refl = refl
 ```

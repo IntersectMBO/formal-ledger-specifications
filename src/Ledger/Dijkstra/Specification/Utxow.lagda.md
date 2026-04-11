@@ -106,18 +106,14 @@ module _ {tx : TopLevelTx} where
 -->
 
 CIP-159 fields (`txDirectDeposits`{.AgdaField} and `txBalanceIntervals`{.AgdaField})
-require at least PlutusV4.  When either field is non-empty,
-`UsesV4Features`{.AgdaDatatype} holds and `allowedLanguagesLegacyMode`{.AgdaFunction}
-returns `∅`, making the legacy rule's language premise unsatisfiable.
-This forces such transactions into normal mode (PlutusV4-only), which is precisely
-the CIP-159/CIP-118 design:
+require at least PlutusV4 and are explicitly forbidden in legacy mode via the
+`Is-∅ (dom txDirectDeposits)` and `Is-∅ (dom txBalanceIntervals)` premises in
+`UTXOW-legacy`.  This follows the same pattern as `Is-∅ (GuardsOf txTop)` for guard
+scripts.
 
-> When backward compatibility with older Plutus scripts (v1–v3) is needed, CIP-159
-> fields can appear in sub-transactions, while older scripts run at the top level
-> (the CIP-118 escape hatch).
-
-The version gating here ensures that a top-level transaction with non-empty CIP-159
-fields cannot enter legacy mode.
+When backward compatibility with older Plutus scripts (v1–v3) is needed, CIP-159
+fields can appear in sub-transactions while older scripts run at the top level
+(the CIP-118 escape hatch).
 
 ```agda
 languages :  ℙ P2Script → ℙ Language
@@ -125,9 +121,6 @@ languages p2Scripts = mapˢ language p2Scripts
 
 allowedLanguagesLegacyMode : TopLevelTx → UTxO → ℙ Language
 allowedLanguagesLegacyMode tx utxo =
-  if UsesV4Features tx
-    then ∅
-    else
   if UsesV3Features tx
     then fromList (PlutusV3 ∷ [])
     else
@@ -330,6 +323,11 @@ mode up front rather than deciding both.
 4. `Guards` is the empty set, and, thus, all sub-transaction's `requiredTopLevelGuards`
    are also the empty set.
 
+5. The top-level transaction does not contain direct deposits (`txDirectDeposits` is empty).
+
+6. The top-level transaction does not contain balance interval assertions
+   (`txBalanceIntervals` is empty).
+
 ```agda
   UTXOW-legacy :
     let
@@ -374,7 +372,9 @@ mode up front rather than deciding both.
     in
     ∙ ∃[ s ∈ p2ScriptsNeeded ] language s ∈ fromList (PlutusV1 ∷ PlutusV2 ∷ PlutusV3 ∷ [])
     ∙ ¬ (UsesBootstrapAddress (UTxOOf Γ) txTop)
-    ∙ Is-∅ (GuardsOf txTop)
+    ∙ Is-∅ (GuardsOf txTop)                      -- (4)
+    ∙ Is-∅ (dom txDirectDeposits)                -- (5)
+    ∙ Is-∅ (dom txBalanceIntervals)              -- (6)
     ∙ concatMapˡ (λ txSub → mapˢ proj₁ (TopLevelGuardsOf txSub)) (SubTransactionsOf txTop) ⊆ GuardsOf txTop -- (3)
     ∙ ∀[ (vk , σ) ∈ vKeySigs ] isSigned vk (txidBytes (TxIdOf txTop)) σ
     ∙ ∀[ s ∈ p1ScriptsNeeded ] validP1Script vKeyHashesProvided txVldt s
@@ -394,7 +394,7 @@ unquoteDecl UTXOW-normal-premises = genPremises UTXOW-normal-premises (quote UTX
 unquoteDecl UTXOW-legacy-premises = genPremises UTXOW-legacy-premises (quote UTXOW-legacy)
 unquoteDecl SUBUTXOW-premises = genPremises SUBUTXOW-premises (quote SUBUTXOW)
 pattern UTXOW-normal-⋯ p₀ p₁ p₂ p₃ p₄ p₅ p₆ p₇ p₈ p₉ h = UTXOW-normal (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , h)
-pattern UTXOW-legacy-⋯ p₀ p₁ p₂ p₃ p₄ p₅ p₆ p₇ p₈ p₉ p₁₀ h = UTXOW-legacy (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , h)
+pattern UTXOW-legacy-⋯ p₀ p₁ p₂ p₃ p₄ p₅ p₆ p₇ p₈ p₉ p₁₀ p₁₁ p₁₂ h = UTXOW-legacy (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , p₁₂ , h)
 pattern SUBUTXOW-⋯ p₀ p₁ p₂ p₃ p₄ p₅ p₆ p₇ p₈ p₉ h = SUBUTXOW (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , h)
 ```
 -->
