@@ -506,7 +506,6 @@ data _⊢_⇀⦇_,SUBUTXO⦈_ : SubUTxOEnv → UTxOState → SubLevelTx → UTxO
     ∙ MaybeNetworkIdOf txSub ~ just NetworkId
     ∙ CurrentTreasuryOf txSub ~ just (TreasuryOf Γ)
     ∙ dom (DirectDepositsOf txSub) ⊆ dom (AccountBalancesOf Γ)
-    ∙ dom (BalanceIntervalsOf txSub) ⊆ dom (AccountBalancesOf Γ)
     ∙ ∀[ (c , interval) ∈ BalanceIntervalsOf txSub ˢ ]
         (InBalanceInterval (maybe id 0 (lookupᵐ? (AccountBalancesOf Γ) c)) interval)
       ────────────────────────────────
