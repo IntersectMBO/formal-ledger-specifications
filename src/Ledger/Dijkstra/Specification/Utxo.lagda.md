@@ -83,6 +83,7 @@ record UTxOEnv : Type where
     depositsChange    : DepositsChange
     allScripts        : ℙ Script
     allData           : DataHash ⇀ Datum
+    accountBalances   : Rewards
 
 record SubUTxOEnv : Type where
   field
@@ -93,6 +94,7 @@ record SubUTxOEnv : Type where
     isTopLevelValid  : Bool
     allScripts       : ℙ Script
     allData          : DataHash ⇀ Datum
+    accountBalances  : Rewards
 ```
 
 The `UTxOEnv`{.AgdaRecord} carries
@@ -150,6 +152,10 @@ record HasDataPool {a} (A : Type a) : Type a where
   field DataPoolOf : A → DataHash ⇀ Datum
 open HasDataPool ⦃...⦄ public
 
+record HasAccountBalances {a} (A : Type a) : Type a where
+  field AccountBalancesOf : A → Rewards
+open HasAccountBalances ⦃...⦄ public
+
 record HasSlot {a} (A : Type a) : Type a where
   field SlotOf : A → Slot
 open HasSlot ⦃...⦄ public
@@ -176,6 +182,9 @@ instance
   HasDataPool-UTxOEnv : HasDataPool UTxOEnv
   HasDataPool-UTxOEnv .DataPoolOf = UTxOEnv.allData
 
+  HasAccountBalances-UTxOEnv : HasAccountBalances UTxOEnv
+  HasAccountBalances-UTxOEnv .AccountBalancesOf = UTxOEnv.accountBalances
+
   HasSlot-SubUTxOEnv : HasSlot SubUTxOEnv
   HasSlot-SubUTxOEnv .SlotOf = SubUTxOEnv.slot
 
@@ -196,6 +205,9 @@ instance
 
   HasDataPool-SubUTxOEnv : HasDataPool SubUTxOEnv
   HasDataPool-SubUTxOEnv .DataPoolOf = SubUTxOEnv.allData
+
+  HasAccountBalances-SubUTxOEnv : HasAccountBalances SubUTxOEnv
+  HasAccountBalances-SubUTxOEnv .AccountBalancesOf = SubUTxOEnv.accountBalances
 
   HasUTxO-UTxOState : HasUTxO UTxOState
   HasUTxO-UTxOState .UTxOOf = UTxOState.utxo
@@ -328,9 +340,19 @@ module _ (depositsChange : DepositsChange) where
   consumedBatch txTop utxo = consumed txTop utxo
                              + ∑ˡ[ stx ← SubTransactionsOf txTop ] (consumedTx stx utxo)
                              + inject depositRefundsSub
+```
 
+Direct deposits represent value that flows from the transaction into account
+addresses.  In the preservation-of-value equation, direct deposits appear on the
+*produced* side: value leaves the UTxO and enters account balances.  The
+`getCoin (DirectDepositsOf tx)` term sums the ADA of all direct deposits in
+the transaction.
+
+```agda
   producedTx : Tx ℓ → Value
-  producedTx tx = balance (outs tx) + inject (DonationsOf tx)
+  producedTx tx = balance (outs tx)
+                  + inject (DonationsOf tx)
+                  + inject (getCoin (DirectDepositsOf tx))
 
   produced : TopLevelTx → Value
   produced txTop = producedTx txTop
@@ -433,6 +455,12 @@ The [CIP][1] states:
    words, spending inputs across all top- and sub-level transactions
    are disjoint.
 
+4. Direct deposit targets must be registered accounts (their credentials
+   must appear in `dom accountBalances`).
+
+5. Each balance interval assertion must hold against the pre-batch account
+   balances; this is a Phase-1 validity condition.
+
 ```agda
 data _⊢_⇀⦇_,SUBUTXO⦈_ : SubUTxOEnv → UTxOState → SubLevelTx → UTxOState → Type where
 
@@ -455,6 +483,9 @@ data _⊢_⇀⦇_,SUBUTXO⦈_ : SubUTxOEnv → UTxOState → SubLevelTx → UTxO
     ∙ ∀[ a ∈ dom (WithdrawalsOf txSub)] (NetworkIdOf a ≡ NetworkId)
     ∙ MaybeNetworkIdOf txSub ~ just NetworkId
     ∙ CurrentTreasuryOf txSub ~ just (TreasuryOf Γ)
+    ∙ dom (DirectDepositsOf txSub) ⊆ dom (AccountBalancesOf Γ)
+    ∙ ∀[ (c , interval) ∈ BalanceIntervalsOf txSub ˢ ]
+        InBalanceInterval (maybe id 0 (lookupᵐ? (AccountBalancesOf Γ) c)) interval
       ────────────────────────────────
     let
        s₁ = if IsTopLevelValidFlagOf Γ
@@ -514,6 +545,9 @@ data _⊢_⇀⦇_,UTXO⦈_ : UTxOEnv × Bool → UTxOState → TopLevelTx → UT
     ∙ ∀[ a ∈ dom (WithdrawalsOf txTop)] NetworkIdOf a ≡ NetworkId
     ∙ MaybeNetworkIdOf txTop ~ just NetworkId
     ∙ CurrentTreasuryOf txTop  ~ just (TreasuryOf Γ)
+    ∙ dom (DirectDepositsOf txTop) ⊆ dom (AccountBalancesOf Γ)
+    ∙ ∀[ (c , interval) ∈ BalanceIntervalsOf txTop ˢ ]
+        InBalanceInterval (maybe id 0 (lookupᵐ? (AccountBalancesOf Γ) c)) interval
     ∙ Γ ⊢ _ ⇀⦇ txTop ,UTXOS⦈ _
       ────────────────────────────────
     let
@@ -526,8 +560,8 @@ data _⊢_⇀⦇_,UTXO⦈_ : UTxOEnv × Bool → UTxOState → TopLevelTx → UT
 <!--
 ```agda
 unquoteDecl UTXO-premises = genPremises UTXO-premises (quote UTXO)
-pattern UTXO-⋯ p₀  p₁  p₂  p₃  p₄  p₅  p₆  p₇  p₈  p₉  p₁₀  p₁₁  p₁₂  p₁₃  p₁₄  p₁₅  p₁₆  p₁₇  p₁₈ h
-  = UTXO (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , p₁₂ , p₁₃ , p₁₄ , p₁₅ , p₁₆ , p₁₇ , p₁₈ , h)
+pattern UTXO-⋯ p₀ p₁ p₂ p₃ p₄ p₅ p₆ p₇ p₈ p₉ p₁₀ p₁₁ p₁₂ p₁₃ p₁₄ p₁₅ p₁₆ p₁₇ p₁₈ p₁₉ p₂₀ h
+  = UTXO (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , p₁₂ , p₁₃ , p₁₄ , p₁₅ , p₁₆ , p₁₇ , p₁₈ , p₁₉ , p₂₀ , h)
 ```
 -->
 
