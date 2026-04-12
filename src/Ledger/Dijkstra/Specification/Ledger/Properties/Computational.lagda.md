@@ -330,9 +330,10 @@ instance
                       -- UTXOW must run from the post-SUBLEDGERS UTxOState (utxoSt₁)
                       computeUtxow utxoΓ utxoSt₁ txTop >>= λ where
                         (utxoSt₂ , utxoStep) →
-                          let finalGov = rmOrphanDRepVotes certSt₂ govSt₂
+                          let certStateFinal = record certSt₂ { dState = applyDirectDeposits (allDirectDeposits txTop) (DStateOf certSt₂) }
+                              finalGov = rmOrphanDRepVotes certStateFinal govSt₂
                           in
-                          success ( ⟦ utxoSt₂ , finalGov , certSt₂ ⟧ˡ
+                          success ( ⟦ utxoSt₂ , finalGov , certStateFinal ⟧ˡ
                                   , LEDGER-V (isV , subStep , certStep , govStep , utxoStep))
 
         (no ¬isV) →
