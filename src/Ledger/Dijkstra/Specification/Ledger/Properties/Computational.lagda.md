@@ -91,17 +91,16 @@ instance
     computeGov      = comp {STS = _⊢_⇀⦇_,GOVS⦈_}
 
     -- Helper env constructors (avoid `let ... in with ...` parse issues)
-    subUtxoΓ : SubLedgerEnv → SubUTxOEnv
-    subUtxoΓ Γ = ⟦ slot , pparams , treasury , utxo₀ , isTopLevelValid , allScripts , accountBalances ⟧
-      where open SubLedgerEnv Γ
+    module _ (Γ : SubLedgerEnv) where
+      open SubLedgerEnv Γ
+      subUtxoΓ : SubUTxOEnv
+      subUtxoΓ = ⟦ slot , pparams , treasury , utxo₀ , isTopLevelValid , allScripts , accountBalances ⟧
 
-    certΓ : SubLedgerEnv → LedgerState → SubLevelTx → CertEnv
-    certΓ Γ s stx = ⟦ epoch slot , pparams , ListOfGovVotesOf stx , WithdrawalsOf stx , allColdCreds (LedgerState.govSt s) enactState ⟧
-      where open SubLedgerEnv Γ
+      certΓ : LedgerState → SubLevelTx → CertEnv
+      certΓ s stx = ⟦ epoch slot , pparams , ListOfGovVotesOf stx , WithdrawalsOf stx , allColdCreds (GovStateOf s) enactState ⟧
 
-    govΓ : SubLedgerEnv → SubLevelTx → CertState → GovEnv
-    govΓ Γ stx certSt = ⟦ TxIdOf stx , epoch slot , pparams , ppolicy , enactState , certSt , dom (RewardsOf certSt) ⟧
-      where open SubLedgerEnv Γ
+      govΓ : SubLevelTx → CertState → GovEnv
+      govΓ stx certSt = ⟦ TxIdOf stx , epoch slot , pparams , ppolicy , enactState , certSt , dom (RewardsOf certSt) ⟧
 ```
 -->
 
@@ -114,38 +113,18 @@ instance
 ```agda
     computeProof Γ s stx with SubLedgerEnv.isTopLevelValid Γ ≟ true
     ... | yes isV =
-      let open SubLedgerEnv Γ
-          open LedgerState s
-          subUtxoΓ : SubUTxOEnv
-          subUtxoΓ = ⟦ slot , pparams , treasury , utxo₀ , isTopLevelValid , allScripts , accountBalances ⟧
-          certΓ : CertEnv
-          certΓ = ⟦ epoch slot , pparams , ListOfGovVotesOf stx , WithdrawalsOf stx
-                  , allColdCreds govSt enactState ⟧
-      in
-      computeSubutxow subUtxoΓ utxoSt stx >>= λ where
+      computeSubutxow (subUtxoΓ Γ) (UTxOStateOf s) stx >>= λ where
         (utxoSt' , utxoStep) →
-          computeCerts certΓ certState (DCertsOf stx) >>= λ where
+          computeCerts (certΓ Γ s stx) (CertStateOf s) (DCertsOf stx) >>= λ where
             (certSt' , certStep) →
-              let govΓ : GovEnv
-                  govΓ = ⟦ TxIdOf stx , epoch slot , pparams , ppolicy , enactState
-                        , certSt' , dom (RewardsOf certSt') ⟧
-              in
-              computeGov govΓ govSt (GovProposals+Votes stx) >>= λ where
+              computeGov (govΓ Γ stx certSt') (GovStateOf s) (GovProposals+Votes stx) >>= λ where
                 (govSt' , govStep) →
-                  success ( ⟦ utxoSt' , govSt' , certSt' ⟧ˡ
-                          , SUBLEDGER-V (isV , utxoStep , certStep , govStep))
+                  success ( ⟦ utxoSt' , govSt' , certSt' ⟧ˡ , SUBLEDGER-V (isV , utxoStep , certStep , govStep))
 
-    ... | no ¬isV =
-      let open SubLedgerEnv Γ; open LedgerState s
-          isI : isTopLevelValid ≡ false
-          isI = ¬-not ¬isV
-          subUtxoΓ : SubUTxOEnv
-          subUtxoΓ = ⟦ slot , pparams , treasury , utxo₀ , isTopLevelValid , allScripts , accountBalances ⟧
-      in case computeSubutxow subUtxoΓ utxoSt stx of λ where
-        (failure e) → failure e
-        (success (utxoSt' , utxoStep)) →
-          success ( ⟦ utxoSt , govSt , certState ⟧ˡ
-                  , SUBLEDGER-I ( isI , subst (subUtxoΓ ⊢ utxoSt ⇀⦇ stx ,SUBUTXOW⦈_) (SUBUTXOW-noop isI utxoStep) utxoStep ))
+    ... | no ¬isV = case computeSubutxow (subUtxoΓ Γ) (UTxOStateOf s) stx of λ where
+      (failure e) → failure e
+      (success (utxoSt' , utxoStep)) →
+        success ( s , SUBLEDGER-I ( ¬-not ¬isV , subst (subUtxoΓ Γ ⊢ (UTxOStateOf s) ⇀⦇ stx ,SUBUTXOW⦈_) (SUBUTXOW-noop (¬-not ¬isV) utxoStep) utxoStep ))
 
 ```
 -->
@@ -163,26 +142,22 @@ instance
       with SubLedgerEnv.isTopLevelValid Γ ≟ true
     ... | no ¬isV = contradiction isV ¬isV
     ... | yes refl
-      with computeSubutxow (subUtxoΓ Γ) (LedgerState.utxoSt s) stx
-         | complete {STS = _⊢_⇀⦇_,SUBUTXOW⦈_}
-             (subUtxoΓ Γ) (LedgerState.utxoSt s) stx utxoSt₁ utxoStep
+      with computeSubutxow (subUtxoΓ Γ) (UTxOStateOf s) stx
+         | complete {STS = _⊢_⇀⦇_,SUBUTXOW⦈_} (subUtxoΓ Γ) (UTxOStateOf s) stx utxoSt₁ utxoStep
     ... | success (utxoSt₁ , _) | refl
-      with computeCerts (certΓ Γ s stx) (LedgerState.certState s) (DCertsOf stx)
-         | complete {STS = _⊢_⇀⦇_,CERTS⦈_}
-             (certΓ Γ s stx) (LedgerState.certState s) (DCertsOf stx) certSt₁ certStep
+      with computeCerts (certΓ Γ s stx) (CertStateOf s) (DCertsOf stx)
+         | complete {STS = _⊢_⇀⦇_,CERTS⦈_} (certΓ Γ s stx) (CertStateOf s) (DCertsOf stx) certSt₁ certStep
     ... | success (certSt₁ , _) | refl
-      with computeGov (govΓ Γ stx certSt₁) (LedgerState.govSt s) (GovProposals+Votes stx)
-         | complete {STS = _⊢_⇀⦇_,GOVS⦈_}
-             (govΓ Γ stx certSt₁) (LedgerState.govSt s) (GovProposals+Votes stx) govSt₁ govStep
+      with computeGov (govΓ Γ stx certSt₁) (GovStateOf s) (GovProposals+Votes stx)
+         | complete {STS = _⊢_⇀⦇_,GOVS⦈_} (govΓ Γ stx certSt₁) (GovStateOf s) (GovProposals+Votes stx) govSt₁ govStep
     ... | success (govSt₁ , _) | refl = refl
 
     completeness Γ s stx s' (SUBLEDGER-I (isI , utxoStep))
       with SubLedgerEnv.isTopLevelValid Γ ≟ true
     ... | yes isV = case trans (sym isV) isI of λ ()
     ... | no ¬isV
-      with computeSubutxow (subUtxoΓ Γ) (LedgerState.utxoSt s) stx
-         | complete {STS = _⊢_⇀⦇_,SUBUTXOW⦈_}
-             (subUtxoΓ Γ) (LedgerState.utxoSt s) stx (LedgerState.utxoSt s) utxoStep
+      with computeSubutxow (subUtxoΓ Γ) (UTxOStateOf s) stx
+         | complete {STS = _⊢_⇀⦇_,SUBUTXOW⦈_} (subUtxoΓ Γ) (UTxOStateOf s) stx (UTxOStateOf s) utxoStep
     ... | success _ | refl = refl
 
 Computational-SUBLEDGERS : Computational _⊢_⇀⦇_,SUBLEDGERS⦈_ String
@@ -209,67 +184,30 @@ instance
     computeUtxow      = comp {STS = _⊢_⇀⦇_,UTXOW⦈_}
 
     -- Helper builders (avoid `let ... in with ...`)
-    utxo₀Of : LedgerState → UTxO
-    utxo₀Of s = UTxOOf (LedgerState.utxoSt s)
-
     allScriptsOf : TopLevelTx → LedgerState → ℙ Script
-    allScriptsOf tx s = getAllScripts tx (utxo₀Of s)
+    allScriptsOf tx s = getAllScripts tx (UTxOOf s)
 
-    subΓOf : LedgerEnv → LedgerState → TopLevelTx → SubLedgerEnv
-    subΓOf Γ s tx =
-      ⟦ LedgerEnv.slot Γ
-      , LedgerEnv.ppolicy Γ
-      , LedgerEnv.pparams Γ
-      , LedgerEnv.enactState Γ
-      , LedgerEnv.treasury Γ
-      , utxo₀Of s
-      , IsValidFlagOf tx
-      , allScriptsOf tx s
-      , RewardsOf (CertStateOf s)
-      ⟧
+    module _ (Γ : LedgerEnv) where
+      open LedgerEnv Γ
+      subΓOf : LedgerState → TopLevelTx → SubLedgerEnv
+      subΓOf s tx =
+        ⟦ slot , ppolicy , pparams , enactState , treasury , UTxOOf s , IsValidFlagOf tx , allScriptsOf tx s , RewardsOf (CertStateOf s) ⟧
 
-    certΓOf : LedgerEnv → TopLevelTx → GovState → CertEnv
-    certΓOf Γ tx govSt =
-      ⟦ epoch (LedgerEnv.slot Γ)
-      , LedgerEnv.pparams Γ
-      , ListOfGovVotesOf tx
-      , WithdrawalsOf tx
-      , allColdCreds govSt (LedgerEnv.enactState Γ)
-      ⟧
+      certΓOf : TopLevelTx → GovState → CertEnv
+      certΓOf tx govSt = ⟦ epoch slot , pparams , ListOfGovVotesOf tx , WithdrawalsOf tx , allColdCreds govSt enactState ⟧
 
-    govΓOf : LedgerEnv → TopLevelTx → CertState → GovEnv
-    govΓOf Γ tx certSt =
-      ⟦ TxIdOf tx
-      , epoch (LedgerEnv.slot Γ)
-      , LedgerEnv.pparams Γ
-      , LedgerEnv.ppolicy Γ
-      , LedgerEnv.enactState Γ
-      , certSt
-      , dom (RewardsOf certSt)
-      ⟧
+      govΓOf : TopLevelTx → CertState → GovEnv
+      govΓOf tx certSt = ⟦ TxIdOf tx , epoch slot , pparams , ppolicy , enactState , certSt , dom (RewardsOf certSt) ⟧
 
-    utxoΓ-valid : LedgerEnv → LedgerState → TopLevelTx → CertState → CertState → UTxOEnv
-    utxoΓ-valid Γ s tx certSt₁ certSt₂ =
-      let depositsChange = calculateDepositsChange (LedgerState.certState s) certSt₁ certSt₂
-      in ⟦ LedgerEnv.slot Γ
-         , LedgerEnv.pparams Γ
-         , LedgerEnv.treasury Γ
-         , utxo₀Of s
-         , depositsChange
-         , allScriptsOf tx s
-         , RewardsOf (CertStateOf s)
-         ⟧
+      utxoΓ-valid : LedgerState → TopLevelTx → CertState → CertState → UTxOEnv
+      utxoΓ-valid s tx certSt₁ certSt₂ =
+        ⟦ slot , pparams , treasury , UTxOOf s , calculateDepositsChange (CertStateOf s) certSt₁ certSt₂
+        , allScriptsOf tx s , RewardsOf (CertStateOf s) ⟧
 
-    utxoΓ-invalid : LedgerEnv → LedgerState → TopLevelTx → UTxOEnv
-    utxoΓ-invalid Γ s tx =
-      ⟦ LedgerEnv.slot Γ
-      , LedgerEnv.pparams Γ
-      , LedgerEnv.treasury Γ
-      , utxo₀Of s
-      , ⟦ 0ℤ , 0ℤ ⟧
-      , allScriptsOf tx s
-      , RewardsOf (CertStateOf s)
-      ⟧
+      utxoΓ-invalid : LedgerState → TopLevelTx → UTxOEnv
+      utxoΓ-invalid s tx =
+        ⟦ slot , pparams , treasury , UTxOOf s , ⟦ 0ℤ , 0ℤ ⟧ , allScriptsOf tx s , RewardsOf (CertStateOf s) ⟧
+
 ```
 -->
 
@@ -280,68 +218,28 @@ instance
 
 <!--
 ```agda
-    computeProof Γ s txTop =
-      let open LedgerEnv Γ
-          open LedgerState s
-          utxo₀ : UTxO
-          utxo₀ = UTxOOf utxoSt
-          allScripts : ℙ Script
-          allScripts = getAllScripts txTop utxo₀
-          subΓ : SubLedgerEnv
-          subΓ = ⟦ slot , ppolicy , pparams , enactState , treasury
-                 , utxo₀ , IsValidFlagOf txTop , allScripts , RewardsOf certState ⟧
-      in
-      case IsValidFlagOf txTop ≟ true of λ where
-        (yes isV) →
-          computeSubledgers subΓ s (SubTransactionsOf txTop) >>= λ where
-            (s₁ , subStep) →
-              let open LedgerState s₁
-                    renaming ( utxoSt    to utxoSt₁
-                             ; govSt     to govSt₁
-                             ; certState to certState₁ )
-                  certΓ : CertEnv
-                  certΓ = ⟦ epoch slot , pparams , ListOfGovVotesOf txTop , WithdrawalsOf txTop
-                          , allColdCreds govSt₁ enactState ⟧
-              in
-              computeCerts certΓ certState₁ (DCertsOf txTop) >>= λ where
-                (certSt₂ , certStep) →
-                  let govΓ : GovEnv
-                      govΓ = ⟦ TxIdOf txTop , epoch slot , pparams , ppolicy , enactState
-                            , certSt₂ , dom (RewardsOf certSt₂) ⟧
-                  in
-                  computeGov govΓ govSt₁ (GovProposals+Votes txTop) >>= λ where
-                    (govSt₂ , govStep) →
-                      let certState₀ : CertState
-                          certState₀ = CertStateOf s
-                          depositsChange : DepositsChange
-                          depositsChange = calculateDepositsChange certState₀ certState₁ certSt₂
-                          utxoΓ : UTxOEnv
-                          utxoΓ = ⟦ slot , pparams , treasury , utxo₀ , depositsChange , allScripts , RewardsOf certState ⟧
-                      in
-                      -- UTXOW must run from the post-SUBLEDGERS UTxOState (utxoSt₁)
-                      computeUtxow utxoΓ utxoSt₁ txTop >>= λ where
-                        (utxoSt₂ , utxoStep) →
-                          let finalGov = rmOrphanDRepVotes certSt₂ govSt₂
-                          in
-                          success ( ⟦ utxoSt₂ , finalGov , certSt₂ ⟧ˡ
-                                  , LEDGER-V (isV , subStep , certStep , govStep , utxoStep))
+    computeProof Γ s txTop = case IsValidFlagOf txTop ≟ true of λ where
+      (yes isV) → computeSubledgers (subΓOf Γ s txTop) s (SubTransactionsOf txTop) >>= λ where
+        (s₁ , subStep) → computeCerts (certΓOf Γ txTop (GovStateOf s₁)) (CertStateOf s₁) (DCertsOf txTop) >>= λ where
+          (certSt₂ , certStep) → computeGov (govΓOf Γ txTop certSt₂) (GovStateOf s₁) (GovProposals+Votes txTop) >>= λ where
+            (govSt₂ , govStep) →
+              -- UTXOW must run from the post-SUBLEDGERS UTxOState ((UTxOState s₁))
+              computeUtxow (utxoΓ-valid Γ s txTop (CertStateOf s₁) certSt₂) _ txTop >>= λ where
+                (utxoSt₂ , utxoStep) →
+                  success ( ⟦ utxoSt₂ , rmOrphanDRepVotes (certStateWithDDeps txTop certSt₂) govSt₂ , certStateWithDDeps txTop certSt₂ ⟧ˡ
+                          , LEDGER-V (isV , subStep , certStep , govStep , utxoStep))
 
-        (no ¬isV) →
-          let isI : IsValidFlagOf txTop ≡ false
-              isI = ¬-not ¬isV
-          in case computeSubledgers (subΓOf Γ s txTop) s (SubTransactionsOf txTop) of λ where
-            (failure e) → failure e
-            (success (s₁ , subStep)) →
-              computeUtxow (utxoΓ-invalid Γ s txTop) (LedgerState.utxoSt s) txTop >>= λ where
-                (utxoSt₁ , utxoStep) →
-                  success ( ⟦ utxoSt₁ , LedgerState.govSt s , LedgerState.certState s ⟧ˡ
-                          , LEDGER-I
-                              ( isI
-                              , subst (subΓOf Γ s txTop ⊢ s ⇀⦇ SubTransactionsOf txTop ,SUBLEDGERS⦈_)
-                                  (SUBLEDGERS-noop isI subStep)
-                                  subStep
-                              , utxoStep
-                              ))
+      (no ¬isV) → case computeSubledgers (subΓOf Γ s txTop) s (SubTransactionsOf txTop) of λ where
+        (failure e) → failure e
+        (success (s₁ , subStep)) → computeUtxow (utxoΓ-invalid Γ s txTop) (UTxOStateOf s) txTop >>= λ where
+          (utxoSt₁ , utxoStep) → success ( ⟦ utxoSt₁ , GovStateOf s , CertStateOf s ⟧ˡ
+                                         , LEDGER-I ( ¬-not ¬isV
+                                                    , subst  (subΓOf Γ s txTop ⊢ s ⇀⦇ SubTransactionsOf txTop ,SUBLEDGERS⦈_)
+                                                             (SUBLEDGERS-noop (¬-not ¬isV) subStep)
+                                                             subStep
+                                                    , utxoStep
+                                                    )
+                                          )
 ```
 -->
 
@@ -384,9 +282,9 @@ instance
          | complete {STS = _⊢_⇀⦇_,SUBLEDGERS⦈_}
              (subΓOf Γ s txTop) s (SubTransactionsOf txTop) s subStep
     ... | success _ | refl
-      with computeUtxow (utxoΓ-invalid Γ s txTop) (LedgerState.utxoSt s) txTop
+      with computeUtxow (utxoΓ-invalid Γ s txTop) (UTxOStateOf s) txTop
          | complete {STS = _⊢_⇀⦇_,UTXOW⦈_}
-             (utxoΓ-invalid Γ s txTop) (LedgerState.utxoSt s) txTop utxoSt₁ utxoStep
+             (utxoΓ-invalid Γ s txTop) (UTxOStateOf s) txTop utxoSt₁ utxoStep
     ... | success _ | refl = refl
 
 Computational-LEDGERS : Computational _⊢_⇀⦇_,LEDGERS⦈_ String

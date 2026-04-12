@@ -4,6 +4,7 @@
 
 ### WIP
 
+- Apply batch-wide direct deposits to `CertState` in `LEDGER-V` output (CIP-159).
 - Forbid CIP-159 fields (`txDirectDeposits`, `txBalanceIntervals`) in legacy mode via explicit `UTXOW-legacy` premises.
 - Allow partial withdrawals in `PRE-CERT` rule; define `applyWithdrawals` and `_≤ᵐ_` (CIP-159).
 - Extend `TxInfo` with `txDirectDeposits` and `txBalanceIntervals` fields (CIP-159).
