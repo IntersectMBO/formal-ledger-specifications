@@ -709,6 +709,14 @@ allowed to inspect utxo for its inputs.
     foldl (λ acc txSub → acc ∪⁺ DirectDepositsOf txSub)
           (DirectDepositsOf txTop)
           (SubTransactionsOf txTop)
+
+  -- Batch-wide withdrawal aggregation: sums withdrawal amounts for the same reward
+  -- address across the top-level transaction and all sub-transactions.
+  allWithdrawals : TopLevelTx → Withdrawals
+  allWithdrawals txTop =
+    foldl  (λ acc txSub → acc ∪⁺ WithdrawalsOf txSub)
+           (WithdrawalsOf txTop)
+           (SubTransactionsOf txTop)
 ```
 
 
