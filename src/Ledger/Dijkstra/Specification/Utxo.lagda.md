@@ -299,9 +299,7 @@ collateralCheck pp txTop utxo =
   × isAdaOnly (balance (utxo ∣ CollateralInputsOf txTop))
   × coin (balance (utxo ∣ CollateralInputsOf txTop)) * 100 ≥ (TxFeesOf txTop) * pp .collateralPercentage
   × (CollateralInputsOf txTop) ≢ ∅
-```
 
-```agda
 module _ (depositsChange : DepositsChange) where
 
   open DepositsChange depositsChange
@@ -333,11 +331,10 @@ module _ (depositsChange : DepositsChange) where
                              + inject depositRefundsSub
 ```
 
-Direct deposits represent value that flows from the transaction into account
-addresses.  In the preservation-of-value equation, direct deposits appear on the
-*produced* side: value leaves the UTxO and enters account balances.  The
-`getCoin (DirectDepositsOf tx)` term sums the ADA of all direct deposits in
-the transaction.
+Direct deposits can be made into account addresses.
+In the preservation-of-value equation, direct deposits appear on the
+*produced* side: `getCoin (DirectDepositsOf tx)` sums the ADA of all direct deposits in
+the transaction and that amount is deposited into accounts.
 
 ```agda
   producedTx : Tx ℓ → Value
@@ -355,6 +352,42 @@ the transaction.
                         + ∑ˡ[ stx ← SubTransactionsOf txTop ] (producedTx stx)
                         + inject newDepositsSub
 ```
+
+## CIP-159 Notes
+
+### Preservation of Value
+
+CIP-159 introduces two new fields to transactions: `directDeposits` and
+`balanceIntervals`.  Direct deposits represent value that flows from the transaction
+into account addresses.
+
+In the preservation-of-value equation, direct deposits appear on the
+*produced* side: value leaves the UTxO and enters account balances.  The
+`getCoin (DirectDepositsOf tx)` term, appearing in the definition of
+`producedTx`{.AgdaFunction}, sums the ADA of all direct deposits in
+the transaction.
+
+### Phantom Asset Prevention
+
+```agda
+NoPhantomWithdrawals : Rewards → TopLevelTx → Type
+NoPhantomWithdrawals preBalances txTop =
+  ∀[ (addr , amt) ∈ allWithdrawals txTop ˢ ]
+    amt ≤ maybe id 0 (lookupᵐ? preBalances (RewardAddress.stake addr))
+```
+
+**The Problem**.  CIP-159 identifies a "phantom asset" attack when nested
+transactions combine direct deposits and withdrawals to the same account within a
+single batch.  If a sub-transaction deposits ADA into an account and a later
+sub-transaction withdraws it, Plutus scripts may be tricked into believing native
+assets were minted.
+
+**The Solution**.  Withdrawals across the entire batch are bounded by the
+**pre-batch** account balances.  The `NoPhantomWithdrawals`{.AgdaFunction} predicate
+checks that the total withdrawal for each reward address (aggregated via
+`allWithdrawals`{.AgdaFunction}) does not exceed the pre-batch balance of the
+corresponding credential.  This mirrors the spend-side safety principle where
+spending inputs must come from the pre-batch UTxO snapshot (`utxo₀`{.AgdaField}).
 
 
 ## The <span class="AgdaDatatype">UTXOS</span> Transition System
