@@ -166,16 +166,11 @@ instance
   ... | success _ | refl = refl
 
 
-  -- ⁇-≤ᵐ is intentionally placed here (after Computational-CERT) to avoid
-  -- polluting instance resolution for the DELEG/POOL/GOVCERT proofs above.
-  ⁇-≤ᵐ : {amt : Coin} {mb : Maybe Coin} → (amt ≤ᵐ mb) ⁇
-  ⁇-≤ᵐ .dec = Dec-≤ᵐ
-
   Computational-PRE-CERT : Computational _⊢_⇀⦇_,PRE-CERT⦈_ String
   Computational-PRE-CERT .computeProof ce cs _ =
     case ¿  filterˢ isKeyHash (mapˢ CredentialOf (dom (WithdrawalsOf ce))) ⊆ dom (VoteDelegsOf cs)
             × mapˢ CredentialOf (dom (WithdrawalsOf ce)) ⊆ dom (RewardsOf cs)
-            × ∀[ (addr , amt) ∈ WithdrawalsOf ce ˢ ] amt ≤ᵐ lookupᵐ? (RewardsOf cs) (CredentialOf addr)  ¿
+            × ∀[ (addr , amt) ∈ WithdrawalsOf ce ˢ ] amt ≤ maybe id 0 (lookupᵐ? (RewardsOf cs) (CredentialOf addr))  ¿
     of λ where
       (yes p) → success (-, CERT-pre p)
       (no ¬p) → failure (genErrors ¬p)
@@ -183,7 +178,7 @@ instance
   Computational-PRE-CERT .completeness ce st _ st' (CERT-pre p) rewrite
     dec-yes ¿  filterˢ isKeyHash (mapˢ CredentialOf (dom (WithdrawalsOf ce))) ⊆ dom (VoteDelegsOf st)
                × mapˢ CredentialOf (dom (WithdrawalsOf ce)) ⊆ dom (RewardsOf st)
-               × ∀[ (addr , amt) ∈ WithdrawalsOf ce ˢ ] amt ≤ᵐ lookupᵐ? (RewardsOf st) (CredentialOf addr)  ¿
+               × ∀[ (addr , amt) ∈ WithdrawalsOf ce ˢ ] amt ≤ maybe id 0 (lookupᵐ? (RewardsOf st) (CredentialOf addr))  ¿
         p .proj₂ = refl
 
   Computational-POST-CERT : Computational _⊢_⇀⦇_,POST-CERT⦈_ String
