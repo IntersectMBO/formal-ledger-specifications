@@ -466,12 +466,9 @@ data _⊢_⇀⦇_,PRE-CERT⦈_ : CertEnv → CertState → ⊤ → CertState →
     in
     ∙ filter isKeyHash wdrlCreds ⊆ dom voteDelegs
     ∙ wdrlCreds ⊆ dom rewards
-    ∙ ∀[ (addr , amt) ∈ wdrls ˢ ] amt ≤ᵐ lookupᵐ? rewards (stake addr)
+    ∙ ∀[ (addr , amt) ∈ wdrls ˢ ] amt ≤ maybe id 0 (lookupᵐ? rewards (stake addr))
       ────────────────────────────────
-      ⟦ e , pp , vs , wdrls , cc ⟧ ⊢
-        ⟦ ⟦ voteDelegs , stakeDelegs , rewards , deposits ⟧ , stᵖ , ⟦ dReps , ccHotKeys , deposits' ⟧ ⟧
-          ⇀⦇ _ ,PRE-CERT⦈
-        ⟦ ⟦ voteDelegs , stakeDelegs , applyWithdrawals wdrls rewards , deposits ⟧ , stᵖ , ⟦ refreshedDReps , ccHotKeys , deposits' ⟧ ⟧
+      ⟦ e , pp , vs , wdrls , cc ⟧ ⊢ ⟦ ⟦ voteDelegs , stakeDelegs , rewards , deposits ⟧ , stᵖ , ⟦ dReps , ccHotKeys , deposits' ⟧ ⟧ ⇀⦇ _ ,PRE-CERT⦈ ⟦ ⟦ voteDelegs , stakeDelegs , applyWithdrawals wdrls rewards , deposits ⟧ , stᵖ , ⟦ refreshedDReps , ccHotKeys , deposits' ⟧ ⟧
 ```
 
 **TODO**: Version restriction (deferred).  CIP-159 specifies that partial withdrawals are

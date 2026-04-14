@@ -3,15 +3,17 @@ source_branch: master
 source_path: src/Ledger/Prelude.lagda.md
 ---
 
-## Ledger prelude
-
-This module re-exports modules relating to STS, set theory and other miscellaneous
-things used to write the ledger rules. If something is used in more than two Ledger.*
-modules, it should probably go here.
-
-<!--
 ```agda
 {-# OPTIONS --safe #-}
+
+--------------------------------------------------------------------------------
+-- Ledger prelude
+--
+-- Re-exports modules relating to STS, set theory and other
+-- miscellaneous things used to write the ledger rules. If something
+-- is used in more than two Ledger.* modules, it should probably go
+-- here.
+--------------------------------------------------------------------------------
 
 module Ledger.Prelude where
 
@@ -48,10 +50,7 @@ import Data.Integer as ℤ
 open import Data.Integer using (0ℤ) public
 import Data.Rational as ℚ
 open import Data.Rational using (ℚ)
-```
--->
 
-```agda
 dec-de-morgan : ∀{P Q : Type} → ⦃ P ⁇ ⦄ → ¬ (P × Q) → ¬ P ⊎ ¬ Q
 dec-de-morgan ⦃ ⁇ no ¬p ⦄ ¬pq = inj₁ ¬p
 dec-de-morgan ⦃ ⁇ yes p ⦄ ¬pq = inj₂ λ q → ¬pq (p , q)
@@ -99,17 +98,4 @@ Is-∅ X = Is-[] (setToList X)
 
 concatMapˡ : {A B : Type} → (A → ℙ B) → List A → ℙ B
 concatMapˡ f as = proj₁ $ unions (fromList (map f as))
-
-_≤ᵐ_ : Coin → Maybe Coin → Type
-amt ≤ᵐ just bal  = amt ≤ bal
-amt ≤ᵐ nothing   = ⊥
 ```
-
-<!--
-```agda
-instance
-  Dec-≤ᵐ : {amt : Coin} {mb : Maybe Coin} → Dec (amt ≤ᵐ mb)
-  Dec-≤ᵐ {amt} {just n} = amt ≤? n
-  Dec-≤ᵐ {mb = nothing} = no λ ()
-```
--->
