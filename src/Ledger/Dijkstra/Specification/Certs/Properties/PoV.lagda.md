@@ -60,5 +60,5 @@ module Certs-PoV
 ```agda
     CERTS-pov {Γ = Γ} validNetId (run (pre-cert , certs)) =
       trans  (PRE-CERT-pov validNetId pre-cert)
-             (cong (_+ getCoin (WithdrawalsOf Γ)) {!!}) -- (sts-pov certs))
+             (cong (_+ getCoin (WithdrawalsOf Γ)) (sts-pov indexedSumᵛ'-∪' certs))
 ```

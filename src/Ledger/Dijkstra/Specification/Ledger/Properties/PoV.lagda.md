@@ -85,9 +85,9 @@ module _
       → getCoin (mapˢ (map₁ f) s) ≡ getCoin s )
 
   -- CIP-159–specific assumption: ∪⁺ adds getCoin values
-  ( applyDirectDeposits-getCoin :
+  ( applyDirectDeposits-rewardsBalance :
       (dd : DirectDeposits) (ds : DState)
-      → getCoin (applyDirectDeposits dd ds) ≡ getCoin ds + getCoin dd )
+      → rewardsBalance (applyDirectDeposits dd ds) ≡ rewardsBalance ds + getCoin dd )
 
   where
 ```
@@ -96,8 +96,8 @@ module _
 ```agda
   Claim-applyDirectDeposits-getCoin :
     ∀ (dd : DirectDeposits) (ds : DState)
-    → getCoin (applyDirectDeposits dd ds) ≡ getCoin ds + getCoin dd
-  Claim-applyDirectDeposits-getCoin = ?
+    → rewardsBalance (applyDirectDeposits dd ds) ≡ rewardsBalance ds + getCoin dd
+  Claim-applyDirectDeposits-getCoin = applyDirectDeposits-rewardsBalance
 ```
 
 ## LEDGER Preservation of Value
@@ -145,6 +145,6 @@ Follows the Conway pattern with `certState' ≡ certState₀`.
 
 <!--
 ```agda
-  LEDGER-pov = ?
+  LEDGER-pov = {!!}
 ```
 -->

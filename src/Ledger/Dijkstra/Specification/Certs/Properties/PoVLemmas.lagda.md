@@ -40,52 +40,21 @@ private variable
 instance
   _ = +-0-monoid
 
-getCoin-singleton : ⦃ _ : DecEq A ⦄ {(a , c) : A × Coin} → indexedSumᵛ' id ❴ (a , c) ❵ ≡ c
-getCoin-singleton = indexedSum-singleton' {M = Coin} (finiteness _)
-
-∪ˡsingleton∈dom :  ⦃ _ : DecEq A ⦄ (m : A ⇀ Coin) {(a , c) : A × Coin}
-                 → a ∈ dom m → getCoin (m ∪ˡ ❴ (a , c) ❵ᵐ) ≡ getCoin m
-∪ˡsingleton∈dom m {(a , c)} a∈dom =
-  ≡ᵉ-getCoin (m ∪ˡ ❴ (a , c) ❵) m (singleton-∈-∪ˡ {m = m} a∈dom)
-
-module _  ( indexedSumᵛ'-∪ :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ Coin)
-                              → disjoint (dom m) (dom m')
-                              → getCoin (m ∪ˡ m') ≡ getCoin m + getCoin m' )
-  where
-  open ≡-Reasoning
-  open Equivalence
-
-  ∪ˡsingleton∉dom :  ⦃ _ : DecEq A ⦄ (m : A ⇀ Coin) {(a , c) : A × Coin}
-                   → a ∉ dom m → getCoin (m ∪ˡ ❴ (a , c) ❵ᵐ) ≡ getCoin m + c
-  ∪ˡsingleton∉dom m {(a , c)} a∉dom = begin
-    getCoin (m ∪ˡ ❴ a , c ❵ᵐ)
-      ≡⟨ indexedSumᵛ'-∪ m ❴ a , c ❵ᵐ
-         ( λ x y → a∉dom (subst (_∈ dom m) (from ∈-dom-singleton-pair y) x) ) ⟩
-    getCoin m + getCoin ❴ a , c ❵ᵐ
-      ≡⟨ cong (getCoin m +_) getCoin-singleton ⟩
-    getCoin m + c
-      ∎
-
-  ∪ˡsingleton0≡ : ⦃ _ : DecEq A ⦄ → (m : A ⇀ Coin) {a : A}
-    → getCoin (m ∪ˡ ❴ (a , 0) ❵ᵐ) ≡ getCoin m
-  ∪ˡsingleton0≡ m {a} with a ∈? dom m
-  ... | yes a∈dom = ∪ˡsingleton∈dom m a∈dom
-  ... | no a∉dom = trans (∪ˡsingleton∉dom m a∉dom) (+-identityʳ (getCoin m))
+open ≡-Reasoning
 ```
 -->
 
 ## CERT-pov: Each certificate step preserves value
 
 ```agda
-  CERT-pov : {Γ : CertEnv} {s s' : CertState}
-    → Γ ⊢ s ⇀⦇ dCert ,CERT⦈ s'
-    → getCoin s ≡ getCoin s'
+CERT-pov : {Γ : CertEnv} {s s' : CertState}
+  → Γ ⊢ s ⇀⦇ dCert ,CERT⦈ s' → getCoin s ≡ getCoin s'
 ```
 
 <!--
 ```agda
-  CERT-pov (CERT-deleg (DELEG-delegate {rwds = rwds} _)) = sym (∪ˡsingleton0≡ rwds)
-  CERT-pov {s = ⟦ _ , stᵖ , stᵍ ⟧ᶜˢ} {⟦ _ , stᵖ' , stᵍ' ⟧ᶜˢ}
+CERT-pov (CERT-deleg (DELEG-delegate {rwds = rwds} _)) = sym (∪ˡsingleton0≡ rwds)
+CERT-pov {s = ⟦ _ , stᵖ , stᵍ ⟧ᶜˢ} {⟦ _ , stᵖ' , stᵍ' ⟧ᶜˢ}
     (CERT-deleg (DELEG-dereg {c = c} {rwds} {vDelegs = vDelegs} {sDelegs} x)) = begin
     getCoin ⟦ ⟦ vDelegs , sDelegs , rwds , DepositsOf stᵍ ⟧ , stᵖ , stᵍ ⟧
       ≡˘⟨ ≡ᵉ-getCoin rwds-∪ˡ-decomp rwds
@@ -109,24 +78,24 @@ module _  ( indexedSumᵛ'-∪ :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ C
     rwds-∪ˡ≡sing-∪ˡ = ≡ᵉ.trans rwds-∪ˡ-∪
                         ( ≡ᵉ.trans (∪-cong ≡ᵉ.refl (res-singleton'{m = rwds} (x .proj₁)))
                                    (≡ᵉ.sym $ disjoint-∪ˡ-∪ disj) )
-  CERT-pov (CERT-pool _) = refl
-  CERT-pov (CERT-gov _) = refl
+CERT-pov (CERT-pool _) = refl
+CERT-pov (CERT-gov _) = refl
 ```
 -->
 
 ## POST-CERT-pov and sts-pov
 
 ```agda
-  POST-CERT-pov : {Γ : CertEnv} {s s' : CertState}
-    → Γ ⊢ s ⇀⦇ _ ,POST-CERT⦈ s' → getCoin s ≡ getCoin s'
+POST-CERT-pov : {Γ : CertEnv} {s s' : CertState}
+  → Γ ⊢ s ⇀⦇ _ ,POST-CERT⦈ s' → getCoin s ≡ getCoin s'
 
-  POST-CERT-pov CERT-post = refl
+POST-CERT-pov CERT-post = refl
 
-  sts-pov : {Γ : CertEnv} {s₁ sₙ : CertState} {sigs : List DCert}
-    → RunTraceAndThen _⊢_⇀⦇_,CERT⦈_ _⊢_⇀⦇_,POST-CERT⦈_ Γ s₁ sigs sₙ
-    → getCoin s₁ ≡ getCoin sₙ
-  sts-pov (run-[] x) = POST-CERT-pov x
-  sts-pov (run-∷ x xs) = trans (CERT-pov x) (sts-pov xs)
+sts-pov : {Γ : CertEnv} {s₁ sₙ : CertState} {sigs : List DCert}
+  → RunTraceAndThen _⊢_⇀⦇_,CERT⦈_ _⊢_⇀⦇_,POST-CERT⦈_ Γ s₁ sigs sₙ
+  → getCoin s₁ ≡ getCoin sₙ
+sts-pov (run-[] x) = POST-CERT-pov x
+sts-pov (run-∷ x xs) = trans (CERT-pov x) (sts-pov xs)
 ```
 
 ## PRE-CERT-pov (CIP-159: partial withdrawals)
@@ -137,25 +106,25 @@ Conway's `constMap`/`res-decomp`/`sumConstZero` chain.
 
 <!--
 ```agda
-  injOn : (wdls : Withdrawals)
-        → ∀[ a ∈ dom (wdls ˢ) ] NetworkIdOf a ≡ NetworkId
-        → InjectiveOn (dom (wdls ˢ)) RewardAddress.stake
-  injOn _ h {record { stake = stakex }} {record { stake = stakey }} x∈ y∈ refl =
-    cong (λ u → record { net = u ; stake = stakex }) (trans (h x∈) (sym (h y∈)))
+injOn : (wdls : Withdrawals)
+      → ∀[ a ∈ dom (wdls ˢ) ] NetworkIdOf a ≡ NetworkId
+      → InjectiveOn (dom (wdls ˢ)) RewardAddress.stake
+injOn _ h {record { stake = stakex }} {record { stake = stakey }} x∈ y∈ refl =
+  cong (λ u → record { net = u ; stake = stakex }) (trans (h x∈) (sym (h y∈)))
 
-  module Certs-Pov-lemmas
-    ( applyWithdrawals-pov :
-        (wdrls : Withdrawals) (rwds : Rewards)
-        → mapˢ RewardAddress.stake (dom wdrls) ⊆ dom rwds
-        → (∀[ (addr , amt) ∈ wdrls ˢ ]
-            amt ≤ maybe id 0 (lookupᵐ? rwds (RewardAddress.stake addr)))
-        → getCoin rwds ≡ getCoin (applyWithdrawals wdrls rwds) + getCoin wdrls )
-    ( ≡ᵉ-getCoinˢ :
-        {A A' : Type} ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq A' ⦄
-        (s : ℙ (A × Coin)) {f : A → A'}
-        → InjectiveOn (dom s) f
-        → getCoin (mapˢ (map₁ f) s) ≡ getCoin s )
-    where
+module Certs-Pov-lemmas
+  ( applyWithdrawals-pov :
+      (wdrls : Withdrawals) (rwds : Rewards)
+      → mapˢ RewardAddress.stake (dom wdrls) ⊆ dom rwds
+      → (∀[ (addr , amt) ∈ wdrls ˢ ]
+          amt ≤ maybe id 0 (lookupᵐ? rwds (RewardAddress.stake addr)))
+      → getCoin rwds ≡ getCoin (applyWithdrawals wdrls rwds) + getCoin wdrls )
+  ( ≡ᵉ-getCoinˢ :
+      {A A' : Type} ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq A' ⦄
+      (s : ℙ (A × Coin)) {f : A → A'}
+      → InjectiveOn (dom s) f
+      → getCoin (mapˢ (map₁ f) s) ≡ getCoin s )
+  where
 ```
 -->
 

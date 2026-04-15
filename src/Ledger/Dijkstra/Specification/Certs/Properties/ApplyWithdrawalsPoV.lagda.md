@@ -68,15 +68,13 @@ We parameterize over the standard finite-map sum lemmas (same pattern as Conway)
 <!--
 ```agda
 module ApplyWithdrawals-PoV
-  ( indexedSumᵛ'-∪ :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ Coin)
-                      → disjoint (dom m) (dom m')
-                      → getCoin (m ∪ˡ m') ≡ getCoin m + getCoin m' )
   ( getCoin-cong :  {A : Type} ⦃ _ : DecEq A ⦄ (s : A ⇀ Coin) (s' : ℙ (A × Coin))
                   → s ˢ ≡ᵉ s' → indexedSum' proj₂ (s ˢ) ≡ indexedSum' proj₂ s' )
   where
   open ≡-Reasoning
   open Equivalence
   module ≡ᵉ = IsEquivalence (≡ᵉ-isEquivalence {Credential × Coin})
+
 ```
 -->
 
@@ -95,21 +93,58 @@ applying a single withdrawal decreases the total by exactly `amt`.
 
 <!--
 ```agda
-  applyOne-pov acc addr amt bal lookup-eq amt≤bal = {!!}
-    -- Proof sketch:
-    --
-    -- getCoin acc
-    --   ≡ getCoin (acc ∣ ❴ c ❵ ᶜ) + getCoin (acc ∣ ❴ c ❵)
-    --       -- by: acc ≡ᵉ (acc ∣ ❴ c ❵ ᶜ) ∪ (acc ∣ ❴ c ❵), then indexedSumᵛ'-∪
-    --   ≡ getCoin (acc ∣ ❴ c ❵ ᶜ) + bal
-    --       -- by: getCoin-cong on (acc ∣ ❴ c ❵) ≡ᵉ ❴ c , bal ❵ (from lookup-eq)
-    --   ≡ getCoin (acc ∣ ❴ c ❵ ᶜ) + (bal ∸ amt + amt)
-    --       -- by: m∸n+n≡m amt≤bal
-    --   ≡ (bal ∸ amt) + getCoin (acc ∣ ❴ c ❵ ᶜ) + amt
-    --       -- by: +-comm, +-assoc
-    --   ≡ getCoin (❴ c , bal ∸ amt ❵ ∪ˡ (acc ∣ ❴ c ❵ ᶜ)) + amt
-    --       -- by: indexedSumᵛ'-∪ (disjoint since c ∉ dom (acc ∣ ❴ c ❵ ᶜ))
-    -- where c = stake addr
+  applyOne-pov acc addr amt bal lookup-eq amt≤bal = trans acc≡decomp decomp≡goal
+    where
+    c : Credential
+    c = stake addr
+
+    ξ : acc ˢ ≡ᵉ (acc ∣ ❴ c ❵) ˢ ∪ (acc ∣ ❴ c ❵ ᶜ) ˢ
+    ξ = IsEquivalence.sym ≡ᵉ-isEquivalence (res-ex-∪ Dec-∈-singleton)
+
+    c∈acc : (c , bal) ∈ acc ˢ
+    c∈acc with c ∈? dom (acc ˢ)
+    ... | yes c∈dom =
+      subst (λ v → (c , v) ∈ acc ˢ)
+            (just-injective lookup-eq)    -- lookupᵐ acc c ≡ bal
+            (lookupᵐ-∈ acc c c∈dom)      -- (c , lookupᵐ acc c) ∈ acc ˢ
+    ... | no c∉dom = case lookup-eq of λ ()
+      -- lookupᵐ? resolves to nothing, so nothing ≡ just bal is absurd
+
+    acc∣c≡bal : getCoin (acc ∣ ❴ c ❵) ≡ bal
+    acc∣c≡bal =
+      trans (getCoin-cong (acc ∣ ❴ c ❵) ❴ (c , bal) ❵ (res-singleton' c∈acc))
+            getCoin-singleton
+
+    c∉dom-compl : c ∉ dom ((acc ∣ ❴ c ❵ ᶜ) ˢ)
+    c∉dom-compl c∈ = res-comp-dom c∈ (∈-singleton .Equivalence.to refl)
+
+
+    decomp : acc ≡ (acc ∣ ❴ c ❵ ᶜ) ∪ˡ (acc ∣ ❴ c ❵)
+    decomp = ?
+
+    acc≡decomp : getCoin acc ≡ getCoin decomp
+    acc≡decomp =
+      ≡ᵉ-getCoin decomp acc
+        ( ≡ᵉ.trans (disjoint-∪ˡ-∪ (disjoint-sym res-ex-disjoint))
+                   ( ≡ᵉ.trans ∪-sym (res-ex-∪ Dec-∈-singleton)) ) ⟩
+
+    decomp≡goal : getCoin decomp ≡ getCoin (acc ∣ ❴ c ❵ ᶜ) + getCoin (acc ∣ ❴ c ❵)
+    decomp≡goal = indexedSumᵛ'-∪ (acc ∣ ❴ c ❵ ᶜ) (acc ∣ ❴ c ❵) (disjoint-sym res-ex-disjoint) ⟩
+
+    -- Goal : getCoin acc ≡ getCoin (❴ c , bal ∸ amt ❵ᵐ ∪ˡ (acc ∣ ❴ c ❵ˢ ᶜ)) + amt
+    -- Goal = begin
+    --   getCoin acc
+    --     ≡⟨ {!!} ⟩        -- by: acc ≡ᵉ (acc ∣ ❴ c ❵ ᶜ) ∪ (acc ∣ ❴ c ❵), then indexedSumᵛ'-∪
+    --   getCoin (acc ∣ ❴ c ❵ ᶜ) + getCoin (acc ∣ ❴ c ❵)
+    --     ≡⟨ {!!} ⟩        -- by: getCoin-cong on (acc ∣ ❴ c ❵) ≡ᵉ ❴ c , bal ❵ (from lookup-eq)
+    --   getCoin (acc ∣ ❴ c ❵ ᶜ) + bal
+    --     ≡⟨ {!!} ⟩        -- by: m∸n+n≡m amt≤bal
+    --   getCoin (acc ∣ ❴ c ❵ ᶜ) + (bal ∸ amt + amt)
+    --     ≡⟨ {!!} ⟩        -- by: +-comm, +-assoc
+    --   (bal ∸ amt) + getCoin (acc ∣ ❴ c ❵ ᶜ) + amt
+    --     ≡⟨ {!!} ⟩        -- by: indexedSumᵛ'-∪ (disjoint since c ∉ dom (acc ∣ ❴ c ❵ ᶜ))
+    --   getCoin (❴ c , bal ∸ amt ❵ᵐ ∪ˡ (acc ∣ ❴ c ❵ˢ ᶜ)) + amt
+    --   ∎
 ```
 -->
 

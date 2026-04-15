@@ -38,9 +38,6 @@ instance
 
 module _
   (tx : Tx) (let open Tx tx; open TxBody body)
-  ( indexedSumᵛ'-∪  :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ Coin)
-                       → disjoint (dom m) (dom m') → getCoin (m ∪ˡ m') ≡ getCoin m + getCoin m' )
-  ( sumConstZero    :  {A : Type} ⦃ _ : DecEq A ⦄ {X : ℙ A} → getCoin (constMap X 0) ≡ 0 )
   ( res-decomp      :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ Coin)
                        → (m ∪ˡ m')ˢ ≡ᵉ (m ∪ˡ (m' ∣ dom (m ˢ) ᶜ))ˢ )
   ( getCoin-cong    :  {A : Type} ⦃ _ : DecEq A ⦄ (s : A ⇀ Coin) (s' : ℙ (A × Coin)) → s ˢ ≡ᵉ s'
@@ -84,7 +81,7 @@ then the coin values of `s`{.AgdaBound} and `s'`{.AgdaBound} are equal, that is,
       open LState s' renaming (utxoSt to utxoSt'; govSt to govSt'; certState to certState')
       open CertState certState'
       open ≡-Reasoning
-      open Certs-PoV indexedSumᵛ'-∪ sumConstZero res-decomp  getCoin-cong ≡ᵉ-getCoinˢ
+      open Certs-PoV res-decomp  getCoin-cong ≡ᵉ-getCoinˢ
       zeroMap    = constMap (mapˢ RewardAddress.stake (dom txWithdrawals)) 0
     in
     begin
