@@ -294,21 +294,22 @@ The `LEDGER`{.AgdaDatatype} rule will call `applyDirectDeposits`{.AgdaFunction} 
 credit direct deposits to account balances as part of processing a transaction batch.
 
 ```agda
+-- For each withdrawal entry `(addr, amt)`, look up `stake addr` in the acc,
+-- compute `bal ∸ amt`, create a singleton map with the new balance, and
+-- merge it with the rest (complement-restricted, to remove the old entry).
+applyOne : Rewards → RewardAddress × Coin → Rewards
+applyOne acc (addr , amt) =
+  case lookupᵐ? acc (stake addr) of λ where
+    (just bal) → ❴ stake addr , bal ∸ amt ❵ ∪ˡ (acc ∣ ❴ stake addr ❵ ᶜ)
+    nothing    → acc
+    -- `nothing` case is defensive; the PRE-CERT precondition guarantees the
+    -- credential is registered, but handling it makes the function total.
+
 applyWithdrawals : Withdrawals → Rewards → Rewards
-applyWithdrawals wdrls rwds =
-  foldl applyOne rwds (setToList (wdrls ˢ))
-  where
-    -- For each withdrawal entry `(addr, amt)`, look up `stake addr` in the acc,
-    -- compute `bal ∸ amt`, create a singleton map with the new balance, and
-    -- merge it with the rest (complement-restricted, to remove the old entry).
-    applyOne : Rewards → RewardAddress × Coin → Rewards
-    applyOne acc (addr , amt) =
-      case lookupᵐ? acc (stake addr) of λ where
-        (just bal) → ❴ stake addr , bal ∸ amt ❵ ∪ˡ (acc ∣ ❴ stake addr ❵ ᶜ)
-        nothing    → acc
-        -- `nothing` case is defensive; the PRE-CERT precondition guarantees the
-        -- credential is registered, but handling it makes the function total.
+applyWithdrawals wdrls rwds = foldl applyOne rwds (setToList (wdrls ˢ))
 ```
+
+
 
 In the Dijkstra era, CIP-159 allows **partial withdrawals**: a transaction may
 withdraw any amount up to the current account balance.

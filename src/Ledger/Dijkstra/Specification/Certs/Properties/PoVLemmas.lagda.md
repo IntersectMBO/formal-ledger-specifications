@@ -24,12 +24,17 @@ module Ledger.Dijkstra.Specification.Certs.Properties.PoVLemmas
   (gs : GovStructure) (open GovStructure gs) where
 
 open import Ledger.Dijkstra.Specification.Certs gs
+open import Ledger.Dijkstra.Specification.Certs.Properties.ApplyWithdrawalsPoV gs
 open import Ledger.Dijkstra.Specification.Gov.Actions gs hiding (yes; no)
 open import Ledger.Prelude
+
 open import Axiom.Set.Properties th
+
+open import Data.List.Relation.Unary.Unique.Propositional using (Unique)
 open import Data.Nat.Properties using (+-0-monoid; +-identityʳ)
 open import Relation.Binary using (IsEquivalence)
 
+open RewardAddress
 open Computational ⦃...⦄
 open CertState
 
@@ -113,18 +118,14 @@ injOn _ h {record { stake = stakex }} {record { stake = stakey }} x∈ y∈ refl
   cong (λ u → record { net = u ; stake = stakex }) (trans (h x∈) (sym (h y∈)))
 
 module Certs-Pov-lemmas
-  ( applyWithdrawals-pov :
-      (wdrls : Withdrawals) (rwds : Rewards)
-      → mapˢ RewardAddress.stake (dom wdrls) ⊆ dom rwds
-      → (∀[ (addr , amt) ∈ wdrls ˢ ]
-          amt ≤ maybe id 0 (lookupᵐ? rwds (RewardAddress.stake addr)))
-      → getCoin rwds ≡ getCoin (applyWithdrawals wdrls rwds) + getCoin wdrls )
-  ( ≡ᵉ-getCoinˢ :
-      {A A' : Type} ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq A' ⦄
-      (s : ℙ (A × Coin)) {f : A → A'}
-      → InjectiveOn (dom s) f
-      → getCoin (mapˢ (map₁ f) s) ≡ getCoin s )
+  ( ∪ˡ-res-lookup-preserve : ∀ (m : Rewards) (c : Credential) (v : Coin) (c' : Credential)
+      → c' ≢ c → lookupᵐ? (❴ c , v ❵ ∪ˡ (m ∣ ❴ c ❵ ᶜ)) c' ≡ lookupᵐ? m c' )
+
+  ( sum-map-proj₂≡getCoin : ∀ (m : Withdrawals) → sum (map proj₂ (setToList (m ˢ))) ≡ getCoin m )
+
+  ( setToList-Unique : ∀ (m : Withdrawals) → Unique (map (stake ∘ proj₁) (setToList (m ˢ))) )
   where
+    open ApplyWithdrawals-PoV ∪ˡ-res-lookup-preserve sum-map-proj₂≡getCoin setToList-Unique
 ```
 -->
 
@@ -139,6 +140,6 @@ module Certs-Pov-lemmas
 ```agda
     PRE-CERT-pov {Γ = Γ} {s = cs} validNetId
       (CERT-pre {wdrls = wdrls} (_ , wdrlCreds⊆rwds , wdrlBounded)) =
-        applyWithdrawals-pov wdrls (DState.rewards (dState cs)) wdrlCreds⊆rwds wdrlBounded
+        applyWithdrawals-pov wdrls (RewardsOf (dState cs)) wdrlCreds⊆rwds wdrlBounded
 ```
 -->

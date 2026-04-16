@@ -42,13 +42,13 @@ open import Tactic.Inline public
 open import MyDebugOptions public
 open import Prelude.STS.GenPremises public
 open import Data.List.Membership.Propositional.Properties using (∈-deduplicate⁻)
--- Data.List.Relation.Unary.Unique.DecPropositional.Properties
-
-
+open import Relation.Binary using (IsEquivalence)
 
 open import abstract-set-theory.FiniteSetTheory public
   renaming (_⊆_ to _⊆ˢ_)
 open import abstract-set-theory.Axiom.Set.Map.Extra th public
+
+open import Axiom.Set.Properties th
 
 import Data.Integer as ℤ
 open import Data.Integer using (0ℤ) public
@@ -61,9 +61,6 @@ open import Data.Nat.Properties using (+-identityʳ)
 dec-de-morgan : ∀{P Q : Type} → ⦃ P ⁇ ⦄ → ¬ (P × Q) → ¬ P ⊎ ¬ Q
 dec-de-morgan ⦃ ⁇ no ¬p ⦄ ¬pq = inj₁ ¬p
 dec-de-morgan ⦃ ⁇ yes p ⦄ ¬pq = inj₂ λ q → ¬pq (p , q)
-
-≡ᵉ-getCoin : ∀ {A} → ⦃ _ : DecEq A ⦄ → (s s' : A ⇀ Coin) → s ˢ ≡ᵉ s' ˢ → getCoin s ≡ getCoin s'
-≡ᵉ-getCoin {A} ⦃ decEqA ⦄ s s' s≡s' = indexedSumᵛ'-cong {C = Coin} {x = s} {y = s'} s≡s'
 
 setToMap : ∀ {A B : Type} → ⦃ DecEq A ⦄ → ℙ (A × B) → A ⇀ B
 setToMap = fromListᵐ ∘ setToList
@@ -119,11 +116,23 @@ module _ {A : Type} ⦃ _ : DecEq A ⦄ where
   getCoin-singleton : {(a , c) : A × Coin} → indexedSumᵛ' id ❴ (a , c) ❵ ≡ c
   getCoin-singleton = indexedSum-singleton' {M = Coin} (finiteness _)
 
+  ≡ᵉ-getCoin : (s s' : A ⇀ Coin) → s ˢ ≡ᵉ s' ˢ → getCoin s ≡ getCoin s'
+  ≡ᵉ-getCoin s s' s≡s' = indexedSumᵛ'-cong {C = Coin} {x = s} {y = s'} s≡s'
+
+  getCoin-cong : (s : A ⇀ Coin) (s' : ℙ (A × Coin))
+    → s ˢ ≡ᵉ s' → indexedSum' proj₂ (s ˢ) ≡ indexedSum' proj₂ s'
+  getCoin-cong s s' eq = indexedSum-cong {f = proj₂} {x = (s ˢ) ᶠˢ} {y = s' ᶠˢ} eq
+
   indexedSumᵛ'-∪ : (m m' : A ⇀ Coin) → disjoint (dom m) (dom m')
     → getCoin (m ∪ˡ m') ≡ getCoin m + getCoin m'
   indexedSumᵛ'-∪ m m' disj =
     trans (indexedSumᵐ-∪ˡ-∪ˡᶠ m m')
           (indexedSumᵐ-∪ {X = m ᶠᵐ} {m' ᶠᵐ} {f = proj₂} disj)
+
+
+  res-decomp : (m m' : A ⇀ Coin) → (m ∪ˡ m')ˢ ≡ᵉ (m ∪ˡ (m' ∣ dom (m ˢ) ᶜ))ˢ
+  res-decomp m m' = ∪-cong (≡ᵉ.refl {x = m ˢ}) (≡ᵉ.sym (filterᵐ-idem {m = m'}))
+    where module ≡ᵉ = IsEquivalence (≡ᵉ-isEquivalence {A × Coin})
 
   ∪ˡsingleton∈dom : (m : A ⇀ Coin) {(a , c) : A × Coin}
     → a ∈ dom m → getCoin (m ∪ˡ ❴ (a , c) ❵ᵐ) ≡ getCoin m
@@ -140,7 +149,6 @@ module _ {A : Type} ⦃ _ : DecEq A ⦄ where
   ∪ˡsingleton0≡ m {a} with a ∈? dom m
   ... | yes a∈dom = ∪ˡsingleton∈dom m a∈dom
   ... | no a∉dom = trans (∪ˡsingleton∉dom m a∉dom) (+-identityʳ (getCoin m))
-
 
 opaque
   unfolding List-Model finiteness
@@ -165,4 +173,10 @@ opaque
 
     all-zero-dedup : ∀ {x} → x ∈ˡ deduplicate _≟_ l → proj₂ x ≡ 0
     all-zero-dedup x∈dedup = all-zero (∈-deduplicate⁻ (DecEq._≟_ DecEq-×′) l x∈dedup)
+
+opaque
+  unfolding setToList List-Model
+
+  setToList-∈ : ∀ {A : Type} {a : A} {X : ℙ A} → a ∈ˡ setToList X → a ∈ X
+  setToList-∈ = id
 ```

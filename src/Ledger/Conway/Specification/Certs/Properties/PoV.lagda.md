@@ -47,15 +47,11 @@ instance
   _ = +-0-monoid
 
 module Certs-PoV
-    -- TODO: prove some or all of the following assumptions, used in roof of `CERTBASE-pov`.
-    ( res-decomp'      :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ Coin)
-                         → (m ∪ˡ m')ˢ ≡ᵉ (m ∪ˡ (m' ∣ dom (m ˢ) ᶜ))ˢ )
-    ( getCoin-cong'    :  {A : Type} ⦃ _ : DecEq A ⦄ (s : A ⇀ Coin) (s' : ℙ (A × Coin)) → s ˢ ≡ᵉ s'
-                         → indexedSum' proj₂ (s ˢ) ≡ indexedSum' proj₂ s' )
-    ( ≡ᵉ-getCoinˢ'     :  {A A' : Type} ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq A' ⦄ (s : ℙ (A × Coin)) {f : A → A'}
-                         → InjectiveOn (dom s) f → getCoin (mapˢ (map₁ f) s) ≡ getCoin s )
+    -- TODO: prove the following assumption, used in roof of `CERTBASE-pov`.
+    ( ≡ᵉ-getCoinˢ' :  {A A' : Type} ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq A' ⦄ (s : ℙ (A × Coin)) {f : A → A'}
+                      → InjectiveOn (dom s) f → getCoin (mapˢ (map₁ f) s) ≡ getCoin s )
     where
-    open Certs-Pov-lemmas res-decomp' getCoin-cong' ≡ᵉ-getCoinˢ'
+    open Certs-Pov-lemmas ≡ᵉ-getCoinˢ'
 ```
 -->
 

@@ -23,7 +23,7 @@ open import Axiom.Set.Properties th
 open import Algebra using (CommutativeMonoid)
 open import Data.Maybe.Properties
 open import Data.Nat.Properties using (+-0-monoid; +-0-commutativeMonoid; +-identityʳ; +-identityˡ)
-open import Relation.Binary using (IsEquivalence)
+import Relation.Binary as Eq using (IsEquivalence)
 open import Relation.Nullary.Decidable
 open import Tactic.ReduceDec
 
@@ -77,7 +77,7 @@ CERT-pov {s = ⟦ _ , stᵖ , stᵍ ⟧ᶜˢ}{⟦ _ , stᵖ' , stᵍ' ⟧ᶜˢ}
   getCoin ⟦ ⟦ vDelegs ∣ ❴ c ❵ ᶜ , sDelegs ∣ ❴ c ❵ ᶜ , rwds ∣ ❴ c ❵ ᶜ ⟧ , stᵖ' , stᵍ' ⟧
     ∎
   where
-  module ≡ᵉ = IsEquivalence (≡ᵉ-isEquivalence {Credential × Coin})
+  module ≡ᵉ = Eq.IsEquivalence (≡ᵉ-isEquivalence {Credential × Coin})
   rwds-∪ˡ-decomp = (rwds ∣ ❴ c ❵ ᶜ) ∪ˡ (rwds ∣ ❴ c ❵ )
 
   rwds-∪ˡ-∪ : rwds-∪ˡ-decomp ˢ ≡ᵉ (rwds ∣ ❴ c ❵ ᶜ)ˢ ∪ (rwds ∣ ❴ c ❵)ˢ
@@ -100,13 +100,9 @@ injOn _ h {record { stake = stakex }} {record { stake = stakey }} x∈ y∈ refl
   cong (λ u → record { net = u ; stake = stakex }) (trans (h x∈) (sym (h y∈)))
 
 module Certs-Pov-lemmas
-  -- TODO: prove some or all of the following assumptions, used in roof of `CERTBASE-pov`.
-  ( res-decomp      :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ Coin)
-                       → (m ∪ˡ m')ˢ ≡ᵉ (m ∪ˡ (m' ∣ dom (m ˢ) ᶜ))ˢ )
-  ( getCoin-cong    :  {A : Type} ⦃ _ : DecEq A ⦄ (s : A ⇀ Coin) (s' : ℙ (A × Coin)) → s ˢ ≡ᵉ s'
-                       → indexedSum' proj₂ (s ˢ) ≡ indexedSum' proj₂ s' )
-  ( ≡ᵉ-getCoinˢ     :  {A A' : Type} ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq A' ⦄ (s : ℙ (A × Coin)) {f : A → A'}
-                       → InjectiveOn (dom s) f → getCoin (mapˢ (map₁ f) s) ≡ getCoin s )
+  -- TODO: prove the following assumption, used in roof of `CERTBASE-pov`.
+  ( ≡ᵉ-getCoinˢ :  {A A' : Type} ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq A' ⦄ (s : ℙ (A × Coin)) {f : A → A'}
+                   → InjectiveOn (dom s) f → getCoin (mapˢ (map₁ f) s) ≡ getCoin s )
   where
 ```
 -->
@@ -145,7 +141,7 @@ value of the withdrawals in `Γ`{.AgdaBound}.  In other terms,
       let
         open DState (dState cs )
         open DState (dState cs') renaming (rewards to rewards')
-        module ≡ᵉ       = IsEquivalence (≡ᵉ-isEquivalence {Credential × Coin})
+        module ≡ᵉ       = Eq.IsEquivalence (≡ᵉ-isEquivalence {Credential × Coin})
         wdrlsCC         = mapˢ (map₁ RewardAddress.stake) (wdrls ˢ)
         zeroMap         = constMap (mapˢ RewardAddress.stake (dom wdrls)) 0
         rwds-∪ˡ-decomp  = (rewards ∣ dom wdrlsCC ᶜ) ∪ˡ (rewards ∣ dom wdrlsCC)

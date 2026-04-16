@@ -31,15 +31,21 @@ module Ledger.Dijkstra.Specification.Ledger.Properties.PoV
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
 
+open import Ledger.Prelude
+
+open import Axiom.Set.Properties th
+
 open import Ledger.Dijkstra.Specification.Certs govStructure
--- open import Ledger.Dijkstra.Specification.Certs.Properties.PoV govStructure
+open import Ledger.Dijkstra.Specification.Certs.Properties.PoV govStructure
 open import Ledger.Dijkstra.Specification.Certs.Properties.PoVLemmas govStructure
 open import Ledger.Dijkstra.Specification.Ledger txs abs
 open import Ledger.Dijkstra.Specification.Utxo txs abs
 open import Ledger.Dijkstra.Specification.Utxow txs abs
-open import Ledger.Prelude
-open import Axiom.Set.Properties th
+
+open import Data.List.Relation.Unary.Unique.Propositional using (Unique)
 open import Data.Nat.Properties using (+-0-monoid; +-identityʳ; +-comm; +-assoc)
+
+open RewardAddress
 ```
 -->
 
@@ -69,20 +75,12 @@ module _
   (tx : TopLevelTx) (let open Tx tx)
 
   -- Shared assumptions (same pattern as Conway)
-  ( indexedSumᵛ'-∪  :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ Coin)
-                       → disjoint (dom m) (dom m')
-                       → getCoin (m ∪ˡ m') ≡ getCoin m + getCoin m' )
-  ( applyWithdrawals-pov  :
-      (wdrls : Withdrawals) (rwds : Rewards)
-      → mapˢ RewardAddress.stake (dom wdrls) ⊆ dom rwds
-      → (∀[ (addr , amt) ∈ wdrls ˢ ]
-          amt ≤ maybe id 0 (lookupᵐ? rwds (RewardAddress.stake addr)))
-      → getCoin rwds ≡ getCoin (applyWithdrawals wdrls rwds) + getCoin wdrls )
-  ( ≡ᵉ-getCoinˢ  :
-      {A A' : Type} ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq A' ⦄
-      (s : ℙ (A × Coin)) {f : A → A'}
-      → InjectiveOn (dom s) f
-      → getCoin (mapˢ (map₁ f) s) ≡ getCoin s )
+  ( ∪ˡ-res-lookup-preserve : ∀ (m : Rewards) (c : Credential) (v : Coin) (c' : Credential)
+      → c' ≢ c → lookupᵐ? (❴ c , v ❵ ∪ˡ (m ∣ ❴ c ❵ ᶜ)) c' ≡ lookupᵐ? m c' )
+
+  ( sum-map-proj₂≡getCoin : ∀ (m : Withdrawals) → sum (map proj₂ (setToList (m ˢ))) ≡ getCoin m )
+
+  ( setToList-Unique : ∀ (m : Withdrawals) → Unique (map (stake ∘ proj₁) (setToList (m ˢ))) )
 
   -- CIP-159–specific assumption: ∪⁺ adds getCoin values
   ( applyDirectDeposits-rewardsBalance :
@@ -90,22 +88,15 @@ module _
       → rewardsBalance (applyDirectDeposits dd ds) ≡ rewardsBalance ds + getCoin dd )
 
   where
+    open Certs-PoV ∪ˡ-res-lookup-preserve sum-map-proj₂≡getCoin setToList-Unique
 ```
 -->
 
-```agda
-  Claim-applyDirectDeposits-getCoin :
-    ∀ (dd : DirectDeposits) (ds : DState)
-    → rewardsBalance (applyDirectDeposits dd ds) ≡ rewardsBalance ds + getCoin dd
-  Claim-applyDirectDeposits-getCoin = applyDirectDeposits-rewardsBalance
-```
 
 ## LEDGER Preservation of Value
 
 ```agda
-  LEDGER-pov : {Γ : LedgerEnv} {s s' : LedgerState}
-    → Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s'
-    → getCoin s ≡ getCoin s'
+    LEDGER-pov : {Γ : LedgerEnv} {s s' : LedgerState} → Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s' → getCoin s ≡ getCoin s'
 ```
 
 ### Proof sketch
@@ -145,6 +136,6 @@ Follows the Conway pattern with `certState' ≡ certState₀`.
 
 <!--
 ```agda
-  LEDGER-pov = {!!}
+    LEDGER-pov = {!!}
 ```
 -->
