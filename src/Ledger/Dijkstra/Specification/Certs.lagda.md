@@ -103,14 +103,14 @@ record PState : Type where
   field
     pools     : Pools
     fPools    : Pools
-    retiring  : KeyHash ⇀ Epoch
+    retiring  : Retiring
     deposits  : KeyHash ⇀ Coin
 
 record GState : Type where
   constructor ⟦_,_,_⟧ᵛ
   field
     dreps      : DReps
-    ccHotKeys  : Credential ⇀ Maybe Credential
+    ccHotKeys  : CCHotKeys
     deposits   : Credential ⇀ Coin
 
 record CertState : Type where

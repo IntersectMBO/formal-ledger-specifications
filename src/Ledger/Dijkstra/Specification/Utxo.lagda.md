@@ -256,6 +256,9 @@ minfee pp txTop utxo = pp .a * (SizeOf txTop) + pp .b
 instance
   HasCoin-UTxO : HasCoin UTxO
   HasCoin-UTxO .getCoin = cbalance
+
+  HasCoin-UTxOState : HasCoin UTxOState
+  HasCoin-UTxOState .getCoin s = getCoin (UTxOOf s) + FeesOf s + DonationsOf s
 ```
 -->
 
