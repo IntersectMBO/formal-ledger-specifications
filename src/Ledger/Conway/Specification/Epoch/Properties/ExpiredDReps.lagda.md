@@ -440,6 +440,40 @@ record Post-POOLREAP-Update-[_]_≈_ (e : Epoch) (pPRUpd₁ pPRUpd₂ : Post-POO
     dState'' : pPRUpd₁.dState'' ≡ pPRUpd₂.dState''
     acnt''   : pPRUpd₁.acnt'' ≡ pPRUpd₂.acnt''
 
+opaque
+  unfolding Post-POOLREAPUpdate.payout
+
+  Post-POOLREAPUpdate-govActionReturns-cong
+    : ∀ {es₁ es₂ : EnactState} {ls₁ ls₂ : LState}
+        {dSt₁ dSt₂ : DState} {acnt₁ acnt₂ : Acnt}
+        {govUpd₁ govUpd₂ : Governance-Update}
+    → govUpd₁ ≡ govUpd₂
+    → Post-POOLREAPUpdate.govActionReturns es₁ ls₁ dSt₁ acnt₁ govUpd₁
+      ≡ Post-POOLREAPUpdate.govActionReturns es₂ ls₂ dSt₂ acnt₂ govUpd₂
+  Post-POOLREAPUpdate-govActionReturns-cong refl = refl
+
+  Post-POOLREAPUpdate-payout-cong
+    : ∀ {es₁ es₂ : EnactState} {ls₁ ls₂ : LState}
+        {dSt₁ dSt₂ : DState} {acnt₁ acnt₂ : Acnt}
+        {govUpd₁ govUpd₂ : Governance-Update}
+    → es₁ ≡ es₂ → govUpd₁ ≡ govUpd₂
+    → Post-POOLREAPUpdate.payout es₁ ls₁ dSt₁ acnt₁ govUpd₁
+      ≡ Post-POOLREAPUpdate.payout es₂ ls₂ dSt₂ acnt₂ govUpd₂
+  Post-POOLREAPUpdate-payout-cong refl refl = refl
+
+opaque
+  unfolding Post-POOLREAPUpdate.refunds
+  unfolding Post-POOLREAPUpdate.payout
+
+  Post-POOLREAPUpdate-refunds-cong
+    : ∀ {es₁ es₂ : EnactState} {ls₁ ls₂ : LState}
+        {dSt₁ dSt₂ : DState} {acnt₁ acnt₂ : Acnt}
+        {govUpd₁ govUpd₂ : Governance-Update}
+    → es₁ ≡ es₂ → dSt₁ ≡ dSt₂ → govUpd₁ ≡ govUpd₂
+    → Post-POOLREAPUpdate.refunds es₁ ls₁ dSt₁ acnt₁ govUpd₁
+      ≡ Post-POOLREAPUpdate.refunds es₂ ls₂ dSt₂ acnt₂ govUpd₂
+  Post-POOLREAPUpdate-refunds-cong refl refl refl = refl
+
 module Post-POOLREAP-update
   {eSt eSt' : EnactState} {lSt lSt' : LState} {dSt dSt' : DState} {acnt acnt' : Acnt} {govUpd govUpd' : Governance-Update}
   (e : Epoch)
@@ -449,20 +483,14 @@ module Post-POOLREAP-update
   module pPRUpd₁ = Post-POOLREAPUpdate eSt lSt dSt acnt govUpd
   module pPRUpd₂ = Post-POOLREAPUpdate eSt' lSt' dSt' acnt' govUpd'
 
-  opaque
-    unfolding Post-POOLREAPUpdate.payout
+  govActionReturns : pPRUpd₁.govActionReturns ≡ pPRUpd₂.govActionReturns
+  govActionReturns = Post-POOLREAPUpdate-govActionReturns-cong govUpd≡govUpd'
 
-    govActionReturns : pPRUpd₁.govActionReturns ≡ pPRUpd₂.govActionReturns
-    govActionReturns rewrite govUpd≡govUpd' = refl
+  payout : pPRUpd₁.payout ≡ pPRUpd₂.payout
+  payout = Post-POOLREAPUpdate-payout-cong eSt≡eSt' govUpd≡govUpd'
 
-    payout : pPRUpd₁.payout ≡ pPRUpd₂.payout
-    payout rewrite eSt≡eSt' | govActionReturns = refl
-
-  opaque
-    unfolding Post-POOLREAPUpdate.refunds
-
-    refunds : pPRUpd₁.refunds ≡ pPRUpd₂.refunds
-    refunds rewrite payout | dSt≡dSt' = refl
+  refunds : pPRUpd₁.refunds ≡ pPRUpd₂.refunds
+  refunds = Post-POOLREAPUpdate-refunds-cong eSt≡eSt' dSt≡dSt' govUpd≡govUpd'
 
   dState'' : pPRUpd₁.dState'' ≡ pPRUpd₂.dState''
   dState'' rewrite refunds | dSt≡dSt' = refl
