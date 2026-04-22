@@ -58,6 +58,22 @@ private variable
 ∙-homo-Coin = IsMagmaHomomorphism.homo (isMagmaHomomorphism coinIsMonoidHomomorphism)
 ```
 
+## `coin-∑ˡ`
+
+`coin`{.AgdaField} is a monoid homomorphism from `Value`{.AgdaField} (under `+ᵛ`/`ε`) to
+`ℕ`{.AgdaDatatype} (under `+`/`0`), so it distributes over a list-indexed sum.  This
+is the "coin version" of the generic fact that a monoid homomorphism commutes with
+`foldr _∙_ ε`.
+
+```agda
+coin-∑ˡ : ∀ {A : Type} (f : A → Value) (xs : List A)
+        → coin (∑ˡ[ x ← xs ] f x) ≡ sum (map (coin ∘ f) xs)
+coin-∑ˡ f []       = ε-homo coinIsMonoidHomomorphism
+coin-∑ˡ f (x ∷ xs) = trans  (∙-homo-Coin (f x) (∑ˡ[ z ← xs ] f z))
+                            (cong (coin (f x) +_) (coin-∑ˡ f xs))
+```
+
+
 ## Freshness ⇒ disjointness
 
 ```agda

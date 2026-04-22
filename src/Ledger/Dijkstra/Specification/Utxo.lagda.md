@@ -141,6 +141,14 @@ record HasDepositsChange {a} (A : Type a) : Type a where
   field DepositsChangeOf : A → DepositsChange
 open HasDepositsChange ⦃...⦄ public
 
+record HasDepositsChangeTop {a} (A : Type a) : Type a where
+  field DepositsChangeTopOf : A → ℤ
+open HasDepositsChangeTop ⦃...⦄ public
+
+record HasDepositsChangeSub {a} (A : Type a) : Type a where
+  field DepositsChangeSubOf : A → ℤ
+open HasDepositsChangeSub ⦃...⦄ public
+
 record HasScriptPool {a} (A : Type a) : Type a where
   field ScriptPoolOf : A → ℙ Script
 open HasScriptPool ⦃...⦄ public
@@ -208,6 +216,12 @@ instance
 
   HasDonations-UTxOState : HasDonations UTxOState
   HasDonations-UTxOState .DonationsOf = UTxOState.donations
+
+  HasDepositsChangeTop-DepositsChange : HasDepositsChangeTop DepositsChange
+  HasDepositsChangeTop-DepositsChange .DepositsChangeTopOf = DepositsChange.depositsChangeTop
+
+  HasDepositsChangeSub-DepositsChange : HasDepositsChangeSub DepositsChange
+  HasDepositsChangeSub-DepositsChange .DepositsChangeSubOf = DepositsChange.depositsChangeSub
 
   unquoteDecl HasCast-DepositsChange
               HasCast-UTxOEnv
@@ -303,6 +317,16 @@ collateralCheck pp txTop utxo =
   × coin (balance (utxo ∣ CollateralInputsOf txTop)) * 100 ≥ (TxFeesOf txTop) * pp .collateralPercentage
   × (CollateralInputsOf txTop) ≢ ∅
 
+producedTx : Tx ℓ → Value
+producedTx tx = balance (outs tx)
+                + inject (DonationsOf tx)
+                + inject (getCoin (DirectDepositsOf tx))
+
+consumedTx : Tx ℓ → UTxO → Value
+consumedTx tx utxo = balance (utxo ∣ SpendInputsOf tx)
+                     + MintedValueOf tx
+                     + inject (getCoin (WithdrawalsOf tx))
+
 module _ (depositsChange : DepositsChange) where
 
   open DepositsChange depositsChange
@@ -318,11 +342,6 @@ module _ (depositsChange : DepositsChange) where
 
   depositRefundsTop : Coin
   depositRefundsTop = negPart depositsChangeTop
-
-  consumedTx : Tx ℓ → UTxO → Value
-  consumedTx tx utxo = balance (utxo ∣ SpendInputsOf tx)
-                       + MintedValueOf tx
-                       + inject (getCoin (WithdrawalsOf tx))
 
   consumed : TopLevelTx → UTxO → Value
   consumed txTop utxo = consumedTx txTop utxo
@@ -340,11 +359,6 @@ In the preservation-of-value equation, direct deposits appear on the
 the transaction and that amount is deposited into accounts.
 
 ```agda
-  producedTx : Tx ℓ → Value
-  producedTx tx = balance (outs tx)
-                  + inject (DonationsOf tx)
-                  + inject (getCoin (DirectDepositsOf tx))
-
   produced : TopLevelTx → Value
   produced txTop = producedTx txTop
                    + inject (TxFeesOf txTop)
