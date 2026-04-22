@@ -20,8 +20,9 @@ open import Ledger.Dijkstra.Specification.PParams
 
 module Ledger.Dijkstra.Specification.Fees
   {cryptoStructure : _} {epochStructure : _}
-  {scriptStructure : ScriptStructure cryptoStructure epochStructure}
-  (pp : PParams cryptoStructure epochStructure scriptStructure)
+  {Network : Type} ⦃ _ : DecEq Network ⦄
+  {scriptStructure : ScriptStructure cryptoStructure epochStructure Network}
+  (pp : PParams cryptoStructure epochStructure Network scriptStructure)
   where
 
 open import Data.Rational using (0ℚ; ℚ; mkℚ+; _*_; floor)

@@ -7,13 +7,17 @@ source_path: src/Ledger/Dijkstra/Specification/Script/Base.lagda.md
 ```agda
 {-# OPTIONS --safe #-}
 
+open import Ledger.Prelude
 open import Ledger.Core.Specification.Crypto
 open import Ledger.Core.Specification.Epoch
 
 module Ledger.Dijkstra.Specification.Script.Base
   (cs : _) (open CryptoStructure cs)
   (es : _) (open EpochStructure es)
+  (Network : Type) ⦃ _ : DecEq Network ⦄
   where
+
+open import Ledger.Core.Specification.Address Network KeyHash ScriptHash
 
 open import Algebra.Morphism
 open import Data.List.Relation.Unary.All using (All; []; _∷_; all?; uncons)
@@ -32,8 +36,8 @@ open import Ledger.Prelude hiding (All; Any; all?; any?; _∷ʳ_; uncons; _⊆_)
 ```agda
 record P1ScriptStructure : Type₁ where
   field P1Script : Type
-        validP1Script : ℙ KeyHash → Maybe Slot × Maybe Slot → P1Script → Type
-        ⦃ Dec-validP1Script ⦄ : validP1Script ⁇³
+        validP1Script : ℙ KeyHash → ℙ Credential → Maybe Slot × Maybe Slot → P1Script → Type
+        ⦃ Dec-validP1Script ⦄ : ∀ {khs} → validP1Script khs ⁇³
         ⦃ Hashable-P1Script ⦄ : Hashable P1Script ScriptHash
         ⦃ DecEq-P1Script    ⦄ : DecEq P1Script
 

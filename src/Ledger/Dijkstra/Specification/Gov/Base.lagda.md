@@ -25,16 +25,16 @@ record GovStructure : Type₁ where
   field epochStructure : EpochStructure
   open EpochStructure epochStructure public
 
-  field scriptStructure : ScriptStructure cryptoStructure epochStructure
+  field globalConstants : GlobalConstants
+  open GlobalConstants globalConstants public
+
+  field scriptStructure : ScriptStructure cryptoStructure epochStructure Network
   open ScriptStructure scriptStructure public
 
-  open Ledger.Dijkstra.Specification.PParams cryptoStructure epochStructure scriptStructure public
+  open Ledger.Dijkstra.Specification.PParams cryptoStructure epochStructure Network scriptStructure public
 
   field govParams : GovParams
   open GovParams govParams public
-
-  field globalConstants : GlobalConstants
-  open GlobalConstants globalConstants public
 
   open import Ledger.Core.Specification.Address Network KeyHash ScriptHash public
 ```

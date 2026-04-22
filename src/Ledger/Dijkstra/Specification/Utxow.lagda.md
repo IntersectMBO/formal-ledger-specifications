@@ -204,7 +204,7 @@ data _⊢_⇀⦇_,SUBUTXOW⦈_ : SubUTxOEnv → UTxOState → SubLevelTx → UTx
                                       (credsNeeded utxo₀ txSub)
     in
     ∙ ∀[ (vk , σ) ∈ vKeySigs ] isSigned vk (txidBytes txId) σ
-    ∙ ∀[ s ∈ p1ScriptsNeeded ] validP1Script vKeyHashesProvided txVldt s
+    ∙ ∀[ s ∈ p1ScriptsNeeded ] validP1Script vKeyHashesProvided (GuardsOf txSub) txVldt s
     ∙ (¬ UsesBootstrapAddress utxo₀ txSub) -- (2)
     ∙ vKeyHashesNeeded ⊆ vKeyHashesProvided
     ∙ scriptHashesNeeded ⊆ mapˢ hash scriptsProvided
@@ -290,7 +290,7 @@ mode up front rather than deciding both.
     ∙ (UsesBootstrapAddress (UTxOOf Γ) txTop → Is-∅ p2ScriptsNeeded) -- (2)
     ∙ concatMapˡ (λ txSub → mapˢ proj₁ (TopLevelGuardsOf txSub)) (SubTransactionsOf txTop) ⊆ GuardsOf txTop -- (3)
     ∙ ∀[ (vk , σ) ∈ TxWitnesses.vKeySigs (Tx.txWitnesses txTop) ] isSigned vk (txidBytes (TxIdOf txTop)) σ
-    ∙ ∀[ s ∈ p1ScriptsNeeded ] validP1Script vKeyHashesProvided txVldt s
+    ∙ ∀[ s ∈ p1ScriptsNeeded ] validP1Script vKeyHashesProvided (GuardsOf txTop) txVldt s
     ∙ vKeyHashesNeeded ⊆ vKeyHashesProvided
     ∙ scriptHashesNeeded ⊆ mapˢ hash scriptsProvided
     ∙ dataHashesNeeded ⊆ mapˢ hash dataProvided
@@ -371,7 +371,7 @@ mode up front rather than deciding both.
     ∙ Is-∅ (dom txBalanceIntervals)              -- (6)
     ∙ concatMapˡ (λ txSub → mapˢ proj₁ (TopLevelGuardsOf txSub)) (SubTransactionsOf txTop) ⊆ GuardsOf txTop -- (3)
     ∙ ∀[ (vk , σ) ∈ vKeySigs ] isSigned vk (txidBytes (TxIdOf txTop)) σ
-    ∙ ∀[ s ∈ p1ScriptsNeeded ] validP1Script vKeyHashesProvided txVldt s
+    ∙ ∀[ s ∈ p1ScriptsNeeded ] validP1Script vKeyHashesProvided (GuardsOf txTop) txVldt s
     ∙ vKeyHashesNeeded ⊆ vKeyHashesProvided
     ∙ scriptHashesNeeded ⊆ mapˢ hash scriptsProvided
     ∙ dataHashesNeeded ⊆ mapˢ hash dataProvided
