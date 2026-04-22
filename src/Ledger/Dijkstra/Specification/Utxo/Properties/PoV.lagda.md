@@ -403,7 +403,7 @@ coin-of-producedBatch tx dc = begin
     swap-right a b c = trans (+-assoc a b c) (trans (cong (a +_) (+-comm b c)) (sym (+-assoc a c b)))
 
 
-module _
+module UTxO-PoV
   (tx : TopLevelTx) (let open Tx tx; open TxBody txBody)
 
   -- ASSUMPTIONS --
@@ -528,25 +528,25 @@ proof actually consumes.  We expose it as a separate lemma here.
 ```agda
   batch-balance-coin : (Γ , legacyMode) ⊢ s₀ ⇀⦇ tx ,UTXO⦈ s₁
     → cbalance (UTxOOf Γ ∣ SpendInputsOf tx) + getCoin (WithdrawalsOf tx)
-      + negPart (DepositsChangeTopOf (DepositsChangeOf Γ))
+      + negPart (DepositsChangeTopOf Γ)
       + sum ( map  (λ stx → cbalance (UTxOOf Γ ∣ SpendInputsOf stx) + getCoin (WithdrawalsOf stx))
                    (SubTransactionsOf tx) )
-      + negPart (DepositsChangeSubOf (DepositsChangeOf Γ))
+      + negPart (DepositsChangeSubOf Γ)
       ≡ cbalance (outs tx) + TxFeesOf tx + DonationsOf tx + getCoin (DirectDepositsOf tx)
-        + posPart (DepositsChangeTopOf (DepositsChangeOf Γ))
+        + posPart (DepositsChangeTopOf Γ)
         + sum ( map (λ stx → cbalance (outs stx) + DonationsOf stx + getCoin (DirectDepositsOf stx))
                     (SubTransactionsOf tx))
-        + posPart (DepositsChangeSubOf (DepositsChangeOf Γ))
+        + posPart (DepositsChangeSubOf Γ)
 
   batch-balance-coin {Γ = Γ} (UTXO-⋯ _ _ _ _ _ _ _ batchBal _ _ _ _ _ _ _ _ _ _ _ _ _ _ _) =
     begin
-    cbalance (UTxOOf Γ ∣ SpendInputsOf tx) + getCoin (WithdrawalsOf tx) + negPart (DepositsChangeTopOf (DepositsChangeOf Γ)) + _ + _
+    cbalance (UTxOOf Γ ∣ SpendInputsOf tx) + getCoin (WithdrawalsOf tx) + negPart (DepositsChangeTopOf Γ) + _ + _
       ≡˘⟨ coin-of-consumedBatch tx (DepositsChangeOf Γ) (UTxOOf Γ) noMintTx noMintSubTx ⟩
     coin (consumedBatch (DepositsChangeOf Γ) tx (UTxOOf Γ))
       ≡⟨ cong coin batchBal ⟩
     coin (producedBatch (DepositsChangeOf Γ) tx)
       ≡⟨ coin-of-producedBatch tx (DepositsChangeOf Γ) ⟩
-    cbalance (outs tx) + TxFeesOf tx + DonationsOf tx + getCoin (DirectDepositsOf tx) + posPart (DepositsChangeTopOf (DepositsChangeOf Γ)) + _ + _
+    cbalance (outs tx) + TxFeesOf tx + DonationsOf tx + getCoin (DirectDepositsOf tx) + posPart (DepositsChangeTopOf Γ) + _ + _
       ∎
 ```
 
@@ -574,8 +574,7 @@ when combined with the `SUBLEDGERS-pov`{.AgdaFunction} lemma.
 
 ```agda
 {--
-  UTXO-pov :
-    ∀ {Γ : UTxOEnv} {legacyMode : Bool} {s₀ s₁ : UTxOState}
+  UTXO-pov : ∀ {Γ : UTxOEnv} {legacyMode : Bool} {s₀ s₁ : UTxOState}
     → TxIdOf tx ∉ mapˢ proj₁ (dom (UTxOOf s₀))
     → (Γ , legacyMode) ⊢ s₀ ⇀⦇ tx ,UTXO⦈ s₁
     → getCoin s₀

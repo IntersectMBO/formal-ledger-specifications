@@ -223,6 +223,12 @@ instance
   HasDepositsChangeSub-DepositsChange : HasDepositsChangeSub DepositsChange
   HasDepositsChangeSub-DepositsChange .DepositsChangeSubOf = DepositsChange.depositsChangeSub
 
+  HasDepositsChangeTop-UTxOEnv : HasDepositsChangeTop UTxOEnv
+  HasDepositsChangeTop-UTxOEnv .DepositsChangeTopOf = DepositsChangeTopOf ∘ DepositsChangeOf
+
+  HasDepositsChangeSub-UTxOEnv : HasDepositsChangeSub UTxOEnv
+  HasDepositsChangeSub-UTxOEnv .DepositsChangeSubOf = DepositsChangeSubOf ∘ DepositsChangeOf
+
   unquoteDecl HasCast-DepositsChange
               HasCast-UTxOEnv
               HasCast-SubUTxOEnv
