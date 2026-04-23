@@ -132,6 +132,13 @@ credentialToP2Script c scripts =
   do sh ← isScriptObj c
      s  ← lookupHash sh scripts
      toP2Script s
+
+credentialToP1Script
+  : Credential → ℙ Script → Maybe P1Script
+credentialToP1Script c scripts =
+  do sh ← isScriptObj c
+     s  ← lookupHash sh scripts
+     toP1Script s
 ```
 
 ```agda

@@ -146,10 +146,33 @@ hashScriptIntegrity pp langs rdrms dats
     just $ hash (dats , rdrms , mapˢ (getLanguageView pp) langs)
 ```
 
+## Required Top-level Guards
+
+```agda
+TopLevelGuardWellFormed : ℙ Script → Credential × Maybe Datum → Type
+TopLevelGuardWellFormed scripts (c , just d)  = Is-just (credentialToP2Script c scripts)
+TopLevelGuardWellFormed scripts (c , nothing) = Is-just (isKeyHashObj c) ⊎ Is-just (credentialToP1Script c scripts)
+```
+
+<!--
+```agda
+instance
+  TopLevelGuardWellFormed? : TopLevelGuardWellFormed ⁇²
+  TopLevelGuardWellFormed? {y = c , just d}  = Dec-MAny
+  TopLevelGuardWellFormed? {y = c , nothing} = Dec-⊎ ⦃ it ⦄ ⦃ it ⦄
+```
+-->
+
 ## The <span class="AgdaDatatype">SUBUTXOW</span> Transition System {#sec:the-subutxow-transition-system}
 
 1. All needed phase-2 scripts use Plutus language V4.
+
 2. Sub-transactions cannot reference or use bootstrap addresses
+
+3. Required top-level guards are well-formed. If the credential is a
+   `KeyHash`{.AgdaDatatype} or a phase-1 script, then no datum should
+   be specified, otherwise, when it is a phase-2 script, the datum
+   should be specified.
 
 ```agda
 data _⊢_⇀⦇_,SUBUTXOW⦈_ : SubUTxOEnv → UTxOState → SubLevelTx → UTxOState → Type where
@@ -173,6 +196,7 @@ data _⊢_⇀⦇_,SUBUTXOW⦈_ : SubUTxOEnv → UTxOState → SubLevelTx → UTx
 
       credentialsNeeded : ℙ Credential
       credentialsNeeded = mapˢ proj₂ (credsNeeded utxo₀ txSub)
+                           ∪ mapˢ proj₁ (TopLevelGuardsOf txSub)
 
       vKeyHashesNeeded : ℙ KeyHash
       vKeyHashesNeeded = mapPartial isKeyHashObj credentialsNeeded
@@ -211,6 +235,7 @@ data _⊢_⇀⦇_,SUBUTXOW⦈_ : SubUTxOEnv → UTxOState → SubLevelTx → UTx
     in
     ∙ ∀[ (vk , σ) ∈ vKeySigs ] isSigned vk (txidBytes txId) σ
     ∙ ∀[ s ∈ p1ScriptsNeeded ] validP1Script vKeyHashesProvided (GuardsOf txSub) txVldt s
+    ∙ ∀[ tlg ∈ TopLevelGuardsOf txSub ] TopLevelGuardWellFormed scriptsProvided tlg -- (3)
     ∙ (¬ UsesBootstrapAddress utxo₀ txSub) -- (2)
     ∙ vKeyHashesNeeded ⊆ vKeyHashesProvided
     ∙ scriptHashesNeeded ⊆ mapˢ hash scriptsProvided
@@ -327,8 +352,9 @@ mode up front rather than deciding both.
 3. The top-level transaction does not use or reference bootstrap addresses (in
    case it does, it is handled in normal mode).
 
-4. `Guards` is the empty set, and, thus, all sub-transaction's `requiredTopLevelGuards`
-   are also the empty set.
+4. `Guards` only contains keyhashes, and, thus, all sub-transaction's
+   `requiredTopLevelGuards` contain only keyhashes. (`Guards` with
+   only keyhashes correspond to `reqSignerHashes` in pre-Dijkstra).
 
 5. The top-level transaction does not contain direct deposits (`txDirectDeposits` is empty).
 
@@ -386,7 +412,7 @@ mode up front rather than deciding both.
     in
     ∙ ∃[ s ∈ p2ScriptsNeeded ] language s ∈ fromList (PlutusV1 ∷ PlutusV2 ∷ PlutusV3 ∷ [])
     ∙ ¬ (UsesBootstrapAddress (UTxOOf Γ) txTop)
-    ∙ Is-∅ (GuardsOf txTop)                      -- (4)
+    ∙ ∀[ g ∈ GuardsOf txTop ] IsKeyHashObj g     -- (4)
     ∙ Is-∅ (dom txDirectDeposits)                -- (5)
     ∙ Is-∅ (dom txBalanceIntervals)              -- (6)
     ∙ concatMapˡ (λ txSub → mapˢ proj₁ (TopLevelGuardsOf txSub)) (SubTransactionsOf txTop) ⊆ GuardsOf txTop -- (3)
@@ -410,6 +436,6 @@ unquoteDecl UTXOW-legacy-premises = genPremises UTXOW-legacy-premises (quote UTX
 unquoteDecl SUBUTXOW-premises = genPremises SUBUTXOW-premises (quote SUBUTXOW)
 pattern UTXOW-normal-⋯ p₀ p₁ p₂ p₃ p₄ p₅ p₆ p₇ p₈ p₉ p₁₀ h = UTXOW-normal (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , h)
 pattern UTXOW-legacy-⋯ p₀ p₁ p₂ p₃ p₄ p₅ p₆ p₇ p₈ p₉ p₁₀ p₁₁ p₁₂ p₁₃ h = UTXOW-legacy (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , p₁₂ , p₁₃ , h)
-pattern SUBUTXOW-⋯ p₀ p₁ p₂ p₃ p₄ p₅ p₆ p₇ p₈ p₉ p₁₀ h = SUBUTXOW (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , h)
+pattern SUBUTXOW-⋯ p₀ p₁ p₂ p₃ p₄ p₅ p₆ p₇ p₈ p₉ p₁₀ p₁₁ h = SUBUTXOW (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , h)
 ```
 -->

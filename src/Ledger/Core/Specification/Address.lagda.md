@@ -59,6 +59,14 @@ isKeyHashObj : Credential → Maybe KeyHash
 isKeyHashObj (KeyHashObj h) = just h
 isKeyHashObj (ScriptObj _)  = nothing
 
+data IsKeyHashObj : Credential → Type where
+  IsKeyHash : ∀ {h} → IsKeyHashObj (KeyHashObj h)
+
+instance
+  IsKeyHashObj? : IsKeyHashObj ⁇¹
+  IsKeyHashObj? {x = KeyHashObj x} .dec = yes IsKeyHash
+  IsKeyHashObj? {x = ScriptObj x}  .dec = no (λ ())
+
 isKeyHashObjᵇ : Credential → Bool
 isKeyHashObjᵇ (KeyHashObj _) = true
 isKeyHashObjᵇ _ = false

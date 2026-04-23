@@ -43,7 +43,7 @@ private
     → IsTopLevelValidFlagOf Γ ≡ false
     → Γ ⊢ s ⇀⦇ stx ,SUBUTXOW⦈ s'
     → s' ≡ s
-  SUBUTXOW-noop isI (SUBUTXOW (_ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , SUBUTXO _)) rewrite isI = refl
+  SUBUTXOW-noop isI (SUBUTXOW (_ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , SUBUTXO _)) rewrite isI = refl
   -- After `rewrite isI`, `IsTopLevelValidFlagOf Γ` reduces to `false`,
   -- so the SUBUTXO post-state index reduces to `⟦ UTxOOf s , FeesOf s , DonationsOf s ⟧`
   -- which is s by eta-expansion of the UTxOState record, giving refl.
