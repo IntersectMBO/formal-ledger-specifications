@@ -82,7 +82,6 @@ record UTxOEnv : Type where
     utxo₀             : UTxO
     depositsChange    : DepositsChange
     allScripts        : ℙ Script
-    allData           : DataHash ⇀ Datum
 
 record SubUTxOEnv : Type where
   field
@@ -92,7 +91,6 @@ record SubUTxOEnv : Type where
     utxo₀            : UTxO
     isTopLevelValid  : Bool
     allScripts       : ℙ Script
-    allData          : DataHash ⇀ Datum
 ```
 
 The `UTxOEnv`{.AgdaRecord} carries
@@ -101,23 +99,22 @@ The `UTxOEnv`{.AgdaRecord} carries
 +  `allScripts`{.AgdaField}: *batch-wide script pool* containing all scripts available
    to the batch (witness scripts plus reference scripts resolved from allowed
    reference inputs and batch outputs);
-+  `allData`{.AgdaField}: *datum-by-hash pool* containing all data available to the batch.
 
 The pre-batch UTxO snapshot `utxo₀`{.AgdaField} is used to resolve all
 *spend-side* lookups (inputs, collateral, and datum lookup for spent outputs).
 
-The `allScripts`{.AgdaField} and `allData`{.AgdaField} fields of `UTxOEnv`{.AgdaRecord}
-capture the *batch-wide script pool* and *datum-by-hash pool* respectively.  These pools
-are used to resolve all script and datum lookups during phase-2 validation of
-subtransactions in the batch.  Scripts and data are treated as *batch-wide witnesses*;
-attaching a script or datum to a transaction in the batch makes it available for
-phase-2 validation of any transaction in the batch, independent of which
-subtransaction originally supplied it.
+The `allScripts`{.AgdaField} field of `UTxOEnv`{.AgdaRecord} capture
+the *batch-wide script pool*.  This pool is used to resolve all
+script lookups during validation.
 
-If `Γ`{.AgdaBound} denotes a particular `UTxOEnv`{.AgdaRecord}, then we often
-access the `allScripts`{.AgdaField} and `allData`{.AgdaField} fields of
-`Γ`{.AgdaBound} via the `ScriptPoolOf`{.AgdaField} `Γ`{.AgdaBound} and
-`DataPoolOf`{.AgdaField} `Γ`{.AgdaBound} accessors, respectively.
+Scripts are treated as *batch-wide witnesses*; attaching a script to a
+transaction in the batch makes it available for phase-2 validation of
+any transaction in the batch, independent of which subtransaction
+originally supplied it.
+
+If `Γ`{.AgdaBound} denotes a particular `UTxOEnv`{.AgdaRecord}, then
+we often access the `allScripts`{.AgdaField} field of `Γ`{.AgdaBound}
+via `ScriptPoolOf`{.AgdaField} `Γ`{.AgdaBound}.
 
 ```agda
 record UTxOState : Type where
@@ -173,9 +170,6 @@ instance
   HasScriptPool-UTxOEnv : HasScriptPool UTxOEnv
   HasScriptPool-UTxOEnv .ScriptPoolOf = UTxOEnv.allScripts
 
-  HasDataPool-UTxOEnv : HasDataPool UTxOEnv
-  HasDataPool-UTxOEnv .DataPoolOf = UTxOEnv.allData
-
   HasSlot-SubUTxOEnv : HasSlot SubUTxOEnv
   HasSlot-SubUTxOEnv .SlotOf = SubUTxOEnv.slot
 
@@ -193,9 +187,6 @@ instance
 
   HasScriptPool-SubUTxOEnv : HasScriptPool SubUTxOEnv
   HasScriptPool-SubUTxOEnv .ScriptPoolOf = SubUTxOEnv.allScripts
-
-  HasDataPool-SubUTxOEnv : HasDataPool SubUTxOEnv
-  HasDataPool-SubUTxOEnv .DataPoolOf = SubUTxOEnv.allData
 
   HasUTxO-UTxOState : HasUTxO UTxOState
   HasUTxO-UTxOState .UTxOOf = UTxOState.utxo
@@ -358,8 +349,7 @@ for each transaction, we must provide `Script.Validation`{.AgdaModule} with
 the following components:
 
 1.  the pre-batch spend-side snapshot `UTxOOf`{.AgdaField} `Γ`{.AgdaBound},
-2.  the datum-by-hash pool `DataPoolOf`{.AgdaField} `Γ`{.AgdaBound}.
-3.  the script pool `ScriptPoolOf`{.AgdaField} `Γ`{.AgdaBound},
+2.  the script pool `ScriptPoolOf`{.AgdaField} `Γ`{.AgdaBound},
 
 Phase-2 scripts together with their context are collected by the function
 `allP2ScriptsWithContext`{.AgdaFunction}:
@@ -374,8 +364,7 @@ allP2ScriptsWithContext Γ txTop =
         collectP2ScriptsWithContext (PParamsOf Γ)
                                     txTop
                                     (UTxOOf Γ)        -- (1)
-                                    (DataPoolOf Γ)    -- (2)
-                                    (ScriptPoolOf Γ)  -- (3)
+                                    (ScriptPoolOf Γ)  -- (2)
 ```
 
 ### New in Dijkstra

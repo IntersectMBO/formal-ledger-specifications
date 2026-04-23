@@ -58,15 +58,14 @@ failure).
 getDatumSpend
   : Tx ℓ
   → UTxO
-  → (DataHash ⇀ Datum)
   → TxIn
   → Maybe Datum
-getDatumSpend tx utxo₀ allData txin
+getDatumSpend tx utxo₀ txin
   with lookupᵐ? utxo₀ txin
 ... | just (_ , _ , just d , _) =
   case d of λ where
     (inj₁ d) → just d
-    (inj₂ h) → lookupᵐ? allData h
+    (inj₂ h) → lookupHash h (DataOf tx)
 ... | _ = nothing
 ```
 
@@ -183,10 +182,9 @@ a list of lists of data (a list of data is part of the context of a script).
     : PParams
     → Tx ℓ
     → UTxO
-    → (DataHash ⇀ Datum)
     → ℙ Script
     → List (P2Script × List Data × ExUnits × CostModel)
-  collectP2ScriptsWithContext pp tx utxo allData allScripts
+  collectP2ScriptsWithContext pp tx utxo allScripts
     = concat (setToList (mapˢ toScript (credsNeeded utxo tx)))
     where
       context : ScriptPurpose → Data
@@ -201,7 +199,7 @@ a list of lists of data (a list of data is part of the context of a script).
 
       assembleData : Redeemer → ScriptPurpose → List (List Data)
       assembleData redeemer sp@(⟦ Spend , txin ⟧ˢᵖ)
-        = [ fromMaybe (getDatumSpend tx utxo allData txin) ++ (redeemer ∷ [ context sp ]) ]
+        = [ fromMaybe (getDatumSpend tx utxo txin) ++ (redeemer ∷ [ context sp ]) ]
       assembleData redeemer sp           = [ redeemer ∷ [ context sp ] ]
 
       toScript

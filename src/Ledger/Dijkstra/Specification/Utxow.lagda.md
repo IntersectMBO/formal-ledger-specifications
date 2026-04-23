@@ -168,8 +168,8 @@ data _⊢_⇀⦇_,SUBUTXOW⦈_ : SubUTxOEnv → UTxOState → SubLevelTx → UTx
       scriptsProvided : ℙ Script
       scriptsProvided = ScriptPoolOf Γ
 
-      dataProvided : ℙ Data
-      dataProvided = range (DataPoolOf Γ)
+      dataHashesProvided : ℙ DataHash
+      dataHashesProvided = mapˢ hash (DataOf txSub)
 
       credentialsNeeded : ℙ Credential
       credentialsNeeded = mapˢ proj₂ (credsNeeded utxo₀ txSub)
@@ -189,13 +189,19 @@ data _⊢_⇀⦇_,SUBUTXOW⦈_ : SubUTxOEnv → UTxOState → SubLevelTx → UTx
       p2ScriptsNeeded : ℙ P2Script
       p2ScriptsNeeded = mapPartial toP2Script scriptsNeeded
 
-      dataHashesNeeded : ℙ DataHash
-      dataHashesNeeded =
+      dataHashesNeededSpendInputs : ℙ DataHash
+      dataHashesNeededSpendInputs =
         mapPartial (λ txOut@(a , _ , d , _) →
                         do sh ← isScriptObj (payCred a)
                            _  ← lookupHash sh p2ScriptsNeeded
                            d >>= isInj₂)
                    (range (utxo₀ ∣ txIns))
+
+      dataHashesOutputs : ℙ DataHash
+      dataHashesOutputs = mapPartial txOutToDataHash (range txOuts)
+
+      dataHashesReferenceInputs : ℙ DataHash
+      dataHashesReferenceInputs = mapPartial txOutToDataHash (range (UTxOOf Γ ∣ referenceInputs))
 
       scriptRedeemerPtrs : ℙ RedeemerPtr
       scriptRedeemerPtrs = mapPartial (λ (sp , c) → if credentialToP2Script c scriptsNeeded
@@ -208,7 +214,8 @@ data _⊢_⇀⦇_,SUBUTXOW⦈_ : SubUTxOEnv → UTxOState → SubLevelTx → UTx
     ∙ (¬ UsesBootstrapAddress utxo₀ txSub) -- (2)
     ∙ vKeyHashesNeeded ⊆ vKeyHashesProvided
     ∙ scriptHashesNeeded ⊆ mapˢ hash scriptsProvided
-    ∙ dataHashesNeeded ⊆ mapˢ hash dataProvided
+    ∙ dataHashesNeededSpendInputs ⊆ dataHashesProvided
+    ∙ dataHashesProvided ⊆ dataHashesNeededSpendInputs ∪ dataHashesOutputs ∪ dataHashesReferenceInputs
     ∙ dom txRedeemers ≡ᵉ scriptRedeemerPtrs
     ∙ languages p2ScriptsNeeded ⊆ dom (PParams.costmdls (PParamsOf Γ)) ∩ ❴ PlutusV4 ❵ -- (1)
     ∙ txADhash ≡ map hash txAuxData
@@ -244,7 +251,6 @@ mode up front rather than deciding both.
    guards at the top-level.
 
 ```agda
-  -- Normal branch is taken exactly when Legacy does *not* hold.
   UTXOW-normal :
     let
       open Tx txTop
@@ -254,8 +260,8 @@ mode up front rather than deciding both.
       scriptsProvided : ℙ Script
       scriptsProvided = ScriptPoolOf Γ
 
-      dataProvided : ℙ Data
-      dataProvided = range (DataPoolOf Γ)
+      dataHashesProvided : ℙ DataHash
+      dataHashesProvided = mapˢ hash (DataOf txTop)
 
       credentialsNeeded : ℙ Credential
       credentialsNeeded = mapˢ proj₂ (credsNeeded (UTxOOf Γ) txTop)
@@ -278,13 +284,19 @@ mode up front rather than deciding both.
       p2ScriptsNeeded : ℙ P2Script
       p2ScriptsNeeded = mapPartial toP2Script scriptsNeeded
 
-      dataHashesNeeded : ℙ DataHash
-      dataHashesNeeded =
+      dataHashesNeededSpendInputs : ℙ DataHash
+      dataHashesNeededSpendInputs =
         mapPartial (λ txOut@(a , _ , d , _) → do
                       sh ← isScriptObj (payCred a)
                       _  ← lookupHash sh p2ScriptsNeeded
                       x  ← d
                       isInj₂ x) (range (UTxOOf Γ ∣ txIns))
+
+      dataHashesOutputs : ℙ DataHash
+      dataHashesOutputs = mapPartial txOutToDataHash (range txOuts)
+
+      dataHashesReferenceInputs : ℙ DataHash
+      dataHashesReferenceInputs = mapPartial txOutToDataHash (range (UTxOOf Γ ∣ referenceInputs))
     in
     ∙ ∀[ s ∈ p2ScriptsNeeded ] language s ∈ fromList (PlutusV4 ∷ []) -- (1)
     ∙ (UsesBootstrapAddress (UTxOOf Γ) txTop → Is-∅ p2ScriptsNeeded) -- (2)
@@ -293,7 +305,8 @@ mode up front rather than deciding both.
     ∙ ∀[ s ∈ p1ScriptsNeeded ] validP1Script vKeyHashesProvided (GuardsOf txTop) txVldt s
     ∙ vKeyHashesNeeded ⊆ vKeyHashesProvided
     ∙ scriptHashesNeeded ⊆ mapˢ hash scriptsProvided
-    ∙ dataHashesNeeded ⊆ mapˢ hash dataProvided
+    ∙ dataHashesNeededSpendInputs ⊆ dataHashesProvided
+    ∙ dataHashesProvided ⊆ dataHashesNeededSpendInputs ∪ dataHashesOutputs ∪ dataHashesReferenceInputs
     ∙ languages p2ScriptsNeeded ⊆ dom (PParams.costmdls (PParamsOf Γ)) ∩ ❴ PlutusV4 ❵ -- (1)
     ∙ txADhash ≡ map hash txAuxData
     ∙ (Γ , false) ⊢ s ⇀⦇ txTop ,UTXO⦈ s'
@@ -332,8 +345,8 @@ mode up front rather than deciding both.
       scriptsProvided : ℙ Script
       scriptsProvided = ScriptPoolOf Γ
 
-      dataProvided : ℙ Data
-      dataProvided = range (DataPoolOf Γ)
+      dataHashesProvided : ℙ DataHash
+      dataHashesProvided = mapˢ hash (DataOf txTop)
 
       credentialsNeeded : ℙ Credential
       credentialsNeeded = mapˢ proj₂ (credsNeeded (UTxOOf Γ) txTop)
@@ -356,13 +369,20 @@ mode up front rather than deciding both.
       p2ScriptsNeeded : ℙ P2Script
       p2ScriptsNeeded = mapPartial toP2Script scriptsNeeded
 
-      dataHashesNeeded : ℙ DataHash
-      dataHashesNeeded =
+      dataHashesNeededSpendInputs : ℙ DataHash
+      dataHashesNeededSpendInputs =
         mapPartial (λ txOut@(a , _ , d , _) → do
                       sh ← isScriptObj (payCred a)
                       _  ← lookupHash sh p2ScriptsNeeded
                       x  ← d
                       isInj₂ x) (range (UTxOOf Γ ∣ txIns))
+
+      dataHashesOutputs : ℙ DataHash
+      dataHashesOutputs = mapPartial txOutToDataHash (range txOuts)
+
+      dataHashesReferenceInputs : ℙ DataHash
+      dataHashesReferenceInputs = mapPartial txOutToDataHash (range (UTxOOf Γ ∣ referenceInputs))
+
     in
     ∙ ∃[ s ∈ p2ScriptsNeeded ] language s ∈ fromList (PlutusV1 ∷ PlutusV2 ∷ PlutusV3 ∷ [])
     ∙ ¬ (UsesBootstrapAddress (UTxOOf Γ) txTop)
@@ -374,7 +394,8 @@ mode up front rather than deciding both.
     ∙ ∀[ s ∈ p1ScriptsNeeded ] validP1Script vKeyHashesProvided (GuardsOf txTop) txVldt s
     ∙ vKeyHashesNeeded ⊆ vKeyHashesProvided
     ∙ scriptHashesNeeded ⊆ mapˢ hash scriptsProvided
-    ∙ dataHashesNeeded ⊆ mapˢ hash dataProvided
+    ∙ dataHashesNeededSpendInputs ⊆ dataHashesProvided
+    ∙ dataHashesProvided ⊆ dataHashesNeededSpendInputs ∪ dataHashesOutputs ∪ dataHashesReferenceInputs
     ∙ languages p2ScriptsNeeded ⊆ dom (PParams.costmdls (PParamsOf Γ)) ∩ allowedLanguagesLegacyMode txTop (UTxOOf Γ)
     ∙ txADhash ≡ map hash txAuxData
     ∙ (Γ , true) ⊢ s ⇀⦇ txTop ,UTXO⦈ s'
@@ -387,8 +408,8 @@ mode up front rather than deciding both.
 unquoteDecl UTXOW-normal-premises = genPremises UTXOW-normal-premises (quote UTXOW-normal)
 unquoteDecl UTXOW-legacy-premises = genPremises UTXOW-legacy-premises (quote UTXOW-legacy)
 unquoteDecl SUBUTXOW-premises = genPremises SUBUTXOW-premises (quote SUBUTXOW)
-pattern UTXOW-normal-⋯ p₀ p₁ p₂ p₃ p₄ p₅ p₆ p₇ p₈ p₉ h = UTXOW-normal (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , h)
-pattern UTXOW-legacy-⋯ p₀ p₁ p₂ p₃ p₄ p₅ p₆ p₇ p₈ p₉ p₁₀ p₁₁ p₁₂ h = UTXOW-legacy (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , p₁₂ , h)
-pattern SUBUTXOW-⋯ p₀ p₁ p₂ p₃ p₄ p₅ p₆ p₇ p₈ p₉ h = SUBUTXOW (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , h)
+pattern UTXOW-normal-⋯ p₀ p₁ p₂ p₃ p₄ p₅ p₆ p₇ p₈ p₉ p₁₀ h = UTXOW-normal (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , h)
+pattern UTXOW-legacy-⋯ p₀ p₁ p₂ p₃ p₄ p₅ p₆ p₇ p₈ p₉ p₁₀ p₁₁ p₁₂ p₁₃ h = UTXOW-legacy (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , p₁₂ , p₁₃ , h)
+pattern SUBUTXOW-⋯ p₀ p₁ p₂ p₃ p₄ p₅ p₆ p₇ p₈ p₉ p₁₀ h = SUBUTXOW (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , h)
 ```
 -->

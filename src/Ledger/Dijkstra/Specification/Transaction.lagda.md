@@ -564,10 +564,14 @@ could be either of them.
 
 In the Dijkstra era, we need to talk about which UTxO a helper is parameterised by.
 
-+  Spending inputs are always inspected against the pre-batch UTxO snapshot (`utxo₀`{.AgdaField}).
-+  Script/data availability is batch-scoped; in the ledger rules, the global
-   script universe and datum-by-hash pool are computed once per top-level batch
-   (using `getAllScripts`{.AgdaFunction} and `getAllData`{.AgdaFunction}).
+- Spending inputs are always inspected against the pre-batch UTxO
+  snapshot (`utxo₀`{.AgdaField}).
+
+- Script availability is batch-scoped; in the ledger rules, the global
+  script universe is computed once per batch (using
+  `getAllScripts`{.AgdaFunction}).
+
+- Data is _not_ shared among transactions in a batch.
 
 The function `getTxScripts`{.AgdaFunction} defined below is the set of scripts the
 ledger may use to resolve script hashes while validating a transaction, given it is
@@ -680,12 +684,6 @@ allowed to inspect utxo for its inputs.
   --| Set of data from a transaction
   getTxData : Tx txLevel → ℙ Datum
   getTxData tx = witnessData tx
-
-  --| Set of data from a batch
-  getAllData : TopLevelTx → ℙ Datum
-  getAllData txTop = foldl  (λ acc txSub → acc ∪ getTxData txSub)
-                            (getTxData txTop)
-                            (SubTransactionsOf txTop)
 
   NoOverlappingSpendInputs : TopLevelTx → Type
   NoOverlappingSpendInputs topTx =
