@@ -1,4 +1,4 @@
-name: formal-ledger-test
+name: formal-ledger-conformance
 depend:
   standard-library
   standard-library-classes

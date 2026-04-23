@@ -128,15 +128,21 @@
 
           devShells = with pkgs; {
 
-            default =
-              (mkShell {
-                inputsFrom = builtins.attrValues pkgs';
-              }).overrideAttrs
-                (oldAttrs: {
-                  buildInputs = oldAttrs.buildInputs ++ [
-                    fls-shake-agdaWithPackages.buildInputs
-                  ];
-                });
+            default = mkShell {
+              packages = [ fls-shake-agdaWithPackages ];
+              shellHook = ''
+                agda() {
+                  ${self'.packages.fls-agda}/bin/agda \
+                    --with-compiler=${haskellPackages.ghcWithPackages (p: [ p.ieee754 ])}/bin/ghc \
+                    --library-file=<(cat ${fls-agdaWithPackages.libraryFile}
+                      echo "$PWD/formal-ledger/formal-ledger.agda-lib"
+                      echo "$PWD/formal-ledger-test/formal-ledger-test.agda-lib"
+                      echo "$PWD/formal-ledger-conformance/formal-ledger-conformance.agda-lib") \
+                    "$@"
+                }
+                export -f agda
+              '';
+            };
 
             fls-shake-agdaWithPackages = self'.devShells.fls-shake.overrideAttrs (_: {
               packages = [ fls-shake-agdaWithPackages ];
