@@ -110,11 +110,11 @@ instance
                        → map proj₁ (computeProof-aux dV3 dLeg dNorm) ≡ success s₁
       completeness-aux (yes (s , p , q)) _ _ _ (UTXOW-normal-⋯ p₀ _ _ _ _ _ _ _ _ _ _) =
         ⊥-elim (Properties.∉-∅ (V1,V2,V3∩V4⊆∅ (∈-∩ .Equivalence.to (q , (p₀ p)))))
-      completeness-aux (no ¬p) _ _ _ (UTXOW-legacy-⋯ p₀ _ _ _ _ _ _ _ _ _ _ _) =
+      completeness-aux (no ¬p) _ _ _ (UTXOW-legacy-⋯ p₀ _ _ _ _ _ _ _ _ _ _ _ _ _) =
         ⊥-elim (¬p p₀)
-      completeness-aux (yes _) (no ¬p) _ _ (UTXOW-legacy-⋯ p₀ p₁ p₂ p₃ p₄ p₅ p₆ p₇ p₈ p₉ p₁₀ _) =
-        ⊥-elim (¬p (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀))
-      completeness-aux (yes _) (yes _) _ _ (UTXOW-legacy-⋯ _ _ _ _ _ _ _ _ _ _ _ h)
+      completeness-aux (yes _) (no ¬p) _ _ (UTXOW-legacy-⋯ p₀ p₁ p₂ p₃ p₄ p₅ p₆ p₇ p₈ p₉ p₁₀ p₁₁ p₁₂ _) =
+        ⊥-elim (¬p (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , p₁₂))
+      completeness-aux (yes _) (yes _) _ _ (UTXOW-legacy-⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ h)
         with UTXO.computeProof (Γ , true) s₀ txTop | UTXO.completeness _ _ _ _ h
       ... | success _ | refl = refl
       completeness-aux (no _) _ (no ¬p) _ (UTXOW-normal-⋯ p₀ p₁ p₂ p₃ p₄ p₅ p₆ p₇ p₈ p₉ _) =
