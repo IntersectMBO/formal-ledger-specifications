@@ -104,7 +104,7 @@ The pre-batch UTxO snapshot `utxo₀`{.AgdaField} is used to resolve all
 *spend-side* lookups (inputs, collateral, and datum lookup for spent outputs).
 
 The `allScripts`{.AgdaField} field of `UTxOEnv`{.AgdaRecord} capture
-the *batch-wide script pool*.  This pools is used to resolve all
+the *batch-wide script pool*.  This pool is used to resolve all
 script lookups during validation.
 
 Scripts are treated as *batch-wide witnesses*; attaching a script to a
@@ -114,7 +114,7 @@ originally supplied it.
 
 If `Γ`{.AgdaBound} denotes a particular `UTxOEnv`{.AgdaRecord}, then
 we often access the `allScripts`{.AgdaField} field of `Γ`{.AgdaBound}
-via the `ScriptPoolOf`{.AgdaField} `Γ`{.AgdaBound}.
+via `ScriptPoolOf`{.AgdaField} `Γ`{.AgdaBound}.
 
 ```agda
 record UTxOState : Type where
