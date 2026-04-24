@@ -279,6 +279,8 @@ mode up front rather than deciding both.
       open TxBody txBody
       open TxWitnesses txWitnesses
 
+      utxo₀ = UTxOOf Γ
+
       scriptsProvided : ℙ Script
       scriptsProvided = ScriptPoolOf Γ
 
@@ -286,7 +288,7 @@ mode up front rather than deciding both.
       dataHashesProvided = mapˢ hash (DataOf txTop)
 
       credentialsNeeded : ℙ Credential
-      credentialsNeeded = mapˢ proj₂ (credsNeeded (UTxOOf Γ) txTop)
+      credentialsNeeded = mapˢ proj₂ (credsNeeded utxo₀ txTop)
 
       vKeyHashesProvided : ℙ KeyHash
       vKeyHashesProvided = mapˢ hash (dom vKeySigs)
@@ -312,13 +314,13 @@ mode up front rather than deciding both.
                       sh ← isScriptObj (payCred a)
                       _  ← lookupHash sh p2ScriptsNeeded
                       x  ← d
-                      isInj₂ x) (range (UTxOOf Γ ∣ txIns))
+                      isInj₂ x) (range (utxo₀ ∣ txIns))
 
       dataHashesOutputs : ℙ DataHash
       dataHashesOutputs = mapPartial txOutToDataHash (range txOuts)
 
       dataHashesReferenceInputs : ℙ DataHash
-      dataHashesReferenceInputs = mapPartial txOutToDataHash (range (UTxOOf Γ ∣ referenceInputs))
+      dataHashesReferenceInputs = mapPartial txOutToDataHash (range (utxo₀ ∣ referenceInputs))
 
       allReferenceScriptHashes : ℙ ScriptHash
       allReferenceScriptHashes = mapˢ hash (allReferenceScripts txTop (UTxOOf Γ))
@@ -340,7 +342,7 @@ mode up front rather than deciding both.
     ∙ scriptHashesNeeded ⊆ mapˢ hash scriptsProvided
     ∙ dataHashesNeededSpendInputs ⊆ dataHashesProvided
     ∙ dataHashesProvided ⊆ dataHashesNeededSpendInputs ∪ dataHashesOutputs ∪ dataHashesReferenceInputs
-    ∙ languages p2ScriptsNeeded ⊆ dom (PParams.costmdls (PParamsOf Γ)) ∩ allowedLanguages txTop (UTxOOf Γ)
+    ∙ languages p2ScriptsNeeded ⊆ dom (PParams.costmdls (PParamsOf Γ)) ∩ allowedLanguages txTop utxo₀
     ∙ txADhash ≡ map hash txAuxData
     ∙ (Γ , false) ⊢ s ⇀⦇ txTop ,UTXO⦈ s'
       ────────────────────────────────
@@ -362,6 +364,8 @@ mode up front rather than deciding both.
       open TxBody txBody
       open TxWitnesses txWitnesses
 
+      utxo₀ = UTxOOf Γ
+
       scriptsProvided : ℙ Script
       scriptsProvided = ScriptPoolOf Γ
 
@@ -369,7 +373,7 @@ mode up front rather than deciding both.
       dataHashesProvided = mapˢ hash (DataOf txTop)
 
       credentialsNeeded : ℙ Credential
-      credentialsNeeded = mapˢ proj₂ (credsNeeded (UTxOOf Γ) txTop)
+      credentialsNeeded = mapˢ proj₂ (credsNeeded utxo₀ txTop)
 
       vKeyHashesProvided : ℙ KeyHash
       vKeyHashesProvided = mapˢ hash (dom vKeySigs)
@@ -395,13 +399,13 @@ mode up front rather than deciding both.
                       sh ← isScriptObj (payCred a)
                       _  ← lookupHash sh p2ScriptsNeeded
                       x  ← d
-                      isInj₂ x) (range (UTxOOf Γ ∣ txIns))
+                      isInj₂ x) (range (utxo₀ ∣ txIns))
 
       dataHashesOutputs : ℙ DataHash
       dataHashesOutputs = mapPartial txOutToDataHash (range txOuts)
 
       dataHashesReferenceInputs : ℙ DataHash
-      dataHashesReferenceInputs = mapPartial txOutToDataHash (range (UTxOOf Γ ∣ referenceInputs))
+      dataHashesReferenceInputs = mapPartial txOutToDataHash (range (utxo₀ ∣ referenceInputs))
 
       allReferenceScriptHashes : ℙ ScriptHash
       allReferenceScriptHashes = mapˢ hash (allReferenceScripts txTop (UTxOOf Γ))
@@ -423,7 +427,7 @@ mode up front rather than deciding both.
     ∙ scriptHashesNeeded ⊆ mapˢ hash scriptsProvided
     ∙ dataHashesNeededSpendInputs ⊆ dataHashesProvided
     ∙ dataHashesProvided ⊆ dataHashesNeededSpendInputs ∪ dataHashesOutputs ∪ dataHashesReferenceInputs
-    ∙ languages p2ScriptsNeeded ⊆ dom (PParams.costmdls (PParamsOf Γ)) ∩ allowedLanguagesLegacy txTop (UTxOOf Γ)
+    ∙ languages p2ScriptsNeeded ⊆ dom (PParams.costmdls (PParamsOf Γ)) ∩ allowedLanguagesLegacy txTop utxo₀
     ∙ txADhash ≡ map hash txAuxData
     ∙ (Γ , true) ⊢ s ⇀⦇ txTop ,UTXO⦈ s'
       ────────────────────────────────
