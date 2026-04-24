@@ -474,7 +474,7 @@ data _⊢_⇀⦇_,SUBUTXO⦈_ : SubUTxOEnv → UTxOState → SubLevelTx → UTxO
     ∙ CurrentTreasuryOf txSub ~ just (TreasuryOf Γ)
     ∙ dom (DirectDepositsOf txSub) ⊆ dom (AccountBalancesOf Γ)
     ∙ ∀[ (c , interval) ∈ BalanceIntervalsOf txSub ˢ ]
-        InBalanceInterval (maybe id 0 (lookupᵐ? (AccountBalancesOf Γ) c)) interval
+      c ∈ dom (AccountBalancesOf Γ ˢ) × InBalanceInterval (maybe id 0 (lookupᵐ? (AccountBalancesOf Γ) c)) interval
       ────────────────────────────────
     let
        s₁ = if IsTopLevelValidFlagOf Γ
