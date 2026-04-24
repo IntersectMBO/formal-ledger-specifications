@@ -196,7 +196,6 @@ data _⊢_⇀⦇_,SUBUTXOW⦈_ : SubUTxOEnv → UTxOState → SubLevelTx → UTx
 
       credentialsNeeded : ℙ Credential
       credentialsNeeded = mapˢ proj₂ (credsNeeded utxo₀ txSub)
-                           ∪ mapˢ proj₁ (TopLevelGuardsOf txSub)
 
       vKeyHashesNeeded : ℙ KeyHash
       vKeyHashesNeeded = mapPartial isKeyHashObj credentialsNeeded
