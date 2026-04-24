@@ -9,7 +9,7 @@ This section defines native scripts, which verify the presence of
 verification keys, whether a transaction happens in a certain slot
 interval, and the presence of guarding credentials.  Native scripts
 are evaluated as part of the phase-1 validation. Native scripts
-replace Timelock scripts in Conway era.
+replace Timelock scripts from Conway era.
 
 <!--
 ```agda
@@ -24,8 +24,11 @@ module Ledger.Dijkstra.Specification.Script.Native
   (cs : _) (open CryptoStructure cs)
   (es : _) (open EpochStructure es)
   (Network : Type)
-  ⦃ _ : DecEq Network ⦄
+  (DecEq-Network : DecEq Network)
   where
+
+instance
+  _ = DecEq-Network
 
 open import Ledger.Core.Specification.Address Network KeyHash ScriptHash 
 

@@ -13,9 +13,9 @@ open import Ledger.Core.Specification.Epoch using (EpochStructure)
 module Ledger.Dijkstra.Specification.Script
   (cs : CryptoStructure) (open CryptoStructure cs)
   (es : EpochStructure) (open EpochStructure es)
-  (Network : Type) ⦃ _ : DecEq Network ⦄
+  (Network : Type) (DecEq-Network : DecEq Network)
   where
 
-open import Ledger.Dijkstra.Specification.Script.Base cs es Network public
-open import Ledger.Dijkstra.Specification.Script.Native cs es Network public
+open import Ledger.Dijkstra.Specification.Script.Base cs es Network DecEq-Network public
+open import Ledger.Dijkstra.Specification.Script.Native cs es Network DecEq-Network public
 ```

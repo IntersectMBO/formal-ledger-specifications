@@ -14,9 +14,11 @@ open import Ledger.Core.Specification.Epoch
 module Ledger.Dijkstra.Specification.Script.Base
   (cs : _) (open CryptoStructure cs)
   (es : _) (open EpochStructure es)
-  (Network : Type) ⦃ _ : DecEq Network ⦄
+  (Network : Type) ( DecEq-Network : DecEq Network )
   where
 
+instance
+  _ = DecEq-Network
 open import Ledger.Core.Specification.Address Network KeyHash ScriptHash
 
 open import Algebra.Morphism

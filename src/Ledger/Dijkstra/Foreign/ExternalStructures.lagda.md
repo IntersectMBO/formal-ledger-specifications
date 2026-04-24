@@ -30,7 +30,7 @@ instance
   _ = HSScriptStructure
 
 module Crypto = CryptoStructure it
-open import Ledger.Dijkstra.Specification.PParams it it it hiding (Acnt; DrepThresholds; PoolThresholds)
+open import Ledger.Dijkstra.Specification.PParams it it (GlobalConstants.Network it) it it hiding (Acnt; DrepThresholds; PoolThresholds)
 
 HsGovParams : GovParams
 HsGovParams = record
@@ -75,7 +75,7 @@ instance
     ; AuxiliaryData   = ℕ
     ; epochStructure  = it
     ; globalConstants = it
-    ; crypto          = it
+    ; cryptoStructure = it
     ; govParams       = HsGovParams
     ; txidBytes       = id
     ; scriptStructure = it
@@ -86,7 +86,7 @@ instance
 
 open TransactionStructure HSTransactionStructure public
 open import Ledger.Dijkstra.Specification.Certs govStructure public
-open import Ledger.Dijkstra.Specification.Account govStructure public
+-- open import Ledger.Dijkstra.Specification.Account govStructure public
 
 open import Ledger.Dijkstra.Specification.Abstract it
 
@@ -117,7 +117,7 @@ instance
           λ x xs → Data.Fin.toℕ <$> findIndexᵇ (_== x) xs
       }
     ; scriptSize = λ where
-        (inj₁ x) → HSTimelock.tlScriptSize x
+        (inj₁ x) → HSNativeScript.nsScriptSize x
         (inj₂ x) → HSPlutusScript.psScriptSize x
     ; valContext = λ _ _ → zero
     }

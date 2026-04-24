@@ -20,8 +20,8 @@ open import Ledger.Dijkstra.Specification.Script.Base
 module Ledger.Dijkstra.Specification.PParams
   (cs : CryptoStructure )
   (es : EpochStructure) (open EpochStructure es)
-  (Network : Type) ⦃ _ : DecEq Network ⦄
-  (ss : ScriptStructure cs es Network) (open ScriptStructure ss)
+  (Network : Type) ( DecEq-Network : DecEq Network )
+  (ss : ScriptStructure cs es Network DecEq-Network) (open ScriptStructure ss)
   where
 
 open import Data.Product.Properties

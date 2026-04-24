@@ -13,7 +13,7 @@ import MAlonzo.Code.Ledger.Dijkstra.Foreign.Transaction       as X
   , TxId, Ix, TxIn, ExUnits, P1Script, P2Script
   , Script, Datum, DataHash, Value, TxOut, ScriptHash, AuxiliaryData, Withdrawals
   , Redeemer, RedeemerPtr
-  , Timelock(..), HSTimelock (..), HSPlutusScript (..))
+  , NativeScript(..), HSNativeScript (..), HSPlutusScript (..))
 import MAlonzo.Code.Ledger.Dijkstra.Foreign.Cert              as X
   (certStep, certsStep, CertState(..))
 import MAlonzo.Code.Ledger.Dijkstra.Foreign.Chain             as X

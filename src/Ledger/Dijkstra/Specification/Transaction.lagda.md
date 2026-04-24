@@ -118,7 +118,7 @@ record TransactionStructure : Type₁ where
   open Ledger.Dijkstra.Specification.TokenAlgebra.Base ScriptHash public
   open Ledger.Core.Specification.Address Network KeyHash ScriptHash ⦃ it ⦄ ⦃ it ⦄ ⦃ it ⦄ public
   open EpochStructure epochStructure public
-  open Ledger.Dijkstra.Specification.Script cryptoStructure epochStructure Network public
+  open Ledger.Dijkstra.Specification.Script cryptoStructure epochStructure Network it public
   field
 ```
 -->
@@ -128,7 +128,7 @@ record TransactionStructure : Type₁ where
 <!--
 ```agda
   open ScriptStructure scriptStructure public
-  open Ledger.Dijkstra.Specification.PParams cryptoStructure epochStructure Network scriptStructure public
+  open Ledger.Dijkstra.Specification.PParams cryptoStructure epochStructure Network it scriptStructure public
   field
 ```
 -->

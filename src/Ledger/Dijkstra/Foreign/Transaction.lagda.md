@@ -27,13 +27,13 @@ instance
   HsTy-Tag = autoHsType Tag ⊣ withName "Tag"
   Conv-Tag = autoConvert Tag
 
--- Timelock and script types
-  HsTy-Timelock = autoHsType Timelock
+instance
+  HsTy-NativeScript = autoHsType NativeScript
   {-# TERMINATING #-}
-  Conv-Timelock = autoConvert Timelock
+  Conv-NativeScript = autoConvert NativeScript
 
-  HsTy-HSTimelock = autoHsType HSTimelock
-  Conv-HSTimelock = autoConvert HSTimelock
+  HsTy-HSNativeScript = autoHsType HSNativeScript
+  Conv-HSNativeScript = autoConvert HSNativeScript
 
   HsTy-HSPlutusScript = autoHsType HSPlutusScript
   Conv-HSPlutusScript = autoConvert HSPlutusScript

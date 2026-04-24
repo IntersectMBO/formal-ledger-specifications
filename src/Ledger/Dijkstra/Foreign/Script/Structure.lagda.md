@@ -28,25 +28,25 @@ instance
   _ = HSEpochStructure
   _ = HSGlobalConstants
 
-open import Ledger.Dijkstra.Specification.Script.Base it it
-open import Ledger.Conway.Specification.Script.Timelock it it
+open import Ledger.Dijkstra.Specification.Script.Base it it (GlobalConstants.Network it) it
+open import Ledger.Dijkstra.Specification.Script.Native it it (GlobalConstants.Network it) it
 
-record HSTimelock : Type where
+record HSNativeScript : Type where
   field
-    timelock     : Timelock
-    tlScriptHash : ℕ
-    tlScriptSize : ℕ
+    nativeScript : NativeScript
+    nsScriptHash  : ℕ
+    nsScriptSize  : ℕ
 
 instance
-  Hashable-HSTimelock : Hashable HSTimelock ℕ
-  Hashable-HSTimelock .hash = HSTimelock.tlScriptHash
+  Hashable-HSNativeScript : Hashable HSNativeScript ℕ
+  Hashable-HSNativeScript .hash = HSNativeScript.nsScriptHash
 
-unquoteDecl DecEq-HSTimelock = derive-DecEq ((quote HSTimelock , DecEq-HSTimelock) ∷ [])
+unquoteDecl DecEq-HSNativeScript = derive-DecEq ((quote HSNativeScript , DecEq-HSNativeScript) ∷ [])
 
 HSP1ScriptStructure : P1ScriptStructure
 HSP1ScriptStructure = record
-  { P1Script = HSTimelock
-  ; validP1Script = λ x y → evalTimelock x y ∘ HSTimelock.timelock }
+  { P1Script = HSNativeScript
+  ; validP1Script = λ x y z → EvalNativeScript x y z ∘ HSNativeScript.nativeScript }
 
 record HSPlutusScript : Type where
   constructor MkHSPlutusScript
