@@ -1,4 +1,5 @@
 {
+  name,
   lib,
   mkDerivation,
   standard-library,
@@ -6,17 +7,15 @@
   standard-library-meta,
   abstract-set-theory,
   iog-prelude,
+  formal-ledger,
 }:
 mkDerivation {
-  pname = "formal-ledger";
+  pname = "formal-ledger-${name}";
   version = "0.1";
   src = lib.fileset.toSource {
-    root = ../../.;
+    root = ../../formal-ledger-${name};
     fileset = lib.fileset.unions [
-      ../scripts/checkTypeChecked.sh
-      ../../src
-      ../../formal-ledger.agda-lib
-      ../../src-lib-exts
+      ../../formal-ledger-${name}
     ];
   };
   meta = { };
@@ -26,17 +25,13 @@ mkDerivation {
     standard-library-meta
     abstract-set-theory
     iog-prelude
+    formal-ledger
   ];
   buildPhase = ''
-    agda --profile=modules src/Ledger.lagda.md | tee typecheck.log
-  '';
-  doCheck = true;
-  checkPhase = ''
-    sh build-tools/scripts/checkTypeChecked.sh
+    agda --build-library
   '';
   installPhase = ''
     mkdir "$out"
-    awk '/^Total/{p=1}p' typecheck.log > "$out/typecheck.time"
-    cp -r . "$out"
+    cp -r _build "$out"
   '';
 }
