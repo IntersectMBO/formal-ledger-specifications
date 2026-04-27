@@ -124,7 +124,7 @@
 
             default =
               (mkShell {
-                inputsFrom = builtins.attrValues pkgs';
+                inputsFrom = builtins.attrValues (removeAttrs pkgs' [ "formal-ledger-test" ]);
               }).overrideAttrs
                 (oldAttrs: {
                   buildInputs = oldAttrs.buildInputs ++ [
