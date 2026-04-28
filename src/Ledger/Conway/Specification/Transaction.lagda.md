@@ -151,7 +151,7 @@ record TransactionStructure : Type₁ where
   record TxTier : Set where
     constructor ⟦_,_,_⟧ᵗˢ
     field 
-      tierNo : TierNo -- tier number 
+      -- tierNo : TierNo -- tier number TODO do we need it
       timeToWait : WaitTime -- blocks/slots to wait until tx is mature
       tierCoeff : TierCoeff
 ```
