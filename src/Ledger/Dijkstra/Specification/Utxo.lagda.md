@@ -519,7 +519,7 @@ data _⊢_⇀⦇_,UTXO⦈_ : UTxOEnv × Bool → UTxOState → TopLevelTx → UT
     ∙ ReferenceInputsOf txTop ⊆ dom (UTxOOf Γ) -- (2)
     ∙ SpendInputsOf txTop ⊆ dom (UTxOOf s₀) -- (3)
     ∙ inInterval (SlotOf Γ) (ValidIntervalOf txTop)
-    ∙ minfee (PParamsOf Γ) txTop (UTxOOf s₀) ≤ TxFeesOf txTop
+    ∙ minfee (PParamsOf Γ) txTop (UTxOOf Γ) ≤ TxFeesOf txTop
     ∙ coin (MintedValueOf txTop) ≡ 0
     ∙ consumedBatch (DepositsChangeOf Γ) txTop (UTxOOf Γ) ≡ producedBatch (DepositsChangeOf Γ) txTop
     ∙ (legacyMode ≡ true → consumed (DepositsChangeOf Γ) txTop (UTxOOf Γ) ≡ produced (DepositsChangeOf Γ) txTop)  -- (4)
