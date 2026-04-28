@@ -473,8 +473,9 @@ data _⊢_⇀⦇_,SUBUTXO⦈_ : SubUTxOEnv → UTxOState → SubLevelTx → UTxO
     ∙ MaybeNetworkIdOf txSub ~ just NetworkId
     ∙ CurrentTreasuryOf txSub ~ just (TreasuryOf Γ)
     ∙ dom (DirectDepositsOf txSub) ⊆ dom (AccountBalancesOf Γ)
+    ∙ dom (BalanceIntervalsOf txSub) ⊆ dom (AccountBalancesOf Γ)
     ∙ ∀[ (c , interval) ∈ BalanceIntervalsOf txSub ˢ ]
-      c ∈ dom (AccountBalancesOf Γ ˢ) × InBalanceInterval (maybe id 0 (lookupᵐ? (AccountBalancesOf Γ) c)) interval
+        (InBalanceInterval (maybe id 0 (lookupᵐ? (AccountBalancesOf Γ) c)) interval)
       ────────────────────────────────
     let
        s₁ = if IsTopLevelValidFlagOf Γ
@@ -535,8 +536,9 @@ data _⊢_⇀⦇_,UTXO⦈_ : UTxOEnv × Bool → UTxOState → TopLevelTx → UT
     ∙ MaybeNetworkIdOf txTop ~ just NetworkId
     ∙ CurrentTreasuryOf txTop  ~ just (TreasuryOf Γ)
     ∙ dom (DirectDepositsOf txTop) ⊆ dom (AccountBalancesOf Γ)
+    ∙ dom (BalanceIntervalsOf txTop) ⊆ dom (AccountBalancesOf Γ)
     ∙ ∀[ (c , interval) ∈ BalanceIntervalsOf txTop ˢ ]
-        InBalanceInterval (maybe id 0 (lookupᵐ? (AccountBalancesOf Γ) c)) interval
+        (InBalanceInterval (maybe id 0 (lookupᵐ? (AccountBalancesOf Γ) c)) interval)
     ∙ Γ ⊢ _ ⇀⦇ txTop ,UTXOS⦈ _
       ────────────────────────────────
     let
@@ -549,8 +551,8 @@ data _⊢_⇀⦇_,UTXO⦈_ : UTxOEnv × Bool → UTxOState → TopLevelTx → UT
 <!--
 ```agda
 unquoteDecl UTXO-premises = genPremises UTXO-premises (quote UTXO)
-pattern UTXO-⋯ p₀ p₁ p₂ p₃ p₄ p₅ p₆ p₇ p₈ p₉ p₁₀ p₁₁ p₁₂ p₁₃ p₁₄ p₁₅ p₁₆ p₁₇ p₁₈ p₁₉ p₂₀ h
-  = UTXO (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , p₁₂ , p₁₃ , p₁₄ , p₁₅ , p₁₆ , p₁₇ , p₁₈ , p₁₉ , p₂₀ , h)
+pattern UTXO-⋯ p₀ p₁ p₂ p₃ p₄ p₅ p₆ p₇ p₈ p₉ p₁₀ p₁₁ p₁₂ p₁₃ p₁₄ p₁₅ p₁₆ p₁₇ p₁₈ p₁₉ p₂₀ p₂₁ h
+  = UTXO (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , p₁₂ , p₁₃ , p₁₄ , p₁₅ , p₁₆ , p₁₇ , p₁₈ , p₁₉ , p₂₀ , p₂₁ , h)
 ```
 -->
 
