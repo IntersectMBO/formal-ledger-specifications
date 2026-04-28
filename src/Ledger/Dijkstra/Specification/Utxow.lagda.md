@@ -321,13 +321,25 @@ mode up front rather than deciding both.
 
       dataHashesReferenceInputs : ℙ DataHash
       dataHashesReferenceInputs = mapPartial txOutToDataHash (range (UTxOOf Γ ∣ referenceInputs))
+
+      allReferenceScriptHashes : ℙ ScriptHash
+      allReferenceScriptHashes = mapˢ hash (allReferenceScripts txTop (UTxOOf Γ))
+
+      allScriptHashesNeeded : ℙ ScriptHash
+      allScriptHashesNeeded = mapPartial (isScriptObj ∘ proj₂) (allCredsNeeded (UTxOOf Γ) txTop)
+
+      allWitnessScriptHashes : ℙ ScriptHash
+      allWitnessScriptHashes = mapˢ hash (allWitnessScripts txTop)
+
     in
+
     ∙ ∀[ s ∈ p2ScriptsNeeded ] language s ∈ fromList (PlutusV4 ∷ []) -- (1)
     ∙ (UsesBootstrapAddress (UTxOOf Γ) txTop → Is-∅ p2ScriptsNeeded) -- (2)
     ∙ concatMapˡ (λ txSub → mapˢ proj₁ (TopLevelGuardsOf txSub)) (SubTransactionsOf txTop) ⊆ GuardsOf txTop -- (3)
     ∙ ∀[ (vk , σ) ∈ TxWitnesses.vKeySigs (Tx.txWitnesses txTop) ] isSigned vk (txidBytes (TxIdOf txTop)) σ
     ∙ ∀[ s ∈ p1ScriptsNeeded ] validP1Script vKeyHashesProvided (GuardsOf txTop) txVldt s
     ∙ vKeyHashesNeeded ⊆ vKeyHashesProvided
+    ∙ allScriptHashesNeeded - allReferenceScriptHashes ≡ᵉ allWitnessScriptHashes
     ∙ scriptHashesNeeded ⊆ mapˢ hash scriptsProvided
     ∙ dataHashesNeededSpendInputs ⊆ dataHashesProvided
     ∙ dataHashesProvided ⊆ dataHashesNeededSpendInputs ∪ dataHashesOutputs ∪ dataHashesReferenceInputs
@@ -408,7 +420,17 @@ mode up front rather than deciding both.
       dataHashesReferenceInputs : ℙ DataHash
       dataHashesReferenceInputs = mapPartial txOutToDataHash (range (UTxOOf Γ ∣ referenceInputs))
 
+      allReferenceScriptHashes : ℙ ScriptHash
+      allReferenceScriptHashes = mapˢ hash (allReferenceScripts txTop (UTxOOf Γ))
+
+      allScriptHashesNeeded : ℙ ScriptHash
+      allScriptHashesNeeded = mapPartial (isScriptObj ∘ proj₂) (allCredsNeeded (UTxOOf Γ) txTop)
+
+      allWitnessScriptHashes : ℙ ScriptHash
+      allWitnessScriptHashes = mapˢ hash (allWitnessScripts txTop)
+
     in
+
     ∙ ∃[ s ∈ p2ScriptsNeeded ] language s ∈ fromList (PlutusV1 ∷ PlutusV2 ∷ PlutusV3 ∷ [])
     ∙ ¬ (UsesBootstrapAddress (UTxOOf Γ) txTop)
     ∙ ∀[ g ∈ GuardsOf txTop ] IsKeyHashObj g     -- (4)
@@ -418,6 +440,7 @@ mode up front rather than deciding both.
     ∙ ∀[ (vk , σ) ∈ vKeySigs ] isSigned vk (txidBytes (TxIdOf txTop)) σ
     ∙ ∀[ s ∈ p1ScriptsNeeded ] validP1Script vKeyHashesProvided (GuardsOf txTop) txVldt s
     ∙ vKeyHashesNeeded ⊆ vKeyHashesProvided
+    ∙ allScriptHashesNeeded - allReferenceScriptHashes ≡ᵉ allWitnessScriptHashes
     ∙ scriptHashesNeeded ⊆ mapˢ hash scriptsProvided
     ∙ dataHashesNeededSpendInputs ⊆ dataHashesProvided
     ∙ dataHashesProvided ⊆ dataHashesNeededSpendInputs ∪ dataHashesOutputs ∪ dataHashesReferenceInputs
@@ -433,8 +456,8 @@ mode up front rather than deciding both.
 unquoteDecl UTXOW-normal-premises = genPremises UTXOW-normal-premises (quote UTXOW-normal)
 unquoteDecl UTXOW-legacy-premises = genPremises UTXOW-legacy-premises (quote UTXOW-legacy)
 unquoteDecl SUBUTXOW-premises = genPremises SUBUTXOW-premises (quote SUBUTXOW)
-pattern UTXOW-normal-⋯ p₀ p₁ p₂ p₃ p₄ p₅ p₆ p₇ p₈ p₉ p₁₀ h = UTXOW-normal (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , h)
-pattern UTXOW-legacy-⋯ p₀ p₁ p₂ p₃ p₄ p₅ p₆ p₇ p₈ p₉ p₁₀ p₁₁ p₁₂ p₁₃ h = UTXOW-legacy (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , p₁₂ , p₁₃ , h)
+pattern UTXOW-normal-⋯ p₀ p₁ p₂ p₃ p₄ p₅ p₆ p₇ p₈ p₉ p₁₀ p₁₁ h = UTXOW-normal (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , h)
+pattern UTXOW-legacy-⋯ p₀ p₁ p₂ p₃ p₄ p₅ p₆ p₇ p₈ p₉ p₁₀ p₁₁ p₁₂ p₁₃ p₁₄ h = UTXOW-legacy (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , p₁₂ , p₁₃ , p₁₄ , h)
 pattern SUBUTXOW-⋯ p₀ p₁ p₂ p₃ p₄ p₅ p₆ p₇ p₈ p₉ p₁₀ p₁₁ h = SUBUTXOW (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , h)
 ```
 -->

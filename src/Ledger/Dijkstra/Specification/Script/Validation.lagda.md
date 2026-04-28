@@ -158,6 +158,11 @@ credsNeeded utxo tx =
     collateralInputs : Tx ℓ → ℙ TxIn
     collateralInputs {TxLevelTop} tx = CollateralInputsOf tx
     collateralInputs {TxLevelSub} tx = ∅
+
+allCredsNeeded : UTxO → TopLevelTx → ℙ (ScriptPurpose × Credential) 
+allCredsNeeded utxo txTop =
+  foldl (λ acc txSub → acc ∪ credsNeeded utxo txSub)
+        (credsNeeded utxo txTop) (SubTransactionsOf txTop)
 ```
 
 **CIP-159 and `credsNeeded`**.
