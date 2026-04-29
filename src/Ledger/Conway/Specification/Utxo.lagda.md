@@ -417,6 +417,10 @@ collateralCheck pp tx utxo =
 
 <!--
 ```agda
+private
+  εᵉ : ExUnits
+  εᵉ = Monoid.ε (ExUnit-CommutativeMonoid .Ledger.Prelude.CommutativeMonoid.monoid)
+
 module _ (let open UTxOState; open TxBody) where
 ```
 -->
@@ -451,43 +455,20 @@ that their difference is the identity function.
                      + inject (txb .txDonation)
 
   -- updates SDPolicy state with transaction being processed
-  processTxTiers : TxId → TxTier → ℕ → Fees → ExUnits → SDPolicy → SDPolicy
-  processTxTiers txid tier txsize txfee txeu ⟦ dp , pn , ts , tf , eu ⟧ˢᵈᵖ = ⟦ dp , pn' , ts' , tf' , eu' ⟧ˢᵈᵖ
+  -- uses tier.tierNo directly as the key into totalSize/totalFees/totalExUnits
+  processTxTiers : TxTier → ℕ → Fees → ExUnits → SDPolicy → SDPolicy
+  processTxTiers tier txsize txfee txeu ⟦ dp , ts , tf , eu ⟧ˢᵈᵖ = ⟦ dp , ts' , tf' , eu' ⟧ˢᵈᵖ
     where
-      -- dp is not updated here
-      -- txid is deleted from pending transactions
-      pn' = pn ∣ (singleton txid) ᶜ
-      w   = tier .TxTier.timeToWait
-      -- find the largest WaitTime key ≤ w (the tier bucket this tx falls into)
-      findBucket : ∀ {V : Type} → WaitTime ⇀ V → Maybe WaitTime
-      findBucket m = foldr step nothing (setToList (dom m))
-        where
-          step : WaitTime → Maybe WaitTime → Maybe WaitTime
-          step k nothing    = if ⌊ k ≤? w ⌋ then just k        else nothing
-          step k (just prev) = if ⌊ k ≤? w ⌋ then just (k ⊔ prev) else just prev
-      -- size-based tier occupancy: add txsize to the matching bucket
-      ts' = case findBucket ts of λ where
-              nothing   → ts
-              (just k)  → mapSingleValue (txsize +_) ts k
-      -- fee-based tier occupancy: add txfee to the matching bucket
-      tf' = case findBucket tf of λ where
-              nothing   → tf
-              (just k)  → mapSingleValue (txfee +_) tf k
-      -- ExUnits-based tier occupancy: add txeu to the matching bucket
-      eu' = case findBucket eu of λ where
-              nothing   → eu
-              (just k)  → mapSingleValue (txeu ◇_) eu k
-      
-  -- checks if transaction being processed follows tier constraints
-  checkPolicyState : TxId → TxTier → ℕ → SDPolicy → Set
-  checkPolicyState txid tier txsize ⟦ dp , pn , ts , tf , eu ⟧ˢᵈᵖ = isInPending × coeffOK
-    where 
-      -- check if tx waited the mandatory wait time in pending set 
-      isInPending = tier .TxTier.timeToWait ∈ range (pn ∣ (singleton txid)) 
-      -- check if tx has correct tier coefficient
-      -- TODO: determine which policy version to use (for now look up timeToWait in both levels)
-      w = tier .TxTier.timeToWait
-      coeffOK = just w ≡ join (map (λ innerMap → map (λ (x : PolicyClause) → x .PolicyClause.coeffRange) (lookupᵐ? innerMap w)) (lookupᵐ? dp w))
+      n   = tier .TxTier.tierNo
+      ts' = ts ∪ˡ ❴ n , M.fromMaybe 0   (lookupᵐ? ts n) + txsize ❵ᵐ
+      tf' = tf ∪ˡ ❴ n , M.fromMaybe 0   (lookupᵐ? tf n) + txfee  ❵ᵐ
+      eu' = eu ∪ˡ ❴ n , M.fromMaybe εᵉ (lookupᵐ? eu n) ◇ txeu ❵ᵐ
+
+  -- checks if transaction's tier coefficient matches the diversity policy
+  checkPolicyState : TxTier → SDPolicy → Set
+  checkPolicyState tier ⟦ dp , ts , tf , eu ⟧ˢᵈᵖ =
+    just (tier .TxTier.tierCoeff) ≡
+      M.map PolicyClause.coeffRange (lookupᵐ? dp (tier .TxTier.tierNo))
 
 ```
 
@@ -524,7 +505,7 @@ data _⊢_⇀⦇_,UTXOS⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Typ
 -->
 ```agda
          p2Scripts  = collectP2ScriptsWithContext pp tx utxo
-         ps' = processTxTiers txId tier txsize (minfee pp utxo tx) (totExUnits tx) policyState
+         ps' = processTxTiers tier txsize (minfee pp utxo tx) (totExUnits tx) policyState
       in
         ∙ ValidCertDeposits pp deposits txCerts
         ∙ evalP2Scripts p2Scripts ≡ isValid
@@ -541,7 +522,7 @@ data _⊢_⇀⦇_,UTXOS⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Typ
 -->
 ```agda
          p2Scripts  = collectP2ScriptsWithContext pp tx utxo
-         ps' = processTxTiers txId tier txsize (minfee pp utxo tx) (totExUnits tx) policyState
+         ps' = processTxTiers tier txsize (minfee pp utxo tx) (totExUnits tx) policyState
       in
         ∙ evalP2Scripts p2Scripts ≡ isValid
         ∙ isValid ≡ false
@@ -598,7 +579,7 @@ data _⊢_⇀⦇_,UTXO⦈_ where
     ∙ ∀[ a ∈ dom txWithdrawals ]    NetworkIdOf a  ≡ NetworkId
     ∙ txNetworkId  ~ just NetworkId
     ∙ currentTreasury  ~ just treasury
-    ∙ checkPolicyState txId tier txsize policyState 
+    ∙ checkPolicyState tier policyState 
     ∙ Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ s'
       ────────────────────────────────
       Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s'

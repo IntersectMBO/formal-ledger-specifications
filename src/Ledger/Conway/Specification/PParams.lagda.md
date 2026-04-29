@@ -223,15 +223,6 @@ record PParams : Type where
         maxRefScriptSizePerBlock      : ℕ
         refScriptCostStride           : ℕ⁺
         refScriptCostMultiplier       : ℚ
-        -- Tiered pricing parameters
-        maxTiers                      : ℕ     -- maximum number of tiers
-        maxDelay                      : ℕ     -- max artificial delay (in blocks)
-        dFreq                         : ℕ     -- how often to update delays (in blocks)
-        tFreq                         : ℕ     -- how often to update tier count (in blocks)
-        targetLoad                    : ℕ     -- target tier fullness as percentage (0-100)
-        addTierPrice                  : Coin  -- fee threshold above which a new tier is added
-        removeTierPrice               : Coin  -- fee threshold below which the last tier is removed
-        newTierSize                   : ℕ     -- αₘ': block percentage allocated to a newly added tier
 ```
 
 <!--
@@ -295,8 +286,7 @@ positivePParams : PParams → List ℕ
 positivePParams pp =  ( maxBlockSize ∷ maxTxSize ∷ maxHeaderSize
                       ∷ maxValSize ∷ coinsPerUTxOByte
                       ∷ poolDeposit ∷ collateralPercentage ∷ ccMaxTermLength
-                      ∷ govActionLifetime ∷ govActionDeposit ∷ drepDeposit
-                      ∷ maxTiers ∷ dFreq ∷ tFreq ∷ newTierSize ∷ [] )
+                      ∷ govActionLifetime ∷ govActionDeposit ∷ drepDeposit ∷ [] )
 ```
 
 <!--
@@ -356,14 +346,6 @@ module PParamsUpdate where
           maxRefScriptSizePerBlock      : Maybe ℕ
           refScriptCostStride           : Maybe ℕ⁺
           refScriptCostMultiplier       : Maybe ℚ
-          maxTiers                      : Maybe ℕ
-          maxDelay                      : Maybe ℕ
-          dFreq                         : Maybe ℕ
-          tFreq                         : Maybe ℕ
-          targetLoad                    : Maybe ℕ
-          addTierPrice                  : Maybe Coin
-          removeTierPrice               : Maybe Coin
-          newTierSize                   : Maybe ℕ
           minUTxOValue                  : Maybe Coin -- retired, keep for now
           a0                            : Maybe ℚ
           Emax                          : Maybe Epoch
@@ -381,8 +363,7 @@ module PParamsUpdate where
   paramsUpdateWellFormed ppu =
        just 0 ∉ fromList ( maxBlockSize ∷ maxTxSize ∷ maxHeaderSize ∷ maxValSize
                          ∷ coinsPerUTxOByte ∷ poolDeposit ∷ collateralPercentage ∷ ccMaxTermLength
-                         ∷ govActionLifetime ∷ govActionDeposit ∷ drepDeposit
-                         ∷ maxTiers ∷ dFreq ∷ tFreq ∷ newTierSize ∷ [] )
+                         ∷ govActionLifetime ∷ govActionDeposit ∷ drepDeposit ∷ [] )
     where open PParamsUpdate ppu
 
   paramsUpdateWellFormed? : ( u : PParamsUpdate ) → Dec (paramsUpdateWellFormed u)
@@ -418,14 +399,6 @@ module PParamsUpdate where
       ∷ is-just refScriptCostMultiplier
       ∷ is-just prices
       ∷ is-just minUTxOValue
-      ∷ is-just maxTiers
-      ∷ is-just maxDelay
-      ∷ is-just dFreq
-      ∷ is-just tFreq
-      ∷ is-just targetLoad
-      ∷ is-just addTierPrice
-      ∷ is-just removeTierPrice
-      ∷ is-just newTierSize
       ∷ [])
 
   modifiesTechnicalGroup : PParamsUpdate → Bool
@@ -518,14 +491,6 @@ module PParamsUpdate where
       ; refScriptCostStride         = U.refScriptCostStride ?↗ P.refScriptCostStride
       ; refScriptCostMultiplier     = U.refScriptCostMultiplier ?↗ P.refScriptCostMultiplier
       ; prices                      = U.prices ?↗ P.prices
-      ; maxTiers                    = U.maxTiers ?↗ P.maxTiers
-      ; maxDelay                    = U.maxDelay ?↗ P.maxDelay
-      ; dFreq                       = U.dFreq ?↗ P.dFreq
-      ; tFreq                       = U.tFreq ?↗ P.tFreq
-      ; targetLoad                  = U.targetLoad ?↗ P.targetLoad
-      ; addTierPrice                = U.addTierPrice ?↗ P.addTierPrice
-      ; removeTierPrice             = U.removeTierPrice ?↗ P.removeTierPrice
-      ; newTierSize                 = U.newTierSize ?↗ P.newTierSize
       ; minUTxOValue                = U.minUTxOValue ?↗ P.minUTxOValue
       ; a0                          = U.a0 ?↗ P.a0
       ; Emax                        = U.Emax ?↗ P.Emax

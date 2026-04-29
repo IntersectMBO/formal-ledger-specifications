@@ -32,7 +32,6 @@ record BHBody : Type where
     slot    : Slot
     bhash   : KeyHash
     hBbsize : ℕ
-    incomingIds : ℙ TxId -- TODO should this go in Block
 
 record BHeader : Type where
   field
@@ -103,16 +102,15 @@ data _⊢_⇀⦇_,BBODY⦈_
       open EnactState
       txs = block .ts
       bhb = block .bheader .bhbody
-      inIds = incomingIds bhb
       hk = hash (bhb .bvkcold)
       pp = PParamsOf es
       Γ  = ⟦ bhb .slot , ∣ es .constitution ∣ , pp , es , TreasuryOf acnt ⟧
       ls'' = record { LState ls' ; utxoSt = record { UTxOState (ls' .LState.utxoSt) ; policyState = ps' } }
      in
     ∙ block .bBodySize ≡ bhb .hBbsize
-    ∙ block .bBodyHash ≡ bhb .bhash   
+    ∙ block .bBodyHash ≡ bhb .bhash
     ∙ Γ ⊢ ls ⇀⦇ txs ,LEDGERS⦈ ls'
-    ∙ pp ⊢ (ls .LState.utxoSt .UTxOState.policyState) ⇀⦇ (inIds) ,DIVUP⦈ ps'
+    ∙ pp ⊢ (ls .LState.utxoSt .UTxOState.policyState) ⇀⦇ tt ,DIVUP⦈ ps'
     ────────────────────────────────
     (es , acnt) ⊢ ls , b ⇀⦇ block ,BBODY⦈ ( ls'' , incrBlocks hk b)
 ```

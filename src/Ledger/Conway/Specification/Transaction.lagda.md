@@ -145,14 +145,15 @@ record TransactionStructure : Type₁ where
   -- TODO should wait time be Block or Slot?
   WaitTime = ℕ
   TierNo = ℕ
-  topTier = 0
+  fastTier = 0
+  slowTier = 1
   TierCoeff = ℕ -- TODO define correctly
 
   record TxTier : Set where
     constructor ⟦_,_,_⟧ᵗˢ
     field 
-      -- tierNo : TierNo -- tier number TODO do we need it
-      timeToWait : WaitTime -- blocks/slots to wait until tx is mature
+      tierNo : TierNo -- tier number TODO do we need it
+      -- timeToWait : WaitTime -- blocks/slots to wait until tx is mature
       tierCoeff : TierCoeff
 ```
 
@@ -187,6 +188,7 @@ record TransactionStructure : Type₁ where
       reqSignerHashes      : ℙ KeyHash
       scriptIntegrityHash  : Maybe ScriptHash
       tier : TxTier
+      feeChangeAddr : Maybe RewardAddress
       -- txup              : Maybe Update   -- deprecated; leave for now
 ```
 
