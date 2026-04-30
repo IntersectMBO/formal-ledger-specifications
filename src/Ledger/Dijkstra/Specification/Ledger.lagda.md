@@ -329,6 +329,83 @@ the post-deposit `DRep` state.  (In practice, `applyDirectDeposits`{.AgdaFunctio
 only modifies rewards, so `rmOrphanDRepVotes` would produce the same result either
 way, but using `certStateFinal` is semantically correct.)
 
+### Design Rationale: Batch-wide Direct Deposit Application
+
+A natural alternative to applying direct deposits batch-wide (as above) is to
+interleave them with the per-sub-transaction processing performed by
+`SUBLEDGERS`{.AgdaDatatype}; that is, in each `SUBLEDGER-V`{.AgdaInductiveConstructor}
+step, apply that sub-transaction's `DirectDepositsOf stx` to the threaded
+`CertState`{.AgdaRecord} after running `CERTS`{.AgdaDatatype}/`GOVS`{.AgdaDatatype}
+for the sub-transaction.
+
+**The CIP forbids this alternative, and the rule structure
+adopted here makes the prohibition manifest rather than imposing it as an extra
+premise.**
+
++  **CIP-159 rules out per-sub-transaction application**.
+
+   CIP-159 states that, "to prevent ... *phantom asset* attacks, transactions can
+   only withdraw funds that exist in the account *before* the overall transaction
+   is run.  This means later sub-txs cannot withdraw assets that were deposited
+   by prior sub-txs in the same overall transaction."  Per-sub-transaction
+   application would let sub-transaction `N`'s `PRE-CERT`{.AgdaDatatype} step
+   authorize withdrawals against a `rewards`{.AgdaField} map already inflated by
+   sub-transactions `1..N−1`'s deposits — exactly the situation the CIP forbids.
+
++  **Phantom asset prevention follows structurally**.
+
+   Because `applyDirectDeposits`{.AgdaFunction} never runs against the
+   `CertState`{.AgdaRecord} threaded through `SUBLEDGERS`{.AgdaDatatype}, every
+   `PRE-CERT`{.AgdaDatatype} step in the batch checks each withdrawal `amt` against
+   `rewards`{.AgdaField} as updated only by `applyWithdrawals`{.AgdaFunction} and
+   by registration/deregistration certificates.  Summed across the batch this
+   yields, for every reward address, total withdrawals bounded by the pre-batch
+   balance (i.e., the `NoPhantomWithdrawals`{.AgdaFunction} property) *as a
+   consequence of the rule structure* rather than as a separate premise that would
+   need to be added and discharged.
+
++  **Alignment with CIP-118 script context isolation**.
+
+   CIP-118 requires that "Plutus scripts in one sub-transaction do not see other
+   sub-transactions or the top-level transaction in their context."  Holding the
+   `accountBalances`{.AgdaField} field of `SubLedgerEnv`{.AgdaRecord} and
+   `SubUTxOEnv`{.AgdaRecord} fixed at the pre-batch snapshot `RewardsOf certState₀`
+   ensures that every sub-transaction's balance-interval check (and any future Plutus
+   context derived from this field) sees the same balances independently of the
+   surrounding sub-transactions.  Per-sub-transaction application would make these
+   views order-dependent across sub-transactions.
+
++  **Direct deposits are a diff, not a sequence of state updates**.
+
+   CIP-159 specifies that the `direct_deposits` field carries only the diff to be
+   applied (e.g., `0.1 ADA`, not the resulting `100.1 ADA` balance).  Aggregating
+   each sub-transaction's diff via `∪⁺` (union-with-addition) and applying the
+   sum once is the natural reading: the batch-level
+   `allDirectDeposits`{.AgdaFunction} is the diff from pre-batch to post-batch.
+   Per-sub-transaction application would impose an artificial sequential
+   interpretation on what is logically a commutative aggregation.
+
++  **Determinism and reorderability**.
+
+   CIP-159 motivates direct deposits in part by their freedom from contention:
+   deposits into the same account from different parties can be processed "in any
+   order and fully parallel."  Batch-wide application makes this manifest at the
+   rule level: the order of sub-transactions in the batch does not affect the
+   `accountBalances`{.AgdaField} visible to any sub-transaction's
+   `SUBUTXO`{.AgdaDatatype} or `CERTS`{.AgdaDatatype} step, nor the final
+   `rewards`{.AgdaField} reached after the deposit step.
+
++  **`depositsChange`{.AgdaFunction} remains orthogonal**.
+
+   `calculateDepositsChange`{.AgdaFunction} measures *protocol* deposit movements
+   (registration/deregistration of credentials, DReps, pools), which live in the
+   `deposits`{.AgdaField} fields of `DState`{.AgdaRecord}/`PState`{.AgdaRecord}/
+   `GState`{.AgdaRecord} — not in `rewards`{.AgdaField}.  Because
+   `applyDirectDeposits`{.AgdaFunction} touches only `rewards`{.AgdaField} and
+   runs *after* `calculateDepositsChange`{.AgdaFunction}, the two notions of
+   "deposit" remain cleanly disjoint without case analysis.
+
+
 ```agda
 data _⊢_⇀⦇_,LEDGER⦈_ : LedgerEnv → LedgerState → TopLevelTx → LedgerState → Type where
 
