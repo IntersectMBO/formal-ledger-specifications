@@ -24,7 +24,7 @@ private
     if      s ≟ "⟦_,_⦆" then "Both"
     else if s ≟ "⟦_,∞⦆" then "Lower"
     else if s ≟ "⟦0,_⦆" then "Upper"
-    else ""
+    else s
 
 instance
   HsTy-BalanceInterval = autoHsType BalanceInterval ⊣ onConstructors toHaskellConstr

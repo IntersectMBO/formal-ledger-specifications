@@ -5,6 +5,8 @@ module MAlonzo.Code.Ledger.Dijkstra.Foreign.API
   ) where
 
 import MAlonzo.Code.Ledger.Core.Foreign.API
+import MAlonzo.Code.Ledger.Dijkstra.Foreign.Account           as X
+  (BalanceInterval(..))
 import MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams           as X
   (LanguageCostModels(..), DrepThresholds(..), PoolThresholds(..), Acnt(..), PParams(..), PParamsUpdate(..))
 import MAlonzo.Code.Ledger.Dijkstra.Foreign.Transaction       as X

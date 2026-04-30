@@ -51,25 +51,6 @@ record HSBlock : Type where
 
 open HSBlock
 
-convBlock : HSBlock → Block
-convBlock b
-  with bBodySize b ≟ BHBody.hBbsize (BHeader.bhbody (bheader b))
-... | no _ = error $ "bBodySize check failed: " S.++
-               show (bBodySize b) S.++ " ≠ " S.++
-               show (BHBody.hBbsize (BHeader.bhbody (bheader b)))
-... | yes p
-  with bBodyHash b ≟ BHBody.bhash (BHeader.bhbody (bheader b))
-... | no _ = error $ "BBodyHash check failed: " S.++
-               show (bBodyHash b) S.++ " ≠ " S.++
-               show (BHBody.bhash (BHeader.bhbody (bheader b)))
-... | yes q = record
-  { bheader = bheader b
-  ; ts = ts b
-  ; bBodySize = bBodySize b
-  ; ≡-bBodySize = p
-  ; ≡-bBodyHash = q
-  }
-
 instance
   Conv-Block-HSBlock : Convertible Block HSBlock
   Conv-Block-HSBlock .to b = record { Block b }
