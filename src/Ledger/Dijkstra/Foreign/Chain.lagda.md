@@ -49,9 +49,6 @@ record HSBlock : Type where
     bBodySize : ℕ
     bBodyHash : KeyHash
 
-postulate
-  trustMe-≡ : ∀ {a} {A : Type a} {x y : A} → x ≡ y
-
 open HSBlock
 
 convBlock : HSBlock → Block
