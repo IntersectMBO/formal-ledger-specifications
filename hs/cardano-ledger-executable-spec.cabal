@@ -11,7 +11,9 @@ build-type:     Simple
 
 library
   exposed-modules:
-      MAlonzo.Code.Ledger.Foreign.API
+      MAlonzo.Code.Ledger.Core.Foreign.API
+      MAlonzo.Code.Ledger.Conway.Foreign.API
+      MAlonzo.Code.Ledger.Dijkstra.Foreign.API
   other-modules:
       MAlonzo.Code.Agda.Builtin.Bool
       MAlonzo.Code.Agda.Builtin.Char
@@ -547,6 +549,66 @@ library
       MAlonzo.Code.Ledger.Core.Specification.Crypto
       MAlonzo.Code.Ledger.Core.Specification.Epoch
       MAlonzo.Code.Ledger.Core.Specification.ProtocolVersion
+      MAlonzo.Code.Ledger.Dijkstra.Foreign
+      MAlonzo.Code.Ledger.Dijkstra.Foreign.Account
+      MAlonzo.Code.Ledger.Dijkstra.Foreign.Cert
+      MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs
+      MAlonzo.Code.Ledger.Dijkstra.Foreign.Chain
+      MAlonzo.Code.Ledger.Dijkstra.Foreign.Enact
+      MAlonzo.Code.Ledger.Dijkstra.Foreign.Epoch
+      MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures
+      MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov
+      MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Actions
+      MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Core
+      MAlonzo.Code.Ledger.Dijkstra.Foreign.HSStructures
+      MAlonzo.Code.Ledger.Dijkstra.Foreign.Ledger
+      MAlonzo.Code.Ledger.Dijkstra.Foreign.NewEpoch
+      MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams
+      MAlonzo.Code.Ledger.Dijkstra.Foreign.Ratify
+      MAlonzo.Code.Ledger.Dijkstra.Foreign.Rewards
+      MAlonzo.Code.Ledger.Dijkstra.Foreign.Script
+      MAlonzo.Code.Ledger.Dijkstra.Foreign.Script.Base
+      MAlonzo.Code.Ledger.Dijkstra.Foreign.Script.Structure
+      MAlonzo.Code.Ledger.Dijkstra.Foreign.Transaction
+      MAlonzo.Code.Ledger.Dijkstra.Foreign.Utxo
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Account
+      MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody
+      MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.Properties.Computational
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.Properties.Computational
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Chain
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.Properties.Computational
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Enact
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.Properties.Computational
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.Properties.Computational
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Fees
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Base
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Properties.Computational
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.Properties.Computational
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PoolReap
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.Properties.Computational
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.Properties.Computational
+      MAlonzo.Code.Ledger.Dijkstra.Specification.RewardUpdate
+      MAlonzo.Code.Ledger.Dijkstra.Specification.RewardUpdate.Properties.Computational
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Script
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Native
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Script.ScriptPurpose
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Validation
+      MAlonzo.Code.Ledger.Dijkstra.Specification.TokenAlgebra.Base
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.Properties.Computational
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Utxow
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Utxow.Properties.Computational
       MAlonzo.Code.Ledger.Prelude
       MAlonzo.Code.Ledger.Prelude.Base
       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes
@@ -571,6 +633,7 @@ library
       MAlonzo.Code.Qstdlib.Data.List.Relation.Unary.MOf
       MAlonzo.Code.Qstdlib.Data.List.Subpermutations
       MAlonzo.Code.Qstdlib.Data.List.Subpermutations.Properties
+      MAlonzo.Code.Qstdlib.Data.Maybe
       MAlonzo.Code.Qstdlib.Data.Rational.Properties
       MAlonzo.Code.Qstdlib.Foreign.Haskell.Empty
       MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast
