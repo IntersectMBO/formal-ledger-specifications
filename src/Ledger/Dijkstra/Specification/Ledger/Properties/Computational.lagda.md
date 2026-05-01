@@ -224,10 +224,12 @@ instance
           (certSt₂ , certStep) → computeGov (govΓOf Γ txTop certSt₂) (GovStateOf s₁) (GovProposals+Votes txTop) >>= λ where
             (govSt₂ , govStep) →
               -- UTXOW must run from the post-SUBLEDGERS UTxOState ((UTxOState s₁))
-              computeUtxow (utxoΓ-valid Γ s txTop (CertStateOf s₁) certSt₂) _ txTop >>= λ where
-                (utxoSt₂ , utxoStep) →
-                  success ( ⟦ utxoSt₂ , rmOrphanDRepVotes (certStateWithDDeps txTop certSt₂) govSt₂ , certStateWithDDeps txTop certSt₂ ⟧ˡ
-                          , LEDGER-V (isV , subStep , certStep , govStep , utxoStep))
+              computeUtxow (utxoΓ-valid Γ s txTop (CertStateOf s₁) certSt₂) (UTxOStateOf s₁) txTop >>= λ where
+                (utxoSt₂ , utxoStep) → case ¿ dom (allDirectDeposits txTop) ⊆ dom (RewardsOf certSt₂) ¿ of λ where
+                  (yes h) →
+                    success ( ⟦ utxoSt₂ , rmOrphanDRepVotes (certStateWithDDeps txTop certSt₂) govSt₂ , certStateWithDDeps txTop certSt₂ ⟧ˡ
+                            , LEDGER-V (isV , subStep , certStep , h , govStep , utxoStep) )
+                  (no _)  → failure "direct deposit target was deregistered during this batch"
 
       (no ¬isV) → case computeSubledgers (subΓOf Γ s txTop) s (SubTransactionsOf txTop) of λ where
         (failure e) → failure e
@@ -252,7 +254,7 @@ instance
 ```agda
     completeness Γ s txTop s'
       (LEDGER-V {certState₁ = certSt₁} {certSt₂} {utxoState₁ = utxoSt₁} {govSt₁} {govSt₂} {utxoSt₂}
-        (isV , subStep , certStep , govStep , utxoStep))
+        (isV , subStep , certStep , h , govStep , utxoStep))
       with IsValidFlagOf txTop ≟ true
     ... | no ¬isV = contradiction isV ¬isV
     ... | yes refl
@@ -272,7 +274,11 @@ instance
       with computeUtxow (utxoΓ-valid Γ s txTop certSt₁ certSt₂) utxoSt₁ txTop
          | complete {STS = _⊢_⇀⦇_,UTXOW⦈_}
              (utxoΓ-valid Γ s txTop certSt₁ certSt₂) utxoSt₁ txTop utxoSt₂ utxoStep
-    ... | success (utxoSt₂ , _) | refl = refl
+    ... | success (utxoSt₂ , _) | refl
+      with ¿ dom (allDirectDeposits txTop) ⊆ dom (RewardsOf certSt₂) ¿
+    ... | yes _  = refl
+    ... | no ¬h  = ⊥-elim (¬h h)
+
 
     completeness Γ s txTop s' (LEDGER-I {utxoState₁ = utxoSt₁} (isI , subStep , utxoStep))
       with IsValidFlagOf txTop ≟ true

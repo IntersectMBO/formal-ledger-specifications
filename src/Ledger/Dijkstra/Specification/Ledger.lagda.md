@@ -329,6 +329,15 @@ the post-deposit `DRep` state.  (In practice, `applyDirectDeposits`{.AgdaFunctio
 only modifies rewards, so `rmOrphanDRepVotes` would produce the same result either
 way, but using `certStateFinal` is semantically correct.)
 
+**Deposits target post-batch registered accounts**.  `SUBUTXO`{.AgdaDatatype}
+and `UTXO`{.AgdaDatatype} check that direct-deposit targets are registered in the
+*pre-batch* balances, but they cannot account for deregistrations that occur during
+the batch.  Therefore, we add a new premise, `dom (allDirectDeposits tx) ⊆ dom (RewardsOf
+certState₂)`, to check that `applyDirectDeposits` does not silently re-introduce a
+deregistered credential into the `rewards` map without re-registering it via
+`voteDelegs`, `stakeDelegs`, or `deposits`, as that would result in an inconsistent
+`DState`.  The premise rules this out at phase 1.
+
 ### Design Rationale: Batch-wide Direct Deposit Application
 
 A natural alternative to applying direct deposits batch-wide (as above) is to
@@ -425,6 +434,7 @@ data _⊢_⇀⦇_,LEDGER⦈_ : LedgerEnv → LedgerState → TopLevelTx → Ledg
       ∙ IsValidFlagOf tx ≡ true
       ∙ ⟦ slot , ppolicy , pp , enactState , treasury , utxo₀ , IsValidFlagOf tx , allScripts , RewardsOf certState₀ ⟧ ⊢ ⟦ utxoState₀ , govState₀ , certState₀ ⟧ ⇀⦇ SubTransactionsOf tx ,SUBLEDGERS⦈ ⟦ utxoState₁ , govState₁ , certState₁ ⟧
       ∙ ⟦ epoch slot , pp , ListOfGovVotesOf tx , WithdrawalsOf tx , allColdCreds govState₁ enactState ⟧ ⊢ certState₁ ⇀⦇ DCertsOf tx ,CERTS⦈ certState₂
+      ∙ dom (allDirectDeposits tx) ⊆ dom (RewardsOf certState₂)
       ∙ ⟦ TxIdOf tx , epoch slot , pp , ppolicy , enactState , certState₂ , dom (RewardsOf certState₂) ⟧ ⊢ govState₁ ⇀⦇ GovProposals+Votes tx ,GOVS⦈ govState₂
       ∙ ⟦ slot , pp , treasury , utxo₀ , depositsChange , allScripts , RewardsOf certState₀ ⟧ ⊢ utxoState₁ ⇀⦇ tx ,UTXOW⦈ utxoState₂
         ────────────────────────────────
