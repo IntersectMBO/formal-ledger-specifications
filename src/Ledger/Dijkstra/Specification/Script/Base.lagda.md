@@ -14,9 +14,11 @@ open import Ledger.Core.Specification.Epoch
 module Ledger.Dijkstra.Specification.Script.Base
   (cs : _) (open CryptoStructure cs)
   (es : _) (open EpochStructure es)
-  (Network : Type) ⦃ _ : DecEq Network ⦄
+  (Network : Type) ( DecEq-Network : DecEq Network )
   where
 
+instance
+  _ = DecEq-Network
 open import Ledger.Core.Specification.Address Network KeyHash ScriptHash
 
 open import Algebra.Morphism
@@ -27,6 +29,7 @@ open import Data.Nat.Properties using (+-0-commutativeMonoid; suc-injective)
 open import Function.Bundles
 open import stdlib.Data.List.Relation.Unary.MOf
 open Injection
+open import Tactic.Derive.Show
 
 open import Ledger.Prelude hiding (All; Any; all?; any?; _∷ʳ_; uncons; _⊆_)
 
@@ -126,4 +129,22 @@ record ScriptStructure : Type₁ where
 
   toP2Script : Script → Maybe P2Script
   toP2Script = isInj₂
+
+  record LanguageCostModels : Type where
+    eta-equality
+    constructor mkLanguageCostModels
+    field
+      languageCostModels : List (Language × CostModel)
+
+  open LanguageCostModels public
+
+  instance
+    unquoteDecl
+      DecEq-LanguageCostModels = derive-DecEq ((quote LanguageCostModels , DecEq-LanguageCostModels) ∷ [])
+
+    _ = Show-List
+    _ = Show-×
+
+    unquoteDecl
+      Show-LanguageCostModels  = derive-Show ((quote LanguageCostModels , Show-LanguageCostModels) ∷ [])
 ```

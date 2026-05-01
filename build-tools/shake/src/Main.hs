@@ -123,6 +123,15 @@ hsRule = phony "hs" $ do
     ]
     ["src/Ledger/Conway/Foreign.lagda.md"]
 
+  cmd_
+    "agda"
+    [ "-c"
+    , "--ghc-dont-call-ghc"
+    , "--no-main"
+    , "--compile-dir=" ++ _build
+    ]
+    ["src/Ledger/Dijkstra/Foreign.lagda.md"]
+
   -- copy over the Agda-generated MAlonzo files to _hs
   malonzofiles <- map ("MAlonzo" </>) <$> getDirectoryFiles _malonzo ["//*.hs"]
   forM_ malonzofiles $ \file -> do

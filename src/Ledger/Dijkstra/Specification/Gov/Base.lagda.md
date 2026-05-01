@@ -8,7 +8,7 @@ source_path: src/Ledger/Dijkstra/Specification/Gov/Base.lagda.md
 
 module Ledger.Dijkstra.Specification.Gov.Base where
 
-open import Prelude using (Type)
+open import Prelude using (Type; it)
 open import Class.DecEq
 open import Ledger.Core.Specification.Crypto
 open import Ledger.Core.Specification.Epoch
@@ -18,6 +18,7 @@ import Ledger.Dijkstra.Specification.PParams
 record GovStructure : Type₁ where
   field TxId DocHash : Type
         ⦃ DecEq-TxId ⦄ : DecEq TxId
+        ⦃ DecEq-DocHash ⦄ : DecEq DocHash
 
   field cryptoStructure : CryptoStructure
   open CryptoStructure cryptoStructure public
@@ -28,10 +29,10 @@ record GovStructure : Type₁ where
   field globalConstants : GlobalConstants
   open GlobalConstants globalConstants public
 
-  field scriptStructure : ScriptStructure cryptoStructure epochStructure Network
+  field scriptStructure : ScriptStructure cryptoStructure epochStructure Network it
   open ScriptStructure scriptStructure public
 
-  open Ledger.Dijkstra.Specification.PParams cryptoStructure epochStructure Network scriptStructure public
+  open Ledger.Dijkstra.Specification.PParams cryptoStructure epochStructure Network it scriptStructure public
 
   field govParams : GovParams
   open GovParams govParams public
