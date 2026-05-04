@@ -1,0 +1,31 @@
+<!DOCTYPE HTML>
+<html><head><meta charset="utf-8"><title>Ledger.Dijkstra.Foreign.NewEpoch</title><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css"><link rel="stylesheet" href="Agda.css"><script src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/contrib/auto-render.min.js"></script><script src="AgdaKaTeX.js" defer=""></script></head><body><pre class="Agda">
+<a id="2" class="Keyword">module</a> <a id="9" href="Ledger.Dijkstra.Foreign.NewEpoch.html" class="Module">Ledger.Dijkstra.Foreign.NewEpoch</a> <a id="42" class="Keyword">where</a>
+
+<a id="49" class="Keyword">open</a> <a id="54" class="Keyword">import</a> <a id="61" href="Foreign.Convertible.html" class="Module">Foreign.Convertible</a>
+<a id="81" class="Keyword">open</a> <a id="86" class="Keyword">import</a> <a id="93" href="Foreign.Convertible.Deriving.html" class="Module">Foreign.Convertible.Deriving</a>
+<a id="122" class="Keyword">open</a> <a id="127" class="Keyword">import</a> <a id="134" href="Foreign.HaskellTypes.html" class="Module">Foreign.HaskellTypes</a>
+<a id="155" class="Keyword">open</a> <a id="160" class="Keyword">import</a> <a id="167" href="Foreign.HaskellTypes.Deriving.html" class="Module">Foreign.HaskellTypes.Deriving</a>
+
+<a id="198" class="Keyword">open</a> <a id="203" class="Keyword">import</a> <a id="210" href="Ledger.Prelude.html" class="Module">Ledger.Prelude</a>
+<a id="225" class="Keyword">open</a> <a id="230" class="Keyword">import</a> <a id="237" href="Ledger.Prelude.Foreign.HSTypes.html" class="Module">Ledger.Prelude.Foreign.HSTypes</a>
+
+<a id="269" class="Keyword">open</a> <a id="274" class="Keyword">import</a> <a id="281" href="Ledger.Dijkstra.Foreign.HSStructures.html" class="Module">Ledger.Dijkstra.Foreign.HSStructures</a>
+<a id="318" class="Keyword">open</a> <a id="323" class="Keyword">import</a> <a id="330" href="Ledger.Dijkstra.Foreign.Epoch.html" class="Module">Ledger.Dijkstra.Foreign.Epoch</a>
+<a id="360" class="Keyword">open</a> <a id="365" class="Keyword">import</a> <a id="372" href="Ledger.Dijkstra.Foreign.Rewards.html" class="Module">Ledger.Dijkstra.Foreign.Rewards</a>
+<a id="404" class="Keyword">open</a> <a id="409" class="Keyword">import</a> <a id="416" href="Ledger.Dijkstra.Specification.Epoch.html" class="Module">Ledger.Dijkstra.Specification.Epoch</a> <a id="452" href="Function.Base.html#4755" class="Function">it</a> <a id="455" href="Ledger.Dijkstra.Foreign.HSStructures.html#269" class="Function">DummyAbstractFunctions</a>
+<a id="478" class="Keyword">open</a> <a id="483" class="Keyword">import</a> <a id="490" href="Ledger.Dijkstra.Specification.Epoch.Properties.Computational.html" class="Module">Ledger.Dijkstra.Specification.Epoch.Properties.Computational</a> <a id="551" href="Function.Base.html#4755" class="Function">it</a> <a id="554" href="Ledger.Dijkstra.Foreign.HSStructures.html#269" class="Function">DummyAbstractFunctions</a>
+
+<a id="578" class="Keyword">open</a> <a id="583" href="Interface.ComputationalRelation.html#2804" class="Module">Computational</a>
+
+<a id="598" class="Keyword">instance</a>
+  <a id="HsTy-NewEpochState"></a><a id="609" href="Ledger.Dijkstra.Foreign.NewEpoch.html#609" class="Function">HsTy-NewEpochState</a> <a id="628" class="Symbol">=</a> <a id="630" href="Foreign.HaskellTypes.Deriving.html#11937" class="Macro Operator">autoHsType</a> <a id="641" href="Ledger.Dijkstra.Specification.Epoch.html#4353" class="Record">NewEpochState</a> <a id="655" href="Foreign.HaskellTypes.Deriving.html#11937" class="Macro Operator">⊣</a> <a id="657" href="Foreign.HaskellTypes.Deriving.html#3441" class="Function">withConstructor</a> <a id="673" class="String">&quot;MkNewEpochState&quot;</a>
+                                                  <a id="741" href="Foreign.HaskellTypes.Deriving.html#3900" class="Function Operator">•</a> <a id="743" href="Foreign.HaskellTypes.Deriving.html#3616" class="Function">fieldPrefix</a> <a id="755" class="String">&quot;nes&quot;</a>
+  <a id="Conv-NewEpochState"></a><a id="763" href="Ledger.Dijkstra.Foreign.NewEpoch.html#763" class="Function">Conv-NewEpochState</a> <a id="782" class="Symbol">=</a> <a id="784" href="Foreign.Convertible.Deriving.html#6815" class="Macro">autoConvert</a> <a id="796" href="Ledger.Dijkstra.Specification.Epoch.html#4353" class="Record">NewEpochState</a>
+
+<a id="newepoch-step"></a><a id="811" href="Ledger.Dijkstra.Foreign.NewEpoch.html#811" class="Function">newepoch-step</a> <a id="825" class="Symbol">:</a> <a id="827" href="Foreign.HaskellTypes.html#594" class="Function">HsType</a> <a id="834" class="Symbol">(</a><a id="835" href="Agda.Builtin.Unit.html#175" class="Record">⊤</a> <a id="837" class="Symbol">→</a> <a id="839" href="Ledger.Dijkstra.Specification.Epoch.html#4353" class="Record">NewEpochState</a> <a id="853" class="Symbol">→</a> <a id="855" href="Ledger.Core.Specification.Epoch.html#646" class="Function">Epoch</a> <a id="861" class="Symbol">→</a> <a id="863" href="Interface.ComputationalRelation.html#237" class="Datatype">ComputationResult</a> <a id="881" href="Data.Empty.html#914" class="Function">⊥</a> <a id="883" href="Ledger.Dijkstra.Specification.Epoch.html#4353" class="Record">NewEpochState</a><a id="896" class="Symbol">)</a>
+<a id="898" href="Ledger.Dijkstra.Foreign.NewEpoch.html#811" class="Function">newepoch-step</a> <a id="912" class="Symbol">=</a> <a id="914" href="Foreign.Convertible.html#150" class="Field">to</a> <a id="917" class="Symbol">(</a><a id="918" href="Interface.ComputationalRelation.html#2981" class="Function">compute</a> <a id="926" href="Ledger.Dijkstra.Specification.Epoch.Properties.Computational.html#4332" class="Function">Computational-NEWEPOCH</a><a id="948" class="Symbol">)</a>
+
+<a id="951" class="Symbol">{-#</a> <a id="955" class="Keyword">COMPILE</a> <a id="963" class="Keyword">GHC</a> <a id="967" href="Ledger.Dijkstra.Foreign.NewEpoch.html#811" class="Function">newepoch-step</a> <a id="981" class="Pragma">as</a> <a id="984" class="Pragma">newEpochStep</a> <a id="997" class="Symbol">#-}</a>
+
+</pre></body></html>
