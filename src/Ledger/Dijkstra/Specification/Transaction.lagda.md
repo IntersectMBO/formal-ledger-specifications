@@ -634,9 +634,10 @@ allowed to inspect utxo for its inputs.
   spendScripts : Tx txLevel → UTxO → ℙ Script
   spendScripts = mapPartial txOutToScript ∘₂ spendTxOuts
 
-  --| Set of scripts from reference inputs
+  --| Set of scripts from reference inputs and spending inputs
   referenceScripts : Tx txLevel → UTxO → ℙ Script
-  referenceScripts = mapPartial txOutToScript ∘₂ referencedTxOuts
+  referenceScripts tx utxo =
+    mapPartial txOutToScript (referencedTxOuts tx utxo ∪ spendTxOuts tx utxo)
 
   --| Set of scripts from reference inputs in a batch
   allReferenceScripts : TopLevelTx → UTxO → ℙ Script
@@ -647,6 +648,12 @@ allowed to inspect utxo for its inputs.
   --| Set of scripts from a transactions's witness field
   witnessScripts : Tx txLevel → ℙ Script
   witnessScripts = ScriptsOf
+
+  --| Set of scripts from a transactions's witness
+  allWitnessScripts : TopLevelTx → ℙ Script
+  allWitnessScripts tx = 
+    foldl (λ acc tx → acc ∪ witnessScripts tx)
+          (witnessScripts tx) (SubTransactionsOf tx)
 
   --| Set of all scripts from a transaction
   getTxScripts : Tx txLevel → UTxO → ℙ Script
