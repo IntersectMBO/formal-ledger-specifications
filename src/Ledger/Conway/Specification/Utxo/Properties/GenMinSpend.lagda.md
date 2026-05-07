@@ -51,9 +51,6 @@ coin∅ = begin
   0 ∎
   where open Prelude.≡-Reasoning
 
-getCoin-singleton : ((dp , c) : DepositPurpose × Coin) → indexedSumᵛ' id ❴ (dp , c) ❵ ≡ c
-getCoin-singleton _ = indexedSum-singleton' {A = DepositPurpose × Coin} {f = proj₂} (finiteness _)
-
 module _ -- ASSUMPTION --
          (gc-hom : (d₁ d₂ : Deposits) → getCoin (d₁ ∪⁺ d₂) ≡ getCoin d₁ + getCoin d₂)
   where
@@ -63,7 +60,7 @@ module _ -- ASSUMPTION --
     getCoin (deps ∪⁺ ❴ (dp , c) ❵)
       ≡⟨ gc-hom deps ❴ (dp , c) ❵ ⟩
     getCoin deps + getCoin{A = Deposits} ❴ (dp , c) ❵
-      ≡⟨ cong (getCoin deps +_) (getCoin-singleton (dp , c)) ⟩
+      ≡⟨ cong (getCoin deps +_) getCoin-singleton ⟩
     getCoin deps + c
       ∎
     where open Prelude.≡-Reasoning
