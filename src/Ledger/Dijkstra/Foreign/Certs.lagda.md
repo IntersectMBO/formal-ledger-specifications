@@ -59,11 +59,12 @@ instance
 
 record CertEnv' : Type where
   field
-    epoch     : Epoch
-    pp        : PParams
-    votes     : List GovVote'
-    wdrls     : RewardAddress ⇀ Coin
-    coldCreds : ℙ Credential
+    epoch          : Epoch
+    pp             : PParams
+    votes          : List GovVote'
+    wdrls          : RewardAddress ⇀ Coin
+    coldCreds      : ℙ Credential
+    directDeposits : DirectDeposits
 
 instance
   HsTy-CertEnv' = autoHsType CertEnv'
@@ -74,8 +75,8 @@ instance
 
   mkCertEnv' : Convertible CertEnv CertEnv'
   mkCertEnv' = λ where
-    .to   ce → let module ce = CertEnv ce in record { epoch = ce.epoch ; pp = ce.pp ; votes = to ce.votes ; wdrls = ce.wdrls ; coldCreds = ce.coldCreds }
-    .from ce → let module ce = CertEnv' ce in record { epoch = ce.epoch ; pp = ce.pp ; votes = from ce.votes ; wdrls = ce.wdrls ; coldCreds = ce.coldCreds }
+    .to   ce → let module ce = CertEnv ce in record { epoch = ce.epoch ; pp = ce.pp ; votes = to ce.votes ; wdrls = ce.wdrls ; coldCreds = ce.coldCreds ; directDeposits = ce.directDeposits }
+    .from ce → let module ce = CertEnv' ce in record { epoch = ce.epoch ; pp = ce.pp ; votes = from ce.votes ; wdrls = ce.wdrls ; coldCreds = ce.coldCreds ; directDeposits = ce.directDeposits }
 
   HsTy-CertEnv = MkHsType CertEnv (HsType CertEnv')
   Conv-CertEnv = mkCertEnv' ⨾ Conv-CertEnv'
