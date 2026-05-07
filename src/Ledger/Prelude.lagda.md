@@ -50,6 +50,8 @@ open import abstract-set-theory.Axiom.Set.Map.Extra public
 
 open import Axiom.Set.Properties th
 
+open import Axiom.Set.Properties th
+
 import Data.Integer as ℤ
 open import Data.Integer using (0ℤ) public
 import Data.Rational as ℚ
