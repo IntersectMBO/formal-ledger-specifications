@@ -90,10 +90,10 @@ instance
   Computational-POOL .completeness _ stᵖ (regpool c _) _ (POOL-reg p)
     with ¿ Is-just (lookupᵐ? (PoolsOf stᵖ) c) ¿
   ... | yes p' = ⊥-elim (¬Is-just↔Is-nothing _ .from p p')
-  ... | no ¬p = refl
+  ... | no _ = refl
   Computational-POOL .completeness _ stᵖ (regpool c _) _ (POOL-rereg p)
     with ¿ Is-just (lookupᵐ? (PoolsOf stᵖ) c) ¿
-  ... | yes p = refl
+  ... | yes _ = refl
   ... | no ¬p = ⊥-elim (¬p p)
   Computational-POOL .completeness _ _ (retirepool _ _) _ POOL-retirepool = refl
 
@@ -147,7 +147,7 @@ instance
     dCert@(regpool c poolParams) cs' (CERT-pool h)
     with computeProof (CertEnv.pp ce) (CertState.pState cs) dCert
     | completeness _ _ _ _ h
-  ... | success x | refl = refl
+  ... | success _ | refl = refl
   Computational-CERT .completeness ce cs
     dCert@(retirepool c e) cs' (CERT-pool h)
     with completeness _ _ _ _ h
@@ -182,14 +182,22 @@ instance
         p .proj₂ = refl
 
   Computational-POST-CERT : Computational _⊢_⇀⦇_,POST-CERT⦈_ String
-  Computational-POST-CERT .computeProof ce cs tt = success ( cs' , CERT-post)
+  Computational-POST-CERT .computeProof ce cs tt with ¿ dom (CertEnv.directDeposits ce) ⊆ dom (RewardsOf cs) ¿
+  ... | (no ¬p) = failure (genErrors ¬p)
+  ... | (yes p) = success (cs' , CERT-post p)
     where
       validVoteDelegs : VoteDelegs
       validVoteDelegs = VoteDelegsOf cs ∣^ (mapˢ vDelegCredential (dom (DRepsOf cs)) ∪ fromList (vDelegNoConfidence ∷ vDelegAbstain ∷ []) )
-      cs' : CertState
-      cs' = ⟦ ⟦ validVoteDelegs , _ , _ ⟧ , PStateOf cs , GStateOf cs ⟧
 
-  Computational-POST-CERT .completeness ce cs _ cs' CERT-post = refl
+      newRewards : Rewards
+      newRewards = RewardsOf cs ∪⁺ CertEnv.directDeposits ce
+
+      cs' : CertState
+      cs' = ⟦ ⟦ validVoteDelegs , StakeDelegsOf cs , newRewards , DepositsOf (DStateOf cs) ⟧ , PStateOf cs , GStateOf cs ⟧
+
+  Computational-POST-CERT .completeness ce cs _ cs' (CERT-post p) with ¿ dom (CertEnv.directDeposits ce) ⊆ dom (RewardsOf cs) ¿
+  ... | yes _ = refl
+  ... | no ¬p = ⊥-elim (¬p p)
 
 Computational-CERTS : Computational _⊢_⇀⦇_,CERTS⦈_ String
 Computational-CERTS = it
