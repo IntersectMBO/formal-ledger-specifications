@@ -104,14 +104,14 @@ record PState : Type where
   field
     pools     : Pools
     fPools    : Pools
-    retiring  : KeyHash ⇀ Epoch
+    retiring  : Retiring
     deposits  : KeyHash ⇀ Coin
 
 record GState : Type where
   constructor ⟦_,_,_⟧ᵛ
   field
     dreps      : DReps
-    ccHotKeys  : Credential ⇀ Maybe Credential
+    ccHotKeys  : CCHotKeys
     deposits   : Credential ⇀ Coin
 
 record CertState : Type where
@@ -318,6 +318,17 @@ credit each transaction's direct deposits to its account balances after certific
 processing.  See *Direct Deposit Application (CIP-159)* below for details.
 
 ```agda
+-- For each withdrawal entry `(addr, amt)`, look up `stake addr` in the acc,
+-- compute `bal ∸ amt`, create a singleton map with the new balance, and
+-- merge it with the rest (complement-restricted, to remove the old entry).
+-- applyOne : Rewards → RewardAddress × Coin → Rewards
+-- applyOne acc (addr , amt) =
+--  case lookupᵐ? acc (stake addr) of λ where
+--    (just bal) → ❴ stake addr , bal ∸ amt ❵ ∪ˡ (acc ∣ ❴ stake addr ❵ ᶜ)
+--    nothing    → acc
+--    -- `nothing` case is defensive; the PRE-CERT precondition guarantees the
+--    -- credential is registered, but handling it makes the function total.
+
 applyWithdrawals : Withdrawals → Rewards → Rewards
 applyWithdrawals = applyToRewards _∸_
 ```

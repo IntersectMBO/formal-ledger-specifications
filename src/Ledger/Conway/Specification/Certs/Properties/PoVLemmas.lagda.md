@@ -40,35 +40,12 @@ private variable
 instance
   _ = +-0-monoid
 
-getCoin-singleton : ⦃ _ : DecEq A ⦄ {(a , c) : A × Coin} → indexedSumᵛ' id ❴ (a , c) ❵ ≡ c
-getCoin-singleton = indexedSum-singleton' {M = Coin} (finiteness _)
-
-∪ˡsingleton∈dom :  ⦃ _ : DecEq A ⦄ (m : A ⇀ Coin) {(a , c) : A × Coin}
-                → a ∈ dom m → getCoin (m ∪ˡ ❴ (a , c) ❵ᵐ) ≡ getCoin m
-∪ˡsingleton∈dom m {(a , c)} a∈dom = ≡ᵉ-getCoin (m ∪ˡ ❴ (a , c) ❵) m (singleton-∈-∪ˡ {m = m} a∈dom)
-
 module _  ( indexedSumᵛ'-∪ :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ Coin)
                               → disjoint (dom m) (dom m')
                               → getCoin (m ∪ˡ m') ≡ getCoin m + getCoin m' )
   where
   open ≡-Reasoning
   open Equivalence
-
-  ∪ˡsingleton∉dom :  ⦃ _ : DecEq A ⦄ (m : A ⇀ Coin) {(a , c) : A × Coin}
-                   → a ∉ dom m → getCoin (m ∪ˡ ❴ (a , c) ❵ᵐ) ≡ getCoin m + c
-  ∪ˡsingleton∉dom m {(a , c)} a∉dom = begin
-    getCoin (m ∪ˡ ❴ a , c ❵ᵐ)
-      ≡⟨ indexedSumᵛ'-∪ m ❴ a , c ❵ᵐ
-         ( λ x y → a∉dom (subst (_∈ dom m) (from ∈-dom-singleton-pair y) x) ) ⟩
-    getCoin m + getCoin ❴ a , c ❵ᵐ
-      ≡⟨ cong (getCoin m +_) getCoin-singleton ⟩
-    getCoin m + c
-      ∎
-
-  ∪ˡsingleton0≡ : ⦃ _ : DecEq A ⦄ → (m : A ⇀ Coin) {a : A} → getCoin (m ∪ˡ ❴ (a , 0) ❵ᵐ) ≡ getCoin m
-  ∪ˡsingleton0≡ m {a} with a ∈? dom m
-  ... | yes a∈dom = ∪ˡsingleton∈dom m a∈dom
-  ... | no a∉dom = trans (∪ˡsingleton∉dom m a∉dom) (+-identityʳ (getCoin m))
 ```
 -->
 
