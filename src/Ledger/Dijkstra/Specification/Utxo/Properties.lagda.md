@@ -14,4 +14,6 @@ module Ledger.Dijkstra.Specification.Utxo.Properties where
 
 ```agda
 open import Ledger.Dijkstra.Specification.Utxo.Properties.Computational
+open import Ledger.Dijkstra.Specification.Utxo.Properties.Base
+open import Ledger.Dijkstra.Specification.Utxo.Properties.PoV
 ```
