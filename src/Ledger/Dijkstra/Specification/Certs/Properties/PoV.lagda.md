@@ -16,12 +16,13 @@ module Ledger.Dijkstra.Specification.Certs.Properties.PoV
 
 open import Ledger.Prelude
 
+open import Ledger.Dijkstra.Specification.Account gs
 open import Ledger.Dijkstra.Specification.Certs gs
 open import Ledger.Dijkstra.Specification.Certs.Properties.PoVLemmas gs
 open import Ledger.Dijkstra.Specification.Gov.Actions gs hiding (yes; no)
 open import Ledger.Prelude
 open import Data.List.Relation.Unary.Unique.Propositional using (Unique)
-open import Data.Nat.Properties using (+-0-monoid)
+open import Data.Nat.Properties using (+-0-monoid; +-comm; +-assoc)
 
 open CertState
 open RewardAddress
@@ -39,22 +40,59 @@ module Certs-PoV
   ( sum-map-proj₂≡getCoin : ∀ (m : Withdrawals) → sum (map proj₂ (setToList (m ˢ))) ≡ getCoin m )
 
   ( setToList-Unique : ∀ (m : Withdrawals) → Unique (map (stake ∘ proj₁) (setToList (m ˢ))) )
+
+  -- New CIP-159 assumption (forwarded to Certs-Pov-lemmas): see PoVLemmas.
+  ( indexedSumᵛ'-∪⁺ : ∀ (m m' : Rewards) → getCoin (m ∪⁺ m') ≡ getCoin m + getCoin m' )
+
   where
-    open Certs-Pov-lemmas ∪ˡ-res-lookup-preserve sum-map-proj₂≡getCoin setToList-Unique
+  open Certs-Pov-lemmas ∪ˡ-res-lookup-preserve sum-map-proj₂≡getCoin setToList-Unique
+                        indexedSumᵛ'-∪⁺
 ```
 -->
 
 ## Theorem: The `CERTS` rule preserves value {#thm:CERTS-PoV}
 
-```agda
-    CERTS-pov : {Γ : CertEnv} {s₁ sₙ : CertState}
-      → ∀[ a ∈ dom (WithdrawalsOf Γ) ] NetworkIdOf a ≡ NetworkId
-      → Γ ⊢ s₁ ⇀⦇ l ,CERTS⦈ sₙ
-      → getCoin s₁ ≡ getCoin sₙ + getCoin (WithdrawalsOf Γ)
-```
+In Dijkstra, the `CERTS`{.AgdaDatatype} rule processes withdrawals (via
+`PRE-CERT`{.AgdaDatatype}) and direct deposits (via `POST-CERT`{.AgdaDatatype})
+in addition to the certificate steps.  Withdrawals reduce the rewards balance;
+direct deposits increase it; the preservation-of-value equation is a symmetric
+"consumed equals produced" statement:
+
+`getCoin s₁ + getCoin (CertEnv.directDeposits Γ) ≡ getCoin sₙ + getCoin (WithdrawalsOf Γ)`.
+
+Equivalently, the *increase* in rewards balance from `s₁`{.AgdaBound} to
+`sₙ`{.AgdaBound} equals `directDeposits − withdrawals`.
 
 ```agda
-    CERTS-pov {Γ = Γ} validNetId (run (pre-cert , certs)) =
-      trans  (PRE-CERT-pov validNetId pre-cert)
-             (cong (_+ getCoin (WithdrawalsOf Γ)) (sts-pov certs))
+  CERTS-pov : {Γ : CertEnv} {s₁ sₙ : CertState}
+    → ∀[ a ∈ dom (WithdrawalsOf Γ) ] NetworkIdOf a ≡ NetworkId
+    → Γ ⊢ s₁ ⇀⦇ l ,CERTS⦈ sₙ
+    → getCoin s₁ + getCoin (DirectDepositsOf Γ) ≡ getCoin sₙ + getCoin (WithdrawalsOf Γ)
 ```
+
+The proof composes `PRE-CERT-pov`{.AgdaFunction} (which gives
+`getCoin s₁ ≡ getCoin s' + getCoin (WithdrawalsOf Γ)`) with `sts-pov`{.AgdaFunction}
+(which gives `getCoin s' + getCoin (DirectDepositsOf Γ) ≡ getCoin sₙ`),
+plus an arithmetic shuffle to interleave the two accounting terms.
+
+<!--
+```agda
+  CERTS-pov {Γ = Γ} {s₁} {sₙ} validNetId (run {s' = s'} (pre-cert , certs)) =
+    begin
+      getCoin s₁ + cdd        ≡⟨ cong (_+ cdd) (PRE-CERT-pov validNetId pre-cert) ⟩
+      getCoin s' + cwd + cdd  ≡⟨ swap-right _ (cwd) (cdd) ⟩
+      getCoin s' + cdd + cwd  ≡⟨ cong (_+ cwd) (sts-pov certs) ⟩
+      getCoin sₙ + cwd ∎
+    where
+    open ≡-Reasoning
+    cdd cwd : Coin
+    cdd = getCoin (DirectDepositsOf Γ)
+    cwd = getCoin (WithdrawalsOf Γ)
+
+    swap-right : ∀ a b c → (a + b) + c ≡ (a + c) + b
+    swap-right a b c =
+      trans  (+-assoc a b c)
+             (trans  (cong (a +_) (+-comm b c))
+                     (sym (+-assoc a c b)))
+```
+-->

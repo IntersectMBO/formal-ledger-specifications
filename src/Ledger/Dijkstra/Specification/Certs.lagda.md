@@ -181,6 +181,9 @@ instance
   HasWithdrawals-CertEnv : HasWithdrawals CertEnv
   HasWithdrawals-CertEnv .WithdrawalsOf = CertEnv.wdrls
 
+  HasDirectDeposits-CertEnv : HasDirectDeposits CertEnv
+  HasDirectDeposits-CertEnv .DirectDepositsOf = CertEnv.directDeposits
+
   HasVoteDelegs-DState : HasVoteDelegs DState
   HasVoteDelegs-DState .VoteDelegsOf = DState.voteDelegs
 
