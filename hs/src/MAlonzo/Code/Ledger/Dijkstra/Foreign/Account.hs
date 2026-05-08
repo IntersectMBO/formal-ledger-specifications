@@ -37,11 +37,11 @@ d_Conv'45'BalanceInterval_14
       (coe
          (\ v0 ->
             case coe v0 of
-              MAlonzo.Code.Ledger.Dijkstra.Specification.Account.C_'10214'_'44'_'10630'_850 v1 v2
+              MAlonzo.Code.Ledger.Dijkstra.Specification.Account.C_'10214'_'44'_'10630'_870 v1 v2
                 -> coe C_Both_921 (coe v1) (coe v2)
-              MAlonzo.Code.Ledger.Dijkstra.Specification.Account.C_'10214'_'44''8734''10630'_852 v1
+              MAlonzo.Code.Ledger.Dijkstra.Specification.Account.C_'10214'_'44''8734''10630'_872 v1
                 -> coe C_Lower_977 (coe v1)
-              MAlonzo.Code.Ledger.Dijkstra.Specification.Account.C_'10214'0'44'_'10630'_854 v1
+              MAlonzo.Code.Ledger.Dijkstra.Specification.Account.C_'10214'0'44'_'10630'_874 v1
                 -> coe C_Upper_991 (coe v1)
               _ -> MAlonzo.RTE.mazUnreachableError))
       (coe
@@ -49,15 +49,15 @@ d_Conv'45'BalanceInterval_14
             case coe v0 of
               C_Both_921 v1 v2
                 -> coe
-                     MAlonzo.Code.Ledger.Dijkstra.Specification.Account.C_'10214'_'44'_'10630'_850
+                     MAlonzo.Code.Ledger.Dijkstra.Specification.Account.C_'10214'_'44'_'10630'_870
                      (coe v1) (coe v2)
               C_Lower_977 v1
                 -> coe
-                     MAlonzo.Code.Ledger.Dijkstra.Specification.Account.C_'10214'_'44''8734''10630'_852
+                     MAlonzo.Code.Ledger.Dijkstra.Specification.Account.C_'10214'_'44''8734''10630'_872
                      (coe v1)
               C_Upper_991 v1
                 -> coe
-                     MAlonzo.Code.Ledger.Dijkstra.Specification.Account.C_'10214'0'44'_'10630'_854
+                     MAlonzo.Code.Ledger.Dijkstra.Specification.Account.C_'10214'0'44'_'10630'_874
                      (coe v1)
               _ -> MAlonzo.RTE.mazUnreachableError))
 -- Ledger.Dijkstra.Foreign.Account.BalanceInterval
