@@ -8,11 +8,17 @@ source_path: src/Ledger/Dijkstra/Specification/Certs/Properties/PoVLemmas.lagda.
 
 ## Key Differences from Conway
 
-+  **`PRE-CERT`**: Conway uses `constMap wdrlCreds 0 ∪ˡ rewards` (zeroing).
++  **`PRE-CERT`**.  Conway uses `constMap wdrlCreds 0 ∪ˡ rewards` (zeroing).
    Dijkstra (CIP-159) uses `applyWithdrawals wdrls rewards` (subtraction).
    The PoV equation still holds; the proof structure differs.
-+  **`CERT` / `DELEG`**: Same value-relevant structure as Conway.
-+  **No `CERT-vdel`**: Dijkstra has `CERT-deleg`, `CERT-pool`, `CERT-gov` only.
++  **`POST-CERT`**.  Conway only filters `voteDelegs` and preserves `getCoin`.
+   Dijkstra (CIP-159) additionally applies `rewards ∪⁺ directDeposits`, increasing
+   the value by `getCoin (DirectDepositsOf Γ)`.  The PoV equation
+   therefore changes: `POST-CERT-pov` and `sts-pov` now relate the pre- and
+   post-state by the direct-deposit total, and `CERTS-pov` becomes a symmetric
+   "consumed ≡ produced" equation balancing withdrawals against direct deposits.
++  **`CERT` / `DELEG`**.  Same value-relevant structure as Conway.
++  **No `CERT-vdel`**.  Dijkstra has `CERT-deleg`, `CERT-pool`, `CERT-gov` only.
 
 <!--
 ```agda
@@ -23,6 +29,7 @@ open import Ledger.Dijkstra.Specification.Gov.Base using (GovStructure)
 module Ledger.Dijkstra.Specification.Certs.Properties.PoVLemmas
   (gs : GovStructure) (open GovStructure gs) where
 
+open import Ledger.Dijkstra.Specification.Account gs
 open import Ledger.Dijkstra.Specification.Certs gs
 open import Ledger.Dijkstra.Specification.Certs.Properties.ApplyWithdrawalsPoV gs
 open import Ledger.Dijkstra.Specification.Gov.Actions gs hiding (yes; no)
@@ -56,6 +63,8 @@ CERT-pov : {Γ : CertEnv} {s s' : CertState}
   → Γ ⊢ s ⇀⦇ dCert ,CERT⦈ s' → getCoin s ≡ getCoin s'
 ```
 
+(The `CERT` rule is unchanged in Dijkstra, so this lemma matches the Conway version.)
+
 <!--
 ```agda
 CERT-pov (CERT-deleg (DELEG-delegate {rwds = rwds} _)) = sym (∪ˡsingleton0≡ rwds)
@@ -88,26 +97,20 @@ CERT-pov (CERT-gov _) = refl
 ```
 -->
 
-## POST-CERT-pov and sts-pov
+## CIP-159 PoV lemmas (parameterized)
 
-```agda
-POST-CERT-pov : {Γ : CertEnv} {s s' : CertState}
-  → Γ ⊢ s ⇀⦇ _ ,POST-CERT⦈ s' → getCoin s ≡ getCoin s'
+The `POST-CERT-pov`, `sts-pov`, and `PRE-CERT-pov` proofs all live inside the
+parameterized `Certs-Pov-lemmas`{.AgdaModule} sub-module.
 
-POST-CERT-pov CERT-post = refl
-
-sts-pov : {Γ : CertEnv} {s₁ sₙ : CertState} {sigs : List DCert}
-  → RunTraceAndThen _⊢_⇀⦇_,CERT⦈_ _⊢_⇀⦇_,POST-CERT⦈_ Γ s₁ sigs sₙ
-  → getCoin s₁ ≡ getCoin sₙ
-sts-pov (run-[] x) = POST-CERT-pov x
-sts-pov (run-∷ x xs) = trans (CERT-pov x) (sts-pov xs)
-```
-
-## PRE-CERT-pov (CIP-159: partial withdrawals)
-
-The key new assumption `applyWithdrawals-pov` states that applying withdrawals
-decreases `rewardsBalance` by exactly the total withdrawn amount.  This replaces
-Conway's `constMap`/`res-decomp`/`sumConstZero` chain.
++  `PRE-CERT-pov`{.AgdaFunction} relies on `applyWithdrawals-pov`{.AgdaFunction}
+   from `Certs.Properties.ApplyWithdrawalsPoV`{.AgdaModule}, which itself takes
+   three module parameters bridging gaps in the `agda-sets` API.
++  `POST-CERT-pov`{.AgdaFunction} relies on a fourth parameter
+   `indexedSumᵛ'-∪⁺`{.AgdaFunction} stating that `getCoin` distributes over
+   `∪⁺`{.AgdaFunction} (union with addition).  This is the natural analogue of
+   the existing Conway `indexedSumᵛ'-∪`{.AgdaFunction} lemma for `∪ˡ`{.AgdaFunction}
+   on disjoint domains, but for `∪⁺`{.AgdaFunction} the equation holds
+   *unconditionally* — values at shared keys are added rather than dropped.
 
 <!--
 ```agda
@@ -124,10 +127,61 @@ module Certs-Pov-lemmas
   ( sum-map-proj₂≡getCoin : ∀ (m : Withdrawals) → sum (map proj₂ (setToList (m ˢ))) ≡ getCoin m )
 
   ( setToList-Unique : ∀ (m : Withdrawals) → Unique (map (stake ∘ proj₁) (setToList (m ˢ))) )
+
+  -- New CIP-159 assumption: getCoin distributes over ∪⁺.
+  -- `∪⁺` adds values of shared keys, so `getCoin (m ∪⁺ m') ≡ getCoin m + getCoin m'`
+  -- holds unconditionally.  TODO: Prove this in Ledger.Prelude or agda-sets.
+  ( indexedSumᵛ'-∪⁺ : ∀ (m m' : Rewards) → getCoin (m ∪⁺ m') ≡ getCoin m + getCoin m' )
   where
     open ApplyWithdrawals-PoV ∪ˡ-res-lookup-preserve sum-map-proj₂≡getCoin setToList-Unique
 ```
 -->
+
+### POST-CERT-pov (CIP-159: direct deposits)
+
+The `POST-CERT`{.AgdaDatatype} rule applies direct deposits via `rewards ∪⁺ dd`,
+*increasing* the rewards balance by `getCoin dd`.  The PoV equation therefore
+becomes "pre-balance plus direct deposits equals post-balance":
+
+```agda
+    POST-CERT-pov : {Γ : CertEnv} {s s' : CertState}
+      → Γ ⊢ s ⇀⦇ _ ,POST-CERT⦈ s'
+      → getCoin s + getCoin (DirectDepositsOf Γ) ≡ getCoin s'
+```
+
+<!--
+```agda
+    POST-CERT-pov (CERT-post {dd = dd} {rewards = rewards} _) =
+      sym (indexedSumᵛ'-∪⁺ rewards dd)
+```
+-->
+
+### sts-pov
+
+A trace of `CERT`{.AgdaDatatype} steps followed by `POST-CERT`{.AgdaDatatype}
+increases the rewards balance by exactly the direct-deposit total: each
+`CERT`{.AgdaDatatype} step preserves value (by `CERT-pov`{.AgdaFunction}), and the
+final `POST-CERT`{.AgdaDatatype} step adds `getCoin (DirectDepositsOf Γ)`.
+
+```agda
+    sts-pov : {Γ : CertEnv} {s₁ sₙ : CertState} {sigs : List DCert}
+      → RunTraceAndThen _⊢_⇀⦇_,CERT⦈_ _⊢_⇀⦇_,POST-CERT⦈_ Γ s₁ sigs sₙ
+      → getCoin s₁ + getCoin (DirectDepositsOf Γ) ≡ getCoin sₙ
+```
+
+<!--
+```agda
+    sts-pov (run-[] x) = POST-CERT-pov x
+    sts-pov {Γ = Γ} (run-∷ x xs) =
+      trans (cong (_+ getCoin (DirectDepositsOf Γ)) (CERT-pov x)) (sts-pov xs)
+```
+-->
+
+### PRE-CERT-pov (CIP-159: partial withdrawals)
+
+The key new assumption `applyWithdrawals-pov` states that applying withdrawals
+decreases `rewardsBalance` by exactly the total withdrawn amount.  This replaces
+Conway's `constMap`/`res-decomp`/`sumConstZero` chain.
 
 ```agda
     PRE-CERT-pov : {Γ : CertEnv} {s s' : CertState}
