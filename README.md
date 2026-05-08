@@ -1,4 +1,10 @@
-# The Cardano Formal Ledger Specification
+<h1 align="center"> The Cardano Formal Ledger Specification</h1>
+
+<p align="center">
+  <a href="https://github.com/intersectmbo/formal-ledger-specifications/actions/workflows/nightly.yml">
+    <img alt="GitHub Workflow Status (master)" src="https://img.shields.io/github/actions/workflow/status/intersectmbo/formal-ledger-specifications/nightly.yml?branch=master&style=for-the-badge" />
+  </a>
+</p>
 
 This is the formal ledger specifications for the Cardano blockchain.
 It is written in [Agda](https://wiki.portal.chalmers.se/agda/pmwiki.php) and
