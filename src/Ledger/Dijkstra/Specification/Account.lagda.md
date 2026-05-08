@@ -33,6 +33,14 @@ DirectDeposits : Type
 DirectDeposits = RewardAddress ⇀ Coin
 ```
 
+<!--
+```agda
+record HasDirectDeposits {a} (A : Type a) : Type a where
+  field DirectDepositsOf : A → DirectDeposits
+open HasDirectDeposits ⦃...⦄ public
+```
+-->
+
 ## Balance Intervals {#sec:balance-intervals}
 
 [CIP 159][] allows a transaction to assert that an account's balance falls within a
