@@ -51,8 +51,8 @@ derivation as their final premise.  We factor out an extractor:
 UTXOW⇒UTXO : ∀ {Γ : UTxOEnv} {s s' : UTxOState} {tx : TopLevelTx}
   → Γ ⊢ s ⇀⦇ tx ,UTXOW⦈ s' → ∃[ legacyMode ] ((Γ , legacyMode) ⊢ s ⇀⦇ tx ,UTXO⦈ s')
 
-UTXOW⇒UTXO (UTXOW-normal-⋯ _ _ _ _ _ _ _ _ _ _ utxo) = false , utxo
-UTXOW⇒UTXO (UTXOW-legacy-⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ utxo) = true , utxo
+UTXOW⇒UTXO (UTXOW-normal-⋯ _ _ _ _ _ _ _ _ _ _ _ _ utxo) = false , utxo
+UTXOW⇒UTXO (UTXOW-legacy-⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ utxo) = true , utxo
 ```
 
 ## `UTXOW-I-getCoin`: collateral collection preserves `getCoin`
