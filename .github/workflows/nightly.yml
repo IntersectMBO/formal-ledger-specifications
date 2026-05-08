@@ -12,7 +12,7 @@ jobs:
   build-all:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - uses: cachix/install-nix-action@v31
         with:
@@ -35,7 +35,7 @@ jobs:
             substituters = https://cache.iog.io https://cache.nixos.org/
 
       - name: Checkout formal-ledger-specifications
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           path: fls
 
@@ -45,7 +45,7 @@ jobs:
           nix build ./#hs-src
 
       - name: Checkout cardano-ledger
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           repository: IntersectMBO/cardano-ledger
           path: cl

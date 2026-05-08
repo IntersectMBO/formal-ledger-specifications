@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout current branch
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Copy PDF from legacy-latex-artifacts branch
         run: |
@@ -64,7 +64,7 @@ jobs:
           mv ../dist ./dist
 
       - name: Upload PDF artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: ${{ inputs.pdf_name }}
           path: dist

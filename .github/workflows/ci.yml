@@ -18,7 +18,7 @@ jobs:
   formal-ledger-agda:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - uses: cachix/install-nix-action@v31
         with:
           nix_path: nixpkgs=https://github.com/NixOS/nixpkgs/archive/6c5963357f3c1c840201eda129a99d455074db04.tar.gz
@@ -30,12 +30,12 @@ jobs:
         run: |
           nix build -o outputs
       - name: Upload agda _build artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: _build
           path: outputs/_build
       - name: Upload agda typechecking time artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: typecheck.time
           path: outputs/typecheck.time
@@ -71,7 +71,7 @@ jobs:
     needs: [formal-ledger-agda, hs, conway-ledger-pdf, cardano-ledger-pdf, mkdocs]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0
       - name: Set artifacts_branch variable
@@ -100,7 +100,7 @@ jobs:
         env:
           ARTIFACTS_BRANCH: ${{ steps.set-artifacts-branch.outputs.artifacts_branch }}
       - name: Download artifacts
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           pattern: '!_build'
           merge-multiple: true
@@ -159,7 +159,7 @@ jobs:
             git add -A
             git commit --allow-empty -m "Artifacts generated from ${{ github.sha }}"
       - name: Push ${{ env.artifacts_branch }}
-        uses: ad-m/github-push-action@v0.6.0
+        uses: ad-m/github-push-action@v1
         with:
             github_token: ${{ secrets.GITHUB_TOKEN }}
             branch: ${{ steps.set-artifacts-branch.outputs.artifacts_branch }}
