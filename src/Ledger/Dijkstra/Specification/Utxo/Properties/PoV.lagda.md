@@ -431,7 +431,7 @@ collateral from the top-level transaction and leaves `donations` unchanged.
   UTXO-I-getCoin :
     (Γ , legacyMode) ⊢ s₀ ⇀⦇ tx ,UTXO⦈ s₁ → IsValidFlagOf tx ≡ false → getCoin s₀ ≡ getCoin s₁
 
-  UTXO-I-getCoin {s₀ = ⟦ u , f , d ⟧ᵘ} (UTXO-⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ h) refl =
+  UTXO-I-getCoin {s₀ = ⟦ u , f , d ⟧ᵘ} (UTXO-⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ h) refl =
     begin
       cbalance u + f + d
         ≡⟨ cong (λ x → x + f + d) (split-balance u (CollateralInputsOf tx)) ⟩
@@ -455,7 +455,7 @@ collateral from the top-level transaction and leaves `donations` unchanged.
       ≡ getCoin s₁ + cbalance (UTxOOf s₀ ∣ SpendInputsOf tx)
 
   UTXO-V-mechanical {s₀ = ⟦ u , f , d ⟧ᵘ} {s₁ = ⟦ u' , f' , d' ⟧ᵘ}
-    (UTXO-⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ h) refl freshId =
+    (UTXO-⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ h) refl freshId =
     begin
     cbalance u + f + d + cbalance (outs tx) + TxFeesOf tx + DonationsOf tx
 
@@ -538,7 +538,7 @@ proof actually consumes.  We expose it as a separate lemma here.
                     (SubTransactionsOf tx))
         + posPart (DepositsChangeSubOf Γ)
 
-  batch-balance-coin {Γ = Γ} (UTXO-⋯ _ _ _ _ _ _ _ batchBal _ _ _ _ _ _ _ _ _ _ _ _ _ _ _) =
+  batch-balance-coin {Γ = Γ} (UTXO-⋯ _ _ _ _ _ _ _ batchBal _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _) =
     begin
     cbalance (UTxOOf Γ ∣ SpendInputsOf tx) + getCoin (WithdrawalsOf tx) + negPart (DepositsChangeTopOf Γ) + _ + _
       ≡˘⟨ coin-of-consumedBatch tx (DepositsChangeOf Γ) (UTxOOf Γ) noMintTx noMintSubTx ⟩
