@@ -66,12 +66,6 @@ jobs:
         run: |
           nix-shell -p haskell.compiler.ghc96 cabal-install --run "cd dist/hs; cabal update && cabal build"
 
-  html:
-    needs: [formal-ledger-agda]
-    uses: ./.github/workflows/build_artifact.yml
-    with:
-      target: html
-
   mkdocs:
     needs: [formal-ledger-agda]
     uses: ./.github/workflows/build_artifact.yml
