@@ -52,23 +52,11 @@ jobs:
     with:
       target: mkdocs
 
-  cardano-ledger-pdf:
-    needs: [formal-ledger-agda]
-    uses: ./.github/workflows/copy_legacy_pdf.yml
-    with:
-      pdf_name: cardano-ledger.pdf
-
-  conway-ledger-pdf:
-    needs: [formal-ledger-agda]
-    uses: ./.github/workflows/copy_legacy_pdf.yml
-    with:
-      pdf_name: conway-ledger.pdf
-
   push-artifacts-to-branch:
     # This job runs only if the workflow has not been manually dispached,
     # and the origininating branch belongs to the repository
     if: ${{ github.event_name != 'workflow_dispatch' && ! github.event.pull_request.head.repo.fork }}
-    needs: [formal-ledger-agda, hs, conway-ledger-pdf, cardano-ledger-pdf, mkdocs]
+    needs: [formal-ledger-agda, hs, mkdocs]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
@@ -96,7 +84,7 @@ jobs:
           else
             git checkout --orphan "${ARTIFACTS_BRANCH}"
           fi
-          git rm -rf .
+          find . -mindepth 1 -not -name cardano-ledger.pdf -not -name conway-ledger.pdf  -not -path './.git*' -delete
         env:
           ARTIFACTS_BRANCH: ${{ steps.set-artifacts-branch.outputs.artifacts_branch }}
       - name: Download artifacts
