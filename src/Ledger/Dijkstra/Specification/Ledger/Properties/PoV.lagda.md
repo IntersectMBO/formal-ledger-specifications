@@ -189,6 +189,9 @@ module _
 
   ( split-balance : ∀ (u : UTxO) (keys : ℙ TxIn) → cbalance u ≡ cbalance (u ∣ keys ᶜ) + cbalance (u ∣ keys) )
 
+  -- New CIP-159 assumption (forwarded to Certs-Pov-lemmas): see PoVLemmas.
+  ( indexedSumᵛ'-∪⁺ : ∀ (m m' : Rewards) → getCoin (m ∪⁺ m') ≡ getCoin m + getCoin m' )
+
   -- Per-step SUBUTXOW coin equation.  Assumed for now; a local proof
   -- would require, in addition to `balance-∪` and `split-balance`, a
   -- batch-wide "spend inputs preserved" invariant (the running UTxO
@@ -247,7 +250,7 @@ module _
       → sum (map (λ x → f x + g x) xs) ≡ sum (map f xs) + sum (map g xs) )
 
   where
-  open Certs-PoV ∪ˡ-res-lookup-preserve sum-map-proj₂≡getCoin setToList-Unique
+  open Certs-PoV ∪ˡ-res-lookup-preserve sum-map-proj₂≡getCoin setToList-Unique indexedSumᵛ'-∪⁺
   -- Import the utxow-level properties (utxow-pov-invalid, UTXOW-V-mechanical,
   -- UTXOW-batch-balance-coin) from `Utxow.Properties.PoV`.  The `λ {u}{u'} →`
   -- η-wrapper is needed for the same Agda eta-expansion reason as in
@@ -339,7 +342,7 @@ module _
       → ∀[ a ∈ dom (WithdrawalsOf stx) ] NetworkIdOf a ≡ NetworkId
     extract-subutxo-netId
       (SUBUTXOW ( _ , _ , _ , _ , _ , _ , _ , _ , _ , _
-                , SUBUTXO (_ , _ , _ , _ , _ , _ , _ , _ , _ , _ , netId , _))) = netId
+                , _ , _ , SUBUTXO (_ , _ , _ , _ , _ , _ , _ , _ , _ , _ , netId , _))) = netId
 
     wdrl-netId : ∀[ a ∈ dom (WithdrawalsOf stx) ] NetworkIdOf a ≡ NetworkId
     wdrl-netId = extract-subutxo-netId subutxowStep -- extract from premise 11
@@ -437,7 +440,7 @@ where `certStateFinal = record certState₂ { dState = applyDirectDeposits (allD
         begin
         getCoin (CertStateOf s)                                    ≡⟨ SUBLEDGERS-certs-pov valid subStep ⟩
         getCoin cs₁ + subWdrlsCoin                                 ≡⟨ cong (_+ subWdrlsCoin) (CERTS-pov (extract-utxo-netId utxoStep) certStep) ⟩
-        getCoin cs₂ + getCoin (WithdrawalsOf tx) + subWdrlsCoin  ≡⟨ +-assoc (getCoin cs₂) _ subWdrlsCoin ⟩
+        getCoin cs₂ + getCoin (WithdrawalsOf tx) + subWdrlsCoin    ≡⟨ +-assoc (getCoin cs₂) _ subWdrlsCoin ⟩
         getCoin cs₂ + (getCoin (WithdrawalsOf tx) + subWdrlsCoin)  ∎
 
 

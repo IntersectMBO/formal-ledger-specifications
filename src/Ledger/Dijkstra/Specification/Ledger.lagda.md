@@ -68,6 +68,9 @@ instance
   HasEnactState-LedgerEnv : HasEnactState LedgerEnv
   HasEnactState-LedgerEnv .EnactStateOf = LedgerEnv.enactState
 
+  HasTreasury-LedgerEnv : HasTreasury LedgerEnv
+  HasTreasury-LedgerEnv .TreasuryOf = LedgerEnv.treasury
+
   HasPParams-SubLedgerEnv : HasPParams SubLedgerEnv
   HasPParams-SubLedgerEnv .PParamsOf = SubLedgerEnv.pparams
 
@@ -82,9 +85,9 @@ instance
 
   HasAccountBalances-SubLedgerEnv : HasAccountBalances SubLedgerEnv
   HasAccountBalances-SubLedgerEnv .AccountBalancesOf = SubLedgerEnv.accountBalances
-
 ```
 -->
+
 ```agda
 record LedgerState : Type where
 ```
@@ -99,6 +102,7 @@ record LedgerState : Type where
     govSt      : GovState
     certState  : CertState
 ```
+
 <!--
 ```agda
 record HasLedgerState {a} (A : Type a) : Type a where
@@ -174,24 +178,24 @@ allColdCreds : GovState → EnactState → ℙ Credential
 allColdCreds govSt es =
   ccCreds (es .cc) ∪ concatMapˢ (λ (_ , st) → proposedCC (GovActionOf st)) (fromList govSt)
 
+coinFromDeposits : CertState → Coin
+coinFromDeposits certState =
+  getCoin (DepositsOf (DStateOf certState))
+  + getCoin (DepositsOf (PStateOf certState))
+  + getCoin (DepositsOf (GStateOf certState))
+
 calculateDepositsChange : CertState → CertState → CertState → DepositsChange
 calculateDepositsChange certState₀ certState₁ certState₂
   = ⟦ coinChangeTop , coinChangeSub ⟧
   where
-    coinFromDeposit : CertState → Coin
-    coinFromDeposit certState =
-      getCoin (DepositsOf (DStateOf certState))
-      + getCoin (DepositsOf (PStateOf certState))
-      + getCoin (DepositsOf (GStateOf certState))
-
     coin₀ : Coin
-    coin₀ = coinFromDeposit certState₀
+    coin₀ = coinFromDeposits certState₀
 
     coin₁ : Coin
-    coin₁ = coinFromDeposit certState₁
+    coin₁ = coinFromDeposits certState₁
 
     coin₂ : Coin
-    coin₂ = coinFromDeposit certState₂
+    coin₂ = coinFromDeposits certState₂
 
     coinChangeSub : ℤ
     coinChangeSub = coin₁ - coin₀
@@ -199,6 +203,19 @@ calculateDepositsChange certState₀ certState₁ certState₂
     coinChangeTop : ℤ
     coinChangeTop = coin₂ - coin₁
 ```
+
+<!--
+```agda
+instance
+  HasCoin-LedgerState : HasCoin LedgerState
+  HasCoin-LedgerState .getCoin s =
+    getCoin (UTxOStateOf s)             -- cbalance + fees + donations
+    + getCoin (CertStateOf s)           -- rewards
+    + coinFromDeposits (CertStateOf s)  -- deposits
+```
+-->
+
+
 
 ## <span class="AgdaDatatype">LEDGER</span> Transition System
 
