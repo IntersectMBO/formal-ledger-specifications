@@ -1,9 +1,8 @@
 <h1 align="center"> The Cardano Formal Ledger Specification</h1>
 
 <p align="center">
-  <a href="https://github.com/intersectmbo/formal-ledger-specifications/actions/workflows/nightly.yml">
-    <img alt="GitHub Workflow Status (master)" src="https://img.shields.io/github/actions/workflow/status/intersectmbo/formal-ledger-specifications/nightly.yml?branch=master&style=for-the-badge" />
-  </a>
+  <a href="https://github.com/intersectmbo/formal-ledger-specifications/actions/workflows/nightly.yml"><img alt="GitHub Workflow Status (master)" src="https://img.shields.io/github/actions/workflow/status/intersectmbo/formal-ledger-specifications/nightly.yml?branch=master&style=for-the-badge"/></a>
+  <a href="https://opensource.org/licenses/Apache-2.0"><img alt="License: Apache 2.0" src="https://img.shields.io/badge/License-Apache_2.0-blue?style=for-the-badge"/></a>
 </p>
 
 This is the formal ledger specifications for the Cardano blockchain.
