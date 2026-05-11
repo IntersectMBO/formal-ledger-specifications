@@ -151,7 +151,7 @@ d_fut_2706 v0
 -- Ledger.Dijkstra.Specification.RewardUpdate._.EpochState.ls
 d_ls_2708 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.T_EpochState_4022 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.T_LedgerState_3688
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.T_LedgerState_3686
 d_ls_2708 v0
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4038 (coe v0)

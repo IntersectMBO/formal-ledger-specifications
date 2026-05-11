@@ -80,7 +80,7 @@ d__'8866'_'8640''10631'_'44'CHAIN'10632'__2594 a0 a1 a2 a3 a4 a5
 d_totalRefScriptsSize_2640 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3056 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.T_LedgerState_3688 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.T_LedgerState_3686 ->
   [MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3622] ->
   Integer
 d_totalRefScriptsSize_2640 v0 v1
@@ -91,11 +91,11 @@ d_totalRefScriptsSize_2640 v0 v1
 d_HasLedgerState'45'NewEpochState_2752 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3056 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.T_HasLedgerState_3708
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.T_HasLedgerState_3706
 d_HasLedgerState'45'NewEpochState_2752 ~v0 ~v1
   = du_HasLedgerState'45'NewEpochState_2752
 du_HasLedgerState'45'NewEpochState_2752 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.T_HasLedgerState_3708
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.T_HasLedgerState_3706
 du_HasLedgerState'45'NewEpochState_2752
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_HasLedgerState'45'NewEpochState_4166
@@ -174,7 +174,7 @@ d_computeProof_3066 v0
 -- Ledger.Dijkstra.Specification.Chain.Properties.Computational._._.ls
 d_ls_3092 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.T_NewEpochState_4090 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.T_LedgerState_3688
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.T_LedgerState_3686
 d_ls_3092 v0
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4038
@@ -372,7 +372,7 @@ d_Computational'45'CHAIN_3114 v0 v1
                           (coe
                              MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                              (coe
-                                MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_LedgerStateOf_3716
+                                MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_LedgerStateOf_3714
                                 (coe
                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_HasLedgerState'45'NewEpochState_4166)
                                 v6)
