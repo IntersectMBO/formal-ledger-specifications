@@ -110,7 +110,7 @@ allowedLanguagesLegacy tx utxo =
   if UsesBootstrapAddress utxo tx
     then ∅
   else if UsesV4Features tx
-    then fromList (PlutusV4 ∷ [])
+    then ∅
   else if UsesV3Features tx
     then fromList (PlutusV4 ∷ PlutusV3 ∷ [])
   else if UsesV2Features tx utxo
