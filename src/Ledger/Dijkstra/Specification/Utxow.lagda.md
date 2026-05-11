@@ -115,12 +115,14 @@ languages p2Scripts = mapˢ language p2Scripts
 
 allowedLanguagesLegacyMode : TopLevelTx → UTxO → ℙ Language
 allowedLanguagesLegacyMode tx utxo =
-  if UsesV3Features tx
+  if UsesBootstrapAddress utxo tx
+    then ∅
+  else if UsesV3Features tx
     then fromList (PlutusV3 ∷ [])
-    else
-  if UsesV2Features tx utxo
+  else if UsesV2Features tx utxo
     then fromList (PlutusV3 ∷ PlutusV2 ∷ [])
-    else fromList (PlutusV3 ∷ PlutusV2 ∷ PlutusV1 ∷ [])
+  else
+    fromList (PlutusV3 ∷ PlutusV2 ∷ PlutusV1 ∷ [])
 ```
 
 ## Checking the script integrity hash
@@ -432,7 +434,6 @@ mode up front rather than deciding both.
     in
 
     ∙ ∃[ s ∈ p2ScriptsNeeded ] language s ∈ fromList (PlutusV1 ∷ PlutusV2 ∷ PlutusV3 ∷ [])
-    ∙ ¬ (UsesBootstrapAddress (UTxOOf Γ) txTop)
     ∙ ∀[ g ∈ GuardsOf txTop ] IsKeyHashObj g     -- (4)
     ∙ Is-∅ (dom txDirectDeposits)                -- (5)
     ∙ Is-∅ (dom txBalanceIntervals)              -- (6)
@@ -444,7 +445,7 @@ mode up front rather than deciding both.
     ∙ scriptHashesNeeded ⊆ mapˢ hash scriptsProvided
     ∙ dataHashesNeededSpendInputs ⊆ dataHashesProvided
     ∙ dataHashesProvided ⊆ dataHashesNeededSpendInputs ∪ dataHashesOutputs ∪ dataHashesReferenceInputs
-    ∙ languages p2ScriptsNeeded ⊆ dom (PParams.costmdls (PParamsOf Γ)) ∩ allowedLanguagesLegacyMode txTop (UTxOOf Γ)
+    ∙ languages p2ScriptsNeeded ⊆ dom (PParams.costmdls (PParamsOf Γ)) ∩ (allowedLanguagesLegacyMode txTop (UTxOOf Γ) ∪ ❴ PlutusV4 ❵)
     ∙ txADhash ≡ map hash txAuxData
     ∙ (Γ , true) ⊢ s ⇀⦇ txTop ,UTXO⦈ s'
       ────────────────────────────────
@@ -457,7 +458,7 @@ unquoteDecl UTXOW-normal-premises = genPremises UTXOW-normal-premises (quote UTX
 unquoteDecl UTXOW-legacy-premises = genPremises UTXOW-legacy-premises (quote UTXOW-legacy)
 unquoteDecl SUBUTXOW-premises = genPremises SUBUTXOW-premises (quote SUBUTXOW)
 pattern UTXOW-normal-⋯ p₀ p₁ p₂ p₃ p₄ p₅ p₆ p₇ p₈ p₉ p₁₀ p₁₁ h = UTXOW-normal (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , h)
-pattern UTXOW-legacy-⋯ p₀ p₁ p₂ p₃ p₄ p₅ p₆ p₇ p₈ p₉ p₁₀ p₁₁ p₁₂ p₁₃ p₁₄ h = UTXOW-legacy (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , p₁₂ , p₁₃ , p₁₄ , h)
+pattern UTXOW-legacy-⋯ p₀ p₁ p₂ p₃ p₄ p₅ p₆ p₇ p₈ p₉ p₁₀ p₁₁ p₁₂ p₁₃ h = UTXOW-legacy (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , p₁₂ , p₁₃ , h)
 pattern SUBUTXOW-⋯ p₀ p₁ p₂ p₃ p₄ p₅ p₆ p₇ p₈ p₉ p₁₀ p₁₁ h = SUBUTXOW (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , h)
 ```
 -->
