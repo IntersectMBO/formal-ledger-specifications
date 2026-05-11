@@ -58,11 +58,9 @@ module _ (tx : TopLevelTx) where
     hasTreasure  : Is-just (CurrentTreasuryOf tx)       → UsesV3Features
 
   data UsesV4Features : Set where
-    hasSubtransactions   : ¬ Is-[] (SubTransactionsOf tx)        → UsesV4Features
-    hasGuards            : ¬ Is-∅ (GuardsOf tx)                  → UsesV4Features
+    hasScriptGuards      : ¬ (∀[ g ∈ GuardsOf tx ] IsKeyHashObj g) → UsesV4Features
     hasDirectDeposits    : ¬ Is-∅ (dom (DirectDepositsOf tx))    → UsesV4Features
     hasBalanceIntervals  : ¬ Is-∅ (dom (BalanceIntervalsOf tx))  → UsesV4Features
-
 ```
 
 <!--
@@ -82,45 +80,50 @@ module _ {tx : TopLevelTx} where
 
 module _ {tx : TopLevelTx} where
   open Tx tx
-  -- open TxBody txBody
 
   instance
     Dec-UsesV4Features : UsesV4Features tx ⁇
     Dec-UsesV4Features .dec
-      with ¿ ¬ Is-[] (SubTransactionsOf tx) ¿ | ¿ ¬ Is-∅ (GuardsOf tx) ¿
+      with ¿ ¬ (∀[ g ∈ GuardsOf tx ] IsKeyHashObj g) ¿
          | ¿ ¬ Is-∅ (dom (DirectDepositsOf tx)) ¿ | ¿ ¬ Is-∅ (dom (BalanceIntervalsOf tx)) ¿
-    ... | yes p | _ | _ | _ = yes (hasSubtransactions p)
-    ... | _ | yes p | _ | _ = yes (hasGuards p)
-    ... | _ | _ | yes p | _ = yes (hasDirectDeposits p)
-    ... | _ | _ | _ | yes p = yes (hasBalanceIntervals p)
-    ... | no p₁ | no p₂ | no p₃ | no p₄
-      = no λ { (hasSubtransactions x) → p₁ x ; (hasGuards x) → p₂ x
-             ; (hasDirectDeposits x) → p₃ x ; (hasBalanceIntervals x) → p₄ x }
+    ... | yes p | _ | _ = yes (hasScriptGuards p)
+    ... | _ | yes p | _ = yes (hasDirectDeposits p)
+    ... | _ | _ | yes p = yes (hasBalanceIntervals p)
+    ... | no p₂ | no p₃ | no p₄
+      = no λ { (hasScriptGuards x) → p₂ x
+             ; (hasDirectDeposits x) → p₃ x
+             ; (hasBalanceIntervals x) → p₄ x }
 ```
 -->
 
-CIP-159 fields (`txDirectDeposits`{.AgdaField} and `txBalanceIntervals`{.AgdaField})
-require at least PlutusV4 and are explicitly forbidden in legacy mode via the
-`Is-∅ (dom txDirectDeposits)` and `Is-∅ (dom txBalanceIntervals)` premises in
-`UTXOW-legacy`.  This follows the same pattern as `Is-∅ (GuardsOf txTop)` for guard
-scripts.
-
-When backward compatibility with older Plutus scripts (v1–v3) is needed, CIP-159
-fields can appear in sub-transactions while older scripts run at the top level
-(the CIP-118 escape hatch).
+The set of languages allowed in phase-2 scripts within a transaction
+depends on (1) the operation mode (see
+[below](sec:the-utxow-transition-system)), and (2) the features of a
+transaction and their compatibility with Plutus versions.
 
 ```agda
 languages :  ℙ P2Script → ℙ Language
 languages p2Scripts = mapˢ language p2Scripts
 
-allowedLanguagesLegacyMode : TopLevelTx → UTxO → ℙ Language
-allowedLanguagesLegacyMode tx utxo =
-  if UsesV3Features tx
-    then fromList (PlutusV3 ∷ [])
-    else
-  if UsesV2Features tx utxo
-    then fromList (PlutusV3 ∷ PlutusV2 ∷ [])
-    else fromList (PlutusV3 ∷ PlutusV2 ∷ PlutusV1 ∷ [])
+allowedLanguagesLegacy : TopLevelTx → UTxO → ℙ Language
+allowedLanguagesLegacy tx utxo =
+  if UsesBootstrapAddress utxo tx
+    then ∅
+  else if UsesV4Features tx
+    then ∅
+  else if UsesV3Features tx
+    then fromList (PlutusV4 ∷ PlutusV3 ∷ [])
+  else if UsesV2Features tx utxo
+    then fromList (PlutusV4 ∷ PlutusV3 ∷ PlutusV2 ∷ [])
+  else
+    fromList (PlutusV4 ∷ PlutusV3 ∷ PlutusV2 ∷ PlutusV1 ∷ [])
+
+allowedLanguages : Tx ℓ → UTxO → ℙ Language
+allowedLanguages tx utxo =
+  if UsesBootstrapAddress utxo tx
+    then ∅
+  else
+    fromList (PlutusV4 ∷ [])
 ```
 
 ## Checking the script integrity hash
@@ -167,9 +170,7 @@ instance
 
 1. All needed phase-2 scripts use Plutus language V4.
 
-2. Sub-transactions cannot reference or use bootstrap addresses
-
-3. Required top-level guards are well-formed. If the credential is a
+2. Required top-level guards are well-formed. If the credential is a
    `KeyHash`{.AgdaDatatype} or a phase-1 script, then no datum should
    be specified, otherwise, when it is a phase-2 script, the datum
    should be specified.
@@ -232,16 +233,16 @@ data _⊢_⇀⦇_,SUBUTXOW⦈_ : SubUTxOEnv → UTxOState → SubLevelTx → UTx
                                                        else nothing)
                                       (credsNeeded utxo₀ txSub)
     in
+    ∙ ∀[ s ∈ p2ScriptsNeeded ] language s ∈ fromList (PlutusV4 ∷ []) -- (1)
     ∙ ∀[ (vk , σ) ∈ vKeySigs ] isSigned vk (txidBytes txId) σ
     ∙ ∀[ s ∈ p1ScriptsNeeded ] validP1Script vKeyHashesProvided (GuardsOf txSub) txVldt s
-    ∙ ∀[ tlg ∈ TopLevelGuardsOf txSub ] TopLevelGuardWellFormed scriptsProvided tlg -- (3)
-    ∙ (¬ UsesBootstrapAddress utxo₀ txSub) -- (2)
+    ∙ ∀[ tlg ∈ TopLevelGuardsOf txSub ] TopLevelGuardWellFormed scriptsProvided tlg -- (2)
     ∙ vKeyHashesNeeded ⊆ vKeyHashesProvided
     ∙ scriptHashesNeeded ⊆ mapˢ hash scriptsProvided
     ∙ dataHashesNeededSpendInputs ⊆ dataHashesProvided
     ∙ dataHashesProvided ⊆ dataHashesNeededSpendInputs ∪ dataHashesOutputs ∪ dataHashesReferenceInputs
     ∙ dom txRedeemers ≡ᵉ scriptRedeemerPtrs
-    ∙ languages p2ScriptsNeeded ⊆ dom (PParams.costmdls (PParamsOf Γ)) ∩ ❴ PlutusV4 ❵ -- (1)
+    ∙ languages p2ScriptsNeeded ⊆ dom (PParams.costmdls (PParamsOf Γ)) ∩ allowedLanguages txSub utxo₀
     ∙ txADhash ≡ map hash txAuxData
     ∙ scriptIntegrityHash ≡ hashScriptIntegrity (PParamsOf Γ) (languages p2ScriptsNeeded) txRedeemers txData
     ∙ Γ ⊢ s₀ ⇀⦇ txSub ,SUBUTXO⦈ s₁
@@ -268,10 +269,7 @@ mode up front rather than deciding both.
 
 1. All needed phase-2 scripts use Plutus language V4.
 
-2. If the top-level transaction uses or references bootstrap addresses then the
-   set of needed phase-2 scripts must be empty.
-
-3. The required top-level guards of subtransactions appear in the set of
+2. The required top-level guards of subtransactions appear in the set of
    guards at the top-level.
 
 ```agda
@@ -334,8 +332,7 @@ mode up front rather than deciding both.
     in
 
     ∙ ∀[ s ∈ p2ScriptsNeeded ] language s ∈ fromList (PlutusV4 ∷ []) -- (1)
-    ∙ (UsesBootstrapAddress (UTxOOf Γ) txTop → Is-∅ p2ScriptsNeeded) -- (2)
-    ∙ concatMapˡ (λ txSub → mapˢ proj₁ (TopLevelGuardsOf txSub)) (SubTransactionsOf txTop) ⊆ GuardsOf txTop -- (3)
+    ∙ concatMapˡ (λ txSub → mapˢ proj₁ (TopLevelGuardsOf txSub)) (SubTransactionsOf txTop) ⊆ GuardsOf txTop -- (2)
     ∙ ∀[ (vk , σ) ∈ TxWitnesses.vKeySigs (Tx.txWitnesses txTop) ] isSigned vk (txidBytes (TxIdOf txTop)) σ
     ∙ ∀[ s ∈ p1ScriptsNeeded ] validP1Script vKeyHashesProvided (GuardsOf txTop) txVldt s
     ∙ vKeyHashesNeeded ⊆ vKeyHashesProvided
@@ -343,7 +340,7 @@ mode up front rather than deciding both.
     ∙ scriptHashesNeeded ⊆ mapˢ hash scriptsProvided
     ∙ dataHashesNeededSpendInputs ⊆ dataHashesProvided
     ∙ dataHashesProvided ⊆ dataHashesNeededSpendInputs ∪ dataHashesOutputs ∪ dataHashesReferenceInputs
-    ∙ languages p2ScriptsNeeded ⊆ dom (PParams.costmdls (PParamsOf Γ)) ∩ ❴ PlutusV4 ❵ -- (1)
+    ∙ languages p2ScriptsNeeded ⊆ dom (PParams.costmdls (PParamsOf Γ)) ∩ allowedLanguages txTop (UTxOOf Γ)
     ∙ txADhash ≡ map hash txAuxData
     ∙ (Γ , false) ⊢ s ⇀⦇ txTop ,UTXO⦈ s'
       ────────────────────────────────
@@ -353,24 +350,10 @@ mode up front rather than deciding both.
 ### Legacy mode
 
 1. There is at least a needed phase-2 script with Plutus language version V1, V2
-   or V3.
+   or V3. Note that Plutus V4 scripts are allowed in legacy mode.
 
-2. The language of all needed phase-2 scripts is compatible with the features
-   used by the top-level transaction, (votes, proposals, inline datum, ...) (See
-   `allowedLanguagesLegacy`). Moreover, all needed phase-2 scripts use Plutus
-   language versions V1, V2, or V3.
-
-3. The top-level transaction does not use or reference bootstrap addresses (in
-   case it does, it is handled in normal mode).
-
-4. `Guards` only contains keyhashes, and, thus, all sub-transaction's
-   `requiredTopLevelGuards` contain only keyhashes. (`Guards` with
-   only keyhashes correspond to `reqSignerHashes` in pre-Dijkstra).
-
-5. The top-level transaction does not contain direct deposits (`txDirectDeposits` is empty).
-
-6. The top-level transaction does not contain balance interval assertions
-   (`txBalanceIntervals` is empty).
+2. The required top-level guards of subtransactions appear in the set of
+   guards at the top-level.
 
 ```agda
   UTXOW-legacy :
@@ -431,12 +414,8 @@ mode up front rather than deciding both.
 
     in
 
-    ∙ ∃[ s ∈ p2ScriptsNeeded ] language s ∈ fromList (PlutusV1 ∷ PlutusV2 ∷ PlutusV3 ∷ [])
-    ∙ ¬ (UsesBootstrapAddress (UTxOOf Γ) txTop)
-    ∙ ∀[ g ∈ GuardsOf txTop ] IsKeyHashObj g     -- (4)
-    ∙ Is-∅ (dom txDirectDeposits)                -- (5)
-    ∙ Is-∅ (dom txBalanceIntervals)              -- (6)
-    ∙ concatMapˡ (λ txSub → mapˢ proj₁ (TopLevelGuardsOf txSub)) (SubTransactionsOf txTop) ⊆ GuardsOf txTop -- (3)
+    ∙ ∃[ s ∈ p2ScriptsNeeded ] language s ∈ fromList (PlutusV1 ∷ PlutusV2 ∷ PlutusV3 ∷ []) -- (1)
+    ∙ concatMapˡ (λ txSub → mapˢ proj₁ (TopLevelGuardsOf txSub)) (SubTransactionsOf txTop) ⊆ GuardsOf txTop -- (2)
     ∙ ∀[ (vk , σ) ∈ vKeySigs ] isSigned vk (txidBytes (TxIdOf txTop)) σ
     ∙ ∀[ s ∈ p1ScriptsNeeded ] validP1Script vKeyHashesProvided (GuardsOf txTop) txVldt s
     ∙ vKeyHashesNeeded ⊆ vKeyHashesProvided
@@ -444,7 +423,7 @@ mode up front rather than deciding both.
     ∙ scriptHashesNeeded ⊆ mapˢ hash scriptsProvided
     ∙ dataHashesNeededSpendInputs ⊆ dataHashesProvided
     ∙ dataHashesProvided ⊆ dataHashesNeededSpendInputs ∪ dataHashesOutputs ∪ dataHashesReferenceInputs
-    ∙ languages p2ScriptsNeeded ⊆ dom (PParams.costmdls (PParamsOf Γ)) ∩ allowedLanguagesLegacyMode txTop (UTxOOf Γ)
+    ∙ languages p2ScriptsNeeded ⊆ dom (PParams.costmdls (PParamsOf Γ)) ∩ allowedLanguagesLegacy txTop (UTxOOf Γ)
     ∙ txADhash ≡ map hash txAuxData
     ∙ (Γ , true) ⊢ s ⇀⦇ txTop ,UTXO⦈ s'
       ────────────────────────────────
@@ -456,8 +435,8 @@ mode up front rather than deciding both.
 unquoteDecl UTXOW-normal-premises = genPremises UTXOW-normal-premises (quote UTXOW-normal)
 unquoteDecl UTXOW-legacy-premises = genPremises UTXOW-legacy-premises (quote UTXOW-legacy)
 unquoteDecl SUBUTXOW-premises = genPremises SUBUTXOW-premises (quote SUBUTXOW)
-pattern UTXOW-normal-⋯ p₀ p₁ p₂ p₃ p₄ p₅ p₆ p₇ p₈ p₉ p₁₀ p₁₁ h = UTXOW-normal (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , h)
-pattern UTXOW-legacy-⋯ p₀ p₁ p₂ p₃ p₄ p₅ p₆ p₇ p₈ p₉ p₁₀ p₁₁ p₁₂ p₁₃ p₁₄ h = UTXOW-legacy (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , p₁₂ , p₁₃ , p₁₄ , h)
+pattern UTXOW-normal-⋯ p₀ p₁ p₂ p₃ p₄ p₅ p₆ p₇ p₈ p₉ p₁₀ h = UTXOW-normal (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , h)
+pattern UTXOW-legacy-⋯ p₀ p₁ p₂ p₃ p₄ p₅ p₆ p₇ p₈ p₉ p₁₀ h = UTXOW-legacy (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , h)
 pattern SUBUTXOW-⋯ p₀ p₁ p₂ p₃ p₄ p₅ p₆ p₇ p₈ p₉ p₁₀ p₁₁ h = SUBUTXOW (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , h)
 ```
 -->
