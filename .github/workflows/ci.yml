@@ -18,7 +18,7 @@ jobs:
   formal-ledger-agda:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - uses: cachix/install-nix-action@v31
         with:
           nix_path: nixpkgs=https://github.com/NixOS/nixpkgs/archive/6c5963357f3c1c840201eda129a99d455074db04.tar.gz
@@ -30,12 +30,12 @@ jobs:
         run: |
           nix build -o outputs
       - name: Upload agda _build artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: _build
           path: outputs/_build
       - name: Upload agda typechecking time artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: typecheck.time
           path: outputs/typecheck.time
@@ -46,58 +46,20 @@ jobs:
     with:
       target: hs
 
-  hs-build:
-    needs: [hs]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Download extracted Haskell code
-        uses: actions/download-artifact@v4
-        with:
-          name: hs
-          path: dist
-      - name: Install Nix
-        uses: cachix/install-nix-action@v31
-        with:
-          nix_path: nixpkgs=https://github.com/NixOS/nixpkgs/archive/6c5963357f3c1c840201eda129a99d455074db04.tar.gz
-          extra_nix_config: |
-            trusted-public-keys = hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ= cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
-            substituters = https://cache.iog.io https://cache.nixos.org/
-      - name: Build the extracted Haskell code
-        run: |
-          nix-shell -p haskell.compiler.ghc96 cabal-install --run "cd dist/hs; cabal update && cabal build"
-
-  html:
-    needs: [formal-ledger-agda]
-    uses: ./.github/workflows/build_artifact.yml
-    with:
-      target: html
-
   mkdocs:
     needs: [formal-ledger-agda]
     uses: ./.github/workflows/build_artifact.yml
     with:
       target: mkdocs
 
-  cardano-ledger-pdf:
-    needs: [formal-ledger-agda]
-    uses: ./.github/workflows/copy_legacy_pdf.yml
-    with:
-      pdf_name: cardano-ledger.pdf
-
-  conway-ledger-pdf:
-    needs: [formal-ledger-agda]
-    uses: ./.github/workflows/copy_legacy_pdf.yml
-    with:
-      pdf_name: conway-ledger.pdf
-
   push-artifacts-to-branch:
     # This job runs only if the workflow has not been manually dispached,
     # and the origininating branch belongs to the repository
     if: ${{ github.event_name != 'workflow_dispatch' && ! github.event.pull_request.head.repo.fork }}
-    needs: [formal-ledger-agda, hs, hs-build, html, conway-ledger-pdf, cardano-ledger-pdf, mkdocs]
+    needs: [formal-ledger-agda, hs, mkdocs]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0
       - name: Set artifacts_branch variable
@@ -122,11 +84,11 @@ jobs:
           else
             git checkout --orphan "${ARTIFACTS_BRANCH}"
           fi
-          git rm -rf .
+          find . -mindepth 1 -not -name cardano-ledger.pdf -not -name conway-ledger.pdf  -not -path './.git*' -delete
         env:
           ARTIFACTS_BRANCH: ${{ steps.set-artifacts-branch.outputs.artifacts_branch }}
       - name: Download artifacts
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           pattern: '!_build'
           merge-multiple: true
@@ -185,62 +147,8 @@ jobs:
             git add -A
             git commit --allow-empty -m "Artifacts generated from ${{ github.sha }}"
       - name: Push ${{ env.artifacts_branch }}
-        uses: ad-m/github-push-action@v0.6.0
+        uses: ad-m/github-push-action@v1
         with:
             github_token: ${{ secrets.GITHUB_TOKEN }}
             branch: ${{ steps.set-artifacts-branch.outputs.artifacts_branch }}
             force: true
-
-  build-cardano-ledger:
-    needs: [hs]
-    if: ${{ github.event_name == 'push' || github.event_name == 'workflow_dispatch' }}
-    runs-on: ubuntu-latest
-    steps:
-      - name: Free up disk space
-        run: |
-          # Remove software and language runtimes we're not using
-          sudo rm -rf \
-            "$AGENT_TOOLSDIRECTORY" \
-            /opt/google/chrome \
-            /opt/microsoft/msedge \
-            /opt/microsoft/powershell \
-            /opt/pipx \
-            /usr/lib/mono \
-            /usr/local/julia* \
-            /usr/local/lib/android \
-            /usr/local/lib/node_modules \
-            /usr/local/share/chromium \
-            /usr/local/share/powershell \
-            /usr/share/dotnet \
-            /usr/share/swift
-          df -h /
-      - uses: cachix/install-nix-action@v31
-        with:
-          nix_path: nixpkgs=https://github.com/NixOS/nixpkgs/archive/6c5963357f3c1c840201eda129a99d455074db04.tar.gz
-          extra_nix_config: |
-            trusted-public-keys = hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ= cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
-            substituters = https://cache.iog.io https://cache.nixos.org/
-      - name: Checkout prepare-conf-test.sh
-        uses: actions/checkout@v4
-        with:
-          sparse-checkout: |
-            build-tools/scripts/prepare-conf-test.sh
-          sparse-checkout-cone-mode: false
-          path: fls
-
-      - name: Checkout cardano-ledger
-        uses: actions/checkout@v4
-        with:
-          repository: IntersectMBO/cardano-ledger
-          path: cl
-          fetch-depth: 0
-
-      - name: Download hs artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: hs
-
-      - name: Build cardano-ledger
-        run: |
-          cd cl
-          nix develop --command bash -c "../fls/build-tools/scripts/prepare-conf-test.sh . ../hs && cabal update && cabal build cardano-ledger-conformance"

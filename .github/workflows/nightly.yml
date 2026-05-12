@@ -12,7 +12,7 @@ jobs:
   build-all:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - uses: cachix/install-nix-action@v31
         with:
@@ -24,3 +24,33 @@ jobs:
         run: |
           targets=$(nix flake show --json 2>/dev/null | jq -r '.packages."x86_64-linux" | keys[] | ".#\(.)"')
           nix build $targets
+
+  build-and-test-cardano-ledger:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: cachix/install-nix-action@v31
+        with:
+          extra_nix_config: |
+            trusted-public-keys = hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ= cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
+            substituters = https://cache.iog.io https://cache.nixos.org/
+
+      - name: Checkout formal-ledger-specifications
+        uses: actions/checkout@v6
+        with:
+          path: fls
+
+      - name: Build haskell code
+        run: |
+          cd fls
+          nix build ./#hs-src
+
+      - name: Checkout cardano-ledger
+        uses: actions/checkout@v6
+        with:
+          repository: IntersectMBO/cardano-ledger
+          path: cl
+
+      - name: Build cardano-ledger
+        run: |
+          cd cl
+          nix develop --command bash -c "../fls/build-tools/scripts/prepare-conf-test.sh . ../fls/result/hs && cabal update && cabal test cardano-ledger-conformance"

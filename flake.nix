@@ -83,10 +83,6 @@
 
           hs-src = pkgs.callPackage ./build-tools/nix/hs-src.nix { inherit mkDerivation; };
 
-          cardano-ledger-executable-spec = pkgs.haskell.lib.compose.disableLibraryProfiling (
-            pkgs.haskellPackages.callCabal2nix "cardano-ledger-executable-spec" "${hs-src}/hs" { }
-          );
-
           pkgs' = {
             inherit
               formal-ledger
@@ -115,7 +111,6 @@
             inherit
               fls-agdaWithPackages
               fls-shake-agdaWithPackages
-              cardano-ledger-executable-spec
               ;
           };
 
