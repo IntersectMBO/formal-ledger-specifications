@@ -34,7 +34,7 @@ private
     open import Ledger.Conway.Conformance.Certs govStructure public
 
 open Tx
-open import Ledger.Conway.Conformance.Equivalence.Map
+open import abstract-set-theory.Axiom.Set.Map.Extra th
 open import Ledger.Conway.Conformance.Equivalence.Certs txs abs
 open import Axiom.Set.Properties th using (≡ᵉ-Setoid; ≡ᵉ-isEquivalence)
 

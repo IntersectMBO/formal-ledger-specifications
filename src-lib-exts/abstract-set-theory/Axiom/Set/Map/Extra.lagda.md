@@ -1,42 +1,82 @@
 ---
 source_branch: master
-source_path: src/Ledger/Conway/Conformance/Equivalence/Map.lagda.md
+source_path: src-lib-exts/abstract-set-theory/Axiom/Set/Map/Extra.lagda.md
 ---
+
+# Extensions to `Axiom.Set.Map`
+
+This module collects properties of finite maps that aren't yet in the upstream
+library (`agda-sets`).  This includes extra utilities and candidates for upstreaming.
+
+<!--
 ```agda
 {-# OPTIONS --safe #-}
 
-module Ledger.Conway.Conformance.Equivalence.Map where
+module abstract-set-theory.Axiom.Set.Map.Extra where
 
-open import Ledger.Prelude
-open import Axiom.Set.Properties th
+open import abstract-set-theory.FiniteSetTheory renaming (_⊆_ to _⊆ˢ_)
+open Properties using  ( ≡ᵉ-Setoid; ≡ᵉ-isEquivalence; ∪-cong-⊆; ∪-cong; ∪-identityʳ
+                       ; ∪-identityˡ ; filter-⊆; ∪-comm; ∉-∅; Dec-∈-singleton )
+
+open import abstract-set-theory.Prelude
+open import Interface.TypeClasses.HasSubset
 
 import Algebra as Alg
-import Algebra.Definitions as AlgDefs
 import Algebra.Structures as AlgStrucs
 
 open import Data.List.Relation.Unary.Any using (Any)
 open import Data.These as These using (These; this; that; these; fold)
 open import Data.Product using (swap)
 open import Data.Sum using () renaming (map to map-⊎)
-import Relation.Binary.Reasoning.Setoid as SetoidReasoning
-open import Relation.Binary using (IsEquivalence; _Preserves_⟶_)
-open import Relation.Binary.Bundles
-open module SetSetoid {A} = Setoid (≡ᵉ-Setoid {A}) using () renaming (refl to ≈-refl; trans to infixr 1 _⟨≈⟩_)
 open import Data.Product.Properties using (×-≡,≡←≡; ×-≡,≡→≡)
 
+import Relation.Binary.Reasoning.Setoid as SetoidReasoning
+open import Relation.Binary using (IsEquivalence; _Preserves_⟶_)
+open import Relation.Binary.Bundles using (Setoid)
+
+open module SetSetoid {A} = Setoid (≡ᵉ-Setoid {A})
+  using () renaming (refl to ≈-refl; trans to infixr 1 _⟨≈⟩_)
+
 open Any
+open Equivalence
 
 import Axiom.Set
 import Axiom.Set.Rel
 {-# DISPLAY Axiom.Set.Theory._∈_ _ a b = a ∈ b #-}
 {-# DISPLAY Axiom.Set.Rel.dom _ a = dom a #-}
 
+instance
+  HasSubset-ℙ : {A : Type} → HasSubset (ℙ A)
+  HasSubset-ℙ ._⊆_ = _⊆ˢ_
+
+  HasSubset-⇀ : {A B : Type} → HasSubset (A ⇀ B)
+  HasSubset-⇀ {A} {B} ._⊆_ m₁ m₂ = {k : A} {v : B} → (k , v) ∈ (m₁ ˢ) → (k , v) ∈ (m₂ ˢ)
+```
+-->
+
+## Map inequality
+
+```agda
+infix 4 _≢ᵐ_
+
+_≢ᵐ_ : {A B : Type} → (A ⇀ B) → (A ⇀ B) → Type
+a ≢ᵐ b = ¬ a ≡ᵐ b
+```
+
+## Properties of `_∪⁺_`
+
+This section was previously `Ledger.Conway.Conformance.Equivalence.Map` and
+contains general properties of additive map union over any commutative monoid.
+Nothing here is Conway-specific; it was developed under that path during early
+agda-sets bring-up.
+
+<!--
+```agda
 module _  {A B : Type}
   (open AlgStrucs {A = B} _≡_)
   ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq B ⦄
   ⦃ _ : CommutativeMonoid _ _ B ⦄
   ⦃ csg : IsCommutativeSemigroup _◇_ ⦄
-
   where
   private
     variable
@@ -629,14 +669,14 @@ module _  {A B : Type}
       ∈-filter-res- : {x : A × B} (m : A ⇀ B) → x ∈ filterᵐ P′ m ∣ ❴ k ❵ → P′ x × ∃[ b ] x ≡ (k , b)
       ∈-filter-res- m x∈ = proj₁ (from ∈-filter $ res-⊆ x∈) , res-singleton''{m = filterᵐ P′ m} x∈
 
-      module ≡ᵉ = IsEquivalence (≡ᵉ-isEquivalence {Σ A (λ x → B)})
+      module Eq = IsEquivalence (≡ᵉ-isEquivalence {Σ A (λ x → B)})
       open SetoidReasoning (≡ᵉ-Setoid{Σ A (λ x → B)})
 
       restrict-singleton-filterᵐ-false : ∀ m → ¬ P k → filterᵐ P′ m ∣ ❴ k ❵ ᶜ ≡ᵐ filterᵐ P′ m
-      restrict-singleton-filterᵐ-false {k} m ¬p = ≡ᵉ.sym $
+      restrict-singleton-filterᵐ-false {k} m ¬p = Eq.sym $
         begin
-        filterᵐ P′ m ˢ                                        ≈⟨ ≡ᵉ.sym (res-ex-∪ Dec-∈-singleton) ⟩
-        (filterᵐ P′ m ∣ ❴ k ❵) ˢ ∪ (filterᵐ P′ m ∣ ❴ k ❵ ᶜ)ˢ  ≈⟨ ∪-cong ¬P→res-∅ ≡ᵉ.refl ⟩
+        filterᵐ P′ m ˢ                                        ≈⟨ Eq.sym (res-ex-∪ Dec-∈-singleton) ⟩
+        (filterᵐ P′ m ∣ ❴ k ❵) ˢ ∪ (filterᵐ P′ m ∣ ❴ k ❵ ᶜ)ˢ  ≈⟨ ∪-cong ¬P→res-∅ Eq.refl ⟩
         ∅ ∪ (filterᵐ P′ m ∣ ❴ k ❵ ᶜ) ˢ                        ≈⟨ ∪-identityˡ _ ⟩
         (filterᵐ P′ m ∣ ❴ k ❵ ᶜ) ˢ                            ∎
           where
