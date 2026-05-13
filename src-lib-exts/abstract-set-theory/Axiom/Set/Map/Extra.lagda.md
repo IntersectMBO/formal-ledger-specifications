@@ -1,15 +1,27 @@
 ---
 source_branch: master
-source_path: src/Ledger/Conway/Conformance/Equivalence/Map.lagda.md
+source_path: src-lib-exts/abstract-set-theory/Axiom/Set/Map/Extra.lagda.md
 ---
+
+# Extensions to `Axiom.Set.Map`
+
+This module collects properties of finite maps that aren't yet in the upstream
+library (`agda-sets`).  This includes extra utilities and candidates for upstreaming.
+
+<!--
 ```agda
 {-# OPTIONS --safe #-}
 
-module Ledger.Conway.Conformance.Equivalence.Map where
+open import Axiom.Set using (Theory)
 
-open import Ledger.Prelude
+module abstract-set-theory.Axiom.Set.Map.Extra (th : Theory) where
+
+open import abstract-set-theory.Prelude
+  using (Type; ¬_; DecEq; _≡_; cong; sym; trans; subst; refl; _∘_; case_of_; ⊥-elim)
+open import Axiom.Set.Map th
 open import Axiom.Set.Properties th
 
+-- Imports specific to the ∪⁺ machinery below
 import Algebra as Alg
 import Algebra.Definitions as AlgDefs
 import Algebra.Structures as AlgStrucs
@@ -25,12 +37,36 @@ open module SetSetoid {A} = Setoid (≡ᵉ-Setoid {A}) using () renaming (refl t
 open import Data.Product.Properties using (×-≡,≡←≡; ×-≡,≡→≡)
 
 open Any
+open Equivalence
 
 import Axiom.Set
 import Axiom.Set.Rel
 {-# DISPLAY Axiom.Set.Theory._∈_ _ a b = a ∈ b #-}
 {-# DISPLAY Axiom.Set.Rel.dom _ a = dom a #-}
 
+private variable
+  A : Type
+  B : Type
+```
+-->
+
+## Map inequality
+
+```agda
+infix 4 _≢ᵐ_
+_≢ᵐ_ : Map A B → Map A B → Type
+a ≢ᵐ b = ¬ a ≡ᵐ b
+```
+
+## Properties of `_∪⁺_`
+
+This section was previously `Ledger.Conway.Conformance.Equivalence.Map`
+and contains general properties of additive map union over any
+commutative monoid. Nothing here is Conway-specific; it was developed
+under that path during early agda-sets bring-up.
+
+<!--
+```agda
 module _  {A B : Type}
   (open AlgStrucs {A = B} _≡_)
   ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq B ⦄
@@ -673,3 +709,4 @@ module _  {A B : Type}
       lem-del-excluded : ∀ m → ¬ P k → filterᵐ P′ (m ∣ ❴ k ❵ ᶜ) ≡ᵐ filterᵐ P′ m
       lem-del-excluded m ¬p = filterᵐ-restrict m ⟨≈⟩ restrict-singleton-filterᵐ-false m ¬p
 ```
+-->
