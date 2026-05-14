@@ -130,30 +130,30 @@ instance
       ... | false | [ refl ]
         with H?
       ... | (no ¬p) = failure "UTXO" -- (genErrors ¬p)
-      ... | yes (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , p₁₂ , p₁₃ , p₁₄ , p₁₅ , p₁₆ , p₁₇ , p₁₈ , p₁₉ , p₂₀ , p₂₁)
+      ... | yes (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , p₁₂ , p₁₃ , p₁₄ , p₁₅ , p₁₆ , p₁₇ , p₁₈ , p₁₉ , p₂₀ , p₂₁ , p₂₂)
         with UTXOS.computeProof (Γ,legacyMode .proj₁) tt txTop
-      ... | success h = success (-, UTXO (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , p₁₂ , p₁₃ , p₁₄ , p₁₅ , p₁₆ , p₁₇ , p₁₈ , p₁₉ , p₂₀ , p₂₁ , proj₂ h))
+      ... | success h = success (-, UTXO (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , p₁₂ , p₁₃ , p₁₄ , p₁₅ , p₁₆ , p₁₇ , p₁₈ , p₁₉ , p₂₀ , p₂₁ , p₂₂ , proj₂ h))
       ... | failure ¬h = failure "UTXOS"
       computeProof | true | [ refl ]
         with H?
       ... | (no ¬p) = failure "UTXO" -- (genErrors ¬p)
-      ... | yes (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , p₁₂ , p₁₃ , p₁₄ , p₁₅ , p₁₆ , p₁₇ , p₁₈ , p₁₉ , p₂₀ , p₂₁)
+      ... | yes (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , p₁₂ , p₁₃ , p₁₄ , p₁₅ , p₁₆ , p₁₇ , p₁₈ , p₁₉ , p₂₀ , p₂₁ , p₂₂)
         with UTXOS.computeProof (Γ,legacyMode .proj₁) tt txTop
-      ... | success h = success (-, UTXO (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , p₁₂ , p₁₃ , p₁₄ , p₁₅ , p₁₆ , p₁₇ , p₁₈ , p₁₉ , p₂₀ , p₂₁ , proj₂ h))
+      ... | success h = success (-, UTXO (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , p₁₂ , p₁₃ , p₁₄ , p₁₅ , p₁₆ , p₁₇ , p₁₈ , p₁₉ , p₂₀ , p₂₁ , p₂₂ , proj₂ h))
       ... | failure ¬h = failure "UTXOS"
 
       completeness : ∀ s₁ → Γ,legacyMode ⊢ s₀ ⇀⦇ txTop ,UTXO⦈ s₁ → map proj₁ computeProof ≡ success s₁
-      completeness s₁ (UTXO-⋯ p₀ p₁ p₂ p₃ p₄ p₅ p₆ p₇ p₈ p₉ p₁₀ p₁₁ p₁₂ p₁₃ p₁₄ p₁₅ p₁₆ p₁₇ p₁₈ p₁₉ p₂₀ p₂₁ h)
+      completeness s₁ (UTXO-⋯ p₀ p₁ p₂ p₃ p₄ p₅ p₆ p₇ p₈ p₉ p₁₀ p₁₁ p₁₂ p₁₃ p₁₄ p₁₅ p₁₆ p₁₇ p₁₈ p₁₉ p₂₀ p₂₁ p₂₂ h)
         with IsValidFlagOf txTop | inspect IsValidFlagOf txTop
       ... | false | [ refl ]
         with H?
-      ... | no ¬p = ⊥-elim (¬p ((p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , p₁₂ , p₁₃ , p₁₄ , p₁₅ , p₁₆ , p₁₇ , p₁₈ , p₁₉ , p₂₀ , p₂₁)))
+      ... | no ¬p = ⊥-elim (¬p ((p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , p₁₂ , p₁₃ , p₁₄ , p₁₅ , p₁₆ , p₁₇ , p₁₈ , p₁₉ , p₂₀ , p₂₁ , p₂₂)))
       ... | yes _
         with UTXOS.computeProof (Γ,legacyMode .proj₁) tt txTop | UTXOS.completeness _ _ _ _ h
       ... | success h | refl = refl
-      completeness s₁ (UTXO-⋯ p₀  p₁  p₂  p₃  p₄  p₅  p₆  p₇  p₈  p₉  p₁₀  p₁₁  p₁₂  p₁₃  p₁₄  p₁₅  p₁₆  p₁₇  p₁₈ p₁₉ p₂₀ p₂₁ h) | true | [ refl ]
+      completeness s₁ (UTXO-⋯ p₀  p₁  p₂  p₃  p₄  p₅  p₆  p₇  p₈  p₉  p₁₀  p₁₁  p₁₂  p₁₃  p₁₄  p₁₅  p₁₆  p₁₇  p₁₈ p₁₉ p₂₀ p₂₁ p₂₂ h) | true | [ refl ]
         with H?
-      ... | no ¬p = ⊥-elim (¬p ((p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , p₁₂ , p₁₃ , p₁₄ , p₁₅ , p₁₆ , p₁₇ , p₁₈ , p₁₉ , p₂₀ , p₂₁)))
+      ... | no ¬p = ⊥-elim (¬p ((p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , p₁₂ , p₁₃ , p₁₄ , p₁₅ , p₁₆ , p₁₇ , p₁₈ , p₁₉ , p₂₀ , p₂₁ , p₂₂)))
       ... | yes _
         with UTXOS.computeProof (Γ,legacyMode .proj₁) tt txTop | UTXOS.completeness _ _ _ _ h
       ... | success h | refl = refl

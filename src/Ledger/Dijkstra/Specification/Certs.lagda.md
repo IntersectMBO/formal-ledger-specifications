@@ -283,13 +283,25 @@ private variable
 ```
 -->
 
+<!--
+```agda
+applyToRewards : (Coin → Coin → Coin)
+  → (RewardAddress ⇀ Coin)
+  → Rewards
+  → Rewards
+applyToRewards f m rwds =
+  foldl (λ acc (addr , amt) → maybe (λ bal → ❴ stake addr , f bal amt ❵ ∪ˡ acc) acc (lookupᵐ? acc (stake addr)))
+        rwds
+        (setToList (m ˢ))
+```
+-->
 
 ```agda
 rewardsBalance : DState → Coin
 rewardsBalance ds = ∑[ x ← RewardsOf ds ] x
 
-applyDirectDeposits : DirectDeposits → DState → DState
-applyDirectDeposits dd ds = record ds { rewards = RewardsOf ds ∪⁺ dd }
+applyDirectDeposits : DirectDeposits → Rewards → Rewards
+applyDirectDeposits = applyToRewards _+_
 ```
 
 The `POST-CERT`{.AgdaDatatype} rule calls `applyDirectDeposits`{.AgdaFunction} to
@@ -298,19 +310,7 @@ processing.  See *Direct Deposit Application (CIP-159)* below for details.
 
 ```agda
 applyWithdrawals : Withdrawals → Rewards → Rewards
-applyWithdrawals wdrls rwds =
-  foldl applyOne rwds (setToList (wdrls ˢ))
-  where
-    -- For each withdrawal entry `(addr, amt)`, look up `stake addr` in the acc,
-    -- compute `bal ∸ amt`, create a singleton map with the new balance, and
-    -- merge it with the rest (complement-restricted, to remove the old entry).
-    applyOne : Rewards → RewardAddress × Coin → Rewards
-    applyOne acc (addr , amt) =
-      case lookupᵐ? acc (stake addr) of λ where
-        (just bal) → ❴ stake addr , bal ∸ amt ❵ ∪ˡ (acc ∣ ❴ stake addr ❵ ᶜ)
-        nothing    → acc
-        -- `nothing` case is defensive; the PRE-CERT precondition guarantees the
-        -- credential is registered, but handling it makes the function total.
+applyWithdrawals = applyToRewards _∸_
 ```
 
 In the Dijkstra era, CIP-159 allows **partial withdrawals**: a transaction may
@@ -532,9 +532,9 @@ data _⊢_⇀⦇_,POST-CERT⦈_ : CertEnv → CertState → ⊤ → CertState �
     let activeVDelegs = mapˢ vDelegCredential (dom (DRepsOf stᵍ))
                          ∪ fromList (vDelegNoConfidence ∷ vDelegAbstain ∷ [])
     in
-    ∙ dom dd ⊆ dom rewards
+    ∙ mapˢ stake (dom dd) ⊆ dom rewards
       ────────────────────────────────
-      ⟦ e , pp , vs , wdrls , cc , dd ⟧ ⊢ ⟦ ⟦ voteDelegs , stakeDelegs , rewards , deposits ⟧ , stᵖ , stᵍ ⟧ ⇀⦇ _ ,POST-CERT⦈ ⟦ ⟦ voteDelegs ∣^ activeVDelegs , stakeDelegs , rewards ∪⁺ dd , deposits ⟧ , stᵖ , stᵍ ⟧
+      ⟦ e , pp , vs , wdrls , cc , dd ⟧ ⊢ ⟦ ⟦ voteDelegs , stakeDelegs , rewards , deposits ⟧ , stᵖ , stᵍ ⟧ ⇀⦇ _ ,POST-CERT⦈ ⟦ ⟦ voteDelegs ∣^ activeVDelegs , stakeDelegs , applyDirectDeposits dd rewards , deposits ⟧ , stᵖ , stᵍ ⟧
 
 
 

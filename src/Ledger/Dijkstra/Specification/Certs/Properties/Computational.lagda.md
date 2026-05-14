@@ -21,6 +21,7 @@ import Data.Maybe.Relation.Unary.Any as M
 import Data.Maybe.Relation.Unary.All as M
 
 open GovStructure govStructure
+open RewardAddress
 open Inverse
 
 open Computational ⦃...⦄
@@ -182,7 +183,7 @@ instance
         p .proj₂ = refl
 
   Computational-POST-CERT : Computational _⊢_⇀⦇_,POST-CERT⦈_ String
-  Computational-POST-CERT .computeProof ce cs tt with ¿ dom (CertEnv.directDeposits ce) ⊆ dom (RewardsOf cs) ¿
+  Computational-POST-CERT .computeProof ce cs tt with ¿ mapˢ stake (dom (CertEnv.directDeposits ce)) ⊆ dom (RewardsOf cs) ¿
   ... | (no ¬p) = failure (genErrors ¬p)
   ... | (yes p) = success (cs' , CERT-post p)
     where
@@ -190,12 +191,12 @@ instance
       validVoteDelegs = VoteDelegsOf cs ∣^ (mapˢ vDelegCredential (dom (DRepsOf cs)) ∪ fromList (vDelegNoConfidence ∷ vDelegAbstain ∷ []) )
 
       newRewards : Rewards
-      newRewards = RewardsOf cs ∪⁺ CertEnv.directDeposits ce
+      newRewards = applyDirectDeposits (CertEnv.directDeposits ce) (RewardsOf cs)
 
       cs' : CertState
       cs' = ⟦ ⟦ validVoteDelegs , StakeDelegsOf cs , newRewards , DepositsOf (DStateOf cs) ⟧ , PStateOf cs , GStateOf cs ⟧
 
-  Computational-POST-CERT .completeness ce cs _ cs' (CERT-post p) with ¿ dom (CertEnv.directDeposits ce) ⊆ dom (RewardsOf cs) ¿
+  Computational-POST-CERT .completeness ce cs _ cs' (CERT-post p) with ¿ mapˢ stake (dom (CertEnv.directDeposits ce)) ⊆ dom (RewardsOf cs) ¿
   ... | yes _ = refl
   ... | no ¬p = ⊥-elim (¬p p)
 

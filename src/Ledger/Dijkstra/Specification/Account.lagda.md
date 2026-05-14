@@ -30,7 +30,7 @@ receiving account address to a `Coin`{.AgdaDatatype} amount.
 
 ```agda
 DirectDeposits : Type
-DirectDeposits = Credential ⇀ Coin
+DirectDeposits = RewardAddress ⇀ Coin
 ```
 
 ## Balance Intervals {#sec:balance-intervals}
