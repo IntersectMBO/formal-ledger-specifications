@@ -48,6 +48,7 @@ import Data.List.Relation.Unary.AllPairs as List
 import Data.List.Relation.Unary.Any as List
 import Data.Sum.Relation.Unary.All as Sum
 
+open RewardAddress
 
 totExUnits : ∀{ℓ} → Tx ℓ → ExUnits
 totExUnits tx = ∑[ (_ , eu) ← RedeemersOf tx ] eu
@@ -503,9 +504,10 @@ data _⊢_⇀⦇_,SUBUTXO⦈_ : SubUTxOEnv → UTxOState → SubLevelTx → UTxO
     ∙ ∀[ (a , _) ∈ range (TxOutsOf txSub) ] (Sum.All (const ⊤) (λ a → AttrSizeOf a ≤ maxBootstrapAddrSize) a)
     ∙ ∀[ (a , _) ∈ range (TxOutsOf txSub) ] (netId a ≡ NetworkId)
     ∙ ∀[ a ∈ dom (WithdrawalsOf txSub)] (NetworkIdOf a ≡ NetworkId)
+    ∙ ∀[ a ∈ dom (DirectDepositsOf txSub)] (NetworkIdOf a ≡ NetworkId)
     ∙ MaybeNetworkIdOf txSub ~ just NetworkId
     ∙ CurrentTreasuryOf txSub ~ just (TreasuryOf Γ)
-    ∙ dom (DirectDepositsOf txSub) ⊆ dom (AccountBalancesOf Γ)
+    ∙ mapˢ stake (dom (DirectDepositsOf txSub)) ⊆ dom (AccountBalancesOf Γ)
     ∙ dom (BalanceIntervalsOf txSub) ⊆ dom (AccountBalancesOf Γ)
     ∙ ∀[ (c , interval) ∈ BalanceIntervalsOf txSub ˢ ]
         (InBalanceInterval (maybe id 0 (lookupᵐ? (AccountBalancesOf Γ) c)) interval)
@@ -566,9 +568,10 @@ data _⊢_⇀⦇_,UTXO⦈_ : UTxOEnv × Bool → UTxOState → TopLevelTx → UT
     ∙ ∀[ (a , _) ∈ range (TxOutsOf txTop) ] (Sum.All (const ⊤) (λ a → AttrSizeOf a ≤ maxBootstrapAddrSize)) a
     ∙ ∀[ (a , _) ∈ range (TxOutsOf txTop) ] (netId a ≡ NetworkId)
     ∙ ∀[ a ∈ dom (WithdrawalsOf txTop)] NetworkIdOf a ≡ NetworkId
+    ∙ ∀[ a ∈ dom (DirectDepositsOf txTop)] (NetworkIdOf a ≡ NetworkId)
     ∙ MaybeNetworkIdOf txTop ~ just NetworkId
     ∙ CurrentTreasuryOf txTop  ~ just (TreasuryOf Γ)
-    ∙ dom (DirectDepositsOf txTop) ⊆ dom (AccountBalancesOf Γ)
+    ∙ mapˢ stake (dom (DirectDepositsOf txTop)) ⊆ dom (AccountBalancesOf Γ)
     ∙ dom (BalanceIntervalsOf txTop) ⊆ dom (AccountBalancesOf Γ)
     ∙ ∀[ (c , interval) ∈ BalanceIntervalsOf txTop ˢ ]
         (InBalanceInterval (maybe id 0 (lookupᵐ? (AccountBalancesOf Γ) c)) interval)
@@ -584,8 +587,8 @@ data _⊢_⇀⦇_,UTXO⦈_ : UTxOEnv × Bool → UTxOState → TopLevelTx → UT
 <!--
 ```agda
 unquoteDecl UTXO-premises = genPremises UTXO-premises (quote UTXO)
-pattern UTXO-⋯ p₀ p₁ p₂ p₃ p₄ p₅ p₆ p₇ p₈ p₉ p₁₀ p₁₁ p₁₂ p₁₃ p₁₄ p₁₅ p₁₆ p₁₇ p₁₈ p₁₉ p₂₀ p₂₁ h
-  = UTXO (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , p₁₂ , p₁₃ , p₁₄ , p₁₅ , p₁₆ , p₁₇ , p₁₈ , p₁₉ , p₂₀ , p₂₁ , h)
+pattern UTXO-⋯ p₀ p₁ p₂ p₃ p₄ p₅ p₆ p₇ p₈ p₉ p₁₀ p₁₁ p₁₂ p₁₃ p₁₄ p₁₅ p₁₆ p₁₇ p₁₈ p₁₉ p₂₀ p₂₁ p₂₂ h
+  = UTXO (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , p₁₂ , p₁₃ , p₁₄ , p₁₅ , p₁₆ , p₁₇ , p₁₈ , p₁₉ , p₂₀ , p₂₁ , p₂₂ , h)
 ```
 -->
 
