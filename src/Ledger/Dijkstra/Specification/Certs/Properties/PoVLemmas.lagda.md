@@ -124,16 +124,12 @@ module Certs-Pov-lemmas
   ( ∪ˡ-res-lookup-preserve : ∀ (m : Rewards) (c : Credential) (v : Coin) (c' : Credential)
       → c' ≢ c → lookupᵐ? (❴ c , v ❵ ∪ˡ (m ∣ ❴ c ❵ ᶜ)) c' ≡ lookupᵐ? m c' )
 
-  ( sum-map-proj₂≡getCoin : ∀ (m : Withdrawals) → sum (map proj₂ (setToList (m ˢ))) ≡ getCoin m )
+  ( sum-map-proj₂≡getCoin : ∀ (m : RewardAddress ⇀ Coin) → sum (map proj₂ (setToList (m ˢ))) ≡ getCoin m )
 
-  ( setToList-Unique : ∀ (m : Withdrawals) → Unique (map (stake ∘ proj₁) (setToList (m ˢ))) )
-
-  -- New CIP-159 assumption: getCoin distributes over ∪⁺.
-  -- `∪⁺` adds values of shared keys, so `getCoin (m ∪⁺ m') ≡ getCoin m + getCoin m'`
-  -- holds unconditionally.  TODO: Prove this in Ledger.Prelude or agda-sets.
-  ( indexedSumᵛ'-∪⁺ : ∀ (m m' : Rewards) → getCoin (m ∪⁺ m') ≡ getCoin m + getCoin m' )
+  ( setToList-Unique : ∀ (m : RewardAddress ⇀ Coin) → ∀[ a ∈ dom (m ˢ) ] NetworkIdOf a ≡ NetworkId
+      → Unique (map (stake ∘ proj₁) (setToList (m ˢ))) )
   where
-    open ApplyWithdrawals-PoV ∪ˡ-res-lookup-preserve sum-map-proj₂≡getCoin setToList-Unique
+    open ApplyToRewards-PoV ∪ˡ-res-lookup-preserve sum-map-proj₂≡getCoin setToList-Unique
 ```
 -->
 
@@ -145,14 +141,16 @@ becomes "pre-balance plus direct deposits equals post-balance":
 
 ```agda
     POST-CERT-pov : {Γ : CertEnv} {s s' : CertState}
+      → mapˢ stake (dom (DirectDepositsOf Γ)) ⊆ dom (RewardsOf (DStateOf s))
+      → ∀[ a ∈ dom (DirectDepositsOf Γ) ] NetworkIdOf a ≡ NetworkId
       → Γ ⊢ s ⇀⦇ _ ,POST-CERT⦈ s'
       → getCoin s + getCoin (DirectDepositsOf Γ) ≡ getCoin s'
 ```
 
 <!--
 ```agda
-    POST-CERT-pov (CERT-post {dd = dd} {rewards = rewards} _) =
-      sym (indexedSumᵛ'-∪⁺ rewards dd)
+    POST-CERT-pov {Γ} {s} creds∈ netIds (CERT-post {dd = dd} {rewards = rewards} _) =
+      applyDirectDeposits-pov dd rewards creds∈ netIds
 ```
 -->
 
@@ -165,6 +163,8 @@ final `POST-CERT`{.AgdaDatatype} step adds `getCoin (DirectDepositsOf Γ)`.
 
 ```agda
     sts-pov : {Γ : CertEnv} {s₁ sₙ : CertState} {sigs : List DCert}
+      → mapˢ stake (dom (DirectDepositsOf Γ)) ⊆ dom (RewardsOf (DStateOf s₁))
+      → ∀[ a ∈ dom (DirectDepositsOf Γ) ] NetworkIdOf a ≡ NetworkId
       → RunTraceAndThen _⊢_⇀⦇_,CERT⦈_ _⊢_⇀⦇_,POST-CERT⦈_ Γ s₁ sigs sₙ
       → getCoin s₁ + getCoin (DirectDepositsOf Γ) ≡ getCoin sₙ
 ```

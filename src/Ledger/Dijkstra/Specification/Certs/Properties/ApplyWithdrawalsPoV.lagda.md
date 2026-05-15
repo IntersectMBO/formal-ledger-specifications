@@ -42,7 +42,7 @@ module Ledger.Dijkstra.Specification.Certs.Properties.ApplyWithdrawalsPoV
   (gs : GovStructure) (open GovStructure gs) where
 
 open import Ledger.Dijkstra.Specification.Account gs using (DirectDeposits; BalanceInterval)
-open import Ledger.Dijkstra.Specification.Certs gs hiding (applyOne)
+open import Ledger.Dijkstra.Specification.Certs gs
 open import Ledger.Dijkstra.Specification.Gov.Actions gs hiding (yes; no)
 open import Ledger.Prelude
 open import Axiom.Set.Properties th
