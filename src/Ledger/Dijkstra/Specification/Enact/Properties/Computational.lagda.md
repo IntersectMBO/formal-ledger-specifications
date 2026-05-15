@@ -3,7 +3,7 @@ source_branch: master
 source_path: src/Ledger/Dijkstra/Specification/Enact/Properties/Computational.lagda.md
 ---
 
-# ENACT: Computational {#sec:enact-computational}
+# <span class="AgdaDatatype">ENACT</span>: Computational {#sec:enact-computational}
 
 This module proves that the `ENACT`{.AgdaDatatype} transition rule is computational.
 

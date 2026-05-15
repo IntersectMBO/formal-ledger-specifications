@@ -440,7 +440,7 @@ Sections [Auxiliary `DELEG`{.AgdaDatatype} Transition System](#auxiliary-deleg-t
    committee members to act without a delay of one epoch.
 
 
-### Auxiliary DELEG transition system
+### Auxiliary <span class="AgdaDatatype">DELEG</span> transition system
 
 ```agda
 data _⊢_⇀⦇_,DELEG⦈_ : DelegEnv → DState → DCert → DState → Type where
@@ -467,7 +467,7 @@ data _⊢_⇀⦇_,DELEG⦈_ : DelegEnv → DState → DCert → DState → Type 
 ```
 
 
-### Auxiliary POOL transition system
+### Auxiliary <span class="AgdaDatatype">POOL</span> transition system
 
 ??? info "Differences with the Shelley Specification"
 
@@ -516,7 +516,7 @@ data _⊢_⇀⦇_,POOL⦈_ : PoolEnv → PState → DCert → PState → Type wh
 ```
 
 
-### Auxiliary GOVCERT transition system
+### Auxiliary <span class="AgdaDatatype">GOVCERT</span> transition system
 
 ```agda
 data _⊢_⇀⦇_,GOVCERT⦈_ : CertEnv → GState → DCert → GState → Type where
@@ -566,7 +566,7 @@ data _⊢_⇀⦇_,CERT⦈_  : CertEnv → CertState → DCert → CertState → 
       Γ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ , stᵖ , stᵍ' ⟧
 ```
 
-### The <span class="AgdaFunction">PRE-CERT</span> Transition Rule
+### The <span class="AgdaDatatype">PRE-CERT</span> Transition Rule
 
 Here we define the `PRE-CERT`{.AgdaDatatype} transition rule.  This rule is applied
 at the start of the `CERTS`{.AgdaDatatype} transition rule and handles the following
@@ -607,7 +607,7 @@ data _⊢_⇀⦇_,PRE-CERT⦈_ : CertEnv → CertState → ⊤ → CertState →
       ⟦ e , pp , vs , wdrls , cc ⟧ ⊢ ⟦ ⟦ voteDelegs , stakeDelegs , rewards ⟧ , stᵖ , ⟦ dReps , ccHotKeys ⟧ ⟧ ⇀⦇ _ ,PRE-CERT⦈ ⟦ ⟦ voteDelegs , stakeDelegs , constMap wdrlCreds 0 ∪ˡ rewards ⟧ , stᵖ , ⟦ refreshedDReps , ccHotKeys ⟧ ⟧
 ```
 
-### The <span class="AgdaFunction">POST-CERT</span> Transition Rule
+### The <span class="AgdaDatatype">POST-CERT</span> Transition Rule
 
 The `POST-CERT`{.AgdaFunction} transition rule is applied at the end of the
 `CERTS`{.AgdaDatatype} rule and it ensures that only valid registered

@@ -447,7 +447,7 @@ data _⊢_⇀⦇_,UTXOS⦈_ : UTxOEnv → ⊤ → TopLevelTx → ⊤ → Type wh
       Γ ⊢ tt ⇀⦇ txTop ,UTXOS⦈ tt
 ```
 
-## The UTXO Transition System
+## The <span class="AgdaDatatype">UTXO</span> Transition System
 
 <!--
 ```agda
@@ -455,7 +455,7 @@ unquoteDecl UTXOS-premises = genPremises UTXOS-premises (quote UTXOS)
 ```
 -->
 
-## The UTXO Transition System
+## The <span class="AgdaDatatype">UTXO</span> Transition System
 
 The [CIP][1] states:
 

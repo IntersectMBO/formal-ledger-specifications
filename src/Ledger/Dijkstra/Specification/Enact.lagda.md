@@ -111,7 +111,7 @@ instance
 -->
 
 
-## The <span class="AgdaDataType">ENACT</span> Transition System
+## The <span class="AgdaDatatype">ENACT</span> Transition System
 
 ```agda
 data _⊢_⇀⦇_,ENACT⦈_ : EnactEnv → EnactState → GovAction → EnactState → Type where

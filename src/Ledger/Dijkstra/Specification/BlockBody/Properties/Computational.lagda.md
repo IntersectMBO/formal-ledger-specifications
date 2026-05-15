@@ -3,7 +3,7 @@ source_branch: master
 source_path: src/Ledger/Dijkstra/Specification/BlockBody/Properties/Computational.lagda.md
 ---
 
-# BBODY: Computational {#sec:bbody-computational}
+# <span class="AgdaDatatype">BBODY</span>: Computational {#sec:bbody-computational}
 
 This module proves that the `BBODY`{.AgdaDatatype} transition rule is computational.
 

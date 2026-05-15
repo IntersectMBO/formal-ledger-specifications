@@ -3,7 +3,7 @@ source_branch: master
 source_path: src/Ledger/Dijkstra/Specification/PoolReap/Properties/Computational.lagda.md
 ---
 
-# PoolReap: Computational {#sec:poolreap-computational}
+# <span class="AgdaDatatype">POOLREAP</span>: Computational {#sec:poolreap-computational}
 
 This module proves that the `POOLREAP`{.AgdaDatatype} transition rule is computational.
 

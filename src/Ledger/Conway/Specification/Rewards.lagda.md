@@ -563,7 +563,7 @@ can move funds into “Reward accounts.”
 This section defines the calculation of the stake distribution for the
 purpose of calculating rewards.
 
-### Definitions of the Snapshot type
+### Definitions of the <span class="AgdaRecord">Snapshot</span> type
 
 This subsection defines the `Snapshot`{.AgdaField} type which represents a stake
 distribution snapshot.  Such a snapshot contains the essential data needed to compute
@@ -774,7 +774,7 @@ performance during epoch $e_3$ (he produced 4 blocks) will be used with
 the darker blue snapshot for the rewards which will be handed out at the
 beginning of epoch $e_5$.
 
-## Stake Distribution Snapshots {#sec:stake-distribution-snapshots}
+## Stake Distribution <span class="AgdaRecord">Snapshots</span> {#sec:stake-distribution-snapshots}
 
 This section defines the SNAP transition rule for stake distribution
 snapshots, including the type `Snapshots`{.AgdaField} that contains the data that

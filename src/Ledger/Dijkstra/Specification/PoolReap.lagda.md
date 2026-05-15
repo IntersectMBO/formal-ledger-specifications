@@ -4,7 +4,7 @@ source_path: src/Ledger/Dijkstra/Specification/PoolReap.lagda.md
 ---
 
 
-# Pool Reaping Transition {#sec:pool-reaping-transition}
+# The <span class="AgdaDatatype">POOLREAP</span> Transition System {#sec:pool-reaping-transition}
 
 ## Key Difference from Conway/Specification
 

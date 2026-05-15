@@ -3,7 +3,7 @@ source_branch: master
 source_path: src/Ledger/Dijkstra/Specification/Ledger/Properties/Computational.lagda.md
 ---
 
-# Ledger: Computational {#sec:ledger-computational}
+# <span class="AgdaDatatype">LEDGER</span>: Computational {#sec:ledger-computational}
 
 This module proves that the `SUBLEDGER`{.AgdaDatatype} and `LEDGER`{.AgdaDatatype}
 transition rules are computational.
@@ -156,7 +156,7 @@ instance
 ```
 -->
 
-## Ledger: Computational {#sec:ledger-computational}
+## <span class="AgdaDatatype">LEDGER</span>: Computational {#sec:ledger-computational}
 
 ```agda
   Computational-LEDGER : Computational _⊢_⇀⦇_,LEDGER⦈_ String

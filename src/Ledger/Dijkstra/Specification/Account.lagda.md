@@ -48,7 +48,7 @@ data BalanceInterval : Type where
 ```
 
 
-### The `InBalanceInterval` Predicate {#sec:in-balance-interval}
+### The <span class="AgdaDatatype">InBalanceInterval</span> Predicate {#sec:in-balance-interval}
 
 The `InBalanceInterval` predicate checks whether a given `Coin` value `c` falls
 within a `BalanceInterval`.  (Unlike `inInterval` for slots, which uses closed

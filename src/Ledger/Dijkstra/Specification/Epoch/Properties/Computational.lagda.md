@@ -3,7 +3,7 @@ source_branch: master
 source_path: src/Ledger/Dijkstra/Specification/Epoch/Properties/Computational.lagda.md
 ---
 
-# EPOCH: Computational {#sec:epoch-computational}
+# <span class="AgdaDatatype">EPOCH</span>: Computational {#sec:epoch-computational}
 
 This module proves that the `EPOCH`{.AgdaDatatype} and `NEWEPOCH`{.AgdaDatatype}
 transition rules are computational.
