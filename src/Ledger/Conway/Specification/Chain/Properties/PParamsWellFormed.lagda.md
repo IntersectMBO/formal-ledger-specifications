@@ -3,7 +3,7 @@ source_branch: master
 source_path: src/Ledger/Conway/Specification/Chain/Properties/PParamsWellFormed.lagda.md
 ---
 
-## Claim: Well-formedness of <span class="AgdaRecord">PParams</span> is a <span class="AgdaOperator">CHAIN</span> invariant {#clm:pp-wellFormed-inv}
+## Claim: Well-formedness of <span class="AgdaRecord">PParams</span> is a <span class="AgdaDatatype">CHAIN</span> invariant {#clm:pp-wellFormed-inv}
 
 <!--
 ```agda
