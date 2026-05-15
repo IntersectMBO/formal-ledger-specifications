@@ -1344,7 +1344,7 @@ du_EpochStateFromConf_4952
       (coe
          (\ v0 v1 ->
             coe
-              MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_240
+              MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_236
               (coe
                  MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.C_constructor_30
                  (coe
@@ -1617,7 +1617,7 @@ du_EpochStateToConf_4968
               (coe
                  MAlonzo.Code.Ledger.Conway.Specification.Epoch.d_ss_3288 (coe v1))
               (coe
-                 MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_240
+                 MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_236
                  (coe
                     MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.C_constructor_30
                     (coe
@@ -1761,7 +1761,7 @@ du_EpochStateToConf_4968
                           (coe
                              MAlonzo.Code.Ledger.Conway.Specification.Epoch.d_ls_3290 (coe v1)))
                        (coe
-                          MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_240
+                          MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_236
                           (coe
                              MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.C_constructor_30
                              (coe
@@ -1909,7 +1909,7 @@ du_EpochStateToConf_4968
                           (coe
                              MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                              (coe
-                                MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_240
+                                MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_236
                                 (coe
                                    MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.C_constructor_30
                                    (coe
@@ -2481,7 +2481,7 @@ du_EpochStateToConf_4968
                                          MAlonzo.Code.Ledger.Conway.Specification.Epoch.d_ls_3290
                                          (coe v1))))
                                 (coe
-                                   MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_240
+                                   MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_236
                                    (coe
                                       MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.C_constructor_30
                                       (coe
@@ -3668,7 +3668,7 @@ du_NewEpochStateFromConf_4986
       (coe
          (\ v0 v1 ->
             coe
-              MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_240
+              MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_236
               (coe
                  MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.C_constructor_30
                  (coe
@@ -4031,7 +4031,7 @@ du_NewEpochStateToConf_5004
       (coe
          (\ v0 v1 ->
             coe
-              MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_240
+              MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_236
               (coe
                  MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.C_constructor_30
                  (coe
@@ -4396,7 +4396,7 @@ du_applyRUpd_5024 v0 v1 v2
                                     -> case coe v17 of
                                          MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_'10214'_'44'_'44'_'44'_'10215''7496'_1598 v20 v21 v22 v23
                                            -> coe
-                                                MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_240
+                                                MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_236
                                                 (coe
                                                    MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.C_constructor_30
                                                    (coe
@@ -4661,7 +4661,7 @@ du_applyRUpd_5024 v0 v1 v2
                                                 (coe
                                                    MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_240
+                                                      MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_236
                                                       (coe
                                                          MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.C_constructor_30
                                                          (coe
@@ -4803,7 +4803,7 @@ du_applyRUpd_5024 v0 v1 v2
                                                       (coe
                                                          MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_240
+                                                            MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_236
                                                             (coe
                                                                MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.C_constructor_30
                                                                (coe
@@ -4973,7 +4973,7 @@ du_applyRUpd_5024 v0 v1 v2
                                                             (coe
                                                                MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                (coe
-                                                                  MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_240
+                                                                  MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_236
                                                                   (coe
                                                                      MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.C_constructor_30
                                                                      (coe
@@ -5212,7 +5212,7 @@ du_applyRUpd_5024 v0 v1 v2
                                                                   MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                   (coe v11)
                                                                   (coe
-                                                                     MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_240
+                                                                     MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_236
                                                                      (coe
                                                                         MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.C_constructor_30
                                                                         (coe
@@ -5382,7 +5382,7 @@ du_applyRUpd_5024 v0 v1 v2
                                                                      (coe
                                                                         MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                         (coe
-                                                                           MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_240
+                                                                           MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_236
                                                                            (coe
                                                                               MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.C_constructor_30
                                                                               (coe

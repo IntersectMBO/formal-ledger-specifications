@@ -31,6 +31,22 @@ import qualified MAlonzo.Code.Relation.Nullary.Reflects
 
 -- _.Credential
 d_Credential_46 a0 a1 a2 a3 = ()
+-- _.RewardAddress
+d_RewardAddress_286 a0 a1 a2 a3 = ()
+-- _.RewardAddress.net
+d_net_834 ::
+  MAlonzo.Code.Ledger.Core.Specification.Address.T_RewardAddress_116 ->
+  AgdaAny
+d_net_834 v0
+  = coe
+      MAlonzo.Code.Ledger.Core.Specification.Address.d_net_122 (coe v0)
+-- _.RewardAddress.stake
+d_stake_836 ::
+  MAlonzo.Code.Ledger.Core.Specification.Address.T_RewardAddress_116 ->
+  MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20
+d_stake_836 v0
+  = coe
+      MAlonzo.Code.Ledger.Core.Specification.Address.d_stake_124 (coe v0)
 -- Ledger.Dijkstra.Specification.Account.DirectDeposits
 d_DirectDeposits_846 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Base.T_GovStructure_10 ->

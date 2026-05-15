@@ -8093,7 +8093,7 @@ du_lookupScriptHash_4540 ::
   Maybe MAlonzo.Code.Data.Sum.Base.T__'8846'__30
 du_lookupScriptHash_4540 v0 v1 v2 v3
   = coe
-      MAlonzo.Code.Ledger.Prelude.du_lookupHash_292
+      MAlonzo.Code.Ledger.Prelude.du_lookupHash_288
       (coe
          MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_210
          (coe d_cryptoStructure_1360 (coe v0)))
@@ -8123,7 +8123,10 @@ d_allDirectDeposits_4548 v0 v1
               MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8
               MAlonzo.Code.Ledger.Prelude.Instances.d_CommMonoid'45'ℕ'45''43'_6
               (coe
-                 MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_292
+                 MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'RewardAddress_350
+                 (coe
+                    MAlonzo.Code.Ledger.Core.Specification.Epoch.d_DecEq'45'Netw_320
+                    (coe d_globalConstants_1358 (coe v0)))
                  (coe
                     MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
                     (coe

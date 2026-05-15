@@ -983,7 +983,7 @@ du_m_2680 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 du_m_2680 v0 v1
   = coe
-      MAlonzo.Code.Ledger.Prelude.du_setToMap_212
+      MAlonzo.Code.Ledger.Prelude.du_setToMap_208
       (coe
          MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
          (coe
@@ -1215,7 +1215,7 @@ du_credsNeeded_2814 v0 v1 v2
                      MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                (coe MAlonzo.Code.Class.IsSet.du_IsSet'45'Set_590)
                (coe
-                  MAlonzo.Code.Ledger.Prelude.du_'8739'_'8739'_258
+                  MAlonzo.Code.Ledger.Prelude.du_'8739'_'8739'_254
                   (coe
                      MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Instances.du_HasCast'45'A'8640'B'45'RelAB_12)
                   (MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_txWithdrawals_3486

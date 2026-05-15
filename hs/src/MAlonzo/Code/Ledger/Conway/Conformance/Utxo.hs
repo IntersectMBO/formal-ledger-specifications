@@ -1507,7 +1507,7 @@ d_UTXO'45'premises_3016 v0 v1 v2 v3 v4
                                                            MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
                                                            (coe v5)))))
                                              (coe
-                                                MAlonzo.Code.Ledger.Prelude.du_'8739'_'8739'_258
+                                                MAlonzo.Code.Ledger.Prelude.du_'8739'_'8739'_254
                                                 (coe
                                                    MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Instances.du_HasCast'45'A'8640'B'45'RelAB_12)
                                                 (coe
@@ -1547,7 +1547,7 @@ d_UTXO'45'premises_3016 v0 v1 v2 v3 v4
                                                               MAlonzo.Code.Ledger.Conway.Specification.Utxo.d_pparams_2490
                                                               (coe v3)))))
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Prelude.du_'8739'_'8739'_258
+                                                   MAlonzo.Code.Ledger.Prelude.du_'8739'_'8739'_254
                                                    (coe
                                                       MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Instances.du_HasCast'45'A'8640'B'45'RelAB_12)
                                                    (coe

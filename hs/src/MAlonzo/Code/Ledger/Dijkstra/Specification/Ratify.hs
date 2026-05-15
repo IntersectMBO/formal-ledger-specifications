@@ -680,7 +680,7 @@ d_threshold_1732 ::
 d_threshold_1732 v0 v1 v2 v3
   = let v4
           = coe
-              MAlonzo.Code.Ledger.Prelude.du_'8739'_'8739'_258
+              MAlonzo.Code.Ledger.Prelude.du_'8739'_'8739'_254
               (coe
                  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_HasCast'45'GovAction'45'Sigma_1240)
               v3 in
@@ -4888,7 +4888,7 @@ d_d_2538 v0 v1 v2 v3
                                               MAlonzo.Code.Data.Rational.Properties.d__'8804''63'__3622
                                               (coe v10) (coe v11)))
                                       v9
-                                      (MAlonzo.Code.Ledger.Prelude.d__'47''8320'__214
+                                      (MAlonzo.Code.Ledger.Prelude.d__'47''8320'__210
                                          (coe
                                             d_acceptedStake_2126 (coe v0)
                                             (coe d_currentEpoch_1932 (coe v1))
@@ -4944,7 +4944,7 @@ d_d_2538 v0 v1 v2 v3
                                               MAlonzo.Code.Data.Rational.Properties.d__'8804''63'__3622
                                               (coe v10) (coe v11)))
                                       v9
-                                      (MAlonzo.Code.Ledger.Prelude.d__'47''8320'__214
+                                      (MAlonzo.Code.Ledger.Prelude.d__'47''8320'__210
                                          (coe
                                             d_acceptedStake_2126 (coe v0)
                                             (coe d_currentEpoch_1932 (coe v1))
@@ -5006,7 +5006,7 @@ d_d_2538 v0 v1 v2 v3
                                               MAlonzo.Code.Data.Rational.Properties.d__'8804''63'__3622
                                               (coe v10) (coe v11)))
                                       v9
-                                      (MAlonzo.Code.Ledger.Prelude.d__'47''8320'__214
+                                      (MAlonzo.Code.Ledger.Prelude.d__'47''8320'__210
                                          (coe
                                             d_acceptedStake_2126 (coe v0)
                                             (coe d_currentEpoch_1932 (coe v1))
@@ -5073,7 +5073,7 @@ d_d_2538 v0 v1 v2 v3
                                               MAlonzo.Code.Data.Rational.Properties.d__'8804''63'__3622
                                               (coe v10) (coe v11)))
                                       v9
-                                      (MAlonzo.Code.Ledger.Prelude.d__'47''8320'__214
+                                      (MAlonzo.Code.Ledger.Prelude.d__'47''8320'__210
                                          (coe
                                             d_acceptedStake_2126 (coe v0)
                                             (coe d_currentEpoch_1932 (coe v1))
@@ -5129,7 +5129,7 @@ d_d_2538 v0 v1 v2 v3
                                               MAlonzo.Code.Data.Rational.Properties.d__'8804''63'__3622
                                               (coe v10) (coe v11)))
                                       v9
-                                      (MAlonzo.Code.Ledger.Prelude.d__'47''8320'__214
+                                      (MAlonzo.Code.Ledger.Prelude.d__'47''8320'__210
                                          (coe
                                             d_acceptedStake_2126 (coe v0)
                                             (coe d_currentEpoch_1932 (coe v1))
@@ -5191,7 +5191,7 @@ d_d_2538 v0 v1 v2 v3
                                               MAlonzo.Code.Data.Rational.Properties.d__'8804''63'__3622
                                               (coe v10) (coe v11)))
                                       v9
-                                      (MAlonzo.Code.Ledger.Prelude.d__'47''8320'__214
+                                      (MAlonzo.Code.Ledger.Prelude.d__'47''8320'__210
                                          (coe
                                             d_acceptedStake_2126 (coe v0)
                                             (coe d_currentEpoch_1932 (coe v1))
@@ -5247,7 +5247,7 @@ d_d_2538 v0 v1 v2 v3
                                               MAlonzo.Code.Data.Rational.Properties.d__'8804''63'__3622
                                               (coe v10) (coe v11)))
                                       v9
-                                      (MAlonzo.Code.Ledger.Prelude.d__'47''8320'__214
+                                      (MAlonzo.Code.Ledger.Prelude.d__'47''8320'__210
                                          (coe
                                             d_acceptedStake_2126 (coe v0)
                                             (coe d_currentEpoch_1932 (coe v1))
@@ -5277,7 +5277,7 @@ d_acceptedByDRep'63'_2552 v0 v1 v2 v3
       MAlonzo.Code.Data.Rational.Properties.d__'8804''63'__3622
       (coe du_t_2206 (coe v0) (coe v2) (coe v3))
       (coe
-         MAlonzo.Code.Ledger.Prelude.d__'47''8320'__214
+         MAlonzo.Code.Ledger.Prelude.d__'47''8320'__210
          (coe du_acceptedStake_2208 (coe v0) (coe v1) (coe v3))
          (coe du_totalStake_2210 (coe v0) (coe v1) (coe v3)))
 -- Ledger.Dijkstra.Specification.Ratify.acceptedBySPO?
@@ -5292,7 +5292,7 @@ d_acceptedBySPO'63'_2560 v0 v1 v2 v3
       MAlonzo.Code.Data.Rational.Properties.d__'8804''63'__3622
       (coe du_t_2266 (coe v0) (coe v2) (coe v3))
       (coe
-         MAlonzo.Code.Ledger.Prelude.d__'47''8320'__214
+         MAlonzo.Code.Ledger.Prelude.d__'47''8320'__210
          (coe
             du_acceptedStake_2268 (coe v0) (coe d_delegatees_1942 (coe v1))
             (coe d_pools_1940 (coe v1))

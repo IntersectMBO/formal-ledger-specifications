@@ -1842,7 +1842,7 @@ d_computeProofH_2946 v0 v1 v2 v3 v4 v5
                                                                                                                   v24 of
                                                                                                              MAlonzo.Code.Data.Sum.Base.C_inj'8321'_38 v25
                                                                                                                -> coe
-                                                                                                                    ("\172\n((z\n  : (.Axiom.Set.Theory\7496.th List-Model\7496\n     abstract-set-theory.Axiom.Set.Map.Extra.\8802\7504\n     Axiom.Set.Map.\8709\7504 (.Axiom.Set.Theory\7496.th List-Model\7496))\n    (.TransactionStructure.TxWitnesses.txrdmrs\n     (.TransactionStructure.Tx.wits tx))\n    \215\n    nothing \8802\n    .proj\8322\n    (.TransactionStructure.TxBody.txVldt\n     (.TransactionStructure.Tx.body tx))) \8594\n Functor.fmap Functor-Maybe\n (.AbstractFunctions.epochInfoSlotToUTCTime abs)\n (.proj\8322\n  (.TransactionStructure.TxBody.txVldt\n   (.TransactionStructure.Tx.body tx)))\n \8802 nothing)"
+                                                                                                                    ("\172\n((z\n  : Axiom.Set.Map.\8709\7504 (.Axiom.Set.Theory\7496.th List-Model\7496) \8802\7504\n    .TransactionStructure.TxWitnesses.txrdmrs\n    (.TransactionStructure.Tx.wits tx)\n    \215\n    nothing \8802\n    .proj\8322\n    (.TransactionStructure.TxBody.txVldt\n     (.TransactionStructure.Tx.body tx))) \8594\n Functor.fmap Functor-Maybe\n (.AbstractFunctions.epochInfoSlotToUTCTime abs)\n (.proj\8322\n  (.TransactionStructure.TxBody.txVldt\n   (.TransactionStructure.Tx.body tx)))\n \8802 nothing)"
                                                                                                                      ::
                                                                                                                      Data.Text.Text)
                                                                                                              MAlonzo.Code.Data.Sum.Base.C_inj'8322'_42 v25
@@ -1946,7 +1946,7 @@ d_computeProofH_2946 v0 v1 v2 v3 v4 v5
                                                                                                                                                                  (coe
                                                                                                                                                                     v30)))))
                                                                                                                                                    (coe
-                                                                                                                                                      MAlonzo.Code.Ledger.Prelude.du_'8739'_'8739'_258
+                                                                                                                                                      MAlonzo.Code.Ledger.Prelude.du_'8739'_'8739'_254
                                                                                                                                                       (coe
                                                                                                                                                          MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Instances.du_HasCast'45'A'8640'B'45'RelAB_12)
                                                                                                                                                       (coe
@@ -2001,7 +2001,7 @@ d_computeProofH_2946 v0 v1 v2 v3 v4 v5
                                                                                                                                                                            (coe
                                                                                                                                                                               v2)))))
                                                                                                                                                              (coe
-                                                                                                                                                                MAlonzo.Code.Ledger.Prelude.du_'8739'_'8739'_258
+                                                                                                                                                                MAlonzo.Code.Ledger.Prelude.du_'8739'_'8739'_254
                                                                                                                                                                 (coe
                                                                                                                                                                    MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Instances.du_HasCast'45'A'8640'B'45'RelAB_12)
                                                                                                                                                                 (coe

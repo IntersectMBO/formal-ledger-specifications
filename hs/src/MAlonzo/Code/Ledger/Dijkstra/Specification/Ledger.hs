@@ -2952,7 +2952,7 @@ du_calculateDepositsChange_3846 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_DepositsChange_3034
 du_calculateDepositsChange_3846 v0 v1 v2 v3
   = coe
-      MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_240
+      MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_236
       (coe
          MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.C_constructor_30
          (coe
