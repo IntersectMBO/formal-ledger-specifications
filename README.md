@@ -20,6 +20,10 @@ While the Agda formalization of the Conway era is complete, some pieces of the
 ledgers from previous eras have yet to be formalized.  We hope to finish formalizing
 the outstanding pieces in the near future.
 
+This repository is part of a broader ongoing effort to formally specify the Cardano
+blockchain in Agda.  For an index of all Cardano formal specifications, see the
+[Cardano Formal Specifications][cardano-formal-specifications] repository.
+
 ## Where to go from here?
 
 You can
@@ -34,8 +38,6 @@ You can
    building the artifacts, generating Haskell source code for conformance testing, or
    exploring the literate Agda files in a development environment are available in
    the [Contributing Guide][].
-
-+  explore other Cardano formal specifications in the [Cardano Formal Specifications][cardano-formal-specifications] repository, which serves as a central index of formal specifications across the Cardano ecosystem.
 
 ---
 
