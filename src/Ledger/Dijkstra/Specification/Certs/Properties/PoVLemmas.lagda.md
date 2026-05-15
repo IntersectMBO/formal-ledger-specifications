@@ -121,15 +121,15 @@ injOn _ h {record { stake = stakex }} {record { stake = stakey }} x∈ y∈ refl
   cong (λ u → record { net = u ; stake = stakex }) (trans (h x∈) (sym (h y∈)))
 
 module Certs-Pov-lemmas
-  ( ∪ˡ-res-lookup-preserve : ∀ (m : Rewards) (c : Credential) (v : Coin) (c' : Credential)
-      → c' ≢ c → lookupᵐ? (❴ c , v ❵ ∪ˡ (m ∣ ❴ c ❵ ᶜ)) c' ≡ lookupᵐ? m c' )
+  ( ∪ˡ-lookup-preserve : ∀ (m : Rewards) (c : Credential) (v : Coin) (c' : Credential)
+      → c' ≢ c → lookupᵐ? (❴ c , v ❵ ∪ˡ m ) c' ≡ lookupᵐ? m c' )
 
   ( sum-map-proj₂≡getCoin : ∀ (m : RewardAddress ⇀ Coin) → sum (map proj₂ (setToList (m ˢ))) ≡ getCoin m )
 
   ( setToList-Unique : ∀ (m : RewardAddress ⇀ Coin) → ∀[ a ∈ dom (m ˢ) ] NetworkIdOf a ≡ NetworkId
       → Unique (map (stake ∘ proj₁) (setToList (m ˢ))) )
   where
-    open ApplyToRewards-PoV ∪ˡ-res-lookup-preserve sum-map-proj₂≡getCoin setToList-Unique
+    open ApplyToRewards-PoV ∪ˡ-lookup-preserve sum-map-proj₂≡getCoin setToList-Unique
 ```
 -->
 
@@ -141,7 +141,6 @@ becomes "pre-balance plus direct deposits equals post-balance":
 
 ```agda
     POST-CERT-pov : {Γ : CertEnv} {s s' : CertState}
-      → mapˢ stake (dom (DirectDepositsOf Γ)) ⊆ dom (RewardsOf (DStateOf s))
       → ∀[ a ∈ dom (DirectDepositsOf Γ) ] NetworkIdOf a ≡ NetworkId
       → Γ ⊢ s ⇀⦇ _ ,POST-CERT⦈ s'
       → getCoin s + getCoin (DirectDepositsOf Γ) ≡ getCoin s'
@@ -149,8 +148,13 @@ becomes "pre-balance plus direct deposits equals post-balance":
 
 <!--
 ```agda
-    POST-CERT-pov {Γ} {s} creds∈ netIds (CERT-post {dd = dd} {rewards = rewards} _) =
-      applyDirectDeposits-pov dd rewards creds∈ netIds
+    -- `CERT-post`'s own premise `creds∈ : mapˢ stake (dom dd) ⊆ dom rewards`
+    -- is exactly what `applyDirectDeposits-pov` needs.  We extract it from
+    -- the step rather than threading it from outside, because CERTs *do*
+    -- generally change `dom rewards` (e.g. `DELEG-dereg`), so the premise
+    -- can't be propagated from the pre-CERT* state.
+    POST-CERT-pov netIds (CERT-post {dd = dd} {rewards = rewards} creds∈) =
+      sym (applyDirectDeposits-pov dd rewards creds∈ netIds)
 ```
 -->
 
@@ -163,7 +167,6 @@ final `POST-CERT`{.AgdaDatatype} step adds `getCoin (DirectDepositsOf Γ)`.
 
 ```agda
     sts-pov : {Γ : CertEnv} {s₁ sₙ : CertState} {sigs : List DCert}
-      → mapˢ stake (dom (DirectDepositsOf Γ)) ⊆ dom (RewardsOf (DStateOf s₁))
       → ∀[ a ∈ dom (DirectDepositsOf Γ) ] NetworkIdOf a ≡ NetworkId
       → RunTraceAndThen _⊢_⇀⦇_,CERT⦈_ _⊢_⇀⦇_,POST-CERT⦈_ Γ s₁ sigs sₙ
       → getCoin s₁ + getCoin (DirectDepositsOf Γ) ≡ getCoin sₙ
@@ -171,9 +174,15 @@ final `POST-CERT`{.AgdaDatatype} step adds `getCoin (DirectDepositsOf Γ)`.
 
 <!--
 ```agda
-    sts-pov (run-[] x) = POST-CERT-pov x
-    sts-pov {Γ = Γ} (run-∷ x xs) =
-      trans (cong (_+ getCoin (DirectDepositsOf Γ)) (CERT-pov x)) (sts-pov xs)
+    sts-pov nid (run-[] x) = POST-CERT-pov nid x
+    sts-pov {Γ} {s₁} {sₙ} nid (run-∷ {s' = s'} x xs) =
+      begin
+      rewardsBalance (dState s₁) + getCoin (DirectDepositsOf Γ)
+      ≡⟨ cong (_+ getCoin (DirectDepositsOf Γ)) (CERT-pov x) ⟩
+      rewardsBalance (dState s') + getCoin (DirectDepositsOf Γ)
+        ≡⟨ sts-pov nid xs ⟩
+      rewardsBalance (dState sₙ)
+      ∎
 ```
 -->
 
@@ -194,6 +203,6 @@ Conway's `constMap`/`res-decomp`/`sumConstZero` chain.
 ```agda
     PRE-CERT-pov {Γ = Γ} {s = cs} validNetId
       (CERT-pre {wdrls = wdrls} (_ , wdrlCreds⊆rwds , wdrlBounded)) =
-        applyWithdrawals-pov wdrls (RewardsOf (dState cs)) wdrlCreds⊆rwds wdrlBounded
+        applyWithdrawals-pov wdrls (RewardsOf (dState cs)) wdrlCreds⊆rwds validNetId wdrlBounded
 ```
 -->

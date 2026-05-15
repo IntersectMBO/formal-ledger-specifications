@@ -34,8 +34,8 @@ instance
   _ = +-0-monoid
 
 module Certs-PoV
-  ( ∪ˡ-res-lookup-preserve : ∀ (m : Rewards) (c : Credential) (v : Coin) (c' : Credential)
-      → c' ≢ c → lookupᵐ? (❴ c , v ❵ ∪ˡ (m ∣ ❴ c ❵ ᶜ)) c' ≡ lookupᵐ? m c' )
+  ( ∪ˡ-lookup-preserve : ∀ (m : Rewards) (c : Credential) (v : Coin) (c' : Credential)
+      → c' ≢ c → lookupᵐ? (❴ c , v ❵ ∪ˡ m) c' ≡ lookupᵐ? m c' )
 
   ( sum-map-proj₂≡getCoin : ∀ (m : RewardAddress ⇀ Coin) → sum (map proj₂ (setToList (m ˢ))) ≡ getCoin m )
 
@@ -43,7 +43,7 @@ module Certs-PoV
       → Unique (map (stake ∘ proj₁) (setToList (m ˢ))) )
 
   where
-  open Certs-Pov-lemmas ∪ˡ-res-lookup-preserve sum-map-proj₂≡getCoin setToList-Unique
+  open Certs-Pov-lemmas ∪ˡ-lookup-preserve sum-map-proj₂≡getCoin setToList-Unique
 ```
 -->
 
@@ -64,7 +64,6 @@ Equivalently, the *increase* in rewards balance from `s₁`{.AgdaBound} to
   CERTS-pov : {Γ : CertEnv} {s₁ sₙ : CertState}
     → ∀[ a ∈ dom (WithdrawalsOf Γ) ] NetworkIdOf a ≡ NetworkId
     → ∀[ a ∈ dom (DirectDepositsOf Γ) ] NetworkIdOf a ≡ NetworkId
-    → mapˢ stake (dom (DirectDepositsOf Γ)) ⊆ dom (RewardsOf (DStateOf s₁))
     → Γ ⊢ s₁ ⇀⦇ l ,CERTS⦈ sₙ
     → getCoin s₁ + getCoin (DirectDepositsOf Γ) ≡ getCoin sₙ + getCoin (WithdrawalsOf Γ)
 ```
@@ -76,11 +75,11 @@ plus an arithmetic shuffle to interleave the two accounting terms.
 
 <!--
 ```agda
-  CERTS-pov {Γ = Γ} {s₁} {sₙ} validNetIdW validNetIdDD creds∈ (run {s' = s'} (pre-cert , certs)) =
+  CERTS-pov {Γ = Γ} {s₁} {sₙ} validNetIdW validNetIdDD (run {s' = s'} (pre-cert , certs)) =
     begin
-      getCoin s₁ + cdd        ≡⟨ cong (_+ cdd) (PRE-CERT-pov validNetId pre-cert) ⟩
+      getCoin s₁ + cdd        ≡⟨ cong (_+ cdd) (PRE-CERT-pov validNetIdW pre-cert) ⟩
       getCoin s' + cwd + cdd  ≡⟨ swap-right _ (cwd) (cdd) ⟩
-      getCoin s' + cdd + cwd  ≡⟨ cong (_+ cwd) (sts-pov creds∈' validNetIdDD certs) ⟩
+      getCoin s' + cdd + cwd  ≡⟨ cong (_+ cwd) (sts-pov validNetIdDD certs) ⟩
       getCoin sₙ + cwd ∎
     where
     open ≡-Reasoning
@@ -93,7 +92,5 @@ plus an arithmetic shuffle to interleave the two accounting terms.
       trans  (+-assoc a b c)
              (trans  (cong (a +_) (+-comm b c))
                      (sym (+-assoc a c b)))
-    creds∈' : mapˢ stake (dom (DirectDepositsOf Γ)) ⊆ dom (RewardsOf (DStateOf s'))
-    creds∈' = {!!}  -- preserve-dom across PRE-CERT
 ```
 -->
