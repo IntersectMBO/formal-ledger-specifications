@@ -41,7 +41,7 @@ the full `CertState`{.AgdaRecord} plus the account record.
 Thus, the `PoolReapState`{.AgdaRecord} here carries (`DState`{.AgdaRecord},
 `PState`{.AgdaRecord}, `GState`{.AgdaRecord}, `Acnt`{.AgdaRecord})
 as opposed to the Conway `PoolReapState`{.AgdaRecord} (`UTxOState`{.AgdaRecord},
-Acnt{.AgdaRecord}, `DState`{.AgdaRecord}, `PState`{.AgdaRecord}) shape.
+`Acnt`{.AgdaRecord}, `DState`{.AgdaRecord}, `PState`{.AgdaRecord}) shape.
 
 ```agda
 record PoolReapState : Type where
