@@ -35,6 +35,8 @@ You can
    exploring the literate Agda files in a development environment are available in
    the [Contributing Guide][].
 
++  explore other Cardano formal specifications in the [Cardano Formal Specifications][cardano-formal-specifications] repository, which serves as a central index of formal specifications across the Cardano ecosystem.
+
 ---
 
 ## 📜 **Published Artifacts**
@@ -64,6 +66,7 @@ If you encounter any issues, please check the [Troubleshooting Guide][] or [subm
 
 
 
+[cardano-formal-specifications]: https://github.com/IntersectMBO/cardano-formal-specifications
 [cardano-ledger.pdf]: https://IntersectMBO.github.io/formal-ledger-specifications/cardano-ledger.pdf
 [conway-ledger.pdf]: https://IntersectMBO.github.io/formal-ledger-specifications/conway-ledger.pdf
 [Contributing Guide]: https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/CONTRIBUTING.md
