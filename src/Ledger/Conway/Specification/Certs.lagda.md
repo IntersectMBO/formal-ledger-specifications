@@ -566,7 +566,7 @@ data _⊢_⇀⦇_,CERT⦈_  : CertEnv → CertState → DCert → CertState → 
       Γ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ , stᵖ , stᵍ' ⟧
 ```
 
-### The <span class="AgdaFunction">PRE-CERT</span> Transition Rule
+### The <span class="AgdaDatatype">PRE-CERT</span> Transition Rule
 
 Here we define the `PRE-CERT`{.AgdaDatatype} transition rule.  This rule is applied
 at the start of the `CERTS`{.AgdaDatatype} transition rule and handles the following
@@ -607,7 +607,7 @@ data _⊢_⇀⦇_,PRE-CERT⦈_ : CertEnv → CertState → ⊤ → CertState →
       ⟦ e , pp , vs , wdrls , cc ⟧ ⊢ ⟦ ⟦ voteDelegs , stakeDelegs , rewards ⟧ , stᵖ , ⟦ dReps , ccHotKeys ⟧ ⟧ ⇀⦇ _ ,PRE-CERT⦈ ⟦ ⟦ voteDelegs , stakeDelegs , constMap wdrlCreds 0 ∪ˡ rewards ⟧ , stᵖ , ⟦ refreshedDReps , ccHotKeys ⟧ ⟧
 ```
 
-### The <span class="AgdaFunction">POST-CERT</span> Transition Rule
+### The <span class="AgdaDatatype">POST-CERT</span> Transition Rule
 
 The `POST-CERT`{.AgdaFunction} transition rule is applied at the end of the
 `CERTS`{.AgdaDatatype} rule and it ensures that only valid registered

@@ -452,7 +452,7 @@ data _⊢_⇀⦇_,CERT⦈_  : CertEnv → CertState → DCert → CertState → 
       Γ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ , stᵖ , stᵍ' ⟧
 ```
 
-## The <span class="AgdaFunction">PRE-CERT</span> Transition Rule
+## The <span class="AgdaDatatype">PRE-CERT</span> Transition Rule
 
 ### Withdrawal Processing
 
@@ -494,7 +494,7 @@ Enforcing this requires threading `legacyMode` into `CertEnv`, which in turn req
 changes to the `SUBLEDGER` and `LEDGER` rules.  This restriction will be added in a
 follow-up issue.
 
-## The <span class="AgdaFunction">POST-CERT</span> Transition Rule
+## The <span class="AgdaDatatype">POST-CERT</span> Transition Rule
 
 ### Direct Deposit Application (CIP-159)
 
