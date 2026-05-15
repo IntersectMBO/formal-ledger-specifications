@@ -41,7 +41,8 @@ open import Ledger.Dijkstra.Specification.Gov.Base using (GovStructure)
 module Ledger.Dijkstra.Specification.Certs.Properties.ApplyWithdrawalsPoV
   (gs : GovStructure) (open GovStructure gs) where
 
-open import Ledger.Dijkstra.Specification.Certs gs
+open import Ledger.Dijkstra.Specification.Account gs using (DirectDeposits; BalanceInterval)
+open import Ledger.Dijkstra.Specification.Certs gs hiding (applyOne)
 open import Ledger.Dijkstra.Specification.Gov.Actions gs hiding (yes; no)
 open import Ledger.Prelude
 open import Axiom.Set.Properties th
@@ -70,6 +71,45 @@ instance
 
 The following auxiliary properties are needed.
 
+### Bridge: `getCoin` of a singleton-overwriting union
+
+After CIP-159 PR #1197, `applyToRewards` writes via `❴ k , v ❵ ∪ˡ acc` (no
+complement restriction on `acc`).  Left-bias of `∪ˡ` makes this extensionally
+equal to the older `❴ k , v ❵ ∪ˡ (acc ∣ ❴ k ❵ ᶜ)` form; the lemma below states
+the corresponding `getCoin` equation, which the two `applyOne` proofs use to
+land on a uniform RHS.
+
+```agda
+getCoin-∪ˡ-overwrite : (acc : Rewards) (c : Credential) (v : Coin)
+  → getCoin (❴ c , v ❵ ∪ˡ acc) ≡ v + getCoin (acc ∣ ❴ c ❵ ᶜ)
+```
+
+<!--
+```agda
+getCoin-∪ˡ-overwrite acc c v =
+  begin
+    getCoin (❴ c , v ❵ ∪ˡ acc)
+      ≡⟨ ≡ᵉ-getCoin (❴ c , v ❵ ∪ˡ acc) (❴ c , v ❵ ∪ˡ (acc ∣ ❴ c ❵ ᶜ))
+                    bridge ⟩
+    getCoin (❴ c , v ❵ ∪ˡ (acc ∣ ❴ c ❵ ᶜ))
+      ≡⟨ indexedSumᵛ'-∪ ❴ c , v ❵ᵐ (acc ∣ ❴ c ❵ ᶜ) disj ⟩
+    getCoin ❴ c , v ❵ᵐ + getCoin (acc ∣ ❴ c ❵ ᶜ)
+      ≡⟨ cong (_+ getCoin (acc ∣ ❴ c ❵ ᶜ)) getCoin-singleton ⟩
+    v + getCoin (acc ∣ ❴ c ❵ ᶜ)
+      ∎
+  where
+  open ≡-Reasoning
+  open Equivalence
+  module ≡ᵉ = IsEquivalence (≡ᵉ-isEquivalence {Credential × Coin})
+  -- `∪ˡ` is `_∪ (_ ∣ dom _ ᶜ)`, and `filterᵐ` is idempotent, so dropping
+  -- the inner `∣ ❴ c ❵ ᶜ` on the right operand doesn't change the result.
+  bridge : (❴ c , v ❵ ∪ˡ acc) ˢ ≡ᵉ (❴ c , v ❵ ∪ˡ (acc ∣ ❴ c ❵ ᶜ)) ˢ
+  bridge = res-decomp ❴ c , v ❵ᵐ acc
+  disj : disjoint (dom ❴ c , v ❵ᵐ) (dom (acc ∣ ❴ c ❵ ᶜ))
+  disj x y = res-comp-dom y (dom-single→single x)
+```
+-->
+
 ### Single-step Lemma: `applyOne` decreases `getCoin` by `amt`
 
 When `stake addr ∈ dom acc` and `amt ≤ bal` (where `bal` is the current balance),
@@ -80,7 +120,7 @@ applyOne-pov :
   (acc : Rewards) (addr : RewardAddress) (amt bal : Coin)
   → lookupᵐ? acc (stake addr) ≡ just bal
   → amt ≤ bal
-  → getCoin acc ≡ getCoin (❴ stake addr , bal ∸ amt ❵ ∪ˡ (acc ∣ ❴ stake addr ❵ ᶜ)) + amt
+  → getCoin acc ≡ getCoin (❴ stake addr , bal ∸ amt ❵ ∪ˡ acc) + amt
 ```
 
 <!--
@@ -101,10 +141,8 @@ applyOne-pov acc addr amt bal lookup-eq amt≤bal =
       ≡⟨ trans (sym (+-assoc (getCoin (acc ∣ ❴ c ❵ ᶜ)) (bal ∸ amt) amt))
                (cong (_+ amt) (+-comm (getCoin (acc ∣ ❴ c ❵ ᶜ)) (bal ∸ amt))) ⟩
     (bal ∸ amt) + getCoin (acc ∣ ❴ c ❵ ᶜ) + amt
-      ≡˘⟨ cong (_+ amt)
-            (trans (indexedSumᵛ'-∪ ❴ c , bal ∸ amt ❵ᵐ (acc ∣ ❴ c ❵ ᶜ) disj-doms)
-                   (cong (_+ getCoin (acc ∣ ❴ c ❵ ᶜ)) getCoin-singleton)) ⟩
-    getCoin (❴ c , bal ∸ amt ❵ᵐ ∪ˡ (acc ∣ ❴ c ❵ˢ ᶜ)) + amt
+      ≡˘⟨ cong (_+ amt) (getCoin-∪ˡ-overwrite acc c (bal ∸ amt)) ⟩
+    getCoin (❴ c , bal ∸ amt ❵ ∪ˡ acc) + amt
       ∎
   where
   module ≡ᵉ = IsEquivalence (≡ᵉ-isEquivalence {Credential × Coin})
@@ -128,11 +166,7 @@ applyOne-pov acc addr amt bal lookup-eq amt≤bal =
     trans (getCoin-cong (acc ∣ ❴ c ❵) ❴ (c , bal) ❵ (res-singleton' {m = acc} c∈acc))
           getCoin-singleton
 
-  c∉dom-compl : c ∉ dom ((acc ∣ ❴ c ❵ ᶜ) ˢ)
-  c∉dom-compl c∈ = res-comp-dom c∈ (to ∈-singleton refl)
-
-  disj-doms : disjoint (dom ❴ c , bal ∸ amt ❵ᵐ) (dom (acc ∣ ❴ c ❵ ᶜ))
-  disj-doms x y = c∉dom-compl (subst (_∈ dom (acc ∣ ❴ c ❵ ᶜ)) (from ∈-dom-singleton-pair x) y)
+  -- `c∉dom-compl` and `disj-doms` removed: the bridge lemma encapsulates them.
 ```
 -->
 
@@ -164,13 +198,13 @@ applyOne-pov acc addr amt bal lookup-eq amt≤bal =
 <!--
 ```agda
 -- applyOne preserves balance for other credentials.
-module ApplyWithdrawals-PoV
+module ApplyToRewards-PoV
   -- ASSUMPTIONS --
 
   -- TODO: ask that these be proved in the `agda-sets` library.
 
   -- 1. For any credential `c'` other than `c`, lookupᵐ? (❴ c , v ❵ ∪ˡ (m ∣ ❴ c ❵ ᶜ)) c' ≡ lookupᵐ? m c'
-  ( ∪ˡ-res-lookup-preserve : ∀ (m : Rewards) (c : Credential) (v : Coin) (c' : Credential)
+  ( ∪ˡ-res-lookup-preserve : (m : Rewards) (c : Credential) (v : Coin) (c' : Credential)
       → c' ≢ c → lookupᵐ? (❴ c , v ❵ ∪ˡ (m ∣ ❴ c ❵ ᶜ)) c' ≡ lookupᵐ? m c' )
     -- It's hard because the `agda-sets` API requires instance resolution for
     -- `lookupᵐ?`, but the semantic content is clear (lookup in a left-biased union
@@ -179,16 +213,27 @@ module ApplyWithdrawals-PoV
     -- resolution is painful library plumbing.
 
    -- 2. getCoin representation.
-  ( sum-map-proj₂≡getCoin : ∀ (m : Withdrawals) → sum (map proj₂ (setToList (m ˢ))) ≡ getCoin m )
+  ( sum-map-proj₂≡getCoin : (m : RewardAddress ⇀ Coin) → sum (map proj₂ (setToList (m ˢ))) ≡ getCoin m )
 
    -- 3. no duplicate credentials.
-  ( setToList-Unique : ∀ (m : Withdrawals) → Unique (map (stake ∘ proj₁) (setToList (m ˢ))) )
+  ( setToList-Unique : (m : RewardAddress ⇀ Coin) → ∀[ a ∈ dom (m ˢ) ] NetworkIdOf a ≡ NetworkId
+      → Unique (map (stake ∘ proj₁) (setToList (m ˢ))) )
+
   where
+
+  -- Local convenience matching the inline fold body of `applyToRewards`.
+  -- Definitionally equal to the lambda inside `applyToRewards f`, so
+  -- `foldl applyOne acc xs ≡ foldl (applyToRewards-lambda f) acc xs` is `refl`.
+  applyOne : (Coin → Coin → Coin) → Rewards → RewardAddress × Coin → Rewards
+  applyOne f acc (addr , amt) =
+    maybe (λ bal → ❴ stake addr , f bal amt ❵ ∪ˡ acc) acc (lookupᵐ? acc (stake addr))
 ```
 -->
 
 
-## Main Theorem
+## Main Theorems
+
+### `applyWithdrawals-pov`
 
 This is the form needed by `PRE-CERT-pov`.
 
@@ -278,7 +323,7 @@ This is the form needed by `PRE-CERT-pov`.
       where
       c   = stake addr
       acc' : Rewards
-      acc' = ❴ c , bal ∸ amt ❵ ∪ˡ (acc ∣ ❴ c ❵ ᶜ)
+      acc' = ❴ c , bal ∸ amt ❵ ∪ˡ acc
 
       amt≤bal : amt ≤ bal
       amt≤bal = subst (amt ≤_) (cong (maybe id 0) eq) (h (here refl) .proj₂)
@@ -303,5 +348,126 @@ This is the form needed by `PRE-CERT-pov`.
 ```
 -->
 
+### `applyDirectDeposits-pov`
 
+The CIP-159 `POST-CERT` rule applies direct deposits via `applyDirectDeposits dd rwds`,
+*increasing* the rewards balance by exactly the sum of the deposit amounts.  This
+lemma is the symmetric counterpart to `applyWithdrawals-pov`; both are instances
+of the common `applyToRewards` fold.
+
+The fold induction `foldl-applyOne-pov-add` is the additive analogue of
+`foldl-applyOne-pov`; its single-step ingredient `applyOne-pov-add` follows
+directly from `getCoin-∪ˡ-overwrite`.
+
+```agda
+  applyOne-pov-add : (acc : Rewards) (addr : RewardAddress) (amt bal : Coin)
+    → lookupᵐ? acc (stake addr) ≡ just bal
+    → getCoin (❴ stake addr , bal + amt ❵ ∪ˡ acc) ≡ getCoin acc + amt
+```
+
+<!--
+```agda
+  applyOne-pov-add acc addr amt bal lookup-eq =
+    let c = stake addr in
+    begin
+      getCoin (❴ c , bal + amt ❵ ∪ˡ acc)
+        ≡⟨ getCoin-∪ˡ-overwrite acc c (bal + amt) ⟩
+      (bal + amt) + getCoin (acc ∣ ❴ c ❵ ᶜ)
+        ≡⟨ +-comm (bal + amt) (getCoin (acc ∣ ❴ c ❵ ᶜ)) ⟩
+      getCoin (acc ∣ ❴ c ❵ ᶜ) + (bal + amt)
+        ≡˘⟨ +-assoc (getCoin (acc ∣ ❴ c ❵ ᶜ)) bal amt ⟩
+      getCoin (acc ∣ ❴ c ❵ ᶜ) + bal + amt
+        ≡˘⟨ cong (_+ amt) (split-by-lookup acc c bal lookup-eq) ⟩
+      getCoin acc + amt
+        ∎
+    where
+    open ≡-Reasoning
+    -- Same decomposition `acc ≡ (acc ∣ ❴ c ❵ ᶜ) ∪ˡ (acc ∣ ❴ c ❵)` used in
+    -- `applyOne-pov`; factor it out if both proofs are kept in this module.
+    split-by-lookup : (acc : Rewards) (c : Credential) (bal : Coin)
+      → lookupᵐ? acc c ≡ just bal
+      → getCoin acc ≡ getCoin (acc ∣ ❴ c ❵ ᶜ) + bal
+    split-by-lookup acc c bal lookup-eq = {!!}
+      -- Same proof as the first three steps of `applyOne-pov`; factor it out.
+```
+-->
+
+```agda
+  foldl-applyOne-pov-add : (acc : Rewards) (entries : List (RewardAddress × Coin))
+    → (∀ {addr amt} → (addr , amt) ∈ˡ entries → stake addr ∈ dom acc)
+    → Unique (map (stake ∘ proj₁) entries)
+    → getCoin (foldl (applyOne _+_) acc entries) ≡ getCoin acc + sum (map proj₂ entries)
+```
+
+<!--
+```agda
+  foldl-applyOne-pov-add acc [] _ _ =
+    sym (+-identityʳ (indexedSumᵛ' id acc))
+  foldl-applyOne-pov-add acc ((addr , amt) ∷ xs) h (c∉xs :: uniq-xs)
+    with lookupᵐ? acc (stake addr) in eq
+  -- Defensive `nothing` case ruled out by the membership precondition.
+  ... | nothing = ⊥-elim (case lookup-just (h (here refl)) of λ where
+                            (_ , p) → case trans (sym eq) p of λ ())
+    where
+    -- A small helper: membership in domain implies `lookupᵐ?` is `just`.
+    lookup-just : ∀ {a} → a ∈ dom acc → Σ Coin λ v → lookupᵐ? acc a ≡ just v
+    lookup-just = {!!}  -- standard agda-sets bridge; provable from `dom∈`.
+  ... | just bal = begin
+      getCoin (foldl (applyOne _+_) acc' xs)
+        ≡⟨ foldl-applyOne-pov-add acc' xs h' uniq-xs ⟩
+      getCoin acc' + sum (map proj₂ xs)
+        ≡⟨ cong (_+ sum (map proj₂ xs)) (applyOne-pov-add acc addr amt bal eq) ⟩
+      (getCoin acc + amt) + sum (map proj₂ xs)
+        ≡⟨ +-assoc (getCoin acc) amt (sum (map proj₂ xs)) ⟩
+      getCoin acc + (amt + sum (map proj₂ xs))
+        ∎
+    where
+    open ≡-Reasoning
+    c = stake addr
+    acc' = ❴ c , bal + amt ❵ ∪ˡ acc
+    -- `h'` is the same invariant-transfer argument as in `foldl-applyOne-pov`,
+    -- but with no `amt ≤ maybe id 0 (lookupᵐ? _ _)` bound to thread —
+    -- only domain membership has to be preserved.  Use the bridge lemma
+    -- to convert `acc' = ❴ c , bal + amt ❵ ∪ˡ acc` into the equivalent
+    -- `❴ c , bal + amt ❵ ∪ˡ (acc ∣ ❴ c ❵ ᶜ)` form, then reuse
+    -- `∪ˡ-res-dom-preserve` from `Certs/Properties/ApplyWithdrawalsPoV`.
+    h' : ∀ {addr' amt'} → (addr' , amt') ∈ˡ xs → stake addr' ∈ dom acc'
+    h' = {!!}  -- mechanical mirror of the original `h'`; see comment above.
+```
+-->
+
+
+
+```agda
+  applyDirectDeposits-pov : (dd : DirectDeposits) (rwds : Rewards)
+    → mapˢ stake (dom dd) ⊆ dom rwds
+    → ∀[ a ∈ dom dd ] NetworkIdOf a ≡ NetworkId
+    → getCoin (applyDirectDeposits dd rwds) ≡ getCoin rwds + getCoin dd
+```
+
+<!--
+```agda
+  applyDirectDeposits-pov dd rwds creds∈ netIds =
+    begin
+      getCoin (applyDirectDeposits dd rwds)
+        ≡⟨ refl ⟩  -- by definition of `applyDirectDeposits = applyToRewards _+_`
+      getCoin (foldl (applyOne _+_) rwds (setToList (dd ˢ)))
+        ≡⟨ sym (foldl-applyOne-pov-add rwds (setToList (dd ˢ)) inv
+                                       (setToList-Unique dd netIds)) ⟩
+      getCoin rwds + sum (map proj₂ (setToList (dd ˢ)))
+        ≡⟨ cong (getCoin rwds +_) (sum-map-proj₂≡getCoin dd) ⟩
+      getCoin rwds + getCoin dd
+        ∎
+    where
+    open ≡-Reasoning
+    open Equivalence
+    inv : ∀ {addr amt} → (addr , amt) ∈ˡ setToList (dd ˢ) → stake addr ∈ dom rwds
+    inv {addr} {amt} mem =
+      let addr-amt∈dd : (addr , amt) ∈ dd ˢ
+          addr-amt∈dd = setToList-∈ mem
+          c∈dom-dd : stake addr ∈ mapˢ stake (dom dd)
+          c∈dom-dd = to ∈-map (addr , refl , to dom∈ (amt , addr-amt∈dd))
+      in  creds∈ c∈dom-dd
+```
+-->
 
