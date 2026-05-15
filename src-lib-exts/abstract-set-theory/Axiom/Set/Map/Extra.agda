@@ -1,15 +1,8 @@
----
-source_branch: master
-source_path: src-lib-exts/abstract-set-theory/Axiom/Set/Map/Extra.lagda.md
----
+-- Extensions to `Axiom.Set.Map`
+--
+-- This module collects properties of finite maps that aren't yet in the upstream
+-- library (`agda-sets`).  This includes extra utilities and candidates for upstreaming.
 
-# Extensions to `Axiom.Set.Map`
-
-This module collects properties of finite maps that aren't yet in the upstream
-library (`agda-sets`).  This includes extra utilities and candidates for upstreaming.
-
-<!--
-```agda
 {-# OPTIONS --safe #-}
 
 module abstract-set-theory.Axiom.Set.Map.Extra where
@@ -51,27 +44,23 @@ instance
 
   HasSubset-⇀ : {A B : Type} → HasSubset (A ⇀ B)
   HasSubset-⇀ {A} {B} ._⊆_ m₁ m₂ = {k : A} {v : B} → (k , v) ∈ (m₁ ˢ) → (k , v) ∈ (m₂ ˢ)
-```
--->
 
-## Map inequality
 
-```agda
+-- Map Inequality -----------------------------------------------------------------
+
 infix 4 _≢ᵐ_
 
 _≢ᵐ_ : {A B : Type} → (A ⇀ B) → (A ⇀ B) → Type
 a ≢ᵐ b = ¬ a ≡ᵐ b
-```
 
-## Properties of `_∪⁺_`
 
-This section was previously `Ledger.Conway.Conformance.Equivalence.Map` and
-contains general properties of additive map union over any commutative monoid.
-Nothing here is Conway-specific; it was developed under that path during early
-agda-sets bring-up.
+-- Properties of `_∪⁺_` -----------------------------------------------------------
 
-<!--
-```agda
+-- This section was previously `Ledger.Conway.Conformance.Equivalence.Map` and
+-- contains general properties of additive map union over any commutative monoid.
+-- Nothing here is Conway-specific; it was developed under that path during early
+-- agda-sets bring-up.
+
 module _  {A B : Type}
   (open AlgStrucs {A = B} _≡_)
   ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq B ⦄
@@ -712,4 +701,3 @@ module _  {A B : Type}
 
       lem-del-excluded : ∀ m → ¬ P k → filterᵐ P′ (m ∣ ❴ k ❵ ᶜ) ≡ᵐ filterᵐ P′ m
       lem-del-excluded m ¬p = filterᵐ-restrict m ⟨≈⟩ restrict-singleton-filterᵐ-false m ¬p
-```
