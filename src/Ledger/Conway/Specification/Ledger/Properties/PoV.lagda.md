@@ -38,15 +38,9 @@ instance
 
 module _
   (tx : Tx) (let open Tx tx; open TxBody body)
-  ( indexedSumᵛ'-∪  :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ Coin)
-                       → disjoint (dom m) (dom m') → getCoin (m ∪ˡ m') ≡ getCoin m + getCoin m' )
-  ( sumConstZero    :  {A : Type} ⦃ _ : DecEq A ⦄ {X : ℙ A} → getCoin (constMap X 0) ≡ 0 )
-  ( res-decomp      :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ Coin)
-                       → (m ∪ˡ m')ˢ ≡ᵉ (m ∪ˡ (m' ∣ dom (m ˢ) ᶜ))ˢ )
-  ( getCoin-cong    :  {A : Type} ⦃ _ : DecEq A ⦄ (s : A ⇀ Coin) (s' : ℙ (A × Coin)) → s ˢ ≡ᵉ s'
-                       → indexedSum' proj₂ (s ˢ) ≡ indexedSum' proj₂ s' )
-  ( ≡ᵉ-getCoinˢ     :  {A A' : Type} ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq A' ⦄ (s : ℙ (A × Coin)) {f : A → A'}
-                       → InjectiveOn (dom s) f → getCoin (mapˢ (map₁ f) s) ≡ getCoin s )
+  -- TODO: prove the following assumption, used in roof of `CERTBASE-pov`.
+  ( ≡ᵉ-getCoinˢ :  {A A' : Type} ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq A' ⦄ (s : ℙ (A × Coin)) {f : A → A'}
+                   → InjectiveOn (dom s) f → getCoin (mapˢ (map₁ f) s) ≡ getCoin s )
   where
 
   pattern UTXO-induction r = UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ r _ _ _
@@ -84,8 +78,8 @@ then the coin values of `s`{.AgdaBound} and `s'`{.AgdaBound} are equal, that is,
       open LState s' renaming (utxoSt to utxoSt'; govSt to govSt'; certState to certState')
       open CertState certState'
       open ≡-Reasoning
-      open Certs-PoV indexedSumᵛ'-∪ sumConstZero res-decomp  getCoin-cong ≡ᵉ-getCoinˢ
-      zeroMap    = constMap (mapˢ RewardAddress.stake (dom txWithdrawals)) 0
+      open Certs-PoV ≡ᵉ-getCoinˢ
+      zeroMap = constMap (mapˢ RewardAddress.stake (dom txWithdrawals)) 0
     in
     begin
       getCoin utxoSt + getCoin certState

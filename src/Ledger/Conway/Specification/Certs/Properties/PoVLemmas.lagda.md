@@ -23,7 +23,7 @@ open import Axiom.Set.Properties th
 open import Algebra using (CommutativeMonoid)
 open import Data.Maybe.Properties
 open import Data.Nat.Properties using (+-0-monoid; +-0-commutativeMonoid; +-identityʳ; +-identityˡ)
-open import Relation.Binary using (IsEquivalence)
+import Relation.Binary as Eq using (IsEquivalence)
 open import Relation.Nullary.Decidable
 open import Tactic.ReduceDec
 
@@ -40,35 +40,7 @@ private variable
 instance
   _ = +-0-monoid
 
-getCoin-singleton : ⦃ _ : DecEq A ⦄ {(a , c) : A × Coin} → indexedSumᵛ' id ❴ (a , c) ❵ ≡ c
-getCoin-singleton = indexedSum-singleton' {M = Coin} (finiteness _)
-
-∪ˡsingleton∈dom :  ⦃ _ : DecEq A ⦄ (m : A ⇀ Coin) {(a , c) : A × Coin}
-                → a ∈ dom m → getCoin (m ∪ˡ ❴ (a , c) ❵ᵐ) ≡ getCoin m
-∪ˡsingleton∈dom m {(a , c)} a∈dom = ≡ᵉ-getCoin (m ∪ˡ ❴ (a , c) ❵) m (singleton-∈-∪ˡ {m = m} a∈dom)
-
-module _  ( indexedSumᵛ'-∪ :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ Coin)
-                              → disjoint (dom m) (dom m')
-                              → getCoin (m ∪ˡ m') ≡ getCoin m + getCoin m' )
-  where
-  open ≡-Reasoning
-  open Equivalence
-
-  ∪ˡsingleton∉dom :  ⦃ _ : DecEq A ⦄ (m : A ⇀ Coin) {(a , c) : A × Coin}
-                   → a ∉ dom m → getCoin (m ∪ˡ ❴ (a , c) ❵ᵐ) ≡ getCoin m + c
-  ∪ˡsingleton∉dom m {(a , c)} a∉dom = begin
-    getCoin (m ∪ˡ ❴ a , c ❵ᵐ)
-      ≡⟨ indexedSumᵛ'-∪ m ❴ a , c ❵ᵐ
-         ( λ x y → a∉dom (subst (_∈ dom m) (from ∈-dom-singleton-pair y) x) ) ⟩
-    getCoin m + getCoin ❴ a , c ❵ᵐ
-      ≡⟨ cong (getCoin m +_) getCoin-singleton ⟩
-    getCoin m + c
-      ∎
-
-  ∪ˡsingleton0≡ : ⦃ _ : DecEq A ⦄ → (m : A ⇀ Coin) {a : A} → getCoin (m ∪ˡ ❴ (a , 0) ❵ᵐ) ≡ getCoin m
-  ∪ˡsingleton0≡ m {a} with a ∈? dom m
-  ... | yes a∈dom = ∪ˡsingleton∈dom m a∈dom
-  ... | no a∉dom = trans (∪ˡsingleton∉dom m a∉dom) (+-identityʳ (getCoin m))
+open ≡-Reasoning
 ```
 -->
 
@@ -83,61 +55,55 @@ some `dcert`{.AgdaBound} : `DCert`{.AgdaDatatype}. Then,
 *Formally*.
 
 ```agda
-  CERT-pov : {Γ : CertEnv} {s s'  : CertState}
-    → Γ ⊢ s ⇀⦇ dCert ,CERT⦈ s'
-    → getCoin s ≡ getCoin s'
+CERT-pov : {Γ : CertEnv} {s s'  : CertState}
+  → Γ ⊢ s ⇀⦇ dCert ,CERT⦈ s' → getCoin s ≡ getCoin s'
 ```
 
 *Proof*.  (Click the "Show more Agda" button to reveal the proof.)
 
 <!--
 ```agda
-  CERT-pov (CERT-deleg (DELEG-delegate {rwds = rwds} _)) = sym (∪ˡsingleton0≡ rwds)
-  CERT-pov (CERT-deleg (DELEG-reg {rwds = rwds} _)) = sym (∪ˡsingleton0≡ rwds)
-  CERT-pov {s = ⟦ _ , stᵖ , stᵍ ⟧ᶜˢ}{⟦ _ , stᵖ' , stᵍ' ⟧ᶜˢ}
-    (CERT-deleg (DELEG-dereg {c = c} {rwds} {vDelegs = vDelegs}{sDelegs} x)) = begin
-    getCoin ⟦ ⟦ vDelegs , sDelegs , rwds ⟧ , stᵖ , stᵍ ⟧
-      ≡˘⟨ ≡ᵉ-getCoin rwds-∪ˡ-decomp rwds
-          ( ≡ᵉ.trans rwds-∪ˡ-∪ (≡ᵉ.trans ∪-sym (res-ex-∪ Dec-∈-singleton)) ) ⟩
-    getCoin rwds-∪ˡ-decomp
-      ≡⟨ ≡ᵉ-getCoin rwds-∪ˡ-decomp ((rwds ∣ ❴ c ❵ ᶜ) ∪ˡ ❴ (c , 0) ❵ᵐ) rwds-∪ˡ≡sing-∪ˡ  ⟩
-    getCoin ((rwds ∣ ❴ c ❵ ᶜ) ∪ˡ ❴ (c , 0) ❵ᵐ )
-      ≡⟨ ∪ˡsingleton0≡ (rwds ∣ ❴ c ❵ ᶜ) ⟩
-    getCoin ⟦ ⟦ vDelegs ∣ ❴ c ❵ ᶜ , sDelegs ∣ ❴ c ❵ ᶜ , rwds ∣ ❴ c ❵ ᶜ ⟧ , stᵖ' , stᵍ' ⟧
-      ∎
-    where
-    module ≡ᵉ = IsEquivalence (≡ᵉ-isEquivalence {Credential × Coin})
-    rwds-∪ˡ-decomp = (rwds ∣ ❴ c ❵ ᶜ) ∪ˡ (rwds ∣ ❴ c ❵ )
+CERT-pov (CERT-deleg (DELEG-delegate {rwds = rwds} _)) = sym (∪ˡsingleton0≡ rwds)
+CERT-pov (CERT-deleg (DELEG-reg {rwds = rwds} _)) = sym (∪ˡsingleton0≡ rwds)
+CERT-pov {s = ⟦ _ , stᵖ , stᵍ ⟧ᶜˢ}{⟦ _ , stᵖ' , stᵍ' ⟧ᶜˢ}
+  (CERT-deleg (DELEG-dereg {c = c} {rwds} {vDelegs = vDelegs}{sDelegs} x)) = begin
+  getCoin ⟦ ⟦ vDelegs , sDelegs , rwds ⟧ , stᵖ , stᵍ ⟧
+    ≡˘⟨ ≡ᵉ-getCoin rwds-∪ˡ-decomp rwds
+        ( ≡ᵉ.trans rwds-∪ˡ-∪ (≡ᵉ.trans ∪-sym (res-ex-∪ Dec-∈-singleton)) ) ⟩
+  getCoin rwds-∪ˡ-decomp
+    ≡⟨ ≡ᵉ-getCoin rwds-∪ˡ-decomp ((rwds ∣ ❴ c ❵ ᶜ) ∪ˡ ❴ (c , 0) ❵ᵐ) rwds-∪ˡ≡sing-∪ˡ  ⟩
+  getCoin ((rwds ∣ ❴ c ❵ ᶜ) ∪ˡ ❴ (c , 0) ❵ᵐ )
+    ≡⟨ ∪ˡsingleton0≡ (rwds ∣ ❴ c ❵ ᶜ) ⟩
+  getCoin ⟦ ⟦ vDelegs ∣ ❴ c ❵ ᶜ , sDelegs ∣ ❴ c ❵ ᶜ , rwds ∣ ❴ c ❵ ᶜ ⟧ , stᵖ' , stᵍ' ⟧
+    ∎
+  where
+  module ≡ᵉ = Eq.IsEquivalence (≡ᵉ-isEquivalence {Credential × Coin})
+  rwds-∪ˡ-decomp = (rwds ∣ ❴ c ❵ ᶜ) ∪ˡ (rwds ∣ ❴ c ❵ )
 
-    rwds-∪ˡ-∪ : rwds-∪ˡ-decomp ˢ ≡ᵉ (rwds ∣ ❴ c ❵ ᶜ)ˢ ∪ (rwds ∣ ❴ c ❵)ˢ
-    rwds-∪ˡ-∪ = disjoint-∪ˡ-∪ (disjoint-sym res-ex-disjoint)
+  rwds-∪ˡ-∪ : rwds-∪ˡ-decomp ˢ ≡ᵉ (rwds ∣ ❴ c ❵ ᶜ)ˢ ∪ (rwds ∣ ❴ c ❵)ˢ
+  rwds-∪ˡ-∪ = disjoint-∪ˡ-∪ (disjoint-sym res-ex-disjoint)
 
-    disj : disjoint (dom ((rwds ∣ ❴ c ❵ˢ ᶜ) ˢ)) (dom (❴ c , 0 ❵ᵐ ˢ))
-    disj {a} a∈res a∈dom  = res-comp-dom a∈res (dom-single→single a∈dom)
+  disj : disjoint (dom ((rwds ∣ ❴ c ❵ˢ ᶜ) ˢ)) (dom (❴ c , 0 ❵ᵐ ˢ))
+  disj {a} a∈res a∈dom  = res-comp-dom a∈res (dom-single→single a∈dom)
 
-    rwds-∪ˡ≡sing-∪ˡ : rwds-∪ˡ-decomp ˢ ≡ᵉ ((rwds ∣ ❴ c ❵ ᶜ) ∪ˡ ❴ (c , 0) ❵ᵐ )ˢ
-    rwds-∪ˡ≡sing-∪ˡ = ≡ᵉ.trans rwds-∪ˡ-∪
-                              ( ≡ᵉ.trans (∪-cong ≡ᵉ.refl (res-singleton'{m = rwds} x))
-                                         (≡ᵉ.sym $ disjoint-∪ˡ-∪ disj) )
-  CERT-pov (CERT-pool x) = refl
-  CERT-pov (CERT-vdel x) = refl
+  rwds-∪ˡ≡sing-∪ˡ : rwds-∪ˡ-decomp ˢ ≡ᵉ ((rwds ∣ ❴ c ❵ ᶜ) ∪ˡ ❴ (c , 0) ❵ᵐ )ˢ
+  rwds-∪ˡ≡sing-∪ˡ = ≡ᵉ.trans rwds-∪ˡ-∪
+                            ( ≡ᵉ.trans (∪-cong ≡ᵉ.refl (res-singleton'{m = rwds} x))
+                                       (≡ᵉ.sym $ disjoint-∪ˡ-∪ disj) )
+CERT-pov (CERT-pool x) = refl
+CERT-pov (CERT-vdel x) = refl
 
-  injOn : (wdls : Withdrawals)
-          → ∀[ a ∈ dom (wdls ˢ) ] NetworkIdOf a ≡ NetworkId
-          → InjectiveOn (dom (wdls ˢ)) RewardAddress.stake
-  injOn _ h {record { stake = stakex }} {record { stake = stakey }} x∈ y∈ refl =
-    cong (λ u → record { net = u ; stake = stakex }) (trans (h x∈) (sym (h y∈)))
+injOn : (wdls : Withdrawals)
+        → ∀[ a ∈ dom (wdls ˢ) ] NetworkIdOf a ≡ NetworkId
+        → InjectiveOn (dom (wdls ˢ)) RewardAddress.stake
+injOn _ h {record { stake = stakex }} {record { stake = stakey }} x∈ y∈ refl =
+  cong (λ u → record { net = u ; stake = stakex }) (trans (h x∈) (sym (h y∈)))
 
-  module Certs-Pov-lemmas
-    -- TODO: prove some or all of the following assumptions, used in roof of `CERTBASE-pov`.
-    ( sumConstZero    :  {A : Type} ⦃ _ : DecEq A ⦄ {X : ℙ A} → getCoin (constMap X 0) ≡ 0 )
-    ( res-decomp      :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ Coin)
-                         → (m ∪ˡ m')ˢ ≡ᵉ (m ∪ˡ (m' ∣ dom (m ˢ) ᶜ))ˢ )
-    ( getCoin-cong    :  {A : Type} ⦃ _ : DecEq A ⦄ (s : A ⇀ Coin) (s' : ℙ (A × Coin)) → s ˢ ≡ᵉ s'
-                         → indexedSum' proj₂ (s ˢ) ≡ indexedSum' proj₂ s' )
-    ( ≡ᵉ-getCoinˢ     :  {A A' : Type} ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq A' ⦄ (s : ℙ (A × Coin)) {f : A → A'}
-                         → InjectiveOn (dom s) f → getCoin (mapˢ (map₁ f) s) ≡ getCoin s )
-    where
+module Certs-Pov-lemmas
+  -- TODO: prove the following assumption, used in roof of `CERTBASE-pov`.
+  ( ≡ᵉ-getCoinˢ :  {A A' : Type} ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq A' ⦄ (s : ℙ (A × Coin)) {f : A → A'}
+                   → InjectiveOn (dom s) f → getCoin (mapˢ (map₁ f) s) ≡ getCoin s )
+  where
 ```
 -->
 
@@ -175,7 +141,7 @@ value of the withdrawals in `Γ`{.AgdaBound}.  In other terms,
       let
         open DState (dState cs )
         open DState (dState cs') renaming (rewards to rewards')
-        module ≡ᵉ       = IsEquivalence (≡ᵉ-isEquivalence {Credential × Coin})
+        module ≡ᵉ       = Eq.IsEquivalence (≡ᵉ-isEquivalence {Credential × Coin})
         wdrlsCC         = mapˢ (map₁ RewardAddress.stake) (wdrls ˢ)
         zeroMap         = constMap (mapˢ RewardAddress.stake (dom wdrls)) 0
         rwds-∪ˡ-decomp  = (rewards ∣ dom wdrlsCC ᶜ) ∪ˡ (rewards ∣ dom wdrlsCC)

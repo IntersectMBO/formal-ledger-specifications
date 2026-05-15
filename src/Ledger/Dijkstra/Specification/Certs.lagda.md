@@ -104,14 +104,14 @@ record PState : Type where
   field
     pools     : Pools
     fPools    : Pools
-    retiring  : KeyHash ⇀ Epoch
+    retiring  : Retiring
     deposits  : KeyHash ⇀ Coin
 
 record GState : Type where
   constructor ⟦_,_,_⟧ᵛ
   field
     dreps      : DReps
-    ccHotKeys  : Credential ⇀ Maybe Credential
+    ccHotKeys  : CCHotKeys
     deposits   : Credential ⇀ Coin
 
 record CertState : Type where
@@ -180,6 +180,9 @@ instance
 
   HasWithdrawals-CertEnv : HasWithdrawals CertEnv
   HasWithdrawals-CertEnv .WithdrawalsOf = CertEnv.wdrls
+
+  HasDirectDeposits-CertEnv : HasDirectDeposits CertEnv
+  HasDirectDeposits-CertEnv .DirectDepositsOf = CertEnv.directDeposits
 
   HasVoteDelegs-DState : HasVoteDelegs DState
   HasVoteDelegs-DState .VoteDelegsOf = DState.voteDelegs
