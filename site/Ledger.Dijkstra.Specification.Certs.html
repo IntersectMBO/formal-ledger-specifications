@@ -14118,7 +14118,7 @@ to process withdrawals as part of certificate processing.</p>
       <a id="14073" href="Prelude.InferenceRules.html#13694" class="Function Operator">────────────────────────────────</a>
       <a id="14112" href="Ledger.Dijkstra.Specification.Certs.html#7415" class="Generalizable">Γ</a> <a id="14114" href="Ledger.Dijkstra.Specification.Certs.html#13517" class="Datatype Operator">⊢</a> <a class="AgdaKaTeX">$\begin{pmatrix} \,\href{Ledger.Dijkstra.Specification.Certs.html#7789}{\htmlId{14118}{\htmlClass{Generalizable}{\text{stᵈ}}}}\, \\ \,\href{Ledger.Dijkstra.Specification.Certs.html#7829}{\htmlId{14124}{\htmlClass{Generalizable}{\text{stᵖ}}}}\, \\ \,\href{Ledger.Dijkstra.Specification.Certs.html#7809}{\htmlId{14130}{\htmlClass{Generalizable}{\text{stᵍ}}}}\, \end{pmatrix}$</a> <a id="14136" href="Ledger.Dijkstra.Specification.Certs.html#13517" class="Datatype Operator">⇀⦇</a> <a id="14139" href="Ledger.Dijkstra.Specification.Certs.html#7576" class="Generalizable">dCert</a> <a id="14145" href="Ledger.Dijkstra.Specification.Certs.html#13517" class="Datatype Operator">,CERT⦈</a> <a class="AgdaKaTeX">$\begin{pmatrix} \,\href{Ledger.Dijkstra.Specification.Certs.html#7789}{\htmlId{14154}{\htmlClass{Generalizable}{\text{stᵈ}}}}\, \\ \,\href{Ledger.Dijkstra.Specification.Certs.html#7829}{\htmlId{14160}{\htmlClass{Generalizable}{\text{stᵖ}}}}\, \\ \,\href{Ledger.Dijkstra.Specification.Certs.html#7813}{\htmlId{14166}{\htmlClass{Generalizable}{\text{stᵍ&#39;}}}}\, \end{pmatrix}$</a>
 </pre>
-<h2 id="the-pre-cert-transition-rule">The <span class="AgdaFunction">PRE-CERT</span> Transition Rule<a class="headerlink" href="#the-pre-cert-transition-rule" title="Permanent link">&para;</a></h2>
+<h2 id="the-pre-cert-transition-rule">The <span class="AgdaDatatype">PRE-CERT</span> Transition Rule<a class="headerlink" href="#the-pre-cert-transition-rule" title="Permanent link">&para;</a></h2>
 <h3 id="withdrawal-processing">Withdrawal Processing<a class="headerlink" href="#withdrawal-processing" title="Permanent link">&para;</a></h3>
 <p>The <code class="AgdaDatatype">PRE-CERT</code> rule processes withdrawals before certificate
 evaluation.  In the Dijkstra era, CIP-159 extends the withdrawal semantics from an
@@ -14150,7 +14150,7 @@ only permitted in transactions without Plutus v1–v3 scripts (i.e., <code>legac
 Enforcing this requires threading <code>legacyMode</code> into <code>CertEnv</code>, which in turn requires
 changes to the <code>SUBLEDGER</code> and <code>LEDGER</code> rules.  This restriction will be added in a
 follow-up issue.</p>
-<h2 id="the-post-cert-transition-rule">The <span class="AgdaFunction">POST-CERT</span> Transition Rule<a class="headerlink" href="#the-post-cert-transition-rule" title="Permanent link">&para;</a></h2>
+<h2 id="the-post-cert-transition-rule">The <span class="AgdaDatatype">POST-CERT</span> Transition Rule<a class="headerlink" href="#the-post-cert-transition-rule" title="Permanent link">&para;</a></h2>
 <h3 id="direct-deposit-application-cip-159">Direct Deposit Application (CIP-159)<a class="headerlink" href="#direct-deposit-application-cip-159" title="Permanent link">&para;</a></h3>
 <p>The <code class="AgdaDatatype">POST-CERT</code> rule applies CIP-159 direct deposits to the
 threaded <code class="AgdaRecord">CertState</code> after all individual <code class="AgdaDatatype">CERT</code> steps
