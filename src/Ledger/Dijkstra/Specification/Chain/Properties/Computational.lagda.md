@@ -3,7 +3,7 @@ source_branch: master
 source_path: src/Ledger/Dijkstra/Specification/Chain/Properties/Computational.lagda.md
 ---
 
-# CHAIN: Computational {#sec:chain-computational}
+# <span class="AgdaDatatype">CHAIN</span>: Computational {#sec:chain-computational}
 
 This module proves that the `CHAIN`{.AgdaDatatype} transition rule is computational.
 

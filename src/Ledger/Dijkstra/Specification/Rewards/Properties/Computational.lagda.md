@@ -3,7 +3,7 @@ source_branch: master
 source_path: src/Ledger/Dijkstra/Specification/Rewards/Properties/Computational.lagda.md
 ---
 
-# SNAP: Computational {#sec:snap-computational}
+# <span class="AgdaDatatype">SNAP</span>: Computational {#sec:snap-computational}
 
 This module proves that the `SNAP`{.AgdaDatatype} transition rule is computational.
 

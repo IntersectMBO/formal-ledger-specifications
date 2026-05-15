@@ -3,7 +3,7 @@ source_branch: master
 source_path: src/Ledger/Dijkstra/Specification/RewardUpdate/Properties/Computational.lagda.md
 ---
 
-# RUPD: Computational {#sec:snap-computational}
+# <span class="AgdaDatatype">RUPD</span>: Computational {#sec:snap-computational}
 
 This module proves that the `RUPD`{.AgdaDatatype} and `TICK`{.AgdaDatatype} transition rules are computational.
 

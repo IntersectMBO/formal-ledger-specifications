@@ -3,7 +3,7 @@ source_branch: master
 source_path: src/Ledger/Dijkstra/Specification/Epoch.lagda.md
 ---
 
-# Epoch and NewEpoch transition systems for Dijkstra
+# <span class="AgdaDatatype">EPOCH</span> and <span class="AgdaDatatype">NEWEPOCH</span> Transition Systems for Dijkstra
 
 Modelled on the `Conway.Conformance.Epoch`{.AgdaModule} module, adapted for Dijkstra:
 

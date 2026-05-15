@@ -47,7 +47,7 @@ record Block : Type where
     ≡-bBodyHash : bBodyHash ≡ BHBody.bhash (BHeader.bhbody bheader)
 ```
 
-# Block Body Transition
+# The <span class="AgdaDatatype">BBODY</span> Transition System
 
 The Block Body Transition updates the block body state which comprises the
 ledger state and the map describing the produced blocks. The environment of the
