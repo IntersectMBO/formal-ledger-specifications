@@ -432,7 +432,6 @@ nav:
           - Certs: Ledger.Conway.Conformance.Equivalence.Certs.md
           - Convert: Ledger.Conway.Conformance.Equivalence.Convert.md
           - Deposits: Ledger.Conway.Conformance.Equivalence.Deposits.md
-          - Map: Ledger.Conway.Conformance.Equivalence.Map.md
           - Utxo: Ledger.Conway.Conformance.Equivalence.Utxo.md
         - Gov: Ledger.Conway.Conformance.Gov.md
         - Ledger: Ledger.Conway.Conformance.Ledger.md
