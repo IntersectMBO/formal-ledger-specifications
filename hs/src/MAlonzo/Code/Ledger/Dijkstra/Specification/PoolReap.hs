@@ -118,41 +118,41 @@ d_stake_2242 v0
 -- Ledger.Dijkstra.Specification.PoolReap._.CertState
 d_CertState_2612 a0 a1 = ()
 -- Ledger.Dijkstra.Specification.PoolReap._.CertState.dState
-d_dState_2874 ::
+d_dState_2876 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_CertState_1404 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DState_1348
-d_dState_2874 v0
+d_dState_2876 v0
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_dState_1412
       (coe v0)
 -- Ledger.Dijkstra.Specification.PoolReap._.CertState.gState
-d_gState_2876 ::
+d_gState_2878 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_CertState_1404 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_GState_1388
-d_gState_2876 v0
+d_gState_2878 v0
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_gState_1416
       (coe v0)
 -- Ledger.Dijkstra.Specification.PoolReap._.CertState.pState
-d_pState_2878 ::
+d_pState_2880 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_CertState_1404 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_PState_1368
-d_pState_2878 v0
+d_pState_2880 v0
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_pState_1414
       (coe v0)
 -- Ledger.Dijkstra.Specification.PoolReap.toRewardAddress
-d_toRewardAddress_2988 ::
+d_toRewardAddress_2990 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3056 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3058 ->
   MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20 ->
   MAlonzo.Code.Ledger.Core.Specification.Address.T_RewardAddress_116
-d_toRewardAddress_2988 v0 ~v1 v2 = du_toRewardAddress_2988 v0 v2
-du_toRewardAddress_2988 ::
+d_toRewardAddress_2990 v0 ~v1 v2 = du_toRewardAddress_2990 v0 v2
+du_toRewardAddress_2990 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
   MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20 ->
   MAlonzo.Code.Ledger.Core.Specification.Address.T_RewardAddress_116
-du_toRewardAddress_2988 v0 v1
+du_toRewardAddress_2990 v0 v1
   = coe
       MAlonzo.Code.Ledger.Core.Specification.Address.C_constructor_126
       (coe
@@ -162,28 +162,28 @@ du_toRewardAddress_2988 v0 v1
             (coe v0)))
       (coe v1)
 -- Ledger.Dijkstra.Specification.PoolReap.PoolReapState
-d_PoolReapState_2992 a0 a1 = ()
-data T_PoolReapState_2992
-  = C_'10214'_'44'_'10215''7510'_3002 MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_CertState_1404
+d_PoolReapState_2994 a0 a1 = ()
+data T_PoolReapState_2994
+  = C_'10214'_'44'_'10215''7510'_3004 MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_CertState_1404
                                       MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_Acnt_194
 -- Ledger.Dijkstra.Specification.PoolReap.PoolReapState.certState
-d_certState_2998 ::
-  T_PoolReapState_2992 ->
+d_certState_3000 ::
+  T_PoolReapState_2994 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_CertState_1404
-d_certState_2998 v0
+d_certState_3000 v0
   = case coe v0 of
-      C_'10214'_'44'_'10215''7510'_3002 v1 v2 -> coe v1
+      C_'10214'_'44'_'10215''7510'_3004 v1 v2 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Dijkstra.Specification.PoolReap.PoolReapState.acnt
-d_acnt_3000 ::
-  T_PoolReapState_2992 ->
+d_acnt_3002 ::
+  T_PoolReapState_2994 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_Acnt_194
-d_acnt_3000 v0
+d_acnt_3002 v0
   = case coe v0 of
-      C_'10214'_'44'_'10215''7510'_3002 v1 v2 -> coe v2
+      C_'10214'_'44'_'10215''7510'_3004 v1 v2 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Dijkstra.Specification.PoolReap._⊢_⇀⦇_,POOLREAP⦈_
-d__'8866'_'8640''10631'_'44'POOLREAP'10632'__3008 a0 a1 a2 a3 a4 a5
+d__'8866'_'8640''10631'_'44'POOLREAP'10632'__3010 a0 a1 a2 a3 a4 a5
   = ()
-data T__'8866'_'8640''10631'_'44'POOLREAP'10632'__3008
-  = C_POOLREAP_3044
+data T__'8866'_'8640''10631'_'44'POOLREAP'10632'__3010
+  = C_POOLREAP_3046
