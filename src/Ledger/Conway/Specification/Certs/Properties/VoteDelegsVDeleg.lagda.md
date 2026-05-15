@@ -28,12 +28,12 @@ A `CertState`{.AgdaRecord} has a `DState`{.AgdaDatatype}, a `PState`{.AgdaDataty
 `VDeleg`{.AgdaDatatype}.
 
 `VDeleg`{.AgdaDatatype} is a datatype with three constructors; the one of interest to
-us here is `vDelegCredential{.AgdaInductiveConstructor}, which takes a `Credential`{.AgdaDatatype}.
+us here is `vDelegCredential`{.AgdaInductiveConstructor}, which takes a `Credential`{.AgdaDatatype}.
 
 Now suppose we have a collection `C`{.AgdaBound} of credentials—for instance, given
 `d`{.AgdaBound} : `DState`{.AgdaDatatype}, take `C`{.AgdaBound} to be the domain of
 the `voteDelegs`{.AgdaField} field of `d`{.AgdaBound}. We could then obtain a set of
-`VDelegs`{.AgdaDatatype} by applying `vDelegCredential{.AgdaInductiveConstructor} to
+`VDelegs`{.AgdaDatatype} by applying `vDelegCredential`{.AgdaInductiveConstructor} to
 each element of `C`{.AgdaBound}.
 
 The present property asserts that the set of `VDelegs`{.AgdaDatatype} that results

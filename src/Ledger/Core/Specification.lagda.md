@@ -39,7 +39,7 @@ import Ledger.Core.Specification.Epoch
 
 ## Protocol Version
 
-The `ProtocolVersion{.AgdaModule} module defines protocol versions.
+The `ProtocolVersion`{.AgdaModule} module defines protocol versions.
 
 ```agda
 import Ledger.Core.Specification.ProtocolVersion
