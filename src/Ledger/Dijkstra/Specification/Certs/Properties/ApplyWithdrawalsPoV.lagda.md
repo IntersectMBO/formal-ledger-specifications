@@ -101,10 +101,25 @@ getCoin-∪ˡ-overwrite acc c v =
   open ≡-Reasoning
   open Equivalence
   module ≡ᵉ = IsEquivalence (≡ᵉ-isEquivalence {Credential × Coin})
-  -- `∪ˡ` is `_∪ (_ ∣ dom _ ᶜ)`, and `filterᵐ` is idempotent, so dropping
-  -- the inner `∣ ❴ c ❵ ᶜ` on the right operand doesn't change the result.
+  -- `res-decomp ❴ c , v ❵ᵐ acc` proves
+  --     (❴ c , v ❵ᵐ ∪ˡ acc) ˢ ≡ᵉ (❴ c , v ❵ᵐ ∪ˡ (acc ∣ dom (❴ c , v ❵ᵐ ˢ) ᶜ)) ˢ
+  -- but the bridge wants `❴ c ❵ ᶜ` on the right (a set-singleton built via
+  -- the `listing` axiom of `Theory`), not `dom (❴ c , v ❵ᵐ ˢ) ᶜ` (built via
+  -- `mapˢ`, i.e. the `replacement` axiom).  The two restriction sets are
+  -- extensionally equal by `dom-single≡single`, so we chain `res-decomp`
+  -- with an `∪ˡ`-cong step on the right operand to translate the
+  -- restriction set.  ('Listing vs. replacement' is exactly what Agda's
+  -- MismatchedProjectionsError flagged in the previous formulation.)
+
+  -- `_≡ᵐ_` on `Map A B` is defined as `_≡ᵉ_` on the underlying relations
+  -- (`Map.agda`: `(x , _) ≡ᵐ (y , _) = x ≡ᵉ y`), so `res-comp-cong`
+  -- (from `Axiom.Set.Rel`) lifts straight to the Map level.
+  restrict-cong' : (❴ c , v ❵ᵐ ∪ˡ (acc ∣ dom (❴ c , v ❵ᵐ ˢ) ᶜ)) ˢ ≡ᵉ (❴ c , v ❵ᵐ ∪ˡ (acc ∣ ❴ c ❵ ᶜ)) ˢ
+  restrict-cong' = ∪ˡ-cong (≡ᵉ.refl {x = ❴ c , v ❵ᵐ ˢ}) (res-comp-cong dom-single≡single)
+
   bridge : (❴ c , v ❵ ∪ˡ acc) ˢ ≡ᵉ (❴ c , v ❵ ∪ˡ (acc ∣ ❴ c ❵ ᶜ)) ˢ
-  bridge = res-decomp ❴ c , v ❵ᵐ acc
+  bridge = ≡ᵉ.trans (res-decomp ❴ c , v ❵ᵐ acc) restrict-cong'
+
   disj : disjoint (dom ❴ c , v ❵ᵐ) (dom (acc ∣ ❴ c ❵ ᶜ))
   disj x y = res-comp-dom y (dom-single→single x)
 ```
@@ -250,8 +265,8 @@ This is the form needed by `PRE-CERT-pov`.
     begin
       getCoin rwds
         ≡⟨ foldl-applyOne-pov rwds (setToList (wdrls ˢ)) inv (setToList-Unique wdrls) ⟩
-      getCoin (foldl applyOne rwds (setToList (wdrls ˢ))) + sum (map proj₂ (setToList (wdrls ˢ)))
-        ≡⟨ cong (getCoin (foldl applyOne rwds (setToList (wdrls ˢ))) +_) (sum-map-proj₂≡getCoin wdrls) ⟩
+      getCoin (foldl (applyOne _∸_) rwds (setToList (wdrls ˢ))) + sum (map proj₂ (setToList (wdrls ˢ)))
+        ≡⟨ cong (getCoin (foldl (applyOne _∸_) rwds (setToList (wdrls ˢ))) +_) (sum-map-proj₂≡getCoin wdrls) ⟩
       getCoin (applyWithdrawals wdrls rwds) + getCoin wdrls
         ∎
     where
@@ -292,7 +307,8 @@ This is the form needed by `PRE-CERT-pov`.
       → (∀ {addr amt} → (addr , amt) ∈ˡ entries
       → stake addr ∈ dom acc × amt ≤ maybe id 0 (lookupᵐ? acc (stake addr)))
       → Unique (map (stake ∘ proj₁) entries) -- needed for invariant preservation
-      → getCoin acc ≡ getCoin (foldl applyOne acc entries) + sum (map proj₂ entries)
+      → getCoin acc ≡ getCoin (foldl (applyOne _∸_) acc entries) + sum (map proj₂ entries)
+
 
     foldl-applyOne-pov acc [] _ _ = sym (+-identityʳ (indexedSumᵛ' id acc))
 
@@ -304,7 +320,7 @@ This is the form needed by `PRE-CERT-pov`.
       let amt≤0 = subst (amt ≤_) (cong (maybe id 0) eq) (h (here refl) .proj₂)
           amt≡0 = n≤0⇒n≡0 amt≤0
       in -- amt ≤ maybe id 0 nothing = amt ≤ 0
-      subst (λ a → getCoin acc ≡ getCoin (foldl applyOne acc xs) + (a + sum (map proj₂ xs)))
+      subst (λ a → getCoin acc ≡ getCoin (foldl (applyOne _∸_) acc xs) + (a + sum (map proj₂ xs)))
             (sym amt≡0)
             (foldl-applyOne-pov acc xs (λ mem → h (there mem)) uniq-xs)
 
@@ -314,11 +330,11 @@ This is the form needed by `PRE-CERT-pov`.
           ≡⟨ applyOne-pov acc addr amt bal eq amt≤bal ⟩
         getCoin acc' + amt
           ≡⟨ cong (_+ amt) (foldl-applyOne-pov acc' xs h' uniq-xs) ⟩
-        (getCoin (foldl applyOne acc' xs) + sum (map proj₂ xs)) + amt
-          ≡⟨ +-assoc (getCoin (foldl applyOne acc' xs)) (sum (map proj₂ xs)) amt ⟩
-        getCoin (foldl applyOne acc' xs) + (sum (map proj₂ xs) + amt)
-          ≡⟨ cong (getCoin (foldl applyOne acc' xs) +_) (+-comm (sum (map proj₂ xs)) amt) ⟩
-        getCoin (foldl applyOne acc' xs) + (amt + sum (map proj₂ xs))
+        (getCoin (foldl (applyOne _∸_) acc' xs) + sum (map proj₂ xs)) + amt
+          ≡⟨ +-assoc (getCoin (foldl (applyOne _∸_) acc' xs)) (sum (map proj₂ xs)) amt ⟩
+        getCoin (foldl (applyOne _∸_) acc' xs) + (sum (map proj₂ xs) + amt)
+          ≡⟨ cong (getCoin (foldl (applyOne _∸_) acc' xs) +_) (+-comm (sum (map proj₂ xs)) amt) ⟩
+        getCoin (foldl (applyOne _∸_) acc' xs) + (amt + sum (map proj₂ xs))
           ∎
       where
       c   = stake addr
