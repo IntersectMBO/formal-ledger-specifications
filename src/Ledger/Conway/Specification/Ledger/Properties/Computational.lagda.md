@@ -3,7 +3,7 @@ source_branch: master
 source_path: src/Ledger/Conway/Specification/Ledger/Properties/Computational.lagda.md
 ---
 
-# Ledger: Computational {#sec:ledger-computational}
+# <span class="AgdaDatatype">LEDGER</span>: Computational {#sec:ledger-computational}
 
 This module proves that the `LEDGER`{.AgdaOperator} transition system is
 computational.

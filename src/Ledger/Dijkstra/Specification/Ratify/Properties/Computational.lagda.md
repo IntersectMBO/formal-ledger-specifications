@@ -3,7 +3,7 @@ source_branch: master
 source_path: src/Ledger/Dijkstra/Specification/Ratify/Properties/Computational.lagda.md
 ---
 
-# RATIFY: Computational {#sec:ratify-computational}
+# <span class="AgdaDatatype">RATIFY</span>: Computational {#sec:ratify-computational}
 
 This module proves that the `RATIFY`{.AgdaDatatype} and `RATIFIES`{.AgdaDatatype} transition rules are computational.
 

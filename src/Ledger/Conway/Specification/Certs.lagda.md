@@ -440,7 +440,7 @@ Sections [Auxiliary `DELEG`{.AgdaDatatype} Transition System](#auxiliary-deleg-t
    committee members to act without a delay of one epoch.
 
 
-### Auxiliary DELEG transition system
+### Auxiliary <span class="AgdaDatatype">DELEG</span> transition system
 
 ```agda
 data _⊢_⇀⦇_,DELEG⦈_ : DelegEnv → DState → DCert → DState → Type where
@@ -467,7 +467,7 @@ data _⊢_⇀⦇_,DELEG⦈_ : DelegEnv → DState → DCert → DState → Type 
 ```
 
 
-### Auxiliary POOL transition system
+### Auxiliary <span class="AgdaDatatype">POOL</span> transition system
 
 ??? info "Differences with the Shelley Specification"
 
@@ -516,7 +516,7 @@ data _⊢_⇀⦇_,POOL⦈_ : PoolEnv → PState → DCert → PState → Type wh
 ```
 
 
-### Auxiliary GOVCERT transition system
+### Auxiliary <span class="AgdaDatatype">GOVCERT</span> transition system
 
 ```agda
 data _⊢_⇀⦇_,GOVCERT⦈_ : CertEnv → GState → DCert → GState → Type where

@@ -15,7 +15,7 @@ open import Ledger.Conway.Specification.Rewards txs abs
 ```
 -->
 
-# Reward Update Transition
+# The <span class="AgdaDatatype">RUPD</span> Transition System
 
 The Reward Update Transition calculates a new `RewardUpdate`{.AgdaDatatype} to
 apply in an epoch transition.
@@ -70,7 +70,7 @@ data _⊢_⇀⦇_,RUPD⦈_
 ```
 
 
-# Chain Tick Transition
+# The <span class="AgdaDatatype">TICK</span> Transition System
 
 The Chain Tick Transition performs some chain level upkeep. The environment
 consists of a set of genesis keys, and the state is the epoch specific state
