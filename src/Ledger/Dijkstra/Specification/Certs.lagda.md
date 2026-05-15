@@ -283,20 +283,29 @@ private variable
 ```
 -->
 
-<!--
+Since it underpins both `applyDirectDeposits`{.AgdaFunction} and
+`applyWithdrawals`{.AgdaFunction}, the `applyToRewards`{.AgdaFunction} function
+bears explaining.  Given three arguments —
+a binary function `f` (e.g., addition or subtraction),
+a map `m` from `RewardAddress`{.AgdaDatatype} to `Coin`{.AgdaDatatype} (e.g.,
+direct deposits or withdrawals), and
+a `Rewards` map (of account balances) — for each `(addr , amt)`, the
+`applyToRewards`{.AgdaFunction} function does the following:
+
+1.  Look up `stake addr` in the accumulator.
+2.  If found with current balance `bal`, replace the entry with `(stake addr, f bal amt)`.
+    *Note*. since `∪ˡ` is left-biased, the fresh singleton wins at `stake addr` and all
+    other entries of `acc` are preserved; no explicit complement restriction is needed.
+3.  If not found (defensive; the caller's precondition will rule this out), return `acc`
+    unchanged; this keeps `applyToRewards` total.
+
 ```agda
-applyToRewards : (Coin → Coin → Coin)
-  → (RewardAddress ⇀ Coin)
-  → Rewards
-  → Rewards
+applyToRewards : (Coin → Coin → Coin) → (RewardAddress ⇀ Coin) → Rewards → Rewards
 applyToRewards f m rwds =
   foldl (λ acc (addr , amt) → maybe (λ bal → ❴ stake addr , f bal amt ❵ ∪ˡ acc) acc (lookupᵐ? acc (stake addr)))
         rwds
         (setToList (m ˢ))
-```
--->
 
-```agda
 rewardsBalance : DState → Coin
 rewardsBalance ds = ∑[ x ← RewardsOf ds ] x
 
