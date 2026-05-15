@@ -225,9 +225,9 @@ private variable
 ## New in Dijkstra
 
 In Dijkstra we compute the set of "global" scripts and data once at the
-top-level in the LEDGER{.AgdaDatatype} rule. This is threaded through
-`SUBLEDGER`{.AgdaDatatype} to UTXOW{.AgdaDatatype}/SUBUTXOW{.AgdaDatatype} via
-UTxOEnv{.AgdaDatatype}/SubUTxOEnv{.AgdaDatatype}.
+top-level in the `LEDGER`{.AgdaDatatype} rule. This is threaded through
+`SUBLEDGER`{.AgdaDatatype} to `UTXOW`{.AgdaDatatype}/`SUBUTXOW`{.AgdaDatatype} via
+`UTxOEnv`{.AgdaDatatype}/`SubUTxOEnv`{.AgdaDatatype}.
 
   -  allScripts : ℙ Script is the union of all scripts relevant to the entire
     batch: scripts referenced/witnessed by the top-level transaction plus
