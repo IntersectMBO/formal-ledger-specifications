@@ -174,7 +174,7 @@ du_acceptConds'63'_2488 v0 v1 v2 v3
          (coe
             MAlonzo.Code.Interface.ComputationalRelation.du_Computational'8658'Dec''_696
             (coe
-               MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
+               MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
                (coe
                   MAlonzo.Code.Ledger.Conway.Specification.Enact.du_HasCast'45'EnactEnv_1226)
                (coe
@@ -234,7 +234,7 @@ d_RATIFY'45'total_2492 v0 v1 v2 v3
                                                  -> coe
                                                       MAlonzo.Code.Data.Product.Base.du_'45''44'__92
                                                       (coe
-                                                         MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
+                                                         MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
                                                          (coe
                                                             MAlonzo.Code.Ledger.Conway.Specification.Ratify.du_HasCast'45'RatifyState_1946)
                                                          (coe
@@ -291,7 +291,7 @@ d_RATIFY'45'total_2492 v0 v1 v2 v3
                                              -> coe
                                                   MAlonzo.Code.Data.Product.Base.du_'45''44'__92
                                                   (coe
-                                                     MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
+                                                     MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
                                                      (coe
                                                         MAlonzo.Code.Ledger.Conway.Specification.Ratify.du_HasCast'45'RatifyState_1946)
                                                      (coe
@@ -335,7 +335,7 @@ d_RATIFY'45'total_2492 v0 v1 v2 v3
                                            (coe
                                               MAlonzo.Code.Data.Product.Base.du_'45''44'__92
                                               (coe
-                                                 MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
+                                                 MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
                                                  (coe
                                                     MAlonzo.Code.Ledger.Conway.Specification.Ratify.du_HasCast'45'RatifyState_1946)
                                                  (coe

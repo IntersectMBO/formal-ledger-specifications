@@ -360,7 +360,7 @@ du_EPOCH'45'total_3258 v0 v1 v2
   = coe
       MAlonzo.Code.Data.Product.Base.du_'45''44'__92
       (coe
-         MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
+         MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
          (coe
             MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_HasCast'45'EpochState_3432)
          (coe
@@ -379,7 +379,7 @@ du_EPOCH'45'total_3258 v0 v1 v2
                   (coe
                      MAlonzo.Code.Ledger.Conway.Specification.Epoch.d_ls_3290 (coe v1))
                   (coe
-                     MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
+                     MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
                      (coe
                         MAlonzo.Code.Ledger.Conway.Specification.Certs.du_HasCast'45'DState_1614)
                      (coe
@@ -390,7 +390,7 @@ du_EPOCH'45'total_3258 v0 v1 v2
                                   = coe
                                       MAlonzo.Code.Ledger.Conway.Specification.PoolReap.C_mkGeneralizeTel_11689
                                       (coe
-                                         MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
+                                         MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
                                          (coe
                                             MAlonzo.Code.Ledger.Conway.Specification.PoolReap.du_HasCast'45'PoolReapState_2628)
                                          (coe
@@ -487,7 +487,7 @@ du_EPOCH'45'total_3258 v0 v1 v2
                                            = coe
                                                MAlonzo.Code.Ledger.Conway.Specification.PoolReap.C_mkGeneralizeTel_11689
                                                (coe
-                                                  MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
+                                                  MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
                                                   (coe
                                                      MAlonzo.Code.Ledger.Conway.Specification.PoolReap.du_HasCast'45'PoolReapState_2628)
                                                   (coe
@@ -580,7 +580,7 @@ du_EPOCH'45'total_3258 v0 v1 v2
                                                  = coe
                                                      MAlonzo.Code.Ledger.Conway.Specification.PoolReap.C_mkGeneralizeTel_11689
                                                      (coe
-                                                        MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
+                                                        MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
                                                         (coe
                                                            MAlonzo.Code.Ledger.Conway.Specification.PoolReap.du_HasCast'45'PoolReapState_2628)
                                                         (coe
@@ -675,7 +675,7 @@ du_EPOCH'45'total_3258 v0 v1 v2
                                         = coe
                                             MAlonzo.Code.Ledger.Conway.Specification.PoolReap.C_mkGeneralizeTel_11689
                                             (coe
-                                               MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
+                                               MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
                                                (coe
                                                   MAlonzo.Code.Ledger.Conway.Specification.PoolReap.du_HasCast'45'PoolReapState_2628)
                                                (coe
@@ -848,7 +848,7 @@ du_EPOCH'45'total_3258 v0 v1 v2
                                                                                 = coe
                                                                                     MAlonzo.Code.Ledger.Conway.Specification.PoolReap.C_mkGeneralizeTel_11689
                                                                                     (coe
-                                                                                       MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
+                                                                                       MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
                                                                                        (coe
                                                                                           MAlonzo.Code.Ledger.Conway.Specification.PoolReap.du_HasCast'45'PoolReapState_2628)
                                                                                        (coe
@@ -955,7 +955,7 @@ du_EPOCH'45'total_3258 v0 v1 v2
                                                                                       = coe
                                                                                           MAlonzo.Code.Ledger.Conway.Specification.PoolReap.C_mkGeneralizeTel_11689
                                                                                           (coe
-                                                                                             MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
+                                                                                             MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
                                                                                              (coe
                                                                                                 MAlonzo.Code.Ledger.Conway.Specification.PoolReap.du_HasCast'45'PoolReapState_2628)
                                                                                              (coe
@@ -1050,7 +1050,7 @@ du_EPOCH'45'total_3258 v0 v1 v2
                                                  = coe
                                                      MAlonzo.Code.Ledger.Conway.Specification.PoolReap.C_mkGeneralizeTel_11689
                                                      (coe
-                                                        MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
+                                                        MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
                                                         (coe
                                                            MAlonzo.Code.Ledger.Conway.Specification.PoolReap.du_HasCast'45'PoolReapState_2628)
                                                         (coe
@@ -1134,7 +1134,7 @@ du_EPOCH'45'total_3258 v0 v1 v2
                                                  = coe
                                                      MAlonzo.Code.Ledger.Conway.Specification.PoolReap.C_mkGeneralizeTel_11689
                                                      (coe
-                                                        MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
+                                                        MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
                                                         (coe
                                                            MAlonzo.Code.Ledger.Conway.Specification.PoolReap.du_HasCast'45'PoolReapState_2628)
                                                         (coe
@@ -1335,7 +1335,7 @@ du_EPOCH'45'total_3258 v0 v1 v2
                                                                              = coe
                                                                                  MAlonzo.Code.Ledger.Conway.Specification.PoolReap.C_mkGeneralizeTel_11689
                                                                                  (coe
-                                                                                    MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
+                                                                                    MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
                                                                                     (coe
                                                                                        MAlonzo.Code.Ledger.Conway.Specification.PoolReap.du_HasCast'45'PoolReapState_2628)
                                                                                     (coe
@@ -1442,7 +1442,7 @@ du_EPOCH'45'total_3258 v0 v1 v2
                                                                                    = coe
                                                                                        MAlonzo.Code.Ledger.Conway.Specification.PoolReap.C_mkGeneralizeTel_11689
                                                                                        (coe
-                                                                                          MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
+                                                                                          MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
                                                                                           (coe
                                                                                              MAlonzo.Code.Ledger.Conway.Specification.PoolReap.du_HasCast'45'PoolReapState_2628)
                                                                                           (coe
@@ -1536,7 +1536,7 @@ du_EPOCH'45'total_3258 v0 v1 v2
                                               = coe
                                                   MAlonzo.Code.Ledger.Conway.Specification.PoolReap.C_mkGeneralizeTel_11689
                                                   (coe
-                                                     MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
+                                                     MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
                                                      (coe
                                                         MAlonzo.Code.Ledger.Conway.Specification.PoolReap.du_HasCast'45'PoolReapState_2628)
                                                      (coe
@@ -1620,7 +1620,7 @@ du_EPOCH'45'total_3258 v0 v1 v2
                                               = coe
                                                   MAlonzo.Code.Ledger.Conway.Specification.PoolReap.C_mkGeneralizeTel_11689
                                                   (coe
-                                                     MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
+                                                     MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
                                                      (coe
                                                         MAlonzo.Code.Ledger.Conway.Specification.PoolReap.du_HasCast'45'PoolReapState_2628)
                                                      (coe
@@ -1697,7 +1697,7 @@ du_EPOCH'45'total_3258 v0 v1 v2
                                   = coe
                                       MAlonzo.Code.Ledger.Conway.Specification.PoolReap.C_mkGeneralizeTel_11689
                                       (coe
-                                         MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
+                                         MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
                                          (coe
                                             MAlonzo.Code.Ledger.Conway.Specification.PoolReap.du_HasCast'45'PoolReapState_2628)
                                          (coe
@@ -1774,7 +1774,7 @@ du_EPOCH'45'total_3258 v0 v1 v2
                                = coe
                                    MAlonzo.Code.Ledger.Conway.Specification.PoolReap.C_mkGeneralizeTel_11689
                                    (coe
-                                      MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
+                                      MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
                                       (coe
                                          MAlonzo.Code.Ledger.Conway.Specification.PoolReap.du_HasCast'45'PoolReapState_2628)
                                       (coe
@@ -1868,7 +1868,7 @@ du_EPOCH'45'total_3258 v0 v1 v2
                (coe
                   MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                   (coe
-                     MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
+                     MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
                      (coe
                         MAlonzo.Code.Ledger.Conway.Specification.Ledger.du_HasCast'45'LState_3022)
                      (coe
@@ -1881,7 +1881,7 @@ du_EPOCH'45'total_3258 v0 v1 v2
                                      = coe
                                          MAlonzo.Code.Ledger.Conway.Specification.PoolReap.C_mkGeneralizeTel_11689
                                          (coe
-                                            MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
+                                            MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
                                             (coe
                                                MAlonzo.Code.Ledger.Conway.Specification.PoolReap.du_HasCast'45'PoolReapState_2628)
                                             (coe
@@ -1958,7 +1958,7 @@ du_EPOCH'45'total_3258 v0 v1 v2
                                      = coe
                                          MAlonzo.Code.Ledger.Conway.Specification.PoolReap.C_mkGeneralizeTel_11689
                                          (coe
-                                            MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
+                                            MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
                                             (coe
                                                MAlonzo.Code.Ledger.Conway.Specification.PoolReap.du_HasCast'45'PoolReapState_2628)
                                             (coe
@@ -2051,7 +2051,7 @@ du_EPOCH'45'total_3258 v0 v1 v2
                                            = coe
                                                MAlonzo.Code.Ledger.Conway.Specification.PoolReap.C_mkGeneralizeTel_11689
                                                (coe
-                                                  MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
+                                                  MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
                                                   (coe
                                                      MAlonzo.Code.Ledger.Conway.Specification.PoolReap.du_HasCast'45'PoolReapState_2628)
                                                   (coe
@@ -2152,7 +2152,7 @@ du_EPOCH'45'total_3258 v0 v1 v2
                                                        = coe
                                                            MAlonzo.Code.Ledger.Conway.Specification.PoolReap.C_mkGeneralizeTel_11689
                                                            (coe
-                                                              MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
+                                                              MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
                                                               (coe
                                                                  MAlonzo.Code.Ledger.Conway.Specification.PoolReap.du_HasCast'45'PoolReapState_2628)
                                                               (coe
@@ -2230,7 +2230,7 @@ du_EPOCH'45'total_3258 v0 v1 v2
                                      = coe
                                          MAlonzo.Code.Ledger.Conway.Specification.PoolReap.C_mkGeneralizeTel_11689
                                          (coe
-                                            MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
+                                            MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
                                             (coe
                                                MAlonzo.Code.Ledger.Conway.Specification.PoolReap.du_HasCast'45'PoolReapState_2628)
                                             (coe
@@ -2331,7 +2331,7 @@ du_EPOCH'45'total_3258 v0 v1 v2
                                        MAlonzo.Code.Ledger.Conway.Specification.Epoch.d_ls_3290
                                        (coe v1))
                                     (coe
-                                       MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
+                                       MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
                                        (coe
                                           MAlonzo.Code.Ledger.Conway.Specification.Certs.du_HasCast'45'DState_1614)
                                        (coe
@@ -2342,7 +2342,7 @@ du_EPOCH'45'total_3258 v0 v1 v2
                                                     = coe
                                                         MAlonzo.Code.Ledger.Conway.Specification.PoolReap.C_mkGeneralizeTel_11689
                                                         (coe
-                                                           MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
+                                                           MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
                                                            (coe
                                                               MAlonzo.Code.Ledger.Conway.Specification.PoolReap.du_HasCast'45'PoolReapState_2628)
                                                            (coe
@@ -2439,7 +2439,7 @@ du_EPOCH'45'total_3258 v0 v1 v2
                                                              = coe
                                                                  MAlonzo.Code.Ledger.Conway.Specification.PoolReap.C_mkGeneralizeTel_11689
                                                                  (coe
-                                                                    MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
+                                                                    MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
                                                                     (coe
                                                                        MAlonzo.Code.Ledger.Conway.Specification.PoolReap.du_HasCast'45'PoolReapState_2628)
                                                                     (coe
@@ -2533,7 +2533,7 @@ du_EPOCH'45'total_3258 v0 v1 v2
                                                                    = coe
                                                                        MAlonzo.Code.Ledger.Conway.Specification.PoolReap.C_mkGeneralizeTel_11689
                                                                        (coe
-                                                                          MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
+                                                                          MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
                                                                           (coe
                                                                              MAlonzo.Code.Ledger.Conway.Specification.PoolReap.du_HasCast'45'PoolReapState_2628)
                                                                           (coe
@@ -2633,7 +2633,7 @@ du_EPOCH'45'total_3258 v0 v1 v2
                                                           = coe
                                                               MAlonzo.Code.Ledger.Conway.Specification.PoolReap.C_mkGeneralizeTel_11689
                                                               (coe
-                                                                 MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
+                                                                 MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
                                                                  (coe
                                                                     MAlonzo.Code.Ledger.Conway.Specification.PoolReap.du_HasCast'45'PoolReapState_2628)
                                                                  (coe
@@ -2811,7 +2811,7 @@ du_EPOCH'45'total_3258 v0 v1 v2
                                                                                                   = coe
                                                                                                       MAlonzo.Code.Ledger.Conway.Specification.PoolReap.C_mkGeneralizeTel_11689
                                                                                                       (coe
-                                                                                                         MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
+                                                                                                         MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
                                                                                                          (coe
                                                                                                             MAlonzo.Code.Ledger.Conway.Specification.PoolReap.du_HasCast'45'PoolReapState_2628)
                                                                                                          (coe
@@ -2922,7 +2922,7 @@ du_EPOCH'45'total_3258 v0 v1 v2
                                                                                                         = coe
                                                                                                             MAlonzo.Code.Ledger.Conway.Specification.PoolReap.C_mkGeneralizeTel_11689
                                                                                                             (coe
-                                                                                                               MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
+                                                                                                               MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
                                                                                                                (coe
                                                                                                                   MAlonzo.Code.Ledger.Conway.Specification.PoolReap.du_HasCast'45'PoolReapState_2628)
                                                                                                                (coe
@@ -3019,7 +3019,7 @@ du_EPOCH'45'total_3258 v0 v1 v2
                                                                    = coe
                                                                        MAlonzo.Code.Ledger.Conway.Specification.PoolReap.C_mkGeneralizeTel_11689
                                                                        (coe
-                                                                          MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
+                                                                          MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
                                                                           (coe
                                                                              MAlonzo.Code.Ledger.Conway.Specification.PoolReap.du_HasCast'45'PoolReapState_2628)
                                                                           (coe
@@ -3109,7 +3109,7 @@ du_EPOCH'45'total_3258 v0 v1 v2
                                                                    = coe
                                                                        MAlonzo.Code.Ledger.Conway.Specification.PoolReap.C_mkGeneralizeTel_11689
                                                                        (coe
-                                                                          MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
+                                                                          MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
                                                                           (coe
                                                                              MAlonzo.Code.Ledger.Conway.Specification.PoolReap.du_HasCast'45'PoolReapState_2628)
                                                                           (coe
@@ -3318,7 +3318,7 @@ du_EPOCH'45'total_3258 v0 v1 v2
                                                                                                = coe
                                                                                                    MAlonzo.Code.Ledger.Conway.Specification.PoolReap.C_mkGeneralizeTel_11689
                                                                                                    (coe
-                                                                                                      MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
+                                                                                                      MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
                                                                                                       (coe
                                                                                                          MAlonzo.Code.Ledger.Conway.Specification.PoolReap.du_HasCast'45'PoolReapState_2628)
                                                                                                       (coe
@@ -3429,7 +3429,7 @@ du_EPOCH'45'total_3258 v0 v1 v2
                                                                                                      = coe
                                                                                                          MAlonzo.Code.Ledger.Conway.Specification.PoolReap.C_mkGeneralizeTel_11689
                                                                                                          (coe
-                                                                                                            MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
+                                                                                                            MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
                                                                                                             (coe
                                                                                                                MAlonzo.Code.Ledger.Conway.Specification.PoolReap.du_HasCast'45'PoolReapState_2628)
                                                                                                             (coe
@@ -3526,7 +3526,7 @@ du_EPOCH'45'total_3258 v0 v1 v2
                                                                 = coe
                                                                     MAlonzo.Code.Ledger.Conway.Specification.PoolReap.C_mkGeneralizeTel_11689
                                                                     (coe
-                                                                       MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
+                                                                       MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
                                                                        (coe
                                                                           MAlonzo.Code.Ledger.Conway.Specification.PoolReap.du_HasCast'45'PoolReapState_2628)
                                                                        (coe
@@ -3614,7 +3614,7 @@ du_EPOCH'45'total_3258 v0 v1 v2
                                                                 = coe
                                                                     MAlonzo.Code.Ledger.Conway.Specification.PoolReap.C_mkGeneralizeTel_11689
                                                                     (coe
-                                                                       MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
+                                                                       MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
                                                                        (coe
                                                                           MAlonzo.Code.Ledger.Conway.Specification.PoolReap.du_HasCast'45'PoolReapState_2628)
                                                                        (coe
@@ -3694,7 +3694,7 @@ du_EPOCH'45'total_3258 v0 v1 v2
                                                     = coe
                                                         MAlonzo.Code.Ledger.Conway.Specification.PoolReap.C_mkGeneralizeTel_11689
                                                         (coe
-                                                           MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
+                                                           MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
                                                            (coe
                                                               MAlonzo.Code.Ledger.Conway.Specification.PoolReap.du_HasCast'45'PoolReapState_2628)
                                                            (coe
@@ -3771,7 +3771,7 @@ du_EPOCH'45'total_3258 v0 v1 v2
                                                  = coe
                                                      MAlonzo.Code.Ledger.Conway.Specification.PoolReap.C_mkGeneralizeTel_11689
                                                      (coe
-                                                        MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
+                                                        MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
                                                         (coe
                                                            MAlonzo.Code.Ledger.Conway.Specification.PoolReap.du_HasCast'45'PoolReapState_2628)
                                                         (coe
@@ -3852,7 +3852,7 @@ du_EPOCH'45'total_3258 v0 v1 v2
                                           MAlonzo.Code.Ledger.Conway.Specification.Epoch.d_fut_3294
                                           (coe v1)))))
                               (coe
-                                 MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
+                                 MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
                                  (coe
                                     MAlonzo.Code.Ledger.Conway.Specification.Certs.du_HasCast'45'PState_1616)
                                  (coe
@@ -3881,7 +3881,7 @@ du_EPOCH'45'total_3258 v0 v1 v2
                                                     = coe
                                                         MAlonzo.Code.Ledger.Conway.Specification.PoolReap.C_mkGeneralizeTel_11689
                                                         (coe
-                                                           MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
+                                                           MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
                                                            (coe
                                                               MAlonzo.Code.Ledger.Conway.Specification.PoolReap.du_HasCast'45'PoolReapState_2628)
                                                            (coe
@@ -3974,7 +3974,7 @@ du_EPOCH'45'total_3258 v0 v1 v2
                                                           = coe
                                                               MAlonzo.Code.Ledger.Conway.Specification.PoolReap.C_mkGeneralizeTel_11689
                                                               (coe
-                                                                 MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
+                                                                 MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
                                                                  (coe
                                                                     MAlonzo.Code.Ledger.Conway.Specification.PoolReap.du_HasCast'45'PoolReapState_2628)
                                                                  (coe
@@ -4073,7 +4073,7 @@ du_EPOCH'45'total_3258 v0 v1 v2
                                                        = coe
                                                            MAlonzo.Code.Ledger.Conway.Specification.PoolReap.C_mkGeneralizeTel_11689
                                                            (coe
-                                                              MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
+                                                              MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
                                                               (coe
                                                                  MAlonzo.Code.Ledger.Conway.Specification.PoolReap.du_HasCast'45'PoolReapState_2628)
                                                               (coe
@@ -4166,7 +4166,7 @@ du_EPOCH'45'total_3258 v0 v1 v2
                                                              = coe
                                                                  MAlonzo.Code.Ledger.Conway.Specification.PoolReap.C_mkGeneralizeTel_11689
                                                                  (coe
-                                                                    MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
+                                                                    MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
                                                                     (coe
                                                                        MAlonzo.Code.Ledger.Conway.Specification.PoolReap.du_HasCast'45'PoolReapState_2628)
                                                                     (coe
@@ -4263,7 +4263,7 @@ du_EPOCH'45'total_3258 v0 v1 v2
                                                        = coe
                                                            MAlonzo.Code.Ledger.Conway.Specification.PoolReap.C_mkGeneralizeTel_11689
                                                            (coe
-                                                              MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
+                                                              MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
                                                               (coe
                                                                  MAlonzo.Code.Ledger.Conway.Specification.PoolReap.du_HasCast'45'PoolReapState_2628)
                                                               (coe
@@ -4356,7 +4356,7 @@ du_EPOCH'45'total_3258 v0 v1 v2
                                                              = coe
                                                                  MAlonzo.Code.Ledger.Conway.Specification.PoolReap.C_mkGeneralizeTel_11689
                                                                  (coe
-                                                                    MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
+                                                                    MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
                                                                     (coe
                                                                        MAlonzo.Code.Ledger.Conway.Specification.PoolReap.du_HasCast'45'PoolReapState_2628)
                                                                     (coe
@@ -4502,7 +4502,7 @@ du_EPOCH'45'total_3258 v0 v1 v2
                            MAlonzo.Code.Ledger.Conway.Specification.Ratify.Properties.Computational.d_RATIFIES'45'total''_2606
                            (coe v0)
                            (coe
-                              MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
+                              MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
                               (coe
                                  MAlonzo.Code.Ledger.Conway.Specification.Ratify.du_HasCast'45'RatifyEnv_1944)
                               (coe
@@ -4608,7 +4608,7 @@ du_EPOCH'45'total_3258 v0 v1 v2
                                                          MAlonzo.Code.Ledger.Conway.Specification.Epoch.d_ls_3290
                                                          (coe v1))
                                                       (coe
-                                                         MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
+                                                         MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
                                                          (coe
                                                             MAlonzo.Code.Ledger.Conway.Specification.Certs.du_HasCast'45'DState_1614)
                                                          (coe
@@ -4619,7 +4619,7 @@ du_EPOCH'45'total_3258 v0 v1 v2
                                                                       = coe
                                                                           MAlonzo.Code.Ledger.Conway.Specification.PoolReap.C_mkGeneralizeTel_11689
                                                                           (coe
-                                                                             MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
+                                                                             MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
                                                                              (coe
                                                                                 MAlonzo.Code.Ledger.Conway.Specification.PoolReap.du_HasCast'45'PoolReapState_2628)
                                                                              (coe
@@ -4725,7 +4725,7 @@ du_EPOCH'45'total_3258 v0 v1 v2
                                                                                = coe
                                                                                    MAlonzo.Code.Ledger.Conway.Specification.PoolReap.C_mkGeneralizeTel_11689
                                                                                    (coe
-                                                                                      MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
+                                                                                      MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
                                                                                       (coe
                                                                                          MAlonzo.Code.Ledger.Conway.Specification.PoolReap.du_HasCast'45'PoolReapState_2628)
                                                                                       (coe
@@ -4832,7 +4832,7 @@ du_EPOCH'45'total_3258 v0 v1 v2
                                                                                      = coe
                                                                                          MAlonzo.Code.Ledger.Conway.Specification.PoolReap.C_mkGeneralizeTel_11689
                                                                                          (coe
-                                                                                            MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
+                                                                                            MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
                                                                                             (coe
                                                                                                MAlonzo.Code.Ledger.Conway.Specification.PoolReap.du_HasCast'45'PoolReapState_2628)
                                                                                             (coe
@@ -4941,7 +4941,7 @@ du_EPOCH'45'total_3258 v0 v1 v2
                                                                             = coe
                                                                                 MAlonzo.Code.Ledger.Conway.Specification.PoolReap.C_mkGeneralizeTel_11689
                                                                                 (coe
-                                                                                   MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
+                                                                                   MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
                                                                                    (coe
                                                                                       MAlonzo.Code.Ledger.Conway.Specification.PoolReap.du_HasCast'45'PoolReapState_2628)
                                                                                    (coe
@@ -5131,7 +5131,7 @@ du_EPOCH'45'total_3258 v0 v1 v2
                                                                                                                     = coe
                                                                                                                         MAlonzo.Code.Ledger.Conway.Specification.PoolReap.C_mkGeneralizeTel_11689
                                                                                                                         (coe
-                                                                                                                           MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
+                                                                                                                           MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
                                                                                                                            (coe
                                                                                                                               MAlonzo.Code.Ledger.Conway.Specification.PoolReap.du_HasCast'45'PoolReapState_2628)
                                                                                                                            (coe
@@ -5242,7 +5242,7 @@ du_EPOCH'45'total_3258 v0 v1 v2
                                                                                                                           = coe
                                                                                                                               MAlonzo.Code.Ledger.Conway.Specification.PoolReap.C_mkGeneralizeTel_11689
                                                                                                                               (coe
-                                                                                                                                 MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
+                                                                                                                                 MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
                                                                                                                                  (coe
                                                                                                                                     MAlonzo.Code.Ledger.Conway.Specification.PoolReap.du_HasCast'45'PoolReapState_2628)
                                                                                                                                  (coe
@@ -5345,7 +5345,7 @@ du_EPOCH'45'total_3258 v0 v1 v2
                                                                                      = coe
                                                                                          MAlonzo.Code.Ledger.Conway.Specification.PoolReap.C_mkGeneralizeTel_11689
                                                                                          (coe
-                                                                                            MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
+                                                                                            MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
                                                                                             (coe
                                                                                                MAlonzo.Code.Ledger.Conway.Specification.PoolReap.du_HasCast'45'PoolReapState_2628)
                                                                                             (coe
@@ -5444,7 +5444,7 @@ du_EPOCH'45'total_3258 v0 v1 v2
                                                                                      = coe
                                                                                          MAlonzo.Code.Ledger.Conway.Specification.PoolReap.C_mkGeneralizeTel_11689
                                                                                          (coe
-                                                                                            MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
+                                                                                            MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
                                                                                             (coe
                                                                                                MAlonzo.Code.Ledger.Conway.Specification.PoolReap.du_HasCast'45'PoolReapState_2628)
                                                                                             (coe
@@ -5665,7 +5665,7 @@ du_EPOCH'45'total_3258 v0 v1 v2
                                                                                                                  = coe
                                                                                                                      MAlonzo.Code.Ledger.Conway.Specification.PoolReap.C_mkGeneralizeTel_11689
                                                                                                                      (coe
-                                                                                                                        MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
+                                                                                                                        MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
                                                                                                                         (coe
                                                                                                                            MAlonzo.Code.Ledger.Conway.Specification.PoolReap.du_HasCast'45'PoolReapState_2628)
                                                                                                                         (coe
@@ -5776,7 +5776,7 @@ du_EPOCH'45'total_3258 v0 v1 v2
                                                                                                                        = coe
                                                                                                                            MAlonzo.Code.Ledger.Conway.Specification.PoolReap.C_mkGeneralizeTel_11689
                                                                                                                            (coe
-                                                                                                                              MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
+                                                                                                                              MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
                                                                                                                               (coe
                                                                                                                                  MAlonzo.Code.Ledger.Conway.Specification.PoolReap.du_HasCast'45'PoolReapState_2628)
                                                                                                                               (coe
@@ -5878,7 +5878,7 @@ du_EPOCH'45'total_3258 v0 v1 v2
                                                                                   = coe
                                                                                       MAlonzo.Code.Ledger.Conway.Specification.PoolReap.C_mkGeneralizeTel_11689
                                                                                       (coe
-                                                                                         MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
+                                                                                         MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
                                                                                          (coe
                                                                                             MAlonzo.Code.Ledger.Conway.Specification.PoolReap.du_HasCast'45'PoolReapState_2628)
                                                                                          (coe
@@ -5977,7 +5977,7 @@ du_EPOCH'45'total_3258 v0 v1 v2
                                                                                   = coe
                                                                                       MAlonzo.Code.Ledger.Conway.Specification.PoolReap.C_mkGeneralizeTel_11689
                                                                                       (coe
-                                                                                         MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
+                                                                                         MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
                                                                                          (coe
                                                                                             MAlonzo.Code.Ledger.Conway.Specification.PoolReap.du_HasCast'45'PoolReapState_2628)
                                                                                          (coe
@@ -6068,7 +6068,7 @@ du_EPOCH'45'total_3258 v0 v1 v2
                                                                       = coe
                                                                           MAlonzo.Code.Ledger.Conway.Specification.PoolReap.C_mkGeneralizeTel_11689
                                                                           (coe
-                                                                             MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
+                                                                             MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
                                                                              (coe
                                                                                 MAlonzo.Code.Ledger.Conway.Specification.PoolReap.du_HasCast'45'PoolReapState_2628)
                                                                              (coe
@@ -6154,7 +6154,7 @@ du_EPOCH'45'total_3258 v0 v1 v2
                                                                    = coe
                                                                        MAlonzo.Code.Ledger.Conway.Specification.PoolReap.C_mkGeneralizeTel_11689
                                                                        (coe
-                                                                          MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
+                                                                          MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
                                                                           (coe
                                                                              MAlonzo.Code.Ledger.Conway.Specification.PoolReap.du_HasCast'45'PoolReapState_2628)
                                                                           (coe
@@ -6254,7 +6254,7 @@ du_EPOCH'45'total_3258 v0 v1 v2
                                                    (MAlonzo.Code.Ledger.Conway.Specification.Epoch.d_ls_3290
                                                       (coe v1))))))))))
                            (coe
-                              MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
+                              MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
                               (coe
                                  MAlonzo.Code.Ledger.Conway.Specification.Ratify.du_HasCast'45'RatifyState_1946)
                               (coe
@@ -6326,7 +6326,7 @@ du_EPOCH'45'total_3258 v0 v1 v2
       (coe
          MAlonzo.Code.Ledger.Conway.Specification.Epoch.C_EPOCH_4012
          (coe
-            MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
+            MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
             (coe
                MAlonzo.Code.Ledger.Conway.Specification.Certs.du_HasCast'45'DState_1614)
             (coe
@@ -6337,7 +6337,7 @@ du_EPOCH'45'total_3258 v0 v1 v2
                          = coe
                              MAlonzo.Code.Ledger.Conway.Specification.PoolReap.C_mkGeneralizeTel_11689
                              (coe
-                                MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
+                                MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
                                 (coe
                                    MAlonzo.Code.Ledger.Conway.Specification.PoolReap.du_HasCast'45'PoolReapState_2628)
                                 (coe
@@ -6434,7 +6434,7 @@ du_EPOCH'45'total_3258 v0 v1 v2
                                   = coe
                                       MAlonzo.Code.Ledger.Conway.Specification.PoolReap.C_mkGeneralizeTel_11689
                                       (coe
-                                         MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
+                                         MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
                                          (coe
                                             MAlonzo.Code.Ledger.Conway.Specification.PoolReap.du_HasCast'45'PoolReapState_2628)
                                          (coe
@@ -6527,7 +6527,7 @@ du_EPOCH'45'total_3258 v0 v1 v2
                                         = coe
                                             MAlonzo.Code.Ledger.Conway.Specification.PoolReap.C_mkGeneralizeTel_11689
                                             (coe
-                                               MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
+                                               MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
                                                (coe
                                                   MAlonzo.Code.Ledger.Conway.Specification.PoolReap.du_HasCast'45'PoolReapState_2628)
                                                (coe
@@ -6622,7 +6622,7 @@ du_EPOCH'45'total_3258 v0 v1 v2
                                = coe
                                    MAlonzo.Code.Ledger.Conway.Specification.PoolReap.C_mkGeneralizeTel_11689
                                    (coe
-                                      MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
+                                      MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
                                       (coe
                                          MAlonzo.Code.Ledger.Conway.Specification.PoolReap.du_HasCast'45'PoolReapState_2628)
                                       (coe
@@ -6795,7 +6795,7 @@ du_EPOCH'45'total_3258 v0 v1 v2
                                                                        = coe
                                                                            MAlonzo.Code.Ledger.Conway.Specification.PoolReap.C_mkGeneralizeTel_11689
                                                                            (coe
-                                                                              MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
+                                                                              MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
                                                                               (coe
                                                                                  MAlonzo.Code.Ledger.Conway.Specification.PoolReap.du_HasCast'45'PoolReapState_2628)
                                                                               (coe
@@ -6898,7 +6898,7 @@ du_EPOCH'45'total_3258 v0 v1 v2
                                                                              = coe
                                                                                  MAlonzo.Code.Ledger.Conway.Specification.PoolReap.C_mkGeneralizeTel_11689
                                                                                  (coe
-                                                                                    MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
+                                                                                    MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
                                                                                     (coe
                                                                                        MAlonzo.Code.Ledger.Conway.Specification.PoolReap.du_HasCast'45'PoolReapState_2628)
                                                                                     (coe
@@ -6992,7 +6992,7 @@ du_EPOCH'45'total_3258 v0 v1 v2
                                         = coe
                                             MAlonzo.Code.Ledger.Conway.Specification.PoolReap.C_mkGeneralizeTel_11689
                                             (coe
-                                               MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
+                                               MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
                                                (coe
                                                   MAlonzo.Code.Ledger.Conway.Specification.PoolReap.du_HasCast'45'PoolReapState_2628)
                                                (coe
@@ -7076,7 +7076,7 @@ du_EPOCH'45'total_3258 v0 v1 v2
                                         = coe
                                             MAlonzo.Code.Ledger.Conway.Specification.PoolReap.C_mkGeneralizeTel_11689
                                             (coe
-                                               MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
+                                               MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
                                                (coe
                                                   MAlonzo.Code.Ledger.Conway.Specification.PoolReap.du_HasCast'45'PoolReapState_2628)
                                                (coe
@@ -7277,7 +7277,7 @@ du_EPOCH'45'total_3258 v0 v1 v2
                                                                     = coe
                                                                         MAlonzo.Code.Ledger.Conway.Specification.PoolReap.C_mkGeneralizeTel_11689
                                                                         (coe
-                                                                           MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
+                                                                           MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
                                                                            (coe
                                                                               MAlonzo.Code.Ledger.Conway.Specification.PoolReap.du_HasCast'45'PoolReapState_2628)
                                                                            (coe
@@ -7376,7 +7376,7 @@ du_EPOCH'45'total_3258 v0 v1 v2
                                                                           = coe
                                                                               MAlonzo.Code.Ledger.Conway.Specification.PoolReap.C_mkGeneralizeTel_11689
                                                                               (coe
-                                                                                 MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
+                                                                                 MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
                                                                                  (coe
                                                                                     MAlonzo.Code.Ledger.Conway.Specification.PoolReap.du_HasCast'45'PoolReapState_2628)
                                                                                  (coe
@@ -7468,7 +7468,7 @@ du_EPOCH'45'total_3258 v0 v1 v2
                                      = coe
                                          MAlonzo.Code.Ledger.Conway.Specification.PoolReap.C_mkGeneralizeTel_11689
                                          (coe
-                                            MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
+                                            MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
                                             (coe
                                                MAlonzo.Code.Ledger.Conway.Specification.PoolReap.du_HasCast'45'PoolReapState_2628)
                                             (coe
@@ -7552,7 +7552,7 @@ du_EPOCH'45'total_3258 v0 v1 v2
                                      = coe
                                          MAlonzo.Code.Ledger.Conway.Specification.PoolReap.C_mkGeneralizeTel_11689
                                          (coe
-                                            MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
+                                            MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
                                             (coe
                                                MAlonzo.Code.Ledger.Conway.Specification.PoolReap.du_HasCast'45'PoolReapState_2628)
                                             (coe
@@ -7629,7 +7629,7 @@ du_EPOCH'45'total_3258 v0 v1 v2
                          = coe
                              MAlonzo.Code.Ledger.Conway.Specification.PoolReap.C_mkGeneralizeTel_11689
                              (coe
-                                MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
+                                MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
                                 (coe
                                    MAlonzo.Code.Ledger.Conway.Specification.PoolReap.du_HasCast'45'PoolReapState_2628)
                                 (coe
@@ -7706,7 +7706,7 @@ du_EPOCH'45'total_3258 v0 v1 v2
                       = coe
                           MAlonzo.Code.Ledger.Conway.Specification.PoolReap.C_mkGeneralizeTel_11689
                           (coe
-                             MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
+                             MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
                              (coe
                                 MAlonzo.Code.Ledger.Conway.Specification.PoolReap.du_HasCast'45'PoolReapState_2628)
                              (coe
@@ -7797,7 +7797,7 @@ du_EPOCH'45'total_3258 v0 v1 v2
                      MAlonzo.Code.Ledger.Conway.Specification.PoolReap.Properties.Computational.du_POOLREAP'45'total_2080
                      (coe v0) (coe v2)
                      (coe
-                        MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
+                        MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
                         (coe
                            MAlonzo.Code.Ledger.Conway.Specification.PoolReap.du_HasCast'45'PoolReapState_2628)
                         (coe
@@ -7867,7 +7867,7 @@ du_EPOCH'45'total_3258 v0 v1 v2
                      MAlonzo.Code.Ledger.Conway.Specification.Ratify.Properties.Computational.d_RATIFIES'45'total''_2606
                      (coe v0)
                      (coe
-                        MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
+                        MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
                         (coe
                            MAlonzo.Code.Ledger.Conway.Specification.Ratify.du_HasCast'45'RatifyEnv_1944)
                         (coe
@@ -7973,7 +7973,7 @@ du_EPOCH'45'total_3258 v0 v1 v2
                                                    MAlonzo.Code.Ledger.Conway.Specification.Epoch.d_ls_3290
                                                    (coe v1))
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
+                                                   MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
                                                    (coe
                                                       MAlonzo.Code.Ledger.Conway.Specification.Certs.du_HasCast'45'DState_1614)
                                                    (coe
@@ -7984,7 +7984,7 @@ du_EPOCH'45'total_3258 v0 v1 v2
                                                                 = coe
                                                                     MAlonzo.Code.Ledger.Conway.Specification.PoolReap.C_mkGeneralizeTel_11689
                                                                     (coe
-                                                                       MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
+                                                                       MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
                                                                        (coe
                                                                           MAlonzo.Code.Ledger.Conway.Specification.PoolReap.du_HasCast'45'PoolReapState_2628)
                                                                        (coe
@@ -8084,7 +8084,7 @@ du_EPOCH'45'total_3258 v0 v1 v2
                                                                          = coe
                                                                              MAlonzo.Code.Ledger.Conway.Specification.PoolReap.C_mkGeneralizeTel_11689
                                                                              (coe
-                                                                                MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
+                                                                                MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
                                                                                 (coe
                                                                                    MAlonzo.Code.Ledger.Conway.Specification.PoolReap.du_HasCast'45'PoolReapState_2628)
                                                                                 (coe
@@ -8188,7 +8188,7 @@ du_EPOCH'45'total_3258 v0 v1 v2
                                                                                = coe
                                                                                    MAlonzo.Code.Ledger.Conway.Specification.PoolReap.C_mkGeneralizeTel_11689
                                                                                    (coe
-                                                                                      MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
+                                                                                      MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
                                                                                       (coe
                                                                                          MAlonzo.Code.Ledger.Conway.Specification.PoolReap.du_HasCast'45'PoolReapState_2628)
                                                                                       (coe
@@ -8297,7 +8297,7 @@ du_EPOCH'45'total_3258 v0 v1 v2
                                                                       = coe
                                                                           MAlonzo.Code.Ledger.Conway.Specification.PoolReap.C_mkGeneralizeTel_11689
                                                                           (coe
-                                                                             MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
+                                                                             MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
                                                                              (coe
                                                                                 MAlonzo.Code.Ledger.Conway.Specification.PoolReap.du_HasCast'45'PoolReapState_2628)
                                                                              (coe
@@ -8483,7 +8483,7 @@ du_EPOCH'45'total_3258 v0 v1 v2
                                                                                                               = coe
                                                                                                                   MAlonzo.Code.Ledger.Conway.Specification.PoolReap.C_mkGeneralizeTel_11689
                                                                                                                   (coe
-                                                                                                                     MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
+                                                                                                                     MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
                                                                                                                      (coe
                                                                                                                         MAlonzo.Code.Ledger.Conway.Specification.PoolReap.du_HasCast'45'PoolReapState_2628)
                                                                                                                      (coe
@@ -8594,7 +8594,7 @@ du_EPOCH'45'total_3258 v0 v1 v2
                                                                                                                     = coe
                                                                                                                         MAlonzo.Code.Ledger.Conway.Specification.PoolReap.C_mkGeneralizeTel_11689
                                                                                                                         (coe
-                                                                                                                           MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
+                                                                                                                           MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
                                                                                                                            (coe
                                                                                                                               MAlonzo.Code.Ledger.Conway.Specification.PoolReap.du_HasCast'45'PoolReapState_2628)
                                                                                                                            (coe
@@ -8695,7 +8695,7 @@ du_EPOCH'45'total_3258 v0 v1 v2
                                                                                = coe
                                                                                    MAlonzo.Code.Ledger.Conway.Specification.PoolReap.C_mkGeneralizeTel_11689
                                                                                    (coe
-                                                                                      MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
+                                                                                      MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
                                                                                       (coe
                                                                                          MAlonzo.Code.Ledger.Conway.Specification.PoolReap.du_HasCast'45'PoolReapState_2628)
                                                                                       (coe
@@ -8794,7 +8794,7 @@ du_EPOCH'45'total_3258 v0 v1 v2
                                                                                = coe
                                                                                    MAlonzo.Code.Ledger.Conway.Specification.PoolReap.C_mkGeneralizeTel_11689
                                                                                    (coe
-                                                                                      MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
+                                                                                      MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
                                                                                       (coe
                                                                                          MAlonzo.Code.Ledger.Conway.Specification.PoolReap.du_HasCast'45'PoolReapState_2628)
                                                                                       (coe
@@ -9014,7 +9014,7 @@ du_EPOCH'45'total_3258 v0 v1 v2
                                                                                                            = coe
                                                                                                                MAlonzo.Code.Ledger.Conway.Specification.PoolReap.C_mkGeneralizeTel_11689
                                                                                                                (coe
-                                                                                                                  MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
+                                                                                                                  MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
                                                                                                                   (coe
                                                                                                                      MAlonzo.Code.Ledger.Conway.Specification.PoolReap.du_HasCast'45'PoolReapState_2628)
                                                                                                                   (coe
@@ -9125,7 +9125,7 @@ du_EPOCH'45'total_3258 v0 v1 v2
                                                                                                                  = coe
                                                                                                                      MAlonzo.Code.Ledger.Conway.Specification.PoolReap.C_mkGeneralizeTel_11689
                                                                                                                      (coe
-                                                                                                                        MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
+                                                                                                                        MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
                                                                                                                         (coe
                                                                                                                            MAlonzo.Code.Ledger.Conway.Specification.PoolReap.du_HasCast'45'PoolReapState_2628)
                                                                                                                         (coe
@@ -9224,7 +9224,7 @@ du_EPOCH'45'total_3258 v0 v1 v2
                                                                             = coe
                                                                                 MAlonzo.Code.Ledger.Conway.Specification.PoolReap.C_mkGeneralizeTel_11689
                                                                                 (coe
-                                                                                   MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
+                                                                                   MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
                                                                                    (coe
                                                                                       MAlonzo.Code.Ledger.Conway.Specification.PoolReap.du_HasCast'45'PoolReapState_2628)
                                                                                    (coe
@@ -9322,7 +9322,7 @@ du_EPOCH'45'total_3258 v0 v1 v2
                                                                             = coe
                                                                                 MAlonzo.Code.Ledger.Conway.Specification.PoolReap.C_mkGeneralizeTel_11689
                                                                                 (coe
-                                                                                   MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
+                                                                                   MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
                                                                                    (coe
                                                                                       MAlonzo.Code.Ledger.Conway.Specification.PoolReap.du_HasCast'45'PoolReapState_2628)
                                                                                    (coe
@@ -9412,7 +9412,7 @@ du_EPOCH'45'total_3258 v0 v1 v2
                                                                 = coe
                                                                     MAlonzo.Code.Ledger.Conway.Specification.PoolReap.C_mkGeneralizeTel_11689
                                                                     (coe
-                                                                       MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
+                                                                       MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
                                                                        (coe
                                                                           MAlonzo.Code.Ledger.Conway.Specification.PoolReap.du_HasCast'45'PoolReapState_2628)
                                                                        (coe
@@ -9492,7 +9492,7 @@ du_EPOCH'45'total_3258 v0 v1 v2
                                                              = coe
                                                                  MAlonzo.Code.Ledger.Conway.Specification.PoolReap.C_mkGeneralizeTel_11689
                                                                  (coe
-                                                                    MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
+                                                                    MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
                                                                     (coe
                                                                        MAlonzo.Code.Ledger.Conway.Specification.PoolReap.du_HasCast'45'PoolReapState_2628)
                                                                     (coe
@@ -9588,7 +9588,7 @@ du_EPOCH'45'total_3258 v0 v1 v2
                                              (MAlonzo.Code.Ledger.Conway.Specification.Epoch.d_ls_3290
                                                 (coe v1))))))))))
                      (coe
-                        MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
+                        MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
                         (coe
                            MAlonzo.Code.Ledger.Conway.Specification.Ratify.du_HasCast'45'RatifyState_1946)
                         (coe
@@ -10283,7 +10283,7 @@ du_NEWEPOCH'45'total_3434 v0 v1 v2
                                           -> coe
                                                MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                (coe
-                                                  MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
+                                                  MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
                                                   (coe
                                                      MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.C_constructor_30
                                                      (coe
@@ -10721,7 +10721,7 @@ du_NEWEPOCH'45'total_3434 v0 v1 v2
                                           -> coe
                                                MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                (coe
-                                                  MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
+                                                  MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
                                                   (coe
                                                      MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.C_constructor_30
                                                      (coe
@@ -11148,7 +11148,7 @@ du_NEWEPOCH'45'total_3434 v0 v1 v2
                           (coe
                              MAlonzo.Code.Data.Product.Base.du_'45''44'__92
                              (coe
-                                MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
+                                MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
                                 (coe
                                    MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_HasCast'45'NewEpochState_3434)
                                 (coe

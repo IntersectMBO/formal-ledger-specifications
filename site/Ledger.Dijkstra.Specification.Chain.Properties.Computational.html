@@ -13002,34 +13002,6 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Conformance.Equivalence.Map.html" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Map
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="Ledger.Conway.Conformance.Equivalence.Utxo.html" class="md-nav__link">
         
   
@@ -13594,7 +13566,7 @@
   <a id="1185" class="Symbol">(</a><a id="1186" href="Ledger.Dijkstra.Specification.Chain.Properties.Computational.html#1186" class="Bound">nes</a> <a id="1190" class="Symbol">:</a> <a id="1192" href="Ledger.Dijkstra.Specification.Epoch.html#4982" class="Record">NewEpochState</a><a id="1205" class="Symbol">)</a>
   <a id="1209" class="Symbol">(</a><a id="1210" class="Keyword">open</a> <a id="1215" href="Ledger.Dijkstra.Specification.Epoch.html#3237" class="Module">EpochState</a> <a id="1226" class="Symbol">(</a><a id="1227" href="Ledger.Dijkstra.Specification.Epoch.html#5103" class="Field">NewEpochState.epochState</a> <a id="1252" href="Ledger.Dijkstra.Specification.Chain.Properties.Computational.html#1186" class="Bound">nes</a><a id="1255" class="Symbol">)</a> <a id="1257" class="Keyword">using</a> <a id="1263" class="Symbol">(</a><a id="1264" href="Ledger.Dijkstra.Specification.Epoch.html#3350" class="Field">ls</a><a id="1266" class="Symbol">)</a> <a id="1268" class="Keyword">renaming</a> <a id="1277" class="Symbol">(</a><a id="1278" href="Ledger.Dijkstra.Specification.Epoch.html#3379" class="Field">es</a> <a id="1281" class="Symbol">to</a> <a id="1284" class="Field">es&#39;</a><a id="1287" class="Symbol">))</a>
   <a id="1292" class="Symbol">(</a><a id="1293" class="Keyword">open</a> <a id="1298" href="Ledger.Dijkstra.Specification.Enact.html#821" class="Module">EnactState</a> <a id="1309" href="Ledger.Dijkstra.Specification.Chain.Properties.Computational.html#1284" class="Function">es&#39;</a> <a id="1313" class="Keyword">using</a> <a id="1319" class="Symbol">(</a><a id="1320" href="Ledger.Dijkstra.Specification.Enact.html#1031" class="Field">pparams</a><a id="1327" class="Symbol">))</a>
-  <a id="1332" class="Symbol">(</a><a id="1333" class="Keyword">open</a> <a id="1338" href="Ledger.Dijkstra.Specification.PParams.html#2535" class="Module">PParams</a> <a id="1346" href="Ledger.Prelude.html#2486" class="Function Operator">∣</a> <a id="1348" href="Ledger.Dijkstra.Specification.Enact.html#1031" class="Function">pparams</a> <a id="1356" href="Ledger.Prelude.html#2486" class="Function Operator">∣</a> <a id="1358" class="Keyword">using</a> <a id="1364" class="Symbol">(</a><a id="1365" href="Ledger.Dijkstra.Specification.PParams.html#3410" class="Field">maxRefScriptSizePerBlock</a><a id="1389" class="Symbol">))</a>
+  <a id="1332" class="Symbol">(</a><a id="1333" class="Keyword">open</a> <a id="1338" href="Ledger.Dijkstra.Specification.PParams.html#2535" class="Module">PParams</a> <a id="1346" href="Ledger.Prelude.html#2483" class="Function Operator">∣</a> <a id="1348" href="Ledger.Dijkstra.Specification.Enact.html#1031" class="Function">pparams</a> <a id="1356" href="Ledger.Prelude.html#2483" class="Function Operator">∣</a> <a id="1358" class="Keyword">using</a> <a id="1364" class="Symbol">(</a><a id="1365" href="Ledger.Dijkstra.Specification.PParams.html#3410" class="Field">maxRefScriptSizePerBlock</a><a id="1389" class="Symbol">))</a>
   <a id="1394" class="Symbol">(</a><a id="1395" href="Ledger.Dijkstra.Specification.Chain.Properties.Computational.html#1395" class="Bound">ts</a> <a id="1398" class="Symbol">:</a> <a id="1400" href="Agda.Builtin.List.html#147" class="Datatype">List</a> <a id="1405" href="Ledger.Dijkstra.Specification.Transaction.html#9763" class="Function">TopLevelTx</a><a id="1415" class="Symbol">)</a>
   <a id="1419" class="Keyword">where</a>
   <a id="1427" href="Ledger.Dijkstra.Specification.Chain.Properties.Computational.html#1427" class="Function">refScriptSize≤?Bound</a> <a id="1448" class="Symbol">:</a> <a id="1450" href="Relation.Nullary.Decidable.Core.html#1966" class="Record">Dec</a> <a id="1454" class="Symbol">(</a><a id="1455" href="Ledger.Dijkstra.Specification.Chain.html#2417" class="Function">totalRefScriptsSize</a> <a id="1475" href="Ledger.Dijkstra.Specification.Epoch.html#3350" class="Function">ls</a> <a id="1478" href="Ledger.Dijkstra.Specification.Chain.Properties.Computational.html#1395" class="Bound">ts</a> <a id="1481" href="Class.HasOrder.Core.html#613" class="Field Operator">≤</a> <a id="1483" href="Ledger.Dijkstra.Specification.PParams.html#3410" class="Function">maxRefScriptSizePerBlock</a><a id="1507" class="Symbol">)</a>

@@ -12958,34 +12958,6 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Conformance.Equivalence.Map.html" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Map
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="Ledger.Conway.Conformance.Equivalence.Utxo.html" class="md-nav__link">
         
   
@@ -13633,7 +13605,7 @@ getGovState = LState.govSt ∘ getLState
     <a id="3789" href="Ledger.Conway.Conformance.Properties.html#3789" class="Function">ledgerEnv</a> <a id="3799" class="Symbol">=</a> <a class="AgdaKaTeX">$\begin{pmatrix} \,\href{Ledger.Conway.Conformance.Properties.html#3651}{\htmlId{3803}{\htmlClass{Bound}{\text{slot}}}}\, \\ \,\href{Ledger.Conway.Specification.Enact.html#1793}{\htmlId{3810}{\htmlClass{Function}{\text{constitution}}}}\, \,\htmlId{3823}{\htmlClass{Symbol}{\text{.}}}\,\,\href{Data.Product.Base.html#636}{\htmlId{3824}{\htmlClass{Field}{\text{proj₁}}}}\, \,\htmlId{3830}{\htmlClass{Symbol}{\text{.}}}\,\,\href{Data.Product.Base.html#650}{\htmlId{3831}{\htmlClass{Field}{\text{proj₂}}}}\, \\ \,\href{Ledger.Conway.Specification.Enact.html#1898}{\htmlId{3839}{\htmlClass{Function}{\text{pparams}}}}\, \,\htmlId{3847}{\htmlClass{Symbol}{\text{.}}}\,\,\href{Data.Product.Base.html#636}{\htmlId{3848}{\htmlClass{Field}{\text{proj₁}}}}\, \\ \,\href{Ledger.Conway.Specification.Epoch.html#2396}{\htmlId{3856}{\htmlClass{Function}{\text{es}}}}\, \\ \,\href{Ledger.Conway.Specification.PParams.html#3178}{\htmlId{3861}{\htmlClass{Field}{\text{Acnt.treasury}}}}\, \,\href{Ledger.Conway.Specification.Epoch.html#2323}{\htmlId{3875}{\htmlClass{Function}{\text{acnt}}}}\, \end{pmatrix}$</a>
 
   <a id="3885" href="Ledger.Conway.Conformance.Properties.html#3885" class="Function">validTxIn₂</a> <a id="3896" class="Symbol">:</a> <a id="3898" href="Ledger.Conway.Specification.Transaction.html#6498" class="Record">Tx</a> <a id="3901" class="Symbol">→</a> <a id="3903" href="Agda.Primitive.html#388" class="Primitive">Type</a>
-  <a id="3910" href="Ledger.Conway.Conformance.Properties.html#3885" class="Function">validTxIn₂</a> <a id="3921" href="Ledger.Conway.Conformance.Properties.html#3921" class="Bound">tx</a> <a id="3924" class="Symbol">=</a> <a id="3926" href="Data.Product.Base.html#1371" class="Function">∃[</a> <a id="3929" href="Ledger.Conway.Conformance.Properties.html#3929" class="Bound">ls&#39;</a> <a id="3933" href="Data.Product.Base.html#1371" class="Function">]</a> <a id="3935" href="Ledger.Conway.Conformance.Properties.html#3789" class="Function">ledgerEnv</a> <a id="3945" href="Ledger.Conway.Conformance.Ledger.html#1254" class="Datatype Operator">⊢</a> <a id="3947" class="Symbol">(</a><a id="3948" href="Ledger.Conway.Conformance.Equivalence.Deposits.html#12905" class="Function">certDeposits</a> <a id="3961" href="Ledger.Conway.Specification.Epoch.html#2372" class="Function">ls</a> <a id="3964" href="Ledger.Conway.Conformance.Equivalence.Convert.html#380" class="Function Operator">⊢conv</a> <a id="3970" href="Ledger.Conway.Specification.Epoch.html#2372" class="Function">ls</a><a id="3972" class="Symbol">)</a> <a id="3974" href="Ledger.Conway.Conformance.Ledger.html#1254" class="Datatype Operator">⇀⦇</a> <a id="3977" href="Ledger.Conway.Conformance.Properties.html#3921" class="Bound">tx</a> <a id="3980" href="Ledger.Conway.Conformance.Ledger.html#1254" class="Datatype Operator">,LEDGER⦈</a> <a id="3989" href="Ledger.Conway.Conformance.Properties.html#3929" class="Bound">ls&#39;</a>
+  <a id="3910" href="Ledger.Conway.Conformance.Properties.html#3885" class="Function">validTxIn₂</a> <a id="3921" href="Ledger.Conway.Conformance.Properties.html#3921" class="Bound">tx</a> <a id="3924" class="Symbol">=</a> <a id="3926" href="Data.Product.Base.html#1371" class="Function">∃[</a> <a id="3929" href="Ledger.Conway.Conformance.Properties.html#3929" class="Bound">ls&#39;</a> <a id="3933" href="Data.Product.Base.html#1371" class="Function">]</a> <a id="3935" href="Ledger.Conway.Conformance.Properties.html#3789" class="Function">ledgerEnv</a> <a id="3945" href="Ledger.Conway.Conformance.Ledger.html#1254" class="Datatype Operator">⊢</a> <a id="3947" class="Symbol">(</a><a id="3948" href="Ledger.Conway.Conformance.Equivalence.Deposits.html#12903" class="Function">certDeposits</a> <a id="3961" href="Ledger.Conway.Specification.Epoch.html#2372" class="Function">ls</a> <a id="3964" href="Ledger.Conway.Conformance.Equivalence.Convert.html#380" class="Function Operator">⊢conv</a> <a id="3970" href="Ledger.Conway.Specification.Epoch.html#2372" class="Function">ls</a><a id="3972" class="Symbol">)</a> <a id="3974" href="Ledger.Conway.Conformance.Ledger.html#1254" class="Datatype Operator">⇀⦇</a> <a id="3977" href="Ledger.Conway.Conformance.Properties.html#3921" class="Bound">tx</a> <a id="3980" href="Ledger.Conway.Conformance.Ledger.html#1254" class="Datatype Operator">,LEDGER⦈</a> <a id="3989" href="Ledger.Conway.Conformance.Properties.html#3929" class="Bound">ls&#39;</a>
 
 <a id="validTx₁"></a><a id="3994" href="Ledger.Conway.Conformance.Properties.html#3994" class="Function">validTx₁</a> <a id="4003" class="Symbol">:</a> <a id="4005" href="Ledger.Conway.Specification.Transaction.html#6498" class="Record">Tx</a> <a id="4008" class="Symbol">→</a> <a id="4010" href="Agda.Primitive.html#388" class="Primitive">Type</a>
 <a id="4015" href="Ledger.Conway.Conformance.Properties.html#3994" class="Function">validTx₁</a> <a id="4024" href="Ledger.Conway.Conformance.Properties.html#4024" class="Bound">tx</a> <a id="4027" class="Symbol">=</a> <a id="4029" href="Data.Product.Base.html#1371" class="Function">∃[</a> <a id="4032" href="Ledger.Conway.Conformance.Properties.html#4032" class="Bound">s</a> <a id="4034" href="Data.Product.Base.html#1371" class="Function">]</a> <a id="4036" href="Ledger.Conway.Conformance.Properties.html#3536" class="Function">validTxIn₁</a> <a id="4047" href="Ledger.Conway.Conformance.Properties.html#4032" class="Bound">s</a> <a id="4049" href="Ledger.Conway.Conformance.Properties.html#4024" class="Bound">tx</a>
@@ -13643,10 +13615,10 @@ getGovState = LState.govSt ∘ getLState
 
 <a id="4175" class="Keyword">module</a> <a id="4182" href="Ledger.Conway.Conformance.Properties.html#4182" class="Module">_</a> <a id="4184" class="Symbol">(</a><a id="4185" href="Ledger.Conway.Conformance.Properties.html#4185" class="Bound">s</a> <a id="4187" class="Symbol">:</a> <a id="4189" href="Ledger.Conway.Specification.Chain.html#1187" class="Record">ChainState</a><a id="4199" class="Symbol">)</a> <a id="4201" class="Keyword">where</a>
   <a id="4209" class="Keyword">open</a> <a id="4214" href="Ledger.Conway.Specification.Chain.html#1187" class="Module">ChainState</a> <a id="4225" href="Ledger.Conway.Conformance.Properties.html#4185" class="Bound">s</a><a id="4226" class="Symbol">;</a> <a id="4228" class="Keyword">open</a> <a id="4233" href="Ledger.Conway.Specification.Epoch.html#4280" class="Module">NewEpochState</a> <a id="4247" href="Ledger.Conway.Specification.Chain.html#1223" class="Field">newEpochState</a><a id="4260" class="Symbol">;</a> <a id="4262" class="Keyword">open</a> <a id="4267" href="Ledger.Conway.Specification.Epoch.html#2226" class="Module">EpochState</a> <a id="4278" href="Ledger.Conway.Specification.Epoch.html#4401" class="Function">epochState</a>
-  <a id="4291" class="Keyword">open</a> <a id="4296" href="Ledger.Conway.Conformance.Ledger.html#876" class="Module">LState</a> <a id="4303" class="Symbol">(</a><a id="4304" href="Ledger.Conway.Conformance.Equivalence.Deposits.html#12905" class="Function">certDeposits</a> <a id="4317" href="Ledger.Conway.Specification.Epoch.html#2372" class="Function">ls</a> <a id="4320" href="Ledger.Conway.Conformance.Equivalence.Convert.html#380" class="Function Operator">⊢conv</a> <a id="4326" href="Ledger.Conway.Specification.Epoch.html#2372" class="Function">ls</a><a id="4328" class="Symbol">)</a>
+  <a id="4291" class="Keyword">open</a> <a id="4296" href="Ledger.Conway.Conformance.Ledger.html#876" class="Module">LState</a> <a id="4303" class="Symbol">(</a><a id="4304" href="Ledger.Conway.Conformance.Equivalence.Deposits.html#12903" class="Function">certDeposits</a> <a id="4317" href="Ledger.Conway.Specification.Epoch.html#2372" class="Function">ls</a> <a id="4320" href="Ledger.Conway.Conformance.Equivalence.Convert.html#380" class="Function Operator">⊢conv</a> <a id="4326" href="Ledger.Conway.Specification.Epoch.html#2372" class="Function">ls</a><a id="4328" class="Symbol">)</a>
   <a id="4332" class="Keyword">open</a> <a id="4337" href="Ledger.Conway.Specification.Enact.html#1688" class="Module">EnactState</a> <a id="4348" href="Ledger.Conway.Specification.Epoch.html#2396" class="Function">es</a> <a id="4351" class="Keyword">renaming</a> <a id="4360" class="Symbol">(</a><a id="4361" href="Ledger.Conway.Specification.Enact.html#1898" class="Field">pparams</a> <a id="4369" class="Symbol">to</a> <a id="4372" class="Field">pparams&#39;</a><a id="4380" class="Symbol">)</a>
   <a id="4384" class="Keyword">open</a> <a id="4389" href="Ledger.Conway.Conformance.Certs.html#1058" class="Module">CertState</a> <a id="4399" href="Ledger.Conway.Conformance.Ledger.html#984" class="Function">certState</a><a id="4408" class="Symbol">;</a> <a id="4410" class="Keyword">open</a> <a id="4415" href="Ledger.Conway.Conformance.Certs.html#704" class="Module">DState</a> <a id="4422" href="Ledger.Conway.Conformance.Certs.html#1117" class="Function">dState</a>
-  <a id="4431" href="Ledger.Conway.Conformance.Properties.html#4431" class="Function">pparams</a> <a id="4439" class="Symbol">=</a> <a id="4441" href="Ledger.Prelude.html#2486" class="Function Operator">∣</a> <a id="4443" href="Ledger.Conway.Conformance.Properties.html#4372" class="Function">pparams&#39;</a> <a id="4452" href="Ledger.Prelude.html#2486" class="Function Operator">∣</a>
+  <a id="4431" href="Ledger.Conway.Conformance.Properties.html#4431" class="Function">pparams</a> <a id="4439" class="Symbol">=</a> <a id="4441" href="Ledger.Prelude.html#2483" class="Function Operator">∣</a> <a id="4443" href="Ledger.Conway.Conformance.Properties.html#4372" class="Function">pparams&#39;</a> <a id="4452" href="Ledger.Prelude.html#2483" class="Function Operator">∣</a>
   <a id="4456" class="Keyword">open</a> <a id="4461" href="Ledger.Conway.Specification.PParams.html#5296" class="Module">PParams</a> <a id="4469" href="Ledger.Conway.Conformance.Properties.html#4431" class="Function">pparams</a>
   <a id="4479" class="Keyword">open</a> <a id="4484" href="Ledger.Conway.Specification.Transaction.html#6498" class="Module">Tx</a><a id="4486" class="Symbol">;</a> <a id="4488" class="Keyword">open</a> <a id="4493" href="Ledger.Conway.Specification.Transaction.html#4780" class="Module">TxBody</a>
 

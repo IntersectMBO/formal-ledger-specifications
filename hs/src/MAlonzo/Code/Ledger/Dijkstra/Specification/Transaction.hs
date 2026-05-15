@@ -8088,7 +8088,7 @@ du_lookupScriptHash_4548 ::
   Maybe MAlonzo.Code.Data.Sum.Base.T__'8846'__30
 du_lookupScriptHash_4548 v0 v1 v2 v3
   = coe
-      MAlonzo.Code.Ledger.Prelude.du_lookupHash_128
+      MAlonzo.Code.Ledger.Prelude.du_lookupHash_124
       (coe
          MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_210
          (coe d_cryptoStructure_1360 (coe v0)))

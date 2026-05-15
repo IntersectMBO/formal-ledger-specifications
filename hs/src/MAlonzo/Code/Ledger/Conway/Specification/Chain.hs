@@ -1093,7 +1093,7 @@ du_maxRefScriptSizePerBlock_3612 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.PParams.d_maxRefScriptSizePerBlock_394
       (coe
-         MAlonzo.Code.Ledger.Prelude.du_'8739'_'8739'_94
+         MAlonzo.Code.Ledger.Prelude.du_'8739'_'8739'_90
          (coe
             MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.du_HasCast'45'HashProtected_1090)
          (MAlonzo.Code.Ledger.Conway.Specification.Enact.d_pparams_1194

@@ -2863,7 +2863,7 @@ du_η_4218 ::
   MAlonzo.Code.Data.Rational.Base.T_ℚ_6
 du_η_4218 v0 v1 v2
   = coe
-      MAlonzo.Code.Ledger.Prelude.d__'247''8320'__58
+      MAlonzo.Code.Ledger.Prelude.d__'247''8320'__54
       (coe
          MAlonzo.Code.Data.Rational.Literals.d_fromℤ_6
          (coe du_blocksMade_4212 (coe v0) (coe v2)))
@@ -3385,7 +3385,7 @@ du_applyRUpd_4316 v0 v1 v2
                                            -> coe
                                                 C_'10214'_'44'_'44'_'44'_'44'_'10215''7497'''_4046
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
+                                                   MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
                                                    (coe
                                                       MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.C_constructor_30
                                                       (coe
@@ -3521,7 +3521,7 @@ du_applyRUpd_4316 v0 v1 v2
                                                 (coe
                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.C_'10214'_'44'_'44'_'10215''737'_3702
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
+                                                      MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
                                                       (coe
                                                          MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.C_constructor_30
                                                          (coe
@@ -4669,7 +4669,7 @@ du_mkStakeDistrs_4450 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.T_StakeDistrs_1900
 du_mkStakeDistrs_4450 v0 v1 v2 v3 v4 v5 v6
   = coe
-      MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
+      MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
       (coe
          MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.C_constructor_30
          (coe

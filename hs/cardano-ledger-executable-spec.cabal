@@ -470,7 +470,6 @@ library
       MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Certs
       MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert
       MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Deposits
-      MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Map
       MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Utxo
       MAlonzo.Code.Ledger.Conway.Conformance.Gov
       MAlonzo.Code.Ledger.Conway.Conformance.Ledger

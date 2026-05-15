@@ -510,7 +510,7 @@ du_certΓ_3634 ::
   MAlonzo.Code.Ledger.Conway.Specification.Certs.T_CertEnv_1388
 du_certΓ_3634 v0 v1 v2 v3
   = coe
-      MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
+      MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
       (coe
          MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.C_constructor_30
          (coe
@@ -1406,7 +1406,7 @@ du_govΓ_3636 ::
   MAlonzo.Code.Ledger.Conway.Specification.Gov.T_GovEnv_1870
 du_govΓ_3636 v0 v1 v2 v3 v4
   = coe
-      MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
+      MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
       (coe
          MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.C_constructor_30
          (coe
@@ -2223,7 +2223,7 @@ d_computeProof_3642 v0 v1 v2 v3 v4
                                                                   (coe
                                                                      MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
+                                                                        MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
                                                                         (coe
                                                                            MAlonzo.Code.Ledger.Conway.Conformance.Ledger.du_HasCast'45'LState_2718)
                                                                         (coe
@@ -2310,7 +2310,7 @@ d_computeProof_3642 v0 v1 v2 v3 v4
                                       (coe
                                          MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                          (coe
-                                            MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_76
+                                            MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
                                             (coe
                                                MAlonzo.Code.Ledger.Conway.Conformance.Ledger.du_HasCast'45'LState_2718)
                                             (coe
