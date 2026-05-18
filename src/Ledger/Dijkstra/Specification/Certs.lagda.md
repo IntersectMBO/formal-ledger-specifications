@@ -32,8 +32,6 @@ record StakePoolParams : Type where
     pledge          : Coin
     rewardAccount   : Credential
 
--- Miscellaneous Type Aliases
-
 CCHotKeys : Type
 CCHotKeys = Credential ⇀ Maybe Credential
 
@@ -63,7 +61,6 @@ Stake = Credential ⇀ Coin
 StakeDelegs : Type
 StakeDelegs = Credential ⇀ KeyHash
 
--- Delegation Definitions
 data DCert : Type where
   delegate    : Credential → Maybe VDeleg → Maybe KeyHash → Coin → DCert
   dereg       : Credential → Maybe Coin → DCert
@@ -283,53 +280,10 @@ private variable
 ```
 -->
 
-Since it underpins both `applyDirectDeposits`{.AgdaFunction} and
-`applyWithdrawals`{.AgdaFunction}, the `applyToRewards`{.AgdaFunction} function
-bears explaining.  Given three arguments —
-a binary function `f` (e.g., addition or subtraction),
-a map `m` from `RewardAddress`{.AgdaDatatype} to `Coin`{.AgdaDatatype} (e.g.,
-direct deposits or withdrawals), and
-a `Rewards` map (of account balances) — for each `(addr , amt)`, the
-`applyToRewards`{.AgdaFunction} function does the following:
-
-1.  Look up `stake addr` in the accumulator.
-2.  If found with current balance `bal`, replace the entry with `(stake addr, f bal amt)`.
-    *Note*. since `∪ˡ` is left-biased, the fresh singleton wins at `stake addr` and all
-    other entries of `acc` are preserved; no explicit complement restriction is needed.
-3.  If not found (defensive; the caller's precondition will rule this out), return `acc`
-    unchanged; this keeps `applyToRewards` total.
-
 ```agda
-applyToRewards : (Coin → Coin → Coin) → (RewardAddress ⇀ Coin) → Rewards → Rewards
-applyToRewards f m rwds =
-  foldl (λ acc (addr , amt) → maybe (λ bal → ❴ stake addr , f bal amt ❵ ∪ˡ acc) acc (lookupᵐ? acc (stake addr)))
-        rwds
-        (setToList (m ˢ))
-
 rewardsBalance : DState → Coin
 rewardsBalance ds = ∑[ x ← RewardsOf ds ] x
-
-applyDirectDeposits : DirectDeposits → Rewards → Rewards
-applyDirectDeposits = applyToRewards _+_
 ```
-
-The `POST-CERT`{.AgdaDatatype} rule calls `applyDirectDeposits`{.AgdaFunction} to
-credit each transaction's direct deposits to its account balances after certificate
-processing.  See *Direct Deposit Application (CIP-159)* below for details.
-
-```agda
-applyWithdrawals : Withdrawals → Rewards → Rewards
-applyWithdrawals = applyToRewards _∸_
-```
-
-In the Dijkstra era, CIP-159 allows **partial withdrawals**: a transaction may
-withdraw any amount up to the current account balance.
-`applyWithdrawals`{.AgdaFunction} subtracts each withdrawal amount from the
-corresponding account balance.  Full withdrawals remain valid as a special case
-(where the withdrawn amount equals the balance, leaving a zero balance).
-
-The `PRE-CERT`{.AgdaDatatype} rule calls `applyWithdrawals`{.AgdaFunction}
-to process withdrawals as part of certificate processing.
 
 <!--
 ```agda
@@ -344,8 +298,11 @@ instance
 ```
 -->
 
+## Auxiliary Transition Systems
+
+## `DELEG`{.AgdaDatatype} Transition System
+
 ```agda
--- Auxiliary DELEG transition system --
 data _⊢_⇀⦇_,DELEG⦈_ : DelegEnv → DState → DCert → DState → Type where
 
   DELEG-delegate :
@@ -367,8 +324,11 @@ data _⊢_⇀⦇_,DELEG⦈_ : DelegEnv → DState → DCert → DState → Type 
 
 isPoolRegistered : Pools -> KeyHash -> Maybe StakePoolParams
 isPoolRegistered ps kh = lookupᵐ? ps kh
+```
 
--- Auxiliary POOL transition system --
+## `POOL`{.AgdaDatatype} Transition System
+
+```agda
 data _⊢_⇀⦇_,POOL⦈_ : PoolEnv → PState → DCert → PState → Type where
 
   POOL-reg :
@@ -411,9 +371,11 @@ data _⊢_⇀⦇_,POOL⦈_ : PoolEnv → PState → DCert → PState → Type wh
          , ❴ kh , e ❵ ∪ˡ retiring
          , deposits
          ⟧
+```
 
+## `GOVCERT`{.AgdaDatatype} Transition System
 
--- Auxiliary GOVCERT transition system --
+```agda
 data _⊢_⇀⦇_,GOVCERT⦈_ : CertEnv → GState → DCert → GState → Type where
 
   GOVCERT-regdrep :
@@ -432,8 +394,11 @@ data _⊢_⇀⦇_,GOVCERT⦈_ : CertEnv → GState → DCert → GState → Type
     ∙ c ∈ cc
       ────────────────────────────────
       ⟦ e , pp , vs , wdrls , cc , dd ⟧ ⊢ ⟦ dReps , ccKeys , deposits ⟧ ⇀⦇ ccreghot c mc ,GOVCERT⦈ ⟦ dReps , ❴ c , mc ❵ ∪ˡ ccKeys , deposits ⟧
+```
 
--- CERT Transition System --
+# `CERT`{.AgdaDatatype} Transition System
+
+```agda
 data _⊢_⇀⦇_,CERT⦈_  : CertEnv → CertState → DCert → CertState → Type where
 
   CERT-deleg :
@@ -452,103 +417,9 @@ data _⊢_⇀⦇_,CERT⦈_  : CertEnv → CertState → DCert → CertState → 
       Γ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ , stᵖ , stᵍ' ⟧
 ```
 
-## The <span class="AgdaDatatype">PRE-CERT</span> Transition Rule
-
-### Withdrawal Processing
-
-The `PRE-CERT`{.AgdaDatatype} rule processes withdrawals before certificate
-evaluation.  In the Dijkstra era, CIP-159 extends the withdrawal semantics from an
-"all-or-nothing" model (where the withdrawn amount must equal the full account
-balance) to a "partial withdrawal" model (where any amount up to the full balance
-may be withdrawn).
-
-The precondition checks that each withdrawal targets a registered account and that
-the withdrawal amount does not exceed the account's current balance.  The effect
-subtracts the withdrawal amounts from the corresponding account balances via
-`applyWithdrawals`{.AgdaFunction}.
-
-<!--
-```agda
-open GovVote using (voter)
-```
--->
+# `CERTS`{.AgdaDatatype} Transition System
 
 ```agda
-data _⊢_⇀⦇_,PRE-CERT⦈_ : CertEnv → CertState → ⊤ → CertState → Type where
-
-  CERT-pre :
-    let refresh         = mapPartial (isGovVoterDRep ∘ voter) (fromList vs)
-        refreshedDReps  = mapValueRestricted (const (e + pp .drepActivity)) dReps refresh
-        wdrlCreds       = mapˢ stake (dom wdrls)
-    in
-    ∙ filter isKeyHash wdrlCreds ⊆ dom voteDelegs
-    ∙ wdrlCreds ⊆ dom rewards
-    ∙ ∀[ (addr , amt) ∈ wdrls ˢ ] amt ≤ maybe id 0 (lookupᵐ? rewards (stake addr))
-      ────────────────────────────────
-      ⟦ e , pp , vs , wdrls , cc , dd ⟧ ⊢ ⟦ ⟦ voteDelegs , stakeDelegs , rewards , deposits ⟧ , stᵖ , ⟦ dReps , ccHotKeys , deposits' ⟧ ⟧ ⇀⦇ _ ,PRE-CERT⦈ ⟦ ⟦ voteDelegs , stakeDelegs , applyWithdrawals wdrls rewards , deposits ⟧ , stᵖ , ⟦ refreshedDReps , ccHotKeys , deposits' ⟧ ⟧
-```
-
-**TODO**: Version restriction (deferred).  CIP-159 specifies that partial withdrawals are
-only permitted in transactions without Plutus v1–v3 scripts (i.e., `legacyMode ≡ false`).
-Enforcing this requires threading `legacyMode` into `CertEnv`, which in turn requires
-changes to the `SUBLEDGER` and `LEDGER` rules.  This restriction will be added in a
-follow-up issue.
-
-## The <span class="AgdaDatatype">POST-CERT</span> Transition Rule
-
-### Direct Deposit Application (CIP-159)
-
-The `POST-CERT`{.AgdaDatatype} rule applies CIP-159 direct deposits to the
-threaded `CertState`{.AgdaRecord} after all individual `CERT`{.AgdaDatatype} steps
-for the transaction have run, alongside its existing `voteDelegs`{.AgdaField}
-filtering.  Specifically:
-
-+  `voteDelegs`{.AgdaField} is restricted to credentials that delegate to a
-   currently-registered `DRep`{.AgdaInductiveConstructor} (or to the abstain /
-   no-confidence pseudo-DReps).
-+  `rewards`{.AgdaField} is augmented by `directDeposits`{.AgdaField} via
-   `∪⁺`{.AgdaFunction} (union with addition) — equivalently,
-   `applyDirectDeposits directDeposits` is applied to the threaded
-   `DState`{.AgdaRecord}.
-
-The premise `dom directDeposits ⊆ dom rewards` ensures that
-`applyDirectDeposits`{.AgdaFunction} does not silently re-introduce a credential
-into `rewards`{.AgdaField} that was deregistered earlier in the same
-transaction's `CERT`{.AgdaDatatype} steps (and is therefore no longer present in
-`voteDelegs`{.AgdaField}, `stakeDelegs`{.AgdaField}, or `deposits`{.AgdaField}),
-which would produce an inconsistent `DState`{.AgdaRecord}.  The check is
-performed against the post-`CERT`{.AgdaDatatype} `rewards`{.AgdaField} of the
-*same* transaction, so deregistrations performed by *prior* sub-transactions in
-the same batch are correctly accounted for: a sub-transaction whose deposit
-targets a credential deregistered earlier in the batch will fail this premise.
-
-The phantom-asset prohibition of CIP-159 — that withdrawals in one
-sub-transaction may not draw from deposits made by an earlier sub-transaction in
-the same batch — is enforced separately in the `Utxo`{.AgdaModule} module by the
-`NoPhantomWithdrawals`{.AgdaFunction} predicate, which bounds *batch-wide*
-withdrawal totals (per reward address) by the `accountBalances`{.AgdaField} field
-of `UTxOEnv`{.AgdaRecord} / `SubUTxOEnv`{.AgdaRecord} — the *pre-batch* snapshot
-`RewardsOf certState₀`{.AgdaBound}.  Because `accountBalances`{.AgdaField} is
-fixed at the pre-batch value and never updated by direct deposit application,
-the phantom-asset prohibition holds regardless of the per-transaction
-`rewards`{.AgdaField} updates done by `POST-CERT`{.AgdaDatatype}.
-
-
-```agda
-data _⊢_⇀⦇_,POST-CERT⦈_ : CertEnv → CertState → ⊤ → CertState → Type where
-
-  CERT-post :
-    let activeVDelegs = mapˢ vDelegCredential (dom (DRepsOf stᵍ))
-                         ∪ fromList (vDelegNoConfidence ∷ vDelegAbstain ∷ [])
-    in
-    ∙ mapˢ stake (dom dd) ⊆ dom rewards
-      ────────────────────────────────
-      ⟦ e , pp , vs , wdrls , cc , dd ⟧ ⊢ ⟦ ⟦ voteDelegs , stakeDelegs , rewards , deposits ⟧ , stᵖ , stᵍ ⟧ ⇀⦇ _ ,POST-CERT⦈ ⟦ ⟦ voteDelegs ∣^ activeVDelegs , stakeDelegs , applyDirectDeposits dd rewards , deposits ⟧ , stᵖ , stᵍ ⟧
-
-
-
--- CERTS Transition System --
-
 _⊢_⇀⦇_,CERTS⦈_  : CertEnv → CertState  → List DCert  → CertState  → Type
-_⊢_⇀⦇_,CERTS⦈_ = RunTraceAfterAndThen _⊢_⇀⦇_,PRE-CERT⦈_ _⊢_⇀⦇_,CERT⦈_ _⊢_⇀⦇_,POST-CERT⦈_
+_⊢_⇀⦇_,CERTS⦈_ = ReflexiveTransitiveClosure {sts = _⊢_⇀⦇_,CERT⦈_}
 ```
