@@ -166,40 +166,6 @@ instance
     with computeProof Γ (CertState.gState cs) dCert | completeness _ _ _ _ h
   ... | success _ | refl = refl
 
-
-  Computational-PRE-CERT : Computational _⊢_⇀⦇_,PRE-CERT⦈_ String
-  Computational-PRE-CERT .computeProof ce cs _ =
-    case ¿  filterˢ isKeyHash (mapˢ CredentialOf (dom (WithdrawalsOf ce))) ⊆ dom (VoteDelegsOf cs)
-            × mapˢ CredentialOf (dom (WithdrawalsOf ce)) ⊆ dom (RewardsOf cs)
-            × ∀[ (addr , amt) ∈ WithdrawalsOf ce ˢ ] amt ≤ maybe id 0 (lookupᵐ? (RewardsOf cs) (CredentialOf addr))  ¿
-    of λ where
-      (yes p) → success (-, CERT-pre p)
-      (no ¬p) → failure (genErrors ¬p)
-
-  Computational-PRE-CERT .completeness ce st _ st' (CERT-pre p) rewrite
-    dec-yes ¿  filterˢ isKeyHash (mapˢ CredentialOf (dom (WithdrawalsOf ce))) ⊆ dom (VoteDelegsOf st)
-               × mapˢ CredentialOf (dom (WithdrawalsOf ce)) ⊆ dom (RewardsOf st)
-               × ∀[ (addr , amt) ∈ WithdrawalsOf ce ˢ ] amt ≤ maybe id 0 (lookupᵐ? (RewardsOf st) (CredentialOf addr))  ¿
-        p .proj₂ = refl
-
-  Computational-POST-CERT : Computational _⊢_⇀⦇_,POST-CERT⦈_ String
-  Computational-POST-CERT .computeProof ce cs tt with ¿ mapˢ stake (dom (CertEnv.directDeposits ce)) ⊆ dom (RewardsOf cs) ¿
-  ... | (no ¬p) = failure (genErrors ¬p)
-  ... | (yes p) = success (cs' , CERT-post p)
-    where
-      validVoteDelegs : VoteDelegs
-      validVoteDelegs = VoteDelegsOf cs ∣^ (mapˢ vDelegCredential (dom (DRepsOf cs)) ∪ fromList (vDelegNoConfidence ∷ vDelegAbstain ∷ []) )
-
-      newRewards : Rewards
-      newRewards = applyDirectDeposits (CertEnv.directDeposits ce) (RewardsOf cs)
-
-      cs' : CertState
-      cs' = ⟦ ⟦ validVoteDelegs , StakeDelegsOf cs , newRewards , DepositsOf (DStateOf cs) ⟧ , PStateOf cs , GStateOf cs ⟧
-
-  Computational-POST-CERT .completeness ce cs _ cs' (CERT-post p) with ¿ mapˢ stake (dom (CertEnv.directDeposits ce)) ⊆ dom (RewardsOf cs) ¿
-  ... | yes _ = refl
-  ... | no ¬p = ⊥-elim (¬p p)
-
 Computational-CERTS : Computational _⊢_⇀⦇_,CERTS⦈_ String
 Computational-CERTS = it
 ```
