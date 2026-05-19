@@ -103,9 +103,12 @@ instance
   ~? {A} {x} {y} ⦃ deqEq ⦄ = ⁇ (connected? (DecEq._≟_ deqEq) x y)
 
 -- Positive and negative part of integers
-open import Data.Integer using (sign; ∣_∣; _⊖_)
+open import Data.Integer using (_⊖_) public
+open import Data.Integer using (sign; ∣_∣)
 open import Data.Integer.Properties using ([1+m]⊖[1+n]≡m⊖n)
 open import Data.Sign using (Sign)
+
+open import Data.Nat.Properties using (m+[n∸m]≡n; m≤n⇒m∸n≡0; ≤-total; +-identityʳ)
 
 posPart : ℤ → ℕ
 posPart x with sign x
@@ -122,6 +125,33 @@ negPart x with sign x
 ∸≡posPart⊖ {zero} {ℕ.suc n} = _≡_.refl
 ∸≡posPart⊖ {ℕ.suc m} {zero} = _≡_.refl
 ∸≡posPart⊖ {ℕ.suc m} {ℕ.suc n} = trans (∸≡posPart⊖{m}{n}) (sym (cong posPart (([1+m]⊖[1+n]≡m⊖n m n))))
+
+∸≡negPart⊖ : {m n : ℕ} → (n ∸ m) ≡ negPart (m ⊖ n)
+∸≡negPart⊖ {zero}  {zero}  = refl
+∸≡negPart⊖ {zero}  {ℕ.suc n} = refl
+∸≡negPart⊖ {ℕ.suc m} {zero}  = refl
+∸≡negPart⊖ {ℕ.suc m} {ℕ.suc n} =
+  trans (∸≡negPart⊖ {m} {n})
+        (sym (cong negPart ([1+m]⊖[1+n]≡m⊖n m n)))
+
++∸≡∸+ : (a b : ℕ) → a +ℕ (b ∸ a) ≡ b +ℕ (a ∸ b)
++∸≡∸+ a b with ≤-total a b
+... | inj₁ a≤b =
+  trans (m+[n∸m]≡n a≤b)
+        (sym (trans (cong (b +ℕ_) (m≤n⇒m∸n≡0 a≤b)) (+-identityʳ b)))
+... | inj₂ b≤a =
+  trans (cong (a +ℕ_) (m≤n⇒m∸n≡0 b≤a))
+        (trans (+-identityʳ a) (sym (m+[n∸m]≡n b≤a)))
+
+-- y + posPart (x ⊖ y) ≡ x + negPart (x ⊖ y)
+posPart-negPart-sym : ∀ x y → y +ℕ posPart (x ⊖ y) ≡ x +ℕ negPart (x ⊖ y)
+posPart-negPart-sym x y = let _+_ = _+ℕ_ in
+  begin
+    y + posPart (x ⊖ y)  ≡⟨ cong (y +_) (sym (∸≡posPart⊖ {x} {y})) ⟩
+    y + (x ∸ y)          ≡⟨ +∸≡∸+ y x ⟩
+    x + (y ∸ x)          ≡⟨ cong (x +_) (∸≡negPart⊖ {x} {y}) ⟩
+    x + negPart (x ⊖ y)  ∎
+  where open ≡-Reasoning
 
 instance
   Dec-NonZero : ∀ {n} → NonZero n ⁇

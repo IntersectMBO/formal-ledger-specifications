@@ -55,7 +55,7 @@ open import Data.Integer using (0ℤ) public
 import Data.Rational as ℚ
 open import Data.Rational using (ℚ)
 
-open import Data.Nat.Properties using (+-identityʳ)
+open import Data.Nat.Properties using (+-identityʳ; +-comm; +-assoc)
 
 
 dec-de-morgan : ∀{P Q : Type} → ⦃ P ⁇ ⦄ → ¬ (P × Q) → ¬ P ⊎ ¬ Q
@@ -111,6 +111,17 @@ indexedSumL-proj₂-zero ((a , v) ∷ xs) all-zero =
     trans (cong (_+ indexedSumL proj₂ xs) (all-zero (Prelude.Init.here refl)))
           (indexedSumL-proj₂-zero xs (all-zero ∘ Prelude.Init.there))
 
+
++-interleave : {a b c d : ℕ} → a + b + (c + d) ≡ a + c + (b + d)
++-interleave {a}{b}{c}{d} = begin
+  a + b + (c + d)  ≡⟨ +-assoc a b (c + d) ⟩
+  a + (b + (c + d))  ≡⟨ cong (a +_) (sym (+-assoc b c d)) ⟩
+  a + (b + c + d)    ≡⟨ cong (λ y → a + (y + d)) (+-comm b c) ⟩
+  a + (c + b + d)    ≡⟨ cong (a +_) (+-assoc c b d) ⟩
+  a + (c + (b + d))  ≡⟨ sym (+-assoc a c (b + d)) ⟩
+  a + c + (b + d)  ∎
+  where open ≡-Reasoning
+
 module _ {A : Type} ⦃ _ : DecEq A ⦄ where
 
   getCoin-singleton : {(a , c) : A × Coin} → indexedSumᵛ' id ❴ (a , c) ❵ ≡ c
@@ -149,6 +160,16 @@ module _ {A : Type} ⦃ _ : DecEq A ⦄ where
   ∪ˡsingleton0≡ m {a} with a ∈? dom m
   ... | yes a∈dom = ∪ˡsingleton∈dom m a∈dom
   ... | no a∉dom = trans (∪ˡsingleton∉dom m a∉dom) (+-identityʳ (getCoin m))
+
+sum-map-+ : ∀ {A : Type} (f g : A → ℕ) (xs : List A)
+  → sum (map (λ x → f x + g x) xs) ≡ sum (map f xs) + sum (map g xs)
+sum-map-+ _ _ [] = refl
+sum-map-+ f g (x ∷ xs) =
+  begin
+  f x + g x + sum (map (λ x → f x + g x) xs)    ≡⟨ cong (f x + g x +_) (sum-map-+ f g xs) ⟩
+  f x + g x + (sum (map f xs) + sum (map g xs)) ≡⟨ +-interleave {f x} ⟩
+  f x + sum (map f xs) + (g x + sum (map g xs)) ∎
+  where open ≡-Reasoning
 
 opaque
   unfolding List-Model finiteness

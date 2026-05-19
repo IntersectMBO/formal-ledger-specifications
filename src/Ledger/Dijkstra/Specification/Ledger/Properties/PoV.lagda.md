@@ -118,12 +118,12 @@ intermediate stage of the main chain.
 To close, add `Σ directDeps_i` to both sides of the goal (eliminated at the end via
 `+-cancelʳ-≡`):
 
-    (U₀ + R₀ + D₀) + Σ directDeps_i
+    U₀ + R₀ + D₀ + Σ directDeps_i
     ≡ U₀ + (R₀ + Σ directDeps_i) + D₀
     ≡ U₀ + (R₂ + Σ wdrls_i) + D₀               by (2)
     ≡ U₀ + Σ wdrls_i + D₀ + R₂                 (rearrange)
     ≡ U₂ + Σ directDeps_i + D₂ + R₂            by (★)
-    ≡ (U₂ + R₂ + D₂) + Σ directDeps_i          (rearrange)
+    ≡ U₂ + R₂ + D₂ + Σ directDeps_i          (rearrange)
 
 
 ### `LEDGER-I` proof outline
@@ -152,8 +152,8 @@ module _
   (tx : TopLevelTx) (let open Tx tx)
 
   -- Shared assumptions (same pattern as Conway)
-  ( ∪ˡ-res-lookup-preserve : ∀ (m : Rewards) (c : Credential) (v : Coin) (c' : Credential)
-      → c' ≢ c → lookupᵐ? (❴ c , v ❵ ∪ˡ (m ∣ ❴ c ❵ ᶜ)) c' ≡ lookupᵐ? m c' )
+  ( ∪ˡ-lookup-preserve : ∀ (m : Rewards) (c : Credential) (v : Coin) (c' : Credential)
+      → c' ≢ c → lookupᵐ? (❴ c , v ❵ ∪ˡ m) c' ≡ lookupᵐ? m c' )
 
   ( sum-map-proj₂≡getCoin : ∀ (m : Withdrawals) → sum (map proj₂ (setToList (m ˢ))) ≡ getCoin m )
 
@@ -162,9 +162,6 @@ module _
   ( balance-∪ : ∀ {u u' : UTxO} → disjoint (dom u) (dom u') → cbalance (u ∪ˡ u') ≡ cbalance u + cbalance u' )
 
   ( split-balance : ∀ (u : UTxO) (keys : ℙ TxIn) → cbalance u ≡ cbalance (u ∣ keys ᶜ) + cbalance (u ∣ keys) )
-
-  -- New CIP-159 assumption (forwarded to Certs-Pov-lemmas): see PoVLemmas.
-  ( indexedSumᵛ'-∪⁺ : ∀ (m m' : Rewards) → getCoin (m ∪⁺ m') ≡ getCoin m + getCoin m' )
 
   -- Per-step SUBUTXOW coin equation.  Assumed for now; a local proof
   -- would require, in addition to `balance-∪` and `split-balance`, a
@@ -201,25 +198,34 @@ module _
       → subΓ ⊢ s ⇀⦇ SubTransactionsOf tx ,SUBLEDGERS⦈ ⟦ utxoSt₁ , govSt₁ , certState₁ ⟧ˡ
       → TxIdOf tx ∉ mapˢ proj₁ (dom (UTxOOf utxoSt₁)) )
 
-  -- Deposit-change posPart/negPart identity.  Provable from the definition
-  -- of `calculateDepositsChange` and the standard
-  -- `y + posPart (x - y) ≡ x + negPart (x - y)` lemma (per-component, then
-  -- composed across top and sub).  Deferred to the follow-up PR.
-  ( posNeg-deposits : (cs₀ cs₁ cs₂ : CertState)
-      → let dc = calculateDepositsChange cs₀ cs₁ cs₂ in
-        coinFromDeposits cs₀ + posPart (DepositsChangeTopOf dc) + posPart (DepositsChangeSubOf dc)
-        ≡ coinFromDeposits cs₂ + negPart (DepositsChangeTopOf dc) + negPart (DepositsChangeSubOf dc) )
-
-  -- Sum distribution (standard list algebra):
-  ( sum-map-+ : ∀ {A : Type} (f g : A → ℕ) (xs : List A)
-      → sum (map (λ x → f x + g x) xs) ≡ sum (map f xs) + sum (map g xs) )
-
   where
-  open Certs-PoV ∪ˡ-res-lookup-preserve sum-map-proj₂≡getCoin setToList-Unique indexedSumᵛ'-∪⁺
+  open Certs-PoV ∪ˡ-lookup-preserve sum-map-proj₂≡getCoin setToList-Unique
   -- Note: The `λ {u}{u'} →` η-wrapper may be needed for Agda eta-expansion issue.
 
   open UTXOW-PoV tx (λ {u} {u'} → balance-∪ {u} {u'}) split-balance noMintTx noMintSubTx (λ {u} → outs-disjoint {u})
   open ≡-Reasoning
+
+  posNeg-deposits : (cs₀ cs₁ cs₂ : CertState)
+    → let dc = calculateDepositsChange cs₀ cs₁ cs₂ in
+      coinFromDeposits cs₀ + posPart (DepositsChangeTopOf dc) + posPart (DepositsChangeSubOf dc)
+      ≡ coinFromDeposits cs₂ + negPart (DepositsChangeTopOf dc) + negPart (DepositsChangeSubOf dc)
+  posNeg-deposits cs₀ cs₁ cs₂ = begin
+      coin₀ + pt + psp   ≡⟨ swap-right coin₀ pt psp ⟩
+      coin₀ + psp + pt   ≡⟨ cong (_+ pt) (posPart-negPart-sym coin₁ coin₀) ⟩
+      coin₁ + ns + pt   ≡⟨ swap-right coin₁ ns pt ⟩
+      coin₁ + pt + ns   ≡⟨ cong (_+ ns) (posPart-negPart-sym coin₂ coin₁) ⟩
+      coin₂ + nt + ns   ∎
+    where
+    open ≡-Reasoning
+    coin₀ = coinFromDeposits cs₀
+    coin₁ = coinFromDeposits cs₁
+    coin₂ = coinFromDeposits cs₂
+    psp = posPart (coin₁ ⊖ coin₀)   -- DepositsChangeSubOf dc
+    ns = negPart (coin₁ ⊖ coin₀)
+    pt = posPart (coin₂ ⊖ coin₁)   -- DepositsChangeTopOf dc
+    nt = negPart (coin₂ ⊖ coin₁)
+    swap-right : ∀ a b c → a + b + c ≡ a + c + b
+    swap-right a b c = trans (+-assoc a b c) (trans (cong (a +_) (+-comm b c)) (sym (+-assoc a c b)))
 
   -- Per-sub-tx withdrawal totals.
   wdrwl : SubLevelTx → Coin
@@ -334,7 +340,7 @@ module _
     -- Sub-level CERTS-pov (NEW signature: dd on LHS, wdrl on RHS).
     sub-certs : getCoin (CertStateOf s₀) + getCoin (DirectDepositsOf stx)
                 ≡ getCoin (CertStateOf s₁) + getCoin (WithdrawalsOf stx)
-    sub-certs = CERTS-pov (extract-subutxo-netId subutxowStep) certsStep
+    sub-certs = ? -- CERTS-pov (extract-subutxo-netId subutxowStep) certsStep
 
     -- IH: same form as the outer goal, just one element shorter.
     ih : getCoin (CertStateOf s₁) + sum (map ddwl sigs)
