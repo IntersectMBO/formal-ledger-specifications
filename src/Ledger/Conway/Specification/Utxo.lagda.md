@@ -96,6 +96,7 @@ record UTxOEnv : Type where
     slot      : Slot
     pparams   : PParams
     treasury  : Treasury
+    blockType : BlockType      -- EB or RB, exposed for updateTiers
 ```
 
 *UTxO states*
@@ -105,16 +106,17 @@ record UTxOState : Type where
 ```
 <!--
 ```agda
-  constructor ⟦_,_,_,_,_⟧ᵘ
+  constructor ⟦_,_,_,_,_,_⟧ᵘ
 ```
 -->
 ```agda
   field
-    utxo       : UTxO
-    fees       : Fees
-    deposits   : Deposits
-    donations  : Donations
-    policyState : SDPolicy -- diversity policy and immature transactions
+    utxo        : UTxO
+    fees        : Fees
+    deposits    : Deposits
+    donations   : Donations
+    policyState : SDPolicy              -- diversity policy and per-block tier stats
+    feeRewards  : Credential ⇀ Coin  -- pending fee-change credits, keyed by stake credential
 ```
 
 <!--
@@ -448,11 +450,34 @@ that their difference is the identity function.
     +  inject (depositRefunds pp st txb)
     +  inject (getCoin (txb .txWithdrawals))
 
-  produced : PParams → UTxOState → TxBody → Value
-  produced pp st txb = balance (outs txb)
-                     + inject (txb .txFee)
-                     + inject (newDeposits pp st txb)
-                     + inject (txb .txDonation)
+  -- When feeChangeAddr is absent, txFee goes entirely to the fee pot (unchanged).
+  -- When feeChangeAddr is present, txFee is split:
+  --   trsAmt = (coeffRange - 1) * minfee  →  treasury (donations)
+  --   fcAmt  = txFee - trsAmt             →  feeChangeAddr
+  -- The fee pot receives nothing in that case, so no fee summand appears.
+  produced : PParams → UTxOState → Tx → Value
+  produced pp st tx =
+    let open Tx tx 
+        -- re-bind projections that clash with the module-level open TxBody
+        fee    = body .TxBody.txFee
+        don    = body .TxBody.txDonation
+        fcAddr = body .TxBody.feeChangeAddr
+        dp     = st .UTxOState.policyState .SDPolicy.diversityPolicy
+        coeffR = M.fromMaybe 1 (M.map PolicyClause.coeffRange
+                   (lookupᵐ? dp actualTier))
+        base   = minfee pp (st .UTxOState.utxo) tx
+        trsAmt = (coeffR ∸ 1) * base
+        fcAmt  = fee ∸ trsAmt
+    in case fcAddr of λ where
+      nothing  → balance (outs body)
+               + inject fee
+               + inject (newDeposits pp st body)
+               + inject don
+      (just _) → balance (outs body)
+               + inject (newDeposits pp st body)
+               + inject don
+               + inject trsAmt    -- (coeffRange - 1) * minfee → treasury
+               + inject fcAmt     -- fee - trsAmt → feeChangeAddr
 
   -- updates SDPolicy state with transaction being processed
   -- uses tier.tierNo directly as the key into totalSize/totalFees/totalExUnits
@@ -482,11 +507,12 @@ private variable
   Γ : UTxOEnv
   s s' : UTxOState
   tx : Tx
-  utxo : UTxO
-  fees : Fees
-  donations : Donations
-  deposits : Deposits
+  utxo        : UTxO
+  fees        : Fees
+  donations   : Donations
+  deposits    : Deposits
   policyState : SDPolicy
+  feeRewards  : Credential ⇀ Coin
 
 open UTxOEnv
 ```
@@ -496,7 +522,7 @@ open UTxOEnv
 data _⊢_⇀⦇_,UTXOS⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Type where
 
   Scripts-Yes :
-    let  pp         = Γ .pparams
+    let  pp              = Γ .pparams
 ```
 <!--
 ```agda
@@ -504,16 +530,25 @@ data _⊢_⇀⦇_,UTXOS⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Typ
 ```
 -->
 ```agda
-         p2Scripts  = collectP2ScriptsWithContext pp tx utxo
-         ps' = processTxTiers tier txsize (minfee pp utxo tx) (totExUnits tx) policyState
+         p2Scripts       = collectP2ScriptsWithContext pp tx utxo
+         ps'             = processTxTiers tier txsize (minfee pp utxo tx) (totExUnits tx) policyState
+         base            = minfee pp utxo tx
+         -- treasury receives (coeffRange - 1) * minfee
+         coeffR          = M.fromMaybe 1 (M.map PolicyClause.coeffRange
+                             (lookupᵐ? (diversityPolicy) actualTier))
+         trsAmt          = (coeffR ∸ 1) * base
+         -- feeChangeAddr receives txFee - (coeffRange - 1) * minfee; fee pot otherwise
+         fcAmt           = txFee ∸ trsAmt
+         fr'             = M.maybe (λ addr → feeRewards ∪⁺ ❴ addr .RewardAddress.stake , fcAmt ❵ᵐ) feeRewards feeChangeAddr
+         fees'           = fees + M.maybe (const 0) fcAmt feeChangeAddr
       in
         ∙ ValidCertDeposits pp deposits txCerts
         ∙ evalP2Scripts p2Scripts ≡ isValid
         ∙ isValid ≡ true
           ────────────────────────────────
-          Γ ⊢ ⟦ utxo , fees , deposits , donations , policyState ⟧ᵘ ⇀⦇ tx ,UTXOS⦈ ⟦ (utxo ∣ txIns ᶜ) ∪ˡ (outs txb) , fees + txFee , updateDeposits pp txb deposits , donations + txDonation , ps' ⟧ᵘ
+          Γ ⊢ ⟦ utxo , fees , deposits , donations , policyState , feeRewards ⟧ᵘ ⇀⦇ tx ,UTXOS⦈ ⟦ (utxo ∣ txIns ᶜ) ∪ˡ (outs txb) , fees' , updateDeposits pp txb deposits , donations + txDonation + trsAmt , ps' , fr' ⟧ᵘ
   Scripts-No :
-    let  pp         = Γ .pparams
+    let  pp              = Γ .pparams
 ```
 <!--
 ```agda
@@ -521,13 +556,13 @@ data _⊢_⇀⦇_,UTXOS⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Typ
 ```
 -->
 ```agda
-         p2Scripts  = collectP2ScriptsWithContext pp tx utxo
-         ps' = processTxTiers tier txsize (minfee pp utxo tx) (totExUnits tx) policyState
+         p2Scripts       = collectP2ScriptsWithContext pp tx utxo
+         ps'             = processTxTiers tier txsize (minfee pp utxo tx) (totExUnits tx) policyState
       in
         ∙ evalP2Scripts p2Scripts ≡ isValid
         ∙ isValid ≡ false
           ────────────────────────────────
-          Γ ⊢ ⟦ utxo , fees , deposits , donations , policyState ⟧ᵘ  ⇀⦇ tx ,UTXOS⦈ ⟦ utxo ∣ collateralInputs ᶜ , fees + cbalance (utxo ∣ collateralInputs) , deposits , donations , ps' ⟧ᵘ -- still added to tier list because tx pays fees
+          Γ ⊢ ⟦ utxo , fees , deposits , donations , policyState , feeRewards ⟧ᵘ  ⇀⦇ tx ,UTXOS⦈ ⟦ utxo ∣ collateralInputs ᶜ , fees + cbalance (utxo ∣ collateralInputs) , deposits , donations , ps' , feeRewards ⟧ᵘ
 ```
 <!--
 ```agda
@@ -561,12 +596,16 @@ data _⊢_⇀⦇_,UTXO⦈_ where
 ```agda
         txOutsʰ   = mapValues txOutHash txOuts
         overhead  = 160
+        coeffR    = M.fromMaybe 1 (M.map PolicyClause.coeffRange
+                      (lookupᵐ? (diversityPolicy) actualTier))
     in
     ∙ txIns ≢ ∅                              ∙ txIns ∪ refInputs ⊆ dom utxo
     ∙ txIns ∩ refInputs ≡ ∅                  ∙ inInterval slot txVldt
-    ∙ ((tier .TxTier.tierCoeff) * (minfee pp utxo tx)) ≤ txFee             
+    ∙ ((tier .TxTier.tierCoeff) * (minfee pp utxo tx)) ≤ txFee
+    ∙ actualTier ≤ tier .TxTier.tierNo
+    ∙ coeffR ≥ tier .TxTier.tierCoeff
     ∙ (txrdmrs ˢ ≢ ∅ → collateralCheck pp tx utxo)
-    ∙ consumed pp s txb ≡ produced pp s txb  ∙ coin mint ≡ 0
+    ∙ consumed pp s txb ≡ produced pp s tx   ∙ coin mint ≡ 0
     ∙ txsize ≤ maxTxSize pp
     ∙ refScriptsSize utxo tx ≤ pp .maxRefScriptSizePerTx
     ∙ ∀[ (_ , txout) ∈ ∣ txOutsʰ ∣ ]
@@ -579,7 +618,9 @@ data _⊢_⇀⦇_,UTXO⦈_ where
     ∙ ∀[ a ∈ dom txWithdrawals ]    NetworkIdOf a  ≡ NetworkId
     ∙ txNetworkId  ~ just NetworkId
     ∙ currentTreasury  ~ just treasury
-    ∙ checkPolicyState tier policyState 
+    ∙ checkPolicyState tier policyState
+    -- TODO: verify whether RB blocks should only contain fast-tier (tier 0) transactions,
+    --       while EB blocks may contain transactions of any tier.
     ∙ Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ s'
       ────────────────────────────────
       Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s'

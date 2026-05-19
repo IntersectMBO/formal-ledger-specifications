@@ -381,7 +381,7 @@ This section defines the function `applyRUpd`{.AgdaFunction}, which applies a
 applyRUpd : RewardUpdate → EpochState → EpochState
 applyRUpd rewardUpdate ⟦ ⟦ treasury , reserves ⟧ᵃ
                        , ss
-                       , ⟦ ⟦ utxo , fees , deposits , donations ⟧ᵘ
+                       , ⟦ ⟦ utxo , fees , deposits , donations , policyState , feeRewards ⟧ᵘ
                          , govSt
                          , ⟦ ⟦ voteDelegs , stakeDelegs , rewards ⟧ᵈ , pState , gState ⟧ᶜˢ ⟧ˡ
                        , es
@@ -389,7 +389,7 @@ applyRUpd rewardUpdate ⟦ ⟦ treasury , reserves ⟧ᵃ
                        ⟧ᵉ' = ⟦ ⟦ posPart (pos treasury + Δt + pos unregRU')
                                , posPart (pos reserves + Δr) ⟧
                              , ss
-                             , ⟦ ⟦ utxo , posPart (pos fees + Δf) , deposits , donations ⟧
+                             , ⟦ ⟦ utxo , posPart (pos fees + Δf) , deposits , donations , policyState , feeRewards ⟧ᵘ
                                , govSt
                                , ⟦ ⟦ voteDelegs , stakeDelegs , rewards ∪⁺ regRU ⟧ , pState , gState ⟧ ⟧
                              , es
@@ -677,7 +677,7 @@ module Pre-POOLREAPUpdate (ls : LState)
 -->
 ```agda
   utxoSt' : UTxOState
-  utxoSt' = ⟦ UTxOOf utxoSt , FeesOf utxoSt , DepositsOf utxoSt ∣ mapˢ (proj₁ ∘ proj₂) removedGovActions ᶜ , 0 ⟧
+  utxoSt' = ⟦ UTxOOf utxoSt , FeesOf utxoSt , DepositsOf utxoSt ∣ mapˢ (proj₁ ∘ proj₂) removedGovActions ᶜ , 0 , utxoSt .UTxOState.policyState , ∅ᵐ ⟧ᵘ
 
   pState' : PState
   pState' = ⟦ fPools ∪ˡ pools , ∅ , retiring ⟧

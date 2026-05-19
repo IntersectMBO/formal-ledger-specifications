@@ -27,11 +27,12 @@ of the block, instead of functions.
 ```agda
 record BHBody : Type where
   field
-    bvkcold : VKey
-    bsize   : ℕ
-    slot    : Slot
-    bhash   : KeyHash
-    hBbsize : ℕ
+    bvkcold   : VKey
+    bsize     : ℕ
+    slot      : Slot
+    bhash     : KeyHash
+    hBbsize   : ℕ
+    blockType : BlockType      -- EB or RB
 
 record BHeader : Type where
   field
@@ -104,13 +105,14 @@ data _⊢_⇀⦇_,BBODY⦈_
       bhb = block .bheader .bhbody
       hk = hash (bhb .bvkcold)
       pp = PParamsOf es
-      Γ  = ⟦ bhb .slot , ∣ es .constitution ∣ , pp , es , TreasuryOf acnt ⟧
+      Γ  = ⟦ bhb .slot , ∣ es .constitution ∣ , pp , es , TreasuryOf acnt
+           , bhb .blockType ⟧
       ls'' = record { LState ls' ; utxoSt = record { UTxOState (ls' .LState.utxoSt) ; policyState = ps' } }
      in
     ∙ block .bBodySize ≡ bhb .hBbsize
     ∙ block .bBodyHash ≡ bhb .bhash
     ∙ Γ ⊢ ls ⇀⦇ txs ,LEDGERS⦈ ls'
-    ∙ pp ⊢ (ls .LState.utxoSt .UTxOState.policyState) ⇀⦇ tt ,DIVUP⦈ ps'
+    ∙ (pp , bhb .blockType) ⊢ (ls .LState.utxoSt .UTxOState.policyState) ⇀⦇ tt ,DIVUP⦈ ps'
     ────────────────────────────────
     (es , acnt) ⊢ ls , b ⇀⦇ block ,BBODY⦈ ( ls'' , incrBlocks hk b)
 ```

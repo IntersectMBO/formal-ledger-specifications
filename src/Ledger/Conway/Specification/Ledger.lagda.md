@@ -41,11 +41,12 @@ open EnactState using (cc)
 ```agda
 record LEnv : Type where
   field
-    slot        : Slot
-    ppolicy     : Maybe ScriptHash
-    pparams     : PParams
-    enactState  : EnactState
-    treasury    : Treasury
+    slot              : Slot
+    ppolicy           : Maybe ScriptHash
+    pparams           : PParams
+    enactState        : EnactState
+    treasury          : Treasury
+    blockType         : BlockType
 ```
 <!--
 ```agda
@@ -175,22 +176,39 @@ data _⊢_⇀⦇_,LEDGER⦈_ : LEnv → LState → Tx → LState → Type where
 <!--
 ```agda
          open TxBody txb
+         open LEnv Γ
+```
+-->
+```agda
+         utxoEnv     = ⟦ Γ .LEnv.slot , pp , Γ .LEnv.treasury , blockType ⟧
+         -- flush feeRewards into dState.rewards and clear them
+         rwds'       = RewardsOf certState' ∪⁺ utxoSt' .UTxOState.feeRewards
+         dSt''       = record (DStateOf certState') { rewards = rwds' }
+         certState'' = record certState' { dState = dSt'' }
+         utxoSt''    = ⟦ utxoSt' .UTxOState.utxo , utxoSt' .UTxOState.fees
+                        , utxoSt' .UTxOState.deposits , utxoSt' .UTxOState.donations
+                        , utxoSt' .UTxOState.policyState , ∅ᵐ ⟧ᵘ
+    in
+      ∙ isValid tx ≡ true
+      ∙ utxoEnv ⊢ utxoSt ⇀⦇ tx ,UTXOW⦈ utxoSt'
+      ∙ ⟦ epoch (Γ .LEnv.slot) , pp , txGovVotes , txWithdrawals , allColdCreds govSt (Γ .LEnv.enactState) ⟧ ⊢ certState ⇀⦇ txCerts ,CERTS⦈ certState'
+      ∙ ⟦ txId , epoch (Γ .LEnv.slot) , pp , Γ .LEnv.ppolicy , Γ .LEnv.enactState , certState'' , dom (RewardsOf certState) ⟧ ⊢ rmOrphanDRepVotes certState'' govSt ⇀⦇ txgov txb ,GOVS⦈ govSt'
+      ────────────────────────────────
+      Γ ⊢ ⟦ utxoSt , govSt , certState ⟧ ⇀⦇ tx ,LEDGER⦈ ⟦ utxoSt'' , govSt' , certState'' ⟧
+
+  LEDGER-I :
+```
+<!--
+```agda
+    let  open LEnv Γ
 ```
 -->
 ```agda
     in
-      ∙ isValid tx ≡ true
-      ∙ ⟦ slot , pp , treasury ⟧  ⊢ utxoSt ⇀⦇ tx ,UTXOW⦈ utxoSt'
-      ∙ ⟦ epoch slot , pp , txGovVotes , txWithdrawals , allColdCreds govSt enactState ⟧ ⊢ certState ⇀⦇ txCerts ,CERTS⦈ certState'
-      ∙ ⟦ txId , epoch slot , pp , ppolicy , enactState , certState' , dom (RewardsOf certState) ⟧ ⊢ rmOrphanDRepVotes certState' govSt ⇀⦇ txgov txb ,GOVS⦈ govSt'
-      ────────────────────────────────
-      ⟦ slot , ppolicy , pp , enactState , treasury ⟧ ⊢ ⟦ utxoSt , govSt , certState ⟧ ⇀⦇ tx ,LEDGER⦈ ⟦ utxoSt' , govSt' , certState' ⟧
-
-  LEDGER-I :
       ∙ isValid tx ≡ false
-      ∙ ⟦ slot , pp , treasury ⟧ ⊢ utxoSt ⇀⦇ tx ,UTXOW⦈ utxoSt'
+      ∙ ⟦ Γ .LEnv.slot , pp , Γ .LEnv.treasury , blockType ⟧ ⊢ utxoSt ⇀⦇ tx ,UTXOW⦈ utxoSt'
       ────────────────────────────────
-      ⟦ slot , ppolicy , pp , enactState , treasury ⟧ ⊢ ⟦ utxoSt , govSt , certState ⟧ ⇀⦇ tx ,LEDGER⦈ ⟦ utxoSt' , govSt , certState ⟧
+      Γ ⊢ ⟦ utxoSt , govSt , certState ⟧ ⇀⦇ tx ,LEDGER⦈ ⟦ utxoSt' , govSt , certState ⟧
 ```
 
 The rule `LEDGER`{.AgdaDatatype} invokes the `GOVS`{.AgdaDatatype} rule to

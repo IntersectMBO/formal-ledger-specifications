@@ -149,6 +149,9 @@ record TransactionStructure : Type₁ where
   slowTier = 1
   TierCoeff = ℕ -- TODO define correctly
 
+  data BlockType : Type where
+    EB RB : BlockType  -- Endorser Block / Ranking Block
+
   record TxTier : Set where
     constructor ⟦_,_,_⟧ᵗˢ
     field 
@@ -230,11 +233,12 @@ record TransactionStructure : Type₁ where
 
   record Tx : Type where
     field
-      body     : TxBody
-      wits     : TxWitnesses
-      txsize   : ℕ
-      isValid  : Bool
-      txAD     : Maybe AuxiliaryData
+      body       : TxBody
+      wits       : TxWitnesses
+      txsize     : ℕ
+      isValid    : Bool
+      txAD       : Maybe AuxiliaryData
+      actualTier : TierNo  -- tier the tx is actually placed in (≤ body.tier.tierNo)
 ```
 
 <!--
