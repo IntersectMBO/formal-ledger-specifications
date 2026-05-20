@@ -62,8 +62,8 @@ Equivalently, the *increase* in rewards balance from `s₁`{.AgdaBound} to
 
 ```agda
   CERTS-pov : {Γ : CertEnv} {s₁ sₙ : CertState}
-    → ∀[ a ∈ dom (WithdrawalsOf Γ) ] NetworkIdOf a ≡ NetworkId
-    → ∀[ a ∈ dom (DirectDepositsOf Γ) ] NetworkIdOf a ≡ NetworkId
+    → (∀[ a ∈ dom (WithdrawalsOf Γ) ] NetworkIdOf a ≡ NetworkId)
+      × (∀[ a ∈ dom (DirectDepositsOf Γ) ] NetworkIdOf a ≡ NetworkId)
     → Γ ⊢ s₁ ⇀⦇ l ,CERTS⦈ sₙ
     → getCoin s₁ + getCoin (DirectDepositsOf Γ) ≡ getCoin sₙ + getCoin (WithdrawalsOf Γ)
 ```
@@ -75,7 +75,7 @@ plus an arithmetic shuffle to interleave the two accounting terms.
 
 <!--
 ```agda
-  CERTS-pov {Γ = Γ} {s₁} {sₙ} validNetIdW validNetIdDD (run {s' = s'} (pre-cert , certs)) =
+  CERTS-pov {Γ = Γ} {s₁} {sₙ} (validNetIdW , validNetIdDD) (run {s' = s'} (pre-cert , certs)) =
     begin
       getCoin s₁ + cdd        ≡⟨ cong (_+ cdd) (PRE-CERT-pov validNetIdW pre-cert) ⟩
       getCoin s' + cwd + cdd  ≡⟨ swap-right _ (cwd) (cdd) ⟩

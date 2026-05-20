@@ -169,7 +169,8 @@ split-by-lookup acc c bal lookup-eq =
   acc∣c≡bal =
     trans (getCoin-cong (acc ∣ ❴ c ❵) ❴ (c , bal) ❵ (res-singleton' {m = acc} c∈acc))
           getCoin-singleton
-
+```
+-->
 
 
 ### Single-step Lemma: `applyOne` decreases `getCoin` by `amt`

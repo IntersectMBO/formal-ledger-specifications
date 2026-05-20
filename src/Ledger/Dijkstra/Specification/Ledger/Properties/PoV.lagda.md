@@ -152,12 +152,20 @@ module _
   (tx : TopLevelTx) (let open Tx tx)
 
   -- Shared assumptions (same pattern as Conway)
+  -- ( ∪ˡ-lookup-preserve : ∀ (m : Rewards) (c : Credential) (v : Coin) (c' : Credential)
+  --     → c' ≢ c → lookupᵐ? (❴ c , v ❵ ∪ˡ m) c' ≡ lookupᵐ? m c' )
+
+  -- ( sum-map-proj₂≡getCoin : ∀ (m : Withdrawals) → sum (map proj₂ (setToList (m ˢ))) ≡ getCoin m )
+
+  -- ( setToList-Unique : ∀ (m : Withdrawals) → Unique (map (stake ∘ proj₁) (setToList (m ˢ))) )
+
   ( ∪ˡ-lookup-preserve : ∀ (m : Rewards) (c : Credential) (v : Coin) (c' : Credential)
       → c' ≢ c → lookupᵐ? (❴ c , v ❵ ∪ˡ m) c' ≡ lookupᵐ? m c' )
 
-  ( sum-map-proj₂≡getCoin : ∀ (m : Withdrawals) → sum (map proj₂ (setToList (m ˢ))) ≡ getCoin m )
+  ( sum-map-proj₂≡getCoin : ∀ (m : RewardAddress ⇀ Coin) → sum (map proj₂ (setToList (m ˢ))) ≡ getCoin m )
 
-  ( setToList-Unique : ∀ (m : Withdrawals) → Unique (map (stake ∘ proj₁) (setToList (m ˢ))) )
+  ( setToList-Unique : ∀ (m : RewardAddress ⇀ Coin) → ∀[ a ∈ dom (m ˢ) ] NetworkIdOf a ≡ NetworkId
+      → Unique (map (stake ∘ proj₁) (setToList (m ˢ))) )
 
   ( balance-∪ : ∀ {u u' : UTxO} → disjoint (dom u) (dom u') → cbalance (u ∪ˡ u') ≡ cbalance u + cbalance u' )
 
@@ -312,7 +320,7 @@ module _
                         (getCoin (DirectDepositsOf stx))
                         (sum (map ddwl sigs))) ⟩
       (getCoin (CertStateOf s₀) + getCoin (DirectDepositsOf stx)) + sum (map ddwl sigs)
-        ≡⟨ cong (_+ sum (map ddwl sigs)) sub-certs ⟩
+        ≡⟨ cong (_+ sum (map ddwl sigs)) (CERTS-pov (extract-netId subutxowStep) certsStep) ⟩
       (getCoin (CertStateOf s₁) + getCoin (WithdrawalsOf stx)) + sum (map ddwl sigs)
         ≡⟨ swap-right (getCoin (CertStateOf s₁))
                       (getCoin (WithdrawalsOf stx))
@@ -330,17 +338,14 @@ module _
       getCoin (CertStateOf sₙ) + (getCoin (WithdrawalsOf stx) + sum (map wdrwl sigs))
         ∎
     where
-    extract-subutxo-netId : ∀ {Γ' s₀' s₁'}
+    extract-netId : ∀ {Γ' s₀' s₁'}
       → Γ' ⊢ s₀' ⇀⦇ stx ,SUBUTXOW⦈ s₁'
-      → ∀[ a ∈ dom (WithdrawalsOf stx) ] NetworkIdOf a ≡ NetworkId
-    extract-subutxo-netId
+      → (∀[ a ∈ dom (WithdrawalsOf stx) ] NetworkIdOf a ≡ NetworkId)
+        × (∀[ a ∈ dom (DirectDepositsOf stx) ] NetworkIdOf a ≡ NetworkId)
+    extract-netId
       (SUBUTXOW ( _ , _ , _ , _ , _ , _ , _ , _ , _ , _
-                , _ , _ , SUBUTXO (_ , _ , _ , _ , _ , _ , _ , _ , _ , _ , netId , _))) = netId
-
-    -- Sub-level CERTS-pov (NEW signature: dd on LHS, wdrl on RHS).
-    sub-certs : getCoin (CertStateOf s₀) + getCoin (DirectDepositsOf stx)
-                ≡ getCoin (CertStateOf s₁) + getCoin (WithdrawalsOf stx)
-    sub-certs = ? -- CERTS-pov (extract-subutxo-netId subutxowStep) certsStep
+                , _ , _ , SUBUTXO (_ , _ , _ , _ , _ , _ , _ , _ , _ , _ , wd-netId , dd-netId , _))) =
+      wd-netId , dd-netId
 
     -- IH: same form as the outer goal, just one element shorter.
     ih : getCoin (CertStateOf s₁) + sum (map ddwl sigs)
@@ -432,13 +437,16 @@ between `producedBatch` (UTxO side, via `UTXOW-batch-balance-coin`) and `certSta
       allWdrls = getCoin (WithdrawalsOf tx) + subWdrlsCoin
 
       extract-utxo-netId : ∀ {Γ' s₀' s₁'} → Γ' ⊢ s₀' ⇀⦇ tx ,UTXOW⦈ s₁'
-        → ∀[ a ∈ dom (WithdrawalsOf tx) ] NetworkIdOf a ≡ NetworkId
+        → (∀[ a ∈ dom (WithdrawalsOf tx) ] NetworkIdOf a ≡ NetworkId)
+          × (∀[ a ∈ dom (DirectDepositsOf tx) ] NetworkIdOf a ≡ NetworkId)
       extract-utxo-netId
-        (UTXOW-normal-⋯ _ _ _ _ _ _ _ _ _ _ _ _
-          (UTXO (_ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , netId , _))) = netId
+        (UTXOW-normal-⋯ _ _ _ _ _ _ _ _ _ _ _
+          (UTXO (_ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , wd-netId , dd-netId , _))) =
+        wd-netId , dd-netId
       extract-utxo-netId
-        (UTXOW-legacy-⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
-          (UTXO (_ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , netId , _))) = netId
+        (UTXOW-legacy-⋯ _ _ _ _ _ _ _ _ _ _ _
+          (UTXO (_ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , wd-netId , dd-netId , _))) =
+        wd-netId , dd-netId
 
       -- Combined CERTS-pov: pre-batch certState + all direct deposits ≡
       --                     post-CERTS certState + all withdrawals.
