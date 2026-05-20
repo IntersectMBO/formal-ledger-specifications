@@ -171,9 +171,23 @@ record HasCertState {a} (A : Type a) : Type a where
   field CertStateOf : A → CertState
 open HasCertState ⦃...⦄ public
 
+record HasEpoch {a} (A : Type a) : Type a where
+  field EpochOf : A → Epoch
+open HasEpoch ⦃...⦄ public
+
+record HasVotes {a} (A : Type a) : Type a where
+  field VotesOf : A → List GovVote
+open HasVotes ⦃...⦄ public
+
 instance
   HasPParams-CertEnv : HasPParams CertEnv
   HasPParams-CertEnv .PParamsOf = CertEnv.pp
+
+  HasEpoch-CertEnv : HasEpoch CertEnv
+  HasEpoch-CertEnv .EpochOf = CertEnv.epoch
+
+  HasVotes-CertEnv : HasVotes CertEnv
+  HasVotes-CertEnv .VotesOf = CertEnv.votes
 
   HasWithdrawals-CertEnv : HasWithdrawals CertEnv
   HasWithdrawals-CertEnv .WithdrawalsOf = CertEnv.wdrls
@@ -298,7 +312,7 @@ instance
 ```
 -->
 
-## Auxiliary Transition Systems
+# Auxiliary Transition Systems
 
 ## `DELEG`{.AgdaDatatype} Transition System
 

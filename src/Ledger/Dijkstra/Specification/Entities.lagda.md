@@ -3,7 +3,7 @@ source_branch: master
 source_path: src/Ledger/Dijkstra/Specification/Entities.lagda.md
 ---
 
-# Certificates {#sec:certificates}
+# Entities {#sec:entities}
 
 <!--
 ```agda
@@ -75,6 +75,12 @@ Premise (1) ensures that each withdrawal targets a registered
 account and that the withdrawal amount does not exceed the account's
 current balance.
 
+The phantom-asset prohibition of CIP-159 — that withdrawals in one
+sub-transaction may not draw from deposits made by an earlier
+sub-transaction in the same batch — is enforced separately in the
+`Utxo`{.AgdaModule} (see [Phantom Asset
+Prevention](Ledger.Dijkstra.Specification.Utxo.md#subsubsec:phantom-asset-prevention)).
+
 ## Direct Deposit Application (CIP-159)
 
 The `ENTITIES`{.AgdaDatatype} rule applies CIP-159 direct deposits to the
@@ -109,8 +115,7 @@ private variable
   voteDelegs₀ voteDelegs₁ : VoteDelegs
   wdrls : Withdrawals
   dd : DirectDeposits
-  A : Type
-  depositsᵍ depositsᵈ₀ depositsᵈ₁ : A ⇀ Coin
+  depositsᵍ depositsᵈ₀ depositsᵈ₁ : Credential ⇀ Coin
 
   dCerts : List DCert
   e : Epoch
@@ -137,8 +142,8 @@ data _⊢_⇀⦇_,ENTITIES⦈_ : CertEnv → CertState → List DCert → CertSt
     ∙ filter isKeyHash wdrlCreds ⊆ dom voteDelegs₀
     ∙ wdrlCreds ⊆ dom rewards₀
     ∙ ∀[ (addr , amt) ∈ wdrls ˢ ] amt ≤ maybe id 0 (lookupᵐ? rewards₀ (stake addr)) -- (1)
-    ∙ ddCreds ⊆ dom rewards₁ -- (2)
     ∙ ⟦ e , pp , vs , wdrls , cc , dd ⟧ ⊢ ⟦ ⟦ voteDelegs₀ , stakeDelegs₀ , applyWithdrawals wdrls rewards₀ , depositsᵈ₀ ⟧ , pState₀ , ⟦ refreshedDReps , ccHotKeys , depositsᵍ ⟧ ⟧ ⇀⦇ dCerts  ,CERTS⦈ ⟦ ⟦ voteDelegs₁ , stakeDelegs₁ , rewards₁ , depositsᵈ₁ ⟧ , pState₁ , gState₁ ⟧
+    ∙ ddCreds ⊆ dom rewards₁ -- (2)
       ────────────────────────────────
       ⟦ e , pp , vs , wdrls , cc , dd ⟧ ⊢ ⟦ ⟦ voteDelegs₀ , stakeDelegs₀ , rewards₀ , depositsᵈ₀ ⟧ , pState₀ , ⟦ dReps , ccHotKeys , depositsᵍ ⟧ ⟧ ⇀⦇ dCerts ,ENTITIES⦈ ⟦ ⟦ voteDelegs₁ ∣^ activeVDelegs , stakeDelegs₁ , applyDirectDeposits dd rewards₁ , depositsᵈ₁ ⟧ , pState₁ , gState₁ ⟧
 ```

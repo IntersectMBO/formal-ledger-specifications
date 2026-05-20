@@ -225,7 +225,6 @@ nav:
     - Properties: Ledger.Dijkstra.Specification.Certs.Properties.md
     - Properties/:
       - Computational: Ledger.Dijkstra.Specification.Certs.Properties.Computational.md
-
   - Chain: Ledger.Dijkstra.Specification.Chain.md
   - Chain/:
     - Properties: Ledger.Dijkstra.Specification.Chain.Properties.md
@@ -236,7 +235,11 @@ nav:
     - Properties: Ledger.Dijkstra.Specification.Enact.Properties.md
     - Properties/:
       - Computational: Ledger.Dijkstra.Specification.Enact.Properties.Computational.md
-
+  - Entities: Ledger.Dijkstra.Specification.Entities.md
+  - Entities/:
+    - Properties: Ledger.Dijkstra.Specification.Entities.Properties.md
+    - Properties/:
+      - Computational: Ledger.Dijkstra.Specification.Entities.Properties.Computational.md
   - Epoch: Ledger.Dijkstra.Specification.Epoch.md
   - Epoch/:
     - Properties: Ledger.Dijkstra.Specification.Epoch.Properties.md

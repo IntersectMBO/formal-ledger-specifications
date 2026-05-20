@@ -368,7 +368,7 @@ In the preservation-of-value equation, direct deposits appear on the
 `producedTx`{.AgdaFunction}, sums the ADA of all direct deposits in
 the transaction.
 
-### Phantom Asset Prevention
+### Phantom Asset Prevention {#subsubsec:phantom-asset-prevention}
 
 ```agda
 NoPhantomWithdrawals : Rewards → TopLevelTx → Type

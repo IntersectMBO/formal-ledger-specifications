@@ -27,7 +27,7 @@ open import Ledger.Dijkstra.Specification.Enact govStructure
 open import Ledger.Dijkstra.Specification.Gov govStructure
 open import Ledger.Dijkstra.Specification.Utxo txs abs
 open import Ledger.Dijkstra.Specification.Utxow txs abs
-open import Ledger.Dijkstra.Specification.Cert govStructure
+open import Ledger.Dijkstra.Specification.Certs govStructure
 open import Ledger.Dijkstra.Specification.Entities govStructure
 
 open EnactState using (cc)
