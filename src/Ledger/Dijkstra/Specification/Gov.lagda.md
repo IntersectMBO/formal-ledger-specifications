@@ -81,10 +81,6 @@ record HasGovState {a} (A : Type a) : Type a where
   field GovStateOf : A → GovState
 open HasGovState ⦃...⦄ public
 
-record HasEpoch {a} (A : Type a) : Type a where
-  field EpochOf : A → Epoch
-open HasEpoch ⦃...⦄ public
-
 record HasRewardCredentials {a} (A : Type a) : Type a where
   field RewardCredentialsOf : A → ℙ Credential
 open HasRewardCredentials ⦃...⦄ public

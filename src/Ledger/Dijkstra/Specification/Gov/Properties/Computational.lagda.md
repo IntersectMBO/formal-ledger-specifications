@@ -20,6 +20,7 @@ open import Axiom.Set.Properties
 open import Ledger.Core.Specification.ProtocolVersion
 open import Ledger.Dijkstra.Specification.Enact govStructure
 open import Ledger.Dijkstra.Specification.Gov govStructure
+open import Ledger.Dijkstra.Specification.Certs govStructure
 open import Ledger.Dijkstra.Specification.Gov.Actions govStructure hiding (yes; no)
 open import Ledger.Dijkstra.Specification.Ratify govStructure
 

@@ -14,15 +14,16 @@ transition rules are computational.
 
 open import Ledger.Dijkstra.Specification.Transaction
 open import Ledger.Dijkstra.Specification.Abstract
-import Ledger.Dijkstra.Specification.Certs
 
 module Ledger.Dijkstra.Specification.Ledger.Properties.Computational
-  (txs : _) (open TransactionStructure txs) (open Ledger.Dijkstra.Specification.Certs govStructure)
+  (txs : _) (open TransactionStructure txs)
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
 
 open import Ledger.Prelude
-open import Ledger.Dijkstra.Specification.Certs.Properties.Computational govStructure
+open import Ledger.Dijkstra.Specification.Certs govStructure
+open import Ledger.Dijkstra.Specification.Entities govStructure
+open import Ledger.Dijkstra.Specification.Entities.Properties.Computational govStructure
 open import Ledger.Dijkstra.Specification.Gov govStructure
 open import Ledger.Dijkstra.Specification.Gov.Properties.Computational txs
 open import Ledger.Dijkstra.Specification.Ledger txs abs
@@ -86,7 +87,7 @@ instance
     where
     open Computational ⦃...⦄ renaming (computeProof to comp; completeness to complete)
     computeSubutxow = comp {STS = _⊢_⇀⦇_,SUBUTXOW⦈_}
-    computeCerts    = comp {STS = _⊢_⇀⦇_,CERTS⦈_}
+    computeEntities = comp {STS = _⊢_⇀⦇_,ENTITIES⦈_}
     computeGov      = comp {STS = _⊢_⇀⦇_,GOVS⦈_}
 
     module go
@@ -114,7 +115,7 @@ instance
       computeProof = case isTopLevelValid ≟ true of λ where
         (yes p) → do
           (utxoSt' , utxoStep) ← computeSubutxow subUtxoΓ utxoSt stx
-          (certSt' , certStep) ← computeCerts certΓ certState (DCertsOf stx)
+          (certSt' , certStep) ← computeEntities certΓ certState (DCertsOf stx)
           (govSt'  , govStep)  ← computeGov (govΓ certSt') govSt (GovProposals+Votes stx)
           success (_ , SUBLEDGER-V (p , utxoStep , certStep , govStep))
         (no ¬p) → do
@@ -137,7 +138,7 @@ instance
       ... | yes refl
         with computeSubutxow subUtxoΓ utxoSt stx | complete _ _ _ _ utxoStep
       ... | success (utxoSt' , _) | refl
-        with computeCerts certΓ certState (DCertsOf stx) | complete _ _ _ _ certStep
+        with computeEntities certΓ certState (DCertsOf stx) | complete _ _ _ _ certStep
       ... | success (certSt' , _) | refl
         with computeGov (govΓ certSt') govSt (GovProposals+Votes stx)
            | complete {STS = _⊢_⇀⦇_,GOVS⦈_} (govΓ certSt') _ _ _ govStep
@@ -168,7 +169,7 @@ instance
     where
     open Computational ⦃...⦄ renaming (computeProof to comp; completeness to complete)
     computeSubledgers = comp {STS = _⊢_⇀⦇_,SUBLEDGERS⦈_}
-    computeCerts      = comp {STS = _⊢_⇀⦇_,CERTS⦈_}
+    computeEntities   = comp {STS = _⊢_⇀⦇_,ENTITIES⦈_}
     computeGov        = comp {STS = _⊢_⇀⦇_,GOVS⦈_}
     computeUtxow      = comp {STS = _⊢_⇀⦇_,UTXOW⦈_}
 
@@ -212,7 +213,7 @@ instance
       computeProof = case IsValidFlagOf txTop ≟ true of λ where
         (yes p) → do
           (s₁      , subStep)  ← computeSubledgers subΓ s (SubTransactionsOf txTop)
-          (certSt₂ , certStep) ← computeCerts (certΓ (GovStateOf s₁)) (CertStateOf s₁) (DCertsOf txTop)
+          (certSt₂ , certStep) ← computeEntities (certΓ (GovStateOf s₁)) (CertStateOf s₁) (DCertsOf txTop)
           (govSt₂  , govStep)  ← computeGov (govΓ certSt₂) (GovStateOf s₁) (GovProposals+Votes txTop)
           (utxoSt₂ , utxoStep) ← computeUtxow (utxoΓ-valid (CertStateOf s₁) certSt₂) (UTxOStateOf s₁) txTop
           success (_ , LEDGER-V (p , subStep , certStep , govStep , utxoStep))
@@ -233,7 +234,7 @@ instance
 ```agda
       completeness ledgerSt
         (LEDGER-V {certState₁ = certSt₁} {certSt₂} {utxoState₁ = utxoSt₁} {govSt₁} {govSt₂} {utxoSt₂}
-                  (v , subStep , certStep , govStep , utxoStep))
+                  (v , subStep , entitiesStep , govStep , utxoStep))
         with IsValidFlagOf txTop ≟ true
       ... | no ¬v = contradiction v ¬v
       ... | yes refl
@@ -241,8 +242,8 @@ instance
            | complete {STS = _⊢_⇀⦇_,SUBLEDGERS⦈_} subΓ s (SubTransactionsOf txTop)
                       (⟦ utxoSt₁ , govSt₁ , certSt₁ ⟧ˡ) subStep
       ... | success (⟦ utxoSt₁ , govSt₁ , certSt₁ ⟧ˡ , _) | refl
-        with computeCerts (certΓ govSt₁) certSt₁ (DCertsOf txTop)
-           | complete {STS = _⊢_⇀⦇_,CERTS⦈_} (certΓ govSt₁) certSt₁ (DCertsOf txTop) certSt₂ certStep
+        with computeEntities (certΓ govSt₁) certSt₁ (DCertsOf txTop)
+           | complete {STS = _⊢_⇀⦇_,ENTITIES⦈_} (certΓ govSt₁) certSt₁ (DCertsOf txTop) certSt₂ entitiesStep
       ... | success (certSt₂ , _) | refl
         with computeGov (govΓ certSt₂) govSt₁ (GovProposals+Votes txTop)
            | complete {STS = _⊢_⇀⦇_,GOVS⦈_} (govΓ certSt₂) govSt₁ (GovProposals+Votes txTop) govSt₂ govStep
