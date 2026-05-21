@@ -554,6 +554,7 @@ library
       MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs
       MAlonzo.Code.Ledger.Dijkstra.Foreign.Chain
       MAlonzo.Code.Ledger.Dijkstra.Foreign.Enact
+      MAlonzo.Code.Ledger.Dijkstra.Foreign.Entities
       MAlonzo.Code.Ledger.Dijkstra.Foreign.Epoch
       MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures
       MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov
@@ -580,6 +581,8 @@ library
       MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.Properties.Computational
       MAlonzo.Code.Ledger.Dijkstra.Specification.Enact
       MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.Properties.Computational
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Entities
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Entities.Properties.Computational
       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch
       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.Properties.Computational
       MAlonzo.Code.Ledger.Dijkstra.Specification.Fees
