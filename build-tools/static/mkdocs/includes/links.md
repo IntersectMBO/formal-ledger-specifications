@@ -32,6 +32,7 @@
 [CIP-118]: https://cips.cardano.org/cip/CIP-0118
 [CIPs]: https://github.com/cardano-foundation/CIPs
 [DELEG]: Ledger.Conway.Specification.Certs.md#auxiliary-deleg-transition-system
+[Dijkstra Certs]: Ledger.Dijkstra.Specification.Certs.md
 [ENACT]: Ledger.Conway.Specification.Enact.md#sec:the-enact-transition-system
 [EPOCH]: Ledger.Conway.Specification.Epoch.md#sec:the-epoch-transition-system
 [Epoch]: Ledger.Conway.Specification.Epoch.md
