@@ -102,60 +102,60 @@ d_ExUnits_222 = erased
 d_HasData'45'Tx_352 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TxLevel_8 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_HasData_4102
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_HasData_4114
 d_HasData'45'Tx_352 ~v0 = du_HasData'45'Tx_352
 du_HasData'45'Tx_352 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TxLevel_8 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_HasData_4102
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_HasData_4114
 du_HasData'45'Tx_352 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.du_HasData'45'Tx_4404
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.du_HasData'45'Tx_4396
 -- _.HasGuards-Tx
 d_HasGuards'45'Tx_416 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TxLevel_8 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_HasGuards_4162
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_HasGuards_4174
 d_HasGuards'45'Tx_416 ~v0 = du_HasGuards'45'Tx_416
 du_HasGuards'45'Tx_416 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TxLevel_8 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_HasGuards_4162
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_HasGuards_4174
 du_HasGuards'45'Tx_416 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.du_HasGuards'45'Tx_4408
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.du_HasGuards'45'Tx_4400
 -- _.HasSubTransactions-TopLevelTx
 d_HasSubTransactions'45'TopLevelTx_538 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_HasSubTransactions_3896
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_HasSubTransactions_3908
 d_HasSubTransactions'45'TopLevelTx_538 ~v0
   = du_HasSubTransactions'45'TopLevelTx_538
 du_HasSubTransactions'45'TopLevelTx_538 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_HasSubTransactions_3896
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_HasSubTransactions_3908
 du_HasSubTransactions'45'TopLevelTx_538
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.du_HasSubTransactions'45'TopLevelTx_4334
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.du_HasSubTransactions'45'TopLevelTx_4326
 -- _.HasTopLevelGuards-SubLevelTx
 d_HasTopLevelGuards'45'SubLevelTx_544 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_HasTopLevelGuards_3920
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_HasTopLevelGuards_3932
 d_HasTopLevelGuards'45'SubLevelTx_544 ~v0
   = du_HasTopLevelGuards'45'SubLevelTx_544
 du_HasTopLevelGuards'45'SubLevelTx_544 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_HasTopLevelGuards_3920
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_HasTopLevelGuards_3932
 du_HasTopLevelGuards'45'SubLevelTx_544
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.du_HasTopLevelGuards'45'SubLevelTx_4336
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.du_HasTopLevelGuards'45'SubLevelTx_4328
 -- _.HasTxId-Tx
 d_HasTxId'45'Tx_564 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TxLevel_8 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_HasTxId_3942
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_HasTxId_3954
 d_HasTxId'45'Tx_564 ~v0 = du_HasTxId'45'Tx_564
 du_HasTxId'45'Tx_564 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TxLevel_8 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_HasTxId_3942
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_HasTxId_3954
 du_HasTxId'45'Tx_564 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.du_HasTxId'45'Tx_4394
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.du_HasTxId'45'Tx_4386
 -- _.Hashable-Script
 d_Hashable'45'Script_618 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
@@ -317,25 +317,25 @@ d_UTxO_924 = erased
 -- _.allReferenceScripts
 d_allReferenceScripts_986 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3626 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3638 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   [MAlonzo.Code.Data.Sum.Base.T__'8846'__30]
 d_allReferenceScripts_986 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_allReferenceScripts_4488
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_allReferenceScripts_4480
       (coe v0)
 -- _.allWitnessScripts
 d_allWitnessScripts_994 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3626 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3638 ->
   [MAlonzo.Code.Data.Sum.Base.T__'8846'__30]
 d_allWitnessScripts_994 ~v0 = du_allWitnessScripts_994
 du_allWitnessScripts_994 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3626 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3638 ->
   [MAlonzo.Code.Data.Sum.Base.T__'8846'__30]
 du_allWitnessScripts_994
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.du_allWitnessScripts_4500
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.du_allWitnessScripts_4492
 -- _.isKeyHashObj
 d_isKeyHashObj_1066 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
@@ -706,43 +706,43 @@ d_treasuryCut_2022 v0
       (coe v0)
 -- _.Tx.isValid
 d_isValid_2484 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3626 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3638 ->
   AgdaAny
 d_isValid_2484 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_isValid_3652
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_isValid_3664
       (coe v0)
 -- _.Tx.txAuxData
 d_txAuxData_2486 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3626 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3638 ->
   Maybe AgdaAny
 d_txAuxData_2486 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txAuxData_3654
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txAuxData_3666
       (coe v0)
 -- _.Tx.txBody
 d_txBody_2488 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3626 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TxBody_3630
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3638 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TxBody_3642
 d_txBody_2488 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3646
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3658
       (coe v0)
 -- _.Tx.txSize
 d_txSize_2490 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3626 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3638 ->
   Integer
 d_txSize_2490 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txSize_3650
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txSize_3662
       (coe v0)
 -- _.Tx.txWitnesses
 d_txWitnesses_2492 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3626 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TxWitnesses_3632
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3638 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TxWitnesses_3644
 d_txWitnesses_2492 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txWitnesses_3648
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txWitnesses_3660
       (coe v0)
 -- Ledger.Dijkstra.Specification.Utxow._._⊢_⇀⦇_,SUBUTXO⦈_
 d__'8866'_'8640''10631'_'44'SUBUTXO'10632'__2580 a0 a1 a2 a3 a4 a5
@@ -753,7 +753,7 @@ d__'8866'_'8640''10631'_'44'UTXO'10632'__2584 a0 a1 a2 a3 a4 a5
 -- Ledger.Dijkstra.Specification.Utxow._.HasPParams-SubUTxOEnv
 d_HasPParams'45'SubUTxOEnv_2638 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3060 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3062 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasPParams_572
 d_HasPParams'45'SubUTxOEnv_2638 ~v0 ~v1
   = du_HasPParams'45'SubUTxOEnv_2638
@@ -761,11 +761,11 @@ du_HasPParams'45'SubUTxOEnv_2638 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasPParams_572
 du_HasPParams'45'SubUTxOEnv_2638
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.du_HasPParams'45'SubUTxOEnv_3282
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.du_HasPParams'45'SubUTxOEnv_3284
 -- Ledger.Dijkstra.Specification.Utxow._.HasPParams-UTxOEnv
 d_HasPParams'45'UTxOEnv_2640 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3060 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3062 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasPParams_572
 d_HasPParams'45'UTxOEnv_2640 ~v0 ~v1
   = du_HasPParams'45'UTxOEnv_2640
@@ -773,54 +773,54 @@ du_HasPParams'45'UTxOEnv_2640 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasPParams_572
 du_HasPParams'45'UTxOEnv_2640
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.du_HasPParams'45'UTxOEnv_3268
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.du_HasPParams'45'UTxOEnv_3270
 -- Ledger.Dijkstra.Specification.Utxow._.HasScriptPool-SubUTxOEnv
 d_HasScriptPool'45'SubUTxOEnv_2646 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3060 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_HasScriptPool_3190
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3062 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_HasScriptPool_3192
 d_HasScriptPool'45'SubUTxOEnv_2646 ~v0 ~v1
   = du_HasScriptPool'45'SubUTxOEnv_2646
 du_HasScriptPool'45'SubUTxOEnv_2646 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_HasScriptPool_3190
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_HasScriptPool_3192
 du_HasScriptPool'45'SubUTxOEnv_2646
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.du_HasScriptPool'45'SubUTxOEnv_3290
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.du_HasScriptPool'45'SubUTxOEnv_3292
 -- Ledger.Dijkstra.Specification.Utxow._.HasScriptPool-UTxOEnv
 d_HasScriptPool'45'UTxOEnv_2648 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3060 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_HasScriptPool_3190
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3062 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_HasScriptPool_3192
 d_HasScriptPool'45'UTxOEnv_2648 ~v0 ~v1
   = du_HasScriptPool'45'UTxOEnv_2648
 du_HasScriptPool'45'UTxOEnv_2648 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_HasScriptPool_3190
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_HasScriptPool_3192
 du_HasScriptPool'45'UTxOEnv_2648
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.du_HasScriptPool'45'UTxOEnv_3276
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.du_HasScriptPool'45'UTxOEnv_3278
 -- Ledger.Dijkstra.Specification.Utxow._.HasUTxO-SubUTxOEnv
 d_HasUTxO'45'SubUTxOEnv_2662 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3060 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_HasUTxO_3608
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3062 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_HasUTxO_3620
 d_HasUTxO'45'SubUTxOEnv_2662 ~v0 ~v1
   = du_HasUTxO'45'SubUTxOEnv_2662
 du_HasUTxO'45'SubUTxOEnv_2662 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_HasUTxO_3608
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_HasUTxO_3620
 du_HasUTxO'45'SubUTxOEnv_2662
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.du_HasUTxO'45'SubUTxOEnv_3286
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.du_HasUTxO'45'SubUTxOEnv_3288
 -- Ledger.Dijkstra.Specification.Utxow._.HasUTxO-UTxOEnv
 d_HasUTxO'45'UTxOEnv_2664 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3060 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_HasUTxO_3608
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3062 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_HasUTxO_3620
 d_HasUTxO'45'UTxOEnv_2664 ~v0 ~v1 = du_HasUTxO'45'UTxOEnv_2664
 du_HasUTxO'45'UTxOEnv_2664 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_HasUTxO_3608
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_HasUTxO_3620
 du_HasUTxO'45'UTxOEnv_2664
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.du_HasUTxO'45'UTxOEnv_3272
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.du_HasUTxO'45'UTxOEnv_3274
 -- Ledger.Dijkstra.Specification.Utxow._.SubUTxOEnv
 d_SubUTxOEnv_2684 a0 a1 = ()
 -- Ledger.Dijkstra.Specification.Utxow._.UTxOEnv
@@ -829,161 +829,161 @@ d_UTxOEnv_2696 a0 a1 = ()
 d_UTxOState_2700 a0 a1 = ()
 -- Ledger.Dijkstra.Specification.Utxow._.SubUTxOEnv.accountBalances
 d_accountBalances_2810 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_SubUTxOEnv_3078 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_SubUTxOEnv_3080 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_accountBalances_2810 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_accountBalances_3106
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_accountBalances_3108
       (coe v0)
 -- Ledger.Dijkstra.Specification.Utxow._.SubUTxOEnv.allScripts
 d_allScripts_2812 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_SubUTxOEnv_3078 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_SubUTxOEnv_3080 ->
   [MAlonzo.Code.Data.Sum.Base.T__'8846'__30]
 d_allScripts_2812 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_allScripts_3104
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_allScripts_3106
       (coe v0)
 -- Ledger.Dijkstra.Specification.Utxow._.SubUTxOEnv.isTopLevelValid
 d_isTopLevelValid_2814 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_SubUTxOEnv_3078 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_SubUTxOEnv_3080 ->
   Bool
 d_isTopLevelValid_2814 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_isTopLevelValid_3102
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_isTopLevelValid_3104
       (coe v0)
 -- Ledger.Dijkstra.Specification.Utxow._.SubUTxOEnv.pparams
 d_pparams_2816 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_SubUTxOEnv_3078 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_SubUTxOEnv_3080 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParams_312
 d_pparams_2816 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_pparams_3096
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_pparams_3098
       (coe v0)
 -- Ledger.Dijkstra.Specification.Utxow._.SubUTxOEnv.slot
 d_slot_2818 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_SubUTxOEnv_3078 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_SubUTxOEnv_3080 ->
   AgdaAny
 d_slot_2818 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_slot_3094
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_slot_3096
       (coe v0)
 -- Ledger.Dijkstra.Specification.Utxow._.SubUTxOEnv.treasury
 d_treasury_2820 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_SubUTxOEnv_3078 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_SubUTxOEnv_3080 ->
   Integer
 d_treasury_2820 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_treasury_3098
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_treasury_3100
       (coe v0)
 -- Ledger.Dijkstra.Specification.Utxow._.SubUTxOEnv.utxo₀
 d_utxo'8320'_2822 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_SubUTxOEnv_3078 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_SubUTxOEnv_3080 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_utxo'8320'_2822 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_utxo'8320'_3100
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_utxo'8320'_3102
       (coe v0)
 -- Ledger.Dijkstra.Specification.Utxow._.UTxOEnv.accountBalances
 d_accountBalances_2826 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOEnv_3046 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOEnv_3048 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_accountBalances_2826 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_accountBalances_3074
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_accountBalances_3076
       (coe v0)
 -- Ledger.Dijkstra.Specification.Utxow._.UTxOEnv.allScripts
 d_allScripts_2828 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOEnv_3046 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOEnv_3048 ->
   [MAlonzo.Code.Data.Sum.Base.T__'8846'__30]
 d_allScripts_2828 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_allScripts_3072
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_allScripts_3074
       (coe v0)
 -- Ledger.Dijkstra.Specification.Utxow._.UTxOEnv.depositsChange
 d_depositsChange_2830 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOEnv_3046 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_DepositsChange_3034
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOEnv_3048 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_DepositsChange_3036
 d_depositsChange_2830 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_depositsChange_3070
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_depositsChange_3072
       (coe v0)
 -- Ledger.Dijkstra.Specification.Utxow._.UTxOEnv.pparams
 d_pparams_2832 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOEnv_3046 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOEnv_3048 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParams_312
 d_pparams_2832 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_pparams_3064
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_pparams_3066
       (coe v0)
 -- Ledger.Dijkstra.Specification.Utxow._.UTxOEnv.slot
 d_slot_2834 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOEnv_3046 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOEnv_3048 ->
   AgdaAny
 d_slot_2834 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_slot_3062
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_slot_3064
       (coe v0)
 -- Ledger.Dijkstra.Specification.Utxow._.UTxOEnv.treasury
 d_treasury_2836 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOEnv_3046 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOEnv_3048 ->
   Integer
 d_treasury_2836 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_treasury_3066
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_treasury_3068
       (coe v0)
 -- Ledger.Dijkstra.Specification.Utxow._.UTxOEnv.utxo₀
 d_utxo'8320'_2838 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOEnv_3046 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOEnv_3048 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_utxo'8320'_2838 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_utxo'8320'_3068
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_utxo'8320'_3070
       (coe v0)
 -- Ledger.Dijkstra.Specification.Utxow._.UTxOState.donations
 d_donations_2842 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOState_3110 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOState_3112 ->
   Integer
 d_donations_2842 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_donations_3122
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_donations_3124
       (coe v0)
 -- Ledger.Dijkstra.Specification.Utxow._.UTxOState.fees
 d_fees_2844 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOState_3110 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOState_3112 ->
   Integer
 d_fees_2844 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_fees_3120
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_fees_3122
       (coe v0)
 -- Ledger.Dijkstra.Specification.Utxow._.UTxOState.utxo
 d_utxo_2846 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOState_3110 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOState_3112 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_utxo_2846 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_utxo_3118
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_utxo_3120
       (coe v0)
 -- Ledger.Dijkstra.Specification.Utxow._.allCredsNeeded
 d_allCredsNeeded_2860 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3060 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3062 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3626 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3638 ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
 d_allCredsNeeded_2860 v0 ~v1 = du_allCredsNeeded_2860 v0
 du_allCredsNeeded_2860 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3626 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3638 ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
 du_allCredsNeeded_2860 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Validation.du_allCredsNeeded_3306
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Validation.du_allCredsNeeded_3308
       (coe v0)
 -- Ledger.Dijkstra.Specification.Utxow._.credentialToP2Script
 d_credentialToP2Script_2866 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3060 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3062 ->
   MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20 ->
   [MAlonzo.Code.Data.Sum.Base.T__'8846'__30] -> Maybe AgdaAny
 d_credentialToP2Script_2866 v0 ~v1
@@ -994,72 +994,72 @@ du_credentialToP2Script_2866 ::
   [MAlonzo.Code.Data.Sum.Base.T__'8846'__30] -> Maybe AgdaAny
 du_credentialToP2Script_2866 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Validation.du_credentialToP2Script_3248
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Validation.du_credentialToP2Script_3250
       (coe v0)
 -- Ledger.Dijkstra.Specification.Utxow._.credsNeeded
 d_credsNeeded_2868 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3060 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3062 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TxLevel_8 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3626 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3638 ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
 d_credsNeeded_2868 v0 ~v1 = du_credsNeeded_2868 v0
 du_credsNeeded_2868 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TxLevel_8 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3626 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3638 ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
 du_credsNeeded_2868 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Validation.du_credsNeeded_3268
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Validation.du_credsNeeded_3270
       (coe v0)
 -- Ledger.Dijkstra.Specification.Utxow._.rdptr
 d_rdptr_2876 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3060 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3062 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TxLevel_8 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3626 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.ScriptPurpose.T_ScriptPurpose_2980 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3638 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.ScriptPurpose.T_ScriptPurpose_2982 ->
   Maybe MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_rdptr_2876 v0 v1 v2 v3 v4
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Validation.du_rdptr_3104
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Validation.du_rdptr_3106
       (coe v0) (coe v1) v3 v4
 -- Ledger.Dijkstra.Specification.Utxow._.txOutToDataHash
 d_txOutToDataHash_2882 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3060 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3062 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 -> Maybe AgdaAny
 d_txOutToDataHash_2882 ~v0 ~v1 = du_txOutToDataHash_2882
 du_txOutToDataHash_2882 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 -> Maybe AgdaAny
 du_txOutToDataHash_2882
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Validation.du_txOutToDataHash_3244
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Validation.du_txOutToDataHash_3246
 -- Ledger.Dijkstra.Specification.Utxow.UsesBootstrapAddress
 d_UsesBootstrapAddress_2902 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3060 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3062 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TxLevel_8 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3626 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3638 ->
   ()
 d_UsesBootstrapAddress_2902 = erased
 -- Ledger.Dijkstra.Specification.Utxow._._.HasInlineDatum
 d_HasInlineDatum_2986 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3060 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3626 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3062 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3638 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 -> ()
 d_HasInlineDatum_2986 = erased
 -- Ledger.Dijkstra.Specification.Utxow._._.UsesV2Features
 d_UsesV2Features_2990 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3060 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3626 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3062 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3638 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 -> ()
 d_UsesV2Features_2990 = erased
 -- Ledger.Dijkstra.Specification.Utxow._.UsesV3Features
@@ -1076,13 +1076,13 @@ data T_UsesV4Features_3004
 -- Ledger.Dijkstra.Specification.Utxow._.Dec-UsesV3Features
 d_Dec'45'UsesV3Features_3020 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3060 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3626 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3062 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3638 ->
   MAlonzo.Code.Class.Decidable.Core.T__'8263'_10
 d_Dec'45'UsesV3Features_3020 ~v0 ~v1 v2
   = du_Dec'45'UsesV3Features_3020 v2
 du_Dec'45'UsesV3Features_3020 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3626 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3638 ->
   MAlonzo.Code.Class.Decidable.Core.T__'8263'_10
 du_Dec'45'UsesV3Features_3020 v0
   = coe
@@ -1097,9 +1097,9 @@ du_Dec'45'UsesV3Features_3020 v0
                        (coe
                           (\ v1 -> MAlonzo.Code.Class.Decidable.Instances.d_Dec'45''8869'_8))
                        (coe
-                          MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txGovVotes_3726
+                          MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txGovVotes_3738
                           (coe
-                             MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3646
+                             MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3658
                              (coe v0)))))
                  (coe
                     MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
@@ -1116,9 +1116,9 @@ du_Dec'45'UsesV3Features_3020 v0
                           (coe
                              (\ v2 -> MAlonzo.Code.Class.Decidable.Instances.d_Dec'45''8869'_8))
                           (coe
-                             MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txGovProposals_3728
+                             MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txGovProposals_3740
                              (coe
-                                MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3646
+                                MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3658
                                 (coe v0)))))
                     (coe
                        MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
@@ -1130,9 +1130,9 @@ du_Dec'45'UsesV3Features_3020 v0
                        (coe
                           MAlonzo.Code.Prelude.d_Dec'45'NonZero_98
                           (coe
-                             MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txDonation_3724
+                             MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txDonation_3736
                              (coe
-                                MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3646
+                                MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3658
                                 (coe v0)))) in
              coe
                (let v4
@@ -1143,9 +1143,9 @@ du_Dec'45'UsesV3Features_3020 v0
                                 (\ v4 ->
                                    MAlonzo.Code.Class.Decidable.Instances.d_Dec'45''8868'_10))
                              (coe
-                                MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_currentTreasury_3732
+                                MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_currentTreasury_3744
                                 (coe
-                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3646
+                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3658
                                    (coe v0)))) in
                 coe
                   (let v5
@@ -1467,13 +1467,13 @@ du_Dec'45'UsesV3Features_3020 v0
 -- Ledger.Dijkstra.Specification.Utxow._.Dec-UsesV4Features
 d_Dec'45'UsesV4Features_3070 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3060 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3626 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3062 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3638 ->
   MAlonzo.Code.Class.Decidable.Core.T__'8263'_10
 d_Dec'45'UsesV4Features_3070 ~v0 ~v1 v2
   = du_Dec'45'UsesV4Features_3070 v2
 du_Dec'45'UsesV4Features_3070 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3626 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3638 ->
   MAlonzo.Code.Class.Decidable.Core.T__'8263'_10
 du_Dec'45'UsesV4Features_3070 v0
   = coe
@@ -1490,9 +1490,9 @@ du_Dec'45'UsesV4Features_3070 v0
                        (coe
                           MAlonzo.Code.Ledger.Core.Specification.Address.du_IsKeyHashObj'63'_56)
                        (coe
-                          MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txGuards_3740
+                          MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txGuards_3752
                           (coe
-                             MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3646
+                             MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3658
                              (coe v0)))))
                  (coe
                     MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
@@ -1516,10 +1516,10 @@ du_Dec'45'UsesV4Features_3070 v0
                                    MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                              (coe MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_594)
                              (coe
-                                MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_DirectDepositsOf_4270
+                                MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txDirectDeposits_3756
                                 (coe
-                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.du_HasDirectDeposits'45'Tx_4348)
-                                v0))))
+                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3658
+                                   (coe v0))))))
                     (coe
                        MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
                        (coe MAlonzo.Code.Agda.Builtin.Bool.C_false_8)
@@ -1542,9 +1542,9 @@ du_Dec'45'UsesV4Features_3070 v0
                                       MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                                 (coe MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_594)
                                 (coe
-                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBalanceIntervals_3746
+                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBalanceIntervals_3758
                                    (coe
-                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3646
+                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3658
                                       (coe v0))))))
                        (coe
                           MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
@@ -1714,7 +1714,7 @@ du_Dec'45'UsesV4Features_3070 v0
 -- Ledger.Dijkstra.Specification.Utxow.languages
 d_languages_3098 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3060 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3062 ->
   [AgdaAny] -> [AgdaAny]
 d_languages_3098 v0 ~v1 v2 = du_languages_3098 v0 v2
 du_languages_3098 ::
@@ -1736,14 +1736,14 @@ du_languages_3098 v0 v1
 -- Ledger.Dijkstra.Specification.Utxow.allowedLanguagesLegacy
 d_allowedLanguagesLegacy_3102 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3060 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3626 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3062 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3638 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 -> [AgdaAny]
 d_allowedLanguagesLegacy_3102 v0 ~v1 v2 v3
   = du_allowedLanguagesLegacy_3102 v0 v2 v3
 du_allowedLanguagesLegacy_3102 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3626 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3638 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 -> [AgdaAny]
 du_allowedLanguagesLegacy_3102 v0 v1 v2
   = coe
@@ -1772,9 +1772,9 @@ du_allowedLanguagesLegacy_3102 v0 v1 v2
                      MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                (coe MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_594)
                (coe
-                  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txOuts_3710
+                  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txOuts_3722
                   (coe
-                     MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3646
+                     MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3658
                      (coe v1))))
             (coe
                MAlonzo.Code.Class.IsSet.du_range_588
@@ -1809,14 +1809,14 @@ du_allowedLanguagesLegacy_3102 v0 v1 v2
                         (coe
                            MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                      (coe
-                        MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txIns_3704
+                        MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txIns_3716
                         (coe
-                           MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3646
+                           MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3658
                            (coe v1)))
                      (coe
-                        MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_referenceInputs_3706
+                        MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_referenceInputs_3718
                         (coe
-                           MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3646
+                           MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3658
                            (coe v1))))))))
       (coe
          (\ v3 ->
@@ -1892,7 +1892,7 @@ du_allowedLanguagesLegacy_3102 v0 v1 v2
                                             (\ v7 ->
                                                MAlonzo.Code.Class.Decidable.Instances.d_Dec'45''8868'_10))
                                          (coe
-                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.du_txOutToDatum_4430
+                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.du_txOutToDatum_4422
                                             (coe v6))))
                                  (coe
                                     MAlonzo.Code.Axiom.Set.du__'8746'__708
@@ -1908,9 +1908,9 @@ du_allowedLanguagesLegacy_3102 v0 v1 v2
                                              MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                                        (coe MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_594)
                                        (coe
-                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_TxOutsOf_4210
+                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_TxOutsOf_4222
                                           (coe
-                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.du_HasTxOuts'45'Tx_4416)
+                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.du_HasTxOuts'45'Tx_4408)
                                           v1))
                                     (coe
                                        MAlonzo.Code.Class.IsSet.du_range_588
@@ -1945,14 +1945,14 @@ du_allowedLanguagesLegacy_3102 v0 v1 v2
                                                 (coe
                                                    MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                                              (coe
-                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_SpendInputsOf_4010
+                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_SpendInputsOf_4022
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.du_HasSpendInputs'45'Tx_4360)
+                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.du_HasSpendInputs'45'Tx_4352)
                                                 v1)
                                              (coe
-                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_ReferenceInputsOf_4030
+                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_ReferenceInputsOf_4042
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.du_HasReferenceInputs'45'Tx_4364)
+                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.du_HasReferenceInputs'45'Tx_4356)
                                                 v1))))))
                               (coe
                                  (\ v6 ->
@@ -2040,15 +2040,15 @@ du_allowedLanguagesLegacy_3102 v0 v1 v2
 -- Ledger.Dijkstra.Specification.Utxow.allowedLanguages
 d_allowedLanguages_3108 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3060 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3062 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TxLevel_8 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3626 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3638 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 -> [AgdaAny]
 d_allowedLanguages_3108 v0 ~v1 ~v2 v3 v4
   = du_allowedLanguages_3108 v0 v3 v4
 du_allowedLanguages_3108 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3626 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3638 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 -> [AgdaAny]
 du_allowedLanguages_3108 v0 v1 v2
   = coe
@@ -2077,9 +2077,9 @@ du_allowedLanguages_3108 v0 v1 v2
                      MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                (coe MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_594)
                (coe
-                  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txOuts_3710
+                  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txOuts_3722
                   (coe
-                     MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3646
+                     MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3658
                      (coe v1))))
             (coe
                MAlonzo.Code.Class.IsSet.du_range_588
@@ -2114,14 +2114,14 @@ du_allowedLanguages_3108 v0 v1 v2
                         (coe
                            MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                      (coe
-                        MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txIns_3704
+                        MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txIns_3716
                         (coe
-                           MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3646
+                           MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3658
                            (coe v1)))
                      (coe
-                        MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_referenceInputs_3706
+                        MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_referenceInputs_3718
                         (coe
-                           MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3646
+                           MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3658
                            (coe v1))))))))
       (coe
          (\ v3 ->
@@ -2153,7 +2153,7 @@ du_allowedLanguages_3108 v0 v1 v2
 -- Ledger.Dijkstra.Specification.Utxow.hashScriptIntegrity
 d_hashScriptIntegrity_3114 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3060 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3062 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParams_312 ->
   [AgdaAny] ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
@@ -2260,7 +2260,7 @@ d_hashScriptIntegrity_3114 v0 v1 v2 v3 v4 v5
                                              (coe
                                                 MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                                           (coe
-                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.d_getLanguageView_3078
+                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.d_getLanguageView_3080
                                              v1 v2)
                                           v3)))) in
                     coe
@@ -2294,14 +2294,14 @@ d_hashScriptIntegrity_3114 v0 v1 v2 v3 v4 v5
 -- Ledger.Dijkstra.Specification.Utxow.TopLevelGuardWellFormed
 d_TopLevelGuardWellFormed_3144 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3060 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3062 ->
   [MAlonzo.Code.Data.Sum.Base.T__'8846'__30] ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 -> ()
 d_TopLevelGuardWellFormed_3144 = erased
 -- Ledger.Dijkstra.Specification.Utxow.TopLevelGuardWellFormed?
 d_TopLevelGuardWellFormed'63'_3156 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3060 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3062 ->
   [MAlonzo.Code.Data.Sum.Base.T__'8846'__30] ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Class.Decidable.Core.T__'8263'_10
@@ -2323,7 +2323,7 @@ du_TopLevelGuardWellFormed'63'_3156 v0 v1 v2
                        (\ v6 ->
                           MAlonzo.Code.Class.Decidable.Instances.d_Dec'45''8868'_10))
                     (coe
-                       MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Validation.du_credentialToP2Script_3248
+                       MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Validation.du_credentialToP2Script_3250
                        (coe v0) (coe v3) (coe v1))
              MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18
                -> coe
@@ -2350,7 +2350,7 @@ du_TopLevelGuardWellFormed'63'_3156 v0 v1 v2
                                 (\ v5 ->
                                    MAlonzo.Code.Class.Decidable.Instances.d_Dec'45''8868'_10))))
                        (coe
-                          MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Validation.du_credentialToP1Script_3258
+                          MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Validation.du_credentialToP1Script_3260
                           (coe v0) (coe v3) (coe v1)))
              _ -> MAlonzo.RTE.mazUnreachableError
       _ -> MAlonzo.RTE.mazUnreachableError
@@ -2362,60 +2362,60 @@ newtype T__'8866'_'8640''10631'_'44'SUBUTXOW'10632'__3164
 -- Ledger.Dijkstra.Specification.Utxow._.txAuxData
 d_txAuxData_3170 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3060 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3062 ->
   T_GeneralizeTel_56059 -> Maybe AgdaAny
 d_txAuxData_3170 ~v0 ~v1 v2 = du_txAuxData_3170 v2
 du_txAuxData_3170 :: T_GeneralizeTel_56059 -> Maybe AgdaAny
 du_txAuxData_3170 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txAuxData_3654
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txAuxData_3666
       (coe d_'46'generalizedField'45'txSub_56051 (coe v0))
 -- Ledger.Dijkstra.Specification.Utxow._.txBody
 d_txBody_3172 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3060 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3062 ->
   T_GeneralizeTel_56059 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TxBody_3630
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TxBody_3642
 d_txBody_3172 ~v0 ~v1 v2 = du_txBody_3172 v2
 du_txBody_3172 ::
   T_GeneralizeTel_56059 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TxBody_3630
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TxBody_3642
 du_txBody_3172 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3646
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3658
       (coe d_'46'generalizedField'45'txSub_56051 (coe v0))
 -- Ledger.Dijkstra.Specification.Utxow._.txWitnesses
 d_txWitnesses_3176 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3060 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3062 ->
   T_GeneralizeTel_56059 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TxWitnesses_3632
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TxWitnesses_3644
 d_txWitnesses_3176 ~v0 ~v1 v2 = du_txWitnesses_3176 v2
 du_txWitnesses_3176 ::
   T_GeneralizeTel_56059 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TxWitnesses_3632
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TxWitnesses_3644
 du_txWitnesses_3176 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txWitnesses_3648
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txWitnesses_3660
       (coe d_'46'generalizedField'45'txSub_56051 (coe v0))
 -- Ledger.Dijkstra.Specification.Utxow._.referenceInputs
 d_referenceInputs_3186 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3060 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3062 ->
   T_GeneralizeTel_56059 -> [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
 d_referenceInputs_3186 ~v0 ~v1 v2 = du_referenceInputs_3186 v2
 du_referenceInputs_3186 ::
   T_GeneralizeTel_56059 -> [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
 du_referenceInputs_3186 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_referenceInputs_3706
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_referenceInputs_3718
       (coe
-         MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3646
+         MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3658
          (coe d_'46'generalizedField'45'txSub_56051 (coe v0)))
 -- Ledger.Dijkstra.Specification.Utxow._.scriptIntegrityHash
 d_scriptIntegrityHash_3190 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3060 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3062 ->
   T_GeneralizeTel_56059 -> Maybe AgdaAny
 d_scriptIntegrityHash_3190 ~v0 ~v1 v2
   = du_scriptIntegrityHash_3190 v2
@@ -2423,118 +2423,118 @@ du_scriptIntegrityHash_3190 ::
   T_GeneralizeTel_56059 -> Maybe AgdaAny
 du_scriptIntegrityHash_3190 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_scriptIntegrityHash_3736
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_scriptIntegrityHash_3748
       (coe
-         MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3646
+         MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3658
          (coe d_'46'generalizedField'45'txSub_56051 (coe v0)))
 -- Ledger.Dijkstra.Specification.Utxow._.txADhash
 d_txADhash_3192 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3060 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3062 ->
   T_GeneralizeTel_56059 -> Maybe AgdaAny
 d_txADhash_3192 ~v0 ~v1 v2 = du_txADhash_3192 v2
 du_txADhash_3192 :: T_GeneralizeTel_56059 -> Maybe AgdaAny
 du_txADhash_3192 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txADhash_3722
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txADhash_3734
       (coe
-         MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3646
+         MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3658
          (coe d_'46'generalizedField'45'txSub_56051 (coe v0)))
 -- Ledger.Dijkstra.Specification.Utxow._.txId
 d_txId_3210 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3060 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3062 ->
   T_GeneralizeTel_56059 -> AgdaAny
 d_txId_3210 ~v0 ~v1 v2 = du_txId_3210 v2
 du_txId_3210 :: T_GeneralizeTel_56059 -> AgdaAny
 du_txId_3210 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txId_3712
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txId_3724
       (coe
-         MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3646
+         MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3658
          (coe d_'46'generalizedField'45'txSub_56051 (coe v0)))
 -- Ledger.Dijkstra.Specification.Utxow._.txIns
 d_txIns_3212 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3060 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3062 ->
   T_GeneralizeTel_56059 -> [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
 d_txIns_3212 ~v0 ~v1 v2 = du_txIns_3212 v2
 du_txIns_3212 ::
   T_GeneralizeTel_56059 -> [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
 du_txIns_3212 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txIns_3704
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txIns_3716
       (coe
-         MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3646
+         MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3658
          (coe d_'46'generalizedField'45'txSub_56051 (coe v0)))
 -- Ledger.Dijkstra.Specification.Utxow._.txOuts
 d_txOuts_3216 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3060 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3062 ->
   T_GeneralizeTel_56059 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_txOuts_3216 ~v0 ~v1 v2 = du_txOuts_3216 v2
 du_txOuts_3216 ::
   T_GeneralizeTel_56059 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 du_txOuts_3216 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txOuts_3710
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txOuts_3722
       (coe
-         MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3646
+         MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3658
          (coe d_'46'generalizedField'45'txSub_56051 (coe v0)))
 -- Ledger.Dijkstra.Specification.Utxow._.txVldt
 d_txVldt_3222 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3060 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3062 ->
   T_GeneralizeTel_56059 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_txVldt_3222 ~v0 ~v1 v2 = du_txVldt_3222 v2
 du_txVldt_3222 ::
   T_GeneralizeTel_56059 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 du_txVldt_3222 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txVldt_3720
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txVldt_3732
       (coe
-         MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3646
+         MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3658
          (coe d_'46'generalizedField'45'txSub_56051 (coe v0)))
 -- Ledger.Dijkstra.Specification.Utxow._.txData
 d_txData_3232 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3060 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3062 ->
   T_GeneralizeTel_56059 -> [AgdaAny]
 d_txData_3232 ~v0 ~v1 v2 = du_txData_3232 v2
 du_txData_3232 :: T_GeneralizeTel_56059 -> [AgdaAny]
 du_txData_3232 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txData_3764
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txData_3776
       (coe
-         MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txWitnesses_3648
+         MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txWitnesses_3660
          (coe d_'46'generalizedField'45'txSub_56051 (coe v0)))
 -- Ledger.Dijkstra.Specification.Utxow._.txRedeemers
 d_txRedeemers_3234 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3060 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3062 ->
   T_GeneralizeTel_56059 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_txRedeemers_3234 ~v0 ~v1 v2 = du_txRedeemers_3234 v2
 du_txRedeemers_3234 ::
   T_GeneralizeTel_56059 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 du_txRedeemers_3234 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txRedeemers_3766
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txRedeemers_3778
       (coe
-         MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txWitnesses_3648
+         MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txWitnesses_3660
          (coe d_'46'generalizedField'45'txSub_56051 (coe v0)))
 -- Ledger.Dijkstra.Specification.Utxow._.vKeySigs
 d_vKeySigs_3236 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3060 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3062 ->
   T_GeneralizeTel_56059 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_vKeySigs_3236 ~v0 ~v1 v2 = du_vKeySigs_3236 v2
 du_vKeySigs_3236 ::
   T_GeneralizeTel_56059 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 du_vKeySigs_3236 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_vKeySigs_3760
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_vKeySigs_3772
       (coe
-         MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txWitnesses_3648
+         MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txWitnesses_3660
          (coe d_'46'generalizedField'45'txSub_56051 (coe v0)))
 -- Ledger.Dijkstra.Specification.Utxow._⊢_⇀⦇_,UTXOW⦈_
 d__'8866'_'8640''10631'_'44'UTXOW'10632'__3298 a0 a1 a2 a3 a4 a5
@@ -2545,260 +2545,260 @@ data T__'8866'_'8640''10631'_'44'UTXOW'10632'__3298
 -- Ledger.Dijkstra.Specification.Utxow._.txAuxData
 d_txAuxData_3304 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3060 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3062 ->
   T_GeneralizeTel_73201 -> Maybe AgdaAny
 d_txAuxData_3304 ~v0 ~v1 v2 = du_txAuxData_3304 v2
 du_txAuxData_3304 :: T_GeneralizeTel_73201 -> Maybe AgdaAny
 du_txAuxData_3304 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txAuxData_3654
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txAuxData_3666
       (coe d_'46'generalizedField'45'txTop_73193 (coe v0))
 -- Ledger.Dijkstra.Specification.Utxow._.txBody
 d_txBody_3306 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3060 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3062 ->
   T_GeneralizeTel_73201 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TxBody_3630
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TxBody_3642
 d_txBody_3306 ~v0 ~v1 v2 = du_txBody_3306 v2
 du_txBody_3306 ::
   T_GeneralizeTel_73201 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TxBody_3630
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TxBody_3642
 du_txBody_3306 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3646
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3658
       (coe d_'46'generalizedField'45'txTop_73193 (coe v0))
 -- Ledger.Dijkstra.Specification.Utxow._.txWitnesses
 d_txWitnesses_3310 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3060 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3062 ->
   T_GeneralizeTel_73201 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TxWitnesses_3632
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TxWitnesses_3644
 d_txWitnesses_3310 ~v0 ~v1 v2 = du_txWitnesses_3310 v2
 du_txWitnesses_3310 ::
   T_GeneralizeTel_73201 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TxWitnesses_3632
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TxWitnesses_3644
 du_txWitnesses_3310 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txWitnesses_3648
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txWitnesses_3660
       (coe d_'46'generalizedField'45'txTop_73193 (coe v0))
 -- Ledger.Dijkstra.Specification.Utxow._.referenceInputs
 d_referenceInputs_3320 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3060 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3062 ->
   T_GeneralizeTel_73201 -> [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
 d_referenceInputs_3320 ~v0 ~v1 v2 = du_referenceInputs_3320 v2
 du_referenceInputs_3320 ::
   T_GeneralizeTel_73201 -> [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
 du_referenceInputs_3320 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_referenceInputs_3706
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_referenceInputs_3718
       (coe
-         MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3646
+         MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3658
          (coe d_'46'generalizedField'45'txTop_73193 (coe v0)))
 -- Ledger.Dijkstra.Specification.Utxow._.txADhash
 d_txADhash_3326 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3060 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3062 ->
   T_GeneralizeTel_73201 -> Maybe AgdaAny
 d_txADhash_3326 ~v0 ~v1 v2 = du_txADhash_3326 v2
 du_txADhash_3326 :: T_GeneralizeTel_73201 -> Maybe AgdaAny
 du_txADhash_3326 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txADhash_3722
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txADhash_3734
       (coe
-         MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3646
+         MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3658
          (coe d_'46'generalizedField'45'txTop_73193 (coe v0)))
 -- Ledger.Dijkstra.Specification.Utxow._.txIns
 d_txIns_3346 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3060 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3062 ->
   T_GeneralizeTel_73201 -> [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
 d_txIns_3346 ~v0 ~v1 v2 = du_txIns_3346 v2
 du_txIns_3346 ::
   T_GeneralizeTel_73201 -> [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
 du_txIns_3346 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txIns_3704
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txIns_3716
       (coe
-         MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3646
+         MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3658
          (coe d_'46'generalizedField'45'txTop_73193 (coe v0)))
 -- Ledger.Dijkstra.Specification.Utxow._.txOuts
 d_txOuts_3350 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3060 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3062 ->
   T_GeneralizeTel_73201 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_txOuts_3350 ~v0 ~v1 v2 = du_txOuts_3350 v2
 du_txOuts_3350 ::
   T_GeneralizeTel_73201 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 du_txOuts_3350 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txOuts_3710
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txOuts_3722
       (coe
-         MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3646
+         MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3658
          (coe d_'46'generalizedField'45'txTop_73193 (coe v0)))
 -- Ledger.Dijkstra.Specification.Utxow._.txVldt
 d_txVldt_3356 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3060 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3062 ->
   T_GeneralizeTel_73201 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_txVldt_3356 ~v0 ~v1 v2 = du_txVldt_3356 v2
 du_txVldt_3356 ::
   T_GeneralizeTel_73201 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 du_txVldt_3356 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txVldt_3720
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txVldt_3732
       (coe
-         MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3646
+         MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3658
          (coe d_'46'generalizedField'45'txTop_73193 (coe v0)))
 -- Ledger.Dijkstra.Specification.Utxow._.vKeySigs
 d_vKeySigs_3370 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3060 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3062 ->
   T_GeneralizeTel_73201 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_vKeySigs_3370 ~v0 ~v1 v2 = du_vKeySigs_3370 v2
 du_vKeySigs_3370 ::
   T_GeneralizeTel_73201 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 du_vKeySigs_3370 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_vKeySigs_3760
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_vKeySigs_3772
       (coe
-         MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txWitnesses_3648
+         MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txWitnesses_3660
          (coe d_'46'generalizedField'45'txTop_73193 (coe v0)))
 -- Ledger.Dijkstra.Specification.Utxow._.txAuxData
 d_txAuxData_3434 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3060 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3062 ->
   T_GeneralizeTel_89733 -> Maybe AgdaAny
 d_txAuxData_3434 ~v0 ~v1 v2 = du_txAuxData_3434 v2
 du_txAuxData_3434 :: T_GeneralizeTel_89733 -> Maybe AgdaAny
 du_txAuxData_3434 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txAuxData_3654
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txAuxData_3666
       (coe d_'46'generalizedField'45'txTop_89725 (coe v0))
 -- Ledger.Dijkstra.Specification.Utxow._.txBody
 d_txBody_3436 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3060 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3062 ->
   T_GeneralizeTel_89733 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TxBody_3630
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TxBody_3642
 d_txBody_3436 ~v0 ~v1 v2 = du_txBody_3436 v2
 du_txBody_3436 ::
   T_GeneralizeTel_89733 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TxBody_3630
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TxBody_3642
 du_txBody_3436 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3646
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3658
       (coe d_'46'generalizedField'45'txTop_89725 (coe v0))
 -- Ledger.Dijkstra.Specification.Utxow._.txWitnesses
 d_txWitnesses_3440 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3060 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3062 ->
   T_GeneralizeTel_89733 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TxWitnesses_3632
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TxWitnesses_3644
 d_txWitnesses_3440 ~v0 ~v1 v2 = du_txWitnesses_3440 v2
 du_txWitnesses_3440 ::
   T_GeneralizeTel_89733 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TxWitnesses_3632
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TxWitnesses_3644
 du_txWitnesses_3440 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txWitnesses_3648
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txWitnesses_3660
       (coe d_'46'generalizedField'45'txTop_89725 (coe v0))
 -- Ledger.Dijkstra.Specification.Utxow._.referenceInputs
 d_referenceInputs_3450 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3060 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3062 ->
   T_GeneralizeTel_89733 -> [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
 d_referenceInputs_3450 ~v0 ~v1 v2 = du_referenceInputs_3450 v2
 du_referenceInputs_3450 ::
   T_GeneralizeTel_89733 -> [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
 du_referenceInputs_3450 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_referenceInputs_3706
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_referenceInputs_3718
       (coe
-         MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3646
+         MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3658
          (coe d_'46'generalizedField'45'txTop_89725 (coe v0)))
 -- Ledger.Dijkstra.Specification.Utxow._.txADhash
 d_txADhash_3456 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3060 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3062 ->
   T_GeneralizeTel_89733 -> Maybe AgdaAny
 d_txADhash_3456 ~v0 ~v1 v2 = du_txADhash_3456 v2
 du_txADhash_3456 :: T_GeneralizeTel_89733 -> Maybe AgdaAny
 du_txADhash_3456 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txADhash_3722
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txADhash_3734
       (coe
-         MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3646
+         MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3658
          (coe d_'46'generalizedField'45'txTop_89725 (coe v0)))
 -- Ledger.Dijkstra.Specification.Utxow._.txIns
 d_txIns_3476 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3060 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3062 ->
   T_GeneralizeTel_89733 -> [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
 d_txIns_3476 ~v0 ~v1 v2 = du_txIns_3476 v2
 du_txIns_3476 ::
   T_GeneralizeTel_89733 -> [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
 du_txIns_3476 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txIns_3704
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txIns_3716
       (coe
-         MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3646
+         MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3658
          (coe d_'46'generalizedField'45'txTop_89725 (coe v0)))
 -- Ledger.Dijkstra.Specification.Utxow._.txOuts
 d_txOuts_3480 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3060 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3062 ->
   T_GeneralizeTel_89733 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_txOuts_3480 ~v0 ~v1 v2 = du_txOuts_3480 v2
 du_txOuts_3480 ::
   T_GeneralizeTel_89733 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 du_txOuts_3480 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txOuts_3710
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txOuts_3722
       (coe
-         MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3646
+         MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3658
          (coe d_'46'generalizedField'45'txTop_89725 (coe v0)))
 -- Ledger.Dijkstra.Specification.Utxow._.txVldt
 d_txVldt_3486 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3060 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3062 ->
   T_GeneralizeTel_89733 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_txVldt_3486 ~v0 ~v1 v2 = du_txVldt_3486 v2
 du_txVldt_3486 ::
   T_GeneralizeTel_89733 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 du_txVldt_3486 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txVldt_3720
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txVldt_3732
       (coe
-         MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3646
+         MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3658
          (coe d_'46'generalizedField'45'txTop_89725 (coe v0)))
 -- Ledger.Dijkstra.Specification.Utxow._.vKeySigs
 d_vKeySigs_3500 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3060 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3062 ->
   T_GeneralizeTel_89733 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_vKeySigs_3500 ~v0 ~v1 v2 = du_vKeySigs_3500 v2
 du_vKeySigs_3500 ::
   T_GeneralizeTel_89733 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 du_vKeySigs_3500 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_vKeySigs_3760
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_vKeySigs_3772
       (coe
-         MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txWitnesses_3648
+         MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txWitnesses_3660
          (coe d_'46'generalizedField'45'txTop_89725 (coe v0)))
 -- Ledger.Dijkstra.Specification.Utxow.UTXOW-normal-premises
 d_UTXOW'45'normal'45'premises_3560 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3060 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3626 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOEnv_3046 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3062 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3638 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOEnv_3048 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_UTXOW'45'normal'45'premises_3560 v0 ~v1 v2 v3
   = du_UTXOW'45'normal'45'premises_3560 v0 v2 v3
 du_UTXOW'45'normal'45'premises_3560 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3626 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOEnv_3046 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3638 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOEnv_3048 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 du_UTXOW'45'normal'45'premises_3560 v0 v1 v2
   = coe
@@ -2886,15 +2886,15 @@ du_UTXOW'45'normal'45'premises_3560 v0 v1 v2
                                    MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                              (\ v4 -> MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30 (coe v4))
                              (coe
-                                MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Validation.du_credsNeeded_3268
+                                MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Validation.du_credsNeeded_3270
                                 (coe v0)
                                 (coe
                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.C_TxLevelTop_10)
                                 (coe
-                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_utxo'8320'_3068
+                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_utxo'8320'_3070
                                    (coe v2))
                                 (coe v1)))))
-                  (MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_allScripts_3072
+                  (MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_allScripts_3074
                      (coe v2)))))
          (coe
             MAlonzo.Code.Class.Decidable.Instances.du_Dec'45''215'_14
@@ -2924,12 +2924,12 @@ du_UTXOW'45'normal'45'premises_3560 v0 v1 v2
                                 (coe v0))))
                        (coe v3)
                        (coe
-                          MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txGuards_3740
+                          MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txGuards_3752
                           (coe
-                             MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3646
+                             MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3658
                              (coe v1)))))
                (coe
-                  MAlonzo.Code.Ledger.Prelude.du_concatMap'737'_146
+                  MAlonzo.Code.Ledger.Prelude.du_concatMap'737'_126
                   (coe
                      (\ v3 ->
                         coe
@@ -2938,14 +2938,14 @@ du_UTXOW'45'normal'45'premises_3560 v0 v1 v2
                              (coe
                                 MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                           (\ v4 -> MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe v4))
-                          (MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txRequiredTopLevelGuards_3742
+                          (MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txRequiredTopLevelGuards_3754
                              (coe
-                                MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3646
+                                MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3658
                                 (coe v3)))))
                   (coe
-                     MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txSubTransactions_3738
+                     MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txSubTransactions_3750
                      (coe
-                        MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3646
+                        MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3658
                         (coe v1)))))
             (coe
                MAlonzo.Code.Class.Decidable.Instances.du_Dec'45''215'_14
@@ -2965,17 +2965,17 @@ du_UTXOW'45'normal'45'premises_3560 v0 v1 v2
                           (coe
                              MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txidBytes_2636
                              v0
-                             (MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txId_3712
+                             (MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txId_3724
                                 (coe
-                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3646
+                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3658
                                    (coe v1))))
                           (MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30 (coe v3))))
                   (coe
                      MAlonzo.Code.Axiom.Set.Map.du__'738'_570
                      (coe
-                        MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_vKeySigs_3760
+                        MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_vKeySigs_3772
                         (coe
-                           MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txWitnesses_3648
+                           MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txWitnesses_3660
                            (coe v1)))))
                (coe
                   MAlonzo.Code.Class.Decidable.Instances.du_Dec'45''215'_14
@@ -3010,17 +3010,17 @@ du_UTXOW'45'normal'45'premises_3560 v0 v1 v2
                                     MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                               (coe MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_594)
                               (coe
-                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_vKeySigs_3760
+                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_vKeySigs_3772
                                  (coe
-                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txWitnesses_3648
+                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txWitnesses_3660
                                     (coe v1)))))
-                        (MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txGuards_3740
+                        (MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txGuards_3752
                            (coe
-                              MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3646
+                              MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3658
                               (coe v1)))
-                        (MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txVldt_3720
+                        (MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txVldt_3732
                            (coe
-                              MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3646
+                              MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3658
                               (coe v1))))
                      (coe
                         MAlonzo.Code.Axiom.Set.du_mapPartial_604
@@ -3063,15 +3063,15 @@ du_UTXOW'45'normal'45'premises_3560 v0 v1 v2
                                             MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                                       (\ v4 -> MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30 (coe v4))
                                       (coe
-                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Validation.du_credsNeeded_3268
+                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Validation.du_credsNeeded_3270
                                          (coe v0)
                                          (coe
                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.C_TxLevelTop_10)
                                          (coe
-                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_utxo'8320'_3068
+                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_utxo'8320'_3070
                                             (coe v2))
                                          (coe v1)))))
-                           (MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_allScripts_3072
+                           (MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_allScripts_3074
                               (coe v2)))))
                   (coe
                      MAlonzo.Code.Class.Decidable.Instances.du_Dec'45''215'_14
@@ -3114,9 +3114,9 @@ du_UTXOW'45'normal'45'premises_3560 v0 v1 v2
                                             MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                                       (coe MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_594)
                                       (coe
-                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_vKeySigs_3760
+                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_vKeySigs_3772
                                          (coe
-                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txWitnesses_3648
+                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txWitnesses_3660
                                             (coe v1)))))))
                         (coe
                            MAlonzo.Code.Axiom.Set.du_mapPartial_604
@@ -3132,12 +3132,12 @@ du_UTXOW'45'normal'45'premises_3560 v0 v1 v2
                                     MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                               (\ v3 -> MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30 (coe v3))
                               (coe
-                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Validation.du_credsNeeded_3268
+                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Validation.du_credsNeeded_3270
                                  (coe v0)
                                  (coe
                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.C_TxLevelTop_10)
                                  (coe
-                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_utxo'8320'_3068
+                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_utxo'8320'_3070
                                     (coe v2))
                                  (coe v1)))))
                      (coe
@@ -3172,7 +3172,7 @@ du_UTXOW'45'normal'45'premises_3560 v0 v1 v2
                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_scriptStructure_2150
                                                   (coe v0))))
                                          (coe
-                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.du_allWitnessScripts_4500
+                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.du_allWitnessScripts_4492
                                             (coe v1)))))
                               (coe
                                  MAlonzo.Code.Axiom.Set.du__'65340'__758
@@ -3198,10 +3198,10 @@ du_UTXOW'45'normal'45'premises_3560 v0 v1 v2
                                          MAlonzo.Code.Ledger.Core.Specification.Address.du_isScriptObj_68
                                          (coe MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30 (coe v3)))
                                     (coe
-                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Validation.du_allCredsNeeded_3306
+                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Validation.du_allCredsNeeded_3308
                                        (coe v0)
                                        (coe
-                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_utxo'8320'_3068
+                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_utxo'8320'_3070
                                           (coe v2))
                                        (coe v1)))
                                  (coe
@@ -3215,10 +3215,10 @@ du_UTXOW'45'normal'45'premises_3560 v0 v1 v2
                                           (coe
                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_scriptStructure_2150
                                              (coe v0))))
-                                    (MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_allReferenceScripts_4488
+                                    (MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_allReferenceScripts_4480
                                        (coe v0) (coe v1)
                                        (coe
-                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_utxo'8320'_3068
+                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_utxo'8320'_3070
                                           (coe v2))))))
                            (coe
                               MAlonzo.Code.Axiom.Set.du_Dec'45'All'738'_1682
@@ -3262,10 +3262,10 @@ du_UTXOW'45'normal'45'premises_3560 v0 v1 v2
                                                     MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
                                                     (coe v4)))
                                             (coe
-                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Validation.du_allCredsNeeded_3306
+                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Validation.du_allCredsNeeded_3308
                                                (coe v0)
                                                (coe
-                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_utxo'8320'_3068
+                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_utxo'8320'_3070
                                                   (coe v2))
                                                (coe v1)))
                                          (coe
@@ -3279,10 +3279,10 @@ du_UTXOW'45'normal'45'premises_3560 v0 v1 v2
                                                   (coe
                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_scriptStructure_2150
                                                      (coe v0))))
-                                            (MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_allReferenceScripts_4488
+                                            (MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_allReferenceScripts_4480
                                                (coe v0) (coe v1)
                                                (coe
-                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_utxo'8320'_3068
+                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_utxo'8320'_3070
                                                   (coe v2)))))))
                               (coe
                                  MAlonzo.Code.Axiom.Set.du_map_426
@@ -3296,7 +3296,7 @@ du_UTXOW'45'normal'45'premises_3560 v0 v1 v2
                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_scriptStructure_2150
                                           (coe v0))))
                                  (coe
-                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.du_allWitnessScripts_4500
+                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.du_allWitnessScripts_4492
                                     (coe v1)))))
                         (coe
                            MAlonzo.Code.Class.Decidable.Instances.du_Dec'45''215'_14
@@ -3327,7 +3327,7 @@ du_UTXOW'45'normal'45'premises_3560 v0 v1 v2
                                                (coe
                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_scriptStructure_2150
                                                   (coe v0))))
-                                         (MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_allScripts_3072
+                                         (MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_allScripts_3074
                                             (coe v2)))))
                               (coe
                                  MAlonzo.Code.Axiom.Set.du_mapPartial_604
@@ -3343,12 +3343,12 @@ du_UTXOW'45'normal'45'premises_3560 v0 v1 v2
                                           MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                                     (\ v3 -> MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30 (coe v3))
                                     (coe
-                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Validation.du_credsNeeded_3268
+                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Validation.du_credsNeeded_3270
                                        (coe v0)
                                        (coe
                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.C_TxLevelTop_10)
                                        (coe
-                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_utxo'8320'_3068
+                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_utxo'8320'_3070
                                           (coe v2))
                                        (coe v1)))))
                            (coe
@@ -3393,9 +3393,9 @@ du_UTXOW'45'normal'45'premises_3560 v0 v1 v2
                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_scriptStructure_2150
                                                               (coe v0)))))))
                                             (coe
-                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_DataOf_4110
+                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_DataOf_4122
                                                (coe
-                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.du_HasData'45'Tx_4404)
+                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.du_HasData'45'Tx_4396)
                                                v1))))
                                  (coe
                                     MAlonzo.Code.Axiom.Set.du_mapPartial_604
@@ -3422,7 +3422,7 @@ du_UTXOW'45'normal'45'premises_3560 v0 v1 v2
                                               MAlonzo.Code.Agda.Primitive.d_lzero_20 erased
                                               MAlonzo.Code.Agda.Primitive.d_lzero_20 erased
                                               (coe
-                                                 MAlonzo.Code.Ledger.Prelude.du_lookupHash_124
+                                                 MAlonzo.Code.Ledger.Prelude.du_lookupHash_104
                                                  (coe
                                                     MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_210
                                                     (coe
@@ -3479,15 +3479,15 @@ du_UTXOW'45'normal'45'premises_3560 v0 v1 v2
                                                                      MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
                                                                        (coe v6))
                                                                   (coe
-                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Validation.du_credsNeeded_3268
+                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Validation.du_credsNeeded_3270
                                                                      (coe v0)
                                                                      (coe
                                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.C_TxLevelTop_10)
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_utxo'8320'_3068
+                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_utxo'8320'_3070
                                                                         (coe v2))
                                                                      (coe v1)))))
-                                                       (MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_allScripts_3072
+                                                       (MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_allScripts_3074
                                                           (coe v2)))))
                                               (\ v5 ->
                                                  coe
@@ -3528,12 +3528,12 @@ du_UTXOW'45'normal'45'premises_3560 v0 v1 v2
                                                 (MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_DecEq'45'Ix_1364
                                                    (coe v0))))
                                           (coe
-                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_utxo'8320'_3068
+                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_utxo'8320'_3070
                                              (coe v2))
                                           (coe
-                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txIns_3704
+                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txIns_3716
                                              (coe
-                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3646
+                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3658
                                                 (coe v1)))))))
                               (coe
                                  MAlonzo.Code.Class.Decidable.Instances.du_Dec'45''215'_14
@@ -3592,7 +3592,7 @@ du_UTXOW'45'normal'45'premises_3560 v0 v1 v2
                                                             MAlonzo.Code.Agda.Primitive.d_lzero_20
                                                             erased
                                                             (coe
-                                                               MAlonzo.Code.Ledger.Prelude.du_lookupHash_124
+                                                               MAlonzo.Code.Ledger.Prelude.du_lookupHash_104
                                                                (coe
                                                                   MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_210
                                                                   (coe
@@ -3649,15 +3649,15 @@ du_UTXOW'45'normal'45'premises_3560 v0 v1 v2
                                                                                    MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
                                                                                      (coe v7))
                                                                                 (coe
-                                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Validation.du_credsNeeded_3268
+                                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Validation.du_credsNeeded_3270
                                                                                    (coe v0)
                                                                                    (coe
                                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.C_TxLevelTop_10)
                                                                                    (coe
-                                                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_utxo'8320'_3068
+                                                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_utxo'8320'_3070
                                                                                       (coe v2))
                                                                                    (coe v1)))))
-                                                                     (MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_allScripts_3072
+                                                                     (MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_allScripts_3074
                                                                         (coe v2)))))
                                                             (\ v6 ->
                                                                coe
@@ -3704,12 +3704,12 @@ du_UTXOW'45'normal'45'premises_3560 v0 v1 v2
                                                               (MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_DecEq'45'Ix_1364
                                                                  (coe v0))))
                                                         (coe
-                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_utxo'8320'_3068
+                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_utxo'8320'_3070
                                                            (coe v2))
                                                         (coe
-                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txIns_3704
+                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txIns_3716
                                                            (coe
-                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3646
+                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3658
                                                               (coe v1))))))
                                                (coe
                                                   MAlonzo.Code.Axiom.Set.du__'8746'__708
@@ -3723,7 +3723,7 @@ du_UTXOW'45'normal'45'premises_3560 v0 v1 v2
                                                         (coe
                                                            MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                                                      (coe
-                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Validation.du_txOutToDataHash_3244)
+                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Validation.du_txOutToDataHash_3246)
                                                      (coe
                                                         MAlonzo.Code.Class.IsSet.du_range_588
                                                         (coe
@@ -3733,9 +3733,9 @@ du_UTXOW'45'normal'45'premises_3560 v0 v1 v2
                                                         (coe
                                                            MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_594)
                                                         (coe
-                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txOuts_3710
+                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txOuts_3722
                                                            (coe
-                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3646
+                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3658
                                                               (coe v1)))))
                                                   (coe
                                                      MAlonzo.Code.Axiom.Set.du_mapPartial_604
@@ -3743,7 +3743,7 @@ du_UTXOW'45'normal'45'premises_3560 v0 v1 v2
                                                         (coe
                                                            MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                                                      (coe
-                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Validation.du_txOutToDataHash_3244)
+                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Validation.du_txOutToDataHash_3246)
                                                      (coe
                                                         MAlonzo.Code.Class.IsSet.du_range_588
                                                         (coe
@@ -3773,12 +3773,12 @@ du_UTXOW'45'normal'45'premises_3560 v0 v1 v2
                                                                  (MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_DecEq'45'Ix_1364
                                                                     (coe v0))))
                                                            (coe
-                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_utxo'8320'_3068
+                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_utxo'8320'_3070
                                                               (coe v2))
                                                            (coe
-                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_referenceInputs_3706
+                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_referenceInputs_3718
                                                               (coe
-                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3646
+                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3658
                                                                  (coe v1))))))))))
                                     (coe
                                        MAlonzo.Code.Axiom.Set.du_map_426
@@ -3798,9 +3798,9 @@ du_UTXOW'45'normal'45'premises_3560 v0 v1 v2
                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_scriptStructure_2150
                                                          (coe v0)))))))
                                        (coe
-                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_DataOf_4110
+                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_DataOf_4122
                                           (coe
-                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.du_HasData'45'Tx_4404)
+                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.du_HasData'45'Tx_4396)
                                           v1)))
                                  (coe
                                     MAlonzo.Code.Class.Decidable.Instances.du_Dec'45''215'_14
@@ -3852,12 +3852,12 @@ du_UTXOW'45'normal'45'premises_3560 v0 v1 v2
                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_scriptStructure_2150
                                                            (coe v0))
                                                         (coe
-                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_pparams_3064
+                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_pparams_3066
                                                            (coe v2))))
                                                   (coe
                                                      du_allowedLanguages_3108 (coe v0) (coe v1)
                                                      (coe
-                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_utxo'8320'_3068
+                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_utxo'8320'_3070
                                                         (coe v2))))))
                                        (coe
                                           du_languages_3098 (coe v0)
@@ -3904,15 +3904,15 @@ du_UTXOW'45'normal'45'premises_3560 v0 v1 v2
                                                               MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
                                                                 (coe v4))
                                                            (coe
-                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Validation.du_credsNeeded_3268
+                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Validation.du_credsNeeded_3270
                                                               (coe v0)
                                                               (coe
                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.C_TxLevelTop_10)
                                                               (coe
-                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_utxo'8320'_3068
+                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_utxo'8320'_3070
                                                                  (coe v2))
                                                               (coe v1)))))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_allScripts_3072
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_allScripts_3074
                                                    (coe v2))))))
                                     (coe
                                        MAlonzo.Code.Class.Decidable.Instances.du_DecEq'8658'Dec_6
@@ -3924,9 +3924,9 @@ du_UTXOW'45'normal'45'premises_3560 v0 v1 v2
                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_adHashingScheme_1356
                                                 (coe v0))))
                                        (coe
-                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txADhash_3722
+                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txADhash_3734
                                           (coe
-                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3646
+                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3658
                                              (coe v1)))
                                        (coe
                                           MAlonzo.Code.Class.Functor.Core.du_fmap_22
@@ -3939,21 +3939,21 @@ du_UTXOW'45'normal'45'premises_3560 v0 v1 v2
                                                 (coe
                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_adHashingScheme_1356
                                                    (coe v0))))
-                                          (MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txAuxData_3654
+                                          (MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txAuxData_3666
                                              (coe v1))))))))))))))
 -- Ledger.Dijkstra.Specification.Utxow.UTXOW-legacy-premises
 d_UTXOW'45'legacy'45'premises_3562 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3060 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3626 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOEnv_3046 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3062 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3638 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOEnv_3048 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_UTXOW'45'legacy'45'premises_3562 v0 ~v1 v2 v3
   = du_UTXOW'45'legacy'45'premises_3562 v0 v2 v3
 du_UTXOW'45'legacy'45'premises_3562 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3626 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOEnv_3046 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3638 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOEnv_3048 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 du_UTXOW'45'legacy'45'premises_3562 v0 v1 v2
   = coe
@@ -4059,15 +4059,15 @@ du_UTXOW'45'legacy'45'premises_3562 v0 v1 v2
                                    MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                              (\ v4 -> MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30 (coe v4))
                              (coe
-                                MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Validation.du_credsNeeded_3268
+                                MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Validation.du_credsNeeded_3270
                                 (coe v0)
                                 (coe
                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.C_TxLevelTop_10)
                                 (coe
-                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_utxo'8320'_3068
+                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_utxo'8320'_3070
                                    (coe v2))
                                 (coe v1)))))
-                  (MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_allScripts_3072
+                  (MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_allScripts_3074
                      (coe v2)))))
          (coe
             MAlonzo.Code.Class.Decidable.Instances.du_Dec'45''215'_14
@@ -4097,12 +4097,12 @@ du_UTXOW'45'legacy'45'premises_3562 v0 v1 v2
                                 (coe v0))))
                        (coe v3)
                        (coe
-                          MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txGuards_3740
+                          MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txGuards_3752
                           (coe
-                             MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3646
+                             MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3658
                              (coe v1)))))
                (coe
-                  MAlonzo.Code.Ledger.Prelude.du_concatMap'737'_146
+                  MAlonzo.Code.Ledger.Prelude.du_concatMap'737'_126
                   (coe
                      (\ v3 ->
                         coe
@@ -4111,14 +4111,14 @@ du_UTXOW'45'legacy'45'premises_3562 v0 v1 v2
                              (coe
                                 MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                           (\ v4 -> MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe v4))
-                          (MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txRequiredTopLevelGuards_3742
+                          (MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txRequiredTopLevelGuards_3754
                              (coe
-                                MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3646
+                                MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3658
                                 (coe v3)))))
                   (coe
-                     MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txSubTransactions_3738
+                     MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txSubTransactions_3750
                      (coe
-                        MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3646
+                        MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3658
                         (coe v1)))))
             (coe
                MAlonzo.Code.Class.Decidable.Instances.du_Dec'45''215'_14
@@ -4138,17 +4138,17 @@ du_UTXOW'45'legacy'45'premises_3562 v0 v1 v2
                           (coe
                              MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txidBytes_2636
                              v0
-                             (MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txId_3712
+                             (MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txId_3724
                                 (coe
-                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3646
+                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3658
                                    (coe v1))))
                           (MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30 (coe v3))))
                   (coe
                      MAlonzo.Code.Axiom.Set.Map.du__'738'_570
                      (coe
-                        MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_vKeySigs_3760
+                        MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_vKeySigs_3772
                         (coe
-                           MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txWitnesses_3648
+                           MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txWitnesses_3660
                            (coe v1)))))
                (coe
                   MAlonzo.Code.Class.Decidable.Instances.du_Dec'45''215'_14
@@ -4183,17 +4183,17 @@ du_UTXOW'45'legacy'45'premises_3562 v0 v1 v2
                                     MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                               (coe MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_594)
                               (coe
-                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_vKeySigs_3760
+                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_vKeySigs_3772
                                  (coe
-                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txWitnesses_3648
+                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txWitnesses_3660
                                     (coe v1)))))
-                        (MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txGuards_3740
+                        (MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txGuards_3752
                            (coe
-                              MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3646
+                              MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3658
                               (coe v1)))
-                        (MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txVldt_3720
+                        (MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txVldt_3732
                            (coe
-                              MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3646
+                              MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3658
                               (coe v1))))
                      (coe
                         MAlonzo.Code.Axiom.Set.du_mapPartial_604
@@ -4236,15 +4236,15 @@ du_UTXOW'45'legacy'45'premises_3562 v0 v1 v2
                                             MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                                       (\ v4 -> MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30 (coe v4))
                                       (coe
-                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Validation.du_credsNeeded_3268
+                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Validation.du_credsNeeded_3270
                                          (coe v0)
                                          (coe
                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.C_TxLevelTop_10)
                                          (coe
-                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_utxo'8320'_3068
+                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_utxo'8320'_3070
                                             (coe v2))
                                          (coe v1)))))
-                           (MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_allScripts_3072
+                           (MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_allScripts_3074
                               (coe v2)))))
                   (coe
                      MAlonzo.Code.Class.Decidable.Instances.du_Dec'45''215'_14
@@ -4287,9 +4287,9 @@ du_UTXOW'45'legacy'45'premises_3562 v0 v1 v2
                                             MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                                       (coe MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_594)
                                       (coe
-                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_vKeySigs_3760
+                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_vKeySigs_3772
                                          (coe
-                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txWitnesses_3648
+                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txWitnesses_3660
                                             (coe v1)))))))
                         (coe
                            MAlonzo.Code.Axiom.Set.du_mapPartial_604
@@ -4305,12 +4305,12 @@ du_UTXOW'45'legacy'45'premises_3562 v0 v1 v2
                                     MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                               (\ v3 -> MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30 (coe v3))
                               (coe
-                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Validation.du_credsNeeded_3268
+                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Validation.du_credsNeeded_3270
                                  (coe v0)
                                  (coe
                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.C_TxLevelTop_10)
                                  (coe
-                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_utxo'8320'_3068
+                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_utxo'8320'_3070
                                     (coe v2))
                                  (coe v1)))))
                      (coe
@@ -4345,7 +4345,7 @@ du_UTXOW'45'legacy'45'premises_3562 v0 v1 v2
                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_scriptStructure_2150
                                                   (coe v0))))
                                          (coe
-                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.du_allWitnessScripts_4500
+                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.du_allWitnessScripts_4492
                                             (coe v1)))))
                               (coe
                                  MAlonzo.Code.Axiom.Set.du__'65340'__758
@@ -4371,10 +4371,10 @@ du_UTXOW'45'legacy'45'premises_3562 v0 v1 v2
                                          MAlonzo.Code.Ledger.Core.Specification.Address.du_isScriptObj_68
                                          (coe MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30 (coe v3)))
                                     (coe
-                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Validation.du_allCredsNeeded_3306
+                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Validation.du_allCredsNeeded_3308
                                        (coe v0)
                                        (coe
-                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_utxo'8320'_3068
+                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_utxo'8320'_3070
                                           (coe v2))
                                        (coe v1)))
                                  (coe
@@ -4388,10 +4388,10 @@ du_UTXOW'45'legacy'45'premises_3562 v0 v1 v2
                                           (coe
                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_scriptStructure_2150
                                              (coe v0))))
-                                    (MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_allReferenceScripts_4488
+                                    (MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_allReferenceScripts_4480
                                        (coe v0) (coe v1)
                                        (coe
-                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_utxo'8320'_3068
+                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_utxo'8320'_3070
                                           (coe v2))))))
                            (coe
                               MAlonzo.Code.Axiom.Set.du_Dec'45'All'738'_1682
@@ -4435,10 +4435,10 @@ du_UTXOW'45'legacy'45'premises_3562 v0 v1 v2
                                                     MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
                                                     (coe v4)))
                                             (coe
-                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Validation.du_allCredsNeeded_3306
+                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Validation.du_allCredsNeeded_3308
                                                (coe v0)
                                                (coe
-                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_utxo'8320'_3068
+                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_utxo'8320'_3070
                                                   (coe v2))
                                                (coe v1)))
                                          (coe
@@ -4452,10 +4452,10 @@ du_UTXOW'45'legacy'45'premises_3562 v0 v1 v2
                                                   (coe
                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_scriptStructure_2150
                                                      (coe v0))))
-                                            (MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_allReferenceScripts_4488
+                                            (MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_allReferenceScripts_4480
                                                (coe v0) (coe v1)
                                                (coe
-                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_utxo'8320'_3068
+                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_utxo'8320'_3070
                                                   (coe v2)))))))
                               (coe
                                  MAlonzo.Code.Axiom.Set.du_map_426
@@ -4469,7 +4469,7 @@ du_UTXOW'45'legacy'45'premises_3562 v0 v1 v2
                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_scriptStructure_2150
                                           (coe v0))))
                                  (coe
-                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.du_allWitnessScripts_4500
+                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.du_allWitnessScripts_4492
                                     (coe v1)))))
                         (coe
                            MAlonzo.Code.Class.Decidable.Instances.du_Dec'45''215'_14
@@ -4500,7 +4500,7 @@ du_UTXOW'45'legacy'45'premises_3562 v0 v1 v2
                                                (coe
                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_scriptStructure_2150
                                                   (coe v0))))
-                                         (MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_allScripts_3072
+                                         (MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_allScripts_3074
                                             (coe v2)))))
                               (coe
                                  MAlonzo.Code.Axiom.Set.du_mapPartial_604
@@ -4516,12 +4516,12 @@ du_UTXOW'45'legacy'45'premises_3562 v0 v1 v2
                                           MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                                     (\ v3 -> MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30 (coe v3))
                                     (coe
-                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Validation.du_credsNeeded_3268
+                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Validation.du_credsNeeded_3270
                                        (coe v0)
                                        (coe
                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.C_TxLevelTop_10)
                                        (coe
-                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_utxo'8320'_3068
+                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_utxo'8320'_3070
                                           (coe v2))
                                        (coe v1)))))
                            (coe
@@ -4566,9 +4566,9 @@ du_UTXOW'45'legacy'45'premises_3562 v0 v1 v2
                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_scriptStructure_2150
                                                               (coe v0)))))))
                                             (coe
-                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_DataOf_4110
+                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_DataOf_4122
                                                (coe
-                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.du_HasData'45'Tx_4404)
+                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.du_HasData'45'Tx_4396)
                                                v1))))
                                  (coe
                                     MAlonzo.Code.Axiom.Set.du_mapPartial_604
@@ -4595,7 +4595,7 @@ du_UTXOW'45'legacy'45'premises_3562 v0 v1 v2
                                               MAlonzo.Code.Agda.Primitive.d_lzero_20 erased
                                               MAlonzo.Code.Agda.Primitive.d_lzero_20 erased
                                               (coe
-                                                 MAlonzo.Code.Ledger.Prelude.du_lookupHash_124
+                                                 MAlonzo.Code.Ledger.Prelude.du_lookupHash_104
                                                  (coe
                                                     MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_210
                                                     (coe
@@ -4652,15 +4652,15 @@ du_UTXOW'45'legacy'45'premises_3562 v0 v1 v2
                                                                      MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
                                                                        (coe v6))
                                                                   (coe
-                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Validation.du_credsNeeded_3268
+                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Validation.du_credsNeeded_3270
                                                                      (coe v0)
                                                                      (coe
                                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.C_TxLevelTop_10)
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_utxo'8320'_3068
+                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_utxo'8320'_3070
                                                                         (coe v2))
                                                                      (coe v1)))))
-                                                       (MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_allScripts_3072
+                                                       (MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_allScripts_3074
                                                           (coe v2)))))
                                               (\ v5 ->
                                                  coe
@@ -4701,12 +4701,12 @@ du_UTXOW'45'legacy'45'premises_3562 v0 v1 v2
                                                 (MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_DecEq'45'Ix_1364
                                                    (coe v0))))
                                           (coe
-                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_utxo'8320'_3068
+                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_utxo'8320'_3070
                                              (coe v2))
                                           (coe
-                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txIns_3704
+                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txIns_3716
                                              (coe
-                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3646
+                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3658
                                                 (coe v1)))))))
                               (coe
                                  MAlonzo.Code.Class.Decidable.Instances.du_Dec'45''215'_14
@@ -4765,7 +4765,7 @@ du_UTXOW'45'legacy'45'premises_3562 v0 v1 v2
                                                             MAlonzo.Code.Agda.Primitive.d_lzero_20
                                                             erased
                                                             (coe
-                                                               MAlonzo.Code.Ledger.Prelude.du_lookupHash_124
+                                                               MAlonzo.Code.Ledger.Prelude.du_lookupHash_104
                                                                (coe
                                                                   MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_210
                                                                   (coe
@@ -4822,15 +4822,15 @@ du_UTXOW'45'legacy'45'premises_3562 v0 v1 v2
                                                                                    MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
                                                                                      (coe v7))
                                                                                 (coe
-                                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Validation.du_credsNeeded_3268
+                                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Validation.du_credsNeeded_3270
                                                                                    (coe v0)
                                                                                    (coe
                                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.C_TxLevelTop_10)
                                                                                    (coe
-                                                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_utxo'8320'_3068
+                                                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_utxo'8320'_3070
                                                                                       (coe v2))
                                                                                    (coe v1)))))
-                                                                     (MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_allScripts_3072
+                                                                     (MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_allScripts_3074
                                                                         (coe v2)))))
                                                             (\ v6 ->
                                                                coe
@@ -4877,12 +4877,12 @@ du_UTXOW'45'legacy'45'premises_3562 v0 v1 v2
                                                               (MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_DecEq'45'Ix_1364
                                                                  (coe v0))))
                                                         (coe
-                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_utxo'8320'_3068
+                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_utxo'8320'_3070
                                                            (coe v2))
                                                         (coe
-                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txIns_3704
+                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txIns_3716
                                                            (coe
-                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3646
+                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3658
                                                               (coe v1))))))
                                                (coe
                                                   MAlonzo.Code.Axiom.Set.du__'8746'__708
@@ -4896,7 +4896,7 @@ du_UTXOW'45'legacy'45'premises_3562 v0 v1 v2
                                                         (coe
                                                            MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                                                      (coe
-                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Validation.du_txOutToDataHash_3244)
+                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Validation.du_txOutToDataHash_3246)
                                                      (coe
                                                         MAlonzo.Code.Class.IsSet.du_range_588
                                                         (coe
@@ -4906,9 +4906,9 @@ du_UTXOW'45'legacy'45'premises_3562 v0 v1 v2
                                                         (coe
                                                            MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_594)
                                                         (coe
-                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txOuts_3710
+                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txOuts_3722
                                                            (coe
-                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3646
+                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3658
                                                               (coe v1)))))
                                                   (coe
                                                      MAlonzo.Code.Axiom.Set.du_mapPartial_604
@@ -4916,7 +4916,7 @@ du_UTXOW'45'legacy'45'premises_3562 v0 v1 v2
                                                         (coe
                                                            MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                                                      (coe
-                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Validation.du_txOutToDataHash_3244)
+                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Validation.du_txOutToDataHash_3246)
                                                      (coe
                                                         MAlonzo.Code.Class.IsSet.du_range_588
                                                         (coe
@@ -4946,12 +4946,12 @@ du_UTXOW'45'legacy'45'premises_3562 v0 v1 v2
                                                                  (MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_DecEq'45'Ix_1364
                                                                     (coe v0))))
                                                            (coe
-                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_utxo'8320'_3068
+                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_utxo'8320'_3070
                                                               (coe v2))
                                                            (coe
-                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_referenceInputs_3706
+                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_referenceInputs_3718
                                                               (coe
-                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3646
+                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3658
                                                                  (coe v1))))))))))
                                     (coe
                                        MAlonzo.Code.Axiom.Set.du_map_426
@@ -4971,9 +4971,9 @@ du_UTXOW'45'legacy'45'premises_3562 v0 v1 v2
                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_scriptStructure_2150
                                                          (coe v0)))))))
                                        (coe
-                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_DataOf_4110
+                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_DataOf_4122
                                           (coe
-                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.du_HasData'45'Tx_4404)
+                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.du_HasData'45'Tx_4396)
                                           v1)))
                                  (coe
                                     MAlonzo.Code.Class.Decidable.Instances.du_Dec'45''215'_14
@@ -5025,13 +5025,13 @@ du_UTXOW'45'legacy'45'premises_3562 v0 v1 v2
                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_scriptStructure_2150
                                                            (coe v0))
                                                         (coe
-                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_pparams_3064
+                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_pparams_3066
                                                            (coe v2))))
                                                   (coe
                                                      du_allowedLanguagesLegacy_3102 (coe v0)
                                                      (coe v1)
                                                      (coe
-                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_utxo'8320'_3068
+                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_utxo'8320'_3070
                                                         (coe v2))))))
                                        (coe
                                           du_languages_3098 (coe v0)
@@ -5078,15 +5078,15 @@ du_UTXOW'45'legacy'45'premises_3562 v0 v1 v2
                                                               MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
                                                                 (coe v4))
                                                            (coe
-                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Validation.du_credsNeeded_3268
+                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Validation.du_credsNeeded_3270
                                                               (coe v0)
                                                               (coe
                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.C_TxLevelTop_10)
                                                               (coe
-                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_utxo'8320'_3068
+                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_utxo'8320'_3070
                                                                  (coe v2))
                                                               (coe v1)))))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_allScripts_3072
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_allScripts_3074
                                                    (coe v2))))))
                                     (coe
                                        MAlonzo.Code.Class.Decidable.Instances.du_DecEq'8658'Dec_6
@@ -5098,9 +5098,9 @@ du_UTXOW'45'legacy'45'premises_3562 v0 v1 v2
                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_adHashingScheme_1356
                                                 (coe v0))))
                                        (coe
-                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txADhash_3722
+                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txADhash_3734
                                           (coe
-                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3646
+                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3658
                                              (coe v1)))
                                        (coe
                                           MAlonzo.Code.Class.Functor.Core.du_fmap_22
@@ -5113,14 +5113,14 @@ du_UTXOW'45'legacy'45'premises_3562 v0 v1 v2
                                                 (coe
                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_adHashingScheme_1356
                                                    (coe v0))))
-                                          (MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txAuxData_3654
+                                          (MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txAuxData_3666
                                              (coe v1))))))))))))))
 -- Ledger.Dijkstra.Specification.Utxow.SUBUTXOW-premises
 d_SUBUTXOW'45'premises_3564 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3060 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3626 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_SubUTxOEnv_3078 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3062 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3638 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_SubUTxOEnv_3080 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_SUBUTXOW'45'premises_3564 v0 v1 v2 v3
   = coe
@@ -5208,15 +5208,15 @@ d_SUBUTXOW'45'premises_3564 v0 v1 v2 v3
                                    MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                              (\ v5 -> MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30 (coe v5))
                              (coe
-                                MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Validation.du_credsNeeded_3268
+                                MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Validation.du_credsNeeded_3270
                                 (coe v0)
                                 (coe
                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.C_TxLevelSub_12)
                                 (coe
-                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_utxo'8320'_3100
+                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_utxo'8320'_3102
                                    (coe v3))
                                 (coe v2)))))
-                  (MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_allScripts_3104
+                  (MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_allScripts_3106
                      (coe v3)))))
          (coe
             MAlonzo.Code.Class.Decidable.Instances.du_Dec'45''215'_14
@@ -5236,17 +5236,17 @@ d_SUBUTXOW'45'premises_3564 v0 v1 v2 v3
                        (coe
                           MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txidBytes_2636
                           v0
-                          (MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txId_3712
+                          (MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txId_3724
                              (coe
-                                MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3646
+                                MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3658
                                 (coe v2))))
                        (MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30 (coe v4))))
                (coe
                   MAlonzo.Code.Axiom.Set.Map.du__'738'_570
                   (coe
-                     MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_vKeySigs_3760
+                     MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_vKeySigs_3772
                      (coe
-                        MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txWitnesses_3648
+                        MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txWitnesses_3660
                         (coe v2)))))
             (coe
                MAlonzo.Code.Class.Decidable.Instances.du_Dec'45''215'_14
@@ -5281,17 +5281,17 @@ d_SUBUTXOW'45'premises_3564 v0 v1 v2 v3
                                  MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                            (coe MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_594)
                            (coe
-                              MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_vKeySigs_3760
+                              MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_vKeySigs_3772
                               (coe
-                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txWitnesses_3648
+                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txWitnesses_3660
                                  (coe v2)))))
-                     (MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txGuards_3740
+                     (MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txGuards_3752
                         (coe
-                           MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3646
+                           MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3658
                            (coe v2)))
-                     (MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txVldt_3720
+                     (MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txVldt_3732
                         (coe
-                           MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3646
+                           MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3658
                            (coe v2))))
                   (coe
                      MAlonzo.Code.Axiom.Set.du_mapPartial_604
@@ -5334,15 +5334,15 @@ d_SUBUTXOW'45'premises_3564 v0 v1 v2 v3
                                          MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                                    (\ v5 -> MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30 (coe v5))
                                    (coe
-                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Validation.du_credsNeeded_3268
+                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Validation.du_credsNeeded_3270
                                       (coe v0)
                                       (coe
                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.C_TxLevelSub_12)
                                       (coe
-                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_utxo'8320'_3100
+                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_utxo'8320'_3102
                                          (coe v3))
                                       (coe v2)))))
-                        (MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_allScripts_3104
+                        (MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_allScripts_3106
                            (coe v3)))))
                (coe
                   MAlonzo.Code.Class.Decidable.Instances.du_Dec'45''215'_14
@@ -5353,12 +5353,12 @@ d_SUBUTXOW'45'premises_3564 v0 v1 v2 v3
                      (coe
                         du_TopLevelGuardWellFormed'63'_3156 (coe v0)
                         (coe
-                           MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_allScripts_3104
+                           MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_allScripts_3106
                            (coe v3)))
                      (coe
-                        MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txRequiredTopLevelGuards_3742
+                        MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txRequiredTopLevelGuards_3754
                         (coe
-                           MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3646
+                           MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3658
                            (coe v2))))
                   (coe
                      MAlonzo.Code.Class.Decidable.Instances.du_Dec'45''215'_14
@@ -5401,9 +5401,9 @@ d_SUBUTXOW'45'premises_3564 v0 v1 v2 v3
                                             MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                                       (coe MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_594)
                                       (coe
-                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_vKeySigs_3760
+                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_vKeySigs_3772
                                          (coe
-                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txWitnesses_3648
+                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txWitnesses_3660
                                             (coe v2)))))))
                         (coe
                            MAlonzo.Code.Axiom.Set.du_mapPartial_604
@@ -5419,12 +5419,12 @@ d_SUBUTXOW'45'premises_3564 v0 v1 v2 v3
                                     MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                               (\ v4 -> MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30 (coe v4))
                               (coe
-                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Validation.du_credsNeeded_3268
+                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Validation.du_credsNeeded_3270
                                  (coe v0)
                                  (coe
                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.C_TxLevelSub_12)
                                  (coe
-                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_utxo'8320'_3100
+                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_utxo'8320'_3102
                                     (coe v3))
                                  (coe v2)))))
                      (coe
@@ -5456,7 +5456,7 @@ d_SUBUTXOW'45'premises_3564 v0 v1 v2 v3
                                             (coe
                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_scriptStructure_2150
                                                (coe v0))))
-                                      (MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_allScripts_3104
+                                      (MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_allScripts_3106
                                          (coe v3)))))
                            (coe
                               MAlonzo.Code.Axiom.Set.du_mapPartial_604
@@ -5472,12 +5472,12 @@ d_SUBUTXOW'45'premises_3564 v0 v1 v2 v3
                                        MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                                  (\ v4 -> MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30 (coe v4))
                                  (coe
-                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Validation.du_credsNeeded_3268
+                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Validation.du_credsNeeded_3270
                                     (coe v0)
                                     (coe
                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.C_TxLevelSub_12)
                                     (coe
-                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_utxo'8320'_3100
+                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_utxo'8320'_3102
                                        (coe v3))
                                     (coe v2)))))
                         (coe
@@ -5522,9 +5522,9 @@ d_SUBUTXOW'45'premises_3564 v0 v1 v2 v3
                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_scriptStructure_2150
                                                            (coe v0)))))))
                                          (coe
-                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_DataOf_4110
+                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_DataOf_4122
                                             (coe
-                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.du_HasData'45'Tx_4404)
+                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.du_HasData'45'Tx_4396)
                                             v2))))
                               (coe
                                  MAlonzo.Code.Axiom.Set.du_mapPartial_604
@@ -5550,7 +5550,7 @@ d_SUBUTXOW'45'premises_3564 v0 v1 v2 v3
                                            MAlonzo.Code.Agda.Primitive.d_lzero_20 erased
                                            MAlonzo.Code.Agda.Primitive.d_lzero_20 erased
                                            (coe
-                                              MAlonzo.Code.Ledger.Prelude.du_lookupHash_124
+                                              MAlonzo.Code.Ledger.Prelude.du_lookupHash_104
                                               (coe
                                                  MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_210
                                                  (coe
@@ -5607,15 +5607,15 @@ d_SUBUTXOW'45'premises_3564 v0 v1 v2 v3
                                                                   MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
                                                                     (coe v7))
                                                                (coe
-                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Validation.du_credsNeeded_3268
+                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Validation.du_credsNeeded_3270
                                                                   (coe v0)
                                                                   (coe
                                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.C_TxLevelSub_12)
                                                                   (coe
-                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_utxo'8320'_3100
+                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_utxo'8320'_3102
                                                                      (coe v3))
                                                                   (coe v2)))))
-                                                    (MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_allScripts_3104
+                                                    (MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_allScripts_3106
                                                        (coe v3)))))
                                            (\ v6 ->
                                               coe
@@ -5656,12 +5656,12 @@ d_SUBUTXOW'45'premises_3564 v0 v1 v2 v3
                                              (MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_DecEq'45'Ix_1364
                                                 (coe v0))))
                                        (coe
-                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_utxo'8320'_3100
+                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_utxo'8320'_3102
                                           (coe v3))
                                        (coe
-                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txIns_3704
+                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txIns_3716
                                           (coe
-                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3646
+                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3658
                                              (coe v2)))))))
                            (coe
                               MAlonzo.Code.Class.Decidable.Instances.du_Dec'45''215'_14
@@ -5720,7 +5720,7 @@ d_SUBUTXOW'45'premises_3564 v0 v1 v2 v3
                                                          MAlonzo.Code.Agda.Primitive.d_lzero_20
                                                          erased
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Prelude.du_lookupHash_124
+                                                            MAlonzo.Code.Ledger.Prelude.du_lookupHash_104
                                                             (coe
                                                                MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_210
                                                                (coe
@@ -5777,15 +5777,15 @@ d_SUBUTXOW'45'premises_3564 v0 v1 v2 v3
                                                                                 MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
                                                                                   (coe v8))
                                                                              (coe
-                                                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Validation.du_credsNeeded_3268
+                                                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Validation.du_credsNeeded_3270
                                                                                 (coe v0)
                                                                                 (coe
                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.C_TxLevelSub_12)
                                                                                 (coe
-                                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_utxo'8320'_3100
+                                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_utxo'8320'_3102
                                                                                    (coe v3))
                                                                                 (coe v2)))))
-                                                                  (MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_allScripts_3104
+                                                                  (MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_allScripts_3106
                                                                      (coe v3)))))
                                                          (\ v7 ->
                                                             coe
@@ -5831,12 +5831,12 @@ d_SUBUTXOW'45'premises_3564 v0 v1 v2 v3
                                                            (MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_DecEq'45'Ix_1364
                                                               (coe v0))))
                                                      (coe
-                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_utxo'8320'_3100
+                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_utxo'8320'_3102
                                                         (coe v3))
                                                      (coe
-                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txIns_3704
+                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txIns_3716
                                                         (coe
-                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3646
+                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3658
                                                            (coe v2))))))
                                             (coe
                                                MAlonzo.Code.Axiom.Set.du__'8746'__708
@@ -5850,7 +5850,7 @@ d_SUBUTXOW'45'premises_3564 v0 v1 v2 v3
                                                      (coe
                                                         MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                                                   (coe
-                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Validation.du_txOutToDataHash_3244)
+                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Validation.du_txOutToDataHash_3246)
                                                   (coe
                                                      MAlonzo.Code.Class.IsSet.du_range_588
                                                      (coe
@@ -5860,9 +5860,9 @@ d_SUBUTXOW'45'premises_3564 v0 v1 v2 v3
                                                      (coe
                                                         MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_594)
                                                      (coe
-                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txOuts_3710
+                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txOuts_3722
                                                         (coe
-                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3646
+                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3658
                                                            (coe v2)))))
                                                (coe
                                                   MAlonzo.Code.Axiom.Set.du_mapPartial_604
@@ -5870,7 +5870,7 @@ d_SUBUTXOW'45'premises_3564 v0 v1 v2 v3
                                                      (coe
                                                         MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                                                   (coe
-                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Validation.du_txOutToDataHash_3244)
+                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Validation.du_txOutToDataHash_3246)
                                                   (coe
                                                      MAlonzo.Code.Class.IsSet.du_range_588
                                                      (coe
@@ -5900,12 +5900,12 @@ d_SUBUTXOW'45'premises_3564 v0 v1 v2 v3
                                                               (MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_DecEq'45'Ix_1364
                                                                  (coe v0))))
                                                         (coe
-                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_utxo'8320'_3100
+                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_utxo'8320'_3102
                                                            (coe v3))
                                                         (coe
-                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_referenceInputs_3706
+                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_referenceInputs_3718
                                                            (coe
-                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3646
+                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3658
                                                               (coe v2))))))))))
                                  (coe
                                     MAlonzo.Code.Axiom.Set.du_map_426
@@ -5925,9 +5925,9 @@ d_SUBUTXOW'45'premises_3564 v0 v1 v2 v3
                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_scriptStructure_2150
                                                       (coe v0)))))))
                                     (coe
-                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_DataOf_4110
+                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_DataOf_4122
                                        (coe
-                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.du_HasData'45'Tx_4404)
+                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.du_HasData'45'Tx_4396)
                                        v2)))
                               (coe
                                  MAlonzo.Code.Class.Decidable.Instances.du_Dec'45''215'_14
@@ -5961,7 +5961,7 @@ d_SUBUTXOW'45'premises_3564 v0 v1 v2 v3
                                                        (coe
                                                           MAlonzo.Code.Class.ToBool.du_ToBool'45'Maybe_100)
                                                        (coe
-                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Validation.du_credentialToP2Script_3248
+                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Validation.du_credentialToP2Script_3250
                                                           (coe v0)
                                                           (coe
                                                              MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
@@ -6002,15 +6002,15 @@ d_SUBUTXOW'45'premises_3564 v0 v1 v2 v3
                                                                            MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
                                                                              (coe v7))
                                                                         (coe
-                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Validation.du_credsNeeded_3268
+                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Validation.du_credsNeeded_3270
                                                                            (coe v0)
                                                                            (coe
                                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.C_TxLevelSub_12)
                                                                            (coe
-                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_utxo'8320'_3100
+                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_utxo'8320'_3102
                                                                               (coe v3))
                                                                            (coe v2)))))
-                                                             (MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_allScripts_3104
+                                                             (MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_allScripts_3106
                                                                 (coe v3))))
                                                        (coe
                                                           MAlonzo.Code.Level.C_lift_20
@@ -6019,7 +6019,7 @@ d_SUBUTXOW'45'premises_3564 v0 v1 v2 v3
                                                        (coe
                                                           (\ v6 ->
                                                              coe
-                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Validation.du_rdptr_3104
+                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Validation.du_rdptr_3106
                                                                (coe v0) (coe v1) (coe v2)
                                                                (coe
                                                                   MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
@@ -6029,12 +6029,12 @@ d_SUBUTXOW'45'premises_3564 v0 v1 v2 v3
                                                              coe
                                                                MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18)))
                                                   (coe
-                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Validation.du_credsNeeded_3268
+                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Validation.du_credsNeeded_3270
                                                      (coe v0)
                                                      (coe
                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.C_TxLevelSub_12)
                                                      (coe
-                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_utxo'8320'_3100
+                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_utxo'8320'_3102
                                                         (coe v3))
                                                      (coe v2)))))
                                        (coe
@@ -6045,9 +6045,9 @@ d_SUBUTXOW'45'premises_3564 v0 v1 v2 v3
                                                 MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                                           (coe MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_594)
                                           (coe
-                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txRedeemers_3766
+                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txRedeemers_3778
                                              (coe
-                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txWitnesses_3648
+                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txWitnesses_3660
                                                 (coe v2)))))
                                     (coe
                                        MAlonzo.Code.Axiom.Set.du_Dec'45'All'738'_1682
@@ -6074,9 +6074,9 @@ d_SUBUTXOW'45'premises_3564 v0 v1 v2 v3
                                                         MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                                                   (coe MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_594)
                                                   (coe
-                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txRedeemers_3766
+                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txRedeemers_3778
                                                      (coe
-                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txWitnesses_3648
+                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txWitnesses_3660
                                                         (coe v2))))))
                                        (coe
                                           MAlonzo.Code.Axiom.Set.du_mapPartial_604
@@ -6089,7 +6089,7 @@ d_SUBUTXOW'45'premises_3564 v0 v1 v2 v3
                                                (coe
                                                   MAlonzo.Code.Class.ToBool.du_ToBool'45'Maybe_100)
                                                (coe
-                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Validation.du_credentialToP2Script_3248
+                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Validation.du_credentialToP2Script_3250
                                                   (coe v0)
                                                   (coe
                                                      MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
@@ -6130,15 +6130,15 @@ d_SUBUTXOW'45'premises_3564 v0 v1 v2 v3
                                                                    MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
                                                                      (coe v6))
                                                                 (coe
-                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Validation.du_credsNeeded_3268
+                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Validation.du_credsNeeded_3270
                                                                    (coe v0)
                                                                    (coe
                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.C_TxLevelSub_12)
                                                                    (coe
-                                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_utxo'8320'_3100
+                                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_utxo'8320'_3102
                                                                       (coe v3))
                                                                    (coe v2)))))
-                                                     (MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_allScripts_3104
+                                                     (MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_allScripts_3106
                                                         (coe v3))))
                                                (coe
                                                   MAlonzo.Code.Level.C_lift_20
@@ -6146,7 +6146,7 @@ d_SUBUTXOW'45'premises_3564 v0 v1 v2 v3
                                                (coe
                                                   (\ v5 ->
                                                      coe
-                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Validation.du_rdptr_3104
+                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Validation.du_rdptr_3106
                                                        (coe v0) (coe v1) (coe v2)
                                                        (coe
                                                           MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
@@ -6156,12 +6156,12 @@ d_SUBUTXOW'45'premises_3564 v0 v1 v2 v3
                                                      coe
                                                        MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18)))
                                           (coe
-                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Validation.du_credsNeeded_3268
+                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Validation.du_credsNeeded_3270
                                              (coe v0)
                                              (coe
                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.C_TxLevelSub_12)
                                              (coe
-                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_utxo'8320'_3100
+                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_utxo'8320'_3102
                                                 (coe v3))
                                              (coe v2)))))
                                  (coe
@@ -6214,12 +6214,12 @@ d_SUBUTXOW'45'premises_3564 v0 v1 v2 v3
                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_scriptStructure_2150
                                                            (coe v0))
                                                         (coe
-                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_pparams_3096
+                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_pparams_3098
                                                            (coe v3))))
                                                   (coe
                                                      du_allowedLanguages_3108 (coe v0) (coe v2)
                                                      (coe
-                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_utxo'8320'_3100
+                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_utxo'8320'_3102
                                                         (coe v3))))))
                                        (coe
                                           du_languages_3098 (coe v0)
@@ -6266,15 +6266,15 @@ d_SUBUTXOW'45'premises_3564 v0 v1 v2 v3
                                                               MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
                                                                 (coe v5))
                                                            (coe
-                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Validation.du_credsNeeded_3268
+                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Validation.du_credsNeeded_3270
                                                               (coe v0)
                                                               (coe
                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.C_TxLevelSub_12)
                                                               (coe
-                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_utxo'8320'_3100
+                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_utxo'8320'_3102
                                                                  (coe v3))
                                                               (coe v2)))))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_allScripts_3104
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_allScripts_3106
                                                    (coe v3))))))
                                     (coe
                                        MAlonzo.Code.Class.Decidable.Instances.du_Dec'45''215'_14
@@ -6288,9 +6288,9 @@ d_SUBUTXOW'45'premises_3564 v0 v1 v2 v3
                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_adHashingScheme_1356
                                                    (coe v0))))
                                           (coe
-                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txADhash_3722
+                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txADhash_3734
                                              (coe
-                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3646
+                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3658
                                                 (coe v2)))
                                           (coe
                                              MAlonzo.Code.Class.Functor.Core.du_fmap_22
@@ -6303,7 +6303,7 @@ d_SUBUTXOW'45'premises_3564 v0 v1 v2 v3
                                                    (coe
                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_adHashingScheme_1356
                                                       (coe v0))))
-                                             (MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txAuxData_3654
+                                             (MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txAuxData_3666
                                                 (coe v2))))
                                        (coe
                                           MAlonzo.Code.Class.Decidable.Instances.du_DecEq'8658'Dec_6
@@ -6315,14 +6315,14 @@ d_SUBUTXOW'45'premises_3564 v0 v1 v2 v3
                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1360
                                                    (coe v0))))
                                           (coe
-                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_scriptIntegrityHash_3736
+                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_scriptIntegrityHash_3748
                                              (coe
-                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3646
+                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3658
                                                 (coe v2)))
                                           (coe
                                              d_hashScriptIntegrity_3114 (coe v0) (coe v1)
                                              (coe
-                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_pparams_3096
+                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_pparams_3098
                                                 (coe v3))
                                              (coe
                                                 du_languages_3098 (coe v0)
@@ -6369,30 +6369,30 @@ d_SUBUTXOW'45'premises_3564 v0 v1 v2 v3
                                                                     MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
                                                                       (coe v5))
                                                                  (coe
-                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Validation.du_credsNeeded_3268
+                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Validation.du_credsNeeded_3270
                                                                     (coe v0)
                                                                     (coe
                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.C_TxLevelSub_12)
                                                                     (coe
-                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_utxo'8320'_3100
+                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_utxo'8320'_3102
                                                                        (coe v3))
                                                                     (coe v2)))))
-                                                      (MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_allScripts_3104
+                                                      (MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_allScripts_3106
                                                          (coe v3)))))
                                              (coe
-                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txRedeemers_3766
+                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txRedeemers_3778
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txWitnesses_3648
+                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txWitnesses_3660
                                                    (coe v2)))
                                              (coe
-                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txData_3764
+                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txData_3776
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txWitnesses_3648
+                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txWitnesses_3660
                                                    (coe v2))))))))))))))))
 -- Ledger.Dijkstra.Specification.Utxow..generalizedField-txSub
 d_'46'generalizedField'45'txSub_56051 ::
   T_GeneralizeTel_56059 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3626
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3638
 d_'46'generalizedField'45'txSub_56051 v0
   = case coe v0 of
       C_mkGeneralizeTel_56061 v1 v2 v3 v4 -> coe v1
@@ -6400,7 +6400,7 @@ d_'46'generalizedField'45'txSub_56051 v0
 -- Ledger.Dijkstra.Specification.Utxow..generalizedField-Γ
 d_'46'generalizedField'45'Γ_56053 ::
   T_GeneralizeTel_56059 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_SubUTxOEnv_3078
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_SubUTxOEnv_3080
 d_'46'generalizedField'45'Γ_56053 v0
   = case coe v0 of
       C_mkGeneralizeTel_56061 v1 v2 v3 v4 -> coe v2
@@ -6408,7 +6408,7 @@ d_'46'generalizedField'45'Γ_56053 v0
 -- Ledger.Dijkstra.Specification.Utxow..generalizedField-s₀
 d_'46'generalizedField'45's'8320'_56055 ::
   T_GeneralizeTel_56059 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOState_3110
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOState_3112
 d_'46'generalizedField'45's'8320'_56055 v0
   = case coe v0 of
       C_mkGeneralizeTel_56061 v1 v2 v3 v4 -> coe v3
@@ -6416,7 +6416,7 @@ d_'46'generalizedField'45's'8320'_56055 v0
 -- Ledger.Dijkstra.Specification.Utxow..generalizedField-s₁
 d_'46'generalizedField'45's'8321'_56057 ::
   T_GeneralizeTel_56059 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOState_3110
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOState_3112
 d_'46'generalizedField'45's'8321'_56057 v0
   = case coe v0 of
       C_mkGeneralizeTel_56061 v1 v2 v3 v4 -> coe v4
@@ -6424,14 +6424,14 @@ d_'46'generalizedField'45's'8321'_56057 v0
 -- Ledger.Dijkstra.Specification.Utxow.GeneralizeTel
 d_GeneralizeTel_56059 a0 a1 = ()
 data T_GeneralizeTel_56059
-  = C_mkGeneralizeTel_56061 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3626
-                            MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_SubUTxOEnv_3078
-                            MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOState_3110
-                            MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOState_3110
+  = C_mkGeneralizeTel_56061 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3638
+                            MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_SubUTxOEnv_3080
+                            MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOState_3112
+                            MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOState_3112
 -- Ledger.Dijkstra.Specification.Utxow..generalizedField-txTop
 d_'46'generalizedField'45'txTop_73193 ::
   T_GeneralizeTel_73201 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3626
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3638
 d_'46'generalizedField'45'txTop_73193 v0
   = case coe v0 of
       C_mkGeneralizeTel_73203 v1 v2 v3 v4 -> coe v1
@@ -6439,7 +6439,7 @@ d_'46'generalizedField'45'txTop_73193 v0
 -- Ledger.Dijkstra.Specification.Utxow..generalizedField-Γ
 d_'46'generalizedField'45'Γ_73195 ::
   T_GeneralizeTel_73201 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOEnv_3046
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOEnv_3048
 d_'46'generalizedField'45'Γ_73195 v0
   = case coe v0 of
       C_mkGeneralizeTel_73203 v1 v2 v3 v4 -> coe v2
@@ -6447,7 +6447,7 @@ d_'46'generalizedField'45'Γ_73195 v0
 -- Ledger.Dijkstra.Specification.Utxow..generalizedField-s
 d_'46'generalizedField'45's_73197 ::
   T_GeneralizeTel_73201 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOState_3110
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOState_3112
 d_'46'generalizedField'45's_73197 v0
   = case coe v0 of
       C_mkGeneralizeTel_73203 v1 v2 v3 v4 -> coe v3
@@ -6455,7 +6455,7 @@ d_'46'generalizedField'45's_73197 v0
 -- Ledger.Dijkstra.Specification.Utxow..generalizedField-s'
 d_'46'generalizedField'45's''_73199 ::
   T_GeneralizeTel_73201 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOState_3110
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOState_3112
 d_'46'generalizedField'45's''_73199 v0
   = case coe v0 of
       C_mkGeneralizeTel_73203 v1 v2 v3 v4 -> coe v4
@@ -6463,14 +6463,14 @@ d_'46'generalizedField'45's''_73199 v0
 -- Ledger.Dijkstra.Specification.Utxow.GeneralizeTel
 d_GeneralizeTel_73201 a0 a1 = ()
 data T_GeneralizeTel_73201
-  = C_mkGeneralizeTel_73203 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3626
-                            MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOEnv_3046
-                            MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOState_3110
-                            MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOState_3110
+  = C_mkGeneralizeTel_73203 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3638
+                            MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOEnv_3048
+                            MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOState_3112
+                            MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOState_3112
 -- Ledger.Dijkstra.Specification.Utxow..generalizedField-txTop
 d_'46'generalizedField'45'txTop_89725 ::
   T_GeneralizeTel_89733 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3626
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3638
 d_'46'generalizedField'45'txTop_89725 v0
   = case coe v0 of
       C_mkGeneralizeTel_89735 v1 v2 v3 v4 -> coe v1
@@ -6478,7 +6478,7 @@ d_'46'generalizedField'45'txTop_89725 v0
 -- Ledger.Dijkstra.Specification.Utxow..generalizedField-Γ
 d_'46'generalizedField'45'Γ_89727 ::
   T_GeneralizeTel_89733 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOEnv_3046
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOEnv_3048
 d_'46'generalizedField'45'Γ_89727 v0
   = case coe v0 of
       C_mkGeneralizeTel_89735 v1 v2 v3 v4 -> coe v2
@@ -6486,7 +6486,7 @@ d_'46'generalizedField'45'Γ_89727 v0
 -- Ledger.Dijkstra.Specification.Utxow..generalizedField-s
 d_'46'generalizedField'45's_89729 ::
   T_GeneralizeTel_89733 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOState_3110
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOState_3112
 d_'46'generalizedField'45's_89729 v0
   = case coe v0 of
       C_mkGeneralizeTel_89735 v1 v2 v3 v4 -> coe v3
@@ -6494,7 +6494,7 @@ d_'46'generalizedField'45's_89729 v0
 -- Ledger.Dijkstra.Specification.Utxow..generalizedField-s'
 d_'46'generalizedField'45's''_89731 ::
   T_GeneralizeTel_89733 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOState_3110
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOState_3112
 d_'46'generalizedField'45's''_89731 v0
   = case coe v0 of
       C_mkGeneralizeTel_89735 v1 v2 v3 v4 -> coe v4
@@ -6502,7 +6502,7 @@ d_'46'generalizedField'45's''_89731 v0
 -- Ledger.Dijkstra.Specification.Utxow.GeneralizeTel
 d_GeneralizeTel_89733 a0 a1 = ()
 data T_GeneralizeTel_89733
-  = C_mkGeneralizeTel_89735 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3626
-                            MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOEnv_3046
-                            MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOState_3110
-                            MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOState_3110
+  = C_mkGeneralizeTel_89735 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3638
+                            MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOEnv_3048
+                            MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOState_3112
+                            MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOState_3112
