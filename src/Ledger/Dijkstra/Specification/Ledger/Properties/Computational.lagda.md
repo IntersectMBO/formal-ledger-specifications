@@ -193,14 +193,8 @@ instance
       govΓ : CertState → GovEnv
       govΓ certSt = ⟦ TxIdOf txTop , epoch slot , pparams , ppolicy , enactState , certSt , dom (RewardsOf certSt) ⟧
 
-      utxoΓ-valid : CertState → CertState → UTxOEnv
-      utxoΓ-valid certSt₁ certSt₂ =
-        ⟦ slot , pparams , treasury , utxo₀
-        , calculateDepositsChange certState certSt₁ certSt₂
-        , allScripts , RewardsOf certState ⟧
-
-      utxoΓ-invalid : UTxOEnv
-      utxoΓ-invalid = ⟦ slot , pparams , treasury , utxo₀ , ⟦ 0ℤ , 0ℤ ⟧ , allScripts , RewardsOf certState ⟧
+      utxoΓ : UTxOEnv
+      utxoΓ = ⟦ slot , pparams , treasury , utxo₀ , certState , allScripts , RewardsOf certState ⟧
 ```
 -->
 
@@ -215,11 +209,11 @@ instance
           (s₁      , subStep)  ← computeSubledgers subΓ s (SubTransactionsOf txTop)
           (certSt₂ , certStep) ← computeEntities (certΓ (GovStateOf s₁)) (CertStateOf s₁) (DCertsOf txTop)
           (govSt₂  , govStep)  ← computeGov (govΓ certSt₂) (GovStateOf s₁) (GovProposals+Votes txTop)
-          (utxoSt₂ , utxoStep) ← computeUtxow (utxoΓ-valid (CertStateOf s₁) certSt₂) (UTxOStateOf s₁) txTop
+          (utxoSt₂ , utxoStep) ← computeUtxow utxoΓ (UTxOStateOf s₁) txTop
           success (_ , LEDGER-V (p , subStep , certStep , govStep , utxoStep))
         (no ¬p) → do
           (s₁      , subStep)  ← computeSubledgers subΓ s (SubTransactionsOf txTop)
-          (utxoSt₁ , utxoStep) ← computeUtxow utxoΓ-invalid utxoSt txTop
+          (utxoSt₁ , utxoStep) ← computeUtxow utxoΓ utxoSt txTop
           let subStep' = subst (subΓ ⊢ s ⇀⦇ SubTransactionsOf txTop ,SUBLEDGERS⦈_)
                                (SUBLEDGERS-noop (¬-not ¬p) subStep) subStep
           success (_ , LEDGER-I (¬-not ¬p , subStep' , utxoStep))
@@ -233,8 +227,8 @@ instance
 <!--
 ```agda
       completeness ledgerSt
-        (LEDGER-V {certState₁ = certSt₁} {certSt₂} {utxoState₁ = utxoSt₁} {govSt₁} {govSt₂} {utxoSt₂}
-                  (v , subStep , entitiesStep , govStep , utxoStep))
+        (LEDGER-V {utxoState₁ = utxoSt₁} {govSt₁} {certSt₁} {certSt₂} {govSt₂} {utxoSt₂}
+        (v , subStep , entitiesStep , govStep , utxoStep))
         with IsValidFlagOf txTop ≟ true
       ... | no ¬v = contradiction v ¬v
       ... | yes refl
@@ -248,8 +242,8 @@ instance
         with computeGov (govΓ certSt₂) govSt₁ (GovProposals+Votes txTop)
            | complete {STS = _⊢_⇀⦇_,GOVS⦈_} (govΓ certSt₂) govSt₁ (GovProposals+Votes txTop) govSt₂ govStep
       ... | success (govSt₂ , _) | refl
-        with computeUtxow (utxoΓ-valid certSt₁ certSt₂) utxoSt₁ txTop
-           | complete {STS = _⊢_⇀⦇_,UTXOW⦈_} (utxoΓ-valid certSt₁ certSt₂) utxoSt₁ txTop utxoSt₂ utxoStep
+        with computeUtxow utxoΓ utxoSt₁ txTop
+           | complete {STS = _⊢_⇀⦇_,UTXOW⦈_} utxoΓ utxoSt₁ txTop utxoSt₂ utxoStep
       ... | success (utxoSt₂ , _) | refl = refl
       completeness ledgerSt
         (LEDGER-I {utxoState₁ = utxoSt₁} (i , subStep , utxoStep))
@@ -259,8 +253,8 @@ instance
         with computeSubledgers subΓ s (SubTransactionsOf txTop)
            | complete {STS = _⊢_⇀⦇_,SUBLEDGERS⦈_} subΓ s (SubTransactionsOf txTop) s subStep
       ... | success _ | refl
-        with computeUtxow utxoΓ-invalid utxoSt txTop
-           | complete {STS = _⊢_⇀⦇_,UTXOW⦈_} utxoΓ-invalid utxoSt txTop utxoSt₁ utxoStep
+        with computeUtxow utxoΓ utxoSt txTop
+           | complete {STS = _⊢_⇀⦇_,UTXOW⦈_} utxoΓ utxoSt txTop utxoSt₁ utxoStep
       ... | success _ | refl = refl
 
 Computational-LEDGERS : Computational _⊢_⇀⦇_,LEDGERS⦈_ String

@@ -380,6 +380,10 @@ could be either of them.
     field DCertsOf : A → List DCert
   open HasDCerts ⦃...⦄ public
 
+  record HasGovProposals {a} (A : Type a) : Type a where
+    field GovProposalsOf : A → List GovProposal
+  open HasGovProposals ⦃...⦄ public
+
   record HasData {a} (A : Type a) : Type a where
     field DataOf : A → ℙ Datum
   open HasData ⦃...⦄ public
@@ -722,6 +726,10 @@ allowed to inspect utxo for its inputs.
     foldl  (λ acc txSub → acc ∪⁺ WithdrawalsOf txSub)
            (WithdrawalsOf txTop)
            (SubTransactionsOf txTop)
+
+  -- Batch-wide certificates
+  allDCerts : TopLevelTx → List DCert
+  allDCerts txTop = concatMap DCertsOf (SubTransactionsOf txTop) ++ DCertsOf txTop
 ```
 
 

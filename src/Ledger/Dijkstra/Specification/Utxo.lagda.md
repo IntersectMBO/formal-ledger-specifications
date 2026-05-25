@@ -43,6 +43,7 @@ open import Ledger.Dijkstra.Specification.Certs govStructure
 open import Ledger.Dijkstra.Specification.Script.Validation txs abs
 open import Ledger.Dijkstra.Specification.Fees using (scriptsCost)
 
+open import Data.Maybe using (fromMaybe)
 import Data.List.Relation.Unary.All as List
 import Data.List.Relation.Unary.AllPairs as List
 import Data.List.Relation.Unary.Any as List
@@ -70,18 +71,13 @@ The UTxO rules are parameterised by an environment `UTxOEnv`{.AgdaRecord} and an
 evolving state `UTxOState`{.AgdaRecord}.
 
 ```agda
-record DepositsChange : Type where
-  field
-    depositsChangeTop : ℤ
-    depositsChangeSub : ℤ
-
 record UTxOEnv : Type where
   field
     slot              : Slot
     pparams           : PParams
     treasury          : Treasury
     utxo₀             : UTxO
-    depositsChange    : DepositsChange
+    certState         : CertState
     allScripts        : ℙ Script
     accountBalances   : Rewards
 
@@ -138,10 +134,6 @@ record HasIsTopLevelValidFlag {a} (A : Type a) : Type a where
   field IsTopLevelValidFlagOf : A → Bool
 open HasIsTopLevelValidFlag ⦃...⦄ public
 
-record HasDepositsChange {a} (A : Type a) : Type a where
-  field DepositsChangeOf : A → DepositsChange
-open HasDepositsChange ⦃...⦄ public
-
 record HasScriptPool {a} (A : Type a) : Type a where
   field ScriptPoolOf : A → ℙ Script
 open HasScriptPool ⦃...⦄ public
@@ -171,8 +163,8 @@ instance
   HasUTxO-UTxOEnv : HasUTxO UTxOEnv
   HasUTxO-UTxOEnv .UTxOOf = UTxOEnv.utxo₀
 
-  HasDepositsChange-UTxOEnv : HasDepositsChange UTxOEnv
-  HasDepositsChange-UTxOEnv .DepositsChangeOf = UTxOEnv.depositsChange
+  HasCertState-UTxOEnv : HasCertState UTxOEnv
+  HasCertState-UTxOEnv .CertStateOf = UTxOEnv.certState
 
   HasScriptPool-UTxOEnv : HasScriptPool UTxOEnv
   HasScriptPool-UTxOEnv .ScriptPoolOf = UTxOEnv.allScripts
@@ -210,15 +202,12 @@ instance
   HasDonations-UTxOState : HasDonations UTxOState
   HasDonations-UTxOState .DonationsOf = UTxOState.donations
 
-  unquoteDecl HasCast-DepositsChange
-              HasCast-UTxOEnv
+  unquoteDecl HasCast-UTxOEnv
               HasCast-SubUTxOEnv
               HasCast-UTxOState = derive-HasCast
-    ( (quote DepositsChange , HasCast-DepositsChange  ) ∷
-      (quote UTxOEnv        , HasCast-UTxOEnv  ) ∷
+    ( (quote UTxOEnv        , HasCast-UTxOEnv  ) ∷
       (quote SubUTxOEnv     , HasCast-SubUTxOEnv  ) ∷
     [ (quote UTxOState      , HasCast-UTxOState) ])
-
 
 private
   variable
@@ -293,6 +282,7 @@ isAdaOnly v = policies v ≡ᵉ coinPolicies
 ```
 -->
 
+### Collateral Check
 ```agda
 collateralCheck : PParams → TopLevelTx → UTxO → Type
 collateralCheck pp txTop utxo =
@@ -300,36 +290,145 @@ collateralCheck pp txTop utxo =
   × isAdaOnly (balance (utxo ∣ CollateralInputsOf txTop))
   × coin (balance (utxo ∣ CollateralInputsOf txTop)) * 100 ≥ (TxFeesOf txTop) * pp .collateralPercentage
   × (CollateralInputsOf txTop) ≢ ∅
+```
 
-module _ (depositsChange : DepositsChange) where
+### Change in Deposits
 
-  open DepositsChange depositsChange
+```agda
+module _ (pp : PParams) (certState : CertState) where
 
-  depositRefundsSub : Coin
-  depositRefundsSub = negPart depositsChangeSub
+  updateCertDeposit : DCert
+    → (Credential ⇀ Coin) × (KeyHash ⇀ Coin) × (Credential ⇀ Coin)
+    → (Credential ⇀ Coin) × (KeyHash ⇀ Coin) × (Credential ⇀ Coin)
+  updateCertDeposit cert (depositsᵈ , depositsᵖ , depositsᵍ) =
+    case cert of λ where
+      (delegate c _ _ d) → (depositsᵈ ∪⁺ ❴ c , d ❵ , depositsᵖ , depositsᵍ)
+      (dereg c _       ) → (depositsᵈ ∣ ❴ c ❵ ᶜ    , depositsᵖ , depositsᵍ)
+      (regpool kh _    ) → (depositsᵈ , depositsᵖ ∪ˡ ❴ kh , pp .poolDeposit ❵ , depositsᵍ)
+      (regdrep c d _   ) → (depositsᵈ , depositsᵖ , depositsᵍ ∪⁺ ❴ c , d ❵)
+      (deregdrep c _   ) → (depositsᵈ , depositsᵖ , depositsᵍ ∣ ❴ c ❵ ᶜ)
+      _                  → (depositsᵈ , depositsᵖ , depositsᵍ)
 
-  newDepositsSub : Coin
-  newDepositsSub = posPart depositsChangeSub
+  updateCertDeposits : List DCert → CertState
+  updateCertDeposits =
+    foldr (λ c certState → let open CertState certState
+                               (depositsᵈ , depositsᵖ , depositsᵍ) = updateCertDeposit c ( DepositsOf dState
+                                                                                         , DepositsOf pState
+                                                                                         , DepositsOf gState)
+                           in ⟦ record dState { deposits = depositsᵍ }
+                              , record pState { deposits = depositsᵖ }
+                              , record gState { deposits = depositsᵍ } ⟧)
+          certState
 
-  newDepositsTop : Coin
-  newDepositsTop = posPart depositsChangeTop
+  coinFromDeposits : CertState → Coin
+  coinFromDeposits certState =
+      getCoin (DepositsOf (DStateOf certState))
+    + getCoin (DepositsOf (PStateOf certState))
+    + getCoin (DepositsOf (GStateOf certState))
 
-  depositRefundsTop : Coin
-  depositRefundsTop = negPart depositsChangeTop
+  depositsChange : List DCert → ℤ
+  depositsChange certs = coinFromDeposits (updateCertDeposits certs) - coinFromDeposits certState
+
+  newCertDeposits : List DCert → Coin
+  newCertDeposits certs = posPart (depositsChange certs)
+
+  refundCertDeposits : List DCert → Coin
+  refundCertDeposits certs = negPart (depositsChange certs)
+
+module _ (pp : PParams) where
+  govProposalsDeposits : List GovProposal → Coin
+  govProposalsDeposits = foldl (λ acc _ → acc + pp .govActionDeposit) 0
+```
+
+#### Design Note: Cert-State Threading and Deposit Accounting
+
+This subsection accompanies the new `updateCertDeposit`{.AgdaFunction} family of
+functions above and explains the design choice that led to them.  Anyone
+modifying `updateCertDeposit`{.AgdaFunction} (or the `CERT`{.AgdaDatatype}
+sub-rules `DELEG`{.AgdaDatatype}, `POOL`{.AgdaDatatype}, or
+`GOVCERT`{.AgdaDatatype}) should read this section first.
+
+##### What changed
+
+Previously, the `LEDGER`{.AgdaDatatype} rule computed a `DepositsChange`{.AgdaRecord}
+record at the top level — holding precomputed `posPart`/`negPart` summands for the
+top-level and sub-level deposit deltas — and folded that record into
+`UTxOEnv`{.AgdaRecord} for use by `consumedBatch`{.AgdaFunction} and
+`producedBatch`{.AgdaFunction}.  Now, `UTxOEnv`{.AgdaRecord} instead carries the
+*pre-batch* `CertState`{.AgdaRecord} directly, and the `UTXO`{.AgdaDatatype} rule
+recomputes deposit deltas on the fly from the certificates in the transaction batch.
+
+The motivation is structural: by passing the actual `CertState`{.AgdaRecord} rather
+than a precomputed delta, downstream proofs (notably the preservation-of-value proof
+in `Ledger.Properties.PoV`{.AgdaModule}) can relate the UTxO-side deposit accounting
+to the genuine `CertState`{.AgdaRecord} evolution produced by the
+`ENTITIES`{.AgdaDatatype}/`CERT`{.AgdaDatatype} rules without intermediating through
+`posPart`/`negPart` algebra.  Gov-proposal deposits also enter this picture
+naturally, which is why `govProposalsDeposits`{.AgdaFunction} was added at the same
+time.
+
+##### Promoting the UTxO rule
+
+A consequence of this change is that the `UTXO`{.AgdaDatatype} rule has been promoted
+from a *consumer* of `CertState`{.AgdaRecord} data (it used to receive a precomputed
+`DepositsChange`{.AgdaRecord}) to a *secondary executor* of certificate accounting.
+The `updateCertDeposit`{.AgdaFunction} function in this module *recomputes*, from a
+list of `DCerts`{.AgdaDatatype} and a starting `CertState`{.AgdaRecord}, what the
+deposits of the resulting `CertState`{.AgdaRecord} should be.
+
+As such, the certificate-deposit logic now exists in two places:
+
++  inside the `CERT`{.AgdaDatatype} sub-rules `DELEG`{.AgdaDatatype},
+   `POOL`{.AgdaDatatype}, and `GOVCERT`{.AgdaDatatype} in
+   [`Certs.lagda.md`][Dijkstra Certs], where each constructor's *result state*
+   determines how the deposits evolve as part of the operational
+   semantics;
++  inside `updateCertDeposit`{.AgdaFunction} in this module, where the
+   same evolution is recomputed in closed form against the *pre-batch*
+   `CertState`{.AgdaRecord}, for use in the `UTXO`{.AgdaDatatype} batch
+   balance equation.
+
+The function `updateCertDeposit`{.AgdaFunction} is a deliberate parallel to the
+existing logic inside the `CERT`{.AgdaDatatype} sub-rules.  Cases must correspond
+constructor-for-constructor; the exact `Coin`{.AgdaDatatype} update at each cert must
+agree.
+
+(Any drift between the two implementations is a soundness problem.  If
+`updateCertDeposit`{.AgdaFunction} computes a different deposit update for, say,
+`regdrep c d _` than the `GOVCERT-regdrep`{.AgdaInductiveConstructor} constructor in
+the `Certs` module does, then the `UTXO`{.AgdaDatatype} batch balance equation will
+admit transactions whose actual `CertState`{.AgdaRecord} evolution doesn't balance;
+i.e., transactions that create or destroy value out of thin air.
+
+The consistency obligation can be stated precisely as a lemma to be
+proved alongside `LEDGER-pov`{.AgdaFunction}:
+
+    updateCertDeposits-consistent :
+      ∀ {Γ : CertEnv} {s s' : CertState} {dCerts : List DCert}
+        → Γ ⊢ s ⇀⦇ dCerts ,CERTS⦈ s'
+        → updateCertDeposits (PParamsOf Γ) s dCerts ≡ s'
+
+---
+
+### Consumed and Produced
+
+```agda
+
+module _ (pp : PParams) (certState : CertState) where
 
   consumedTx : Tx ℓ → UTxO → Value
   consumedTx tx utxo = balance (utxo ∣ SpendInputsOf tx)
                        + MintedValueOf tx
                        + inject (getCoin (WithdrawalsOf tx))
+                       + inject (govProposalsDeposits pp (ListOfGovProposalsOf tx))
 
   consumed : TopLevelTx → UTxO → Value
   consumed txTop utxo = consumedTx txTop utxo
-                        + inject depositRefundsTop
+                       + inject (newCertDeposits pp certState (allDCerts txTop))
 
   consumedBatch : TopLevelTx → UTxO → Value
   consumedBatch txTop utxo = consumed txTop utxo
                              + ∑ˡ[ stx ← SubTransactionsOf txTop ] (consumedTx stx utxo)
-                             + inject depositRefundsSub
 ```
 
 Direct deposits can be made into account addresses.
@@ -346,12 +445,11 @@ the transaction and that amount is deposited into accounts.
   produced : TopLevelTx → Value
   produced txTop = producedTx txTop
                    + inject (TxFeesOf txTop)
-                   + inject newDepositsTop
+                   + inject (refundCertDeposits pp certState (allDCerts txTop))
 
   producedBatch : TopLevelTx → Value
   producedBatch txTop = produced txTop
                         + ∑ˡ[ stx ← SubTransactionsOf txTop ] (producedTx stx)
-                        + inject newDepositsSub
 ```
 
 ## CIP-159 Notes
@@ -556,8 +654,8 @@ data _⊢_⇀⦇_,UTXO⦈_ : UTxOEnv × Bool → UTxOState → TopLevelTx → UT
     ∙ inInterval (SlotOf Γ) (ValidIntervalOf txTop)
     ∙ minfee (PParamsOf Γ) txTop (UTxOOf Γ) ≤ TxFeesOf txTop
     ∙ coin (MintedValueOf txTop) ≡ 0
-    ∙ consumedBatch (DepositsChangeOf Γ) txTop (UTxOOf Γ) ≡ producedBatch (DepositsChangeOf Γ) txTop
-    ∙ (legacyMode ≡ true → consumed (DepositsChangeOf Γ) txTop (UTxOOf Γ) ≡ produced (DepositsChangeOf Γ) txTop)  -- (4)
+    ∙ consumedBatch (PParamsOf Γ) (CertStateOf Γ) txTop (UTxOOf Γ) ≡ producedBatch (PParamsOf Γ) (CertStateOf Γ) txTop
+    ∙ (legacyMode ≡ true → consumed (PParamsOf Γ) (CertStateOf Γ) txTop (UTxOOf Γ) ≡ produced (PParamsOf Γ) (CertStateOf Γ) txTop)  -- (4)
     ∙ SizeOf txTop ≤ maxTxSize (PParamsOf Γ)
     ∙ ∑ˡ[ x ← setToList (allReferenceScripts txTop (UTxOOf Γ)) ] scriptSize x ≤ (PParamsOf Γ) .maxRefScriptSizePerTx
     ∙ ((RedeemersOf txTop ˢ ≢ ∅) ⊎ (List.Any (λ txSub → RedeemersOf txSub ˢ ≢ ∅) (SubTransactionsOf txTop))

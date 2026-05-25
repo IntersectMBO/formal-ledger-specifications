@@ -174,31 +174,6 @@ rmOrphanDRepVotes cs govSt = L.map (map₂ go) govSt
 allColdCreds : GovState → EnactState → ℙ Credential
 allColdCreds govSt es =
   ccCreds (es .cc) ∪ concatMapˢ (λ (_ , st) → proposedCC (GovActionOf st)) (fromList govSt)
-
-calculateDepositsChange : CertState → CertState → CertState → DepositsChange
-calculateDepositsChange certState₀ certState₁ certState₂
-  = ⟦ coinChangeTop , coinChangeSub ⟧
-  where
-    coinFromDeposit : CertState → Coin
-    coinFromDeposit certState =
-      getCoin (DepositsOf (DStateOf certState))
-      + getCoin (DepositsOf (PStateOf certState))
-      + getCoin (DepositsOf (GStateOf certState))
-
-    coin₀ : Coin
-    coin₀ = coinFromDeposit certState₀
-
-    coin₁ : Coin
-    coin₁ = coinFromDeposit certState₁
-
-    coin₂ : Coin
-    coin₂ = coinFromDeposit certState₂
-
-    coinChangeSub : ℤ
-    coinChangeSub = coin₁ - coin₀
-
-    coinChangeTop : ℤ
-    coinChangeTop = coin₂ - coin₁
 ```
 
 ## <span class="AgdaDatatype">LEDGER</span> Transition System
@@ -310,15 +285,12 @@ data _⊢_⇀⦇_,LEDGER⦈_ : LedgerEnv → LedgerState → TopLevelTx → Ledg
 
          allScripts : ℙ Script
          allScripts = getAllScripts tx utxo₀
-
-         depositsChange : DepositsChange
-         depositsChange = calculateDepositsChange certState₀ certState₁ certState₂
     in
       ∙ IsValidFlagOf tx ≡ true
       ∙ ⟦ slot , ppolicy , pp , enactState , treasury , utxo₀ , IsValidFlagOf tx , allScripts , RewardsOf certState₀ ⟧ ⊢ ⟦ utxoState₀ , govState₀ , certState₀ ⟧ ⇀⦇ SubTransactionsOf tx ,SUBLEDGERS⦈ ⟦ utxoState₁ , govState₁ , certState₁ ⟧
       ∙ ⟦ epoch slot , pp , ListOfGovVotesOf tx , WithdrawalsOf tx , allColdCreds govState₁ enactState , DirectDepositsOf tx ⟧ ⊢ certState₁ ⇀⦇ DCertsOf tx ,ENTITIES⦈ certState₂
       ∙ ⟦ TxIdOf tx , epoch slot , pp , ppolicy , enactState , certState₂ , dom (RewardsOf certState₂) ⟧ ⊢ govState₁ ⇀⦇ GovProposals+Votes tx ,GOVS⦈ govState₂
-      ∙ ⟦ slot , pp , treasury , utxo₀ , depositsChange , allScripts , RewardsOf certState₀ ⟧ ⊢ utxoState₁ ⇀⦇ tx ,UTXOW⦈ utxoState₂
+      ∙ ⟦ slot , pp , treasury , utxo₀ , certState₀ , allScripts , RewardsOf certState₀ ⟧ ⊢ utxoState₁ ⇀⦇ tx ,UTXOW⦈ utxoState₂
         ────────────────────────────────
         ⟦ slot , ppolicy , pp , enactState , treasury ⟧ ⊢ ⟦ utxoState₀ , govState₀ , certState₀ ⟧ ⇀⦇ tx ,LEDGER⦈ ⟦ utxoState₂ , rmOrphanDRepVotes certState₂ govState₂ , certState₂ ⟧
 
@@ -331,7 +303,7 @@ data _⊢_⇀⦇_,LEDGER⦈_ : LedgerEnv → LedgerState → TopLevelTx → Ledg
     in
       ∙ IsValidFlagOf tx ≡ false
       ∙ ⟦ slot , ppolicy , pp , enactState , treasury , utxo₀ , IsValidFlagOf tx , allScripts , RewardsOf certState₀ ⟧ ⊢ ⟦ utxoState₀ , govState₀ , certState₀ ⟧ ⇀⦇ SubTransactionsOf tx ,SUBLEDGERS⦈ ⟦ utxoState₀ , govState₀ , certState₀ ⟧
-      ∙ ⟦ slot , pp , treasury , utxo₀ , ⟦ 0ℤ , 0ℤ ⟧ , allScripts , RewardsOf certState₀ ⟧ ⊢ utxoState₀ ⇀⦇ tx ,UTXOW⦈ utxoState₁
+      ∙ ⟦ slot , pp , treasury , utxo₀ , certState₀ , allScripts , RewardsOf certState₀ ⟧ ⊢ utxoState₀ ⇀⦇ tx ,UTXOW⦈ utxoState₁
         ────────────────────────────────
         ⟦ slot , ppolicy , pp , enactState , treasury ⟧ ⊢ ⟦ utxoState₀ , govState₀ , certState₀ ⟧ ⇀⦇ tx ,LEDGER⦈ ⟦ utxoState₁ , govState₀ , certState₀ ⟧
 

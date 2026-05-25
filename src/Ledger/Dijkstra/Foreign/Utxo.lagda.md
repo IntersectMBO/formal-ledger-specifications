@@ -33,10 +33,6 @@ private
   toHsConstr c = if c ≟ "utxo₀" then "utxo0" else c
 
 instance
-  HsTy-DepositsChange = autoHsType DepositsChange ⊣ withConstructor "MkDepositsChange"
-                                                    • fieldPrefix "dc"
-  Conv-DepositsChange = autoConvert DepositsChange
-
   HsTy-UTxOEnv = autoHsType UTxOEnv ⊣ withConstructor "MkUTxOEnv"
                                       • fieldPrefix "ue"
                                       • onConstructors toHsConstr
