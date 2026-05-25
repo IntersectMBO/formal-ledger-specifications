@@ -62,7 +62,7 @@ a target.
 watchMode :: IO ()
 watchMode = do
   root <- Dir.canonicalizePath "."
-  shakeWithDatabase shakeOptions (lagdamd2md True) $ \db -> do
+  shakeWithDatabase shakeOptions lagdamd2md $ \db -> do
     _ <- Watch.withManager $ \mgr ->
       do
         changedFiles <- newChan
@@ -212,25 +212,13 @@ htmlRule =
 -- Markdown
 ------------------------------------------------------------------------------
 
--- | List of folder paths of library extension files
-libExts :: [FilePath]
-libExts =
-  [ "iog-prelude"
-  , "stdlib"
-  , "stdlib-classes"
-  , "stdlib-meta"
-  ]
-
 {- | Process literate Markdown Agda files using Agda
 The target is a *.md file in _build/mkdocs/docs
 Its dependency is a .lagda.md file in either src or src-lib-exts
-Main only is intended to use in filewatch mode
+Intended to use in filewatch mode only.
 -}
-lagdamd2md ::
-  -- | Main only mode?
-  Bool ->
-  Rules ()
-lagdamd2md mainOnly =
+lagdamd2md :: Rules ()
+lagdamd2md =
   _mkdocs </> "docs" </> "*.md" %> \out -> do
     let mdfile =
           joinPath
@@ -251,22 +239,37 @@ lagdamd2md mainOnly =
     command_
       []
       "agda"
-      $ ["--fls"]
-        ++ (if mainOnly then ["--fls-main-only"] else [])
-        ++ [ "--fls-html-dir=" ++ (_mkdocs </> "docs")
-           , srcfile
-           ]
+      $ [ "--fls"
+        , "--fls-main-only"
+        , "--fls-html-dir=" ++ (_mkdocs </> "docs")
+        , srcfile
+        ]
+ where
+  libExts =
+    [ "iog-prelude"
+    , "stdlib"
+    , "stdlib-classes"
+    , "stdlib-meta"
+    ]
 
+-- | Generate mkdocs site
 mkdocsRule :: Rules ()
 mkdocsRule = do
-  lagdamd2md False
-  phony "mkdocs" $ do
-    lagdamdfiles <- map ("src" </>) <$> getDirectoryFiles "src" ["//*.lagda.md"]
-    agdafiles <- map ("src" </>) <$> getDirectoryFiles "src" ["//*.agda"]
+  _mkdocs </> "docs" </> "Ledger.md" %> \out -> do
+    agdafiles <- map ("src" </>) <$> getDirectoryFiles "src" ["//*.lagda.md", "//*.agda"]
     agdalibfiles <- map ("src-lib-exts" </>) <$> getDirectoryFiles "src-lib-exts" ["//*.agda"]
 
-    need (lagdamdfiles ++ agdafiles ++ agdalibfiles)
+    need (agdafiles ++ agdalibfiles)
 
+    command_
+      []
+      "agda"
+      $ [ "--fls"
+        , "--fls-html-dir=" ++ (_mkdocs </> "docs")
+        , "src/Ledger.lagda.md"
+        ]
+
+  phony "mkdocs" $ do
     need [_mkdocs </> "docs" </> "Ledger.md"]
 
     staticfiles <- getDirectoryFiles "build-tools/static/mkdocs" ["//*"]
@@ -285,7 +288,8 @@ mkdocsRule = do
       [ "build"
       , "-s"
       , "-d"
-      , root </> mkdocsDist ]
+      , root </> mkdocsDist
+      ]
 
 ------------------------------------------------------------------------------
 -- Build directory paths
