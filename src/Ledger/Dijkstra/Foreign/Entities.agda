@@ -1,0 +1,23 @@
+module Ledger.Dijkstra.Foreign.Entities where
+
+open import Class.Convertible
+open import Tactic.Derive.Convertible
+open import Class.HasHsType
+open import Tactic.Derive.HsType
+
+open import Ledger.Prelude
+open import Ledger.Prelude.Foreign.HSTypes
+
+open import Ledger.Core.Foreign.Address
+open import Ledger.Dijkstra.Foreign.HSStructures
+open import Ledger.Dijkstra.Foreign.Gov.Core
+open import Ledger.Dijkstra.Foreign.PParams
+open import Ledger.Dijkstra.Foreign.Cert
+open import Ledger.Dijkstra.Specification.Entities.Properties.Computational DummyGovStructure
+
+open Computational
+
+entities-step : HsType (CertEnv → CertState → List DCert → ComputationResult String CertState)
+entities-step = to (compute Computational-ENTITIES)
+
+{-# COMPILE GHC entities-step as entitiesStep #-}

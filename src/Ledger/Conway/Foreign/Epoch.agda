@@ -1,0 +1,51 @@
+module Ledger.Conway.Foreign.Epoch where
+
+open import Class.Convertible
+open import Class.Convertible.Foreign
+open import Class.HasHsType
+open import Class.HasHsType.Foreign
+open import Tactic.Derive.Convertible
+open import Tactic.Derive.HsType
+
+open import Ledger.Prelude
+open import Ledger.Prelude.Foreign.HSTypes
+
+open import Ledger.Conway.Foreign.HSStructures
+open import Ledger.Conway.Foreign.Enact
+open import Ledger.Conway.Foreign.Ledger
+open import Ledger.Conway.Foreign.PParams
+open import Ledger.Conway.Foreign.Ratify
+open import Ledger.Conway.Foreign.Rewards
+open import Ledger.Conway.Conformance.Equivalence.Convert
+open import Ledger.Conway.Conformance.Epoch it it
+open import Ledger.Conway.Conformance.Epoch.Properties it it
+
+open Computational
+
+module EpochSpec where
+  open import Ledger.Conway.Specification.Epoch it it public
+  open import Ledger.Conway.Specification.Epoch.Properties.Computational it it public
+
+import Data.String as S
+
+instance
+  Show-EPOCH : ∀ {eps e eps'} → Show (_ EpochSpec.⊢ eps ⇀⦇ e ,EPOCH⦈ eps')
+  Show-EPOCH .show (EpochSpec.EPOCH (s , r , pr)) =
+    "EPOCH\n" S.++ "SNAP" S.++ " POOLREAP"
+
+instance
+  HsTy-EpochState = autoHsType EpochState ⊣ withConstructor "MkEpochState"
+                                          • fieldPrefix "es"
+  Conv-EpochState = autoConvert EpochState
+
+-- An implementation of EPOCH that connects the conformance state
+-- with the specification rule.
+
+epoch-step
+  : HsType (⊤ → EpochState → Epoch → ComputationResult ⊥ (EpochState × String))
+epoch-step _ epochSt e =
+  let r = EpochSpec.Computational-EPOCH .computeProof _ (conv (from epochSt)) e
+  in case r of λ where
+    (success (s , p)) → to (success (conv s , show p))
+
+{-# COMPILE GHC epoch-step as epochStep #-}

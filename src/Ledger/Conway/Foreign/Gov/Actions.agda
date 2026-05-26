@@ -1,0 +1,55 @@
+module Ledger.Conway.Foreign.Gov.Actions where
+
+open import Data.Rational using (ℚ)
+open import Class.Convertible
+open import Class.Convertible.Foreign
+open import Tactic.Derive.Convertible
+open import Class.HasHsType
+open import Class.HasHsType.Foreign
+open import Tactic.Derive.HsType
+
+open import Ledger.Prelude
+open import Ledger.Prelude.Foreign.HSTypes
+
+open import Ledger.Conway.Foreign.HSStructures
+open import Ledger.Conway.Foreign.PParams
+open import Ledger.Core.Foreign.Address
+open import Ledger.Conway.Specification.Gov.Base
+open import Ledger.Conway.Specification.Gov.Actions govStructure using (Vote) public
+open import Ledger.Core.Specification.ProtocolVersion
+
+DocHash = GovStructure.DocHash govStructure
+
+-- nondependent version of GovAction
+data GovAction' : Type where
+  NoConfidence        :                                             GovAction'
+  UpdateCommittee     : (Credential ⇀ Epoch) → ℙ Credential → ℚ  →  GovAction'
+  NewConstitution     : DocHash → Maybe ScriptHash               →  GovAction'
+  TriggerHardFork     : ProtVer                                  →  GovAction'
+  ChangePParams       : PParamsUpdate                            →  GovAction'
+  TreasuryWithdrawal  : (RewardAddress ⇀ Treasury)               →  GovAction'
+  Info                :                                             GovAction'
+
+instance
+  mkGovAction' : Convertible GovAction GovAction'
+  mkGovAction' = λ where
+    .to ⟦ NoConfidence        , _           ⟧ᵍᵃ → NoConfidence
+    .to ⟦ UpdateCommittee     , (m , p , q) ⟧ᵍᵃ → (UpdateCommittee m p q)
+    .to ⟦ NewConstitution     , (dh , s )   ⟧ᵍᵃ → (NewConstitution dh s)
+    .to ⟦ TriggerHardFork     , p           ⟧ᵍᵃ → (TriggerHardFork p)
+    .to ⟦ ChangePParams       , pu          ⟧ᵍᵃ → (ChangePParams pu)
+    .to ⟦ TreasuryWithdrawal  , m           ⟧ᵍᵃ → ((TreasuryWithdrawal m))
+    .to ⟦ Info                , _           ⟧ᵍᵃ → Info
+    .from NoConfidence              → ⟦ NoConfidence        , tt          ⟧ᵍᵃ
+    .from (UpdateCommittee m p q)   → ⟦ UpdateCommittee     , (m , p , q) ⟧ᵍᵃ
+    .from (NewConstitution dh s)    → ⟦ NewConstitution     , (dh , s)    ⟧ᵍᵃ
+    .from (TriggerHardFork p)       → ⟦ TriggerHardFork     , p           ⟧ᵍᵃ
+    .from (ChangePParams pu)        → ⟦ ChangePParams       , pu          ⟧ᵍᵃ
+    .from (TreasuryWithdrawal m)    → ⟦ TreasuryWithdrawal  , m           ⟧ᵍᵃ
+    .from Info                      → ⟦ Info                , tt          ⟧ᵍᵃ
+
+  HsTy-GovAction' = autoHsType GovAction' ⊣ withName "GovAction"
+  Conv-GovAction' = autoConvert GovAction'
+
+  HsTy-GovAction = mkHsType GovAction (HsType GovAction')
+  Conv-GovAction = mkGovAction' ⨾ Conv-GovAction'
