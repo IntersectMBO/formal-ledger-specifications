@@ -215,6 +215,7 @@ nav:
 - Dijkstra:
   - Introduction: Ledger.Dijkstra.Specification.md
   - Abstract: Ledger.Dijkstra.Specification.Abstract.md
+  - Account: Ledger.Dijkstra.Specification.Account.md
   - BlockBody: Ledger.Dijkstra.Specification.BlockBody.md
   - BlockBody/:
     - Properties: Ledger.Dijkstra.Specification.BlockBody.Properties.md
@@ -283,6 +284,7 @@ nav:
   - Script: Ledger.Dijkstra.Specification.Script.md
   - Script/:
     - Base: Ledger.Dijkstra.Specification.Script.Base.md
+    - Native: Ledger.Dijkstra.Specification.Script.Native.md
     - ScriptPurpose: Ledger.Dijkstra.Specification.Script.ScriptPurpose.md
     - Validation: Ledger.Dijkstra.Specification.Script.Validation.md
   - TokenAlgebra: Ledger.Dijkstra.Specification.TokenAlgebra.Base.md
