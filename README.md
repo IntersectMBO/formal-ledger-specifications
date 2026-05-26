@@ -32,8 +32,6 @@ You can
 
 +  dive into one of the modules in the **Conway/ > Specification/** section of the website; for instance, you can read about how rewards are calculated in the [Conway/Specification/Rewards][Ledger.Conway.Specification.Rewards.html] module
 
-+  view the [HTML version of the Agda source code][fls-html]
-
 +  interact with and/or contribute to the formal specification; instructions for
    building the artifacts, generating Haskell source code for conformance testing, or
    exploring the literate Agda files in a development environment are available in
@@ -47,7 +45,6 @@ The table below provides links to the full formal ledger specification (as brows
 
 | Artifact | Link | Description |
 | :---- | :---- | :---- |
-| **Source Code** | [HTML][fls-html] | Interactive, hyperlinked version of the Agda source code |
 | **Formal Specification** | [HTML][fls-site] [cardano-ledger.pdf][]<sup>†</sup> | Complete specification of the Cardano Ledger |
 | **Conway-Era PDF** | [conway-ledger.pdf][]<sup>†</sup> | Covers what's new in the Conway era |
 
@@ -72,7 +69,6 @@ If you encounter any issues, please check the [Troubleshooting Guide][] or [subm
 [cardano-ledger.pdf]: https://IntersectMBO.github.io/formal-ledger-specifications/cardano-ledger.pdf
 [conway-ledger.pdf]: https://IntersectMBO.github.io/formal-ledger-specifications/conway-ledger.pdf
 [Contributing Guide]: https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/CONTRIBUTING.md
-[fls-html]: https://IntersectMBO.github.io/formal-ledger-specifications/html
 [fls-site]: https://IntersectMBO.github.io/formal-ledger-specifications/site
 [formal-ledger-specifications]: https://github.com/IntersectMBO/formal-ledger-specifications/
 [Ledger.Conway.Specification.Rewards.html]: https://intersectmbo.github.io/formal-ledger-specifications/site/Ledger.Conway.Specification.Rewards.html
