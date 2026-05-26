@@ -1,0 +1,57 @@
+module Ledger.Dijkstra.Foreign.Utxo where
+
+open import Data.Integer using (ℤ)
+
+open import Class.Convertible
+open import Class.Convertible.Foreign
+open import Tactic.Derive.Convertible
+open import Class.HasHsType
+open import Class.HasHsType.Foreign
+open import Tactic.Derive.HsType
+
+open import Ledger.Prelude
+open import Ledger.Prelude.Foreign.HSTypes
+
+open import Ledger.Core.Foreign.Address
+open import Ledger.Dijkstra.Foreign.HSStructures
+open import Ledger.Dijkstra.Foreign.PParams
+open import Ledger.Dijkstra.Foreign.Cert
+open import Ledger.Dijkstra.Foreign.Gov
+open import Ledger.Dijkstra.Foreign.Rewards
+open import Ledger.Dijkstra.Foreign.Transaction
+open import Ledger.Dijkstra.Specification.Utxo it DummyAbstractFunctions
+open import Ledger.Dijkstra.Specification.Utxow.Properties.Computational it DummyAbstractFunctions
+open import Ledger.Dijkstra.Specification.Utxo.Properties.Computational it DummyAbstractFunctions
+
+open Computational
+
+private
+  toHsConstr : String → String
+  toHsConstr c = if c ≟ "utxo₀" then "utxo0" else c
+
+instance
+  HsTy-UTxOEnv = autoHsType UTxOEnv ⊣ withConstructor "MkUTxOEnv"
+                                      • fieldPrefix "ue"
+                                      • onConstructors toHsConstr
+  Conv-UTxOEnv = autoConvert UTxOEnv
+
+  HsTy-SubUTxOEnv = autoHsType SubUTxOEnv ⊣ withConstructor "MkSubUTxOEnv"
+                                            • fieldPrefix "sue"
+  Conv-SubUTxOEnv = autoConvert SubUTxOEnv
+
+  HsTy-UTxOState = autoHsType UTxOState ⊣ withConstructor "MkUTxOState"
+                                          • fieldPrefix "us"
+  Conv-UTxOState = autoConvert UTxOState
+
+unquoteDecl = do
+  hsTypeAlias UTxO
+  
+utxo-step : HsType (UTxOEnv × Bool → UTxOState → Tx TxLevelTop → ComputationResult String UTxOState)
+utxo-step = to (compute Computational-UTXO)
+
+{-# COMPILE GHC utxo-step as utxoStep #-}
+
+utxow-step : HsType (UTxOEnv → UTxOState → Tx TxLevelTop → ComputationResult String UTxOState)
+utxow-step = to (compute Computational-UTXOW)
+
+{-# COMPILE GHC utxow-step as utxowStep #-}
