@@ -5,10 +5,10 @@ source_path: src/Ledger/Dijkstra/Foreign/Epoch.lagda.md
 ```agda
 module Ledger.Dijkstra.Foreign.Epoch where
 
-open import Foreign.Convertible
-open import Foreign.Convertible.Deriving
-open import Foreign.HaskellTypes
-open import Foreign.HaskellTypes.Deriving
+open import Class.Convertible
+open import Tactic.Derive.Convertible
+open import Class.HasHsType
+open import Tactic.Derive.HsType
 
 open import Ledger.Prelude
 open import Ledger.Prelude.Foreign.HSTypes

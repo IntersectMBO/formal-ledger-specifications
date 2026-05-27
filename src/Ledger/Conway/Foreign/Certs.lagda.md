@@ -5,9 +5,11 @@ source_path: src/Ledger/Conway/Foreign/Certs.lagda.md
 ```agda
 module Ledger.Conway.Foreign.Certs where
 
-open import Foreign.Convertible
-open import Foreign.Convertible.Deriving
-open import Foreign.HaskellTypes.Deriving
+open import Class.Convertible
+open import Class.Convertible.Foreign
+open import Class.HasHsType.Foreign
+open import Tactic.Derive.Convertible
+open import Tactic.Derive.HsType
 
 open import Ledger.Prelude
 open import Ledger.Prelude.Foreign.HSTypes
@@ -65,7 +67,7 @@ instance
     .to   ce → let module ce = CertEnv ce in record { epoch = ce.epoch ; pp = ce.pp ; votes = to ce.votes ; wdrls = ce.wdrls ; coldCreds = ce.coldCreds }
     .from ce → let module ce = CertEnv' ce in record { epoch = ce.epoch ; pp = ce.pp ; votes = from ce.votes ; wdrls = ce.wdrls ; coldCreds = ce.coldCreds }
 
-  HsTy-CertEnv = MkHsType CertEnv (HsType CertEnv')
+  HsTy-CertEnv = mkHsType CertEnv (HsType CertEnv')
   Conv-CertEnv = mkCertEnv' ⨾ Conv-CertEnv'
 
 instance

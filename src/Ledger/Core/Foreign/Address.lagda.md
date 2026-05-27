@@ -9,9 +9,10 @@ open import Ledger.Prelude
 open import Ledger.Prelude.Foreign.HSTypes
 open import Ledger.Core.Specification.Address ℕ ℕ ℕ ⦃ it ⦄ ⦃ it ⦄ ⦃ it ⦄
 
-open import Foreign.Convertible 
-open import Foreign.Convertible.Deriving
-open import Foreign.HaskellTypes.Deriving
+open import Class.Convertible
+open import Class.HasHsType.Foreign
+open import Tactic.Derive.Convertible
+open import Tactic.Derive.HsType
 open import stdlib.Foreign.Haskell.Empty
 
 instance

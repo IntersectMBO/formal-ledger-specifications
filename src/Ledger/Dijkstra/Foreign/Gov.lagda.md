@@ -5,10 +5,12 @@ source_path: src/Ledger/Dijkstra/Foreign/Gov.lagda.md
 ```agda
 module Ledger.Dijkstra.Foreign.Gov where
 
-open import Foreign.Convertible
-open import Foreign.Convertible.Deriving
-open import Foreign.HaskellTypes
-open import Foreign.HaskellTypes.Deriving
+open import Class.Convertible
+open import Class.Convertible.Foreign
+open import Tactic.Derive.Convertible
+open import Class.HasHsType
+open import Class.HasHsType.Foreign
+open import Tactic.Derive.HsType
 
 open import Ledger.Prelude
 open import Ledger.Prelude.Foreign.HSTypes
@@ -78,7 +80,7 @@ instance
                                               • fieldPrefix "gp"
   Conv-GovProposal' = autoConvert GovProposal'
 
-  HsTy-GovProposal = MkHsType GovProposal (HsType GovProposal')
+  HsTy-GovProposal = mkHsType GovProposal (HsType GovProposal')
   Conv-GovProposal = mkGovProposal' ⨾ Conv-GovProposal'
 
 -- GovActionState also has a dependent prevAction field.
@@ -107,7 +109,7 @@ instance
                                                      • fieldPrefix "gas"
   Conv-GovActionState' = autoConvert GovActionState'
 
-  HsTy-GovActionState = MkHsType GovActionState (HsType GovActionState')
+  HsTy-GovActionState = mkHsType GovActionState (HsType GovActionState')
   Conv-GovActionState = mkGovActionState' ⨾ Conv-GovActionState'
 
 -- GovEnv has no dependent types, so autoHsType works directly.

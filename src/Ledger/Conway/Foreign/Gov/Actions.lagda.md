@@ -6,10 +6,12 @@ source_path: src/Ledger/Conway/Foreign/Gov/Actions.lagda.md
 module Ledger.Conway.Foreign.Gov.Actions where
 
 open import Data.Rational using (ℚ)
-open import Foreign.Convertible
-open import Foreign.Convertible.Deriving
-open import Foreign.HaskellTypes
-open import Foreign.HaskellTypes.Deriving
+open import Class.Convertible
+open import Class.Convertible.Foreign
+open import Tactic.Derive.Convertible
+open import Class.HasHsType
+open import Class.HasHsType.Foreign
+open import Tactic.Derive.HsType
 
 open import Ledger.Prelude
 open import Ledger.Prelude.Foreign.HSTypes
@@ -54,6 +56,6 @@ instance
   HsTy-GovAction' = autoHsType GovAction' ⊣ withName "GovAction"
   Conv-GovAction' = autoConvert GovAction'
 
-  HsTy-GovAction = MkHsType GovAction (HsType GovAction')
+  HsTy-GovAction = mkHsType GovAction (HsType GovAction')
   Conv-GovAction = mkGovAction' ⨾ Conv-GovAction'
 ```

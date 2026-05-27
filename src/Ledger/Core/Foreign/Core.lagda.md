@@ -13,10 +13,10 @@ open import Data.Nat.Properties using (+-0-commutativeMonoid) public
 import      Data.Integer as ℤ
 import      Data.Rational as ℚ
 
-open import Foreign.Convertible           public
-open import Foreign.Convertible.Deriving  public
-open import Foreign.HaskellTypes          public
-open import Foreign.HaskellTypes.Deriving public
+open import Class.Convertible         public
+open import Tactic.Derive.Convertible public
+open import Class.HasHsType           public
+open import Tactic.Derive.HsType      public
 
 open import Ledger.Core.Specification.Crypto
 open import Ledger.Core.Specification.Epoch

@@ -6,9 +6,12 @@ source_path: src/Ledger/Conway/Foreign/NewEpoch.lagda.md
 module Ledger.Conway.Foreign.NewEpoch where
 
 import Data.String as S
-open import Foreign.Convertible
-open import Foreign.Convertible.Deriving
-open import Foreign.HaskellTypes.Deriving
+open import Class.Convertible
+open import Class.Convertible.Foreign
+open import Class.HasHsType
+open import Class.HasHsType.Foreign
+open import Tactic.Derive.Convertible
+open import Tactic.Derive.HsType
 
 open import Ledger.Prelude
 open import Ledger.Prelude.Foreign.HSTypes

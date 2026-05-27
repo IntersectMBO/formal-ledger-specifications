@@ -6,12 +6,14 @@ source_path: src/Ledger/Prelude/Foreign/HSTypes.lagda.md
 module Ledger.Prelude.Foreign.HSTypes where
 
 open import Data.Rational
-open import Foreign.Convertible 
-open import Foreign.Convertible.Deriving
+open import Class.Convertible
+open import Tactic.Derive.Convertible
 open import Foreign.Haskell
-open import Foreign.HaskellTypes public
-open import Foreign.HaskellTypes.Deriving
+open import Class.HasHsType public
+open import Tactic.Derive.HsType
 open import stdlib.Foreign.Haskell.Empty
+-- open import Class.HasHsType.Foreign
+open import Class.Convertible.Foreign
 
 open import Ledger.Prelude
 open import Ledger.Prelude.Numeric.UnitInterval
@@ -37,10 +39,10 @@ instance
   iConvString = Convertible-Refl {String}
   iConvBool   = Convertible-Refl {Bool}
 
-  HsTy-⊥ = MkHsType ⊥ Empty
+  HsTy-⊥ = mkHsType ⊥ Empty
   Conv-⊥ = autoConvert ⊥
 
-  HsTy-⊤ = MkHsType ⊤ ⊤
+  HsTy-⊤ = mkHsType ⊤ ⊤
 
 -- * Rational
 
@@ -53,7 +55,7 @@ data Rational : Type where
 {-# FOREIGN GHC type Rational = Ratio Integer #-}
 
 instance
-  HsTy-Rational = MkHsType ℚ Rational
+  HsTy-Rational = mkHsType ℚ Rational
   Conv-Rational : HsConvertible ℚ
   Conv-Rational = λ where
     .to (mkℚ n d _)       → n , suc d
@@ -81,7 +83,7 @@ record HSSet A : Type where
 
 instance
   HsTy-HSSet : ∀ {A} → ⦃ HasHsType A ⦄ → HasHsType (ℙ A)
-  HsTy-HSSet {A} = MkHsType _ (HSSet (HsType A))
+  HsTy-HSSet {A} = mkHsType _ (HSSet (HsType A))
 
   Conv-HSSet : ∀ {A} ⦃ _ : HasHsType A ⦄
              → ⦃ HsConvertible A ⦄
@@ -91,7 +93,7 @@ instance
     .from → fromList ∘ from ∘ HSSet.elems
 
   HsTy-Map : ∀ {A B} → ⦃ HasHsType A ⦄ → ⦃ HasHsType B ⦄ → HasHsType (A ⇀ B)
-  HsTy-Map {A} {B} = MkHsType _ (HSMap (HsType A) (HsType B))
+  HsTy-Map {A} {B} = mkHsType _ (HSMap (HsType A) (HsType B))
 
   Conv-HSMap : ∀ {A B} ⦃ _ : HasHsType A ⦄ ⦃ _ : HasHsType B ⦄
     → ⦃ DecEq A ⦄
@@ -99,8 +101,8 @@ instance
     → ⦃ HsConvertible B ⦄
     → HsConvertible (A ⇀ B)
   Conv-HSMap = λ where
-    .to → MkHSMap ∘ to
-    .from → from ∘ HSMap.assocList
+    .to → MkHSMap ∘ to ∘ setToList ∘ proj₁
+    .from → fromListᵐ ∘ map from ∘ HSMap.assocList
 
 -- * ComputationResult
 
@@ -128,13 +130,14 @@ instance
   HsTy-ComputationResult : ∀ {l} {Err} {A : Type l}
                            → ⦃ HasHsType Err ⦄ → ⦃ HasHsType A ⦄
                            → HasHsType (ComputationResult Err A)
-  HsTy-ComputationResult {Err = Err} {A} = MkHsType _ (HSComputationResult (HsType Err) (HsType A))
+  HsTy-ComputationResult {Err = Err} {A} = mkHsType _ (HSComputationResult (HsType Err) (HsType A))
 
   Conv-ComputationResult : ConvertibleType HSComputationResult ComputationResult
   Conv-ComputationResult = autoConvertible
 
   Conv-HSComputationResult : ConvertibleType ComputationResult HSComputationResult
   Conv-HSComputationResult = autoConvertible
+
 -- * Numeric types
 
 instance

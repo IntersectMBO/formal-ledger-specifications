@@ -5,10 +5,12 @@ source_path: src/Ledger/Conway/Foreign/Gov.lagda.md
 ```agda
 module Ledger.Conway.Foreign.Gov where
 
-open import Foreign.Convertible
-open import Foreign.Convertible.Deriving
-open import Foreign.HaskellTypes
-open import Foreign.HaskellTypes.Deriving
+open import Class.Convertible
+open import Class.Convertible.Foreign
+open import Tactic.Derive.Convertible
+open import Class.HasHsType
+open import Class.HasHsType.Foreign
+open import Tactic.Derive.HsType
 
 open import Ledger.Prelude
 open import Ledger.Prelude.Foreign.HSTypes
@@ -108,10 +110,10 @@ instance
 -- And finally we compose everything into conversions for the dependent types
 
 instance
-  HsTy-GovProposal = MkHsType GovProposal (HsType GovProposal')
+  HsTy-GovProposal = mkHsType GovProposal (HsType GovProposal')
   Conv-GovProposal = mkGovProposal' ⨾ Conv-GovProposal'
 
-  HsTy-GovActionState = MkHsType GovActionState (HsType GovActionState')
+  HsTy-GovActionState = mkHsType GovActionState (HsType GovActionState')
   Conv-GovActionState = mkGovActionState' ⨾ Conv-GovActionState'
 
 unquoteDecl = do

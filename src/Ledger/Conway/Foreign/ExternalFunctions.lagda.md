@@ -6,7 +6,7 @@ source_path: src/Ledger/Conway/Foreign/ExternalFunctions.lagda.md
 module Ledger.Conway.Foreign.ExternalFunctions where
 
 open import Ledger.Prelude
-open import Foreign.HaskellTypes.Deriving
+open import Tactic.Derive.HsType
 
 record ExternalFunctions : Set where
   field
