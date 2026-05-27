@@ -174,6 +174,30 @@ rmOrphanDRepVotes cs govSt = L.map (map₂ go) govSt
 allColdCreds : GovState → EnactState → ℙ Credential
 allColdCreds govSt es =
   ccCreds (es .cc) ∪ concatMapˢ (λ (_ , st) → proposedCC (GovActionOf st)) (fromList govSt)
+
+-- `coinFromDeposit` (singular, this module's previous helper) is replaced by
+-- the hoisted `coinFromDeposits` (plural) from `Certs.lagda.md`.  See
+-- `Certs.lagda.md`, section "Cert-State Deposit Accounting".
+
+instance
+  -- LedgerState holds three coin-bearing components:
+  --   1. UTxO state (UTxO balance plus fees plus donations) via HasCoin-UTxOState
+  --   2. The rewards balance in DState.rewards
+  --   3. The three CertState deposit pots, via coinFromDeposits:
+  --        + DState.deposits (stake-key deposits, Credential ⇀ Coin)
+  --        + PState.deposits (pool deposits,      KeyHash    ⇀ Coin)
+  --        + GState.deposits (gov-action deposits, Credential ⇀ Coin
+  --                            — keyed by the stake credential of returnAddr)
+  -- Existing HasCoin-CertState only counts (2); (3) has to be added on at the
+  -- LedgerState level to make the LEDGER-pov equation balance against the UTXO
+  -- batch-balance equation, which charges `newCertDeposits` and
+  -- `govProposalsDeposits` on the consumed side.  Both of these are absorbed
+  -- into `coinFromDeposits` on the produced side (cert deposits via the
+  -- D/P-pot deltas; gov-action deposits via the G-pot growth).
+  HasCoin-LedgerState : HasCoin LedgerState
+  HasCoin-LedgerState .getCoin s =  getCoin (UTxOStateOf s)
+                                    + rewardsBalance (DStateOf (CertStateOf s))
+                                    + coinFromDeposits (CertStateOf s)
 ```
 
 ## <span class="AgdaDatatype">LEDGER</span> Transition System
