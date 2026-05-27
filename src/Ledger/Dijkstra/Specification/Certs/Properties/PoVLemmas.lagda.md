@@ -179,43 +179,39 @@ PoolDepositsAligned : PState → Type
 PoolDepositsAligned ps = dom (PoolsOf ps) ⊆ dom (DepositsOf ps)
 
 module CERT-Deposits-Bridge
-  ( ∪ˡ-singleton-mem-≡ :
-      ∀ {A : Type} ⦃ _ : DecEq A ⦄
-        (m : A ⇀ Coin) (k : A) (v : Coin)
-      → k ∈ dom m → m ∪ˡ ❴ k , v ❵ ≡ m )
-  ( Is-just-isPoolRegistered⇒∈-dom :
-      ∀ {pools : Pools} {kh : KeyHash}
-      → Is-just (isPoolRegistered pools kh) → kh ∈ dom pools )
+  ( ∪ˡ-singleton-mem-≡ : ∀ {A : Type} ⦃ _ : DecEq A ⦄ (m : A ⇀ Coin) (k : A) (v : Coin)
+    → k ∈ dom m → m ∪ˡ ❴ k , v ❵ ≡ m )
   where
+
+  Is-just-isPoolRegistered⇒∈-dom :
+    ∀ {pools : Pools} {kh : KeyHash}
+    → Is-just (isPoolRegistered pools kh) → kh ∈ dom (pools ˢ)
+  Is-just-isPoolRegistered⇒∈-dom {pools = pools} {kh = kh} ij with kh ∈? dom (pools ˢ)
+  ... | yes kh∈ = kh∈
+  ... | no  _   = case ij of λ ()
+
 
   -- Per-step bridge: the triple of deposit pots after a single `CERT` step
   -- equals `updateCertDeposit` applied to the pre-step triple.
-  CERT-deposits-updateCertDeposit :
-    {Γ : CertEnv} {s s' : CertState}
+  CERT-deposits-updateCertDeposit : {Γ : CertEnv} {s s' : CertState}
     → PoolDepositsAligned (PStateOf s)
     → Γ ⊢ s ⇀⦇ dCert ,CERT⦈ s'
-    → ( DepositsOf (DStateOf s')
-      , DepositsOf (PStateOf s')
-      , DepositsOf (GStateOf s') )
-      ≡ updateCertDeposit (PParamsOf Γ) dCert
-          ( DepositsOf (DStateOf s)
-          , DepositsOf (PStateOf s)
-          , DepositsOf (GStateOf s) )
+    → ( DepositsOf (DStateOf s') , DepositsOf (PStateOf s') , DepositsOf (GStateOf s') )
+      ≡  updateCertDeposit (PParamsOf Γ) dCert
+         ( DepositsOf (DStateOf s) , DepositsOf (PStateOf s) , DepositsOf (GStateOf s) )
 
-  CERT-deposits-updateCertDeposit _ (CERT-deleg (DELEG-delegate _))    = refl
-  CERT-deposits-updateCertDeposit _ (CERT-deleg (DELEG-dereg _))       = refl
-  CERT-deposits-updateCertDeposit _ (CERT-pool (POOL-reg _))           = refl
-  CERT-deposits-updateCertDeposit
-    {Γ = Γ} {s = s} poolInv (CERT-pool (POOL-rereg {kh = kh} regd))    =
+  CERT-deposits-updateCertDeposit          _     (CERT-deleg  (DELEG-delegate _))        = refl
+  CERT-deposits-updateCertDeposit          _     (CERT-deleg  (DELEG-dereg _))           = refl
+  CERT-deposits-updateCertDeposit          _     (CERT-pool   (POOL-reg _))              = refl
+  CERT-deposits-updateCertDeposit {s = s}  plInv (CERT-pool   (POOL-rereg {kh = kh} r))  =
     -- The rule's output pot is `deposits` (unchanged), but `updateCertDeposit`
     -- produces `deposits ∪ˡ ❴ kh , pp .poolDeposit ❵`.  The pool-deposit
-    -- invariant `poolInv` plus the rereg premise `regd : Is-just …`
-    -- give `kh ∈ dom deposits`; `∪ˡ-singleton-mem-≡` then makes the union
-    -- a no-op.
+    -- invariant `plInv` plus the rereg premise `r : Is-just …` give
+    -- `kh ∈ dom deposits`; `∪ˡ-singleton-mem-≡` then makes the union a no-op.
     cong (λ x → ( DepositsOf (DStateOf s) , x , DepositsOf (GStateOf s) ))
          (sym (∪ˡ-singleton-mem-≡
                  (DepositsOf (PStateOf s)) kh _
-                 (poolInv (Is-just-isPoolRegistered⇒∈-dom regd))))
+                 (plInv (Is-just-isPoolRegistered⇒∈-dom r))))
   CERT-deposits-updateCertDeposit _ (CERT-pool POOL-retirepool)        = refl
   CERT-deposits-updateCertDeposit _ (CERT-gov (GOVCERT-regdrep _))     = refl
   CERT-deposits-updateCertDeposit _ (CERT-gov (GOVCERT-deregdrep _))   = refl

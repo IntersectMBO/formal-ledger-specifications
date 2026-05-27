@@ -149,7 +149,7 @@ module CERTS-Deposits-Bridge
       → PoolDepositsAligned (PStateOf s') )
   where
 
-  open CERT-Deposits-Bridge ∪ˡ-singleton-mem-≡ Is-just-isPoolRegistered⇒∈-dom
+  open CERT-Deposits-Bridge ∪ˡ-singleton-mem-≡
     using (CERT-deposits-updateCertDeposit)
 ```
 
