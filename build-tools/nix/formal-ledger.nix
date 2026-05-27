@@ -28,7 +28,7 @@ mkDerivation {
     iog-prelude
   ];
   buildPhase = ''
-    agda --profile=modules src/Ledger.lagda.md | tee typecheck.log
+    agda --trace-imports=3 --profile=modules src/Ledger.lagda.md | tee typecheck.log
   '';
   doCheck = true;
   checkPhase = ''
