@@ -246,6 +246,9 @@ minfee pp txTop utxo = pp .a * (SizeOf txTop) + pp .b
 instance
   HasCoin-UTxO : HasCoin UTxO
   HasCoin-UTxO .getCoin = cbalance
+
+  HasCoin-UTxOState : HasCoin UTxOState
+  HasCoin-UTxOState .getCoin s = getCoin (UTxOOf s) + FeesOf s + DonationsOf s
 ```
 -->
 
@@ -294,47 +297,13 @@ collateralCheck pp txTop utxo =
 
 ### Change in Deposits
 
+The closed-form cert-deposit helpers (`updateCertDeposit`, `updateCertDeposits`,
+`coinFromDeposits`, `depositsChange`, `newCertDeposits`, `refundCertDeposits`) have
+been moved to `Ledger.Dijkstra.Specification.Certs` so that downstream proofs in
+`Certs.Properties.PoVLemmas` (parameterised only by `GovStructure`) can reference
+them.  They are imported here via the open import of `Certs` at the top of this module.
+
 ```agda
-module _ (pp : PParams) (certState : CertState) where
-
-  updateCertDeposit : DCert
-    → (Credential ⇀ Coin) × (KeyHash ⇀ Coin) × (Credential ⇀ Coin)
-    → (Credential ⇀ Coin) × (KeyHash ⇀ Coin) × (Credential ⇀ Coin)
-  updateCertDeposit cert (depositsᵈ , depositsᵖ , depositsᵍ) =
-    case cert of λ where
-      (delegate c _ _ d) → (depositsᵈ ∪⁺ ❴ c , d ❵ , depositsᵖ , depositsᵍ)
-      (dereg c _       ) → (depositsᵈ ∣ ❴ c ❵ ᶜ    , depositsᵖ , depositsᵍ)
-      (regpool kh _    ) → (depositsᵈ , depositsᵖ ∪ˡ ❴ kh , pp .poolDeposit ❵ , depositsᵍ)
-      (regdrep c d _   ) → (depositsᵈ , depositsᵖ , depositsᵍ ∪⁺ ❴ c , d ❵)
-      (deregdrep c _   ) → (depositsᵈ , depositsᵖ , depositsᵍ ∣ ❴ c ❵ ᶜ)
-      _                  → (depositsᵈ , depositsᵖ , depositsᵍ)
-
-  updateCertDeposits : List DCert → CertState
-  updateCertDeposits =
-    foldr (λ c certState → let open CertState certState
-                               (depositsᵈ , depositsᵖ , depositsᵍ) = updateCertDeposit c ( DepositsOf dState
-                                                                                         , DepositsOf pState
-                                                                                         , DepositsOf gState)
-                           in ⟦ record dState { deposits = depositsᵍ }
-                              , record pState { deposits = depositsᵖ }
-                              , record gState { deposits = depositsᵍ } ⟧)
-          certState
-
-  coinFromDeposits : CertState → Coin
-  coinFromDeposits certState =
-      getCoin (DepositsOf (DStateOf certState))
-    + getCoin (DepositsOf (PStateOf certState))
-    + getCoin (DepositsOf (GStateOf certState))
-
-  depositsChange : List DCert → ℤ
-  depositsChange certs = coinFromDeposits (updateCertDeposits certs) - coinFromDeposits certState
-
-  newCertDeposits : List DCert → Coin
-  newCertDeposits certs = posPart (depositsChange certs)
-
-  refundCertDeposits : List DCert → Coin
-  refundCertDeposits certs = negPart (depositsChange certs)
-
 module _ (pp : PParams) where
   govProposalsDeposits : List GovProposal → Coin
   govProposalsDeposits = foldl (λ acc _ → acc + pp .govActionDeposit) 0
