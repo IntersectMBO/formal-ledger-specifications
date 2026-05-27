@@ -1,5 +1,7 @@
 module Ledger.Conway.Foreign where
 
+open import Ledger.Conway.Foreign.Core
+open import Ledger.Conway.Foreign.ExternalFunctions
 open import Ledger.Conway.Foreign.Cert public
 open import Ledger.Conway.Foreign.Chain public
 open import Ledger.Conway.Foreign.Certs public

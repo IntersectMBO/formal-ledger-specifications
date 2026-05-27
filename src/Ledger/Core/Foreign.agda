@@ -1,5 +1,7 @@
 module Ledger.Core.Foreign where
 
+import Ledger.Core.Foreign.Core
+
 import Ledger.Core.Foreign.Address
 
 import Ledger.Core.Foreign.Crypto
