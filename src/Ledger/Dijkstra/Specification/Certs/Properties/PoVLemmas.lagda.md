@@ -127,3 +127,97 @@ CERT-pov (CERT-pool _)  = refl
 CERT-pov (CERT-gov  _)  = refl
 ```
 -->
+
+
+## The `CERT-deposits-updateCertDeposit` bridging lemma
+
+The `LEDGER-pov` chain needs to relate the **`coinFromDeposits`** of the
+post-`CERTS` `CertState` to the **`updateCertDeposits`** closed-form
+computation appearing in `consumed`/`produced` via `newCertDeposits` /
+`refundCertDeposits` (see `Utxo.lagda.md`).  The per-step ingredient is
+`CERT-deposits-updateCertDeposit`: for every `CERT` step `Γ ⊢ s ⇀⦇ dCert ,CERT⦈ s'`,
+the triple of post-step deposit pots `(DState.deposits, PState.deposits, GState.deposits)`
+of `s'` equals `updateCertDeposit (PParamsOf Γ) dCert` applied to the same
+triple from `s`.
+
+The case analysis is constructor-for-constructor, mirroring the structure of
+`CERT-pov`:
+
++  `DELEG-delegate`, `DELEG-dereg`, `POOL-reg`, `POOL-retirepool`,
+   `GOVCERT-regdrep`, `GOVCERT-deregdrep`, `GOVCERT-ccreghot`: each reduces to
+   `refl`{.AgdaInductiveConstructor} because the rule's pot update and
+   `updateCertDeposit`'s `case`-branch produce literally the same expression.
++  `POOL-rereg`: the rule leaves `deposits` unchanged, but
+   `updateCertDeposit (regpool kh _)` produces
+   `deposits ∪ˡ ❴ kh , pp .poolDeposit ❵`.  These agree under the
+   ledger-wide invariant that every registered pool has a matching deposit
+   entry — formally, `dom (PoolsOf ps) ⊆ dom (DepositsOf ps)` for the
+   `PState ps` we are stepping from.  Combined with `POOL-rereg`'s premise
+   `Is-just (isPoolRegistered pools kh)` (i.e., `kh ∈ dom pools`), this gives
+   `kh ∈ dom deposits`, making the `∪ˡ` a no-op.
+
+The invariant is maintained globally by the ledger (it's a `CHAIN`-level
+invariant; see also the `PoolReap.lagda.md` comment about retiring pools
+always being registered).  We thread it through the lemma as the explicit
+predicate `PoolDepositsAligned` (a `PState → Type`).
+
+The lemma also depends on two small set/map facts that we package as
+module parameters of `CERT-Deposits-Bridge`:
+
++  `∪ˡ-singleton-mem-≡`. If `k ∈ dom m` then `m ∪ˡ ❴ k , v ❵ ≡ m` (pure `≡`,
+   not just `≡ᵉ`).  Provable from the left-biased semantics of `∪ˡ`.
++  `Is-just-isPoolRegistered⇒∈-dom`. Standard `Is-just (lookupᵐ? m k) → k ∈ dom m`
+   for finite maps.  Almost certainly already lives in `Axiom.Set.Properties`
+   or `Interface.HasMap`; if not, a few-line proof from `lookupᵐ?` semantics.
+
+Both are filed as deferred parameters here so the lemma can compile cleanly
+now; they should be discharged from the standard map / set libraries when
+convenient.
+
+```agda
+PoolDepositsAligned : PState → Type
+PoolDepositsAligned ps = dom (PoolsOf ps) ⊆ dom (DepositsOf ps)
+
+module CERT-Deposits-Bridge
+  ( ∪ˡ-singleton-mem-≡ :
+      ∀ {A : Type} ⦃ _ : DecEq A ⦄
+        (m : A ⇀ Coin) (k : A) (v : Coin)
+      → k ∈ dom m → m ∪ˡ ❴ k , v ❵ ≡ m )
+  ( Is-just-isPoolRegistered⇒∈-dom :
+      ∀ {pools : Pools} {kh : KeyHash}
+      → Is-just (isPoolRegistered pools kh) → kh ∈ dom pools )
+  where
+
+  -- Per-step bridge: the triple of deposit pots after a single `CERT` step
+  -- equals `updateCertDeposit` applied to the pre-step triple.
+  CERT-deposits-updateCertDeposit :
+    {Γ : CertEnv} {s s' : CertState}
+    → PoolDepositsAligned (PStateOf s)
+    → Γ ⊢ s ⇀⦇ dCert ,CERT⦈ s'
+    → ( DepositsOf (DStateOf s')
+      , DepositsOf (PStateOf s')
+      , DepositsOf (GStateOf s') )
+      ≡ updateCertDeposit (PParamsOf Γ) dCert
+          ( DepositsOf (DStateOf s)
+          , DepositsOf (PStateOf s)
+          , DepositsOf (GStateOf s) )
+
+  CERT-deposits-updateCertDeposit _ (CERT-deleg (DELEG-delegate _))    = refl
+  CERT-deposits-updateCertDeposit _ (CERT-deleg (DELEG-dereg _))       = refl
+  CERT-deposits-updateCertDeposit _ (CERT-pool (POOL-reg _))           = refl
+  CERT-deposits-updateCertDeposit
+    {Γ = Γ} {s = s} poolInv (CERT-pool (POOL-rereg {kh = kh} regd))    =
+    -- The rule's output pot is `deposits` (unchanged), but `updateCertDeposit`
+    -- produces `deposits ∪ˡ ❴ kh , pp .poolDeposit ❵`.  The pool-deposit
+    -- invariant `poolInv` plus the rereg premise `regd : Is-just …`
+    -- give `kh ∈ dom deposits`; `∪ˡ-singleton-mem-≡` then makes the union
+    -- a no-op.
+    cong (λ x → ( DepositsOf (DStateOf s) , x , DepositsOf (GStateOf s) ))
+         (sym (∪ˡ-singleton-mem-≡
+                 (DepositsOf (PStateOf s)) kh _
+                 (poolInv (Is-just-isPoolRegistered⇒∈-dom regd))))
+  CERT-deposits-updateCertDeposit _ (CERT-pool POOL-retirepool)        = refl
+  CERT-deposits-updateCertDeposit _ (CERT-gov (GOVCERT-regdrep _))     = refl
+  CERT-deposits-updateCertDeposit _ (CERT-gov (GOVCERT-deregdrep _))   = refl
+  CERT-deposits-updateCertDeposit _ (CERT-gov (GOVCERT-ccreghot _))    = refl
+```
