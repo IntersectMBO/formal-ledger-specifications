@@ -292,6 +292,12 @@ collateralCheck pp txTop utxo =
 
 ### Governance Proposal Deposits
 
+The closed-form cert-deposit helpers (`updateCertDeposit`, `updateCertDeposits`,
+`coinFromDeposits`, `depositsChange`, `newCertDeposits`, `refundCertDeposits`) have
+been moved to `Ledger.Dijkstra.Specification.Certs` so that downstream proofs in
+`Certs.Properties.PoVLemmas` (parameterised only by `GovStructure`) can reference
+them.  They are imported here via the open import of `Certs` at the top of this module.
+
 ```agda
 module _ (pp : PParams) where
   govProposalsDeposits : List GovProposal → Coin
