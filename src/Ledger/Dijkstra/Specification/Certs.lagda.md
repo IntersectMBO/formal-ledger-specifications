@@ -300,91 +300,78 @@ rewardsBalance ds = ∑[ x ← RewardsOf ds ] x
 ```
 
 
-## Cert-State Deposit Accounting {#sec:cert-state-deposit-accounting}
+## Cert-State Deposit Accounting
 
-The following helpers compute, in closed form, how a list of `DCert`s
-affects the three deposit pots (`DState.deposits`, `PState.deposits`,
-`GState.deposits`) carried by a `CertState`.  They are used by the
-`UTXO` batch-balance equation (in `Utxo.lagda.md`) and by the
-preservation-of-value proof (in `Ledger.Properties.PoV`); see the
-"Design Note: Cert-State Threading and Deposit Accounting" subsection
-in `Utxo.lagda.md` for the rationale.
+Functions in this seciton compute the effect that a `DCert`{.AgdaRecord} list has on
+the three deposit fields (`DState.deposits`{.AgdaField}, `PState.deposits`{.AgdaField},
+`GState.deposits`{.AgdaField}) carried by a `CertState`{.AgdaRecord}.  They describe
+the deposit evolution for a single `DCert` and mirror that of the corresponding
+`CERT` sub-rule.
 
-These helpers were previously defined inside the `module _ (pp) (certState)`
-block in `Utxo.lagda.md`.  They have been hoisted here because they refer
-only to `Certs`-level definitions (`PParams`, `DCert`, `CertState`) and
-because downstream proofs in `Certs.Properties.PoVLemmas` need to refer
-to them while remaining parameterised only over `GovStructure`.
+### <span class="AgdaDatatype">DepositPots</span> Type and Helper Function
+
+The three deposit fields (or "pots") carried by a `CertState`{.AgdaRecord} live in
+distinct map types (`Credential ⇀ Coin`, `KeyHash ⇀ Coin`, `Credential ⇀ Coin`),
+so we package them as components of a single `DepositPots`{.AgdaFunction} type,
+inhabitants of which are constructed via `depositPots`{.AgdaFunction}, and values of which
+are computed via `coinFromDepositPots`{.AgdaFunction}.  By definition,
+
+    coinFromDeposits cs ≡ coinFromDepositPots (depositPots cs).
+
+
+
+```agda
+DepositPots : Type
+DepositPots = (Credential ⇀ Coin) × (KeyHash ⇀ Coin) × (Credential ⇀ Coin)
+
+depositPotsOf : CertState → DepositPots
+depositPotsOf cs = DepositsOf (DStateOf cs) , DepositsOf (PStateOf cs) , DepositsOf (GStateOf cs)
+
+coinFromDepositPots : DepositPots → Coin
+coinFromDepositPots (dd , dp , dg) = getCoin dd + getCoin dp + getCoin dg
+```
 
 ```agda
 module _ (pp : PParams) where
 
-  -- Closed-form pot evolution for a single `DCert`.  This mirrors the
-  -- deposit-pot evolution that the corresponding `CERT` sub-rule produces;
-  -- the parallel is made formal by `CERT-deposits-updateCertDeposit` in
-  -- `Certs.Properties.PoVLemmas`.
-  --
-  -- Any drift between this function and the `CERT` sub-rule semantics is a
-  -- soundness problem: it would allow the UTXO batch-balance equation to
-  -- accept transactions whose actual `CertState` evolution doesn't balance.
-  updateCertDeposit : DCert
-    → (Credential ⇀ Coin) × (KeyHash ⇀ Coin) × (Credential ⇀ Coin)
-    → (Credential ⇀ Coin) × (KeyHash ⇀ Coin) × (Credential ⇀ Coin)
-  updateCertDeposit cert (depositsᵈ , depositsᵖ , depositsᵍ) =
-    case cert of λ where
-      (delegate c _ _ d) → (depositsᵈ ∪⁺ ❴ c , d ❵ , depositsᵖ , depositsᵍ)
-      (dereg c _       ) → (depositsᵈ ∣ ❴ c ❵ ᶜ    , depositsᵖ , depositsᵍ)
-      (regpool kh _    ) → (depositsᵈ , depositsᵖ ∪ˡ ❴ kh , pp .poolDeposit ❵ , depositsᵍ)
-      (regdrep c d _   ) → (depositsᵈ , depositsᵖ , depositsᵍ ∪⁺ ❴ c , d ❵)
-      (deregdrep c _   ) → (depositsᵈ , depositsᵖ , depositsᵍ ∣ ❴ c ❵ ᶜ)
-      _                  → (depositsᵈ , depositsᵖ , depositsᵍ)
+  updateCertDeposit : DCert → DepositPots → DepositPots
+  updateCertDeposit cert (dd , dp , dg) = case cert of λ where
+    (delegate c _ _ d)  → (dd ∪⁺ ❴ c , d ❵  , dp                              , dg)
+    (dereg c _)         → (dd ∣ ❴ c ❵ ᶜ     , dp                              , dg)
+    (regpool kh _)      → (dd               , dp ∪ˡ ❴ kh , pp .poolDeposit ❵  , dg)
+    (regdrep c d _)     → (dd               , dp                              , dg ∪⁺ ❴ c , d ❵)
+    (deregdrep c _)     → (dd               , dp                              , dg ∣ ❴ c ❵ ᶜ)
+    _                   → (dd               , dp                              , dg)
 
-  -- Per-cert `CertState` step.  Extracted as a named function (rather than an
-  -- inline lambda in `updateCertDeposits`'s fold) so that downstream proofs can
-  -- state and use the per-step pots equation
-  -- `pots (updateCertDepositsStep pp s c) ≡ updateCertDeposit pp c (pots s)`
-  -- in `Certs.Properties.PoV`.
-  --
-  -- This function updates only the three deposit pots of its input `CertState`;
-  -- all other fields (`voteDelegs`, `stakeDelegs`, `rewards`, `pools`, `fPools`,
-  -- `retiring`, `dreps`, `ccHotKeys`) are inherited unchanged.
   updateCertDepositsStep : CertState → DCert → CertState
-  updateCertDepositsStep certState c =
-    let open CertState certState
-        result = updateCertDeposit c
-                   ( DepositsOf dState , DepositsOf pState , DepositsOf gState )
-    in ⟦ record dState { deposits = proj₁ result }
-       , record pState { deposits = proj₁ (proj₂ result) }
-       , record gState { deposits = proj₂ (proj₂ result) } ⟧
+  updateCertDepositsStep cs c =
+    let (dd , dp , dg) = updateCertDeposit c (depositPotsOf cs) in
+    ⟦ record dState { deposits = dd } , record pState { deposits = dp } , record gState { deposits = dg } ⟧
+    where open CertState cs
+```
 
+Note that any drift between the `updateCertDepositsStep`{.AgdaFunction} and the
+`CERT` sub-rule semantics is a soundness problem: it would allow the UTXO batch-balance equation to
+accept transactions whose actual `CertState` evolution doesn't balance.
+TODO: add a property in `Certs.Properties` for this invariant.
 
+```agda
 coinFromDeposits : CertState → Coin
-coinFromDeposits certState =
-    getCoin (DepositsOf (DStateOf certState))
-  + getCoin (DepositsOf (PStateOf certState))
-  + getCoin (DepositsOf (GStateOf certState))
+coinFromDeposits cs = coinFromDepositPots (depositPotsOf cs)
 
 module _ (pp : PParams) (certState : CertState) where
 
   -- Iterated cert-deposit accounting starting from `certState`.  Returns a
   -- new `CertState` whose three deposit pots reflect the cumulative effect
-  -- of the given certificate list; other fields are inherited unchanged from
-  -- `certState`.
+  -- of the given certificate list.
   updateCertDeposits : List DCert → CertState
-  -- The `CERTS` rule processes certificates left-to-right (head first via
-  -- `BS-ind`).  We thread `updateCertDepositsStep` through the cert list in the
-  -- same direction via `foldl`, which is the order-correct closed form.
-  --
-  -- (Previous versions of this definition used `foldr`, which processes the
-  -- list right-to-left.  `foldr` is unsound here because cert operations are
-  -- not order-independent in general: e.g. `[delegate c d, dereg c (just d)]`
-  -- for a fresh credential should end with `c ∉ deposits` per `CERTS`, but
-  -- `foldr` processes `dereg c` first (a no-op on the fresh state) and then
-  -- `delegate c d`, ending with `c ∈ deposits`.)
+  -- The `CERTS` rule processes certificates left-to-right; foldl threads
+  -- updateCertDepositsStep through the cert list in the same direction.
   updateCertDeposits = foldl (updateCertDepositsStep pp) certState
 
   depositsChange : List DCert → ℤ
-  depositsChange certs = coinFromDeposits (updateCertDeposits certs) - coinFromDeposits certState
+  depositsChange certs =
+    coinFromDeposits (updateCertDeposits certs) - coinFromDeposits certState
 
   newCertDeposits : List DCert → Coin
   newCertDeposits certs = posPart (depositsChange certs)
@@ -392,7 +379,6 @@ module _ (pp : PParams) (certState : CertState) where
   refundCertDeposits : List DCert → Coin
   refundCertDeposits certs = negPart (depositsChange certs)
 ```
-
 
 <!--
 ```agda
