@@ -86,9 +86,24 @@ instance
   Computational-SUBLEDGER = record {go}
     where
     open Computational ⦃...⦄ renaming (computeProof to comp; completeness to complete)
-    computeSubutxow = comp {STS = _⊢_⇀⦇_,SUBUTXOW⦈_}
-    computeEntities = comp {STS = _⊢_⇀⦇_,ENTITIES⦈_}
-    computeGov      = comp {STS = _⊢_⇀⦇_,GOVS⦈_}
+    opaque
+      computeSubutxow : ∀ Γ s x → ComputationResult String (∃ λ s' → Γ ⊢ s ⇀⦇ x ,SUBUTXOW⦈ s')
+      computeSubutxow = comp {STS = _⊢_⇀⦇_,SUBUTXOW⦈_}
+
+      computeEntities : ∀ Γ s x → ComputationResult String (∃ λ s' → Γ ⊢ s ⇀⦇ x ,ENTITIES⦈ s')
+      computeEntities = comp {STS = _⊢_⇀⦇_,ENTITIES⦈_}
+
+      computeGov : ∀ Γ s x → ComputationResult String (∃ λ s' → Γ ⊢ s ⇀⦇ x ,GOVS⦈ s')
+      computeGov = comp {STS = _⊢_⇀⦇_,GOVS⦈_}
+
+      completeGov : ∀ Γ s x s' → Γ ⊢ s ⇀⦇ x ,GOVS⦈ s' → (proj₁ <$> computeGov Γ s x) ≡ success s'
+      completeGov = complete {STS = _⊢_⇀⦇_,GOVS⦈_}
+
+      completeSubutxow : ∀ Γ s x s' → Γ ⊢ s ⇀⦇ x ,SUBUTXOW⦈ s' → (proj₁ <$> computeSubutxow Γ s x) ≡ success s'
+      completeSubutxow = complete {STS = _⊢_⇀⦇_,SUBUTXOW⦈_}
+
+      completeEntities : ∀ Γ s x s' → Γ ⊢ s ⇀⦇ x ,ENTITIES⦈ s' → (proj₁ <$> computeEntities Γ s x) ≡ success s'
+      completeEntities = complete {STS = _⊢_⇀⦇_,ENTITIES⦈_}
 
     module go
       (Γ   : SubLedgerEnv) (let open SubLedgerEnv Γ)
@@ -136,18 +151,18 @@ instance
         with isTopLevelValid ≟ true
       ... | no ¬v = contradiction v ¬v
       ... | yes refl
-        with computeSubutxow subUtxoΓ utxoSt stx | complete _ _ _ _ utxoStep
+        with computeSubutxow subUtxoΓ utxoSt stx | completeSubutxow _ _ _ _ utxoStep
       ... | success (utxoSt' , _) | refl
-        with computeEntities certΓ certState (DCertsOf stx) | complete _ _ _ _ certStep
+        with computeEntities certΓ certState (DCertsOf stx) | completeEntities _ _ _ _ certStep
       ... | success (certSt' , _) | refl
         with computeGov (govΓ certSt') govSt (GovProposals+Votes stx)
-           | complete {STS = _⊢_⇀⦇_,GOVS⦈_} (govΓ certSt') _ _ _ govStep
+           | completeGov (govΓ certSt') _ _ _ govStep
       ... | success (govSt' , _) | refl = refl
       completeness sub' (SUBLEDGER-I (i , utxoStep))
         with isTopLevelValid ≟ true
       ... | yes v = case trans (sym v) i of λ ()
       ... | no ¬v
-        with computeSubutxow subUtxoΓ utxoSt stx | complete _ _ _ _ utxoStep
+        with computeSubutxow subUtxoΓ utxoSt stx | completeSubutxow _ _ _ _ utxoStep
       ... | success (utxoSt' , _) | refl = refl
 
 Computational-SUBLEDGERS : Computational _⊢_⇀⦇_,SUBLEDGERS⦈_ String
@@ -168,10 +183,30 @@ instance
   Computational-LEDGER = record {go}
     where
     open Computational ⦃...⦄ renaming (computeProof to comp; completeness to complete)
-    computeSubledgers = comp {STS = _⊢_⇀⦇_,SUBLEDGERS⦈_}
-    computeEntities   = comp {STS = _⊢_⇀⦇_,ENTITIES⦈_}
-    computeGov        = comp {STS = _⊢_⇀⦇_,GOVS⦈_}
-    computeUtxow      = comp {STS = _⊢_⇀⦇_,UTXOW⦈_}
+    opaque
+      computeSubledgers : ∀ Γ s x → ComputationResult String (∃ λ s' → Γ ⊢ s ⇀⦇ x ,SUBLEDGERS⦈ s')
+      computeSubledgers = comp {STS = _⊢_⇀⦇_,SUBLEDGERS⦈_}
+
+      computeUtxow : ∀ Γ s x → ComputationResult String (∃ λ s' → Γ ⊢ s ⇀⦇ x ,UTXOW⦈ s')
+      computeUtxow = comp {STS = _⊢_⇀⦇_,UTXOW⦈_}
+
+      computeEntities : ∀ Γ s x → ComputationResult String (∃ λ s' → Γ ⊢ s ⇀⦇ x ,ENTITIES⦈ s')
+      computeEntities = comp {STS = _⊢_⇀⦇_,ENTITIES⦈_}
+
+      computeGov : ∀ Γ s x → ComputationResult String (∃ λ s' → Γ ⊢ s ⇀⦇ x ,GOVS⦈ s')
+      computeGov = comp {STS = _⊢_⇀⦇_,GOVS⦈_}
+
+      completeSubledgers : ∀ Γ s x s' → Γ ⊢ s ⇀⦇ x ,SUBLEDGERS⦈ s' → (proj₁ <$> computeSubledgers Γ s x) ≡ success s'
+      completeSubledgers = complete {STS = _⊢_⇀⦇_,SUBLEDGERS⦈_}
+
+      completeUtxow : ∀ Γ s x s' → Γ ⊢ s ⇀⦇ x ,UTXOW⦈ s' → (proj₁ <$> computeUtxow Γ s x) ≡ success s'
+      completeUtxow = complete {STS = _⊢_⇀⦇_,UTXOW⦈_}
+
+      completeEntities : ∀ Γ s x s' → Γ ⊢ s ⇀⦇ x ,ENTITIES⦈ s' → (proj₁ <$> computeEntities Γ s x) ≡ success s'
+      completeEntities = complete {STS = _⊢_⇀⦇_,ENTITIES⦈_}
+
+      completeGov : ∀ Γ s x s' → Γ ⊢ s ⇀⦇ x ,GOVS⦈ s' → (proj₁ <$> computeGov Γ s x) ≡ success s'
+      completeGov = complete {STS = _⊢_⇀⦇_,GOVS⦈_}
 
     module go
       (Γ     : LedgerEnv)   (let open LedgerEnv Γ)
@@ -233,17 +268,17 @@ instance
       ... | no ¬v = contradiction v ¬v
       ... | yes refl
         with computeSubledgers subΓ s (SubTransactionsOf txTop)
-           | complete {STS = _⊢_⇀⦇_,SUBLEDGERS⦈_} subΓ s (SubTransactionsOf txTop)
+           | completeSubledgers subΓ s (SubTransactionsOf txTop)
                       (⟦ utxoSt₁ , govSt₁ , certSt₁ ⟧ˡ) subStep
       ... | success (⟦ utxoSt₁ , govSt₁ , certSt₁ ⟧ˡ , _) | refl
         with computeEntities (certΓ govSt₁) certSt₁ (DCertsOf txTop)
-           | complete {STS = _⊢_⇀⦇_,ENTITIES⦈_} (certΓ govSt₁) certSt₁ (DCertsOf txTop) certSt₂ entitiesStep
+           | completeEntities (certΓ govSt₁) certSt₁ (DCertsOf txTop) certSt₂ entitiesStep
       ... | success (certSt₂ , _) | refl
         with computeGov (govΓ certSt₂) govSt₁ (GovProposals+Votes txTop)
-           | complete {STS = _⊢_⇀⦇_,GOVS⦈_} (govΓ certSt₂) govSt₁ (GovProposals+Votes txTop) govSt₂ govStep
+           | completeGov (govΓ certSt₂) govSt₁ (GovProposals+Votes txTop) govSt₂ govStep
       ... | success (govSt₂ , _) | refl
         with computeUtxow utxoΓ utxoSt₁ txTop
-           | complete {STS = _⊢_⇀⦇_,UTXOW⦈_} utxoΓ utxoSt₁ txTop utxoSt₂ utxoStep
+           | completeUtxow utxoΓ utxoSt₁ txTop utxoSt₂ utxoStep
       ... | success (utxoSt₂ , _) | refl = refl
       completeness ledgerSt
         (LEDGER-I {utxoState₁ = utxoSt₁} (i , subStep , utxoStep))
@@ -251,10 +286,10 @@ instance
       ... | yes v = case trans (sym v) i of λ ()
       ... | no ¬v
         with computeSubledgers subΓ s (SubTransactionsOf txTop)
-           | complete {STS = _⊢_⇀⦇_,SUBLEDGERS⦈_} subΓ s (SubTransactionsOf txTop) s subStep
+           | completeSubledgers subΓ s (SubTransactionsOf txTop) s subStep
       ... | success _ | refl
         with computeUtxow utxoΓ utxoSt txTop
-           | complete {STS = _⊢_⇀⦇_,UTXOW⦈_} utxoΓ utxoSt txTop utxoSt₁ utxoStep
+           | completeUtxow utxoΓ utxoSt txTop utxoSt₁ utxoStep
       ... | success _ | refl = refl
 
 Computational-LEDGERS : Computational _⊢_⇀⦇_,LEDGERS⦈_ String
