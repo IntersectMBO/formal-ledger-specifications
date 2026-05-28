@@ -130,7 +130,7 @@ hsRule = phony "hs" $ do
     , "--no-main"
     , "--compile-dir=" ++ _build
     ]
-    ["src/Ledger/Dijkstra/Foreign.lagda.md"]
+    ["src/Ledger/Dijkstra/Foreign.agda"]
 
   -- copy over the Agda-generated MAlonzo files to _hs
   malonzofiles <- map ("MAlonzo" </>) <$> getDirectoryFiles _malonzo ["//*.hs"]
