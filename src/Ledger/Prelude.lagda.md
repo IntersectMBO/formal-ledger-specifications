@@ -115,6 +115,7 @@ indexedSumL-proj₂-zero ((a , v) ∷ xs) all-zero =
   a + c + (b + d)  ∎
   where open ≡-Reasoning
 
+
 module _ {A : Type} ⦃ _ : DecEq A ⦄ where
 
   -- A coin singleton has the coin you expect.
