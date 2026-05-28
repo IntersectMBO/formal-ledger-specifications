@@ -12,8 +12,8 @@ module Ledger.Conway.Foreign.Script.Structure
 open import Algebra.Construct.DirectProduct using (commutativeMonoid)
 open import Algebra.Morphism    using (module MonoidMorphisms)
 open import Data.Nat.Properties using (+-0-commutativeMonoid)
-open import Foreign.HaskellTypes.Deriving
-open import Foreign.Convertible.Deriving
+open import Tactic.Derive.HsType
+open import Tactic.Derive.Convertible
 open import Tactic.Derive.Show
 
 open import Ledger.Prelude

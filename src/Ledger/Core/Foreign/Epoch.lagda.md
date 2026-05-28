@@ -7,7 +7,7 @@ module Ledger.Core.Foreign.Epoch where
 
 open import Ledger.Prelude
 open import Ledger.Prelude.Foreign.HSTypes
-open import Foreign.HaskellTypes.Deriving
+open import Tactic.Derive.HsType
 
 open import Ledger.Core.Specification.Epoch public
 

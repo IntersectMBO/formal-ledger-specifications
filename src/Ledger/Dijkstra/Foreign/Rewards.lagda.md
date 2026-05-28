@@ -5,10 +5,10 @@ source_path: src/Ledger/Dijkstra/Foreign/Rewards.lagda.md
 ```agda
 module Ledger.Dijkstra.Foreign.Rewards where
 
-open import Foreign.Convertible
-open import Foreign.Convertible.Deriving
-open import Foreign.HaskellTypes
-open import Foreign.HaskellTypes.Deriving
+open import Class.Convertible
+open import Tactic.Derive.Convertible
+open import Class.HasHsType
+open import Tactic.Derive.HsType
 
 open import Ledger.Prelude
 open import Ledger.Prelude.Foreign.HSTypes
@@ -36,7 +36,7 @@ open import Data.Integer using (ℤ) renaming (+_ to pos; _≤_ to _≤ℤ_)
 
 instance
   iHsTy-ℤ : HasHsType ℤ
-  iHsTy-ℤ = MkHsType ℤ ℤ
+  iHsTy-ℤ = mkHsType ℤ ℤ
   iConv-ℤ : Convertible ℤ ℤ
   iConv-ℤ = Convertible-Refl
 
@@ -63,7 +63,7 @@ instance
                                                     • fieldPrefix "ru"
   Conv-HsRewardUpdate = autoConvert HsRewardUpdate
 
-  HsTy-RewardUpdate = MkHsType RewardUpdate (HsType HsRewardUpdate)
+  HsTy-RewardUpdate = mkHsType RewardUpdate (HsType HsRewardUpdate)
   Conv-RewardUpdate = mkHsRewardUpdate ⨾ Conv-HsRewardUpdate
 
 unquoteDecl = do

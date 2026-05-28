@@ -7,8 +7,8 @@ source_path: src/Ledger/Dijkstra/Foreign/Script/Base.lagda.md
 module Ledger.Dijkstra.Foreign.Script.Base
   where
 
-open import Foreign.HaskellTypes.Deriving
-open import Foreign.Convertible.Deriving
+open import Tactic.Derive.HsType
+open import Tactic.Derive.Convertible
 open import Tactic.Derive.Show
 
 open import Ledger.Prelude

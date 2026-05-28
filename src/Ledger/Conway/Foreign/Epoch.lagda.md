@@ -5,9 +5,12 @@ source_path: src/Ledger/Conway/Foreign/Epoch.lagda.md
 ```agda
 module Ledger.Conway.Foreign.Epoch where
 
-open import Foreign.Convertible
-open import Foreign.Convertible.Deriving
-open import Foreign.HaskellTypes.Deriving
+open import Class.Convertible
+open import Class.Convertible.Foreign
+open import Class.HasHsType
+open import Class.HasHsType.Foreign
+open import Tactic.Derive.Convertible
+open import Tactic.Derive.HsType
 
 open import Ledger.Prelude
 open import Ledger.Prelude.Foreign.HSTypes

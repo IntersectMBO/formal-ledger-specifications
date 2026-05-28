@@ -5,10 +5,10 @@ source_path: src/Ledger/Dijkstra/Foreign/Certs.lagda.md
 ```agda
 module Ledger.Dijkstra.Foreign.Certs where
 
-open import Foreign.Convertible
-open import Foreign.Convertible.Deriving
-open import Foreign.HaskellTypes
-open import Foreign.HaskellTypes.Deriving
+open import Class.Convertible
+open import Tactic.Derive.Convertible
+open import Class.HasHsType
+open import Tactic.Derive.HsType
 
 open import Ledger.Prelude
 open import Ledger.Prelude.Foreign.HSTypes
@@ -78,7 +78,7 @@ instance
     .to   ce → let module ce = CertEnv ce in record { epoch = ce.epoch ; pp = ce.pp ; votes = to ce.votes ; wdrls = ce.wdrls ; coldCreds = ce.coldCreds ; directDeposits = ce.directDeposits }
     .from ce → let module ce = CertEnv' ce in record { epoch = ce.epoch ; pp = ce.pp ; votes = from ce.votes ; wdrls = ce.wdrls ; coldCreds = ce.coldCreds ; directDeposits = ce.directDeposits }
 
-  HsTy-CertEnv = MkHsType CertEnv (HsType CertEnv')
+  HsTy-CertEnv = mkHsType CertEnv (HsType CertEnv')
   Conv-CertEnv = mkCertEnv' ⨾ Conv-CertEnv'
 
 -- Computational step functions

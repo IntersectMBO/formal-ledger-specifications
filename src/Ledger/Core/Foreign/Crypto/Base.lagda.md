@@ -10,8 +10,8 @@ open import Ledger.Prelude.Foreign.HSTypes
 
 open import Ledger.Core.Specification.Crypto
 
-open import Foreign.HaskellTypes.Deriving
-open import Foreign.Convertible.Deriving
+open import Tactic.Derive.HsType
+open import Tactic.Derive.Convertible
 open import Tactic.Derive.Show
 
 record HSVKey : Type where

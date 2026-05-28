@@ -7,9 +7,9 @@ module Ledger.Conway.Foreign.Rewards where
 
 import Data.Integer as ℤ
 import Data.String as S
-open import Foreign.Convertible
-open import Foreign.Convertible.Deriving
-open import Foreign.HaskellTypes.Deriving
+open import Class.Convertible
+open import Tactic.Derive.Convertible
+open import Tactic.Derive.HsType
 
 open import Ledger.Prelude
 open import Ledger.Prelude.Foreign.HSTypes

@@ -5,9 +5,12 @@ source_path: src/Ledger/Conway/Foreign/Gov/Core.lagda.md
 ```agda
 module Ledger.Conway.Foreign.Gov.Core where
 
-open import Foreign.Convertible
-open import Foreign.Convertible.Deriving
-open import Foreign.HaskellTypes.Deriving
+open import Class.Convertible
+open import Class.Convertible.Foreign
+open import Class.HasHsType
+open import Class.HasHsType.Foreign
+open import Tactic.Derive.Convertible
+open import Tactic.Derive.HsType
 
 open import Ledger.Prelude
 open import Ledger.Prelude.Foreign.HSTypes
@@ -48,7 +51,7 @@ instance
       (KeyHashObj kh) → ⟦ SPO , kh ⟧ᵍᵛ
       (ScriptObj _)   → error "mkGovVoter: Converting from SPO with ScriptObj credential"
 
-  HsTy-GovVoter = MkHsType GovVoter (HsType GovVoter')
+  HsTy-GovVoter = mkHsType GovVoter (HsType GovVoter')
   Conv-GovVoter : Convertible GovVoter (HsType GovVoter')
   Conv-GovVoter = mkGovVoter' ⨾ Convertible-Pair
 
@@ -72,6 +75,6 @@ instance
                                       • withName "GovVote"
   Conv-GovVote' = autoConvert GovVote'
 
-  HsTy-GovVote = MkHsType GovVote (HsType GovVote')
+  HsTy-GovVote = mkHsType GovVote (HsType GovVote')
   Conv-GovVote = mkGovVote' ⨾ Conv-GovVote'
 ```

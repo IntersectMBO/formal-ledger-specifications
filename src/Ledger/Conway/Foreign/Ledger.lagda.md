@@ -5,12 +5,14 @@ source_path: src/Ledger/Conway/Foreign/Ledger.lagda.md
 ```agda
 module Ledger.Conway.Foreign.Ledger where
 
-open import Foreign.Convertible 
-open import Foreign.Convertible.Deriving
+open import Class.Convertible
+open import Class.Convertible.Foreign
+open import Tactic.Derive.Convertible
 open import Foreign.Haskell
 open import Foreign.Haskell.Coerce
-open import Foreign.HaskellTypes
-open import Foreign.HaskellTypes.Deriving
+open import Class.HasHsType
+open import Class.HasHsType.Foreign
+open import Tactic.Derive.HsType
 
 open import Ledger.Prelude
 open import Ledger.Prelude.Foreign.HSTypes

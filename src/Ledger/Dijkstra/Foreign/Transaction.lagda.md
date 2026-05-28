@@ -5,10 +5,12 @@ source_path: src/Ledger/Dijkstra/Foreign/Transaction.lagda.md
 ```agda
 module Ledger.Dijkstra.Foreign.Transaction where
 
-open import Foreign.Convertible
-open import Foreign.Convertible.Deriving
-open import Foreign.HaskellTypes
-open import Foreign.HaskellTypes.Deriving
+open import Class.Convertible
+open import Class.Convertible.Foreign
+open import Tactic.Derive.Convertible
+open import Class.HasHsType
+open import Class.HasHsType.Foreign
+open import Tactic.Derive.HsType
 import Data.String as S
 
 open import Ledger.Prelude
@@ -79,7 +81,7 @@ instance
   Conv-TxBodySub' = autoConvert TxBodySub
 
   HsTy-TxBodySub' : HasHsType (TxBody TxLevelSub)
-  HsTy-TxBodySub' = MkHsType (TxBody TxLevelSub) (HsType TxBodySub)
+  HsTy-TxBodySub' = mkHsType (TxBody TxLevelSub) (HsType TxBodySub)
   Conv-TxBodySub'' : Convertible (TxBody TxLevelSub) (HsType TxBodySub)
   Conv-TxBodySub'' = convTxBodySub ⨾ Conv-TxBodySub'
 
@@ -102,7 +104,7 @@ instance
   Conv-TxSub' = autoConvert TxSub
 
   HsTy-TxSub' : HasHsType (Tx TxLevelSub)
-  HsTy-TxSub' = MkHsType (Tx TxLevelSub) (HsType TxSub)
+  HsTy-TxSub' = mkHsType (Tx TxLevelSub) (HsType TxSub)
   Conv-TxSub'' : Convertible (Tx TxLevelSub) (HsType TxSub)
   Conv-TxSub'' = convTxSub ⨾ Conv-TxSub'
 
@@ -141,7 +143,7 @@ instance
   Conv-TxBodyTop' = autoConvert TxBodyTop
 
   HsTy-TxBodyTop' : HasHsType (TxBody TxLevelTop)
-  HsTy-TxBodyTop' = MkHsType (TxBody TxLevelTop) (HsType TxBodyTop)
+  HsTy-TxBodyTop' = mkHsType (TxBody TxLevelTop) (HsType TxBodyTop)
   Conv-TxBodyTop'' : Convertible (TxBody TxLevelTop) (HsType TxBodyTop)
   Conv-TxBodyTop'' = convTxBodyTop ⨾ Conv-TxBodyTop'
 
@@ -164,7 +166,7 @@ instance
   Conv-TxTop' = autoConvert TxTop
 
   HsTy-TxTop' : HasHsType (Tx TxLevelTop)
-  HsTy-TxTop' = MkHsType (Tx TxLevelTop) (HsType TxTop)
+  HsTy-TxTop' = mkHsType (Tx TxLevelTop) (HsType TxTop)
   Conv-TxTop'' : Convertible (Tx TxLevelTop) (HsType TxTop)
   Conv-TxTop'' = convTxTop ⨾ Conv-TxTop'
 

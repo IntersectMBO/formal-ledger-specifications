@@ -5,10 +5,12 @@ source_path: src/Ledger/Dijkstra/Foreign/Account.lagda.md
 ```agda
 module Ledger.Dijkstra.Foreign.Account where
 
-open import Foreign.Convertible
-open import Foreign.Convertible.Deriving
-open import Foreign.HaskellTypes
-open import Foreign.HaskellTypes.Deriving
+open import Class.Convertible
+open import Class.Convertible.Foreign
+open import Tactic.Derive.Convertible
+open import Class.HasHsType
+open import Class.HasHsType.Foreign
+open import Tactic.Derive.HsType
 import Data.String as S
 
 open import Ledger.Prelude

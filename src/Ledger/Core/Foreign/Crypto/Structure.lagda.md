@@ -8,8 +8,8 @@ open import Ledger.Core.Foreign.ExternalFunctions
 module Ledger.Core.Foreign.Crypto.Structure
   (externalFunctions : ExternalFunctions) where
 
-open import Foreign.HaskellTypes.Deriving
-open import Foreign.Convertible.Deriving
+open import Tactic.Derive.HsType
+open import Tactic.Derive.Convertible
 open import Tactic.Derive.Show
 
 open import Ledger.Prelude

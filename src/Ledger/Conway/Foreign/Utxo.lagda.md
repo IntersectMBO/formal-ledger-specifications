@@ -7,12 +7,14 @@ source_path: src/Ledger/Conway/Foreign/Utxo.lagda.md
 
 module Ledger.Conway.Foreign.Utxo where
 
-open import Foreign.Convertible 
-open import Foreign.Convertible.Deriving
+open import Class.Convertible
+open import Class.Convertible.Foreign
+open import Tactic.Derive.Convertible
 open import Foreign.Haskell
 open import Foreign.Haskell.Coerce
-open import Foreign.HaskellTypes
-open import Foreign.HaskellTypes.Deriving
+open import Class.HasHsType
+open import Class.HasHsType.Foreign
+open import Tactic.Derive.HsType
 
 open import Ledger.Prelude
 open import Ledger.Prelude.Foreign.HSTypes
