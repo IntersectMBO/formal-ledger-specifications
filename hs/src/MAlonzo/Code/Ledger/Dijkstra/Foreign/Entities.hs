@@ -21,8 +21,9 @@ import qualified MAlonzo.Code.Agda.Builtin.Equality
 import qualified MAlonzo.Code.Agda.Builtin.List
 import qualified MAlonzo.Code.Agda.Builtin.Sigma
 import qualified MAlonzo.Code.Agda.Builtin.String
+import qualified MAlonzo.Code.Class.Convertible.Core
+import qualified MAlonzo.Code.Class.Convertible.Instances
 import qualified MAlonzo.Code.Data.Irrelevant
-import qualified MAlonzo.Code.Foreign.Convertible
 import qualified MAlonzo.Code.Function.Bundles
 import qualified MAlonzo.Code.Interface.ComputationalRelation
 import qualified MAlonzo.Code.Interface.STS
@@ -200,32 +201,32 @@ d_'8801''45'success'8660'STS_30
             (coe v0)))
 -- Ledger.Dijkstra.Foreign.Entities.entities-step
 entitiesStep ::
-  MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.T_CertEnv_24355 ->
+  MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.T_CertEnv_23683 ->
   MAlonzo.Code.Ledger.Dijkstra.Foreign.Cert.T_CertState_41 ->
   MAlonzo.Code.Agda.Builtin.List.T_List_10
-    () MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.T_DCert_2881 ->
+    () MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.T_DCert_2851 ->
   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.T_HSComputationResult_110
     MAlonzo.Code.Agda.Builtin.String.T_String_6
     MAlonzo.Code.Ledger.Dijkstra.Foreign.Cert.T_CertState_41
 entitiesStep = coe d_entities'45'step_32
 d_entities'45'step_32 ::
-  MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.T_CertEnv_24355 ->
+  MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.T_CertEnv_23683 ->
   MAlonzo.Code.Ledger.Dijkstra.Foreign.Cert.T_CertState_41 ->
-  [MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.T_DCert_2881] ->
+  [MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.T_DCert_2851] ->
   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.T_HSComputationResult_110
     MAlonzo.Code.Agda.Builtin.String.T_String_6
     MAlonzo.Code.Ledger.Dijkstra.Foreign.Cert.T_CertState_41
 d_entities'45'step_32 v0
   = coe
-      MAlonzo.Code.Foreign.Convertible.d_to_18
+      MAlonzo.Code.Class.Convertible.Core.d_to_20
       (coe
-         MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Fun_132
+         MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'Fun_34
          (coe
             MAlonzo.Code.Ledger.Dijkstra.Foreign.Cert.d_Conv'45'CertState_16)
          (coe
-            MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Fun_132
+            MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'Fun_34
             (coe
-               MAlonzo.Code.Foreign.Convertible.du_Convertible'45'List_120
+               MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                (coe
                   MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.d_Conv'45'DCert_22))
             (coe
@@ -244,6 +245,6 @@ d_entities'45'step_32 v0
                   (coe
                      MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20))))
          (coe
-            MAlonzo.Code.Foreign.Convertible.d_from_20
+            MAlonzo.Code.Class.Convertible.Core.d_from_22
             MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.d_Conv'45'CertEnv_110
             v0))

@@ -17,13 +17,13 @@ import MAlonzo.RTE (coe, erased, AgdaAny, addInt, subInt, mulInt,
                     rem64, lt64, eq64, word64FromNat, word64ToNat)
 import qualified MAlonzo.RTE
 import qualified Data.Text
+import qualified MAlonzo.Code.Class.Convertible.Core
 import qualified MAlonzo.Code.Class.DecEq.Core
+import qualified MAlonzo.Code.Class.HasHsType.Core
 import qualified MAlonzo.Code.Class.Show.Core
 import qualified MAlonzo.Code.Data.Nat.Properties
 import qualified MAlonzo.Code.Data.Nat.Show
 import qualified MAlonzo.Code.Data.String.Base
-import qualified MAlonzo.Code.Foreign.Convertible
-import qualified MAlonzo.Code.Foreign.HaskellTypes
 import qualified MAlonzo.Code.Interface.TypeClasses.Hashable
 import qualified MAlonzo.Code.Ledger.Core.Specification.Crypto
 import qualified MAlonzo.Code.Relation.Nullary.Decidable.Core
@@ -32,7 +32,7 @@ import qualified MAlonzo.Code.Tactic.Derive.Show
 
 import GHC.Generics (Generic)
 data HSVKey = MkHSVKey {hvkVKey :: Integer, hvkStoredHash :: Integer}
- deriving (Show, Eq, Generic)
+  deriving (Show, Eq, Generic)
 -- Ledger.Core.Foreign.Crypto.Base.HSVKey
 d_HSVKey_10 = ()
 data T_HSVKey_10 = C_MkHSVKey_20 Integer Integer
@@ -165,14 +165,14 @@ d_HashableSet'45'ℕ_36
             (coe (\ v0 -> v0))))
 -- Ledger.Core.Foreign.Crypto.Base.HsTy-HSVKey
 d_HsTy'45'HSVKey_38 ::
-  MAlonzo.Code.Foreign.HaskellTypes.T_HasHsType_14
+  MAlonzo.Code.Class.HasHsType.Core.T_HasHsType_10
 d_HsTy'45'HSVKey_38 = erased
 -- Ledger.Core.Foreign.Crypto.Base.Conv-HSVKey
 d_Conv'45'HSVKey_40 ::
-  MAlonzo.Code.Foreign.Convertible.T_Convertible_8
+  MAlonzo.Code.Class.Convertible.Core.T_Convertible_10
 d_Conv'45'HSVKey_40
   = coe
-      MAlonzo.Code.Foreign.Convertible.C_constructor_22
+      MAlonzo.Code.Class.Convertible.Core.C_constructor_24
       (coe
          (\ v0 ->
             case coe v0 of

@@ -24,11 +24,18 @@ import qualified MAlonzo.Code.Agda.Builtin.Maybe
 import qualified MAlonzo.Code.Agda.Builtin.Sigma
 import qualified MAlonzo.Code.Agda.Primitive
 import qualified MAlonzo.Code.Axiom.Set
+import qualified MAlonzo.Code.Axiom.Set.Map
+import qualified MAlonzo.Code.Class.Convertible.Core
+import qualified MAlonzo.Code.Class.Convertible.Foreign
+import qualified MAlonzo.Code.Class.Convertible.Instances
 import qualified MAlonzo.Code.Class.DecEq.Core
+import qualified MAlonzo.Code.Class.Functor.Core
+import qualified MAlonzo.Code.Class.Functor.Instances
+import qualified MAlonzo.Code.Class.HasHsType.Core
+import qualified MAlonzo.Code.Data.Product.Base
 import qualified MAlonzo.Code.Data.Rational.Base
-import qualified MAlonzo.Code.Foreign.Convertible
+import qualified MAlonzo.Code.Foreign.Haskell.Coerce
 import qualified MAlonzo.Code.Foreign.Haskell.Pair
-import qualified MAlonzo.Code.Foreign.HaskellTypes
 import qualified MAlonzo.Code.Interface.ComputationalRelation
 import qualified MAlonzo.Code.Ledger.Prelude.Foreign.Util
 import qualified MAlonzo.Code.Ledger.Prelude.Numeric.PositiveNat
@@ -57,37 +64,40 @@ instance Monad (ComputationResult e) where
   (Failure e) >>= _ = Failure e
 type Coin = Integer
 -- Ledger.Prelude.Foreign.HSTypes.iConvTop
-d_iConvTop_8 :: MAlonzo.Code.Foreign.Convertible.T_Convertible_8
+d_iConvTop_8 ::
+  MAlonzo.Code.Class.Convertible.Core.T_Convertible_10
 d_iConvTop_8
-  = coe MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Refl_38
+  = coe MAlonzo.Code.Class.Convertible.Core.du_Convertible'45'Refl_34
 -- Ledger.Prelude.Foreign.HSTypes.iConvNat
-d_iConvNat_10 :: MAlonzo.Code.Foreign.Convertible.T_Convertible_8
+d_iConvNat_10 ::
+  MAlonzo.Code.Class.Convertible.Core.T_Convertible_10
 d_iConvNat_10
-  = coe MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Refl_38
+  = coe MAlonzo.Code.Class.Convertible.Core.du_Convertible'45'Refl_34
 -- Ledger.Prelude.Foreign.HSTypes.iConvString
 d_iConvString_12 ::
-  MAlonzo.Code.Foreign.Convertible.T_Convertible_8
+  MAlonzo.Code.Class.Convertible.Core.T_Convertible_10
 d_iConvString_12
-  = coe MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Refl_38
+  = coe MAlonzo.Code.Class.Convertible.Core.du_Convertible'45'Refl_34
 -- Ledger.Prelude.Foreign.HSTypes.iConvBool
-d_iConvBool_14 :: MAlonzo.Code.Foreign.Convertible.T_Convertible_8
+d_iConvBool_14 ::
+  MAlonzo.Code.Class.Convertible.Core.T_Convertible_10
 d_iConvBool_14
-  = coe MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Refl_38
+  = coe MAlonzo.Code.Class.Convertible.Core.du_Convertible'45'Refl_34
 -- Ledger.Prelude.Foreign.HSTypes.HsTy-⊥
 d_HsTy'45''8869'_16 ::
-  MAlonzo.Code.Foreign.HaskellTypes.T_HasHsType_14
+  MAlonzo.Code.Class.HasHsType.Core.T_HasHsType_10
 d_HsTy'45''8869'_16 = erased
 -- Ledger.Prelude.Foreign.HSTypes.Conv-⊥
 d_Conv'45''8869'_18 ::
-  MAlonzo.Code.Foreign.Convertible.T_Convertible_8
+  MAlonzo.Code.Class.Convertible.Core.T_Convertible_10
 d_Conv'45''8869'_18
   = coe
-      MAlonzo.Code.Foreign.Convertible.C_constructor_22
+      MAlonzo.Code.Class.Convertible.Core.C_constructor_24
       (coe (\ v0 -> MAlonzo.RTE.mazUnreachableError))
       (coe (\ v0 -> MAlonzo.RTE.mazUnreachableError))
 -- Ledger.Prelude.Foreign.HSTypes.HsTy-⊤
 d_HsTy'45''8868'_20 ::
-  MAlonzo.Code.Foreign.HaskellTypes.T_HasHsType_14
+  MAlonzo.Code.Class.HasHsType.Core.T_HasHsType_10
 d_HsTy'45''8868'_20 = erased
 -- Ledger.Prelude.Foreign.HSTypes.Rational
 d_Rational_22 = ()
@@ -101,14 +111,14 @@ cover_Rational_22 x
       (:%) _ _ -> ()
 -- Ledger.Prelude.Foreign.HSTypes.HsTy-Rational
 d_HsTy'45'Rational_26 ::
-  MAlonzo.Code.Foreign.HaskellTypes.T_HasHsType_14
+  MAlonzo.Code.Class.HasHsType.Core.T_HasHsType_10
 d_HsTy'45'Rational_26 = erased
 -- Ledger.Prelude.Foreign.HSTypes.Conv-Rational
 d_Conv'45'Rational_28 ::
-  MAlonzo.Code.Foreign.Convertible.T_Convertible_8
+  MAlonzo.Code.Class.Convertible.Core.T_Convertible_10
 d_Conv'45'Rational_28
   = coe
-      MAlonzo.Code.Foreign.Convertible.C_constructor_22
+      MAlonzo.Code.Class.Convertible.Core.C_constructor_24
       (coe
          (\ v0 ->
             case coe v0 of
@@ -170,30 +180,30 @@ d_elems_66 v0
 -- Ledger.Prelude.Foreign.HSTypes.HsTy-HSSet
 d_HsTy'45'HSSet_72 ::
   () ->
-  MAlonzo.Code.Foreign.HaskellTypes.T_HasHsType_14 ->
-  MAlonzo.Code.Foreign.HaskellTypes.T_HasHsType_14
+  MAlonzo.Code.Class.HasHsType.Core.T_HasHsType_10 ->
+  MAlonzo.Code.Class.HasHsType.Core.T_HasHsType_10
 d_HsTy'45'HSSet_72 = erased
 -- Ledger.Prelude.Foreign.HSTypes.Conv-HSSet
 d_Conv'45'HSSet_80 ::
   () ->
-  MAlonzo.Code.Foreign.HaskellTypes.T_HasHsType_14 ->
-  MAlonzo.Code.Foreign.Convertible.T_Convertible_8 ->
-  MAlonzo.Code.Foreign.Convertible.T_Convertible_8
+  MAlonzo.Code.Class.HasHsType.Core.T_HasHsType_10 ->
+  MAlonzo.Code.Class.Convertible.Core.T_Convertible_10 ->
+  MAlonzo.Code.Class.Convertible.Core.T_Convertible_10
 d_Conv'45'HSSet_80 ~v0 ~v1 v2 = du_Conv'45'HSSet_80 v2
 du_Conv'45'HSSet_80 ::
-  MAlonzo.Code.Foreign.Convertible.T_Convertible_8 ->
-  MAlonzo.Code.Foreign.Convertible.T_Convertible_8
+  MAlonzo.Code.Class.Convertible.Core.T_Convertible_10 ->
+  MAlonzo.Code.Class.Convertible.Core.T_Convertible_10
 du_Conv'45'HSSet_80 v0
   = coe
-      MAlonzo.Code.Foreign.Convertible.C_constructor_22
+      MAlonzo.Code.Class.Convertible.Core.C_constructor_24
       (coe
          (\ v1 ->
             coe
               C_MkHSSet_68
               (coe
-                 MAlonzo.Code.Foreign.Convertible.d_to_18
+                 MAlonzo.Code.Class.Convertible.Core.d_to_20
                  (coe
-                    MAlonzo.Code.Foreign.Convertible.du_Convertible'45'List_120
+                    MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                     (coe v0))
                  v1)))
       (coe
@@ -205,59 +215,74 @@ du_Conv'45'HSSet_80 v0
                  (coe
                     MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
               (coe
-                 MAlonzo.Code.Foreign.Convertible.d_from_20
+                 MAlonzo.Code.Class.Convertible.Core.d_from_22
                  (coe
-                    MAlonzo.Code.Foreign.Convertible.du_Convertible'45'List_120
+                    MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                     (coe v0))
                  (d_elems_66 (coe v1)))))
 -- Ledger.Prelude.Foreign.HSTypes.HsTy-Map
 d_HsTy'45'Map_88 ::
   () ->
   () ->
-  MAlonzo.Code.Foreign.HaskellTypes.T_HasHsType_14 ->
-  MAlonzo.Code.Foreign.HaskellTypes.T_HasHsType_14 ->
-  MAlonzo.Code.Foreign.HaskellTypes.T_HasHsType_14
+  MAlonzo.Code.Class.HasHsType.Core.T_HasHsType_10 ->
+  MAlonzo.Code.Class.HasHsType.Core.T_HasHsType_10 ->
+  MAlonzo.Code.Class.HasHsType.Core.T_HasHsType_10
 d_HsTy'45'Map_88 = erased
 -- Ledger.Prelude.Foreign.HSTypes.Conv-HSMap
 d_Conv'45'HSMap_102 ::
   () ->
   () ->
-  MAlonzo.Code.Foreign.HaskellTypes.T_HasHsType_14 ->
-  MAlonzo.Code.Foreign.HaskellTypes.T_HasHsType_14 ->
+  MAlonzo.Code.Class.HasHsType.Core.T_HasHsType_10 ->
+  MAlonzo.Code.Class.HasHsType.Core.T_HasHsType_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
-  MAlonzo.Code.Foreign.Convertible.T_Convertible_8 ->
-  MAlonzo.Code.Foreign.Convertible.T_Convertible_8 ->
-  MAlonzo.Code.Foreign.Convertible.T_Convertible_8
+  MAlonzo.Code.Class.Convertible.Core.T_Convertible_10 ->
+  MAlonzo.Code.Class.Convertible.Core.T_Convertible_10 ->
+  MAlonzo.Code.Class.Convertible.Core.T_Convertible_10
 d_Conv'45'HSMap_102 ~v0 ~v1 ~v2 ~v3 v4 v5 v6
   = du_Conv'45'HSMap_102 v4 v5 v6
 du_Conv'45'HSMap_102 ::
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
-  MAlonzo.Code.Foreign.Convertible.T_Convertible_8 ->
-  MAlonzo.Code.Foreign.Convertible.T_Convertible_8 ->
-  MAlonzo.Code.Foreign.Convertible.T_Convertible_8
+  MAlonzo.Code.Class.Convertible.Core.T_Convertible_10 ->
+  MAlonzo.Code.Class.Convertible.Core.T_Convertible_10 ->
+  MAlonzo.Code.Class.Convertible.Core.T_Convertible_10
 du_Conv'45'HSMap_102 v0 v1 v2
   = coe
-      MAlonzo.Code.Foreign.Convertible.C_constructor_22
+      MAlonzo.Code.Class.Convertible.Core.C_constructor_24
       (coe
          (\ v3 ->
             coe
               C_MkHSMap_56
               (coe
-                 MAlonzo.Code.Foreign.Convertible.d_to_18
+                 MAlonzo.Code.Class.Convertible.Core.d_to_20
                  (coe
-                    MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                    MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                     (coe
-                       MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94 (coe v1)
-                       (coe v2)))
+                       MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
+                       (coe v1) (coe v2)))
                  (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe v3)))))
       (coe
          (\ v3 ->
             coe
-              MAlonzo.Code.Foreign.Convertible.d_from_20
+              MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
               (coe
-                 MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Map_116 (coe v0)
-                 (coe v1) (coe v2))
-              (d_assocList_54 (coe v3))))
+                 MAlonzo.Code.Axiom.Set.d_th_1516
+                 (coe
+                    MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+              (coe v0)
+              (coe
+                 MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                 MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92 () erased
+                 () erased
+                 (\ v4 ->
+                    coe
+                      MAlonzo.Code.Data.Product.Base.du_map_128
+                      (coe MAlonzo.Code.Class.Convertible.Core.d_from_22 (coe v1))
+                      (coe
+                         (\ v5 -> MAlonzo.Code.Class.Convertible.Core.d_from_22 (coe v2)))
+                      (coe
+                         MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44 () erased () erased
+                         (coe MAlonzo.Code.Foreign.Haskell.Coerce.C_TrustMe_40) v4))
+                 (d_assocList_54 (coe v3)))))
 -- Ledger.Prelude.Foreign.HSTypes.HSComputationResult
 d_HSComputationResult_110 a0 a1 = ()
 type T_HSComputationResult_110 a0 a1 = ComputationResult a0 a1
@@ -279,9 +304,9 @@ d_HsTy'45'ComputationResult_126 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   () ->
-  MAlonzo.Code.Foreign.HaskellTypes.T_HasHsType_14 ->
-  MAlonzo.Code.Foreign.HaskellTypes.T_HasHsType_14 ->
-  MAlonzo.Code.Foreign.HaskellTypes.T_HasHsType_14
+  MAlonzo.Code.Class.HasHsType.Core.T_HasHsType_10 ->
+  MAlonzo.Code.Class.HasHsType.Core.T_HasHsType_10 ->
+  MAlonzo.Code.Class.HasHsType.Core.T_HasHsType_10
 d_HsTy'45'ComputationResult_126 = erased
 -- Ledger.Prelude.Foreign.HSTypes.Conv-ComputationResult
 d_Conv'45'ComputationResult_132 ::
@@ -289,29 +314,29 @@ d_Conv'45'ComputationResult_132 ::
   () ->
   () ->
   () ->
-  MAlonzo.Code.Foreign.Convertible.T_Convertible_8 ->
-  MAlonzo.Code.Foreign.Convertible.T_Convertible_8 ->
-  MAlonzo.Code.Foreign.Convertible.T_Convertible_8
+  MAlonzo.Code.Class.Convertible.Core.T_Convertible_10 ->
+  MAlonzo.Code.Class.Convertible.Core.T_Convertible_10 ->
+  MAlonzo.Code.Class.Convertible.Core.T_Convertible_10
 d_Conv'45'ComputationResult_132 ~v0 ~v1 ~v2 ~v3 v4 v5
   = du_Conv'45'ComputationResult_132 v4 v5
 du_Conv'45'ComputationResult_132 ::
-  MAlonzo.Code.Foreign.Convertible.T_Convertible_8 ->
-  MAlonzo.Code.Foreign.Convertible.T_Convertible_8 ->
-  MAlonzo.Code.Foreign.Convertible.T_Convertible_8
+  MAlonzo.Code.Class.Convertible.Core.T_Convertible_10 ->
+  MAlonzo.Code.Class.Convertible.Core.T_Convertible_10 ->
+  MAlonzo.Code.Class.Convertible.Core.T_Convertible_10
 du_Conv'45'ComputationResult_132 v0 v1
   = coe
-      MAlonzo.Code.Foreign.Convertible.C_constructor_22
+      MAlonzo.Code.Class.Convertible.Core.C_constructor_24
       (coe
          (\ v2 ->
             case coe v2 of
               C_Success_116 v3
                 -> coe
                      MAlonzo.Code.Interface.ComputationalRelation.C_success_42
-                     (coe MAlonzo.Code.Foreign.Convertible.d_to_18 v1 v3)
+                     (coe MAlonzo.Code.Class.Convertible.Core.d_to_20 v1 v3)
               C_Failure_118 v3
                 -> coe
                      MAlonzo.Code.Interface.ComputationalRelation.C_failure_44
-                     (coe MAlonzo.Code.Foreign.Convertible.d_to_18 v0 v3)
+                     (coe MAlonzo.Code.Class.Convertible.Core.d_to_20 v0 v3)
               _ -> MAlonzo.RTE.mazUnreachableError))
       (coe
          (\ v2 ->
@@ -319,11 +344,11 @@ du_Conv'45'ComputationResult_132 v0 v1
               MAlonzo.Code.Interface.ComputationalRelation.C_success_42 v3
                 -> coe
                      C_Success_116
-                     (coe MAlonzo.Code.Foreign.Convertible.d_from_20 v1 v3)
+                     (coe MAlonzo.Code.Class.Convertible.Core.d_from_22 v1 v3)
               MAlonzo.Code.Interface.ComputationalRelation.C_failure_44 v3
                 -> coe
                      C_Failure_118
-                     (coe MAlonzo.Code.Foreign.Convertible.d_from_20 v0 v3)
+                     (coe MAlonzo.Code.Class.Convertible.Core.d_from_22 v0 v3)
               _ -> MAlonzo.RTE.mazUnreachableError))
 -- Ledger.Prelude.Foreign.HSTypes.Conv-HSComputationResult
 d_Conv'45'HSComputationResult_134 ::
@@ -331,27 +356,29 @@ d_Conv'45'HSComputationResult_134 ::
   () ->
   () ->
   () ->
-  MAlonzo.Code.Foreign.Convertible.T_Convertible_8 ->
-  MAlonzo.Code.Foreign.Convertible.T_Convertible_8 ->
-  MAlonzo.Code.Foreign.Convertible.T_Convertible_8
+  MAlonzo.Code.Class.Convertible.Core.T_Convertible_10 ->
+  MAlonzo.Code.Class.Convertible.Core.T_Convertible_10 ->
+  MAlonzo.Code.Class.Convertible.Core.T_Convertible_10
 d_Conv'45'HSComputationResult_134 ~v0 ~v1 ~v2 ~v3 v4 v5
   = du_Conv'45'HSComputationResult_134 v4 v5
 du_Conv'45'HSComputationResult_134 ::
-  MAlonzo.Code.Foreign.Convertible.T_Convertible_8 ->
-  MAlonzo.Code.Foreign.Convertible.T_Convertible_8 ->
-  MAlonzo.Code.Foreign.Convertible.T_Convertible_8
+  MAlonzo.Code.Class.Convertible.Core.T_Convertible_10 ->
+  MAlonzo.Code.Class.Convertible.Core.T_Convertible_10 ->
+  MAlonzo.Code.Class.Convertible.Core.T_Convertible_10
 du_Conv'45'HSComputationResult_134 v0 v1
   = coe
-      MAlonzo.Code.Foreign.Convertible.C_constructor_22
+      MAlonzo.Code.Class.Convertible.Core.C_constructor_24
       (coe
          (\ v2 ->
             case coe v2 of
               MAlonzo.Code.Interface.ComputationalRelation.C_success_42 v3
                 -> coe
-                     C_Success_116 (coe MAlonzo.Code.Foreign.Convertible.d_to_18 v1 v3)
+                     C_Success_116
+                     (coe MAlonzo.Code.Class.Convertible.Core.d_to_20 v1 v3)
               MAlonzo.Code.Interface.ComputationalRelation.C_failure_44 v3
                 -> coe
-                     C_Failure_118 (coe MAlonzo.Code.Foreign.Convertible.d_to_18 v0 v3)
+                     C_Failure_118
+                     (coe MAlonzo.Code.Class.Convertible.Core.d_to_20 v0 v3)
               _ -> MAlonzo.RTE.mazUnreachableError))
       (coe
          (\ v2 ->
@@ -359,28 +386,28 @@ du_Conv'45'HSComputationResult_134 v0 v1
               C_Success_116 v3
                 -> coe
                      MAlonzo.Code.Interface.ComputationalRelation.C_success_42
-                     (coe MAlonzo.Code.Foreign.Convertible.d_from_20 v1 v3)
+                     (coe MAlonzo.Code.Class.Convertible.Core.d_from_22 v1 v3)
               C_Failure_118 v3
                 -> coe
                      MAlonzo.Code.Interface.ComputationalRelation.C_failure_44
-                     (coe MAlonzo.Code.Foreign.Convertible.d_from_20 v0 v3)
+                     (coe MAlonzo.Code.Class.Convertible.Core.d_from_22 v0 v3)
               _ -> MAlonzo.RTE.mazUnreachableError))
 -- Ledger.Prelude.Foreign.HSTypes.HsTy-UnitInterval
 d_HsTy'45'UnitInterval_136 ::
-  MAlonzo.Code.Foreign.HaskellTypes.T_HasHsType_14
+  MAlonzo.Code.Class.HasHsType.Core.T_HasHsType_10
 d_HsTy'45'UnitInterval_136 = erased
 -- Ledger.Prelude.Foreign.HSTypes.Conv-UnitInterval
 d_Conv'45'UnitInterval_138 ::
-  MAlonzo.Code.Foreign.Convertible.T_Convertible_8
+  MAlonzo.Code.Class.Convertible.Core.T_Convertible_10
 d_Conv'45'UnitInterval_138
   = coe
-      MAlonzo.Code.Foreign.Convertible.C_constructor_22
+      MAlonzo.Code.Class.Convertible.Core.C_constructor_24
       (coe
          (\ v0 ->
             coe
-              MAlonzo.Code.Foreign.Convertible.d_to_18
+              MAlonzo.Code.Class.Convertible.Core.d_to_20
               (coe
-                 MAlonzo.Code.Foreign.Convertible.C_constructor_22
+                 MAlonzo.Code.Class.Convertible.Core.C_constructor_24
                  (coe
                     (\ v1 ->
                        case coe v1 of
@@ -405,9 +432,9 @@ d_Conv'45'UnitInterval_138
             let v1
                   = MAlonzo.Code.Ledger.Prelude.Numeric.UnitInterval.d_toUnitInterval_74
                       (coe
-                         MAlonzo.Code.Foreign.Convertible.d_from_20
+                         MAlonzo.Code.Class.Convertible.Core.d_from_22
                          (coe
-                            MAlonzo.Code.Foreign.Convertible.C_constructor_22
+                            MAlonzo.Code.Class.Convertible.Core.C_constructor_24
                             (coe
                                (\ v1 ->
                                   case coe v1 of
@@ -439,14 +466,14 @@ d_Conv'45'UnitInterval_138
                  _ -> MAlonzo.RTE.mazUnreachableError)))
 -- Ledger.Prelude.Foreign.HSTypes.HsTy-PosNat
 d_HsTy'45'PosNat_148 ::
-  MAlonzo.Code.Foreign.HaskellTypes.T_HasHsType_14
+  MAlonzo.Code.Class.HasHsType.Core.T_HasHsType_10
 d_HsTy'45'PosNat_148 = erased
 -- Ledger.Prelude.Foreign.HSTypes.Conv-PosNat
 d_Conv'45'PosNat_150 ::
-  MAlonzo.Code.Foreign.Convertible.T_Convertible_8
+  MAlonzo.Code.Class.Convertible.Core.T_Convertible_10
 d_Conv'45'PosNat_150
   = coe
-      MAlonzo.Code.Foreign.Convertible.C_constructor_22
+      MAlonzo.Code.Class.Convertible.Core.C_constructor_24
       (coe
          (\ v0 ->
             MAlonzo.Code.Ledger.Prelude.Numeric.PositiveNat.d_fromPosNat_16

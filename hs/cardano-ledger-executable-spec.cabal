@@ -124,6 +124,10 @@ library
       MAlonzo.Code.Class.CommutativeMonoid
       MAlonzo.Code.Class.CommutativeMonoid.Core
       MAlonzo.Code.Class.CommutativeMonoid.Instances
+      MAlonzo.Code.Class.Convertible
+      MAlonzo.Code.Class.Convertible.Core
+      MAlonzo.Code.Class.Convertible.Foreign
+      MAlonzo.Code.Class.Convertible.Instances
       MAlonzo.Code.Class.Core
       MAlonzo.Code.Class.DecEq
       MAlonzo.Code.Class.DecEq.Core
@@ -142,6 +146,10 @@ library
       MAlonzo.Code.Class.HasAdd.Core
       MAlonzo.Code.Class.HasAdd.Instances
       MAlonzo.Code.Class.HasEmptySet
+      MAlonzo.Code.Class.HasHsType
+      MAlonzo.Code.Class.HasHsType.Core
+      MAlonzo.Code.Class.HasHsType.Foreign
+      MAlonzo.Code.Class.HasHsType.Instances
       MAlonzo.Code.Class.HasOrder
       MAlonzo.Code.Class.HasOrder.Core
       MAlonzo.Code.Class.HasOrder.Instances
@@ -405,15 +413,11 @@ library
       MAlonzo.Code.Effect.Empty
       MAlonzo.Code.Effect.Functor
       MAlonzo.Code.Effect.Monad
-      MAlonzo.Code.Foreign.Convertible
-      MAlonzo.Code.Foreign.Convertible.Deriving
       MAlonzo.Code.Foreign.Haskell
       MAlonzo.Code.Foreign.Haskell.Coerce
       MAlonzo.Code.Foreign.Haskell.Either
       MAlonzo.Code.Foreign.Haskell.List.NonEmpty
       MAlonzo.Code.Foreign.Haskell.Pair
-      MAlonzo.Code.Foreign.HaskellTypes
-      MAlonzo.Code.Foreign.HaskellTypes.Deriving
       MAlonzo.Code.Function
       MAlonzo.Code.Function.Base
       MAlonzo.Code.Function.Bundles
@@ -757,7 +761,9 @@ library
       MAlonzo.Code.Tactic.Constrs
       MAlonzo.Code.Tactic.Defaults
       MAlonzo.Code.Tactic.Derive
+      MAlonzo.Code.Tactic.Derive.Convertible
       MAlonzo.Code.Tactic.Derive.DecEq
+      MAlonzo.Code.Tactic.Derive.HsType
       MAlonzo.Code.Tactic.Derive.Show
       MAlonzo.Code.Tactic.Derive.TestTypes
       MAlonzo.Code.Tactic.EquationalReasoning

@@ -10,7 +10,7 @@
 
 {-# OPTIONS_GHC -Wno-overlapping-patterns #-}
 
-module MAlonzo.Code.Foreign.HaskellTypes.Deriving where
+module MAlonzo.Code.Tactic.Derive.HsType where
 
 import MAlonzo.RTE (coe, erased, AgdaAny, addInt, subInt, mulInt,
                     quotInt, remInt, geqInt, ltInt, eqInt, add64, sub64, mul64, quot64,
@@ -27,6 +27,7 @@ import qualified MAlonzo.Code.Agda.Builtin.String
 import qualified MAlonzo.Code.Agda.Builtin.Unit
 import qualified MAlonzo.Code.Agda.Primitive
 import qualified MAlonzo.Code.Class.DecEq.Core
+import qualified MAlonzo.Code.Class.DecEq.Instances
 import qualified MAlonzo.Code.Class.Functor.Core
 import qualified MAlonzo.Code.Class.Functor.Instances
 import qualified MAlonzo.Code.Class.Monad.Core
@@ -34,6 +35,7 @@ import qualified MAlonzo.Code.Class.Monad.Instances
 import qualified MAlonzo.Code.Data.Bool.Base
 import qualified MAlonzo.Code.Data.List.Base
 import qualified MAlonzo.Code.Data.Maybe.Base
+import qualified MAlonzo.Code.Data.Product.Base
 import qualified MAlonzo.Code.Data.String.Base
 import qualified MAlonzo.Code.Data.String.Properties
 import qualified MAlonzo.Code.Reflection.AST.Abstraction
@@ -44,71 +46,83 @@ import qualified MAlonzo.Code.Reflection.AST.Show
 import qualified MAlonzo.Code.Reflection.TCM
 import qualified MAlonzo.Code.Reflection.TCM.Format
 import qualified MAlonzo.Code.Reflection.Utils.Core
+import qualified MAlonzo.Code.Relation.Nullary.Decidable.Core
 import qualified MAlonzo.Code.Tactic.Derive.Show
 import qualified MAlonzo.Code.Text.Printf
 
--- Foreign.HaskellTypes.Deriving.mapHead
-d_mapHead_12 ::
+-- Tactic.Derive.HsType.NameEnv
+d_NameEnv_6 = ()
+data T_NameEnv_6
+  = C_constructor_24 [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
+                     (AgdaAny -> Maybe MAlonzo.Code.Agda.Builtin.String.T_String_6)
+                     (AgdaAny -> Maybe MAlonzo.Code.Agda.Builtin.String.T_String_6)
+                     (AgdaAny -> Maybe MAlonzo.Code.Agda.Builtin.String.T_String_6)
+-- Tactic.Derive.HsType.NameEnv.customNames
+d_customNames_16 ::
+  T_NameEnv_6 -> [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
+d_customNames_16 v0
+  = case coe v0 of
+      C_constructor_24 v1 v2 v3 v4 -> coe v1
+      _ -> MAlonzo.RTE.mazUnreachableError
+-- Tactic.Derive.HsType.NameEnv.tName
+d_tName_18 ::
+  T_NameEnv_6 ->
+  AgdaAny -> Maybe MAlonzo.Code.Agda.Builtin.String.T_String_6
+d_tName_18 v0
+  = case coe v0 of
+      C_constructor_24 v1 v2 v3 v4 -> coe v2
+      _ -> MAlonzo.RTE.mazUnreachableError
+-- Tactic.Derive.HsType.NameEnv.cName
+d_cName_20 ::
+  T_NameEnv_6 ->
+  AgdaAny -> Maybe MAlonzo.Code.Agda.Builtin.String.T_String_6
+d_cName_20 v0
+  = case coe v0 of
+      C_constructor_24 v1 v2 v3 v4 -> coe v3
+      _ -> MAlonzo.RTE.mazUnreachableError
+-- Tactic.Derive.HsType.NameEnv.fName
+d_fName_22 ::
+  T_NameEnv_6 ->
+  AgdaAny -> Maybe MAlonzo.Code.Agda.Builtin.String.T_String_6
+d_fName_22 v0
+  = case coe v0 of
+      C_constructor_24 v1 v2 v3 v4 -> coe v4
+      _ -> MAlonzo.RTE.mazUnreachableError
+-- Tactic.Derive.HsType.mapHead
+d_mapHead_26 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () -> (AgdaAny -> AgdaAny) -> [AgdaAny] -> [AgdaAny]
-d_mapHead_12 ~v0 ~v1 v2 v3 = du_mapHead_12 v2 v3
-du_mapHead_12 :: (AgdaAny -> AgdaAny) -> [AgdaAny] -> [AgdaAny]
-du_mapHead_12 v0 v1
+d_mapHead_26 ~v0 ~v1 v2 v3 = du_mapHead_26 v2 v3
+du_mapHead_26 :: (AgdaAny -> AgdaAny) -> [AgdaAny] -> [AgdaAny]
+du_mapHead_26 v0 v1
   = case coe v1 of
       [] -> coe v1
       (:) v2 v3
         -> coe
              MAlonzo.Code.Agda.Builtin.List.C__'8759'__22 (coe v0 v2) (coe v3)
       _ -> MAlonzo.RTE.mazUnreachableError
--- Foreign.HaskellTypes.Deriving.capitalize
-d_capitalize_22 ::
+-- Tactic.Derive.HsType.capitalize
+d_capitalize_36 ::
   MAlonzo.Code.Agda.Builtin.String.T_String_6 ->
   MAlonzo.Code.Agda.Builtin.String.T_String_6
-d_capitalize_22 v0
+d_capitalize_36 v0
   = coe
       MAlonzo.Code.Agda.Builtin.String.d_primStringFromList_14
       (coe
-         du_mapHead_12 (coe MAlonzo.Code.Agda.Builtin.Char.d_primToUpper_24)
+         du_mapHead_26 (coe MAlonzo.Code.Agda.Builtin.Char.d_primToUpper_24)
          (coe MAlonzo.Code.Agda.Builtin.String.d_primStringToList_12 v0))
--- Foreign.HaskellTypes.Deriving.uncapitalize
-d_uncapitalize_24 ::
+-- Tactic.Derive.HsType.uncapitalize
+d_uncapitalize_38 ::
   MAlonzo.Code.Agda.Builtin.String.T_String_6 ->
   MAlonzo.Code.Agda.Builtin.String.T_String_6
-d_uncapitalize_24 v0
+d_uncapitalize_38 v0
   = coe
       MAlonzo.Code.Agda.Builtin.String.d_primStringFromList_14
       (coe
-         du_mapHead_12 (coe MAlonzo.Code.Agda.Builtin.Char.d_primToLower_26)
+         du_mapHead_26 (coe MAlonzo.Code.Agda.Builtin.Char.d_primToLower_26)
          (coe MAlonzo.Code.Agda.Builtin.String.d_primStringToList_12 v0))
--- Foreign.HaskellTypes.Deriving.joinStrings
-d_joinStrings_26 ::
-  MAlonzo.Code.Agda.Builtin.String.T_String_6 ->
-  [MAlonzo.Code.Agda.Builtin.String.T_String_6] ->
-  MAlonzo.Code.Agda.Builtin.String.T_String_6
-d_joinStrings_26 v0 v1
-  = coe
-      MAlonzo.Code.Data.List.Base.du_foldr_216
-      (coe MAlonzo.Code.Data.String.Base.d__'43''43'__20)
-      (coe ("" :: Data.Text.Text))
-      (coe
-         MAlonzo.Code.Data.List.Base.du_intersperse_42 (coe v0) (coe v1))
--- Foreign.HaskellTypes.Deriving._‼_
-d__'8252'__32 ::
-  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  () -> [AgdaAny] -> Integer -> Maybe AgdaAny
-d__'8252'__32 ~v0 ~v1 v2 v3 = du__'8252'__32 v2 v3
-du__'8252'__32 :: [AgdaAny] -> Integer -> Maybe AgdaAny
-du__'8252'__32 v0 v1
-  = case coe v0 of
-      [] -> coe MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18
-      (:) v2 v3
-        -> case coe v1 of
-             0 -> coe MAlonzo.Code.Agda.Builtin.Maybe.C_just_16 (coe v2)
-             _ -> let v4 = subInt (coe v1) (coe (1 :: Integer)) in
-                  coe (coe du__'8252'__32 (coe v3) (coe v4))
-      _ -> MAlonzo.RTE.mazUnreachableError
--- Foreign.HaskellTypes.Deriving.lookup
-d_lookup_46 ::
+-- Tactic.Derive.HsType.lookup
+d_lookup_40 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -116,13 +130,13 @@ d_lookup_46 ::
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   AgdaAny ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] -> Maybe AgdaAny
-d_lookup_46 v0 ~v1 ~v2 ~v3 v4 v5 v6 = du_lookup_46 v0 v4 v5 v6
-du_lookup_46 ::
+d_lookup_40 v0 ~v1 ~v2 ~v3 v4 v5 v6 = du_lookup_40 v0 v4 v5 v6
+du_lookup_40 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   AgdaAny ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] -> Maybe AgdaAny
-du_lookup_46 v0 v1 v2 v3
+du_lookup_40 v0 v1 v2 v3
   = coe
       MAlonzo.Code.Data.Maybe.Base.du_map_64
       (\ v4 -> MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30 (coe v4))
@@ -133,107 +147,58 @@ du_lookup_46 v0 v1 v2 v3
               MAlonzo.Code.Class.DecEq.Core.du__'61''61'__18 (coe v0) (coe v1)
               (coe v2) (coe MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe v4)))
          v3)
--- Foreign.HaskellTypes.Deriving.Env
-d_Env_54 = ()
-data T_Env_54
-  = C_constructor_76 [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
-                     (AgdaAny -> Maybe MAlonzo.Code.Agda.Builtin.String.T_String_6)
-                     (AgdaAny -> Maybe MAlonzo.Code.Agda.Builtin.String.T_String_6)
-                     (AgdaAny -> Maybe MAlonzo.Code.Agda.Builtin.String.T_String_6)
-                     ([MAlonzo.Code.Agda.Builtin.String.T_String_6] ->
-                      [MAlonzo.Code.Agda.Builtin.String.T_String_6])
--- Foreign.HaskellTypes.Deriving.Env.customNames
-d_customNames_66 ::
-  T_Env_54 -> [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
-d_customNames_66 v0
-  = case coe v0 of
-      C_constructor_76 v1 v2 v3 v4 v5 -> coe v1
-      _ -> MAlonzo.RTE.mazUnreachableError
--- Foreign.HaskellTypes.Deriving.Env.tName
-d_tName_68 ::
-  T_Env_54 ->
-  AgdaAny -> Maybe MAlonzo.Code.Agda.Builtin.String.T_String_6
-d_tName_68 v0
-  = case coe v0 of
-      C_constructor_76 v1 v2 v3 v4 v5 -> coe v2
-      _ -> MAlonzo.RTE.mazUnreachableError
--- Foreign.HaskellTypes.Deriving.Env.cName
-d_cName_70 ::
-  T_Env_54 ->
-  AgdaAny -> Maybe MAlonzo.Code.Agda.Builtin.String.T_String_6
-d_cName_70 v0
-  = case coe v0 of
-      C_constructor_76 v1 v2 v3 v4 v5 -> coe v3
-      _ -> MAlonzo.RTE.mazUnreachableError
--- Foreign.HaskellTypes.Deriving.Env.fName
-d_fName_72 ::
-  T_Env_54 ->
-  AgdaAny -> Maybe MAlonzo.Code.Agda.Builtin.String.T_String_6
-d_fName_72 v0
-  = case coe v0 of
-      C_constructor_76 v1 v2 v3 v4 v5 -> coe v4
-      _ -> MAlonzo.RTE.mazUnreachableError
--- Foreign.HaskellTypes.Deriving.Env.typeclassDeriving
-d_typeclassDeriving_74 ::
-  T_Env_54 ->
-  [MAlonzo.Code.Agda.Builtin.String.T_String_6] ->
-  [MAlonzo.Code.Agda.Builtin.String.T_String_6]
-d_typeclassDeriving_74 v0
-  = case coe v0 of
-      C_constructor_76 v1 v2 v3 v4 v5 -> coe v5
-      _ -> MAlonzo.RTE.mazUnreachableError
--- Foreign.HaskellTypes.Deriving.lookupEnv
-d_lookupEnv_78 ::
-  (T_Env_54 ->
+-- Tactic.Derive.HsType.lookupEnv
+d_lookupEnv_48 ::
+  (T_NameEnv_6 ->
    AgdaAny -> Maybe MAlonzo.Code.Agda.Builtin.String.T_String_6) ->
-  T_Env_54 ->
+  T_NameEnv_6 ->
   AgdaAny -> Maybe MAlonzo.Code.Agda.Builtin.String.T_String_6
-d_lookupEnv_78 v0 v1 v2
+d_lookupEnv_48 v0 v1 v2
   = coe
       MAlonzo.Code.Data.Maybe.Base.du__'60''8739''62'__80
       (coe
-         du_lookup_46 (coe ())
+         du_lookup_40 (coe ())
          (coe
             MAlonzo.Code.Class.DecEq.Core.C_constructor_32
             (coe MAlonzo.Code.Reflection.AST.Name.d__'8799'__12))
-         (coe v2) (coe d_customNames_66 (coe v1)))
+         (coe v2) (coe d_customNames_16 (coe v1)))
       (coe v0 v1 v2)
--- Foreign.HaskellTypes.Deriving.lookupTypeName
-d_lookupTypeName_86 ::
-  T_Env_54 ->
+-- Tactic.Derive.HsType.lookupTypeName
+d_lookupTypeName_56 ::
+  T_NameEnv_6 ->
   AgdaAny -> Maybe MAlonzo.Code.Agda.Builtin.String.T_String_6
-d_lookupTypeName_86
-  = coe d_lookupEnv_78 (coe (\ v0 -> d_tName_68 (coe v0)))
--- Foreign.HaskellTypes.Deriving.lookupConName
-d_lookupConName_88 ::
-  T_Env_54 ->
+d_lookupTypeName_56
+  = coe d_lookupEnv_48 (coe (\ v0 -> d_tName_18 (coe v0)))
+-- Tactic.Derive.HsType.lookupConName
+d_lookupConName_58 ::
+  T_NameEnv_6 ->
   AgdaAny -> Maybe MAlonzo.Code.Agda.Builtin.String.T_String_6
-d_lookupConName_88
-  = coe d_lookupEnv_78 (coe (\ v0 -> d_cName_70 (coe v0)))
--- Foreign.HaskellTypes.Deriving.lookupFieldName
-d_lookupFieldName_90 ::
-  T_Env_54 ->
+d_lookupConName_58
+  = coe d_lookupEnv_48 (coe (\ v0 -> d_cName_20 (coe v0)))
+-- Tactic.Derive.HsType.lookupFieldName
+d_lookupFieldName_60 ::
+  T_NameEnv_6 ->
   AgdaAny -> Maybe MAlonzo.Code.Agda.Builtin.String.T_String_6
-d_lookupFieldName_90
-  = coe d_lookupEnv_78 (coe (\ v0 -> d_fName_72 (coe v0)))
--- Foreign.HaskellTypes.Deriving.emptyEnv
-d_emptyEnv_92 :: T_Env_54
-d_emptyEnv_92
+d_lookupFieldName_60
+  = coe d_lookupEnv_48 (coe (\ v0 -> d_fName_22 (coe v0)))
+-- Tactic.Derive.HsType.emptyEnv
+d_emptyEnv_62 :: T_NameEnv_6
+d_emptyEnv_62
   = coe
-      C_constructor_76 (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)
+      C_constructor_24 (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)
       (let v0 = coe MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18 in
        coe (coe (\ v1 -> v0)))
       (let v0 = coe MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18 in
        coe (coe (\ v1 -> v0)))
       (let v0 = coe MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18 in
        coe (coe (\ v1 -> v0)))
-      (coe (\ v0 -> v0))
--- Foreign.HaskellTypes.Deriving.customName
-d_customName_94 ::
-  AgdaAny -> MAlonzo.Code.Agda.Builtin.String.T_String_6 -> T_Env_54
-d_customName_94 v0 v1
+-- Tactic.Derive.HsType.customName
+d_customName_64 ::
+  AgdaAny ->
+  MAlonzo.Code.Agda.Builtin.String.T_String_6 -> T_NameEnv_6
+d_customName_64 v0 v1
   = coe
-      C_constructor_76
+      C_constructor_24
       (coe
          MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
          (coe MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 (coe v0) (coe v1))
@@ -244,15 +209,14 @@ d_customName_94 v0 v1
        coe (coe (\ v3 -> v2)))
       (let v2 = coe MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18 in
        coe (coe (\ v3 -> v2)))
-      (coe (\ v2 -> v2))
--- Foreign.HaskellTypes.Deriving.onTypes
-d_onTypes_100 ::
+-- Tactic.Derive.HsType.onTypes
+d_onTypes_70 ::
   (MAlonzo.Code.Agda.Builtin.String.T_String_6 ->
    MAlonzo.Code.Agda.Builtin.String.T_String_6) ->
-  T_Env_54
-d_onTypes_100 v0
+  T_NameEnv_6
+d_onTypes_70 v0
   = coe
-      C_constructor_76 (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)
+      C_constructor_24 (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)
       (coe
          (\ v1 ->
             coe
@@ -262,15 +226,14 @@ d_onTypes_100 v0
        coe (coe (\ v2 -> v1)))
       (let v1 = coe MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18 in
        coe (coe (\ v2 -> v1)))
-      (coe (\ v1 -> v1))
--- Foreign.HaskellTypes.Deriving.onConstructors
-d_onConstructors_104 ::
+-- Tactic.Derive.HsType.onConstructors
+d_onConstructors_74 ::
   (MAlonzo.Code.Agda.Builtin.String.T_String_6 ->
    MAlonzo.Code.Agda.Builtin.String.T_String_6) ->
-  T_Env_54
-d_onConstructors_104 v0
+  T_NameEnv_6
+d_onConstructors_74 v0
   = coe
-      C_constructor_76 (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)
+      C_constructor_24 (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)
       (let v1 = coe MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18 in
        coe (coe (\ v2 -> v1)))
       (coe
@@ -280,24 +243,23 @@ d_onConstructors_104 v0
               (coe v0 (MAlonzo.Code.Tactic.Derive.Show.d_showName_24 (coe v1)))))
       (let v1 = coe MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18 in
        coe (coe (\ v2 -> v1)))
-      (coe (\ v1 -> v1))
--- Foreign.HaskellTypes.Deriving.withName
-d_withName_108 ::
-  MAlonzo.Code.Agda.Builtin.String.T_String_6 -> T_Env_54
-d_withName_108 v0 = coe d_onTypes_100 (coe (\ v1 -> v0))
--- Foreign.HaskellTypes.Deriving.withConstructor
-d_withConstructor_112 ::
-  MAlonzo.Code.Agda.Builtin.String.T_String_6 -> T_Env_54
-d_withConstructor_112 v0
-  = coe d_onConstructors_104 (coe (\ v1 -> v0))
--- Foreign.HaskellTypes.Deriving.onFields
-d_onFields_116 ::
+-- Tactic.Derive.HsType.withName
+d_withName_78 ::
+  MAlonzo.Code.Agda.Builtin.String.T_String_6 -> T_NameEnv_6
+d_withName_78 v0 = coe d_onTypes_70 (coe (\ v1 -> v0))
+-- Tactic.Derive.HsType.withConstructor
+d_withConstructor_82 ::
+  MAlonzo.Code.Agda.Builtin.String.T_String_6 -> T_NameEnv_6
+d_withConstructor_82 v0
+  = coe d_onConstructors_74 (coe (\ v1 -> v0))
+-- Tactic.Derive.HsType.onFields
+d_onFields_86 ::
   (MAlonzo.Code.Agda.Builtin.String.T_String_6 ->
    MAlonzo.Code.Agda.Builtin.String.T_String_6) ->
-  T_Env_54
-d_onFields_116 v0
+  T_NameEnv_6
+d_onFields_86 v0
   = coe
-      C_constructor_76 (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)
+      C_constructor_24 (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)
       (let v1 = coe MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18 in
        coe (coe (\ v2 -> v1)))
       (let v1 = coe MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18 in
@@ -307,150 +269,101 @@ d_onFields_116 v0
             coe
               MAlonzo.Code.Agda.Builtin.Maybe.C_just_16
               (coe v0 (MAlonzo.Code.Tactic.Derive.Show.d_showName_24 (coe v1)))))
-      (coe (\ v1 -> v1))
--- Foreign.HaskellTypes.Deriving.fieldPrefix
-d_fieldPrefix_120 ::
-  MAlonzo.Code.Agda.Builtin.String.T_String_6 -> T_Env_54
-d_fieldPrefix_120 v0
+-- Tactic.Derive.HsType.fieldPrefix
+d_fieldPrefix_90 ::
+  MAlonzo.Code.Agda.Builtin.String.T_String_6 -> T_NameEnv_6
+d_fieldPrefix_90 v0
   = coe
-      d_onFields_116
+      d_onFields_86
       (coe
          (\ v1 ->
             coe
               MAlonzo.Code.Data.String.Base.d__'43''43'__20 v0
-              (d_capitalize_22 (coe v1))))
--- Foreign.HaskellTypes.Deriving.deriving
-d_deriving_126 ::
-  [MAlonzo.Code.Agda.Builtin.String.T_String_6] -> T_Env_54
-d_deriving_126 v0
+              (d_capitalize_36 (coe v1))))
+-- Tactic.Derive.HsType._•_
+d__'8226'__96 :: T_NameEnv_6 -> T_NameEnv_6 -> T_NameEnv_6
+d__'8226'__96 v0 v1
   = coe
-      C_constructor_76 (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)
-      (let v1 = coe MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18 in
-       coe (coe (\ v2 -> v1)))
-      (let v1 = coe MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18 in
-       coe (coe (\ v2 -> v1)))
-      (let v1 = coe MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18 in
-       coe (coe (\ v2 -> v1)))
-      (coe (\ v1 -> v0))
--- Foreign.HaskellTypes.Deriving.withDefaultDeriving
-d_withDefaultDeriving_130 :: T_Env_54
-d_withDefaultDeriving_130
-  = coe
-      d_deriving_126
-      (coe
-         MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
-         (coe ("Show" :: Data.Text.Text))
-         (coe
-            MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
-            (coe ("Eq" :: Data.Text.Text))
-            (coe
-               MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
-               (coe ("Generic" :: Data.Text.Text))
-               (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))
--- Foreign.HaskellTypes.Deriving._•_
-d__'8226'__132 :: T_Env_54 -> T_Env_54 -> T_Env_54
-d__'8226'__132 v0 v1
-  = coe
-      C_constructor_76
+      C_constructor_24
       (coe
          MAlonzo.Code.Data.List.Base.du__'43''43'__32
-         (coe d_customNames_66 (coe v0)) (coe d_customNames_66 (coe v1)))
+         (coe d_customNames_16 (coe v0)) (coe d_customNames_16 (coe v1)))
       (coe
          (\ v2 ->
             coe
               MAlonzo.Code.Data.Maybe.Base.du__'60''8739''62'__80
-              (coe d_tName_68 v0 v2) (coe d_tName_68 v1 v2)))
+              (coe d_tName_18 v0 v2) (coe d_tName_18 v1 v2)))
       (coe
          (\ v2 ->
             coe
               MAlonzo.Code.Data.Maybe.Base.du__'60''8739''62'__80
-              (coe d_cName_70 v0 v2) (coe d_cName_70 v1 v2)))
+              (coe d_cName_20 v0 v2) (coe d_cName_20 v1 v2)))
       (coe
          (\ v2 ->
             coe
               MAlonzo.Code.Data.Maybe.Base.du__'60''8739''62'__80
-              (coe d_fName_72 v0 v2) (coe d_fName_72 v1 v2)))
-      (coe
-         (\ v2 ->
-            coe d_typeclassDeriving_74 v1 (coe d_typeclassDeriving_74 v0 v2)))
--- Foreign.HaskellTypes.Deriving._.env.cName
-d_cName_144 ::
-  T_Env_54 ->
-  T_Env_54 ->
+              (coe d_fName_22 v0 v2) (coe d_fName_22 v1 v2)))
+-- Tactic.Derive.HsType._.env.cName
+d_cName_108 ::
+  T_NameEnv_6 ->
+  T_NameEnv_6 ->
   AgdaAny -> Maybe MAlonzo.Code.Agda.Builtin.String.T_String_6
-d_cName_144 v0 ~v1 = du_cName_144 v0
-du_cName_144 ::
-  T_Env_54 ->
+d_cName_108 v0 ~v1 = du_cName_108 v0
+du_cName_108 ::
+  T_NameEnv_6 ->
   AgdaAny -> Maybe MAlonzo.Code.Agda.Builtin.String.T_String_6
-du_cName_144 v0 = coe d_cName_70 (coe v0)
--- Foreign.HaskellTypes.Deriving._.env.customNames
-d_customNames_146 ::
-  T_Env_54 -> T_Env_54 -> [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
-d_customNames_146 v0 ~v1 = du_customNames_146 v0
-du_customNames_146 ::
-  T_Env_54 -> [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
-du_customNames_146 v0 = coe d_customNames_66 (coe v0)
--- Foreign.HaskellTypes.Deriving._.env.fName
-d_fName_148 ::
-  T_Env_54 ->
-  T_Env_54 ->
+du_cName_108 v0 = coe d_cName_20 (coe v0)
+-- Tactic.Derive.HsType._.env.customNames
+d_customNames_110 ::
+  T_NameEnv_6 ->
+  T_NameEnv_6 -> [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
+d_customNames_110 v0 ~v1 = du_customNames_110 v0
+du_customNames_110 ::
+  T_NameEnv_6 -> [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
+du_customNames_110 v0 = coe d_customNames_16 (coe v0)
+-- Tactic.Derive.HsType._.env.fName
+d_fName_112 ::
+  T_NameEnv_6 ->
+  T_NameEnv_6 ->
   AgdaAny -> Maybe MAlonzo.Code.Agda.Builtin.String.T_String_6
-d_fName_148 v0 ~v1 = du_fName_148 v0
-du_fName_148 ::
-  T_Env_54 ->
+d_fName_112 v0 ~v1 = du_fName_112 v0
+du_fName_112 ::
+  T_NameEnv_6 ->
   AgdaAny -> Maybe MAlonzo.Code.Agda.Builtin.String.T_String_6
-du_fName_148 v0 = coe d_fName_72 (coe v0)
--- Foreign.HaskellTypes.Deriving._.env.tName
-d_tName_150 ::
-  T_Env_54 ->
-  T_Env_54 ->
+du_fName_112 v0 = coe d_fName_22 (coe v0)
+-- Tactic.Derive.HsType._.env.tName
+d_tName_114 ::
+  T_NameEnv_6 ->
+  T_NameEnv_6 ->
   AgdaAny -> Maybe MAlonzo.Code.Agda.Builtin.String.T_String_6
-d_tName_150 v0 ~v1 = du_tName_150 v0
-du_tName_150 ::
-  T_Env_54 ->
+d_tName_114 v0 ~v1 = du_tName_114 v0
+du_tName_114 ::
+  T_NameEnv_6 ->
   AgdaAny -> Maybe MAlonzo.Code.Agda.Builtin.String.T_String_6
-du_tName_150 v0 = coe d_tName_68 (coe v0)
--- Foreign.HaskellTypes.Deriving._.env.typeclassDeriving
-d_typeclassDeriving_152 ::
-  T_Env_54 ->
-  T_Env_54 ->
-  [MAlonzo.Code.Agda.Builtin.String.T_String_6] ->
-  [MAlonzo.Code.Agda.Builtin.String.T_String_6]
-d_typeclassDeriving_152 v0 ~v1 = du_typeclassDeriving_152 v0
-du_typeclassDeriving_152 ::
-  T_Env_54 ->
-  [MAlonzo.Code.Agda.Builtin.String.T_String_6] ->
-  [MAlonzo.Code.Agda.Builtin.String.T_String_6]
-du_typeclassDeriving_152 v0 = coe d_typeclassDeriving_74 (coe v0)
--- Foreign.HaskellTypes.Deriving._.env₁.cName
-d_cName_156 ::
-  T_Env_54 ->
+du_tName_114 v0 = coe d_tName_18 (coe v0)
+-- Tactic.Derive.HsType._.env₁.cName
+d_cName_118 ::
+  T_NameEnv_6 ->
   AgdaAny -> Maybe MAlonzo.Code.Agda.Builtin.String.T_String_6
-d_cName_156 v0 = coe d_cName_70 (coe v0)
--- Foreign.HaskellTypes.Deriving._.env₁.customNames
-d_customNames_158 ::
-  T_Env_54 -> [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
-d_customNames_158 v0 = coe d_customNames_66 (coe v0)
--- Foreign.HaskellTypes.Deriving._.env₁.fName
-d_fName_160 ::
-  T_Env_54 ->
+d_cName_118 v0 = coe d_cName_20 (coe v0)
+-- Tactic.Derive.HsType._.env₁.customNames
+d_customNames_120 ::
+  T_NameEnv_6 -> [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
+d_customNames_120 v0 = coe d_customNames_16 (coe v0)
+-- Tactic.Derive.HsType._.env₁.fName
+d_fName_122 ::
+  T_NameEnv_6 ->
   AgdaAny -> Maybe MAlonzo.Code.Agda.Builtin.String.T_String_6
-d_fName_160 v0 = coe d_fName_72 (coe v0)
--- Foreign.HaskellTypes.Deriving._.env₁.tName
-d_tName_162 ::
-  T_Env_54 ->
+d_fName_122 v0 = coe d_fName_22 (coe v0)
+-- Tactic.Derive.HsType._.env₁.tName
+d_tName_124 ::
+  T_NameEnv_6 ->
   AgdaAny -> Maybe MAlonzo.Code.Agda.Builtin.String.T_String_6
-d_tName_162 v0 = coe d_tName_68 (coe v0)
--- Foreign.HaskellTypes.Deriving._.env₁.typeclassDeriving
-d_typeclassDeriving_164 ::
-  T_Env_54 ->
-  [MAlonzo.Code.Agda.Builtin.String.T_String_6] ->
-  [MAlonzo.Code.Agda.Builtin.String.T_String_6]
-d_typeclassDeriving_164 v0 = coe d_typeclassDeriving_74 (coe v0)
--- Foreign.HaskellTypes.Deriving.solveHsType
-d_solveHsType_172 ::
+d_tName_124 v0 = coe d_tName_18 (coe v0)
+-- Tactic.Derive.HsType.solveHsType
+d_solveHsType_132 ::
   MAlonzo.Code.Agda.Builtin.Reflection.T_Term_154 -> AgdaAny
-d_solveHsType_172 v0
+d_solveHsType_132 v0
   = coe
       MAlonzo.Code.Agda.Builtin.Reflection.d_bindTC_336 () () erased
       erased
@@ -460,8 +373,8 @@ d_solveHsType_172 v0
             MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
             (coe
                (MAlonzo.RTE.QName
-                  (26 :: Integer) (15387014652001289505 :: Integer)
-                  "Foreign.HaskellTypes.HsType"
+                  (38 :: Integer) (5300038832148290500 :: Integer)
+                  "Class.HasHsType.Core._._.HsType"
                   (MAlonzo.RTE.Fixity MAlonzo.RTE.NonAssoc MAlonzo.RTE.Unrelated)))
             (coe
                MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
@@ -506,22 +419,37 @@ d_solveHsType_172 v0
                    (case coe v2 of
                       MAlonzo.Code.Agda.Builtin.Reflection.C_def_184 v4 v5
                         -> case coe v4 of
-                             MAlonzo.RTE.QName 26 15387014652001289505 _ _
+                             MAlonzo.RTE.QName 38 5300038832148290500 _ _
                                -> coe
                                     MAlonzo.Code.Reflection.TCM.Format.du_typeErrorFmt_92 ()
                                     ("Failed to solve HsType %t" :: Data.Text.Text) v0
                              _ -> coe v3
                       _ -> coe v3))))
--- Foreign.HaskellTypes.Deriving.debug
-d_debug_182 ::
+-- Tactic.Derive.HsType.debug
+d_debug_142 ::
   Integer -> MAlonzo.Code.Agda.Builtin.String.T_String_6 -> AgdaAny
-d_debug_182
+d_debug_142
   = coe
       MAlonzo.Code.Reflection.TCM.Format.d_debugPrintFmt_98
       (coe ("tactic.hs-types" :: Data.Text.Text))
--- Foreign.HaskellTypes.Deriving.specialHsTypes
-d_specialHsTypes_184 :: [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
-d_specialHsTypes_184
+-- Tactic.Derive.HsType._‼_
+d__'8252'__144 ::
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  () -> [AgdaAny] -> Integer -> Maybe AgdaAny
+d__'8252'__144 ~v0 ~v1 v2 v3 = du__'8252'__144 v2 v3
+du__'8252'__144 :: [AgdaAny] -> Integer -> Maybe AgdaAny
+du__'8252'__144 v0 v1
+  = case coe v0 of
+      [] -> coe MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18
+      (:) v2 v3
+        -> case coe v1 of
+             0 -> coe MAlonzo.Code.Agda.Builtin.Maybe.C_just_16 (coe v2)
+             _ -> let v4 = subInt (coe v1) (coe (1 :: Integer)) in
+                  coe (coe du__'8252'__144 (coe v3) (coe v4))
+      _ -> MAlonzo.RTE.mazUnreachableError
+-- Tactic.Derive.HsType.specialHsTypes
+d_specialHsTypes_158 :: [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
+d_specialHsTypes_158
   = coe
       MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
       (coe
@@ -615,42 +543,46 @@ d_specialHsTypes_184
                                           MAlonzo.RTE.NonAssoc MAlonzo.RTE.Unrelated)))
                                  (coe ("Data.Text.Text" :: Data.Text.Text)))
                               (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))))))))
--- Foreign.HaskellTypes.Deriving.hsTypeName
-d_hsTypeName_186 ::
-  T_Env_54 -> AgdaAny -> MAlonzo.Code.Agda.Builtin.String.T_String_6
-d_hsTypeName_186 v0 v1
+-- Tactic.Derive.HsType.hsTypeName
+d_hsTypeName_160 ::
+  T_NameEnv_6 ->
+  AgdaAny -> MAlonzo.Code.Agda.Builtin.String.T_String_6
+d_hsTypeName_160 v0 v1
   = coe
       MAlonzo.Code.Data.Maybe.Base.du_fromMaybe_46
-      (d_capitalize_22
+      (d_capitalize_36
          (coe MAlonzo.Code.Tactic.Derive.Show.d_showName_24 (coe v1)))
-      (coe d_lookupTypeName_86 v0 v1)
--- Foreign.HaskellTypes.Deriving.freshHsTypeName
-d_freshHsTypeName_192 :: T_Env_54 -> AgdaAny -> AgdaAny
-d_freshHsTypeName_192 v0 v1
+      (coe d_lookupTypeName_56 v0 v1)
+-- Tactic.Derive.HsType.freshHsTypeName
+d_freshHsTypeName_166 :: T_NameEnv_6 -> AgdaAny -> AgdaAny
+d_freshHsTypeName_166 v0 v1
   = coe
       MAlonzo.Code.Agda.Builtin.Reflection.d_freshName_390
-      (d_hsTypeName_186 (coe v0) (coe v1))
--- Foreign.HaskellTypes.Deriving.hsConName
-d_hsConName_198 ::
-  T_Env_54 -> AgdaAny -> MAlonzo.Code.Agda.Builtin.String.T_String_6
-d_hsConName_198 v0 v1
+      (d_hsTypeName_160 (coe v0) (coe v1))
+-- Tactic.Derive.HsType.hsConName
+d_hsConName_172 ::
+  T_NameEnv_6 ->
+  AgdaAny -> MAlonzo.Code.Agda.Builtin.String.T_String_6
+d_hsConName_172 v0 v1
   = coe
       MAlonzo.Code.Data.Maybe.Base.du_fromMaybe_46
-      (d_capitalize_22
+      (d_capitalize_36
          (coe MAlonzo.Code.Tactic.Derive.Show.d_showName_24 (coe v1)))
-      (coe d_lookupConName_88 v0 v1)
--- Foreign.HaskellTypes.Deriving.hsFieldName
-d_hsFieldName_204 ::
-  T_Env_54 -> AgdaAny -> MAlonzo.Code.Agda.Builtin.String.T_String_6
-d_hsFieldName_204 v0 v1
+      (coe d_lookupConName_58 v0 v1)
+-- Tactic.Derive.HsType.hsFieldName
+d_hsFieldName_178 ::
+  T_NameEnv_6 ->
+  AgdaAny -> MAlonzo.Code.Agda.Builtin.String.T_String_6
+d_hsFieldName_178 v0 v1
   = coe
       MAlonzo.Code.Data.Maybe.Base.du_fromMaybe_46
-      (d_uncapitalize_24
+      (d_uncapitalize_38
          (coe MAlonzo.Code.Tactic.Derive.Show.d_showName_24 (coe v1)))
-      (coe d_lookupFieldName_90 v0 v1)
--- Foreign.HaskellTypes.Deriving.freshHsConName
-d_freshHsConName_210 :: T_Env_54 -> AgdaAny -> AgdaAny -> AgdaAny
-d_freshHsConName_210 v0 v1 v2
+      (coe d_lookupFieldName_60 v0 v1)
+-- Tactic.Derive.HsType.freshHsConName
+d_freshHsConName_184 ::
+  T_NameEnv_6 -> AgdaAny -> AgdaAny -> AgdaAny
+d_freshHsConName_184 v0 v1 v2
   = coe
       MAlonzo.Code.Data.Bool.Base.du_if_then_else__44
       (coe
@@ -662,14 +594,14 @@ d_freshHsConName_210 v0 v1 v2
          (coe ("constructor" :: Data.Text.Text)))
       (coe
          MAlonzo.Code.Agda.Builtin.Reflection.d_freshName_390
-         (d_hsConName_198 (coe v0) (coe v1)))
+         (d_hsConName_172 (coe v0) (coe v1)))
       (coe
          MAlonzo.Code.Agda.Builtin.Reflection.d_freshName_390
-         (d_hsConName_198 (coe v0) (coe v2)))
--- Foreign.HaskellTypes.Deriving.isThis
-d_isThis_218 ::
+         (d_hsConName_172 (coe v0) (coe v2)))
+-- Tactic.Derive.HsType.isThis
+d_isThis_192 ::
   AgdaAny -> MAlonzo.Code.Agda.Builtin.Reflection.T_Term_154 -> Bool
-d_isThis_218 v0 v1
+d_isThis_192 v0 v1
   = let v2 = coe MAlonzo.Code.Agda.Builtin.Bool.C_false_8 in
     coe
       (case coe v1 of
@@ -681,13 +613,13 @@ d_isThis_218 v0 v1
                    (coe MAlonzo.Code.Reflection.AST.Name.d__'8799'__12))
                 (coe v0) (coe v3)
          _ -> coe v2)
--- Foreign.HaskellTypes.Deriving.computeHsType
-d_computeHsType_224 ::
+-- Tactic.Derive.HsType.computeHsType
+d_computeHsType_198 ::
   AgdaAny ->
   AgdaAny ->
   MAlonzo.Code.Agda.Builtin.Reflection.T_Term_154 -> AgdaAny
-d_computeHsType_224 v0 v1 v2
-  = let v3 = d_isThis_218 (coe v0) (coe v2) in
+d_computeHsType_198 v0 v1 v2
+  = let v3 = d_isThis_192 (coe v0) (coe v2) in
     coe
       (if coe v3
          then coe
@@ -701,18 +633,18 @@ d_computeHsType_224 v0 v1 v2
                          (coe MAlonzo.Code.Class.Monad.Instances.d_Monad'45'TC_6) (coe ())
                          (coe ())
                          (coe
-                            d_debug_182 (10 :: Integer) ("solving HsType %t" :: Data.Text.Text)
+                            d_debug_142 (10 :: Integer) ("solving HsType %t" :: Data.Text.Text)
                             v2)
                          (coe
                             MAlonzo.Code.Agda.Builtin.Reflection.d_bindTC_336 () () erased
-                            erased (d_solveHsType_172 (coe v2))
+                            erased (d_solveHsType_132 (coe v2))
                             (\ v4 ->
                                coe
                                  MAlonzo.Code.Class.Monad.Core.du__'62''62'__24
                                  (coe MAlonzo.Code.Class.Monad.Instances.d_Monad'45'TC_6) (coe ())
                                  (coe ())
                                  (coe
-                                    d_debug_182 (10 :: Integer) ("HsType %t = %t" :: Data.Text.Text)
+                                    d_debug_142 (10 :: Integer) ("HsType %t = %t" :: Data.Text.Text)
                                     v2 v4)
                                  (coe
                                     MAlonzo.Code.Agda.Builtin.Reflection.d_returnTC_326 () erased
@@ -747,7 +679,7 @@ d_computeHsType_224 v0 v1 v2
                                                                                                  ()
                                                                                                  erased
                                                                                                  erased
-                                                                                                 (d_computeHsType_224
+                                                                                                 (d_computeHsType_198
                                                                                                     (coe
                                                                                                        v0)
                                                                                                     (coe
@@ -806,7 +738,7 @@ d_computeHsType_224 v0 v1 v2
                                                         (coe
                                                            MAlonzo.Code.Agda.Builtin.Reflection.d_extendContext_382
                                                            () erased v11 v5
-                                                           (d_computeHsType_224
+                                                           (d_computeHsType_198
                                                               (coe v0) (coe v1) (coe v12)))
                                                         (\ v13 ->
                                                            coe
@@ -845,7 +777,7 @@ d_computeHsType_224 v0 v1 v2
                                                      -> coe
                                                           MAlonzo.Code.Agda.Builtin.Reflection.d_bindTC_336
                                                           () () erased erased
-                                                          (d_computeHsType_224
+                                                          (d_computeHsType_198
                                                              (coe v0) (coe v1) (coe v8))
                                                           (\ v14 ->
                                                              coe
@@ -866,7 +798,7 @@ d_computeHsType_224 v0 v1 v2
                                                                            (coe
                                                                               MAlonzo.Code.Agda.Builtin.Reflection.C_quantity'45'ω_66)))
                                                                      (coe v8))
-                                                                  (d_computeHsType_224
+                                                                  (d_computeHsType_198
                                                                      (coe v0) (coe v1) (coe v13)))
                                                                (\ v15 ->
                                                                   coe
@@ -894,16 +826,16 @@ d_computeHsType_224 v0 v1 v2
                                   _ -> MAlonzo.RTE.mazUnreachableError
                            _ -> MAlonzo.RTE.mazUnreachableError
                     _ -> coe v4)))
--- Foreign.HaskellTypes.Deriving.makeHsCon
-d_makeHsCon_284 ::
-  T_Env_54 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_makeHsCon_284 v0 v1 v2 v3
+-- Tactic.Derive.HsType.makeHsCon
+d_makeHsCon_258 ::
+  T_NameEnv_6 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+d_makeHsCon_258 v0 v1 v2 v3
   = coe
       MAlonzo.Code.Class.Monad.Core.du__'62''62'__24
       (coe MAlonzo.Code.Class.Monad.Instances.d_Monad'45'TC_6) (coe ())
       (coe ())
       (coe
-         d_debug_182 (10 :: Integer)
+         d_debug_142 (10 :: Integer)
          ("Making constructor %q : %q" :: Data.Text.Text) v3 v1)
       (coe
          MAlonzo.Code.Agda.Builtin.Reflection.d_bindTC_336 () () erased
@@ -923,7 +855,7 @@ d_makeHsCon_284 v0 v1 v2 v3
                  MAlonzo.Code.Agda.Builtin.Reflection.C_def_184 v6 v7
                    -> coe
                         MAlonzo.Code.Agda.Builtin.Reflection.d_bindTC_336 () () erased
-                        erased (d_freshHsConName_210 (coe v0) (coe v2) (coe v3))
+                        erased (d_freshHsConName_184 (coe v0) (coe v2) (coe v3))
                         (\ v8 ->
                            coe
                              MAlonzo.Code.Agda.Builtin.Reflection.d_bindTC_336 () () erased
@@ -934,17 +866,17 @@ d_makeHsCon_284 v0 v1 v2 v3
                                   (coe MAlonzo.Code.Class.Monad.Instances.d_Monad'45'TC_6) (coe ())
                                   (coe ())
                                   (coe
-                                     d_debug_182 (10 :: Integer) ("cTy = %t" :: Data.Text.Text) v9)
+                                     d_debug_142 (10 :: Integer) ("cTy = %t" :: Data.Text.Text) v9)
                                   (coe
                                      MAlonzo.Code.Agda.Builtin.Reflection.d_bindTC_336 () () erased
-                                     erased (d_computeHsType_224 (coe v6) (coe v2) (coe v9))
+                                     erased (d_computeHsType_198 (coe v6) (coe v2) (coe v9))
                                      (\ v10 ->
                                         coe
                                           MAlonzo.Code.Class.Monad.Core.du__'62''62'__24
                                           (coe MAlonzo.Code.Class.Monad.Instances.d_Monad'45'TC_6)
                                           (coe ()) (coe ())
                                           (coe
-                                             d_debug_182 (10 :: Integer)
+                                             d_debug_142 (10 :: Integer)
                                              ("hsTy = %t" :: Data.Text.Text) v10)
                                           (coe
                                              MAlonzo.Code.Agda.Builtin.Reflection.d_returnTC_326 ()
@@ -957,15 +889,15 @@ d_makeHsCon_284 v0 v1 v2 v3
                                                       MAlonzo.Code.Agda.Builtin.Reflection.C_quantity'45'ω_66)
                                                    (coe v10))))))))
                  _ -> coe v5)))
--- Foreign.HaskellTypes.Deriving.makeHsData
-d_makeHsData_304 ::
-  T_Env_54 -> AgdaAny -> Integer -> [AgdaAny] -> AgdaAny
-d_makeHsData_304 v0 v1 ~v2 v3 = du_makeHsData_304 v0 v1 v3
-du_makeHsData_304 :: T_Env_54 -> AgdaAny -> [AgdaAny] -> AgdaAny
-du_makeHsData_304 v0 v1 v2
+-- Tactic.Derive.HsType.makeHsData
+d_makeHsData_278 ::
+  T_NameEnv_6 -> AgdaAny -> Integer -> [AgdaAny] -> AgdaAny
+d_makeHsData_278 v0 v1 ~v2 v3 = du_makeHsData_278 v0 v1 v3
+du_makeHsData_278 :: T_NameEnv_6 -> AgdaAny -> [AgdaAny] -> AgdaAny
+du_makeHsData_278 v0 v1 v2
   = coe
       MAlonzo.Code.Agda.Builtin.Reflection.d_bindTC_336 () () erased
-      erased (d_freshHsTypeName_192 (coe v0) (coe v1))
+      erased (d_freshHsTypeName_166 (coe v0) (coe v1))
       (\ v3 ->
          coe
            MAlonzo.Code.Class.Monad.Core.du__'62''62'__24
@@ -991,7 +923,7 @@ du_makeHsData_304 v0 v1 v2
               (coe
                  MAlonzo.Code.Class.Monad.Core.du_mapM_104
                  (coe MAlonzo.Code.Class.Monad.Instances.d_Monad'45'TC_6) (coe ())
-                 (coe d_makeHsCon_284 (coe v0) (coe v1) (coe v3)) (coe v2))
+                 (coe d_makeHsCon_258 (coe v0) (coe v1) (coe v3)) (coe v2))
               (\ v4 ->
                  coe
                    MAlonzo.Code.Class.Monad.Core.du__'62''62'__24
@@ -1001,9 +933,9 @@ du_makeHsData_304 v0 v1 v2
                    (coe
                       MAlonzo.Code.Agda.Builtin.Reflection.d_returnTC_326 () erased
                       v3))))
--- Foreign.HaskellTypes.Deriving.makeHsType
-d_makeHsType_318 :: T_Env_54 -> AgdaAny -> AgdaAny
-d_makeHsType_318 v0 v1
+-- Tactic.Derive.HsType.makeHsType
+d_makeHsType_292 :: T_NameEnv_6 -> AgdaAny -> AgdaAny
+d_makeHsType_292 v0 v1
   = coe
       MAlonzo.Code.Agda.Builtin.Reflection.d_bindTC_336 () () erased
       erased
@@ -1016,48 +948,87 @@ d_makeHsType_318 v0 v1
          coe
            (case coe v2 of
               MAlonzo.Code.Agda.Builtin.Reflection.C_data'45'type_290 v4 v5
-                -> coe du_makeHsData_304 (coe v0) (coe v1) (coe v5)
+                -> coe du_makeHsData_278 (coe v0) (coe v1) (coe v5)
               MAlonzo.Code.Agda.Builtin.Reflection.C_record'45'type_296 v4 v5
                 -> coe
-                     du_makeHsData_304 (coe v0) (coe v1)
+                     du_makeHsData_278 (coe v0) (coe v1)
                      (coe
                         MAlonzo.Code.Agda.Builtin.List.C__'8759'__22 (coe v4)
                         (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))
               _ -> coe v3))
--- Foreign.HaskellTypes.Deriving.compilePragma
-d_compilePragma_334 ::
+-- Tactic.Derive.HsType.joinStrings
+d_joinStrings_308 ::
+  MAlonzo.Code.Agda.Builtin.String.T_String_6 ->
+  [MAlonzo.Code.Agda.Builtin.String.T_String_6] ->
+  MAlonzo.Code.Agda.Builtin.String.T_String_6
+d_joinStrings_308 v0 v1
+  = coe
+      MAlonzo.Code.Data.List.Base.du_foldr_216
+      (coe MAlonzo.Code.Data.String.Base.d__'43''43'__20)
+      (coe ("" :: Data.Text.Text))
+      (coe
+         MAlonzo.Code.Data.List.Base.du_intersperse_42 (coe v0) (coe v1))
+-- Tactic.Derive.HsType.removeUnderscore
+d_removeUnderscore_314 ::
+  MAlonzo.Code.Agda.Builtin.String.T_String_6 ->
+  MAlonzo.Code.Agda.Builtin.String.T_String_6
+d_removeUnderscore_314 v0
+  = coe
+      d_joinStrings_308 (coe ("." :: Data.Text.Text))
+      (coe
+         MAlonzo.Code.Data.List.Base.du_filter_648
+         (coe
+            (\ v1 ->
+               coe
+                 MAlonzo.Code.Relation.Nullary.Decidable.Core.du_'172''63'_76
+                 (coe
+                    MAlonzo.Code.Class.DecEq.Core.d__'8799'__16
+                    MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'String_46
+                    ("_" :: Data.Text.Text) v1)))
+         (coe
+            MAlonzo.Code.Data.List.Base.du_map_22
+            (coe MAlonzo.Code.Agda.Builtin.String.d_primStringFromList_14)
+            (coe
+               MAlonzo.Code.Data.List.Base.du_wordsBy_802
+               (coe
+                  MAlonzo.Code.Class.DecEq.Core.d__'8799'__16
+                  MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'Char_40 '.')
+               (coe MAlonzo.Code.Agda.Builtin.String.d_primStringToList_12 v0))))
+-- Tactic.Derive.HsType.compilePragma
+d_compilePragma_322 ::
   AgdaAny -> [AgdaAny] -> MAlonzo.Code.Agda.Builtin.String.T_String_6
-d_compilePragma_334 v0 v1
+d_compilePragma_322 v0 v1
   = coe
       MAlonzo.Code.Text.Printf.d_printf_26
       ("= data %s (%s)" :: Data.Text.Text)
       (MAlonzo.Code.Tactic.Derive.Show.d_showName_24 (coe v0))
-      (d_joinStrings_26
+      (d_joinStrings_308
          (coe (" | " :: Data.Text.Text))
          (coe
             MAlonzo.Code.Data.List.Base.du_map_22
             (coe MAlonzo.Code.Tactic.Derive.Show.d_showName_24) (coe v1)))
--- Foreign.HaskellTypes.Deriving.renderHsTypeName
-d_renderHsTypeName_340 ::
+-- Tactic.Derive.HsType.renderHsTypeName
+d_renderHsTypeName_328 ::
   AgdaAny -> MAlonzo.Code.Agda.Builtin.String.T_String_6
-d_renderHsTypeName_340 v0
+d_renderHsTypeName_328 v0
   = coe
       MAlonzo.Code.Data.Maybe.Base.du_fromMaybe_46
       (coe
          MAlonzo.Code.Data.String.Base.d__'43''43'__20
          ("MAlonzo.Code." :: Data.Text.Text)
-         (coe MAlonzo.Code.Agda.Builtin.Reflection.d_primShowQName_12 v0))
+         (d_removeUnderscore_314
+            (coe MAlonzo.Code.Agda.Builtin.Reflection.d_primShowQName_12 v0)))
       (coe
-         du_lookup_46 (coe ())
+         du_lookup_40 (coe ())
          (coe
             MAlonzo.Code.Class.DecEq.Core.C_constructor_32
             (coe MAlonzo.Code.Reflection.AST.Name.d__'8799'__12))
-         (coe v0) (coe d_specialHsTypes_184))
--- Foreign.HaskellTypes.Deriving.renderHsType
-d_renderHsType_344 ::
+         (coe v0) (coe d_specialHsTypes_158))
+-- Tactic.Derive.HsType.renderHsType
+d_renderHsType_332 ::
   MAlonzo.Code.Agda.Builtin.Reflection.T_Term_154 ->
   MAlonzo.Code.Agda.Builtin.String.T_String_6
-d_renderHsType_344 v0
+d_renderHsType_332 v0
   = let v1
           = coe
               MAlonzo.Code.Text.Printf.d_printf_26
@@ -1070,13 +1041,13 @@ d_renderHsType_344 v0
                     = let v4
                             = coe
                                 MAlonzo.Code.Text.Printf.d_printf_26 ("(%s %s)" :: Data.Text.Text)
-                                (d_renderHsTypeName_340 (coe v2))
-                                (d_joinStrings_26
+                                (d_renderHsTypeName_328 (coe v2))
+                                (d_joinStrings_308
                                    (coe (" " :: Data.Text.Text))
-                                   (coe d_renderHsArgs_346 (coe v3))) in
+                                   (coe d_renderHsArgs_334 (coe v3))) in
                       coe
                         (case coe v3 of
-                           [] -> coe d_renderHsTypeName_340 (coe v2)
+                           [] -> coe d_renderHsTypeName_328 (coe v2)
                            _ -> coe v4) in
               coe
                 (case coe v2 of
@@ -1104,7 +1075,7 @@ d_renderHsType_344 v0
                                                                                          ("[%s]"
                                                                                           ::
                                                                                           Data.Text.Text)
-                                                                                         (d_renderHsType_344
+                                                                                         (d_renderHsType_332
                                                                                             (coe
                                                                                                v10))
                                                                                   _ -> coe v4
@@ -1164,10 +1135,10 @@ d_renderHsType_344 v0
                                                                                                                                                  ("(%s, %s)"
                                                                                                                                                   ::
                                                                                                                                                   Data.Text.Text)
-                                                                                                                                                 (d_renderHsType_344
+                                                                                                                                                 (d_renderHsType_332
                                                                                                                                                     (coe
                                                                                                                                                        v12))
-                                                                                                                                                 (d_renderHsType_344
+                                                                                                                                                 (d_renderHsType_332
                                                                                                                                                     (coe
                                                                                                                                                        v20))
                                                                                                                                           _ -> coe
@@ -1192,12 +1163,39 @@ d_renderHsType_344 v0
                                  _ -> coe v4
                           _ -> coe v4
                    _ -> coe v4)
+         MAlonzo.Code.Agda.Builtin.Reflection.C_pi_202 v2 v3
+           -> case coe v2 of
+                MAlonzo.Code.Agda.Builtin.Reflection.C_arg_98 v4 v5
+                  -> case coe v4 of
+                       MAlonzo.Code.Agda.Builtin.Reflection.C_arg'45'info_82 v6 v7
+                         -> case coe v6 of
+                              MAlonzo.Code.Agda.Builtin.Reflection.C_visible_50
+                                -> case coe v7 of
+                                     MAlonzo.Code.Agda.Builtin.Reflection.C_modality_74 v8 v9
+                                       -> case coe v8 of
+                                            MAlonzo.Code.Agda.Builtin.Reflection.C_relevant_58
+                                              -> case coe v9 of
+                                                   MAlonzo.Code.Agda.Builtin.Reflection.C_quantity'45'ω_66
+                                                     -> case coe v3 of
+                                                          MAlonzo.Code.Agda.Builtin.Reflection.C_abs_122 v10 v11
+                                                            -> coe
+                                                                 MAlonzo.Code.Text.Printf.d_printf_26
+                                                                 ("(%s -> %s)" :: Data.Text.Text)
+                                                                 (d_renderHsType_332 (coe v5))
+                                                                 (d_renderHsType_332 (coe v11))
+                                                          _ -> MAlonzo.RTE.mazUnreachableError
+                                                   _ -> coe v1
+                                            _ -> coe v1
+                                     _ -> MAlonzo.RTE.mazUnreachableError
+                              _ -> coe v1
+                       _ -> MAlonzo.RTE.mazUnreachableError
+                _ -> MAlonzo.RTE.mazUnreachableError
          _ -> coe v1)
--- Foreign.HaskellTypes.Deriving.renderHsArgs
-d_renderHsArgs_346 ::
+-- Tactic.Derive.HsType.renderHsArgs
+d_renderHsArgs_334 ::
   [MAlonzo.Code.Agda.Builtin.Reflection.T_Arg_88] ->
   [MAlonzo.Code.Agda.Builtin.String.T_String_6]
-d_renderHsArgs_346 v0
+d_renderHsArgs_334 v0
   = case coe v0 of
       [] -> coe v0
       (:) v1 v2
@@ -1205,7 +1203,7 @@ d_renderHsArgs_346 v0
              MAlonzo.Code.Agda.Builtin.Reflection.C_arg_98 v3 v4
                -> case coe v3 of
                     MAlonzo.Code.Agda.Builtin.Reflection.C_arg'45'info_82 v5 v6
-                      -> let v7 = d_renderHsArgs_346 (coe v2) in
+                      -> let v7 = d_renderHsArgs_334 (coe v2) in
                          coe
                            (case coe v5 of
                               MAlonzo.Code.Agda.Builtin.Reflection.C_visible_50
@@ -1217,8 +1215,8 @@ d_renderHsArgs_346 v0
                                                    MAlonzo.Code.Agda.Builtin.Reflection.C_quantity'45'ω_66
                                                      -> coe
                                                           MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
-                                                          (coe d_renderHsType_344 (coe v4))
-                                                          (coe d_renderHsArgs_346 (coe v2))
+                                                          (coe d_renderHsType_332 (coe v4))
+                                                          (coe d_renderHsArgs_334 (coe v2))
                                                    _ -> coe v7
                                             _ -> coe v7
                                      _ -> MAlonzo.RTE.mazUnreachableError
@@ -1226,75 +1224,144 @@ d_renderHsArgs_346 v0
                     _ -> MAlonzo.RTE.mazUnreachableError
              _ -> MAlonzo.RTE.mazUnreachableError
       _ -> MAlonzo.RTE.mazUnreachableError
--- Foreign.HaskellTypes.Deriving.renderTypeclassDeriving
-d_renderTypeclassDeriving_368 ::
-  [MAlonzo.Code.Agda.Builtin.String.T_String_6] ->
-  MAlonzo.Code.Agda.Builtin.String.T_String_6
-d_renderTypeclassDeriving_368 v0
-  = let v1
-          = coe
-              MAlonzo.Code.Text.Printf.d_printf_26
-              ("deriving (%s)" :: Data.Text.Text)
-              (d_joinStrings_26 (coe (", " :: Data.Text.Text)) (coe v0)) in
+-- Tactic.Derive.HsType.canDeriveInstancesT
+d_canDeriveInstancesT_362 ::
+  MAlonzo.Code.Agda.Builtin.Reflection.T_Term_154 -> Bool
+d_canDeriveInstancesT_362 v0
+  = let v1 = coe MAlonzo.Code.Agda.Builtin.Bool.C_false_8 in
     coe
       (case coe v0 of
-         [] -> coe ("" :: Data.Text.Text)
+         MAlonzo.Code.Agda.Builtin.Reflection.C_def_184 v2 v3
+           -> coe d_canDeriveInstancesA_364 (coe v3)
+         MAlonzo.Code.Agda.Builtin.Reflection.C_pi_202 v2 v3
+           -> case coe v2 of
+                MAlonzo.Code.Agda.Builtin.Reflection.C_arg_98 v4 v5
+                  -> case coe v4 of
+                       MAlonzo.Code.Agda.Builtin.Reflection.C_arg'45'info_82 v6 v7
+                         -> case coe v6 of
+                              MAlonzo.Code.Agda.Builtin.Reflection.C_visible_50
+                                -> case coe v7 of
+                                     MAlonzo.Code.Agda.Builtin.Reflection.C_modality_74 v8 v9
+                                       -> case coe v8 of
+                                            MAlonzo.Code.Agda.Builtin.Reflection.C_relevant_58
+                                              -> case coe v9 of
+                                                   MAlonzo.Code.Agda.Builtin.Reflection.C_quantity'45'ω_66
+                                                     -> coe
+                                                          seq (coe v3)
+                                                          (coe
+                                                             MAlonzo.Code.Agda.Builtin.Bool.C_false_8)
+                                                   _ -> coe v1
+                                            _ -> coe v1
+                                     _ -> MAlonzo.RTE.mazUnreachableError
+                              _ -> coe v1
+                       _ -> MAlonzo.RTE.mazUnreachableError
+                _ -> MAlonzo.RTE.mazUnreachableError
          _ -> coe v1)
--- Foreign.HaskellTypes.Deriving.foreignPragma
-d_foreignPragma_372 :: T_Env_54 -> AgdaAny -> [AgdaAny] -> AgdaAny
-d_foreignPragma_372 v0 v1 v2
+-- Tactic.Derive.HsType.canDeriveInstancesA
+d_canDeriveInstancesA_364 ::
+  [MAlonzo.Code.Agda.Builtin.Reflection.T_Arg_88] -> Bool
+d_canDeriveInstancesA_364 v0
+  = case coe v0 of
+      [] -> coe MAlonzo.Code.Agda.Builtin.Bool.C_true_10
+      (:) v1 v2
+        -> case coe v1 of
+             MAlonzo.Code.Agda.Builtin.Reflection.C_arg_98 v3 v4
+               -> case coe v3 of
+                    MAlonzo.Code.Agda.Builtin.Reflection.C_arg'45'info_82 v5 v6
+                      -> let v7 = d_canDeriveInstancesA_364 (coe v2) in
+                         coe
+                           (case coe v5 of
+                              MAlonzo.Code.Agda.Builtin.Reflection.C_visible_50
+                                -> case coe v6 of
+                                     MAlonzo.Code.Agda.Builtin.Reflection.C_modality_74 v8 v9
+                                       -> case coe v8 of
+                                            MAlonzo.Code.Agda.Builtin.Reflection.C_relevant_58
+                                              -> case coe v9 of
+                                                   MAlonzo.Code.Agda.Builtin.Reflection.C_quantity'45'ω_66
+                                                     -> coe
+                                                          MAlonzo.Code.Data.Bool.Base.d__'8743'__24
+                                                          (coe d_canDeriveInstancesT_362 (coe v4))
+                                                          (coe d_canDeriveInstancesA_364 (coe v2))
+                                                   _ -> coe v7
+                                            _ -> coe v7
+                                     _ -> MAlonzo.RTE.mazUnreachableError
+                              _ -> coe v7)
+                    _ -> MAlonzo.RTE.mazUnreachableError
+             _ -> MAlonzo.RTE.mazUnreachableError
+      _ -> MAlonzo.RTE.mazUnreachableError
+-- Tactic.Derive.HsType.foreignPragma
+d_foreignPragma_384 :: AgdaAny -> [AgdaAny] -> AgdaAny
+d_foreignPragma_384 v0 v1
   = coe
       MAlonzo.Code.Agda.Builtin.Reflection.d_bindTC_336 () () erased
       erased
       (coe
          MAlonzo.Code.Class.Monad.Core.du_forM_120
          (coe MAlonzo.Code.Class.Monad.Instances.d_Monad'45'TC_6) (coe ())
-         (coe v2)
+         (coe v1)
          (coe
-            (\ v3 ->
+            (\ v2 ->
                coe
                  MAlonzo.Code.Agda.Builtin.Reflection.d_bindTC_336 () () erased
                  erased
                  (coe
                     MAlonzo.Code.Agda.Builtin.Reflection.d_bindTC_336 () () erased
-                    erased (coe MAlonzo.Code.Agda.Builtin.Reflection.d_getType_406 v3)
-                    (\ v4 ->
+                    erased (coe MAlonzo.Code.Agda.Builtin.Reflection.d_getType_406 v2)
+                    (\ v3 ->
                        coe
                          MAlonzo.Code.Agda.Builtin.Reflection.d_returnTC_326 () erased
-                         (MAlonzo.Code.Reflection.Utils.Core.d_viewTy_22 (coe v4))))
-                 (\ v4 ->
-                    case coe v4 of
-                      MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v5 v6
+                         (MAlonzo.Code.Reflection.Utils.Core.d_viewTy_22 (coe v3))))
+                 (\ v3 ->
+                    case coe v3 of
+                      MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v4 v5
                         -> coe
                              MAlonzo.Code.Agda.Builtin.Reflection.d_returnTC_326 () erased
                              (coe
-                                MAlonzo.Code.Text.Printf.d_printf_26 ("%s %s" :: Data.Text.Text)
-                                (MAlonzo.Code.Tactic.Derive.Show.d_showName_24 (coe v3))
-                                (d_joinStrings_26
-                                   (coe (" " :: Data.Text.Text))
-                                   (coe
-                                      d_renderHsArgs_346
+                                MAlonzo.Code.Data.Product.Base.du__'44''8242'__84
+                                (coe
+                                   MAlonzo.Code.Text.Printf.d_printf_26 ("%s %s" :: Data.Text.Text)
+                                   (MAlonzo.Code.Tactic.Derive.Show.d_showName_24 (coe v2))
+                                   (d_joinStrings_308
+                                      (coe (" " :: Data.Text.Text))
                                       (coe
-                                         MAlonzo.Code.Data.List.Base.du_map_22
-                                         (coe MAlonzo.Code.Reflection.AST.Abstraction.d_unAbs_36)
-                                         (coe v5)))))
+                                         d_renderHsArgs_334
+                                         (coe
+                                            MAlonzo.Code.Data.List.Base.du_map_22
+                                            (coe MAlonzo.Code.Reflection.AST.Abstraction.d_unAbs_36)
+                                            (coe v4)))))
+                                (d_canDeriveInstancesA_364
+                                   (coe
+                                      MAlonzo.Code.Data.List.Base.du_map_22
+                                      (coe MAlonzo.Code.Reflection.AST.Abstraction.d_unAbs_36)
+                                      (coe v4))))
                       _ -> MAlonzo.RTE.mazUnreachableError))))
-      (\ v3 ->
+      (\ v2 ->
          coe
            MAlonzo.Code.Agda.Builtin.Reflection.d_returnTC_326 () erased
            (coe
               MAlonzo.Code.Text.Printf.d_printf_26
-              ("data %s = %s\n  %s" :: Data.Text.Text)
-              (MAlonzo.Code.Tactic.Derive.Show.d_showName_24 (coe v1))
-              (d_joinStrings_26 (coe (" | " :: Data.Text.Text)) (coe v3))
-              (d_renderTypeclassDeriving_368
+              ("data %s = %s\n  deriving (%sGeneric)" :: Data.Text.Text)
+              (MAlonzo.Code.Tactic.Derive.Show.d_showName_24 (coe v0))
+              (d_joinStrings_308
+                 (coe (" | " :: Data.Text.Text))
                  (coe
-                    d_typeclassDeriving_74 v0
-                    (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))))
--- Foreign.HaskellTypes.Deriving.foreignPragmaRec
-d_foreignPragmaRec_390 ::
-  T_Env_54 -> AgdaAny -> [AgdaAny] -> [AgdaAny] -> AgdaAny
-d_foreignPragmaRec_390 v0 v1 v2 v3
+                    MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                    (coe MAlonzo.Code.Data.List.Base.du_unzip_186 v2)))
+              (coe
+                 MAlonzo.Code.Data.Bool.Base.du_if_then_else__44
+                 (coe
+                    MAlonzo.Code.Data.List.Base.du_foldl_230
+                    (coe MAlonzo.Code.Data.Bool.Base.d__'8743'__24)
+                    (coe MAlonzo.Code.Agda.Builtin.Bool.C_true_10)
+                    (coe
+                       MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
+                       (coe MAlonzo.Code.Data.List.Base.du_unzip_186 v2)))
+                 (coe ("Show, Eq, " :: Data.Text.Text))
+                 (coe ("" :: Data.Text.Text)))))
+-- Tactic.Derive.HsType.foreignPragmaRec
+d_foreignPragmaRec_404 ::
+  T_NameEnv_6 -> AgdaAny -> [AgdaAny] -> [AgdaAny] -> AgdaAny
+d_foreignPragmaRec_404 v0 v1 v2 v3
   = case coe v2 of
       []
         -> coe
@@ -1325,12 +1392,12 @@ d_foreignPragmaRec_390 v0 v1 v2 v3
                          MAlonzo.Code.Agda.Builtin.Reflection.d_returnTC_326 () erased
                          (coe
                             MAlonzo.Code.Text.Printf.d_printf_26
-                            ("data %s = %s\n %s" :: Data.Text.Text)
+                            ("data %s = %s\n  deriving (%sGeneric)" :: Data.Text.Text)
                             (MAlonzo.Code.Tactic.Derive.Show.d_showName_24 (coe v1))
                             (coe
                                MAlonzo.Code.Text.Printf.d_printf_26 ("%s {%s}" :: Data.Text.Text)
                                (MAlonzo.Code.Tactic.Derive.Show.d_showName_24 (coe v4))
-                               (d_joinStrings_26
+                               (d_joinStrings_308
                                   (coe (", " :: Data.Text.Text))
                                   (coe
                                      MAlonzo.Code.Data.List.Base.du_zipWith_104
@@ -1339,30 +1406,36 @@ d_foreignPragmaRec_390 v0 v1 v2 v3
                                            coe
                                              MAlonzo.Code.Text.Printf.d_printf_26
                                              ("%s :: %s" :: Data.Text.Text) v9
-                                             (d_renderHsType_344
+                                             (d_renderHsType_332
                                                 (coe
                                                    MAlonzo.Code.Reflection.AST.Argument.d_unArg_74
                                                    (coe v10)))))
                                      (coe
                                         MAlonzo.Code.Data.List.Base.du_map_22
-                                        (coe d_hsFieldName_204 (coe v0)) (coe v3))
+                                        (coe d_hsFieldName_178 (coe v0)) (coe v3))
                                      (coe
                                         MAlonzo.Code.Data.List.Base.du_map_22
                                         (coe MAlonzo.Code.Reflection.AST.Abstraction.d_unAbs_36)
                                         (coe v7)))))
-                            (d_renderTypeclassDeriving_368
+                            (coe
+                               MAlonzo.Code.Data.Bool.Base.du_if_then_else__44
                                (coe
-                                  d_typeclassDeriving_74 v0
-                                  (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))
+                                  d_canDeriveInstancesA_364
+                                  (coe
+                                     MAlonzo.Code.Data.List.Base.du_map_22
+                                     (coe MAlonzo.Code.Reflection.AST.Abstraction.d_unAbs_36)
+                                     (coe v7)))
+                               (coe ("Show, Eq, " :: Data.Text.Text))
+                               (coe ("" :: Data.Text.Text))))
                   _ -> MAlonzo.RTE.mazUnreachableError)
       _ -> MAlonzo.RTE.mazUnreachableError
--- Foreign.HaskellTypes.Deriving.hsImports
-d_hsImports_418 :: MAlonzo.Code.Agda.Builtin.String.T_String_6
-d_hsImports_418
+-- Tactic.Derive.HsType.hsImports
+d_hsImports_432 :: MAlonzo.Code.Agda.Builtin.String.T_String_6
+d_hsImports_432
   = coe ("import GHC.Generics (Generic)" :: Data.Text.Text)
--- Foreign.HaskellTypes.Deriving.bindHsType
-d_bindHsType_420 :: T_Env_54 -> AgdaAny -> AgdaAny -> AgdaAny
-d_bindHsType_420 v0 v1 v2
+-- Tactic.Derive.HsType.bindHsType
+d_bindHsType_434 :: T_NameEnv_6 -> AgdaAny -> AgdaAny -> AgdaAny
+d_bindHsType_434 v0 v1 v2
   = coe
       MAlonzo.Code.Agda.Builtin.Reflection.d_bindTC_336 () () erased
       erased
@@ -1381,7 +1454,7 @@ d_bindHsType_420 v0 v1 v2
                      (coe ())
                      (coe
                         MAlonzo.Code.Agda.Builtin.Reflection.d_pragmaForeign_420
-                        ("GHC" :: Data.Text.Text) d_hsImports_418)
+                        ("GHC" :: Data.Text.Text) d_hsImports_432)
                      (coe
                         MAlonzo.Code.Class.Monad.Core.du__'62''62'__24
                         (coe MAlonzo.Code.Class.Monad.Instances.d_Monad'45'TC_6) (coe ())
@@ -1389,7 +1462,7 @@ d_bindHsType_420 v0 v1 v2
                         (coe
                            MAlonzo.Code.Agda.Builtin.Reflection.d_pragmaCompile_422
                            ("GHC" :: Data.Text.Text) v2
-                           (d_compilePragma_334 (coe v2) (coe v6)))
+                           (d_compilePragma_322 (coe v2) (coe v6)))
                         (coe
                            MAlonzo.Code.Agda.Builtin.Reflection.d_bindTC_336 () () erased
                            erased
@@ -1409,7 +1482,7 @@ d_bindHsType_420 v0 v1 v2
                                           (coe
                                              MAlonzo.Code.Agda.Builtin.Reflection.d_pragmaForeign_420
                                              ("GHC" :: Data.Text.Text))
-                                          (coe d_foreignPragma_372 (coe v0) (coe v2) (coe v6))
+                                          (coe d_foreignPragma_384 (coe v2) (coe v6))
                                    MAlonzo.Code.Agda.Builtin.Reflection.C_record'45'type_296 v9 v10
                                      -> coe
                                           MAlonzo.Code.Class.Monad.Core.du__'61''60''60'__32
@@ -1419,7 +1492,7 @@ d_bindHsType_420 v0 v1 v2
                                              MAlonzo.Code.Agda.Builtin.Reflection.d_pragmaForeign_420
                                              ("GHC" :: Data.Text.Text))
                                           (coe
-                                             d_foreignPragmaRec_390 (coe v0) (coe v2) (coe v6)
+                                             d_foreignPragmaRec_404 (coe v0) (coe v2) (coe v6)
                                              (coe
                                                 MAlonzo.Code.Data.List.Base.du_map_22
                                                 (coe
@@ -1427,9 +1500,9 @@ d_bindHsType_420 v0 v1 v2
                                                 (coe v10)))
                                    _ -> coe v8))))
               _ -> coe v4))
--- Foreign.HaskellTypes.Deriving.computeProjections
-d_computeProjections_438 :: Integer -> AgdaAny -> AgdaAny
-d_computeProjections_438 v0 v1
+-- Tactic.Derive.HsType.computeProjections
+d_computeProjections_452 :: Integer -> AgdaAny -> AgdaAny
+d_computeProjections_452 v0 v1
   = coe
       MAlonzo.Code.Agda.Builtin.Reflection.d_bindTC_336 () () erased
       erased
@@ -1522,16 +1595,16 @@ d_computeProjections_438 v0 v1
                            MAlonzo.Code.Data.List.Base.d_downFrom_404
                            (coe MAlonzo.Code.Data.List.Base.du_length_268 v3))))
            _ -> MAlonzo.RTE.mazUnreachableError)
--- Foreign.HaskellTypes.Deriving.makeTypeAlias
-d_makeTypeAlias_470 ::
+-- Tactic.Derive.HsType.makeTypeAlias
+d_makeTypeAlias_484 ::
   AgdaAny ->
-  T_Env_54 ->
+  T_NameEnv_6 ->
   MAlonzo.Code.Agda.Builtin.Reflection.T_Term_154 -> AgdaAny
-d_makeTypeAlias_470 v0 v1 v2
+d_makeTypeAlias_484 v0 v1 v2
   = coe
       MAlonzo.Code.Agda.Builtin.Reflection.d_bindTC_336 () () erased
       erased
-      (d_solveHsType_172
+      (d_solveHsType_132
          (coe
             MAlonzo.Code.Agda.Builtin.Reflection.C_def_184 (coe v0)
             (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))
@@ -1546,8 +1619,8 @@ d_makeTypeAlias_470 v0 v1 v2
               (coe
                  MAlonzo.Code.Text.Printf.d_printf_26
                  ("type %s = %s" :: Data.Text.Text)
-                 (d_hsTypeName_186 (coe v1) (coe v0))
-                 (d_renderHsType_344 (coe v3))))
+                 (d_hsTypeName_160 (coe v1) (coe v0))
+                 (d_renderHsType_332 (coe v3))))
            (coe
               MAlonzo.Code.Agda.Builtin.Reflection.d_unify_338 v2
               (coe
@@ -1577,12 +1650,12 @@ d_makeTypeAlias_470 v0 v1 v2
                                 (MAlonzo.RTE.Fixity MAlonzo.RTE.NonAssoc MAlonzo.RTE.Unrelated)))
                           (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))
                     (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))))
--- Foreign.HaskellTypes.Deriving.doAutoHsType
-d_doAutoHsType_480 ::
-  T_Env_54 ->
+-- Tactic.Derive.HsType.doAutoHsType
+d_doAutoHsType_494 ::
+  T_NameEnv_6 ->
   AgdaAny ->
   MAlonzo.Code.Agda.Builtin.Reflection.T_Term_154 -> AgdaAny
-d_doAutoHsType_480 v0 v1 v2
+d_doAutoHsType_494 v0 v1 v2
   = coe
       MAlonzo.Code.Class.Monad.Core.du__'62''62'__24
       (coe MAlonzo.Code.Class.Monad.Instances.d_Monad'45'TC_6) (coe ())
@@ -1593,8 +1666,8 @@ d_doAutoHsType_480 v0 v1 v2
             MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
             (coe
                (MAlonzo.RTE.QName
-                  (14 :: Integer) (15387014652001289505 :: Integer)
-                  "Foreign.HaskellTypes.HasHsType"
+                  (10 :: Integer) (5300038832148290500 :: Integer)
+                  "Class.HasHsType.Core.HasHsType"
                   (MAlonzo.RTE.Fixity MAlonzo.RTE.NonAssoc MAlonzo.RTE.Unrelated)))
             (coe
                MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
@@ -1613,19 +1686,19 @@ d_doAutoHsType_480 v0 v1 v2
                (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))
       (coe
          MAlonzo.Code.Agda.Builtin.Reflection.d_bindTC_336 () () erased
-         erased (d_makeHsType_318 (coe v0) (coe v1))
+         erased (d_makeHsType_292 (coe v0) (coe v1))
          (\ v3 ->
             coe
               MAlonzo.Code.Class.Monad.Core.du__'62''62'__24
               (coe MAlonzo.Code.Class.Monad.Instances.d_Monad'45'TC_6) (coe ())
               (coe ())
               (coe
-                 d_debug_182 (50 :: Integer) ("  HsType %q = %q" :: Data.Text.Text)
+                 d_debug_142 (50 :: Integer) ("  HsType %q = %q" :: Data.Text.Text)
                  v1 v3)
               (coe
                  MAlonzo.Code.Class.Monad.Core.du__'62''62'__24
                  (coe MAlonzo.Code.Class.Monad.Instances.d_Monad'45'TC_6) (coe ())
-                 (coe ()) (coe d_bindHsType_420 (coe v0) (coe v1) (coe v3))
+                 (coe ()) (coe d_bindHsType_434 (coe v0) (coe v1) (coe v3))
                  (coe
                     MAlonzo.Code.Class.Monad.Core.du__'62''62'__24
                     (coe MAlonzo.Code.Class.Monad.Instances.d_Monad'45'TC_6) (coe ())
@@ -1655,8 +1728,8 @@ d_doAutoHsType_480 v0 v1 v2
                                          MAlonzo.Code.Agda.Builtin.Reflection.C_proj_260
                                          (coe
                                             (MAlonzo.RTE.QName
-                                               (20 :: Integer) (15387014652001289505 :: Integer)
-                                               "Foreign.HaskellTypes.HasHsType.HsType"
+                                               (16 :: Integer) (5300038832148290500 :: Integer)
+                                               "Class.HasHsType.Core.HasHsType.HsType"
                                                (MAlonzo.RTE.Fixity
                                                   MAlonzo.RTE.NonAssoc MAlonzo.RTE.Unrelated)))))
                                    (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))
@@ -1670,46 +1743,41 @@ d_doAutoHsType_480 v0 v1 v2
                        (coe
                           MAlonzo.Code.Agda.Builtin.Reflection.C_def_184 (coe v3)
                           (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))))))
--- Foreign.HaskellTypes.Deriving.autoHsType
-d_autoHsType_490 ::
+-- Tactic.Derive.HsType.autoHsType
+d_autoHsType_504 ::
   AgdaAny ->
   MAlonzo.Code.Agda.Builtin.Reflection.T_Term_154 -> AgdaAny
-d_autoHsType_490 v0 v1
+d_autoHsType_504 v0 v1
   = coe
       MAlonzo.Code.Class.Functor.Core.du__'60''36'__24
       (coe MAlonzo.Code.Class.Functor.Instances.d_Functor'45'TC_438)
       (coe ()) (coe ()) (coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8)
-      (coe
-         d_doAutoHsType_480 (coe d_withDefaultDeriving_130) (coe v0)
-         (coe v1))
--- Foreign.HaskellTypes.Deriving.autoHsType_⊣_
-d_autoHsType_'8867'__496 ::
+      (coe d_doAutoHsType_494 (coe d_emptyEnv_62) (coe v0) (coe v1))
+-- Tactic.Derive.HsType.autoHsType_⊣_
+d_autoHsType_'8867'__510 ::
   AgdaAny ->
-  T_Env_54 ->
+  T_NameEnv_6 ->
   MAlonzo.Code.Agda.Builtin.Reflection.T_Term_154 -> AgdaAny
-d_autoHsType_'8867'__496 v0 v1 v2
+d_autoHsType_'8867'__510 v0 v1 v2
   = coe
       MAlonzo.Code.Class.Functor.Core.du__'60''36'__24
       (coe MAlonzo.Code.Class.Functor.Instances.d_Functor'45'TC_438)
       (coe ()) (coe ()) (coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8)
-      (coe
-         d_doAutoHsType_480
-         (coe d__'8226'__132 (coe d_withDefaultDeriving_130) (coe v1))
-         (coe v0) (coe v2))
--- Foreign.HaskellTypes.Deriving._↦_
-d__'8614'__504 ::
+      (coe d_doAutoHsType_494 (coe v1) (coe v0) (coe v2))
+-- Tactic.Derive.HsType._↦_
+d__'8614'__518 ::
   AgdaAny ->
   MAlonzo.Code.Agda.Builtin.String.T_String_6 ->
   MAlonzo.Code.Agda.Builtin.Reflection.T_Term_154 -> AgdaAny
-d__'8614'__504 v0 v1
+d__'8614'__518 v0 v1
   = coe
       MAlonzo.Code.Agda.Builtin.Reflection.d_unify_338
       (coe
          MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
          (coe
             (MAlonzo.RTE.QName
-               (94 :: Integer) (18008581653501872126 :: Integer)
-               "Foreign.HaskellTypes.Deriving.customName"
+               (64 :: Integer) (15422988094639456485 :: Integer)
+               "Tactic.Derive.HsType.customName"
                (MAlonzo.RTE.Fixity MAlonzo.RTE.NonAssoc MAlonzo.RTE.Unrelated)))
          (coe
             MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
@@ -1740,28 +1808,28 @@ d__'8614'__504 v0 v1
                      MAlonzo.Code.Agda.Builtin.Reflection.C_lit_210
                      (coe MAlonzo.Code.Agda.Builtin.Reflection.C_string_144 (coe v1))))
                (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))
--- Foreign.HaskellTypes.Deriving.hsTypeAlias
-d_hsTypeAlias_510 ::
+-- Tactic.Derive.HsType.hsTypeAlias
+d_hsTypeAlias_524 ::
   AgdaAny ->
   MAlonzo.Code.Agda.Builtin.Reflection.T_Term_154 -> AgdaAny
-d_hsTypeAlias_510 v0
-  = coe d_makeTypeAlias_470 (coe v0) (coe d_emptyEnv_92)
--- Foreign.HaskellTypes.Deriving.hsTypeAlias_⊣_
-d_hsTypeAlias_'8867'__514 ::
+d_hsTypeAlias_524 v0
+  = coe d_makeTypeAlias_484 (coe v0) (coe d_emptyEnv_62)
+-- Tactic.Derive.HsType.hsTypeAlias_⊣_
+d_hsTypeAlias_'8867'__528 ::
   AgdaAny ->
-  T_Env_54 ->
+  T_NameEnv_6 ->
   MAlonzo.Code.Agda.Builtin.Reflection.T_Term_154 -> AgdaAny
-d_hsTypeAlias_'8867'__514 v0 v1
-  = coe d_makeTypeAlias_470 (coe v0) (coe v1)
--- Foreign.HaskellTypes.Deriving.hsCon
-d_hsCon_520 ::
+d_hsTypeAlias_'8867'__528 v0 v1
+  = coe d_makeTypeAlias_484 (coe v0) (coe v1)
+-- Tactic.Derive.HsType.hsCon
+d_hsCon_534 ::
   MAlonzo.Code.Agda.Builtin.Reflection.T_Term_154 ->
   Integer ->
   MAlonzo.Code.Agda.Builtin.Reflection.T_Term_154 -> AgdaAny
-d_hsCon_520 v0 v1 v2
+d_hsCon_534 v0 v1 v2
   = coe
       MAlonzo.Code.Agda.Builtin.Reflection.d_bindTC_336 () () erased
-      erased (d_solveHsType_172 (coe v0))
+      erased (d_solveHsType_132 (coe v0))
       (\ v3 ->
          let v4
                = coe
@@ -1803,7 +1871,7 @@ d_hsCon_520 v0 v1 v2
                                 MAlonzo.Code.Reflection.TCM.Format.du_typeErrorFmt_92 ()
                                 ("%q has only %u constructors" :: Data.Text.Text) v5
                                 (coe MAlonzo.Code.Data.List.Base.du_length_268 v7))
-                             (coe du__'8252'__32 (coe v7) (coe v1)))
+                             (coe du__'8252'__144 (coe v7) (coe v1)))
                           (\ v8 ->
                              coe
                                MAlonzo.Code.Agda.Builtin.Reflection.d_unify_338 v2
@@ -1811,15 +1879,15 @@ d_hsCon_520 v0 v1 v2
                                   MAlonzo.Code.Agda.Builtin.Reflection.C_con_178 (coe v8)
                                   (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))
               _ -> coe v4))
--- Foreign.HaskellTypes.Deriving.hsProj
-d_hsProj_542 ::
+-- Tactic.Derive.HsType.hsProj
+d_hsProj_556 ::
   MAlonzo.Code.Agda.Builtin.Reflection.T_Term_154 ->
   Integer ->
   MAlonzo.Code.Agda.Builtin.Reflection.T_Term_154 -> AgdaAny
-d_hsProj_542 v0 v1 v2
+d_hsProj_556 v0 v1 v2
   = coe
       MAlonzo.Code.Agda.Builtin.Reflection.d_bindTC_336 () () erased
-      erased (d_solveHsType_172 (coe v0))
+      erased (d_solveHsType_132 (coe v0))
       (\ v3 ->
          let v4
                = coe
@@ -1849,7 +1917,7 @@ d_hsProj_542 v0 v1 v2
                                   -> case coe v10 of
                                        (:) v11 v12
                                          -> case coe v12 of
-                                              [] -> coe d_computeProjections_438 (coe v9) (coe v11)
+                                              [] -> coe d_computeProjections_452 (coe v9) (coe v11)
                                               _ -> coe v8
                                        _ -> coe v8
                                 _ -> coe v8)))
@@ -1864,7 +1932,7 @@ d_hsProj_542 v0 v1 v2
                                 MAlonzo.Code.Reflection.TCM.Format.du_typeErrorFmt_92 ()
                                 ("%q has only %u fields" :: Data.Text.Text) v5
                                 (coe MAlonzo.Code.Data.List.Base.du_length_268 v7))
-                             (coe du__'8252'__32 (coe v7) (coe v1)))
+                             (coe du__'8252'__144 (coe v7) (coe v1)))
                           (\ v8 ->
                              coe
                                MAlonzo.Code.Agda.Builtin.Reflection.d_bindTC_336 () () erased
@@ -1911,14 +1979,14 @@ d_hsProj_542 v0 v1 v2
                                              (coe ("_" :: Data.Text.Text)) (coe v9))))
                                     (coe MAlonzo.Code.Agda.Builtin.Reflection.d_unify_338 v2 v8))))
               _ -> coe v4))
--- Foreign.HaskellTypes.Deriving.hsTyName
-d_hsTyName_568 ::
+-- Tactic.Derive.HsType.hsTyName
+d_hsTyName_582 ::
   MAlonzo.Code.Agda.Builtin.Reflection.T_Term_154 ->
   MAlonzo.Code.Agda.Builtin.Reflection.T_Term_154 -> AgdaAny
-d_hsTyName_568 v0 v1
+d_hsTyName_582 v0 v1
   = coe
       MAlonzo.Code.Agda.Builtin.Reflection.d_bindTC_336 () () erased
-      erased (d_solveHsType_172 (coe v0))
+      erased (d_solveHsType_132 (coe v0))
       (\ v2 ->
          let v3
                = coe

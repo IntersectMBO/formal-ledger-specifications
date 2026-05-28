@@ -23,16 +23,19 @@ import qualified MAlonzo.Code.Agda.Builtin.Sigma
 import qualified MAlonzo.Code.Agda.Builtin.String
 import qualified MAlonzo.Code.Agda.Builtin.Unit
 import qualified MAlonzo.Code.Axiom.Set
+import qualified MAlonzo.Code.Axiom.Set.Map
+import qualified MAlonzo.Code.Class.Convertible.Core
+import qualified MAlonzo.Code.Class.Convertible.Foreign
+import qualified MAlonzo.Code.Class.Convertible.Instances
 import qualified MAlonzo.Code.Class.DecEq.Instances
 import qualified MAlonzo.Code.Class.Functor.Core
 import qualified MAlonzo.Code.Class.Functor.Instances
+import qualified MAlonzo.Code.Class.HasHsType.Core
 import qualified MAlonzo.Code.Data.Nat.Properties
 import qualified MAlonzo.Code.Data.Nat.Show
 import qualified MAlonzo.Code.Data.Product.Base
 import qualified MAlonzo.Code.Data.String.Base
-import qualified MAlonzo.Code.Foreign.Convertible
 import qualified MAlonzo.Code.Foreign.Haskell.Coerce
-import qualified MAlonzo.Code.Foreign.HaskellTypes
 import qualified MAlonzo.Code.Interface.ComputationalRelation
 import qualified MAlonzo.Code.Ledger.Core.Foreign.Address
 import qualified MAlonzo.Code.Ledger.Core.Foreign.Crypto.Base
@@ -75,13 +78,13 @@ import qualified MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory
 
 import GHC.Generics (Generic)
 data BHBody = MkBHBody {bhbBvkcold :: MAlonzo.Code.Ledger.Core.Foreign.Crypto.Base.HSVKey, bhbBsize :: Integer, bhbSlot :: Integer, bhbBhash :: Integer, bhbHBbsize :: Integer}
- deriving (Show, Eq, Generic)
+  deriving (Show, Eq, Generic)
 data BHeader = MkBHeader {bhBhbody :: MAlonzo.Code.Ledger.Dijkstra.Foreign.Chain.BHBody, bhBhsig :: Integer}
- deriving (Show, Eq, Generic)
+  deriving (Show, Eq, Generic)
 data Block = MkBlock {bBheader :: MAlonzo.Code.Ledger.Dijkstra.Foreign.Chain.BHeader, bTs :: [MAlonzo.Code.Ledger.Dijkstra.Foreign.Transaction.TxTop], bBBodySize :: Integer, bBBodyHash :: Integer}
- deriving (Show, Eq, Generic)
+  deriving (Show, Eq, Generic)
 data ChainState = MkChainState {csNewEpochState :: MAlonzo.Code.Ledger.Dijkstra.Foreign.NewEpoch.NewEpochState}
- deriving (Show, Eq, Generic)
+  deriving (Show, Eq, Generic)
 -- Ledger.Dijkstra.Foreign.Chain._._⊢_⇀⦇_,BBODY⦈_
 d__'8866'_'8640''10631'_'44'BBODY'10632'__10 a0 a1 a2 a3 = ()
 -- Ledger.Dijkstra.Foreign.Chain._._⊢_⇀⦇_,CHAIN⦈_
@@ -322,14 +325,14 @@ d_refScriptSize'8804''63'Bound_108
             MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20))
 -- Ledger.Dijkstra.Foreign.Chain.HsTy-BHBody
 d_HsTy'45'BHBody_110 ::
-  MAlonzo.Code.Foreign.HaskellTypes.T_HasHsType_14
+  MAlonzo.Code.Class.HasHsType.Core.T_HasHsType_10
 d_HsTy'45'BHBody_110 = erased
 -- Ledger.Dijkstra.Foreign.Chain.Conv-BHBody
 d_Conv'45'BHBody_112 ::
-  MAlonzo.Code.Foreign.Convertible.T_Convertible_8
+  MAlonzo.Code.Class.Convertible.Core.T_Convertible_10
 d_Conv'45'BHBody_112
   = coe
-      MAlonzo.Code.Foreign.Convertible.C_constructor_22
+      MAlonzo.Code.Class.Convertible.Core.C_constructor_24
       (coe
          (\ v0 ->
             case coe v0 of
@@ -352,9 +355,9 @@ d_Conv'45'BHBody_112
                 -> coe
                      MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.C_constructor_2954
                      (coe
-                        MAlonzo.Code.Foreign.Convertible.d_from_20
+                        MAlonzo.Code.Class.Convertible.Core.d_from_22
                         (coe
-                           MAlonzo.Code.Foreign.Convertible.C_constructor_22
+                           MAlonzo.Code.Class.Convertible.Core.C_constructor_24
                            (coe
                               (\ v6 ->
                                  case coe v6 of
@@ -376,20 +379,20 @@ d_Conv'45'BHBody_112
               _ -> MAlonzo.RTE.mazUnreachableError))
 -- Ledger.Dijkstra.Foreign.Chain.HsTy-BHeader
 d_HsTy'45'BHeader_114 ::
-  MAlonzo.Code.Foreign.HaskellTypes.T_HasHsType_14
+  MAlonzo.Code.Class.HasHsType.Core.T_HasHsType_10
 d_HsTy'45'BHeader_114 = erased
 -- Ledger.Dijkstra.Foreign.Chain.Conv-BHeader
 d_Conv'45'BHeader_116 ::
-  MAlonzo.Code.Foreign.Convertible.T_Convertible_8
+  MAlonzo.Code.Class.Convertible.Core.T_Convertible_10
 d_Conv'45'BHeader_116
   = coe
-      MAlonzo.Code.Foreign.Convertible.C_constructor_22
+      MAlonzo.Code.Class.Convertible.Core.C_constructor_24
       (coe
          (\ v0 ->
             case coe v0 of
               MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.C_constructor_2966 v1 v2
                 -> coe
-                     C_MkBHeader_2585
+                     C_MkBHeader_2555
                      (coe
                         C_MkBHBody_175
                         (coe
@@ -421,13 +424,13 @@ d_Conv'45'BHeader_116
       (coe
          (\ v0 ->
             case coe v0 of
-              C_MkBHeader_2585 v1 v2
+              C_MkBHeader_2555 v1 v2
                 -> coe
                      MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.C_constructor_2966
                      (coe
-                        MAlonzo.Code.Foreign.Convertible.d_from_20
+                        MAlonzo.Code.Class.Convertible.Core.d_from_22
                         (coe
-                           MAlonzo.Code.Foreign.Convertible.C_constructor_22
+                           MAlonzo.Code.Class.Convertible.Core.C_constructor_24
                            (coe
                               (\ v3 ->
                                  case coe v3 of
@@ -451,9 +454,9 @@ d_Conv'45'BHeader_116
                                      -> coe
                                           MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.C_constructor_2954
                                           (coe
-                                             MAlonzo.Code.Foreign.Convertible.d_from_20
+                                             MAlonzo.Code.Class.Convertible.Core.d_from_22
                                              (coe
-                                                MAlonzo.Code.Foreign.Convertible.C_constructor_22
+                                                MAlonzo.Code.Class.Convertible.Core.C_constructor_24
                                                 (coe
                                                    (\ v9 ->
                                                       case coe v9 of
@@ -512,10 +515,10 @@ d_bBodyHash_134 v0
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Dijkstra.Foreign.Chain.Conv-Block-HSBlock
 d_Conv'45'Block'45'HSBlock_138 ::
-  MAlonzo.Code.Foreign.Convertible.T_Convertible_8
+  MAlonzo.Code.Class.Convertible.Core.T_Convertible_10
 d_Conv'45'Block'45'HSBlock_138
   = coe
-      MAlonzo.Code.Foreign.Convertible.C_constructor_22
+      MAlonzo.Code.Class.Convertible.Core.C_constructor_24
       (coe
          (\ v0 ->
             coe
@@ -659,22 +662,22 @@ cover_BHBody_173 x
       MkBHBody _ _ _ _ _ -> ()
 -- Ledger.Dijkstra.Foreign.Chain.HsTy-HSBlock
 d_HsTy'45'HSBlock_184 ::
-  MAlonzo.Code.Foreign.HaskellTypes.T_HasHsType_14
+  MAlonzo.Code.Class.HasHsType.Core.T_HasHsType_10
 d_HsTy'45'HSBlock_184 = erased
 -- Ledger.Dijkstra.Foreign.Chain.Conv-HSBlock
 d_Conv'45'HSBlock_186 ::
-  MAlonzo.Code.Foreign.Convertible.T_Convertible_8
+  MAlonzo.Code.Class.Convertible.Core.T_Convertible_10
 d_Conv'45'HSBlock_186
   = coe
-      MAlonzo.Code.Foreign.Convertible.C_constructor_22
+      MAlonzo.Code.Class.Convertible.Core.C_constructor_24
       (coe
          (\ v0 ->
             case coe v0 of
               C_constructor_136 v1 v2 v3 v4
                 -> coe
-                     C_MkBlock_5677
+                     C_MkBlock_5635
                      (coe
-                        C_MkBHeader_2585
+                        C_MkBHeader_2555
                         (coe
                            C_MkBHBody_175
                            (coe
@@ -720,7 +723,7 @@ d_Conv'45'HSBlock_186
                         MAlonzo.Code.Class.Functor.Core.du_fmap_22
                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92 () erased
                         () erased
-                        (MAlonzo.Code.Foreign.Convertible.d_to_18
+                        (MAlonzo.Code.Class.Convertible.Core.d_to_20
                            (coe
                               MAlonzo.Code.Ledger.Dijkstra.Foreign.Transaction.d_Conv'45'TxTop''''_550))
                         v2)
@@ -729,19 +732,19 @@ d_Conv'45'HSBlock_186
       (coe
          (\ v0 ->
             case coe v0 of
-              C_MkBlock_5677 v1 v2 v3 v4
+              C_MkBlock_5635 v1 v2 v3 v4
                 -> coe
                      C_constructor_136
                      (coe
-                        MAlonzo.Code.Foreign.Convertible.d_from_20
+                        MAlonzo.Code.Class.Convertible.Core.d_from_22
                         (coe
-                           MAlonzo.Code.Foreign.Convertible.C_constructor_22
+                           MAlonzo.Code.Class.Convertible.Core.C_constructor_24
                            (coe
                               (\ v5 ->
                                  case coe v5 of
                                    MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.C_constructor_2966 v6 v7
                                      -> coe
-                                          C_MkBHeader_2585
+                                          C_MkBHeader_2555
                                           (coe
                                              C_MkBHBody_175
                                              (coe
@@ -773,13 +776,13 @@ d_Conv'45'HSBlock_186
                            (coe
                               (\ v5 ->
                                  case coe v5 of
-                                   C_MkBHeader_2585 v6 v7
+                                   C_MkBHeader_2555 v6 v7
                                      -> coe
                                           MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.C_constructor_2966
                                           (coe
-                                             MAlonzo.Code.Foreign.Convertible.d_from_20
+                                             MAlonzo.Code.Class.Convertible.Core.d_from_22
                                              (coe
-                                                MAlonzo.Code.Foreign.Convertible.C_constructor_22
+                                                MAlonzo.Code.Class.Convertible.Core.C_constructor_24
                                                 (coe
                                                    (\ v8 ->
                                                       case coe v8 of
@@ -804,9 +807,9 @@ d_Conv'45'HSBlock_186
                                                           -> coe
                                                                MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.C_constructor_2954
                                                                (coe
-                                                                  MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                  MAlonzo.Code.Class.Convertible.Core.d_from_22
                                                                   (coe
-                                                                     MAlonzo.Code.Foreign.Convertible.C_constructor_22
+                                                                     MAlonzo.Code.Class.Convertible.Core.C_constructor_24
                                                                      (coe
                                                                         (\ v14 ->
                                                                            case coe v14 of
@@ -837,7 +840,7 @@ d_Conv'45'HSBlock_186
                         MAlonzo.Code.Class.Functor.Core.du_fmap_22
                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92 () erased
                         () erased
-                        (MAlonzo.Code.Foreign.Convertible.d_from_20
+                        (MAlonzo.Code.Class.Convertible.Core.d_from_22
                            (coe
                               MAlonzo.Code.Ledger.Dijkstra.Foreign.Transaction.d_Conv'45'TxTop''''_550))
                         v2)
@@ -845,31 +848,31 @@ d_Conv'45'HSBlock_186
               _ -> MAlonzo.RTE.mazUnreachableError))
 -- Ledger.Dijkstra.Foreign.Chain.HsTy-Block
 d_HsTy'45'Block_188 ::
-  MAlonzo.Code.Foreign.HaskellTypes.T_HasHsType_14
+  MAlonzo.Code.Class.HasHsType.Core.T_HasHsType_10
 d_HsTy'45'Block_188 = erased
 -- Ledger.Dijkstra.Foreign.Chain.Conv-Block
 d_Conv'45'Block_190 ::
-  MAlonzo.Code.Foreign.Convertible.T_Convertible_8
+  MAlonzo.Code.Class.Convertible.Core.T_Convertible_10
 d_Conv'45'Block_190
   = coe
-      MAlonzo.Code.Foreign.Convertible.du__'10814'__80
+      MAlonzo.Code.Class.Convertible.Core.du__'10814'__76
       (coe d_Conv'45'Block'45'HSBlock_138) (coe d_Conv'45'HSBlock_186)
 -- Ledger.Dijkstra.Foreign.Chain.HsTy-ChainState
 d_HsTy'45'ChainState_192 ::
-  MAlonzo.Code.Foreign.HaskellTypes.T_HasHsType_14
+  MAlonzo.Code.Class.HasHsType.Core.T_HasHsType_10
 d_HsTy'45'ChainState_192 = erased
 -- Ledger.Dijkstra.Foreign.Chain.Conv-ChainState
 d_Conv'45'ChainState_194 ::
-  MAlonzo.Code.Foreign.Convertible.T_Convertible_8
+  MAlonzo.Code.Class.Convertible.Core.T_Convertible_10
 d_Conv'45'ChainState_194
   = coe
-      MAlonzo.Code.Foreign.Convertible.C_constructor_22
+      MAlonzo.Code.Class.Convertible.Core.C_constructor_24
       (coe
          (\ v0 ->
             case coe v0 of
               MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.C_constructor_4102 v1
                 -> coe
-                     C_MkChainState_7555
+                     C_MkChainState_7483
                      (coe
                         MAlonzo.Code.Ledger.Dijkstra.Foreign.NewEpoch.C_MkNewEpochState_533
                         (coe
@@ -878,11 +881,11 @@ d_Conv'45'ChainState_194
                         (coe
                            MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                            (coe
-                              MAlonzo.Code.Foreign.Convertible.d_to_18
+                              MAlonzo.Code.Class.Convertible.Core.d_to_20
                               (coe
-                                 MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                 MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                  (coe
-                                    MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                    MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                     (coe MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                     (coe
                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
@@ -893,11 +896,11 @@ d_Conv'45'ChainState_194
                         (coe
                            MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                            (coe
-                              MAlonzo.Code.Foreign.Convertible.d_to_18
+                              MAlonzo.Code.Class.Convertible.Core.d_to_20
                               (coe
-                                 MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                 MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                  (coe
-                                    MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                    MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                     (coe MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                     (coe
                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
@@ -908,7 +911,7 @@ d_Conv'45'ChainState_194
                         (coe
                            MAlonzo.Code.Ledger.Dijkstra.Foreign.Epoch.C_MkEpochState_533
                            (coe
-                              MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.C_MkAcnt_11831
+                              MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.C_MkAcnt_11715
                               (coe
                                  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_treasury_200
                                  (coe
@@ -924,17 +927,17 @@ d_Conv'45'ChainState_194
                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_epochState_4098
                                        (coe v1)))))
                            (coe
-                              MAlonzo.Code.Ledger.Dijkstra.Foreign.Rewards.C_MkSnapshots_3039
+                              MAlonzo.Code.Ledger.Dijkstra.Foreign.Rewards.C_MkSnapshots_2907
                               (coe
                                  MAlonzo.Code.Ledger.Dijkstra.Foreign.Rewards.C_MkSnapshot_187
                                  (coe
                                     MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                     (coe
-                                       MAlonzo.Code.Foreign.Convertible.d_to_18
+                                       MAlonzo.Code.Class.Convertible.Core.d_to_20
                                        (coe
-                                          MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                          MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                           (coe
-                                             MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                             MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                              (coe
                                                 MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_222)
                                              (coe
@@ -952,11 +955,11 @@ d_Conv'45'ChainState_194
                                  (coe
                                     MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                     (coe
-                                       MAlonzo.Code.Foreign.Convertible.d_to_18
+                                       MAlonzo.Code.Class.Convertible.Core.d_to_20
                                        (coe
-                                          MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                          MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                           (coe
-                                             MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                             MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                              (coe
                                                 MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_222)
                                              (coe
@@ -974,11 +977,11 @@ d_Conv'45'ChainState_194
                                  (coe
                                     MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                     (coe
-                                       MAlonzo.Code.Foreign.Convertible.d_to_18
+                                       MAlonzo.Code.Class.Convertible.Core.d_to_20
                                        (coe
-                                          MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                          MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                           (coe
-                                             MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                             MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                              (coe
                                                 MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                              (coe
@@ -998,11 +1001,11 @@ d_Conv'45'ChainState_194
                                  (coe
                                     MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                     (coe
-                                       MAlonzo.Code.Foreign.Convertible.d_to_18
+                                       MAlonzo.Code.Class.Convertible.Core.d_to_20
                                        (coe
-                                          MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                          MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                           (coe
-                                             MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                             MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                              (coe
                                                 MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_222)
                                              (coe
@@ -1020,11 +1023,11 @@ d_Conv'45'ChainState_194
                                  (coe
                                     MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                     (coe
-                                       MAlonzo.Code.Foreign.Convertible.d_to_18
+                                       MAlonzo.Code.Class.Convertible.Core.d_to_20
                                        (coe
-                                          MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                          MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                           (coe
-                                             MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                             MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                              (coe
                                                 MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_222)
                                              (coe
@@ -1042,11 +1045,11 @@ d_Conv'45'ChainState_194
                                  (coe
                                     MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                     (coe
-                                       MAlonzo.Code.Foreign.Convertible.d_to_18
+                                       MAlonzo.Code.Class.Convertible.Core.d_to_20
                                        (coe
-                                          MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                          MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                           (coe
-                                             MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                             MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                              (coe
                                                 MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                              (coe
@@ -1066,11 +1069,11 @@ d_Conv'45'ChainState_194
                                  (coe
                                     MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                     (coe
-                                       MAlonzo.Code.Foreign.Convertible.d_to_18
+                                       MAlonzo.Code.Class.Convertible.Core.d_to_20
                                        (coe
-                                          MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                          MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                           (coe
-                                             MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                             MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                              (coe
                                                 MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_222)
                                              (coe
@@ -1088,11 +1091,11 @@ d_Conv'45'ChainState_194
                                  (coe
                                     MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                     (coe
-                                       MAlonzo.Code.Foreign.Convertible.d_to_18
+                                       MAlonzo.Code.Class.Convertible.Core.d_to_20
                                        (coe
-                                          MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                          MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                           (coe
-                                             MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                             MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                              (coe
                                                 MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_222)
                                              (coe
@@ -1110,11 +1113,11 @@ d_Conv'45'ChainState_194
                                  (coe
                                     MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                     (coe
-                                       MAlonzo.Code.Foreign.Convertible.d_to_18
+                                       MAlonzo.Code.Class.Convertible.Core.d_to_20
                                        (coe
-                                          MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                          MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                           (coe
-                                             MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                             MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                              (coe
                                                 MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                              (coe
@@ -1137,49 +1140,49 @@ d_Conv'45'ChainState_194
                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_epochState_4098
                                        (coe v1)))))
                            (coe
-                              MAlonzo.Code.Ledger.Dijkstra.Foreign.Ledger.C_MkLedgerState_33477
+                              MAlonzo.Code.Ledger.Dijkstra.Foreign.Ledger.C_MkLedgerState_33365
                               (coe
-                                 MAlonzo.Code.Ledger.Dijkstra.Foreign.Utxo.C_MkUTxOState_45489
+                                 MAlonzo.Code.Ledger.Dijkstra.Foreign.Utxo.C_MkUTxOState_45349
                                  (coe
                                     MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                     (coe
-                                       MAlonzo.Code.Foreign.Convertible.d_to_18
+                                       MAlonzo.Code.Class.Convertible.Core.d_to_20
                                        (coe
-                                          MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                          MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                           (coe
-                                             MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                             MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                              (coe
-                                                MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                 (coe
                                                    MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                 (coe
                                                    MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
                                              (coe
-                                                MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                 (coe
-                                                   MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Either_100
+                                                   MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Either_10
                                                    (coe
                                                       MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'BaseAddr_226)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'BootstrapAddr_230))
                                                 (coe
-                                                   MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                   MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                    (coe
-                                                      MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                      MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                       (coe
-                                                         MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Maybe_90
+                                                         MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'Maybe_16
                                                          (coe
-                                                            MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Either_100
+                                                            MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Either_10
                                                             (coe
                                                                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                             (coe
                                                                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                                       (coe
-                                                         MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Maybe_90
+                                                         MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'Maybe_16
                                                          (coe
-                                                            MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Either_100
+                                                            MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Either_10
                                                             (coe
                                                                MAlonzo.Code.Ledger.Dijkstra.Foreign.Transaction.d_Conv'45'HSNativeScript_18)
                                                             (coe
@@ -1216,11 +1219,11 @@ d_Conv'45'ChainState_194
                                  MAlonzo.Code.Class.Functor.Core.du_fmap_22
                                  MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92 () erased
                                  () erased
-                                 (MAlonzo.Code.Foreign.Convertible.d_to_18
+                                 (MAlonzo.Code.Class.Convertible.Core.d_to_20
                                     (coe
-                                       MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                       MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                        (coe
-                                          MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                          MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                           (coe
                                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                           (coe
@@ -1236,15 +1239,15 @@ d_Conv'45'ChainState_194
                               (coe
                                  MAlonzo.Code.Ledger.Dijkstra.Foreign.Cert.C_MkCertState_43
                                  (coe
-                                    MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.C_MkDState_15987
+                                    MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.C_MkDState_15623
                                     (coe
                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                        (coe
-                                          MAlonzo.Code.Foreign.Convertible.d_to_18
+                                          MAlonzo.Code.Class.Convertible.Core.d_to_20
                                           (coe
-                                             MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                             MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                              (coe
-                                                MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                 (coe
                                                    MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_222)
                                                 (coe
@@ -1264,11 +1267,11 @@ d_Conv'45'ChainState_194
                                     (coe
                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                        (coe
-                                          MAlonzo.Code.Foreign.Convertible.d_to_18
+                                          MAlonzo.Code.Class.Convertible.Core.d_to_20
                                           (coe
-                                             MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                             MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                              (coe
-                                                MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                 (coe
                                                    MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_222)
                                                 (coe
@@ -1288,11 +1291,11 @@ d_Conv'45'ChainState_194
                                     (coe
                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                        (coe
-                                          MAlonzo.Code.Foreign.Convertible.d_to_18
+                                          MAlonzo.Code.Class.Convertible.Core.d_to_20
                                           (coe
-                                             MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                             MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                              (coe
-                                                MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                 (coe
                                                    MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_222)
                                                 (coe
@@ -1312,11 +1315,11 @@ d_Conv'45'ChainState_194
                                     (coe
                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                        (coe
-                                          MAlonzo.Code.Foreign.Convertible.d_to_18
+                                          MAlonzo.Code.Class.Convertible.Core.d_to_20
                                           (coe
-                                             MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                             MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                              (coe
-                                                MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                 (coe
                                                    MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_222)
                                                 (coe
@@ -1334,15 +1337,15 @@ d_Conv'45'ChainState_194
                                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_epochState_4098
                                                             (coe v1))))))))))
                                  (coe
-                                    MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.C_MkPState_11493
+                                    MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.C_MkPState_11305
                                     (coe
                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                        (coe
-                                          MAlonzo.Code.Foreign.Convertible.d_to_18
+                                          MAlonzo.Code.Class.Convertible.Core.d_to_20
                                           (coe
-                                             MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                             MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                              (coe
-                                                MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                 (coe
                                                    MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                 (coe
@@ -1362,11 +1365,11 @@ d_Conv'45'ChainState_194
                                     (coe
                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                        (coe
-                                          MAlonzo.Code.Foreign.Convertible.d_to_18
+                                          MAlonzo.Code.Class.Convertible.Core.d_to_20
                                           (coe
-                                             MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                             MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                              (coe
-                                                MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                 (coe
                                                    MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                 (coe
@@ -1386,11 +1389,11 @@ d_Conv'45'ChainState_194
                                     (coe
                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                        (coe
-                                          MAlonzo.Code.Foreign.Convertible.d_to_18
+                                          MAlonzo.Code.Class.Convertible.Core.d_to_20
                                           (coe
-                                             MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                             MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                              (coe
-                                                MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                 (coe
                                                    MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                 (coe
@@ -1410,11 +1413,11 @@ d_Conv'45'ChainState_194
                                     (coe
                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                        (coe
-                                          MAlonzo.Code.Foreign.Convertible.d_to_18
+                                          MAlonzo.Code.Class.Convertible.Core.d_to_20
                                           (coe
-                                             MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                             MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                              (coe
-                                                MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                 (coe
                                                    MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                 (coe
@@ -1432,15 +1435,15 @@ d_Conv'45'ChainState_194
                                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_epochState_4098
                                                             (coe v1))))))))))
                                  (coe
-                                    MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.C_MkGState_20649
+                                    MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.C_MkGState_20109
                                     (coe
                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                        (coe
-                                          MAlonzo.Code.Foreign.Convertible.d_to_18
+                                          MAlonzo.Code.Class.Convertible.Core.d_to_20
                                           (coe
-                                             MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                             MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                              (coe
-                                                MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                 (coe
                                                    MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_222)
                                                 (coe
@@ -1460,15 +1463,15 @@ d_Conv'45'ChainState_194
                                     (coe
                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                        (coe
-                                          MAlonzo.Code.Foreign.Convertible.d_to_18
+                                          MAlonzo.Code.Class.Convertible.Core.d_to_20
                                           (coe
-                                             MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                             MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                              (coe
-                                                MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                 (coe
                                                    MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_222)
                                                 (coe
-                                                   MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Maybe_90
+                                                   MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'Maybe_16
                                                    (coe
                                                       MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_222))))
                                           (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
@@ -1486,11 +1489,11 @@ d_Conv'45'ChainState_194
                                     (coe
                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                        (coe
-                                          MAlonzo.Code.Foreign.Convertible.d_to_18
+                                          MAlonzo.Code.Class.Convertible.Core.d_to_20
                                           (coe
-                                             MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                             MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                              (coe
-                                                MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                 (coe
                                                    MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_222)
                                                 (coe
@@ -1508,18 +1511,18 @@ d_Conv'45'ChainState_194
                                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_epochState_4098
                                                             (coe v1))))))))))))
                            (coe
-                              MAlonzo.Code.Ledger.Dijkstra.Foreign.Enact.C_MkEnactState_1655
+                              MAlonzo.Code.Ledger.Dijkstra.Foreign.Enact.C_MkEnactState_1623
                               (coe
                                  MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44 () erased () erased
                                  (coe MAlonzo.Code.Foreign.Haskell.Coerce.du_pair'45'toFFI_92)
                                  (coe
                                     MAlonzo.Code.Data.Product.Base.du_map_128
                                     (coe
-                                       MAlonzo.Code.Foreign.Convertible.d_to_18
+                                       MAlonzo.Code.Class.Convertible.Core.d_to_20
                                        (coe
-                                          MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Maybe_90
+                                          MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'Maybe_16
                                           (coe
-                                             MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                             MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                              (coe
                                                 MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.du_Conv'45'HSMap_102
                                                 (let v2
@@ -1551,9 +1554,9 @@ d_Conv'45'ChainState_194
                                                 MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_28))))
                                     (coe
                                        (\ v2 ->
-                                          MAlonzo.Code.Foreign.Convertible.d_to_18
+                                          MAlonzo.Code.Class.Convertible.Core.d_to_20
                                             (coe
-                                               MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                               MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                (coe
                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                (coe
@@ -1571,20 +1574,20 @@ d_Conv'45'ChainState_194
                                  (coe
                                     MAlonzo.Code.Data.Product.Base.du_map_128
                                     (coe
-                                       MAlonzo.Code.Foreign.Convertible.d_to_18
+                                       MAlonzo.Code.Class.Convertible.Core.d_to_20
                                        (coe
-                                          MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                          MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                           (coe
                                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                           (coe
-                                             MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Maybe_90
+                                             MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'Maybe_16
                                              (coe
                                                 MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
                                     (coe
                                        (\ v2 ->
-                                          MAlonzo.Code.Foreign.Convertible.d_to_18
+                                          MAlonzo.Code.Class.Convertible.Core.d_to_20
                                             (coe
-                                               MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                               MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                (coe
                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                (coe
@@ -1602,18 +1605,18 @@ d_Conv'45'ChainState_194
                                  (coe
                                     MAlonzo.Code.Data.Product.Base.du_map_128
                                     (coe
-                                       MAlonzo.Code.Foreign.Convertible.d_to_18
+                                       MAlonzo.Code.Class.Convertible.Core.d_to_20
                                        (coe
-                                          MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                          MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                           (coe
                                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                           (coe
                                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                     (coe
                                        (\ v2 ->
-                                          MAlonzo.Code.Foreign.Convertible.d_to_18
+                                          MAlonzo.Code.Class.Convertible.Core.d_to_20
                                             (coe
-                                               MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                               MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                (coe
                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                (coe
@@ -1631,14 +1634,14 @@ d_Conv'45'ChainState_194
                                  (coe
                                     MAlonzo.Code.Data.Product.Base.du_map_128
                                     (coe
-                                       MAlonzo.Code.Foreign.Convertible.d_to_18
+                                       MAlonzo.Code.Class.Convertible.Core.d_to_20
                                        (coe
                                           MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.d_Conv'45'PParams_26))
                                     (coe
                                        (\ v2 ->
-                                          MAlonzo.Code.Foreign.Convertible.d_to_18
+                                          MAlonzo.Code.Class.Convertible.Core.d_to_20
                                             (coe
-                                               MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                               MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                (coe
                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                (coe
@@ -1653,11 +1656,11 @@ d_Conv'45'ChainState_194
                               (coe
                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                  (coe
-                                    MAlonzo.Code.Foreign.Convertible.d_to_18
+                                    MAlonzo.Code.Class.Convertible.Core.d_to_20
                                     (coe
-                                       MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                       MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                        (coe
-                                          MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                          MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                           (coe
                                              MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'RewardAddress_234)
                                           (coe
@@ -1671,9 +1674,9 @@ d_Conv'45'ChainState_194
                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_epochState_4098
                                                 (coe v1))))))))
                            (coe
-                              MAlonzo.Code.Ledger.Dijkstra.Foreign.Ratify.C_MkRatifyState_12021
+                              MAlonzo.Code.Ledger.Dijkstra.Foreign.Ratify.C_MkRatifyState_11883
                               (coe
-                                 MAlonzo.Code.Ledger.Dijkstra.Foreign.Enact.C_MkEnactState_1655
+                                 MAlonzo.Code.Ledger.Dijkstra.Foreign.Enact.C_MkEnactState_1623
                                  (coe
                                     MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44 () erased ()
                                     erased
@@ -1681,11 +1684,11 @@ d_Conv'45'ChainState_194
                                     (coe
                                        MAlonzo.Code.Data.Product.Base.du_map_128
                                        (coe
-                                          MAlonzo.Code.Foreign.Convertible.d_to_18
+                                          MAlonzo.Code.Class.Convertible.Core.d_to_20
                                           (coe
-                                             MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Maybe_90
+                                             MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'Maybe_16
                                              (coe
-                                                MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                 (coe
                                                    MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.du_Conv'45'HSMap_102
                                                    (let v2
@@ -1717,9 +1720,9 @@ d_Conv'45'ChainState_194
                                                    MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_28))))
                                        (coe
                                           (\ v2 ->
-                                             MAlonzo.Code.Foreign.Convertible.d_to_18
+                                             MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                (coe
-                                                  MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                  MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                   (coe
                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                   (coe
@@ -1740,20 +1743,20 @@ d_Conv'45'ChainState_194
                                     (coe
                                        MAlonzo.Code.Data.Product.Base.du_map_128
                                        (coe
-                                          MAlonzo.Code.Foreign.Convertible.d_to_18
+                                          MAlonzo.Code.Class.Convertible.Core.d_to_20
                                           (coe
-                                             MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                             MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                              (coe
                                                 MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                              (coe
-                                                MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Maybe_90
+                                                MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'Maybe_16
                                                 (coe
                                                    MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
                                        (coe
                                           (\ v2 ->
-                                             MAlonzo.Code.Foreign.Convertible.d_to_18
+                                             MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                (coe
-                                                  MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                  MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                   (coe
                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                   (coe
@@ -1774,18 +1777,18 @@ d_Conv'45'ChainState_194
                                     (coe
                                        MAlonzo.Code.Data.Product.Base.du_map_128
                                        (coe
-                                          MAlonzo.Code.Foreign.Convertible.d_to_18
+                                          MAlonzo.Code.Class.Convertible.Core.d_to_20
                                           (coe
-                                             MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                             MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                              (coe
                                                 MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                              (coe
                                                 MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                        (coe
                                           (\ v2 ->
-                                             MAlonzo.Code.Foreign.Convertible.d_to_18
+                                             MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                (coe
-                                                  MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                  MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                   (coe
                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                   (coe
@@ -1806,14 +1809,14 @@ d_Conv'45'ChainState_194
                                     (coe
                                        MAlonzo.Code.Data.Product.Base.du_map_128
                                        (coe
-                                          MAlonzo.Code.Foreign.Convertible.d_to_18
+                                          MAlonzo.Code.Class.Convertible.Core.d_to_20
                                           (coe
                                              MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.d_Conv'45'PParams_26))
                                        (coe
                                           (\ v2 ->
-                                             MAlonzo.Code.Foreign.Convertible.d_to_18
+                                             MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                (coe
-                                                  MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                  MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                   (coe
                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                   (coe
@@ -1830,11 +1833,11 @@ d_Conv'45'ChainState_194
                                  (coe
                                     MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                     (coe
-                                       MAlonzo.Code.Foreign.Convertible.d_to_18
+                                       MAlonzo.Code.Class.Convertible.Core.d_to_20
                                        (coe
-                                          MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                          MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                           (coe
-                                             MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                             MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                              (coe
                                                 MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'RewardAddress_234)
                                              (coe
@@ -1852,13 +1855,13 @@ d_Conv'45'ChainState_194
                               (coe
                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSSet_68
                                  (coe
-                                    MAlonzo.Code.Foreign.Convertible.d_to_18
+                                    MAlonzo.Code.Class.Convertible.Core.d_to_20
                                     (coe
-                                       MAlonzo.Code.Foreign.Convertible.du_Convertible'45'List_120
+                                       MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                        (coe
-                                          MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                          MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                           (coe
-                                             MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                             MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                              (coe
                                                 MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                              (coe
@@ -1879,9 +1882,9 @@ d_Conv'45'ChainState_194
                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_epochState_4098
                                        (coe v1))))))
                         (coe
-                           MAlonzo.Code.Foreign.Convertible.d_to_18
+                           MAlonzo.Code.Class.Convertible.Core.d_to_20
                            (coe
-                              MAlonzo.Code.Foreign.Convertible.du_Functor'8658'Convertible_64
+                              MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
                               (coe MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                               (coe
                                  MAlonzo.Code.Ledger.Dijkstra.Foreign.Rewards.d_Conv'45'RewardUpdate_204))
@@ -1890,11 +1893,11 @@ d_Conv'45'ChainState_194
                         (coe
                            MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                            (coe
-                              MAlonzo.Code.Foreign.Convertible.d_to_18
+                              MAlonzo.Code.Class.Convertible.Core.d_to_20
                               (coe
-                                 MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                 MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                  (coe
-                                    MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                    MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                     (coe MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                     (coe
                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
@@ -1906,13 +1909,13 @@ d_Conv'45'ChainState_194
       (coe
          (\ v0 ->
             case coe v0 of
-              C_MkChainState_7555 v1
+              C_MkChainState_7483 v1
                 -> coe
                      MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.C_constructor_4102
                      (coe
-                        MAlonzo.Code.Foreign.Convertible.d_from_20
+                        MAlonzo.Code.Class.Convertible.Core.d_from_22
                         (coe
-                           MAlonzo.Code.Foreign.Convertible.C_constructor_22
+                           MAlonzo.Code.Class.Convertible.Core.C_constructor_24
                            (coe
                               (\ v2 ->
                                  case coe v2 of
@@ -1923,11 +1926,11 @@ d_Conv'45'ChainState_194
                                           (coe
                                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                              (coe
-                                                MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                 (coe
-                                                   MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                   MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                                    (coe
-                                                      MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                      MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                       (coe
                                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                       (coe
@@ -1937,11 +1940,11 @@ d_Conv'45'ChainState_194
                                           (coe
                                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                              (coe
-                                                MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                 (coe
-                                                   MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                   MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                                    (coe
-                                                      MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                      MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                       (coe
                                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                       (coe
@@ -1951,7 +1954,7 @@ d_Conv'45'ChainState_194
                                           (coe
                                              MAlonzo.Code.Ledger.Dijkstra.Foreign.Epoch.C_MkEpochState_533
                                              (coe
-                                                MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.C_MkAcnt_11831
+                                                MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.C_MkAcnt_11715
                                                 (coe
                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_treasury_200
                                                    (coe
@@ -1963,17 +1966,17 @@ d_Conv'45'ChainState_194
                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4022
                                                       (coe v6))))
                                              (coe
-                                                MAlonzo.Code.Ledger.Dijkstra.Foreign.Rewards.C_MkSnapshots_3039
+                                                MAlonzo.Code.Ledger.Dijkstra.Foreign.Rewards.C_MkSnapshots_2907
                                                 (coe
                                                    MAlonzo.Code.Ledger.Dijkstra.Foreign.Rewards.C_MkSnapshot_187
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                                       (coe
-                                                         MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                         MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                          (coe
-                                                            MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                            MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                                             (coe
-                                                               MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                               MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                (coe
                                                                   MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_222)
                                                                (coe
@@ -1989,11 +1992,11 @@ d_Conv'45'ChainState_194
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                                       (coe
-                                                         MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                         MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                          (coe
-                                                            MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                            MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                                             (coe
-                                                               MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                               MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                (coe
                                                                   MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_222)
                                                                (coe
@@ -2009,11 +2012,11 @@ d_Conv'45'ChainState_194
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                                       (coe
-                                                         MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                         MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                          (coe
-                                                            MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                            MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                                             (coe
-                                                               MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                               MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                (coe
                                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                                (coe
@@ -2031,11 +2034,11 @@ d_Conv'45'ChainState_194
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                                       (coe
-                                                         MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                         MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                          (coe
-                                                            MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                            MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                                             (coe
-                                                               MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                               MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                (coe
                                                                   MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_222)
                                                                (coe
@@ -2051,11 +2054,11 @@ d_Conv'45'ChainState_194
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                                       (coe
-                                                         MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                         MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                          (coe
-                                                            MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                            MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                                             (coe
-                                                               MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                               MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                (coe
                                                                   MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_222)
                                                                (coe
@@ -2071,11 +2074,11 @@ d_Conv'45'ChainState_194
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                                       (coe
-                                                         MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                         MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                          (coe
-                                                            MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                            MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                                             (coe
-                                                               MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                               MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                (coe
                                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                                (coe
@@ -2093,11 +2096,11 @@ d_Conv'45'ChainState_194
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                                       (coe
-                                                         MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                         MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                          (coe
-                                                            MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                            MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                                             (coe
-                                                               MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                               MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                (coe
                                                                   MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_222)
                                                                (coe
@@ -2113,11 +2116,11 @@ d_Conv'45'ChainState_194
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                                       (coe
-                                                         MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                         MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                          (coe
-                                                            MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                            MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                                             (coe
-                                                               MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                               MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                (coe
                                                                   MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_222)
                                                                (coe
@@ -2133,11 +2136,11 @@ d_Conv'45'ChainState_194
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                                       (coe
-                                                         MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                         MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                          (coe
-                                                            MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                            MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                                             (coe
-                                                               MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                               MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                (coe
                                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                                (coe
@@ -2156,49 +2159,49 @@ d_Conv'45'ChainState_194
                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ss_4024
                                                       (coe v6))))
                                              (coe
-                                                MAlonzo.Code.Ledger.Dijkstra.Foreign.Ledger.C_MkLedgerState_33477
+                                                MAlonzo.Code.Ledger.Dijkstra.Foreign.Ledger.C_MkLedgerState_33365
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Dijkstra.Foreign.Utxo.C_MkUTxOState_45489
+                                                   MAlonzo.Code.Ledger.Dijkstra.Foreign.Utxo.C_MkUTxOState_45349
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                                       (coe
-                                                         MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                         MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                          (coe
-                                                            MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                            MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                                             (coe
-                                                               MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                               MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                (coe
-                                                                  MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                  MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                   (coe
                                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                                   (coe
                                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
                                                                (coe
-                                                                  MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                  MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                   (coe
-                                                                     MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Either_100
+                                                                     MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Either_10
                                                                      (coe
                                                                         MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'BaseAddr_226)
                                                                      (coe
                                                                         MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'BootstrapAddr_230))
                                                                   (coe
-                                                                     MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                     MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                      (coe
                                                                         MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                                      (coe
-                                                                        MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                        MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                         (coe
-                                                                           MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Maybe_90
+                                                                           MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'Maybe_16
                                                                            (coe
-                                                                              MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Either_100
+                                                                              MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Either_10
                                                                               (coe
                                                                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                                               (coe
                                                                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                                                         (coe
-                                                                           MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Maybe_90
+                                                                           MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'Maybe_16
                                                                            (coe
-                                                                              MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Either_100
+                                                                              MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Either_10
                                                                               (coe
                                                                                  MAlonzo.Code.Ledger.Dijkstra.Foreign.Transaction.d_Conv'45'HSNativeScript_18)
                                                                               (coe
@@ -2229,11 +2232,11 @@ d_Conv'45'ChainState_194
                                                    MAlonzo.Code.Class.Functor.Core.du_fmap_22
                                                    MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92
                                                    () erased () erased
-                                                   (MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                   (MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                       (coe
-                                                         MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                         MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                          (coe
-                                                            MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                            MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                             (coe
                                                                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                             (coe
@@ -2247,15 +2250,15 @@ d_Conv'45'ChainState_194
                                                 (coe
                                                    MAlonzo.Code.Ledger.Dijkstra.Foreign.Cert.C_MkCertState_43
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.C_MkDState_15987
+                                                      MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.C_MkDState_15623
                                                       (coe
                                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                                          (coe
-                                                            MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                            MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                             (coe
-                                                               MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                               MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                                                (coe
-                                                                  MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                  MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                   (coe
                                                                      MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_222)
                                                                   (coe
@@ -2273,11 +2276,11 @@ d_Conv'45'ChainState_194
                                                       (coe
                                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                                          (coe
-                                                            MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                            MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                             (coe
-                                                               MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                               MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                                                (coe
-                                                                  MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                  MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                   (coe
                                                                      MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_222)
                                                                   (coe
@@ -2295,11 +2298,11 @@ d_Conv'45'ChainState_194
                                                       (coe
                                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                                          (coe
-                                                            MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                            MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                             (coe
-                                                               MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                               MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                                                (coe
-                                                                  MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                  MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                   (coe
                                                                      MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_222)
                                                                   (coe
@@ -2317,11 +2320,11 @@ d_Conv'45'ChainState_194
                                                       (coe
                                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                                          (coe
-                                                            MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                            MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                             (coe
-                                                               MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                               MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                                                (coe
-                                                                  MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                  MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                   (coe
                                                                      MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_222)
                                                                   (coe
@@ -2337,15 +2340,15 @@ d_Conv'45'ChainState_194
                                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                            (coe v6)))))))))
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.C_MkPState_11493
+                                                      MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.C_MkPState_11305
                                                       (coe
                                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                                          (coe
-                                                            MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                            MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                             (coe
-                                                               MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                               MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                                                (coe
-                                                                  MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                  MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                   (coe
                                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                                   (coe
@@ -2363,11 +2366,11 @@ d_Conv'45'ChainState_194
                                                       (coe
                                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                                          (coe
-                                                            MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                            MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                             (coe
-                                                               MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                               MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                                                (coe
-                                                                  MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                  MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                   (coe
                                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                                   (coe
@@ -2385,11 +2388,11 @@ d_Conv'45'ChainState_194
                                                       (coe
                                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                                          (coe
-                                                            MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                            MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                             (coe
-                                                               MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                               MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                                                (coe
-                                                                  MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                  MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                   (coe
                                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                                   (coe
@@ -2407,11 +2410,11 @@ d_Conv'45'ChainState_194
                                                       (coe
                                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                                          (coe
-                                                            MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                            MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                             (coe
-                                                               MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                               MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                                                (coe
-                                                                  MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                  MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                   (coe
                                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                                   (coe
@@ -2427,15 +2430,15 @@ d_Conv'45'ChainState_194
                                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                            (coe v6)))))))))
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.C_MkGState_20649
+                                                      MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.C_MkGState_20109
                                                       (coe
                                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                                          (coe
-                                                            MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                            MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                             (coe
-                                                               MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                               MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                                                (coe
-                                                                  MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                  MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                   (coe
                                                                      MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_222)
                                                                   (coe
@@ -2453,15 +2456,15 @@ d_Conv'45'ChainState_194
                                                       (coe
                                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                                          (coe
-                                                            MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                            MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                             (coe
-                                                               MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                               MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                                                (coe
-                                                                  MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                  MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                   (coe
                                                                      MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_222)
                                                                   (coe
-                                                                     MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Maybe_90
+                                                                     MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'Maybe_16
                                                                      (coe
                                                                         MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_222))))
                                                             (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
@@ -2477,11 +2480,11 @@ d_Conv'45'ChainState_194
                                                       (coe
                                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                                          (coe
-                                                            MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                            MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                             (coe
-                                                               MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                               MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                                                (coe
-                                                                  MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                  MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                   (coe
                                                                      MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_222)
                                                                   (coe
@@ -2497,7 +2500,7 @@ d_Conv'45'ChainState_194
                                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                            (coe v6)))))))))))
                                              (coe
-                                                MAlonzo.Code.Ledger.Dijkstra.Foreign.Enact.C_MkEnactState_1655
+                                                MAlonzo.Code.Ledger.Dijkstra.Foreign.Enact.C_MkEnactState_1623
                                                 (coe
                                                    MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44
                                                    () erased () erased
@@ -2506,11 +2509,11 @@ d_Conv'45'ChainState_194
                                                    (coe
                                                       MAlonzo.Code.Data.Product.Base.du_map_128
                                                       (coe
-                                                         MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                         MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                          (coe
-                                                            MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Maybe_90
+                                                            MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'Maybe_16
                                                             (coe
-                                                               MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                               MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                (coe
                                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.du_Conv'45'HSMap_102
                                                                   (let v9
@@ -2542,9 +2545,9 @@ d_Conv'45'ChainState_194
                                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_28))))
                                                       (coe
                                                          (\ v9 ->
-                                                            MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                            MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                               (coe
-                                                                 MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                 MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                  (coe
                                                                     MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                                  (coe
@@ -2562,20 +2565,20 @@ d_Conv'45'ChainState_194
                                                    (coe
                                                       MAlonzo.Code.Data.Product.Base.du_map_128
                                                       (coe
-                                                         MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                         MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                          (coe
-                                                            MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                            MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                             (coe
                                                                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                             (coe
-                                                               MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Maybe_90
+                                                               MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'Maybe_16
                                                                (coe
                                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
                                                       (coe
                                                          (\ v9 ->
-                                                            MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                            MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                               (coe
-                                                                 MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                 MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                  (coe
                                                                     MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                                  (coe
@@ -2593,18 +2596,18 @@ d_Conv'45'ChainState_194
                                                    (coe
                                                       MAlonzo.Code.Data.Product.Base.du_map_128
                                                       (coe
-                                                         MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                         MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                          (coe
-                                                            MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                            MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                             (coe
                                                                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                             (coe
                                                                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                                       (coe
                                                          (\ v9 ->
-                                                            MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                            MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                               (coe
-                                                                 MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                 MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                  (coe
                                                                     MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                                  (coe
@@ -2622,14 +2625,14 @@ d_Conv'45'ChainState_194
                                                    (coe
                                                       MAlonzo.Code.Data.Product.Base.du_map_128
                                                       (coe
-                                                         MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                         MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                          (coe
                                                             MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.d_Conv'45'PParams_26))
                                                       (coe
                                                          (\ v9 ->
-                                                            MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                            MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                               (coe
-                                                                 MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                 MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                  (coe
                                                                     MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                                  (coe
@@ -2642,11 +2645,11 @@ d_Conv'45'ChainState_194
                                                 (coe
                                                    MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                                    (coe
-                                                      MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                      MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                       (coe
-                                                         MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                         MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                                          (coe
-                                                            MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                            MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                             (coe
                                                                MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'RewardAddress_234)
                                                             (coe
@@ -2658,9 +2661,9 @@ d_Conv'45'ChainState_194
                                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_es_4028
                                                                (coe v6)))))))
                                              (coe
-                                                MAlonzo.Code.Ledger.Dijkstra.Foreign.Ratify.C_MkRatifyState_12021
+                                                MAlonzo.Code.Ledger.Dijkstra.Foreign.Ratify.C_MkRatifyState_11883
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Dijkstra.Foreign.Enact.C_MkEnactState_1655
+                                                   MAlonzo.Code.Ledger.Dijkstra.Foreign.Enact.C_MkEnactState_1623
                                                    (coe
                                                       MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44
                                                       () erased () erased
@@ -2669,11 +2672,11 @@ d_Conv'45'ChainState_194
                                                       (coe
                                                          MAlonzo.Code.Data.Product.Base.du_map_128
                                                          (coe
-                                                            MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                            MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                             (coe
-                                                               MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Maybe_90
+                                                               MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'Maybe_16
                                                                (coe
-                                                                  MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                  MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                   (coe
                                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.du_Conv'45'HSMap_102
                                                                      (let v9
@@ -2705,9 +2708,9 @@ d_Conv'45'ChainState_194
                                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_28))))
                                                          (coe
                                                             (\ v9 ->
-                                                               MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                               MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                  (coe
-                                                                    MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                    MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                     (coe
                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                                     (coe
@@ -2727,20 +2730,20 @@ d_Conv'45'ChainState_194
                                                       (coe
                                                          MAlonzo.Code.Data.Product.Base.du_map_128
                                                          (coe
-                                                            MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                            MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                             (coe
-                                                               MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                               MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                (coe
                                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                                (coe
-                                                                  MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Maybe_90
+                                                                  MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'Maybe_16
                                                                   (coe
                                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
                                                          (coe
                                                             (\ v9 ->
-                                                               MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                               MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                  (coe
-                                                                    MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                    MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                     (coe
                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                                     (coe
@@ -2760,18 +2763,18 @@ d_Conv'45'ChainState_194
                                                       (coe
                                                          MAlonzo.Code.Data.Product.Base.du_map_128
                                                          (coe
-                                                            MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                            MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                             (coe
-                                                               MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                               MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                (coe
                                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                                (coe
                                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                                          (coe
                                                             (\ v9 ->
-                                                               MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                               MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                  (coe
-                                                                    MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                    MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                     (coe
                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                                     (coe
@@ -2791,14 +2794,14 @@ d_Conv'45'ChainState_194
                                                       (coe
                                                          MAlonzo.Code.Data.Product.Base.du_map_128
                                                          (coe
-                                                            MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                            MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                             (coe
                                                                MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.d_Conv'45'PParams_26))
                                                          (coe
                                                             (\ v9 ->
-                                                               MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                               MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                  (coe
-                                                                    MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                    MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                     (coe
                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                                     (coe
@@ -2813,11 +2816,11 @@ d_Conv'45'ChainState_194
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                                       (coe
-                                                         MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                         MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                          (coe
-                                                            MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                            MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                                             (coe
-                                                               MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                               MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                (coe
                                                                   MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'RewardAddress_234)
                                                                (coe
@@ -2833,13 +2836,13 @@ d_Conv'45'ChainState_194
                                                 (coe
                                                    MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSSet_68
                                                    (coe
-                                                      MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                      MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                       (coe
-                                                         MAlonzo.Code.Foreign.Convertible.du_Convertible'45'List_120
+                                                         MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                                          (coe
-                                                            MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                            MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                             (coe
-                                                               MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                               MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                (coe
                                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                                (coe
@@ -2856,9 +2859,9 @@ d_Conv'45'ChainState_194
                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                       (coe v6)))))
                                           (coe
-                                             MAlonzo.Code.Foreign.Convertible.d_to_18
+                                             MAlonzo.Code.Class.Convertible.Core.d_to_20
                                              (coe
-                                                MAlonzo.Code.Foreign.Convertible.du_Functor'8658'Convertible_64
+                                                MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
                                                 (coe
                                                    MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                 (coe
@@ -2867,11 +2870,11 @@ d_Conv'45'ChainState_194
                                           (coe
                                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                              (coe
-                                                MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                 (coe
-                                                   MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                   MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                                    (coe
-                                                      MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                      MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                       (coe
                                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                       (coe
@@ -2887,33 +2890,73 @@ d_Conv'45'ChainState_194
                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.C_constructor_4104
                                           (coe v3)
                                           (coe
-                                             MAlonzo.Code.Foreign.Convertible.d_from_20
+                                             MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
                                              (coe
-                                                MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Map_116
+                                                MAlonzo.Code.Axiom.Set.d_th_1516
                                                 (coe
-                                                   MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
-                                                (coe
-                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
-                                                (coe
-                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                             (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
-                                                (coe v4)))
+                                                   MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                             (coe
+                                                MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
+                                             (coe
+                                                MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                                                MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92
+                                                () erased () erased
+                                                (\ v9 ->
+                                                   coe
+                                                     MAlonzo.Code.Data.Product.Base.du_map_128
+                                                     (coe
+                                                        MAlonzo.Code.Class.Convertible.Core.d_from_22
+                                                        (coe
+                                                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
+                                                     (coe
+                                                        (\ v10 ->
+                                                           MAlonzo.Code.Class.Convertible.Core.d_from_22
+                                                             (coe
+                                                                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                     (coe
+                                                        MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44
+                                                        () erased () erased
+                                                        (coe
+                                                           MAlonzo.Code.Foreign.Haskell.Coerce.C_TrustMe_40)
+                                                        v9))
+                                                (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
+                                                   (coe v4))))
                                           (coe
-                                             MAlonzo.Code.Foreign.Convertible.d_from_20
+                                             MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
                                              (coe
-                                                MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Map_116
+                                                MAlonzo.Code.Axiom.Set.d_th_1516
                                                 (coe
-                                                   MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
-                                                (coe
-                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
-                                                (coe
-                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                             (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
-                                                (coe v5)))
+                                                   MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                             (coe
+                                                MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
+                                             (coe
+                                                MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                                                MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92
+                                                () erased () erased
+                                                (\ v9 ->
+                                                   coe
+                                                     MAlonzo.Code.Data.Product.Base.du_map_128
+                                                     (coe
+                                                        MAlonzo.Code.Class.Convertible.Core.d_from_22
+                                                        (coe
+                                                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
+                                                     (coe
+                                                        (\ v10 ->
+                                                           MAlonzo.Code.Class.Convertible.Core.d_from_22
+                                                             (coe
+                                                                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                     (coe
+                                                        MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44
+                                                        () erased () erased
+                                                        (coe
+                                                           MAlonzo.Code.Foreign.Haskell.Coerce.C_TrustMe_40)
+                                                        v9))
+                                                (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
+                                                   (coe v5))))
                                           (coe
-                                             MAlonzo.Code.Foreign.Convertible.d_from_20
+                                             MAlonzo.Code.Class.Convertible.Core.d_from_22
                                              (coe
-                                                MAlonzo.Code.Foreign.Convertible.C_constructor_22
+                                                MAlonzo.Code.Class.Convertible.Core.C_constructor_24
                                                 (coe
                                                    (\ v9 ->
                                                       case coe v9 of
@@ -2921,7 +2964,7 @@ d_Conv'45'ChainState_194
                                                           -> coe
                                                                MAlonzo.Code.Ledger.Dijkstra.Foreign.Epoch.C_MkEpochState_533
                                                                (coe
-                                                                  MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.C_MkAcnt_11831
+                                                                  MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.C_MkAcnt_11715
                                                                   (coe
                                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_treasury_200
                                                                      (coe v10))
@@ -2929,17 +2972,17 @@ d_Conv'45'ChainState_194
                                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_reserves_202
                                                                      (coe v10)))
                                                                (coe
-                                                                  MAlonzo.Code.Ledger.Dijkstra.Foreign.Rewards.C_MkSnapshots_3039
+                                                                  MAlonzo.Code.Ledger.Dijkstra.Foreign.Rewards.C_MkSnapshots_2907
                                                                   (coe
                                                                      MAlonzo.Code.Ledger.Dijkstra.Foreign.Rewards.C_MkSnapshot_187
                                                                      (coe
                                                                         MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                                                         (coe
-                                                                           MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                           MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                            (coe
-                                                                              MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                              MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                                                               (coe
-                                                                                 MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                 MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                  (coe
                                                                                     MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_222)
                                                                                  (coe
@@ -2953,11 +2996,11 @@ d_Conv'45'ChainState_194
                                                                      (coe
                                                                         MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                                                         (coe
-                                                                           MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                           MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                            (coe
-                                                                              MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                              MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                                                               (coe
-                                                                                 MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                 MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                  (coe
                                                                                     MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_222)
                                                                                  (coe
@@ -2971,11 +3014,11 @@ d_Conv'45'ChainState_194
                                                                      (coe
                                                                         MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                                                         (coe
-                                                                           MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                           MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                            (coe
-                                                                              MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                              MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                                                               (coe
-                                                                                 MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                 MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                  (coe
                                                                                     MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                                                  (coe
@@ -2991,11 +3034,11 @@ d_Conv'45'ChainState_194
                                                                      (coe
                                                                         MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                                                         (coe
-                                                                           MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                           MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                            (coe
-                                                                              MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                              MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                                                               (coe
-                                                                                 MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                 MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                  (coe
                                                                                     MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_222)
                                                                                  (coe
@@ -3009,11 +3052,11 @@ d_Conv'45'ChainState_194
                                                                      (coe
                                                                         MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                                                         (coe
-                                                                           MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                           MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                            (coe
-                                                                              MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                              MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                                                               (coe
-                                                                                 MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                 MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                  (coe
                                                                                     MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_222)
                                                                                  (coe
@@ -3027,11 +3070,11 @@ d_Conv'45'ChainState_194
                                                                      (coe
                                                                         MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                                                         (coe
-                                                                           MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                           MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                            (coe
-                                                                              MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                              MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                                                               (coe
-                                                                                 MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                 MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                  (coe
                                                                                     MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                                                  (coe
@@ -3047,11 +3090,11 @@ d_Conv'45'ChainState_194
                                                                      (coe
                                                                         MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                                                         (coe
-                                                                           MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                           MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                            (coe
-                                                                              MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                              MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                                                               (coe
-                                                                                 MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                 MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                  (coe
                                                                                     MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_222)
                                                                                  (coe
@@ -3065,11 +3108,11 @@ d_Conv'45'ChainState_194
                                                                      (coe
                                                                         MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                                                         (coe
-                                                                           MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                           MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                            (coe
-                                                                              MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                              MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                                                               (coe
-                                                                                 MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                 MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                  (coe
                                                                                     MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_222)
                                                                                  (coe
@@ -3083,11 +3126,11 @@ d_Conv'45'ChainState_194
                                                                      (coe
                                                                         MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                                                         (coe
-                                                                           MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                           MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                            (coe
-                                                                              MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                              MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                                                               (coe
-                                                                                 MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                 MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                  (coe
                                                                                     MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                                                  (coe
@@ -3102,49 +3145,49 @@ d_Conv'45'ChainState_194
                                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_feeSS_3808
                                                                      (coe v11)))
                                                                (coe
-                                                                  MAlonzo.Code.Ledger.Dijkstra.Foreign.Ledger.C_MkLedgerState_33477
+                                                                  MAlonzo.Code.Ledger.Dijkstra.Foreign.Ledger.C_MkLedgerState_33365
                                                                   (coe
-                                                                     MAlonzo.Code.Ledger.Dijkstra.Foreign.Utxo.C_MkUTxOState_45489
+                                                                     MAlonzo.Code.Ledger.Dijkstra.Foreign.Utxo.C_MkUTxOState_45349
                                                                      (coe
                                                                         MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                                                         (coe
-                                                                           MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                           MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                            (coe
-                                                                              MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                              MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                                                               (coe
-                                                                                 MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                 MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                  (coe
-                                                                                    MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                    MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                     (coe
                                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                                                     (coe
                                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
                                                                                  (coe
-                                                                                    MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                    MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                     (coe
-                                                                                       MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Either_100
+                                                                                       MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Either_10
                                                                                        (coe
                                                                                           MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'BaseAddr_226)
                                                                                        (coe
                                                                                           MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'BootstrapAddr_230))
                                                                                     (coe
-                                                                                       MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                       MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                        (coe
                                                                                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                                                        (coe
-                                                                                          MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                          MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                           (coe
-                                                                                             MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Maybe_90
+                                                                                             MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'Maybe_16
                                                                                              (coe
-                                                                                                MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Either_100
+                                                                                                MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Either_10
                                                                                                 (coe
                                                                                                    MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                                                                 (coe
                                                                                                    MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                                                                           (coe
-                                                                                             MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Maybe_90
+                                                                                             MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'Maybe_16
                                                                                              (coe
-                                                                                                MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Either_100
+                                                                                                MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Either_10
                                                                                                 (coe
                                                                                                    MAlonzo.Code.Ledger.Dijkstra.Foreign.Transaction.d_Conv'45'HSNativeScript_18)
                                                                                                 (coe
@@ -3169,11 +3212,11 @@ d_Conv'45'ChainState_194
                                                                      MAlonzo.Code.Class.Functor.Core.du_fmap_22
                                                                      MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92
                                                                      () erased () erased
-                                                                     (MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                     (MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                         (coe
-                                                                           MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                           MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                            (coe
-                                                                              MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                              MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                               (coe
                                                                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                                               (coe
@@ -3185,15 +3228,15 @@ d_Conv'45'ChainState_194
                                                                   (coe
                                                                      MAlonzo.Code.Ledger.Dijkstra.Foreign.Cert.C_MkCertState_43
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.C_MkDState_15987
+                                                                        MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.C_MkDState_15623
                                                                         (coe
                                                                            MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                                                            (coe
-                                                                              MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                              MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                               (coe
-                                                                                 MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                                 MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                                                                  (coe
-                                                                                    MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                    MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                     (coe
                                                                                        MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_222)
                                                                                     (coe
@@ -3210,11 +3253,11 @@ d_Conv'45'ChainState_194
                                                                         (coe
                                                                            MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                                                            (coe
-                                                                              MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                              MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                               (coe
-                                                                                 MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                                 MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                                                                  (coe
-                                                                                    MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                    MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                     (coe
                                                                                        MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_222)
                                                                                     (coe
@@ -3231,11 +3274,11 @@ d_Conv'45'ChainState_194
                                                                         (coe
                                                                            MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                                                            (coe
-                                                                              MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                              MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                               (coe
-                                                                                 MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                                 MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                                                                  (coe
-                                                                                    MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                    MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                     (coe
                                                                                        MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_222)
                                                                                     (coe
@@ -3252,11 +3295,11 @@ d_Conv'45'ChainState_194
                                                                         (coe
                                                                            MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                                                            (coe
-                                                                              MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                              MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                               (coe
-                                                                                 MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                                 MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                                                                  (coe
-                                                                                    MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                    MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                     (coe
                                                                                        MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_222)
                                                                                     (coe
@@ -3271,15 +3314,15 @@ d_Conv'45'ChainState_194
                                                                                           (coe
                                                                                              v12))))))))
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.C_MkPState_11493
+                                                                        MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.C_MkPState_11305
                                                                         (coe
                                                                            MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                                                            (coe
-                                                                              MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                              MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                               (coe
-                                                                                 MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                                 MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                                                                  (coe
-                                                                                    MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                    MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                     (coe
                                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                                                     (coe
@@ -3296,11 +3339,11 @@ d_Conv'45'ChainState_194
                                                                         (coe
                                                                            MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                                                            (coe
-                                                                              MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                              MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                               (coe
-                                                                                 MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                                 MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                                                                  (coe
-                                                                                    MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                    MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                     (coe
                                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                                                     (coe
@@ -3317,11 +3360,11 @@ d_Conv'45'ChainState_194
                                                                         (coe
                                                                            MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                                                            (coe
-                                                                              MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                              MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                               (coe
-                                                                                 MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                                 MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                                                                  (coe
-                                                                                    MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                    MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                     (coe
                                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                                                     (coe
@@ -3338,11 +3381,11 @@ d_Conv'45'ChainState_194
                                                                         (coe
                                                                            MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                                                            (coe
-                                                                              MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                              MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                               (coe
-                                                                                 MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                                 MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                                                                  (coe
-                                                                                    MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                    MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                     (coe
                                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                                                     (coe
@@ -3357,15 +3400,15 @@ d_Conv'45'ChainState_194
                                                                                           (coe
                                                                                              v12))))))))
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.C_MkGState_20649
+                                                                        MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.C_MkGState_20109
                                                                         (coe
                                                                            MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                                                            (coe
-                                                                              MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                              MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                               (coe
-                                                                                 MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                                 MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                                                                  (coe
-                                                                                    MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                    MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                     (coe
                                                                                        MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_222)
                                                                                     (coe
@@ -3382,15 +3425,15 @@ d_Conv'45'ChainState_194
                                                                         (coe
                                                                            MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                                                            (coe
-                                                                              MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                              MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                               (coe
-                                                                                 MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                                 MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                                                                  (coe
-                                                                                    MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                    MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                     (coe
                                                                                        MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_222)
                                                                                     (coe
-                                                                                       MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Maybe_90
+                                                                                       MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'Maybe_16
                                                                                        (coe
                                                                                           MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_222))))
                                                                               (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
@@ -3405,11 +3448,11 @@ d_Conv'45'ChainState_194
                                                                         (coe
                                                                            MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                                                            (coe
-                                                                              MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                              MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                               (coe
-                                                                                 MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                                 MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                                                                  (coe
-                                                                                    MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                    MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                     (coe
                                                                                        MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_222)
                                                                                     (coe
@@ -3424,7 +3467,7 @@ d_Conv'45'ChainState_194
                                                                                           (coe
                                                                                              v12))))))))))
                                                                (coe
-                                                                  MAlonzo.Code.Ledger.Dijkstra.Foreign.Enact.C_MkEnactState_1655
+                                                                  MAlonzo.Code.Ledger.Dijkstra.Foreign.Enact.C_MkEnactState_1623
                                                                   (coe
                                                                      MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44
                                                                      () erased () erased
@@ -3433,11 +3476,11 @@ d_Conv'45'ChainState_194
                                                                      (coe
                                                                         MAlonzo.Code.Data.Product.Base.du_map_128
                                                                         (coe
-                                                                           MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                           MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                            (coe
-                                                                              MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Maybe_90
+                                                                              MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'Maybe_16
                                                                               (coe
-                                                                                 MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                 MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                  (coe
                                                                                     MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.du_Conv'45'HSMap_102
                                                                                     (let v15
@@ -3472,9 +3515,9 @@ d_Conv'45'ChainState_194
                                                                                     MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_28))))
                                                                         (coe
                                                                            (\ v15 ->
-                                                                              MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                              MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                                 (coe
-                                                                                   MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                   MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                    (coe
                                                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                                                    (coe
@@ -3490,20 +3533,20 @@ d_Conv'45'ChainState_194
                                                                      (coe
                                                                         MAlonzo.Code.Data.Product.Base.du_map_128
                                                                         (coe
-                                                                           MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                           MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                            (coe
-                                                                              MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                              MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                               (coe
                                                                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                                               (coe
-                                                                                 MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Maybe_90
+                                                                                 MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'Maybe_16
                                                                                  (coe
                                                                                     MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
                                                                         (coe
                                                                            (\ v15 ->
-                                                                              MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                              MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                                 (coe
-                                                                                   MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                   MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                    (coe
                                                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                                                    (coe
@@ -3519,18 +3562,18 @@ d_Conv'45'ChainState_194
                                                                      (coe
                                                                         MAlonzo.Code.Data.Product.Base.du_map_128
                                                                         (coe
-                                                                           MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                           MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                            (coe
-                                                                              MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                              MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                               (coe
                                                                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                                               (coe
                                                                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                                                         (coe
                                                                            (\ v15 ->
-                                                                              MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                              MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                                 (coe
-                                                                                   MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                   MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                    (coe
                                                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                                                    (coe
@@ -3546,14 +3589,14 @@ d_Conv'45'ChainState_194
                                                                      (coe
                                                                         MAlonzo.Code.Data.Product.Base.du_map_128
                                                                         (coe
-                                                                           MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                           MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                            (coe
                                                                               MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.d_Conv'45'PParams_26))
                                                                         (coe
                                                                            (\ v15 ->
-                                                                              MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                              MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                                 (coe
-                                                                                   MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                   MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                    (coe
                                                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                                                    (coe
@@ -3564,11 +3607,11 @@ d_Conv'45'ChainState_194
                                                                   (coe
                                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                                                      (coe
-                                                                        MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                        MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                         (coe
-                                                                           MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                           MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                                                            (coe
-                                                                              MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                              MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                               (coe
                                                                                  MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'RewardAddress_234)
                                                                               (coe
@@ -3578,9 +3621,9 @@ d_Conv'45'ChainState_194
                                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_withdrawals_1248
                                                                               (coe v13))))))
                                                                (coe
-                                                                  MAlonzo.Code.Ledger.Dijkstra.Foreign.Ratify.C_MkRatifyState_12021
+                                                                  MAlonzo.Code.Ledger.Dijkstra.Foreign.Ratify.C_MkRatifyState_11883
                                                                   (coe
-                                                                     MAlonzo.Code.Ledger.Dijkstra.Foreign.Enact.C_MkEnactState_1655
+                                                                     MAlonzo.Code.Ledger.Dijkstra.Foreign.Enact.C_MkEnactState_1623
                                                                      (coe
                                                                         MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44
                                                                         () erased () erased
@@ -3589,11 +3632,11 @@ d_Conv'45'ChainState_194
                                                                         (coe
                                                                            MAlonzo.Code.Data.Product.Base.du_map_128
                                                                            (coe
-                                                                              MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                              MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                               (coe
-                                                                                 MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Maybe_90
+                                                                                 MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'Maybe_16
                                                                                  (coe
-                                                                                    MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                    MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                     (coe
                                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.du_Conv'45'HSMap_102
                                                                                        (let v15
@@ -3628,9 +3671,9 @@ d_Conv'45'ChainState_194
                                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_28))))
                                                                            (coe
                                                                               (\ v15 ->
-                                                                                 MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                                    (coe
-                                                                                      MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                      MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                       (coe
                                                                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                                                       (coe
@@ -3648,20 +3691,20 @@ d_Conv'45'ChainState_194
                                                                         (coe
                                                                            MAlonzo.Code.Data.Product.Base.du_map_128
                                                                            (coe
-                                                                              MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                              MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                               (coe
-                                                                                 MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                 MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                  (coe
                                                                                     MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                                                  (coe
-                                                                                    MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Maybe_90
+                                                                                    MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'Maybe_16
                                                                                     (coe
                                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
                                                                            (coe
                                                                               (\ v15 ->
-                                                                                 MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                                    (coe
-                                                                                      MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                      MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                       (coe
                                                                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                                                       (coe
@@ -3679,18 +3722,18 @@ d_Conv'45'ChainState_194
                                                                         (coe
                                                                            MAlonzo.Code.Data.Product.Base.du_map_128
                                                                            (coe
-                                                                              MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                              MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                               (coe
-                                                                                 MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                 MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                  (coe
                                                                                     MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                                                  (coe
                                                                                     MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                                                            (coe
                                                                               (\ v15 ->
-                                                                                 MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                                    (coe
-                                                                                      MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                      MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                       (coe
                                                                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                                                       (coe
@@ -3708,14 +3751,14 @@ d_Conv'45'ChainState_194
                                                                         (coe
                                                                            MAlonzo.Code.Data.Product.Base.du_map_128
                                                                            (coe
-                                                                              MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                              MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                               (coe
                                                                                  MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.d_Conv'45'PParams_26))
                                                                            (coe
                                                                               (\ v15 ->
-                                                                                 MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                                    (coe
-                                                                                      MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                      MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                       (coe
                                                                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                                                       (coe
@@ -3728,11 +3771,11 @@ d_Conv'45'ChainState_194
                                                                      (coe
                                                                         MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                                                         (coe
-                                                                           MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                           MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                            (coe
-                                                                              MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                              MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                                                               (coe
-                                                                                 MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                 MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                  (coe
                                                                                     MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'RewardAddress_234)
                                                                                  (coe
@@ -3746,13 +3789,13 @@ d_Conv'45'ChainState_194
                                                                   (coe
                                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSSet_68
                                                                      (coe
-                                                                        MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                        MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                         (coe
-                                                                           MAlonzo.Code.Foreign.Convertible.du_Convertible'45'List_120
+                                                                           MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                                                            (coe
-                                                                              MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                              MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                               (coe
-                                                                                 MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                 MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                  (coe
                                                                                     MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                                                  (coe
@@ -3772,22 +3815,22 @@ d_Conv'45'ChainState_194
                                                           -> coe
                                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.C_'10214'_'44'_'44'_'44'_'44'_'10215''7497'''_4032
                                                                (coe
-                                                                  MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                  MAlonzo.Code.Class.Convertible.Core.d_from_22
                                                                   (coe
-                                                                     MAlonzo.Code.Foreign.Convertible.C_constructor_22
+                                                                     MAlonzo.Code.Class.Convertible.Core.C_constructor_24
                                                                      (coe
                                                                         (\ v15 ->
                                                                            case coe v15 of
                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.C_'10214'_'44'_'10215''7491'_204 v16 v17
                                                                                -> coe
-                                                                                    MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.C_MkAcnt_11831
+                                                                                    MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.C_MkAcnt_11715
                                                                                     (coe v16)
                                                                                     (coe v17)
                                                                              _ -> MAlonzo.RTE.mazUnreachableError))
                                                                      (coe
                                                                         (\ v15 ->
                                                                            case coe v15 of
-                                                                             MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.C_MkAcnt_11831 v16 v17
+                                                                             MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.C_MkAcnt_11715 v16 v17
                                                                                -> coe
                                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.C_'10214'_'44'_'10215''7491'_204
                                                                                     (coe v16)
@@ -3795,25 +3838,25 @@ d_Conv'45'ChainState_194
                                                                              _ -> MAlonzo.RTE.mazUnreachableError)))
                                                                   v10)
                                                                (coe
-                                                                  MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                  MAlonzo.Code.Class.Convertible.Core.d_from_22
                                                                   (coe
-                                                                     MAlonzo.Code.Foreign.Convertible.C_constructor_22
+                                                                     MAlonzo.Code.Class.Convertible.Core.C_constructor_24
                                                                      (coe
                                                                         (\ v15 ->
                                                                            case coe v15 of
                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.C_constructor_3810 v16 v17 v18 v19
                                                                                -> coe
-                                                                                    MAlonzo.Code.Ledger.Dijkstra.Foreign.Rewards.C_MkSnapshots_3039
+                                                                                    MAlonzo.Code.Ledger.Dijkstra.Foreign.Rewards.C_MkSnapshots_2907
                                                                                     (coe
                                                                                        MAlonzo.Code.Ledger.Dijkstra.Foreign.Rewards.C_MkSnapshot_187
                                                                                        (coe
                                                                                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                                                                           (coe
-                                                                                             MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                             MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                                              (coe
-                                                                                                MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                                                MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                                                                                 (coe
-                                                                                                   MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                   MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                                    (coe
                                                                                                       MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_222)
                                                                                                    (coe
@@ -3826,11 +3869,11 @@ d_Conv'45'ChainState_194
                                                                                        (coe
                                                                                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                                                                           (coe
-                                                                                             MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                             MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                                              (coe
-                                                                                                MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                                                MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                                                                                 (coe
-                                                                                                   MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                   MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                                    (coe
                                                                                                       MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_222)
                                                                                                    (coe
@@ -3843,11 +3886,11 @@ d_Conv'45'ChainState_194
                                                                                        (coe
                                                                                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                                                                           (coe
-                                                                                             MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                             MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                                              (coe
-                                                                                                MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                                                MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                                                                                 (coe
-                                                                                                   MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                   MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                                    (coe
                                                                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                                                                    (coe
@@ -3862,11 +3905,11 @@ d_Conv'45'ChainState_194
                                                                                        (coe
                                                                                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                                                                           (coe
-                                                                                             MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                             MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                                              (coe
-                                                                                                MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                                                MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                                                                                 (coe
-                                                                                                   MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                   MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                                    (coe
                                                                                                       MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_222)
                                                                                                    (coe
@@ -3879,11 +3922,11 @@ d_Conv'45'ChainState_194
                                                                                        (coe
                                                                                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                                                                           (coe
-                                                                                             MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                             MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                                              (coe
-                                                                                                MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                                                MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                                                                                 (coe
-                                                                                                   MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                   MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                                    (coe
                                                                                                       MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_222)
                                                                                                    (coe
@@ -3896,11 +3939,11 @@ d_Conv'45'ChainState_194
                                                                                        (coe
                                                                                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                                                                           (coe
-                                                                                             MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                             MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                                              (coe
-                                                                                                MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                                                MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                                                                                 (coe
-                                                                                                   MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                   MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                                    (coe
                                                                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                                                                    (coe
@@ -3915,11 +3958,11 @@ d_Conv'45'ChainState_194
                                                                                        (coe
                                                                                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                                                                           (coe
-                                                                                             MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                             MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                                              (coe
-                                                                                                MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                                                MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                                                                                 (coe
-                                                                                                   MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                   MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                                    (coe
                                                                                                       MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_222)
                                                                                                    (coe
@@ -3932,11 +3975,11 @@ d_Conv'45'ChainState_194
                                                                                        (coe
                                                                                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                                                                           (coe
-                                                                                             MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                             MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                                              (coe
-                                                                                                MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                                                MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                                                                                 (coe
-                                                                                                   MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                   MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                                    (coe
                                                                                                       MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_222)
                                                                                                    (coe
@@ -3949,11 +3992,11 @@ d_Conv'45'ChainState_194
                                                                                        (coe
                                                                                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                                                                           (coe
-                                                                                             MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                             MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                                              (coe
-                                                                                                MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                                                MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                                                                                 (coe
-                                                                                                   MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                   MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                                    (coe
                                                                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                                                                    (coe
@@ -3968,13 +4011,13 @@ d_Conv'45'ChainState_194
                                                                      (coe
                                                                         (\ v15 ->
                                                                            case coe v15 of
-                                                                             MAlonzo.Code.Ledger.Dijkstra.Foreign.Rewards.C_MkSnapshots_3039 v16 v17 v18 v19
+                                                                             MAlonzo.Code.Ledger.Dijkstra.Foreign.Rewards.C_MkSnapshots_2907 v16 v17 v18 v19
                                                                                -> coe
                                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.C_constructor_3810
                                                                                     (coe
-                                                                                       MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                                       MAlonzo.Code.Class.Convertible.Core.d_from_22
                                                                                        (coe
-                                                                                          MAlonzo.Code.Foreign.Convertible.C_constructor_22
+                                                                                          MAlonzo.Code.Class.Convertible.Core.C_constructor_24
                                                                                           (coe
                                                                                              (\ v20 ->
                                                                                                 case coe
@@ -3985,11 +4028,11 @@ d_Conv'45'ChainState_194
                                                                                                          (coe
                                                                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                                                                                             (coe
-                                                                                                               MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                                               MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                                                                (coe
-                                                                                                                  MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                                                                  MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                                                                                                   (coe
-                                                                                                                     MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                                     MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                                                      (coe
                                                                                                                         MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_222)
                                                                                                                      (coe
@@ -4000,11 +4043,11 @@ d_Conv'45'ChainState_194
                                                                                                          (coe
                                                                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                                                                                             (coe
-                                                                                                               MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                                               MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                                                                (coe
-                                                                                                                  MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                                                                  MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                                                                                                   (coe
-                                                                                                                     MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                                     MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                                                      (coe
                                                                                                                         MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_222)
                                                                                                                      (coe
@@ -4015,11 +4058,11 @@ d_Conv'45'ChainState_194
                                                                                                          (coe
                                                                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                                                                                             (coe
-                                                                                                               MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                                               MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                                                                (coe
-                                                                                                                  MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                                                                  MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                                                                                                   (coe
-                                                                                                                     MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                                     MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                                                      (coe
                                                                                                                         MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                                                                                      (coe
@@ -4036,94 +4079,172 @@ d_Conv'45'ChainState_194
                                                                                                     -> coe
                                                                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.C_constructor_3748
                                                                                                          (coe
-                                                                                                            MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                                                            MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
                                                                                                             (coe
-                                                                                                               MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Map_116
-                                                                                                               (let v24
-                                                                                                                      = MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20 in
+                                                                                                               MAlonzo.Code.Axiom.Set.d_th_1516
+                                                                                                               (coe
+                                                                                                                  MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                                                            (let v24
+                                                                                                                   = MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20 in
+                                                                                                             coe
+                                                                                                               (let v25
+                                                                                                                      = MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_636
+                                                                                                                          (coe
+                                                                                                                             v24) in
                                                                                                                 coe
-                                                                                                                  (let v25
-                                                                                                                         = MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_636
-                                                                                                                             (coe
-                                                                                                                                v24) in
-                                                                                                                   coe
+                                                                                                                  (coe
+                                                                                                                     MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_292
                                                                                                                      (coe
-                                                                                                                        MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_292
+                                                                                                                        MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
                                                                                                                         (coe
-                                                                                                                           MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
-                                                                                                                           (coe
-                                                                                                                              MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_206
-                                                                                                                              (coe
-                                                                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1360
-                                                                                                                                 (coe
-                                                                                                                                    v25))))
-                                                                                                                        (coe
-                                                                                                                           MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_210
+                                                                                                                           MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_206
                                                                                                                            (coe
                                                                                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1360
                                                                                                                               (coe
-                                                                                                                                 v25))))))
-                                                                                                               (coe
-                                                                                                                  MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_222)
-                                                                                                               (coe
-                                                                                                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                                                                            (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
-                                                                                                               (coe
-                                                                                                                  v21)))
-                                                                                                         (coe
-                                                                                                            MAlonzo.Code.Foreign.Convertible.d_from_20
-                                                                                                            (coe
-                                                                                                               MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Map_116
-                                                                                                               (let v24
-                                                                                                                      = MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20 in
-                                                                                                                coe
-                                                                                                                  (let v25
-                                                                                                                         = MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_636
-                                                                                                                             (coe
-                                                                                                                                v24) in
-                                                                                                                   coe
+                                                                                                                                 v25))))
                                                                                                                      (coe
-                                                                                                                        MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_292
+                                                                                                                        MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_210
                                                                                                                         (coe
-                                                                                                                           MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
+                                                                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1360
                                                                                                                            (coe
-                                                                                                                              MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_206
-                                                                                                                              (coe
-                                                                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1360
-                                                                                                                                 (coe
-                                                                                                                                    v25))))
+                                                                                                                              v25))))))
+                                                                                                            (coe
+                                                                                                               MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                                                                                                               MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92
+                                                                                                               ()
+                                                                                                               erased
+                                                                                                               ()
+                                                                                                               erased
+                                                                                                               (\ v24 ->
+                                                                                                                  coe
+                                                                                                                    MAlonzo.Code.Data.Product.Base.du_map_128
+                                                                                                                    (coe
+                                                                                                                       MAlonzo.Code.Class.Convertible.Core.d_from_22
+                                                                                                                       (coe
+                                                                                                                          MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_222))
+                                                                                                                    (coe
+                                                                                                                       (\ v25 ->
+                                                                                                                          MAlonzo.Code.Class.Convertible.Core.d_from_22
+                                                                                                                            (coe
+                                                                                                                               MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                                                                                    (coe
+                                                                                                                       MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44
+                                                                                                                       ()
+                                                                                                                       erased
+                                                                                                                       ()
+                                                                                                                       erased
+                                                                                                                       (coe
+                                                                                                                          MAlonzo.Code.Foreign.Haskell.Coerce.C_TrustMe_40)
+                                                                                                                       v24))
+                                                                                                               (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
+                                                                                                                  (coe
+                                                                                                                     v21))))
+                                                                                                         (coe
+                                                                                                            MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
+                                                                                                            (coe
+                                                                                                               MAlonzo.Code.Axiom.Set.d_th_1516
+                                                                                                               (coe
+                                                                                                                  MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                                                            (let v24
+                                                                                                                   = MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20 in
+                                                                                                             coe
+                                                                                                               (let v25
+                                                                                                                      = MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_636
+                                                                                                                          (coe
+                                                                                                                             v24) in
+                                                                                                                coe
+                                                                                                                  (coe
+                                                                                                                     MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_292
+                                                                                                                     (coe
+                                                                                                                        MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
                                                                                                                         (coe
-                                                                                                                           MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_210
+                                                                                                                           MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_206
                                                                                                                            (coe
                                                                                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1360
                                                                                                                               (coe
-                                                                                                                                 v25))))))
-                                                                                                               (coe
-                                                                                                                  MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_222)
-                                                                                                               (coe
-                                                                                                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                                                                            (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
-                                                                                                               (coe
-                                                                                                                  v22)))
-                                                                                                         (coe
-                                                                                                            MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                                                                                 v25))))
+                                                                                                                     (coe
+                                                                                                                        MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_210
+                                                                                                                        (coe
+                                                                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1360
+                                                                                                                           (coe
+                                                                                                                              v25))))))
                                                                                                             (coe
-                                                                                                               MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Map_116
+                                                                                                               MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                                                                                                               MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92
+                                                                                                               ()
+                                                                                                               erased
+                                                                                                               ()
+                                                                                                               erased
+                                                                                                               (\ v24 ->
+                                                                                                                  coe
+                                                                                                                    MAlonzo.Code.Data.Product.Base.du_map_128
+                                                                                                                    (coe
+                                                                                                                       MAlonzo.Code.Class.Convertible.Core.d_from_22
+                                                                                                                       (coe
+                                                                                                                          MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_222))
+                                                                                                                    (coe
+                                                                                                                       (\ v25 ->
+                                                                                                                          MAlonzo.Code.Class.Convertible.Core.d_from_22
+                                                                                                                            (coe
+                                                                                                                               MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                                                                                    (coe
+                                                                                                                       MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44
+                                                                                                                       ()
+                                                                                                                       erased
+                                                                                                                       ()
+                                                                                                                       erased
+                                                                                                                       (coe
+                                                                                                                          MAlonzo.Code.Foreign.Haskell.Coerce.C_TrustMe_40)
+                                                                                                                       v24))
+                                                                                                               (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
+                                                                                                                  (coe
+                                                                                                                     v22))))
+                                                                                                         (coe
+                                                                                                            MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
+                                                                                                            (coe
+                                                                                                               MAlonzo.Code.Axiom.Set.d_th_1516
                                                                                                                (coe
-                                                                                                                  MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
-                                                                                                               (coe
-                                                                                                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
-                                                                                                               (coe
-                                                                                                                  MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.d_Conv'45'StakePoolParams_18))
-                                                                                                            (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
-                                                                                                               (coe
-                                                                                                                  v23)))
+                                                                                                                  MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                                                            (coe
+                                                                                                               MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
+                                                                                                            (coe
+                                                                                                               MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                                                                                                               MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92
+                                                                                                               ()
+                                                                                                               erased
+                                                                                                               ()
+                                                                                                               erased
+                                                                                                               (\ v24 ->
+                                                                                                                  coe
+                                                                                                                    MAlonzo.Code.Data.Product.Base.du_map_128
+                                                                                                                    (coe
+                                                                                                                       MAlonzo.Code.Class.Convertible.Core.d_from_22
+                                                                                                                       (coe
+                                                                                                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
+                                                                                                                    (coe
+                                                                                                                       (\ v25 ->
+                                                                                                                          MAlonzo.Code.Class.Convertible.Core.d_from_22
+                                                                                                                            (coe
+                                                                                                                               MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.d_Conv'45'StakePoolParams_18)))
+                                                                                                                    (coe
+                                                                                                                       MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44
+                                                                                                                       ()
+                                                                                                                       erased
+                                                                                                                       ()
+                                                                                                                       erased
+                                                                                                                       (coe
+                                                                                                                          MAlonzo.Code.Foreign.Haskell.Coerce.C_TrustMe_40)
+                                                                                                                       v24))
+                                                                                                               (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
+                                                                                                                  (coe
+                                                                                                                     v23))))
                                                                                                   _ -> MAlonzo.RTE.mazUnreachableError)))
                                                                                        v16)
                                                                                     (coe
-                                                                                       MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                                       MAlonzo.Code.Class.Convertible.Core.d_from_22
                                                                                        (coe
-                                                                                          MAlonzo.Code.Foreign.Convertible.C_constructor_22
+                                                                                          MAlonzo.Code.Class.Convertible.Core.C_constructor_24
                                                                                           (coe
                                                                                              (\ v20 ->
                                                                                                 case coe
@@ -4134,11 +4255,11 @@ d_Conv'45'ChainState_194
                                                                                                          (coe
                                                                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                                                                                             (coe
-                                                                                                               MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                                               MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                                                                (coe
-                                                                                                                  MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                                                                  MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                                                                                                   (coe
-                                                                                                                     MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                                     MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                                                      (coe
                                                                                                                         MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_222)
                                                                                                                      (coe
@@ -4149,11 +4270,11 @@ d_Conv'45'ChainState_194
                                                                                                          (coe
                                                                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                                                                                             (coe
-                                                                                                               MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                                               MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                                                                (coe
-                                                                                                                  MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                                                                  MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                                                                                                   (coe
-                                                                                                                     MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                                     MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                                                      (coe
                                                                                                                         MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_222)
                                                                                                                      (coe
@@ -4164,11 +4285,11 @@ d_Conv'45'ChainState_194
                                                                                                          (coe
                                                                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                                                                                             (coe
-                                                                                                               MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                                               MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                                                                (coe
-                                                                                                                  MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                                                                  MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                                                                                                   (coe
-                                                                                                                     MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                                     MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                                                      (coe
                                                                                                                         MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                                                                                      (coe
@@ -4185,94 +4306,172 @@ d_Conv'45'ChainState_194
                                                                                                     -> coe
                                                                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.C_constructor_3748
                                                                                                          (coe
-                                                                                                            MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                                                            MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
                                                                                                             (coe
-                                                                                                               MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Map_116
-                                                                                                               (let v24
-                                                                                                                      = MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20 in
+                                                                                                               MAlonzo.Code.Axiom.Set.d_th_1516
+                                                                                                               (coe
+                                                                                                                  MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                                                            (let v24
+                                                                                                                   = MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20 in
+                                                                                                             coe
+                                                                                                               (let v25
+                                                                                                                      = MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_636
+                                                                                                                          (coe
+                                                                                                                             v24) in
                                                                                                                 coe
-                                                                                                                  (let v25
-                                                                                                                         = MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_636
-                                                                                                                             (coe
-                                                                                                                                v24) in
-                                                                                                                   coe
+                                                                                                                  (coe
+                                                                                                                     MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_292
                                                                                                                      (coe
-                                                                                                                        MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_292
+                                                                                                                        MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
                                                                                                                         (coe
-                                                                                                                           MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
-                                                                                                                           (coe
-                                                                                                                              MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_206
-                                                                                                                              (coe
-                                                                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1360
-                                                                                                                                 (coe
-                                                                                                                                    v25))))
-                                                                                                                        (coe
-                                                                                                                           MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_210
+                                                                                                                           MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_206
                                                                                                                            (coe
                                                                                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1360
                                                                                                                               (coe
-                                                                                                                                 v25))))))
-                                                                                                               (coe
-                                                                                                                  MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_222)
-                                                                                                               (coe
-                                                                                                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                                                                            (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
-                                                                                                               (coe
-                                                                                                                  v21)))
-                                                                                                         (coe
-                                                                                                            MAlonzo.Code.Foreign.Convertible.d_from_20
-                                                                                                            (coe
-                                                                                                               MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Map_116
-                                                                                                               (let v24
-                                                                                                                      = MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20 in
-                                                                                                                coe
-                                                                                                                  (let v25
-                                                                                                                         = MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_636
-                                                                                                                             (coe
-                                                                                                                                v24) in
-                                                                                                                   coe
+                                                                                                                                 v25))))
                                                                                                                      (coe
-                                                                                                                        MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_292
+                                                                                                                        MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_210
                                                                                                                         (coe
-                                                                                                                           MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
+                                                                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1360
                                                                                                                            (coe
-                                                                                                                              MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_206
-                                                                                                                              (coe
-                                                                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1360
-                                                                                                                                 (coe
-                                                                                                                                    v25))))
+                                                                                                                              v25))))))
+                                                                                                            (coe
+                                                                                                               MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                                                                                                               MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92
+                                                                                                               ()
+                                                                                                               erased
+                                                                                                               ()
+                                                                                                               erased
+                                                                                                               (\ v24 ->
+                                                                                                                  coe
+                                                                                                                    MAlonzo.Code.Data.Product.Base.du_map_128
+                                                                                                                    (coe
+                                                                                                                       MAlonzo.Code.Class.Convertible.Core.d_from_22
+                                                                                                                       (coe
+                                                                                                                          MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_222))
+                                                                                                                    (coe
+                                                                                                                       (\ v25 ->
+                                                                                                                          MAlonzo.Code.Class.Convertible.Core.d_from_22
+                                                                                                                            (coe
+                                                                                                                               MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                                                                                    (coe
+                                                                                                                       MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44
+                                                                                                                       ()
+                                                                                                                       erased
+                                                                                                                       ()
+                                                                                                                       erased
+                                                                                                                       (coe
+                                                                                                                          MAlonzo.Code.Foreign.Haskell.Coerce.C_TrustMe_40)
+                                                                                                                       v24))
+                                                                                                               (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
+                                                                                                                  (coe
+                                                                                                                     v21))))
+                                                                                                         (coe
+                                                                                                            MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
+                                                                                                            (coe
+                                                                                                               MAlonzo.Code.Axiom.Set.d_th_1516
+                                                                                                               (coe
+                                                                                                                  MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                                                            (let v24
+                                                                                                                   = MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20 in
+                                                                                                             coe
+                                                                                                               (let v25
+                                                                                                                      = MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_636
+                                                                                                                          (coe
+                                                                                                                             v24) in
+                                                                                                                coe
+                                                                                                                  (coe
+                                                                                                                     MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_292
+                                                                                                                     (coe
+                                                                                                                        MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
                                                                                                                         (coe
-                                                                                                                           MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_210
+                                                                                                                           MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_206
                                                                                                                            (coe
                                                                                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1360
                                                                                                                               (coe
-                                                                                                                                 v25))))))
-                                                                                                               (coe
-                                                                                                                  MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_222)
-                                                                                                               (coe
-                                                                                                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                                                                            (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
-                                                                                                               (coe
-                                                                                                                  v22)))
-                                                                                                         (coe
-                                                                                                            MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                                                                                 v25))))
+                                                                                                                     (coe
+                                                                                                                        MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_210
+                                                                                                                        (coe
+                                                                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1360
+                                                                                                                           (coe
+                                                                                                                              v25))))))
                                                                                                             (coe
-                                                                                                               MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Map_116
+                                                                                                               MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                                                                                                               MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92
+                                                                                                               ()
+                                                                                                               erased
+                                                                                                               ()
+                                                                                                               erased
+                                                                                                               (\ v24 ->
+                                                                                                                  coe
+                                                                                                                    MAlonzo.Code.Data.Product.Base.du_map_128
+                                                                                                                    (coe
+                                                                                                                       MAlonzo.Code.Class.Convertible.Core.d_from_22
+                                                                                                                       (coe
+                                                                                                                          MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_222))
+                                                                                                                    (coe
+                                                                                                                       (\ v25 ->
+                                                                                                                          MAlonzo.Code.Class.Convertible.Core.d_from_22
+                                                                                                                            (coe
+                                                                                                                               MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                                                                                    (coe
+                                                                                                                       MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44
+                                                                                                                       ()
+                                                                                                                       erased
+                                                                                                                       ()
+                                                                                                                       erased
+                                                                                                                       (coe
+                                                                                                                          MAlonzo.Code.Foreign.Haskell.Coerce.C_TrustMe_40)
+                                                                                                                       v24))
+                                                                                                               (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
+                                                                                                                  (coe
+                                                                                                                     v22))))
+                                                                                                         (coe
+                                                                                                            MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
+                                                                                                            (coe
+                                                                                                               MAlonzo.Code.Axiom.Set.d_th_1516
                                                                                                                (coe
-                                                                                                                  MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
-                                                                                                               (coe
-                                                                                                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
-                                                                                                               (coe
-                                                                                                                  MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.d_Conv'45'StakePoolParams_18))
-                                                                                                            (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
-                                                                                                               (coe
-                                                                                                                  v23)))
+                                                                                                                  MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                                                            (coe
+                                                                                                               MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
+                                                                                                            (coe
+                                                                                                               MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                                                                                                               MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92
+                                                                                                               ()
+                                                                                                               erased
+                                                                                                               ()
+                                                                                                               erased
+                                                                                                               (\ v24 ->
+                                                                                                                  coe
+                                                                                                                    MAlonzo.Code.Data.Product.Base.du_map_128
+                                                                                                                    (coe
+                                                                                                                       MAlonzo.Code.Class.Convertible.Core.d_from_22
+                                                                                                                       (coe
+                                                                                                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
+                                                                                                                    (coe
+                                                                                                                       (\ v25 ->
+                                                                                                                          MAlonzo.Code.Class.Convertible.Core.d_from_22
+                                                                                                                            (coe
+                                                                                                                               MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.d_Conv'45'StakePoolParams_18)))
+                                                                                                                    (coe
+                                                                                                                       MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44
+                                                                                                                       ()
+                                                                                                                       erased
+                                                                                                                       ()
+                                                                                                                       erased
+                                                                                                                       (coe
+                                                                                                                          MAlonzo.Code.Foreign.Haskell.Coerce.C_TrustMe_40)
+                                                                                                                       v24))
+                                                                                                               (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
+                                                                                                                  (coe
+                                                                                                                     v23))))
                                                                                                   _ -> MAlonzo.RTE.mazUnreachableError)))
                                                                                        v17)
                                                                                     (coe
-                                                                                       MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                                       MAlonzo.Code.Class.Convertible.Core.d_from_22
                                                                                        (coe
-                                                                                          MAlonzo.Code.Foreign.Convertible.C_constructor_22
+                                                                                          MAlonzo.Code.Class.Convertible.Core.C_constructor_24
                                                                                           (coe
                                                                                              (\ v20 ->
                                                                                                 case coe
@@ -4283,11 +4482,11 @@ d_Conv'45'ChainState_194
                                                                                                          (coe
                                                                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                                                                                             (coe
-                                                                                                               MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                                               MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                                                                (coe
-                                                                                                                  MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                                                                  MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                                                                                                   (coe
-                                                                                                                     MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                                     MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                                                      (coe
                                                                                                                         MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_222)
                                                                                                                      (coe
@@ -4298,11 +4497,11 @@ d_Conv'45'ChainState_194
                                                                                                          (coe
                                                                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                                                                                             (coe
-                                                                                                               MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                                               MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                                                                (coe
-                                                                                                                  MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                                                                  MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                                                                                                   (coe
-                                                                                                                     MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                                     MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                                                      (coe
                                                                                                                         MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_222)
                                                                                                                      (coe
@@ -4313,11 +4512,11 @@ d_Conv'45'ChainState_194
                                                                                                          (coe
                                                                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                                                                                             (coe
-                                                                                                               MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                                               MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                                                                (coe
-                                                                                                                  MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                                                                  MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                                                                                                   (coe
-                                                                                                                     MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                                     MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                                                      (coe
                                                                                                                         MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                                                                                      (coe
@@ -4334,145 +4533,223 @@ d_Conv'45'ChainState_194
                                                                                                     -> coe
                                                                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.C_constructor_3748
                                                                                                          (coe
-                                                                                                            MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                                                            MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
                                                                                                             (coe
-                                                                                                               MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Map_116
-                                                                                                               (let v24
-                                                                                                                      = MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20 in
+                                                                                                               MAlonzo.Code.Axiom.Set.d_th_1516
+                                                                                                               (coe
+                                                                                                                  MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                                                            (let v24
+                                                                                                                   = MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20 in
+                                                                                                             coe
+                                                                                                               (let v25
+                                                                                                                      = MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_636
+                                                                                                                          (coe
+                                                                                                                             v24) in
                                                                                                                 coe
-                                                                                                                  (let v25
-                                                                                                                         = MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_636
-                                                                                                                             (coe
-                                                                                                                                v24) in
-                                                                                                                   coe
+                                                                                                                  (coe
+                                                                                                                     MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_292
                                                                                                                      (coe
-                                                                                                                        MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_292
+                                                                                                                        MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
                                                                                                                         (coe
-                                                                                                                           MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
-                                                                                                                           (coe
-                                                                                                                              MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_206
-                                                                                                                              (coe
-                                                                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1360
-                                                                                                                                 (coe
-                                                                                                                                    v25))))
-                                                                                                                        (coe
-                                                                                                                           MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_210
+                                                                                                                           MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_206
                                                                                                                            (coe
                                                                                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1360
                                                                                                                               (coe
-                                                                                                                                 v25))))))
-                                                                                                               (coe
-                                                                                                                  MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_222)
-                                                                                                               (coe
-                                                                                                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                                                                            (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
-                                                                                                               (coe
-                                                                                                                  v21)))
-                                                                                                         (coe
-                                                                                                            MAlonzo.Code.Foreign.Convertible.d_from_20
-                                                                                                            (coe
-                                                                                                               MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Map_116
-                                                                                                               (let v24
-                                                                                                                      = MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20 in
-                                                                                                                coe
-                                                                                                                  (let v25
-                                                                                                                         = MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_636
-                                                                                                                             (coe
-                                                                                                                                v24) in
-                                                                                                                   coe
+                                                                                                                                 v25))))
                                                                                                                      (coe
-                                                                                                                        MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_292
+                                                                                                                        MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_210
                                                                                                                         (coe
-                                                                                                                           MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
+                                                                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1360
                                                                                                                            (coe
-                                                                                                                              MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_206
-                                                                                                                              (coe
-                                                                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1360
-                                                                                                                                 (coe
-                                                                                                                                    v25))))
+                                                                                                                              v25))))))
+                                                                                                            (coe
+                                                                                                               MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                                                                                                               MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92
+                                                                                                               ()
+                                                                                                               erased
+                                                                                                               ()
+                                                                                                               erased
+                                                                                                               (\ v24 ->
+                                                                                                                  coe
+                                                                                                                    MAlonzo.Code.Data.Product.Base.du_map_128
+                                                                                                                    (coe
+                                                                                                                       MAlonzo.Code.Class.Convertible.Core.d_from_22
+                                                                                                                       (coe
+                                                                                                                          MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_222))
+                                                                                                                    (coe
+                                                                                                                       (\ v25 ->
+                                                                                                                          MAlonzo.Code.Class.Convertible.Core.d_from_22
+                                                                                                                            (coe
+                                                                                                                               MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                                                                                    (coe
+                                                                                                                       MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44
+                                                                                                                       ()
+                                                                                                                       erased
+                                                                                                                       ()
+                                                                                                                       erased
+                                                                                                                       (coe
+                                                                                                                          MAlonzo.Code.Foreign.Haskell.Coerce.C_TrustMe_40)
+                                                                                                                       v24))
+                                                                                                               (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
+                                                                                                                  (coe
+                                                                                                                     v21))))
+                                                                                                         (coe
+                                                                                                            MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
+                                                                                                            (coe
+                                                                                                               MAlonzo.Code.Axiom.Set.d_th_1516
+                                                                                                               (coe
+                                                                                                                  MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                                                            (let v24
+                                                                                                                   = MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20 in
+                                                                                                             coe
+                                                                                                               (let v25
+                                                                                                                      = MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_636
+                                                                                                                          (coe
+                                                                                                                             v24) in
+                                                                                                                coe
+                                                                                                                  (coe
+                                                                                                                     MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_292
+                                                                                                                     (coe
+                                                                                                                        MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
                                                                                                                         (coe
-                                                                                                                           MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_210
+                                                                                                                           MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_206
                                                                                                                            (coe
                                                                                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1360
                                                                                                                               (coe
-                                                                                                                                 v25))))))
-                                                                                                               (coe
-                                                                                                                  MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_222)
-                                                                                                               (coe
-                                                                                                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                                                                            (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
-                                                                                                               (coe
-                                                                                                                  v22)))
-                                                                                                         (coe
-                                                                                                            MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                                                                                 v25))))
+                                                                                                                     (coe
+                                                                                                                        MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_210
+                                                                                                                        (coe
+                                                                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1360
+                                                                                                                           (coe
+                                                                                                                              v25))))))
                                                                                                             (coe
-                                                                                                               MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Map_116
+                                                                                                               MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                                                                                                               MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92
+                                                                                                               ()
+                                                                                                               erased
+                                                                                                               ()
+                                                                                                               erased
+                                                                                                               (\ v24 ->
+                                                                                                                  coe
+                                                                                                                    MAlonzo.Code.Data.Product.Base.du_map_128
+                                                                                                                    (coe
+                                                                                                                       MAlonzo.Code.Class.Convertible.Core.d_from_22
+                                                                                                                       (coe
+                                                                                                                          MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_222))
+                                                                                                                    (coe
+                                                                                                                       (\ v25 ->
+                                                                                                                          MAlonzo.Code.Class.Convertible.Core.d_from_22
+                                                                                                                            (coe
+                                                                                                                               MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                                                                                    (coe
+                                                                                                                       MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44
+                                                                                                                       ()
+                                                                                                                       erased
+                                                                                                                       ()
+                                                                                                                       erased
+                                                                                                                       (coe
+                                                                                                                          MAlonzo.Code.Foreign.Haskell.Coerce.C_TrustMe_40)
+                                                                                                                       v24))
+                                                                                                               (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
+                                                                                                                  (coe
+                                                                                                                     v22))))
+                                                                                                         (coe
+                                                                                                            MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
+                                                                                                            (coe
+                                                                                                               MAlonzo.Code.Axiom.Set.d_th_1516
                                                                                                                (coe
-                                                                                                                  MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
-                                                                                                               (coe
-                                                                                                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
-                                                                                                               (coe
-                                                                                                                  MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.d_Conv'45'StakePoolParams_18))
-                                                                                                            (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
-                                                                                                               (coe
-                                                                                                                  v23)))
+                                                                                                                  MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                                                            (coe
+                                                                                                               MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
+                                                                                                            (coe
+                                                                                                               MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                                                                                                               MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92
+                                                                                                               ()
+                                                                                                               erased
+                                                                                                               ()
+                                                                                                               erased
+                                                                                                               (\ v24 ->
+                                                                                                                  coe
+                                                                                                                    MAlonzo.Code.Data.Product.Base.du_map_128
+                                                                                                                    (coe
+                                                                                                                       MAlonzo.Code.Class.Convertible.Core.d_from_22
+                                                                                                                       (coe
+                                                                                                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
+                                                                                                                    (coe
+                                                                                                                       (\ v25 ->
+                                                                                                                          MAlonzo.Code.Class.Convertible.Core.d_from_22
+                                                                                                                            (coe
+                                                                                                                               MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.d_Conv'45'StakePoolParams_18)))
+                                                                                                                    (coe
+                                                                                                                       MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44
+                                                                                                                       ()
+                                                                                                                       erased
+                                                                                                                       ()
+                                                                                                                       erased
+                                                                                                                       (coe
+                                                                                                                          MAlonzo.Code.Foreign.Haskell.Coerce.C_TrustMe_40)
+                                                                                                                       v24))
+                                                                                                               (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
+                                                                                                                  (coe
+                                                                                                                     v23))))
                                                                                                   _ -> MAlonzo.RTE.mazUnreachableError)))
                                                                                        v18)
                                                                                     (coe v19)
                                                                              _ -> MAlonzo.RTE.mazUnreachableError)))
                                                                   v11)
                                                                (coe
-                                                                  MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                  MAlonzo.Code.Class.Convertible.Core.d_from_22
                                                                   (coe
-                                                                     MAlonzo.Code.Foreign.Convertible.C_constructor_22
+                                                                     MAlonzo.Code.Class.Convertible.Core.C_constructor_24
                                                                      (coe
                                                                         (\ v15 ->
                                                                            case coe v15 of
                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.C_'10214'_'44'_'44'_'10215''737'_3706 v16 v17 v18
                                                                                -> coe
-                                                                                    MAlonzo.Code.Ledger.Dijkstra.Foreign.Ledger.C_MkLedgerState_33477
+                                                                                    MAlonzo.Code.Ledger.Dijkstra.Foreign.Ledger.C_MkLedgerState_33365
                                                                                     (coe
-                                                                                       MAlonzo.Code.Ledger.Dijkstra.Foreign.Utxo.C_MkUTxOState_45489
+                                                                                       MAlonzo.Code.Ledger.Dijkstra.Foreign.Utxo.C_MkUTxOState_45349
                                                                                        (coe
                                                                                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                                                                           (coe
-                                                                                             MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                             MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                                              (coe
-                                                                                                MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                                                MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                                                                                 (coe
-                                                                                                   MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                   MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                                    (coe
-                                                                                                      MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                      MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                                       (coe
                                                                                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                                                                       (coe
                                                                                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
                                                                                                    (coe
-                                                                                                      MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                      MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                                       (coe
-                                                                                                         MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Either_100
+                                                                                                         MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Either_10
                                                                                                          (coe
                                                                                                             MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'BaseAddr_226)
                                                                                                          (coe
                                                                                                             MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'BootstrapAddr_230))
                                                                                                       (coe
-                                                                                                         MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                         MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                                          (coe
                                                                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                                                                          (coe
-                                                                                                            MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                            MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                                             (coe
-                                                                                                               MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Maybe_90
+                                                                                                               MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'Maybe_16
                                                                                                                (coe
-                                                                                                                  MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Either_100
+                                                                                                                  MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Either_10
                                                                                                                   (coe
                                                                                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                                                                                   (coe
                                                                                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                                                                                             (coe
-                                                                                                               MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Maybe_90
+                                                                                                               MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'Maybe_16
                                                                                                                (coe
-                                                                                                                  MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Either_100
+                                                                                                                  MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Either_10
                                                                                                                   (coe
                                                                                                                      MAlonzo.Code.Ledger.Dijkstra.Foreign.Transaction.d_Conv'45'HSNativeScript_18)
                                                                                                                   (coe
@@ -4494,11 +4771,11 @@ d_Conv'45'ChainState_194
                                                                                        MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92
                                                                                        () erased ()
                                                                                        erased
-                                                                                       (MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                       (MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                                           (coe
-                                                                                             MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                             MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                              (coe
-                                                                                                MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                                 (coe
                                                                                                    MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                                                                 (coe
@@ -4509,15 +4786,15 @@ d_Conv'45'ChainState_194
                                                                                     (coe
                                                                                        MAlonzo.Code.Ledger.Dijkstra.Foreign.Cert.C_MkCertState_43
                                                                                        (coe
-                                                                                          MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.C_MkDState_15987
+                                                                                          MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.C_MkDState_15623
                                                                                           (coe
                                                                                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                                                                              (coe
-                                                                                                MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                                MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                                                 (coe
-                                                                                                   MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                                                   MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                                                                                    (coe
-                                                                                                      MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                      MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                                       (coe
                                                                                                          MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_222)
                                                                                                       (coe
@@ -4532,11 +4809,11 @@ d_Conv'45'ChainState_194
                                                                                           (coe
                                                                                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                                                                              (coe
-                                                                                                MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                                MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                                                 (coe
-                                                                                                   MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                                                   MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                                                                                    (coe
-                                                                                                      MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                      MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                                       (coe
                                                                                                          MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_222)
                                                                                                       (coe
@@ -4551,11 +4828,11 @@ d_Conv'45'ChainState_194
                                                                                           (coe
                                                                                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                                                                              (coe
-                                                                                                MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                                MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                                                 (coe
-                                                                                                   MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                                                   MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                                                                                    (coe
-                                                                                                      MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                      MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                                       (coe
                                                                                                          MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_222)
                                                                                                       (coe
@@ -4570,11 +4847,11 @@ d_Conv'45'ChainState_194
                                                                                           (coe
                                                                                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                                                                              (coe
-                                                                                                MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                                MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                                                 (coe
-                                                                                                   MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                                                   MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                                                                                    (coe
-                                                                                                      MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                      MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                                       (coe
                                                                                                          MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_222)
                                                                                                       (coe
@@ -4587,15 +4864,15 @@ d_Conv'45'ChainState_194
                                                                                                          (coe
                                                                                                             v18)))))))
                                                                                        (coe
-                                                                                          MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.C_MkPState_11493
+                                                                                          MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.C_MkPState_11305
                                                                                           (coe
                                                                                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                                                                              (coe
-                                                                                                MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                                MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                                                 (coe
-                                                                                                   MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                                                   MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                                                                                    (coe
-                                                                                                      MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                      MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                                       (coe
                                                                                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                                                                       (coe
@@ -4610,11 +4887,11 @@ d_Conv'45'ChainState_194
                                                                                           (coe
                                                                                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                                                                              (coe
-                                                                                                MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                                MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                                                 (coe
-                                                                                                   MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                                                   MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                                                                                    (coe
-                                                                                                      MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                      MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                                       (coe
                                                                                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                                                                       (coe
@@ -4629,11 +4906,11 @@ d_Conv'45'ChainState_194
                                                                                           (coe
                                                                                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                                                                              (coe
-                                                                                                MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                                MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                                                 (coe
-                                                                                                   MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                                                   MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                                                                                    (coe
-                                                                                                      MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                      MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                                       (coe
                                                                                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                                                                       (coe
@@ -4648,11 +4925,11 @@ d_Conv'45'ChainState_194
                                                                                           (coe
                                                                                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                                                                              (coe
-                                                                                                MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                                MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                                                 (coe
-                                                                                                   MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                                                   MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                                                                                    (coe
-                                                                                                      MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                      MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                                       (coe
                                                                                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                                                                       (coe
@@ -4665,15 +4942,15 @@ d_Conv'45'ChainState_194
                                                                                                          (coe
                                                                                                             v18)))))))
                                                                                        (coe
-                                                                                          MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.C_MkGState_20649
+                                                                                          MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.C_MkGState_20109
                                                                                           (coe
                                                                                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                                                                              (coe
-                                                                                                MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                                MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                                                 (coe
-                                                                                                   MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                                                   MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                                                                                    (coe
-                                                                                                      MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                      MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                                       (coe
                                                                                                          MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_222)
                                                                                                       (coe
@@ -4688,15 +4965,15 @@ d_Conv'45'ChainState_194
                                                                                           (coe
                                                                                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                                                                              (coe
-                                                                                                MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                                MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                                                 (coe
-                                                                                                   MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                                                   MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                                                                                    (coe
-                                                                                                      MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                      MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                                       (coe
                                                                                                          MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_222)
                                                                                                       (coe
-                                                                                                         MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Maybe_90
+                                                                                                         MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'Maybe_16
                                                                                                          (coe
                                                                                                             MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_222))))
                                                                                                 (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
@@ -4709,11 +4986,11 @@ d_Conv'45'ChainState_194
                                                                                           (coe
                                                                                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                                                                              (coe
-                                                                                                MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                                MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                                                 (coe
-                                                                                                   MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                                                   MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                                                                                    (coe
-                                                                                                      MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                      MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                                       (coe
                                                                                                          MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_222)
                                                                                                       (coe
@@ -4729,60 +5006,60 @@ d_Conv'45'ChainState_194
                                                                      (coe
                                                                         (\ v15 ->
                                                                            case coe v15 of
-                                                                             MAlonzo.Code.Ledger.Dijkstra.Foreign.Ledger.C_MkLedgerState_33477 v16 v17 v18
+                                                                             MAlonzo.Code.Ledger.Dijkstra.Foreign.Ledger.C_MkLedgerState_33365 v16 v17 v18
                                                                                -> coe
                                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.C_'10214'_'44'_'44'_'10215''737'_3706
                                                                                     (coe
-                                                                                       MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                                       MAlonzo.Code.Class.Convertible.Core.d_from_22
                                                                                        (coe
-                                                                                          MAlonzo.Code.Foreign.Convertible.C_constructor_22
+                                                                                          MAlonzo.Code.Class.Convertible.Core.C_constructor_24
                                                                                           (coe
                                                                                              (\ v19 ->
                                                                                                 case coe
                                                                                                        v19 of
                                                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.C_'10214'_'44'_'44'_'10215''7512'_3124 v20 v21 v22
                                                                                                     -> coe
-                                                                                                         MAlonzo.Code.Ledger.Dijkstra.Foreign.Utxo.C_MkUTxOState_45489
+                                                                                                         MAlonzo.Code.Ledger.Dijkstra.Foreign.Utxo.C_MkUTxOState_45349
                                                                                                          (coe
                                                                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                                                                                             (coe
-                                                                                                               MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                                               MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                                                                (coe
-                                                                                                                  MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                                                                  MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                                                                                                   (coe
-                                                                                                                     MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                                     MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                                                      (coe
-                                                                                                                        MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                                        MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                                                         (coe
                                                                                                                            MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                                                                                         (coe
                                                                                                                            MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
                                                                                                                      (coe
-                                                                                                                        MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                                        MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                                                         (coe
-                                                                                                                           MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Either_100
+                                                                                                                           MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Either_10
                                                                                                                            (coe
                                                                                                                               MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'BaseAddr_226)
                                                                                                                            (coe
                                                                                                                               MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'BootstrapAddr_230))
                                                                                                                         (coe
-                                                                                                                           MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                                           MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                                                            (coe
                                                                                                                               MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                                                                                            (coe
-                                                                                                                              MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                                              MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                                                               (coe
-                                                                                                                                 MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Maybe_90
+                                                                                                                                 MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'Maybe_16
                                                                                                                                  (coe
-                                                                                                                                    MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Either_100
+                                                                                                                                    MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Either_10
                                                                                                                                     (coe
                                                                                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                                                                                                     (coe
                                                                                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                                                                                                               (coe
-                                                                                                                                 MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Maybe_90
+                                                                                                                                 MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'Maybe_16
                                                                                                                                  (coe
-                                                                                                                                    MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Either_100
+                                                                                                                                    MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Either_10
                                                                                                                                     (coe
                                                                                                                                        MAlonzo.Code.Ledger.Dijkstra.Foreign.Transaction.d_Conv'45'HSNativeScript_18)
                                                                                                                                     (coe
@@ -4799,60 +5076,86 @@ d_Conv'45'ChainState_194
                                                                                              (\ v19 ->
                                                                                                 case coe
                                                                                                        v19 of
-                                                                                                  MAlonzo.Code.Ledger.Dijkstra.Foreign.Utxo.C_MkUTxOState_45489 v20 v21 v22
+                                                                                                  MAlonzo.Code.Ledger.Dijkstra.Foreign.Utxo.C_MkUTxOState_45349 v20 v21 v22
                                                                                                     -> coe
                                                                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.C_'10214'_'44'_'44'_'10215''7512'_3124
                                                                                                          (coe
-                                                                                                            MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                                                            MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
                                                                                                             (coe
-                                                                                                               MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Map_116
+                                                                                                               MAlonzo.Code.Axiom.Set.d_th_1516
                                                                                                                (coe
-                                                                                                                  MAlonzo.Code.Prelude.d_DecEq'45''215''8242'_4
-                                                                                                                  ()
-                                                                                                                  erased
-                                                                                                                  ()
-                                                                                                                  erased
-                                                                                                                  MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22
-                                                                                                                  MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
-                                                                                                               (coe
-                                                                                                                  MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                                  MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                                                            (coe
+                                                                                                               MAlonzo.Code.Prelude.d_DecEq'45''215''8242'_4
+                                                                                                               ()
+                                                                                                               erased
+                                                                                                               ()
+                                                                                                               erased
+                                                                                                               MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22
+                                                                                                               MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
+                                                                                                            (coe
+                                                                                                               MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                                                                                                               MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92
+                                                                                                               ()
+                                                                                                               erased
+                                                                                                               ()
+                                                                                                               erased
+                                                                                                               (\ v23 ->
+                                                                                                                  coe
+                                                                                                                    MAlonzo.Code.Data.Product.Base.du_map_128
+                                                                                                                    (coe
+                                                                                                                       MAlonzo.Code.Class.Convertible.Core.d_from_22
+                                                                                                                       (coe
+                                                                                                                          MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
+                                                                                                                          (coe
+                                                                                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                                                                                          (coe
+                                                                                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                                                                                    (coe
+                                                                                                                       (\ v24 ->
+                                                                                                                          MAlonzo.Code.Class.Convertible.Core.d_from_22
+                                                                                                                            (coe
+                                                                                                                               MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
+                                                                                                                               (coe
+                                                                                                                                  MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Either_10
+                                                                                                                                  (coe
+                                                                                                                                     MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'BaseAddr_226)
+                                                                                                                                  (coe
+                                                                                                                                     MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'BootstrapAddr_230))
+                                                                                                                               (coe
+                                                                                                                                  MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
+                                                                                                                                  (coe
+                                                                                                                                     MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                                                                                                  (coe
+                                                                                                                                     MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
+                                                                                                                                     (coe
+                                                                                                                                        MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'Maybe_16
+                                                                                                                                        (coe
+                                                                                                                                           MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Either_10
+                                                                                                                                           (coe
+                                                                                                                                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
+                                                                                                                                           (coe
+                                                                                                                                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                                                                                                     (coe
+                                                                                                                                        MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'Maybe_16
+                                                                                                                                        (coe
+                                                                                                                                           MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Either_10
+                                                                                                                                           (coe
+                                                                                                                                              MAlonzo.Code.Ledger.Dijkstra.Foreign.Transaction.d_Conv'45'HSNativeScript_18)
+                                                                                                                                           (coe
+                                                                                                                                              MAlonzo.Code.Ledger.Dijkstra.Foreign.Transaction.d_Conv'45'HSPlutusScript_22))))))))
+                                                                                                                    (coe
+                                                                                                                       MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44
+                                                                                                                       ()
+                                                                                                                       erased
+                                                                                                                       ()
+                                                                                                                       erased
+                                                                                                                       (coe
+                                                                                                                          MAlonzo.Code.Foreign.Haskell.Coerce.C_TrustMe_40)
+                                                                                                                       v23))
+                                                                                                               (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
                                                                                                                   (coe
-                                                                                                                     MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
-                                                                                                                  (coe
-                                                                                                                     MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                                                                               (coe
-                                                                                                                  MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
-                                                                                                                  (coe
-                                                                                                                     MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Either_100
-                                                                                                                     (coe
-                                                                                                                        MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'BaseAddr_226)
-                                                                                                                     (coe
-                                                                                                                        MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'BootstrapAddr_230))
-                                                                                                                  (coe
-                                                                                                                     MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
-                                                                                                                     (coe
-                                                                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
-                                                                                                                     (coe
-                                                                                                                        MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
-                                                                                                                        (coe
-                                                                                                                           MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Maybe_90
-                                                                                                                           (coe
-                                                                                                                              MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Either_100
-                                                                                                                              (coe
-                                                                                                                                 MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
-                                                                                                                              (coe
-                                                                                                                                 MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
-                                                                                                                        (coe
-                                                                                                                           MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Maybe_90
-                                                                                                                           (coe
-                                                                                                                              MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Either_100
-                                                                                                                              (coe
-                                                                                                                                 MAlonzo.Code.Ledger.Dijkstra.Foreign.Transaction.d_Conv'45'HSNativeScript_18)
-                                                                                                                              (coe
-                                                                                                                                 MAlonzo.Code.Ledger.Dijkstra.Foreign.Transaction.d_Conv'45'HSPlutusScript_22)))))))
-                                                                                                            (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
-                                                                                                               (coe
-                                                                                                                  v20)))
+                                                                                                                     v20))))
                                                                                                          (coe
                                                                                                             v21)
                                                                                                          (coe
@@ -4864,11 +5167,11 @@ d_Conv'45'ChainState_194
                                                                                        MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92
                                                                                        () erased ()
                                                                                        erased
-                                                                                       (MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                                       (MAlonzo.Code.Class.Convertible.Core.d_from_22
                                                                                           (coe
-                                                                                             MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                             MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                              (coe
-                                                                                                MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                                 (coe
                                                                                                    MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                                                                 (coe
@@ -4877,9 +5180,9 @@ d_Conv'45'ChainState_194
                                                                                                 MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.d_Conv'45'GovActionState_348)))
                                                                                        v17)
                                                                                     (coe
-                                                                                       MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                                       MAlonzo.Code.Class.Convertible.Core.d_from_22
                                                                                        (coe
-                                                                                          MAlonzo.Code.Foreign.Convertible.C_constructor_22
+                                                                                          MAlonzo.Code.Class.Convertible.Core.C_constructor_24
                                                                                           (coe
                                                                                              (\ v19 ->
                                                                                                 case coe
@@ -4888,15 +5191,15 @@ d_Conv'45'ChainState_194
                                                                                                     -> coe
                                                                                                          MAlonzo.Code.Ledger.Dijkstra.Foreign.Cert.C_MkCertState_43
                                                                                                          (coe
-                                                                                                            MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.C_MkDState_15987
+                                                                                                            MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.C_MkDState_15623
                                                                                                             (coe
                                                                                                                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                                                                                                (coe
-                                                                                                                  MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                                                  MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                                                                   (coe
-                                                                                                                     MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                                                                     MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                                                                                                      (coe
-                                                                                                                        MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                                        MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                                                         (coe
                                                                                                                            MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_222)
                                                                                                                         (coe
@@ -4909,11 +5212,11 @@ d_Conv'45'ChainState_194
                                                                                                             (coe
                                                                                                                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                                                                                                (coe
-                                                                                                                  MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                                                  MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                                                                   (coe
-                                                                                                                     MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                                                                     MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                                                                                                      (coe
-                                                                                                                        MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                                        MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                                                         (coe
                                                                                                                            MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_222)
                                                                                                                         (coe
@@ -4926,11 +5229,11 @@ d_Conv'45'ChainState_194
                                                                                                             (coe
                                                                                                                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                                                                                                (coe
-                                                                                                                  MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                                                  MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                                                                   (coe
-                                                                                                                     MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                                                                     MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                                                                                                      (coe
-                                                                                                                        MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                                        MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                                                         (coe
                                                                                                                            MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_222)
                                                                                                                         (coe
@@ -4943,11 +5246,11 @@ d_Conv'45'ChainState_194
                                                                                                             (coe
                                                                                                                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                                                                                                (coe
-                                                                                                                  MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                                                  MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                                                                   (coe
-                                                                                                                     MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                                                                     MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                                                                                                      (coe
-                                                                                                                        MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                                        MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                                                         (coe
                                                                                                                            MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_222)
                                                                                                                         (coe
@@ -4958,15 +5261,15 @@ d_Conv'45'ChainState_194
                                                                                                                         (coe
                                                                                                                            v20))))))
                                                                                                          (coe
-                                                                                                            MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.C_MkPState_11493
+                                                                                                            MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.C_MkPState_11305
                                                                                                             (coe
                                                                                                                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                                                                                                (coe
-                                                                                                                  MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                                                  MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                                                                   (coe
-                                                                                                                     MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                                                                     MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                                                                                                      (coe
-                                                                                                                        MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                                        MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                                                         (coe
                                                                                                                            MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                                                                                         (coe
@@ -4979,11 +5282,11 @@ d_Conv'45'ChainState_194
                                                                                                             (coe
                                                                                                                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                                                                                                (coe
-                                                                                                                  MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                                                  MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                                                                   (coe
-                                                                                                                     MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                                                                     MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                                                                                                      (coe
-                                                                                                                        MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                                        MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                                                         (coe
                                                                                                                            MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                                                                                         (coe
@@ -4996,11 +5299,11 @@ d_Conv'45'ChainState_194
                                                                                                             (coe
                                                                                                                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                                                                                                (coe
-                                                                                                                  MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                                                  MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                                                                   (coe
-                                                                                                                     MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                                                                     MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                                                                                                      (coe
-                                                                                                                        MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                                        MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                                                         (coe
                                                                                                                            MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                                                                                         (coe
@@ -5013,11 +5316,11 @@ d_Conv'45'ChainState_194
                                                                                                             (coe
                                                                                                                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                                                                                                (coe
-                                                                                                                  MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                                                  MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                                                                   (coe
-                                                                                                                     MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                                                                     MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                                                                                                      (coe
-                                                                                                                        MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                                        MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                                                         (coe
                                                                                                                            MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                                                                                         (coe
@@ -5028,15 +5331,15 @@ d_Conv'45'ChainState_194
                                                                                                                         (coe
                                                                                                                            v21))))))
                                                                                                          (coe
-                                                                                                            MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.C_MkGState_20649
+                                                                                                            MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.C_MkGState_20109
                                                                                                             (coe
                                                                                                                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                                                                                                (coe
-                                                                                                                  MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                                                  MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                                                                   (coe
-                                                                                                                     MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                                                                     MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                                                                                                      (coe
-                                                                                                                        MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                                        MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                                                         (coe
                                                                                                                            MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_222)
                                                                                                                         (coe
@@ -5049,15 +5352,15 @@ d_Conv'45'ChainState_194
                                                                                                             (coe
                                                                                                                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                                                                                                (coe
-                                                                                                                  MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                                                  MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                                                                   (coe
-                                                                                                                     MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                                                                     MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                                                                                                      (coe
-                                                                                                                        MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                                        MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                                                         (coe
                                                                                                                            MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_222)
                                                                                                                         (coe
-                                                                                                                           MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Maybe_90
+                                                                                                                           MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'Maybe_16
                                                                                                                            (coe
                                                                                                                               MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_222))))
                                                                                                                   (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
@@ -5068,11 +5371,11 @@ d_Conv'45'ChainState_194
                                                                                                             (coe
                                                                                                                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                                                                                                (coe
-                                                                                                                  MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                                                  MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                                                                   (coe
-                                                                                                                     MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                                                                     MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                                                                                                      (coe
-                                                                                                                        MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                                        MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                                                         (coe
                                                                                                                            MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_222)
                                                                                                                         (coe
@@ -5091,24 +5394,24 @@ d_Conv'45'ChainState_194
                                                                                                     -> coe
                                                                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.C_'10214'_'44'_'44'_'10215''7580''738'_1418
                                                                                                          (coe
-                                                                                                            MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                                                            MAlonzo.Code.Class.Convertible.Core.d_from_22
                                                                                                             (coe
-                                                                                                               MAlonzo.Code.Foreign.Convertible.C_constructor_22
+                                                                                                               MAlonzo.Code.Class.Convertible.Core.C_constructor_24
                                                                                                                (coe
                                                                                                                   (\ v23 ->
                                                                                                                      case coe
                                                                                                                             v23 of
                                                                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.C_'10214'_'44'_'44'_'44'_'10215''7496'_1366 v24 v25 v26 v27
                                                                                                                          -> coe
-                                                                                                                              MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.C_MkDState_15987
+                                                                                                                              MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.C_MkDState_15623
                                                                                                                               (coe
                                                                                                                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                                                                                                                  (coe
-                                                                                                                                    MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                                                                    MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                                                                                     (coe
-                                                                                                                                       MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                                                                                       MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                                                                                                                        (coe
-                                                                                                                                          MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                                                          MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                                                                           (coe
                                                                                                                                              MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_222)
                                                                                                                                           (coe
@@ -5119,11 +5422,11 @@ d_Conv'45'ChainState_194
                                                                                                                               (coe
                                                                                                                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                                                                                                                  (coe
-                                                                                                                                    MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                                                                    MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                                                                                     (coe
-                                                                                                                                       MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                                                                                       MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                                                                                                                        (coe
-                                                                                                                                          MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                                                          MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                                                                           (coe
                                                                                                                                              MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_222)
                                                                                                                                           (coe
@@ -5134,11 +5437,11 @@ d_Conv'45'ChainState_194
                                                                                                                               (coe
                                                                                                                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                                                                                                                  (coe
-                                                                                                                                    MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                                                                    MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                                                                                     (coe
-                                                                                                                                       MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                                                                                       MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                                                                                                                        (coe
-                                                                                                                                          MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                                                          MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                                                                           (coe
                                                                                                                                              MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_222)
                                                                                                                                           (coe
@@ -5149,11 +5452,11 @@ d_Conv'45'ChainState_194
                                                                                                                               (coe
                                                                                                                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                                                                                                                  (coe
-                                                                                                                                    MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                                                                    MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                                                                                     (coe
-                                                                                                                                       MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                                                                                       MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                                                                                                                        (coe
-                                                                                                                                          MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                                                          MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                                                                           (coe
                                                                                                                                              MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_222)
                                                                                                                                           (coe
@@ -5166,170 +5469,274 @@ d_Conv'45'ChainState_194
                                                                                                                   (\ v23 ->
                                                                                                                      case coe
                                                                                                                             v23 of
-                                                                                                                       MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.C_MkDState_15987 v24 v25 v26 v27
+                                                                                                                       MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.C_MkDState_15623 v24 v25 v26 v27
                                                                                                                          -> coe
                                                                                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.C_'10214'_'44'_'44'_'44'_'10215''7496'_1366
                                                                                                                               (coe
-                                                                                                                                 MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                                                                                 MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
                                                                                                                                  (coe
-                                                                                                                                    MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Map_116
-                                                                                                                                    (let v28
-                                                                                                                                           = MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20 in
+                                                                                                                                    MAlonzo.Code.Axiom.Set.d_th_1516
+                                                                                                                                    (coe
+                                                                                                                                       MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                                                                                 (let v28
+                                                                                                                                        = MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20 in
+                                                                                                                                  coe
+                                                                                                                                    (let v29
+                                                                                                                                           = MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_636
+                                                                                                                                               (coe
+                                                                                                                                                  v28) in
                                                                                                                                      coe
-                                                                                                                                       (let v29
-                                                                                                                                              = MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_636
-                                                                                                                                                  (coe
-                                                                                                                                                     v28) in
-                                                                                                                                        coe
+                                                                                                                                       (coe
+                                                                                                                                          MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_292
                                                                                                                                           (coe
-                                                                                                                                             MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_292
+                                                                                                                                             MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
                                                                                                                                              (coe
-                                                                                                                                                MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
-                                                                                                                                                (coe
-                                                                                                                                                   MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_206
-                                                                                                                                                   (coe
-                                                                                                                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1360
-                                                                                                                                                      (coe
-                                                                                                                                                         v29))))
-                                                                                                                                             (coe
-                                                                                                                                                MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_210
+                                                                                                                                                MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_206
                                                                                                                                                 (coe
                                                                                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1360
                                                                                                                                                    (coe
-                                                                                                                                                      v29))))))
-                                                                                                                                    (coe
-                                                                                                                                       MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_222)
-                                                                                                                                    (coe
-                                                                                                                                       MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Core.d_Conv'45'VDeleg_32))
-                                                                                                                                 (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
-                                                                                                                                    (coe
-                                                                                                                                       v24)))
+                                                                                                                                                      v29))))
+                                                                                                                                          (coe
+                                                                                                                                             MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_210
+                                                                                                                                             (coe
+                                                                                                                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1360
+                                                                                                                                                (coe
+                                                                                                                                                   v29))))))
+                                                                                                                                 (coe
+                                                                                                                                    MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                                                                                                                                    MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92
+                                                                                                                                    ()
+                                                                                                                                    erased
+                                                                                                                                    ()
+                                                                                                                                    erased
+                                                                                                                                    (\ v28 ->
+                                                                                                                                       coe
+                                                                                                                                         MAlonzo.Code.Data.Product.Base.du_map_128
+                                                                                                                                         (coe
+                                                                                                                                            MAlonzo.Code.Class.Convertible.Core.d_from_22
+                                                                                                                                            (coe
+                                                                                                                                               MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_222))
+                                                                                                                                         (coe
+                                                                                                                                            (\ v29 ->
+                                                                                                                                               MAlonzo.Code.Class.Convertible.Core.d_from_22
+                                                                                                                                                 (coe
+                                                                                                                                                    MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Core.d_Conv'45'VDeleg_32)))
+                                                                                                                                         (coe
+                                                                                                                                            MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44
+                                                                                                                                            ()
+                                                                                                                                            erased
+                                                                                                                                            ()
+                                                                                                                                            erased
+                                                                                                                                            (coe
+                                                                                                                                               MAlonzo.Code.Foreign.Haskell.Coerce.C_TrustMe_40)
+                                                                                                                                            v28))
+                                                                                                                                    (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
+                                                                                                                                       (coe
+                                                                                                                                          v24))))
                                                                                                                               (coe
-                                                                                                                                 MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                                                                                 MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
                                                                                                                                  (coe
-                                                                                                                                    MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Map_116
-                                                                                                                                    (let v28
-                                                                                                                                           = MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20 in
+                                                                                                                                    MAlonzo.Code.Axiom.Set.d_th_1516
+                                                                                                                                    (coe
+                                                                                                                                       MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                                                                                 (let v28
+                                                                                                                                        = MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20 in
+                                                                                                                                  coe
+                                                                                                                                    (let v29
+                                                                                                                                           = MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_636
+                                                                                                                                               (coe
+                                                                                                                                                  v28) in
                                                                                                                                      coe
-                                                                                                                                       (let v29
-                                                                                                                                              = MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_636
-                                                                                                                                                  (coe
-                                                                                                                                                     v28) in
-                                                                                                                                        coe
+                                                                                                                                       (coe
+                                                                                                                                          MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_292
                                                                                                                                           (coe
-                                                                                                                                             MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_292
+                                                                                                                                             MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
                                                                                                                                              (coe
-                                                                                                                                                MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
-                                                                                                                                                (coe
-                                                                                                                                                   MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_206
-                                                                                                                                                   (coe
-                                                                                                                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1360
-                                                                                                                                                      (coe
-                                                                                                                                                         v29))))
-                                                                                                                                             (coe
-                                                                                                                                                MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_210
+                                                                                                                                                MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_206
                                                                                                                                                 (coe
                                                                                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1360
                                                                                                                                                    (coe
-                                                                                                                                                      v29))))))
-                                                                                                                                    (coe
-                                                                                                                                       MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_222)
-                                                                                                                                    (coe
-                                                                                                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                                                                                                 (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
-                                                                                                                                    (coe
-                                                                                                                                       v25)))
+                                                                                                                                                      v29))))
+                                                                                                                                          (coe
+                                                                                                                                             MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_210
+                                                                                                                                             (coe
+                                                                                                                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1360
+                                                                                                                                                (coe
+                                                                                                                                                   v29))))))
+                                                                                                                                 (coe
+                                                                                                                                    MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                                                                                                                                    MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92
+                                                                                                                                    ()
+                                                                                                                                    erased
+                                                                                                                                    ()
+                                                                                                                                    erased
+                                                                                                                                    (\ v28 ->
+                                                                                                                                       coe
+                                                                                                                                         MAlonzo.Code.Data.Product.Base.du_map_128
+                                                                                                                                         (coe
+                                                                                                                                            MAlonzo.Code.Class.Convertible.Core.d_from_22
+                                                                                                                                            (coe
+                                                                                                                                               MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_222))
+                                                                                                                                         (coe
+                                                                                                                                            (\ v29 ->
+                                                                                                                                               MAlonzo.Code.Class.Convertible.Core.d_from_22
+                                                                                                                                                 (coe
+                                                                                                                                                    MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                                                                                                         (coe
+                                                                                                                                            MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44
+                                                                                                                                            ()
+                                                                                                                                            erased
+                                                                                                                                            ()
+                                                                                                                                            erased
+                                                                                                                                            (coe
+                                                                                                                                               MAlonzo.Code.Foreign.Haskell.Coerce.C_TrustMe_40)
+                                                                                                                                            v28))
+                                                                                                                                    (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
+                                                                                                                                       (coe
+                                                                                                                                          v25))))
                                                                                                                               (coe
-                                                                                                                                 MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                                                                                 MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
                                                                                                                                  (coe
-                                                                                                                                    MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Map_116
-                                                                                                                                    (let v28
-                                                                                                                                           = MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20 in
+                                                                                                                                    MAlonzo.Code.Axiom.Set.d_th_1516
+                                                                                                                                    (coe
+                                                                                                                                       MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                                                                                 (let v28
+                                                                                                                                        = MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20 in
+                                                                                                                                  coe
+                                                                                                                                    (let v29
+                                                                                                                                           = MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_636
+                                                                                                                                               (coe
+                                                                                                                                                  v28) in
                                                                                                                                      coe
-                                                                                                                                       (let v29
-                                                                                                                                              = MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_636
-                                                                                                                                                  (coe
-                                                                                                                                                     v28) in
-                                                                                                                                        coe
+                                                                                                                                       (coe
+                                                                                                                                          MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_292
                                                                                                                                           (coe
-                                                                                                                                             MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_292
+                                                                                                                                             MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
                                                                                                                                              (coe
-                                                                                                                                                MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
-                                                                                                                                                (coe
-                                                                                                                                                   MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_206
-                                                                                                                                                   (coe
-                                                                                                                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1360
-                                                                                                                                                      (coe
-                                                                                                                                                         v29))))
-                                                                                                                                             (coe
-                                                                                                                                                MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_210
+                                                                                                                                                MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_206
                                                                                                                                                 (coe
                                                                                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1360
                                                                                                                                                    (coe
-                                                                                                                                                      v29))))))
-                                                                                                                                    (coe
-                                                                                                                                       MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_222)
-                                                                                                                                    (coe
-                                                                                                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                                                                                                 (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
-                                                                                                                                    (coe
-                                                                                                                                       v26)))
+                                                                                                                                                      v29))))
+                                                                                                                                          (coe
+                                                                                                                                             MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_210
+                                                                                                                                             (coe
+                                                                                                                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1360
+                                                                                                                                                (coe
+                                                                                                                                                   v29))))))
+                                                                                                                                 (coe
+                                                                                                                                    MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                                                                                                                                    MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92
+                                                                                                                                    ()
+                                                                                                                                    erased
+                                                                                                                                    ()
+                                                                                                                                    erased
+                                                                                                                                    (\ v28 ->
+                                                                                                                                       coe
+                                                                                                                                         MAlonzo.Code.Data.Product.Base.du_map_128
+                                                                                                                                         (coe
+                                                                                                                                            MAlonzo.Code.Class.Convertible.Core.d_from_22
+                                                                                                                                            (coe
+                                                                                                                                               MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_222))
+                                                                                                                                         (coe
+                                                                                                                                            (\ v29 ->
+                                                                                                                                               MAlonzo.Code.Class.Convertible.Core.d_from_22
+                                                                                                                                                 (coe
+                                                                                                                                                    MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                                                                                                         (coe
+                                                                                                                                            MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44
+                                                                                                                                            ()
+                                                                                                                                            erased
+                                                                                                                                            ()
+                                                                                                                                            erased
+                                                                                                                                            (coe
+                                                                                                                                               MAlonzo.Code.Foreign.Haskell.Coerce.C_TrustMe_40)
+                                                                                                                                            v28))
+                                                                                                                                    (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
+                                                                                                                                       (coe
+                                                                                                                                          v26))))
                                                                                                                               (coe
-                                                                                                                                 MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                                                                                 MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
                                                                                                                                  (coe
-                                                                                                                                    MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Map_116
-                                                                                                                                    (let v28
-                                                                                                                                           = MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20 in
+                                                                                                                                    MAlonzo.Code.Axiom.Set.d_th_1516
+                                                                                                                                    (coe
+                                                                                                                                       MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                                                                                 (let v28
+                                                                                                                                        = MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20 in
+                                                                                                                                  coe
+                                                                                                                                    (let v29
+                                                                                                                                           = MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_636
+                                                                                                                                               (coe
+                                                                                                                                                  v28) in
                                                                                                                                      coe
-                                                                                                                                       (let v29
-                                                                                                                                              = MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_636
-                                                                                                                                                  (coe
-                                                                                                                                                     v28) in
-                                                                                                                                        coe
+                                                                                                                                       (coe
+                                                                                                                                          MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_292
                                                                                                                                           (coe
-                                                                                                                                             MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_292
+                                                                                                                                             MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
                                                                                                                                              (coe
-                                                                                                                                                MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
-                                                                                                                                                (coe
-                                                                                                                                                   MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_206
-                                                                                                                                                   (coe
-                                                                                                                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1360
-                                                                                                                                                      (coe
-                                                                                                                                                         v29))))
-                                                                                                                                             (coe
-                                                                                                                                                MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_210
+                                                                                                                                                MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_206
                                                                                                                                                 (coe
                                                                                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1360
                                                                                                                                                    (coe
-                                                                                                                                                      v29))))))
-                                                                                                                                    (coe
-                                                                                                                                       MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_222)
-                                                                                                                                    (coe
-                                                                                                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                                                                                                 (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
-                                                                                                                                    (coe
-                                                                                                                                       v27)))
+                                                                                                                                                      v29))))
+                                                                                                                                          (coe
+                                                                                                                                             MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_210
+                                                                                                                                             (coe
+                                                                                                                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1360
+                                                                                                                                                (coe
+                                                                                                                                                   v29))))))
+                                                                                                                                 (coe
+                                                                                                                                    MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                                                                                                                                    MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92
+                                                                                                                                    ()
+                                                                                                                                    erased
+                                                                                                                                    ()
+                                                                                                                                    erased
+                                                                                                                                    (\ v28 ->
+                                                                                                                                       coe
+                                                                                                                                         MAlonzo.Code.Data.Product.Base.du_map_128
+                                                                                                                                         (coe
+                                                                                                                                            MAlonzo.Code.Class.Convertible.Core.d_from_22
+                                                                                                                                            (coe
+                                                                                                                                               MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_222))
+                                                                                                                                         (coe
+                                                                                                                                            (\ v29 ->
+                                                                                                                                               MAlonzo.Code.Class.Convertible.Core.d_from_22
+                                                                                                                                                 (coe
+                                                                                                                                                    MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                                                                                                         (coe
+                                                                                                                                            MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44
+                                                                                                                                            ()
+                                                                                                                                            erased
+                                                                                                                                            ()
+                                                                                                                                            erased
+                                                                                                                                            (coe
+                                                                                                                                               MAlonzo.Code.Foreign.Haskell.Coerce.C_TrustMe_40)
+                                                                                                                                            v28))
+                                                                                                                                    (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
+                                                                                                                                       (coe
+                                                                                                                                          v27))))
                                                                                                                        _ -> MAlonzo.RTE.mazUnreachableError)))
                                                                                                             v20)
                                                                                                          (coe
-                                                                                                            MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                                                            MAlonzo.Code.Class.Convertible.Core.d_from_22
                                                                                                             (coe
-                                                                                                               MAlonzo.Code.Foreign.Convertible.C_constructor_22
+                                                                                                               MAlonzo.Code.Class.Convertible.Core.C_constructor_24
                                                                                                                (coe
                                                                                                                   (\ v23 ->
                                                                                                                      case coe
                                                                                                                             v23 of
                                                                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.C_constructor_1386 v24 v25 v26 v27
                                                                                                                          -> coe
-                                                                                                                              MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.C_MkPState_11493
+                                                                                                                              MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.C_MkPState_11305
                                                                                                                               (coe
                                                                                                                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                                                                                                                  (coe
-                                                                                                                                    MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                                                                    MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                                                                                     (coe
-                                                                                                                                       MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                                                                                       MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                                                                                                                        (coe
-                                                                                                                                          MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                                                          MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                                                                           (coe
                                                                                                                                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                                                                                                           (coe
@@ -5340,11 +5747,11 @@ d_Conv'45'ChainState_194
                                                                                                                               (coe
                                                                                                                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                                                                                                                  (coe
-                                                                                                                                    MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                                                                    MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                                                                                     (coe
-                                                                                                                                       MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                                                                                       MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                                                                                                                        (coe
-                                                                                                                                          MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                                                          MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                                                                           (coe
                                                                                                                                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                                                                                                           (coe
@@ -5355,11 +5762,11 @@ d_Conv'45'ChainState_194
                                                                                                                               (coe
                                                                                                                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                                                                                                                  (coe
-                                                                                                                                    MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                                                                    MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                                                                                     (coe
-                                                                                                                                       MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                                                                                       MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                                                                                                                        (coe
-                                                                                                                                          MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                                                          MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                                                                           (coe
                                                                                                                                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                                                                                                           (coe
@@ -5370,11 +5777,11 @@ d_Conv'45'ChainState_194
                                                                                                                               (coe
                                                                                                                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                                                                                                                  (coe
-                                                                                                                                    MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                                                                    MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                                                                                     (coe
-                                                                                                                                       MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                                                                                       MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                                                                                                                        (coe
-                                                                                                                                          MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                                                          MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                                                                           (coe
                                                                                                                                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                                                                                                           (coe
@@ -5387,82 +5794,186 @@ d_Conv'45'ChainState_194
                                                                                                                   (\ v23 ->
                                                                                                                      case coe
                                                                                                                             v23 of
-                                                                                                                       MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.C_MkPState_11493 v24 v25 v26 v27
+                                                                                                                       MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.C_MkPState_11305 v24 v25 v26 v27
                                                                                                                          -> coe
                                                                                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.C_constructor_1386
                                                                                                                               (coe
-                                                                                                                                 MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                                                                                 MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
                                                                                                                                  (coe
-                                                                                                                                    MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Map_116
+                                                                                                                                    MAlonzo.Code.Axiom.Set.d_th_1516
                                                                                                                                     (coe
-                                                                                                                                       MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
-                                                                                                                                    (coe
-                                                                                                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
-                                                                                                                                    (coe
-                                                                                                                                       MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.d_Conv'45'StakePoolParams_18))
-                                                                                                                                 (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
-                                                                                                                                    (coe
-                                                                                                                                       v24)))
+                                                                                                                                       MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                                                                                 (coe
+                                                                                                                                    MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
+                                                                                                                                 (coe
+                                                                                                                                    MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                                                                                                                                    MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92
+                                                                                                                                    ()
+                                                                                                                                    erased
+                                                                                                                                    ()
+                                                                                                                                    erased
+                                                                                                                                    (\ v28 ->
+                                                                                                                                       coe
+                                                                                                                                         MAlonzo.Code.Data.Product.Base.du_map_128
+                                                                                                                                         (coe
+                                                                                                                                            MAlonzo.Code.Class.Convertible.Core.d_from_22
+                                                                                                                                            (coe
+                                                                                                                                               MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
+                                                                                                                                         (coe
+                                                                                                                                            (\ v29 ->
+                                                                                                                                               MAlonzo.Code.Class.Convertible.Core.d_from_22
+                                                                                                                                                 (coe
+                                                                                                                                                    MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.d_Conv'45'StakePoolParams_18)))
+                                                                                                                                         (coe
+                                                                                                                                            MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44
+                                                                                                                                            ()
+                                                                                                                                            erased
+                                                                                                                                            ()
+                                                                                                                                            erased
+                                                                                                                                            (coe
+                                                                                                                                               MAlonzo.Code.Foreign.Haskell.Coerce.C_TrustMe_40)
+                                                                                                                                            v28))
+                                                                                                                                    (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
+                                                                                                                                       (coe
+                                                                                                                                          v24))))
                                                                                                                               (coe
-                                                                                                                                 MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                                                                                 MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
                                                                                                                                  (coe
-                                                                                                                                    MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Map_116
+                                                                                                                                    MAlonzo.Code.Axiom.Set.d_th_1516
                                                                                                                                     (coe
-                                                                                                                                       MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
-                                                                                                                                    (coe
-                                                                                                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
-                                                                                                                                    (coe
-                                                                                                                                       MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.d_Conv'45'StakePoolParams_18))
-                                                                                                                                 (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
-                                                                                                                                    (coe
-                                                                                                                                       v25)))
+                                                                                                                                       MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                                                                                 (coe
+                                                                                                                                    MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
+                                                                                                                                 (coe
+                                                                                                                                    MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                                                                                                                                    MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92
+                                                                                                                                    ()
+                                                                                                                                    erased
+                                                                                                                                    ()
+                                                                                                                                    erased
+                                                                                                                                    (\ v28 ->
+                                                                                                                                       coe
+                                                                                                                                         MAlonzo.Code.Data.Product.Base.du_map_128
+                                                                                                                                         (coe
+                                                                                                                                            MAlonzo.Code.Class.Convertible.Core.d_from_22
+                                                                                                                                            (coe
+                                                                                                                                               MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
+                                                                                                                                         (coe
+                                                                                                                                            (\ v29 ->
+                                                                                                                                               MAlonzo.Code.Class.Convertible.Core.d_from_22
+                                                                                                                                                 (coe
+                                                                                                                                                    MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.d_Conv'45'StakePoolParams_18)))
+                                                                                                                                         (coe
+                                                                                                                                            MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44
+                                                                                                                                            ()
+                                                                                                                                            erased
+                                                                                                                                            ()
+                                                                                                                                            erased
+                                                                                                                                            (coe
+                                                                                                                                               MAlonzo.Code.Foreign.Haskell.Coerce.C_TrustMe_40)
+                                                                                                                                            v28))
+                                                                                                                                    (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
+                                                                                                                                       (coe
+                                                                                                                                          v25))))
                                                                                                                               (coe
-                                                                                                                                 MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                                                                                 MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
                                                                                                                                  (coe
-                                                                                                                                    MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Map_116
+                                                                                                                                    MAlonzo.Code.Axiom.Set.d_th_1516
                                                                                                                                     (coe
-                                                                                                                                       MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
-                                                                                                                                    (coe
-                                                                                                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
-                                                                                                                                    (coe
-                                                                                                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                                                                                                 (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
-                                                                                                                                    (coe
-                                                                                                                                       v26)))
+                                                                                                                                       MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                                                                                 (coe
+                                                                                                                                    MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
+                                                                                                                                 (coe
+                                                                                                                                    MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                                                                                                                                    MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92
+                                                                                                                                    ()
+                                                                                                                                    erased
+                                                                                                                                    ()
+                                                                                                                                    erased
+                                                                                                                                    (\ v28 ->
+                                                                                                                                       coe
+                                                                                                                                         MAlonzo.Code.Data.Product.Base.du_map_128
+                                                                                                                                         (coe
+                                                                                                                                            MAlonzo.Code.Class.Convertible.Core.d_from_22
+                                                                                                                                            (coe
+                                                                                                                                               MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
+                                                                                                                                         (coe
+                                                                                                                                            (\ v29 ->
+                                                                                                                                               MAlonzo.Code.Class.Convertible.Core.d_from_22
+                                                                                                                                                 (coe
+                                                                                                                                                    MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                                                                                                         (coe
+                                                                                                                                            MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44
+                                                                                                                                            ()
+                                                                                                                                            erased
+                                                                                                                                            ()
+                                                                                                                                            erased
+                                                                                                                                            (coe
+                                                                                                                                               MAlonzo.Code.Foreign.Haskell.Coerce.C_TrustMe_40)
+                                                                                                                                            v28))
+                                                                                                                                    (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
+                                                                                                                                       (coe
+                                                                                                                                          v26))))
                                                                                                                               (coe
-                                                                                                                                 MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                                                                                 MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
                                                                                                                                  (coe
-                                                                                                                                    MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Map_116
+                                                                                                                                    MAlonzo.Code.Axiom.Set.d_th_1516
                                                                                                                                     (coe
-                                                                                                                                       MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
-                                                                                                                                    (coe
-                                                                                                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
-                                                                                                                                    (coe
-                                                                                                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                                                                                                 (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
-                                                                                                                                    (coe
-                                                                                                                                       v27)))
+                                                                                                                                       MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                                                                                 (coe
+                                                                                                                                    MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
+                                                                                                                                 (coe
+                                                                                                                                    MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                                                                                                                                    MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92
+                                                                                                                                    ()
+                                                                                                                                    erased
+                                                                                                                                    ()
+                                                                                                                                    erased
+                                                                                                                                    (\ v28 ->
+                                                                                                                                       coe
+                                                                                                                                         MAlonzo.Code.Data.Product.Base.du_map_128
+                                                                                                                                         (coe
+                                                                                                                                            MAlonzo.Code.Class.Convertible.Core.d_from_22
+                                                                                                                                            (coe
+                                                                                                                                               MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
+                                                                                                                                         (coe
+                                                                                                                                            (\ v29 ->
+                                                                                                                                               MAlonzo.Code.Class.Convertible.Core.d_from_22
+                                                                                                                                                 (coe
+                                                                                                                                                    MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                                                                                                         (coe
+                                                                                                                                            MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44
+                                                                                                                                            ()
+                                                                                                                                            erased
+                                                                                                                                            ()
+                                                                                                                                            erased
+                                                                                                                                            (coe
+                                                                                                                                               MAlonzo.Code.Foreign.Haskell.Coerce.C_TrustMe_40)
+                                                                                                                                            v28))
+                                                                                                                                    (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
+                                                                                                                                       (coe
+                                                                                                                                          v27))))
                                                                                                                        _ -> MAlonzo.RTE.mazUnreachableError)))
                                                                                                             v21)
                                                                                                          (coe
-                                                                                                            MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                                                            MAlonzo.Code.Class.Convertible.Core.d_from_22
                                                                                                             (coe
-                                                                                                               MAlonzo.Code.Foreign.Convertible.C_constructor_22
+                                                                                                               MAlonzo.Code.Class.Convertible.Core.C_constructor_24
                                                                                                                (coe
                                                                                                                   (\ v23 ->
                                                                                                                      case coe
                                                                                                                             v23 of
                                                                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.C_'10214'_'44'_'44'_'10215''7515'_1402 v24 v25 v26
                                                                                                                          -> coe
-                                                                                                                              MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.C_MkGState_20649
+                                                                                                                              MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.C_MkGState_20109
                                                                                                                               (coe
                                                                                                                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                                                                                                                  (coe
-                                                                                                                                    MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                                                                    MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                                                                                     (coe
-                                                                                                                                       MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                                                                                       MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                                                                                                                        (coe
-                                                                                                                                          MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                                                          MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                                                                           (coe
                                                                                                                                              MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_222)
                                                                                                                                           (coe
@@ -5473,15 +5984,15 @@ d_Conv'45'ChainState_194
                                                                                                                               (coe
                                                                                                                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                                                                                                                  (coe
-                                                                                                                                    MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                                                                    MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                                                                                     (coe
-                                                                                                                                       MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                                                                                       MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                                                                                                                        (coe
-                                                                                                                                          MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                                                          MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                                                                           (coe
                                                                                                                                              MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_222)
                                                                                                                                           (coe
-                                                                                                                                             MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Maybe_90
+                                                                                                                                             MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'Maybe_16
                                                                                                                                              (coe
                                                                                                                                                 MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_222))))
                                                                                                                                     (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
@@ -5490,11 +6001,11 @@ d_Conv'45'ChainState_194
                                                                                                                               (coe
                                                                                                                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                                                                                                                  (coe
-                                                                                                                                    MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                                                                    MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                                                                                     (coe
-                                                                                                                                       MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                                                                                       MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                                                                                                                        (coe
-                                                                                                                                          MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                                                          MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                                                                           (coe
                                                                                                                                              MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_222)
                                                                                                                                           (coe
@@ -5507,116 +6018,194 @@ d_Conv'45'ChainState_194
                                                                                                                   (\ v23 ->
                                                                                                                      case coe
                                                                                                                             v23 of
-                                                                                                                       MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.C_MkGState_20649 v24 v25 v26
+                                                                                                                       MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.C_MkGState_20109 v24 v25 v26
                                                                                                                          -> coe
                                                                                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.C_'10214'_'44'_'44'_'10215''7515'_1402
                                                                                                                               (coe
-                                                                                                                                 MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                                                                                 MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
                                                                                                                                  (coe
-                                                                                                                                    MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Map_116
-                                                                                                                                    (let v27
-                                                                                                                                           = MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20 in
+                                                                                                                                    MAlonzo.Code.Axiom.Set.d_th_1516
+                                                                                                                                    (coe
+                                                                                                                                       MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                                                                                 (let v27
+                                                                                                                                        = MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20 in
+                                                                                                                                  coe
+                                                                                                                                    (let v28
+                                                                                                                                           = MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_636
+                                                                                                                                               (coe
+                                                                                                                                                  v27) in
                                                                                                                                      coe
-                                                                                                                                       (let v28
-                                                                                                                                              = MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_636
-                                                                                                                                                  (coe
-                                                                                                                                                     v27) in
-                                                                                                                                        coe
-                                                                                                                                          (coe
-                                                                                                                                             MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_292
-                                                                                                                                             (coe
-                                                                                                                                                MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
-                                                                                                                                                (coe
-                                                                                                                                                   MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_206
-                                                                                                                                                   (coe
-                                                                                                                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1360
-                                                                                                                                                      (coe
-                                                                                                                                                         v28))))
-                                                                                                                                             (coe
-                                                                                                                                                MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_210
-                                                                                                                                                (coe
-                                                                                                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1360
-                                                                                                                                                   (coe
-                                                                                                                                                      v28))))))
-                                                                                                                                    (coe
-                                                                                                                                       MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_222)
-                                                                                                                                    (coe
-                                                                                                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                                                                                                 (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
-                                                                                                                                    (coe
-                                                                                                                                       v24)))
-                                                                                                                              (coe
-                                                                                                                                 MAlonzo.Code.Foreign.Convertible.d_from_20
-                                                                                                                                 (coe
-                                                                                                                                    MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Map_116
-                                                                                                                                    (let v27
-                                                                                                                                           = MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20 in
-                                                                                                                                     coe
-                                                                                                                                       (let v28
-                                                                                                                                              = MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_636
-                                                                                                                                                  (coe
-                                                                                                                                                     v27) in
-                                                                                                                                        coe
-                                                                                                                                          (coe
-                                                                                                                                             MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_292
-                                                                                                                                             (coe
-                                                                                                                                                MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
-                                                                                                                                                (coe
-                                                                                                                                                   MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_206
-                                                                                                                                                   (coe
-                                                                                                                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1360
-                                                                                                                                                      (coe
-                                                                                                                                                         v28))))
-                                                                                                                                             (coe
-                                                                                                                                                MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_210
-                                                                                                                                                (coe
-                                                                                                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1360
-                                                                                                                                                   (coe
-                                                                                                                                                      v28))))))
-                                                                                                                                    (coe
-                                                                                                                                       MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_222)
-                                                                                                                                    (coe
-                                                                                                                                       MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Maybe_90
                                                                                                                                        (coe
-                                                                                                                                          MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_222)))
-                                                                                                                                 (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
-                                                                                                                                    (coe
-                                                                                                                                       v25)))
-                                                                                                                              (coe
-                                                                                                                                 MAlonzo.Code.Foreign.Convertible.d_from_20
-                                                                                                                                 (coe
-                                                                                                                                    MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Map_116
-                                                                                                                                    (let v27
-                                                                                                                                           = MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20 in
-                                                                                                                                     coe
-                                                                                                                                       (let v28
-                                                                                                                                              = MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_636
-                                                                                                                                                  (coe
-                                                                                                                                                     v27) in
-                                                                                                                                        coe
+                                                                                                                                          MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_292
                                                                                                                                           (coe
-                                                                                                                                             MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_292
+                                                                                                                                             MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
                                                                                                                                              (coe
-                                                                                                                                                MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
-                                                                                                                                                (coe
-                                                                                                                                                   MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_206
-                                                                                                                                                   (coe
-                                                                                                                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1360
-                                                                                                                                                      (coe
-                                                                                                                                                         v28))))
-                                                                                                                                             (coe
-                                                                                                                                                MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_210
+                                                                                                                                                MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_206
                                                                                                                                                 (coe
                                                                                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1360
                                                                                                                                                    (coe
-                                                                                                                                                      v28))))))
+                                                                                                                                                      v28))))
+                                                                                                                                          (coe
+                                                                                                                                             MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_210
+                                                                                                                                             (coe
+                                                                                                                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1360
+                                                                                                                                                (coe
+                                                                                                                                                   v28))))))
+                                                                                                                                 (coe
+                                                                                                                                    MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                                                                                                                                    MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92
+                                                                                                                                    ()
+                                                                                                                                    erased
+                                                                                                                                    ()
+                                                                                                                                    erased
+                                                                                                                                    (\ v27 ->
+                                                                                                                                       coe
+                                                                                                                                         MAlonzo.Code.Data.Product.Base.du_map_128
+                                                                                                                                         (coe
+                                                                                                                                            MAlonzo.Code.Class.Convertible.Core.d_from_22
+                                                                                                                                            (coe
+                                                                                                                                               MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_222))
+                                                                                                                                         (coe
+                                                                                                                                            (\ v28 ->
+                                                                                                                                               MAlonzo.Code.Class.Convertible.Core.d_from_22
+                                                                                                                                                 (coe
+                                                                                                                                                    MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                                                                                                         (coe
+                                                                                                                                            MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44
+                                                                                                                                            ()
+                                                                                                                                            erased
+                                                                                                                                            ()
+                                                                                                                                            erased
+                                                                                                                                            (coe
+                                                                                                                                               MAlonzo.Code.Foreign.Haskell.Coerce.C_TrustMe_40)
+                                                                                                                                            v27))
+                                                                                                                                    (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
+                                                                                                                                       (coe
+                                                                                                                                          v24))))
+                                                                                                                              (coe
+                                                                                                                                 MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
+                                                                                                                                 (coe
+                                                                                                                                    MAlonzo.Code.Axiom.Set.d_th_1516
                                                                                                                                     (coe
-                                                                                                                                       MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_222)
+                                                                                                                                       MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                                                                                 (let v27
+                                                                                                                                        = MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20 in
+                                                                                                                                  coe
+                                                                                                                                    (let v28
+                                                                                                                                           = MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_636
+                                                                                                                                               (coe
+                                                                                                                                                  v27) in
+                                                                                                                                     coe
+                                                                                                                                       (coe
+                                                                                                                                          MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_292
+                                                                                                                                          (coe
+                                                                                                                                             MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
+                                                                                                                                             (coe
+                                                                                                                                                MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_206
+                                                                                                                                                (coe
+                                                                                                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1360
+                                                                                                                                                   (coe
+                                                                                                                                                      v28))))
+                                                                                                                                          (coe
+                                                                                                                                             MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_210
+                                                                                                                                             (coe
+                                                                                                                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1360
+                                                                                                                                                (coe
+                                                                                                                                                   v28))))))
+                                                                                                                                 (coe
+                                                                                                                                    MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                                                                                                                                    MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92
+                                                                                                                                    ()
+                                                                                                                                    erased
+                                                                                                                                    ()
+                                                                                                                                    erased
+                                                                                                                                    (\ v27 ->
+                                                                                                                                       coe
+                                                                                                                                         MAlonzo.Code.Data.Product.Base.du_map_128
+                                                                                                                                         (coe
+                                                                                                                                            MAlonzo.Code.Class.Convertible.Core.d_from_22
+                                                                                                                                            (coe
+                                                                                                                                               MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_222))
+                                                                                                                                         (coe
+                                                                                                                                            (\ v28 ->
+                                                                                                                                               MAlonzo.Code.Class.Convertible.Core.d_from_22
+                                                                                                                                                 (coe
+                                                                                                                                                    MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'Maybe_16
+                                                                                                                                                    (coe
+                                                                                                                                                       MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_222))))
+                                                                                                                                         (coe
+                                                                                                                                            MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44
+                                                                                                                                            ()
+                                                                                                                                            erased
+                                                                                                                                            ()
+                                                                                                                                            erased
+                                                                                                                                            (coe
+                                                                                                                                               MAlonzo.Code.Foreign.Haskell.Coerce.C_TrustMe_40)
+                                                                                                                                            v27))
+                                                                                                                                    (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
+                                                                                                                                       (coe
+                                                                                                                                          v25))))
+                                                                                                                              (coe
+                                                                                                                                 MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
+                                                                                                                                 (coe
+                                                                                                                                    MAlonzo.Code.Axiom.Set.d_th_1516
                                                                                                                                     (coe
-                                                                                                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                                                                                                 (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
-                                                                                                                                    (coe
-                                                                                                                                       v26)))
+                                                                                                                                       MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                                                                                 (let v27
+                                                                                                                                        = MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20 in
+                                                                                                                                  coe
+                                                                                                                                    (let v28
+                                                                                                                                           = MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_636
+                                                                                                                                               (coe
+                                                                                                                                                  v27) in
+                                                                                                                                     coe
+                                                                                                                                       (coe
+                                                                                                                                          MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_292
+                                                                                                                                          (coe
+                                                                                                                                             MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
+                                                                                                                                             (coe
+                                                                                                                                                MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_206
+                                                                                                                                                (coe
+                                                                                                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1360
+                                                                                                                                                   (coe
+                                                                                                                                                      v28))))
+                                                                                                                                          (coe
+                                                                                                                                             MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_210
+                                                                                                                                             (coe
+                                                                                                                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1360
+                                                                                                                                                (coe
+                                                                                                                                                   v28))))))
+                                                                                                                                 (coe
+                                                                                                                                    MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                                                                                                                                    MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92
+                                                                                                                                    ()
+                                                                                                                                    erased
+                                                                                                                                    ()
+                                                                                                                                    erased
+                                                                                                                                    (\ v27 ->
+                                                                                                                                       coe
+                                                                                                                                         MAlonzo.Code.Data.Product.Base.du_map_128
+                                                                                                                                         (coe
+                                                                                                                                            MAlonzo.Code.Class.Convertible.Core.d_from_22
+                                                                                                                                            (coe
+                                                                                                                                               MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_222))
+                                                                                                                                         (coe
+                                                                                                                                            (\ v28 ->
+                                                                                                                                               MAlonzo.Code.Class.Convertible.Core.d_from_22
+                                                                                                                                                 (coe
+                                                                                                                                                    MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                                                                                                         (coe
+                                                                                                                                            MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44
+                                                                                                                                            ()
+                                                                                                                                            erased
+                                                                                                                                            ()
+                                                                                                                                            erased
+                                                                                                                                            (coe
+                                                                                                                                               MAlonzo.Code.Foreign.Haskell.Coerce.C_TrustMe_40)
+                                                                                                                                            v27))
+                                                                                                                                    (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
+                                                                                                                                       (coe
+                                                                                                                                          v26))))
                                                                                                                        _ -> MAlonzo.RTE.mazUnreachableError)))
                                                                                                             v22)
                                                                                                   _ -> MAlonzo.RTE.mazUnreachableError)))
@@ -5624,15 +6213,15 @@ d_Conv'45'ChainState_194
                                                                              _ -> MAlonzo.RTE.mazUnreachableError)))
                                                                   v12)
                                                                (coe
-                                                                  MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                  MAlonzo.Code.Class.Convertible.Core.d_from_22
                                                                   (coe
-                                                                     MAlonzo.Code.Foreign.Convertible.C_constructor_22
+                                                                     MAlonzo.Code.Class.Convertible.Core.C_constructor_24
                                                                      (coe
                                                                         (\ v15 ->
                                                                            case coe v15 of
                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.C_constructor_1250 v16 v17 v18 v19 v20
                                                                                -> coe
-                                                                                    MAlonzo.Code.Ledger.Dijkstra.Foreign.Enact.C_MkEnactState_1655
+                                                                                    MAlonzo.Code.Ledger.Dijkstra.Foreign.Enact.C_MkEnactState_1623
                                                                                     (coe
                                                                                        MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44
                                                                                        () erased ()
@@ -5642,11 +6231,11 @@ d_Conv'45'ChainState_194
                                                                                        (coe
                                                                                           MAlonzo.Code.Data.Product.Base.du_map_128
                                                                                           (coe
-                                                                                             MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                             MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                                              (coe
-                                                                                                MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Maybe_90
+                                                                                                MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'Maybe_16
                                                                                                 (coe
-                                                                                                   MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                   MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                                    (coe
                                                                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.du_Conv'45'HSMap_102
                                                                                                       (let v21
@@ -5681,9 +6270,9 @@ d_Conv'45'ChainState_194
                                                                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_28))))
                                                                                           (coe
                                                                                              (\ v21 ->
-                                                                                                MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                                MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                                                   (coe
-                                                                                                     MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                     MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                                      (coe
                                                                                                         MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                                                                      (coe
@@ -5699,20 +6288,20 @@ d_Conv'45'ChainState_194
                                                                                        (coe
                                                                                           MAlonzo.Code.Data.Product.Base.du_map_128
                                                                                           (coe
-                                                                                             MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                             MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                                              (coe
-                                                                                                MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                                 (coe
                                                                                                    MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                                                                 (coe
-                                                                                                   MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Maybe_90
+                                                                                                   MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'Maybe_16
                                                                                                    (coe
                                                                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
                                                                                           (coe
                                                                                              (\ v21 ->
-                                                                                                MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                                MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                                                   (coe
-                                                                                                     MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                     MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                                      (coe
                                                                                                         MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                                                                      (coe
@@ -5728,18 +6317,18 @@ d_Conv'45'ChainState_194
                                                                                        (coe
                                                                                           MAlonzo.Code.Data.Product.Base.du_map_128
                                                                                           (coe
-                                                                                             MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                             MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                                              (coe
-                                                                                                MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                                 (coe
                                                                                                    MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                                                                 (coe
                                                                                                    MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                                                                           (coe
                                                                                              (\ v21 ->
-                                                                                                MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                                MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                                                   (coe
-                                                                                                     MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                     MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                                      (coe
                                                                                                         MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                                                                      (coe
@@ -5755,14 +6344,14 @@ d_Conv'45'ChainState_194
                                                                                        (coe
                                                                                           MAlonzo.Code.Data.Product.Base.du_map_128
                                                                                           (coe
-                                                                                             MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                             MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                                              (coe
                                                                                                 MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.d_Conv'45'PParams_26))
                                                                                           (coe
                                                                                              (\ v21 ->
-                                                                                                MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                                MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                                                   (coe
-                                                                                                     MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                     MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                                      (coe
                                                                                                         MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                                                                      (coe
@@ -5772,11 +6361,11 @@ d_Conv'45'ChainState_194
                                                                                     (coe
                                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                                                                        (coe
-                                                                                          MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                          MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                                           (coe
-                                                                                             MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                                             MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                                                                              (coe
-                                                                                                MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                                 (coe
                                                                                                    MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'RewardAddress_234)
                                                                                                 (coe
@@ -5788,17 +6377,17 @@ d_Conv'45'ChainState_194
                                                                      (coe
                                                                         (\ v15 ->
                                                                            case coe v15 of
-                                                                             MAlonzo.Code.Ledger.Dijkstra.Foreign.Enact.C_MkEnactState_1655 v16 v17 v18 v19 v20
+                                                                             MAlonzo.Code.Ledger.Dijkstra.Foreign.Enact.C_MkEnactState_1623 v16 v17 v18 v19 v20
                                                                                -> coe
                                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.C_constructor_1250
                                                                                     (coe
                                                                                        MAlonzo.Code.Data.Product.Base.du_map_128
                                                                                        (coe
-                                                                                          MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                                          MAlonzo.Code.Class.Convertible.Core.d_from_22
                                                                                           (coe
-                                                                                             MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Maybe_90
+                                                                                             MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'Maybe_16
                                                                                              (coe
-                                                                                                MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                                 (coe
                                                                                                    MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.du_Conv'45'HSMap_102
                                                                                                    (let v21
@@ -5833,9 +6422,9 @@ d_Conv'45'ChainState_194
                                                                                                    MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_28))))
                                                                                        (coe
                                                                                           (\ v21 ->
-                                                                                             MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                                             MAlonzo.Code.Class.Convertible.Core.d_from_22
                                                                                                (coe
-                                                                                                  MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                  MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                                   (coe
                                                                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                                                                   (coe
@@ -5850,20 +6439,20 @@ d_Conv'45'ChainState_194
                                                                                     (coe
                                                                                        MAlonzo.Code.Data.Product.Base.du_map_128
                                                                                        (coe
-                                                                                          MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                                          MAlonzo.Code.Class.Convertible.Core.d_from_22
                                                                                           (coe
-                                                                                             MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                             MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                              (coe
                                                                                                 MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                                                              (coe
-                                                                                                MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Maybe_90
+                                                                                                MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'Maybe_16
                                                                                                 (coe
                                                                                                    MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
                                                                                        (coe
                                                                                           (\ v21 ->
-                                                                                             MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                                             MAlonzo.Code.Class.Convertible.Core.d_from_22
                                                                                                (coe
-                                                                                                  MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                  MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                                   (coe
                                                                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                                                                   (coe
@@ -5878,18 +6467,18 @@ d_Conv'45'ChainState_194
                                                                                     (coe
                                                                                        MAlonzo.Code.Data.Product.Base.du_map_128
                                                                                        (coe
-                                                                                          MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                                          MAlonzo.Code.Class.Convertible.Core.d_from_22
                                                                                           (coe
-                                                                                             MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                             MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                              (coe
                                                                                                 MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                                                              (coe
                                                                                                 MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                                                                        (coe
                                                                                           (\ v21 ->
-                                                                                             MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                                             MAlonzo.Code.Class.Convertible.Core.d_from_22
                                                                                                (coe
-                                                                                                  MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                  MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                                   (coe
                                                                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                                                                   (coe
@@ -5904,14 +6493,14 @@ d_Conv'45'ChainState_194
                                                                                     (coe
                                                                                        MAlonzo.Code.Data.Product.Base.du_map_128
                                                                                        (coe
-                                                                                          MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                                          MAlonzo.Code.Class.Convertible.Core.d_from_22
                                                                                           (coe
                                                                                              MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.d_Conv'45'PParams_26))
                                                                                        (coe
                                                                                           (\ v21 ->
-                                                                                             MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                                             MAlonzo.Code.Class.Convertible.Core.d_from_22
                                                                                                (coe
-                                                                                                  MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                  MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                                   (coe
                                                                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                                                                   (coe
@@ -5924,60 +6513,84 @@ d_Conv'45'ChainState_194
                                                                                              MAlonzo.Code.Foreign.Haskell.Coerce.C_TrustMe_40)
                                                                                           v19))
                                                                                     (coe
-                                                                                       MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                                       MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
                                                                                        (coe
-                                                                                          MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Map_116
-                                                                                          (let v21
-                                                                                                 = MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20 in
+                                                                                          MAlonzo.Code.Axiom.Set.d_th_1516
+                                                                                          (coe
+                                                                                             MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                                       (let v21
+                                                                                              = MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20 in
+                                                                                        coe
+                                                                                          (let v22
+                                                                                                 = MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_636
+                                                                                                     (coe
+                                                                                                        v21) in
                                                                                            coe
-                                                                                             (let v22
-                                                                                                    = MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_636
-                                                                                                        (coe
-                                                                                                           v21) in
-                                                                                              coe
+                                                                                             (coe
+                                                                                                MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'RewardAddress_350
                                                                                                 (coe
-                                                                                                   MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'RewardAddress_350
+                                                                                                   MAlonzo.Code.Ledger.Core.Specification.Epoch.d_DecEq'45'Netw_320
                                                                                                    (coe
-                                                                                                      MAlonzo.Code.Ledger.Core.Specification.Epoch.d_DecEq'45'Netw_320
+                                                                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_globalConstants_1358
                                                                                                       (coe
-                                                                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_globalConstants_1358
-                                                                                                         (coe
-                                                                                                            v22)))
+                                                                                                         v22)))
+                                                                                                (coe
+                                                                                                   MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
                                                                                                    (coe
-                                                                                                      MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
-                                                                                                      (coe
-                                                                                                         MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_206
-                                                                                                         (coe
-                                                                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1360
-                                                                                                            (coe
-                                                                                                               v22))))
-                                                                                                   (coe
-                                                                                                      MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_210
+                                                                                                      MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_206
                                                                                                       (coe
                                                                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1360
                                                                                                          (coe
-                                                                                                            v22))))))
-                                                                                          (coe
-                                                                                             MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'RewardAddress_234)
-                                                                                          (coe
-                                                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                                                       (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
-                                                                                          (coe
-                                                                                             v20)))
+                                                                                                            v22))))
+                                                                                                (coe
+                                                                                                   MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_210
+                                                                                                   (coe
+                                                                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1360
+                                                                                                      (coe
+                                                                                                         v22))))))
+                                                                                       (coe
+                                                                                          MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                                                                                          MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92
+                                                                                          () erased
+                                                                                          () erased
+                                                                                          (\ v21 ->
+                                                                                             coe
+                                                                                               MAlonzo.Code.Data.Product.Base.du_map_128
+                                                                                               (coe
+                                                                                                  MAlonzo.Code.Class.Convertible.Core.d_from_22
+                                                                                                  (coe
+                                                                                                     MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'RewardAddress_234))
+                                                                                               (coe
+                                                                                                  (\ v22 ->
+                                                                                                     MAlonzo.Code.Class.Convertible.Core.d_from_22
+                                                                                                       (coe
+                                                                                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                                                               (coe
+                                                                                                  MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44
+                                                                                                  ()
+                                                                                                  erased
+                                                                                                  ()
+                                                                                                  erased
+                                                                                                  (coe
+                                                                                                     MAlonzo.Code.Foreign.Haskell.Coerce.C_TrustMe_40)
+                                                                                                  v21))
+                                                                                          (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
+                                                                                             (coe
+                                                                                                v20))))
                                                                              _ -> MAlonzo.RTE.mazUnreachableError)))
                                                                   v13)
                                                                (coe
-                                                                  MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                  MAlonzo.Code.Class.Convertible.Core.d_from_22
                                                                   (coe
-                                                                     MAlonzo.Code.Foreign.Convertible.C_constructor_22
+                                                                     MAlonzo.Code.Class.Convertible.Core.C_constructor_24
                                                                      (coe
                                                                         (\ v15 ->
                                                                            case coe v15 of
                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.C_constructor_1960 v16 v17 v18
                                                                                -> coe
-                                                                                    MAlonzo.Code.Ledger.Dijkstra.Foreign.Ratify.C_MkRatifyState_12021
+                                                                                    MAlonzo.Code.Ledger.Dijkstra.Foreign.Ratify.C_MkRatifyState_11883
                                                                                     (coe
-                                                                                       MAlonzo.Code.Ledger.Dijkstra.Foreign.Enact.C_MkEnactState_1655
+                                                                                       MAlonzo.Code.Ledger.Dijkstra.Foreign.Enact.C_MkEnactState_1623
                                                                                        (coe
                                                                                           MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44
                                                                                           () erased
@@ -5987,11 +6600,11 @@ d_Conv'45'ChainState_194
                                                                                           (coe
                                                                                              MAlonzo.Code.Data.Product.Base.du_map_128
                                                                                              (coe
-                                                                                                MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                                MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                                                 (coe
-                                                                                                   MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Maybe_90
+                                                                                                   MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'Maybe_16
                                                                                                    (coe
-                                                                                                      MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                      MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                                       (coe
                                                                                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.du_Conv'45'HSMap_102
                                                                                                          (let v19
@@ -6026,9 +6639,9 @@ d_Conv'45'ChainState_194
                                                                                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_28))))
                                                                                              (coe
                                                                                                 (\ v19 ->
-                                                                                                   MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                                   MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                                                      (coe
-                                                                                                        MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                        MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                                         (coe
                                                                                                            MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                                                                         (coe
@@ -6046,20 +6659,20 @@ d_Conv'45'ChainState_194
                                                                                           (coe
                                                                                              MAlonzo.Code.Data.Product.Base.du_map_128
                                                                                              (coe
-                                                                                                MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                                MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                                                 (coe
-                                                                                                   MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                   MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                                    (coe
                                                                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                                                                    (coe
-                                                                                                      MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Maybe_90
+                                                                                                      MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'Maybe_16
                                                                                                       (coe
                                                                                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
                                                                                              (coe
                                                                                                 (\ v19 ->
-                                                                                                   MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                                   MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                                                      (coe
-                                                                                                        MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                        MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                                         (coe
                                                                                                            MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                                                                         (coe
@@ -6077,18 +6690,18 @@ d_Conv'45'ChainState_194
                                                                                           (coe
                                                                                              MAlonzo.Code.Data.Product.Base.du_map_128
                                                                                              (coe
-                                                                                                MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                                MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                                                 (coe
-                                                                                                   MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                   MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                                    (coe
                                                                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                                                                    (coe
                                                                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                                                                              (coe
                                                                                                 (\ v19 ->
-                                                                                                   MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                                   MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                                                      (coe
-                                                                                                        MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                        MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                                         (coe
                                                                                                            MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                                                                         (coe
@@ -6106,14 +6719,14 @@ d_Conv'45'ChainState_194
                                                                                           (coe
                                                                                              MAlonzo.Code.Data.Product.Base.du_map_128
                                                                                              (coe
-                                                                                                MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                                MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                                                 (coe
                                                                                                    MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.d_Conv'45'PParams_26))
                                                                                              (coe
                                                                                                 (\ v19 ->
-                                                                                                   MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                                   MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                                                      (coe
-                                                                                                        MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                        MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                                         (coe
                                                                                                            MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                                                                         (coe
@@ -6125,11 +6738,11 @@ d_Conv'45'ChainState_194
                                                                                        (coe
                                                                                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                                                                           (coe
-                                                                                             MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                             MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                                              (coe
-                                                                                                MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                                                MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                                                                                 (coe
-                                                                                                   MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                   MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                                    (coe
                                                                                                       MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'RewardAddress_234)
                                                                                                    (coe
@@ -6142,13 +6755,13 @@ d_Conv'45'ChainState_194
                                                                                     (coe
                                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSSet_68
                                                                                        (coe
-                                                                                          MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                          MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                                           (coe
-                                                                                             MAlonzo.Code.Foreign.Convertible.du_Convertible'45'List_120
+                                                                                             MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                                                                              (coe
-                                                                                                MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                                 (coe
-                                                                                                   MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                   MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                                    (coe
                                                                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                                                                    (coe
@@ -6161,20 +6774,20 @@ d_Conv'45'ChainState_194
                                                                      (coe
                                                                         (\ v15 ->
                                                                            case coe v15 of
-                                                                             MAlonzo.Code.Ledger.Dijkstra.Foreign.Ratify.C_MkRatifyState_12021 v16 v17 v18
+                                                                             MAlonzo.Code.Ledger.Dijkstra.Foreign.Ratify.C_MkRatifyState_11883 v16 v17 v18
                                                                                -> coe
                                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.C_constructor_1960
                                                                                     (coe
-                                                                                       MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                                       MAlonzo.Code.Class.Convertible.Core.d_from_22
                                                                                        (coe
-                                                                                          MAlonzo.Code.Foreign.Convertible.C_constructor_22
+                                                                                          MAlonzo.Code.Class.Convertible.Core.C_constructor_24
                                                                                           (coe
                                                                                              (\ v19 ->
                                                                                                 case coe
                                                                                                        v19 of
                                                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.C_constructor_1250 v20 v21 v22 v23 v24
                                                                                                     -> coe
-                                                                                                         MAlonzo.Code.Ledger.Dijkstra.Foreign.Enact.C_MkEnactState_1655
+                                                                                                         MAlonzo.Code.Ledger.Dijkstra.Foreign.Enact.C_MkEnactState_1623
                                                                                                          (coe
                                                                                                             MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44
                                                                                                             ()
@@ -6186,11 +6799,11 @@ d_Conv'45'ChainState_194
                                                                                                             (coe
                                                                                                                MAlonzo.Code.Data.Product.Base.du_map_128
                                                                                                                (coe
-                                                                                                                  MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                                                  MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                                                                   (coe
-                                                                                                                     MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Maybe_90
+                                                                                                                     MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'Maybe_16
                                                                                                                      (coe
-                                                                                                                        MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                                        MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                                                         (coe
                                                                                                                            MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.du_Conv'45'HSMap_102
                                                                                                                            (let v25
@@ -6225,9 +6838,9 @@ d_Conv'45'ChainState_194
                                                                                                                            MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_28))))
                                                                                                                (coe
                                                                                                                   (\ v25 ->
-                                                                                                                     MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                                                     MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                                                                        (coe
-                                                                                                                          MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                                          MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                                                           (coe
                                                                                                                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                                                                                           (coe
@@ -6245,20 +6858,20 @@ d_Conv'45'ChainState_194
                                                                                                             (coe
                                                                                                                MAlonzo.Code.Data.Product.Base.du_map_128
                                                                                                                (coe
-                                                                                                                  MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                                                  MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                                                                   (coe
-                                                                                                                     MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                                     MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                                                      (coe
                                                                                                                         MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                                                                                      (coe
-                                                                                                                        MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Maybe_90
+                                                                                                                        MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'Maybe_16
                                                                                                                         (coe
                                                                                                                            MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
                                                                                                                (coe
                                                                                                                   (\ v25 ->
-                                                                                                                     MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                                                     MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                                                                        (coe
-                                                                                                                          MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                                          MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                                                           (coe
                                                                                                                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                                                                                           (coe
@@ -6276,18 +6889,18 @@ d_Conv'45'ChainState_194
                                                                                                             (coe
                                                                                                                MAlonzo.Code.Data.Product.Base.du_map_128
                                                                                                                (coe
-                                                                                                                  MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                                                  MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                                                                   (coe
-                                                                                                                     MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                                     MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                                                      (coe
                                                                                                                         MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                                                                                      (coe
                                                                                                                         MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                                                                                                (coe
                                                                                                                   (\ v25 ->
-                                                                                                                     MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                                                     MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                                                                        (coe
-                                                                                                                          MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                                          MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                                                           (coe
                                                                                                                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                                                                                           (coe
@@ -6305,14 +6918,14 @@ d_Conv'45'ChainState_194
                                                                                                             (coe
                                                                                                                MAlonzo.Code.Data.Product.Base.du_map_128
                                                                                                                (coe
-                                                                                                                  MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                                                  MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                                                                   (coe
                                                                                                                      MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.d_Conv'45'PParams_26))
                                                                                                                (coe
                                                                                                                   (\ v25 ->
-                                                                                                                     MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                                                     MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                                                                        (coe
-                                                                                                                          MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                                          MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                                                           (coe
                                                                                                                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                                                                                           (coe
@@ -6322,11 +6935,11 @@ d_Conv'45'ChainState_194
                                                                                                          (coe
                                                                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                                                                                             (coe
-                                                                                                               MAlonzo.Code.Foreign.Convertible.d_to_18
+                                                                                                               MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                                                                (coe
-                                                                                                                  MAlonzo.Code.Foreign.Convertible.du_Convertible'45'FinSet_104
+                                                                                                                  MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                                                                                                   (coe
-                                                                                                                     MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                                     MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                                                      (coe
                                                                                                                         MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'RewardAddress_234)
                                                                                                                      (coe
@@ -6339,17 +6952,17 @@ d_Conv'45'ChainState_194
                                                                                              (\ v19 ->
                                                                                                 case coe
                                                                                                        v19 of
-                                                                                                  MAlonzo.Code.Ledger.Dijkstra.Foreign.Enact.C_MkEnactState_1655 v20 v21 v22 v23 v24
+                                                                                                  MAlonzo.Code.Ledger.Dijkstra.Foreign.Enact.C_MkEnactState_1623 v20 v21 v22 v23 v24
                                                                                                     -> coe
                                                                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.C_constructor_1250
                                                                                                          (coe
                                                                                                             MAlonzo.Code.Data.Product.Base.du_map_128
                                                                                                             (coe
-                                                                                                               MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                                                               MAlonzo.Code.Class.Convertible.Core.d_from_22
                                                                                                                (coe
-                                                                                                                  MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Maybe_90
+                                                                                                                  MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'Maybe_16
                                                                                                                   (coe
-                                                                                                                     MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                                     MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                                                      (coe
                                                                                                                         MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.du_Conv'45'HSMap_102
                                                                                                                         (let v25
@@ -6384,9 +6997,9 @@ d_Conv'45'ChainState_194
                                                                                                                         MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_28))))
                                                                                                             (coe
                                                                                                                (\ v25 ->
-                                                                                                                  MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                                                                  MAlonzo.Code.Class.Convertible.Core.d_from_22
                                                                                                                     (coe
-                                                                                                                       MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                                       MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                                                        (coe
                                                                                                                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                                                                                        (coe
@@ -6403,20 +7016,20 @@ d_Conv'45'ChainState_194
                                                                                                          (coe
                                                                                                             MAlonzo.Code.Data.Product.Base.du_map_128
                                                                                                             (coe
-                                                                                                               MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                                                               MAlonzo.Code.Class.Convertible.Core.d_from_22
                                                                                                                (coe
-                                                                                                                  MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                                  MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                                                   (coe
                                                                                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                                                                                   (coe
-                                                                                                                     MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Maybe_90
+                                                                                                                     MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'Maybe_16
                                                                                                                      (coe
                                                                                                                         MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
                                                                                                             (coe
                                                                                                                (\ v25 ->
-                                                                                                                  MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                                                                  MAlonzo.Code.Class.Convertible.Core.d_from_22
                                                                                                                     (coe
-                                                                                                                       MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                                       MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                                                        (coe
                                                                                                                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                                                                                        (coe
@@ -6433,18 +7046,18 @@ d_Conv'45'ChainState_194
                                                                                                          (coe
                                                                                                             MAlonzo.Code.Data.Product.Base.du_map_128
                                                                                                             (coe
-                                                                                                               MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                                                               MAlonzo.Code.Class.Convertible.Core.d_from_22
                                                                                                                (coe
-                                                                                                                  MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                                  MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                                                   (coe
                                                                                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                                                                                   (coe
                                                                                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                                                                                             (coe
                                                                                                                (\ v25 ->
-                                                                                                                  MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                                                                  MAlonzo.Code.Class.Convertible.Core.d_from_22
                                                                                                                     (coe
-                                                                                                                       MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                                       MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                                                        (coe
                                                                                                                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                                                                                        (coe
@@ -6461,14 +7074,14 @@ d_Conv'45'ChainState_194
                                                                                                          (coe
                                                                                                             MAlonzo.Code.Data.Product.Base.du_map_128
                                                                                                             (coe
-                                                                                                               MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                                                               MAlonzo.Code.Class.Convertible.Core.d_from_22
                                                                                                                (coe
                                                                                                                   MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.d_Conv'45'PParams_26))
                                                                                                             (coe
                                                                                                                (\ v25 ->
-                                                                                                                  MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                                                                  MAlonzo.Code.Class.Convertible.Core.d_from_22
                                                                                                                     (coe
-                                                                                                                       MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                                       MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                                                        (coe
                                                                                                                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                                                                                        (coe
@@ -6483,46 +7096,72 @@ d_Conv'45'ChainState_194
                                                                                                                   MAlonzo.Code.Foreign.Haskell.Coerce.C_TrustMe_40)
                                                                                                                v23))
                                                                                                          (coe
-                                                                                                            MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                                                            MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
                                                                                                             (coe
-                                                                                                               MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Map_116
-                                                                                                               (let v25
-                                                                                                                      = MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20 in
+                                                                                                               MAlonzo.Code.Axiom.Set.d_th_1516
+                                                                                                               (coe
+                                                                                                                  MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                                                            (let v25
+                                                                                                                   = MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20 in
+                                                                                                             coe
+                                                                                                               (let v26
+                                                                                                                      = MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_636
+                                                                                                                          (coe
+                                                                                                                             v25) in
                                                                                                                 coe
-                                                                                                                  (let v26
-                                                                                                                         = MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_636
-                                                                                                                             (coe
-                                                                                                                                v25) in
-                                                                                                                   coe
+                                                                                                                  (coe
+                                                                                                                     MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'RewardAddress_350
                                                                                                                      (coe
-                                                                                                                        MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'RewardAddress_350
+                                                                                                                        MAlonzo.Code.Ledger.Core.Specification.Epoch.d_DecEq'45'Netw_320
                                                                                                                         (coe
-                                                                                                                           MAlonzo.Code.Ledger.Core.Specification.Epoch.d_DecEq'45'Netw_320
+                                                                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_globalConstants_1358
                                                                                                                            (coe
-                                                                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_globalConstants_1358
-                                                                                                                              (coe
-                                                                                                                                 v26)))
+                                                                                                                              v26)))
+                                                                                                                     (coe
+                                                                                                                        MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
                                                                                                                         (coe
-                                                                                                                           MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
-                                                                                                                           (coe
-                                                                                                                              MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_206
-                                                                                                                              (coe
-                                                                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1360
-                                                                                                                                 (coe
-                                                                                                                                    v26))))
-                                                                                                                        (coe
-                                                                                                                           MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_210
+                                                                                                                           MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_206
                                                                                                                            (coe
                                                                                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1360
                                                                                                                               (coe
-                                                                                                                                 v26))))))
-                                                                                                               (coe
-                                                                                                                  MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'RewardAddress_234)
-                                                                                                               (coe
-                                                                                                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                                                                            (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
-                                                                                                               (coe
-                                                                                                                  v24)))
+                                                                                                                                 v26))))
+                                                                                                                     (coe
+                                                                                                                        MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_210
+                                                                                                                        (coe
+                                                                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1360
+                                                                                                                           (coe
+                                                                                                                              v26))))))
+                                                                                                            (coe
+                                                                                                               MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                                                                                                               MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92
+                                                                                                               ()
+                                                                                                               erased
+                                                                                                               ()
+                                                                                                               erased
+                                                                                                               (\ v25 ->
+                                                                                                                  coe
+                                                                                                                    MAlonzo.Code.Data.Product.Base.du_map_128
+                                                                                                                    (coe
+                                                                                                                       MAlonzo.Code.Class.Convertible.Core.d_from_22
+                                                                                                                       (coe
+                                                                                                                          MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'RewardAddress_234))
+                                                                                                                    (coe
+                                                                                                                       (\ v26 ->
+                                                                                                                          MAlonzo.Code.Class.Convertible.Core.d_from_22
+                                                                                                                            (coe
+                                                                                                                               MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                                                                                    (coe
+                                                                                                                       MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44
+                                                                                                                       ()
+                                                                                                                       erased
+                                                                                                                       ()
+                                                                                                                       erased
+                                                                                                                       (coe
+                                                                                                                          MAlonzo.Code.Foreign.Haskell.Coerce.C_TrustMe_40)
+                                                                                                                       v25))
+                                                                                                               (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
+                                                                                                                  (coe
+                                                                                                                     v24))))
                                                                                                   _ -> MAlonzo.RTE.mazUnreachableError)))
                                                                                        v16)
                                                                                     (coe
@@ -6532,13 +7171,13 @@ d_Conv'45'ChainState_194
                                                                                           (coe
                                                                                              MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                                                                                        (coe
-                                                                                          MAlonzo.Code.Foreign.Convertible.d_from_20
+                                                                                          MAlonzo.Code.Class.Convertible.Core.d_from_22
                                                                                           (coe
-                                                                                             MAlonzo.Code.Foreign.Convertible.du_Convertible'45'List_120
+                                                                                             MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                                                                              (coe
-                                                                                                MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                                 (coe
-                                                                                                   MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Pair_94
+                                                                                                   MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                                                                    (coe
                                                                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                                                                    (coe
@@ -6554,57 +7193,77 @@ d_Conv'45'ChainState_194
                                                         _ -> MAlonzo.RTE.mazUnreachableError)))
                                              v6)
                                           (coe
-                                             MAlonzo.Code.Foreign.Convertible.d_from_20
+                                             MAlonzo.Code.Class.Convertible.Core.d_from_22
                                              (coe
-                                                MAlonzo.Code.Foreign.Convertible.du_Functor'8658'Convertible_64
+                                                MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
                                                 (coe
                                                    MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                 (coe
                                                    MAlonzo.Code.Ledger.Dijkstra.Foreign.Rewards.d_Conv'45'RewardUpdate_204))
                                              v7)
                                           (coe
-                                             MAlonzo.Code.Foreign.Convertible.d_from_20
+                                             MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
                                              (coe
-                                                MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Map_116
+                                                MAlonzo.Code.Axiom.Set.d_th_1516
                                                 (coe
-                                                   MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
-                                                (coe
-                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
-                                                (coe
-                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                             (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
-                                                (coe v8)))
+                                                   MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                             (coe
+                                                MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
+                                             (coe
+                                                MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                                                MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92
+                                                () erased () erased
+                                                (\ v9 ->
+                                                   coe
+                                                     MAlonzo.Code.Data.Product.Base.du_map_128
+                                                     (coe
+                                                        MAlonzo.Code.Class.Convertible.Core.d_from_22
+                                                        (coe
+                                                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
+                                                     (coe
+                                                        (\ v10 ->
+                                                           MAlonzo.Code.Class.Convertible.Core.d_from_22
+                                                             (coe
+                                                                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                                                     (coe
+                                                        MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44
+                                                        () erased () erased
+                                                        (coe
+                                                           MAlonzo.Code.Foreign.Haskell.Coerce.C_TrustMe_40)
+                                                        v9))
+                                                (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
+                                                   (coe v8))))
                                    _ -> MAlonzo.RTE.mazUnreachableError)))
                         v1)
               _ -> MAlonzo.RTE.mazUnreachableError))
 -- Ledger.Dijkstra.Foreign.Chain.chain-step
 chainStep ::
   MAlonzo.Code.Agda.Builtin.Unit.T_'8868'_6 ->
-  T_ChainState_7553 ->
-  T_Block_5675 ->
+  T_ChainState_7481 ->
+  T_Block_5633 ->
   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.T_HSComputationResult_110
-    MAlonzo.Code.Agda.Builtin.String.T_String_6 T_ChainState_7553
+    MAlonzo.Code.Agda.Builtin.String.T_String_6 T_ChainState_7481
 chainStep = coe d_chain'45'step_196
 d_chain'45'step_196 ::
   MAlonzo.Code.Agda.Builtin.Unit.T_'8868'_6 ->
-  T_ChainState_7553 ->
-  T_Block_5675 ->
+  T_ChainState_7481 ->
+  T_Block_5633 ->
   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.T_HSComputationResult_110
-    MAlonzo.Code.Agda.Builtin.String.T_String_6 T_ChainState_7553
+    MAlonzo.Code.Agda.Builtin.String.T_String_6 T_ChainState_7481
 d_chain'45'step_196 ~v0 = du_chain'45'step_196
 du_chain'45'step_196 ::
-  T_ChainState_7553 ->
-  T_Block_5675 ->
+  T_ChainState_7481 ->
+  T_Block_5633 ->
   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.T_HSComputationResult_110
-    MAlonzo.Code.Agda.Builtin.String.T_String_6 T_ChainState_7553
+    MAlonzo.Code.Agda.Builtin.String.T_String_6 T_ChainState_7481
 du_chain'45'step_196
   = coe
-      MAlonzo.Code.Foreign.Convertible.d_to_18
+      MAlonzo.Code.Class.Convertible.Core.d_to_20
       (coe
-         MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Fun_132
+         MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'Fun_34
          (coe d_Conv'45'ChainState_194)
          (coe
-            MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Fun_132
+            MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'Fun_34
             (coe d_Conv'45'Block_190)
             (coe
                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.du_Conv'45'HSComputationResult_134
@@ -6624,39 +7283,39 @@ du_chain'45'step_196
                   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20)))
          (coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8))
 -- Ledger.Dijkstra.Foreign.Chain.BHeader
-d_BHeader_2583 = ()
-type T_BHeader_2583 = BHeader
-pattern C_MkBHeader_2585 a0 a1 = MkBHeader a0 a1
-check_MkBHeader_2585 :: T_BHBody_173 -> Integer -> T_BHeader_2583
-check_MkBHeader_2585 = MkBHeader
-cover_BHeader_2583 :: BHeader -> ()
-cover_BHeader_2583 x
+d_BHeader_2553 = ()
+type T_BHeader_2553 = BHeader
+pattern C_MkBHeader_2555 a0 a1 = MkBHeader a0 a1
+check_MkBHeader_2555 :: T_BHBody_173 -> Integer -> T_BHeader_2553
+check_MkBHeader_2555 = MkBHeader
+cover_BHeader_2553 :: BHeader -> ()
+cover_BHeader_2553 x
   = case x of
       MkBHeader _ _ -> ()
 -- Ledger.Dijkstra.Foreign.Chain.Block
-d_Block_5675 = ()
-type T_Block_5675 = Block
-pattern C_MkBlock_5677 a0 a1 a2 a3 = MkBlock a0 a1 a2 a3
-check_MkBlock_5677 ::
-  T_BHeader_2583 ->
+d_Block_5633 = ()
+type T_Block_5633 = Block
+pattern C_MkBlock_5635 a0 a1 a2 a3 = MkBlock a0 a1 a2 a3
+check_MkBlock_5635 ::
+  T_BHeader_2553 ->
   MAlonzo.Code.Agda.Builtin.List.T_List_10
     ()
-    MAlonzo.Code.Ledger.Dijkstra.Foreign.Transaction.T_TxTop_228273 ->
-  Integer -> Integer -> T_Block_5675
-check_MkBlock_5677 = MkBlock
-cover_Block_5675 :: Block -> ()
-cover_Block_5675 x
+    MAlonzo.Code.Ledger.Dijkstra.Foreign.Transaction.T_TxTop_227667 ->
+  Integer -> Integer -> T_Block_5633
+check_MkBlock_5635 = MkBlock
+cover_Block_5633 :: Block -> ()
+cover_Block_5633 x
   = case x of
       MkBlock _ _ _ _ -> ()
 -- Ledger.Dijkstra.Foreign.Chain.ChainState
-d_ChainState_7553 = ()
-type T_ChainState_7553 = ChainState
-pattern C_MkChainState_7555 a0 = MkChainState a0
-check_MkChainState_7555 ::
+d_ChainState_7481 = ()
+type T_ChainState_7481 = ChainState
+pattern C_MkChainState_7483 a0 = MkChainState a0
+check_MkChainState_7483 ::
   MAlonzo.Code.Ledger.Dijkstra.Foreign.NewEpoch.T_NewEpochState_531 ->
-  T_ChainState_7553
-check_MkChainState_7555 = MkChainState
-cover_ChainState_7553 :: ChainState -> ()
-cover_ChainState_7553 x
+  T_ChainState_7481
+check_MkChainState_7483 = MkChainState
+cover_ChainState_7481 :: ChainState -> ()
+cover_ChainState_7481 x
   = case x of
       MkChainState _ -> ()

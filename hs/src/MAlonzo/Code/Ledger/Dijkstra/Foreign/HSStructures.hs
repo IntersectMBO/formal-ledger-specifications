@@ -32,10 +32,12 @@ import qualified MAlonzo.Code.Algebra.Morphism.Structures
 import qualified MAlonzo.Code.Axiom.Set
 import qualified MAlonzo.Code.Axiom.Set.Map
 import qualified MAlonzo.Code.Class.CommutativeMonoid.Core
+import qualified MAlonzo.Code.Class.Convertible.Core
 import qualified MAlonzo.Code.Class.DecEq.Core
 import qualified MAlonzo.Code.Class.DecEq.Instances
 import qualified MAlonzo.Code.Class.Decidable.Core
 import qualified MAlonzo.Code.Class.HasAdd.Core
+import qualified MAlonzo.Code.Class.HasHsType.Core
 import qualified MAlonzo.Code.Class.HasOrder.Core
 import qualified MAlonzo.Code.Class.Monoid.Core
 import qualified MAlonzo.Code.Class.Semigroup.Core
@@ -51,8 +53,6 @@ import qualified MAlonzo.Code.Data.Nat.Base
 import qualified MAlonzo.Code.Data.Rational.Base
 import qualified MAlonzo.Code.Data.Refinement.Base
 import qualified MAlonzo.Code.Data.Sum.Base
-import qualified MAlonzo.Code.Foreign.Convertible
-import qualified MAlonzo.Code.Foreign.HaskellTypes
 import qualified MAlonzo.Code.Function.Bundles
 import qualified MAlonzo.Code.Interface.TypeClasses.Hashable
 import qualified MAlonzo.Code.Ledger.Conway.Specification.TokenAlgebra.Base
@@ -9257,7 +9257,7 @@ d_vKeySigs_3060 v0
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.Convert-HSLanguage
 d_Convert'45'HSLanguage_3074 ::
-  MAlonzo.Code.Foreign.Convertible.T_Convertible_8
+  MAlonzo.Code.Class.Convertible.Core.T_Convertible_10
 d_Convert'45'HSLanguage_3074
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Foreign.Script.Base.d_Convert'45'HSLanguage_22
@@ -9281,7 +9281,7 @@ d_DecEq'45'TxLevel_3082
 d_HSLanguage_3086 = ()
 -- Ledger.Dijkstra.Foreign.HSStructures._.HsType-HSLanguage
 d_HsType'45'HSLanguage_3088 ::
-  MAlonzo.Code.Foreign.HaskellTypes.T_HasHsType_14
+  MAlonzo.Code.Class.HasHsType.Core.T_HasHsType_10
 d_HsType'45'HSLanguage_3088 = erased
 -- Ledger.Dijkstra.Foreign.HSStructures._.Transaction.InLevel
 d_InLevel_3090 ::
