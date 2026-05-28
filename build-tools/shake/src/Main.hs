@@ -121,7 +121,7 @@ hsRule = phony "hs" $ do
     , "--no-main"
     , "--compile-dir=" ++ _build
     ]
-    ["src/Ledger/Conway/Foreign.lagda.md"]
+    ["src/Ledger/Conway/Foreign.agda"]
 
   cmd_
     "agda"
