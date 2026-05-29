@@ -18,10 +18,10 @@ import MAlonzo.RTE (coe, erased, AgdaAny, addInt, subInt, mulInt,
 import qualified MAlonzo.RTE
 import qualified Data.Text
 import qualified MAlonzo.Code.Agda.Builtin.Bool
+import qualified MAlonzo.Code.Class.Convertible.Core
 import qualified MAlonzo.Code.Class.DecEq.Core
+import qualified MAlonzo.Code.Class.HasHsType.Core
 import qualified MAlonzo.Code.Class.Show.Core
-import qualified MAlonzo.Code.Foreign.Convertible
-import qualified MAlonzo.Code.Foreign.HaskellTypes
 import qualified MAlonzo.Code.Relation.Nullary.Decidable.Core
 import qualified MAlonzo.Code.Relation.Nullary.Reflects
 
@@ -55,14 +55,14 @@ cover_HSLanguage_15 x
       PV4 -> ()
 -- Ledger.Dijkstra.Foreign.Script.Base.HsType-HSLanguage
 d_HsType'45'HSLanguage_20 ::
-  MAlonzo.Code.Foreign.HaskellTypes.T_HasHsType_14
+  MAlonzo.Code.Class.HasHsType.Core.T_HasHsType_10
 d_HsType'45'HSLanguage_20 = erased
 -- Ledger.Dijkstra.Foreign.Script.Base.Convert-HSLanguage
 d_Convert'45'HSLanguage_22 ::
-  MAlonzo.Code.Foreign.Convertible.T_Convertible_8
+  MAlonzo.Code.Class.Convertible.Core.T_Convertible_10
 d_Convert'45'HSLanguage_22
   = coe
-      MAlonzo.Code.Foreign.Convertible.C_constructor_22
+      MAlonzo.Code.Class.Convertible.Core.C_constructor_24
       (coe
          (\ v0 ->
             case coe v0 of

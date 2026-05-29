@@ -32,10 +32,12 @@ import qualified MAlonzo.Code.Algebra.Morphism.Structures
 import qualified MAlonzo.Code.Axiom.Set
 import qualified MAlonzo.Code.Axiom.Set.Map
 import qualified MAlonzo.Code.Class.CommutativeMonoid.Core
+import qualified MAlonzo.Code.Class.Convertible.Core
 import qualified MAlonzo.Code.Class.DecEq.Core
 import qualified MAlonzo.Code.Class.DecEq.Instances
 import qualified MAlonzo.Code.Class.Decidable.Core
 import qualified MAlonzo.Code.Class.HasAdd.Core
+import qualified MAlonzo.Code.Class.HasHsType.Core
 import qualified MAlonzo.Code.Class.HasOrder.Core
 import qualified MAlonzo.Code.Class.IsSet
 import qualified MAlonzo.Code.Class.Monoid.Core
@@ -59,8 +61,6 @@ import qualified MAlonzo.Code.Data.Rational.Base
 import qualified MAlonzo.Code.Data.Refinement.Base
 import qualified MAlonzo.Code.Data.Sum.Base
 import qualified MAlonzo.Code.Data.Sum.Relation.Binary.LeftOrder
-import qualified MAlonzo.Code.Foreign.Convertible
-import qualified MAlonzo.Code.Foreign.HaskellTypes
 import qualified MAlonzo.Code.Function.Bundles
 import qualified MAlonzo.Code.Interface.TypeClasses.Hashable
 import qualified MAlonzo.Code.Ledger.Conway.Foreign.Script.Base
@@ -390,10 +390,10 @@ d_tlScriptSize_236 v0
 -- Ledger.Conway.Foreign.ExternalStructures._.Base.Convert-HSLanguage
 d_Convert'45'HSLanguage_268 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
-  MAlonzo.Code.Foreign.Convertible.T_Convertible_8
+  MAlonzo.Code.Class.Convertible.Core.T_Convertible_10
 d_Convert'45'HSLanguage_268 ~v0 = du_Convert'45'HSLanguage_268
 du_Convert'45'HSLanguage_268 ::
-  MAlonzo.Code.Foreign.Convertible.T_Convertible_8
+  MAlonzo.Code.Class.Convertible.Core.T_Convertible_10
 du_Convert'45'HSLanguage_268
   = coe
       MAlonzo.Code.Ledger.Conway.Foreign.Script.Base.d_Convert'45'HSLanguage_20
@@ -412,7 +412,7 @@ d_HSLanguage_272 a0 = ()
 -- Ledger.Conway.Foreign.ExternalStructures._.Base.HsType-HSLanguage
 d_HsType'45'HSLanguage_274 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
-  MAlonzo.Code.Foreign.HaskellTypes.T_HasHsType_14
+  MAlonzo.Code.Class.HasHsType.Core.T_HasHsType_10
 d_HsType'45'HSLanguage_274 = erased
 -- Ledger.Conway.Foreign.ExternalStructures._.Base.Show-HSLanguage
 d_Show'45'HSLanguage_284 ::
