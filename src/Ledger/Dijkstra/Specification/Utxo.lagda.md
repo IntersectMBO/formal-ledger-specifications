@@ -356,7 +356,7 @@ existing logic inside the `CERT`{.AgdaDatatype} sub-rules.  Cases must correspon
 constructor-for-constructor; the exact `Coin`{.AgdaDatatype} update at each cert must
 agree.
 
-(Any drift between the two implementations is a soundness problem.  If
+Any drift between the two implementations is a soundness problem.  If
 `updateCertDeposit`{.AgdaFunction} computes a different deposit update for, say,
 `regdrep c d _` than the `GOVCERT-regdrep`{.AgdaInductiveConstructor} constructor in
 the `Certs` module does, then the `UTXO`{.AgdaDatatype} batch balance equation will
