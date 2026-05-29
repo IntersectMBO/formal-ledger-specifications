@@ -141,6 +141,7 @@ record GovActionState : Type where
     expiresIn   : Epoch
     action      : GovAction
     prevAction  : NeedsHash (gaType action)
+    deposit     : Coin
 
 -- Governance Helper Functions
 isGovVoterDRep : GovVoter → Maybe Credential

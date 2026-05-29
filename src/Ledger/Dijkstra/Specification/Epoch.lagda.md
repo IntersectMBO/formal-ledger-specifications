@@ -77,8 +77,7 @@ getOrphans es govSt = proj₁ $ iterate step ([] , govSt) (length govSt)
 getStakeCred : TxOut → Maybe Credential
 getStakeCred (a , _ , _ , _) = stakeCred a
 
-open GovActionState using (returnAddr)
--- open RewardAddress using (stake)
+open GovActionState using (returnAddr; deposit)
 
 PoolDelegatedStake : Type
 PoolDelegatedStake = KeyHash ⇀ Coin
@@ -331,16 +330,11 @@ opaque
       sd : KeyHash ⇀ Coin
       sd = aggregate₊ ((stakeCredentialsPerPool ∘ʳ (StakeOf ss ˢ)) ᶠˢ)
 
-  -- In Dijkstra, look up each gov action's deposit from GState.deposits
-  -- using the stake credential of the proposal's returnAddr.
-  stakeFromGADeposits : GovState → GState → Stake
-  stakeFromGADeposits govSt gState =
-    aggregateBy
-      (mapˢ (λ (gaid , addr) → (gaid , addr) , stake addr) govSt')
-      (mapFromPartialFun (λ (_ , addr) → lookupᵐ? (DepositsOf gState) (stake addr)) govSt')
-    where
-      govSt' : ℙ (GovActionID × RewardAddress)
-      govSt' = mapˢ (map₂ returnAddr) (fromList govSt)
+  -- In Dijkstra, look up each gov action's deposit from its
+  -- GovActionState
+  stakeFromGADeposits : GovState → Stake
+  stakeFromGADeposits =
+    foldr (λ (_ , gaSt) acc → ❴ (stake (gaSt .returnAddr) , gaSt .deposit) ❵ ∪⁺ acc) ∅
 
 module VDelegDelegatedStake
   (currentEpoch : Epoch)
@@ -349,15 +343,19 @@ module VDelegDelegatedStake
   (gState       : GState)
   (dState       : DState)
   where
+
   activeDReps : ℙ Credential
   activeDReps = dom (activeDRepsOf gState currentEpoch)
+
   activeVDelegs : ℙ VDeleg
   activeVDelegs = mapˢ vDelegCredential activeDReps ∪ ❴ vDelegNoConfidence ❵ ∪ ❴ vDelegAbstain ❵
+
   stakePerCredential : Credential → Coin
   stakePerCredential c =
       cbalance ((UTxOOf utxoSt) ∣^' λ txout → getStakeCred txout ≡ just c)
-    + fromMaybe 0 (lookupᵐ? (stakeFromGADeposits govSt gState) c)  -- ← gState, not utxoSt
+    + fromMaybe 0 (lookupᵐ? (stakeFromGADeposits govSt) c)
     + fromMaybe 0 (lookupᵐ? (RewardsOf dState) c)
+
   calculate : VDeleg ⇀ Coin
   calculate =
     mapFromFun
@@ -376,14 +374,14 @@ opaque
     calculatePoolDelegatedStake ss ∪⁺ (stakeFromDeposits ∣ dom (PoolsOf ss))
     where
     stakeFromDeposits : KeyHash ⇀ Coin
-    stakeFromDeposits = aggregate₊ (((StakeDelegsOf ss ˢ) ⁻¹ʳ ∘ʳ (stakeFromGADeposits govSt gState ˢ)) ᶠˢ)
+    stakeFromDeposits = aggregate₊ (((StakeDelegsOf ss ˢ) ⁻¹ʳ ∘ʳ (stakeFromGADeposits govSt ˢ)) ᶠˢ)
 
 -- mkStakeDistrs no longer takes utxoSt for the deposit lookup,
 -- but still takes it for the UTxO-balance part of VDeleg stake.
 mkStakeDistrs : Snapshot → Epoch → UTxOState → GovState → GState → DState → StakeDistrs
 mkStakeDistrs ss currentEpoch utxoSt govSt gState dState =
   ⟦ calculateVDelegDelegatedStake currentEpoch utxoSt govSt gState dState
-  , calculatePoolDelegatedStakeForVoting ss govSt gState   -- ← no utxoSt here
+  , calculatePoolDelegatedStakeForVoting ss govSt gState
   ⟧
 
 
@@ -422,12 +420,7 @@ data _⊢_⇀⦇_,EPOCH⦈_ : ⊤ → EpochState → Epoch → EpochState → Ty
 
       removedGovActions : ℙ (RewardAddress × Coin)
       removedGovActions =
-          mapPartial
-            (λ (gaid , gaSt) →
-              let ra   = GovActionState.returnAddr gaSt
-                  cred = RewardAddress.stake ra
-              in  (ra ,_) <$> lookupᵐ? (DepositsOf (GStateOf ls)) cred)
-            removed'
+        mapˢ (λ (_ , gaSt) → (gaSt .returnAddr , gaSt .deposit)) removed'
 
       govActionReturns : RewardAddress ⇀ Coin
       govActionReturns =
@@ -452,14 +445,12 @@ data _⊢_⇀⦇_,EPOCH⦈_ : ⊤ → EpochState → Epoch → EpochState → Ty
       gState' = ⟦ (if null govSt' then mapValues (1 +_) (DRepsOf ls) else (DRepsOf ls))
                 , CCHotKeysOf ls ∣ ccCreds (EnactState.cc es)
                 , DepositsOf (GStateOf ls)
-                  -- ∣ mapˢ (RewardAddress.stake ∘ GovActionState.returnAddr ∘ proj₂) removed' ᶜ
                 ⟧
 
       certState' : CertState
       certState' = record { dState = dState' ; pState = pState' ; gState = gState' }
 
-      -- utxoSt' = ⟦ utxoSt .utxo , utxoSt .fees , utxoSt .deposits ∣ mapˢ (proj₁ ∘ proj₂) removedGovActions ᶜ , 0 ⟧
-      utxoSt' = UTxOStateOf ls
+      utxoSt' = ⟦ UTxOOf utxoSt , FeesOf utxoSt , 0 ⟧
 
       acnt' = record acnt
         { treasury  = TreasuryOf acnt ∸ totWithdrawals + DonationsOf utxoSt + unclaimed }
