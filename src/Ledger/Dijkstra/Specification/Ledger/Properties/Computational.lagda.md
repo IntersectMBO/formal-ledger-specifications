@@ -106,12 +106,12 @@ instance
       completeEntities = complete {STS = _⊢_⇀⦇_,ENTITIES⦈_}
 
     module go
-      (Γ   : SubLedgerEnv) (let open SubLedgerEnv Γ)
+      (Γ   : SubLedgerEnv) (let open SubLedgerEnv Γ renaming (certState to certState'))
       (s   : LedgerState)  (let open LedgerState s)
       (stx : SubLevelTx)
       where
       subUtxoΓ : SubUTxOEnv
-      subUtxoΓ = ⟦ slot , pparams , treasury , utxo₀ , isTopLevelValid , allScripts , accountBalances ⟧
+      subUtxoΓ = ⟦ slot , pparams , treasury , utxo₀ , certState' , allScripts , isTopLevelValid ⟧
 
       certΓ : CertEnv
       certΓ = ⟦ epoch slot , pparams , ListOfGovVotesOf stx , WithdrawalsOf stx , allColdCreds govSt enactState , DirectDepositsOf stx ⟧
@@ -220,7 +220,7 @@ instance
       allScripts = getAllScripts txTop utxo₀
 
       subΓ : SubLedgerEnv
-      subΓ = ⟦ slot , ppolicy , pparams , enactState , treasury , utxo₀ , IsValidFlagOf txTop , allScripts , RewardsOf certState ⟧
+      subΓ = ⟦ slot , ppolicy , pparams , enactState , treasury , utxo₀ , certState , allScripts , IsValidFlagOf txTop ⟧
 
       certΓ : GovState → CertEnv
       certΓ govSt' = ⟦ epoch slot , pparams , ListOfGovVotesOf txTop , WithdrawalsOf txTop , allColdCreds govSt' enactState , DirectDepositsOf txTop ⟧
@@ -229,7 +229,7 @@ instance
       govΓ certSt = ⟦ TxIdOf txTop , epoch slot , pparams , ppolicy , enactState , certSt , dom (RewardsOf certSt) ⟧
 
       utxoΓ : UTxOEnv
-      utxoΓ = ⟦ slot , pparams , treasury , utxo₀ , certState , allScripts , RewardsOf certState ⟧
+      utxoΓ = ⟦ slot , pparams , treasury , utxo₀ , certState , allScripts ⟧
 ```
 -->
 
