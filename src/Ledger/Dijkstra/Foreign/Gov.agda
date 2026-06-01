@@ -87,16 +87,17 @@ record GovActionState' : Type where
     expiresIn   : Epoch
     action      : GovAction'
     prevAction  : GovActionID
+    deposit     : Coin
 
 private
   mkGovActionState' : Convertible GovActionState GovActionState'
   mkGovActionState' = λ where
     .to   s → let module s = GovActionState s in
       record { votes = s.votes ; returnAddr = s.returnAddr ; expiresIn = s.expiresIn
-             ; action = to s.action ; prevAction = fromNeedsHash s.prevAction }
+             ; action = to s.action ; prevAction = fromNeedsHash s.prevAction ; deposit = s.deposit }
     .from s → let module s = GovActionState' s in
       record { votes = s.votes ; returnAddr = s.returnAddr ; expiresIn = s.expiresIn
-             ; action = from s.action ; prevAction = toNeedsHash s.prevAction }
+             ; action = from s.action ; prevAction = toNeedsHash s.prevAction ; deposit = s.deposit }
 
 instance
   HsTy-GovActionState' = autoHsType GovActionState' ⊣ withName "GovActionState"

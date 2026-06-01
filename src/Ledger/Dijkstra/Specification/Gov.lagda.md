@@ -184,9 +184,15 @@ insertGovAction ((gaID₀ , gaSt₀) ∷ gaPrs) (gaID₁ , gaSt₁)
      then (gaID₀ , gaSt₀) ∷ insertGovAction gaPrs (gaID₁ , gaSt₁)
      else (gaID₁ , gaSt₁) ∷ (gaID₀ , gaSt₀) ∷ gaPrs
 
-mkGovStatePair :  Epoch → GovActionID → RewardAddress → (a : GovAction) → NeedsHash (a .gaType)
-                  → GovActionID × GovActionState
-mkGovStatePair e aid addr a prev = (aid , gas)
+mkGovStatePair
+  : Epoch
+  → GovActionID
+  → RewardAddress
+  → (a : GovAction)
+  → NeedsHash (a .gaType)
+  → Coin
+  → GovActionID × GovActionState
+mkGovStatePair e aid addr a prev d = (aid , gas)
   where
   gas : GovActionState
   gas = record  { votes = record { gvCC = ∅ ; gvDRep = ∅ ; gvSPO = ∅ }
@@ -194,13 +200,16 @@ mkGovStatePair e aid addr a prev = (aid , gas)
                 ; expiresIn = e
                 ; action = a
                 ; prevAction = prev
+                ; deposit = d
                 }
 
 -- add a new proposed action at the end of a given GovState
-addAction :  GovState → Epoch → GovActionID → RewardAddress
-             → (a : GovAction) → NeedsHash (a .gaType)
-             → GovState
-addAction s e aid addr a prev = insertGovAction s (mkGovStatePair e aid addr a prev)
+addAction
+  : GovState → Epoch → GovActionID → RewardAddress
+  → (a : GovAction) → NeedsHash (a .gaType)
+  → Coin
+  → GovState
+addAction s e aid addr a prev d = insertGovAction s (mkGovStatePair e aid addr a prev d)
 
 
 opaque
@@ -441,6 +450,7 @@ data _⊢_⇀⦇_,GOV⦈_ : GovEnv × ℕ → GovState → GovVote ⊎ GovPropos
       ───────────────────────────────────────
       (Γ , k) ⊢ s ⇀⦇ inj₂ prop ,GOV⦈ addAction s (pp .govActionLifetime +ᵉ e)
                                                  (Γ .txid , k) addr a prev
+                                                 (pp. govActionDeposit)
 
 
 -- N.B. The GOVS transition rule is a reduce combinator; applies GOV at each step.
