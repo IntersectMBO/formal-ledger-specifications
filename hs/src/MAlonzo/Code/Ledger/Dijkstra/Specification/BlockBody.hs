@@ -83,219 +83,219 @@ d_treasury_1242 v0
       MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_treasury_200
       (coe v0)
 -- Ledger.Dijkstra.Specification.BlockBody._.EnactState
-d_EnactState_2612 a0 a1 = ()
+d_EnactState_2614 a0 a1 = ()
 -- Ledger.Dijkstra.Specification.BlockBody._.EnactState.cc
-d_cc_2662 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.T_EnactState_1228 ->
+d_cc_2664 ::
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.T_EnactState_1230 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_cc_2662 v0
+d_cc_2664 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_cc_1240 (coe v0)
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_cc_1242 (coe v0)
 -- Ledger.Dijkstra.Specification.BlockBody._.EnactState.constitution
-d_constitution_2664 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.T_EnactState_1228 ->
+d_constitution_2666 ::
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.T_EnactState_1230 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_constitution_2664 v0
+d_constitution_2666 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_constitution_1242
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_constitution_1244
       (coe v0)
 -- Ledger.Dijkstra.Specification.BlockBody._.EnactState.pparams
-d_pparams_2666 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.T_EnactState_1228 ->
+d_pparams_2668 ::
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.T_EnactState_1230 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_pparams_2666 v0
+d_pparams_2668 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_pparams_1246
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_pparams_1248
       (coe v0)
 -- Ledger.Dijkstra.Specification.BlockBody._.EnactState.pv
-d_pv_2668 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.T_EnactState_1228 ->
+d_pv_2670 ::
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.T_EnactState_1230 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_pv_2668 v0
+d_pv_2670 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_pv_1244 (coe v0)
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_pv_1246 (coe v0)
 -- Ledger.Dijkstra.Specification.BlockBody._.EnactState.withdrawals
-d_withdrawals_2670 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.T_EnactState_1228 ->
+d_withdrawals_2672 ::
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.T_EnactState_1230 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_withdrawals_2670 v0
+d_withdrawals_2672 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_withdrawals_1248
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_withdrawals_1250
       (coe v0)
 -- Ledger.Dijkstra.Specification.BlockBody._._⊢_⇀⦇_,LEDGERS⦈_
-d__'8866'_'8640''10631'_'44'LEDGERS'10632'__2678 ::
+d__'8866'_'8640''10631'_'44'LEDGERS'10632'__2680 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3072 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.T_LedgerEnv_3650 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.T_LedgerState_3692 ->
-  [MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3626] ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.T_LedgerState_3692 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3074 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.T_LedgerEnv_3652 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.T_LedgerState_3694 ->
+  [MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3628] ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.T_LedgerState_3694 ->
   ()
-d__'8866'_'8640''10631'_'44'LEDGERS'10632'__2678 = erased
+d__'8866'_'8640''10631'_'44'LEDGERS'10632'__2680 = erased
 -- Ledger.Dijkstra.Specification.BlockBody._.LedgerState
-d_LedgerState_2746 a0 a1 = ()
+d_LedgerState_2748 a0 a1 = ()
 -- Ledger.Dijkstra.Specification.BlockBody._.LedgerState.certState
-d_certState_2798 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.T_LedgerState_3692 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_CertState_1404
-d_certState_2798 v0
+d_certState_2800 ::
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.T_LedgerState_3694 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_CertState_1406
+d_certState_2800 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_certState_3704
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_certState_3706
       (coe v0)
 -- Ledger.Dijkstra.Specification.BlockBody._.LedgerState.govSt
-d_govSt_2800 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.T_LedgerState_3692 ->
+d_govSt_2802 ::
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.T_LedgerState_3694 ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
-d_govSt_2800 v0
+d_govSt_2802 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_govSt_3702
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_govSt_3704
       (coe v0)
 -- Ledger.Dijkstra.Specification.BlockBody._.LedgerState.utxoSt
-d_utxoSt_2802 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.T_LedgerState_3692 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOState_3110
-d_utxoSt_2802 v0
+d_utxoSt_2804 ::
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.T_LedgerState_3694 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOState_3112
+d_utxoSt_2804 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_utxoSt_3700
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_utxoSt_3702
       (coe v0)
 -- Ledger.Dijkstra.Specification.BlockBody._.BlocksMade
-d_BlocksMade_2828 ::
+d_BlocksMade_2830 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3072 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3074 ->
   ()
-d_BlocksMade_2828 = erased
+d_BlocksMade_2830 = erased
 -- Ledger.Dijkstra.Specification.BlockBody._.totExUnits
-d_totExUnits_2930 ::
+d_totExUnits_2932 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3072 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3074 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TxLevel_8 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3626 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3628 ->
   AgdaAny
-d_totExUnits_2930 v0 ~v1 = du_totExUnits_2930 v0
-du_totExUnits_2930 ::
+d_totExUnits_2932 v0 ~v1 = du_totExUnits_2932 v0
+du_totExUnits_2932 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TxLevel_8 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3626 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3628 ->
   AgdaAny
-du_totExUnits_2930 v0 v1 v2
+du_totExUnits_2932 v0 v1 v2
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.du_totExUnits_3032
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.du_totExUnits_3034
       (coe v0) v2
 -- Ledger.Dijkstra.Specification.BlockBody.BHBody
-d_BHBody_2932 a0 a1 = ()
-data T_BHBody_2932
-  = C_constructor_2954 AgdaAny Integer AgdaAny AgdaAny Integer
+d_BHBody_2934 a0 a1 = ()
+data T_BHBody_2934
+  = C_constructor_2956 AgdaAny Integer AgdaAny AgdaAny Integer
 -- Ledger.Dijkstra.Specification.BlockBody.BHBody.bvkcold
-d_bvkcold_2944 :: T_BHBody_2932 -> AgdaAny
-d_bvkcold_2944 v0
+d_bvkcold_2946 :: T_BHBody_2934 -> AgdaAny
+d_bvkcold_2946 v0
   = case coe v0 of
-      C_constructor_2954 v1 v2 v3 v4 v5 -> coe v1
+      C_constructor_2956 v1 v2 v3 v4 v5 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Dijkstra.Specification.BlockBody.BHBody.bsize
-d_bsize_2946 :: T_BHBody_2932 -> Integer
-d_bsize_2946 v0
+d_bsize_2948 :: T_BHBody_2934 -> Integer
+d_bsize_2948 v0
   = case coe v0 of
-      C_constructor_2954 v1 v2 v3 v4 v5 -> coe v2
+      C_constructor_2956 v1 v2 v3 v4 v5 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Dijkstra.Specification.BlockBody.BHBody.slot
-d_slot_2948 :: T_BHBody_2932 -> AgdaAny
-d_slot_2948 v0
+d_slot_2950 :: T_BHBody_2934 -> AgdaAny
+d_slot_2950 v0
   = case coe v0 of
-      C_constructor_2954 v1 v2 v3 v4 v5 -> coe v3
+      C_constructor_2956 v1 v2 v3 v4 v5 -> coe v3
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Dijkstra.Specification.BlockBody.BHBody.bhash
-d_bhash_2950 :: T_BHBody_2932 -> AgdaAny
-d_bhash_2950 v0
+d_bhash_2952 :: T_BHBody_2934 -> AgdaAny
+d_bhash_2952 v0
   = case coe v0 of
-      C_constructor_2954 v1 v2 v3 v4 v5 -> coe v4
+      C_constructor_2956 v1 v2 v3 v4 v5 -> coe v4
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Dijkstra.Specification.BlockBody.BHBody.hBbsize
-d_hBbsize_2952 :: T_BHBody_2932 -> Integer
-d_hBbsize_2952 v0
+d_hBbsize_2954 :: T_BHBody_2934 -> Integer
+d_hBbsize_2954 v0
   = case coe v0 of
-      C_constructor_2954 v1 v2 v3 v4 v5 -> coe v5
+      C_constructor_2956 v1 v2 v3 v4 v5 -> coe v5
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Dijkstra.Specification.BlockBody.BHeader
-d_BHeader_2956 a0 a1 = ()
-data T_BHeader_2956 = C_constructor_2966 T_BHBody_2932 AgdaAny
+d_BHeader_2958 a0 a1 = ()
+data T_BHeader_2958 = C_constructor_2968 T_BHBody_2934 AgdaAny
 -- Ledger.Dijkstra.Specification.BlockBody.BHeader.bhbody
-d_bhbody_2962 :: T_BHeader_2956 -> T_BHBody_2932
-d_bhbody_2962 v0
+d_bhbody_2964 :: T_BHeader_2958 -> T_BHBody_2934
+d_bhbody_2964 v0
   = case coe v0 of
-      C_constructor_2966 v1 v2 -> coe v1
+      C_constructor_2968 v1 v2 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Dijkstra.Specification.BlockBody.BHeader.bhsig
-d_bhsig_2964 :: T_BHeader_2956 -> AgdaAny
-d_bhsig_2964 v0
+d_bhsig_2966 :: T_BHeader_2958 -> AgdaAny
+d_bhsig_2966 v0
   = case coe v0 of
-      C_constructor_2966 v1 v2 -> coe v2
+      C_constructor_2968 v1 v2 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Dijkstra.Specification.BlockBody.Block
-d_Block_2968 a0 a1 = ()
-data T_Block_2968
-  = C_constructor_2994 T_BHeader_2956
-                       [MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3626]
+d_Block_2970 a0 a1 = ()
+data T_Block_2970
+  = C_constructor_2996 T_BHeader_2958
+                       [MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3628]
                        Integer AgdaAny
 -- Ledger.Dijkstra.Specification.BlockBody.Block.bheader
-d_bheader_2982 :: T_Block_2968 -> T_BHeader_2956
-d_bheader_2982 v0
+d_bheader_2984 :: T_Block_2970 -> T_BHeader_2958
+d_bheader_2984 v0
   = case coe v0 of
-      C_constructor_2994 v1 v2 v3 v4 -> coe v1
+      C_constructor_2996 v1 v2 v3 v4 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Dijkstra.Specification.BlockBody.Block.ts
-d_ts_2984 ::
-  T_Block_2968 ->
-  [MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3626]
-d_ts_2984 v0
+d_ts_2986 ::
+  T_Block_2970 ->
+  [MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3628]
+d_ts_2986 v0
   = case coe v0 of
-      C_constructor_2994 v1 v2 v3 v4 -> coe v2
+      C_constructor_2996 v1 v2 v3 v4 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Dijkstra.Specification.BlockBody.Block.bBodySize
-d_bBodySize_2986 :: T_Block_2968 -> Integer
-d_bBodySize_2986 v0
+d_bBodySize_2988 :: T_Block_2970 -> Integer
+d_bBodySize_2988 v0
   = case coe v0 of
-      C_constructor_2994 v1 v2 v3 v4 -> coe v3
+      C_constructor_2996 v1 v2 v3 v4 -> coe v3
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Dijkstra.Specification.BlockBody.Block.bBodyHash
-d_bBodyHash_2988 :: T_Block_2968 -> AgdaAny
-d_bBodyHash_2988 v0
+d_bBodyHash_2990 :: T_Block_2970 -> AgdaAny
+d_bBodyHash_2990 v0
   = case coe v0 of
-      C_constructor_2994 v1 v2 v3 v4 -> coe v4
+      C_constructor_2996 v1 v2 v3 v4 -> coe v4
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Dijkstra.Specification.BlockBody.Block.≡-bBodySize
-d_'8801''45'bBodySize_2990 ::
-  T_Block_2968 -> MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_'8801''45'bBodySize_2990 = erased
+d_'8801''45'bBodySize_2992 ::
+  T_Block_2970 -> MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
+d_'8801''45'bBodySize_2992 = erased
 -- Ledger.Dijkstra.Specification.BlockBody.Block.≡-bBodyHash
-d_'8801''45'bBodyHash_2992 ::
-  T_Block_2968 -> MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_'8801''45'bBodyHash_2992 = erased
+d_'8801''45'bBodyHash_2994 ::
+  T_Block_2970 -> MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
+d_'8801''45'bBodyHash_2994 = erased
 -- Ledger.Dijkstra.Specification.BlockBody.BBodyEnv
-d_BBodyEnv_2996 ::
+d_BBodyEnv_2998 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3072 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3074 ->
   ()
-d_BBodyEnv_2996 = erased
+d_BBodyEnv_2998 = erased
 -- Ledger.Dijkstra.Specification.BlockBody.BBodyState
-d_BBodyState_2998 ::
+d_BBodyState_3000 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3072 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3074 ->
   ()
-d_BBodyState_2998 = erased
+d_BBodyState_3000 = erased
 -- Ledger.Dijkstra.Specification.BlockBody.incrBlocks
-d_incrBlocks_3000 ::
+d_incrBlocks_3002 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3072 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3074 ->
   AgdaAny ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_incrBlocks_3000 v0 ~v1 v2 v3 = du_incrBlocks_3000 v0 v2 v3
-du_incrBlocks_3000 ::
+d_incrBlocks_3002 v0 ~v1 v2 v3 = du_incrBlocks_3002 v0 v2 v3
+du_incrBlocks_3002 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
   AgdaAny ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-du_incrBlocks_3000 v0 v1 v2
+du_incrBlocks_3002 v0 v1 v2
   = coe
       MAlonzo.Code.Axiom.Set.Map.Dec.du__'8746''8314'__582
       MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8
@@ -318,7 +318,7 @@ du_incrBlocks_3000 v0 v1 v2
                MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
          (coe v1) (coe (1 :: Integer)))
 -- Ledger.Dijkstra.Specification.BlockBody._⊢_⇀⦇_,BBODY⦈_
-d__'8866'_'8640''10631'_'44'BBODY'10632'__3006 a0 a1 a2 a3 a4 a5
+d__'8866'_'8640''10631'_'44'BBODY'10632'__3008 a0 a1 a2 a3 a4 a5
   = ()
-newtype T__'8866'_'8640''10631'_'44'BBODY'10632'__3006
-  = C_BBODY'45'Block'45'Body_3032 MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+newtype T__'8866'_'8640''10631'_'44'BBODY'10632'__3008
+  = C_BBODY'45'Block'45'Body_3034 MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
