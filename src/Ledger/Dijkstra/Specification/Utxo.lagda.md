@@ -467,7 +467,7 @@ The [CIP][1] states:
    are disjoint.
 
 4. Direct deposit targets must be registered accounts (their credentials
-   must appear in `dom accountBalances`).
+   must appear in `dom (RewardsOf Γ)`).
 
 5. Each balance interval assertion must hold against the pre-batch account
    balances; this is a Phase-1 validity condition.

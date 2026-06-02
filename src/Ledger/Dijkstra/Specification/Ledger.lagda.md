@@ -80,10 +80,6 @@ instance
 
   HasTreasury-SubLedgerEnv : HasTreasury SubLedgerEnv
   HasTreasury-SubLedgerEnv .TreasuryOf = SubLedgerEnv.treasury
-
-  -- HasAccountBalances-SubLedgerEnv : HasAccountBalances SubLedgerEnv
-  -- HasAccountBalances-SubLedgerEnv .AccountBalancesOf = SubLedgerEnv.accountBalances
-
 ```
 -->
 ```agda
@@ -222,7 +218,6 @@ private variable
   treasury                          : Treasury
   isTopLevelValid                   : Bool
   allScripts                        : ℙ Script
-  accountBalances                   : Rewards
 ```
 -->
 
