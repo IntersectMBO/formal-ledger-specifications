@@ -307,13 +307,12 @@ the three deposit fields (`DState.deposits`{.AgdaField}, `PState.deposits`{.Agda
 the deposit evolution for a single `DCert` and mirror that of the corresponding
 `CERT` sub-rule.
 
-### <span class="AgdaDatatype">DepositTriple</span> Type and Helper Function
+### Helper Functions
 
 The three deposit fields carried by a `CertState`{.AgdaRecord} have types
 `Credential ⇀ Coin`, `KeyHash ⇀ Coin`, and `Credential ⇀ Coin`, respectively,
-so we package them as the components of a single `DepositTriple`{.AgdaFunction} type,
-inhabitants of which are constructed via `depositTripleOf`{.AgdaFunction}, and values
-of which are computed via `coinFromDepositTriple`{.AgdaFunction}.  By definition,
+and we package them up as a triple of values which are computed via
+`coinFromDepositTriple`{.AgdaFunction}.  By definition,
 
     coinFromDeposits cs ≡ coinFromDepositTriple (depositTripleOf cs).
 
