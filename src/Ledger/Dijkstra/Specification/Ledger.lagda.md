@@ -45,9 +45,9 @@ record SubLedgerEnv : Type where
     enactState       : EnactState
     treasury         : Treasury
     utxo₀            : UTxO
-    isTopLevelValid  : Bool
+    certState        : CertState
     allScripts       : ℙ Script
-    accountBalances  : Rewards
+    isTopLevelValid  : Bool
 
 record LedgerEnv : Type where
   field
@@ -80,10 +80,6 @@ instance
 
   HasTreasury-SubLedgerEnv : HasTreasury SubLedgerEnv
   HasTreasury-SubLedgerEnv .TreasuryOf = SubLedgerEnv.treasury
-
-  HasAccountBalances-SubLedgerEnv : HasAccountBalances SubLedgerEnv
-  HasAccountBalances-SubLedgerEnv .AccountBalancesOf = SubLedgerEnv.accountBalances
-
 ```
 -->
 ```agda
@@ -211,7 +207,7 @@ instance
 private variable
   utxo₀                             : UTxO
   utxoState₀ utxoState₁ utxoState₂  : UTxOState
-  certState₀ certState₁ certState₂  : CertState
+  certState certState₀ certState₁ certState₂  : CertState
   govState₀  govState₁  govState₂   : GovState
   tx                                : TopLevelTx
   stx                               : SubLevelTx
@@ -222,7 +218,6 @@ private variable
   treasury                          : Treasury
   isTopLevelValid                   : Bool
   allScripts                        : ℙ Script
-  accountBalances                   : Rewards
 ```
 -->
 
@@ -289,17 +284,17 @@ data _⊢_⇀⦇_,SUBLEDGER⦈_ : SubLedgerEnv → LedgerState → SubLevelTx �
 
   SUBLEDGER-V :
       ∙ isTopLevelValid ≡ true
-      ∙ ⟦ slot , pp , treasury , utxo₀ , isTopLevelValid , allScripts , accountBalances ⟧ ⊢ utxoState₀ ⇀⦇ stx ,SUBUTXOW⦈ utxoState₁
+      ∙ ⟦ slot , pp , treasury , utxo₀ , certState , allScripts , isTopLevelValid ⟧ ⊢ utxoState₀ ⇀⦇ stx ,SUBUTXOW⦈ utxoState₁
       ∙ ⟦ epoch slot , pp , ListOfGovVotesOf stx , WithdrawalsOf stx , allColdCreds govState₀ enactState , DirectDepositsOf stx ⟧ ⊢ certState₀ ⇀⦇ DCertsOf stx ,ENTITIES⦈ certState₁
       ∙ ⟦ TxIdOf stx , epoch slot , pp , ppolicy , enactState , certState₁ , dom (RewardsOf certState₁) ⟧ ⊢ govState₀ ⇀⦇ GovProposals+Votes stx ,GOVS⦈ govState₁
         ────────────────────────────────
-        ⟦ slot , ppolicy , pp , enactState , treasury , utxo₀ , isTopLevelValid , allScripts , accountBalances ⟧ ⊢ ⟦ utxoState₀ , govState₀ , certState₀ ⟧ ⇀⦇ stx ,SUBLEDGER⦈ ⟦ utxoState₁ , govState₁ , certState₁ ⟧
+        ⟦ slot , ppolicy , pp , enactState , treasury , utxo₀ , certState , allScripts , isTopLevelValid ⟧ ⊢ ⟦ utxoState₀ , govState₀ , certState₀ ⟧ ⇀⦇ stx ,SUBLEDGER⦈ ⟦ utxoState₁ , govState₁ , certState₁ ⟧
 
   SUBLEDGER-I :
       ∙ isTopLevelValid ≡ false
-      ∙ ⟦ slot , pp , treasury , utxo₀ , isTopLevelValid , allScripts , accountBalances ⟧ ⊢ utxoState₀ ⇀⦇ stx ,SUBUTXOW⦈ utxoState₀
+      ∙ ⟦ slot , pp , treasury , utxo₀ , certState , allScripts , isTopLevelValid  ⟧ ⊢ utxoState₀ ⇀⦇ stx ,SUBUTXOW⦈ utxoState₀
         ────────────────────────────────
-        ⟦ slot , ppolicy , pp , enactState , treasury , utxo₀ , isTopLevelValid , allScripts , accountBalances ⟧ ⊢ ⟦ utxoState₀ , govState₀ , certState₀ ⟧ ⇀⦇ stx ,SUBLEDGER⦈ ⟦ utxoState₀ , govState₀ , certState₀ ⟧
+        ⟦ slot , ppolicy , pp , enactState , treasury , utxo₀ , certState , allScripts , isTopLevelValid ⟧ ⊢ ⟦ utxoState₀ , govState₀ , certState₀ ⟧ ⇀⦇ stx ,SUBLEDGER⦈ ⟦ utxoState₀ , govState₀ , certState₀ ⟧
 
 _⊢_⇀⦇_,SUBLEDGERS⦈_ : SubLedgerEnv → LedgerState → List SubLevelTx → LedgerState → Type
 _⊢_⇀⦇_,SUBLEDGERS⦈_ = ReflexiveTransitiveClosure {sts = _⊢_⇀⦇_,SUBLEDGER⦈_}
@@ -315,10 +310,10 @@ data _⊢_⇀⦇_,LEDGER⦈_ : LedgerEnv → LedgerState → TopLevelTx → Ledg
          allScripts = getAllScripts tx utxo₀
     in
       ∙ IsValidFlagOf tx ≡ true
-      ∙ ⟦ slot , ppolicy , pp , enactState , treasury , utxo₀ , IsValidFlagOf tx , allScripts , RewardsOf certState₀ ⟧ ⊢ ⟦ utxoState₀ , govState₀ , certState₀ ⟧ ⇀⦇ SubTransactionsOf tx ,SUBLEDGERS⦈ ⟦ utxoState₁ , govState₁ , certState₁ ⟧
+      ∙ ⟦ slot , ppolicy , pp , enactState , treasury , utxo₀ , certState₀ , allScripts , IsValidFlagOf tx ⟧ ⊢ ⟦ utxoState₀ , govState₀ , certState₀ ⟧ ⇀⦇ SubTransactionsOf tx ,SUBLEDGERS⦈ ⟦ utxoState₁ , govState₁ , certState₁ ⟧
       ∙ ⟦ epoch slot , pp , ListOfGovVotesOf tx , WithdrawalsOf tx , allColdCreds govState₁ enactState , DirectDepositsOf tx ⟧ ⊢ certState₁ ⇀⦇ DCertsOf tx ,ENTITIES⦈ certState₂
       ∙ ⟦ TxIdOf tx , epoch slot , pp , ppolicy , enactState , certState₂ , dom (RewardsOf certState₂) ⟧ ⊢ govState₁ ⇀⦇ GovProposals+Votes tx ,GOVS⦈ govState₂
-      ∙ ⟦ slot , pp , treasury , utxo₀ , certState₀ , allScripts , RewardsOf certState₀ ⟧ ⊢ utxoState₁ ⇀⦇ tx ,UTXOW⦈ utxoState₂
+      ∙ ⟦ slot , pp , treasury , utxo₀ , certState₀ , allScripts ⟧ ⊢ utxoState₁ ⇀⦇ tx ,UTXOW⦈ utxoState₂
         ────────────────────────────────
         ⟦ slot , ppolicy , pp , enactState , treasury ⟧ ⊢ ⟦ utxoState₀ , govState₀ , certState₀ ⟧ ⇀⦇ tx ,LEDGER⦈ ⟦ utxoState₂ , rmOrphanDRepVotes certState₂ govState₂ , certState₂ ⟧
 
@@ -330,8 +325,8 @@ data _⊢_⇀⦇_,LEDGER⦈_ : LedgerEnv → LedgerState → TopLevelTx → Ledg
          allScripts = getAllScripts tx utxo₀
     in
       ∙ IsValidFlagOf tx ≡ false
-      ∙ ⟦ slot , ppolicy , pp , enactState , treasury , utxo₀ , IsValidFlagOf tx , allScripts , RewardsOf certState₀ ⟧ ⊢ ⟦ utxoState₀ , govState₀ , certState₀ ⟧ ⇀⦇ SubTransactionsOf tx ,SUBLEDGERS⦈ ⟦ utxoState₀ , govState₀ , certState₀ ⟧
-      ∙ ⟦ slot , pp , treasury , utxo₀ , certState₀ , allScripts , RewardsOf certState₀ ⟧ ⊢ utxoState₀ ⇀⦇ tx ,UTXOW⦈ utxoState₁
+      ∙ ⟦ slot , ppolicy , pp , enactState , treasury , utxo₀ , certState₀ , allScripts , IsValidFlagOf tx ⟧ ⊢ ⟦ utxoState₀ , govState₀ , certState₀ ⟧ ⇀⦇ SubTransactionsOf tx ,SUBLEDGERS⦈ ⟦ utxoState₀ , govState₀ , certState₀ ⟧
+      ∙ ⟦ slot , pp , treasury , utxo₀ , certState₀ , allScripts ⟧ ⊢ utxoState₀ ⇀⦇ tx ,UTXOW⦈ utxoState₁
         ────────────────────────────────
         ⟦ slot , ppolicy , pp , enactState , treasury ⟧ ⊢ ⟦ utxoState₀ , govState₀ , certState₀ ⟧ ⇀⦇ tx ,LEDGER⦈ ⟦ utxoState₁ , govState₀ , certState₀ ⟧
 

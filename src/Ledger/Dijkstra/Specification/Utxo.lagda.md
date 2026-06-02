@@ -79,7 +79,6 @@ record UTxOEnv : Type where
     utxo₀             : UTxO
     certState         : CertState
     allScripts        : ℙ Script
-    accountBalances   : Rewards
 
 record SubUTxOEnv : Type where
   field
@@ -87,9 +86,9 @@ record SubUTxOEnv : Type where
     pparams          : PParams
     treasury         : Treasury
     utxo₀            : UTxO
-    isTopLevelValid  : Bool
+    certState        : CertState
     allScripts       : ℙ Script
-    accountBalances  : Rewards
+    isTopLevelValid  : Bool
 ```
 
 The `UTxOEnv`{.AgdaRecord} carries
@@ -142,10 +141,6 @@ record HasDataPool {a} (A : Type a) : Type a where
   field DataPoolOf : A → DataHash ⇀ Datum
 open HasDataPool ⦃...⦄ public
 
-record HasAccountBalances {a} (A : Type a) : Type a where
-  field AccountBalancesOf : A → Rewards
-open HasAccountBalances ⦃...⦄ public
-
 record HasSlot {a} (A : Type a) : Type a where
   field SlotOf : A → Slot
 open HasSlot ⦃...⦄ public
@@ -169,8 +164,8 @@ instance
   HasScriptPool-UTxOEnv : HasScriptPool UTxOEnv
   HasScriptPool-UTxOEnv .ScriptPoolOf = UTxOEnv.allScripts
 
-  HasAccountBalances-UTxOEnv : HasAccountBalances UTxOEnv
-  HasAccountBalances-UTxOEnv .AccountBalancesOf = UTxOEnv.accountBalances
+  HasRewards-UTxOEnv : HasRewards UTxOEnv
+  HasRewards-UTxOEnv .RewardsOf = RewardsOf ∘ UTxOEnv.certState
 
   HasSlot-SubUTxOEnv : HasSlot SubUTxOEnv
   HasSlot-SubUTxOEnv .SlotOf = SubUTxOEnv.slot
@@ -190,8 +185,8 @@ instance
   HasScriptPool-SubUTxOEnv : HasScriptPool SubUTxOEnv
   HasScriptPool-SubUTxOEnv .ScriptPoolOf = SubUTxOEnv.allScripts
 
-  HasAccountBalances-SubUTxOEnv : HasAccountBalances SubUTxOEnv
-  HasAccountBalances-SubUTxOEnv .AccountBalancesOf = SubUTxOEnv.accountBalances
+  HasRewards-SubUTxOEnv : HasRewards SubUTxOEnv
+  HasRewards-SubUTxOEnv .RewardsOf = RewardsOf ∘ SubUTxOEnv.certState
 
   HasUTxO-UTxOState : HasUTxO UTxOState
   HasUTxO-UTxOState .UTxOOf = UTxOState.utxo
@@ -472,7 +467,7 @@ The [CIP][1] states:
    are disjoint.
 
 4. Direct deposit targets must be registered accounts (their credentials
-   must appear in `dom accountBalances`).
+   must appear in `dom (RewardsOf Γ)`).
 
 5. Each balance interval assertion must hold against the pre-batch account
    balances; this is a Phase-1 validity condition.
@@ -500,10 +495,10 @@ data _⊢_⇀⦇_,SUBUTXO⦈_ : SubUTxOEnv → UTxOState → SubLevelTx → UTxO
     ∙ ∀[ a ∈ dom (DirectDepositsOf txSub)] (NetworkIdOf a ≡ NetworkId)
     ∙ MaybeNetworkIdOf txSub ~ just NetworkId
     ∙ CurrentTreasuryOf txSub ~ just (TreasuryOf Γ)
-    ∙ mapˢ stake (dom (DirectDepositsOf txSub)) ⊆ dom (AccountBalancesOf Γ)
-    ∙ dom (BalanceIntervalsOf txSub) ⊆ dom (AccountBalancesOf Γ)
+    ∙ mapˢ stake (dom (DirectDepositsOf txSub)) ⊆ dom (RewardsOf Γ)
+    ∙ dom (BalanceIntervalsOf txSub) ⊆ dom (RewardsOf Γ)
     ∙ ∀[ (c , interval) ∈ BalanceIntervalsOf txSub ˢ ]
-        (InBalanceInterval (maybe id 0 (lookupᵐ? (AccountBalancesOf Γ) c)) interval)
+        (InBalanceInterval (maybe id 0 (lookupᵐ? (RewardsOf Γ) c)) interval)
       ────────────────────────────────
     let
        s₁ = if IsTopLevelValidFlagOf Γ
@@ -564,10 +559,10 @@ data _⊢_⇀⦇_,UTXO⦈_ : UTxOEnv × Bool → UTxOState → TopLevelTx → UT
     ∙ ∀[ a ∈ dom (DirectDepositsOf txTop)] (NetworkIdOf a ≡ NetworkId)
     ∙ MaybeNetworkIdOf txTop ~ just NetworkId
     ∙ CurrentTreasuryOf txTop  ~ just (TreasuryOf Γ)
-    ∙ mapˢ stake (dom (DirectDepositsOf txTop)) ⊆ dom (AccountBalancesOf Γ)
-    ∙ dom (BalanceIntervalsOf txTop) ⊆ dom (AccountBalancesOf Γ)
+    ∙ mapˢ stake (dom (DirectDepositsOf txTop)) ⊆ dom (RewardsOf Γ)
+    ∙ dom (BalanceIntervalsOf txTop) ⊆ dom (RewardsOf Γ)
     ∙ ∀[ (c , interval) ∈ BalanceIntervalsOf txTop ˢ ]
-        (InBalanceInterval (maybe id 0 (lookupᵐ? (AccountBalancesOf Γ) c)) interval)
+        (InBalanceInterval (maybe id 0 (lookupᵐ? (RewardsOf Γ) c)) interval)
     ∙ Γ ⊢ _ ⇀⦇ txTop ,UTXOS⦈ _
       ────────────────────────────────
     let
