@@ -299,16 +299,6 @@ mkdocsRule = do
 _build :: FilePath
 _build = "_build"
 
--- | Various directories for latex
-latexIn, latexOut, latexGen, latexPP :: FilePath
-latexIn = "latex.in" -- static latex inputs
-latexGen = "latex.gen" -- generated latex (from agda)
-latexPP = "latex.pp" -- latex postprocessed
-latexOut = "latex.out" -- latex outputs
-
-_latexGen :: FilePath
-_latexGen = _build </> latexGen
-
 malonzo, malonzoGen :: FilePath
 malonzo = "MAlonzo"
 malonzoGen = malonzo </> "Code"
