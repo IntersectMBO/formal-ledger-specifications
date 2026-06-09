@@ -118,6 +118,13 @@ proposals in `tx`{.AgdaBound}.
    set `updateGroups`{.AgdaField} `pu`{.AgdaBound} is nonempty.
 
 
++  **Claim** `Gov.Properties.LastVoteApplied`.  A voter's vote is applied to the governance action.
+
+   When a voter casts a vote on a governance action via the `GOV`{.AgdaDatatype} rule, that
+   vote is recorded on the action in the resulting `GovState`{.AgdaFunction}.  Lifting to a
+   block (the `GOVS`{.AgdaFunction} closure), the *last* vote a voter casts on a given action
+   is the one recorded in the resulting state.
+
 +  **Claim** [CHAIN-EpochStep][].  A new enact state occurs only in a new epoch.
 
    Let `cs`{.AgdaBound} and `cs'`{.AgdaBound} be `ChainStates`{.AgdaRecord} and
