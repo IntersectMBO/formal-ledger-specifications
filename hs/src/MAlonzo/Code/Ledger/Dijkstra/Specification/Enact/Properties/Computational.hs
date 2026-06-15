@@ -80,121 +80,121 @@ d_gaType_1080 v0
       MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_gaType_882
       (coe v0)
 -- Ledger.Dijkstra.Specification.Enact.Properties.Computational._._⊢_⇀⦇_,ENACT⦈_
-d__'8866'_'8640''10631'_'44'ENACT'10632'__1214 a0 a1 a2 a3 a4 = ()
+d__'8866'_'8640''10631'_'44'ENACT'10632'__1216 a0 a1 a2 a3 a4 = ()
 -- Ledger.Dijkstra.Specification.Enact.Properties.Computational._.EnactEnv
-d_EnactEnv_1230 a0 = ()
+d_EnactEnv_1232 a0 = ()
 -- Ledger.Dijkstra.Specification.Enact.Properties.Computational._.EnactState
-d_EnactState_1234 a0 = ()
+d_EnactState_1236 a0 = ()
 -- Ledger.Dijkstra.Specification.Enact.Properties.Computational._.HasccMaxTermLength-EnactState
-d_HasccMaxTermLength'45'EnactState_1250 ::
+d_HasccMaxTermLength'45'EnactState_1252 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Base.T_GovStructure_10 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasCCMaxTermLength_592
-d_HasccMaxTermLength'45'EnactState_1250 ~v0
-  = du_HasccMaxTermLength'45'EnactState_1250
-du_HasccMaxTermLength'45'EnactState_1250 ::
+d_HasccMaxTermLength'45'EnactState_1252 ~v0
+  = du_HasccMaxTermLength'45'EnactState_1252
+du_HasccMaxTermLength'45'EnactState_1252 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasCCMaxTermLength_592
-du_HasccMaxTermLength'45'EnactState_1250
+du_HasccMaxTermLength'45'EnactState_1252
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.du_HasccMaxTermLength'45'EnactState_1274
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.du_HasccMaxTermLength'45'EnactState_1276
 -- Ledger.Dijkstra.Specification.Enact.Properties.Computational._.EnactEnv.epoch
-d_epoch_1276 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.T_EnactEnv_1212 ->
+d_epoch_1278 ::
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.T_EnactEnv_1214 ->
   AgdaAny
-d_epoch_1276 v0
+d_epoch_1278 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_epoch_1224
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_epoch_1226
       (coe v0)
 -- Ledger.Dijkstra.Specification.Enact.Properties.Computational._.EnactEnv.gid
-d_gid_1278 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.T_EnactEnv_1212 ->
+d_gid_1280 ::
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.T_EnactEnv_1214 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_gid_1278 v0
+d_gid_1280 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_gid_1220
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_gid_1222
       (coe v0)
 -- Ledger.Dijkstra.Specification.Enact.Properties.Computational._.EnactEnv.treasury
-d_treasury_1280 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.T_EnactEnv_1212 ->
+d_treasury_1282 ::
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.T_EnactEnv_1214 ->
   Integer
-d_treasury_1280 v0
+d_treasury_1282 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_treasury_1222
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_treasury_1224
       (coe v0)
 -- Ledger.Dijkstra.Specification.Enact.Properties.Computational._.EnactState.cc
-d_cc_1284 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.T_EnactState_1228 ->
+d_cc_1286 ::
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.T_EnactState_1230 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_cc_1284 v0
+d_cc_1286 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_cc_1240 (coe v0)
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_cc_1242 (coe v0)
 -- Ledger.Dijkstra.Specification.Enact.Properties.Computational._.EnactState.constitution
-d_constitution_1286 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.T_EnactState_1228 ->
+d_constitution_1288 ::
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.T_EnactState_1230 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_constitution_1286 v0
+d_constitution_1288 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_constitution_1242
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_constitution_1244
       (coe v0)
 -- Ledger.Dijkstra.Specification.Enact.Properties.Computational._.EnactState.pparams
-d_pparams_1288 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.T_EnactState_1228 ->
+d_pparams_1290 ::
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.T_EnactState_1230 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_pparams_1288 v0
+d_pparams_1290 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_pparams_1246
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_pparams_1248
       (coe v0)
 -- Ledger.Dijkstra.Specification.Enact.Properties.Computational._.EnactState.pv
-d_pv_1290 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.T_EnactState_1228 ->
+d_pv_1292 ::
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.T_EnactState_1230 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_pv_1290 v0
+d_pv_1292 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_pv_1244 (coe v0)
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_pv_1246 (coe v0)
 -- Ledger.Dijkstra.Specification.Enact.Properties.Computational._.EnactState.withdrawals
-d_withdrawals_1292 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.T_EnactState_1228 ->
+d_withdrawals_1294 ::
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.T_EnactState_1230 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_withdrawals_1292 v0
+d_withdrawals_1294 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_withdrawals_1248
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_withdrawals_1250
       (coe v0)
 -- Ledger.Dijkstra.Specification.Enact.Properties.Computational._.completeness
-d_completeness_1300 ::
+d_completeness_1302 ::
   MAlonzo.Code.Interface.ComputationalRelation.T_Computational_232 ->
   AgdaAny ->
   AgdaAny ->
   AgdaAny ->
   AgdaAny ->
   AgdaAny -> MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_completeness_1300 = erased
+d_completeness_1302 = erased
 -- Ledger.Dijkstra.Specification.Enact.Properties.Computational._.computeProof
-d_computeProof_1306 ::
+d_computeProof_1308 ::
   MAlonzo.Code.Interface.ComputationalRelation.T_Computational_232 ->
   AgdaAny ->
   AgdaAny ->
   AgdaAny ->
   MAlonzo.Code.Interface.ComputationalRelation.T_ComputationResult_34
-d_computeProof_1306 v0
+d_computeProof_1308 v0
   = coe
       MAlonzo.Code.Interface.ComputationalRelation.d_computeProof_272
       (coe v0)
 -- Ledger.Dijkstra.Specification.Enact.Properties.Computational._.ENACT-deterministic
-d_ENACT'45'deterministic_1332 ::
+d_ENACT'45'deterministic_1334 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Base.T_GovStructure_10 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.T_EnactEnv_1212 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.T_EnactState_1228 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.T_EnactEnv_1214 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.T_EnactState_1230 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovAction_876 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.T_EnactState_1228 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.T_EnactState_1228 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.T__'8866'_'8640''10631'_'44'ENACT'10632'__1340 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.T__'8866'_'8640''10631'_'44'ENACT'10632'__1340 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.T_EnactState_1230 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.T_EnactState_1230 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.T__'8866'_'8640''10631'_'44'ENACT'10632'__1342 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.T__'8866'_'8640''10631'_'44'ENACT'10632'__1342 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_ENACT'45'deterministic_1332 = erased
+d_ENACT'45'deterministic_1334 = erased
 -- Ledger.Dijkstra.Specification.Enact.Properties.Computational.Computational-ENACT
-d_Computational'45'ENACT_1334 ::
+d_Computational'45'ENACT_1336 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Base.T_GovStructure_10 ->
   MAlonzo.Code.Interface.ComputationalRelation.T_Computational_232
-d_Computational'45'ENACT_1334 v0
+d_Computational'45'ENACT_1336 v0
   = coe
       MAlonzo.Code.Interface.ComputationalRelation.C_MkComputational_412
       (\ v1 v2 v3 ->
@@ -207,27 +207,27 @@ d_Computational'45'ENACT_1334 v0
                          (coe
                             MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                             (coe
-                               MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.C_constructor_1250
+                               MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.C_constructor_1252
                                (coe
                                   MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                   (coe MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18)
                                   (coe
-                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_gid_1220
+                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_gid_1222
                                      (coe v1)))
                                (coe
-                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_constitution_1242
+                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_constitution_1244
                                   (coe v2))
                                (coe
-                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_pv_1244
+                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_pv_1246
                                   (coe v2))
                                (coe
-                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_pparams_1246
+                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_pparams_1248
                                   (coe v2))
                                (coe
-                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_withdrawals_1248
+                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_withdrawals_1250
                                   (coe v2)))
                             (coe
-                               MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.C_Enact'45'NoConf_1342))
+                               MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.C_Enact'45'NoConf_1344))
                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_UpdateCommittee_862
                     -> case coe v5 of
                          MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v6 v7
@@ -269,9 +269,9 @@ d_Computational'45'ENACT_1334 v0
                                                                               (coe
                                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_CCMaxTermLengthOf_600
                                                                                  (coe
-                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.du_HasccMaxTermLength'45'EnactState_1274)
+                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.du_HasccMaxTermLength'45'EnactState_1276)
                                                                                  v2)
-                                                                              (MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_epoch_1224
+                                                                              (MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_epoch_1226
                                                                                  (coe v1))))
                                                                         (coe
                                                                            MAlonzo.Code.Function.Base.du_'8739'_'10217''45'__298
@@ -288,9 +288,9 @@ d_Computational'45'ENACT_1334 v0
                                                                               (coe
                                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_CCMaxTermLengthOf_600
                                                                                  (coe
-                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.du_HasccMaxTermLength'45'EnactState_1274)
+                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.du_HasccMaxTermLength'45'EnactState_1276)
                                                                                  v2)
-                                                                              (MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_epoch_1224
+                                                                              (MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_epoch_1226
                                                                                  (coe v1)))))
                                                                      (coe
                                                                         MAlonzo.Code.Class.Decidable.Instances.du_DecEq'8658'Dec_6
@@ -307,9 +307,9 @@ d_Computational'45'ENACT_1334 v0
                                                                            (coe
                                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_CCMaxTermLengthOf_600
                                                                               (coe
-                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.du_HasccMaxTermLength'45'EnactState_1274)
+                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.du_HasccMaxTermLength'45'EnactState_1276)
                                                                               v2)
-                                                                           (MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_epoch_1224
+                                                                           (MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_epoch_1226
                                                                               (coe v1)))))))
                                                           v10))
                                                   (coe
@@ -332,7 +332,7 @@ d_Computational'45'ENACT_1334 v0
                                                                (coe
                                                                   MAlonzo.Code.Data.Product.Base.du_'45''44'__92
                                                                   (coe
-                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.C_constructor_1250
+                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.C_constructor_1252
                                                                      (coe
                                                                         MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                         (coe
@@ -427,28 +427,28 @@ d_Computational'45'ENACT_1334 v0
                                                                                              (coe
                                                                                                 MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                                                 (coe
-                                                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_cc_1240
+                                                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_cc_1242
                                                                                                    (coe
                                                                                                       v2))))))
                                                                                     (coe v8)))
                                                                               (coe v9)))
                                                                         (coe
-                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_gid_1220
+                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_gid_1222
                                                                            (coe v1)))
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_constitution_1242
+                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_constitution_1244
                                                                         (coe v2))
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_pv_1244
+                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_pv_1246
                                                                         (coe v2))
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_pparams_1246
+                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_pparams_1248
                                                                         (coe v2))
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_withdrawals_1248
+                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_withdrawals_1250
                                                                         (coe v2)))
                                                                   (coe
-                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.C_Enact'45'UpdComm_1350
+                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.C_Enact'45'UpdComm_1352
                                                                      v13))
                                                         _ -> MAlonzo.RTE.mazUnreachableError
                                                  else coe
@@ -468,67 +468,67 @@ d_Computational'45'ENACT_1334 v0
                          (coe
                             MAlonzo.Code.Data.Product.Base.du_'45''44'__92
                             (coe
-                               MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.C_constructor_1250
+                               MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.C_constructor_1252
                                (coe
-                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_cc_1240
+                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_cc_1242
                                   (coe v2))
                                (coe
                                   MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 (coe v5)
                                   (coe
-                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_gid_1220
+                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_gid_1222
                                      (coe v1)))
                                (coe
-                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_pv_1244
+                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_pv_1246
                                   (coe v2))
                                (coe
-                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_pparams_1246
+                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_pparams_1248
                                   (coe v2))
                                (coe
-                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_withdrawals_1248
+                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_withdrawals_1250
                                   (coe v2)))
                             (coe
-                               MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.C_Enact'45'NewConst_1352))
+                               MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.C_Enact'45'NewConst_1354))
                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_TriggerHardFork_866
                     -> coe
                          MAlonzo.Code.Interface.ComputationalRelation.C_success_42
                          (coe
                             MAlonzo.Code.Data.Product.Base.du_'45''44'__92
                             (coe
-                               MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.C_constructor_1250
+                               MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.C_constructor_1252
                                (coe
-                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_cc_1240
+                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_cc_1242
                                   (coe v2))
                                (coe
-                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_constitution_1242
+                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_constitution_1244
                                   (coe v2))
                                (coe
                                   MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 (coe v5)
                                   (coe
-                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_gid_1220
+                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_gid_1222
                                      (coe v1)))
                                (coe
-                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_pparams_1246
+                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_pparams_1248
                                   (coe v2))
                                (coe
-                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_withdrawals_1248
+                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_withdrawals_1250
                                   (coe v2)))
                             (coe
-                               MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.C_Enact'45'HF_1354))
+                               MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.C_Enact'45'HF_1356))
                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_ChangePParams_868
                     -> coe
                          MAlonzo.Code.Interface.ComputationalRelation.C_success_42
                          (coe
                             MAlonzo.Code.Data.Product.Base.du_'45''44'__92
                             (coe
-                               MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.C_constructor_1250
+                               MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.C_constructor_1252
                                (coe
-                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_cc_1240
+                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_cc_1242
                                   (coe v2))
                                (coe
-                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_constitution_1242
+                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_constitution_1244
                                   (coe v2))
                                (coe
-                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_pv_1244
+                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_pv_1246
                                   (coe v2))
                                (coe
                                   MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
@@ -540,17 +540,17 @@ d_Computational'45'ENACT_1334 v0
                                            (coe v0)))
                                      (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                         (coe
-                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_pparams_1246
+                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_pparams_1248
                                            (coe v2)))
                                      v5)
                                   (coe
-                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_gid_1220
+                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_gid_1222
                                      (coe v1)))
                                (coe
-                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_withdrawals_1248
+                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_withdrawals_1250
                                   (coe v2)))
                             (coe
-                               MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.C_Enact'45'PParams_1356))
+                               MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.C_Enact'45'PParams_1358))
                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_TreasuryWithdrawal_870
                     -> let v6
                              = MAlonzo.Code.Data.Nat.Properties.d__'8804''63'__2920
@@ -609,11 +609,11 @@ d_Computational'45'ENACT_1334 v0
                                              (coe
                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Base.d_cryptoStructure_640
                                                 (coe v0))))
-                                       (MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_withdrawals_1248
+                                       (MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_withdrawals_1250
                                           (coe v2))
                                        v5))
                                  (coe
-                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_treasury_1222
+                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_treasury_1224
                                     (coe v1)) in
                        coe
                          (case coe v6 of
@@ -626,18 +626,18 @@ d_Computational'45'ENACT_1334 v0
                                                  (coe
                                                     MAlonzo.Code.Data.Product.Base.du_'45''44'__92
                                                     (coe
-                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.C_constructor_1250
+                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.C_constructor_1252
                                                        (coe
-                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_cc_1240
+                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_cc_1242
                                                           (coe v2))
                                                        (coe
-                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_constitution_1242
+                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_constitution_1244
                                                           (coe v2))
                                                        (coe
-                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_pv_1244
+                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_pv_1246
                                                           (coe v2))
                                                        (coe
-                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_pparams_1246
+                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_pparams_1248
                                                           (coe v2))
                                                        (coe
                                                           MAlonzo.Code.Axiom.Set.Map.Dec.du__'8746''8314'__582
@@ -667,11 +667,11 @@ d_Computational'45'ENACT_1334 v0
                                                                       MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'RewardAddress_350
                                                                       (coe v10) (coe v11)
                                                                       (coe v12)))))
-                                                          (MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_withdrawals_1248
+                                                          (MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_withdrawals_1250
                                                              (coe v2))
                                                           v5))
                                                     (coe
-                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.C_Enact'45'Wdrl_1362
+                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.C_Enact'45'Wdrl_1364
                                                        v9))
                                           _ -> MAlonzo.RTE.mazUnreachableError
                                    else coe
@@ -689,6 +689,6 @@ d_Computational'45'ENACT_1334 v0
                          (coe
                             MAlonzo.Code.Data.Product.Base.du_'45''44'__92 (coe v2)
                             (coe
-                               MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.C_Enact'45'Info_1364))
+                               MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.C_Enact'45'Info_1366))
                   _ -> MAlonzo.RTE.mazUnreachableError
            _ -> MAlonzo.RTE.mazUnreachableError)

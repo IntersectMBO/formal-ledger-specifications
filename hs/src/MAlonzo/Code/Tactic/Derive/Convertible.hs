@@ -10,7 +10,7 @@
 
 {-# OPTIONS_GHC -Wno-overlapping-patterns #-}
 
-module MAlonzo.Code.Foreign.Convertible.Deriving where
+module MAlonzo.Code.Tactic.Derive.Convertible where
 
 import MAlonzo.RTE (coe, erased, AgdaAny, addInt, subInt, mulInt,
                     quotInt, remInt, geqInt, ltInt, eqInt, add64, sub64, mul64, quot64,
@@ -19,6 +19,7 @@ import qualified MAlonzo.RTE
 import qualified Data.Text
 import qualified MAlonzo.Code.Agda.Builtin.Bool
 import qualified MAlonzo.Code.Agda.Builtin.List
+import qualified MAlonzo.Code.Agda.Builtin.Maybe
 import qualified MAlonzo.Code.Agda.Builtin.Nat
 import qualified MAlonzo.Code.Agda.Builtin.Reflection
 import qualified MAlonzo.Code.Agda.Builtin.Sigma
@@ -35,7 +36,6 @@ import qualified MAlonzo.Code.Class.MonadTC
 import qualified MAlonzo.Code.Data.List.Base
 import qualified MAlonzo.Code.Data.Nat.Properties
 import qualified MAlonzo.Code.Data.Product.Base
-import qualified MAlonzo.Code.Foreign.HaskellTypes.Deriving
 import qualified MAlonzo.Code.Meta.Init
 import qualified MAlonzo.Code.Reflection.AST.DeBruijn
 import qualified MAlonzo.Code.Reflection.TCI
@@ -45,17 +45,21 @@ import qualified MAlonzo.Code.Reflection.Tactic
 import qualified MAlonzo.Code.Reflection.Utils.Core
 import qualified MAlonzo.Code.Reflection.Utils.Substitute
 import qualified MAlonzo.Code.Reflection.Utils.TCI
+import qualified MAlonzo.Code.Tactic.Derive.HsType
 
--- Foreign.Convertible.Deriving._
+import GHC.Generics (Generic)
+data Test = MkTest {tF :: Integer, tG :: (Maybe Integer), tH :: [Integer]}
+  deriving (Show, Eq, Generic)
+-- Tactic.Derive.Convertible._
 d___6 ::
   MAlonzo.Code.Class.Monad.Core.T_Monad_8 ->
   MAlonzo.Code.Class.Functor.Core.T_Functor_14
 d___6 v0
   = coe MAlonzo.Code.Class.Monad.Core.du_Functor'45'M_60 (coe v0)
--- Foreign.Convertible.Deriving.TyViewTel
+-- Tactic.Derive.Convertible.TyViewTel
 d_TyViewTel_16 :: ()
 d_TyViewTel_16 = erased
--- Foreign.Convertible.Deriving.substTel
+-- Tactic.Derive.Convertible.substTel
 d_substTel_18 ::
   Integer ->
   MAlonzo.Code.Agda.Builtin.Reflection.T_Term_154 ->
@@ -79,7 +83,7 @@ d_substTel_18 v0 v1 v2
                        (coe v4))
              _ -> MAlonzo.RTE.mazUnreachableError
       _ -> MAlonzo.RTE.mazUnreachableError
--- Foreign.Convertible.Deriving.smashLevels
+-- Tactic.Derive.Convertible.smashLevels
 d_smashLevels_34 ::
   [MAlonzo.Code.Agda.Builtin.Reflection.T_Abs_112] ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
@@ -129,7 +133,7 @@ d_smashLevels_34 v0
                        _ -> MAlonzo.RTE.mazUnreachableError
                 _ -> MAlonzo.RTE.mazUnreachableError
          _ -> coe v1)
--- Foreign.Convertible.Deriving.tyViewToTel
+-- Tactic.Derive.Convertible.tyViewToTel
 d_tyViewToTel_44 ::
   [MAlonzo.Code.Agda.Builtin.Reflection.T_Abs_112] ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
@@ -143,7 +147,7 @@ d_tyViewToTel_44
                 -> coe
                      MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 (coe v1) (coe v2)
               _ -> MAlonzo.RTE.mazUnreachableError))
--- Foreign.Convertible.Deriving.hideTyView
+-- Tactic.Derive.Convertible.hideTyView
 d_hideTyView_52 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -171,7 +175,7 @@ du_hideTyView_52 v0
                     _ -> MAlonzo.RTE.mazUnreachableError
              _ -> MAlonzo.RTE.mazUnreachableError
       _ -> MAlonzo.RTE.mazUnreachableError
--- Foreign.Convertible.Deriving.instanceType
+-- Tactic.Derive.Convertible.instanceType
 d_instanceType_64 ::
   AgdaAny ->
   AgdaAny -> MAlonzo.Code.Class.MonadTC.T_TCEnv_26 -> AgdaAny
@@ -359,10 +363,10 @@ d_instanceType_64 v0 v1 v2
                                                                       MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                       (coe
                                                                          (MAlonzo.RTE.QName
-                                                                            (8 :: Integer)
-                                                                            (14615801261834023095 ::
+                                                                            (10 :: Integer)
+                                                                            (18110973584150085460 ::
                                                                                Integer)
-                                                                            "Foreign.Convertible.Convertible"
+                                                                            "Class.Convertible.Core.Convertible"
                                                                             (MAlonzo.RTE.Fixity
                                                                                MAlonzo.RTE.NonAssoc
                                                                                MAlonzo.RTE.Unrelated)))
@@ -429,9 +433,9 @@ d_instanceType_64 v0 v1 v2
                                                              MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                              (coe
                                                                 (MAlonzo.RTE.QName
-                                                                   (8 :: Integer)
-                                                                   (14615801261834023095 :: Integer)
-                                                                   "Foreign.Convertible.Convertible"
+                                                                   (10 :: Integer)
+                                                                   (18110973584150085460 :: Integer)
+                                                                   "Class.Convertible.Core.Convertible"
                                                                    (MAlonzo.RTE.Fixity
                                                                       MAlonzo.RTE.NonAssoc
                                                                       MAlonzo.RTE.Unrelated)))
@@ -479,7 +483,7 @@ d_instanceType_64 v0 v1 v2
                        _ -> MAlonzo.RTE.mazUnreachableError)
                   v2
            _ -> MAlonzo.RTE.mazUnreachableError)
--- Foreign.Convertible.Deriving.conversionClause
+-- Tactic.Derive.Convertible.conversionClause
 d_conversionClause_96 ::
   AgdaAny ->
   AgdaAny ->
@@ -784,7 +788,7 @@ d_conversionClause_96 v0 v1 v2
                     _ -> MAlonzo.RTE.mazUnreachableError
              _ -> MAlonzo.RTE.mazUnreachableError
       _ -> MAlonzo.RTE.mazUnreachableError
--- Foreign.Convertible.Deriving.instanceClauses
+-- Tactic.Derive.Convertible.instanceClauses
 d_instanceClauses_146 ::
   AgdaAny ->
   AgdaAny -> MAlonzo.Code.Class.MonadTC.T_TCEnv_26 -> AgdaAny
@@ -863,14 +867,14 @@ d_instanceClauses_146 v0 v1 v2
                                             d_conversionClause_96
                                             (coe
                                                (MAlonzo.RTE.QName
-                                                  (18 :: Integer) (14615801261834023095 :: Integer)
-                                                  "Foreign.Convertible.Convertible.to"
+                                                  (20 :: Integer) (18110973584150085460 :: Integer)
+                                                  "Class.Convertible.Core.Convertible.to"
                                                   (MAlonzo.RTE.Fixity
                                                      MAlonzo.RTE.NonAssoc MAlonzo.RTE.Unrelated)))
                                             (coe
                                                (MAlonzo.RTE.QName
-                                                  (28 :: Integer) (14615801261834023095 :: Integer)
-                                                  "Foreign.Convertible._.to"
+                                                  (30 :: Integer) (18110973584150085460 :: Integer)
+                                                  "Class.Convertible.Core._.to"
                                                   (MAlonzo.RTE.Fixity
                                                      MAlonzo.RTE.NonAssoc MAlonzo.RTE.Unrelated))))
                                          (coe MAlonzo.Code.Data.List.Base.du_zip_182 v3 v4))
@@ -884,17 +888,17 @@ d_instanceClauses_146 v0 v1 v2
                                               (d_conversionClause_96
                                                  (coe
                                                     (MAlonzo.RTE.QName
-                                                       (20 :: Integer)
-                                                       (14615801261834023095 :: Integer)
-                                                       "Foreign.Convertible.Convertible.from"
+                                                       (22 :: Integer)
+                                                       (18110973584150085460 :: Integer)
+                                                       "Class.Convertible.Core.Convertible.from"
                                                        (MAlonzo.RTE.Fixity
                                                           MAlonzo.RTE.NonAssoc
                                                           MAlonzo.RTE.Unrelated)))
                                                  (coe
                                                     (MAlonzo.RTE.QName
-                                                       (26 :: Integer)
-                                                       (14615801261834023095 :: Integer)
-                                                       "Foreign.Convertible._.from"
+                                                       (28 :: Integer)
+                                                       (18110973584150085460 :: Integer)
+                                                       "Class.Convertible.Core._.from"
                                                        (MAlonzo.RTE.Fixity
                                                           MAlonzo.RTE.NonAssoc
                                                           MAlonzo.RTE.Unrelated))))
@@ -915,7 +919,7 @@ d_instanceClauses_146 v0 v1 v2
                                           Data.Text.Text)
                                          v0 v1)))
                      v2)))
--- Foreign.Convertible.Deriving.absurdClause
+-- Tactic.Derive.Convertible.absurdClause
 d_absurdClause_166 ::
   AgdaAny -> MAlonzo.Code.Agda.Builtin.Reflection.T_Clause_160
 d_absurdClause_166 v0
@@ -964,7 +968,7 @@ d_absurdClause_166 v0
                   MAlonzo.Code.Agda.Builtin.Reflection.C_absurd_264
                   (coe (0 :: Integer))))
             (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))
--- Foreign.Convertible.Deriving.patternLambda
+-- Tactic.Derive.Convertible.patternLambda
 d_patternLambda_170 ::
   MAlonzo.Code.Class.MonadTC.T_TCEnv_26 -> AgdaAny
 d_patternLambda_170 v0
@@ -996,7 +1000,7 @@ d_patternLambda_170 v0
            (case coe v1 of
               MAlonzo.Code.Agda.Builtin.Reflection.C_def_184 v3 v4
                 -> case coe v3 of
-                     MAlonzo.RTE.QName 8 14615801261834023095 _ _
+                     MAlonzo.RTE.QName 10 18110973584150085460 _ _
                        -> case coe v4 of
                             (:) v5 v6
                               -> case coe v5 of
@@ -1079,21 +1083,21 @@ d_patternLambda_170 v0
                                                                                                                                                   (d_conversionClause_96
                                                                                                                                                      (coe
                                                                                                                                                         (MAlonzo.RTE.QName
-                                                                                                                                                           (18 ::
+                                                                                                                                                           (20 ::
                                                                                                                                                               Integer)
-                                                                                                                                                           (14615801261834023095 ::
+                                                                                                                                                           (18110973584150085460 ::
                                                                                                                                                               Integer)
-                                                                                                                                                           "Foreign.Convertible.Convertible.to"
+                                                                                                                                                           "Class.Convertible.Core.Convertible.to"
                                                                                                                                                            (MAlonzo.RTE.Fixity
                                                                                                                                                               MAlonzo.RTE.NonAssoc
                                                                                                                                                               MAlonzo.RTE.Unrelated)))
                                                                                                                                                      (coe
                                                                                                                                                         (MAlonzo.RTE.QName
-                                                                                                                                                           (28 ::
+                                                                                                                                                           (30 ::
                                                                                                                                                               Integer)
-                                                                                                                                                           (14615801261834023095 ::
+                                                                                                                                                           (18110973584150085460 ::
                                                                                                                                                               Integer)
-                                                                                                                                                           "Foreign.Convertible._.to"
+                                                                                                                                                           "Class.Convertible.Core._.to"
                                                                                                                                                            (MAlonzo.RTE.Fixity
                                                                                                                                                               MAlonzo.RTE.NonAssoc
                                                                                                                                                               MAlonzo.RTE.Unrelated))))
@@ -1116,21 +1120,21 @@ d_patternLambda_170 v0
                                                                                                                                                        (d_conversionClause_96
                                                                                                                                                           (coe
                                                                                                                                                              (MAlonzo.RTE.QName
-                                                                                                                                                                (20 ::
+                                                                                                                                                                (22 ::
                                                                                                                                                                    Integer)
-                                                                                                                                                                (14615801261834023095 ::
+                                                                                                                                                                (18110973584150085460 ::
                                                                                                                                                                    Integer)
-                                                                                                                                                                "Foreign.Convertible.Convertible.from"
+                                                                                                                                                                "Class.Convertible.Core.Convertible.from"
                                                                                                                                                                 (MAlonzo.RTE.Fixity
                                                                                                                                                                    MAlonzo.RTE.NonAssoc
                                                                                                                                                                    MAlonzo.RTE.Unrelated)))
                                                                                                                                                           (coe
                                                                                                                                                              (MAlonzo.RTE.QName
-                                                                                                                                                                (26 ::
+                                                                                                                                                                (28 ::
                                                                                                                                                                    Integer)
-                                                                                                                                                                (14615801261834023095 ::
+                                                                                                                                                                (18110973584150085460 ::
                                                                                                                                                                    Integer)
-                                                                                                                                                                "Foreign.Convertible._.from"
+                                                                                                                                                                "Class.Convertible.Core._.from"
                                                                                                                                                                 (MAlonzo.RTE.Fixity
                                                                                                                                                                    MAlonzo.RTE.NonAssoc
                                                                                                                                                                    MAlonzo.RTE.Unrelated))))
@@ -1163,11 +1167,11 @@ d_patternLambda_170 v0
                                                                                                                                                                             d_absurdClause_166
                                                                                                                                                                             (coe
                                                                                                                                                                                (MAlonzo.RTE.QName
-                                                                                                                                                                                  (18 ::
+                                                                                                                                                                                  (20 ::
                                                                                                                                                                                      Integer)
-                                                                                                                                                                                  (14615801261834023095 ::
+                                                                                                                                                                                  (18110973584150085460 ::
                                                                                                                                                                                      Integer)
-                                                                                                                                                                                  "Foreign.Convertible.Convertible.to"
+                                                                                                                                                                                  "Class.Convertible.Core.Convertible.to"
                                                                                                                                                                                   (MAlonzo.RTE.Fixity
                                                                                                                                                                                      MAlonzo.RTE.NonAssoc
                                                                                                                                                                                      MAlonzo.RTE.Unrelated))))
@@ -1177,11 +1181,11 @@ d_patternLambda_170 v0
                                                                                                                                                                                d_absurdClause_166
                                                                                                                                                                                (coe
                                                                                                                                                                                   (MAlonzo.RTE.QName
-                                                                                                                                                                                     (20 ::
+                                                                                                                                                                                     (22 ::
                                                                                                                                                                                         Integer)
-                                                                                                                                                                                     (14615801261834023095 ::
+                                                                                                                                                                                     (18110973584150085460 ::
                                                                                                                                                                                         Integer)
-                                                                                                                                                                                     "Foreign.Convertible.Convertible.from"
+                                                                                                                                                                                     "Class.Convertible.Core.Convertible.from"
                                                                                                                                                                                      (MAlonzo.RTE.Fixity
                                                                                                                                                                                         MAlonzo.RTE.NonAssoc
                                                                                                                                                                                         MAlonzo.RTE.Unrelated))))
@@ -1225,7 +1229,7 @@ d_patternLambda_170 v0
                             _ -> coe v2 v0
                      _ -> coe v2 v0
               _ -> coe v2 v0))
--- Foreign.Convertible.Deriving.doPatternLambda
+-- Tactic.Derive.Convertible.doPatternLambda
 d_doPatternLambda_192 ::
   MAlonzo.Code.Agda.Builtin.Reflection.T_Term_154 -> AgdaAny
 d_doPatternLambda_192 v0
@@ -1234,7 +1238,7 @@ d_doPatternLambda_192 v0
       (coe MAlonzo.Code.Class.Monad.Instances.d_Monad'45'TC_6) (coe ())
       (coe ()) (coe d_patternLambda_170)
       (coe MAlonzo.Code.Class.MonadTC.d_initTCEnvWithGoal_68 (coe v0))
--- Foreign.Convertible.Deriving.deriveConvertible
+-- Tactic.Derive.Convertible.deriveConvertible
 d_deriveConvertible_196 :: AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_deriveConvertible_196 v0 v1 v2
   = coe
@@ -1302,7 +1306,7 @@ d_deriveConvertible_196 v0 v1 v2
                                              MAlonzo.Code.Meta.Init.d_iMonad'45'TC_4 () erased
                                              (coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8)))))))
                    v3)))
--- Foreign.Convertible.Deriving.ConvertibleType
+-- Tactic.Derive.Convertible.ConvertibleType
 d_ConvertibleType_218 ::
   AgdaAny ->
   AgdaAny ->
@@ -1327,7 +1331,7 @@ d_ConvertibleType_218 v0 v1
                  (coe MAlonzo.Code.Meta.Init.d_iMonadReader'45'TC_8)
                  (coe MAlonzo.Code.Reflection.Utils.Core.d_tyView_34 (coe v2))))
          (coe d_instanceType_64 (coe v0) (coe v1)))
--- Foreign.Convertible.Deriving.autoConvertible
+-- Tactic.Derive.Convertible.autoConvertible
 d_autoConvertible_224 ::
   MAlonzo.Code.Agda.Builtin.Reflection.T_Term_154 -> AgdaAny
 d_autoConvertible_224
@@ -1353,7 +1357,7 @@ d_autoConvertible_224
                MAlonzo.Code.Class.MonadReader.du_MonadReader'45'ReaderT_122
                (coe MAlonzo.Code.Class.Monad.Instances.d_Monad'45'TC_6)))
          (coe d_patternLambda_170))
--- Foreign.Convertible.Deriving.autoConvert
+-- Tactic.Derive.Convertible.autoConvert
 d_autoConvert_226 ::
   AgdaAny ->
   MAlonzo.Code.Agda.Builtin.Reflection.T_Term_154 -> AgdaAny
@@ -1385,8 +1389,8 @@ d_autoConvert_226 v0 v1
                  MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                  (coe
                     (MAlonzo.RTE.QName
-                       (8 :: Integer) (14615801261834023095 :: Integer)
-                       "Foreign.Convertible.Convertible"
+                       (10 :: Integer) (18110973584150085460 :: Integer)
+                       "Class.Convertible.Core.Convertible"
                        (MAlonzo.RTE.Fixity MAlonzo.RTE.NonAssoc MAlonzo.RTE.Unrelated)))
                  (coe
                     MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
@@ -1418,7 +1422,7 @@ d_autoConvert_226 v0 v1
            (coe
               MAlonzo.Code.Agda.Builtin.Reflection.d_bindTC_336 () () erased
               erased
-              (MAlonzo.Code.Foreign.HaskellTypes.Deriving.d_solveHsType_172
+              (MAlonzo.Code.Tactic.Derive.HsType.d_solveHsType_132
                  (coe
                     MAlonzo.Code.Agda.Builtin.Reflection.C_def_184 (coe v0)
                     (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))
@@ -1433,3 +1437,38 @@ d_autoConvert_226 v0 v1
                       (coe MAlonzo.Code.Class.Monad.Instances.d_Monad'45'TC_6) (coe ())
                       (coe ()) (coe MAlonzo.Code.Agda.Builtin.Reflection.d_unify_338 v1)
                       (coe d_doPatternLambda_192 (coe v1))))))
+-- Tactic.Derive.Convertible.Test
+d_Test_236 = ()
+data T_Test_236
+  = C_constructor_250 Integer (Maybe Integer) [Integer]
+-- Tactic.Derive.Convertible.Test.f
+d_f_244 :: T_Test_236 -> Integer
+d_f_244 v0
+  = case coe v0 of
+      C_constructor_250 v1 v2 v3 -> coe v1
+      _ -> MAlonzo.RTE.mazUnreachableError
+-- Tactic.Derive.Convertible.Test.g
+d_g_246 :: T_Test_236 -> Maybe Integer
+d_g_246 v0
+  = case coe v0 of
+      C_constructor_250 v1 v2 v3 -> coe v2
+      _ -> MAlonzo.RTE.mazUnreachableError
+-- Tactic.Derive.Convertible.Test.h
+d_h_248 :: T_Test_236 -> [Integer]
+d_h_248 v0
+  = case coe v0 of
+      C_constructor_250 v1 v2 v3 -> coe v3
+      _ -> MAlonzo.RTE.mazUnreachableError
+-- Tactic.Derive.Convertible.Test
+d_Test_46797 = ()
+type T_Test_46797 = Test
+pattern C_MkTest_46799 a0 a1 a2 = MkTest a0 a1 a2
+check_MkTest_46799 ::
+  Integer ->
+  MAlonzo.Code.Agda.Builtin.Maybe.T_Maybe_10 () Integer ->
+  MAlonzo.Code.Agda.Builtin.List.T_List_10 () Integer -> T_Test_46797
+check_MkTest_46799 = MkTest
+cover_Test_46797 :: Test -> ()
+cover_Test_46797 x
+  = case x of
+      MkTest _ _ _ -> ()

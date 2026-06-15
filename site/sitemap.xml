@@ -25,26 +25,6 @@
          <lastmod>1980-01-01</lastmod>
     </url>
     <url>
-         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Foreign.Convertible.Deriving.html</loc>
-         <lastmod>1980-01-01</lastmod>
-    </url>
-    <url>
-         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Foreign.Convertible.DerivingTest.html</loc>
-         <lastmod>1980-01-01</lastmod>
-    </url>
-    <url>
-         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Foreign.Convertible.html</loc>
-         <lastmod>1980-01-01</lastmod>
-    </url>
-    <url>
-         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Foreign.HaskellTypes.Deriving.html</loc>
-         <lastmod>1980-01-01</lastmod>
-    </url>
-    <url>
-         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Foreign.HaskellTypes.html</loc>
-         <lastmod>1980-01-01</lastmod>
-    </url>
-    <url>
          <loc>https://intersectmbo.github.io/formal-ledger-specifications/Interface.ComputationalRelation.html</loc>
          <lastmod>1980-01-01</lastmod>
     </url>
@@ -146,90 +126,6 @@
     </url>
     <url>
          <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Conway.Conformance.html</loc>
-         <lastmod>1980-01-01</lastmod>
-    </url>
-    <url>
-         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Conway.Foreign.Cert.html</loc>
-         <lastmod>1980-01-01</lastmod>
-    </url>
-    <url>
-         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Conway.Foreign.Certs.html</loc>
-         <lastmod>1980-01-01</lastmod>
-    </url>
-    <url>
-         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Conway.Foreign.Chain.html</loc>
-         <lastmod>1980-01-01</lastmod>
-    </url>
-    <url>
-         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Conway.Foreign.Enact.html</loc>
-         <lastmod>1980-01-01</lastmod>
-    </url>
-    <url>
-         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Conway.Foreign.Epoch.html</loc>
-         <lastmod>1980-01-01</lastmod>
-    </url>
-    <url>
-         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Conway.Foreign.ExternalStructures.html</loc>
-         <lastmod>1980-01-01</lastmod>
-    </url>
-    <url>
-         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Conway.Foreign.Gov.Actions.html</loc>
-         <lastmod>1980-01-01</lastmod>
-    </url>
-    <url>
-         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Conway.Foreign.Gov.Core.html</loc>
-         <lastmod>1980-01-01</lastmod>
-    </url>
-    <url>
-         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Conway.Foreign.Gov.html</loc>
-         <lastmod>1980-01-01</lastmod>
-    </url>
-    <url>
-         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Conway.Foreign.HSStructures.html</loc>
-         <lastmod>1980-01-01</lastmod>
-    </url>
-    <url>
-         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Conway.Foreign.Ledger.html</loc>
-         <lastmod>1980-01-01</lastmod>
-    </url>
-    <url>
-         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Conway.Foreign.NewEpoch.html</loc>
-         <lastmod>1980-01-01</lastmod>
-    </url>
-    <url>
-         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Conway.Foreign.PParams.html</loc>
-         <lastmod>1980-01-01</lastmod>
-    </url>
-    <url>
-         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Conway.Foreign.Ratify.html</loc>
-         <lastmod>1980-01-01</lastmod>
-    </url>
-    <url>
-         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Conway.Foreign.Rewards.html</loc>
-         <lastmod>1980-01-01</lastmod>
-    </url>
-    <url>
-         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Conway.Foreign.Script.Base.html</loc>
-         <lastmod>1980-01-01</lastmod>
-    </url>
-    <url>
-         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Conway.Foreign.Script.Structure.html</loc>
-         <lastmod>1980-01-01</lastmod>
-    </url>
-    <url>
-         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Conway.Foreign.Script.html</loc>
-         <lastmod>1980-01-01</lastmod>
-    </url>
-    <url>
-         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Conway.Foreign.Transaction.html</loc>
-         <lastmod>1980-01-01</lastmod>
-    </url>
-    <url>
-         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Conway.Foreign.Utxo.html</loc>
-         <lastmod>1980-01-01</lastmod>
-    </url>
-    <url>
-         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Conway.Foreign.html</loc>
          <lastmod>1980-01-01</lastmod>
     </url>
     <url>
@@ -537,34 +433,6 @@
          <lastmod>1980-01-01</lastmod>
     </url>
     <url>
-         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Core.Foreign.Address.html</loc>
-         <lastmod>1980-01-01</lastmod>
-    </url>
-    <url>
-         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Core.Foreign.Crypto.Base.html</loc>
-         <lastmod>1980-01-01</lastmod>
-    </url>
-    <url>
-         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Core.Foreign.Crypto.Structure.html</loc>
-         <lastmod>1980-01-01</lastmod>
-    </url>
-    <url>
-         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Core.Foreign.Crypto.html</loc>
-         <lastmod>1980-01-01</lastmod>
-    </url>
-    <url>
-         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Core.Foreign.Epoch.html</loc>
-         <lastmod>1980-01-01</lastmod>
-    </url>
-    <url>
-         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Core.Foreign.ExternalFunctions.html</loc>
-         <lastmod>1980-01-01</lastmod>
-    </url>
-    <url>
-         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Core.Foreign.html</loc>
-         <lastmod>1980-01-01</lastmod>
-    </url>
-    <url>
          <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Core.Specification.Address.html</loc>
          <lastmod>1980-01-01</lastmod>
     </url>
@@ -586,98 +454,6 @@
     </url>
     <url>
          <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Core.html</loc>
-         <lastmod>1980-01-01</lastmod>
-    </url>
-    <url>
-         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Dijkstra.Foreign.Account.html</loc>
-         <lastmod>1980-01-01</lastmod>
-    </url>
-    <url>
-         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Dijkstra.Foreign.Cert.html</loc>
-         <lastmod>1980-01-01</lastmod>
-    </url>
-    <url>
-         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Dijkstra.Foreign.Certs.html</loc>
-         <lastmod>1980-01-01</lastmod>
-    </url>
-    <url>
-         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Dijkstra.Foreign.Chain.html</loc>
-         <lastmod>1980-01-01</lastmod>
-    </url>
-    <url>
-         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Dijkstra.Foreign.Enact.html</loc>
-         <lastmod>1980-01-01</lastmod>
-    </url>
-    <url>
-         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Dijkstra.Foreign.Entities.html</loc>
-         <lastmod>1980-01-01</lastmod>
-    </url>
-    <url>
-         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Dijkstra.Foreign.Epoch.html</loc>
-         <lastmod>1980-01-01</lastmod>
-    </url>
-    <url>
-         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Dijkstra.Foreign.ExternalStructures.html</loc>
-         <lastmod>1980-01-01</lastmod>
-    </url>
-    <url>
-         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Dijkstra.Foreign.Gov.Actions.html</loc>
-         <lastmod>1980-01-01</lastmod>
-    </url>
-    <url>
-         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Dijkstra.Foreign.Gov.Core.html</loc>
-         <lastmod>1980-01-01</lastmod>
-    </url>
-    <url>
-         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Dijkstra.Foreign.Gov.html</loc>
-         <lastmod>1980-01-01</lastmod>
-    </url>
-    <url>
-         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Dijkstra.Foreign.HSStructures.html</loc>
-         <lastmod>1980-01-01</lastmod>
-    </url>
-    <url>
-         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Dijkstra.Foreign.Ledger.html</loc>
-         <lastmod>1980-01-01</lastmod>
-    </url>
-    <url>
-         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Dijkstra.Foreign.NewEpoch.html</loc>
-         <lastmod>1980-01-01</lastmod>
-    </url>
-    <url>
-         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Dijkstra.Foreign.PParams.html</loc>
-         <lastmod>1980-01-01</lastmod>
-    </url>
-    <url>
-         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Dijkstra.Foreign.Ratify.html</loc>
-         <lastmod>1980-01-01</lastmod>
-    </url>
-    <url>
-         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Dijkstra.Foreign.Rewards.html</loc>
-         <lastmod>1980-01-01</lastmod>
-    </url>
-    <url>
-         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Dijkstra.Foreign.Script.Base.html</loc>
-         <lastmod>1980-01-01</lastmod>
-    </url>
-    <url>
-         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Dijkstra.Foreign.Script.Structure.html</loc>
-         <lastmod>1980-01-01</lastmod>
-    </url>
-    <url>
-         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Dijkstra.Foreign.Script.html</loc>
-         <lastmod>1980-01-01</lastmod>
-    </url>
-    <url>
-         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Dijkstra.Foreign.Transaction.html</loc>
-         <lastmod>1980-01-01</lastmod>
-    </url>
-    <url>
-         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Dijkstra.Foreign.Utxo.html</loc>
-         <lastmod>1980-01-01</lastmod>
-    </url>
-    <url>
-         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Dijkstra.Foreign.html</loc>
          <lastmod>1980-01-01</lastmod>
     </url>
     <url>
