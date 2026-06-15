@@ -13,7 +13,7 @@ transition rule `CERT`{.AgdaDatatype}:
    (`CERT-coinFromDeposits-step`{.AgdaFunction}): the post-step
    `coinFromDeposits`{.AgdaFunction} is equal to the coin-valuation of the
    closed-form `updateCertDeposit`{.AgdaFunction} applied to the pre-step
-   deposit-pot triple.
+   deposits triple.
 
 The first is the per-step ingredient of `CERTS-pov`{.AgdaFunction} in
 `Certs.Properties.PoV`{.AgdaModule}.  The second is the per-step ingredient
@@ -26,32 +26,21 @@ quantities appearing in the UTXO batch-balance equation.
 ## Why coin form, and why the `≡ᵐ`-componentwise scaffolding
 
 A naïve triple-form bridging lemma would say
-
-    pots s' ≡ updateCertDeposit pp dCert (pots s)
-
-**propositionally**.  For the `POOL-rereg` case, the rule leaves the
-pool-deposit pot unchanged, but `updateCertDeposit`{.AgdaFunction} appends
-`❴ kh , poolDeposit ❵`.  Closing this gap requires the equation
-
-    m ∪ˡ ❴ k , v ❵ ≡ m     (when  k ∈ dom m),
-
-which `agda-sets` only provides up to `≡ᵐ`{.AgdaFunction} (extensional map
-equality), **not** propositional `≡`.
+`pots s' ≡ updateCertDeposit pp dCert (pots s)` **propositionally**.
+For the `POOL-rereg` case, the rule leaves the pool-deposit pot unchanged, but
+`updateCertDeposit`{.AgdaFunction} appends `❴ kh , poolDeposit ❵`.  Closing this gap
+requires the equation `m ∪ˡ ❴ k , v ❵ ≡ m` (when `k ∈ dom m`), which `agda-sets` only
+provides up to `≡ᵐ` (extensional map equality), **not** propositional `≡`.
 
 To avoid introducing a deferred propositional version of that fact, we work
 at two levels:
 
 +  The **per-step triple-form bridge** `CERT-pots-≡ᵐᵗ`{.AgdaFunction} states
-   `pots s'`{.AgdaFunction} and the closed-form output agree
-   **componentwise modulo `≡ᵐ`**.  The `POOL-rereg` case uses
-   `singleton-∈-∪ˡ`{.AgdaFunction} from `agda-sets`
-
-        a ∈ dom m → m ∪ˡ ❴ (a , b) ❵ᵐ ≡ᵐ m
-
-   — a parameter-free fact.
+   `pots s'`{.AgdaFunction} and the `updateCertDeposits` output agree
+   **componentwise modulo `≡ᵐ`**.
 +  The **per-step coin-form bridge** `CERT-coinFromDeposits-step`{.AgdaFunction}
    is derived from `CERT-pots-≡ᵐᵗ`{.AgdaFunction} by collapsing each
-   `≡ᵐ`{.AgdaFunction} component to a coin equality via `≡ᵉ-getCoin`{.AgdaFunction},
+   `≡ᵐ` component to a coin equality via `≡ᵉ-getCoin`{.AgdaFunction},
    and summing the three resulting equalities.
 
 The `≡ᵐ`-componentwise relation `_≡ᵐᵗ_` threads through the list-iterated closed
@@ -66,35 +55,6 @@ pool-deposit-alignment invariant under one `CERT` step), consumed in
 `Certs.Properties.PoV`{.AgdaModule} and discharged at the `CHAIN`-invariant
 layer in a follow-up issue.
 
-## A note on unresolved-implicit hygiene
-
-Several lemmas in this module rely on `agda-sets` `Map`-respecting cong
-operations (`∪ˡ-cong`{.AgdaFunction}, `restrict-cong`{.AgdaFunction},
-`∪⁺-cong-r`{.AgdaFunction}, `≡ᵐ-refl`{.AgdaFunction}, `≡ᵉ-getCoin`{.AgdaFunction}).
-A subtle interaction with the definition of `_≡ᵐ_`{.AgdaFunction} —
-`m ≡ᵐ m'` unfolds to `m ˢ ≡ᵉ m' ˢ`, which only constrains the **relation**
-projection of the `Map` Σ — means that unification through `_≡ᵐ_` does not
-propagate `left-unique`{.AgdaFunction} witnesses.  Two patterns avoid the
-resulting unresolved metas:
-
-+  When a lemma has **implicit** `Map` arguments (like the four maps of `∪ˡ-cong`),
-   we pass them explicitly at the call site:
-   `∪ˡ-cong {m = b} {m' = sing} {m'' = b'} {m''' = sing} …`.
-+  When defining lemmas whose implicit `Triple` arguments would be decomposed
-   by an LHS pattern (`{a , b , g}`), we instead bind the triple variable
-   directly (`{t}`) and project explicitly in the body (`proj₁ t`, etc.).
-   Pattern destructuring at an **implicit** position introduces three fresh
-   implicit Map metas — one per component — whose `.proj₂` (`left-unique`)
-   doesn't get pinned by the usual `_≡ᵐ_`-based unification.  Projection
-   terms have no such gap because the `Map` Σ remains atomically referenced
-   through `t`.
-
-The two patterns combined keep all `Σ`-level facts concrete at every call
-site — relation **and** `left-unique` — and the module typechecks meta-free.
-(`pots s'` for `≡ᵐᵗ-refl` in the seven refl cases of `CERT-pots-≡ᵐᵗ`, and
-explicit `depᵖ`/`depᵖ ∪ˡ ❴ kh , pp .poolDeposit ❵ᵐ` to `≡ᵐ-sym` in the
-`POOL-rereg` case, follow the same principle.)
-
 <!--
 ```agda
 {-# OPTIONS --safe #-}
@@ -104,23 +64,18 @@ open import Ledger.Dijkstra.Specification.Gov.Base using (GovStructure)
 module Ledger.Dijkstra.Specification.Certs.Properties.PoVLemmas
   (gs : GovStructure) (open GovStructure gs) where
 
-open import Ledger.Prelude
-open import Ledger.Dijkstra.Specification.Certs gs
-open import Ledger.Dijkstra.Specification.Gov.Actions gs hiding (yes; no)
-
--- `_∪⁺_`- and `_∣_ᶜ`-respecting `≡ᵐ`-cong lemmas.  These live in the
--- `Extra` module of `abstract-set-theory`; named explicitly so we don't
--- depend on whichever subset `Ledger.Prelude` re-exports today.
-open import abstract-set-theory.Axiom.Set.Map.Extra
-  using (∪⁺-cong-r; restrict-cong)
-
-open import Axiom.Set.Properties th
 open import Algebra using (CommutativeMonoid)
 import Algebra.Structures as AlgStruct
 open import Data.Maybe using (Is-just)
 open import Data.Nat.Properties using (+-0-monoid; +-identityʳ)
 open import Relation.Binary using (IsEquivalence)
 open import Relation.Nullary.Decidable
+
+open import Ledger.Prelude
+open import Ledger.Dijkstra.Specification.Certs gs
+open import Ledger.Dijkstra.Specification.Gov.Actions gs hiding (yes; no)
+open import abstract-set-theory.Axiom.Set.Map.Extra using (∪⁺-cong-r; restrict-cong)
+open import Axiom.Set.Properties th
 
 -- TODO: some hoop-jumping required since the Map proofs need the
 -- stdlib IsCommutativeSemigroup for Coin.
@@ -147,39 +102,15 @@ open Equivalence
 ```
 -->
 
-## Deposit-pot triple and closed-form helpers {#sec:triple-helpers}
+## Deposit triple and helpers {#sec:triple-helpers}
 
-The three deposit pots carried by a `CertState`{.AgdaRecord} live in
-distinct map types (`Credential ⇀ Coin`, `KeyHash ⇀ Coin`, `Credential ⇀ Coin`),
-so we package them as a single `Triple`{.AgdaFunction}, inhabitants of which are
-constructed via `pots`{.AgdaFunction}, and values of which are computed via
-`coinFromDeposits-pots`{.AgdaFunction}.  By definition,
-
-    coinFromDeposits cs ≡ coinFromDeposits-pots (pots cs).
-
-```agda
-Triple : Type
-Triple = (Credential ⇀ Coin) × (KeyHash ⇀ Coin) × (Credential ⇀ Coin)
-
-pots : CertState → Triple
-pots cs =
-  ( DepositsOf (DStateOf cs)
-  , DepositsOf (PStateOf cs)
-  , DepositsOf (GStateOf cs)
-  )
-
-coinFromDeposits-pots : Triple → Coin
-coinFromDeposits-pots (depᵈ , depᵖ , depᵍ) =
-  getCoin depᵈ + getCoin depᵖ + getCoin depᵍ
-```
-
-The per-step pots equation
+The per-step deposit update equation
 
     pots (updateCertDepositsStep pp s c) ≡ updateCertDeposit pp c (pots s)
 
-is **propositional**: by Σ-η on `Triple`{.AgdaFunction} and record-η on the three
-`record dState { deposits = ... }` updates inside
-`updateCertDepositsStep`{.AgdaFunction}, both sides reduce to the same expression.
+is **propositional**: by Σ-η on `DepositTriple`{.AgdaDatatype} and record-η on the three
+record updates inside `updateCertDepositsStep`{.AgdaFunction}, both sides reduce to
+the same expression.
 
 ```agda
 pots-updateCertDepositsStep : (pp : PParams) (s : CertState) (c : DCert)
@@ -192,7 +123,7 @@ The triple-level closed-form iteration mirrors the rule-level
 over a list of certificates.
 
 ```agda
-updateCertDeposit-list : PParams → Triple → List DCert → Triple
+updateCertDeposit-list : PParams → DepositsTriple → List DCert → DepositsTriple
 updateCertDeposit-list pp t = foldl (λ t' c → updateCertDeposit pp c t') t
 ```
 
@@ -217,7 +148,7 @@ pots-updateCertDeposits pp s (c ∷ cs') =
 
 ```agda
 -- Componentwise extensional map equality on `Triple`.
-_≡ᵐᵗ_ : Triple → Triple → Type
+_≡ᵐᵗ_ : DepositsTriple → DepositsTriple → Type
 (a₁ , b₁ , c₁) ≡ᵐᵗ (a₂ , b₂ , c₂) =
   (a₁ ≡ᵐ a₂) × (b₁ ≡ᵐ b₂) × (c₁ ≡ᵐ c₂)
 
@@ -261,41 +192,30 @@ and `kh` explicitly and pass the fully-constructed singleton
 `❴ kh , pp .poolDeposit ❵ᵐ` to `≡ᵐ-refl`{.AgdaFunction}.
 
 ```agda
-updateCertDeposit-≡ᵐᵗ : (pp : PParams) (c : DCert) {t t' : Triple}
-  → t ≡ᵐᵗ t'
-  → updateCertDeposit pp c t ≡ᵐᵗ updateCertDeposit pp c t'
-updateCertDeposit-≡ᵐᵗ _  (delegate _ _ _ _)                       (a≡ , b≡ , g≡) =
-  ∪⁺-cong-r a≡ , b≡ , g≡
-updateCertDeposit-≡ᵐᵗ _  (dereg _ _) {a , _ , _} {a' , _ , _}     (a≡ , b≡ , g≡) =
+updateCertDeposit-≡ᵐᵗ : (pp : PParams) (c : DCert) {t t' : DepositsTriple}
+  → t ≡ᵐᵗ t' → updateCertDeposit pp c t ≡ᵐᵗ updateCertDeposit pp c t'
+updateCertDeposit-≡ᵐᵗ _ (delegate _ _ _ _) (a≡ , b≡ , g≡) = ∪⁺-cong-r a≡ , b≡ , g≡
+updateCertDeposit-≡ᵐᵗ _ (dereg _ _) {a , _ , _} {a' , _ , _} (a≡ , b≡ , g≡) =
   restrict-cong a a' a≡ , b≡ , g≡
-updateCertDeposit-≡ᵐᵗ pp (regpool kh _) {t = t} {t' = t'}         (a≡ , b≡ , g≡) =
-  -- `∪ˡ-cong` has four **implicit** Map arguments {m m' m'' m'''}.  Inferring
-  -- them only from `b≡ : … ≡ᵐ …` and `≡ᵐ-refl sing : sing ≡ᵐ sing` pins each
-  -- meta's `.proj₁` (the relation) but leaves its `.proj₂` (`left-unique`)
-  -- as a separate meta — `_≡ᵐ_`'s definition `m ˢ ≡ᵉ m' ˢ` simply doesn't
-  -- mention the Σ-tail.  We pass all four explicitly: `b` and `b'` projected
-  -- from `t` and `t'` (the projection form keeps the Σ atomically referenced
-  -- and avoids the implicit-pattern-meta issue), and the singleton itself
-  -- for both `m'` and `m'''`.
-  let sing = ❴ kh , pp .poolDeposit ❵ᵐ
-      b    = proj₁ (proj₂ t)
-      b'   = proj₁ (proj₂ t')
-  in a≡ , ∪ˡ-cong {m = b} {m' = sing} {m'' = b'} {m''' = sing} b≡ (≡ᵐ-refl sing) , g≡
-updateCertDeposit-≡ᵐᵗ _  (regdrep _ _ _)                          (a≡ , b≡ , g≡) =
-  a≡ , b≡ , ∪⁺-cong-r g≡
-updateCertDeposit-≡ᵐᵗ _  (deregdrep _ _) {_ , _ , g} {_ , _ , g'} (a≡ , b≡ , g≡) =
+updateCertDeposit-≡ᵐᵗ
+  pp (regpool kh _) {t = (_ , b , _)} {t' = (_ , b' , _)} (a≡ , b≡ , g≡) =
+  a≡ , ∪ˡ-cong {m = b} {m' = sngl} {m'' = b'} {m''' = sngl} b≡ (≡ᵐ-refl sngl) , g≡
+  where
+  sngl : KeyHash ⇀ Coin
+  sngl = ❴ kh , pp .poolDeposit ❵ᵐ
+updateCertDeposit-≡ᵐᵗ _ (regdrep _ _ _) (a≡ , b≡ , g≡) = a≡ , b≡ , ∪⁺-cong-r g≡
+updateCertDeposit-≡ᵐᵗ _ (deregdrep _ _) {_ , _ , g} {_ , _ , g'} (a≡ , b≡ , g≡) =
   a≡ , b≡ , restrict-cong g g' g≡
-updateCertDeposit-≡ᵐᵗ _  (retirepool _ _)                         eq = eq
-updateCertDeposit-≡ᵐᵗ _  (ccreghot _ _)                           eq = eq
+updateCertDeposit-≡ᵐᵗ _ (retirepool _ _) eq = eq
+updateCertDeposit-≡ᵐᵗ _ (ccreghot _ _) eq = eq
 ```
 
 The list-iterated version is straightforward induction on the list,
 delegating to `updateCertDeposit-≡ᵐᵗ`{.AgdaFunction} at each step.
 
 ```agda
-updateCertDeposit-list-≡ᵐᵗ : (pp : PParams) (cs : List DCert) {t t' : Triple}
-  → t ≡ᵐᵗ t'
-  → updateCertDeposit-list pp t cs ≡ᵐᵗ updateCertDeposit-list pp t' cs
+updateCertDeposit-list-≡ᵐᵗ : (pp : PParams) (cs : List DCert) {t t' : DepositsTriple}
+  → t ≡ᵐᵗ t' → updateCertDeposit-list pp t cs ≡ᵐᵗ updateCertDeposit-list pp t' cs
 updateCertDeposit-list-≡ᵐᵗ _  []        eq = eq
 updateCertDeposit-list-≡ᵐᵗ pp (c ∷ cs') eq =
   updateCertDeposit-list-≡ᵐᵗ pp cs' (updateCertDeposit-≡ᵐᵗ pp c eq)
@@ -305,15 +225,9 @@ Finally, `≡ᵐᵗ`-equal triples have equal coin valuations: collapse each
 component via `≡ᵉ-getCoin`{.AgdaFunction} and sum.
 
 ```agda
-coinFromDeposits-pots-cong : {t t' : Triple}
+coinFromDeposits-pots-cong : {t t' : DepositsTriple}
   → t ≡ᵐᵗ t' → coinFromDeposits-pots t ≡ coinFromDeposits-pots t'
 coinFromDeposits-pots-cong {t} {t'} (a≡ , b≡ , g≡) =
-  -- We bind `{t}` `{t'}` and project, rather than pattern-matching
-  -- `{a , b , g}` `{a' , b' , g'}`.  An implicit-position pattern on a
-  -- `Triple` introduces three fresh implicit Map metas (one per component)
-  -- whose `left-unique` Σ-fields aren't propagated by Agda's unification;
-  -- the projection form leaves each component as a concrete projection
-  -- term, fully determining both Σ-fields.
   cong₂ _+_
     (cong₂ _+_ (≡ᵉ-getCoin (proj₁ t)         (proj₁ t')         a≡)
                (≡ᵉ-getCoin (proj₁ (proj₂ t)) (proj₁ (proj₂ t')) b≡))

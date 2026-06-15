@@ -2,7 +2,8 @@
 source_branch: master
 source_path: src/Ledger/Dijkstra/Specification/Certs/Properties/PoV.lagda.md
 ---
-# The Preservation-of-Value Property for `CERTS`{.AgdaDatatype}
+
+# The Preservation-of-Value Property for <span class="AgdaDatatype">`CERTS`</span>
 
 This module lifts the per-step results from `Certs.Properties.PoVLemmas`{.AgdaModule}
 across the reflexive-transitive closure `CERTS`{.AgdaDatatype} of `CERT`{.AgdaDatatype}.
