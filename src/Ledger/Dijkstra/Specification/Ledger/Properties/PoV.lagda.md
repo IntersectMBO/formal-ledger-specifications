@@ -14,10 +14,43 @@ Recall (from `Ledger.lagda.md`) that `getCoin (LedgerState)` is
 
     getCoin (UTxOStateOf s)
     + rewardsBalance (DStateOf (CertStateOf s))
-    + coinFromDeposit (CertStateOf s)
+    + coinFromDeposits (CertStateOf s)
+    + coinFromGovDeposit (GovStateOf s)
 
-that is, UTxO coin, rewards balance, and deposits across `DState`{.AgdaRecord},
-`PState`{.AgdaRecord}, and `GState`{.AgdaRecord}.
+that is, UTxO coin, rewards balance, the `DState`/`PState`/`GState` deposit pots
+(`coinFromDeposits`{.AgdaFunction}), and the governance-action deposits
+(`coinFromGovDeposit`{.AgdaFunction}).
+
+> **🔖 Status (2026-06-16) — chain re-derivation needed after the PoV soundness fixes.**
+> The equational chain below predates two corrections to the spec and does **not** yet
+> typecheck against current master:
+>
+> 1. **`getCoin` gained a fourth summand** `coinFromGovDeposit (GovStateOf s)`
+>    (post-#1214 gov-action deposits live in `GovActionState.deposit`, not
+>    `GState.deposits`).  The chain still models the old three-summand total and uses
+>    the now-renamed `coinFromDeposit` (→ `coinFromDeposits`).  Every
+>    `LedgerState`-level total in `LEDGER-pov` (both `LEDGER-I` and `LEDGER-V`) must
+>    thread the new gov summand `G`, with `G₀ = coinFromGovDeposit govState₀` and
+>    `G' = coinFromGovDeposit (rmOrphanDRepVotes certState₂ govState₂)`.
+> 2. **Deposit sides were swapped** in `Utxo` to match Conway: `newCertDeposits` and
+>    `govProposalsDeposits` are now on **produced**, `refundCertDeposits` on
+>    **consumed**.  The batch-balance projection consumed by the chain (and the
+>    `UTXOW-batch-balance-coin` parameter) must be updated to the new sides.
+>
+> This adds two module parameters — to be discharged by a future `Gov.Properties.PoV`,
+> alongside the existing ApplyToRewards / UTXOW / batch-invariant groups:
+>
+> - `rmOrphanDRepVotes-coinFromGovDeposit :`
+>     `∀ cs g → coinFromGovDeposit (rmOrphanDRepVotes cs g) ≡ coinFromGovDeposit g`
+>     (`rmOrphanDRepVotes` only rewrites `votes.gvDRep`, never `deposit`).
+> - `GOVS-coinFromGovDeposit :` a top-level **and** per-sub-tx GOVS accounting fact,
+>     `coinFromGovDeposit govSt′ ≡ coinFromGovDeposit govSt + govProposalsDeposits pp props`,
+>     relating gov-deposit growth to the `govProposalsDeposits` now charged on the
+>     produced side (`GOV-Propose` stores `deposit = pp .govActionDeposit`; no `GOV-Vote`
+>     or epoch-boundary removal changes a deposit within `LEDGER`).
+>
+> `posNeg-deposits` (below) is a pure `posPart`/`negPart` cancellation, unaffected by
+> both fixes; it stands as proved.
 
 ## Proof Strategy
 
