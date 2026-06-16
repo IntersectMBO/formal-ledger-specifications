@@ -172,15 +172,32 @@ allColdCreds govSt es =
   ccCreds (es .cc) ∪ concatMapˢ (λ (_ , st) → proposedCC (GovActionOf st)) (fromList govSt)
 ```
 
-`LedgerState`{.AgdaRecord} holds three coin-bearing components:
+`LedgerState`{.AgdaRecord} holds four coin-bearing components:
 
-1. UTxO state (UTxO balance plus fees plus donations)
+1. UTxO state (UTxO balance plus fees plus donations);
 2. the rewards balance in `DState.rewards`{.AgdaField};
-3. The three `CertState`{.AgdaRecord} deposit fields, via coinFromDeposits:
+3. the three `CertState`{.AgdaRecord} deposit pots summed by `coinFromDeposits`{.AgdaFunction}:
 
    + `DState.deposits`{.AgdaField} (stake-key deposits, `Credential ⇀ Coin`)
    + `PState.deposits`{.AgdaField} (pool deposits, `KeyHash ⇀ Coin`)
-   + `GState.deposits`{.AgdaField} (governance action deposits, `Credential ⇀ Coin`)
+   + `GState.deposits`{.AgdaField} (`Credential ⇀ Coin`);
+
+4. the governance-action deposits, summed by `coinFromGovDeposit`{.AgdaFunction} over
+   `GovActionState.deposit`{.AgdaField} for each action in the current `GovState`{.AgdaRecord}.
+
+N.B. `HasCoin-CertState` only counts components 2–3; component 4 must be added at the
+`LedgerState`{.AgdaRecord} level to make the `LEDGER-pov` equation balance against the
+`UTXO`{.AgdaDatatype} batch-balance equation, which charges `newCertDeposits`{.AgdaFunction}
+and `govProposalsDeposits`{.AgdaFunction} on the *produced* side.  Cert deposits flow into
+the `DState`/`PState` pots tracked by `coinFromDeposits`{.AgdaFunction}; governance-action
+deposits are recorded in `GovActionState.deposit`{.AgdaField} by the `GOV`{.AgdaDatatype}
+rule (post-#1214 they are no longer kept in `GState.deposits`{.AgdaField}) and are tracked
+by `coinFromGovDeposit`{.AgdaFunction}.
+
+```agda
+coinFromGovDeposit : GovState → Coin
+coinFromGovDeposit = foldr (λ (_ , gaSt) acc → GovActionState.deposit gaSt + acc) 0
+```
 
 <!--
 ```agda
@@ -189,6 +206,7 @@ instance
   HasCoin-LedgerState .getCoin s =  getCoin (UTxOStateOf s)
                                     + rewardsBalance (DStateOf (CertStateOf s))
                                     + coinFromDeposits (CertStateOf s)
+                                    + coinFromGovDeposit (GovStateOf s)
 ```
 -->
 
