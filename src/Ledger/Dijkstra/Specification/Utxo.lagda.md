@@ -308,6 +308,17 @@ module _ (pp : PParams) where
 
 ### Consumed and Produced
 
+New deposits lock value out of circulation, so — like fees and donations — they
+appear on the *produced* side: `newCertDeposits`{.AgdaFunction} (the positive part of
+the cert-deposit change) and `govProposalsDeposits`{.AgdaFunction} (the
+governance-action deposits introduced by this transaction).  Deposit *refunds* return
+locked value to circulation, so `refundCertDeposits`{.AgdaFunction} (the negative part
+of the cert-deposit change) appears on the *consumed* side.  This matches the trusted
+Conway convention (`Ledger.Conway.Specification.Utxo`: `newDeposits`{.AgdaFunction} on
+`produced`{.AgdaFunction}, `depositRefunds`{.AgdaFunction} on `consumed`{.AgdaFunction}),
+under the same `depositsChange`{.AgdaFunction} = deposits-after − deposits-before sign
+convention.
+
 ```agda
 
 module _ (pp : PParams) (certState : CertState) where
@@ -316,11 +327,10 @@ module _ (pp : PParams) (certState : CertState) where
   consumedTx tx utxo = balance (utxo ∣ SpendInputsOf tx)
                        + MintedValueOf tx
                        + inject (getCoin (WithdrawalsOf tx))
-                       + inject (govProposalsDeposits pp (ListOfGovProposalsOf tx))
 
   consumed : TopLevelTx → UTxO → Value
   consumed txTop utxo = consumedTx txTop utxo
-                       + inject (newCertDeposits pp certState (allDCerts txTop))
+                       + inject (refundCertDeposits pp certState (allDCerts txTop))
 
   consumedBatch : TopLevelTx → UTxO → Value
   consumedBatch txTop utxo = consumed txTop utxo
@@ -337,11 +347,12 @@ the transaction and that amount is deposited into accounts.
   producedTx tx = balance (outs tx)
                   + inject (DonationsOf tx)
                   + inject (getCoin (DirectDepositsOf tx))
+                  + inject (govProposalsDeposits pp (ListOfGovProposalsOf tx))
 
   produced : TopLevelTx → Value
   produced txTop = producedTx txTop
                    + inject (TxFeesOf txTop)
-                   + inject (refundCertDeposits pp certState (allDCerts txTop))
+                   + inject (newCertDeposits pp certState (allDCerts txTop))
 
   producedBatch : TopLevelTx → Value
   producedBatch txTop = produced txTop
