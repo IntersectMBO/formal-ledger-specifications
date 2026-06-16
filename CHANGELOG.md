@@ -4,6 +4,15 @@
 
 ### WIP
 
+- Fix preservation-of-value soundness bug in `Utxo`: deposit terms were on the wrong
+  sides of the batch-balance equation. New deposits (`newCertDeposits`,
+  `govProposalsDeposits`) now appear on the *produced* side and refunds
+  (`refundCertDeposits`) on the *consumed* side, matching the trusted Conway
+  convention. The previous (swapped) placement let a transaction create value.
+- Count governance-action deposits in `getCoin LedgerState` via a new
+  `coinFromGovDeposit : GovState → Coin` (sum of `GovActionState.deposit`). Post-#1214
+  these deposits live in `GovActionState.deposit`, not `GState.deposits`, so
+  `coinFromDeposits` alone no longer accounts for them.
 - Move cert-deposit helpers from `Utxo` to `Certs`.
 - Fix `updateCertDeposits`: use `foldl` (CERTS is head-first).
 - Add `HasCoin-UTxOState` and `HasCoin-LedgerState` instances; the latter sums UTxO total, rewards balance, and all three deposit fields.
