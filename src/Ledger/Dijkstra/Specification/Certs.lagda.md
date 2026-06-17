@@ -349,20 +349,14 @@ Note that any drift between the `updateCertDepositsStep`{.AgdaFunction} and the
 batch-balance equation to accept transactions whose actual `CertState` evolution
 doesn't balance.
 
-**TODO**. Add a property in `Certs.Properties` for this invariant.
-
 ```agda
 coinFromDeposits : CertState → Coin
 coinFromDeposits cs = coinFromDepositTriple (depositTripleOf cs)
 
 module _ (pp : PParams) (certState : CertState) where
 
-  -- Iterated cert-deposit accounting starting from certState.  Returns a new
-  -- CertState with deposit fields accumulated from the given DCert list.
   updateCertDeposits : List DCert → CertState
   updateCertDeposits = foldl (updateCertDepositsStep pp) certState
-  -- CERTS processes DCert lists head-first via `BS-ind`; this corresponds to a
-  -- *left* fold; a right fold would be unsound on non-commutative sequences.
 
   depositsChange : List DCert → ℤ
   depositsChange certs =
