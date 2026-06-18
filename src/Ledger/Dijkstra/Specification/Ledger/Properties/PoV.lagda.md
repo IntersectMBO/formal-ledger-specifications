@@ -52,6 +52,45 @@ that is, UTxO coin, rewards balance, the `DState`/`PState`/`GState` deposit pots
 > `posNeg-deposits` (below) is a pure `posPart`/`negPart` cancellation, unaffected by
 > both fixes; it stands as proved.
 
+> **🔖 Resume here — make this PR faithful to the top-down plan (remove the provider lemmas).**
+> Goal: this PR should prove only `LEDGER-pov`, with the Certs-PoV and Utxo/Utxow-PoV
+> facts left as **module parameters (stubs)**, discharged later by #1210 and #1189.
+> Do this in a fresh session **with the Agda toolchain available** (merge this branch's
+> tooling onto the working branch first so the SessionStart hook runs; then verify every
+> edit with `/agda-typecheck`, i.e. `nix develop --command agda <file>`).
+>
+> Dependency chain today: `Ledger.Properties.PoV` → `Entities.Properties.PoV` →
+> `Certs.Properties.PoV` → `Certs.Properties.PoVLemmas`.
+>
+> 1. **Capture exact signatures first** (before deleting): copy the types of `CERTS-pov`
+>    and `CERTS-coinFromDeposits-updateCertDeposits` from
+>    `Certs/Properties/PoV.lagda.md` — they become the parameter types below.
+> 2. **Delete** the Certs-PoV provider modules (this is #1210's work):
+>    `Certs/Properties/PoV.lagda.md` and `Certs/Properties/PoVLemmas.lagda.md`.
+> 3. **`Certs/Properties.lagda.md`**: drop the two `open import … Certs.Properties.PoVLemmas`
+>    / `… Certs.Properties.PoV` lines.
+> 4. **`Entities/Properties/PoV.lagda.md`**: remove `open import … Certs.Properties.PoV gs`;
+>    add `CERTS-pov` (the per-`CERTS`-step preservation fact, used at the `CERTS-pov certsStep`
+>    call) as a parameter of the `ENTITIES-PoV` module. Keep the `ApplyToRewardsPoV` import
+>    and everything else — `ENTITIES-pov` itself stays and is still consumed by `LEDGER-pov`.
+> 5. **`Ledger/Properties/PoV.lagda.md`** (this file): give the `LEDGER-PoV` module a
+>    `CERTS-pov` parameter (Certs-PoV stub, discharged by #1210) and thread it into the
+>    `open ENTITIES-PoV …` instantiation. When the `LEDGER-V` chain is finished, also add
+>    `CERTS-coinFromDeposits-updateCertDeposits` as a parameter (the closed-form coin
+>    equation #1210 provides).
+> 6. **Utxo/Utxow-PoV**: nothing to remove — those modules are not on this branch (they
+>    live in #1189). The skeleton already parameterizes the UTxO facts (`balance-∪`,
+>    `split-balance`, `subutxow-step-coin`, `utxo₁-tx-spend-eq`, `fresh-top-tx-id`, …) and
+>    keeps the `Utxo/Utxow.Properties.PoV` imports commented out. Leave as is.
+> 7. **Conway-side touches** in this PR (`Conway/Conformance/Properties.lagda.md`, the
+>    Conway `Certs`/`Ledger` PoV files, `Conway/…/Utxo/Properties/GenMinSpend.lagda.md`):
+>    check whether they were only needed to support the now-removed Dijkstra Certs-PoV
+>    modules; if so, revert them. Confirm with a typecheck.
+> 8. Don't forget the **separate** re-derivation work noted above (thread the
+>    `coinFromGovDeposit` summand and the new gov-deposit parameters
+>    `rmOrphanDRepVotes-coinFromGovDeposit` / `GOVS-coinFromGovDeposit`); the two efforts
+>    touch the same module parameter block, so it's natural to do them together.
+
 ## Proof Strategy
 
 The Dijkstra `LEDGER-pov`{.AgdaFunction} does not decompose into independent
