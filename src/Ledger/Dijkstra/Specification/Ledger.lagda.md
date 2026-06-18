@@ -186,7 +186,8 @@ allColdCreds govSt es =
 4. the governance-action deposits, summed by `coinFromGovDeposit`{.AgdaFunction} over
    `GovActionState.deposit`{.AgdaField} for each action in the current `GovState`{.AgdaRecord}.
 
-N.B. `HasCoin-CertState` only counts components 2–3; component 4 must be added at the
+N.B. `HasCoin-CertState` counts only the rewards balance (component 2) — its `getCoin` is
+`rewardsBalance ∘ DStateOf`{.AgdaFunction} — so components 3 and 4 must be added at the
 `LedgerState`{.AgdaRecord} level to make the `LEDGER-pov` equation balance against the
 `UTXO`{.AgdaDatatype} batch-balance equation, which charges `newCertDeposits`{.AgdaFunction}
 and `govProposalsDeposits`{.AgdaFunction} on the *produced* side.  Cert deposits flow into

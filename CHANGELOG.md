@@ -15,7 +15,7 @@
   `coinFromDeposits` alone no longer accounts for them.
 - Move cert-deposit helpers from `Utxo` to `Certs`.
 - Fix `updateCertDeposits`: use `foldl` (CERTS is head-first).
-- Add `HasCoin-UTxOState` and `HasCoin-LedgerState` instances; the latter sums UTxO total, rewards balance, and all three deposit fields.
+- Add `HasCoin-UTxOState` and `HasCoin-LedgerState` instances; the latter sums UTxO total, rewards balance, the three `CertState` deposit fields (`coinFromDeposits`), and governance-action deposits (`coinFromGovDeposit`).
 - Apply per-transaction direct deposits to `CertState` after each `CERTS` step in `SUBLEDGER-V` and `LEDGER-V` (CIP-159).
 - Forbid CIP-159 fields (`txDirectDeposits`, `txBalanceIntervals`) in legacy mode via explicit `UTXOW-legacy` premises.
 - Allow partial withdrawals in `PRE-CERT` rule; define `applyWithdrawals` and `_≤ᵐ_` (CIP-159).
