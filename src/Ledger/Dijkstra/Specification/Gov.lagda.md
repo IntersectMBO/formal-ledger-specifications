@@ -213,7 +213,6 @@ addAction s e aid addr a prev d = insertGovAction s (mkGovStatePair e aid addr a
 
 
 opaque
-  -- insert (and potentially override) a vote for a particular gov action
   addVote : GovState → GovActionID → GovVoter → Vote → GovState
   addVote gSt aid voter v = map modifyVotes gSt
     where
@@ -233,12 +232,13 @@ opaque
       ⟦ DRep , c  ⟧ᵍᵛ → c ∈ dom (DRepsOf (CertStateOf Γ))
       ⟦ SPO  , kh ⟧ᵍᵛ → kh ∈ dom (PoolsOf (CertStateOf Γ))
 
-  -- Indicates whether TriggerHardFork can be enacted in future.
   validHFAction : GovProposal → GovState → EnactState → Type
   validHFAction (record { action = ⟦ TriggerHardFork , v ⟧ᵍᵃ ; prevAction = prev }) s e =
-    (aid' ≡ prev × pvCanFollow ver v) ⊎ ∃₂[ x , v' ]  (prev , x) ∈ fromList s
+    (aid' ≡ prev × pvCanFollow v ver) ⊎ ∃₂[ x , v' ]  (prev , x) ∈ fromList s
                                                       × GovActionState.action x ≡ ⟦ TriggerHardFork , v' ⟧ᵍᵃ
-                                                      × pvCanFollow v' v
+                                                      × (if pvCanFollowMajor v' ver
+                                                            then pvCanFollowMinor v v'
+                                                            else pvCanFollow v v')
     where
       ver : ProtVer
       ver = EnactState.pv e .proj₁
