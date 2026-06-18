@@ -52,7 +52,6 @@ open import Ledger.Dijkstra.Specification.Certs gs
 open import Ledger.Dijkstra.Specification.Entities gs
 open import Ledger.Dijkstra.Specification.Gov.Actions gs hiding (yes; no)
 
-open import Ledger.Dijkstra.Specification.Certs.Properties.PoV gs
 open import Ledger.Dijkstra.Specification.Entities.Properties.ApplyToRewardsPoV gs
 
 open import Data.List.Relation.Unary.Unique.Propositional using (Unique)
@@ -91,6 +90,13 @@ module ENTITIES-PoV
       (m : RewardAddress ⇀ Coin)
       → ∀[ a ∈ dom (m ˢ) ] NetworkIdOf a ≡ NetworkId
       → Unique (map (stake ∘ proj₁) (setToList (m ˢ))) )
+
+  -- Certs-PoV stub (discharged later by #1210): preservation of value across
+  -- the reflexive-transitive `CERTS` closure.  Formerly proved in
+  -- `Certs.Properties.PoV`; lifted to a module parameter so this PR proves only
+  -- the `ENTITIES`/`LEDGER` layer (top-down strategy).
+  ( CERTS-pov : ∀ {Γ : CertEnv} {s s' : CertState} {dCerts : List DCert}
+      → Γ ⊢ s ⇀⦇ dCerts ,CERTS⦈ s' → getCoin s ≡ getCoin s' )
   where
   open ApplyToRewards-PoV ∪ˡ-lookup-preserve sum-map-proj₂≡getCoin setToList-Unique public
 ```

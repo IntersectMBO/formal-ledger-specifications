@@ -21,36 +21,27 @@ that is, UTxO coin, rewards balance, the `DState`/`PState`/`GState` deposit pots
 (`coinFromDeposits`{.AgdaFunction}), and the governance-action deposits
 (`coinFromGovDeposit`{.AgdaFunction}).
 
-> **🔖 Status (2026-06-16) — chain re-derivation needed after the PoV soundness fixes.**
-> The equational chain below predates two corrections to the spec and does **not** yet
-> typecheck against current master:
+> **Status — complete.** `LEDGER-pov` typechecks end-to-end under `--safe` (no
+> postulates or holes).  Following the top-down plan, this module proves only the
+> top-level `LEDGER` preservation-of-value statement and leaves the supporting facts
+> as **module parameters**, discharged downstream:
 >
-> 1. **`getCoin` gained a fourth summand** `coinFromGovDeposit (GovStateOf s)`
->    (post-#1214 gov-action deposits live in `GovActionState.deposit`, not
->    `GState.deposits`).  The chain still models the old three-summand total and uses
->    the now-renamed `coinFromDeposit` (→ `coinFromDeposits`).  Every
->    `LedgerState`-level total in `LEDGER-pov` (both `LEDGER-I` and `LEDGER-V`) must
->    thread the new gov summand `G`, with `G₀ = coinFromGovDeposit govState₀` and
->    `G' = coinFromGovDeposit (rmOrphanDRepVotes certState₂ govState₂)`.
-> 2. **Deposit sides were swapped** in `Utxo` to match Conway: `newCertDeposits` and
->    `govProposalsDeposits` are now on **produced**, `refundCertDeposits` on
->    **consumed**.  The batch-balance projection consumed by the chain (and the
->    `UTXOW-batch-balance-coin` parameter) must be updated to the new sides.
+> - **Certs-PoV** (`CERTS-pov`, `CERTS-coinFromDeposits-updateCertDeposits`) — by #1210.
+> - **Utxo/Utxow-PoV** (`utxow-pov-invalid`, `UTXOW-V-mechanical`,
+>   `UTXOW-batch-balance-coin`, and the UTxO algebra `balance-∪`, `split-balance`,
+>   `subutxow-step-coin`, `utxo₁-tx-spend-eq`, `fresh-top-tx-id`, …) — by the
+>   utxo/utxow-pov work (#1186).  `UTXOW-batch-balance-coin` is the coin projection of
+>   the spec's `consumedBatch ≡ producedBatch` premise, with the produced-side
+>   `govProposalsDeposits` collected into a single trailing `totGov` term.
+> - **Gov-deposit accounting** (`rmOrphanDRepVotes-coinFromGovDeposit`,
+>   `GOVS-coinFromGovDeposit`) — by a future `Gov.Properties.PoV`.
 >
-> This adds two module parameters — to be discharged by a future `Gov.Properties.PoV`,
-> alongside the existing ApplyToRewards / UTXOW / batch-invariant groups:
->
-> - `rmOrphanDRepVotes-coinFromGovDeposit :`
->     `∀ cs g → coinFromGovDeposit (rmOrphanDRepVotes cs g) ≡ coinFromGovDeposit g`
->     (`rmOrphanDRepVotes` only rewrites `votes.gvDRep`, never `deposit`).
-> - `GOVS-coinFromGovDeposit :` a top-level **and** per-sub-tx GOVS accounting fact,
->     `coinFromGovDeposit govSt′ ≡ coinFromGovDeposit govSt + govProposalsDeposits pp props`,
->     relating gov-deposit growth to the `govProposalsDeposits` now charged on the
->     produced side (`GOV-Propose` stores `deposit = pp .govActionDeposit`; no `GOV-Vote`
->     or epoch-boundary removal changes a deposit within `LEDGER`).
->
-> `posNeg-deposits` (below) is a pure `posPart`/`negPart` cancellation, unaffected by
-> both fixes; it stands as proved.
+> `getCoin` on a `LedgerState` has the four summands above — UTxO coin, rewards
+> balance, the cert-deposit pots (`coinFromDeposits`), and the gov-action deposits
+> (`coinFromGovDeposit`) — and the `LEDGER-V` chain accounts for all four: the cert
+> deposits cancel via the direct-deposit trick (see *Proof Strategy*), and the
+> gov-deposit growth `G' − G₀` is matched against the produced-side `totGov` (the
+> `gov-acc` lemma, from `SUBLEDGERS-gov-coin` + `GOVS-coinFromGovDeposit`).
 
 ## Proof Strategy
 
@@ -109,8 +100,8 @@ open import Ledger.Dijkstra.Specification.Entities.Properties.PoV govStructure
 open import Interface.STS
 open import Data.Nat.Properties
   using (+-comm; +-assoc; +-0-monoid; +-identityʳ; +-cancelʳ-≡)
-open import Data.Integer using (ℤ; 0ℤ; _-_)
-open import Data.Integer.Properties using () renaming (+-comm to +ℤ-comm)
+open import Data.Integer using (ℤ; 0ℤ; _-_; _⊖_)
+open import Data.Integer.Properties using ([1+m]⊖[1+n]≡m⊖n) renaming (+-comm to +ℤ-comm)
 open import Data.List.Relation.Unary.Unique.Propositional using (Unique)
 
 open RewardAddress
@@ -140,6 +131,15 @@ follow-up work.
 ```agda
 noMintingSubTxs : TopLevelTx → Type
 noMintingSubTxs tx = ∀ stx → stx ∈ˡ SubTransactionsOf tx → coin (MintedValueOf stx) ≡ 0
+
+-- The right injections of a list of sums.  Used (at `GovVote ⊎ GovProposal`) to
+-- extract the proposals from a mixed `GOVS` input list for the
+-- `GOVS-coinFromGovDeposit` gov-deposit accounting parameter below.  Stated generically
+-- to avoid the doubly-imported `GovVote`/`GovProposal` names.
+proposalsOf : ∀ {A B : Type} → List (A ⊎ B) → List B
+proposalsOf []            = []
+proposalsOf (inj₁ _ ∷ xs) = proposalsOf xs
+proposalsOf (inj₂ p ∷ xs) = p ∷ proposalsOf xs
 
 
 module LEDGER-PoV
@@ -197,9 +197,75 @@ module LEDGER-PoV
       → SubLedgerEnv.isTopLevelValid subΓ ≡ true
       → subΓ ⊢ s ⇀⦇ SubTransactionsOf tx ,SUBLEDGERS⦈ ⟦ utxoSt₁ , govSt₁ , certState₁ ⟧ˡ
       → TxIdOf tx ∉ mapˢ proj₁ (dom (UTxOOf utxoSt₁)) )
+
+  -- Certs-PoV stubs (discharged later by #1210).  These were the `Certs.Properties.PoV`
+  -- provider lemmas; under the top-down plan they are module parameters here.
+  ( CERTS-pov : ∀ {Γ : CertEnv} {s s' : CertState} {dCerts : List DCert}
+      → Γ ⊢ s ⇀⦇ dCerts ,CERTS⦈ s' → getCoin s ≡ getCoin s' )
+  -- Closed-form cert-deposit coin equation: the post-`CERTS` `CertState` has the same
+  -- `coinFromDeposits` as the closed-form `updateCertDeposits` applied to the initial
+  -- state and the cert list.  (#1210 discharges this using the ledger-level
+  -- pool-deposit alignment invariant; stated premise-free for the LEDGER-pov consumer.)
+  ( CERTS-coinFromDeposits-updateCertDeposits :
+      ∀ {Γ : CertEnv} {s s' : CertState} {dCerts : List DCert}
+      → Γ ⊢ s ⇀⦇ dCerts ,CERTS⦈ s'
+      → coinFromDeposits s' ≡ coinFromDeposits (updateCertDeposits (PParamsOf Γ) s dCerts) )
+
+  -- Governance-deposit accounting (to be discharged by a future `Gov.Properties.PoV`).
+  -- `rmOrphanDRepVotes` only rewrites `votes.gvDRep`, never `GovActionState.deposit`,
+  -- so it leaves `coinFromGovDeposit` unchanged.
+  ( rmOrphanDRepVotes-coinFromGovDeposit :
+      ∀ (cs : CertState) (g : GovState)
+      → coinFromGovDeposit (rmOrphanDRepVotes cs g) ≡ coinFromGovDeposit g )
+  -- Per-`GOVS`-step gov-deposit growth equals the `govProposalsDeposits` of the step's
+  -- proposals (`GOV-Propose` stores `deposit = pp .govActionDeposit`; no `GOV-Vote` or
+  -- in-`LEDGER` removal changes a deposit).  Used by `SUBLEDGERS-gov-coin` (the sub-tx
+  -- GOVS steps) and `gov-acc` (the top-level GOVS step).
+  ( GOVS-coinFromGovDeposit :
+      ∀ {Γ : GovEnv} {govSt govSt′ : GovState} {props}
+      → Γ ⊢ govSt ⇀⦇ props ,GOVS⦈ govSt′
+      → coinFromGovDeposit govSt′
+        ≡ coinFromGovDeposit govSt + govProposalsDeposits (PParamsOf Γ) (proposalsOf props) )
+
+  -- Utxo/Utxow-PoV facts (discharged later by #1186; module-parameter stubs).
+  -- Invalid top-level tx: the UTXOW step preserves UTxO coin.
+  ( utxow-pov-invalid : ∀ {Γ' : UTxOEnv} {s₀ s₁ : UTxOState}
+      → Γ' ⊢ s₀ ⇀⦇ tx ,UTXOW⦈ s₁
+      → IsValidFlagOf tx ≡ false
+      → getCoin s₀ ≡ getCoin s₁ )
+  -- Valid top-level tx, mechanical single-tx coin equation (spend inputs resolved
+  -- against the running UTxO; TxId freshness lets `outs tx` split off cleanly).
+  ( UTXOW-V-mechanical : ∀ {Γ' : UTxOEnv} {s₀ s₁ : UTxOState}
+      → Γ' ⊢ s₀ ⇀⦇ tx ,UTXOW⦈ s₁
+      → IsValidFlagOf tx ≡ true
+      → TxIdOf tx ∉ mapˢ proj₁ (dom (UTxOOf s₀))
+      → getCoin s₀ + cbalance (outs tx) + TxFeesOf tx + DonationsOf tx
+        ≡ getCoin s₁ + cbalance (UTxOOf s₀ ∣ SpendInputsOf tx) )
+  -- The batch balance `consumedBatch ≡ producedBatch`, coin-projected, with the
+  -- minted term dropped (no ADA minting) and the cert-deposit change rephrased to
+  -- the chain's top/sub two-level `posPart`/`negPart` form.  #1186 discharges this
+  -- from the spec premise at the actual post-SUBLEDGERS/ENTITIES cert states `cs₁`,
+  -- `cs₂` (via `posNeg-deposits` + `CERTS-coinFromDeposits-updateCertDeposits`).  The
+  -- governance-deposit summands (`govProposalsDeposits`, top and per-sub) sit on the
+  -- produced side, matching `producedTx`.
+  ( UTXOW-batch-balance-coin : ∀ {Γ' : UTxOEnv} {s₀ s₁ : UTxOState} {cs₁ cs₂ : CertState}
+      → Γ' ⊢ s₀ ⇀⦇ tx ,UTXOW⦈ s₁
+      → cbalance (UTxOOf Γ' ∣ SpendInputsOf tx) + getCoin (WithdrawalsOf tx)
+          + negPart (coinFromDeposits cs₂ ⊖ coinFromDeposits cs₁)
+          + sum (map (λ stx → cbalance (UTxOOf Γ' ∣ SpendInputsOf stx) + getCoin (WithdrawalsOf stx))
+                     (SubTransactionsOf tx))
+          + negPart (coinFromDeposits cs₁ ⊖ coinFromDeposits (CertStateOf Γ'))
+        ≡ cbalance (outs tx) + TxFeesOf tx + DonationsOf tx + getCoin (DirectDepositsOf tx)
+          + posPart (coinFromDeposits cs₂ ⊖ coinFromDeposits cs₁)
+          + sum (map (λ stx → cbalance (outs stx) + DonationsOf stx + getCoin (DirectDepositsOf stx))
+                     (SubTransactionsOf tx))
+          + posPart (coinFromDeposits cs₁ ⊖ coinFromDeposits (CertStateOf Γ'))
+          + ( govProposalsDeposits (PParamsOf Γ') (ListOfGovProposalsOf tx)
+            + sum (map (λ stx → govProposalsDeposits (PParamsOf Γ') (ListOfGovProposalsOf stx))
+                       (SubTransactionsOf tx)) ) )
   where
 
-  open ENTITIES-PoV ∪ˡ-lookup-preserve sum-map-proj₂≡getCoin setToList-Unique
+  open ENTITIES-PoV ∪ˡ-lookup-preserve sum-map-proj₂≡getCoin setToList-Unique CERTS-pov
   -- open UTXOW-PoV tx (λ {u} {u'} → balance-∪ {u} {u'}) split-balance noMintTx noMintSubTx
   --   (λ {u} → outs-disjoint {u})
 ```
@@ -224,6 +290,42 @@ the `left-unique` field as an unresolved meta.
   ddwl = getCoin ∘ DirectDepositsOf
 ```
 
+## Deposit-change interface
+
+The cert-deposit change is the integer delta of `coinFromDeposits`{.AgdaFunction} at
+the top and sub levels.  The #1185/#1186 batch-balance machinery exposes these; here
+the `LEDGER-V` chain only needs the `coinFromDeposits`-difference form (against which
+the `UTXOW-batch-balance-coin`{.AgdaFunction} parameter is phrased), so we define it
+directly.
+
+```agda
+  DepositsChange : Type
+  DepositsChange = ℤ × ℤ            -- (top-level Δ , sub-level Δ)
+
+  DepositsChangeTopOf : DepositsChange → ℤ
+  DepositsChangeTopOf = proj₁
+
+  DepositsChangeSubOf : DepositsChange → ℤ
+  DepositsChangeSubOf = proj₂
+
+  calculateDepositsChange : CertState → CertState → CertState → DepositsChange
+  calculateDepositsChange cs₀ cs₁ cs₂ =
+      (coinFromDeposits cs₂ ⊖ coinFromDeposits cs₁)
+    , (coinFromDeposits cs₁ ⊖ coinFromDeposits cs₀)
+
+  -- ℕ-level posPart/negPart cancellation: `b + posPart (a ⊖ b)` and
+  -- `a + negPart (a ⊖ b)` both equal `a ⊔ b`.
+  posPart-negPart-sym : ∀ (a b : ℕ) → b + posPart (a ⊖ b) ≡ a + negPart (a ⊖ b)
+  posPart-negPart-sym a       zero    = sym (+-identityʳ a)
+  posPart-negPart-sym zero    (suc b) = +-identityʳ (suc b)
+  posPart-negPart-sym (suc a) (suc b) = begin
+      suc b + posPart (suc a ⊖ suc b)  ≡⟨ cong (λ z → suc b + posPart z) ([1+m]⊖[1+n]≡m⊖n a b) ⟩
+      suc b + posPart (a ⊖ b)          ≡⟨ cong suc (posPart-negPart-sym a b) ⟩
+      suc a + negPart (a ⊖ b)          ≡˘⟨ cong (λ z → suc a + negPart z) ([1+m]⊖[1+n]≡m⊖n a b) ⟩
+      suc a + negPart (suc a ⊖ suc b)  ∎
+    where open ≡-Reasoning
+```
+
 ## `posNeg-deposits`
 
 The deposit accounting identity used in the `LEDGER-V` chain.  Both sides express the
@@ -233,8 +335,8 @@ same quantity (the sum of deposits across the batch), just rephrased to expose
 ```agda
   posNeg-deposits : (cs₀ cs₁ cs₂ : CertState)
     → let dc = calculateDepositsChange cs₀ cs₁ cs₂ in
-      coinFromDeposit cs₀ + posPart (DepositsChangeTopOf dc) + posPart (DepositsChangeSubOf dc)
-      ≡ coinFromDeposit cs₂ + negPart (DepositsChangeTopOf dc) + negPart (DepositsChangeSubOf dc)
+      coinFromDeposits cs₀ + posPart (DepositsChangeTopOf dc) + posPart (DepositsChangeSubOf dc)
+      ≡ coinFromDeposits cs₂ + negPart (DepositsChangeTopOf dc) + negPart (DepositsChangeSubOf dc)
   posNeg-deposits cs₀ cs₁ cs₂ = begin
       coin₀ + pt + psp   ≡⟨ swap-right coin₀ pt psp ⟩
       coin₀ + psp + pt   ≡⟨ cong (_+ pt) (posPart-negPart-sym coin₁ coin₀) ⟩
@@ -242,9 +344,9 @@ same quantity (the sum of deposits across the batch), just rephrased to expose
       coin₁ + pt  + ns   ≡⟨ cong (_+ ns) (posPart-negPart-sym coin₂ coin₁) ⟩
       coin₂ + nt  + ns   ∎
     where
-    coin₀ = coinFromDeposit cs₀
-    coin₁ = coinFromDeposit cs₁
-    coin₂ = coinFromDeposit cs₂
+    coin₀ = coinFromDeposits cs₀
+    coin₁ = coinFromDeposits cs₁
+    coin₂ = coinFromDeposits cs₂
     psp = posPart (coin₁ ⊖ coin₀)   -- DepositsChangeSubOf dc
     ns  = negPart (coin₁ ⊖ coin₀)
     pt  = posPart (coin₂ ⊖ coin₁)   -- DepositsChangeTopOf dc
@@ -353,9 +455,9 @@ deposits.
     -- The two NetworkId witnesses, extracted from the SUBUTXOW step.
     -- (Adjust the constructor arity to match the current SUBUTXO premise
     -- shape; this mirrors `extract-netId` from the old #1190.)
-    wd-netId : ∀[ a ∈ dom (WithdrawalsOf stx)    ] NetworkIdOf a ≡ NetworkId
-    dd-netId : ∀[ a ∈ dom (DirectDepositsOf stx) ] NetworkIdOf a ≡ NetworkId
-    wd-netId , dd-netId = extract-netId subutxowStep
+    netIds : (∀[ a ∈ dom (WithdrawalsOf stx)    ] NetworkIdOf a ≡ NetworkId)
+           × (∀[ a ∈ dom (DirectDepositsOf stx) ] NetworkIdOf a ≡ NetworkId)
+    netIds = extract-netId subutxowStep
       where
       extract-netId : ∀ {Γ' s₀' s₁'}
         → Γ' ⊢ s₀' ⇀⦇ stx ,SUBUTXOW⦈ s₁'
@@ -367,9 +469,72 @@ deposits.
                             , wd-netId' , dd-netId' , _))) =
           wd-netId' , dd-netId'
 
+    wd-netId = proj₁ netIds
+    dd-netId = proj₂ netIds
+
     ih : getCoin (CertStateOf s₁) + sum (map ddwl sigs)
          ≡ getCoin (CertStateOf sₙ) + sum (map wdrwl sigs)
     ih = SUBLEDGERS-certs-pov isV rest
+```
+
+## `SUBLEDGERS-gov-coin`
+
+Induct over `SUBLEDGERS`, threading the per-`GOVS` gov-deposit growth: each
+`SUBLEDGER-V` step grows `coinFromGovDeposit`{.AgdaFunction} by the
+`govProposalsDeposits`{.AgdaFunction} of the sub-transaction's proposals (via the
+`GOVS-coinFromGovDeposit`{.AgdaFunction} parameter applied to the step's `GOVS`
+premise).  `SUBLEDGER-I` is ruled out by the top-level validity flag.
+
+```agda
+  -- `proposalsOf (GovProposals+Votes t)` recovers exactly the proposals of `t`.
+  proposalsOf-Proposals+Votes : ∀ {ℓ} (t : Tx ℓ)
+    → proposalsOf (GovProposals+Votes t) ≡ ListOfGovProposalsOf t
+  proposalsOf-Proposals+Votes t = go (ListOfGovProposalsOf t) (ListOfGovVotesOf t)
+    where
+    drop-votes : ∀ {A B : Type} (vs : List A)
+      → proposalsOf {A = A} {B = B} (map inj₁ vs) ≡ []
+    drop-votes []       = refl
+    drop-votes (_ ∷ vs) = drop-votes vs
+    go : ∀ {A B : Type} (ps : List B) (vs : List A)
+       → proposalsOf (map inj₂ ps ++ map inj₁ vs) ≡ ps
+    go []       vs = drop-votes vs
+    go (p ∷ ps) vs = cong (p ∷_) (go ps vs)
+
+  SUBLEDGERS-gov-coin : ∀ {Γ : SubLedgerEnv} {s₀ s₁ : LedgerState} {stxs : List SubLevelTx}
+    → SubLedgerEnv.isTopLevelValid Γ ≡ true
+    → Γ ⊢ s₀ ⇀⦇ stxs ,SUBLEDGERS⦈ s₁
+    → coinFromGovDeposit (GovStateOf s₁)
+      ≡ coinFromGovDeposit (GovStateOf s₀)
+        + sum (map (λ stx → govProposalsDeposits (SubLedgerEnv.pparams Γ) (ListOfGovProposalsOf stx)) stxs)
+
+  SUBLEDGERS-gov-coin _ (BS-base Id-nop) = sym (+-identityʳ _)
+
+  SUBLEDGERS-gov-coin isV (BS-ind (SUBLEDGER-I (isI , _)) _) =
+    ⊥-elim (case trans (sym isV) isI of λ ())
+
+  SUBLEDGERS-gov-coin {Γ} isV (BS-ind {s = s₀} {s' = s₁} {sigs} {s'' = sₙ}
+    (SUBLEDGER-V {stx = stx} (_ , _ , _ , govStep)) rest) =
+    begin
+      coinFromGovDeposit (GovStateOf sₙ)
+        ≡⟨ ih ⟩
+      coinFromGovDeposit (GovStateOf s₁) + g-sum
+        ≡⟨ cong (_+ g-sum) step-gov ⟩
+      coinFromGovDeposit (GovStateOf s₀) + g-stx + g-sum
+        ≡⟨ +-assoc (coinFromGovDeposit (GovStateOf s₀)) g-stx g-sum ⟩
+      coinFromGovDeposit (GovStateOf s₀) + (g-stx + g-sum)
+        ∎
+    where
+    pp = SubLedgerEnv.pparams Γ
+    g-stx = govProposalsDeposits pp (ListOfGovProposalsOf stx)
+    g-sum = sum (map (λ stx → govProposalsDeposits pp (ListOfGovProposalsOf stx)) sigs)
+
+    step-gov : coinFromGovDeposit (GovStateOf s₁) ≡ coinFromGovDeposit (GovStateOf s₀) + g-stx
+    step-gov = trans (GOVS-coinFromGovDeposit govStep)
+                     (cong (λ ps → coinFromGovDeposit (GovStateOf s₀) + govProposalsDeposits pp ps)
+                           (proposalsOf-Proposals+Votes stx))
+
+    ih : coinFromGovDeposit (GovStateOf sₙ) ≡ coinFromGovDeposit (GovStateOf s₁) + g-sum
+    ih = SUBLEDGERS-gov-coin isV rest
 ```
 
 ## `LEDGER-pov`
@@ -387,42 +552,52 @@ are unchanged.  Only the `UTXOW` step affects `getCoin`, and it preserves it via
 
 ```agda
   LEDGER-pov {Γ} {s} (LEDGER-I (invalid , _ , utxoStep)) =
-    cong (λ u → u + getCoin (CertStateOf s) + coinFromDeposit (CertStateOf s))
+    cong (λ u → u + getCoin (CertStateOf s) + coinFromDeposits (CertStateOf s)
+                  + coinFromGovDeposit (GovStateOf s))
          (utxow-pov-invalid utxoStep invalid)
 ```
 
 ### `LEDGER-V` case (valid transaction)
 
 The proof is a single equational chain over `LedgerState` coin totals.  Setting
-`U = getCoin (UTxOState)`, `R = rewardsBalance`, `D = coinFromDeposit`, and
-`allDirectDeps` / `allWdrls` for the top-level and sub-level totals of direct
-deposits and withdrawals respectively, the chain shows
+`U = getCoin (UTxOState)`, `R = rewardsBalance`, `D = coinFromDeposits`,
+`G = coinFromGovDeposit`, and `allDirectDeps` / `allWdrls` for the top-level and
+sub-level totals of direct deposits and withdrawals respectively, the goal
+`getCoin s ≡ getCoin s'` is
 
-    U₀ + R₀ + D₀ + allDirectDeps  ≡  U₂ + R₂ + D₂ + allDirectDeps
+    U₀ + R₀ + D₀ + G₀  ≡  U₂ + R₂ + D₂ + G'
 
-with `allDirectDeps` appearing on both sides — the "deposits added on the rewards
-side equal deposits added on the UTxO side, modulo accounting" cancellation that's at
-the heart of the proof.  `+-cancelʳ-≡` removes the common summand to deliver
-`getCoin s ≡ getCoin s'`.
+where `G₀ = coinFromGovDeposit govState₀` and — since the final `LEDGER-V` `GovState`
+is `rmOrphanDRepVotes certState₂ govState₂` and `rmOrphanDRepVotes` preserves
+`coinFromGovDeposit` (parameter `rmOrphanDRepVotes-coinFromGovDeposit`) —
+`G' = coinFromGovDeposit govState₂`.
+
+The body assembles the four-summand goal from two `where`-lemmas: `three-summand`
+(`U₀+R₀+D₀ ≡ U₂+R₂+D₂+totGov`, the UTxO/rewards/cert-deposit totals with the
+produced-side gov deposits surfacing as `totGov`) and `gov-acc` (`totGov+G₀ ≡ G'`,
+the gov-deposit accounting).
 
 ```agda
   LEDGER-pov {Γ} {s}
-    (LEDGER-V {certState₁ = cs₁} {cs₂} {govSt₁ = govSt₁} {govSt₂}
-              {utxoState₁ = us₁} {utxoState₂ = us₂}
-              (valid , subStep , entitiesStep , _ , utxoStep)) =
-    +-cancelʳ-≡ _ _ _
-      (begin
-        U₀ + R₀ + D₀ + allDirectDeps       ≡⟨ step-i ⟩
-        U₀ + R₂ + allWdrls + D₀            ≡⟨ abcd-to-acdb U₀ R₂ allWdrls D₀ ⟩
-        U₀ + allWdrls + D₀ + R₂            ≡⟨ step-ii ⟩
-        U₂ + allDirectDeps + D₂ + R₂       ≡⟨ abcd-to-adcb U₂ allDirectDeps D₂ R₂ ⟩
-        U₂ + R₂ + D₂ + allDirectDeps       ∎)
+    (LEDGER-V {utxoState₁ = us₁} {govState₁ = govSt₁} {certState₁ = cs₁}
+              {certState₂ = cs₂} {govState₂ = govSt₂} {utxoState₂ = us₂}
+              (valid , subStep , entitiesStep , govStep , utxoStep)) =
+    begin
+      U₀ + R₀ + D₀ + G₀
+        ≡⟨ cong (_+ G₀) three-summand ⟩
+      U₂ + R₂ + D₂ + totGov + G₀
+        ≡⟨ +-assoc (U₂ + R₂ + D₂) totGov G₀ ⟩
+      U₂ + R₂ + D₂ + (totGov + G₀)
+        ≡⟨ cong (U₂ + R₂ + D₂ +_) gov-acc ⟩
+      U₂ + R₂ + D₂ + G'
+        ∎
     where
 ```
 
-The proof uses a handful of arithmetic shuffles — `abcd-to-acdb`, `abcd-to-adcb`, and
-five `arithmetic-N` helpers — all of which are pure `+`-monoid rearrangements.  They
-could in principle be discharged by `solve-macro` for the `+-0`-monoid; for now they
+The proof uses a handful of arithmetic shuffles — `abcd-to-acdb`, the five
+`arithmetic-N` helpers, and `mid-extract`/`rearr3`/`outer-rearr` (for the gov summand)
+— all pure `+`-monoid rearrangements.  Commutative steps go through `swap-right`, so
+`solve-macro` (a *non-normalising* monoid solver) cannot discharge them directly; they
 are stated explicitly to keep the chain readable.
 
 ```agda
@@ -436,24 +611,26 @@ are stated explicitly to keep the chain readable.
         a + c + (d + b)   ≡⟨ sym (+-assoc (a + c) d b) ⟩
         a + c + d + b     ∎
 
-      abcd-to-adcb : ∀ a b c d → a + b + c + d ≡ a + d + c + b
-      abcd-to-adcb a b c d =
-        trans (swap-right (a + b) c d)
-              (trans (cong (_+ c) (swap-right a b d))
-                     (swap-right (a + d) b c))
-
       U₀ U₁ U₂ : Coin
       U₀ = getCoin (UTxOStateOf s)
       U₁ = getCoin us₁
       U₂ = getCoin us₂
 
       D₀ D₂ : Coin
-      D₀ = coinFromDeposit (CertStateOf s)
-      D₂ = coinFromDeposit cs₂
+      D₀ = coinFromDeposits (CertStateOf s)
+      D₂ = coinFromDeposits cs₂
 
       R₀ R₂ : Coin
       R₀ = rewardsBalance (DStateOf (CertStateOf s))
       R₂ = rewardsBalance (DStateOf cs₂)
+
+      -- Governance-deposit summands of the LedgerState totals.  G₀ is the initial
+      -- GovState's deposit; G' is the final state's (`rmOrphanDRepVotes cs₂ govSt₂`),
+      -- which `rmOrphanDRepVotes-coinFromGovDeposit` collapses to `coinFromGovDeposit
+      -- govSt₂`.  (Used by the `gov-acc` lemma.)
+      G₀ G' : Coin
+      G₀ = coinFromGovDeposit (GovStateOf s)
+      G' = coinFromGovDeposit (rmOrphanDRepVotes cs₂ govSt₂)
 
       subDirectDepsCoin : Coin
       subDirectDepsCoin = sum (map ddwl (SubTransactionsOf tx))
@@ -466,6 +643,36 @@ are stated explicitly to keep the chain readable.
 
       allWdrls : Coin
       allWdrls = getCoin (WithdrawalsOf tx) + subWdrlsCoin
+
+      -- Total governance-action deposits introduced by the batch (top + per-sub),
+      -- matching the `govProposalsDeposits` summands on the produced side of the
+      -- batch balance and the gov-deposit growth `G' − G₀`.
+      topGov subGovSum totGov : Coin
+      topGov    = govProposalsDeposits (LedgerEnv.pparams Γ) (ListOfGovProposalsOf tx)
+      subGovSum = sum (map (λ stx → govProposalsDeposits (LedgerEnv.pparams Γ) (ListOfGovProposalsOf stx))
+                           (SubTransactionsOf tx))
+      totGov    = topGov + subGovSum
+
+      -- Pure +-monoid rearrangements for threading the gov summand.
+      mid-extract : ∀ a b c d → a + (b + d) + c ≡ a + b + c + d
+      mid-extract a b c d = trans (cong (_+ c) (sym (+-assoc a b d)))
+                                  (swap-right (a + b) d c)
+
+      rearr3 : ∀ a b c → a + b + c ≡ c + b + a
+      rearr3 a b c = begin
+        a + b + c   ≡⟨ swap-right a b c ⟩
+        a + c + b   ≡⟨ cong (_+ b) (+-comm a c) ⟩
+        c + a + b   ≡⟨ swap-right c a b ⟩
+        c + b + a   ∎
+
+      outer-rearr : ∀ u a d g r → u + a + d + g + r ≡ u + r + d + g + a
+      outer-rearr u a d g r = begin
+        u + a + d + g + r   ≡⟨ swap-right (u + a + d) g r ⟩
+        u + a + d + r + g   ≡⟨ cong (_+ g) (swap-right (u + a) d r) ⟩
+        u + a + r + d + g   ≡⟨ cong (λ x → x + d + g) (swap-right u a r) ⟩
+        u + r + a + d + g   ≡⟨ cong (_+ g) (swap-right (u + r) a d) ⟩
+        u + r + d + a + g   ≡⟨ swap-right (u + r + d) a g ⟩
+        u + r + d + g + a   ∎
 ```
 
 Extract the two top-level `NetworkId` witnesses from the `UTXOW` step:
@@ -475,17 +682,20 @@ Extract the two top-level `NetworkId` witnesses from the `UTXOW` step:
         → (∀[ a ∈ dom (WithdrawalsOf tx)    ] NetworkIdOf a ≡ NetworkId)
         × (∀[ a ∈ dom (DirectDepositsOf tx) ] NetworkIdOf a ≡ NetworkId)
       extract-utxo-netId
-        (UTXOW-normal-⋯ _ _ _ _ _ _ _ _ _ _ _
+        (UTXOW-normal-⋯ _ _ _ _ _ _ _ _ _ _ _ _ _
           (UTXO (_ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , wd-netId , dd-netId , _))) =
           wd-netId , dd-netId
       extract-utxo-netId
-        (UTXOW-legacy-⋯ _ _ _ _ _ _ _ _ _ _ _
+        (UTXOW-legacy-⋯ _ _ _ _ _ _ _ _ _ _ _ _ _
           (UTXO (_ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , wd-netId , dd-netId , _))) =
           wd-netId , dd-netId
 
-      top-wd-netId : ∀[ a ∈ dom (WithdrawalsOf tx) ] NetworkIdOf a ≡ NetworkId
-      top-dd-netId : ∀[ a ∈ dom (DirectDepositsOf tx) ] NetworkIdOf a ≡ NetworkId
-      top-wd-netId , top-dd-netId = extract-utxo-netId utxoStep
+      top-netIds : (∀[ a ∈ dom (WithdrawalsOf tx)    ] NetworkIdOf a ≡ NetworkId)
+                 × (∀[ a ∈ dom (DirectDepositsOf tx) ] NetworkIdOf a ≡ NetworkId)
+      top-netIds = extract-utxo-netId utxoStep
+
+      top-wd-netId = proj₁ top-netIds
+      top-dd-netId = proj₂ top-netIds
 ```
 
 The "combined" `ENTITIES-pov` invocation: pre-batch `certState` + all direct deposits
@@ -569,7 +779,7 @@ The batch balance, rephrased to expose direct deposits and bring withdrawals tog
 ```agda
       bat' : Ctop + allWdrls + Csub + negPart dct + negPart dcs
            ≡ cbalance (outs tx) + TxFeesOf tx + DonationsOf tx
-             + allDirectDeps + Psub + posPart dct + posPart dcs
+             + allDirectDeps + Psub + posPart dct + posPart dcs + totGov
       bat' =
         begin
           Ctop + allWdrls + Csub + negPart dct + negPart dcs
@@ -590,15 +800,15 @@ The batch balance, rephrased to expose direct deposits and bring withdrawals tog
           Ctop + Wtop + CsubW + negPart dct + negPart dcs
             ≡⟨ cong (_+ negPart dcs) (swap-right (Ctop + Wtop) CsubW (negPart dct)) ⟩
           Ctop + Wtop + negPart dct + CsubW + negPart dcs
-            ≡⟨ UTXOW-batch-balance-coin utxoStep ⟩
-          O + F + DN + DDtop + posPart dct + PsubDD + posPart dcs
-            ≡⟨ cong (λ x → O + F + DN + DDtop + posPart dct + x + posPart dcs)
+            ≡⟨ UTXOW-batch-balance-coin {cs₁ = cs₁} {cs₂ = cs₂} utxoStep ⟩
+          O + F + DN + DDtop + posPart dct + PsubDD + posPart dcs + totGov
+            ≡⟨ cong (λ x → O + F + DN + DDtop + posPart dct + x + posPart dcs + totGov)
                     (sum-map-+ (λ stx → cbalance (outs stx) + DonationsOf stx)
                                (λ stx → getCoin (DirectDepositsOf stx))
                                (SubTransactionsOf tx)) ⟩
-          O + F + DN + DDtop + posPart dct + (Psub + subDirectDepsCoin) + posPart dcs
-            ≡⟨ reshuffle-to-DD ⟩
-          O + F + DN + allDirectDeps + Psub + posPart dct + posPart dcs
+          O + F + DN + DDtop + posPart dct + (Psub + subDirectDepsCoin) + posPart dcs + totGov
+            ≡⟨ cong (_+ totGov) reshuffle-to-DD ⟩
+          O + F + DN + allDirectDeps + Psub + posPart dct + posPart dcs + totGov
             ∎
         where
         O     = cbalance (outs tx)
@@ -631,7 +841,7 @@ The batch balance, rephrased to expose direct deposits and bring withdrawals tog
 The main inner chain, showing LHS + E ≡ RHS + E:
 
 ```agda
-      LHS+E≡RHS+E : U₀ + allWdrls + D₀ + E ≡ U₂ + allDirectDeps + D₂ + E
+      LHS+E≡RHS+E : U₀ + allWdrls + D₀ + E ≡ U₂ + allDirectDeps + D₂ + totGov + E
       LHS+E≡RHS+E = begin
         U₀ + allWdrls + D₀ + E
           ≡⟨⟩
@@ -652,15 +862,19 @@ The main inner chain, showing LHS + E ≡ RHS + E:
           ≡⟨ arithmetic-3 U₁ Csub allWdrls ⟩
         U₁ + (Ctop + allWdrls + Csub + negPart dct + negPart dcs) + D₂
           ≡⟨ cong (λ x → U₁ + x + D₂) bat' ⟩
-        U₁ + (cbalance (outs tx) + TxFeesOf tx + DonationsOf tx + allDirectDeps + Psub + posPart dct + posPart dcs) + D₂
-          ≡⟨ arithmetic-4 U₁ (cbalance (outs tx)) (TxFeesOf tx) ⟩
-        U₁ + cbalance (outs tx) + TxFeesOf tx + DonationsOf tx + allDirectDeps + Psub + posPart dct + posPart dcs + D₂
-          ≡⟨ cong (λ x → x + allDirectDeps + Psub + posPart dct + posPart dcs + D₂) mech ⟩
-        U₂ + Ctop + allDirectDeps + Psub + posPart dct + posPart dcs + D₂
-          ≡⟨ arithmetic-5 U₂ Ctop allDirectDeps ⟩
-        U₂ + allDirectDeps + D₂ + Ctop + Psub + posPart dct + posPart dcs
-          ≡˘⟨ arithmetic-1 U₂ allDirectDeps D₂ ⟩
-        U₂ + allDirectDeps + D₂ + E
+        U₁ + (cbalance (outs tx) + TxFeesOf tx + DonationsOf tx + allDirectDeps + Psub + posPart dct + posPart dcs + totGov) + D₂
+          ≡⟨ mid-extract U₁ (cbalance (outs tx) + TxFeesOf tx + DonationsOf tx + allDirectDeps + Psub + posPart dct + posPart dcs) D₂ totGov ⟩
+        U₁ + (cbalance (outs tx) + TxFeesOf tx + DonationsOf tx + allDirectDeps + Psub + posPart dct + posPart dcs) + D₂ + totGov
+          ≡⟨ cong (_+ totGov) (arithmetic-4 U₁ (cbalance (outs tx)) (TxFeesOf tx)) ⟩
+        U₁ + cbalance (outs tx) + TxFeesOf tx + DonationsOf tx + allDirectDeps + Psub + posPart dct + posPart dcs + D₂ + totGov
+          ≡⟨ cong (_+ totGov) (cong (λ x → x + allDirectDeps + Psub + posPart dct + posPart dcs + D₂) mech) ⟩
+        U₂ + Ctop + allDirectDeps + Psub + posPart dct + posPart dcs + D₂ + totGov
+          ≡⟨ cong (_+ totGov) (arithmetic-5 U₂ Ctop allDirectDeps) ⟩
+        U₂ + allDirectDeps + D₂ + Ctop + Psub + posPart dct + posPart dcs + totGov
+          ≡˘⟨ cong (_+ totGov) (arithmetic-1 U₂ allDirectDeps D₂) ⟩
+        U₂ + allDirectDeps + D₂ + E + totGov
+          ≡⟨ swap-right (U₂ + allDirectDeps + D₂) E totGov ⟩
+        U₂ + allDirectDeps + D₂ + totGov + E
           ∎
         where
 ```
@@ -739,8 +953,37 @@ Finally, `step-ii`: extract the actual equation from `LHS+E≡RHS+E` by cancelli
 on both sides:
 
 ```agda
-      step-ii : U₀ + allWdrls + D₀ + R₂ ≡ U₂ + allDirectDeps + D₂ + R₂
+      step-ii : U₀ + allWdrls + D₀ + R₂ ≡ U₂ + allDirectDeps + D₂ + totGov + R₂
       step-ii = cong (_+ R₂)
-                     (+-cancelʳ-≡ E (U₀ + allWdrls + D₀) (U₂ + allDirectDeps + D₂)
+                     (+-cancelʳ-≡ E (U₀ + allWdrls + D₀) (U₂ + allDirectDeps + D₂ + totGov)
                                   LHS+E≡RHS+E)
+
+      -- The three LedgerState totals (UTxO + rewards + cert-deposits): the batch's
+      -- gov deposits surface as `+ totGov` on the produced side.
+      three-summand : U₀ + R₀ + D₀ ≡ U₂ + R₂ + D₂ + totGov
+      three-summand =
+        +-cancelʳ-≡ allDirectDeps (U₀ + R₀ + D₀) (U₂ + R₂ + D₂ + totGov)
+          (begin
+            U₀ + R₀ + D₀ + allDirectDeps           ≡⟨ step-i ⟩
+            U₀ + R₂ + allWdrls + D₀                ≡⟨ abcd-to-acdb U₀ R₂ allWdrls D₀ ⟩
+            U₀ + allWdrls + D₀ + R₂                ≡⟨ step-ii ⟩
+            U₂ + allDirectDeps + D₂ + totGov + R₂  ≡⟨ outer-rearr U₂ allDirectDeps D₂ totGov R₂ ⟩
+            U₂ + R₂ + D₂ + totGov + allDirectDeps  ∎)
+
+      -- Gov-deposit accounting: the batch's total gov deposits exactly account for
+      -- the growth from the initial gov state's deposit (G₀) to the final one (G').
+      gov-acc : totGov + G₀ ≡ G'
+      gov-acc =
+        begin
+          totGov + G₀                          ≡⟨ rearr3 topGov subGovSum G₀ ⟩
+          G₀ + subGovSum + topGov              ≡˘⟨ cong (_+ topGov) (SUBLEDGERS-gov-coin valid subStep) ⟩
+          coinFromGovDeposit govSt₁ + topGov   ≡˘⟨ govStep-eq ⟩
+          coinFromGovDeposit govSt₂            ≡˘⟨ rmOrphanDRepVotes-coinFromGovDeposit cs₂ govSt₂ ⟩
+          G'                                   ∎
+        where
+        govStep-eq : coinFromGovDeposit govSt₂ ≡ coinFromGovDeposit govSt₁ + topGov
+        govStep-eq = trans (GOVS-coinFromGovDeposit govStep)
+                           (cong (λ ps → coinFromGovDeposit govSt₁
+                                       + govProposalsDeposits (LedgerEnv.pparams Γ) ps)
+                                 (proposalsOf-Proposals+Votes tx))
 ```
