@@ -59,8 +59,11 @@ log "nix present: $(nix --version 2>/dev/null || echo unknown)"
 # 2. Enable flakes and configure the binary caches the flake expects (from ci.yml).
 mkdir -p "$HOME/.config/nix"
 NIX_CONF="$HOME/.config/nix/nix.conf"
-grep -q 'experimental-features' "$NIX_CONF" 2>/dev/null || \
-  echo 'experimental-features = nix-command flakes' >> "$NIX_CONF"
+# Append via extra-experimental-features so we don't clobber an existing
+# experimental-features line, and key the check on `flakes` specifically: a bare
+# `experimental-features = nix-command` must not cause us to skip enabling flakes.
+grep -qE 'experimental-features.*flakes' "$NIX_CONF" 2>/dev/null || \
+  echo 'extra-experimental-features = nix-command flakes' >> "$NIX_CONF"
 grep -q 'cache.iog.io' "$NIX_CONF" 2>/dev/null || cat >> "$NIX_CONF" <<'CONF'
 substituters = https://cache.iog.io https://cache.nixos.org/
 trusted-public-keys = hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ= cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
