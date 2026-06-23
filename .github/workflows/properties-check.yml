@@ -1,0 +1,36 @@
+name: properties-check
+
+# Reconcile the ledger-properties catalog (docs/notes/properties.yaml) against
+# the Agda source and the generated roadmap. This is the no-network drift gate
+# described in docs/notes/0001-ledger-property-tracking.md. (The Agda --safe
+# typecheck that guarantees `proved` properties have no holes runs in ci.yml.)
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+    paths:
+      - 'docs/notes/properties.yaml'
+      - 'docs/notes/ledger-properties-roadmap.md'
+      - 'scripts/python/scan_properties.py'
+      - 'src/**/Properties/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+      - name: Install dependencies
+        run: pip install pyyaml
+      - name: Reconcile catalog with Agda and check roadmap is current
+        run: python3 scripts/python/scan_properties.py --check
