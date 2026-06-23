@@ -4,22 +4,30 @@
 # =============================================================================
 #
 # Derive the real status of every ledger property from the Agda source and
-# reconcile it against the declared catalog (docs/notes/properties.yaml).
+# regenerate the human roadmap (docs/notes/ledger-properties-roadmap.md).
 #
-#   * The CATALOG declares what we want (id, era, sts, module, issues, and the
-#     INTENDED status).
-#   * The AGDA is the source of truth for whether a property is proved: a
-#     property module that still contains the marker "coming soon" is `stated`
-#     (proof pending); otherwise it is `proved`. (The Agda `--safe` typecheck,
-#     run by the main CI, is what guarantees a `proved` property has no holes.)
-#   * This script cross-checks the two and regenerates the human roadmap
-#     (docs/notes/ledger-properties-roadmap.md).
+#   * The CATALOG (docs/notes/properties.yaml) declares what we care about:
+#     a property's identity, era, STS, Agda module, key defs, and tracking
+#     issues. It does NOT declare a status — status is derived, never asserted.
+#   * The AGDA (plus the filesystem) is the single source of truth for status:
+#       - module is ""            -> idea     (identified; nothing in Agda yet)
+#       - module file is absent   -> planned  (drafted elsewhere; not on this branch)
+#       - module has "coming soon"-> stated   (statement present; proof pending)
+#       - otherwise               -> proved   (statement + proof present)
+#     The Agda `--safe` typecheck, run by the main CI, is what guarantees a
+#     `proved` property has no holes or postulates; this script guarantees the
+#     bookkeeping (the roadmap) matches the code.
+#
+# Because status is computed, the anti-drift gate is the roadmap itself: if a
+# property's Agda changes (a proof lands, a stub appears) but the committed
+# roadmap is not regenerated, `--check` fails. That makes the #413/#414 class of
+# drift (a proof exists but the dashboard still says otherwise) a CI failure.
 #
 # Usage:
 #   python3 scripts/python/scan_properties.py            # regenerate roadmap
 #   python3 scripts/python/scan_properties.py --check    # CI: fail on drift/staleness
 #
-# Exit codes: 0 = OK, 1 = drift or stale roadmap (see printed report).
+# Exit codes: 0 = OK, 1 = catalog error or stale roadmap (see printed report).
 #
 # Dependencies: Python 3.8+, PyYAML.
 # -----------------------------------------------------------------------------
@@ -44,17 +52,13 @@ END = "<!-- END GENERATED: roadmap (scan_properties.py) -->"
 
 PENDING_MARKER = "coming soon"
 
-# Declared statuses that REQUIRE a present, matching Agda artifact.
-CONCRETE = {"stated", "proved"}
-# Display order for grouping the roadmap.
+# The four derived status values, in display order. There is no declared status.
 STATUS_ORDER = ["proved", "stated", "planned", "idea"]
 STATUS_BADGE = {
     "proved": "✅ proved",
     "stated": "🟡 stated",
     "planned": "🟦 planned",
     "idea": "⚪ idea",
-    "absent": "❌ absent",
-    "none": "— n/a",
 }
 
 
@@ -63,15 +67,21 @@ def module_to_path(module: str) -> Path:
 
 
 def derive_status(module: str):
-    """Return (actual_status, rel_path_or_None, text_or_None)."""
+    """Derive status purely from the module reference and the Agda on disk.
+
+    Returns (status, rel_path_or_None, text_or_None). See the file header for the
+    full rule; in short: no module -> idea; file missing -> planned;
+    "coming soon" present -> stated; otherwise -> proved.
+    """
     if not module:
-        return ("none", None, None)
+        return ("idea", None, None)
     path = module_to_path(module)
+    rel = path.relative_to(REPO_ROOT).as_posix()
     if not path.exists():
-        return ("absent", path.relative_to(REPO_ROOT).as_posix(), None)
+        return ("planned", rel, None)
     text = path.read_text(encoding="utf-8")
-    actual = "stated" if PENDING_MARKER in text.lower() else "proved"
-    return (actual, path.relative_to(REPO_ROOT).as_posix(), text)
+    status = "stated" if PENDING_MARKER in text.lower() else "proved"
+    return (status, rel, text)
 
 
 def load_catalog(path: Path) -> dict:
@@ -84,7 +94,6 @@ def validate_catalog(cat: dict):
     problems = []
     meta = cat.get("meta", {})
     eras = set(meta.get("eras", []))
-    statuses = set(meta.get("status_values", {}).keys())
     sts_vals = set(meta.get("sts_values", []))
     seen = set()
     for p in cat.get("properties", []):
@@ -97,42 +106,29 @@ def validate_catalog(cat: dict):
         seen.add(pid)
         if p.get("era") not in eras:
             problems.append(("ERROR", pid, f"unknown era {p.get('era')!r}"))
-        if p.get("status") not in statuses:
-            problems.append(("ERROR", pid, f"unknown status {p.get('status')!r}"))
         if p.get("sts") not in sts_vals:
             problems.append(("ERROR", pid, f"unknown sts {p.get('sts')!r}"))
+        if "status" in p:
+            problems.append(("ERROR", pid,
+                             "catalog must not declare `status:` — status is derived "
+                             "from the Agda; remove the field"))
     return problems
 
 
-def reconcile(p: dict):
-    """Compare declared vs Agda-derived status. Returns (actual, path, problems)."""
+def evaluate(p: dict):
+    """Derive a property's status and run per-property sanity checks.
+
+    Returns (status, rel_path_or_None, problems)."""
     pid = p["id"]
-    declared = p.get("status")
     module = p.get("module") or ""
-    actual, path, text = derive_status(module)
+    status, path, text = derive_status(module)
     problems = []
-
-    if declared in CONCRETE:
-        if actual == "absent":
-            problems.append(("ERROR", pid, f"declared {declared} but module file is missing: {path}"))
-        elif actual == "none":
-            problems.append(("ERROR", pid, f"declared {declared} but no module is set"))
-        elif actual != declared:
-            problems.append(("ERROR", pid,
-                             f"declared {declared} but Agda looks {actual} "
-                             f"('{PENDING_MARKER}' {'present' if actual=='stated' else 'absent'} in {path})"))
-        if text is not None:
-            missing = [d for d in (p.get("defs") or []) if d and d not in text]
-            if missing:
-                problems.append(("WARN", pid, f"declared defs not found in {path}: {', '.join(missing)}"))
-    elif declared == "planned":
-        if actual in CONCRETE:
-            problems.append(("WARN", pid, f"planned property has landed (Agda looks {actual}); bump status in the catalog"))
-    elif declared == "idea":
-        if module and actual in CONCRETE:
-            problems.append(("WARN", pid, f"idea has an Agda artifact (looks {actual}); update module/status in the catalog"))
-
-    return actual, path, problems
+    if text is not None:
+        missing = [d for d in (p.get("defs") or []) if d and d not in text]
+        if missing:
+            problems.append(("WARN", pid,
+                             f"declared defs not found in {path}: {', '.join(missing)}"))
+    return status, path, problems
 
 
 def render_region(cat: dict, results: dict) -> str:
@@ -140,17 +136,18 @@ def render_region(cat: dict, results: dict) -> str:
     lines = []
     lines.append(BEGIN)
     lines.append("")
-    lines.append("_Generated by `scripts/python/scan_properties.py` — do not edit this region by hand._")
+    lines.append("_Generated by `scripts/python/scan_properties.py` from the catalog "
+                 "reconciled against the Agda — do not edit this region by hand._")
     lines.append("")
 
-    # Summary counts.
+    # Summary counts (by DERIVED status).
     lines.append("### Summary")
     lines.append("")
     lines.append("| Era | proved | stated | planned | idea | total |")
     lines.append("| --- | ---: | ---: | ---: | ---: | ---: |")
     for era in cat["meta"]["eras"]:
         ep = [p for p in props if p["era"] == era]
-        counts = {s: sum(1 for p in ep if p["status"] == s) for s in STATUS_ORDER}
+        counts = {s: sum(1 for p in ep if results[p["id"]]["status"] == s) for s in STATUS_ORDER}
         lines.append(f"| {era} | {counts['proved']} | {counts['stated']} | "
                      f"{counts['planned']} | {counts['idea']} | {len(ep)} |")
     lines.append("")
@@ -164,13 +161,10 @@ def render_region(cat: dict, results: dict) -> str:
         lines.append("")
         lines.append("| Status | Property | STS | Agda module | Issue(s) |")
         lines.append("| --- | --- | --- | --- | --- |")
-        ep.sort(key=lambda p: (STATUS_ORDER.index(p["status"]) if p["status"] in STATUS_ORDER else 99, p["id"]))
+        ep.sort(key=lambda p: (STATUS_ORDER.index(results[p["id"]]["status"]), p["id"]))
         for p in ep:
-            actual = results[p["id"]]["actual"]
-            badge = STATUS_BADGE.get(p["status"], p["status"])
-            # Flag a declared/actual mismatch inline.
-            if p["status"] in CONCRETE and actual not in ("none",) and actual != p["status"]:
-                badge += f" ⚠️(agda:{actual})"
+            status = results[p["id"]]["status"]
+            badge = STATUS_BADGE.get(status, status)
             mod = f"`{p['module']}`" if p.get("module") else "—"
             issues = ", ".join(f"#{n}" for n in (p.get("issues") or [])) or "—"
             title = p["title"].replace("|", "\\|")
@@ -185,15 +179,16 @@ DEFAULT_PREAMBLE = """\
 # Ledger properties roadmap
 
 This is the human-facing dashboard of ledger properties across eras. It is
-**generated** from the catalog (`docs/notes/properties.yaml`) reconciled against
-the Agda source by `scripts/python/scan_properties.py`. Do not edit the generated
-region below by hand; edit the catalog and regenerate.
+**generated** from the catalog (`docs/notes/properties.yaml`) with each
+property's status **derived from the Agda source** by
+`scripts/python/scan_properties.py`. Do not edit the generated region below by
+hand; edit the catalog and regenerate.
 
 See `docs/notes/0001-ledger-property-tracking.md` for the design, conventions,
 and workflow.
 
-Status legend: ✅ proved · 🟡 stated (proof pending) · 🟦 planned (PR open) ·
-⚪ idea (not yet in Agda). A ⚠️ flag means the catalog and the Agda disagree.
+Status legend: ✅ proved · 🟡 stated (proof pending) · 🟦 planned (drafted on
+another branch/PR) · ⚪ idea (not yet in Agda).
 
 """
 
@@ -208,11 +203,12 @@ def build_file(cat: dict, results: dict, existing: str | None) -> str:
 
 
 def main() -> int:
-    ap = argparse.ArgumentParser(description="Reconcile the property catalog with the Agda and render the roadmap.")
+    ap = argparse.ArgumentParser(
+        description="Derive property status from the Agda and render the roadmap.")
     ap.add_argument("--catalog", type=Path, default=DEFAULT_CATALOG)
     ap.add_argument("--roadmap", type=Path, default=DEFAULT_ROADMAP)
     ap.add_argument("--check", action="store_true",
-                    help="CI mode: do not write; fail on drift or a stale roadmap.")
+                    help="CI mode: do not write; fail on a catalog error or a stale roadmap.")
     args = ap.parse_args()
 
     cat = load_catalog(args.catalog)
@@ -220,8 +216,8 @@ def main() -> int:
 
     results = {}
     for p in cat["properties"]:
-        actual, path, probs = reconcile(p)
-        results[p["id"]] = {"actual": actual, "path": path}
+        status, path, probs = evaluate(p)
+        results[p["id"]] = {"status": status, "path": path}
         problems.extend(probs)
 
     errors = [x for x in problems if x[0] == "ERROR"]
@@ -230,7 +226,8 @@ def main() -> int:
     for level, pid, msg in problems:
         print(f"{level}: {pid}: {msg}", file=sys.stderr)
 
-    rendered = build_file(cat, results, args.roadmap.read_text(encoding="utf-8") if args.roadmap.exists() else None)
+    rendered = build_file(cat, results,
+                          args.roadmap.read_text(encoding="utf-8") if args.roadmap.exists() else None)
 
     if args.check:
         stale = (not args.roadmap.exists()) or (args.roadmap.read_text(encoding="utf-8") != rendered)
