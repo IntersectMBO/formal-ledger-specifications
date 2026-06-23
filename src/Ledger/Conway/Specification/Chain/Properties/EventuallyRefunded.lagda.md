@@ -21,7 +21,6 @@ open import Ledger.Core.Specification.Epoch
 open import Ledger.Conway.Specification.Certs govStructure
 open import Ledger.Conway.Specification.Chain txs abs
 open import Ledger.Conway.Specification.Epoch txs abs
-open import Ledger.Conway.Specification.Gov.Actions govStructure hiding (yes; no)
 open import Ledger.Prelude
 ```
 -->
@@ -75,4 +74,4 @@ GADepositsEventuallyRefunded = ∀ {cs : ChainState} {gaid : GovActionID}
       → ¬ gaDepositInPot cs' gaid)
 ```
 
-*Proof*. (coming soon)
+*Proof*. (TODO)
