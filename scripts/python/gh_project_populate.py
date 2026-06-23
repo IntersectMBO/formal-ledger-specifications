@@ -125,7 +125,7 @@ def set_issue_numbers(text: str, prop_id: str, numbers: list[int]) -> str:
     """
     id_re = re.compile(r"^\s*- id:\s*" + re.escape(prop_id) + r"\s*(?:#.*)?$")
     next_item_re = re.compile(r"^\s*- id:\s*")
-    issues_re = re.compile(r"^(\s*issues:\s*)\[[^\]]*\](\s*(?:#.*)?)$")
+    issues_re = re.compile(r"^(\s*issues:\s*)\[[^\]]*\]([ \t]*(?:#[^\n]*)?)\n?$")
     repl = "[" + ", ".join(str(n) for n in numbers) + "]"
     out, in_block, done = [], False, False
     for line in text.splitlines(keepends=True):
@@ -151,7 +151,7 @@ def set_issue_numbers(text: str, prop_id: str, numbers: list[int]) -> str:
 def set_umbrella(text: str, era: str, number: int) -> str:
     """Replace `<era>: null` under the `umbrella_issues:` mapping."""
     umb_re = re.compile(r"^\s*umbrella_issues:\s*$")
-    era_re = re.compile(r"^(\s*" + re.escape(era) + r":\s*)null(\s*(?:#.*)?)$")
+    era_re = re.compile(r"^(\s*" + re.escape(era) + r":\s*)null([ \t]*(?:#[^\n]*)?)\n?$")
     out, in_umb, done = [], False, False
     for line in text.splitlines(keepends=True):
         if not done:
