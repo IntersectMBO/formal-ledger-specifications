@@ -18,7 +18,6 @@ open import Ledger.Conway.Foreign.Ratify
 open import Ledger.Conway.Foreign.Rewards
 open import Ledger.Conway.Conformance.Equivalence.Convert
 open import Ledger.Conway.Conformance.Epoch it it
-open import Ledger.Conway.Conformance.Epoch.Properties it it
 
 open Computational
 
@@ -37,9 +36,6 @@ instance
   HsTy-EpochState = autoHsType EpochState ⊣ withConstructor "MkEpochState"
                                           • fieldPrefix "es"
   Conv-EpochState = autoConvert EpochState
-
--- An implementation of EPOCH that connects the conformance state
--- with the specification rule.
 
 epoch-step
   : HsType (⊤ → EpochState → Epoch → ComputationResult ⊥ (EpochState × String))
