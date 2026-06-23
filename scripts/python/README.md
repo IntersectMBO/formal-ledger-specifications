@@ -11,7 +11,7 @@ has drifted.
 
 | Script | Direction | Network | Writes |
 | --- | --- | --- | --- |
-| `scan_properties.py` | Agda ⨯ catalog → roadmap | none | `docs/notes/ledger-properties-roadmap.md` |
+| `scan_properties.py` | Agda ⨯ catalog → roadmap | none | `docs/notes/ledger-properties-roadmap.md` + the mkdocs copy `build-tools/static/mkdocs/docs/ledger-properties-roadmap.md` |
 | `gh_project_populate.py` | catalog → GitHub (+ write-back) | `gh` | issues/labels; `properties.yaml` |
 | `gh_project_render.py` | GitHub → issues view | `gh` | `docs/notes/ledger-properties-issues.md` |
 
@@ -31,8 +31,11 @@ python3 scripts/python/scan_properties.py --check  # CI: fail on drift or stale 
 It resolves each catalog entry's `module` to its `.lagda.md` and derives the
 status: `idea` (no module), `planned` (module named but the file is not on this
 branch), `stated` (`coming soon` marker present), or `proved` (marker absent). The
-catalog declares no status of its own. `--check` regenerates the roadmap and fails
-if the committed copy is stale (or the catalog is structurally invalid). This is
+catalog declares no status of its own. It writes two byte-identical copies — the
+canonical `docs/notes/ledger-properties-roadmap.md` and the mkdocs-site copy
+`build-tools/static/mkdocs/docs/ledger-properties-roadmap.md` (the site's "Properties
+Roadmap" page). `--check` regenerates both and fails if either committed copy is stale
+(or the catalog is structurally invalid). This is
 the CI gate (`.github/workflows/properties-check.yml`); the Agda `--safe` typecheck
 (main CI) is what guarantees a `proved` property has no holes.
 

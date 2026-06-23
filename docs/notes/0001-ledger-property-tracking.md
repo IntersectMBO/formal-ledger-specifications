@@ -138,10 +138,29 @@ writes the new numbers back into `properties.yaml`.
 4. **Dijkstra**: scaffold the `Gov`/`Chain`/`Epoch` property modules and port the
    proved Conway theorems first (PoV, `GovDepsMatch`) as they are most mechanical.
 
+## Dashboard and UI
+
+The repo-local catalog/roadmap is the source of truth; the following surface it
+without becoming a second place the status can live:
+
+- **mkdocs site.** `scan_properties.py` writes a second, byte-identical copy of the
+  roadmap to `build-tools/static/mkdocs/docs/ledger-properties-roadmap.md`, published
+  as the **Properties Roadmap** page (top-level nav). It is generated, not hand-edited,
+  and `scan_properties.py --check` fails if it drifts from the canonical copy — so the
+  site can never show a stale roadmap.
+- **CI badges.** The README shows the `CI`, `nightly`, and `properties-check` workflow
+  badges, so the drift gate's status is visible at a glance.
+- **GitHub Projects v2 board (Era / STS / Status).** Recommended as a *read-only* view
+  for maintainers (the catalog stays the source of truth). It is set up once by hand
+  (the Projects v2 API is out of scope for the in-repo scripts): create a board, add the
+  `property`-labelled issues, and add single-select fields **Era** (conway/dijkstra),
+  **STS** (UTXO/GOV/EPOCH/…), and **Status** (idea/planned/stated/proved) mirroring the
+  catalog. The per-issue body already records era, STS, and derived status to populate it.
+
 ## Consequences
 
-- One `git grep`-able catalog and one generated dashboard; new contributors and
-  future Claude sessions get the whole picture from the repo.
+- One `git grep`-able catalog and one generated dashboard (in-repo and on the mkdocs
+  site); new contributors and future Claude sessions get the whole picture from the repo.
 - CI refuses to let the bookkeeping lie about the code.
 - Small ongoing cost: edit the catalog and regenerate the roadmap when a
   property's status changes (one command, gated by CI).
@@ -152,4 +171,5 @@ writes the new numbers back into `properties.yaml`.
   as the *primary* status source: closing an issue by hand does not make a proof
   exist. We keep the issue-sync scripts, but for *coordination*, not for truth.
 - **GitHub Projects board.** Nice views, but not version-controlled and invisible
-  to CI / fresh sessions. May be added later as a read-only view.
+  to CI / fresh sessions. Kept as an optional read-only view, not the source of
+  truth (see "Dashboard and UI" above).
