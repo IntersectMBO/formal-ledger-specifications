@@ -3,112 +3,75 @@ source_branch: master
 source_path: src/Ledger/Dijkstra/Specification/PoolReap.lagda.md
 ---
 
-
 # The <span class="AgdaDatatype">POOLREAP</span> Transition System {#sec:pool-reaping-transition}
 
-## Key Difference from Conway/Specification
+The pool reap transition system is responsible for removing pools
+slated for retirement in the given epoch.
 
-In Dijkstra, deposits live in `CertState`{.AgdaRecord} (in
-`DState.deposits`{.AgdaField} and `PState.deposits`{.AgdaField}), *not* in
-`UTxOState`{.AgdaRecord}.  Specifically, pool retirement deposits are tracked in
-`PState.deposits`{.AgdaField}, and govAction deposits are tracked in
-`GState.deposits`{.AgdaField}.  Therefore, `govActionReturns`{.AgdaFunction} is
-computed from `GState.deposits`{.AgdaField}, and pool-related payouts come from
-`PState.deposits`{.AgdaField}, and the `UTxOState`{.AgdaRecord} is *not* modified by
-the `POOLREAP`{.AgdaDatatype} transition.
+In Dijkstra, pool registration deposits are tracked as part of pool state
+(i.e., `PState`{.AgdaDatatype}).
 
 <!--
 ```agda
 {-# OPTIONS --safe #-}
-open import Ledger.Dijkstra.Specification.Abstract
 open import Ledger.Dijkstra.Specification.Transaction
 module Ledger.Dijkstra.Specification.PoolReap
   (txs : _) (open TransactionStructure txs)
-  (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
 open import Ledger.Prelude
 open import Ledger.Dijkstra.Specification.Certs govStructure
-toRewardAddress : Credential → RewardAddress
-toRewardAddress x = record { net = NetworkId ; stake = x }
-
 ```
 -->
 
-The `PoolReapState`{.AgdaRecord} type denotes what the `POOLREAP`{.AgdaDatatype}
-transition reads and writes.  In Dijkstra, deposits live in CertState, so we include
-the full `CertState`{.AgdaRecord} plus the account record.
-
-Thus, the `PoolReapState`{.AgdaRecord} here carries (`DState`{.AgdaRecord},
-`PState`{.AgdaRecord}, `GState`{.AgdaRecord}, `Acnt`{.AgdaRecord})
-as opposed to the Conway `PoolReapState`{.AgdaRecord} (`UTxOState`{.AgdaRecord},
-`Acnt`{.AgdaRecord}, `DState`{.AgdaRecord}, `PState`{.AgdaRecord}) shape.
-
 ```agda
 record PoolReapState : Type where
-  constructor ⟦_,_⟧ᵖ
+  constructor ⟦_,_,_⟧ᵖ
   field
-    certState  : CertState
-    acnt       : Acnt
+    acnt    : Acnt
+    dState  : DState
+    pState  : PState
+```
+
+<!--
+```agda
+instance
+  unquoteDecl HasCast-PoolReapState = derive-HasCast
+                [ (quote PoolReapState , HasCast-PoolReapState) ]
 
 private variable
-  e          : Epoch
-  prs        : PoolReapState
+  e : Epoch
+  treasury reserves : Coin
+  pools fPools : Pools
+  retiring : KeyHash ⇀ Epoch
+  depositsᵖ : KeyHash ⇀ Coin
+  voteDelegs : VoteDelegs
+  stakeDelegs : StakeDelegs
+  rewards : Rewards
+  depositsᵈ : Credential ⇀ Coin
 
+open StakePoolParams using (rewardAccount)
+```
+-->
+
+```agda
 data _⊢_⇀⦇_,POOLREAP⦈_ : ⊤ → PoolReapState → Epoch → PoolReapState → Type where
   POOLREAP :
-    let cs = PoolReapState.certState prs
-        ps = CertState.pState cs
-        ds = CertState.dState cs
-        a  = PoolReapState.acnt prs
-
-        -- Pool key hashes retiring this epoch
+    let
         retired : ℙ KeyHash
-        retired = PState.retiring ps ⁻¹ e
+        retired = retiring ⁻¹ e
 
-        -- For each retiring pool kh with deposit c, look up its reward-account
-        -- credential from PState.pools and convert to a RewardAddress.
-        -- mapPartial handles the case where kh might not be in pools (invariant:
-        -- retiring pools are always registered, so lookupᵐ? always succeeds).
-        poolPayoutPairs : ℙ (RewardAddress × Coin)
-        poolPayoutPairs =
-          mapPartial
-            (λ (kh , c) →
-              (λ params →
-                toRewardAddress (StakePoolParams.rewardAccount params) , c)
-              <$> lookupᵐ? (PState.pools ps) kh)
-            ((PState.deposits ps ∣ retired) ˢ)
+        rewardAccounts : KeyHash ⇀ Credential
+        rewardAccounts = mapValues rewardAccount (pools ∣ retired)
 
-        -- Aggregate by reward address (multiple retiring pools may share one).
-        poolPayout : RewardAddress ⇀ Coin
-        poolPayout = aggregate₊ (poolPayoutPairs ᶠˢ)
+        rewardAccounts' : Credential ⇀ Coin
+        rewardAccounts' = aggregateBy (rewardAccounts ˢ) depositsᵖ
 
-        -- Registered reward accounts receive a refund; unregistered amounts go
-        -- to the treasury as unclaimed.  Mirrors Conway's pullbackMap pattern.
         refunds : Credential ⇀ Coin
-        refunds = pullbackMap poolPayout toRewardAddress (dom (DState.rewards ds))
+        refunds = rewardAccounts' ∣ dom (rewards)
 
         unclaimed : Coin
-        unclaimed = getCoin poolPayout - getCoin refunds
-
-        -- Updated DState: credit refunds to registered reward accounts.
-        dState' : DState
-        dState' = record ds { rewards = DState.rewards ds ∪⁺ refunds }
-
-        -- Updated PState: remove retired pools and their deposits.
-        pState' : PState
-        pState' = record ps
-          { pools    = PState.pools    ps ∣ retired ᶜ
-          ; fPools   = PState.fPools   ps ∣ retired ᶜ
-          ; retiring = PState.retiring ps ∣ retired ᶜ
-          ; deposits = PState.deposits ps ∣ retired ᶜ
-          }
-
-        certState' : CertState
-        certState' = record cs { dState = dState' ; pState = pState' }
-
-        acnt' : Acnt
-        acnt' = record a { treasury = Acnt.treasury a + unclaimed }
+        unclaimed = getCoin (rewardAccounts' ∣ dom (rewards) ᶜ)
     in
       ────────────────────────────────
-      _ ⊢ prs ⇀⦇ e ,POOLREAP⦈ ⟦ certState' , acnt' ⟧ᵖ
+      _ ⊢ ⟦ ⟦ treasury , reserves ⟧ , ⟦ voteDelegs , stakeDelegs , rewards , depositsᵈ ⟧ , ⟦ pools , fPools , retiring , depositsᵖ ⟧ ⟧ ⇀⦇ e ,POOLREAP⦈ ⟦ ⟦ treasury + unclaimed , reserves ⟧ , ⟦ voteDelegs , stakeDelegs ∣^ retired ᶜ , rewards ∪⁺ refunds , depositsᵈ ⟧ , ⟦ pools ∣ retired ᶜ , fPools ∣ retired ᶜ , retiring ∣ retired ᶜ , depositsᵖ ∣ retired ᶜ ⟧ ⟧
 ```
