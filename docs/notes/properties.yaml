@@ -42,7 +42,7 @@ meta:
   # Umbrella tracking issues per era (sub-issues hang off these).
   umbrella_issues:
     conway: 45        # existing "Create properties of the governance system"
-    dijkstra: null    # to be created by gh_project_populate.py
+    dijkstra: 1227    # to be created by gh_project_populate.py
   # The DERIVED status values (computed by scan_properties.py, never declared).
   status_values:
     idea:    "Identified; no statement in Agda yet (module is \"\")."
@@ -80,7 +80,7 @@ properties:
     module: Ledger.Conway.Specification.Utxo.Properties.MinSpend
     anchor: thm:minspend
     defs: [utxoMinSpend, propose-minSpend]
-    issues: []
+    issues: [1228]
     notes: "Headline minimum-spending theorem; related to #359 and built on #413."
 
   - id: conway-chain-eventually-refunded
@@ -140,7 +140,7 @@ properties:
     module: Ledger.Conway.Specification.Epoch.Properties.ConstRwds
     anchor: clm:NEWEPOCH-const-rwds
     defs: [dom-rwds-const]
-    issues: []
+    issues: [1229]
     notes: "Proposed in a #45 comment (2024-01-29). Needs a tracking issue."
 
   - id: conway-chain-creddeps-eq-domrwds
@@ -150,7 +150,7 @@ properties:
     module: Ledger.Conway.Specification.Chain.Properties.CredDepsEqualDomRwds
     anchor: clm:CredDepsEqualDomRwds-inv
     defs: [credDeposits≡dom-rwds, credDeposits≡dom-rwds-inv]
-    issues: []
+    issues: [1230]
     notes: "Proposed in a #45 comment (2024-01-29). Needs a tracking issue."
 
   # --- Other Conway claims (stated, no #45 issue) ---------------------------
@@ -162,7 +162,7 @@ properties:
     module: Ledger.Conway.Specification.Chain.Properties.PParamsWellFormed
     anchor: clm:pp-wellFormed-inv
     defs: [pp-wellFormed, pp-wellFormed-invariant]
-    issues: []
+    issues: [1231]
     notes: ""
 
   - id: conway-epoch-nopropsame-dreps
@@ -172,7 +172,7 @@ properties:
     module: Ledger.Conway.Specification.Epoch.Properties.NoPropSameDReps
     anchor: clm:NoPropSameDReps
     defs: [prop≡∅⇒activeDReps-const]
-    issues: []
+    issues: [1232]
     notes: "Adjacent to #415 but a distinct statement."
 
   - id: conway-certs-votedelegs-vdeleg
@@ -182,7 +182,7 @@ properties:
     module: Ledger.Conway.Specification.Certs.Properties.VoteDelegsVDeleg
     anchor: clm:VDelegsInRegDReps
     defs: [voteDelegsVDeleg]
-    issues: []
+    issues: [1233]
     notes: ""
 
   - id: conway-gov-changepp-hasgroup
@@ -192,7 +192,7 @@ properties:
     module: Ledger.Conway.Specification.Gov.Properties.ChangePPGroup
     anchor: clm:ChangePPGroup
     defs: [ChangePPHasGroup]
-    issues: []
+    issues: [1234]
     notes: ""
 
   # --- Conway proved theorems (track for completeness / regression) ----------
@@ -204,7 +204,7 @@ properties:
     module: Ledger.Conway.Specification.Chain.Properties.GovDepsMatch
     anchor: thm:ChainGovDepsMatch
     defs: []
-    issues: []
+    issues: [1235]
     notes: ""
 
   - id: conway-ledger-govdepsmatch
@@ -214,7 +214,7 @@ properties:
     module: Ledger.Conway.Specification.Ledger.Properties.GovDepsMatch
     anchor: lem:LedgerGovDepsMatch
     defs: [LEDGER-govDepsMatch]
-    issues: []
+    issues: [1236]
     notes: ""
 
   - id: conway-epoch-govdepsmatch
@@ -224,7 +224,7 @@ properties:
     module: Ledger.Conway.Specification.Epoch.Properties.GovDepsMatch
     anchor: lem:EpochGovDepsMatch
     defs: []
-    issues: []
+    issues: [1237]
     notes: ""
 
   - id: conway-ledger-pov
@@ -234,7 +234,7 @@ properties:
     module: Ledger.Conway.Specification.Ledger.Properties.PoV
     anchor: thm:LEDGER-PoV
     defs: []
-    issues: []
+    issues: [1238]
     notes: ""
 
   - id: conway-utxo-pov
@@ -244,7 +244,7 @@ properties:
     module: Ledger.Conway.Specification.Utxo.Properties.PoV
     anchor: thm:UTXO-PoV
     defs: [UTXOpov]
-    issues: []
+    issues: [1239]
     notes: ""
 
   - id: conway-certs-pov
@@ -254,7 +254,7 @@ properties:
     module: Ledger.Conway.Specification.Certs.Properties.PoV
     anchor: thm:CERTS-PoV
     defs: []
-    issues: []
+    issues: [1240]
     notes: "Covers both thm:CERT-PoV and thm:CERTS-PoV."
 
   - id: conway-epoch-expired-dreps
@@ -264,7 +264,7 @@ properties:
     module: Ledger.Conway.Specification.Epoch.Properties.ExpiredDReps
     anchor: ""
     defs: []
-    issues: []
+    issues: [1241]
     notes: "Supports #414 (deposit/GA removal at the epoch boundary)."
 
   # ===========================================================================
