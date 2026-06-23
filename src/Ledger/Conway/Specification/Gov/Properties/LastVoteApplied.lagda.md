@@ -18,6 +18,8 @@ module Ledger.Conway.Specification.Gov.Properties.LastVoteApplied
 open import Ledger.Prelude
 open import Ledger.Conway.Specification.Gov.Actions gs hiding (yes; no)
 open import Ledger.Conway.Specification.Gov gs
+open GovActionState using (votes)
+open GovVotes
 ```
 -->
 
@@ -37,9 +39,9 @@ and the last vote a voter casts in a list of `GOV`{.AgdaDatatype} signals.
 ```agda
 -- The vote (if any) that `voter` has recorded in a single GovActionState.
 votedOn : GovActionState → GovVoter → Maybe Vote
-votedOn gaSt ⟦ CC   , c  ⟧ᵍᵛ = lookupᵐ? (GovVotes.gvCC   (GovActionState.votes gaSt)) c
-votedOn gaSt ⟦ DRep , c  ⟧ᵍᵛ = lookupᵐ? (GovVotes.gvDRep (GovActionState.votes gaSt)) c
-votedOn gaSt ⟦ SPO  , kh ⟧ᵍᵛ = lookupᵐ? (GovVotes.gvSPO  (GovActionState.votes gaSt)) kh
+votedOn gaSt ⟦ CC   , c  ⟧ᵍᵛ = lookupᵐ? (votes gaSt .gvCC) c
+votedOn gaSt ⟦ DRep , c  ⟧ᵍᵛ = lookupᵐ? (votes gaSt .gvDRep) c
+votedOn gaSt ⟦ SPO  , kh ⟧ᵍᵛ = lookupᵐ? (votes gaSt .gvSPO) kh
 
 -- Find the GovActionState associated with an action id in a GovState.
 lookupGAState : GovState → GovActionID → Maybe GovActionState
