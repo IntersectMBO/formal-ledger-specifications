@@ -126,7 +126,7 @@ proposals in `tx`{.AgdaBound}.
    of `cs`{.AgdaBound} and `cs'`{.AgdaBound} differ, then the epoch of the slot of
    `b`{.AgdaBound} is the successor of the last epoch of `cs`{.AgdaBound}.
 
-  **Claim** [Chain.Properties.EventuallyRefunded][].  Governance action deposits are eventually refunded.
++  **Claim** [CHAIN-EventuallyRefunded][].  Governance action deposits are eventually refunded.
 
    For every `ChainState`{.AgdaRecord} `cs`{.AgdaBound} and every governance action
    deposit still held in the deposit pot of `cs`{.AgdaBound}, there is an epoch

@@ -73,4 +73,4 @@ GADepositsEventuallyRefunded = ∀ {cs : ChainState} {gaid : GovActionID}
       → ¬ gaDepositInPot cs' gaid)
 ```
 
-*Proof*. (TODO)
+*Proof*. (coming soon)
