@@ -178,7 +178,7 @@ open import Interface.STS
 open import Data.Nat.Properties
   using (+-comm; +-assoc; +-0-monoid; +-identityʳ; +-cancelʳ-≡)
 open import Data.Integer using (ℤ; 0ℤ; _-_; _⊖_)
-open import Data.Integer.Properties using () renaming (+-comm to +ℤ-comm)
+open import Data.Integer.Properties using ([1+m]⊖[1+n]≡m⊖n) renaming (+-comm to +ℤ-comm)
 open import Data.List.Relation.Unary.Unique.Propositional using (Unique)
 
 open RewardAddress
@@ -318,6 +318,25 @@ module LEDGER-PoV
       → TxIdOf tx ∉ mapˢ proj₁ (dom (UTxOOf s₀))
       → getCoin s₀ + cbalance (outs tx) + TxFeesOf tx + DonationsOf tx
         ≡ getCoin s₁ + cbalance (UTxOOf s₀ ∣ SpendInputsOf tx) )
+  -- The batch balance `consumedBatch ≡ producedBatch`, coin-projected, with the
+  -- minted term dropped (no ADA minting) and the cert-deposit change rephrased to
+  -- the chain's top/sub two-level `posPart`/`negPart` form.  #1186 discharges this
+  -- from the spec premise at the actual post-SUBLEDGERS/ENTITIES cert states `cs₁`,
+  -- `cs₂` (via `posNeg-deposits` + `CERTS-coinFromDeposits-updateCertDeposits`).  The
+  -- governance-deposit summands (`govProposalsDeposits`, top and per-sub) sit on the
+  -- produced side, matching `producedTx`.
+  ( UTXOW-batch-balance-coin : ∀ {Γ' : UTxOEnv} {s₀ s₁ : UTxOState} {cs₁ cs₂ : CertState}
+      → Γ' ⊢ s₀ ⇀⦇ tx ,UTXOW⦈ s₁
+      → cbalance (UTxOOf Γ' ∣ SpendInputsOf tx) + getCoin (WithdrawalsOf tx)
+          + negPart (coinFromDeposits cs₂ ⊖ coinFromDeposits cs₁)
+          + sum (map (λ stx → cbalance (UTxOOf Γ' ∣ SpendInputsOf stx) + getCoin (WithdrawalsOf stx))
+                     (SubTransactionsOf tx))
+          + negPart (coinFromDeposits cs₁ ⊖ coinFromDeposits (CertStateOf Γ'))
+        ≡ cbalance (outs tx) + TxFeesOf tx + DonationsOf tx + getCoin (DirectDepositsOf tx)
+          + posPart (coinFromDeposits cs₂ ⊖ coinFromDeposits cs₁)
+          + sum (map (λ stx → cbalance (outs stx) + DonationsOf stx + getCoin (DirectDepositsOf stx))
+                     (SubTransactionsOf tx))
+          + posPart (coinFromDeposits cs₁ ⊖ coinFromDeposits (CertStateOf Γ')) )
   where
 
   open ENTITIES-PoV ∪ˡ-lookup-preserve sum-map-proj₂≡getCoin setToList-Unique CERTS-pov
@@ -373,7 +392,12 @@ directly.
   posPart-negPart-sym : ∀ (a b : ℕ) → b + posPart (a ⊖ b) ≡ a + negPart (a ⊖ b)
   posPart-negPart-sym a       zero    = sym (+-identityʳ a)
   posPart-negPart-sym zero    (suc b) = +-identityʳ (suc b)
-  posPart-negPart-sym (suc a) (suc b) = cong suc (posPart-negPart-sym a b)
+  posPart-negPart-sym (suc a) (suc b) = begin
+      suc b + posPart (suc a ⊖ suc b)  ≡⟨ cong (λ z → suc b + posPart z) ([1+m]⊖[1+n]≡m⊖n a b) ⟩
+      suc b + posPart (a ⊖ b)          ≡⟨ cong suc (posPart-negPart-sym a b) ⟩
+      suc a + negPart (a ⊖ b)          ≡˘⟨ cong (λ z → suc a + negPart z) ([1+m]⊖[1+n]≡m⊖n a b) ⟩
+      suc a + negPart (suc a ⊖ suc b)  ∎
+    where open ≡-Reasoning
 ```
 
 ## `posNeg-deposits`
@@ -574,9 +598,9 @@ is `rmOrphanDRepVotes certState₂ govState₂` and `rmOrphanDRepVotes` preserve
 
 ```agda
   LEDGER-pov {Γ} {s}
-    (LEDGER-V {certState₁ = cs₁} {cs₂} {govSt₁ = govSt₁} {govSt₂}
-              {utxoState₁ = us₁} {utxoState₂ = us₂}
-              (valid , subStep , entitiesStep , _ , utxoStep)) =
+    (LEDGER-V {utxoState₁ = us₁} {govState₁ = govSt₁} {certState₁ = cs₁}
+              {certState₂ = cs₂} {govState₂ = govSt₂} {utxoState₂ = us₂}
+              (valid , subStep , entitiesStep , govStep , utxoStep)) =
     +-cancelʳ-≡ _ _ _
       (begin
         U₀ + R₀ + D₀ + allDirectDeps       ≡⟨ step-i ⟩
@@ -650,11 +674,11 @@ Extract the two top-level `NetworkId` witnesses from the `UTXOW` step:
         → (∀[ a ∈ dom (WithdrawalsOf tx)    ] NetworkIdOf a ≡ NetworkId)
         × (∀[ a ∈ dom (DirectDepositsOf tx) ] NetworkIdOf a ≡ NetworkId)
       extract-utxo-netId
-        (UTXOW-normal-⋯ _ _ _ _ _ _ _ _ _ _ _
+        (UTXOW-normal-⋯ _ _ _ _ _ _ _ _ _ _ _ _ _
           (UTXO (_ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , wd-netId , dd-netId , _))) =
           wd-netId , dd-netId
       extract-utxo-netId
-        (UTXOW-legacy-⋯ _ _ _ _ _ _ _ _ _ _ _
+        (UTXOW-legacy-⋯ _ _ _ _ _ _ _ _ _ _ _ _ _
           (UTXO (_ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , wd-netId , dd-netId , _))) =
           wd-netId , dd-netId
 
