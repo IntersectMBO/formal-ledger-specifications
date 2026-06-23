@@ -1,0 +1,453 @@
+# =============================================================================
+# Ledger properties catalog
+# =============================================================================
+#
+# This file is the human-curated CATALOG of ledger properties we care about,
+# across eras. It is the single place where a property's identity, location,
+# tracking issue, and *intended* status are declared.
+#
+# It is NOT the source of truth for whether a property is proved. That is
+# derived from the Agda by `scripts/python/scan_properties.py`, which reads the
+# referenced module, checks for a pending-proof marker ("coming soon"), and
+# cross-checks the `status:` declared here. A mismatch is a drift error and
+# fails CI (see .github/workflows/properties-check.yml). The Agda `--safe`
+# typecheck (run by the main CI) is what ultimately guarantees that a `proved`
+# property has no holes or postulates.
+#
+# Workflow and conventions are documented in
+#   docs/notes/0001-ledger-property-tracking.md
+#
+# Field reference (per property):
+#   id      : stable slug, unique across the catalog (used by the scripts)
+#   title   : one-line human description
+#   era     : conway | dijkstra
+#   sts     : the transition system the property is about (UTXO, GOV, EPOCH, ...)
+#   status  : idea | planned | stated | proved   (see meta.status_values below)
+#   module  : dotted Agda module path ("" if no Agda artifact exists yet)
+#   anchor  : heading anchor in the .lagda.md (e.g. clm:EpochStep), "" if none
+#   defs    : key Agda definitions that state/prove the property (for the reader)
+#   issues  : GitHub issue numbers tracking this property ([] => create one)
+#   notes   : free-form context
+# -----------------------------------------------------------------------------
+
+meta:
+  repo: intersectmbo/formal-ledger-specifications
+  eras: [conway, dijkstra]
+  # Umbrella tracking issues per era (sub-issues hang off these).
+  umbrella_issues:
+    conway: 45        # existing "Create properties of the governance system"
+    dijkstra: null    # to be created by gh_project_populate.py
+  status_values:
+    idea:    "Identified; no statement in Agda yet."
+    planned: "Statement drafted in an open PR/branch; not yet on the tracked branch."
+    stated:  "Statement present in Agda as a Claim; proof pending (\"coming soon\")."
+    proved:  "Statement and proof present in Agda; no pending marker; --safe typechecks."
+  # STS the spec is organised around (for grouping/labels).
+  sts_values: [UTXO, UTXOW, CERT, CERTS, GOV, RATIFY, ENACT, EPOCH, NEWEPOCH, POOLREAP, SNAP, LEDGER, CHAIN]
+
+properties:
+
+  # ===========================================================================
+  # CONWAY
+  # ===========================================================================
+
+  # --- Issue #45 sub-issues -------------------------------------------------
+
+  - id: conway-utxo-deposit-growth
+    title: "k proposals grow the GA deposit pot by k * govActionDeposit"
+    era: conway
+    sts: UTXO
+    status: proved
+    module: Ledger.Conway.Specification.Utxo.Properties.GenMinSpend
+    anchor: ""
+    defs: [updatePropDeps≡, gmsc]
+    issues: [413]
+    notes: >
+      This is exactly issue #413 ("first few steps of gmsc factored out"). The
+      lemma `updatePropDeps≡` proves the deposit-pot growth and feeds the
+      `UTXO-minspend` theorem. #413 can be closed once linked.
+
+  - id: conway-utxo-minspend
+    title: "Coin consumed is at least the sum of GA deposits of the proposals"
+    era: conway
+    sts: UTXO
+    status: proved
+    module: Ledger.Conway.Specification.Utxo.Properties.MinSpend
+    anchor: thm:minspend
+    defs: [utxoMinSpend, propose-minSpend]
+    issues: []
+    notes: "Headline minimum-spending theorem; related to #359 and built on #413."
+
+  - id: conway-chain-eventually-refunded
+    title: "GA deposits are eventually refunded"
+    era: conway
+    sts: CHAIN
+    status: planned
+    module: Ledger.Conway.Specification.Chain.Properties.EventuallyRefunded
+    anchor: clm:EventuallyRefunded
+    defs: [GADepositsEventuallyRefunded]
+    issues: [414]
+    notes: >
+      Statement stub drafted this session (branch claude/414-property-eventually-refunded,
+      PR pending on a fork). Marked `planned` until merged; then becomes `stated`.
+
+  - id: conway-epoch-voting-power-self-proposal
+    title: "Voting power of a stake credential does not decrease on self-funded proposal"
+    era: conway
+    sts: EPOCH
+    status: idea
+    module: ""
+    anchor: ""
+    defs: []
+    issues: [415]
+    notes: >
+      The exact #415 statement is NOT yet in Agda. The adjacent claim
+      `NoPropSameDReps` (below) is related but distinct. #415's stated blocker
+      (the stake calculation) now appears resolved (calculateVDelegDelegatedStake
+      exists), so #415 can be un-blocked.
+
+  - id: conway-chain-enactstate-only-on-epoch
+    title: "EnactState only changes at an epoch boundary (new enact state => new epoch)"
+    era: conway
+    sts: CHAIN
+    status: stated
+    module: Ledger.Conway.Specification.Chain.Properties.EpochStep
+    anchor: clm:EpochStep
+    defs: [enact-change⇒newEpoch]
+    issues: [412]
+    notes: "Statement present; proof coming soon."
+
+  - id: conway-gov-last-vote-applied
+    title: "A voter's (last) vote in a block is applied to the GA"
+    era: conway
+    sts: GOV
+    status: planned
+    module: Ledger.Conway.Specification.Gov.Properties.LastVoteApplied
+    anchor: clm:LastVoteApplied
+    defs: [vote-applied-to-GA, last-vote-applied-to-GA]
+    issues: [417]
+    notes: >
+      Statement stub drafted this session (branch claude/417-property-last-vote-applied-to-GA,
+      PR pending on a fork). Marked `planned` until merged; then becomes `stated`.
+
+  # --- Issue #45 comment properties (no dedicated issue yet) -----------------
+
+  - id: conway-newepoch-const-rewards
+    title: "Rewards domain is unchanged by NEWEPOCH (constant at the epoch boundary)"
+    era: conway
+    sts: NEWEPOCH
+    status: stated
+    module: Ledger.Conway.Specification.Epoch.Properties.ConstRwds
+    anchor: clm:NEWEPOCH-const-rwds
+    defs: [dom-rwds-const]
+    issues: []
+    notes: "Proposed in a #45 comment (2024-01-29). Needs a tracking issue."
+
+  - id: conway-chain-creddeps-eq-domrwds
+    title: "dom rewards = CredentialDeposit^-1 (dom deposits) is a CHAIN invariant"
+    era: conway
+    sts: CHAIN
+    status: stated
+    module: Ledger.Conway.Specification.Chain.Properties.CredDepsEqualDomRwds
+    anchor: clm:CredDepsEqualDomRwds-inv
+    defs: [credDeposits≡dom-rwds, credDeposits≡dom-rwds-inv]
+    issues: []
+    notes: "Proposed in a #45 comment (2024-01-29). Needs a tracking issue."
+
+  # --- Other Conway claims (stated, no #45 issue) ---------------------------
+
+  - id: conway-chain-pparams-wellformed
+    title: "Well-formedness of PParams is a CHAIN invariant"
+    era: conway
+    sts: CHAIN
+    status: stated
+    module: Ledger.Conway.Specification.Chain.Properties.PParamsWellFormed
+    anchor: clm:pp-wellFormed-inv
+    defs: [pp-wellFormed, pp-wellFormed-invariant]
+    issues: []
+    notes: ""
+
+  - id: conway-epoch-nopropsame-dreps
+    title: "Active DReps are unchanged across an epoch when there are no proposals"
+    era: conway
+    sts: EPOCH
+    status: stated
+    module: Ledger.Conway.Specification.Epoch.Properties.NoPropSameDReps
+    anchor: clm:NoPropSameDReps
+    defs: [prop≡∅⇒activeDReps-const]
+    issues: []
+    notes: "Adjacent to #415 but a distinct statement."
+
+  - id: conway-certs-votedelegs-vdeleg
+    title: "voteDelegs range is contained in VDelegs built from its domain"
+    era: conway
+    sts: CERTS
+    status: stated
+    module: Ledger.Conway.Specification.Certs.Properties.VoteDelegsVDeleg
+    anchor: clm:VDelegsInRegDReps
+    defs: [voteDelegsVDeleg]
+    issues: []
+    notes: ""
+
+  - id: conway-gov-changepp-hasgroup
+    title: "ChangePParams proposals have a non-empty update group"
+    era: conway
+    sts: GOV
+    status: stated
+    module: Ledger.Conway.Specification.Gov.Properties.ChangePPGroup
+    anchor: clm:ChangePPGroup
+    defs: [ChangePPHasGroup]
+    issues: []
+    notes: ""
+
+  # --- Conway proved theorems (track for completeness / regression) ----------
+
+  - id: conway-chain-govdepsmatch
+    title: "govDepsMatch is a CHAIN invariant"
+    era: conway
+    sts: CHAIN
+    status: proved
+    module: Ledger.Conway.Specification.Chain.Properties.GovDepsMatch
+    anchor: thm:ChainGovDepsMatch
+    defs: []
+    issues: []
+    notes: ""
+
+  - id: conway-ledger-govdepsmatch
+    title: "govDepsMatch is a LEDGER invariant"
+    era: conway
+    sts: LEDGER
+    status: proved
+    module: Ledger.Conway.Specification.Ledger.Properties.GovDepsMatch
+    anchor: lem:LedgerGovDepsMatch
+    defs: [LEDGER-govDepsMatch]
+    issues: []
+    notes: ""
+
+  - id: conway-epoch-govdepsmatch
+    title: "govDepsMatch is an EPOCH invariant"
+    era: conway
+    sts: EPOCH
+    status: proved
+    module: Ledger.Conway.Specification.Epoch.Properties.GovDepsMatch
+    anchor: lem:EpochGovDepsMatch
+    defs: []
+    issues: []
+    notes: ""
+
+  - id: conway-ledger-pov
+    title: "LEDGER preserves value"
+    era: conway
+    sts: LEDGER
+    status: proved
+    module: Ledger.Conway.Specification.Ledger.Properties.PoV
+    anchor: thm:LEDGER-PoV
+    defs: []
+    issues: []
+    notes: ""
+
+  - id: conway-utxo-pov
+    title: "UTXO preserves value"
+    era: conway
+    sts: UTXO
+    status: proved
+    module: Ledger.Conway.Specification.Utxo.Properties.PoV
+    anchor: thm:UTXO-PoV
+    defs: [UTXOpov]
+    issues: []
+    notes: ""
+
+  - id: conway-certs-pov
+    title: "CERT and CERTS preserve value"
+    era: conway
+    sts: CERTS
+    status: proved
+    module: Ledger.Conway.Specification.Certs.Properties.PoV
+    anchor: thm:CERTS-PoV
+    defs: []
+    issues: []
+    notes: "Covers both thm:CERT-PoV and thm:CERTS-PoV."
+
+  - id: conway-epoch-expired-dreps
+    title: "EPOCH preserves the DReps equivalence (expired-DReps parametricity)"
+    era: conway
+    sts: EPOCH
+    status: proved
+    module: Ledger.Conway.Specification.Epoch.Properties.ExpiredDReps
+    anchor: ""
+    defs: []
+    issues: []
+    notes: "Supports #414 (deposit/GA removal at the epoch boundary)."
+
+  # ===========================================================================
+  # DIJKSTRA  (porting targets — none stated yet; mirror of the Conway set)
+  # ===========================================================================
+  # Dijkstra currently has only `Computational` (executability) properties.
+  # Each entry below is a porting task: restate (and reprove) the Conway
+  # property against the Dijkstra modules, which differ (e.g. Account/Entities
+  # model, reorganised Gov).
+
+  - id: dijkstra-utxo-deposit-growth
+    title: "[port] k proposals grow the GA deposit pot by k * govActionDeposit"
+    era: dijkstra
+    sts: UTXO
+    status: idea
+    module: ""
+    anchor: ""
+    defs: []
+    issues: []
+    notes: "Port of conway-utxo-deposit-growth."
+
+  - id: dijkstra-utxo-minspend
+    title: "[port] Coin consumed is at least the sum of GA deposits of the proposals"
+    era: dijkstra
+    sts: UTXO
+    status: idea
+    module: ""
+    anchor: ""
+    defs: []
+    issues: []
+    notes: "Port of conway-utxo-minspend."
+
+  - id: dijkstra-chain-eventually-refunded
+    title: "[port] GA deposits are eventually refunded"
+    era: dijkstra
+    sts: CHAIN
+    status: idea
+    module: ""
+    anchor: ""
+    defs: []
+    issues: []
+    notes: "Port of conway-chain-eventually-refunded (#414)."
+
+  - id: dijkstra-epoch-voting-power-self-proposal
+    title: "[port] Voting power does not decrease on a self-funded proposal"
+    era: dijkstra
+    sts: EPOCH
+    status: idea
+    module: ""
+    anchor: ""
+    defs: []
+    issues: []
+    notes: "Port of conway-epoch-voting-power-self-proposal (#415)."
+
+  - id: dijkstra-chain-enactstate-only-on-epoch
+    title: "[port] EnactState only changes at an epoch boundary"
+    era: dijkstra
+    sts: CHAIN
+    status: idea
+    module: ""
+    anchor: ""
+    defs: []
+    issues: []
+    notes: "Port of conway-chain-enactstate-only-on-epoch (#412)."
+
+  - id: dijkstra-gov-last-vote-applied
+    title: "[port] A voter's (last) vote in a block is applied to the GA"
+    era: dijkstra
+    sts: GOV
+    status: idea
+    module: ""
+    anchor: ""
+    defs: []
+    issues: []
+    notes: "Port of conway-gov-last-vote-applied (#417)."
+
+  - id: dijkstra-newepoch-const-rewards
+    title: "[port] Rewards domain is unchanged by NEWEPOCH"
+    era: dijkstra
+    sts: NEWEPOCH
+    status: idea
+    module: ""
+    anchor: ""
+    defs: []
+    issues: []
+    notes: "Port of conway-newepoch-const-rewards."
+
+  - id: dijkstra-chain-creddeps-eq-domrwds
+    title: "[port] dom rewards = CredentialDeposit^-1 (dom deposits) is a CHAIN invariant"
+    era: dijkstra
+    sts: CHAIN
+    status: idea
+    module: ""
+    anchor: ""
+    defs: []
+    issues: []
+    notes: "Port of conway-chain-creddeps-eq-domrwds. Note: Dijkstra has an Account model."
+
+  - id: dijkstra-chain-pparams-wellformed
+    title: "[port] Well-formedness of PParams is a CHAIN invariant"
+    era: dijkstra
+    sts: CHAIN
+    status: idea
+    module: ""
+    anchor: ""
+    defs: []
+    issues: []
+    notes: "Port of conway-chain-pparams-wellformed."
+
+  - id: dijkstra-epoch-nopropsame-dreps
+    title: "[port] Active DReps are unchanged across an epoch with no proposals"
+    era: dijkstra
+    sts: EPOCH
+    status: idea
+    module: ""
+    anchor: ""
+    defs: []
+    issues: []
+    notes: "Port of conway-epoch-nopropsame-dreps."
+
+  - id: dijkstra-certs-votedelegs-vdeleg
+    title: "[port] voteDelegs range is contained in VDelegs built from its domain"
+    era: dijkstra
+    sts: CERTS
+    status: idea
+    module: ""
+    anchor: ""
+    defs: []
+    issues: []
+    notes: "Port of conway-certs-votedelegs-vdeleg."
+
+  - id: dijkstra-gov-changepp-hasgroup
+    title: "[port] ChangePParams proposals have a non-empty update group"
+    era: dijkstra
+    sts: GOV
+    status: idea
+    module: ""
+    anchor: ""
+    defs: []
+    issues: []
+    notes: "Port of conway-gov-changepp-hasgroup."
+
+  - id: dijkstra-govdepsmatch
+    title: "[port] govDepsMatch is a CHAIN/LEDGER/EPOCH invariant"
+    era: dijkstra
+    sts: CHAIN
+    status: idea
+    module: ""
+    anchor: ""
+    defs: []
+    issues: []
+    notes: "Port of the Conway govDepsMatch invariants."
+
+  - id: dijkstra-pov
+    title: "[port] Preservation of value (LEDGER/UTXO/CERTS/CERT)"
+    era: dijkstra
+    sts: LEDGER
+    status: idea
+    module: ""
+    anchor: ""
+    defs: []
+    issues: []
+    notes: "Port of the Conway preservation-of-value theorems."
+
+  - id: dijkstra-epoch-expired-dreps
+    title: "[port] EPOCH preserves the DReps equivalence"
+    era: dijkstra
+    sts: EPOCH
+    status: idea
+    module: ""
+    anchor: ""
+    defs: []
+    issues: []
+    notes: "Port of conway-epoch-expired-dreps."
