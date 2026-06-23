@@ -43,7 +43,7 @@ formal status *derivable* so it cannot silently drift:
 | Concern | Source of truth | Where |
 | --- | --- | --- |
 | Is a property **proved**? | **The Agda** (`--safe` typecheck; `coming soon` marker = pending) | `src/**/Properties/**.lagda.md` |
-| What properties exist, their identity, location, issue, intended status | **The catalog** (version-controlled) | `docs/notes/properties.yaml` |
+| What properties exist, their identity, location, tracking issue | **The catalog** (version-controlled; declares no status) | `docs/notes/properties.yaml` |
 | Human dashboard | **Generated** from catalog ⨯ Agda | `docs/notes/ledger-properties-roadmap.md` |
 | Work coordination (discussion, assignment, open/closed) | **GitHub issues** | `#45` (Conway umbrella) + sub-issues; a Dijkstra umbrella |
 
@@ -53,18 +53,21 @@ it. A Projects board is invisible to the code and to automation.
 
 ### Status is derived, not asserted
 
-`scripts/python/scan_properties.py` resolves each catalog entry's `module` to its
-`.lagda.md`, and derives:
+The catalog declares **no** status field. `scripts/python/scan_properties.py`
+computes each property's status from its `module` reference and the Agda on disk:
 
-- `proved` — file present and **no** `coming soon` marker;
+- `idea` — no module set (nothing in Agda yet);
+- `planned` — module named but the file is not on this branch (drafted in a PR);
 - `stated` — file present **with** a `coming soon` marker (a `Claim`, proof pending);
-- `absent` — file not present (expected for `idea`/`planned` entries).
+- `proved` — file present with **no** `coming soon` marker.
 
-It then reconciles the derived status against the catalog's declared `status` and
-fails on disagreement. The Agda `--safe` typecheck in the main CI is what
-guarantees a `proved` property has no holes or postulates; this script guarantees
-the *bookkeeping* matches the code. Together they make the #413/#414 class of
-drift a CI failure.
+Because status is computed, the anti-drift gate is the generated roadmap itself:
+`scan_properties.py --check` regenerates the dashboard and fails if the committed
+copy is stale. So if a proof lands (the `coming soon` marker disappears) but the
+roadmap is not regenerated and committed, CI fails. The Agda `--safe` typecheck in
+the main CI is what guarantees a `proved` property has no holes or postulates; this
+script guarantees the *bookkeeping* matches the code. Together they make the
+#413/#414 class of drift a CI failure.
 
 ### Status vocabulary
 
@@ -88,13 +91,15 @@ drift a CI failure.
 
 ## How to … (workflow)
 
-**Add a new property.** Add an entry to `properties.yaml` (`status: idea`), open a
-tracking issue (or let `gh_project_populate.py` create it), then write the module
-with the statement and `coming soon`; flip the entry to `stated`. Run
-`scan_properties.py` and commit the regenerated roadmap.
+**Add a new property.** Add an entry to `properties.yaml` (no status field; with
+no module it derives as `idea`), open a tracking issue (or let
+`gh_project_populate.py` create it), then write the module with the statement and
+`coming soon` (it now derives as `stated`). Run `scan_properties.py` and commit
+the regenerated roadmap.
 
-**Record a proof.** Replace `coming soon` with the proof; flip the catalog entry
-to `proved`; run `scan_properties.py`; close (or let render mark) the issue.
+**Record a proof.** Replace `coming soon` with the proof (it now derives as
+`proved`); run `scan_properties.py` and commit the regenerated roadmap; close (or
+let render mark) the issue.
 
 **Keep everything in sync.** `scan_properties.py --check` runs in CI
 (`.github/workflows/properties-check.yml`) and fails if the catalog disagrees with
@@ -117,7 +122,7 @@ Snapshot at the time of writing — see the live roadmap for current state.
 | — | `CredDepsEqualDomRwds` (=#45 comment P7) | Create an issue. |
 | — | `PParamsWellFormed`, `NoPropSameDReps`, `VoteDelegsVDeleg`, `ChangePPGroup` | Create issues (stated, proof pending). |
 | — | `GovDepsMatch` ×3, PoV ×4, `ExpiredDReps` | Create issues, mark proved (regression-tracking). |
-| — | **Dijkstra**: all of the above | Create a Dijkstra umbrella + porting sub-issues (`status: idea`). |
+| — | **Dijkstra**: all of the above | Create a Dijkstra umbrella + porting sub-issues (all derive as `idea`). |
 
 `gh_project_populate.py` performs the "create an issue" rows from the catalog and
 writes the new numbers back into `properties.yaml`.

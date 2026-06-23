@@ -4,15 +4,20 @@
 #
 # This file is the human-curated CATALOG of ledger properties we care about,
 # across eras. It is the single place where a property's identity, location,
-# tracking issue, and *intended* status are declared.
+# and tracking issue are declared.
 #
-# It is NOT the source of truth for whether a property is proved. That is
-# derived from the Agda by `scripts/python/scan_properties.py`, which reads the
-# referenced module, checks for a pending-proof marker ("coming soon"), and
-# cross-checks the `status:` declared here. A mismatch is a drift error and
-# fails CI (see .github/workflows/properties-check.yml). The Agda `--safe`
-# typecheck (run by the main CI) is what ultimately guarantees that a `proved`
-# property has no holes or postulates.
+# It deliberately does NOT declare a `status:`. Status is *derived* from the
+# Agda by `scripts/python/scan_properties.py`, from the `module:` reference and
+# the source on disk:
+#   no module          -> idea     (identified; nothing in Agda yet)
+#   module file absent -> planned  (drafted on another branch/PR; not here yet)
+#   "coming soon" found-> stated   (statement present; proof pending)
+#   otherwise          -> proved   (statement and proof present)
+# The Agda `--safe` typecheck (run by the main CI) is what ultimately guarantees
+# that a `proved` property has no holes or postulates; `scan_properties.py
+# --check` (see .github/workflows/properties-check.yml) guarantees the generated
+# roadmap matches what the Agda currently implies, so the bookkeeping cannot
+# silently drift from the code.
 #
 # Workflow and conventions are documented in
 #   docs/notes/0001-ledger-property-tracking.md
@@ -22,12 +27,13 @@
 #   title   : one-line human description
 #   era     : conway | dijkstra
 #   sts     : the transition system the property is about (UTXO, GOV, EPOCH, ...)
-#   status  : idea | planned | stated | proved   (see meta.status_values below)
 #   module  : dotted Agda module path ("" if no Agda artifact exists yet)
 #   anchor  : heading anchor in the .lagda.md (e.g. clm:EpochStep), "" if none
 #   defs    : key Agda definitions that state/prove the property (for the reader)
 #   issues  : GitHub issue numbers tracking this property ([] => create one)
 #   notes   : free-form context
+# (Status is NOT a field — it is computed; see meta.status_values for the
+#  meaning of each derived value.)
 # -----------------------------------------------------------------------------
 
 meta:
@@ -37,9 +43,10 @@ meta:
   umbrella_issues:
     conway: 45        # existing "Create properties of the governance system"
     dijkstra: null    # to be created by gh_project_populate.py
+  # The DERIVED status values (computed by scan_properties.py, never declared).
   status_values:
-    idea:    "Identified; no statement in Agda yet."
-    planned: "Statement drafted in an open PR/branch; not yet on the tracked branch."
+    idea:    "Identified; no statement in Agda yet (module is \"\")."
+    planned: "Statement drafted on another branch/PR; module file not on this branch."
     stated:  "Statement present in Agda as a Claim; proof pending (\"coming soon\")."
     proved:  "Statement and proof present in Agda; no pending marker; --safe typechecks."
   # STS the spec is organised around (for grouping/labels).
@@ -57,7 +64,6 @@ properties:
     title: "k proposals grow the GA deposit pot by k * govActionDeposit"
     era: conway
     sts: UTXO
-    status: proved
     module: Ledger.Conway.Specification.Utxo.Properties.GenMinSpend
     anchor: ""
     defs: [updatePropDeps≡, gmsc]
@@ -71,7 +77,6 @@ properties:
     title: "Coin consumed is at least the sum of GA deposits of the proposals"
     era: conway
     sts: UTXO
-    status: proved
     module: Ledger.Conway.Specification.Utxo.Properties.MinSpend
     anchor: thm:minspend
     defs: [utxoMinSpend, propose-minSpend]
@@ -82,7 +87,6 @@ properties:
     title: "GA deposits are eventually refunded"
     era: conway
     sts: CHAIN
-    status: planned
     module: Ledger.Conway.Specification.Chain.Properties.EventuallyRefunded
     anchor: clm:EventuallyRefunded
     defs: [GADepositsEventuallyRefunded]
@@ -95,7 +99,6 @@ properties:
     title: "Voting power of a stake credential does not decrease on self-funded proposal"
     era: conway
     sts: EPOCH
-    status: idea
     module: ""
     anchor: ""
     defs: []
@@ -110,7 +113,6 @@ properties:
     title: "EnactState only changes at an epoch boundary (new enact state => new epoch)"
     era: conway
     sts: CHAIN
-    status: stated
     module: Ledger.Conway.Specification.Chain.Properties.EpochStep
     anchor: clm:EpochStep
     defs: [enact-change⇒newEpoch]
@@ -121,7 +123,6 @@ properties:
     title: "A voter's (last) vote in a block is applied to the GA"
     era: conway
     sts: GOV
-    status: planned
     module: Ledger.Conway.Specification.Gov.Properties.LastVoteApplied
     anchor: clm:LastVoteApplied
     defs: [vote-applied-to-GA, last-vote-applied-to-GA]
@@ -136,7 +137,6 @@ properties:
     title: "Rewards domain is unchanged by NEWEPOCH (constant at the epoch boundary)"
     era: conway
     sts: NEWEPOCH
-    status: stated
     module: Ledger.Conway.Specification.Epoch.Properties.ConstRwds
     anchor: clm:NEWEPOCH-const-rwds
     defs: [dom-rwds-const]
@@ -147,7 +147,6 @@ properties:
     title: "dom rewards = CredentialDeposit^-1 (dom deposits) is a CHAIN invariant"
     era: conway
     sts: CHAIN
-    status: stated
     module: Ledger.Conway.Specification.Chain.Properties.CredDepsEqualDomRwds
     anchor: clm:CredDepsEqualDomRwds-inv
     defs: [credDeposits≡dom-rwds, credDeposits≡dom-rwds-inv]
@@ -160,7 +159,6 @@ properties:
     title: "Well-formedness of PParams is a CHAIN invariant"
     era: conway
     sts: CHAIN
-    status: stated
     module: Ledger.Conway.Specification.Chain.Properties.PParamsWellFormed
     anchor: clm:pp-wellFormed-inv
     defs: [pp-wellFormed, pp-wellFormed-invariant]
@@ -171,7 +169,6 @@ properties:
     title: "Active DReps are unchanged across an epoch when there are no proposals"
     era: conway
     sts: EPOCH
-    status: stated
     module: Ledger.Conway.Specification.Epoch.Properties.NoPropSameDReps
     anchor: clm:NoPropSameDReps
     defs: [prop≡∅⇒activeDReps-const]
@@ -182,7 +179,6 @@ properties:
     title: "voteDelegs range is contained in VDelegs built from its domain"
     era: conway
     sts: CERTS
-    status: stated
     module: Ledger.Conway.Specification.Certs.Properties.VoteDelegsVDeleg
     anchor: clm:VDelegsInRegDReps
     defs: [voteDelegsVDeleg]
@@ -193,7 +189,6 @@ properties:
     title: "ChangePParams proposals have a non-empty update group"
     era: conway
     sts: GOV
-    status: stated
     module: Ledger.Conway.Specification.Gov.Properties.ChangePPGroup
     anchor: clm:ChangePPGroup
     defs: [ChangePPHasGroup]
@@ -206,7 +201,6 @@ properties:
     title: "govDepsMatch is a CHAIN invariant"
     era: conway
     sts: CHAIN
-    status: proved
     module: Ledger.Conway.Specification.Chain.Properties.GovDepsMatch
     anchor: thm:ChainGovDepsMatch
     defs: []
@@ -217,7 +211,6 @@ properties:
     title: "govDepsMatch is a LEDGER invariant"
     era: conway
     sts: LEDGER
-    status: proved
     module: Ledger.Conway.Specification.Ledger.Properties.GovDepsMatch
     anchor: lem:LedgerGovDepsMatch
     defs: [LEDGER-govDepsMatch]
@@ -228,7 +221,6 @@ properties:
     title: "govDepsMatch is an EPOCH invariant"
     era: conway
     sts: EPOCH
-    status: proved
     module: Ledger.Conway.Specification.Epoch.Properties.GovDepsMatch
     anchor: lem:EpochGovDepsMatch
     defs: []
@@ -239,7 +231,6 @@ properties:
     title: "LEDGER preserves value"
     era: conway
     sts: LEDGER
-    status: proved
     module: Ledger.Conway.Specification.Ledger.Properties.PoV
     anchor: thm:LEDGER-PoV
     defs: []
@@ -250,7 +241,6 @@ properties:
     title: "UTXO preserves value"
     era: conway
     sts: UTXO
-    status: proved
     module: Ledger.Conway.Specification.Utxo.Properties.PoV
     anchor: thm:UTXO-PoV
     defs: [UTXOpov]
@@ -261,7 +251,6 @@ properties:
     title: "CERT and CERTS preserve value"
     era: conway
     sts: CERTS
-    status: proved
     module: Ledger.Conway.Specification.Certs.Properties.PoV
     anchor: thm:CERTS-PoV
     defs: []
@@ -272,7 +261,6 @@ properties:
     title: "EPOCH preserves the DReps equivalence (expired-DReps parametricity)"
     era: conway
     sts: EPOCH
-    status: proved
     module: Ledger.Conway.Specification.Epoch.Properties.ExpiredDReps
     anchor: ""
     defs: []
@@ -291,7 +279,6 @@ properties:
     title: "[port] k proposals grow the GA deposit pot by k * govActionDeposit"
     era: dijkstra
     sts: UTXO
-    status: idea
     module: ""
     anchor: ""
     defs: []
@@ -302,7 +289,6 @@ properties:
     title: "[port] Coin consumed is at least the sum of GA deposits of the proposals"
     era: dijkstra
     sts: UTXO
-    status: idea
     module: ""
     anchor: ""
     defs: []
@@ -313,7 +299,6 @@ properties:
     title: "[port] GA deposits are eventually refunded"
     era: dijkstra
     sts: CHAIN
-    status: idea
     module: ""
     anchor: ""
     defs: []
@@ -324,7 +309,6 @@ properties:
     title: "[port] Voting power does not decrease on a self-funded proposal"
     era: dijkstra
     sts: EPOCH
-    status: idea
     module: ""
     anchor: ""
     defs: []
@@ -335,7 +319,6 @@ properties:
     title: "[port] EnactState only changes at an epoch boundary"
     era: dijkstra
     sts: CHAIN
-    status: idea
     module: ""
     anchor: ""
     defs: []
@@ -346,7 +329,6 @@ properties:
     title: "[port] A voter's (last) vote in a block is applied to the GA"
     era: dijkstra
     sts: GOV
-    status: idea
     module: ""
     anchor: ""
     defs: []
@@ -357,7 +339,6 @@ properties:
     title: "[port] Rewards domain is unchanged by NEWEPOCH"
     era: dijkstra
     sts: NEWEPOCH
-    status: idea
     module: ""
     anchor: ""
     defs: []
@@ -368,7 +349,6 @@ properties:
     title: "[port] dom rewards = CredentialDeposit^-1 (dom deposits) is a CHAIN invariant"
     era: dijkstra
     sts: CHAIN
-    status: idea
     module: ""
     anchor: ""
     defs: []
@@ -379,7 +359,6 @@ properties:
     title: "[port] Well-formedness of PParams is a CHAIN invariant"
     era: dijkstra
     sts: CHAIN
-    status: idea
     module: ""
     anchor: ""
     defs: []
@@ -390,7 +369,6 @@ properties:
     title: "[port] Active DReps are unchanged across an epoch with no proposals"
     era: dijkstra
     sts: EPOCH
-    status: idea
     module: ""
     anchor: ""
     defs: []
@@ -401,7 +379,6 @@ properties:
     title: "[port] voteDelegs range is contained in VDelegs built from its domain"
     era: dijkstra
     sts: CERTS
-    status: idea
     module: ""
     anchor: ""
     defs: []
@@ -412,7 +389,6 @@ properties:
     title: "[port] ChangePParams proposals have a non-empty update group"
     era: dijkstra
     sts: GOV
-    status: idea
     module: ""
     anchor: ""
     defs: []
@@ -423,7 +399,6 @@ properties:
     title: "[port] govDepsMatch is a CHAIN/LEDGER/EPOCH invariant"
     era: dijkstra
     sts: CHAIN
-    status: idea
     module: ""
     anchor: ""
     defs: []
@@ -434,7 +409,6 @@ properties:
     title: "[port] Preservation of value (LEDGER/UTXO/CERTS/CERT)"
     era: dijkstra
     sts: LEDGER
-    status: idea
     module: ""
     anchor: ""
     defs: []
@@ -445,7 +419,6 @@ properties:
     title: "[port] EPOCH preserves the DReps equivalence"
     era: dijkstra
     sts: EPOCH
-    status: idea
     module: ""
     anchor: ""
     defs: []

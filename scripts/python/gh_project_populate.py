@@ -38,8 +38,17 @@ try:
 except ImportError:  # pragma: no cover
     sys.exit("error: PyYAML is required (pip install pyyaml)")
 
+# Reuse the single source of truth for status derivation (same directory).
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from scan_properties import derive_status  # noqa: E402
+
 REPO_ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_CATALOG = REPO_ROOT / "docs" / "notes" / "properties.yaml"
+
+
+def prop_status(p: dict) -> str:
+    """Derived status of a catalog property (idea | planned | stated | proved)."""
+    return derive_status(p.get("module") or "")[0]
 
 LABEL_COLORS = {
     "property": "5319e7",
@@ -176,7 +185,7 @@ def issue_body(p: dict, umbrella: int | None) -> str:
         f"- Era: **{p['era']}**  ·  STS: **{p['sts']}**",
         f"- Agda module: {mod}" + (f"  (anchor: `{p['anchor']}`)" if p.get("anchor") else ""),
         f"- Key definitions: {defs}",
-        f"- Declared status: **{p['status']}**",
+        f"- Status (derived from the Agda): **{prop_status(p)}**",
     ]
     if p.get("notes"):
         lines += ["", p["notes"].strip()]
@@ -245,7 +254,7 @@ def main() -> int:
         if p.get("issues"):
             continue  # already tracked
         umbrella = umbrellas.get(p["era"])
-        labels = ["property", f"era:{p['era']}", f"status:{p['status']}", f"sts:{p['sts']}"]
+        labels = ["property", f"era:{p['era']}", f"status:{prop_status(p)}", f"sts:{p['sts']}"]
         num = create_issue(gh, p["title"], issue_body(p, umbrella), labels)
         print(f"created issue for {p['id']}: " + (f"#{num}" if num else "(dry-run)"))
         if num:

@@ -4,9 +4,10 @@ Tooling for the ledger-properties catalog. Design and rationale:
 [`docs/notes/0001-ledger-property-tracking.md`](../../docs/notes/0001-ledger-property-tracking.md).
 
 The catalog [`docs/notes/properties.yaml`](../../docs/notes/properties.yaml) declares
-every property (identity, era, STS, Agda module, tracking issue, intended status).
-**Formal status is derived from the Agda, not asserted** — `scan_properties.py`
-reconciles the catalog against the source and fails on disagreement.
+every property (identity, era, STS, Agda module, tracking issue). It declares **no**
+status — **formal status is derived from the Agda**, and `scan_properties.py`
+regenerates the roadmap from the catalog ⨯ Agda and fails if the committed roadmap
+has drifted.
 
 | Script | Direction | Network | Writes |
 | --- | --- | --- | --- |
@@ -27,12 +28,13 @@ python3 scripts/python/scan_properties.py          # regenerate the roadmap
 python3 scripts/python/scan_properties.py --check  # CI: fail on drift or stale roadmap
 ```
 
-It resolves each catalog entry's `module` to its `.lagda.md` and derives:
-`proved` (no `coming soon` marker), `stated` (marker present), or `absent`. It
-then checks the derived status against the declared `status` and fails on
-mismatch. `--check` additionally fails if the roadmap on disk is out of date.
-This is the CI gate (`.github/workflows/properties-check.yml`); the Agda `--safe`
-typecheck (main CI) is what guarantees a `proved` property has no holes.
+It resolves each catalog entry's `module` to its `.lagda.md` and derives the
+status: `idea` (no module), `planned` (module named but the file is not on this
+branch), `stated` (`coming soon` marker present), or `proved` (marker absent). The
+catalog declares no status of its own. `--check` regenerates the roadmap and fails
+if the committed copy is stale (or the catalog is structurally invalid). This is
+the CI gate (`.github/workflows/properties-check.yml`); the Agda `--safe` typecheck
+(main CI) is what guarantees a `proved` property has no holes.
 
 ## gh_project_populate.py (catalog → GitHub)
 
