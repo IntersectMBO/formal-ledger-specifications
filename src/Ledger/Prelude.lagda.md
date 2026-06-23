@@ -133,10 +133,8 @@ module _ {A : Type} ⦃ _ : DecEq A ⦄ where
 
   -- If a is already in domain of m, left-biased union with singleton at a
   -- leaves total unchanged (existing entry wins).
-  ∪ˡsingleton∈dom : (m : A ⇀ Coin) {(a , c) : A × Coin}
-    → a ∈ dom m → getCoin (m ∪ˡ ❴ (a , c) ❵ᵐ) ≡ getCoin m
   ∪ˡsingleton∈dom m {(a , c)} a∈dom =
-    ≡ᵉ-getCoin (m ∪ˡ ❴ (a , c) ❵) m (singleton-∈-∪ˡ {m = m} a∈dom)
+    ≡ᵉ-getCoin (m ∪ˡ ❴ (a , c) ❵ᵐ) m (singleton-∈-∪ˡ {m = m} a∈dom)
 
   -- If a is *not* in domain of m, left-biased union with singleton adds cleanly.
   ∪ˡsingleton∉dom : (m : A ⇀ Coin) {(a , c) : A × Coin}

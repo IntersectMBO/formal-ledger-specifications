@@ -38,7 +38,7 @@ instance
 
 module _
   (tx : Tx) (let open Tx tx; open TxBody body)
-  -- TODO: prove the following assumption, used in roof of `CERTBASE-pov`.
+  -- TODO: prove the following assumption, used in proof of `CERTBASE-pov`.
   ( ≡ᵉ-getCoinˢ :  {A A' : Type} ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq A' ⦄ (s : ℙ (A × Coin)) {f : A → A'}
                    → InjectiveOn (dom s) f → getCoin (mapˢ (map₁ f) s) ≡ getCoin s )
   where

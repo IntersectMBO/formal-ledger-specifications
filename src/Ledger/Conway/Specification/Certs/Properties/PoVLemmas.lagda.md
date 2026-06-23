@@ -100,7 +100,7 @@ injOn _ h {record { stake = stakex }} {record { stake = stakey }} x∈ y∈ refl
   cong (λ u → record { net = u ; stake = stakex }) (trans (h x∈) (sym (h y∈)))
 
 module Certs-Pov-lemmas
-  -- TODO: prove the following assumption, used in roof of `CERTBASE-pov`.
+  -- TODO: prove the following assumption, used in proof of `CERTBASE-pov`.
   ( ≡ᵉ-getCoinˢ :  {A A' : Type} ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq A' ⦄ (s : ℙ (A × Coin)) {f : A → A'}
                    → InjectiveOn (dom s) f → getCoin (mapˢ (map₁ f) s) ≡ getCoin s )
   where
