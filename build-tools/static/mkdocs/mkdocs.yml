@@ -95,6 +95,7 @@ use_directory_urls: false
 # Navigation structure
 nav:
 - Home: index.md
+- Properties Roadmap: ledger-properties-roadmap.md
 - Preliminaries:
   - Introduction: Ledger.Introduction.md
   - Notation: Notation.md

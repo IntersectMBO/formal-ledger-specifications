@@ -46,6 +46,10 @@ except ImportError:  # pragma: no cover
 REPO_ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_CATALOG = REPO_ROOT / "docs" / "notes" / "properties.yaml"
 DEFAULT_ROADMAP = REPO_ROOT / "docs" / "notes" / "ledger-properties-roadmap.md"
+# Published copy that the mkdocs site picks up (build-tools/static/mkdocs is
+# copied verbatim into the site by the shake `mkdocs` rule). Kept byte-identical
+# to the canonical roadmap and gated by --check so the two cannot drift.
+DEFAULT_SITE_ROADMAP = REPO_ROOT / "build-tools" / "static" / "mkdocs" / "docs" / "ledger-properties-roadmap.md"
 
 BEGIN = "<!-- BEGIN GENERATED: roadmap (scan_properties.py) -->"
 END = "<!-- END GENERATED: roadmap (scan_properties.py) -->"
@@ -207,6 +211,8 @@ def main() -> int:
         description="Derive property status from the Agda and render the roadmap.")
     ap.add_argument("--catalog", type=Path, default=DEFAULT_CATALOG)
     ap.add_argument("--roadmap", type=Path, default=DEFAULT_ROADMAP)
+    ap.add_argument("--site-roadmap", type=Path, default=DEFAULT_SITE_ROADMAP,
+                    help="mkdocs-site copy of the roadmap (kept identical to --roadmap).")
     ap.add_argument("--check", action="store_true",
                     help="CI mode: do not write; fail on a catalog error or a stale roadmap.")
     args = ap.parse_args()
@@ -229,19 +235,24 @@ def main() -> int:
     rendered = build_file(cat, results,
                           args.roadmap.read_text(encoding="utf-8") if args.roadmap.exists() else None)
 
+    # The canonical roadmap and its published mkdocs copy are kept byte-identical.
+    outputs = [args.roadmap, args.site_roadmap]
+
     if args.check:
-        stale = (not args.roadmap.exists()) or (args.roadmap.read_text(encoding="utf-8") != rendered)
-        if stale:
-            print("ERROR: roadmap is out of date; run scan_properties.py and commit "
-                  f"{args.roadmap.relative_to(REPO_ROOT).as_posix()}", file=sys.stderr)
+        stale = [p for p in outputs
+                 if (not p.exists()) or (p.read_text(encoding="utf-8") != rendered)]
+        for p in stale:
+            print(f"ERROR: {p.relative_to(REPO_ROOT).as_posix()} is out of date; "
+                  "run scan_properties.py and commit it", file=sys.stderr)
         ok = (not errors) and (not stale)
         print(f"\n{'OK' if ok else 'FAILED'}: "
               f"{len(errors)} error(s), {len(warns)} warning(s), "
               f"roadmap {'stale' if stale else 'up-to-date'}.", file=sys.stderr)
         return 0 if ok else 1
 
-    args.roadmap.write_text(rendered, encoding="utf-8")
-    print(f"\nwrote {args.roadmap.relative_to(REPO_ROOT).as_posix()} "
+    for p in outputs:
+        p.write_text(rendered, encoding="utf-8")
+    print(f"\nwrote {', '.join(p.relative_to(REPO_ROOT).as_posix() for p in outputs)} "
           f"({len(errors)} error(s), {len(warns)} warning(s))", file=sys.stderr)
     return 1 if errors else 0
 
