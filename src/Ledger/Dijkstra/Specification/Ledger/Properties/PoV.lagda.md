@@ -21,104 +21,27 @@ that is, UTxO coin, rewards balance, the `DState`/`PState`/`GState` deposit pots
 (`coinFromDeposits`{.AgdaFunction}), and the governance-action deposits
 (`coinFromGovDeposit`{.AgdaFunction}).
 
-> **🔖 Status (2026-06-23) — top-down stubbing done; deep chain deferred to #1189.**
-> This session made #1203 faithful to the top-down plan and applied the unambiguous,
-> additive corrections; the deep batch-balance arithmetic is **deliberately deferred**
-> (it depends on the `Utxo`/`Utxow`-PoV interface that lives in #1189, not on this
-> branch).  Concretely:
+> **Status — complete.** `LEDGER-pov` typechecks end-to-end under `--safe` (no
+> postulates or holes).  Following the top-down plan, this module proves only the
+> top-level `LEDGER` preservation-of-value statement and leaves the supporting facts
+> as **module parameters**, discharged downstream:
 >
-> **Done.**
-> - Certs-PoV provider modules removed; `CERTS-pov` is now a module parameter of both
->   `ENTITIES-PoV` and `LEDGER-PoV` (discharged later by #1210), alongside the new
->   `CERTS-coinFromDeposits-updateCertDeposits` parameter.
-> - `coinFromDeposit` → `coinFromDeposits` throughout (the spec renamed it).
-> - The governance-deposit parameters `rmOrphanDRepVotes-coinFromGovDeposit` and
->   `GOVS-coinFromGovDeposit` are declared, and the fourth `getCoin` summand
->   `coinFromGovDeposit` is threaded into the `LedgerState`-level totals (`LEDGER-I`
->   and the `LEDGER-V` `where`-definitions `G₀`, `G'`).
+> - **Certs-PoV** (`CERTS-pov`, `CERTS-coinFromDeposits-updateCertDeposits`) — by #1210.
+> - **Utxo/Utxow-PoV** (`utxow-pov-invalid`, `UTXOW-V-mechanical`,
+>   `UTXOW-batch-balance-coin`, and the UTxO algebra `balance-∪`, `split-balance`,
+>   `subutxow-step-coin`, `utxo₁-tx-spend-eq`, `fresh-top-tx-id`, …) — by the
+>   utxo/utxow-pov work (#1186).  `UTXOW-batch-balance-coin` is the coin projection of
+>   the spec's `consumedBatch ≡ producedBatch` premise, with the produced-side
+>   `govProposalsDeposits` collected into a single trailing `totGov` term.
+> - **Gov-deposit accounting** (`rmOrphanDRepVotes-coinFromGovDeposit`,
+>   `GOVS-coinFromGovDeposit`) — by a future `Gov.Properties.PoV`.
 >
-> **Deferred (this file does not yet typecheck — it is a WIP draft, not on the build
-> path).** The `LEDGER-V` equational chain still references the #1189 `Utxo`/`Utxow`-PoV
-> interface that is **not defined on this branch**: `calculateDepositsChange`,
-> `DepositsChange`, `DepositsChangeTopOf`/`DepositsChangeSubOf`, `UTXOW-batch-balance-coin`,
-> `UTXOW-V-mechanical`, and `utxow-pov-invalid`.  Completing the chain additionally needs
-> the gov-deposit re-derivation: restate `UTXOW-batch-balance-coin` with
-> `govProposalsDeposits` on the **produced** side (post-Finding-A) and add a
-> `SUBLEDGERS-gov-coin` induction threading `coinFromGovDeposit` through `SUBLEDGERS`,
-> so the gov-deposit growth cancels the produced-side `govProposalsDeposits`.  Do that
-> once #1189 provides the real interface (or parameterize over it explicitly).
->
-> The two detailed notes below are retained for the technical interface description.
-
-> **🔖 Status (2026-06-16) — chain re-derivation needed after the PoV soundness fixes.**
-> The equational chain below predates two corrections to the spec and does **not** yet
-> typecheck against current master:
->
-> 1. **`getCoin` gained a fourth summand** `coinFromGovDeposit (GovStateOf s)`
->    (post-#1214 gov-action deposits live in `GovActionState.deposit`, not
->    `GState.deposits`).  The chain still models the old three-summand total and uses
->    the now-renamed `coinFromDeposit` (→ `coinFromDeposits`).  Every
->    `LedgerState`-level total in `LEDGER-pov` (both `LEDGER-I` and `LEDGER-V`) must
->    thread the new gov summand `G`, with `G₀ = coinFromGovDeposit govState₀` and
->    `G' = coinFromGovDeposit (rmOrphanDRepVotes certState₂ govState₂)`.
-> 2. **Deposit sides were swapped** in `Utxo` to match Conway: `newCertDeposits` and
->    `govProposalsDeposits` are now on **produced**, `refundCertDeposits` on
->    **consumed**.  The batch-balance projection consumed by the chain (and the
->    `UTXOW-batch-balance-coin` parameter) must be updated to the new sides.
->
-> This adds two module parameters — to be discharged by a future `Gov.Properties.PoV`,
-> alongside the existing ApplyToRewards / UTXOW / batch-invariant groups:
->
-> - `rmOrphanDRepVotes-coinFromGovDeposit :`
->     `∀ cs g → coinFromGovDeposit (rmOrphanDRepVotes cs g) ≡ coinFromGovDeposit g`
->     (`rmOrphanDRepVotes` only rewrites `votes.gvDRep`, never `deposit`).
-> - `GOVS-coinFromGovDeposit :` a top-level **and** per-sub-tx GOVS accounting fact,
->     `coinFromGovDeposit govSt′ ≡ coinFromGovDeposit govSt + govProposalsDeposits pp props`,
->     relating gov-deposit growth to the `govProposalsDeposits` now charged on the
->     produced side (`GOV-Propose` stores `deposit = pp .govActionDeposit`; no `GOV-Vote`
->     or epoch-boundary removal changes a deposit within `LEDGER`).
->
-> `posNeg-deposits` (below) is a pure `posPart`/`negPart` cancellation, unaffected by
-> both fixes; it stands as proved.
-
-> **🔖 Resume here — make this PR faithful to the top-down plan (remove the provider lemmas).**
-> Goal: this PR should prove only `LEDGER-pov`, with the Certs-PoV and Utxo/Utxow-PoV
-> facts left as **module parameters (stubs)**, discharged later by #1210 and #1189.
-> Do this in a fresh session **with the Agda toolchain available** (merge this branch's
-> tooling onto the working branch first so the SessionStart hook runs; then verify every
-> edit with `/agda-typecheck`, i.e. `nix develop --command agda <file>`).
->
-> Dependency chain today: `Ledger.Properties.PoV` → `Entities.Properties.PoV` →
-> `Certs.Properties.PoV` → `Certs.Properties.PoVLemmas`.
->
-> 1. **Capture exact signatures first** (before deleting): copy the types of `CERTS-pov`
->    and `CERTS-coinFromDeposits-updateCertDeposits` from
->    `Certs/Properties/PoV.lagda.md` — they become the parameter types below.
-> 2. **Delete** the Certs-PoV provider modules (this is #1210's work):
->    `Certs/Properties/PoV.lagda.md` and `Certs/Properties/PoVLemmas.lagda.md`.
-> 3. **`Certs/Properties.lagda.md`**: drop the two `open import … Certs.Properties.PoVLemmas`
->    / `… Certs.Properties.PoV` lines.
-> 4. **`Entities/Properties/PoV.lagda.md`**: remove `open import … Certs.Properties.PoV gs`;
->    add `CERTS-pov` (the per-`CERTS`-step preservation fact, used at the `CERTS-pov certsStep`
->    call) as a parameter of the `ENTITIES-PoV` module. Keep the `ApplyToRewardsPoV` import
->    and everything else — `ENTITIES-pov` itself stays and is still consumed by `LEDGER-pov`.
-> 5. **`Ledger/Properties/PoV.lagda.md`** (this file): give the `LEDGER-PoV` module a
->    `CERTS-pov` parameter (Certs-PoV stub, discharged by #1210) and thread it into the
->    `open ENTITIES-PoV …` instantiation. When the `LEDGER-V` chain is finished, also add
->    `CERTS-coinFromDeposits-updateCertDeposits` as a parameter (the closed-form coin
->    equation #1210 provides).
-> 6. **Utxo/Utxow-PoV**: nothing to remove — those modules are not on this branch (they
->    live in #1189). The skeleton already parameterizes the UTxO facts (`balance-∪`,
->    `split-balance`, `subutxow-step-coin`, `utxo₁-tx-spend-eq`, `fresh-top-tx-id`, …) and
->    keeps the `Utxo/Utxow.Properties.PoV` imports commented out. Leave as is.
-> 7. **Conway-side touches** in this PR (`Conway/Conformance/Properties.lagda.md`, the
->    Conway `Certs`/`Ledger` PoV files, `Conway/…/Utxo/Properties/GenMinSpend.lagda.md`):
->    check whether they were only needed to support the now-removed Dijkstra Certs-PoV
->    modules; if so, revert them. Confirm with a typecheck.
-> 8. Don't forget the **separate** re-derivation work noted above (thread the
->    `coinFromGovDeposit` summand and the new gov-deposit parameters
->    `rmOrphanDRepVotes-coinFromGovDeposit` / `GOVS-coinFromGovDeposit`); the two efforts
->    touch the same module parameter block, so it's natural to do them together.
+> `getCoin` on a `LedgerState` has the four summands above — UTxO coin, rewards
+> balance, the cert-deposit pots (`coinFromDeposits`), and the gov-action deposits
+> (`coinFromGovDeposit`) — and the `LEDGER-V` chain accounts for all four: the cert
+> deposits cancel via the direct-deposit trick (see *Proof Strategy*), and the
+> gov-deposit growth `G' − G₀` is matched against the produced-side `totGov` (the
+> `gov-acc` lemma, from `SUBLEDGERS-gov-coin` + `GOVS-coinFromGovDeposit`).
 
 ## Proof Strategy
 
@@ -294,10 +217,10 @@ module LEDGER-PoV
   ( rmOrphanDRepVotes-coinFromGovDeposit :
       ∀ (cs : CertState) (g : GovState)
       → coinFromGovDeposit (rmOrphanDRepVotes cs g) ≡ coinFromGovDeposit g )
-  -- Per-`GOVS`-step gov-deposit growth equals the produced-side `govProposalsDeposits`
-  -- of the step's proposals (`GOV-Propose` stores `deposit = pp .govActionDeposit`; no
-  -- `GOV-Vote` changes a deposit).  Provisional signature — to be finalized against the
-  -- batch-balance interface during the deferred deep re-derivation.
+  -- Per-`GOVS`-step gov-deposit growth equals the `govProposalsDeposits` of the step's
+  -- proposals (`GOV-Propose` stores `deposit = pp .govActionDeposit`; no `GOV-Vote` or
+  -- in-`LEDGER` removal changes a deposit).  Used by `SUBLEDGERS-gov-coin` (the sub-tx
+  -- GOVS steps) and `gov-acc` (the top-level GOVS step).
   ( GOVS-coinFromGovDeposit :
       ∀ {Γ : GovEnv} {govSt govSt′ : GovState} {props}
       → Γ ⊢ govSt ⇀⦇ props ,GOVS⦈ govSt′
@@ -649,15 +572,10 @@ is `rmOrphanDRepVotes certState₂ govState₂` and `rmOrphanDRepVotes` preserve
 `coinFromGovDeposit` (parameter `rmOrphanDRepVotes-coinFromGovDeposit`) —
 `G' = coinFromGovDeposit govState₂`.
 
-> **WIP (deferred to #1189).** The equational body below is the pre-gov-summand draft:
-> it cancels `allDirectDeps` to deliver the *three-summand* `U₀+R₀+D₀ ≡ U₂+R₂+D₂`, and
-> it references the `Utxo`/`Utxow`-PoV interface (`calculateDepositsChange`,
-> `DepositsChange`, `UTXOW-batch-balance-coin`, `UTXOW-V-mechanical`,
-> `utxow-pov-invalid`) that is **not on this branch**.  Finishing the proof means
-> extending the chain with the `G`-summand accounting: `GOVS-coinFromGovDeposit` ties
-> `G' − G₀` to the produced-side `govProposalsDeposits`, balanced through a
-> `SUBLEDGERS-gov-coin` induction and a restated `UTXOW-batch-balance-coin`.  See the
-> top-of-file status note.
+The body assembles the four-summand goal from two `where`-lemmas: `three-summand`
+(`U₀+R₀+D₀ ≡ U₂+R₂+D₂+totGov`, the UTxO/rewards/cert-deposit totals with the
+produced-side gov deposits surfacing as `totGov`) and `gov-acc` (`totGov+G₀ ≡ G'`,
+the gov-deposit accounting).
 
 ```agda
   LEDGER-pov {Γ} {s}
@@ -676,9 +594,10 @@ is `rmOrphanDRepVotes certState₂ govState₂` and `rmOrphanDRepVotes` preserve
     where
 ```
 
-The proof uses a handful of arithmetic shuffles — `abcd-to-acdb`, `abcd-to-adcb`, and
-five `arithmetic-N` helpers — all of which are pure `+`-monoid rearrangements.  They
-could in principle be discharged by `solve-macro` for the `+-0`-monoid; for now they
+The proof uses a handful of arithmetic shuffles — `abcd-to-acdb`, the five
+`arithmetic-N` helpers, and `mid-extract`/`rearr3`/`outer-rearr` (for the gov summand)
+— all pure `+`-monoid rearrangements.  Commutative steps go through `swap-right`, so
+`solve-macro` (a *non-normalising* monoid solver) cannot discharge them directly; they
 are stated explicitly to keep the chain readable.
 
 ```agda
@@ -691,12 +610,6 @@ are stated explicitly to keep the chain readable.
         a + c + (b + d)   ≡⟨ cong ((a + c) +_) (+-comm b d) ⟩
         a + c + (d + b)   ≡⟨ sym (+-assoc (a + c) d b) ⟩
         a + c + d + b     ∎
-
-      abcd-to-adcb : ∀ a b c d → a + b + c + d ≡ a + d + c + b
-      abcd-to-adcb a b c d =
-        trans (swap-right (a + b) c d)
-              (trans (cong (_+ c) (swap-right a b d))
-                     (swap-right (a + d) b c))
 
       U₀ U₁ U₂ : Coin
       U₀ = getCoin (UTxOStateOf s)
@@ -714,7 +627,7 @@ are stated explicitly to keep the chain readable.
       -- Governance-deposit summands of the LedgerState totals.  G₀ is the initial
       -- GovState's deposit; G' is the final state's (`rmOrphanDRepVotes cs₂ govSt₂`),
       -- which `rmOrphanDRepVotes-coinFromGovDeposit` collapses to `coinFromGovDeposit
-      -- govSt₂`.  (Consumed by the deferred G-summand re-derivation; see status note.)
+      -- govSt₂`.  (Used by the `gov-acc` lemma.)
       G₀ G' : Coin
       G₀ = coinFromGovDeposit (GovStateOf s)
       G' = coinFromGovDeposit (rmOrphanDRepVotes cs₂ govSt₂)
