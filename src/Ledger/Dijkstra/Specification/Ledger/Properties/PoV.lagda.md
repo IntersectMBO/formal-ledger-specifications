@@ -177,7 +177,7 @@ open import Ledger.Dijkstra.Specification.Entities.Properties.PoV govStructure
 open import Interface.STS
 open import Data.Nat.Properties
   using (+-comm; +-assoc; +-0-monoid; +-identityʳ; +-cancelʳ-≡)
-open import Data.Integer using (ℤ; 0ℤ; _-_)
+open import Data.Integer using (ℤ; 0ℤ; _-_; _⊖_)
 open import Data.Integer.Properties using () renaming (+-comm to +ℤ-comm)
 open import Data.List.Relation.Unary.Unique.Propositional using (Unique)
 
@@ -330,6 +330,37 @@ the `left-unique` field as an unresolved meta.
   ddwl = getCoin ∘ DirectDepositsOf
 ```
 
+## Deposit-change interface
+
+The cert-deposit change is the integer delta of `coinFromDeposits`{.AgdaFunction} at
+the top and sub levels.  The #1185/#1186 batch-balance machinery exposes these; here
+the `LEDGER-V` chain only needs the `coinFromDeposits`-difference form (against which
+the `UTXOW-batch-balance-coin`{.AgdaFunction} parameter is phrased), so we define it
+directly.
+
+```agda
+  DepositsChange : Type
+  DepositsChange = ℤ × ℤ            -- (top-level Δ , sub-level Δ)
+
+  DepositsChangeTopOf : DepositsChange → ℤ
+  DepositsChangeTopOf = proj₁
+
+  DepositsChangeSubOf : DepositsChange → ℤ
+  DepositsChangeSubOf = proj₂
+
+  calculateDepositsChange : CertState → CertState → CertState → DepositsChange
+  calculateDepositsChange cs₀ cs₁ cs₂ =
+      (coinFromDeposits cs₂ ⊖ coinFromDeposits cs₁)
+    , (coinFromDeposits cs₁ ⊖ coinFromDeposits cs₀)
+
+  -- ℕ-level posPart/negPart cancellation: `b + posPart (a ⊖ b)` and
+  -- `a + negPart (a ⊖ b)` both equal `a ⊔ b`.
+  posPart-negPart-sym : ∀ (a b : ℕ) → b + posPart (a ⊖ b) ≡ a + negPart (a ⊖ b)
+  posPart-negPart-sym a       zero    = sym (+-identityʳ a)
+  posPart-negPart-sym zero    (suc b) = +-identityʳ (suc b)
+  posPart-negPart-sym (suc a) (suc b) = cong suc (posPart-negPart-sym a b)
+```
+
 ## `posNeg-deposits`
 
 The deposit accounting identity used in the `LEDGER-V` chain.  Both sides express the
@@ -459,9 +490,9 @@ deposits.
     -- The two NetworkId witnesses, extracted from the SUBUTXOW step.
     -- (Adjust the constructor arity to match the current SUBUTXO premise
     -- shape; this mirrors `extract-netId` from the old #1190.)
-    wd-netId : ∀[ a ∈ dom (WithdrawalsOf stx)    ] NetworkIdOf a ≡ NetworkId
-    dd-netId : ∀[ a ∈ dom (DirectDepositsOf stx) ] NetworkIdOf a ≡ NetworkId
-    wd-netId , dd-netId = extract-netId subutxowStep
+    netIds : (∀[ a ∈ dom (WithdrawalsOf stx)    ] NetworkIdOf a ≡ NetworkId)
+           × (∀[ a ∈ dom (DirectDepositsOf stx) ] NetworkIdOf a ≡ NetworkId)
+    netIds = extract-netId subutxowStep
       where
       extract-netId : ∀ {Γ' s₀' s₁'}
         → Γ' ⊢ s₀' ⇀⦇ stx ,SUBUTXOW⦈ s₁'
@@ -472,6 +503,9 @@ deposits.
                   , SUBUTXO (_ , _ , _ , _ , _ , _ , _ , _ , _ , _
                             , wd-netId' , dd-netId' , _))) =
           wd-netId' , dd-netId'
+
+    wd-netId = proj₁ netIds
+    dd-netId = proj₂ netIds
 
     ih : getCoin (CertStateOf s₁) + sum (map ddwl sigs)
          ≡ getCoin (CertStateOf sₙ) + sum (map wdrwl sigs)
@@ -609,9 +643,12 @@ Extract the two top-level `NetworkId` witnesses from the `UTXOW` step:
           (UTXO (_ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , wd-netId , dd-netId , _))) =
           wd-netId , dd-netId
 
-      top-wd-netId : ∀[ a ∈ dom (WithdrawalsOf tx) ] NetworkIdOf a ≡ NetworkId
-      top-dd-netId : ∀[ a ∈ dom (DirectDepositsOf tx) ] NetworkIdOf a ≡ NetworkId
-      top-wd-netId , top-dd-netId = extract-utxo-netId utxoStep
+      top-netIds : (∀[ a ∈ dom (WithdrawalsOf tx)    ] NetworkIdOf a ≡ NetworkId)
+                 × (∀[ a ∈ dom (DirectDepositsOf tx) ] NetworkIdOf a ≡ NetworkId)
+      top-netIds = extract-utxo-netId utxoStep
+
+      top-wd-netId = proj₁ top-netIds
+      top-dd-netId = proj₂ top-netIds
 ```
 
 The "combined" `ENTITIES-pov` invocation: pre-batch `certState` + all direct deposits
