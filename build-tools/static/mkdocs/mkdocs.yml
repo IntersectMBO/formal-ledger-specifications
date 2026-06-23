@@ -361,8 +361,6 @@ nav:
         - Certs/:
           - Properties: Ledger.Conway.Conformance.Certs.Properties.md
         - Epoch: Ledger.Conway.Conformance.Epoch.md
-        - Epoch/:
-          - Properties: Ledger.Conway.Conformance.Epoch.Properties.md
         - Equivalence: Ledger.Conway.Conformance.Equivalence.md
         - Equivalence/:
           - Bisimilarity: Ledger.Conway.Conformance.Equivalence.Bisimilarity.md
