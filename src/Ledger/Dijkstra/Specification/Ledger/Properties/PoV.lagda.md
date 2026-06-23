@@ -303,6 +303,21 @@ module LEDGER-PoV
       → Γ ⊢ govSt ⇀⦇ props ,GOVS⦈ govSt′
       → coinFromGovDeposit govSt′
         ≡ coinFromGovDeposit govSt + govProposalsDeposits (PParamsOf Γ) (proposalsOf props) )
+
+  -- Utxo/Utxow-PoV facts (discharged later by #1186; module-parameter stubs).
+  -- Invalid top-level tx: the UTXOW step preserves UTxO coin.
+  ( utxow-pov-invalid : ∀ {Γ' : UTxOEnv} {s₀ s₁ : UTxOState}
+      → Γ' ⊢ s₀ ⇀⦇ tx ,UTXOW⦈ s₁
+      → IsValidFlagOf tx ≡ false
+      → getCoin s₀ ≡ getCoin s₁ )
+  -- Valid top-level tx, mechanical single-tx coin equation (spend inputs resolved
+  -- against the running UTxO; TxId freshness lets `outs tx` split off cleanly).
+  ( UTXOW-V-mechanical : ∀ {Γ' : UTxOEnv} {s₀ s₁ : UTxOState}
+      → Γ' ⊢ s₀ ⇀⦇ tx ,UTXOW⦈ s₁
+      → IsValidFlagOf tx ≡ true
+      → TxIdOf tx ∉ mapˢ proj₁ (dom (UTxOOf s₀))
+      → getCoin s₀ + cbalance (outs tx) + TxFeesOf tx + DonationsOf tx
+        ≡ getCoin s₁ + cbalance (UTxOOf s₀ ∣ SpendInputsOf tx) )
   where
 
   open ENTITIES-PoV ∪ˡ-lookup-preserve sum-map-proj₂≡getCoin setToList-Unique CERTS-pov
