@@ -551,6 +551,66 @@ deposits.
     ih = SUBLEDGERS-certs-pov isV rest
 ```
 
+## `SUBLEDGERS-gov-coin`
+
+Induct over `SUBLEDGERS`, threading the per-`GOVS` gov-deposit growth: each
+`SUBLEDGER-V` step grows `coinFromGovDeposit`{.AgdaFunction} by the
+`govProposalsDeposits`{.AgdaFunction} of the sub-transaction's proposals (via the
+`GOVS-coinFromGovDeposit`{.AgdaFunction} parameter applied to the step's `GOVS`
+premise).  `SUBLEDGER-I` is ruled out by the top-level validity flag.
+
+```agda
+  -- `proposalsOf (GovProposals+Votes t)` recovers exactly the proposals of `t`.
+  proposalsOf-Proposals+Votes : ∀ {ℓ} (t : Tx ℓ)
+    → proposalsOf (GovProposals+Votes t) ≡ ListOfGovProposalsOf t
+  proposalsOf-Proposals+Votes t = go (ListOfGovProposalsOf t) (ListOfGovVotesOf t)
+    where
+    drop-votes : ∀ {A B : Type} (vs : List A)
+      → proposalsOf {A = A} {B = B} (map inj₁ vs) ≡ []
+    drop-votes []       = refl
+    drop-votes (_ ∷ vs) = drop-votes vs
+    go : ∀ {A B : Type} (ps : List B) (vs : List A)
+       → proposalsOf (map inj₂ ps ++ map inj₁ vs) ≡ ps
+    go []       vs = drop-votes vs
+    go (p ∷ ps) vs = cong (p ∷_) (go ps vs)
+
+  SUBLEDGERS-gov-coin : ∀ {Γ : SubLedgerEnv} {s₀ s₁ : LedgerState} {stxs : List SubLevelTx}
+    → SubLedgerEnv.isTopLevelValid Γ ≡ true
+    → Γ ⊢ s₀ ⇀⦇ stxs ,SUBLEDGERS⦈ s₁
+    → coinFromGovDeposit (GovStateOf s₁)
+      ≡ coinFromGovDeposit (GovStateOf s₀)
+        + sum (map (λ stx → govProposalsDeposits (SubLedgerEnv.pparams Γ) (ListOfGovProposalsOf stx)) stxs)
+
+  SUBLEDGERS-gov-coin _ (BS-base Id-nop) = sym (+-identityʳ _)
+
+  SUBLEDGERS-gov-coin isV (BS-ind (SUBLEDGER-I (isI , _)) _) =
+    ⊥-elim (case trans (sym isV) isI of λ ())
+
+  SUBLEDGERS-gov-coin {Γ} isV (BS-ind {s = s₀} {s' = s₁} {sigs} {s'' = sₙ}
+    (SUBLEDGER-V {stx = stx} (_ , _ , _ , govStep)) rest) =
+    begin
+      coinFromGovDeposit (GovStateOf sₙ)
+        ≡⟨ ih ⟩
+      coinFromGovDeposit (GovStateOf s₁) + g-sum
+        ≡⟨ cong (_+ g-sum) step-gov ⟩
+      coinFromGovDeposit (GovStateOf s₀) + g-stx + g-sum
+        ≡⟨ +-assoc (coinFromGovDeposit (GovStateOf s₀)) g-stx g-sum ⟩
+      coinFromGovDeposit (GovStateOf s₀) + (g-stx + g-sum)
+        ∎
+    where
+    pp = SubLedgerEnv.pparams Γ
+    g-stx = govProposalsDeposits pp (ListOfGovProposalsOf stx)
+    g-sum = sum (map (λ stx → govProposalsDeposits pp (ListOfGovProposalsOf stx)) sigs)
+
+    step-gov : coinFromGovDeposit (GovStateOf s₁) ≡ coinFromGovDeposit (GovStateOf s₀) + g-stx
+    step-gov = trans (GOVS-coinFromGovDeposit govStep)
+                     (cong (λ ps → coinFromGovDeposit (GovStateOf s₀) + govProposalsDeposits pp ps)
+                           (proposalsOf-Proposals+Votes stx))
+
+    ih : coinFromGovDeposit (GovStateOf sₙ) ≡ coinFromGovDeposit (GovStateOf s₁) + g-sum
+    ih = SUBLEDGERS-gov-coin isV rest
+```
+
 ## `LEDGER-pov`
 
 ```agda
