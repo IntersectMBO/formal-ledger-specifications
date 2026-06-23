@@ -17,7 +17,6 @@ module Ledger.Conway.Specification.Chain.Properties.EventuallyRefunded
   (abs : AbstractFunctions txs)
   where
 
-open import Ledger.Core.Specification.Epoch
 open import Ledger.Conway.Specification.Certs govStructure
 open import Ledger.Conway.Specification.Chain txs abs
 open import Ledger.Conway.Specification.Epoch txs abs
