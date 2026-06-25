@@ -51,7 +51,7 @@ open import Ledger.Dijkstra.Specification.Certs govStructure
 open import Ledger.Dijkstra.Specification.Enact govStructure
 open import Ledger.Dijkstra.Specification.Gov govStructure
 open import Ledger.Dijkstra.Specification.Ledger txs abs
-open import Ledger.Dijkstra.Specification.PoolReap txs abs
+open import Ledger.Dijkstra.Specification.PoolReap txs
 open import Ledger.Dijkstra.Specification.Ratify govStructure
 open import Ledger.Dijkstra.Specification.Rewards txs abs
 open import Ledger.Dijkstra.Specification.Utxo txs abs
@@ -76,6 +76,9 @@ getOrphans es govSt = proj₁ $ iterate step ([] , govSt) (length govSt)
 
 getStakeCred : TxOut → Maybe Credential
 getStakeCred (a , _ , _ , _) = stakeCred a
+
+toRewardAddress : Credential → RewardAddress
+toRewardAddress x = record { net = NetworkId ; stake = x }
 
 open GovActionState using (returnAddr; deposit)
 

@@ -48,9 +48,9 @@ open import Ledger.Dijkstra.Specification.Ledger txs abs
   using (_⊢_⇀⦇_,LEDGER⦈_ ; _⊢_⇀⦇_,LEDGERS⦈_ ; _⊢_⇀⦇_,SUBLEDGER⦈_ ; _⊢_⇀⦇_,SUBLEDGERS⦈_)
 open import Ledger.Dijkstra.Specification.Ledger.Properties.Computational txs abs
 
-open import Ledger.Dijkstra.Specification.PoolReap txs abs
+open import Ledger.Dijkstra.Specification.PoolReap txs
   using (_⊢_⇀⦇_,POOLREAP⦈_)
-open import Ledger.Dijkstra.Specification.PoolReap.Properties.Computational txs abs
+open import Ledger.Dijkstra.Specification.PoolReap.Properties.Computational txs
 
 open import Ledger.Dijkstra.Specification.Ratify govStructure
   using (_⊢_⇀⦇_,RATIFY⦈_ ; _⊢_⇀⦇_,RATIFIES⦈_)

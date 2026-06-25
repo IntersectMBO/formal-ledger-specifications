@@ -16,11 +16,10 @@ open import Ledger.Dijkstra.Specification.Abstract
 
 module Ledger.Dijkstra.Specification.PoolReap.Properties.Computational
   (txs : _) (open TransactionStructure txs)
-  (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
 
 open import Ledger.Prelude
-open import Ledger.Dijkstra.Specification.PoolReap txs abs
+open import Ledger.Dijkstra.Specification.PoolReap txs
 
 open Computational ⦃...⦄
 
