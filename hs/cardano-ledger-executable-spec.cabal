@@ -468,7 +468,6 @@ library
       MAlonzo.Code.Ledger.Conway.Conformance.Certs
       MAlonzo.Code.Ledger.Conway.Conformance.Certs.Properties
       MAlonzo.Code.Ledger.Conway.Conformance.Epoch
-      MAlonzo.Code.Ledger.Conway.Conformance.Epoch.Properties
       MAlonzo.Code.Ledger.Conway.Conformance.Equivalence
       MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Bisimilarity
       MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Certs
