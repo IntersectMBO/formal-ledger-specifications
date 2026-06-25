@@ -5,20 +5,24 @@ source_path: src/Ledger/Dijkstra/Specification/Entities/Properties/ApplyToReward
 
 # `applyToRewards` Preservation of Value {#sec:apply-to-rewards-pov}
 
-This module proves preservation of value for the two specialisations of
-`applyToRewards`{.AgdaFunction} used inside the `ENTITIES`{.AgdaDatatype} rule:
+This module proves preservation of value for the two specializations of
+`applyToRewards`{.AgdaFunction} used inside the `ENTITIES`{.AgdaDatatype} rule.
 
-+  `applyWithdrawals-pov`{.AgdaFunction}: `applyWithdrawals`{.AgdaFunction}
-   *decreases* the total rewards balance by exactly the sum of withdrawal
-   amounts.  Truncating subtraction (`_∸_`) means the per-step lemma requires
-   `amt ≤ bal`, and the fold induction requires a `Unique`{.AgdaDatatype} witness on
-   the stake-projected withdrawal list so that no already-reduced balance is
-   revisited.
-+  `applyDirectDeposits-pov`{.AgdaFunction}: `applyDirectDeposits`{.AgdaFunction}
-   *increases* the total rewards balance by exactly the sum of direct-deposit
-   amounts.  Because `_+_` is total and commutative, revisiting a credential is
-   harmless, so neither the `NetworkId`{.AgdaFunction} witness nor the
-   `Unique`{.AgdaDatatype} premise is needed.
++  `applyWithdrawals-pov`{.AgdaFunction}.
+
+   `applyWithdrawals`{.AgdaFunction} *decreases* the total rewards balance by exactly
+   the sum of withdrawal amounts.  Truncating subtraction (`_∸_`) means the per-step
+   lemma requires `amt ≤ bal`, and the fold induction requires a
+   `Unique`{.AgdaDatatype} witness on the stake-projected withdrawal list so that no
+   already-reduced balance is revisited.
+
++  `applyDirectDeposits-pov`{.AgdaFunction}.
+
+   `applyDirectDeposits`{.AgdaFunction} *increases* the total rewards balance by
+   exactly the sum of direct-deposit amounts.  Because `_+_` is total and
+   commutative, revisiting a credential is harmless, so neither the
+   `NetworkId`{.AgdaFunction} witness nor the `Unique`{.AgdaDatatype} premise is
+   needed.
 
 Both lemmas share a common backbone: a per-step result about
 `applyOne`{.AgdaFunction} (the lambda body of `applyToRewards`{.AgdaFunction})
@@ -34,30 +38,26 @@ open import Ledger.Dijkstra.Specification.Gov.Base using (GovStructure)
 module Ledger.Dijkstra.Specification.Entities.Properties.ApplyToRewardsPoV
   (gs : GovStructure) (open GovStructure gs) where
 
-open import Ledger.Prelude
-open import Ledger.Dijkstra.Specification.Account gs using (DirectDeposits)
-open import Ledger.Dijkstra.Specification.Certs gs
-open import Ledger.Dijkstra.Specification.Entities gs
-open import Ledger.Dijkstra.Specification.Gov.Actions gs hiding (yes; no)
-
-open import Axiom.Set.Properties th
-
-open import Data.Nat.Properties
-  using (+-0-monoid; +-identityʳ; +-comm; +-assoc; m∸n+n≡m; n≤0⇒n≡0)
+open import Data.Nat.Properties using (+-identityʳ; +-comm; +-assoc; m∸n+n≡m; n≤0⇒n≡0)
 open import Data.Maybe.Properties using (just-injective)
-open import Data.List.Relation.Unary.Unique.Propositional
-  using (Unique) renaming (_∷_ to _::_)
 open import Data.List.Membership.Propositional.Properties using (∈-map⁺)
 open import Data.List.Relation.Unary.Any using (Any)
-import Data.List.Relation.Unary.All as All
+open import Data.List.Relation.Unary.All using (lookup)
+open import Data.List.Relation.Unary.Unique.Propositional using (Unique) renaming (_∷_ to _::_)
 open import Relation.Binary using (IsEquivalence)
+
+open import Ledger.Prelude hiding (lookup)
+
+open import Ledger.Dijkstra.Specification.Account gs using (DirectDeposits)
+open import Ledger.Dijkstra.Specification.Certs gs using (Rewards)
+open import Ledger.Dijkstra.Specification.Entities gs
+  using (applyWithdrawals; applyDirectDeposits)
+
+open import Axiom.Set.Properties th
 
 open RewardAddress
 open Any
 open ≡-Reasoning
-
-instance
-  _ = +-0-monoid
 ```
 -->
 
@@ -70,13 +70,9 @@ getCoin-∪ˡ-overwrite : (acc : Rewards) (c : Credential) (v : Coin)
 
 <!--
 ```agda
--- After a recent refactor of applyToRewards, the fold body writes to its accumulator
--- via ❴ k , v ❵ ∪ˡ acc; that is, a singleton-on-the-left union with no complement
--- restriction on acc.  Left-biasedness of ∪ˡ makes this extensionally equal to the
--- older ❴ k , v ❵ ∪ˡ (acc ∣ ❴ k ❵ ᶜ) form (singleton wins; existing entries at k are
--- shadowed).  The lemma below is the corresponding getCoin-level equation, which
--- both per-step lemmas (applyOne-pov, applyOne-pov-add) land on as a common
--- right-hand side.
+-- The new applyToRewards writes to its accumulator via ❴ k , v ❵ ∪ˡ acc;
+-- left-biasedness of ∪ˡ makes this extensionally equal to the older
+-- ❴ k , v ❵ ∪ˡ (acc ∣ ❴ k ❵ ᶜ) form; the following proves this at the getCoin level.
 getCoin-∪ˡ-overwrite acc c v =
   begin
     getCoin (❴ c , v ❵ ∪ˡ acc)
@@ -91,14 +87,8 @@ getCoin-∪ˡ-overwrite acc c v =
   open Equivalence
   module ≡ᵉ = IsEquivalence (≡ᵉ-isEquivalence {Credential × Coin})
 
-  -- res-decomp (from Ledger.Prelude) gives
-  --   (❴ c , v ❵ᵐ ∪ˡ acc) ˢ ≡ᵉ (❴ c , v ❵ᵐ ∪ˡ (acc ∣ dom (❴ c , v ❵ᵐ ˢ) ᶜ)) ˢ
-  -- but the bridge wants acc ∣ ❴ c ❵ ᶜ on the right (set-singleton via the listing
-  -- axiom), not acc ∣ dom (❴ c , v ❵ᵐ ˢ) ᶜ (set built via replacement/mapˢ).
-  -- These two restriction  sets are extensionally equal by dom-single≡single, so we
-  -- chain res-decomp with an ∪ˡ-congruence on the right operand.
   restrict-cong-∪ˡ :
-    (❴ c , v ❵ᵐ ∪ˡ (acc ∣ dom (❴ c , v ❵ᵐ ˢ) ᶜ)) ˢ ≡ᵉ (❴ c , v ❵ᵐ ∪ˡ (acc ∣ ❴ c ❵ ᶜ)) ˢ
+    (❴ c , v ❵ᵐ ∪ˡ acc ∣ dom ❴ c , v ❵ᵐ ᶜ) ˢ ≡ᵉ (❴ c , v ❵ᵐ ∪ˡ (acc ∣ ❴ c ❵ ᶜ)) ˢ
   restrict-cong-∪ˡ =
     ∪ˡ-cong {m   = ❴ c , v ❵ᵐ} {m'  = acc ∣ dom (❴ c , v ❵ᵐ ˢ) ᶜ}
             {m'' = ❴ c , v ❵ᵐ} {m''' = acc ∣ ❴ c ❵ ᶜ}
@@ -120,18 +110,14 @@ split-by-lookup : (acc : Rewards) (c : Credential) (bal : Coin)
 <!--
 ```agda
 -- When lookupᵐ? acc c ≡ just bal, we can decompose getCoin acc into the contribution
--- of c (which is bal) plus the contribution of every other credential
--- (getCoin (acc ∣ ❴ c ❵ ᶜ)).  This is the shared prefix used by both per-step lemmas,
--- factored out to avoid duplication.
+-- of c (which is bal) plus the contribution of every other credential, getCoin (acc ∣ ❴ c ❵ ᶜ).
 split-by-lookup acc c bal lookup-eq =
   begin
     getCoin acc
-      ≡˘⟨ ≡ᵉ-getCoin decomp acc
-            ( ≡ᵉ.trans (disjoint-∪ˡ-∪ (disjoint-sym res-ex-disjoint))
-                       (≡ᵉ.trans ∪-sym (res-ex-∪ Dec-∈-singleton)) ) ⟩
+      ≡˘⟨ ≡ᵉ-getCoin decomp acc ( ≡ᵉ.trans  (disjoint-∪ˡ-∪ (disjoint-sym res-ex-disjoint))
+                                            (≡ᵉ.trans ∪-sym (res-ex-∪ Dec-∈-singleton)) ) ⟩
     getCoin decomp
-      ≡⟨ indexedSumᵛ'-∪ (acc ∣ ❴ c ❵ ᶜ) (acc ∣ ❴ c ❵)
-                        (disjoint-sym res-ex-disjoint) ⟩
+      ≡⟨ indexedSumᵛ'-∪ (acc ∣ ❴ c ❵ ᶜ) (acc ∣ ❴ c ❵) (disjoint-sym res-ex-disjoint) ⟩
     getCoin (acc ∣ ❴ c ❵ ᶜ) + getCoin (acc ∣ ❴ c ❵)
       ≡⟨ cong (getCoin (acc ∣ ❴ c ❵ ᶜ) +_) acc∣c≡bal ⟩
     getCoin (acc ∣ ❴ c ❵ ᶜ) + bal
@@ -159,20 +145,17 @@ split-by-lookup acc c bal lookup-eq =
 
 ## The `ApplyToRewards-PoV` module
 
-The three assumed identities below are the same set/map identities used
-by the Conway PoV proofs; they are stated as module parameters here to
-keep this commit focused on the fold-induction structure and to be
-discharged in a follow-up against the `agda-sets` library.
+The three assumed identities below are the same set/map identities used by the Conway
+PoV proofs; they are stated as module parameters here, to be discharged in a
+follow-up against the `agda-sets` library.
 
-+  `∪ˡ-lookup-preserve`: lookup in a left-biased union with a singleton
-   at `c` agrees with lookup in the right map for any key `c' ≠ c`.
-+  `sum-map-proj₂≡getCoin`: the `getCoin`{.AgdaFunction} representation
-   of a `(RewardAddress ⇀ Coin)` map equals the list-sum of its second
-   projections.
-+  `setToList-Unique`: stake-projection of a withdrawal/direct-deposit
-   list is `Unique`{.AgdaDatatype}, assuming the per-batch
-   `NetworkId`{.AgdaFunction} constraint.  Used only by
-   `applyWithdrawals-pov`.
++  `∪ˡ-lookup-preserve`: lookup in a left-biased union with a singleton at `c` agrees
+   with lookup in the right map for any key `c' ≠ c`.
++  `sum-map-proj₂≡getCoin`: the `getCoin`{.AgdaFunction} representation of a
+   `(RewardAddress ⇀ Coin)` map equals the list-sum of its second projections.
++  `setToList-Unique`: stake-projection of a withdrawal/direct-deposit list is
+   `Unique`{.AgdaDatatype}, assuming the per-batch `NetworkId`{.AgdaFunction}
+   constraint.  (Used only by `applyWithdrawals-pov`.)
 
 ```agda
 module ApplyToRewards-PoV
@@ -191,7 +174,8 @@ module ApplyToRewards-PoV
   where
 ```
 
-A local convenience definitionally equal to the lambda body of `applyToRewards f`:
+The `applyOne`{.AgdaFunction} is a local convenience definitionally equal to the
+lambda body of `applyToRewards f`.
 
 ```agda
   applyOne : (Coin → Coin → Coin) → Rewards → RewardAddress × Coin → Rewards
@@ -201,10 +185,10 @@ A local convenience definitionally equal to the lambda body of `applyToRewards f
 
 ## Withdrawal preservation of value
 
-### `applyOne-pov` (one withdrawal step decreases `getCoin` by `amt`)
+### `applyOne-pov`: one withdrawal step decreases `getCoin` by `amt`
 
-When `lookupᵐ? acc (stake addr) ≡ just bal` and `amt ≤ bal`, applying a
-single withdrawal reduces the total by exactly `amt`.
+When `lookupᵐ? acc (stake addr) ≡ just bal` and `amt ≤ bal`, applying a single
+withdrawal reduces the total by exactly `amt`.
 
 ```agda
   applyOne-pov : (acc : Rewards) (addr : RewardAddress) (amt bal : Coin)
@@ -220,10 +204,10 @@ single withdrawal reduces the total by exactly `amt`.
       getCoin acc
         ≡⟨ split-by-lookup acc c bal lookup-eq ⟩
       getCoin (acc ∣ ❴ c ❵ ᶜ) + bal
-        ≡⟨ cong (getCoin (acc ∣ ❴ c ❵ ᶜ) +_) (sym (m∸n+n≡m amt≤bal)) ⟩
+        ≡˘⟨ cong (getCoin (acc ∣ ❴ c ❵ ᶜ) +_) (m∸n+n≡m amt≤bal) ⟩
       getCoin (acc ∣ ❴ c ❵ ᶜ) + (bal ∸ amt + amt)
-        ≡⟨ trans (sym (+-assoc (getCoin (acc ∣ ❴ c ❵ ᶜ)) (bal ∸ amt) amt))
-                 (cong (_+ amt) (+-comm (getCoin (acc ∣ ❴ c ❵ ᶜ)) (bal ∸ amt))) ⟩
+        ≡⟨ trans  (sym (+-assoc (getCoin (acc ∣ ❴ c ❵ ᶜ)) (bal ∸ amt) amt))
+                  (cong (_+ amt) (+-comm (getCoin (acc ∣ ❴ c ❵ ᶜ)) (bal ∸ amt))) ⟩
       (bal ∸ amt) + getCoin (acc ∣ ❴ c ❵ ᶜ) + amt
         ≡˘⟨ cong (_+ amt) (getCoin-∪ˡ-overwrite acc c (bal ∸ amt)) ⟩
       getCoin (❴ c , bal ∸ amt ❵ ∪ˡ acc) + amt
@@ -233,14 +217,20 @@ single withdrawal reduces the total by exactly `amt`.
 
 ### `foldl-applyOne-pov` (fold induction)
 
-The fold invariant tracks three things through the induction: every remaining
-withdrawal credential is in the current accumulator's domain; every remaining
-withdrawal amount is bounded by the current balance at that credential; and no
-credential is revisited (the `Unique`{.AgdaDatatype} witness on the stake-projected
-list).  Uniqueness is essential here precisely because `applyOne _∸_` *modifies*
-the balance at the targeted credential — without it, a re-visit could attempt to
-subtract from an already-reduced balance for which the caller's original `amt ≤ bal`
-bound no longer holds.
+The fold invariant tracks three things through the induction:
+
+1.  every remaining withdrawal credential is in the current accumulator's domain;
+
+2.  every remaining withdrawal amount is bounded by the current balance at that
+    credential;
+
+3.  no credential is revisited (the `Unique`{.AgdaDatatype} witness on the
+    stake-projected list).
+
+Uniqueness is essential here precisely because `applyOne _∸_` *modifies* the balance
+at the targeted credential — without it, a re-visit could attempt to subtract from an
+already-reduced balance for which the caller's original `amt ≤ bal` bound no longer
+holds.
 
 ```agda
   foldl-applyOne-pov : (acc : Rewards) (entries : List (RewardAddress × Coin))
@@ -248,8 +238,7 @@ bound no longer holds.
         → stake addr ∈ dom acc
         × amt ≤ maybe id 0 (lookupᵐ? acc (stake addr)) )
     → Unique (map (stake ∘ proj₁) entries)
-    → getCoin acc
-      ≡ getCoin (foldl (applyOne _∸_) acc entries) + sum (map proj₂ entries)
+    → getCoin acc ≡ getCoin (foldl (applyOne _∸_) acc entries) + sum (map proj₂ entries)
 ```
 
 <!--
@@ -299,7 +288,7 @@ bound no longer holds.
         ξ : stake addr' ∈ dom (acc ˢ) × amt' ≤ (maybe id 0 (lookupᵐ? acc (stake addr')))
         ξ = h (there mem)
         c'≢c : stake addr' ≢ c
-        c'≢c = ≢-sym (All.lookup c∉xs (∈-map⁺ (stake ∘ proj₁) mem))
+        c'≢c = ≢-sym (lookup c∉xs (∈-map⁺ (stake ∘ proj₁) mem))
         dom' : stake addr' ∈ dom acc'
         dom' = dom∪ˡʳ {m = ❴ c , bal ∸ amt ❵} {m' = acc} (proj₁ ξ)
         bal' : lookupᵐ? acc' (stake addr') ≡ lookupᵐ? acc (stake addr')

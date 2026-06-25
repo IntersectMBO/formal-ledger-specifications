@@ -5,10 +5,15 @@ source_path: src/Ledger/Dijkstra/Specification/Ledger/Properties/PoV.lagda.md
 
 # Properties of `LEDGER`: Preservation of Value {#thm:LEDGER-PoV}
 
-This module proves the top-level preservation-of-value theorem for the Dijkstra
-`LEDGER`{.AgdaDatatype} rule.  For any environment `Γ`{.AgdaBound}, top-level
-transaction `tx`{.AgdaBound}, and `LedgerState`{.AgdaRecord} pair `s`{.AgdaBound},
-`s'`{.AgdaBound} related by `LEDGER`{.AgdaDatatype}: `getCoin s ≡ getCoin s'`.
+This module proves the top-level preservation-of-value (PoV) theorem for the Dijkstra
+`LEDGER`{.AgdaDatatype} rule.  If
+
++  `Γ`{.AgdaBound} is a ledger environment,
++  `tx`{.AgdaBound} is top-level transaction, and
++  `s`{.AgdaBound} and `s'`{.AgdaBound} are ledger states related by
+   `LEDGER`{.AgdaDatatype},
+
+then `getCoin s ≡ getCoin s'`.
 
 Recall (from `Ledger.lagda.md`) that `getCoin (LedgerState)` is
 
@@ -17,8 +22,8 @@ Recall (from `Ledger.lagda.md`) that `getCoin (LedgerState)` is
     + coinFromDeposits (CertStateOf s)
     + coinFromGovDeposit (GovStateOf s)
 
-that is, UTxO coin, rewards balance, the `DState`/`PState`/`GState` deposit pots
-(`coinFromDeposits`{.AgdaFunction}), and the governance-action deposits
+This is the sum of UTxO coin, rewards balance, the deposits from `DState`, `PState`,
+and `GState` (`coinFromDeposits`{.AgdaFunction}), and the governance-action deposits
 (`coinFromGovDeposit`{.AgdaFunction}).
 
 > **Status — complete.** `LEDGER-pov` typechecks end-to-end under `--safe` (no

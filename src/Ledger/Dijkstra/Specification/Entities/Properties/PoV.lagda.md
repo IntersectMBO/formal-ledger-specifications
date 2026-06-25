@@ -46,16 +46,16 @@ open import Ledger.Dijkstra.Specification.Gov.Base using (GovStructure)
 module Ledger.Dijkstra.Specification.Entities.Properties.PoV
   (gs : GovStructure) (open GovStructure gs) where
 
-open import Ledger.Prelude
-open import Ledger.Dijkstra.Specification.Account gs -- using (DirectDeposits)
-open import Ledger.Dijkstra.Specification.Certs gs
-open import Ledger.Dijkstra.Specification.Entities gs
-open import Ledger.Dijkstra.Specification.Gov.Actions gs hiding (yes; no)
-
-open import Ledger.Dijkstra.Specification.Entities.Properties.ApplyToRewardsPoV gs
-
 open import Data.List.Relation.Unary.Unique.Propositional using (Unique)
 open import Data.Nat.Properties using (+-comm; +-assoc; +-0-monoid)
+
+open import Ledger.Prelude
+
+open import Ledger.Dijkstra.Specification.Account gs using (DirectDeposits; DirectDepositsOf)
+open import Ledger.Dijkstra.Specification.Certs gs
+open import Ledger.Dijkstra.Specification.Entities gs
+open import Ledger.Dijkstra.Specification.Entities.Properties.ApplyToRewardsPoV gs
+  using (module ApplyToRewards-PoV)
 
 open RewardAddress
 open ≡-Reasoning
@@ -91,7 +91,7 @@ module ENTITIES-PoV
       → ∀[ a ∈ dom (m ˢ) ] NetworkIdOf a ≡ NetworkId
       → Unique (map (stake ∘ proj₁) (setToList (m ˢ))) )
 
-  -- Certs-PoV stub (discharged later by #1210): preservation of value across
+  -- Certs-PoV stub (discharged later by PR #1210): preservation of value across
   -- the reflexive-transitive `CERTS` closure.  Formerly proved in
   -- `Certs.Properties.PoV`; lifted to a module parameter so this PR proves only
   -- the `ENTITIES`/`LEDGER` layer (top-down strategy).
