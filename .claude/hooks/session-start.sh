@@ -64,14 +64,18 @@ NIX_CONF="$HOME/.config/nix/nix.conf"
 # `experimental-features = nix-command` must not cause us to skip enabling flakes.
 grep -qE 'experimental-features.*flakes' "$NIX_CONF" 2>/dev/null || \
   echo 'extra-experimental-features = nix-command flakes' >> "$NIX_CONF"
+# Use extra-* so we add the caches/keys without clobbering any substituters or
+# trusted-public-keys the environment already configured (plain `substituters =`
+# is last-one-wins). The `cache.iog.io` guard keeps this idempotent.
 grep -q 'cache.iog.io' "$NIX_CONF" 2>/dev/null || cat >> "$NIX_CONF" <<'CONF'
-substituters = https://cache.iog.io https://cache.nixos.org/
-trusted-public-keys = hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ= cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
+extra-substituters = https://cache.iog.io https://cache.nixos.org
+extra-trusted-public-keys = hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ= cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
 CONF
 
 # 3. Persist nix on PATH for the rest of the session.
 if [ -n "${CLAUDE_ENV_FILE:-}" ] && [ -e "$HOME/.nix-profile/etc/profile.d/nix.sh" ]; then
-  echo ". \"$HOME/.nix-profile/etc/profile.d/nix.sh\"" >> "$CLAUDE_ENV_FILE"
+  grep -qF 'nix-profile/etc/profile.d/nix.sh' "$CLAUDE_ENV_FILE" 2>/dev/null || \
+    echo ". \"$HOME/.nix-profile/etc/profile.d/nix.sh\"" >> "$CLAUDE_ENV_FILE"
 fi
 
 # 4. Pre-warm the dev shell so `nix develop --command agda <file>` is fast.
