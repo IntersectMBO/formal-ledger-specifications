@@ -12,13 +12,9 @@
         <meta name="author" content="Formal Methods Ledger Team">
       
       
-        <link rel="canonical" href="https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Dijkstra.Specification.html">
+        <link rel="canonical" href="https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Dijkstra.Specification.Entities.Properties.PoV.html">
       
       
-        <link rel="prev" href="Ledger.Conway.Specification.Types.GovStructure.html">
-      
-      
-        <link rel="next" href="Ledger.Dijkstra.Specification.Abstract.html">
       
       
         
@@ -29,7 +25,7 @@
     
     
       
-        <title>Introduction - Formal Ledger Specification</title>
+        <title>Properties of ENTITIES: Preservation of Value - Formal Ledger Specification</title>
       
     
     
@@ -86,7 +82,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#abstract-functions" class="md-skip">
+        <a href="#thm:ENTITIES-PoV" class="md-skip">
           Skip to content
         </a>
       
@@ -119,7 +115,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Introduction
+              Properties of ENTITIES: Preservation of Value
             
           </span>
         </div>
@@ -307,12 +303,10 @@
   
   
   
-    
-  
   
     
     
-      <li class="md-tabs__item md-tabs__item--active">
+      <li class="md-tabs__item">
         <a href="Ledger.Dijkstra.Specification.html" class="md-tabs__link">
           
   
@@ -4791,31 +4785,26 @@
       
   
   
-    
   
   
-  
     
     
     
     
-      
-        
-        
       
       
         
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
         
           
-          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
             
   
   
@@ -4833,7 +4822,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_5">
             <span class="md-nav__icon md-icon"></span>
             
@@ -4848,35 +4837,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Introduction
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="Ledger.Dijkstra.Specification.html" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="Ledger.Dijkstra.Specification.html" class="md-nav__link">
         
   
   
@@ -4892,255 +4856,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#abstract-functions" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Abstract Functions
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#accounts" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Accounts
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#addresses" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Addresses
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#block-body" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Block Body
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#certificates" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Certificates
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#chain" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Chain
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#enactment" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Enactment
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#entities" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Entities
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#epoch" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Epoch
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#fees" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Fees
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#governance" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Governance
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#ledger" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Ledger
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#pool-reaping-transition" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Pool Reaping Transition
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#protocol-parameters" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Protocol Parameters
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#ratification" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Ratification
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#rewards" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Rewards
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#scripts" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Scripts
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#token-algebras" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Token Algebras
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#transactions" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Transactions
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#utxo" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Utxo
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#utxow" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Utxow
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -5159,20 +4874,17 @@
       
       
         
-          
-          
-        
       
     
     
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_2" >
         
           
-          <label class="md-nav__link" for="__nav_5_2" id="__nav_5_2_label" tabindex="">
+          <label class="md-nav__link" for="__nav_5_2" id="__nav_5_2_label" tabindex="0">
             
   
   
@@ -11584,6 +11296,8 @@
   
   
   
+    
+  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -11592,10 +11306,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#abstract-functions" class="md-nav__link">
+  <a href="#proof-strategy" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Abstract Functions
+        Proof Strategy
       
     </span>
   </a>
@@ -11603,10 +11317,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#accounts" class="md-nav__link">
+  <a href="#the-entities-pov-module" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Accounts
+        The ENTITIES-pov module
       
     </span>
   </a>
@@ -11614,208 +11328,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#addresses" class="md-nav__link">
+  <a href="#the-entities-pov-theorem" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Addresses
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#block-body" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Block Body
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#certificates" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Certificates
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#chain" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Chain
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#enactment" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Enactment
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#entities" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Entities
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#epoch" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Epoch
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#fees" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Fees
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#governance" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Governance
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#ledger" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Ledger
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#pool-reaping-transition" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Pool Reaping Transition
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#protocol-parameters" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Protocol Parameters
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#ratification" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Ratification
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#rewards" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Rewards
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#scripts" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Scripts
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#token-algebras" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Token Algebras
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#transactions" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Transactions
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#utxo" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Utxo
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#utxow" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Utxow
+        The ENTITIES-pov theorem
       
     </span>
   </a>
@@ -11840,7 +11356,7 @@
 
 
 
-  <a href="https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/src/Ledger/Dijkstra/Specification.lagda.md?plain=1"
+  <a href="https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/src/Ledger/Dijkstra/Specification/Entities/Properties/PoV.lagda.md?plain=1"
      class="md-content__button md-icon"
      title="View the source of this page"
      aria-label="View the source of this page">
@@ -11850,102 +11366,152 @@
   </a>
 
 
-  <h1>Introduction</h1>
+<h1 id="thm:ENTITIES-PoV">Properties of <code>ENTITIES</code>: Preservation of Value<a class="headerlink" href="#thm:ENTITIES-PoV" title="Permanent link">&para;</a></h1>
+<p>This module proves preservation of value for the <code class="AgdaDatatype">ENTITIES</code> rule
+introduced in <a href="https://github.com/IntersectMBO/formal-ledger-specifications/pull/1201">CIP-159-11d</a>.  In the Dijkstra era, <code class="AgdaDatatype">ENTITIES</code>
+wraps the inner <code class="AgdaDatatype">CERTS</code> step with per-transaction withdrawal- and
+direct-deposit-handling: withdrawals are applied to the rewards balance <em>before</em>
+<code class="AgdaDatatype">CERTS</code>, direct deposits <em>after</em>.  The value-flow equation captures
+the net effect of all three components on <code>getCoin (CertState)</code>:</p>
+<pre><code>getCoin s + getCoin (DirectDepositsOf Γ) ≡ getCoin s' + getCoin (WithdrawalsOf Γ)
+</code></pre>
+<p>Intuitively, the deposits added on the right are matched by the withdrawals removed
+on the left — they "pass through" the rule.</p>
+<h2 id="proof-strategy">Proof Strategy<a class="headerlink" href="#proof-strategy" title="Permanent link">&para;</a></h2>
+<p>Case-split on the single <code class="AgdaInductiveConstructor">ENTITIES</code> constructor to expose
+the three internal phases.  Letting <code class="AgdaBound">r₀</code> denote the initial rewards map
+and <code class="AgdaBound">r₁</code> the rewards map after <code class="AgdaDatatype">CERTS</code>, the equational
+chain is</p>
+<ul>
+<li><code class="AgdaFunction">applyWithdrawals-pov</code> on <code>(wdrls, r₀)</code> rewrites <code>getCoin r₀</code> as
+   <code>getCoin (applyWithdrawals wdrls r₀) + getCoin wdrls</code>.</li>
+<li><code class="AgdaFunction">CERTS-pov</code> on the inner step rewrites
+   <code>getCoin (applyWithdrawals wdrls r₀)</code> as <code>getCoin r₁</code> (the rewards balance is
+   preserved by the closure of <code class="AgdaDatatype">CERT</code>).</li>
+<li><code class="AgdaFunction">applyDirectDeposits-pov</code> on <code>(dd, r₁)</code> rewrites
+   <code>getCoin (applyDirectDeposits dd r₁)</code> as <code>getCoin r₁ + getCoin dd</code>.</li>
+</ul>
+<p>The three rewrites compose into the desired equation modulo associativity and
+commutativity of <code>+</code> on <code>Coin</code>.</p>
+<pre class="Agda hidden-source"><a id="1836" class="Symbol">{-#</a> <a id="1840" class="Keyword">OPTIONS</a> <a id="1848" class="Pragma">--safe</a> <a id="1855" class="Symbol">#-}</a>
 
-<p>This is the formal specification of the Cardano ledger for the Dijkstra era.
-The Agda source code which formalizes the ledger specification in the Dijkstra era
-consists of the modules listed below.</p>
-<pre class="Agda hidden-source"><a id="300" class="Symbol">{-#</a> <a id="304" class="Keyword">OPTIONS</a> <a id="312" class="Pragma">--safe</a> <a id="319" class="Symbol">#-}</a>
-<a id="323" class="Keyword">module</a> <a id="330" href="Ledger.Dijkstra.Specification.html" class="Module">Ledger.Dijkstra.Specification</a> <a id="360" class="Keyword">where</a>
+<a id="1860" class="Keyword">open</a> <a id="1865" class="Keyword">import</a> <a id="1872" href="Ledger.Dijkstra.Specification.Gov.Base.html" class="Module">Ledger.Dijkstra.Specification.Gov.Base</a> <a id="1911" class="Keyword">using</a> <a id="1917" class="Symbol">(</a><a id="1918" href="Ledger.Dijkstra.Specification.Gov.Base.html#439" class="Record">GovStructure</a><a id="1930" class="Symbol">)</a>
+
+<a id="1933" class="Keyword">module</a> <a id="1940" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html" class="Module">Ledger.Dijkstra.Specification.Entities.Properties.PoV</a>
+  <a id="1996" class="Symbol">(</a><a id="1997" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#1997" class="Bound">gs</a> <a id="2000" class="Symbol">:</a> <a id="2002" href="Ledger.Dijkstra.Specification.Gov.Base.html#439" class="Record">GovStructure</a><a id="2014" class="Symbol">)</a> <a id="2016" class="Symbol">(</a><a id="2017" class="Keyword">open</a> <a id="2022" href="Ledger.Dijkstra.Specification.Gov.Base.html#439" class="Module">GovStructure</a> <a id="2035" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#1997" class="Bound">gs</a><a id="2037" class="Symbol">)</a> <a id="2039" class="Keyword">where</a>
+
+<a id="2046" class="Keyword">open</a> <a id="2051" class="Keyword">import</a> <a id="2058" href="Data.List.Relation.Unary.Unique.Propositional.html" class="Module">Data.List.Relation.Unary.Unique.Propositional</a> <a id="2104" class="Keyword">using</a> <a id="2110" class="Symbol">(</a><a id="2111" href="Data.List.Relation.Unary.Unique.Setoid.html#617" class="Datatype">Unique</a><a id="2117" class="Symbol">)</a>
+<a id="2119" class="Keyword">open</a> <a id="2124" class="Keyword">import</a> <a id="2131" href="Data.Nat.Properties.html" class="Module">Data.Nat.Properties</a> <a id="2151" class="Keyword">using</a> <a id="2157" class="Symbol">(</a><a id="2158" href="Data.Nat.Properties.html#15956" class="Function">+-comm</a><a id="2164" class="Symbol">;</a> <a id="2166" href="Data.Nat.Properties.html#15623" class="Function">+-assoc</a><a id="2173" class="Symbol">;</a> <a id="2175" href="Data.Nat.Properties.html#17566" class="Function">+-0-monoid</a><a id="2185" class="Symbol">)</a>
+
+<a id="2188" class="Keyword">open</a> <a id="2193" class="Keyword">import</a> <a id="2200" href="Ledger.Prelude.html" class="Module">Ledger.Prelude</a>
+
+<a id="2216" class="Keyword">open</a> <a id="2221" class="Keyword">import</a> <a id="2228" href="Ledger.Dijkstra.Specification.Account.html" class="Module">Ledger.Dijkstra.Specification.Account</a> <a id="2266" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#1997" class="Bound">gs</a> <a id="2269" class="Keyword">using</a> <a id="2275" class="Symbol">(</a><a id="2276" href="Ledger.Dijkstra.Specification.Account.html#782" class="Function">DirectDeposits</a><a id="2290" class="Symbol">;</a> <a id="2292" href="Ledger.Dijkstra.Specification.Account.html#925" class="Field">DirectDepositsOf</a><a id="2308" class="Symbol">)</a>
+<a id="2310" class="Keyword">open</a> <a id="2315" class="Keyword">import</a> <a id="2322" href="Ledger.Dijkstra.Specification.Certs.html" class="Module">Ledger.Dijkstra.Specification.Certs</a> <a id="2358" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#1997" class="Bound">gs</a>
+<a id="2361" class="Keyword">open</a> <a id="2366" class="Keyword">import</a> <a id="2373" href="Ledger.Dijkstra.Specification.Entities.html" class="Module">Ledger.Dijkstra.Specification.Entities</a> <a id="2412" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#1997" class="Bound">gs</a>
+<a id="2415" class="Keyword">open</a> <a id="2420" class="Keyword">import</a> <a id="2427" href="Ledger.Dijkstra.Specification.Entities.Properties.ApplyToRewardsPoV.html" class="Module">Ledger.Dijkstra.Specification.Entities.Properties.ApplyToRewardsPoV</a> <a id="2495" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#1997" class="Bound">gs</a>
+  <a id="2500" class="Keyword">using</a> <a id="2506" class="Symbol">(</a><a id="2507" class="Keyword">module</a> <a id="2514" href="Ledger.Dijkstra.Specification.Entities.Properties.ApplyToRewardsPoV.html#6184" class="Module">ApplyToRewards-PoV</a><a id="2532" class="Symbol">)</a>
+
+<a id="2535" class="Keyword">open</a> <a id="2540" href="Ledger.Core.Specification.Address.html#2545" class="Module">RewardAddress</a>
+<a id="2554" class="Keyword">open</a> <a id="2559" href="Relation.Binary.PropositionalEquality.Properties.html#6850" class="Module">≡-Reasoning</a>
+
+<a id="2572" class="Keyword">private</a> <a id="2580" class="Keyword">variable</a>
+  <a id="2591" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#2591" class="Generalizable">A</a>      <a id="2598" class="Symbol">:</a> <a id="2600" href="Agda.Primitive.html#388" class="Primitive">Type</a>
+  <a id="2607" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#2607" class="Generalizable">dCerts</a> <a id="2614" class="Symbol">:</a> <a id="2616" href="Agda.Builtin.List.html#147" class="Datatype">List</a> <a id="2621" href="Ledger.Dijkstra.Specification.Certs.html#1480" class="Datatype">DCert</a>
+
+<a id="2628" class="Keyword">instance</a>
+  <a id="2639" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#2639" class="Function">_</a> <a id="2641" class="Symbol">=</a> <a id="2643" href="Data.Nat.Properties.html#17566" class="Function">+-0-monoid</a>
 </pre>
 
-<h2 id="abstract-functions">Abstract Functions<a class="headerlink" href="#abstract-functions" title="Permanent link">&para;</a></h2>
-<pre class="Agda"><a id="406" class="Keyword">import</a> <a id="413" href="Ledger.Dijkstra.Specification.Abstract.html" class="Module">Ledger.Dijkstra.Specification.Abstract</a>
+<h2 id="the-entities-pov-module">The <code>ENTITIES-pov</code> module<a class="headerlink" href="#the-entities-pov-module" title="Permanent link">&para;</a></h2>
+<p><code class="AgdaFunction">ENTITIES-pov</code> inherits the three set/map module parameters of
+<code class="AgdaModule">ApplyToRewards-PoV</code> — they are needed by
+<code class="AgdaFunction">applyWithdrawals-pov</code> and <code class="AgdaFunction">applyDirectDeposits-pov</code> —
+and threads them through unchanged.</p>
+<pre class="Agda"><a id="2956" class="Keyword">module</a> <a id="ENTITIES-PoV"></a><a id="2963" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#2963" class="Module">ENTITIES-PoV</a>
+  <a id="2978" class="Symbol">(</a> <a id="2980" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#2980" class="Bound">∪ˡ-lookup-preserve</a> <a id="2999" class="Symbol">:</a>
+      <a id="3007" class="Symbol">(</a><a id="3008" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#3008" class="Bound">m</a> <a id="3010" class="Symbol">:</a> <a id="3012" href="Ledger.Dijkstra.Specification.Certs.html#1336" class="Function">Rewards</a><a id="3019" class="Symbol">)</a> <a id="3021" class="Symbol">(</a><a id="3022" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#3022" class="Bound">c</a> <a id="3024" class="Symbol">:</a> <a id="3026" href="Ledger.Core.Specification.Address.html#1214" class="Datatype">Credential</a><a id="3036" class="Symbol">)</a> <a id="3038" class="Symbol">(</a><a id="3039" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#3039" class="Bound">v</a> <a id="3041" class="Symbol">:</a> <a id="3043" href="Ledger.Prelude.Base.html#234" class="Function">Coin</a><a id="3047" class="Symbol">)</a> <a id="3049" class="Symbol">(</a><a id="3050" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#3050" class="Bound">c&#39;</a> <a id="3053" class="Symbol">:</a> <a id="3055" href="Ledger.Core.Specification.Address.html#1214" class="Datatype">Credential</a><a id="3065" class="Symbol">)</a>
+      <a id="3073" class="Symbol">→</a> <a id="3075" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#3050" class="Bound">c&#39;</a> <a id="3078" href="Relation.Binary.PropositionalEquality.Core.html#1000" class="Function Operator">≢</a> <a id="3080" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#3022" class="Bound">c</a> <a id="3082" class="Symbol">→</a> <a id="3084" href="Axiom.Set.Map.html#17169" class="Function">lookupᵐ?</a> <a id="3093" class="Symbol">(</a><a id="3094" href="Class.HasSingleton.html#288" class="Field Operator">❴</a> <a id="3096" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#3022" class="Bound">c</a> <a id="3098" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="3100" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#3039" class="Bound">v</a> <a id="3102" href="Class.HasSingleton.html#288" class="Field Operator">❵</a> <a id="3104" href="Axiom.Set.Map.html#7640" class="Function Operator">∪ˡ</a> <a id="3107" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#3008" class="Bound">m</a><a id="3108" class="Symbol">)</a> <a id="3110" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#3050" class="Bound">c&#39;</a> <a id="3113" href="Agda.Builtin.Equality.html#150" class="Datatype Operator">≡</a> <a id="3115" href="Axiom.Set.Map.html#17169" class="Function">lookupᵐ?</a> <a id="3124" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#3008" class="Bound">m</a> <a id="3126" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#3050" class="Bound">c&#39;</a> <a id="3129" class="Symbol">)</a>
+
+  <a id="3134" class="Symbol">(</a> <a id="3136" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#3136" class="Bound">sum-map-proj₂≡getCoin</a> <a id="3158" class="Symbol">:</a>
+      <a id="3166" class="Symbol">(</a><a id="3167" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#3167" class="Bound">m</a> <a id="3169" class="Symbol">:</a> <a id="3171" href="Ledger.Core.Specification.Address.html#2545" class="Record">RewardAddress</a> <a id="3185" href="abstract-set-theory.FiniteSetTheory.html#633" class="Function Operator">⇀</a> <a id="3187" href="Ledger.Prelude.Base.html#234" class="Function">Coin</a><a id="3191" class="Symbol">)</a>
+      <a id="3199" class="Symbol">→</a> <a id="3201" href="Data.Nat.ListAction.html#612" class="Function">sum</a> <a id="3205" class="Symbol">(</a><a id="3206" href="Class.Functor.Core.html#272" class="Function">map</a> <a id="3210" href="Data.Product.Base.html#650" class="Field">proj₂</a> <a id="3216" class="Symbol">(</a><a id="3217" href="abstract-set-theory.FiniteSetTheory.html#2617" class="Function">setToList</a> <a id="3227" class="Symbol">(</a><a id="3228" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#3167" class="Bound">m</a> <a id="3230" href="Axiom.Set.Map.html#2293" class="Function Operator">ˢ</a><a id="3231" class="Symbol">)))</a> <a id="3235" href="Agda.Builtin.Equality.html#150" class="Datatype Operator">≡</a> <a id="3237" href="Ledger.Prelude.HasCoin.html#258" class="Field">getCoin</a> <a id="3245" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#3167" class="Bound">m</a> <a id="3247" class="Symbol">)</a>
+
+  <a id="3252" class="Symbol">(</a> <a id="3254" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#3254" class="Bound">setToList-Unique</a> <a id="3271" class="Symbol">:</a>
+      <a id="3279" class="Symbol">(</a><a id="3280" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#3280" class="Bound">m</a> <a id="3282" class="Symbol">:</a> <a id="3284" href="Ledger.Core.Specification.Address.html#2545" class="Record">RewardAddress</a> <a id="3298" href="abstract-set-theory.FiniteSetTheory.html#633" class="Function Operator">⇀</a> <a id="3300" href="Ledger.Prelude.Base.html#234" class="Function">Coin</a><a id="3304" class="Symbol">)</a>
+      <a id="3312" class="Symbol">→</a> <a id="3314" href="Class.IsSet.html#576" class="Function">∀[</a> <a id="3317" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#3317" class="Bound">a</a> <a id="3319" href="Class.IsSet.html#576" class="Function">∈</a> <a id="3321" href="Class.IsSet.html#916" class="Function">dom</a> <a id="3325" class="Symbol">(</a><a id="3326" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#3280" class="Bound">m</a> <a id="3328" href="Axiom.Set.Map.html#2293" class="Function Operator">ˢ</a><a id="3329" class="Symbol">)</a> <a id="3331" href="Class.IsSet.html#576" class="Function">]</a> <a id="3333" href="Ledger.Core.Specification.Address.html#2964" class="Field">NetworkIdOf</a> <a id="3345" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#3317" class="Bound">a</a> <a id="3347" href="Agda.Builtin.Equality.html#150" class="Datatype Operator">≡</a> <a id="3349" href="Ledger.Core.Specification.Epoch.html#2799" class="Function">NetworkId</a>
+      <a id="3365" class="Symbol">→</a> <a id="3367" href="Data.List.Relation.Unary.Unique.Setoid.html#617" class="Datatype">Unique</a> <a id="3374" class="Symbol">(</a><a id="3375" href="Class.Functor.Core.html#272" class="Function">map</a> <a id="3379" class="Symbol">(</a><a id="3380" href="Ledger.Core.Specification.Address.html#2605" class="Field">stake</a> <a id="3386" href="Function.Base.html#1134" class="Function Operator">∘</a> <a id="3388" href="Data.Product.Base.html#636" class="Field">proj₁</a><a id="3393" class="Symbol">)</a> <a id="3395" class="Symbol">(</a><a id="3396" href="abstract-set-theory.FiniteSetTheory.html#2617" class="Function">setToList</a> <a id="3406" class="Symbol">(</a><a id="3407" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#3280" class="Bound">m</a> <a id="3409" href="Axiom.Set.Map.html#2293" class="Function Operator">ˢ</a><a id="3410" class="Symbol">)))</a> <a id="3414" class="Symbol">)</a>
+
+  <a id="3419" class="Comment">-- Certs-PoV stub (discharged later by PR #1210): preservation of value across</a>
+  <a id="3500" class="Comment">-- the reflexive-transitive `CERTS` closure.  Formerly proved in</a>
+  <a id="3567" class="Comment">-- `Certs.Properties.PoV`; lifted to a module parameter so this PR proves only</a>
+  <a id="3648" class="Comment">-- the `ENTITIES`/`LEDGER` layer (top-down strategy).</a>
+  <a id="3704" class="Symbol">(</a> <a id="3706" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#3706" class="Bound">CERTS-pov</a> <a id="3716" class="Symbol">:</a> <a id="3718" class="Symbol">∀</a> <a id="3720" class="Symbol">{</a><a id="3721" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#3721" class="Bound">Γ</a> <a id="3723" class="Symbol">:</a> <a id="3725" href="Ledger.Dijkstra.Specification.Certs.html#2219" class="Record">CertEnv</a><a id="3732" class="Symbol">}</a> <a id="3734" class="Symbol">{</a><a id="3735" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#3735" class="Bound">s</a> <a id="3737" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#3737" class="Bound">s&#39;</a> <a id="3740" class="Symbol">:</a> <a id="3742" href="Ledger.Dijkstra.Specification.Certs.html#2948" class="Record">CertState</a><a id="3751" class="Symbol">}</a> <a id="3753" class="Symbol">{</a><a id="3754" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#3754" class="Bound">dCerts</a> <a id="3761" class="Symbol">:</a> <a id="3763" href="Agda.Builtin.List.html#147" class="Datatype">List</a> <a id="3768" href="Ledger.Dijkstra.Specification.Certs.html#1480" class="Datatype">DCert</a><a id="3773" class="Symbol">}</a>
+      <a id="3781" class="Symbol">→</a> <a id="3783" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#3721" class="Bound">Γ</a> <a id="3785" href="Ledger.Dijkstra.Specification.Certs.html#15998" class="Function Operator">⊢</a> <a id="3787" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#3735" class="Bound">s</a> <a id="3789" href="Ledger.Dijkstra.Specification.Certs.html#15998" class="Function Operator">⇀⦇</a> <a id="3792" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#3754" class="Bound">dCerts</a> <a id="3799" href="Ledger.Dijkstra.Specification.Certs.html#15998" class="Function Operator">,CERTS⦈</a> <a id="3807" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#3737" class="Bound">s&#39;</a> <a id="3810" class="Symbol">→</a> <a id="3812" href="Ledger.Prelude.HasCoin.html#258" class="Field">getCoin</a> <a id="3820" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#3735" class="Bound">s</a> <a id="3822" href="Agda.Builtin.Equality.html#150" class="Datatype Operator">≡</a> <a id="3824" href="Ledger.Prelude.HasCoin.html#258" class="Field">getCoin</a> <a id="3832" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#3737" class="Bound">s&#39;</a> <a id="3835" class="Symbol">)</a>
+  <a id="3839" class="Keyword">where</a>
+  <a id="3847" class="Keyword">open</a> <a id="3852" href="Ledger.Dijkstra.Specification.Entities.Properties.ApplyToRewardsPoV.html#6184" class="Module">ApplyToRewards-PoV</a> <a id="3871" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#2980" class="Bound">∪ˡ-lookup-preserve</a> <a id="3890" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#3136" class="Bound">sum-map-proj₂≡getCoin</a> <a id="3912" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#3254" class="Bound">setToList-Unique</a> <a id="3929" class="Keyword">public</a>
 </pre>
-<h2 id="accounts">Accounts<a class="headerlink" href="#accounts" title="Permanent link">&para;</a></h2>
-<pre class="Agda"><a id="478" class="Keyword">import</a> <a id="485" href="Ledger.Dijkstra.Specification.Account.html" class="Module">Ledger.Dijkstra.Specification.Account</a>
+<h2 id="the-entities-pov-theorem">The <code>ENTITIES-pov</code> theorem<a class="headerlink" href="#the-entities-pov-theorem" title="Permanent link">&para;</a></h2>
+<p><strong>Informally</strong>.  Let <code class="AgdaBound">s</code>, <code class="AgdaBound">s'</code> be <code class="AgdaRecord">CertStates</code>
+related by <code class="AgdaDatatype">ENTITIES</code> under some <code class="AgdaRecord">CertEnv</code>
+<code class="AgdaBound">Γ</code>, and let <code class="AgdaBound">wd-netId</code> and <code class="AgdaBound">dd-netId</code> be the
+per-batch <code class="AgdaFunction">NetworkId</code> witnesses for <code class="AgdaBound">WithdrawalsOf Γ</code> and
+<code class="AgdaBound">DirectDepositsOf Γ</code> (produced at the call site by the
+<code class="AgdaDatatype">SUBUTXOW</code> or <code class="AgdaDatatype">UTXOW</code> step).  Then,</p>
+<pre><code>getCoin s + getCoin (DirectDepositsOf Γ) ≡ getCoin s' + getCoin (WithdrawalsOf Γ)
+</code></pre>
+<p><strong>Formally</strong>.</p>
+<pre class="Agda">  <a id="ENTITIES-PoV.ENTITIES-pov"></a><a id="4540" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#4540" class="Function">ENTITIES-pov</a> <a id="4553" class="Symbol">:</a> <a id="4555" class="Symbol">{</a><a id="4556" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#4556" class="Bound">Γ</a> <a id="4558" class="Symbol">:</a> <a id="4560" href="Ledger.Dijkstra.Specification.Certs.html#2219" class="Record">CertEnv</a><a id="4567" class="Symbol">}</a> <a id="4569" class="Symbol">{</a><a id="4570" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#4570" class="Bound">s</a> <a id="4572" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#4572" class="Bound">s&#39;</a> <a id="4575" class="Symbol">:</a> <a id="4577" href="Ledger.Dijkstra.Specification.Certs.html#2948" class="Record">CertState</a><a id="4586" class="Symbol">}</a>
+    <a id="4592" class="Symbol">→</a> <a id="4594" href="Class.IsSet.html#576" class="Function">∀[</a> <a id="4597" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#4597" class="Bound">a</a> <a id="4599" href="Class.IsSet.html#576" class="Function">∈</a> <a id="4601" href="Class.IsSet.html#916" class="Function">dom</a> <a id="4605" class="Symbol">(</a><a id="4606" href="Ledger.Core.Specification.Address.html#3223" class="Field">WithdrawalsOf</a> <a id="4620" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#4556" class="Bound">Γ</a><a id="4621" class="Symbol">)</a>    <a id="4626" href="Class.IsSet.html#576" class="Function">]</a> <a id="4628" href="Ledger.Core.Specification.Address.html#2964" class="Field">NetworkIdOf</a> <a id="4640" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#4597" class="Bound">a</a> <a id="4642" href="Agda.Builtin.Equality.html#150" class="Datatype Operator">≡</a> <a id="4644" href="Ledger.Core.Specification.Epoch.html#2799" class="Function">NetworkId</a>
+    <a id="4658" class="Symbol">→</a> <a id="4660" href="Class.IsSet.html#576" class="Function">∀[</a> <a id="4663" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#4663" class="Bound">a</a> <a id="4665" href="Class.IsSet.html#576" class="Function">∈</a> <a id="4667" href="Class.IsSet.html#916" class="Function">dom</a> <a id="4671" class="Symbol">(</a><a id="4672" href="Ledger.Dijkstra.Specification.Account.html#925" class="Field">DirectDepositsOf</a> <a id="4689" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#4556" class="Bound">Γ</a><a id="4690" class="Symbol">)</a> <a id="4692" href="Class.IsSet.html#576" class="Function">]</a> <a id="4694" href="Ledger.Core.Specification.Address.html#2964" class="Field">NetworkIdOf</a> <a id="4706" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#4663" class="Bound">a</a> <a id="4708" href="Agda.Builtin.Equality.html#150" class="Datatype Operator">≡</a> <a id="4710" href="Ledger.Core.Specification.Epoch.html#2799" class="Function">NetworkId</a>
+    <a id="4724" class="Symbol">→</a> <a id="4726" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#4556" class="Bound">Γ</a> <a id="4728" href="Ledger.Dijkstra.Specification.Entities.html#4757" class="Datatype Operator">⊢</a> <a id="4730" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#4570" class="Bound">s</a> <a id="4732" href="Ledger.Dijkstra.Specification.Entities.html#4757" class="Datatype Operator">⇀⦇</a> <a id="4735" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#2607" class="Generalizable">dCerts</a> <a id="4742" href="Ledger.Dijkstra.Specification.Entities.html#4757" class="Datatype Operator">,ENTITIES⦈</a> <a id="4753" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#4572" class="Bound">s&#39;</a>
+    <a id="4760" class="Symbol">→</a> <a id="4762" href="Ledger.Prelude.HasCoin.html#258" class="Field">getCoin</a> <a id="4770" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#4570" class="Bound">s</a> <a id="4772" href="Class.HasAdd.Core.html#162" class="Field Operator">+</a> <a id="4774" href="Ledger.Prelude.HasCoin.html#258" class="Field">getCoin</a> <a id="4782" class="Symbol">(</a><a id="4783" href="Ledger.Dijkstra.Specification.Account.html#925" class="Field">DirectDepositsOf</a> <a id="4800" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#4556" class="Bound">Γ</a><a id="4801" class="Symbol">)</a> <a id="4803" href="Agda.Builtin.Equality.html#150" class="Datatype Operator">≡</a> <a id="4805" href="Ledger.Prelude.HasCoin.html#258" class="Field">getCoin</a> <a id="4813" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#4572" class="Bound">s&#39;</a> <a id="4816" href="Class.HasAdd.Core.html#162" class="Field Operator">+</a> <a id="4818" href="Ledger.Prelude.HasCoin.html#258" class="Field">getCoin</a> <a id="4826" class="Symbol">(</a><a id="4827" href="Ledger.Core.Specification.Address.html#3223" class="Field">WithdrawalsOf</a> <a id="4841" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#4556" class="Bound">Γ</a><a id="4842" class="Symbol">)</a>
 </pre>
-<h2 id="addresses">Addresses<a class="headerlink" href="#addresses" title="Permanent link">&para;</a></h2>
-<pre class="Agda"><a id="550" class="Keyword">import</a> <a id="557" href="Ledger.Core.Specification.Address.html" class="Module">Ledger.Core.Specification.Address</a> <a id="591" class="Keyword">renaming</a> <a id="600" class="Symbol">(</a><a id="601" href="Ledger.Core.Specification.Address.html#2545" class="Record">RewardAddress</a> <a id="615" class="Symbol">to</a> <a id="618" class="Record">RewardAddress</a><a id="631" class="Symbol">)</a>
+<p><strong>Proof</strong>.  Case-split on the single <code class="AgdaInductiveConstructor">ENTITIES</code>
+constructor to expose the inner <code class="AgdaDatatype">CERTS</code> step and the threaded states.</p>
+<pre class="Agda hidden-source">  <a id="5025" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#4540" class="Function">ENTITIES-pov</a> <a id="5038" class="Symbol">{</a><a id="5039" class="Argument">Γ</a> <a id="5041" class="Symbol">=</a> <a id="5043" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#5043" class="Bound">Γ</a><a id="5044" class="Symbol">}</a>
+    <a id="5050" class="Symbol">{</a><a id="5051" class="Argument">s</a>  <a id="5054" class="Symbol">=</a> <a class="AgdaKaTeX">$\begin{pmatrix} \begin{pmatrix} \,\htmlId{5060}{\htmlClass{Symbol}{\text{\_}}}\, \\ \,\htmlId{5064}{\htmlClass{Symbol}{\text{\_}}}\, \\ \,\href{Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#5068}{\htmlId{5068}{\htmlClass{Bound}{\text{r₀}}}}\, \\ \,\htmlId{5073}{\htmlClass{Symbol}{\text{\_}}}\, \end{pmatrix} \\ \,\htmlId{5080}{\htmlClass{Symbol}{\text{\_}}}\, \\ \,\htmlId{5084}{\htmlClass{Symbol}{\text{\_}}}\, \end{pmatrix}$</a><a id="5089" class="Symbol">}</a> <a id="5091" class="Symbol">{</a><a id="5092" class="Argument">s&#39;</a> <a id="5095" class="Symbol">=</a> <a class="AgdaKaTeX">$\begin{pmatrix} \begin{pmatrix} \,\htmlId{5101}{\htmlClass{Symbol}{\text{\_}}}\, \\ \,\htmlId{5105}{\htmlClass{Symbol}{\text{\_}}}\, \\ \,\htmlId{5109}{\htmlClass{Symbol}{\text{\_}}}\,  \\ \,\htmlId{5114}{\htmlClass{Symbol}{\text{\_}}}\, \end{pmatrix} \\ \,\htmlId{5121}{\htmlClass{Symbol}{\text{\_}}}\, \\ \,\htmlId{5125}{\htmlClass{Symbol}{\text{\_}}}\, \end{pmatrix}$</a><a id="5130" class="Symbol">}</a>
+    <a id="5136" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#5136" class="Bound">wd-netId</a> <a id="5145" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#5145" class="Bound">dd-netId</a> <a id="5154" class="Symbol">(</a><a id="5155" href="Ledger.Dijkstra.Specification.Entities.html#4838" class="InductiveConstructor">ENTITIES</a> <a id="5164" class="Symbol">{</a> <a id="5166" class="Argument">rewards₁</a> <a id="5175" class="Symbol">=</a> <a id="5177" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#5177" class="Bound">r₁</a> <a id="5180" class="Symbol">}</a> <a id="5182" class="Symbol">(</a><a id="5183" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#5183" class="Bound">fst</a> <a id="5187" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="5189" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#5189" class="Bound">wdrls⊆</a> <a id="5196" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="5198" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#5198" class="Bound">amts≤</a> <a id="5204" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="5206" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#5206" class="Bound">certsStep</a> <a id="5216" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="5218" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#5218" class="Bound">ddCreds⊆</a> <a id="5227" class="Symbol">))</a> <a id="5230" class="Symbol">=</a>
+    <a id="5236" href="Relation.Binary.Reasoning.Syntax.html#1572" class="Function Operator">begin</a>
+      <a id="5248" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#5911" class="Function">G</a> <a id="5250" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#5068" class="Bound">r₀</a> <a id="5253" href="Class.HasAdd.Core.html#162" class="Field Operator">+</a> <a id="5255" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#5952" class="Function">DD</a>
+        <a id="5266" href="Relation.Binary.Reasoning.Syntax.html#11048" class="Function">≡⟨</a> <a id="5269" href="Relation.Binary.PropositionalEquality.Core.html#1481" class="Function">cong</a> <a id="5274" class="Symbol">(</a><a id="5275" href="Class.HasAdd.Core.html#162" class="Field Operator">_+</a> <a id="5278" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#5952" class="Function">DD</a><a id="5280" class="Symbol">)</a> <a id="5282" class="Symbol">(</a><a id="5283" href="Ledger.Dijkstra.Specification.Entities.Properties.ApplyToRewardsPoV.html#11749" class="Function">applyWithdrawals-pov</a> <a id="5304" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#5749" class="Function">wdrls</a> <a id="5310" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#5068" class="Bound">r₀</a> <a id="5313" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#5189" class="Bound">wdrls⊆</a> <a id="5320" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#5136" class="Bound">wd-netId</a> <a id="5329" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#5198" class="Bound">amts≤</a><a id="5334" class="Symbol">)</a> <a id="5336" href="Relation.Binary.Reasoning.Syntax.html#11048" class="Function">⟩</a>
+      <a id="5344" class="Symbol">(</a><a id="5345" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#5911" class="Function">G</a> <a id="5347" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#5859" class="Function">aw</a> <a id="5350" href="Class.HasAdd.Core.html#162" class="Field Operator">+</a> <a id="5352" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#5950" class="Function">W</a><a id="5353" class="Symbol">)</a> <a id="5355" href="Class.HasAdd.Core.html#162" class="Field Operator">+</a> <a id="5357" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#5952" class="Function">DD</a>
+        <a id="5368" href="Relation.Binary.Reasoning.Syntax.html#11048" class="Function">≡⟨</a> <a id="5371" href="Data.Nat.Properties.html#15623" class="Function">+-assoc</a> <a id="5379" class="Symbol">(</a><a id="5380" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#5911" class="Function">G</a> <a id="5382" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#5859" class="Function">aw</a><a id="5384" class="Symbol">)</a> <a id="5386" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#5950" class="Function">W</a> <a id="5388" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#5952" class="Function">DD</a> <a id="5391" href="Relation.Binary.Reasoning.Syntax.html#11048" class="Function">⟩</a>
+      <a id="5399" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#5911" class="Function">G</a> <a id="5401" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#5859" class="Function">aw</a> <a id="5404" href="Class.HasAdd.Core.html#162" class="Field Operator">+</a> <a id="5406" class="Symbol">(</a><a id="5407" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#5950" class="Function">W</a> <a id="5409" href="Class.HasAdd.Core.html#162" class="Field Operator">+</a> <a id="5411" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#5952" class="Function">DD</a><a id="5413" class="Symbol">)</a>
+        <a id="5423" href="Relation.Binary.Reasoning.Syntax.html#11048" class="Function">≡⟨</a> <a id="5426" href="Relation.Binary.PropositionalEquality.Core.html#1481" class="Function">cong</a> <a id="5431" class="Symbol">(</a><a id="5432" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#5911" class="Function">G</a> <a id="5434" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#5859" class="Function">aw</a> <a id="5437" href="Class.HasAdd.Core.html#162" class="Field Operator">+_</a><a id="5439" class="Symbol">)</a> <a id="5441" class="Symbol">(</a><a id="5442" href="Data.Nat.Properties.html#15956" class="Function">+-comm</a> <a id="5449" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#5950" class="Function">W</a> <a id="5451" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#5952" class="Function">DD</a><a id="5453" class="Symbol">)</a> <a id="5455" href="Relation.Binary.Reasoning.Syntax.html#11048" class="Function">⟩</a>
+      <a id="5463" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#5911" class="Function">G</a> <a id="5465" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#5859" class="Function">aw</a> <a id="5468" href="Class.HasAdd.Core.html#162" class="Field Operator">+</a> <a id="5470" class="Symbol">(</a><a id="5471" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#5952" class="Function">DD</a> <a id="5474" href="Class.HasAdd.Core.html#162" class="Field Operator">+</a> <a id="5476" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#5950" class="Function">W</a><a id="5477" class="Symbol">)</a>
+        <a id="5487" href="Relation.Binary.Reasoning.Syntax.html#11539" class="Function">≡˘⟨</a> <a id="5491" href="Data.Nat.Properties.html#15623" class="Function">+-assoc</a> <a id="5499" class="Symbol">(</a><a id="5500" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#5911" class="Function">G</a> <a id="5502" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#5859" class="Function">aw</a><a id="5504" class="Symbol">)</a> <a id="5506" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#5952" class="Function">DD</a> <a id="5509" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#5950" class="Function">W</a> <a id="5511" href="Relation.Binary.Reasoning.Syntax.html#11539" class="Function">⟩</a>
+      <a id="5519" class="Symbol">(</a><a id="5520" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#5911" class="Function">G</a> <a id="5522" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#5859" class="Function">aw</a> <a id="5525" href="Class.HasAdd.Core.html#162" class="Field Operator">+</a> <a id="5527" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#5952" class="Function">DD</a><a id="5529" class="Symbol">)</a> <a id="5531" href="Class.HasAdd.Core.html#162" class="Field Operator">+</a> <a id="5533" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#5950" class="Function">W</a>
+        <a id="5543" href="Relation.Binary.Reasoning.Syntax.html#11048" class="Function">≡⟨</a> <a id="5546" href="Relation.Binary.PropositionalEquality.Core.html#1481" class="Function">cong</a> <a id="5551" class="Symbol">(λ</a> <a id="5554" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#5554" class="Bound">x</a> <a id="5556" class="Symbol">→</a> <a id="5558" class="Symbol">(</a><a id="5559" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#5554" class="Bound">x</a> <a id="5561" href="Class.HasAdd.Core.html#162" class="Field Operator">+</a> <a id="5563" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#5952" class="Function">DD</a><a id="5565" class="Symbol">)</a> <a id="5567" href="Class.HasAdd.Core.html#162" class="Field Operator">+</a> <a id="5569" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#5950" class="Function">W</a><a id="5570" class="Symbol">)</a> <a id="5572" class="Symbol">(</a><a id="5573" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#3706" class="Bound">CERTS-pov</a> <a id="5583" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#5206" class="Bound">certsStep</a><a id="5592" class="Symbol">)</a> <a id="5594" href="Relation.Binary.Reasoning.Syntax.html#11048" class="Function">⟩</a>
+      <a id="5602" class="Symbol">(</a><a id="5603" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#5911" class="Function">G</a> <a id="5605" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#5177" class="Bound">r₁</a> <a id="5608" href="Class.HasAdd.Core.html#162" class="Field Operator">+</a> <a id="5610" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#5952" class="Function">DD</a><a id="5612" class="Symbol">)</a> <a id="5614" href="Class.HasAdd.Core.html#162" class="Field Operator">+</a> <a id="5616" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#5950" class="Function">W</a>
+        <a id="5626" href="Relation.Binary.Reasoning.Syntax.html#11539" class="Function">≡˘⟨</a> <a id="5630" href="Relation.Binary.PropositionalEquality.Core.html#1481" class="Function">cong</a> <a id="5635" class="Symbol">(</a><a id="5636" href="Class.HasAdd.Core.html#162" class="Field Operator">_+</a> <a id="5639" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#5950" class="Function">W</a><a id="5640" class="Symbol">)</a> <a id="5642" class="Symbol">(</a><a id="5643" href="Ledger.Dijkstra.Specification.Entities.Properties.ApplyToRewardsPoV.html#16148" class="Function">applyDirectDeposits-pov</a> <a id="5667" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#5801" class="Function">dd</a> <a id="5670" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#5177" class="Bound">r₁</a> <a id="5673" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#5218" class="Bound">ddCreds⊆</a><a id="5681" class="Symbol">)</a> <a id="5683" href="Relation.Binary.Reasoning.Syntax.html#11539" class="Function">⟩</a>
+      <a id="5691" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#5911" class="Function">G</a> <a id="5693" class="Symbol">(</a><a id="5694" href="Ledger.Dijkstra.Specification.Entities.html#1890" class="Function">applyDirectDeposits</a> <a id="5714" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#5801" class="Function">dd</a> <a id="5717" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#5177" class="Bound">r₁</a><a id="5719" class="Symbol">)</a> <a id="5721" href="Class.HasAdd.Core.html#162" class="Field Operator">+</a> <a id="5723" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#5950" class="Function">W</a>
+        <a id="5733" href="Relation.Binary.Reasoning.Syntax.html#12345" class="Function Operator">∎</a>
+    <a id="5739" class="Keyword">where</a>
+    <a id="5749" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#5749" class="Function">wdrls</a> <a id="5755" class="Symbol">:</a> <a id="5757" href="Ledger.Core.Specification.Address.html#2626" class="Function">Withdrawals</a>
+    <a id="5773" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#5749" class="Function">wdrls</a> <a id="5779" class="Symbol">=</a> <a id="5781" href="Ledger.Core.Specification.Address.html#3223" class="Field">WithdrawalsOf</a> <a id="5795" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#5043" class="Bound">Γ</a>
+    <a id="5801" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#5801" class="Function">dd</a> <a id="5804" class="Symbol">:</a> <a id="5806" href="Ledger.Dijkstra.Specification.Account.html#782" class="Function">DirectDeposits</a>
+    <a id="5825" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#5801" class="Function">dd</a> <a id="5828" class="Symbol">=</a> <a id="5830" href="Ledger.Dijkstra.Specification.Certs.html#2414" class="Field">CertEnv.directDeposits</a> <a id="5853" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#5043" class="Bound">Γ</a>
+    <a id="5859" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#5859" class="Function">aw</a> <a id="5862" class="Symbol">:</a> <a id="5864" href="Ledger.Dijkstra.Specification.Certs.html#1336" class="Function">Rewards</a>
+    <a id="5876" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#5859" class="Function">aw</a> <a id="5879" class="Symbol">=</a> <a id="5881" href="Ledger.Dijkstra.Specification.Entities.html#1989" class="Function">applyWithdrawals</a> <a id="5898" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#5749" class="Function">wdrls</a> <a id="5904" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#5068" class="Bound">r₀</a>
+    <a id="5911" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#5911" class="Function">G</a> <a id="5913" class="Symbol">:</a> <a id="5915" href="Ledger.Dijkstra.Specification.Certs.html#1336" class="Function">Rewards</a> <a id="5923" class="Symbol">→</a> <a id="5925" href="Ledger.Prelude.Base.html#234" class="Function">Coin</a>
+    <a id="5934" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#5911" class="Function">G</a> <a id="5936" class="Symbol">=</a> <a id="5938" href="Ledger.Prelude.HasCoin.html#258" class="Field">getCoin</a>
+    <a id="5950" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#5950" class="Function">W</a> <a id="5952" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#5952" class="Function">DD</a> <a id="5955" class="Symbol">:</a> <a id="5957" href="Ledger.Prelude.Base.html#234" class="Function">Coin</a>
+    <a id="5966" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#5950" class="Function">W</a>  <a id="5969" class="Symbol">=</a> <a id="5971" href="Ledger.Prelude.HasCoin.html#258" class="Field">getCoin</a> <a id="5979" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#5749" class="Function">wdrls</a>
+    <a id="5989" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#5952" class="Function">DD</a> <a id="5992" class="Symbol">=</a> <a id="5994" href="Ledger.Prelude.HasCoin.html#258" class="Field">getCoin</a> <a id="6002" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html#5801" class="Function">dd</a>
 </pre>
-<h2 id="block-body">Block Body<a class="headerlink" href="#block-body" title="Permanent link">&para;</a></h2>
-<p>The Block Body Transition updates the block body state which comprises the
-ledger state and the map describing the produced blocks.</p>
-<pre class="Agda"><a id="794" class="Keyword">import</a> <a id="801" href="Ledger.Dijkstra.Specification.BlockBody.html" class="Module">Ledger.Dijkstra.Specification.BlockBody</a>
-<a id="841" class="Keyword">import</a> <a id="848" href="Ledger.Dijkstra.Specification.BlockBody.Properties.html" class="Module">Ledger.Dijkstra.Specification.BlockBody.Properties</a>
-</pre>
-<h2 id="certificates">Certificates<a class="headerlink" href="#certificates" title="Permanent link">&para;</a></h2>
-<pre class="Agda"><a id="929" class="Keyword">import</a> <a id="936" href="Ledger.Dijkstra.Specification.Certs.html" class="Module">Ledger.Dijkstra.Specification.Certs</a>
-<a id="972" class="Keyword">import</a> <a id="979" href="Ledger.Dijkstra.Specification.Certs.Properties.html" class="Module">Ledger.Dijkstra.Specification.Certs.Properties</a>
-</pre>
-<h2 id="chain">Chain<a class="headerlink" href="#chain" title="Permanent link">&para;</a></h2>
-<pre class="Agda"><a id="1049" class="Keyword">import</a> <a id="1056" href="Ledger.Dijkstra.Specification.Chain.html" class="Module">Ledger.Dijkstra.Specification.Chain</a>
-<a id="1092" class="Keyword">import</a> <a id="1099" href="Ledger.Dijkstra.Specification.Chain.Properties.html" class="Module">Ledger.Dijkstra.Specification.Chain.Properties</a>
-</pre>
-<h2 id="enactment">Enactment<a class="headerlink" href="#enactment" title="Permanent link">&para;</a></h2>
-<pre class="Agda"><a id="1173" class="Keyword">import</a> <a id="1180" href="Ledger.Dijkstra.Specification.Enact.html" class="Module">Ledger.Dijkstra.Specification.Enact</a>
-<a id="1216" class="Keyword">import</a> <a id="1223" href="Ledger.Dijkstra.Specification.Enact.Properties.html" class="Module">Ledger.Dijkstra.Specification.Enact.Properties</a>
-</pre>
-<h2 id="entities">Entities<a class="headerlink" href="#entities" title="Permanent link">&para;</a></h2>
-<pre class="Agda"><a id="1296" class="Keyword">import</a> <a id="1303" href="Ledger.Dijkstra.Specification.Entities.html" class="Module">Ledger.Dijkstra.Specification.Entities</a>
-<a id="1342" class="Keyword">import</a> <a id="1349" href="Ledger.Dijkstra.Specification.Entities.Properties.html" class="Module">Ledger.Dijkstra.Specification.Entities.Properties</a>
-</pre>
-<h2 id="epoch"><span class="AgdaModule">Epoch</span><a class="headerlink" href="#epoch" title="Permanent link">&para;</a></h2>
-<pre class="Agda"><a id="1454" class="Keyword">import</a> <a id="1461" href="Ledger.Core.Specification.Epoch.html" class="Module">Ledger.Core.Specification.Epoch</a>
-<a id="1493" class="Keyword">import</a> <a id="1500" href="Ledger.Dijkstra.Specification.Epoch.html" class="Module">Ledger.Dijkstra.Specification.Epoch</a>
-<a id="1536" class="Keyword">import</a> <a id="1543" href="Ledger.Dijkstra.Specification.Epoch.Properties.html" class="Module">Ledger.Dijkstra.Specification.Epoch.Properties</a>
-</pre>
-<h2 id="fees">Fees<a class="headerlink" href="#fees" title="Permanent link">&para;</a></h2>
-<pre class="Agda"><a id="1612" class="Keyword">import</a> <a id="1619" href="Ledger.Dijkstra.Specification.Fees.html" class="Module">Ledger.Dijkstra.Specification.Fees</a>
-</pre>
-<h2 id="governance">Governance<a class="headerlink" href="#governance" title="Permanent link">&para;</a></h2>
-<pre class="Agda"><a id="1682" class="Keyword">import</a> <a id="1689" href="Ledger.Dijkstra.Specification.Gov.html" class="Module">Ledger.Dijkstra.Specification.Gov</a>
-<a id="1723" class="Keyword">import</a> <a id="1730" href="Ledger.Dijkstra.Specification.Gov.Base.html" class="Module">Ledger.Dijkstra.Specification.Gov.Base</a>
-<a id="1769" class="Keyword">import</a> <a id="1776" href="Ledger.Dijkstra.Specification.Gov.Actions.html" class="Module">Ledger.Dijkstra.Specification.Gov.Actions</a>
-<a id="1818" class="Keyword">import</a> <a id="1825" href="Ledger.Dijkstra.Specification.Gov.Properties.html" class="Module">Ledger.Dijkstra.Specification.Gov.Properties</a>
-</pre>
-<h2 id="ledger">Ledger<a class="headerlink" href="#ledger" title="Permanent link">&para;</a></h2>
-<pre class="Agda"><a id="1894" class="Keyword">import</a> <a id="1901" href="Ledger.Dijkstra.Specification.Ledger.html" class="Module">Ledger.Dijkstra.Specification.Ledger</a>
-<a id="1938" class="Keyword">import</a> <a id="1945" href="Ledger.Dijkstra.Specification.Ledger.Properties.html" class="Module">Ledger.Dijkstra.Specification.Ledger.Properties</a>
-</pre>
-<h2 id="pool-reaping-transition">Pool Reaping Transition<a class="headerlink" href="#pool-reaping-transition" title="Permanent link">&para;</a></h2>
-<pre class="Agda"><a id="2034" class="Keyword">import</a> <a id="2041" href="Ledger.Dijkstra.Specification.PoolReap.html" class="Module">Ledger.Dijkstra.Specification.PoolReap</a>
-<a id="2080" class="Keyword">import</a> <a id="2087" href="Ledger.Dijkstra.Specification.PoolReap.Properties.html" class="Module">Ledger.Dijkstra.Specification.PoolReap.Properties</a>
-</pre>
-<h2 id="protocol-parameters">Protocol Parameters<a class="headerlink" href="#protocol-parameters" title="Permanent link">&para;</a></h2>
-<pre class="Agda"><a id="2174" class="Keyword">import</a> <a id="2181" href="Ledger.Dijkstra.Specification.PParams.html" class="Module">Ledger.Dijkstra.Specification.PParams</a>
-</pre>
-<h2 id="ratification">Ratification<a class="headerlink" href="#ratification" title="Permanent link">&para;</a></h2>
-<pre class="Agda"><a id="2249" class="Keyword">import</a> <a id="2256" href="Ledger.Dijkstra.Specification.Ratify.html" class="Module">Ledger.Dijkstra.Specification.Ratify</a>
-<a id="2293" class="Keyword">import</a> <a id="2300" href="Ledger.Dijkstra.Specification.Ratify.Properties.html" class="Module">Ledger.Dijkstra.Specification.Ratify.Properties</a>
-</pre>
-<h2 id="rewards">Rewards<a class="headerlink" href="#rewards" title="Permanent link">&para;</a></h2>
-<pre class="Agda"><a id="2373" class="Keyword">import</a> <a id="2380" href="Ledger.Dijkstra.Specification.Rewards.html" class="Module">Ledger.Dijkstra.Specification.Rewards</a>
-<a id="2418" class="Keyword">import</a> <a id="2425" href="Ledger.Dijkstra.Specification.Rewards.Properties.html" class="Module">Ledger.Dijkstra.Specification.Rewards.Properties</a>
-<a id="2474" class="Keyword">import</a> <a id="2481" href="Ledger.Dijkstra.Specification.RewardUpdate.html" class="Module">Ledger.Dijkstra.Specification.RewardUpdate</a>
-<a id="2524" class="Keyword">import</a> <a id="2531" href="Ledger.Dijkstra.Specification.RewardUpdate.Properties.html" class="Module">Ledger.Dijkstra.Specification.RewardUpdate.Properties</a>
-</pre>
-<h2 id="scripts">Scripts<a class="headerlink" href="#scripts" title="Permanent link">&para;</a></h2>
-<pre class="Agda"><a id="2610" class="Keyword">import</a> <a id="2617" href="Ledger.Dijkstra.Specification.Script.html" class="Module">Ledger.Dijkstra.Specification.Script</a>
-<a id="2654" class="Keyword">import</a> <a id="2661" href="Ledger.Dijkstra.Specification.Script.Base.html" class="Module">Ledger.Dijkstra.Specification.Script.Base</a>
-<a id="2703" class="Keyword">import</a> <a id="2710" href="Ledger.Dijkstra.Specification.Script.Native.html" class="Module">Ledger.Dijkstra.Specification.Script.Native</a>
-<a id="2754" class="Keyword">import</a> <a id="2761" href="Ledger.Dijkstra.Specification.Script.ScriptPurpose.html" class="Module">Ledger.Dijkstra.Specification.Script.ScriptPurpose</a>
-<a id="2812" class="Keyword">import</a> <a id="2819" href="Ledger.Dijkstra.Specification.Script.Validation.html" class="Module">Ledger.Dijkstra.Specification.Script.Validation</a>
-</pre>
-<h2 id="token-algebras">Token Algebras<a class="headerlink" href="#token-algebras" title="Permanent link">&para;</a></h2>
-<pre class="Agda"><a id="2899" class="Keyword">import</a> <a id="2906" href="Ledger.Dijkstra.Specification.TokenAlgebra.Base.html" class="Module">Ledger.Dijkstra.Specification.TokenAlgebra.Base</a>
-</pre>
-<h2 id="transactions">Transactions<a class="headerlink" href="#transactions" title="Permanent link">&para;</a></h2>
-<pre class="Agda"><a id="2984" class="Keyword">import</a> <a id="2991" href="Ledger.Dijkstra.Specification.Transaction.html" class="Module">Ledger.Dijkstra.Specification.Transaction</a>
-</pre>
-<h2 id="utxo"><span class="AgdaModule">Utxo</span><a class="headerlink" href="#utxo" title="Permanent link">&para;</a></h2>
-<pre class="Agda"><a id="3087" class="Keyword">import</a> <a id="3094" href="Ledger.Dijkstra.Specification.Utxo.html" class="Module">Ledger.Dijkstra.Specification.Utxo</a>
-<a id="3129" class="Keyword">import</a> <a id="3136" href="Ledger.Dijkstra.Specification.Utxo.Properties.html" class="Module">Ledger.Dijkstra.Specification.Utxo.Properties</a>
-</pre>
-<h2 id="utxow"><span class="AgdaModule">Utxow</span><a class="headerlink" href="#utxow" title="Permanent link">&para;</a></h2>
-<pre class="Agda"><a id="3237" class="Keyword">import</a> <a id="3244" href="Ledger.Dijkstra.Specification.Utxow.html" class="Module">Ledger.Dijkstra.Specification.Utxow</a>
-<a id="3280" class="Keyword">import</a> <a id="3287" href="Ledger.Dijkstra.Specification.Utxow.Properties.html" class="Module">Ledger.Dijkstra.Specification.Utxow.Properties</a>
-</pre>
+
+<p>The first three rewrites move <code>W</code> past <code>DD</code> to set up the
+<code class="AgdaFunction">CERTS-pov</code> application; the <code class="AgdaFunction">CERTS-pov</code>
+step then preserves <code class="AgdaFunction">getCoin</code> through the inner closure;
+and the final rewrite folds <code class="AgdaFunction">applyDirectDeposits</code> back
+into the LHS of the goal.</p>
+<p>Equivalences used implicitly: under
+<code class="AgdaFunction">HasCoin-CertState</code>, <code>getCoin (CertState) ≡ getCoin (rewards ∘ DStateOf)</code>,
+which is why <code>G r₀</code>, <code>G aw</code>, <code>G r₁</code>, and <code>G (applyDirectDeposits dd r₁)</code>
+are interchangeable with <code>getCoin s</code>, <code>getCoin &lt;intermediate&gt;</code>,
+<code>getCoin &lt;post-CERTS&gt;</code>, and <code>getCoin s'</code> respectively — both sides
+project to the <code class="AgdaField">rewards</code> field, which is exactly what the
+chain manipulates.</p>
 
 
 
@@ -11973,44 +11539,6 @@ ledger state and the map describing the produced blocks.</p>
       
         <footer class="md-footer">
   
-    
-      
-      <nav class="md-footer__inner md-grid" aria-label="Footer" >
-        
-          
-          <a href="Ledger.Conway.Specification.Types.GovStructure.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: GovStructure">
-            <div class="md-footer__button md-icon">
-              
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
-            </div>
-            <div class="md-footer__title">
-              <span class="md-footer__direction">
-                Previous
-              </span>
-              <div class="md-ellipsis">
-                GovStructure
-              </div>
-            </div>
-          </a>
-        
-        
-          
-          <a href="Ledger.Dijkstra.Specification.Abstract.html" class="md-footer__link md-footer__link--next" aria-label="Next: Abstract">
-            <div class="md-footer__title">
-              <span class="md-footer__direction">
-                Next
-              </span>
-              <div class="md-ellipsis">
-                Abstract
-              </div>
-            </div>
-            <div class="md-footer__button md-icon">
-              
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
-            </div>
-          </a>
-        
-      </nav>
     
   
   <div class="md-footer-meta md-typeset">
