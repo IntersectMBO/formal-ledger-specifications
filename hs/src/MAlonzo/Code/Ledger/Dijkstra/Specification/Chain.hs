@@ -1011,7 +1011,7 @@ du_maxRefScriptSizePerBlock_4220 v0
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxRefScriptSizePerBlock_420
       (coe
-         MAlonzo.Code.Ledger.Prelude.du_'8739'_'8739'_90
+         MAlonzo.Code.Ledger.Prelude.du_'8739'_'8739'_70
          (coe
             MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_HasCast'45'HashProtected_1250)
          (MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_pparams_1248

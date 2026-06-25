@@ -196,7 +196,7 @@ du_maxRefScriptSizePerBlock_3122 v0
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxRefScriptSizePerBlock_420
       (coe
-         MAlonzo.Code.Ledger.Prelude.du_'8739'_'8739'_90
+         MAlonzo.Code.Ledger.Prelude.du_'8739'_'8739'_70
          (coe
             MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_HasCast'45'HashProtected_1250)
          (MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_pparams_1248
@@ -231,7 +231,7 @@ d_refScriptSize'8804''63'Bound_3126 v0 v1 v2 v3
          (coe v3))
       (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxRefScriptSizePerBlock_420
          (coe
-            MAlonzo.Code.Ledger.Prelude.du_'8739'_'8739'_90
+            MAlonzo.Code.Ledger.Prelude.du_'8739'_'8739'_70
             (coe
                MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_HasCast'45'HashProtected_1250)
             (MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_pparams_1248

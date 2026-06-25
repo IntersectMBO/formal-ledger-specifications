@@ -198,7 +198,7 @@ d_BBODY'45'computeProof_3020 v0 v1 v2 v3 v4
                                            (coe
                                               MAlonzo.Code.Interface.ComputationalRelation.du_InjectError'45'Id_732))
                                         (coe
-                                           MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
+                                           MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_52
                                            (coe
                                               MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.C_constructor_30
                                               (coe
@@ -516,7 +516,7 @@ d_BBODY'45'computeProof_3020 v0 v1 v2 v3 v4
                                               (coe
                                                  MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                  (coe
-                                                    MAlonzo.Code.Ledger.Prelude.du_'8739'_'8739'_90
+                                                    MAlonzo.Code.Ledger.Prelude.du_'8739'_'8739'_70
                                                     (coe
                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_HasCast'45'HashProtected'45'MaybeScriptHash_1252)
                                                     (MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_constitution_1244

@@ -3249,7 +3249,7 @@ d_SUBUTXO'45'premises_3602 v0 v1 v2 v3 v4
                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.du_txOutToValue_4476
                                          (coe MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30 (coe v5)))))
                               (coe
-                                 MAlonzo.Code.Ledger.Prelude.du_'8739'_'8739'_90
+                                 MAlonzo.Code.Ledger.Prelude.du_'8739'_'8739'_70
                                  (coe
                                     MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Instances.du_HasCast'45'A'8640'B'45'RelAB_12)
                                  (coe
@@ -3278,7 +3278,7 @@ d_SUBUTXO'45'premises_3602 v0 v1 v2 v3 v4
                                          (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxValSize_394
                                             (coe d_pparams_3114 (coe v3)))))
                                  (coe
-                                    MAlonzo.Code.Ledger.Prelude.du_'8739'_'8739'_90
+                                    MAlonzo.Code.Ledger.Prelude.du_'8739'_'8739'_70
                                     (coe
                                        MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Instances.du_HasCast'45'A'8640'B'45'RelAB_12)
                                     (coe
@@ -4246,7 +4246,7 @@ d_UTXO'45'premises_3646 v0 v1 v2 v3 v4 v5
                                                               MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
                                                               (coe v6)))))
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Prelude.du_'8739'_'8739'_90
+                                                   MAlonzo.Code.Ledger.Prelude.du_'8739'_'8739'_70
                                                    (coe
                                                       MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Instances.du_HasCast'45'A'8640'B'45'RelAB_12)
                                                    (coe
@@ -4275,7 +4275,7 @@ d_UTXO'45'premises_3646 v0 v1 v2 v3 v4 v5
                                                            (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxValSize_394
                                                               (coe d_pparams_3084 (coe v3)))))
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Prelude.du_'8739'_'8739'_90
+                                                      MAlonzo.Code.Ledger.Prelude.du_'8739'_'8739'_70
                                                       (coe
                                                          MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Instances.du_HasCast'45'A'8640'B'45'RelAB_12)
                                                       (coe
