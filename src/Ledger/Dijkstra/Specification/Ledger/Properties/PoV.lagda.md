@@ -26,13 +26,18 @@ that is, UTxO coin, rewards balance, the `DState`/`PState`/`GState` deposit pots
 > top-level `LEDGER` preservation-of-value statement and leaves the supporting facts
 > as **module parameters**, discharged downstream:
 >
-> - **Certs-PoV** (`CERTS-pov`, `CERTS-coinFromDeposits-updateCertDeposits`) — by #1210.
+> - **Certs-PoV** (`CERTS-pov`, `CERTS-coinFromDeposits-updateCertDeposits`,
+>   `batch-cert-deposits-bridge`) — by #1210.
 > - **Utxo/Utxow-PoV** (`utxow-pov-invalid`, `UTXOW-V-mechanical`,
 >   `UTXOW-batch-balance-coin`, and the UTxO algebra `balance-∪`, `split-balance`,
 >   `subutxow-step-coin`, `utxo₁-tx-spend-eq`, `fresh-top-tx-id`, …) — by the
 >   utxo/utxow-pov work (#1186).  `UTXOW-batch-balance-coin` is the coin projection of
 >   the spec's `consumedBatch ≡ producedBatch` premise, with the produced-side
->   `govProposalsDeposits` collected into a single trailing `totGov` term.
+>   `govProposalsDeposits` collected into a single trailing `totGov` term.  Its
+>   cert-deposit summands are in the spec's *closed form* (`refundCertDeposits` /
+>   `newCertDeposits` over `allDCerts`, from the pre-batch cert state); `bat'` converts
+>   these to the chain's top/sub two-level form using the `batch-cert-deposits-bridge`
+>   (#1210) and `posNeg-deposits`.
 > - **Gov-deposit accounting** (`rmOrphanDRepVotes-coinFromGovDeposit`,
 >   `GOVS-coinFromGovDeposit`) — by a future `Gov.Properties.PoV`.
 >
@@ -210,6 +215,20 @@ module LEDGER-PoV
       ∀ {Γ : CertEnv} {s s' : CertState} {dCerts : List DCert}
       → Γ ⊢ s ⇀⦇ dCerts ,CERTS⦈ s'
       → coinFromDeposits s' ≡ coinFromDeposits (updateCertDeposits (PParamsOf Γ) s dCerts) )
+  -- Batch-wide cert-deposit bridge (discharged later by #1210).  The closed-form
+  -- deposit change over *all* batch certs (`allDCerts tx`, accumulated from the
+  -- pre-batch cert state `CertStateOf ls₀`) equals the actual net `coinFromDeposits`
+  -- change of the post-`ENTITIES` cert state `cs₂`.  The premises pin `cs₂` to the
+  -- batch's cert evolution (`SUBLEDGERS` over the sub-txs, then the top-level
+  -- `ENTITIES`); composing the per-step cert bridges across the batch is #1210's
+  -- responsibility, so the `LEDGER-pov` consumer takes the combined equation as given.
+  ( batch-cert-deposits-bridge :
+      ∀ {Γsub : SubLedgerEnv} {ls₀ ls₁ : LedgerState} {Γe : CertEnv} {cs₂ : CertState}
+      → SubLedgerEnv.isTopLevelValid Γsub ≡ true
+      → Γsub ⊢ ls₀ ⇀⦇ SubTransactionsOf tx ,SUBLEDGERS⦈ ls₁
+      → Γe ⊢ CertStateOf ls₁ ⇀⦇ DCertsOf tx ,ENTITIES⦈ cs₂
+      → depositsChange (PParamsOf Γe) (CertStateOf ls₀) (allDCerts tx)
+        ≡ coinFromDeposits cs₂ ⊖ coinFromDeposits (CertStateOf ls₀) )
 
   -- Governance-deposit accounting (to be discharged by a future `Gov.Properties.PoV`).
   -- `rmOrphanDRepVotes` only rewrites `votes.gvDRep`, never `GovActionState.deposit`,
@@ -241,25 +260,25 @@ module LEDGER-PoV
       → TxIdOf tx ∉ mapˢ proj₁ (dom (UTxOOf s₀))
       → getCoin s₀ + cbalance (outs tx) + TxFeesOf tx + DonationsOf tx
         ≡ getCoin s₁ + cbalance (UTxOOf s₀ ∣ SpendInputsOf tx) )
-  -- The batch balance `consumedBatch ≡ producedBatch`, coin-projected, with the
-  -- minted term dropped (no ADA minting) and the cert-deposit change rephrased to
-  -- the chain's top/sub two-level `posPart`/`negPart` form.  #1186 discharges this
-  -- from the spec premise at the actual post-SUBLEDGERS/ENTITIES cert states `cs₁`,
-  -- `cs₂` (via `posNeg-deposits` + `CERTS-coinFromDeposits-updateCertDeposits`).  The
-  -- governance-deposit summands (`govProposalsDeposits`, top and per-sub) sit on the
-  -- produced side, matching `producedTx`.
-  ( UTXOW-batch-balance-coin : ∀ {Γ' : UTxOEnv} {s₀ s₁ : UTxOState} {cs₁ cs₂ : CertState}
+  -- Closed-form coin projection of the batch balance `consumedBatch ≡ producedBatch`
+  -- (#1186 discharges this from the spec premise; the minted term drops by `noMintTx`).
+  -- The cert-deposit change is in the spec's *closed form* — `refundCertDeposits` /
+  -- `newCertDeposits` of the pre-batch cert state over `allDCerts tx` — keeping this a
+  -- pure UTxO obligation (no post-batch cert state `cs₂`).  `bat'` converts it to the
+  -- chain's top/sub two-level `posPart`/`negPart` form via `batch-cert-deposits-bridge`
+  -- (#1210) together with `posNeg-deposits`.  The governance-deposit summands
+  -- (`govProposalsDeposits`, top and per-sub) sit on the produced side, matching
+  -- `producedTx`.
+  ( UTXOW-batch-balance-coin : ∀ {Γ' : UTxOEnv} {s₀ s₁ : UTxOState}
       → Γ' ⊢ s₀ ⇀⦇ tx ,UTXOW⦈ s₁
       → cbalance (UTxOOf Γ' ∣ SpendInputsOf tx) + getCoin (WithdrawalsOf tx)
-          + negPart (coinFromDeposits cs₂ ⊖ coinFromDeposits cs₁)
           + sum (map (λ stx → cbalance (UTxOOf Γ' ∣ SpendInputsOf stx) + getCoin (WithdrawalsOf stx))
                      (SubTransactionsOf tx))
-          + negPart (coinFromDeposits cs₁ ⊖ coinFromDeposits (CertStateOf Γ'))
+          + refundCertDeposits (PParamsOf Γ') (CertStateOf Γ') (allDCerts tx)
         ≡ cbalance (outs tx) + TxFeesOf tx + DonationsOf tx + getCoin (DirectDepositsOf tx)
-          + posPart (coinFromDeposits cs₂ ⊖ coinFromDeposits cs₁)
           + sum (map (λ stx → cbalance (outs stx) + DonationsOf stx + getCoin (DirectDepositsOf stx))
                      (SubTransactionsOf tx))
-          + posPart (coinFromDeposits cs₁ ⊖ coinFromDeposits (CertStateOf Γ'))
+          + newCertDeposits (PParamsOf Γ') (CertStateOf Γ') (allDCerts tx)
           + ( govProposalsDeposits (PParamsOf Γ') (ListOfGovProposalsOf tx)
             + sum (map (λ stx → govProposalsDeposits (PParamsOf Γ') (ListOfGovProposalsOf stx))
                        (SubTransactionsOf tx)) ) )
@@ -798,9 +817,7 @@ The batch balance, rephrased to expose direct deposits and bring withdrawals tog
                      (sum-map-+ (λ stx → cbalance (UTxOOf (UTxOStateOf s) ∣ SpendInputsOf stx))
                                 wdrwl (SubTransactionsOf tx)) ⟩
           Ctop + Wtop + CsubW + negPart dct + negPart dcs
-            ≡⟨ cong (_+ negPart dcs) (swap-right (Ctop + Wtop) CsubW (negPart dct)) ⟩
-          Ctop + Wtop + negPart dct + CsubW + negPart dcs
-            ≡⟨ UTXOW-batch-balance-coin {cs₁ = cs₁} {cs₂ = cs₂} utxoStep ⟩
+            ≡⟨ convert ⟩
           O + F + DN + DDtop + posPart dct + PsubDD + posPart dcs + totGov
             ≡⟨ cong (λ x → O + F + DN + DDtop + posPart dct + x + posPart dcs + totGov)
                     (sum-map-+ (λ stx → cbalance (outs stx) + DonationsOf stx)
@@ -819,6 +836,99 @@ The batch balance, rephrased to expose direct deposits and bring withdrawals tog
         CsubW = sum (map (λ stx → cbalance (UTxOOf (UTxOStateOf s) ∣ SpendInputsOf stx)
                                 + getCoin (WithdrawalsOf stx))
                          (SubTransactionsOf tx))
+
+        pp = LedgerEnv.pparams Γ
+
+        -- Abstract net-conversion: reconcile the closed-form cert-deposit change
+        -- (`bal`, with deposits as net `posPart`/`negPart`) with the two-level form,
+        -- using the single-level (`sf`) and two-level (`pn`) deposit identities.
+        -- Cancels the constant `D0 + PZ` on the right.
+        net-arith : ∀ (A B G PZ NZ Pt Ps Nt Ns D0 D2 : ℕ)
+          → A + NZ ≡ B + PZ + G
+          → D0 + PZ ≡ D2 + NZ
+          → D0 + Pt + Ps ≡ D2 + Nt + Ns
+          → A + Nt + Ns ≡ B + Pt + Ps + G
+        net-arith A B G PZ NZ Pt Ps Nt Ns D0 D2 bal sf pn =
+          +-cancelʳ-≡ (D0 + PZ) (A + Nt + Ns) (B + Pt + Ps + G) big
+          where
+          rearr-X : (A + Nt + Ns) + (D2 + NZ) ≡ (A + NZ) + (Nt + Ns + D2)
+          rearr-X = begin
+            (A + Nt + Ns) + (D2 + NZ)   ≡˘⟨ +-assoc (A + Nt + Ns) D2 NZ ⟩
+            A + Nt + Ns + D2 + NZ        ≡⟨ swap-right (A + Nt + Ns) D2 NZ ⟩
+            A + Nt + Ns + NZ + D2        ≡⟨ cong (_+ D2) (swap-right (A + Nt) Ns NZ) ⟩
+            A + Nt + NZ + Ns + D2        ≡⟨ cong (λ w → w + Ns + D2) (swap-right A Nt NZ) ⟩
+            A + NZ + Nt + Ns + D2        ≡⟨ +-assoc (A + NZ + Nt) Ns D2 ⟩
+            A + NZ + Nt + (Ns + D2)      ≡⟨ +-assoc (A + NZ) Nt (Ns + D2) ⟩
+            A + NZ + (Nt + (Ns + D2))    ≡⟨ cong (A + NZ +_) (sym (+-assoc Nt Ns D2)) ⟩
+            (A + NZ) + (Nt + Ns + D2)    ∎
+          rearr-Y : Nt + Ns + D2 ≡ D2 + Nt + Ns
+          rearr-Y = trans (+-comm (Nt + Ns) D2) (sym (+-assoc D2 Nt Ns))
+          rearr-Z : (B + PZ + G) + (D0 + Pt + Ps) ≡ (B + Pt + Ps + G) + (D0 + PZ)
+          rearr-Z = begin
+            (B + PZ + G) + (D0 + Pt + Ps)   ≡˘⟨ +-assoc (B + PZ + G) (D0 + Pt) Ps ⟩
+            (B + PZ + G) + (D0 + Pt) + Ps    ≡˘⟨ cong (_+ Ps) (+-assoc (B + PZ + G) D0 Pt) ⟩
+            (B + PZ + G) + D0 + Pt + Ps      ≡⟨ cong (λ w → w + D0 + Pt + Ps) (swap-right B PZ G) ⟩
+            B + G + PZ + D0 + Pt + Ps        ≡⟨ cong (λ w → w + Pt + Ps) (swap-right (B + G) PZ D0) ⟩
+            B + G + D0 + PZ + Pt + Ps        ≡⟨ cong (_+ Ps) (swap-right (B + G + D0) PZ Pt) ⟩
+            B + G + D0 + Pt + PZ + Ps        ≡⟨ swap-right (B + G + D0 + Pt) PZ Ps ⟩
+            B + G + D0 + Pt + Ps + PZ        ≡⟨ cong (λ w → w + Ps + PZ) (swap-right (B + G) D0 Pt) ⟩
+            B + G + Pt + D0 + Ps + PZ        ≡⟨ cong (λ w → w + PZ) (swap-right (B + G + Pt) D0 Ps) ⟩
+            B + G + Pt + Ps + D0 + PZ        ≡⟨ cong (λ w → w + Ps + D0 + PZ) (swap-right B G Pt) ⟩
+            B + Pt + G + Ps + D0 + PZ        ≡⟨ cong (λ w → w + D0 + PZ) (swap-right (B + Pt) G Ps) ⟩
+            B + Pt + Ps + G + D0 + PZ        ≡⟨ +-assoc (B + Pt + Ps + G) D0 PZ ⟩
+            (B + Pt + Ps + G) + (D0 + PZ)    ∎
+          big : (A + Nt + Ns) + (D0 + PZ) ≡ (B + Pt + Ps + G) + (D0 + PZ)
+          big = begin
+            (A + Nt + Ns) + (D0 + PZ)     ≡⟨ cong (A + Nt + Ns +_) sf ⟩
+            (A + Nt + Ns) + (D2 + NZ)     ≡⟨ rearr-X ⟩
+            (A + NZ) + (Nt + Ns + D2)     ≡⟨ cong (_+ (Nt + Ns + D2)) bal ⟩
+            (B + PZ + G) + (Nt + Ns + D2) ≡⟨ cong ((B + PZ + G) +_) rearr-Y ⟩
+            (B + PZ + G) + (D2 + Nt + Ns) ≡˘⟨ cong ((B + PZ + G) +_) pn ⟩
+            (B + PZ + G) + (D0 + Pt + Ps) ≡⟨ rearr-Z ⟩
+            (B + Pt + Ps + G) + (D0 + PZ) ∎
+
+        -- The #1186 closed-form batch balance (cert deposits closed-form over `allDCerts`).
+        closedEq : Ctop + Wtop + CsubW + refundCertDeposits pp (CertStateOf s) (allDCerts tx)
+                 ≡ O + F + DN + DDtop + PsubDD + newCertDeposits pp (CertStateOf s) (allDCerts tx) + totGov
+        closedEq = UTXOW-batch-balance-coin utxoStep
+
+        -- The #1210 batch cert-deposit bridge: closed-form change ≡ actual net change.
+        bridgeEq : depositsChange pp (CertStateOf s) (allDCerts tx) ≡ D₂ ⊖ D₀
+        bridgeEq = batch-cert-deposits-bridge valid subStep entitiesStep
+
+        refund≡ : refundCertDeposits pp (CertStateOf s) (allDCerts tx) ≡ negPart (D₂ ⊖ D₀)
+        refund≡ = cong negPart bridgeEq
+        new≡ : newCertDeposits pp (CertStateOf s) (allDCerts tx) ≡ posPart (D₂ ⊖ D₀)
+        new≡ = cong posPart bridgeEq
+
+        -- Closed-form balance with cert deposits rewritten to net pos/neg parts.
+        closedEq′ : Ctop + Wtop + CsubW + negPart (D₂ ⊖ D₀)
+                  ≡ O + F + DN + DDtop + PsubDD + posPart (D₂ ⊖ D₀) + totGov
+        closedEq′ = begin
+          Ctop + Wtop + CsubW + negPart (D₂ ⊖ D₀)
+            ≡˘⟨ cong (Ctop + Wtop + CsubW +_) refund≡ ⟩
+          Ctop + Wtop + CsubW + refundCertDeposits pp (CertStateOf s) (allDCerts tx)
+            ≡⟨ closedEq ⟩
+          O + F + DN + DDtop + PsubDD + newCertDeposits pp (CertStateOf s) (allDCerts tx) + totGov
+            ≡⟨ cong (λ w → O + F + DN + DDtop + PsubDD + w + totGov) new≡ ⟩
+          O + F + DN + DDtop + PsubDD + posPart (D₂ ⊖ D₀) + totGov
+            ∎
+
+        -- Convert the closed-form balance to the chain's two-level posPart/negPart form,
+        -- via `net-arith` fed `posneg` (two-level) and `posPart-negPart-sym` (net level).
+        convert : Ctop + Wtop + CsubW + negPart dct + negPart dcs
+                ≡ O + F + DN + DDtop + posPart dct + PsubDD + posPart dcs + totGov
+        convert = begin
+          Ctop + Wtop + CsubW + negPart dct + negPart dcs
+            ≡⟨ net-arith (Ctop + Wtop + CsubW) (O + F + DN + DDtop + PsubDD) totGov
+                         (posPart (D₂ ⊖ D₀)) (negPart (D₂ ⊖ D₀))
+                         (posPart dct) (posPart dcs) (negPart dct) (negPart dcs) D₀ D₂
+                         closedEq′ (posPart-negPart-sym D₂ D₀) posneg ⟩
+          O + F + DN + DDtop + PsubDD + posPart dct + posPart dcs + totGov
+            ≡⟨ cong (λ w → w + posPart dcs + totGov)
+                    (swap-right (O + F + DN + DDtop) PsubDD (posPart dct)) ⟩
+          O + F + DN + DDtop + posPart dct + PsubDD + posPart dcs + totGov
+            ∎
 
         reshuffle-to-DD :
             O + F + DN + DDtop + posPart dct + (Psub + subDirectDepsCoin) + posPart dcs
