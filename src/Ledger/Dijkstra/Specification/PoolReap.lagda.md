@@ -9,7 +9,7 @@ The pool reap transition system is responsible for removing pools
 slated for retirement in the given epoch.
 
 In Dijkstra, pool registration deposits are tracked as part of pool state
-(i.e., `PState`{.AgdaDatatype}).
+(i.e., `PState`{.AgdaRecord}).
 
 <!--
 ```agda
