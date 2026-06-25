@@ -373,6 +373,35 @@ code block with the standard HTML comment delimiters.  For example,
 
 See also: [the Agda documentation section on literate markdown][Agda literate markdown].
 
+### Type-checking while you work
+
+The specification is type-checked through the Nix flake, which pins the Agda version
+and all required libraries — there is no separate global Agda install to maintain. For
+day-to-day work, enter the development shell once and run Agda from there, so the
+toolchain is on your `PATH` for your editor and any other tooling:
+
+```bash
+nix develop                                              # Agda + libraries on PATH
+agda src/Ledger/Dijkstra/Specification/Ledger.lagda.md   # type-check one module
+```
+
+Type-checking a single module is much faster than `nix build` (which checks the whole
+specification) and is the quickest way to iterate on a proof. To check one module
+without staying in the shell:
+
+```bash
+nix develop --command agda src/Path/To/Module.lagda.md
+```
+
+If you use [direnv](https://direnv.net), add `use flake` to a `.envrc` and run `direnv
+allow`; the toolchain is then placed on your `PATH` automatically whenever you enter the
+project directory. Launching your editor — and any agent tooling, such as Claude Code —
+from that shell makes Agda available to all of it, which is cheaper than re-entering
+`nix develop` for each invocation.
+
+Generated artifacts (`*.agdai`, `Everything*.agda`, `_build/`, `/.agda/`) are
+git-ignored; don't commit them.
+
 ### Checking how your code looks on the site
 
 An important step in contributing any code to the repository is to check how it will
