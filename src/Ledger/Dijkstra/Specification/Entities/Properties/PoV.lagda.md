@@ -10,9 +10,10 @@ introduced in [CIP-159-11d][PR-1201].  In the Dijkstra era, `ENTITIES`{.AgdaData
 wraps the inner `CERTS`{.AgdaDatatype} step with per-transaction withdrawal- and
 direct-deposit-handling: withdrawals are applied to the rewards balance *before*
 `CERTS`{.AgdaDatatype}, direct deposits *after*.  The value-flow equation captures
-the net effect of all three components on `getCoin (CertState)`:
+the net effect of all three components on the cert-state rewards balance
+(`coinFromRewards`{.AgdaFunction}; the deposit pots are accounted separately):
 
-    getCoin s + getCoin (DirectDepositsOf Γ) ≡ getCoin s' + getCoin (WithdrawalsOf Γ)
+    coinFromRewards s + getCoin (DirectDepositsOf Γ) ≡ coinFromRewards s' + getCoin (WithdrawalsOf Γ)
 
 Intuitively, the deposits added on the right are matched by the withdrawals removed
 on the left — they "pass through" the rule.
@@ -96,7 +97,7 @@ module ENTITIES-PoV
   -- `Certs.Properties.PoV`; lifted to a module parameter so this PR proves only
   -- the `ENTITIES`/`LEDGER` layer (top-down strategy).
   ( CERTS-pov : ∀ {Γ : CertEnv} {s s' : CertState} {dCerts : List DCert}
-      → Γ ⊢ s ⇀⦇ dCerts ,CERTS⦈ s' → getCoin s ≡ getCoin s' )
+      → Γ ⊢ s ⇀⦇ dCerts ,CERTS⦈ s' → coinFromRewards s ≡ coinFromRewards s' )
   where
   open ApplyToRewards-PoV ∪ˡ-lookup-preserve sum-map-proj₂≡getCoin setToList-Unique public
 ```
@@ -110,7 +111,7 @@ per-batch `NetworkId`{.AgdaFunction} witnesses for `WithdrawalsOf Γ`{.AgdaBound
 `DirectDepositsOf Γ`{.AgdaBound} (produced at the call site by the
 `SUBUTXOW`{.AgdaDatatype} or `UTXOW`{.AgdaDatatype} step).  Then,
 
-    getCoin s + getCoin (DirectDepositsOf Γ) ≡ getCoin s' + getCoin (WithdrawalsOf Γ)
+    coinFromRewards s + getCoin (DirectDepositsOf Γ) ≡ coinFromRewards s' + getCoin (WithdrawalsOf Γ)
 
 **Formally**.
 
@@ -119,7 +120,7 @@ per-batch `NetworkId`{.AgdaFunction} witnesses for `WithdrawalsOf Γ`{.AgdaBound
     → ∀[ a ∈ dom (WithdrawalsOf Γ)    ] NetworkIdOf a ≡ NetworkId
     → ∀[ a ∈ dom (DirectDepositsOf Γ) ] NetworkIdOf a ≡ NetworkId
     → Γ ⊢ s ⇀⦇ dCerts ,ENTITIES⦈ s'
-    → getCoin s + getCoin (DirectDepositsOf Γ) ≡ getCoin s' + getCoin (WithdrawalsOf Γ)
+    → coinFromRewards s + getCoin (DirectDepositsOf Γ) ≡ coinFromRewards s' + getCoin (WithdrawalsOf Γ)
 ```
 
 **Proof**.  Case-split on the single `ENTITIES`{.AgdaInductiveConstructor}
@@ -166,10 +167,9 @@ step then preserves `getCoin`{.AgdaFunction} through the inner closure;
 and the final rewrite folds `applyDirectDeposits`{.AgdaFunction} back
 into the LHS of the goal.
 
-Equivalences used implicitly: under
-`HasCoin-CertState`{.AgdaFunction}, `getCoin (CertState) ≡ getCoin (rewards ∘ DStateOf)`,
-which is why `G r₀`, `G aw`, `G r₁`, and `G (applyDirectDeposits dd r₁)`
-are interchangeable with `getCoin s`, `getCoin <intermediate>`,
-`getCoin <post-CERTS>`, and `getCoin s'` respectively — both sides
-project to the `rewards`{.AgdaField} field, which is exactly what the
-chain manipulates.
+Equivalences used implicitly: `coinFromRewards`{.AgdaFunction} is
+`rewardsBalance ∘ DStateOf`{.AgdaFunction} by definition, which is why `G r₀`, `G aw`,
+`G r₁`, and `G (applyDirectDeposits dd r₁)` are interchangeable with
+`coinFromRewards s`, `coinFromRewards <intermediate>`, `coinFromRewards <post-CERTS>`,
+and `coinFromRewards s'` respectively — both sides project to the `rewards`{.AgdaField}
+field, which is exactly what the chain manipulates.

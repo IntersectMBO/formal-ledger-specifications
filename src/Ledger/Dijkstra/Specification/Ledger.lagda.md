@@ -185,9 +185,10 @@ allColdCreds govSt es =
 4. the governance-action deposits, summed by `coinFromGovDeposit`{.AgdaFunction} over
    `GovActionState.deposit`{.AgdaField} for each action in the current `GovState`{.AgdaRecord}.
 
-N.B. `HasCoin-CertState` counts only the rewards balance (component 2) — its `getCoin` is
-`rewardsBalance ∘ DStateOf`{.AgdaFunction} — so components 3 and 4 must be added at the
-`LedgerState`{.AgdaRecord} level to make the `LEDGER-pov` equation balance against the
+`HasCoin-CertState` sums components 2 and 3 — its `getCoin` is `coinFromRewards cs +
+coinFromDeposits cs`{.AgdaFunction} (the rewards balance plus the three deposit pots) — so
+the `LedgerState`{.AgdaRecord} total adds only component 1 (UTxO coin) and component 4
+(governance-action deposits).  This balances the `LEDGER-pov` equation against the
 `UTXO`{.AgdaDatatype} batch-balance equation, which charges `newCertDeposits`{.AgdaFunction}
 and `govProposalsDeposits`{.AgdaFunction} on the *produced* side.  Cert deposits flow into
 the `DState`/`PState` pots tracked by `coinFromDeposits`{.AgdaFunction}; governance-action
@@ -205,7 +206,7 @@ coinFromGovDeposit = foldr (λ (_ , gaSt) acc → GovActionState.deposit gaSt + 
 instance
   HasCoin-LedgerState : HasCoin LedgerState
   HasCoin-LedgerState .getCoin s =  getCoin (UTxOStateOf s)
-                                    + rewardsBalance (DStateOf (CertStateOf s))
+                                    + coinFromRewards (CertStateOf s)
                                     + coinFromDeposits (CertStateOf s)
                                     + coinFromGovDeposit (GovStateOf s)
 ```

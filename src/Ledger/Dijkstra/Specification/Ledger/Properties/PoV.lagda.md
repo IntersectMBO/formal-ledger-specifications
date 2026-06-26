@@ -18,13 +18,16 @@ then `getCoin s ≡ getCoin s'`.
 Recall (from `Ledger.lagda.md`) that `getCoin (LedgerState)` is
 
     getCoin (UTxOStateOf s)
-    + rewardsBalance (DStateOf (CertStateOf s))
+    + coinFromRewards (CertStateOf s)
     + coinFromDeposits (CertStateOf s)
     + coinFromGovDeposit (GovStateOf s)
 
-This is the sum of UTxO coin, rewards balance, the deposits from `DState`, `PState`,
-and `GState` (`coinFromDeposits`{.AgdaFunction}), and the governance-action deposits
-(`coinFromGovDeposit`{.AgdaFunction}).
+This is the sum of UTxO coin, the cert-state rewards balance
+(`coinFromRewards`{.AgdaFunction}), the deposits from `DState`, `PState`, and `GState`
+(`coinFromDeposits`{.AgdaFunction}), and the governance-action deposits
+(`coinFromGovDeposit`{.AgdaFunction}).  Note `getCoin (CertState)` itself now sums the
+rewards balance *and* the deposit pots (`coinFromRewards + coinFromDeposits`), so the
+two middle summands are exactly `getCoin (CertStateOf s)`.
 
 > **Status — complete.** `LEDGER-pov` typechecks end-to-end under `--safe` (no
 > postulates or holes).  Following the top-down plan, this module proves only the
@@ -206,7 +209,7 @@ module LEDGER-PoV
   -- Certs-PoV stubs (discharged later by #1210).  These were the `Certs.Properties.PoV`
   -- provider lemmas; under the top-down plan they are module parameters here.
   ( CERTS-pov : ∀ {Γ : CertEnv} {s s' : CertState} {dCerts : List DCert}
-      → Γ ⊢ s ⇀⦇ dCerts ,CERTS⦈ s' → getCoin s ≡ getCoin s' )
+      → Γ ⊢ s ⇀⦇ dCerts ,CERTS⦈ s' → coinFromRewards s ≡ coinFromRewards s' )
   -- Closed-form cert-deposit coin equation: the post-`CERTS` `CertState` has the same
   -- `coinFromDeposits` as the closed-form `updateCertDeposits` applied to the initial
   -- state and the cert list.  (#1210 discharges this using the ledger-level
@@ -422,8 +425,8 @@ deposits.
   SUBLEDGERS-certs-pov : ∀ {Γ : SubLedgerEnv} {s₀ s₁ : LedgerState} {stxs : List SubLevelTx}
     → SubLedgerEnv.isTopLevelValid Γ ≡ true
     → Γ ⊢ s₀ ⇀⦇ stxs ,SUBLEDGERS⦈ s₁
-    → getCoin (CertStateOf s₀) + sum (map ddwl stxs)
-      ≡ getCoin (CertStateOf s₁) + sum (map wdrwl stxs)
+    → coinFromRewards (CertStateOf s₀) + sum (map ddwl stxs)
+      ≡ coinFromRewards (CertStateOf s₁) + sum (map wdrwl stxs)
 
   SUBLEDGERS-certs-pov _ (BS-base Id-nop) = refl
 
@@ -433,28 +436,28 @@ deposits.
   SUBLEDGERS-certs-pov {Γ} isV (BS-ind {s = s₀} {s' = s₁} {sigs} {s'' = sₙ}
     (SUBLEDGER-V {stx = stx} (isV' , subutxowStep , entitiesStep , _)) rest) =
     begin
-      getCoin (CertStateOf s₀) + (getCoin (DirectDepositsOf stx) + sum (map ddwl sigs))
-        ≡⟨ sym (+-assoc (getCoin (CertStateOf s₀))
+      coinFromRewards (CertStateOf s₀) + (getCoin (DirectDepositsOf stx) + sum (map ddwl sigs))
+        ≡⟨ sym (+-assoc (coinFromRewards (CertStateOf s₀))
                         (getCoin (DirectDepositsOf stx))
                         (sum (map ddwl sigs))) ⟩
-      (getCoin (CertStateOf s₀) + getCoin (DirectDepositsOf stx)) + sum (map ddwl sigs)
+      (coinFromRewards (CertStateOf s₀) + getCoin (DirectDepositsOf stx)) + sum (map ddwl sigs)
         ≡⟨ cong (_+ sum (map ddwl sigs))
                 (ENTITIES-pov wd-netId dd-netId entitiesStep) ⟩
-      (getCoin (CertStateOf s₁) + getCoin (WithdrawalsOf stx)) + sum (map ddwl sigs)
-        ≡⟨ swap-right (getCoin (CertStateOf s₁))
+      (coinFromRewards (CertStateOf s₁) + getCoin (WithdrawalsOf stx)) + sum (map ddwl sigs)
+        ≡⟨ swap-right (coinFromRewards (CertStateOf s₁))
                       (getCoin (WithdrawalsOf stx))
                       (sum (map ddwl sigs)) ⟩
-      (getCoin (CertStateOf s₁) + sum (map ddwl sigs)) + getCoin (WithdrawalsOf stx)
+      (coinFromRewards (CertStateOf s₁) + sum (map ddwl sigs)) + getCoin (WithdrawalsOf stx)
         ≡⟨ cong (_+ getCoin (WithdrawalsOf stx)) ih ⟩
-      (getCoin (CertStateOf sₙ) + sum (map wdrwl sigs)) + getCoin (WithdrawalsOf stx)
-        ≡⟨ swap-right (getCoin (CertStateOf sₙ))
+      (coinFromRewards (CertStateOf sₙ) + sum (map wdrwl sigs)) + getCoin (WithdrawalsOf stx)
+        ≡⟨ swap-right (coinFromRewards (CertStateOf sₙ))
                       (sum (map wdrwl sigs))
                       (getCoin (WithdrawalsOf stx)) ⟩
-      (getCoin (CertStateOf sₙ) + getCoin (WithdrawalsOf stx)) + sum (map wdrwl sigs)
-        ≡⟨ +-assoc (getCoin (CertStateOf sₙ))
+      (coinFromRewards (CertStateOf sₙ) + getCoin (WithdrawalsOf stx)) + sum (map wdrwl sigs)
+        ≡⟨ +-assoc (coinFromRewards (CertStateOf sₙ))
                    (getCoin (WithdrawalsOf stx))
                    (sum (map wdrwl sigs)) ⟩
-      getCoin (CertStateOf sₙ) + (getCoin (WithdrawalsOf stx) + sum (map wdrwl sigs))
+      coinFromRewards (CertStateOf sₙ) + (getCoin (WithdrawalsOf stx) + sum (map wdrwl sigs))
         ∎
     where
     -- The two NetworkId witnesses, extracted from the SUBUTXOW step.
@@ -477,8 +480,8 @@ deposits.
     wd-netId = proj₁ netIds
     dd-netId = proj₂ netIds
 
-    ih : getCoin (CertStateOf s₁) + sum (map ddwl sigs)
-         ≡ getCoin (CertStateOf sₙ) + sum (map wdrwl sigs)
+    ih : coinFromRewards (CertStateOf s₁) + sum (map ddwl sigs)
+         ≡ coinFromRewards (CertStateOf sₙ) + sum (map wdrwl sigs)
     ih = SUBLEDGERS-certs-pov isV rest
 ```
 
@@ -557,7 +560,7 @@ are unchanged.  Only the `UTXOW` step affects `getCoin`, and it preserves it via
 
 ```agda
   LEDGER-pov {Γ} {s} (LEDGER-I (invalid , _ , utxoStep)) =
-    cong (λ u → u + getCoin (CertStateOf s) + coinFromDeposits (CertStateOf s)
+    cong (λ u → u + coinFromRewards (CertStateOf s) + coinFromDeposits (CertStateOf s)
                   + coinFromGovDeposit (GovStateOf s))
          (utxow-pov-invalid utxoStep invalid)
 ```
@@ -565,7 +568,7 @@ are unchanged.  Only the `UTXOW` step affects `getCoin`, and it preserves it via
 ### `LEDGER-V` case (valid transaction)
 
 The proof is a single equational chain over `LedgerState` coin totals.  Setting
-`U = getCoin (UTxOState)`, `R = rewardsBalance`, `D = coinFromDeposits`,
+`U = getCoin (UTxOState)`, `R = coinFromRewards`, `D = coinFromDeposits`,
 `G = coinFromGovDeposit`, and `allDirectDeps` / `allWdrls` for the top-level and
 sub-level totals of direct deposits and withdrawals respectively, the goal
 `getCoin s ≡ getCoin s'` is
@@ -626,8 +629,8 @@ are stated explicitly to keep the chain readable.
       D₂ = coinFromDeposits cs₂
 
       R₀ R₂ : Coin
-      R₀ = rewardsBalance (DStateOf (CertStateOf s))
-      R₂ = rewardsBalance (DStateOf cs₂)
+      R₀ = coinFromRewards (CertStateOf s)
+      R₂ = coinFromRewards cs₂
 
       -- Governance-deposit summands of the LedgerState totals.  G₀ is the initial
       -- GovState's deposit; G' is the final state's (`rmOrphanDRepVotes cs₂ govSt₂`),
@@ -708,27 +711,27 @@ The "combined" `ENTITIES-pov` invocation: pre-batch `certState` + all direct dep
 key step where direct deposits cancel between the UTxO and CertState sides of the ledger.
 
 ```agda
-      combined-certs : getCoin (CertStateOf s) + allDirectDeps
-                     ≡ getCoin cs₂ + allWdrls
+      combined-certs : coinFromRewards (CertStateOf s) + allDirectDeps
+                     ≡ coinFromRewards cs₂ + allWdrls
       combined-certs =
         begin
-          getCoin (CertStateOf s) + allDirectDeps
-            ≡⟨ cong (getCoin (CertStateOf s) +_)
+          coinFromRewards (CertStateOf s) + allDirectDeps
+            ≡⟨ cong (coinFromRewards (CertStateOf s) +_)
                     (+-comm (getCoin (DirectDepositsOf tx)) subDirectDepsCoin) ⟩
-          getCoin (CertStateOf s) + (subDirectDepsCoin + getCoin (DirectDepositsOf tx))
-            ≡⟨ sym (+-assoc (getCoin (CertStateOf s))
+          coinFromRewards (CertStateOf s) + (subDirectDepsCoin + getCoin (DirectDepositsOf tx))
+            ≡⟨ sym (+-assoc (coinFromRewards (CertStateOf s))
                             subDirectDepsCoin
                             (getCoin (DirectDepositsOf tx))) ⟩
-          getCoin (CertStateOf s) + subDirectDepsCoin + getCoin (DirectDepositsOf tx)
+          coinFromRewards (CertStateOf s) + subDirectDepsCoin + getCoin (DirectDepositsOf tx)
             ≡⟨ cong (_+ getCoin (DirectDepositsOf tx))
                     (SUBLEDGERS-certs-pov valid subStep) ⟩
-          getCoin cs₁ + subWdrlsCoin + getCoin (DirectDepositsOf tx)
-            ≡⟨ swap-right (getCoin cs₁) subWdrlsCoin (getCoin (DirectDepositsOf tx)) ⟩
-          getCoin cs₁ + getCoin (DirectDepositsOf tx) + subWdrlsCoin
+          coinFromRewards cs₁ + subWdrlsCoin + getCoin (DirectDepositsOf tx)
+            ≡⟨ swap-right (coinFromRewards cs₁) subWdrlsCoin (getCoin (DirectDepositsOf tx)) ⟩
+          coinFromRewards cs₁ + getCoin (DirectDepositsOf tx) + subWdrlsCoin
             ≡⟨ cong (_+ subWdrlsCoin) (ENTITIES-pov top-wd-netId top-dd-netId entitiesStep) ⟩
-          getCoin cs₂ + getCoin (WithdrawalsOf tx) + subWdrlsCoin
-            ≡⟨ +-assoc (getCoin cs₂) (getCoin (WithdrawalsOf tx)) subWdrlsCoin ⟩
-          getCoin cs₂ + (getCoin (WithdrawalsOf tx) + subWdrlsCoin)
+          coinFromRewards cs₂ + getCoin (WithdrawalsOf tx) + subWdrlsCoin
+            ≡⟨ +-assoc (coinFromRewards cs₂) (getCoin (WithdrawalsOf tx)) subWdrlsCoin ⟩
+          coinFromRewards cs₂ + (getCoin (WithdrawalsOf tx) + subWdrlsCoin)
             ∎
 ```
 
