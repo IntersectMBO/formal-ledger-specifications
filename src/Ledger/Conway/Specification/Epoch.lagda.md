@@ -141,7 +141,7 @@ record NewEpochState : Type where
     The formal specification utilizes the type `PoolDelegatedStake`{.AgdaDatatype}
     in lieu of the derived type `PoolDistr`{.AgdaDatatype} (Figure 5, Shelley
     specification [CVG19](#shelley-ledger-spec)). The latter can be computed from the
-    former by divinding the associated `Coin`{.AgdaDatatype} to each `KeyHash`{.AgdaDatatype}
+    former by dividing the associated `Coin`{.AgdaDatatype} to each `KeyHash`{.AgdaDatatype}
     by the total stake in the map.
 
     In addition, the formal specification omits the VRF key hashes in the
@@ -377,7 +377,7 @@ Relevant quantities are:
 ### Applying Reward Updates {#sec:applying-reward-updates}
 
 This section defines the function `applyRUpd`{.AgdaFunction}, which applies a
-`RewardUpdate`{.AgdaDatatype} to the `EpochState`{.AgdaFunction}.
+`RewardUpdate`{.AgdaRecord} to the `EpochState`{.AgdaFunction}.
 
 ```agda
 applyRUpd : RewardUpdate → EpochState → EpochState
@@ -406,7 +406,7 @@ applyRUpd rewardUpdate ⟦ ⟦ treasury , reserves ⟧ᵃ
 ## Stake Distributions {#sec:stake-distributions}
 
 This section defines the functions
-`calculatePoolDelegatedState`{.AgdaFunction},
+`calculatePoolDelegatedStake`{.AgdaFunction},
 `calculateVDelegDelegatedStake`{.AgdaFunction}, and
 `mkStakeDistrs`{.AgdaFunction}, which calculates stake distributions
 for voting purposes.
@@ -435,10 +435,10 @@ opaque
       sd = aggregate₊ ((stakeCredentialsPerPool ∘ʳ (StakeOf ss ˢ)) ᶠˢ)
 ```
 
-The function `calculatePoolDelegatedState`{.AgdaFunction} calculates the delegated
+The function `calculatePoolDelegatedStake`{.AgdaFunction} calculates the delegated
 stake to `SPOs`{.AgdaInductiveConstructor}.  This function is used both in the
 `EPOCH`{.AgdaDatatype} rule (via
-`calculatePoolDelegatedStateForVoting`{.AgdaFunction}, see below) and in the
+`calculatePoolDelegatedStakeForVoting`{.AgdaFunction}, see below) and in the
 `NEWEPOCH`{.AgdaDatatype} rule.
 
 ```agda
@@ -582,7 +582,7 @@ private variable
 
 The `EPOCH`{.AgdaDatatype} transition system updates several parts of the
 `EpochState`{.AgdaDatatype}. We encapsulate these updates using Agda's module
-system. This modularization reduces typechecking times and helps strucuturing
+system. This modularization reduces typechecking times and helps structuring
 proofs about properties of the `EPOCH`{.AgdaDatatype} transition system.
 
 ### Update Modules and Functions

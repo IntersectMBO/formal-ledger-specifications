@@ -1,6 +1,6 @@
 ---
 source_branch: master
-source_path: src/Ledger/Conway/Specification/Epoch.lagda.md
+source_path: src/Ledger/Dijkstra/Specification/Epoch.lagda.md
 ---
 
 # Epoch Boundary {#sec:epoch-boundary}
@@ -91,8 +91,8 @@ instance
   HasSnapshots-EpochState : HasSnapshots EpochState
   HasSnapshots-EpochState .SnapshotsOf = EpochState.ss
 
-  HasLState-EpochState : HasLedgerState EpochState
-  HasLState-EpochState .LedgerStateOf = EpochState.ls
+  HasLedgerState-EpochState : HasLedgerState EpochState
+  HasLedgerState-EpochState .LedgerStateOf = EpochState.ls
 
   HasGovState-EpochState : HasGovState EpochState
   HasGovState-EpochState .GovStateOf = GovStateOf ∘ LedgerStateOf
@@ -139,7 +139,7 @@ record NewEpochState : Type where
     The formal specification utilizes the type `PoolDelegatedStake`{.AgdaDatatype}
     in lieu of the derived type `PoolDistr`{.AgdaDatatype} (Figure 5, Shelley
     specification [CVG19](#shelley-ledger-spec)). The latter can be computed from the
-    former by divinding the associated `Coin`{.AgdaDatatype} to each `KeyHash`{.AgdaDatatype}
+    former by dividing the associated `Coin`{.AgdaDatatype} to each `KeyHash`{.AgdaDatatype}
     by the total stake in the map.
 
     In addition, the formal specification omits the VRF key hashes in the
@@ -169,8 +169,8 @@ instance
   Hastreasury-NewEpochState : HasTreasury NewEpochState
   Hastreasury-NewEpochState .TreasuryOf = TreasuryOf ∘ EpochStateOf
 
-  HasLState-NewEpochState : HasLedgerState NewEpochState
-  HasLState-NewEpochState .LedgerStateOf = LedgerStateOf ∘ EpochStateOf
+  HasLedgerState-NewEpochState : HasLedgerState NewEpochState
+  HasLedgerState-NewEpochState .LedgerStateOf = LedgerStateOf ∘ EpochStateOf
 
   HasGovState-NewEpochState : HasGovState NewEpochState
   HasGovState-NewEpochState .GovStateOf = GovStateOf ∘ LedgerStateOf
@@ -369,7 +369,7 @@ Relevant quantities are:
 ### Applying Reward Updates {#sec:applying-reward-updates}
 
 This section defines the function `applyRUpd`{.AgdaFunction}, which applies a
-`RewardUpdate`{.AgdaDatatype} to the `EpochState`{.AgdaFunction}.
+`RewardUpdate`{.AgdaRecord} to the `EpochState`{.AgdaFunction}.
 
 ```agda
 applyRUpd : RewardUpdate → EpochState → EpochState
@@ -398,7 +398,7 @@ applyRUpd rewardUpdate ⟦ ⟦ treasury , reserves ⟧ᵃ
 ## Stake Distributions {#sec:stake-distributions}
 
 This section defines the functions
-`calculatePoolDelegatedState`{.AgdaFunction},
+`calculatePoolDelegatedStake`{.AgdaFunction},
 `calculateVDelegDelegatedStake`{.AgdaFunction}, and
 `mkStakeDistrs`{.AgdaFunction}, which calculates stake distributions
 for voting purposes.
@@ -427,18 +427,17 @@ opaque
       sd = aggregate₊ ((stakeCredentialsPerPool ∘ʳ (StakeOf ss ˢ)) ᶠˢ)
 ```
 
-The function `calculatePoolDelegatedState`{.AgdaFunction} calculates the delegated
+The function `calculatePoolDelegatedStake`{.AgdaFunction} calculates the delegated
 stake to `SPOs`{.AgdaInductiveConstructor}.  This function is used both in the
 `EPOCH`{.AgdaDatatype} rule (via
-`calculatePoolDelegatedStateForVoting`{.AgdaFunction}, see below) and in the
+`calculatePoolDelegatedStakeForVoting`{.AgdaFunction}, see below) and in the
 `NEWEPOCH`{.AgdaDatatype} rule.
 
 ```agda
   stakeFromGADeposits
     : GovState
-    → UTxOState
     → Stake
-  stakeFromGADeposits govSt utxoSt =
+  stakeFromGADeposits govSt =
     foldr (λ (_ , gaSt) acc → ❴ (stake (gaSt .returnAddr) , gaSt .deposit) ❵ ∪⁺ acc) ∅ govSt
 ```
 
@@ -465,7 +464,7 @@ module VDelegDelegatedStake
   -- compute the stake for a credential
   stakePerCredential : Credential → Coin
   stakePerCredential c = cbalance ((UTxOOf utxoSt) ∣^' λ (a , _ , _ , _ ) → stakeCred a ≡ just c)
-                         + fromMaybe 0 (lookupᵐ? (stakeFromGADeposits govSt utxoSt) c)
+                         + fromMaybe 0 (lookupᵐ? (stakeFromGADeposits govSt) c)
                          + fromMaybe 0 (lookupᵐ? (RewardsOf dState) c)
 
   calculate : VDeleg ⇀ Coin
@@ -495,15 +494,14 @@ opaque
 ```agda
   calculatePoolDelegatedStakeForVoting
     : Snapshot
-    → UTxOState
     → GovState
     → KeyHash ⇀ Coin
-  calculatePoolDelegatedStakeForVoting ss utxoSt govSt
+  calculatePoolDelegatedStakeForVoting ss govSt
     = calculatePoolDelegatedStake ss ∪⁺ (stakeFromDeposits ∣ dom (PoolsOf ss))
     where
       stakeFromDeposits : KeyHash ⇀ Coin
       stakeFromDeposits = aggregate₊ (((StakeDelegsOf ss ˢ) ⁻¹ʳ
-                                      ∘ʳ (stakeFromGADeposits govSt utxoSt ˢ)) ᶠˢ)
+                                      ∘ʳ (stakeFromGADeposits govSt ˢ)) ᶠˢ)
 ```
 
 The function `calculatePoolDelegatedStakeForVoting`{.AgdaFunction} computes the
@@ -538,7 +536,7 @@ mkStakeDistrs
   → StakeDistrs
 mkStakeDistrs ss currentEpoch utxoSt govSt gState dState =
   ⟦ calculateVDelegDelegatedStake currentEpoch utxoSt govSt gState dState
-  , calculatePoolDelegatedStakeForVoting ss utxoSt govSt ⟧
+  , calculatePoolDelegatedStakeForVoting ss govSt ⟧
 ```
 
 <!--
@@ -568,7 +566,7 @@ private variable
 
 The `EPOCH`{.AgdaDatatype} transition system updates several parts of the
 `EpochState`{.AgdaDatatype}. We encapsulate these updates using Agda's module
-system. This modularization reduces typechecking times and helps strucuturing
+system. This modularization reduces typechecking times and helps structuring
 proofs about properties of the `EPOCH`{.AgdaDatatype} transition system.
 
 ### Update Modules and Functions
