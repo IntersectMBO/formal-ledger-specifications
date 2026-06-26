@@ -3,40 +3,16 @@ source_branch: master
 source_path: src/Ledger/Dijkstra/Specification/Entities/Properties/PoV.lagda.md
 ---
 
-# Properties of `ENTITIES`: Preservation of Value {#thm:ENTITIES-PoV}
+## Properties of `ENTITIES`: Preservation of Value {#thm:ENTITIES-PoV}
 
-This module proves preservation of value for the `ENTITIES`{.AgdaDatatype} rule
-introduced in [CIP-159-11d][PR-1201].  In the Dijkstra era, `ENTITIES`{.AgdaDatatype}
-wraps the inner `CERTS`{.AgdaDatatype} step with per-transaction withdrawal- and
-direct-deposit-handling: withdrawals are applied to the rewards balance *before*
-`CERTS`{.AgdaDatatype}, direct deposits *after*.  The value-flow equation captures
-the net effect of all three components on the cert-state rewards balance
-(`coinFromRewards`{.AgdaFunction}; the deposit pots are accounted separately):
+This module proves preservation of value for the `ENTITIES`{.AgdaDatatype} rule.
 
-    coinFromRewards s + getCoin (DirectDepositsOf Γ) ≡ coinFromRewards s' + getCoin (WithdrawalsOf Γ)
-
-Intuitively, the deposits added on the right are matched by the withdrawals removed
-on the left — they "pass through" the rule.
-
-## Proof Strategy
-
-Case-split on the single `ENTITIES`{.AgdaInductiveConstructor} constructor to expose
-the three internal phases.  Letting `r₀`{.AgdaBound} denote the initial rewards map
-and `r₁`{.AgdaBound} the rewards map after `CERTS`{.AgdaDatatype}, the equational
-chain is
-
-+  `applyWithdrawals-pov`{.AgdaFunction} on `(wdrls, r₀)` rewrites `getCoin r₀` as
-   `getCoin (applyWithdrawals wdrls r₀) + getCoin wdrls`.
-+  `CERTS-pov`{.AgdaFunction} on the inner step rewrites
-   `getCoin (applyWithdrawals wdrls r₀)` as `getCoin r₁` (the rewards balance is
-   preserved by the closure of `CERT`{.AgdaDatatype}).
-+  `applyDirectDeposits-pov`{.AgdaFunction} on `(dd, r₁)` rewrites
-   `getCoin (applyDirectDeposits dd r₁)` as `getCoin r₁ + getCoin dd`.
-
-The three rewrites compose into the desired equation modulo associativity and
-commutativity of `+` on `Coin`.
-
-[PR-1201]: https://github.com/IntersectMBO/formal-ledger-specifications/pull/1201
+In the Dijkstra era, `ENTITIES`{.AgdaDatatype} wraps the inner `CERTS`{.AgdaDatatype}
+step with per-transaction withdrawal and direct-deposit handling.  Withdrawals and
+deposits are applied to the rewards balance before and after `CERTS`{.AgdaDatatype},
+respectively.  The "value-flow" equation proved below captures the net effect of all
+three components on the cert-state rewards balance (`coinFromRewards`{.AgdaFunction};
+the deposits are accounted separately).
 
 <!--
 ```agda
@@ -48,11 +24,12 @@ module Ledger.Dijkstra.Specification.Entities.Properties.PoV
   (gs : GovStructure) (open GovStructure gs) where
 
 open import Data.List.Relation.Unary.Unique.Propositional using (Unique)
-open import Data.Nat.Properties using (+-comm; +-assoc; +-0-monoid)
+open import Data.Nat.Properties using (+-comm; +-assoc)
 
 open import Ledger.Prelude
 
-open import Ledger.Dijkstra.Specification.Account gs using (DirectDeposits; DirectDepositsOf)
+open import Ledger.Dijkstra.Specification.Account gs
+  using (DirectDeposits; DirectDepositsOf)
 open import Ledger.Dijkstra.Specification.Certs gs
 open import Ledger.Dijkstra.Specification.Entities gs
 open import Ledger.Dijkstra.Specification.Entities.Properties.ApplyToRewardsPoV gs
@@ -62,20 +39,17 @@ open RewardAddress
 open ≡-Reasoning
 
 private variable
-  A      : Type
-  dCerts : List DCert
+  A       : Type
+  dCerts  : List DCert
 
-instance
-  _ = +-0-monoid
 ```
 -->
 
 ## The `ENTITIES-pov` module
 
-`ENTITIES-pov`{.AgdaFunction} inherits the three set/map module parameters of
-`ApplyToRewards-PoV`{.AgdaModule} — they are needed by
-`applyWithdrawals-pov`{.AgdaFunction} and `applyDirectDeposits-pov`{.AgdaFunction} —
-and threads them through unchanged.
+`ENTITIES-pov`{.AgdaFunction} inherits the three module parameters of
+`ApplyToRewards-PoV`{.AgdaModule} (which are "obvious" facts which probably ought to
+be proved upstream in the `agda-sets` library).
 
 ```agda
 module ENTITIES-PoV
@@ -84,18 +58,14 @@ module ENTITIES-PoV
       → c' ≢ c → lookupᵐ? (❴ c , v ❵ ∪ˡ m) c' ≡ lookupᵐ? m c' )
 
   ( sum-map-proj₂≡getCoin :
-      (m : RewardAddress ⇀ Coin)
-      → sum (map proj₂ (setToList (m ˢ))) ≡ getCoin m )
+    (m : RewardAddress ⇀ Coin) → sum (map proj₂ (setToList (m ˢ))) ≡ getCoin m )
 
   ( setToList-Unique :
       (m : RewardAddress ⇀ Coin)
       → ∀[ a ∈ dom (m ˢ) ] NetworkIdOf a ≡ NetworkId
       → Unique (map (stake ∘ proj₁) (setToList (m ˢ))) )
 
-  -- Certs-PoV stub (discharged later by PR #1210): preservation of value across
-  -- the reflexive-transitive `CERTS` closure.  Formerly proved in
-  -- `Certs.Properties.PoV`; lifted to a module parameter so this PR proves only
-  -- the `ENTITIES`/`LEDGER` layer (top-down strategy).
+  -- Value preservation of the `CERTS` rule to be proved in `Certs.Properties.PoV`.
   ( CERTS-pov : ∀ {Γ : CertEnv} {s s' : CertState} {dCerts : List DCert}
       → Γ ⊢ s ⇀⦇ dCerts ,CERTS⦈ s' → coinFromRewards s ≡ coinFromRewards s' )
   where
@@ -123,53 +93,31 @@ per-batch `NetworkId`{.AgdaFunction} witnesses for `WithdrawalsOf Γ`{.AgdaBound
     → coinFromRewards s + getCoin (DirectDepositsOf Γ) ≡ coinFromRewards s' + getCoin (WithdrawalsOf Γ)
 ```
 
-**Proof**.  Case-split on the single `ENTITIES`{.AgdaInductiveConstructor}
-constructor to expose the inner `CERTS`{.AgdaDatatype} step and the threaded states.
+**Proof**.
 
-<!--
 ```agda
   ENTITIES-pov {Γ = Γ}
     {s  = ⟦ ⟦ _ , _ , r₀ , _ ⟧ᵈ , _ , _ ⟧ᶜˢ} {s' = ⟦ ⟦ _ , _ , _  , _ ⟧ᵈ , _ , _ ⟧ᶜˢ}
     wd-netId dd-netId (ENTITIES { rewards₁ = r₁ } (fst , wdrls⊆ , amts≤ , certsStep , ddCreds⊆ )) =
     begin
-      G r₀ + DD
-        ≡⟨ cong (_+ DD) (applyWithdrawals-pov wdrls r₀ wdrls⊆ wd-netId amts≤) ⟩
-      (G aw + W) + DD
-        ≡⟨ +-assoc (G aw) W DD ⟩
-      G aw + (W + DD)
-        ≡⟨ cong (G aw +_) (+-comm W DD) ⟩
-      G aw + (DD + W)
-        ≡˘⟨ +-assoc (G aw) DD W ⟩
-      (G aw + DD) + W
-        ≡⟨ cong (λ x → (x + DD) + W) (CERTS-pov certsStep) ⟩
-      (G r₁ + DD) + W
-        ≡˘⟨ cong (_+ W) (applyDirectDeposits-pov dd r₁ ddCreds⊆) ⟩
-      G (applyDirectDeposits dd r₁) + W
+      getCoin r₀ + dd
+        ≡⟨ cong (_+ dd) (applyWithdrawals-pov (WithdrawalsOf Γ) r₀ wdrls⊆ wd-netId amts≤) ⟩
+      getCoin aw + wdrls + dd
+        ≡⟨ +-assoc (getCoin aw) wdrls dd ⟩
+      getCoin aw + (wdrls + dd)
+        ≡⟨ cong (getCoin aw +_) (+-comm wdrls dd) ⟩
+      getCoin aw + (dd + wdrls)
+        ≡˘⟨ +-assoc (getCoin  aw) dd wdrls ⟩
+      getCoin aw + dd + wdrls
+        ≡⟨ cong (λ x → (x + dd) + wdrls) (CERTS-pov certsStep) ⟩
+      (getCoin r₁ + dd) + wdrls
+        ≡˘⟨ cong (_+ wdrls) (applyDirectDeposits-pov (DirectDepositsOf Γ) r₁ ddCreds⊆) ⟩
+      getCoin (applyDirectDeposits (DirectDepositsOf Γ) r₁) + wdrls
         ∎
     where
-    wdrls : Withdrawals
-    wdrls = WithdrawalsOf Γ
-    dd : DirectDeposits
-    dd = CertEnv.directDeposits Γ
+    dd  wdrls : Coin
+    dd = getCoin (DirectDepositsOf Γ)
+    wdrls = getCoin (WithdrawalsOf Γ)
     aw : Rewards
-    aw = applyWithdrawals wdrls r₀
-    G : Rewards → Coin
-    G = getCoin
-    W DD : Coin
-    W  = getCoin wdrls
-    DD = getCoin dd
+    aw = applyWithdrawals (WithdrawalsOf Γ) r₀
 ```
--->
-
-The first three rewrites move `W` past `DD` to set up the
-`CERTS-pov`{.AgdaFunction} application; the `CERTS-pov`{.AgdaFunction}
-step then preserves `getCoin`{.AgdaFunction} through the inner closure;
-and the final rewrite folds `applyDirectDeposits`{.AgdaFunction} back
-into the LHS of the goal.
-
-Equivalences used implicitly: `coinFromRewards`{.AgdaFunction} is
-`rewardsBalance ∘ DStateOf`{.AgdaFunction} by definition, which is why `G r₀`, `G aw`,
-`G r₁`, and `G (applyDirectDeposits dd r₁)` are interchangeable with
-`coinFromRewards s`, `coinFromRewards <intermediate>`, `coinFromRewards <post-CERTS>`,
-and `coinFromRewards s'` respectively — both sides project to the `rewards`{.AgdaField}
-field, which is exactly what the chain manipulates.

@@ -3,7 +3,7 @@ source_branch: master
 source_path: src/Ledger/Dijkstra/Specification/Entities/Properties/ApplyToRewardsPoV.lagda.md
 ---
 
-# `applyToRewards` Preservation of Value {#sec:apply-to-rewards-pov}
+## `applyToRewards` Preservation of Value {#sec:apply-to-rewards-pov}
 
 This module proves preservation of value for the two specializations of
 `applyToRewards`{.AgdaFunction} used inside the `ENTITIES`{.AgdaDatatype} rule.
@@ -38,12 +38,12 @@ open import Ledger.Dijkstra.Specification.Gov.Base using (GovStructure)
 module Ledger.Dijkstra.Specification.Entities.Properties.ApplyToRewardsPoV
   (gs : GovStructure) (open GovStructure gs) where
 
-open import Data.Nat.Properties using (+-identityʳ; +-comm; +-assoc; m∸n+n≡m; n≤0⇒n≡0)
-open import Data.Maybe.Properties using (just-injective)
 open import Data.List.Membership.Propositional.Properties using (∈-map⁺)
 open import Data.List.Relation.Unary.Any using (Any)
 open import Data.List.Relation.Unary.All using (lookup)
 open import Data.List.Relation.Unary.Unique.Propositional using (Unique) renaming (_∷_ to _::_)
+open import Data.Maybe.Properties using (just-injective)
+open import Data.Nat.Properties using (+-identityʳ; +-comm; +-assoc; m∸n+n≡m; n≤0⇒n≡0)
 open import Relation.Binary using (IsEquivalence)
 
 open import Ledger.Prelude hiding (lookup)
@@ -61,7 +61,7 @@ open ≡-Reasoning
 ```
 -->
 
-## Shared helpers
+### Shared helpers
 
 ```agda
 getCoin-∪ˡ-overwrite : (acc : Rewards) (c : Credential) (v : Coin)
@@ -70,9 +70,6 @@ getCoin-∪ˡ-overwrite : (acc : Rewards) (c : Credential) (v : Coin)
 
 <!--
 ```agda
--- The new applyToRewards writes to its accumulator via ❴ k , v ❵ ∪ˡ acc;
--- left-biasedness of ∪ˡ makes this extensionally equal to the older
--- ❴ k , v ❵ ∪ˡ (acc ∣ ❴ k ❵ ᶜ) form; the following proves this at the getCoin level.
 getCoin-∪ˡ-overwrite acc c v =
   begin
     getCoin (❴ c , v ❵ ∪ˡ acc)
@@ -143,7 +140,7 @@ split-by-lookup acc c bal lookup-eq =
 ```
 -->
 
-## The `ApplyToRewards-PoV` module
+### The `ApplyToRewards-PoV` module
 
 The three assumed identities below are the same set/map identities used by the Conway
 PoV proofs; they are stated as module parameters here, to be discharged in a
@@ -183,9 +180,9 @@ lambda body of `applyToRewards f`.
     maybe (λ bal → ❴ stake addr , f bal amt ❵ ∪ˡ acc) acc (lookupᵐ? acc (stake addr))
 ```
 
-## Withdrawal preservation of value
+### Withdrawal preservation of value
 
-### `applyOne-pov`: one withdrawal step decreases `getCoin` by `amt`
+#### `applyOne-pov`: one withdrawal step decreases `getCoin` by `amt`
 
 When `lookupᵐ? acc (stake addr) ≡ just bal` and `amt ≤ bal`, applying a single
 withdrawal reduces the total by exactly `amt`.
@@ -215,16 +212,16 @@ withdrawal reduces the total by exactly `amt`.
 ```
 -->
 
-### `foldl-applyOne-pov` (fold induction)
+#### `foldl-applyOne-pov` (fold induction)
 
-The fold invariant tracks three things through the induction:
+The fold invariant tracks three things through the induction.
 
-1.  every remaining withdrawal credential is in the current accumulator's domain;
+1.  Every remaining withdrawal credential is in the current accumulator's domain.
 
-2.  every remaining withdrawal amount is bounded by the current balance at that
-    credential;
+2.  Every remaining withdrawal amount is bounded by the current balance at that
+    credential.
 
-3.  no credential is revisited (the `Unique`{.AgdaDatatype} witness on the
+3.  No credential is revisited (the `Unique`{.AgdaDatatype} witness on the
     stake-projected list).
 
 Uniqueness is essential here precisely because `applyOne _∸_` *modifies* the balance
@@ -235,8 +232,7 @@ holds.
 ```agda
   foldl-applyOne-pov : (acc : Rewards) (entries : List (RewardAddress × Coin))
     → ( ∀ {addr amt} → (addr , amt) ∈ˡ entries
-        → stake addr ∈ dom acc
-        × amt ≤ maybe id 0 (lookupᵐ? acc (stake addr)) )
+        →  stake addr ∈ dom acc × amt ≤ maybe id 0 (lookupᵐ? acc (stake addr)) )
     → Unique (map (stake ∘ proj₁) entries)
     → getCoin acc ≡ getCoin (foldl (applyOne _∸_) acc entries) + sum (map proj₂ entries)
 ```
@@ -246,15 +242,13 @@ holds.
   foldl-applyOne-pov acc [] _ _ = sym (+-identityʳ (indexedSumᵛ' id acc))
   foldl-applyOne-pov acc ((addr , amt) ∷ xs) h (c∉xs :: uniq-xs)
     with lookupᵐ? acc (stake addr) in eq
-  -- Nothing case: applyOne is the identity; the bound `h (here refl) .proj₂`
-  -- forces `amt ≡ 0`, which makes the recursive call's right-hand side equal
-  -- to ours.
+  -- Nothing case: applyOne is the identity; the bound `h (here refl) .proj₂` forces
+  -- `amt ≡ 0`, which makes the recursive call's right-hand side equal to ours.
   ... | nothing =
     let amt≤0 = subst (amt ≤_) (cong (maybe id 0) eq) (h (here refl) .proj₂)
-        amt≡0 = n≤0⇒n≡0 amt≤0
     in
     subst (λ a → getCoin acc ≡ getCoin (foldl (applyOne _∸_) acc xs) + (a + sum (map proj₂ xs)))
-          (sym amt≡0)
+          (sym (n≤0⇒n≡0 amt≤0))
           (foldl-applyOne-pov acc xs (λ mem → h (there mem)) uniq-xs)
   -- Just case: per-step decrease via `applyOne-pov`, then chain with the IH.
   ... | just bal = begin
@@ -270,7 +264,9 @@ holds.
         getCoin (foldl (applyOne _∸_) acc' xs) + (amt + sum (map proj₂ xs))
           ∎
     where
+    c : Credential
     c = stake addr
+
     acc' : Rewards
     acc' = ❴ c , bal ∸ amt ❵ ∪ˡ acc
 
@@ -302,8 +298,7 @@ holds.
   applyWithdrawals-pov : (wdrls : Withdrawals) (rwds : Rewards)
     → mapˢ stake (dom wdrls) ⊆ dom rwds
     → ∀[ a ∈ dom wdrls ] NetworkIdOf a ≡ NetworkId
-    → ∀[ (addr , amt) ∈ wdrls ˢ ]
-        amt ≤ maybe id 0 (lookupᵐ? rwds (stake addr))
+    → ∀[ (addr , amt) ∈ wdrls ˢ ] amt ≤ maybe id 0 (lookupᵐ? rwds (stake addr))
     → getCoin rwds ≡ getCoin (applyWithdrawals wdrls rwds) + getCoin wdrls
 ```
 
@@ -429,7 +424,7 @@ Note the slimmed-down signature relative to `applyWithdrawals-pov`: no
   applyDirectDeposits-pov dd rwds creds∈ =
     begin
       getCoin (applyDirectDeposits dd rwds)
-        ≡⟨ refl ⟩  -- by definition of `applyDirectDeposits = applyToRewards _+_`
+        ≡⟨ refl ⟩
       getCoin (foldl (applyOne _+_) rwds (setToList (dd ˢ)))
         ≡⟨ foldl-applyOne-pov-add rwds (setToList (dd ˢ)) inv ⟩
       getCoin rwds + sum (map proj₂ (setToList (dd ˢ)))
@@ -438,8 +433,7 @@ Note the slimmed-down signature relative to `applyWithdrawals-pov`: no
         ∎
     where
     open Equivalence
-    inv : ∀ {addr amt} → (addr , amt) ∈ˡ setToList (dd ˢ)
-        → stake addr ∈ dom rwds
+    inv : ∀ {addr amt} → (addr , amt) ∈ˡ setToList (dd ˢ) → stake addr ∈ dom rwds
     inv {addr} {amt} mem = creds∈ c∈dom-dd
       where
       addr-amt∈dd : (addr , amt) ∈ dd ˢ
