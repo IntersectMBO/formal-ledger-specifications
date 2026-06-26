@@ -182,13 +182,6 @@ allColdCreds govSt es =
    + `PState.deposits`{.AgdaField} (pool deposits, `KeyHash ⇀ Coin`)
    + `GState.deposits`{.AgdaField} (governance action deposits, `Credential ⇀ Coin`)
 
-N.B. Existing `HasCoin-CertState` only counts 2; 3 has to be added on at the
-`LedgerState` level to make the `LEDGER-pov` equation balance against the
-`UTXO`{.AgdaDatatype} batch-balance equation, which charges `newCertDeposits` and
-`govProposalsDeposits` on the consumed side.  Both of these are absorbed
-into `coinFromDeposits` on the produced side (cert deposits via the
-DState/PState deltas; gov-action deposits via the GState growth).
-
 <!--
 ```agda
 instance

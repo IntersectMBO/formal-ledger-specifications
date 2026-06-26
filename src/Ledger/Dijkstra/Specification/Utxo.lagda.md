@@ -221,7 +221,7 @@ outs : Tx ℓ  → UTxO
 outs tx = mapKeys (TxIdOf tx ,_) (TxOutsOf tx)
 
 balance : UTxO → Value
-balance utxo = ∑ˢ[ v ← valuesOfUTxO utxo ] v
+balance utxo = ∑[ x ← mapValues txOutToValue utxo ] x
 
 cbalance : UTxO → Coin
 cbalance utxo = coin (balance utxo)
@@ -310,11 +310,10 @@ module _ (pp : PParams) (certState : CertState) where
   consumedTx tx utxo = balance (utxo ∣ SpendInputsOf tx)
                        + MintedValueOf tx
                        + inject (getCoin (WithdrawalsOf tx))
-                       + inject (govProposalsDeposits pp (ListOfGovProposalsOf tx))
 
   consumed : TopLevelTx → UTxO → Value
   consumed txTop utxo = consumedTx txTop utxo
-                       + inject (newCertDeposits pp certState (allDCerts txTop))
+                       + inject (refundCertDeposits pp certState (allDCerts txTop))
 
   consumedBatch : TopLevelTx → UTxO → Value
   consumedBatch txTop utxo = consumed txTop utxo
@@ -331,11 +330,12 @@ the transaction and that amount is deposited into accounts.
   producedTx tx = balance (outs tx)
                   + inject (DonationsOf tx)
                   + inject (getCoin (DirectDepositsOf tx))
+                  + inject (govProposalsDeposits pp (ListOfGovProposalsOf tx))
 
   produced : TopLevelTx → Value
   produced txTop = producedTx txTop
                    + inject (TxFeesOf txTop)
-                   + inject (refundCertDeposits pp certState (allDCerts txTop))
+                   + inject (newCertDeposits pp certState (allDCerts txTop))
 
   producedBatch : TopLevelTx → Value
   producedBatch txTop = produced txTop

@@ -36,6 +36,7 @@ open import Tactic.Defaults
 open import stdlib-meta.Tactic.GenError
 
 open Equivalence
+open GovActionState
 open Inverse
 
 lookupActionId :
@@ -66,45 +67,45 @@ private
   isUpdateCommittee ⟦ TreasuryWithdrawal , _                ⟧ᵍᵃ = no λ()
   isUpdateCommittee ⟦ Info               , _                ⟧ᵍᵃ = no λ()
 
-  hasPrev : (ast : GovActionState) (v : ProtVer)
-    → Dec (∃[ v' ] (GovActionOf ast) ≡ ⟦ TriggerHardFork , v' ⟧ᵍᵃ × pvCanFollow v' v)
+  pvFollows : ∀ v' ver v → Dec (if pvCanFollowMajor v' ver
+                                   then pvCanFollowMinor v v'
+                                   else pvCanFollow v v')
+  pvFollows v' ver v with ¿ pvCanFollowMajor v' ver ¿
+  ... | yes p = ¿ pvCanFollowMinor v v' ¿
+  ... | no ¬p = ¿ pvCanFollow v v' ¿
 
-  hasPrev record { action = ⟦ NoConfidence        , _   ⟧ᵍᵃ} v = no λ ()
-  hasPrev record { action = ⟦ UpdateCommittee     , _   ⟧ᵍᵃ} v = no λ ()
-  hasPrev record { action = ⟦ NewConstitution     , _   ⟧ᵍᵃ} v = no λ ()
-  hasPrev record { action = ⟦ TriggerHardFork     , v'  ⟧ᵍᵃ} v =
-    case pvCanFollow? {v'} {v} of λ where
-      (yes p) → yes (-, refl , p)
-      (no ¬p) → no  (λ where (_ , refl , h) → ¬p h)
-  hasPrev record { action = ⟦ ChangePParams       , _   ⟧ᵍᵃ} v = no λ ()
-  hasPrev record { action = ⟦ TreasuryWithdrawal  , _   ⟧ᵍᵃ} v = no λ ()
-  hasPrev record { action = ⟦ Info                , _   ⟧ᵍᵃ} v = no λ ()
-
+  hasPrev : ∀ x ver v → Dec (∃[ v' ] x .action ≡ ⟦ TriggerHardFork , v' ⟧ᵍᵃ
+                                                      × (if pvCanFollowMajor v' ver
+                                                            then pvCanFollowMinor v v'
+                                                            else pvCanFollow v v'))
+  hasPrev record { action = ⟦ NoConfidence        , _   ⟧ᵍᵃ} _ v = no λ ()
+  hasPrev record { action = ⟦ UpdateCommittee     , _   ⟧ᵍᵃ} _ v = no λ ()
+  hasPrev record { action = ⟦ NewConstitution     , _   ⟧ᵍᵃ} _ v = no λ ()
+  hasPrev record { action = ⟦ TriggerHardFork     , v'  ⟧ᵍᵃ} ver v
+    with pvFollows v' ver v
+  ... | yes p = yes (v' , refl , p)
+  ... | no ¬p = no (λ where (_ , refl , h) → ¬p h)
+  hasPrev record { action = ⟦ ChangePParams       , _   ⟧ᵍᵃ} _ v = no λ ()
+  hasPrev record { action = ⟦ TreasuryWithdrawal  , _   ⟧ᵍᵃ} _ v = no λ ()
+  hasPrev record { action = ⟦ Info                , _   ⟧ᵍᵃ} _ v = no λ ()
 
 opaque
   unfolding validHFAction isRegistered
 
   instance
-    validHFAction? : ∀ {p : GovProposal} {s : GovState} {e : EnactState}
-      → validHFAction p s e ⁇
-
-    validHFAction?  {record { action = ⟦ NoConfidence     , _ ⟧ᵍᵃ}} = Dec-⊤
-    validHFAction?  {record { action = ⟦ UpdateCommittee  , _ ⟧ᵍᵃ}} = Dec-⊤
-    validHFAction?  {record { action = ⟦ NewConstitution  , _ ⟧ᵍᵃ}} = Dec-⊤
-    validHFAction?  {record { action = ⟦ TriggerHardFork  , v ⟧ᵍᵃ ; prevAction = prev }}
-                    {s} {record { pv = (v' , aid') }}
-      with    aid' ≟ prev ×-dec pvCanFollow? {v'} {v}
-           |  any? (λ (aid , x) → aid ≟ prev ×-dec hasPrev x v) s
-
-    ... | yes p  | _       = ⁇ yes (inj₁ p)
-    ... | no _   | yes p with ((aid , x) , x∈xs , (refl , v , h)) ← P.find p
-                           = ⁇ yes (inj₂ (x , v , to ∈-fromList x∈xs , h))
-    ... | no ¬p₁ | no ¬p₂  = ⁇ no λ  { (inj₁ x) → ¬p₁ x
-                                     ; (inj₂ (s , v , (h₁ , h₂ , h₃))) → ¬p₂ $
-                                       ∃∈-Any  ( (prev , s)
-                                               , from ∈-fromList h₁ , refl , (v , h₂ , h₃)
-                                               )
-                                     }
+    validHFAction? : ∀ {p s e} → validHFAction p s e ⁇
+    validHFAction? {record { action = ⟦ NoConfidence        , _ ⟧ᵍᵃ}} = Dec-⊤
+    validHFAction? {record { action = ⟦ UpdateCommittee     , _ ⟧ᵍᵃ}} = Dec-⊤
+    validHFAction? {record { action = ⟦ NewConstitution     , _ ⟧ᵍᵃ}} = Dec-⊤
+    validHFAction? {record { action = ⟦ TriggerHardFork     , v ⟧ᵍᵃ ; prevAction = prev }} {s} {record { pv = (v' , aid') }}
+      with aid' ≟ prev ×-dec pvCanFollow? {v} {v'} | any? (λ (aid , x) → aid ≟ prev ×-dec hasPrev x v' v) s
+    ... | yes p' | _ = ⁇ yes (inj₁ p')
+    ... | no _ | yes p' with ((aid , x) , x∈xs , (refl , v , h)) ← P.find p' = ⁇ yes (inj₂
+      (x , v , to ∈-fromList x∈xs , h))
+    ... | no ¬p₁ | no ¬p₂ = ⁇ no λ
+      { (inj₁ x) → ¬p₁ x
+      ; (inj₂ (s , v , (h₁ , h₂ , h₃))) → ¬p₂ $
+        ∃∈-Any ((prev , s) , (from ∈-fromList h₁ , refl , (v , h₂ , h₃))) }
     validHFAction? {record { action = ⟦ ChangePParams       , _ ⟧ᵍᵃ}} = Dec-⊤
     validHFAction? {record { action = ⟦ TreasuryWithdrawal  , _ ⟧ᵍᵃ}} = Dec-⊤
     validHFAction? {record { action = ⟦ Info                , _ ⟧ᵍᵃ}} = Dec-⊤
