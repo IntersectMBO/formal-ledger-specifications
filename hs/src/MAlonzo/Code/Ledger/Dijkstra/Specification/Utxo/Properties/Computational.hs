@@ -315,7 +315,7 @@ du_computeProof'45'aux_2884 v0 v1 v2 v3 v4
                                                                                                                                                 (coe
                                                                                                                                                    (\ v39 ->
                                                                                                                                                       coe
-                                                                                                                                                        MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
+                                                                                                                                                        MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_52
                                                                                                                                                         (coe
                                                                                                                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.du_HasCast'45'UTxOState_3282)
                                                                                                                                                         (coe
@@ -403,7 +403,7 @@ du_computeProof'45'aux_2884 v0 v1 v2 v3 v4
                                                                                                                                                 (coe
                                                                                                                                                    (\ v39 ->
                                                                                                                                                       coe
-                                                                                                                                                        MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
+                                                                                                                                                        MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_52
                                                                                                                                                         (coe
                                                                                                                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.du_HasCast'45'UTxOState_3282)
                                                                                                                                                         (coe
@@ -683,7 +683,7 @@ du_computeProof'45'aux_3034 v0 v1 v2 v3 v4
                                                                                                                                                                                                      (coe
                                                                                                                                                                                                         (\ v54 ->
                                                                                                                                                                                                            coe
-                                                                                                                                                                                                             MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
+                                                                                                                                                                                                             MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_52
                                                                                                                                                                                                              (coe
                                                                                                                                                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.du_HasCast'45'UTxOState_3282)
                                                                                                                                                                                                              (coe
@@ -778,7 +778,7 @@ du_computeProof'45'aux_3034 v0 v1 v2 v3 v4
                                                                                                                                                                                                      (coe
                                                                                                                                                                                                         (\ v54 ->
                                                                                                                                                                                                            coe
-                                                                                                                                                                                                             MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
+                                                                                                                                                                                                             MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_52
                                                                                                                                                                                                              (coe
                                                                                                                                                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.du_HasCast'45'UTxOState_3282)
                                                                                                                                                                                                              (coe
