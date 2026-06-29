@@ -598,6 +598,7 @@ library
       MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger
       MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.Properties.Computational
       MAlonzo.Code.Ledger.Dijkstra.Specification.PoolReap
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PoolReap.Properties.Computational
       MAlonzo.Code.Ledger.Dijkstra.Specification.PParams
       MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify
       MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.Properties.Computational
