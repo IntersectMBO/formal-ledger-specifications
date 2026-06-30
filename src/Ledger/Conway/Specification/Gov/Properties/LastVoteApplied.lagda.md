@@ -19,6 +19,7 @@ open import Ledger.Prelude
 open import Ledger.Conway.Specification.Gov.Actions gs hiding (yes; no)
 open import Ledger.Conway.Specification.Gov gs
 open GovActionState using (votes)
+open import Data.List.Relation.Unary.Any using (Any; here; there)
 open GovVotes
 ```
 -->
@@ -30,6 +31,8 @@ in the resulting `GovState`{.AgdaFunction}.  There is one subtlety: a voter (a
 `GovVoter`{.AgdaRecord}, i.e. a role together with a credential) may vote on the same
 action more than once within a single block, in which case only the *last* such vote is
 kept.  We therefore state the property in terms of the last vote a voter casts.
+
+
 
 *Formally*.
 
@@ -81,9 +84,20 @@ vote-applied-to-GA = ∀ {Γ k s s'} {gv : GovVote}
 Lifting to a whole block (the `GOVS`{.AgdaFunction} closure of `GOV`{.AgdaDatatype}),
 the last vote a voter casts on an action is the one recorded in the resulting state.
 
+This needs one precondition: the action `aid`{.AgdaBound} being voted on must not have been
+*created by the current transaction*, i.e. `GovEnv.txid Γ ≢ proj₁ aid`{.AgdaBound}.  Without
+it the claim is false — a `GOVPropose`{.AgdaInductiveConstructor} in the same block mints a
+fresh action with id `(txid , k)`{.AgdaBound}; if that collides with a pre-existing
+`aid`{.AgdaBound} it is inserted (by priority) ahead of the voted entry and shadows it, so
+`recordedVote`{.AgdaFunction} no longer sees the vote.  The condition holds for every state
+reachable in the ledger (actions already in `s`{.AgdaBound} carry the ids of *earlier*
+transactions), so it only rules out voting on an action proposed within the very same
+transaction.
+
 ```agda
 last-vote-applied-to-GA : Type
 last-vote-applied-to-GA = ∀ {Γ s s' vps} {aid : GovActionID} {voter : GovVoter} {v : Vote}
+  → GovEnv.txid Γ ≢ proj₁ aid    -- `aid` was not created by the current transaction
   → Γ ⊢ s ⇀⦇ vps ,GOVS⦈ s'
   → lastVoteOn voter aid vps ≡ just v
   → recordedVote s' aid voter ≡ just v
@@ -141,9 +155,88 @@ Since `Γ ⊢ s ⇀⦇ vps ,GOVS⦈ s'` unfolds to `… (Γ , 0) s vps s'`, inst
 `GOVS→run≡`{.AgdaFunction} at `k = 0` lets Step 2 replace the abstract result state
 `s'`{.AgdaBound} by `runGOVS Γ 0 s vps`{.AgdaFunction}.
 
+
 ### Step 2. <span class="AgdaFunction">recordedVote</span> is a <span class="AgdaFunction">foldl</span> of <span class="AgdaFunction">stepVote</span> over signal
 
-TODO
+**Remarks**.
+
+1.  A `recordedVote` correspondence, like,
+
+        recordedVote (runGOVS Γ k s vps) aid voter ≡ foldl (stepVote voter aid) (recordedVote s aid voter) vps
+
+    is *not* a pure consequence of `runGOVS`; we have to induct on the derivation.
+
+    It's **false** as a pure statement; counterexample:
+
+    > take `s = []`, `vps = [ inj₁ (vote aid voter v) ]`.
+    > Then `runGOVS … = addVote [] aid voter v = []` (no entry to modify), so
+    > `recordedVote` is `nothing`, yet `lastVoteOn = just v`.
+
+    To rule this out we assume the premise `(aid , ast) ∈ fromList s` of `GOV-Vote`
+    (the voted action must exist).  That premise only lives in the *derivation*, so
+    Step 2 must induct on the GOVS derivation, not on `runGOVS`.
+
+2.  `last-vote-applied-to-GA`, as stated over an arbitrary `GovState`, isn't true; it
+    needs a freshness guard.
+
+    **Counterexample**.  Let `Γ.txid = T`, and let `s` already contain an action with
+    id `(T, 5)` carrying voter's vote `v` (malformed but type-correct). Take
+
+        vps = [ vote (T,5) voter v , propose-something ]
+
+    where the proposal sits at trace position `5`, so it **re-mints** id `(T,5)` with
+    empty votes. `insertGovAction` can place that empty entry ahead of the original
+    (lower `govActionPriority`), so `lookupGAState` now finds the empty one →
+    `recordedVote s' = nothing`, while `lastVoteOn = just v`.
+
+    This is unreachable in practice (a real `s` never contains an action stamped with
+    the *current* tx's id), which is exactly why it needs to be stated as a precondition.
+    **The base case `vote-applied-to-GA` has no such issue — it's unconditionally true.**
+
+```agda
+lookupᵐ?-insert : ∀ {A B : Type} ⦃ _ : DecEq A ⦄ (m : A ⇀ B) (k : A) (v : B)
+  → lookupᵐ? (insert m k v) k ≡ just v
+lookupᵐ?-insert m k v =
+  ∈⇒lookup≡just (insert m k v) k (Properties.∈-∪⁺ (inj₁ (Equivalence.to ∈-singleton refl)))
+
+opaque
+  unfolding addVote
+  lookupGAState-addVote-≢ : ∀ s aid₀ {voter₀ v₀ aid} → aid₀ ≢ aid
+    → lookupGAState (addVote s aid₀ voter₀ v₀) aid ≡ lookupGAState s aid
+  lookupGAState-addVote-≢ []                 aid₀ ne = refl
+  lookupGAState-addVote-≢ ((aid'' , g'') ∷ s) aid₀ {voter₀} {v₀} {aid} ne with aid ≟ aid''
+  ... | no  _    = lookupGAState-addVote-≢ s aid₀ {voter₀} {v₀} {aid} ne
+  ... | yes refl with aid ≟ aid₀
+  ...   | yes refl = ⊥-elim (ne refl)
+  ...   | no  _    = refl
+
+  recordedVote-addVote-≢gid : ∀ s aid₀ {voter₀ v₀ aid voter} → aid₀ ≢ aid
+    → recordedVote (addVote s aid₀ voter₀ v₀) aid voter ≡ recordedVote s aid voter
+  recordedVote-addVote-≢gid s aid₀ {voter₀} {v₀} {aid} {voter} ne
+    rewrite lookupGAState-addVote-≢ s aid₀ {voter₀} {v₀} {aid} ne = refl
+
+
+  recordedVote-addVote : (s : GovState) (aid : GovActionID) (ast : GovActionState)
+    {voter : GovVoter} {v : Vote}
+    → (aid , ast) ∈ fromList s
+    → recordedVote (addVote s aid voter v) aid voter ≡ just v
+  recordedVote-addVote s aid ast {voter} {v} p = go voter s (Equivalence.from ∈-fromList p)
+    where
+    go : (w : GovVoter) (t : GovState) → (aid , ast) ∈ˡ t
+       → recordedVote (addVote t aid w v) aid w ≡ just v
+    go w ((aid' , g') ∷ t) mem with aid ≟ aid'
+    ... | no aid≢ = case mem of λ where
+      (here refl) → ⊥-elim (aid≢ refl)
+      (there m) → go w t m
+    ... | yes refl rewrite dec-yes (aid ≟ aid) refl .proj₂ with w
+    ...   | ⟦ CC   , c  ⟧ᵍᵛ = lookupᵐ?-insert (gvCC   (votes g')) c  v
+    ...   | ⟦ DRep , c  ⟧ᵍᵛ = lookupᵐ?-insert (gvDRep (votes g')) c  v
+    ...   | ⟦ SPO  , kh ⟧ᵍᵛ = lookupᵐ?-insert (gvSPO  (votes g')) kh v
+
+-- The base case (already proved).
+vote-applied : vote-applied-to-GA
+vote-applied {s = s} (GOV-Vote {aid} {ast} (aid∈s , _)) = recordedVote-addVote s aid ast aid∈s
+```
 
 ### Step 3. Discharge <span class="AgdaFunction">vote-applied-to-GA</span> and <span class="AgdaFunction">last-vote-applied-to-GA</span>
 
