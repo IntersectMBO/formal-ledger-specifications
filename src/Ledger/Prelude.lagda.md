@@ -48,7 +48,7 @@ open import abstract-set-theory.Axiom.Set.Map.Extra public
 
 import Data.Integer as ℤ
 open import Data.Integer using (0ℤ) public
-open import Data.Nat.Properties using (+-identityʳ)
+open import Data.Nat.Properties using (+-comm; +-assoc ; +-identityʳ)
 import Data.Rational as ℚ
 open import Data.Rational using (ℚ)
 
@@ -105,6 +105,16 @@ indexedSumL-proj₂-zero ((a , v) ∷ xs) all-zero =
   trans (cong (_+ indexedSumL proj₂ xs) (all-zero (Prelude.Init.here refl)))
         (indexedSumL-proj₂-zero xs (all-zero ∘ Prelude.Init.there))
 
++-interleave : {a b c d : ℕ} → a + b + (c + d) ≡ a + c + (b + d)
++-interleave {a}{b}{c}{d} = begin
+  a + b + (c + d)  ≡⟨ +-assoc a b (c + d) ⟩
+  a + (b + (c + d))  ≡⟨ cong (a +_) (sym (+-assoc b c d)) ⟩
+  a + (b + c + d)    ≡⟨ cong (λ y → a + (y + d)) (+-comm b c) ⟩
+  a + (c + b + d)    ≡⟨ cong (a +_) (+-assoc c b d) ⟩
+  a + (c + (b + d))  ≡⟨ sym (+-assoc a c (b + d)) ⟩
+  a + c + (b + d)  ∎
+  where open ≡-Reasoning
+
 module _ {A : Type} ⦃ _ : DecEq A ⦄ where
 
   -- A coin singleton has the coin you expect.
@@ -136,7 +146,7 @@ module _ {A : Type} ⦃ _ : DecEq A ⦄ where
   ∪ˡsingleton∈dom : (m : A ⇀ Coin) {(a , c) : A × Coin}
     → a ∈ dom m → getCoin (m ∪ˡ ❴ (a , c) ❵ᵐ) ≡ getCoin m
   ∪ˡsingleton∈dom m {(a , c)} a∈dom =
-    ≡ᵉ-getCoin (m ∪ˡ ❴ (a , c) ❵ᵐ) m (singleton-∈-∪ˡ {m = m} a∈dom)
+    ≡ᵉ-getCoin (m ∪ˡ ❴ (a , c) ❵) m (singleton-∈-∪ˡ {m = m} a∈dom)
 
   -- If a is *not* in domain of m, left-biased union with singleton adds cleanly.
   ∪ˡsingleton∉dom : (m : A ⇀ Coin) {(a , c) : A × Coin}
@@ -187,4 +197,14 @@ opaque
 
   setToList-∈ : ∀ {A : Type} {a : A} {X : ℙ A} → a ∈ˡ setToList X → a ∈ X
   setToList-∈ = id
+
+sum-map-+ : ∀ {A : Type} (f g : A → ℕ) (xs : List A)
+  → sum (map (λ x → f x + g x) xs) ≡ sum (map f xs) + sum (map g xs)
+sum-map-+ _ _ [] = refl
+sum-map-+ f g (x ∷ xs) =
+  begin
+  f x + g x + sum (map (λ x → f x + g x) xs)    ≡⟨ cong (f x + g x +_) (sum-map-+ f g xs) ⟩
+  f x + g x + (sum (map f xs) + sum (map g xs)) ≡⟨ +-interleave {f x} ⟩
+  f x + sum (map f xs) + (g x + sum (map g xs)) ∎
+  where open ≡-Reasoning
 ```
