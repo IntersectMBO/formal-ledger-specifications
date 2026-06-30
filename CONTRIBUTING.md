@@ -376,7 +376,7 @@ See also: [the Agda documentation section on literate markdown][Agda literate ma
 ### Type-checking while you work
 
 The specification is type-checked through the Nix flake, which pins the Agda version
-and all required libraries — there is no separate global Agda install to maintain. For
+and all required libraries. For
 day-to-day work, enter the development shell once and run Agda from there, so the
 toolchain is on your `PATH` for your editor and any other tooling:
 
@@ -393,9 +393,7 @@ without staying in the shell:
 nix develop --command agda src/Path/To/Module.lagda.md
 ```
 
-If you use [direnv](https://direnv.net), add `use flake` to a `.envrc` and run `direnv
-allow`; the toolchain is then placed on your `PATH` automatically whenever you enter the
-project directory. Launching your editor — and any agent tooling, such as Claude Code —
+Launching your editor — and any agent tooling, such as Claude Code —
 from that shell makes Agda available to all of it, which is cheaper than re-entering
 `nix develop` for each invocation.
 
