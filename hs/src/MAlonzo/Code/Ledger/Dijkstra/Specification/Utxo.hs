@@ -2254,7 +2254,15 @@ du_balance_3308 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 -> AgdaAny
 du_balance_3308 v0 v1
   = coe
-      MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.du_indexedSum''_1452
+      MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.du_indexedSum'7515'''_1446
+      (coe
+         MAlonzo.Code.Class.DecEq.Instances.du_DecEq'45''215'_182
+         (coe
+            MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_DecEq'45'TxId_1366
+            (coe v0))
+         (coe
+            MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_DecEq'45'Ix_1364
+            (coe v0)))
       (coe
          MAlonzo.Code.Ledger.Conway.Specification.TokenAlgebra.Base.d_DecEq'45'Value_228
          (coe
@@ -2267,7 +2275,13 @@ du_balance_3308 v0 v1
             (coe v0)))
       (coe (\ v2 -> v2))
       (coe
-         MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.du_valuesOfUTxO_4474
+         MAlonzo.Code.Axiom.Set.Map.du_mapValues_976
+         (coe
+            MAlonzo.Code.Axiom.Set.d_th_1516
+            (coe
+               MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+         (coe
+            MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.du_txOutToValue_4470)
          (coe v1))
 -- Ledger.Dijkstra.Specification.Utxo.cbalance
 d_cbalance_3314 ::
