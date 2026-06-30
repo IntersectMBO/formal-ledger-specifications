@@ -386,7 +386,7 @@ agda src/Ledger/Dijkstra/Specification/Ledger.lagda.md   # type-check one module
 ```
 
 Type-checking a single module is much faster than `nix build` (which checks the whole
-specification) and, apart from type-checking directly inside Emacs, it is the quickest 
+specification) and, apart from type-checking directly inside Emacs, it is the quickest
 way to iterate on a proof.
 
 Launching your editor — and any agent tooling, such as Claude Code —
