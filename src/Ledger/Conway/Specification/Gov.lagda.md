@@ -44,6 +44,7 @@ open import Function.Related.Propositional using (↔⇒)
 
 open GovActionState
 open GovStructure govStructure
+open EnactState using (cc)
 ```
 -->
 
@@ -249,7 +250,7 @@ opaque
   isRegistered : GovEnv → GovVoter → Type
   isRegistered Γ v = case v of
     λ where
-      ⟦ CC   , c  ⟧ᵍᵛ → just c ∈ range (CCHotKeysOf (CertStateOf Γ))
+      ⟦ CC   , c  ⟧ᵍᵛ → just c ∈ range (CCHotKeysOf (CertStateOf Γ) ∣ (ccCreds (cc (EnactStateOf Γ))))
       ⟦ DRep , c  ⟧ᵍᵛ → c ∈ dom (DRepsOf (CertStateOf Γ))
       ⟦ SPO  , kh ⟧ᵍᵛ → kh ∈ dom (PoolsOf (CertStateOf Γ))
 
