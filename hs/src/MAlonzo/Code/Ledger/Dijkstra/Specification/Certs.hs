@@ -4754,7 +4754,7 @@ d_updateCertDepositsStep_1886 ::
   T_CertState_1406 -> T_DCert_1290 -> T_CertState_1406
 d_updateCertDepositsStep_1886 v0 v1 v2 v3
   = coe
-      MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
+      MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_52
       (coe
          MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.C_constructor_30
          (coe

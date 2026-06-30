@@ -891,7 +891,7 @@ du_getDatumSpend_3180 v0 v1 v2 v3
                                                    (coe v13)
                                             MAlonzo.Code.Data.Sum.Base.C_inj'8322'_42 v13
                                               -> coe
-                                                   MAlonzo.Code.Ledger.Prelude.du_lookupHash_124
+                                                   MAlonzo.Code.Ledger.Prelude.du_lookupHash_104
                                                    (coe
                                                       MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
                                                       (coe
@@ -1292,7 +1292,7 @@ du_credentialToP2Script_3282 v0 v1 v2
               MAlonzo.Code.Class.Monad.Instances.d_Monad'45'Maybe_18 () erased ()
               erased
               (coe
-                 MAlonzo.Code.Ledger.Prelude.du_lookupHash_124
+                 MAlonzo.Code.Ledger.Prelude.du_lookupHash_104
                  (coe
                     MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_210
                     (coe
@@ -1331,7 +1331,7 @@ du_credentialToP1Script_3292 v0 v1 v2
               MAlonzo.Code.Class.Monad.Instances.d_Monad'45'Maybe_18 () erased ()
               erased
               (coe
-                 MAlonzo.Code.Ledger.Prelude.du_lookupHash_124
+                 MAlonzo.Code.Ledger.Prelude.du_lookupHash_104
                  (coe
                     MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_210
                     (coe
@@ -1449,7 +1449,7 @@ du_credsNeeded_3302 v0 v1 v2 v3
                      MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                (coe MAlonzo.Code.Class.IsSet.du_IsSet'45'Set_590)
                (coe
-                  MAlonzo.Code.Ledger.Prelude.du_'8739'_'8739'_90
+                  MAlonzo.Code.Ledger.Prelude.du_'8739'_'8739'_70
                   (coe
                      MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Instances.du_HasCast'45'A'8640'B'45'RelAB_12)
                   (MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txWithdrawals_3740
@@ -1791,7 +1791,7 @@ du_getScript_3368 v0 v1 v2 v3 v4 v5 v6
                  MAlonzo.Code.Class.Monad.Instances.d_Monad'45'Maybe_18 () erased ()
                  erased
                  (coe
-                    MAlonzo.Code.Ledger.Prelude.du_lookupHash_124
+                    MAlonzo.Code.Ledger.Prelude.du_lookupHash_104
                     (coe
                        MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_210
                        (coe
