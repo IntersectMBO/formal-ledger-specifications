@@ -130,7 +130,7 @@ du_SNAP'45'total_2878 v0 v1 v2
   = coe
       MAlonzo.Code.Data.Product.Base.du_'45''44'__92
       (coe
-         MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
+         MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_52
          (coe
             MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.du_HasCast'45'Snapshots_3834)
          (coe
