@@ -265,10 +265,6 @@ recordedVote-addAction-≢ :
 recordedVote-addAction-≢ {s} {e} {aid₀} {addr} {a} {prev} {aid} ne
   rewrite lookupGAState-insertGovAction-≢ s (mkGovStatePair e aid₀ addr a prev) {aid} ne = refl
 
--- recordedVote-addAction-≢ : ∀ s e aid₀ addr a prev {aid voter} → aid₀ ≢ aid
---   → recordedVote (addAction s e aid₀ addr a prev) aid voter ≡ recordedVote s aid voter
--- recordedVote-addAction-≢ s e aid₀ addr a prev {aid} ne
---   rewrite lookupGAState-insertGovAction-≢ s (mkGovStatePair e aid₀ addr a prev) {aid} ne = refl
 ```
 
 ### 2. Lifting to a block: induction on the <span class="AgdaDatatype">GOVS</span> derivation
@@ -278,7 +274,7 @@ the last vote a voter casts on an action is the one recorded in the resulting st
 
 This needs one precondition: the action `aid`{.AgdaBound} being voted on must not have been
 *created by the current transaction*, i.e. `Γ .txid ≢ proj₁ aid`.  Without
-it the claim is false.  Indeed, suppose a `GOVPropose`{.AgdaInductiveConstructor} in
+it the claim is false.  Indeed, suppose a `GOV-Propose`{.AgdaInductiveConstructor} in
 the same block yields a fresh action with id `(txid , k)`; if that collides with a
 pre-existing `aid`{.AgdaBound} it is inserted (by priority) ahead of the voted entry
 and shadows it, so `recordedVote`{.AgdaFunction} no longer sees the vote.
