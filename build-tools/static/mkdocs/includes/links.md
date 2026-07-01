@@ -53,6 +53,8 @@
 [GOVCERT]: Ledger.Conway.Specification.Certs.md#auxiliary-govcert-transition-system
 [Governance Functions]: Ledger.Conway.Specification.Gov.md#governance-functions
 [Gov-ChangePPHasGroup]: Ledger.Conway.Specification.Gov.Properties.ChangePPGroup.md#clm:ChangePPGroup
+[Gov.Properties.LastVoteApplied]: Ledger.Conway.Specification.Gov.Properties.LastVoteApplied.md
+[Gov-LastVoteApplied]: Ledger.Conway.Specification.Gov.Properties.LastVoteApplied.md#clm:LastVoteApplied
 [issues]: https://github.com/IntersectMBO/formal-ledger-specifications/issues
 [Introduction]: Ledger.Introduction.md
 [LEDGER]: Ledger.Conway.Specification.Ledger.md#ledger-transition-system
