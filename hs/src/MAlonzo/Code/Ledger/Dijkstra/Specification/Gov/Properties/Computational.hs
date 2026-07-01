@@ -1806,12 +1806,43 @@ d_isRegistered'63'_2308 v0 v1 v2
                              (coe
                                 MAlonzo.Code.Axiom.Set.Map.du__'738'_570
                                 (coe
-                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_ccHotKeys_1400
+                                   MAlonzo.Code.Axiom.Set.Map.du__'8739'__1626
                                    (coe
-                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_gState_1418
+                                      MAlonzo.Code.Axiom.Set.d_th_1516
                                       (coe
-                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.d_certState_1944
-                                         (coe v1))))))))
+                                         MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                   (coe
+                                      MAlonzo.Code.Axiom.Set.d_'8712''45'sp_1648
+                                      MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8
+                                      erased
+                                      (coe
+                                         MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_292
+                                         (coe
+                                            MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
+                                            (coe
+                                               MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_206
+                                               (coe
+                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1360
+                                                  (coe v0))))
+                                         (coe
+                                            MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_210
+                                            (coe
+                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1360
+                                               (coe v0)))))
+                                   (coe
+                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_ccHotKeys_1400
+                                      (coe
+                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_gState_1418
+                                         (coe
+                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.d_certState_1944
+                                            (coe v1))))
+                                   (coe
+                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.du_ccCreds_1282
+                                      (coe
+                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_cc_1242
+                                         (coe
+                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.d_enactState_1942
+                                            (coe v1)))))))))
              MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_DRep_852
                -> coe
                     MAlonzo.Code.Class.Decidable.Core.d_dec_16
