@@ -19,11 +19,14 @@ module Ledger.Conway.Specification.Chain.Properties.EventuallyRefunded
 
 open import Ledger.Conway.Specification.Certs govStructure
 open import Ledger.Conway.Specification.Chain txs abs
+open import Ledger.Conway.Specification.Enact govStructure
 open import Ledger.Conway.Specification.Epoch txs abs
 open import Ledger.Conway.Specification.Ledger txs abs
 open import Ledger.Conway.Specification.Ledger.Properties.Base txs abs
 open import Ledger.Conway.Specification.Gov govStructure using (GovState; GovStateOf)
+open import Ledger.Conway.Specification.PoolReap txs abs
 open import Ledger.Conway.Specification.Ratify govStructure
+open import Ledger.Conway.Specification.RewardUpdate txs abs
 open import Ledger.Conway.Specification.Utxo txs abs
 open import Ledger.Prelude hiding (All; any?; all?)
 
@@ -348,6 +351,84 @@ private
     in updCertDeps-GA-absent pp txCerts
          (updateProposalDeposits txGovProposals txId (PParams.govActionDeposit pp) deps)
          (updPropDeps-GA-absent txGovProposals txId (PParams.govActionDeposit pp) deps txid≢ notIn)
+
+  -- ── Per-LEDGER-step deposit absence preservation ──────────
+
+  -- Abbreviation.
+  GA∉ : GovActionID → LState → Type
+  GA∉ gaid ls = GovActionDeposit gaid ∉ dom (DepositsOf ls)
+
+  LEDGER-GA-absent : ∀ {Γ ls tx ls'} {gaid : GovActionID}
+    → Γ ⊢ ls ⇀⦇ tx ,LEDGER⦈ ls'
+    → TxIdOf tx ≢ proj₁ gaid
+    → GA∉ gaid ls → GA∉ gaid ls'
+  -- Valid tx, scripts pass: deposits updated via updateDeposits.
+  LEDGER-GA-absent {Γ} {ls} {tx}
+    (LEDGER-V⋯ refl (UTXOW-UTXOS (Scripts-Yes _)) _ _) txid≢ h =
+    let open LEnv Γ renaming (pparams to pp)
+        open Tx tx renaming (body to txb)
+    in updateDeposits-GA-absent pp txb (DepositsOf ls) txid≢ h
+  -- Invalid tx, scripts fail: deposits unchanged (collateral only).
+  LEDGER-GA-absent (LEDGER-I⋯ refl (UTXOW-UTXOS (Scripts-No _))) _ h = h
+
+  -- Lift to LEDGERS (RTC of LEDGER) using FreshId for the tx list.
+  LEDGERS-GA-absent : ∀ {Γ ls txs ls'} {gaid : GovActionID}
+    → Γ ⊢ ls ⇀⦇ txs ,LEDGERS⦈ ls'
+    → All (λ tx → TxIdOf tx ≢ proj₁ gaid) txs
+    → GA∉ gaid ls → GA∉ gaid ls'
+  LEDGERS-GA-absent (BS-base Id-nop) _ h = h
+  LEDGERS-GA-absent (BS-ind step rest) (fresh ∷ freshRest) h =
+    LEDGERS-GA-absent rest freshRest (LEDGER-GA-absent step fresh h)
+
+  -- ── Per-CHAIN-step deposit absence preservation ───────────
+
+  -- Through a single CHAIN step, if the deposit is absent and FreshId
+  -- holds for the block, the deposit stays absent.  The deposits go
+  -- through GovernanceUpdate ∣_ᶜ (only removes), POOLREAP ∣_ᶜ (only
+  -- removes PoolDeposit keys), and LEDGERS/updateDeposits (FreshId
+  -- prevents GA-key addition).
+  -- EPOCH preserves GA-deposit absence (deposits only shrink via ∣_ᶜ).
+  EPOCH-GA-absent : ∀ {eps eps'} {e : Epoch} {gaid : GovActionID}
+    → _ ⊢ eps ⇀⦇ e ,EPOCH⦈ eps'
+    → GovActionDeposit gaid ∉ dom (DepositsOf eps)
+    → GovActionDeposit gaid ∉ dom (DepositsOf eps')
+  EPOCH-GA-absent {eps} (EPOCH (_ , POOLREAP , _)) h =
+    let open EpochState eps
+        open RatifyState fut renaming (es to futES)
+        govUpd  = GovernanceUpdate.updates ls fut
+        utxoSt' = Pre-POOLREAPUpdate.utxoSt' ls futES govUpd
+    in ∉-dom-resᶜᵈ {m = UTxOState.deposits utxoSt'} (∉-dom-resᶜᵈ {m = UTxOState.deposits (LState.utxoSt ls)} h)
+
+  CHAIN-GA-absent : ∀ {cs b cs₁} {gaid : GovActionID}
+    → _ ⊢ cs ⇀⦇ b ,CHAIN⦈ cs₁
+    → All (λ tx → TxIdOf tx ≢ proj₁ gaid) (ts b)
+    → GA∉ gaid (LStateOf cs)
+    → GA∉ gaid (LStateOf cs₁)
+  CHAIN-GA-absent ( CHAIN ( _
+    , TICK ((NEWEPOCH-New (_ , epochStep)) , _)
+    , BBODY-Block-Body (_ , _ , _ , ledgers)
+    )) fresh h =
+    LEDGERS-GA-absent ledgers fresh (EPOCH-GA-absent epochStep h)
+  CHAIN-GA-absent ( CHAIN ( _
+    , TICK (NEWEPOCH-Not-New _ , _)
+    , BBODY-Block-Body (_ , _ , _ , ledgers)
+    )) fresh h =
+    LEDGERS-GA-absent ledgers fresh h
+  CHAIN-GA-absent ( CHAIN ( _
+    , TICK ((NEWEPOCH-No-Reward-Update (_ , epochStep)) , _)
+    , BBODY-Block-Body (_ , _ , _ , ledgers)
+    )) fresh h =
+    LEDGERS-GA-absent ledgers fresh (EPOCH-GA-absent epochStep h)
+
+  -- Lift to CHAINStar: deposit stays absent through a sequence of blocks.
+  CHAINStar-GA-absent : ∀ {cs bs cs'} {gaid : GovActionID}
+    → CHAINStar cs bs cs'
+    → FreshId gaid bs
+    → GA∉ gaid (LStateOf cs)
+    → GA∉ gaid (LStateOf cs')
+  CHAINStar-GA-absent []* _ h = h
+  CHAINStar-GA-absent (step ∷* rest) (freshB ∷ freshRest) h =
+    CHAINStar-GA-absent rest freshRest (CHAIN-GA-absent step freshB h)
 
 ```
 -->
