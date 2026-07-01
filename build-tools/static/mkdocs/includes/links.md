@@ -56,7 +56,7 @@
 [Governance Functions]: Ledger.Conway.Specification.Gov.md#governance-functions
 [Gov-ChangePPHasGroup]: Ledger.Conway.Specification.Gov.Properties.ChangePPGroup.md#clm:ChangePPGroup
 [Gov.Properties.LastVoteApplied]: Ledger.Conway.Specification.Gov.Properties.LastVoteApplied.md
-[Gov-LastVoteApplied]: Ledger.Conway.Specification.Gov.Properties.LastVoteApplied.md#clm:LastVoteApplied
+[Gov-LastVoteApplied]: Ledger.Conway.Specification.Gov.Properties.LastVoteApplied.md
 [issues]: https://github.com/IntersectMBO/formal-ledger-specifications/issues
 [Introduction]: Ledger.Introduction.md
 [LEDGER]: Ledger.Conway.Specification.Ledger.md#ledger-transition-system
@@ -64,8 +64,9 @@
 [Ledger.Properties.GovDepsMatch]: Ledger.Conway.Specification.Ledger.Properties.GovDepsMatch.md
 [Ledger.Properties.PoV]: Ledger.Conway.Specification.Ledger.Properties.PoV.md
 [LEDGERS]: Ledger.Conway.Specification.Ledger.md#ledgers-transition-system
-[LEDGER-PoV]: Ledger.Conway.Specification.Ledger.Properties.PoV.md#thm:LEDGER-PoV
 [LEDGER-GovDepsMatch]: Ledger.Conway.Specification.Ledger.Properties.GovDepsMatch.md#lem:LedgerGovDepsMatch
+[Ledger-LastVoteApplied]: Ledger.Conway.Specification.Ledger.Properties.LastVoteApplied.md
+[LEDGER-PoV]: Ledger.Conway.Specification.Ledger.Properties.PoV.md#thm:LEDGER-PoV
 [NEWEPOCH]: Ledger.Conway.Specification.Epoch.md#sec:the-newepoch-transition-system
 [NEWEPOCH-ConstRwds]: Ledger.Conway.Specification.Epoch.Properties.ConstRwds.md#clm:NEWEPOCH-const-rwds
 [Notation]: Notation.md

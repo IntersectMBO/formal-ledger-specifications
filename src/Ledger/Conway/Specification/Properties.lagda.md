@@ -118,7 +118,8 @@ proposals in `tx`{.AgdaBound}.
    set `updateGroups`{.AgdaField} `pu`{.AgdaBound} is nonempty.
 
 
-+  **Claim** [Gov-LastVoteApplied][].  A voter's vote is applied to the governance action.
++  **Theorem** [Gov-LastVoteApplied][] and [Ledger-LastVoteApplied][].
+   A voter's last vote is applied to the governance action.
 
    When a voter casts a vote on a governance action via the `GOV`{.AgdaDatatype} rule, that
    vote is recorded on the action in the resulting `GovState`{.AgdaFunction}.  Lifting to a

@@ -3,7 +3,7 @@ source_branch: master
 source_path: src/Ledger/Conway/Specification/Gov/Properties/LastVoteApplied.lagda.md
 ---
 
-## Claim: A voter's vote is applied to the governance action {#clm:LastVoteApplied}
+## Theorem: A voter's last vote is applied to the governance action {#clm:LastVoteApplied}
 
 <!--
 ```agda
@@ -30,11 +30,10 @@ open PParams using (govActionLifetime)
 
 *Informally*.
 
-When a voter casts a vote on a governance action, that vote is recorded on the action
-in the resulting `GovState`{.AgdaFunction}.  There is one subtlety: a voter (a
-`GovVoter`{.AgdaRecord}, i.e. a role together with a credential) may vote on the same
-action more than once within a single block, in which case only the *last* such vote is
-kept.  We therefore state the property in terms of the last vote a voter casts.
+**Theorem** (last-vote-applied).
+When a voter casts one or more votes on a governance action within a single block
+(the `GOVS`{.AgdaDatatype} closure of `GOV`{.AgdaDatatype} steps), the last vote they
+cast is the one recorded in the resulting `GovState`{.AgdaRecord}.
 
 *Formally*.
 
@@ -73,8 +72,6 @@ lastVoteOn : GovVoter → GovActionID → List (GovVote ⊎ GovProposal) → May
 lastVoteOn voter aid = foldl (stepVote voter aid) nothing
 ```
 
-**Theorem**.
-
 The following is the type that codifies the property we wish to prove.
 
 ```agda
@@ -94,25 +91,29 @@ last-vote-applied-to-GA =
 
 **Proof**.
 
-The proof (that `last-vote-applied-to-GA` is inhabited) has two ingredients.
+The proof (that `last-vote-applied-to-GA` is inhabited) has three main ingredients.
 
-1.  A handful of *per-step* facts describing how a single `GOV`{.AgdaDatatype} signal
-    changes the vote that `recordedVote`{.AgdaFunction} reads back: a vote on the targeted
-    action and voter records it; any other vote, or a proposal, leaves it untouched.
-2.  An induction on the `GOVS`{.AgdaDatatype} derivation that chains these per-step facts
-    into the `foldl`{.AgdaFunction} that `lastVoteOn`{.AgdaFunction} computes.
++  **Four per-step lemmas**. A handful of *per-step* facts describing how a
+   single `GOV`{.AgdaDatatype} signal changes the vote that `recordedVote`{.AgdaFunction}
+   reads back: a vote on the targeted action and voter records it; any other vote, or a
+   proposal, leaves it untouched.
 
-### 1. Fold and per-step lemmas
++  **A fold lemma** (foldl-stepVote-nothing).  Once a matching vote appears in the
+   signal list, `foldl` `stepVote` produces that vote regardless of the starting accumulator.
+   This lets us replace the `nothing` seed of `lastVoteOn` with `recordedVote s aid voter`
+   (the initial state's recorded vote).
 
-The base case is a single `GOV`{.AgdaDatatype} vote step: the cast vote is recorded on
-the targeted action.
++  **Induction on the `GOVS`{.AgdaDatatype} derivation** (lift-GOVS).  At each step, the
+   appropriate per-step lemma rewrites the accumulator.  The induction chains these per-step facts
+   into the `foldl`{.AgdaFunction} that `lastVoteOn`{.AgdaFunction} computes.  Crucially,
+   inducting on the derivation (not the bare list) provides the `GOV-Vote` membership proof
+   that `recordedVote-addVote` requires.
 
-```agda
-vote-applied-to-GA : Type
-vote-applied-to-GA = ∀ {Γ k s s'} {gv : GovVote}
-  → (Γ , k) ⊢ s ⇀⦇ inj₁ gv ,GOV⦈ s'
-  → recordedVote s' (gv .gid) (GovVoterOf gv) ≡ just (VoteOf gv)
-```
+### Four per-step lemmas
+
+Four per-step lemmas describe how a single GOV step changes the recorded vote.
+
+#### 1. <span class="AgdaFunction">recordedVote-addVote</span>
 
 Voting for `(aid , voter)` on an action that is present records exactly `v`.
 
@@ -121,11 +122,11 @@ opaque
   unfolding addVote
 
   recordedVote-addVote :
-    {s      : GovState}
-    {aid    : GovActionID}
-    {ast    : GovActionState}
-    {voter  : GovVoter}
-    {v      : Vote}
+    {s     : GovState}
+    {aid   : GovActionID}
+    {ast   : GovActionState}
+    {voter : GovVoter}
+    {v     : Vote}
     → (aid , ast) ∈ fromList s → recordedVote (addVote s aid voter v) aid voter ≡ just v
 
   recordedVote-addVote {s} {aid} {ast} {voter} {v} p = go voter s (Equivalence.from ∈-fromList p)
@@ -142,70 +143,61 @@ opaque
     ...   | there m   = go w t m
 ```
 
-The base case follows immediately: a `GOV-Vote`{.AgdaInductiveConstructor} step exists
-only when the voted action is present, which is the premise `recordedVote-addVote` needs.
+The next two per-step facts say a `GOV`{.AgdaDatatype} step that does *not* match
+`(aid , voter)` leaves its recorded vote unchanged.
 
-```agda
-vote-applied : vote-applied-to-GA
-vote-applied (GOV-Vote (aid∈s , _)) = recordedVote-addVote aid∈s
-```
+#### 2. <span class="AgdaFunction">recordedVote-addVote-≢gid</span>
 
-Once a matching vote appears, `foldl stepVote` produces that vote regardless of the
-starting accumulator (a later matching vote overrides, a non-match keeps the accumulator).
-In particular, starting from `nothing`{.AgdaInductiveConstructor} (as `lastVoteOn`{.AgdaFunction}
-does) can be replaced by starting from any accumulator.
-
-```agda
-foldl-stepVote-nothing : ∀ {voter aid} (vps : List (GovVote ⊎ GovProposal)) (acc : Maybe Vote) {v}
-  → foldl (stepVote voter aid) nothing vps ≡ just v
-  → foldl (stepVote voter aid) acc   vps ≡ just v
-foldl-stepVote-nothing [] acc ()
-foldl-stepVote-nothing (inj₂ p ∷ vps) acc h = foldl-stepVote-nothing vps acc h
-foldl-stepVote-nothing {voter} {aid} (inj₁ gv ∷ vps) acc h
-  with GovVote.voter gv ≟ voter | gv .gid ≟ aid
-... | yes _ | yes _ = h
-... | yes _ | no  _ = foldl-stepVote-nothing vps acc h
-... | no  _ | yes _ = foldl-stepVote-nothing vps acc h
-... | no  _ | no  _ = foldl-stepVote-nothing vps acc h
-```
-
-Two per-step facts say a `GOV`{.AgdaDatatype} step that does *not* match `(aid , voter)`
-leaves its recorded vote unchanged.  First, voting on a *different action*:
+Voting on a *different action* leaves the recorded vote unchanged.
 
 ```agda
 opaque
   unfolding addVote
 
-  lookupGAState-addVote-≢ : ∀ s aid₀ {voter₀ v₀ aid} → aid₀ ≢ aid
+  lookupGAState-addVote-≢ :
+    {s : GovState}
+    {aid₀ aid : GovActionID}
+    {voter₀ : GovVoter}
+    {v₀ : Vote}
+    → aid₀ ≢ aid
     → lookupGAState (addVote s aid₀ voter₀ v₀) aid ≡ lookupGAState s aid
-  lookupGAState-addVote-≢ [] aid₀ ne = refl
-  lookupGAState-addVote-≢ ((aid'' , g'') ∷ s) aid₀ {voter₀} {v₀} {aid} ne with aid ≟ aid''
-  ... | no  _    = lookupGAState-addVote-≢ s aid₀ {voter₀} {v₀} {aid} ne
+  lookupGAState-addVote-≢ {s = []} _ = refl
+  lookupGAState-addVote-≢ {s = ((aid'' , g'') ∷ s)} {aid₀} {aid} {voter₀} {v₀} ne
+    with aid ≟ aid''
+  ... | no  _    = lookupGAState-addVote-≢ {s} {voter₀ = voter₀} {v₀} ne
   ... | yes refl with aid ≟ aid₀
   ...   | yes refl = ⊥-elim (ne refl)
   ...   | no  _    = refl
 
   recordedVote-addVote-≢gid :
-    {s : GovState} {aid₀ : GovActionID} {voter₀ : GovVoter} {v₀ : Vote} {aid : GovActionID} {voter : GovVoter}
+    {s : GovState}
+    {aid₀ aid : GovActionID}
+    {voter₀ voter : GovVoter}
+    {v₀ : Vote}
     → aid₀ ≢ aid
     → recordedVote (addVote s aid₀ voter₀ v₀) aid voter ≡ recordedVote s aid voter
-  recordedVote-addVote-≢gid {s} {aid₀} {voter₀} {v₀} {aid} {voter} ne
-    rewrite lookupGAState-addVote-≢ s aid₀ {voter₀} {v₀} {aid} ne = refl
+  recordedVote-addVote-≢gid {s} {voter₀ = voter₀} {v₀ = v₀} ne
+    rewrite lookupGAState-addVote-≢ {s = s} {voter₀ = voter₀} {v₀} ne = refl
 ```
 
-Second, a vote on the *same action* by a *different voter*.  Once the voted entry is
-located, the recorded vote for `voter`{.AgdaBound} reads role `voter`{.AgdaBound}'s
+#### 3. <span class="AgdaFunction">recordedVote-addVote-≢voter</span>
+
+A vote on the *same action* by a *different voter*, leaves the recorded vote unchanged.
+
+Once the voted entry is located, the recorded vote for `voter`{.AgdaBound} reads the
 credential map.  A vote by `voter₀ ≢ voter`{.AgdaBound} either touches a different role's
-map (the read map is untouched — `refl`{.AgdaInductiveConstructor}) or the same role at a
-different credential (`lookupᵐ?-insert-≢`{.AgdaFunction}, the credentials differing because
-the voters do).
+map or the same role at a different credential (`lookupᵐ?-insert-≢`{.AgdaFunction},
+the credentials differing because the voters differ).
 
 ```agda
   recordedVote-addVote-≢voter :
-    {s : GovState} {aid : GovActionID} {voter₀ : GovVoter} {v₀ : Vote} {voter : GovVoter}
+    {s : GovState}
+    {aid : GovActionID}
+    {voter₀ voter : GovVoter}
+    {v₀ : Vote}
     → voter₀ ≢ voter
     → recordedVote (addVote s aid voter₀ v₀) aid voter ≡ recordedVote s aid voter
-  recordedVote-addVote-≢voter {s} {aid} {voter₀} {v₀} {voter} ne = go voter₀ voter s ne
+  recordedVote-addVote-≢voter {s} {aid} {voter₀} {voter} {v₀} ne = go voter₀ voter s ne
     where
     go : (w₀ w : GovVoter) (t : GovState) → w₀ ≢ w
        → recordedVote (addVote t aid w₀ v₀) aid w ≡ recordedVote t aid w
@@ -227,16 +219,20 @@ the voters do).
       lookupᵐ?-insert-≢ (gvSPO (votes g')) λ kh₀≡kh → ne′ (cong ⟦ SPO  ,_⟧ᵍᵛ kh₀≡kh)
 ```
 
-The third per-step fact concerns a `GOV-Propose`{.AgdaInductiveConstructor} step.  Proposing
-adds a fresh action via `insertGovAction`{.AgdaFunction}, a priority-ordered insert.  Looking
-up *any other* id is unaffected, since the new entry carries the fresh id and
-`insertGovAction`{.AgdaFunction} preserves the relative order of the existing entries.  This
-is where the freshness hypothesis is consumed: the proposed id `(txid , k)`{.AgdaBound}
-differs from `aid`{.AgdaBound}.
+#### 4. <span class="AgdaFunction">recordedVote-addAction-≢</span>
+
+Proposing a new action with a different id leaves the recorded vote unchanged.
+
+This concerns a `GOV-Propose`{.AgdaInductiveConstructor} step.  Proposing adds a
+fresh action via `insertGovAction`{.AgdaFunction}, a priority-ordered insert.
+Looking up *any other* id is unaffected, since the new entry carries the fresh id and
+`insertGovAction`{.AgdaFunction} preserves the relative order of the existing entries.
+This is where the freshness hypothesis is consumed: the proposed id `(txid , k)`
+differs from `aid`.
 
 ```agda
-lookupGAState-insertGovAction-≢ : ∀ s (p : GovActionID × GovActionState) {aid} → proj₁ p ≢ aid
-  → lookupGAState (insertGovAction s p) aid ≡ lookupGAState s aid
+lookupGAState-insertGovAction-≢ : ∀ s (p : GovActionID × GovActionState) {aid}
+  → proj₁ p ≢ aid → lookupGAState (insertGovAction s p) aid ≡ lookupGAState s aid
 lookupGAState-insertGovAction-≢ []                 (aid₀ , ast₀) {aid} ne with aid ≟ aid₀
 ... | yes refl = ⊥-elim (ne refl)
 ... | no  _    = refl
@@ -254,31 +250,69 @@ lookupGAState-insertGovAction-≢ ((gaID , astH) ∷ s) (aid₀ , ast₀) {aid} 
 recordedVote-addAction-≢ :
   {s : GovState }
   {e : Epoch }
-  {aid₀ : GovActionID }
+  {aid₀ aid : GovActionID }
   {addr : RewardAddress }
   {a : GovAction }
   {prev : NeedsHash (gaType a) }
-  {aid : GovActionID }
   {voter : GovVoter}
   → aid₀ ≢ aid
   → recordedVote (addAction s e aid₀ addr a prev) aid voter ≡ recordedVote s aid voter
-recordedVote-addAction-≢ {s} {e} {aid₀} {addr} {a} {prev} {aid} ne
+recordedVote-addAction-≢ {s} {e} {aid₀} {aid} {addr} {a} {prev} ne
   rewrite lookupGAState-insertGovAction-≢ s (mkGovStatePair e aid₀ addr a prev) {aid} ne = refl
-
--- recordedVote-addAction-≢ : ∀ s e aid₀ addr a prev {aid voter} → aid₀ ≢ aid
---   → recordedVote (addAction s e aid₀ addr a prev) aid voter ≡ recordedVote s aid voter
--- recordedVote-addAction-≢ s e aid₀ addr a prev {aid} ne
---   rewrite lookupGAState-insertGovAction-≢ s (mkGovStatePair e aid₀ addr a prev) {aid} ne = refl
 ```
 
-### 2. Lifting to a block: induction on the <span class="AgdaDatatype">GOVS</span> derivation
+### The fold lemma
+
+Once a matching vote appears, `foldl stepVote` produces that vote regardless of the
+starting accumulator (a later matching vote overrides, a non-match keeps the accumulator).
+In particular, starting from `nothing`{.AgdaInductiveConstructor} (as
+`lastVoteOn`{.AgdaFunction} does) can be replaced by starting from any accumulator.
+
+```agda
+foldl-stepVote-nothing :
+  {aid : GovActionID}
+  {voter : GovVoter}
+  (vps : List (GovVote ⊎ GovProposal))
+  (acc : Maybe Vote)
+  {v : Vote}
+  → foldl (stepVote voter aid) nothing  vps ≡ just v
+  → foldl (stepVote voter aid) acc      vps ≡ just v
+foldl-stepVote-nothing [] acc ()
+foldl-stepVote-nothing (inj₂ p ∷ vps) acc h = foldl-stepVote-nothing vps acc h
+foldl-stepVote-nothing {aid} {voter} (inj₁ gv ∷ vps) acc h
+  with GovVote.voter gv ≟ voter | gv .gid ≟ aid
+... | yes _ | yes _ = h
+... | yes _ | no  _ = foldl-stepVote-nothing vps acc h
+... | no  _ | yes _ = foldl-stepVote-nothing vps acc h
+... | no  _ | no  _ = foldl-stepVote-nothing vps acc h
+```
+
+### Induction on the <span class="AgdaDatatype">GOVS</span> derivation
+
+The base case is a single `GOV`{.AgdaDatatype} vote step: the cast vote is recorded on
+the targeted action.
+
+```agda
+vote-applied-to-GA : Type
+vote-applied-to-GA = ∀ {Γ k s s'} {gv : GovVote}
+  → (Γ , k) ⊢ s ⇀⦇ inj₁ gv ,GOV⦈ s'
+  → recordedVote s' (gv .gid) (GovVoterOf gv) ≡ just (VoteOf gv)
+```
+
+The base case follows immediately: a `GOV-Vote`{.AgdaInductiveConstructor} step exists
+only when the voted action is present, which is the premise `recordedVote-addVote` needs.
+
+```agda
+vote-applied : vote-applied-to-GA
+vote-applied (GOV-Vote (aid∈s , _)) = recordedVote-addVote aid∈s
+```
 
 Lifting to a whole block (the `GOVS`{.AgdaDatatype} closure of `GOV`{.AgdaDatatype}),
 the last vote a voter casts on an action is the one recorded in the resulting state.
 
 This needs one precondition: the action `aid`{.AgdaBound} being voted on must not have been
 *created by the current transaction*, i.e. `Γ .txid ≢ proj₁ aid`.  Without
-it the claim is false.  Indeed, suppose a `GOVPropose`{.AgdaInductiveConstructor} in
+it the claim is false.  Indeed, suppose a `GOV-Propose`{.AgdaInductiveConstructor} in
 the same block yields a fresh action with id `(txid , k)`; if that collides with a
 pre-existing `aid`{.AgdaBound} it is inserted (by priority) ahead of the voted entry
 and shadows it, so `recordedVote`{.AgdaFunction} no longer sees the vote.
@@ -314,22 +348,36 @@ lift-GOVS :
   → Γ .txid ≢ proj₁ aid
   → _⊢_⇀⟦_⟧ᵢ*'_ {_⊢_⇀⟦_⟧ᵇ_ = IdSTS} {_⊢_⇀⦇_,GOV⦈_} (Γ , n) s vps s'
   → recordedVote s' aid voter ≡ foldl (stepVote voter aid) (recordedVote s aid voter) vps
-lift-GOVS fresh (BS-base Id-nop) = refl
+lift-GOVS _ (BS-base Id-nop) = refl
 lift-GOVS {aid = aid} {voter} fresh
   (BS-ind {sigs = sigs} (GOV-Vote {aid = aid₁} {voter = voter₁} (m∈ , _)) rest)
   with voter₁ ≟ voter | aid₁ ≟ aid
-... | yes refl | yes refl = trans  (lift-GOVS fresh rest)
-                                   (cong (λ acc → foldl (stepVote voter aid) acc sigs) (recordedVote-addVote m∈))
-... | no  v≢   | yes refl = trans  (lift-GOVS fresh rest)
-                                   (cong (λ acc → foldl (stepVote voter aid) acc sigs) (recordedVote-addVote-≢voter v≢))
-... | yes _    | no  a≢   = trans  (lift-GOVS fresh rest)
-                                   (cong (λ acc → foldl (stepVote voter aid) acc sigs) (recordedVote-addVote-≢gid a≢))
-... | no  _    | no  a≢   = trans  (lift-GOVS fresh rest)
-                                   (cong (λ acc → foldl (stepVote voter aid) acc sigs) (recordedVote-addVote-≢gid a≢))
-lift-GOVS {Γ = Γ} {n = n} {s = s} {aid = aid} {voter} fresh
+
+... | yes refl | yes refl =
+  trans  (lift-GOVS fresh rest)
+         (cong  (λ acc → foldl (stepVote voter aid) acc sigs)
+                (recordedVote-addVote m∈))
+
+... | no  v≢   | yes refl =
+  trans  (lift-GOVS fresh rest)
+         (cong  (λ acc → foldl (stepVote voter aid) acc sigs)
+                (recordedVote-addVote-≢voter v≢))
+
+... | yes _    | no  a≢   =
+  trans  (lift-GOVS fresh rest)
+         (cong  (λ acc → foldl (stepVote voter aid) acc sigs)
+                (recordedVote-addVote-≢gid a≢))
+
+... | no  _    | no  a≢   =
+  trans  (lift-GOVS fresh rest)
+         (cong  (λ acc → foldl (stepVote voter aid) acc sigs)
+                (recordedVote-addVote-≢gid a≢))
+
+lift-GOVS {s = s} {aid = aid} {voter} fresh
   (BS-ind {sigs = sigs} (GOV-Propose _) rest) =
     trans  (lift-GOVS fresh rest)
-           (cong (λ acc → foldl (stepVote voter aid) acc sigs) (recordedVote-addAction-≢ {s} λ eq → fresh (cong proj₁ eq)) )
+           (cong  (λ acc → foldl (stepVote voter aid) acc sigs)
+                  (recordedVote-addAction-≢ {s} λ eq → fresh (cong proj₁ eq)) )
 ```
 
 Finally, both claims follow.  The lifted statement combines `lift-GOVS`{.AgdaFunction} with
@@ -338,9 +386,8 @@ starting accumulator).
 
 ```agda
 last-vote-applied : last-vote-applied-to-GA
-last-vote-applied {s = s} {vps = vps} {aid = aid} {voter} fresh govs lvo =
-  trans (lift-GOVS fresh govs)
-        (foldl-stepVote-nothing vps (recordedVote s aid voter) lvo)
+last-vote-applied {s = s} {vps = vps} {aid} {voter} fresh govs lvo =
+  trans (lift-GOVS fresh govs) (foldl-stepVote-nothing vps (recordedVote s aid voter) lvo)
 ```
 
 [^1]: This is a potential TODO item: formally prove the claim, "`GovEnv.txid Γ ≢ proj₁ aid` holds for every state reachable in the ledger."
