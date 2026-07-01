@@ -29,11 +29,13 @@ open import Ledger.Prelude hiding (All; any?; all?)
 open import Data.List.Relation.Unary.All using (All; []; _∷_)
 
 open import Data.List.Membership.Propositional using () renaming (_∈_ to _∈ˡ_)
+import Data.List.Membership.Propositional.Properties as ListProp
 open import Data.List.Relation.Unary.Any using (here; there)
 
 open GovActionState
 open Block
 open RatifyEnv using (currentEpoch)
+open RatifyState using (removed)
 ```
 -->
 
@@ -64,7 +66,7 @@ pipeline: at epoch `sucᵉ`{.AgdaFunction} (`expiresIn`{.AgdaField}
 `GovernanceUpdate`{.AgdaModule} actually filters the action out of the governance state
 and strips its deposit from the deposit pot.
 
-Four preconditions are needed.
+Five preconditions are needed.
 
 +  `govDepsMatch`{.AgdaFunction} ensures that every
    `GovActionDeposit`{.AgdaInductiveConstructor} entry has a corresponding
@@ -91,6 +93,13 @@ Four preconditions are needed.
    formal specification does not enforce `TxId`{.AgdaDatatype} freshness
    syntactically.
 
++  `<⇒sucᵉ≤`{.Agda} asserts that
+   `sucᵉ`{.AgdaFunction} is the *least* element strictly above a given epoch:
+   `e < e' → sucᵉ e ≤ e'`{.Agda}.  This property holds for the concrete
+   `ℕ`{.AgdaDatatype} epoch structure but is not yet an axiom of
+   `EpochStructure`{.AgdaRecord}; it is taken as a hypothesis here until the
+   axiom is added upstream.
+
 *Formally*.
 
 We first record what it means for a governance action deposit to still be held in a
@@ -116,6 +125,11 @@ data CHAINStar : ChainState → List Block → ChainState → Type where
 -- in practice (TxId is a cryptographic hash of the transaction body).
 FreshId : GovActionID → List Block → Type
 FreshId gaid bs = All (λ b → All (λ tx → TxIdOf tx ≢ proj₁ gaid) (ts b)) bs
+
+-- Successor is the least element strictly above.  This holds for the
+-- concrete ℕ epoch structure but is not yet an axiom of EpochStructure.
+SucIsLeast : Type
+SucIsLeast = ∀ {e e' : Epoch} → e < e' → sucᵉ e ≤ e'
 ```
 
 The property asserts that every held governance action deposit is eventually
@@ -126,7 +140,8 @@ refunded, which we express formally as the following type definition.
 ```agda
 GADepositsEventuallyRefunded : Type
 GADepositsEventuallyRefunded =
-  ∀ {cs : ChainState} {gaid : GovActionID} {gaSt : GovActionState}
+    SucIsLeast
+  → ∀ {cs : ChainState} {gaid : GovActionID} {gaSt : GovActionState}
   → govDepsMatch (LStateOf cs)
   → (gaid , gaSt) ∈ fromList (GovStateOf (LStateOf cs))
   → LastEpochOf cs ≤ expiresIn gaSt
@@ -225,6 +240,25 @@ private
     ratifies-removed-mono rest (ratify-expired⇒in-removed step exp)
   ratifies-expired∈⇒in-removed (BS-ind step rest) (there mem) exp =
     ratifies-expired∈⇒in-removed rest mem exp
+
+  -- ── GovernanceUpdate lemma ────────────────────────────────────
+
+  -- If (gaid, gaSt) ∈ removed(fut), then after GovernanceUpdate
+  -- the action is not in govSt'.
+  govUpdate-removes : ∀ {ls : LState} {fut : RatifyState}
+    {gaid : GovActionID} {gaSt gaSt' : GovActionState}
+    → (gaid , gaSt) ∈ removed fut
+    → (gaid , gaSt') ∉ˡ GovernanceUpdate.govSt' ls fut
+  govUpdate-removes {ls} {fut} {gaid} {gaSt} {gaSt'} inRem inGovSt' =
+    gaid∉ gaid∈
+    where
+    open LState ls using (govSt)
+    P = λ (x : GovActionID × GovActionState)
+        → proj₁ x ∉ mapˢ proj₁ (GovernanceUpdate.removed' ls fut)
+    gaid∉ : gaid ∉ mapˢ proj₁ (GovernanceUpdate.removed' ls fut)
+    gaid∉ = proj₂ (ListProp.∈-filter⁻ (¿ P ¿¹) {xs = govSt} inGovSt')
+    gaid∈ : gaid ∈ mapˢ proj₁ (GovernanceUpdate.removed' ls fut)
+    gaid∈ = ∈-map .to ((gaid , gaSt) , refl , ∈-∪ .to (inj₁ inRem))
 
 ```
 -->
