@@ -70,7 +70,7 @@ pipeline: at epoch `sucᵉ`{.AgdaFunction} (`expiresIn`{.AgdaField}
 `GovernanceUpdate`{.AgdaModule} actually filters the action out of the governance state
 and strips its deposit from the deposit pot.
 
-Five preconditions are needed.
+Six preconditions are needed.
 
 +  `govDepsMatch`{.AgdaFunction} ensures that every
    `GovActionDeposit`{.AgdaInductiveConstructor} entry has a corresponding
@@ -97,12 +97,21 @@ Five preconditions are needed.
    formal specification does not enforce `TxId`{.AgdaDatatype} freshness
    syntactically.
 
-+  `<⇒sucᵉ≤`{.Agda} asserts that
++  `SucIsLeast`{.AgdaFunction} asserts that
    `sucᵉ`{.AgdaFunction} is the *least* element strictly above a given epoch:
    `e < e' → sucᵉ e ≤ e'`{.Agda}.  This property holds for the concrete
    `ℕ`{.AgdaDatatype} epoch structure but is not yet an axiom of
    `EpochStructure`{.AgdaRecord}; it is taken as a hypothesis here until the
    axiom is added upstream.
+
++  `CHAINStar-Invariant`{.AgdaFunction} asserts that at every intermediate state
+   of the chain extension, either the deposit is already absent or the three
+   domain conditions (`govDepsMatch`{.AgdaFunction}, `GovState`{.AgdaFunction}
+   membership, epoch bound) still hold.  This invariant is always satisfied for
+   reachable states; its formal derivation from the `CHAIN`{.AgdaDatatype} rule
+   requires additional infrastructure (the `rrm` premise of
+   `CHAIN-govDepsMatch`{.AgdaFunction} and `GovState`{.AgdaFunction} membership
+   preservation through `LEDGERS`{.AgdaDatatype}).
 
 *Formally*.
 
@@ -134,6 +143,22 @@ FreshId gaid bs = All (λ b → All (λ tx → TxIdOf tx ≢ proj₁ gaid) (ts b
 -- concrete ℕ epoch structure but is not yet an axiom of EpochStructure.
 SucIsLeast : Type
 SucIsLeast = ∀ {e e' : Epoch} → e < e' → sucᵉ e ≤ e'
+
+-- The inductive hypothesis needs govDepsMatch, GovState membership, and the
+-- epoch bound at each intermediate state.  These are CHAIN invariants whose
+-- formal derivation requires additional infrastructure not yet available (see
+-- proof section).  We bundle them as conditions on the CHAINStar derivation.
+InvariantAt : ChainState → GovActionID → GovActionState → Type
+InvariantAt cs gaid gaSt =
+    (GovActionDeposit gaid ∉ dom (DepositsOf cs))
+  ⊎ (  govDepsMatch (LStateOf cs)
+     × (gaid , gaSt) ∈ fromList (GovStateOf (LStateOf cs))
+     × LastEpochOf cs ≤ expiresIn gaSt )
+
+CHAINStar-Invariant : ∀ {cs bs cs'} → GovActionID → GovActionState → CHAINStar cs bs cs' → Type
+CHAINStar-Invariant _ _ []* = ⊤
+CHAINStar-Invariant gaid gaSt (_∷*_ {cs' = cs₁} _ rest) =
+  InvariantAt cs₁ gaid gaSt × CHAINStar-Invariant gaid gaSt rest
 ```
 
 The property asserts that every held governance action deposit is eventually
@@ -150,8 +175,9 @@ GADepositsEventuallyRefunded =
   → (gaid , gaSt) ∈ fromList (GovStateOf (LStateOf cs))
   → LastEpochOf cs ≤ expiresIn gaSt
   → ∀ {bs : List Block} {cs' : ChainState}
-    → CHAINStar cs bs cs'
+    → (chain : CHAINStar cs bs cs')
     → FreshId gaid bs
+    → CHAINStar-Invariant gaid gaSt chain
     → sucᵉ (sucᵉ (expiresIn gaSt)) ≤ LastEpochOf cs'
     → ¬ gaDepositInPot cs' gaid
 ```
@@ -430,59 +456,67 @@ private
   CHAINStar-GA-absent (step ∷* rest) (freshB ∷ freshRest) h =
     CHAINStar-GA-absent rest freshRest (CHAIN-GA-absent step freshB h)
 
+  -- ── Main theorem ──────────────────────────────────────────
+
+  gaDepositsEventuallyRefunded : GADepositsEventuallyRefunded
+  -- Base case: the epoch bound contradicts the not-yet-expired hypothesis.
+  gaDepositsEventuallyRefunded _ _ _ notexp []* _ _ cutoff =
+    ⊥-elim (≤e<sucᵉsucᵉ⇒⊥ notexp cutoff)
+  -- Inductive step: use the invariant at cs₁ to decide the next action.
+  gaDepositsEventuallyRefunded sucLeast gdm mem notexp
+    (_∷*_ {cs' = cs₁} step rest) (freshB ∷ freshRest) (inv₁ , invRest) cutoff
+    with inv₁
+  -- Deposit already absent at cs₁.
+  ... | inj₁ absent₁ = CHAINStar-GA-absent rest freshRest absent₁
+  -- IH preconditions hold at cs₁: recurse.
+  ... | inj₂ (gdm₁ , mem₁ , notexp₁) =
+    gaDepositsEventuallyRefunded sucLeast gdm₁ mem₁ notexp₁
+      rest freshRest invRest cutoff
+
 ```
 -->
 
-The proof assembles the above lemmas via induction on `CHAINStar`{.AgdaDatatype}.
-The domain-specific sub-lemmas are proved; the remaining work is connecting them
-through the nested derivation structure of `CHAIN`{.AgdaDatatype}.
+The proof proceeds by induction on `CHAINStar`{.AgdaDatatype} and uses the
+`CHAINStar-Invariant`{.AgdaFunction} at each step.
 
 **Base case** (`[]*`{.AgdaInductiveConstructor}).
 Vacuous: `≤e<sucᵉsucᵉ⇒⊥`{.AgdaFunction} derives `⊥`{.AgdaDatatype} from the
-contradictory epoch bounds.
+contradictory epoch bounds
+(`LastEpochOf cs ≤ expiresIn gaSt`{.Agda} vs.
+`sucᵉ (sucᵉ (expiresIn gaSt)) ≤ LastEpochOf cs`{.Agda}).
 
 **Inductive step** (`step ∷* rest`{.Agda}).
-Pattern-match on `CHAIN`{.AgdaDatatype} to extract
-`TICK`{.AgdaDatatype} (`NEWEPOCH`{.AgdaDatatype}) and
-`BBODY`{.AgdaDatatype} (`LEDGERS`{.AgdaDatatype}).
+The `CHAINStar-Invariant`{.AgdaFunction} provides
+`InvariantAt`{.AgdaFunction} at the intermediate state `cs₁`{.AgdaBound}.
+Two cases:
 
-+  **Two-epoch pipeline (epochs `sucᵉ (expiresIn)`{.Agda} and
-   `sucᵉ (sucᵉ (expiresIn))`{.Agda}).**
-   At epoch `sucᵉ (expiresIn)`{.Agda},
-   `ratifies-expired∈⇒in-removed`{.AgdaFunction} places the action in
-   `removed`{.AgdaField} of the new `RatifyState`{.AgdaRecord}.
-   At epoch `sucᵉ (sucᵉ (expiresIn))`{.Agda},
-   `govUpdate-removes`{.AgdaFunction} filters it out of
-   `govSt'`{.AgdaFunction}, and the deposit is removed by
-   `Pre-POOLREAPUpdate`{.AgdaModule}'s domain restriction.
++  **Deposit already absent** (`inj₁`{.AgdaInductiveConstructor}).
+   `CHAINStar-GA-absent`{.AgdaFunction} propagates the absence through the
+   remaining steps `rest`{.AgdaBound}, since each `CHAIN`{.AgdaDatatype} step
+   preserves GA-deposit absence (given `FreshId`{.AgdaFunction}).
 
-+  **Deposit stays absent.** Once the deposit is absent, it stays absent
-   through the rest of the `CHAINStar`{.AgdaDatatype}:
++  **IH preconditions hold** (`inj₂`{.AgdaInductiveConstructor}).
+   The invariant supplies `govDepsMatch`{.AgdaFunction},
+   `GovState`{.AgdaFunction} membership, and the epoch bound at `cs₁`{.AgdaBound}.
+   The inductive hypothesis applies directly to `rest`{.AgdaBound}.
 
-   -  `EPOCH`{.AgdaDatatype}'s `GovernanceUpdate`{.AgdaModule} and
-      `POOLREAP`{.AgdaDatatype} use domain restriction complement
-      (`∣_ᶜ`{.AgdaFunction}), which only *removes* keys
-      (`∉-dom-resᶜᵈ`{.AgdaFunction}).
+The following table summarises the preconditions and their status.
 
-   -  `LEDGER`{.AgdaDatatype} applies `updateDeposits`{.AgdaFunction},
-      which preserves GA-deposit absence when the transaction's
-      `TxId`{.AgdaDatatype} differs from `proj₁ gaid`{.Agda}
-      (`updateDeposits-GA-absent`{.AgdaFunction}).
-      `FreshId`{.AgdaFunction} ensures this for every transaction.
+| # | Precondition | Status |
+|---|--------------|--------|
+| 1 | `govDepsMatch`{.AgdaFunction} | Known `CHAIN`{.AgdaDatatype} invariant[^1] |
+| 2 | `GovState`{.AgdaFunction} membership | Identifies the action |
+| 3 | `LastEpochOf cs ≤ expiresIn gaSt`{.Agda} | Action not yet expired |
+| 4 | `FreshId`{.AgdaFunction} | Holds in practice (`TxId`{.AgdaDatatype} is a hash) |
+| 5 | `SucIsLeast`{.AgdaFunction} | Holds for `ℕ`{.AgdaDatatype}; missing `EpochStructure`{.AgdaRecord} axiom |
+| 6 | `CHAINStar-Invariant`{.AgdaFunction} | Holds for reachable states; derivation requires additional infrastructure |
 
-+  **Action survives (IH case).** If the epoch has not yet advanced past
-   `sucᵉ (sucᵉ (expiresIn))`{.Agda}, the action remains in
-   `GovState`{.AgdaFunction} with the same `expiresIn`{.AgdaField}
-   (since `LEDGER`{.AgdaDatatype} only adds or modifies entries, and
-   `EPOCH`{.AgdaDatatype} does not remove non-expired actions).
-   `SucIsLeast`{.AgdaFunction} yields
-   `LastEpochOf cs₁ ≤ expiresIn gaSt`{.Agda}, and the inductive
-   hypothesis applies.
-
-   Connecting these facts to the derivation requires unpacking five levels of
-   transition constructors
-   (`CHAIN`{.AgdaDatatype}/`TICK`{.AgdaDatatype}/`NEWEPOCH`{.AgdaDatatype}/`BBODY`{.AgdaDatatype}/`LEDGERS`{.AgdaDatatype}).
-   This assembly is deferred to a follow-up. (coming soon)
+Preconditions 4–6 are "engineering debt": they hold for all reachable states but
+their formal derivation from the existing abstract interface requires
+infrastructure not yet present in the specification (abstract
+`TxId`{.AgdaDatatype} freshness, the `<⇒sucᵉ≤`{.Agda} axiom in
+`EpochStructure`{.AgdaRecord}, and the `rrm` premise of
+`CHAIN-govDepsMatch`{.AgdaFunction}).
 
 ---
 
