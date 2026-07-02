@@ -373,6 +373,31 @@ code block with the standard HTML comment delimiters.  For example,
 
 See also: [the Agda documentation section on literate markdown][Agda literate markdown].
 
+### Type-checking while you work
+
+The specification is type-checked through the Nix flake, which pins the Agda version
+and all required libraries. For day-to-day work, enter the Nix development shell once and
+run Agda from there, so the toolchain is on your `PATH` for your editor and any other
+tooling.
+
+```bash
+nix develop                                              # Agda + libraries on PATH
+agda src/Ledger/Dijkstra/Specification/Ledger.lagda.md   # type-check one module
+```
+
+Type-checking a single module is much faster than `nix build` (which checks the whole
+specification) and, apart from type-checking directly inside Emacs, it is the quickest
+way to iterate on a proof.
+
+Launching your editor — and any agent tooling, such as Claude Code —
+from inside the Nix shell makes Agda available to all of it, which is cheaper than
+re-entering `nix develop` for each invocation.  However, it is possible to type-check
+a module without staying in the shell with the command
+
+```bash
+nix develop --command agda src/Path/To/Module.lagda.md
+```
+
 ### Checking how your code looks on the site
 
 An important step in contributing any code to the repository is to check how it will
