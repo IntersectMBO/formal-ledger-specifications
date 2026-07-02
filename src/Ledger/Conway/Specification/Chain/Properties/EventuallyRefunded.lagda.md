@@ -24,16 +24,16 @@ open import Ledger.Conway.Specification.Epoch txs abs
 open import Ledger.Conway.Specification.Ledger txs abs
 open import Ledger.Conway.Specification.Ledger.Properties.Base txs abs
 open import Ledger.Conway.Specification.Gov govStructure using (GovState; GovStateOf)
-open import Ledger.Conway.Specification.PoolReap txs abs
+open import Ledger.Conway.Specification.PoolReap txs abs using (POOLREAP)
 open import Ledger.Conway.Specification.Ratify govStructure
-open import Ledger.Conway.Specification.RewardUpdate txs abs
+open import Ledger.Conway.Specification.RewardUpdate txs abs using (TICK)
 open import Ledger.Conway.Specification.Utxo txs abs
 open import Ledger.Prelude hiding (All; any?; all?)
 
 open import Data.List.Relation.Unary.All using (All; []; _∷_)
 
 open import Data.List.Membership.Propositional using () renaming (_∈_ to _∈ˡ_)
-import Data.List.Membership.Propositional.Properties as ListProp
+open import Data.List.Membership.Propositional.Properties using (∈-filter⁻)
 open import Data.List.Relation.Unary.Any using (here; there)
 
 open GovActionState
@@ -132,12 +132,12 @@ data CHAINStar : ChainState → List Block → ChainState → Type where
          → CHAINStar cs' bs cs''
          → CHAINStar cs (b ∷ bs) cs''
 
--- No block in bs contains a transaction whose TxId equals proj₁ gaid.
+-- No block in bs contains a transaction whose TxId equals txid.
 -- This rules out re-proposal of the same GovActionID, which the formal spec
 -- does not prevent syntactically (TxId is abstract) but which cannot happen
 -- in practice (TxId is a cryptographic hash of the transaction body).
 FreshId : GovActionID → List Block → Type
-FreshId gaid bs = All (λ b → All (λ tx → TxIdOf tx ≢ proj₁ gaid) (ts b)) bs
+FreshId (txid , _) bs = All (λ b → All (λ tx → TxIdOf tx ≢ txid) (ts b)) bs
 
 -- Successor is the least element strictly above.  This holds for the
 -- concrete ℕ epoch structure but is not yet an axiom of EpochStructure.
@@ -151,40 +151,76 @@ SucIsLeast = ∀ {e e' : Epoch} → e < e' → sucᵉ e ≤ e'
 InvariantAt : ChainState → GovActionID → GovActionState → Type
 InvariantAt cs gaid gaSt =
     (GovActionDeposit gaid ∉ dom (DepositsOf cs))
-  ⊎ (  govDepsMatch (LStateOf cs)
-     × (gaid , gaSt) ∈ fromList (GovStateOf (LStateOf cs))
-     × LastEpochOf cs ≤ expiresIn gaSt )
+    ⊎   govDepsMatch (LStateOf cs)
+        × (gaid , gaSt) ∈ fromList (GovStateOf (LStateOf cs))
+        × LastEpochOf cs ≤ expiresIn gaSt
 
-CHAINStar-Invariant : ∀ {cs bs cs'} → GovActionID → GovActionState → CHAINStar cs bs cs' → Type
+CHAINStar-Invariant :
+  {cs   : ChainState}
+  {bs   : List Block}
+  {cs'  : ChainState}
+  → GovActionID → GovActionState → CHAINStar cs bs cs' → Type
+
 CHAINStar-Invariant _ _ []* = ⊤
 CHAINStar-Invariant gaid gaSt (_∷*_ {cs' = cs₁} _ rest) =
   InvariantAt cs₁ gaid gaSt × CHAINStar-Invariant gaid gaSt rest
 ```
 
-The property asserts that every held governance action deposit is eventually
+We want to prove that every governance action deposit is eventually
 refunded, which we express formally as the following type definition.
 
 **Theorem**.
 
 ```agda
-GADepositsEventuallyRefunded : Type
-GADepositsEventuallyRefunded =
-    SucIsLeast
-  → ∀ {cs : ChainState} {gaid : GovActionID} {gaSt : GovActionState}
-  → govDepsMatch (LStateOf cs)
-  → (gaid , gaSt) ∈ fromList (GovStateOf (LStateOf cs))
-  → LastEpochOf cs ≤ expiresIn gaSt
-  → ∀ {bs : List Block} {cs' : ChainState}
-    → (chain : CHAINStar cs bs cs')
-    → FreshId gaid bs
-    → CHAINStar-Invariant gaid gaSt chain
-    → sucᵉ (sucᵉ (expiresIn gaSt)) ≤ LastEpochOf cs'
-    → ¬ gaDepositInPot cs' gaid
+data _⊢_⇀⦇_,REFUNDED⦈_ : ⊤ → ChainState → List Block → ChainState → Type where
+
+  REFUNDED :
+    {cs     : ChainState}
+    {bs     : List Block}
+    {cs'    : ChainState}
+    {gaid   : GovActionID}
+    {gaSt   : GovActionState}
+    {chain  : CHAINStar cs bs cs'}
+    →
+    ∙ SucIsLeast
+    ∙ govDepsMatch (LStateOf cs)
+    ∙ (gaid , gaSt) ∈ fromList (GovStateOf (LStateOf cs))
+    ∙ LastEpochOf cs ≤ expiresIn gaSt
+    ∙ FreshId gaid bs
+    ∙ CHAINStar-Invariant gaid gaSt chain
+    ∙ sucᵉ (sucᵉ (expiresIn gaSt)) ≤ LastEpochOf cs'
+      ────────────────────────────────
+      _ ⊢ cs ⇀⦇ bs ,REFUNDED⦈ cs'
+
+GADepositsEventuallyRefunded : ∀ {cs bs cs'}
+  → _ ⊢ cs ⇀⦇ bs ,REFUNDED⦈ cs' → Type
+GADepositsEventuallyRefunded {cs' = cs'} (REFUNDED {gaid = gaid} _) =
+  ¬ gaDepositInPot cs' gaid
+
+GADepositsEventuallyRefunded' : Type
+GADepositsEventuallyRefunded' =
+  SucIsLeast
+  →  {cs    : ChainState}
+     {gaid  : GovActionID}
+     {gaSt  : GovActionState}
+     → govDepsMatch (LStateOf cs)
+     → (gaid , gaSt) ∈ fromList (GovStateOf (LStateOf cs))
+     → LastEpochOf cs ≤ expiresIn gaSt
+     →  {bs : List Block}
+        {cs' : ChainState}
+        → (chain : CHAINStar cs bs cs')
+        → FreshId gaid bs
+        → CHAINStar-Invariant gaid gaSt chain
+        → sucᵉ (sucᵉ (expiresIn gaSt)) ≤ LastEpochOf cs'
+        → ¬ gaDepositInPot cs' gaid
 ```
 
 **Proof**.
 
-We want to show that the `GADepositsEventuallyRefunded` type is inhabited.
+We prove `gaDepositsEventuallyRefunded`{.AgdaFunction}: given a
+`REFUNDED`{.AgdaInductiveConstructor} derivation, the deposit is gone.
+The proof delegates to the workhorse `gaDepositsEventuallyRefunded'`{.AgdaFunction},
+which proceeds by induction on `CHAINStar`{.AgdaDatatype}.
 
 <!--
 ```agda
@@ -286,7 +322,7 @@ private
     P = λ (x : GovActionID × GovActionState)
         → proj₁ x ∉ mapˢ proj₁ (GovernanceUpdate.removed' ls fut)
     gaid∉ : gaid ∉ mapˢ proj₁ (GovernanceUpdate.removed' ls fut)
-    gaid∉ = proj₂ (ListProp.∈-filter⁻ (¿ P ¿¹) {xs = govSt} inGovSt')
+    gaid∉ = proj₂ (∈-filter⁻ (¿ P ¿¹) {xs = govSt} inGovSt')
     gaid∈ : gaid ∈ mapˢ proj₁ (GovernanceUpdate.removed' ls fut)
     gaid∈ = ∈-map .to ((gaid , gaSt) , refl , ∈-∪ .to (inj₁ inRem))
 
@@ -456,27 +492,35 @@ private
   CHAINStar-GA-absent (step ∷* rest) (freshB ∷ freshRest) h =
     CHAINStar-GA-absent rest freshRest (CHAIN-GA-absent step freshB h)
 
-  -- ── Main theorem ──────────────────────────────────────────
+  -- Main workhorse proof (flat version) -----------------
 
-  gaDepositsEventuallyRefunded : GADepositsEventuallyRefunded
+  gaDepositsEventuallyRefunded' : GADepositsEventuallyRefunded'
   -- Base case: the epoch bound contradicts the not-yet-expired hypothesis.
-  gaDepositsEventuallyRefunded _ _ _ notexp []* _ _ cutoff =
+  gaDepositsEventuallyRefunded' _ _ _ notexp []* _ _ cutoff =
     ⊥-elim (≤e<sucᵉsucᵉ⇒⊥ notexp cutoff)
   -- Inductive step: use the invariant at cs₁ to decide the next action.
-  gaDepositsEventuallyRefunded sucLeast gdm mem notexp
+  gaDepositsEventuallyRefunded' sucLeast gdm mem notexp
     (_∷*_ {cs' = cs₁} step rest) (freshB ∷ freshRest) (inv₁ , invRest) cutoff
     with inv₁
   -- Deposit already absent at cs₁.
   ... | inj₁ absent₁ = CHAINStar-GA-absent rest freshRest absent₁
   -- IH preconditions hold at cs₁: recurse.
   ... | inj₂ (gdm₁ , mem₁ , notexp₁) =
-    gaDepositsEventuallyRefunded sucLeast gdm₁ mem₁ notexp₁
+    gaDepositsEventuallyRefunded' sucLeast gdm₁ mem₁ notexp₁
       rest freshRest invRest cutoff
+
+  -- Theorem: given a REFUNDED derivation, the deposit is gone.
+  gaDepositsEventuallyRefunded : ∀ {cs bs cs'}
+    (h : _ ⊢ cs ⇀⦇ bs ,REFUNDED⦈ cs') → GADepositsEventuallyRefunded h
+  gaDepositsEventuallyRefunded
+    (REFUNDED (sucLeast , gdm , mem , notexp , fresh , inv , cutoff)) =
+    gaDepositsEventuallyRefunded' sucLeast gdm mem notexp _ fresh inv cutoff
 
 ```
 -->
 
-The proof proceeds by induction on `CHAINStar`{.AgdaDatatype} and uses the
+The workhorse proof `gaDepositsEventuallyRefunded'`{.AgdaFunction} proceeds by
+induction on `CHAINStar`{.AgdaDatatype} and uses the
 `CHAINStar-Invariant`{.AgdaFunction} at each step.
 
 **Base case** (`[]*`{.AgdaInductiveConstructor}).
