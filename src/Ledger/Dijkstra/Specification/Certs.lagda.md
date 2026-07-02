@@ -192,6 +192,9 @@ instance
   HasWithdrawals-CertEnv : HasWithdrawals CertEnv
   HasWithdrawals-CertEnv .WithdrawalsOf = CertEnv.wdrls
 
+  HasDirectDeposits-CertEnv : HasDirectDeposits CertEnv
+  HasDirectDeposits-CertEnv .DirectDepositsOf = CertEnv.directDeposits
+
   HasVoteDelegs-DState : HasVoteDelegs DState
   HasVoteDelegs-DState .VoteDelegsOf = DState.voteDelegs
 
@@ -353,6 +356,9 @@ doesn't balance.
 coinFromDeposits : CertState → Coin
 coinFromDeposits cs = coinFromDepositTriple (depositTripleOf cs)
 
+coinFromRewards : CertState → Coin
+coinFromRewards = rewardsBalance ∘ DStateOf
+
 module _ (pp : PParams) (certState : CertState) where
 
   updateCertDeposits : List DCert → CertState
@@ -373,7 +379,8 @@ module _ (pp : PParams) (certState : CertState) where
 ```agda
 instance
   HasCoin-CertState : HasCoin CertState
-  HasCoin-CertState .getCoin = rewardsBalance ∘ DStateOf
+  -- Total coin held in a CertState: the rewards balance plus the deposit pots.
+  HasCoin-CertState .getCoin = λ cs → coinFromRewards cs + coinFromDeposits cs
 
   unquoteDecl DecEq-StakePoolParams = derive-DecEq
     ((quote StakePoolParams , DecEq-StakePoolParams) ∷ [])

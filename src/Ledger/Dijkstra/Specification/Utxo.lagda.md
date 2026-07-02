@@ -292,6 +292,12 @@ collateralCheck pp txTop utxo =
 
 ### Governance Proposal Deposits
 
+The closed-form cert-deposit helpers (`updateCertDeposit`, `updateCertDeposits`,
+`coinFromDeposits`, `depositsChange`, `newCertDeposits`, `refundCertDeposits`) have
+been moved to `Ledger.Dijkstra.Specification.Certs` so that downstream Certs-level
+PoV proofs (parameterised only by `GovStructure`) can reference them.  They are
+imported here via the open import of `Certs` at the top of this module.
+
 ```agda
 module _ (pp : PParams) where
   govProposalsDeposits : List GovProposal → Coin
@@ -301,6 +307,17 @@ module _ (pp : PParams) where
 ---
 
 ### Consumed and Produced
+
+New deposits lock value out of circulation, so — like fees and donations — they
+appear on the *produced* side: `newCertDeposits`{.AgdaFunction} (the positive part of
+the cert-deposit change) and `govProposalsDeposits`{.AgdaFunction} (the
+governance-action deposits introduced by this transaction).  Deposit *refunds* return
+locked value to circulation, so `refundCertDeposits`{.AgdaFunction} (the negative part
+of the cert-deposit change) appears on the *consumed* side.  This matches the trusted
+Conway convention (`Ledger.Conway.Specification.Utxo`: `newDeposits`{.AgdaFunction} on
+`produced`{.AgdaFunction}, `depositRefunds`{.AgdaFunction} on `consumed`{.AgdaFunction}),
+under the same `depositsChange`{.AgdaFunction} = deposits-after − deposits-before sign
+convention.
 
 ```agda
 

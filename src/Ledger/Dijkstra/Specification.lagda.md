@@ -69,6 +69,7 @@ import Ledger.Dijkstra.Specification.Enact.Properties
 import Ledger.Dijkstra.Specification.Entities
 import Ledger.Dijkstra.Specification.Entities.Properties
 ```
+
 ## <span class="AgdaModule">Epoch</span>
 
 ```agda

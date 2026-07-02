@@ -4,9 +4,18 @@
 
 ### WIP
 
+- Fix preservation-of-value soundness bug in `Utxo`: deposit terms were on the wrong
+  sides of the batch-balance equation. New deposits (`newCertDeposits`,
+  `govProposalsDeposits`) now appear on the *produced* side and refunds
+  (`refundCertDeposits`) on the *consumed* side, matching the trusted Conway
+  convention. The previous (swapped) placement let a transaction create value.
+- Count governance-action deposits in `getCoin LedgerState` via a new
+  `coinFromGovDeposit : GovState → Coin` (sum of `GovActionState.deposit`). Post-#1214
+  these deposits live in `GovActionState.deposit`, not `GState.deposits`, so
+  `coinFromDeposits` alone no longer accounts for them.
 - Move cert-deposit helpers from `Utxo` to `Certs`.
 - Fix `updateCertDeposits`: use `foldl` (CERTS is head-first).
-- Add `HasCoin-UTxOState` and `HasCoin-LedgerState` instances; the latter sums UTxO total, rewards balance, and all three deposit fields.
+- Add `HasCoin-UTxOState` and `HasCoin-LedgerState` instances; the latter sums UTxO total, rewards balance, the three `CertState` deposit fields (`coinFromDeposits`), and governance-action deposits (`coinFromGovDeposit`).
 - Apply per-transaction direct deposits to `CertState` after each `CERTS` step in `SUBLEDGER-V` and `LEDGER-V` (CIP-159).
 - Forbid CIP-159 fields (`txDirectDeposits`, `txBalanceIntervals`) in legacy mode via explicit `UTXOW-legacy` premises.
 - Allow partial withdrawals in `PRE-CERT` rule; define `applyWithdrawals` and `_≤ᵐ_` (CIP-159).

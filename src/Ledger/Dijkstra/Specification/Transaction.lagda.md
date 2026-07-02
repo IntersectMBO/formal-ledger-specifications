@@ -416,10 +416,6 @@ could be either of them.
     field CurrentTreasuryOf : A → Maybe Coin
   open HasCurrentTreasury ⦃...⦄ public
 
-  record HasDirectDeposits {a} (A : Type a) : Type a where
-    field DirectDepositsOf : A → DirectDeposits
-  open HasDirectDeposits ⦃...⦄ public
-
   record HasBalanceIntervals {a} (A : Type a) : Type a where
     field BalanceIntervalsOf : A → AccountBalanceIntervals
   open HasBalanceIntervals ⦃...⦄ public
