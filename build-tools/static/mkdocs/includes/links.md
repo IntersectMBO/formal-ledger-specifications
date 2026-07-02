@@ -22,6 +22,8 @@
 [Chain.Properties.CredDepsEqualDomRwds]: Ledger.Conway.Specification.Chain.Properties.CredDepsEqualDomRwds.md
 [Chain.Properties.EpochStep]: Ledger.Conway.Specification.Chain.Properties.EpochStep.md
 [CHAIN-EpochStep]: Ledger.Conway.Specification.Chain.Properties.EpochStep.md#clm:EpochStep
+[Chain.Properties.EventuallyRefunded]: Ledger.Conway.Specification.Chain.Properties.EventuallyRefunded.md
+[CHAIN-EventuallyRefunded]: Ledger.Conway.Specification.Chain.Properties.EventuallyRefunded.md#clm:EventuallyRefunded
 [CHAIN-CredDepsEqualDomRwds-inv]: Ledger.Conway.Specification.Chain.Properties.CredDepsEqualDomRwds.md#clm:CredDepsEqualDomRwds-inv
 [CHAIN-PParamsWellFormed-inv]: Ledger.Conway.Specification.Chain.Properties.PParamsWellFormed.md#clm:pp-wellFormed-inv
 [Chain.Properties.PParamsWellFormed]: Ledger.Conway.Specification.Chain.Properties.PParamsWellFormed.md
