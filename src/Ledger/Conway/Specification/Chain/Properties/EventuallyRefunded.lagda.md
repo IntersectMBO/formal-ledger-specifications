@@ -9,37 +9,36 @@ source_path: src/Ledger/Conway/Specification/Chain/Properties/EventuallyRefunded
 ```agda
 {-# OPTIONS --safe #-}
 
-open import Ledger.Conway.Specification.Abstract
-open import Ledger.Conway.Specification.Transaction
+open import Ledger.Conway.Specification.Abstract using (AbstractFunctions)
+open import Ledger.Conway.Specification.Transaction using (TransactionStructure)
 
 module Ledger.Conway.Specification.Chain.Properties.EventuallyRefunded
-  (txs : _) (open TransactionStructure txs)
+  (txs : TransactionStructure ) (open TransactionStructure txs)
   (abs : AbstractFunctions txs)
   where
+
+open import Data.List.Relation.Unary.All using (All; []; _∷_)
+open import Data.List.Membership.Propositional.Properties using (∈-filter⁻)
+open import Data.List.Relation.Unary.Any using (here; there)
+
+open import Ledger.Prelude hiding (All)
 
 open import Ledger.Conway.Specification.Certs govStructure
 open import Ledger.Conway.Specification.Chain txs abs
 open import Ledger.Conway.Specification.Enact govStructure
 open import Ledger.Conway.Specification.Epoch txs abs
+open import Ledger.Conway.Specification.Gov govStructure using (GovState; GovStateOf)
 open import Ledger.Conway.Specification.Ledger txs abs
 open import Ledger.Conway.Specification.Ledger.Properties.Base txs abs
-open import Ledger.Conway.Specification.Gov govStructure using (GovState; GovStateOf)
 open import Ledger.Conway.Specification.PoolReap txs abs using (POOLREAP)
 open import Ledger.Conway.Specification.Ratify govStructure
 open import Ledger.Conway.Specification.RewardUpdate txs abs using (TICK)
 open import Ledger.Conway.Specification.Utxo txs abs
-open import Ledger.Prelude hiding (All; any?; all?)
 
-open import Data.List.Relation.Unary.All using (All; []; _∷_)
-
-open import Data.List.Membership.Propositional using () renaming (_∈_ to _∈ˡ_)
-open import Data.List.Membership.Propositional.Properties using (∈-filter⁻)
-open import Data.List.Relation.Unary.Any using (here; there)
-
-open GovActionState
-open Block
-open RatifyEnv using (currentEpoch)
-open RatifyState using (removed)
+open GovActionState  using (votes; expiresIn)
+open Block           using (ts)
+open RatifyEnv       using (currentEpoch)
+open RatifyState     using (removed)
 ```
 -->
 
@@ -311,75 +310,99 @@ private
 
   -- If (gaid, gaSt) ∈ removed(fut), then after GovernanceUpdate
   -- the action is not in govSt'.
-  govUpdate-removes : ∀ {ls : LState} {fut : RatifyState}
-    {gaid : GovActionID} {gaSt gaSt' : GovActionState}
+  govUpdate-removes :
+    {ls          : LState}
+    {fut         : RatifyState}
+    {gaid        : GovActionID}
+    {gaSt gaSt'  : GovActionState}
     → (gaid , gaSt) ∈ removed fut
     → (gaid , gaSt') ∉ˡ GovernanceUpdate.govSt' ls fut
-  govUpdate-removes {ls} {fut} {gaid} {gaSt} {gaSt'} inRem inGovSt' =
-    gaid∉ gaid∈
+  govUpdate-removes {ls} {fut} {gaid} {gaSt} inRem inGovSt' = gaid∉ gaid∈
     where
-    open LState ls using (govSt)
-    P = λ (x : GovActionID × GovActionState)
-        → proj₁ x ∉ mapˢ proj₁ (GovernanceUpdate.removed' ls fut)
-    gaid∉ : gaid ∉ mapˢ proj₁ (GovernanceUpdate.removed' ls fut)
-    gaid∉ = proj₂ (∈-filter⁻ (¿ P ¿¹) {xs = govSt} inGovSt')
-    gaid∈ : gaid ∈ mapˢ proj₁ (GovernanceUpdate.removed' ls fut)
+    open GovernanceUpdate ls fut
+
+    P : GovActionID × GovActionState → Type
+    P (id , _) = id ∉ mapˢ proj₁ removed'
+
+    gaid∉ : gaid ∉ mapˢ proj₁ removed'
+    gaid∉ = proj₂ (∈-filter⁻ (¿ P ¿¹) {xs = GovStateOf ls} inGovSt')
+
+    gaid∈ : gaid ∈ mapˢ proj₁ removed'
     gaid∈ = ∈-map .to ((gaid , gaSt) , refl , ∈-∪ .to (inj₁ inRem))
 
   -- Deposit-absence preservation ----------------------
 
   -- GA keys never appear in certDeposit or certRefund.
   GA∉dom-certDep : ∀ {gaid} cert pp → GovActionDeposit gaid ∉ dom (certDeposit cert pp ˢ)
-  GA∉dom-certDep {gaid} (delegate c d k v) pp h with from dom∈ h
-  ... | _ , p with from ∈-singleton p
-  ...   | ()
-  GA∉dom-certDep {gaid} (reg c v) pp h with from dom∈ h
-  ... | _ , p with from ∈-singleton p
-  ...   | ()
-  GA∉dom-certDep {gaid} (regpool kh p) pp h with from dom∈ h
-  ... | _ , q with from ∈-singleton q
-  ...   | ()
-  GA∉dom-certDep {gaid} (regdrep c v a) pp h with from dom∈ h
-  ... | _ , p with from ∈-singleton p
-  ...   | ()
-  GA∉dom-certDep (dereg _ _)      _ h = Properties.∉-∅ (proj₁ dom∅ h)
-  GA∉dom-certDep (deregdrep _ _)  _ h = Properties.∉-∅ (proj₁ dom∅ h)
-  GA∉dom-certDep (retirepool _ _) _ h = Properties.∉-∅ (proj₁ dom∅ h)
-  GA∉dom-certDep (ccreghot _ _)   _ h = Properties.∉-∅ (proj₁ dom∅ h)
+  GA∉dom-certDep (dereg _ _)         _  h = Properties.∉-∅ (proj₁ dom∅ h)
+  GA∉dom-certDep (deregdrep _ _)     _  h = Properties.∉-∅ (proj₁ dom∅ h)
+  GA∉dom-certDep (retirepool _ _)    _  h = Properties.∉-∅ (proj₁ dom∅ h)
+  GA∉dom-certDep (ccreghot _ _)      _  h = Properties.∉-∅ (proj₁ dom∅ h)
+  GA∉dom-certDep (delegate c d k v)  pp h with from ∈-singleton (from dom∈ h .proj₂)
+  ... | ()
+  GA∉dom-certDep (reg c v)           pp h with from ∈-singleton (from dom∈ h .proj₂)
+  ... | ()
+  GA∉dom-certDep (regpool kh p)      pp h with from ∈-singleton (from dom∈ h .proj₂)
+  ... | ()
+  GA∉dom-certDep (regdrep c v a)     pp h with from ∈-singleton (from dom∈ h .proj₂)
+  ... | ()
 
   -- Map-operation helpers (specialised to Deposits).
-  ∉-dom-∪⁺ᵈ : ∀ {m n : Deposits} {x : DepositPurpose}
+  ∉-dom-∪⁺ᵈ : {m n : Deposits} {x : DepositPurpose}
     → x ∉ dom (m ˢ) → x ∉ dom (n ˢ) → x ∉ dom ((m ∪⁺ n) ˢ)
   ∉-dom-∪⁺ᵈ h₁ h₂ h = case from ∈-∪ (proj₁ dom∪⁺≡∪dom h) of λ where
-    (inj₁ x) → h₁ x ; (inj₂ x) → h₂ x
+    (inj₁ x) → h₁ x
+    (inj₂ x) → h₂ x
 
   ∉-dom-∪ˡᵈ : ∀ {m n : Deposits} {x : DepositPurpose}
     → x ∉ dom (m ˢ) → x ∉ dom (n ˢ) → x ∉ dom ((m ∪ˡ n) ˢ)
-  ∉-dom-∪ˡᵈ {m} {n} h₁ h₂ h = case from ∈-∪ (proj₁ (dom∪ˡ≡∪dom {m = m} {m' = n}) h) of λ where
-    (inj₁ x) → h₁ x ; (inj₂ x) → h₂ x
+  ∉-dom-∪ˡᵈ {m} {n} h₁ h₂ h =
+    case from ∈-∪ (proj₁ (dom∪ˡ≡∪dom {m = m} {m' = n}) h) of λ where
+      (inj₁ x) → h₁ x
+      (inj₂ x) → h₂ x
 
   ∉-dom-resᶜᵈ : ∀ {m : Deposits} {S : ℙ DepositPurpose} {x : DepositPurpose}
     → x ∉ dom (m ˢ) → x ∉ dom ((m ∣ S ᶜ) ˢ)
   ∉-dom-resᶜᵈ h h' = h (res-comp-domᵐ h')
 
   -- updateCertDeposits preserves GA-deposit absence.
-  updCertDeps-GA-absent : ∀ {gaid : GovActionID} pp (certs : List DCert) (deps : Deposits)
+  updCertDeps-GA-absent :
+    {gaid   : GovActionID}
+    (pp     : PParams )
+    (certs  : List DCert)
+    (deps   : Deposits)
     → GovActionDeposit gaid ∉ dom (deps ˢ)
     → GovActionDeposit gaid ∉ dom (updateCertDeposits pp certs deps ˢ)
+
   updCertDeps-GA-absent pp [] deps h = h
-  updCertDeps-GA-absent {gaid} pp (delegate c d k v ∷ cs) deps h =
-    updCertDeps-GA-absent pp cs (deps ∪⁺ certDeposit (delegate c d k v) pp) (∉-dom-∪⁺ᵈ h (GA∉dom-certDep {gaid} (delegate c d k v) pp))
-  updCertDeps-GA-absent {gaid} pp (reg c v ∷ cs) deps h =
-    updCertDeps-GA-absent pp cs (deps ∪⁺ certDeposit (reg c v) pp) (∉-dom-∪⁺ᵈ h (GA∉dom-certDep {gaid} (reg c v) pp))
-  updCertDeps-GA-absent {gaid} pp (regpool kh p ∷ cs) deps h =
-    updCertDeps-GA-absent pp cs (deps ∪ˡ certDeposit (regpool kh p) pp)
-      (∉-dom-∪ˡᵈ {m = deps} {n = certDeposit (regpool kh p) pp} h (GA∉dom-certDep {gaid} (regpool kh p) pp))
-  updCertDeps-GA-absent {gaid} pp (regdrep c v a ∷ cs) deps h =
-    updCertDeps-GA-absent pp cs (deps ∪⁺ certDeposit (regdrep c v a) pp) (∉-dom-∪⁺ᵈ h (GA∉dom-certDep {gaid} (regdrep c v a) pp))
-  updCertDeps-GA-absent {gaid} pp (dereg c v ∷ cs) deps h =
+
+  updCertDeps-GA-absent pp (delegate c d k v ∷ cs) deps h =
+    updCertDeps-GA-absent pp cs
+      (deps ∪⁺ certDeposit (delegate c d k v) pp)
+      (∉-dom-∪⁺ᵈ h (GA∉dom-certDep (delegate c d k v) pp))
+
+  updCertDeps-GA-absent pp (reg c v ∷ cs) deps h =
+    updCertDeps-GA-absent pp cs
+      (deps ∪⁺ certDeposit (reg c v) pp)
+      (∉-dom-∪⁺ᵈ h (GA∉dom-certDep (reg c v) pp))
+
+  updCertDeps-GA-absent pp (regpool kh p ∷ cs) deps h =
+    updCertDeps-GA-absent pp cs
+      (deps ∪ˡ certDeposit (regpool kh p) pp)
+      (∉-dom-∪ˡᵈ  {m = deps} {n = certDeposit (regpool kh p) pp}
+                  h (GA∉dom-certDep (regpool kh p) pp))
+
+  updCertDeps-GA-absent pp (regdrep c v a ∷ cs) deps h =
+    updCertDeps-GA-absent pp cs
+      (deps ∪⁺ certDeposit (regdrep c v a) pp)
+      (∉-dom-∪⁺ᵈ h (GA∉dom-certDep (regdrep c v a) pp))
+
+  updCertDeps-GA-absent pp (dereg c v ∷ cs) deps h =
     updCertDeps-GA-absent pp cs (deps ∣ certRefund (dereg c v) ᶜ) (∉-dom-resᶜᵈ {m = deps} h)
-  updCertDeps-GA-absent {gaid} pp (deregdrep c v ∷ cs) deps h =
+
+  updCertDeps-GA-absent pp (deregdrep c v ∷ cs) deps h =
     updCertDeps-GA-absent pp cs (deps ∣ certRefund (deregdrep c v) ᶜ) (∉-dom-resᶜᵈ {m = deps} h)
+
   updCertDeps-GA-absent pp (retirepool _ _ ∷ cs) deps h = updCertDeps-GA-absent pp cs deps h
   updCertDeps-GA-absent pp (ccreghot _ _ ∷ cs) deps h = updCertDeps-GA-absent pp cs deps h
 
@@ -388,9 +411,13 @@ private
   GovActionDeposit-inj refl = refl
 
   -- updateProposalDeposits with fresh TxId preserves GA absence.
-  updPropDeps-GA-absent : ∀ {gaid : GovActionID}
-    (props : List GovProposal) (txid : TxId) (gaDep : Coin) (deps : Deposits)
-    → txid ≢ proj₁ gaid
+  updPropDeps-GA-absent :
+    {gaid   : GovActionID}
+    (props  : List GovProposal)
+    (txid   : TxId)
+    (gaDep  : Coin)
+    (deps   : Deposits)
+    → txid ≢ gaid .proj₁
     → GovActionDeposit gaid ∉ dom (deps ˢ)
     → GovActionDeposit gaid ∉ dom (updateProposalDeposits props txid gaDep deps ˢ)
   updPropDeps-GA-absent [] _ _ _ _ h = h
@@ -399,37 +426,32 @@ private
       (updPropDeps-GA-absent ps txid gaDep deps txid≢ notIn) newKey∉
     where
     newKey∉ : GovActionDeposit gaid ∉ dom (❴ GovActionDeposit (txid , length ps) , gaDep ❵ ˢ)
-    newKey∉ h with from dom∈ h
-    ... | _ , p with from ∈-singleton p
-    ...   | eq = txid≢ (cong proj₁ (GovActionDeposit-inj (cong proj₁ (sym eq))))
+    newKey∉ h = txid≢ (cong proj₁ (GovActionDeposit-inj (cong proj₁ (sym (from ∈-singleton (from dom∈ h .proj₂))))))
 
   -- Combined: updateDeposits with fresh TxId preserves GA absence.
-  updateDeposits-GA-absent : ∀ {gaid : GovActionID} pp (txb : TxBody) (deps : Deposits)
-    → TxBody.txId txb ≢ proj₁ gaid
+  updateDeposits-GA-absent : ∀ {gaid : GovActionID} pp (tx : Tx) (deps : Deposits)
+    → TxIdOf tx ≢ proj₁ gaid
     → GovActionDeposit gaid ∉ dom (deps ˢ)
-    → GovActionDeposit gaid ∉ dom (updateDeposits pp txb deps ˢ)
-  updateDeposits-GA-absent {gaid} pp txb deps txid≢ notIn =
-    let open TxBody txb
-    in updCertDeps-GA-absent pp txCerts
-         (updateProposalDeposits txGovProposals txId (PParams.govActionDeposit pp) deps)
-         (updPropDeps-GA-absent txGovProposals txId (PParams.govActionDeposit pp) deps txid≢ notIn)
+    → GovActionDeposit gaid ∉ dom (updateDeposits pp (TxBodyOf tx) deps ˢ)
+  updateDeposits-GA-absent {gaid} pp tx deps txid≢ notIn =
+    -- let open TxBody txb
+    updCertDeps-GA-absent pp (DCertsOf tx)
+         (updateProposalDeposits (GovProposalsOf tx) (TxIdOf tx) (PParams.govActionDeposit pp) deps)
+         (updPropDeps-GA-absent (GovProposalsOf tx) (TxIdOf tx) (PParams.govActionDeposit pp) deps txid≢ notIn)
 
-  -- ── Per-LEDGER-step deposit absence preservation ──────────
-
-  -- Abbreviation.
-  GA∉ : GovActionID → LState → Type
-  GA∉ gaid ls = GovActionDeposit gaid ∉ dom (DepositsOf ls)
+  -- Per-LEDGER-step deposit absence preservation ------------------------
 
   LEDGER-GA-absent : ∀ {Γ ls tx ls'} {gaid : GovActionID}
     → Γ ⊢ ls ⇀⦇ tx ,LEDGER⦈ ls'
     → TxIdOf tx ≢ proj₁ gaid
-    → GA∉ gaid ls → GA∉ gaid ls'
+    → GovActionDeposit gaid ∉ dom (DepositsOf ls)
+    → GovActionDeposit gaid ∉ dom (DepositsOf ls')
+
   -- Valid tx, scripts pass: deposits updated via updateDeposits.
   LEDGER-GA-absent {Γ} {ls} {tx}
     (LEDGER-V⋯ refl (UTXOW-UTXOS (Scripts-Yes _)) _ _) txid≢ h =
-    let open LEnv Γ renaming (pparams to pp)
-        open Tx tx renaming (body to txb)
-    in updateDeposits-GA-absent pp txb (DepositsOf ls) txid≢ h
+    updateDeposits-GA-absent (PParamsOf Γ) tx (DepositsOf ls) txid≢ h
+
   -- Invalid tx, scripts fail: deposits unchanged (collateral only).
   LEDGER-GA-absent (LEDGER-I⋯ refl (UTXOW-UTXOS (Scripts-No _))) _ h = h
 
@@ -437,12 +459,14 @@ private
   LEDGERS-GA-absent : ∀ {Γ ls txs ls'} {gaid : GovActionID}
     → Γ ⊢ ls ⇀⦇ txs ,LEDGERS⦈ ls'
     → All (λ tx → TxIdOf tx ≢ proj₁ gaid) txs
-    → GA∉ gaid ls → GA∉ gaid ls'
+    → GovActionDeposit gaid ∉ dom (DepositsOf ls)
+    → GovActionDeposit gaid ∉ dom (DepositsOf ls')
+
   LEDGERS-GA-absent (BS-base Id-nop) _ h = h
   LEDGERS-GA-absent (BS-ind step rest) (fresh ∷ freshRest) h =
     LEDGERS-GA-absent rest freshRest (LEDGER-GA-absent step fresh h)
 
-  -- ── Per-CHAIN-step deposit absence preservation ───────────
+  -- Per-CHAIN-step deposit absence preservation --------------------------
 
   -- Through a single CHAIN step, if the deposit is absent and FreshId
   -- holds for the block, the deposit stays absent.  The deposits go
@@ -454,70 +478,85 @@ private
     → _ ⊢ eps ⇀⦇ e ,EPOCH⦈ eps'
     → GovActionDeposit gaid ∉ dom (DepositsOf eps)
     → GovActionDeposit gaid ∉ dom (DepositsOf eps')
+
   EPOCH-GA-absent {eps} (EPOCH (_ , POOLREAP , _)) h =
-    let open EpochState eps
-        open RatifyState fut renaming (es to futES)
-        govUpd  = GovernanceUpdate.updates ls fut
-        utxoSt' = Pre-POOLREAPUpdate.utxoSt' ls futES govUpd
-    in ∉-dom-resᶜᵈ {m = UTxOState.deposits utxoSt'} (∉-dom-resᶜᵈ {m = UTxOState.deposits (LState.utxoSt ls)} h)
+    ∉-dom-resᶜᵈ {m = DepositsOf utxoSt'} (∉-dom-resᶜᵈ {m = DepositsOf eps} h)
+    where
+    open GovernanceUpdate (LStateOf eps) (RatifyStateOf eps) using (updates)
+    open Pre-POOLREAPUpdate (LStateOf eps) (EnactStateOf (RatifyStateOf eps)) updates using (utxoSt')
 
   CHAIN-GA-absent : ∀ {cs b cs₁} {gaid : GovActionID}
     → _ ⊢ cs ⇀⦇ b ,CHAIN⦈ cs₁
     → All (λ tx → TxIdOf tx ≢ proj₁ gaid) (ts b)
-    → GA∉ gaid (LStateOf cs)
-    → GA∉ gaid (LStateOf cs₁)
-  CHAIN-GA-absent ( CHAIN ( _
-    , TICK ((NEWEPOCH-New (_ , epochStep)) , _)
-    , BBODY-Block-Body (_ , _ , _ , ledgers)
-    )) fresh h =
-    LEDGERS-GA-absent ledgers fresh (EPOCH-GA-absent epochStep h)
-  CHAIN-GA-absent ( CHAIN ( _
-    , TICK (NEWEPOCH-Not-New _ , _)
-    , BBODY-Block-Body (_ , _ , _ , ledgers)
-    )) fresh h =
-    LEDGERS-GA-absent ledgers fresh h
-  CHAIN-GA-absent ( CHAIN ( _
-    , TICK ((NEWEPOCH-No-Reward-Update (_ , epochStep)) , _)
-    , BBODY-Block-Body (_ , _ , _ , ledgers)
-    )) fresh h =
-    LEDGERS-GA-absent ledgers fresh (EPOCH-GA-absent epochStep h)
+    → GovActionDeposit gaid ∉ dom (DepositsOf cs)
+    → GovActionDeposit gaid ∉ dom (DepositsOf cs₁)
+
+  CHAIN-GA-absent  ( CHAIN  ( _
+                            , TICK ( NEWEPOCH-New (_ , epochStep) , _ )
+                            , BBODY-Block-Body ( _ , _ , _ , ledgers )
+                            )
+                   ) fresh h = LEDGERS-GA-absent ledgers fresh (EPOCH-GA-absent epochStep h)
+
+  CHAIN-GA-absent  ( CHAIN  ( _
+                            , TICK ( NEWEPOCH-Not-New _ , _ )
+                            , BBODY-Block-Body ( _ , _ , _ , ledgers )
+                            )
+                   ) fresh h = LEDGERS-GA-absent ledgers fresh h
+
+  CHAIN-GA-absent  ( CHAIN  ( _
+                            , TICK ( (NEWEPOCH-No-Reward-Update (_ , epochStep) ) , _ )
+                            , BBODY-Block-Body ( _ , _ , _ , ledgers )
+                            )
+                   ) fresh h = LEDGERS-GA-absent ledgers fresh (EPOCH-GA-absent epochStep h)
 
   -- Lift to CHAINStar: deposit stays absent through a sequence of blocks.
   CHAINStar-GA-absent : ∀ {cs bs cs'} {gaid : GovActionID}
     → CHAINStar cs bs cs'
     → FreshId gaid bs
-    → GA∉ gaid (LStateOf cs)
-    → GA∉ gaid (LStateOf cs')
+    → GovActionDeposit gaid ∉ dom (DepositsOf cs)
+    → GovActionDeposit gaid ∉ dom (DepositsOf cs')
   CHAINStar-GA-absent []* _ h = h
   CHAINStar-GA-absent (step ∷* rest) (freshB ∷ freshRest) h =
     CHAINStar-GA-absent rest freshRest (CHAIN-GA-absent step freshB h)
+```
+-->
 
+```agda
   -- Main workhorse proof (flat version) -----------------
 
   gaDepositsEventuallyRefunded' : GADepositsEventuallyRefunded'
+
   -- Base case: the epoch bound contradicts the not-yet-expired hypothesis.
   gaDepositsEventuallyRefunded' _ _ _ notexp []* _ _ cutoff =
     ⊥-elim (≤e<sucᵉsucᵉ⇒⊥ notexp cutoff)
+
   -- Inductive step: use the invariant at cs₁ to decide the next action.
   gaDepositsEventuallyRefunded' sucLeast gdm mem notexp
-    (_∷*_ {cs' = cs₁} step rest) (freshB ∷ freshRest) (inv₁ , invRest) cutoff
-    with inv₁
-  -- Deposit already absent at cs₁.
-  ... | inj₁ absent₁ = CHAINStar-GA-absent rest freshRest absent₁
-  -- IH preconditions hold at cs₁: recurse.
-  ... | inj₂ (gdm₁ , mem₁ , notexp₁) =
-    gaDepositsEventuallyRefunded' sucLeast gdm₁ mem₁ notexp₁
-      rest freshRest invRest cutoff
+    (_∷*_ {cs' = cs₁} step rest) (freshB ∷ freshRest) (inv₁ , invRest) cutoff with inv₁
 
-  -- Theorem: given a REFUNDED derivation, the deposit is gone.
-  gaDepositsEventuallyRefunded : ∀ {cs bs cs'}
+    --| Deposit already absent at cs₁:
+  ... | inj₁ absent₁ = CHAINStar-GA-absent rest freshRest absent₁
+
+    --| IH preconditions hold at cs₁ (recurse):
+  ... | inj₂ (gdm₁ , mem₁ , notexp₁) =
+    gaDepositsEventuallyRefunded' sucLeast gdm₁ mem₁ notexp₁ rest freshRest invRest cutoff
+
+
+  -- Theorem: given a REFUNDED derivation, the deposit is refunded and gone for good.
+
+  gaDepositsEventuallyRefunded :
+
+    {cs  : ChainState}
+    {bs  : List Block}
+    {cs' : ChainState}
+
     (h : _ ⊢ cs ⇀⦇ bs ,REFUNDED⦈ cs') → GADepositsEventuallyRefunded h
+
   gaDepositsEventuallyRefunded
     (REFUNDED (sucLeast , gdm , mem , notexp , fresh , inv , cutoff)) =
-    gaDepositsEventuallyRefunded' sucLeast gdm mem notexp _ fresh inv cutoff
+      gaDepositsEventuallyRefunded' sucLeast gdm mem notexp _ fresh inv cutoff
 
 ```
--->
 
 The workhorse proof `gaDepositsEventuallyRefunded'`{.AgdaFunction} proceeds by
 induction on `CHAINStar`{.AgdaDatatype} and uses the
