@@ -1124,6 +1124,40 @@ TxOutSpendable-PlutusV2-cong {u} {u″} eq tx txOut =
   subst (Maybe.All _) (txOutToP2Script-reorder {u = u} {u″ = u″} eq tx txOut)
 ```
 
+`languages`{.AgdaFunction} filters `txscripts`{.AgdaFunction} by membership of the
+hash in the needed-hash set `shs`; *both* the script set and `shs` move when the
+`UTxO` is reordered, so we need a filter congruence varying both:
+
+```agda
+filterˢ-hash∈-cong : ∀ {S S′ : ℙ Script} {shs shs′ : ℙ ScriptHash}
+  → S ≡ᵉ S′ → shs ≡ᵉ shs′
+  → filterˢ (λ s → hash s ∈ shs) S ≡ᵉ filterˢ (λ s → hash s ∈ shs′) S′
+filterˢ-hash∈-cong (S⊆ , ⊆S) (shs⊆ , ⊆shs) =
+  (λ x∈ → let (hs∈ , s∈) = Equivalence.from ∈-filter x∈ in Equivalence.to ∈-filter (shs⊆ hs∈ , S⊆ s∈)) ,
+  (λ x∈ → let (hs∈ , s∈) = Equivalence.from ∈-filter x∈ in Equivalence.to ∈-filter (⊆shs hs∈ , ⊆S s∈))
+
+languages-cong : ∀ tx {u u″ : UTxO} {shs shs′ : ℙ ScriptHash} → u ˢ ≡ᵉ u″ ˢ → shs ≡ᵉ shs′
+  → languages tx u shs ≡ᵉ languages tx u″ shs′
+languages-cong tx {u} {u″} eq shseq =
+  mapPartial-cong-fg {f = getLanguage} {g = getLanguage} (λ _ → refl)
+    (filterˢ-hash∈-cong (txscripts-cong tx {u = u} {u″ = u″} eq) shseq)
+```
+
+### The script-integrity hash: the fourth flatten-to-scalar point
+
+The value-preservation-style premise p12 compares `scriptIntegrityHash` with
+`hashScriptIntegrity pp (languages …) txrdmrs txdats` under propositional `_≡_`,
+and `hashScriptIntegrity`{.AgdaFunction} *hashes a set* of language views
+(Utxow §integrity).  As with `collectP2Scripts`{.AgdaFunction}, hashing a set
+serialises it, so order-invariance is a concrete-model fact, not derivable here:
+
+```agda
+postulate
+  hashScriptIntegrity-reorder : ∀ {pp} {langs langs′ : ℙ Language} {rdrms} {dats}
+    → langs ≡ᵉ langs′
+    → hashScriptIntegrity pp langs rdrms dats ≡ hashScriptIntegrity pp langs′ rdrms dats
+```
+
 ## Permutation scaffolding
 
 `AllPairs Indep` is preserved by permutations (since `Indep` is symmetric):
