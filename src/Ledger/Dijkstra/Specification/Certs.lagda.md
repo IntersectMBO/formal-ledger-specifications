@@ -303,70 +303,32 @@ rewardsBalance ds = ∑[ x ← RewardsOf ds ] x
 
 Functions in this section compute the effect that a `DCert`{.AgdaRecord} list has on
 the three deposit fields (`DState.deposits`{.AgdaField}, `PState.deposits`{.AgdaField},
-`GState.deposits`{.AgdaField}) carried by a `CertState`{.AgdaRecord}.  They describe
-the deposit evolution for a single `DCert` and mirror that of the corresponding
-`CERT` sub-rule.
+`GState.deposits`{.AgdaField}) carried by a `CertState`{.AgdaRecord}.
 
-### Helper Functions
-
-The three deposit fields carried by a `CertState`{.AgdaRecord} have types
-`Credential ⇀ Coin`, `KeyHash ⇀ Coin`, and `Credential ⇀ Coin`, respectively,
-and we package them up as a triple of values which are computed via
-`coinFromDepositTriple`{.AgdaFunction}.  By definition,
-
-    coinFromDeposits cs ≡ coinFromDepositTriple (depositTripleOf cs).
+In Dijkstra, both registration and deregistration certificates carry
+the explicit deposit. Hence, it is sufficient to use the list of
+certificates in a transaction to compute the amount from new and
+refunded deposits.
 
 ```agda
-DepositTriple : Type
-DepositTriple = (Credential ⇀ Coin) × (KeyHash ⇀ Coin) × (Credential ⇀ Coin)
-
-depositTripleOf : CertState → DepositTriple
-depositTripleOf cs = DepositsOf (DStateOf cs) , DepositsOf (PStateOf cs) , DepositsOf (GStateOf cs)
-
-coinFromDepositTriple : DepositTriple → Coin
-coinFromDepositTriple (dd , dp , dg) = getCoin dd + getCoin dp + getCoin dg
-
 module _ (pp : PParams) where
 
-  updateCertDeposit : DCert → DepositTriple → DepositTriple
-  updateCertDeposit cert (dd , dp , dg) = case cert of λ where
-    (delegate c _ _ d)  → (dd ∪⁺ ❴ c , d ❵  , dp                              , dg)
-    (dereg c _)         → (dd ∣ ❴ c ❵ ᶜ     , dp                              , dg)
-    (regpool kh _)      → (dd               , dp ∪ˡ ❴ kh , pp .poolDeposit ❵  , dg)
-    (regdrep c d _)     → (dd               , dp                              , dg ∪⁺ ❴ c , d ❵)
-    (deregdrep c _)     → (dd               , dp                              , dg ∣ ❴ c ❵ ᶜ)
-    _                   → (dd               , dp                              , dg)
-
-  updateCertDepositsStep : CertState → DCert → CertState
-  updateCertDepositsStep cs c =
-    let (dd , dp , dg) = updateCertDeposit c (depositTripleOf cs) in
-    ⟦ record dState { deposits = dd } , record pState { deposits = dp } , record gState { deposits = dg } ⟧
-    where open CertState cs
-```
-
-Note that any drift between the `updateCertDepositsStep`{.AgdaFunction} and the
-`CERT` sub-rule semantics is a soundness problem: it would allow the UTXO
-batch-balance equation to accept transactions whose actual `CertState` evolution
-doesn't balance.
-
-```agda
-coinFromDeposits : CertState → Coin
-coinFromDeposits cs = coinFromDepositTriple (depositTripleOf cs)
-
-module _ (pp : PParams) (certState : CertState) where
-
-  updateCertDeposits : List DCert → CertState
-  updateCertDeposits = foldl (updateCertDepositsStep pp) certState
-
-  depositsChange : List DCert → ℤ
-  depositsChange certs =
-    coinFromDeposits (updateCertDeposits certs) - coinFromDeposits certState
-
   newCertDeposits : List DCert → Coin
-  newCertDeposits certs = posPart (depositsChange certs)
+  newCertDeposits = foldl addNewCertDeposit 0
+    where
+      addNewCertDeposit : DCert → Coin → Coin
+      addNewCertDeposit (delegate _ _ _ d) acc = acc + d
+      addNewCertDeposit (regpool _ _)      acc = acc + pp .poolDeposit
+      addNewCertDeposit (regdrep _ d _)    acc = acc + d
+      addNewCertDeposit _                  acc = acc
 
   refundCertDeposits : List DCert → Coin
-  refundCertDeposits certs = negPart (depositsChange certs)
+  refundCertDeposits = foldl addRefundCertDeposit 0
+    where
+      addRefundCertDeposit : DCert → Coin → Coin
+      addRefundCertDeposit (dereg _ d)     acc = acc + d
+      addRefundCertDeposit (deregdrep _ d) acc = acc + d
+      addRefundCertDeposit _               acc = acc
 ```
 
 <!--

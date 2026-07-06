@@ -188,7 +188,7 @@ instance
   HasCoin-LedgerState : HasCoin LedgerState
   HasCoin-LedgerState .getCoin s =  getCoin (UTxOStateOf s)
                                     + rewardsBalance (DStateOf (CertStateOf s))
-                                    + coinFromDeposits (CertStateOf s)
+                                    + getCoin (DepositsOf (DStateOf s)) + getCoin (DepositsOf (PStateOf s)) + getCoin (DepositsOf (GStateOf s))
 ```
 -->
 

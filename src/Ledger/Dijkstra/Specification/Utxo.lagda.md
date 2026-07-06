@@ -304,7 +304,7 @@ module _ (pp : PParams) where
 
 ```agda
 
-module _ (pp : PParams) (certState : CertState) where
+module _ (pp : PParams) where
 
   consumedTx : Tx ℓ → UTxO → Value
   consumedTx tx utxo = balance (utxo ∣ SpendInputsOf tx)
@@ -313,7 +313,7 @@ module _ (pp : PParams) (certState : CertState) where
 
   consumed : TopLevelTx → UTxO → Value
   consumed txTop utxo = consumedTx txTop utxo
-                       + inject (refundCertDeposits pp certState (allDCerts txTop))
+                       + inject (refundCertDeposits pp (allDCerts txTop))
 
   consumedBatch : TopLevelTx → UTxO → Value
   consumedBatch txTop utxo = consumed txTop utxo
@@ -335,7 +335,7 @@ the transaction and that amount is deposited into accounts.
   produced : TopLevelTx → Value
   produced txTop = producedTx txTop
                    + inject (TxFeesOf txTop)
-                   + inject (newCertDeposits pp certState (allDCerts txTop))
+                   + inject (newCertDeposits pp (allDCerts txTop))
 
   producedBatch : TopLevelTx → Value
   producedBatch txTop = produced txTop
@@ -544,8 +544,8 @@ data _⊢_⇀⦇_,UTXO⦈_ : UTxOEnv × Bool → UTxOState → TopLevelTx → UT
     ∙ inInterval (SlotOf Γ) (ValidIntervalOf txTop)
     ∙ minfee (PParamsOf Γ) txTop (UTxOOf Γ) ≤ TxFeesOf txTop
     ∙ coin (MintedValueOf txTop) ≡ 0
-    ∙ consumedBatch (PParamsOf Γ) (CertStateOf Γ) txTop (UTxOOf Γ) ≡ producedBatch (PParamsOf Γ) (CertStateOf Γ) txTop
-    ∙ (legacyMode ≡ true → consumed (PParamsOf Γ) (CertStateOf Γ) txTop (UTxOOf Γ) ≡ produced (PParamsOf Γ) (CertStateOf Γ) txTop)  -- (4)
+    ∙ consumedBatch (PParamsOf Γ) txTop (UTxOOf Γ) ≡ producedBatch (PParamsOf Γ) txTop
+    ∙ (legacyMode ≡ true → consumed (PParamsOf Γ) txTop (UTxOOf Γ) ≡ produced (PParamsOf Γ) txTop)  -- (4)
     ∙ SizeOf txTop ≤ maxTxSize (PParamsOf Γ)
     ∙ ∑ˡ[ x ← setToList (allReferenceScripts txTop (UTxOOf Γ)) ] scriptSize x ≤ (PParamsOf Γ) .maxRefScriptSizePerTx
     ∙ ((RedeemersOf txTop ˢ ≢ ∅) ⊎ (List.Any (λ txSub → RedeemersOf txSub ˢ ≢ ∅) (SubTransactionsOf txTop))
