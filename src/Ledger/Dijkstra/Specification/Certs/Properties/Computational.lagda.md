@@ -45,16 +45,13 @@ instance
                                 × mc ∈ mapˢ just (dom (DelegEnv.pools de)) ∪ ❴ nothing ❵ ¿ of λ where
       (yes p) → success (-, DELEG-delegate p)
       (no ¬p) → failure (genErrors ¬p)
-    (dereg c md) → case lookupᵐ?? (DepositsOf ds) c of λ where
-      (yes ((_ , d) , _ , _)) →
+    (dereg c d) →
         case
           ¿ (c , 0) ∈ (RewardsOf ds)
           × (c , d) ∈ (DepositsOf ds)
-          × (md ≡ nothing ⊎ md ≡ just d)
           ¿ of λ where
             (yes q) → success (-, DELEG-dereg q)
             (no ¬q) → failure (genErrors ¬q)
-      (no ¬p) → failure (genErrors ¬p)
     _ → failure "Unexpected certificate in DELEG"
 
   Computational-DELEG .completeness de ds (delegate c mv mc d)
@@ -63,23 +60,10 @@ instance
                                            × mv ∈ mapˢ (just ∘ vDelegCredential) (DelegEnv.delegatees de) ∪
                                                fromList ( nothing ∷ just vDelegAbstain ∷ just vDelegNoConfidence ∷ [] )
                                            × mc ∈ mapˢ just (dom (DelegEnv.pools de)) ∪ ❴ nothing ❵ ¿) p .proj₂ = refl
-  Computational-DELEG .completeness _ ds (dereg c nothing) _ (DELEG-dereg {d = d} h@(p , q , r))
-    with lookupᵐ?? (DepositsOf ds) c
-  ... | (yes ((_ , d') , s₂ , refl)) rewrite dec-yes
-          (¿ (c , 0) ∈ (RewardsOf ds)
-           × (c , d') ∈ (DepositsOf ds)
-           × (nothing ≡ nothing {A = ℕ} ⊎ nothing ≡ just d')
-           ¿) (p , s₂ , inj₁ refl) .proj₂ = refl
-  Computational-DELEG .completeness _ ds (dereg c nothing) _ (DELEG-dereg h@(p , q , r))
-      | (no ¬s) = ⊥-elim (¬s (_ , q , refl))
-  Computational-DELEG .completeness _ ds (dereg c (just d)) _ (DELEG-dereg h@(p , q , inj₂ refl))
-    with lookupᵐ?? (DepositsOf ds) c
-  ... | (yes ((_ , d') , q' , refl)) rewrite dec-yes
-          (¿ (c , 0) ∈ (RewardsOf ds)
-           × (c , d') ∈ (DepositsOf ds)
-           × (just d ≡ nothing {A = ℕ} ⊎ just d ≡ just d')
-           ¿) (p , q' , inj₂ (cong just (proj₂ (DepositsOf ds) q q'))) .proj₂ = refl
-  ... | (no ¬s) = ⊥-elim (¬s (_ , q , refl))
+  Computational-DELEG .completeness _ ds (dereg c d) _ (DELEG-dereg h@(p , q))
+    with ¿ (c , 0) ∈ (RewardsOf ds) × (c , d) ∈ (DepositsOf ds) ¿
+  ... | yes p = refl
+  ... | no ¬p = ⊥-elim (¬p (p , q))
 
   Computational-POOL : Computational _⊢_⇀⦇_,POOL⦈_ String
   Computational-POOL .computeProof _ stᵖ (regpool c _)

@@ -63,7 +63,7 @@ StakeDelegs = Credential ⇀ KeyHash
 
 data DCert : Type where
   delegate    : Credential → Maybe VDeleg → Maybe KeyHash → Coin → DCert
-  dereg       : Credential → Maybe Coin → DCert
+  dereg       : Credential → Coin → DCert
   regpool     : KeyHash → StakePoolParams → DCert
   retirepool  : KeyHash → Epoch → DCert
   regdrep     : Credential → Coin → Anchor → DCert
@@ -401,9 +401,8 @@ data _⊢_⇀⦇_,DELEG⦈_ : DelegEnv → DState → DCert → DState → Type 
   DELEG-dereg :
     ∙ (c , 0) ∈ rwds
     ∙ (c , d) ∈ deposits
-    ∙ md ≡ nothing ⊎ md ≡ just d
       ────────────────────────────────
-      ⟦ pp , pools , delegatees ⟧ ⊢ ⟦ vDelegs , sDelegs , rwds , deposits ⟧ ⇀⦇ dereg c md ,DELEG⦈ ⟦ vDelegs ∣ ❴ c ❵ ᶜ , sDelegs ∣ ❴ c ❵ ᶜ , rwds ∣ ❴ c ❵ ᶜ , deposits ∣ ❴ c ❵ ᶜ ⟧
+      ⟦ pp , pools , delegatees ⟧ ⊢ ⟦ vDelegs , sDelegs , rwds , deposits ⟧ ⇀⦇ dereg c d ,DELEG⦈ ⟦ vDelegs ∣ ❴ c ❵ ᶜ , sDelegs ∣ ❴ c ❵ ᶜ , rwds ∣ ❴ c ❵ ᶜ , deposits ∣ ❴ c ❵ ᶜ ⟧
 
 
 isPoolRegistered : Pools -> KeyHash -> Maybe StakePoolParams
