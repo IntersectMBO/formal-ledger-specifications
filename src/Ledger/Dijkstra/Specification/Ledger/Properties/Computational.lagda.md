@@ -113,8 +113,8 @@ instance
       subUtxoΓ : SubUTxOEnv
       subUtxoΓ = ⟦ slot , pparams , treasury , utxo₀ , certState' , allScripts , isTopLevelValid ⟧
 
-      certΓ : CertEnv
-      certΓ = ⟦ epoch slot , pparams , ListOfGovVotesOf stx , WithdrawalsOf stx , allColdCreds govSt enactState , DirectDepositsOf stx ⟧
+      entitiesΓ : EntitiesEnv
+      entitiesΓ = ⟦ epoch slot , pparams , ListOfGovVotesOf stx , allColdCreds govSt enactState , WithdrawalsOf stx , DirectDepositsOf stx ⟧
 
       govΓ : CertState → GovEnv
       govΓ certSt = ⟦ TxIdOf stx , epoch slot , pparams , ppolicy , enactState , certSt , dom (RewardsOf certSt) ⟧
@@ -130,7 +130,7 @@ instance
       computeProof = case isTopLevelValid ≟ true of λ where
         (yes p) → do
           (utxoSt' , utxoStep) ← computeSubutxow subUtxoΓ utxoSt stx
-          (certSt' , certStep) ← computeEntities certΓ certState (DCertsOf stx)
+          (certSt' , certStep) ← computeEntities entitiesΓ certState (DCertsOf stx)
           (govSt'  , govStep)  ← computeGov (govΓ certSt') govSt (GovProposals+Votes stx)
           success (_ , SUBLEDGER-V (p , utxoStep , certStep , govStep))
         (no ¬p) → do
@@ -153,7 +153,7 @@ instance
       ... | yes refl
         with computeSubutxow subUtxoΓ utxoSt stx | completeSubutxow _ _ _ _ utxoStep
       ... | success (utxoSt' , _) | refl
-        with computeEntities certΓ certState (DCertsOf stx) | completeEntities _ _ _ _ certStep
+        with computeEntities entitiesΓ certState (DCertsOf stx) | completeEntities _ _ _ _ certStep
       ... | success (certSt' , _) | refl
         with computeGov (govΓ certSt') govSt (GovProposals+Votes stx)
            | completeGov (govΓ certSt') _ _ _ govStep
@@ -222,8 +222,8 @@ instance
       subΓ : SubLedgerEnv
       subΓ = ⟦ slot , ppolicy , pparams , enactState , treasury , utxo₀ , certState , allScripts , IsValidFlagOf txTop ⟧
 
-      certΓ : GovState → CertEnv
-      certΓ govSt' = ⟦ epoch slot , pparams , ListOfGovVotesOf txTop , WithdrawalsOf txTop , allColdCreds govSt' enactState , DirectDepositsOf txTop ⟧
+      entitiesΓ : GovState → EntitiesEnv
+      entitiesΓ govSt' = ⟦ epoch slot , pparams , ListOfGovVotesOf txTop , allColdCreds govSt' enactState , WithdrawalsOf txTop , DirectDepositsOf txTop ⟧
 
       govΓ : CertState → GovEnv
       govΓ certSt = ⟦ TxIdOf txTop , epoch slot , pparams , ppolicy , enactState , certSt , dom (RewardsOf certSt) ⟧
@@ -242,7 +242,7 @@ instance
       computeProof = case IsValidFlagOf txTop ≟ true of λ where
         (yes p) → do
           (s₁      , subStep)  ← computeSubledgers subΓ s (SubTransactionsOf txTop)
-          (certSt₂ , certStep) ← computeEntities (certΓ (GovStateOf s₁)) (CertStateOf s₁) (DCertsOf txTop)
+          (certSt₂ , certStep) ← computeEntities (entitiesΓ (GovStateOf s₁)) (CertStateOf s₁) (DCertsOf txTop)
           (govSt₂  , govStep)  ← computeGov (govΓ certSt₂) (GovStateOf s₁) (GovProposals+Votes txTop)
           (utxoSt₂ , utxoStep) ← computeUtxow utxoΓ (UTxOStateOf s₁) txTop
           success (_ , LEDGER-V (p , subStep , certStep , govStep , utxoStep))
@@ -271,8 +271,8 @@ instance
            | completeSubledgers subΓ s (SubTransactionsOf txTop)
                       (⟦ utxoSt₁ , govSt₁ , certSt₁ ⟧ˡ) subStep
       ... | success (⟦ utxoSt₁ , govSt₁ , certSt₁ ⟧ˡ , _) | refl
-        with computeEntities (certΓ govSt₁) certSt₁ (DCertsOf txTop)
-           | completeEntities (certΓ govSt₁) certSt₁ (DCertsOf txTop) certSt₂ entitiesStep
+        with computeEntities (entitiesΓ govSt₁) certSt₁ (DCertsOf txTop)
+           | completeEntities (entitiesΓ govSt₁) certSt₁ (DCertsOf txTop) certSt₂ entitiesStep
       ... | success (certSt₂ , _) | refl
         with computeGov (govΓ certSt₂) govSt₁ (GovProposals+Votes txTop)
            | completeGov (govΓ certSt₂) govSt₁ (GovProposals+Votes txTop) govSt₂ govStep

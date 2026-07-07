@@ -34,16 +34,16 @@ instance
   Computational-ENTITIES : Computational _⊢_⇀⦇_,ENTITIES⦈_ String
   Computational-ENTITIES = record {go}
     where
-      module go (Γ : CertEnv) (s₀ : CertState) (dCerts : List DCert)
-                (let module Γ = CertEnv Γ
+      module go (Γ : EntitiesEnv) (s₀ : CertState) (dCerts : List DCert)
+                (let module Γ = EntitiesEnv Γ
                      refresh  = mapPartial (isGovVoterDRep ∘ voter) (fromList Γ.votes)
                      refreshedDReps  = mapValueRestricted (const (Γ.epoch  + Γ.pp .PParams.drepActivity)) (DRepsOf s₀) refresh
-                     wdrlCreds       = mapˢ stake (dom Γ.wdrls)
+                     wdrlCreds       = mapˢ stake (dom Γ.withdrawals)
                      ddCreds         = mapˢ stake (dom Γ.directDeposits)
                 ) where
         
         s₁ : CertState
-        s₁ = ⟦ ⟦ VoteDelegsOf s₀ , StakeDelegsOf s₀ , applyWithdrawals Γ.wdrls (RewardsOf s₀) , DepositsOf (DStateOf s₀) ⟧
+        s₁ = ⟦ ⟦ VoteDelegsOf s₀ , StakeDelegsOf s₀ , applyWithdrawals Γ.withdrawals (RewardsOf s₀) , DepositsOf (DStateOf s₀) ⟧
                , PStateOf s₀
                , ⟦ refreshedDReps
                  , CCHotKeysOf s₀
@@ -52,8 +52,8 @@ instance
         computeProof : ComputationResult String (∃-syntax (_⊢_⇀⦇_,ENTITIES⦈_ Γ s₀ dCerts))
         computeProof with ¿ filterˢ isKeyHash wdrlCreds ⊆ dom (VoteDelegsOf s₀)
                           × wdrlCreds ⊆ dom (RewardsOf s₀)
-                          × (∀[ (addr , amt) ∈ Γ.wdrls ˢ ] amt ≤ maybe id 0 (lookupᵐ? (RewardsOf s₀) (stake addr)))
-                          ¿ | Computational-CERTS.computeProof Γ s₁ dCerts
+                          × (∀[ (addr , amt) ∈ Γ.withdrawals ˢ ] amt ≤ maybe id 0 (lookupᵐ? (RewardsOf s₀) (stake addr)))
+                          ¿ | Computational-CERTS.computeProof ⟦ EpochOf Γ , PParamsOf Γ , ColdCredentialsOf Γ ⟧ s₁ dCerts
         ... | no ¬p | _ = failure ""
         ... | yes _ | failure e = failure e
         ... | yes (p₁ , p₂ , p₃) | success (s₂ , p)
@@ -65,8 +65,8 @@ instance
         completeness s' (ENTITIES (p₁ , p₂ , p₃ , p , p₄))
           with ¿ filterˢ isKeyHash wdrlCreds ⊆ dom (VoteDelegsOf s₀)
                × wdrlCreds ⊆ dom (RewardsOf s₀)
-               × (∀[ (addr , amt) ∈ Γ.wdrls ˢ ] amt ≤ maybe id 0 (lookupᵐ? (RewardsOf s₀) (stake addr)))
-               ¿ | Computational-CERTS.computeProof Γ s₁ dCerts | Computational-CERTS.completeness _ _ _ _ p
+               × (∀[ (addr , amt) ∈ Γ.withdrawals ˢ ] amt ≤ maybe id 0 (lookupᵐ? (RewardsOf s₀) (stake addr)))
+               ¿ | Computational-CERTS.computeProof ⟦ EpochOf Γ , PParamsOf Γ , ColdCredentialsOf Γ ⟧ s₁ dCerts | Computational-CERTS.completeness _ _ _ _ p
         ... | no ¬p | _ | p' = ⊥-elim (¬p (p₁ , p₂ , p₃))
         ... | yes _ | failure e | ()
         ... | yes (p₁ , p₂ , p₃) | success (s₂ , p) | refl

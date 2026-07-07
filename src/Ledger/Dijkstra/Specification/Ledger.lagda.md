@@ -278,7 +278,7 @@ data _⊢_⇀⦇_,SUBLEDGER⦈_ : SubLedgerEnv → LedgerState → SubLevelTx �
   SUBLEDGER-V :
       ∙ isTopLevelValid ≡ true
       ∙ ⟦ slot , pp , treasury , utxo₀ , certState , allScripts , isTopLevelValid ⟧ ⊢ utxoState₀ ⇀⦇ stx ,SUBUTXOW⦈ utxoState₁
-      ∙ ⟦ epoch slot , pp , ListOfGovVotesOf stx , WithdrawalsOf stx , allColdCreds govState₀ enactState , DirectDepositsOf stx ⟧ ⊢ certState₀ ⇀⦇ DCertsOf stx ,ENTITIES⦈ certState₁
+      ∙ ⟦ epoch slot , pp , ListOfGovVotesOf stx , allColdCreds govState₀ enactState , WithdrawalsOf stx , DirectDepositsOf stx ⟧ ⊢ certState₀ ⇀⦇ DCertsOf stx ,ENTITIES⦈ certState₁
       ∙ ⟦ TxIdOf stx , epoch slot , pp , ppolicy , enactState , certState₁ , dom (RewardsOf certState₁) ⟧ ⊢ govState₀ ⇀⦇ GovProposals+Votes stx ,GOVS⦈ govState₁
         ────────────────────────────────
         ⟦ slot , ppolicy , pp , enactState , treasury , utxo₀ , certState , allScripts , isTopLevelValid ⟧ ⊢ ⟦ utxoState₀ , govState₀ , certState₀ ⟧ ⇀⦇ stx ,SUBLEDGER⦈ ⟦ utxoState₁ , govState₁ , certState₁ ⟧
@@ -304,7 +304,7 @@ data _⊢_⇀⦇_,LEDGER⦈_ : LedgerEnv → LedgerState → TopLevelTx → Ledg
     in
       ∙ IsValidFlagOf tx ≡ true
       ∙ ⟦ slot , ppolicy , pp , enactState , treasury , utxo₀ , certState₀ , allScripts , IsValidFlagOf tx ⟧ ⊢ ⟦ utxoState₀ , govState₀ , certState₀ ⟧ ⇀⦇ SubTransactionsOf tx ,SUBLEDGERS⦈ ⟦ utxoState₁ , govState₁ , certState₁ ⟧
-      ∙ ⟦ epoch slot , pp , ListOfGovVotesOf tx , WithdrawalsOf tx , allColdCreds govState₁ enactState , DirectDepositsOf tx ⟧ ⊢ certState₁ ⇀⦇ DCertsOf tx ,ENTITIES⦈ certState₂
+      ∙ ⟦ epoch slot , pp , ListOfGovVotesOf tx , allColdCreds govState₁ enactState , WithdrawalsOf tx , DirectDepositsOf tx ⟧ ⊢ certState₁ ⇀⦇ DCertsOf tx ,ENTITIES⦈ certState₂
       ∙ ⟦ TxIdOf tx , epoch slot , pp , ppolicy , enactState , certState₂ , dom (RewardsOf certState₂) ⟧ ⊢ govState₁ ⇀⦇ GovProposals+Votes tx ,GOVS⦈ govState₂
       ∙ ⟦ slot , pp , treasury , utxo₀ , certState₀ , allScripts ⟧ ⊢ utxoState₁ ⇀⦇ tx ,UTXOW⦈ utxoState₂
         ────────────────────────────────

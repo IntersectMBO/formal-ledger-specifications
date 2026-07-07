@@ -24,7 +24,36 @@ open PParams
 ```
 -->
 
-# Auxiliary Functions
+# Auxiliary Types and Functions
+
+```agda
+record EntitiesEnv : Type where
+  field
+    epoch           : Epoch
+    pp              : PParams
+    votes           : List GovVote
+    coldCredentials : ℙ Credential
+    withdrawals     : Withdrawals
+    directDeposits  : DirectDeposits
+
+```
+
+<!--
+```agda
+unquoteDecl HasCast-EntitiesEnv = derive-HasCast
+  [ (quote EntitiesEnv , HasCast-EntitiesEnv) ]
+
+instance
+  EntitiesEnv-HasEpoch : HasEpoch EntitiesEnv
+  EntitiesEnv-HasEpoch .EpochOf = EntitiesEnv.epoch
+
+  EntitiesEnv-HasColdCredentials : HasColdCredentials EntitiesEnv
+  EntitiesEnv-HasColdCredentials .ColdCredentialsOf = EntitiesEnv.coldCredentials
+
+  EntitiesEnv-HasPParams : HasPParams EntitiesEnv
+  EntitiesEnv-HasPParams .PParamsOf = EntitiesEnv.pp
+```
+-->
 
 Since it underpins both `applyDirectDeposits`{.AgdaFunction} and
 `applyWithdrawals`{.AgdaFunction}, the `applyToRewards`{.AgdaFunction} function
@@ -129,7 +158,7 @@ private variable
 -->
 
 ```agda
-data _⊢_⇀⦇_,ENTITIES⦈_ : CertEnv → CertState → List DCert → CertState → Type where
+data _⊢_⇀⦇_,ENTITIES⦈_ : EntitiesEnv → CertState → List DCert → CertState → Type where
 
   ENTITIES :
     let refresh         = mapPartial (isGovVoterDRep ∘ voter) (fromList vs)
@@ -142,8 +171,8 @@ data _⊢_⇀⦇_,ENTITIES⦈_ : CertEnv → CertState → List DCert → CertSt
     ∙ filter isKeyHash wdrlCreds ⊆ dom voteDelegs₀
     ∙ wdrlCreds ⊆ dom rewards₀
     ∙ ∀[ (addr , amt) ∈ wdrls ˢ ] amt ≤ maybe id 0 (lookupᵐ? rewards₀ (stake addr)) -- (1)
-    ∙ ⟦ e , pp , vs , wdrls , cc , dd ⟧ ⊢ ⟦ ⟦ voteDelegs₀ , stakeDelegs₀ , applyWithdrawals wdrls rewards₀ , depositsᵈ₀ ⟧ , pState₀ , ⟦ refreshedDReps , ccHotKeys , depositsᵍ ⟧ ⟧ ⇀⦇ dCerts  ,CERTS⦈ ⟦ ⟦ voteDelegs₁ , stakeDelegs₁ , rewards₁ , depositsᵈ₁ ⟧ , pState₁ , gState₁ ⟧
+    ∙ ⟦ e , pp , cc ⟧ ⊢ ⟦ ⟦ voteDelegs₀ , stakeDelegs₀ , applyWithdrawals wdrls rewards₀ , depositsᵈ₀ ⟧ , pState₀ , ⟦ refreshedDReps , ccHotKeys , depositsᵍ ⟧ ⟧ ⇀⦇ dCerts  ,CERTS⦈ ⟦ ⟦ voteDelegs₁ , stakeDelegs₁ , rewards₁ , depositsᵈ₁ ⟧ , pState₁ , gState₁ ⟧
     ∙ ddCreds ⊆ dom rewards₁ -- (2)
       ────────────────────────────────
-      ⟦ e , pp , vs , wdrls , cc , dd ⟧ ⊢ ⟦ ⟦ voteDelegs₀ , stakeDelegs₀ , rewards₀ , depositsᵈ₀ ⟧ , pState₀ , ⟦ dReps , ccHotKeys , depositsᵍ ⟧ ⟧ ⇀⦇ dCerts ,ENTITIES⦈ ⟦ ⟦ voteDelegs₁ ∣^ activeVDelegs , stakeDelegs₁ , applyDirectDeposits dd rewards₁ , depositsᵈ₁ ⟧ , pState₁ , gState₁ ⟧
+      ⟦ e , pp , vs , cc , wdrls , dd ⟧ ⊢ ⟦ ⟦ voteDelegs₀ , stakeDelegs₀ , rewards₀ , depositsᵈ₀ ⟧ , pState₀ , ⟦ dReps , ccHotKeys , depositsᵍ ⟧ ⟧ ⇀⦇ dCerts ,ENTITIES⦈ ⟦ ⟦ voteDelegs₁ ∣^ activeVDelegs , stakeDelegs₁ , applyDirectDeposits dd rewards₁ , depositsᵈ₁ ⟧ , pState₁ , gState₁ ⟧
 ```

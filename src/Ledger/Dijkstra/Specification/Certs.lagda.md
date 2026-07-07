@@ -35,9 +35,6 @@ record StakePoolParams : Type where
 CCHotKeys : Type
 CCHotKeys = Credential ⇀ Maybe Credential
 
-PoolEnv : Type
-PoolEnv = PParams
-
 Pools : Type
 Pools = KeyHash ⇀ StakePoolParams
 
@@ -82,15 +79,11 @@ cwitness (ccreghot c _)      = just c
 IsPoolRegistered : Pools → KeyHash → Type
 IsPoolRegistered ps kh = kh ∈ dom ps
 
--- Certification Types
 record CertEnv : Type where
   field
-    epoch           : Epoch
+    e               : Epoch
     pp              : PParams
-    votes           : List GovVote
-    wdrls           : Withdrawals
-    coldCreds       : ℙ Credential
-    directDeposits  : DirectDeposits
+    coldCredentials : ℙ Credential
 
 record DState : Type where
   constructor ⟦_,_,_,_⟧ᵈ
@@ -126,6 +119,15 @@ record DelegEnv : Type where
     pparams       : PParams
     pools         : Pools
     delegatees    : ℙ Credential
+
+PoolEnv : Type
+PoolEnv = PParams
+
+record GovCertEnv : Type where
+  field
+    e  : Epoch
+    pp : PParams
+    coldCredentials : ℙ Credential
 ```
 
 <!--
@@ -137,6 +139,10 @@ open HasDeposits ⦃...⦄ public
 record HasCCHotKeys {a} (A : Type a) : Type a where
   field CCHotKeysOf : A → CCHotKeys
 open HasCCHotKeys ⦃...⦄ public
+
+record HasColdCredentials {a} (A : Type a) : Type a where
+  field ColdCredentialsOf : A → ℙ Credential
+open HasColdCredentials ⦃...⦄ public
 
 record HasPools {a} (A : Type a) : Type a where
   field PoolsOf : A → Pools
@@ -186,14 +192,14 @@ instance
   HasPParams-CertEnv : HasPParams CertEnv
   HasPParams-CertEnv .PParamsOf = CertEnv.pp
 
-  HasEpoch-CertEnv : HasEpoch CertEnv
-  HasEpoch-CertEnv .EpochOf = CertEnv.epoch
+  HasPParams-GovCertEnv : HasPParams GovCertEnv
+  HasPParams-GovCertEnv .PParamsOf = GovCertEnv.pp
 
-  HasVotes-CertEnv : HasVotes CertEnv
-  HasVotes-CertEnv .VotesOf = CertEnv.votes
+  HasColdCredentials-GovCertEnv : HasColdCredentials GovCertEnv
+  HasColdCredentials-GovCertEnv .ColdCredentialsOf = GovCertEnv.coldCredentials
 
-  HasWithdrawals-CertEnv : HasWithdrawals CertEnv
-  HasWithdrawals-CertEnv .WithdrawalsOf = CertEnv.wdrls
+  HasColdCredentials-CertEnv : HasColdCredentials CertEnv
+  HasColdCredentials-CertEnv .ColdCredentialsOf = CertEnv.coldCredentials
 
   HasVoteDelegs-DState : HasVoteDelegs DState
   HasVoteDelegs-DState .VoteDelegsOf = DState.voteDelegs
@@ -252,12 +258,19 @@ instance
   HasStakeDelegs-CertState : HasStakeDelegs CertState
   HasStakeDelegs-CertState .StakeDelegsOf = StakeDelegsOf ∘ DStateOf
 
-  unquoteDecl HasCast-CertEnv HasCast-DState HasCast-PState HasCast-GState HasCast-CertState HasCast-DelegEnv = derive-HasCast
+  HasEpoch-GovCertEnv : HasEpoch GovCertEnv
+  HasEpoch-GovCertEnv .EpochOf = GovCertEnv.e
+
+  HasEpoch-CertEnv : HasEpoch CertEnv
+  HasEpoch-CertEnv .EpochOf = CertEnv.e
+
+  unquoteDecl HasCast-CertEnv HasCast-DState HasCast-PState HasCast-GState HasCast-CertState HasCast-DelegEnv HasCast-GovCertEnv = derive-HasCast
     (   (quote CertEnv , HasCast-CertEnv)
     ∷   (quote DState , HasCast-DState)
     ∷   (quote PState , HasCast-PState)
     ∷   (quote GState , HasCast-GState)
     ∷   (quote CertState , HasCast-CertState)
+    ∷   (quote GovCertEnv , HasCast-GovCertEnv)
     ∷ [ (quote DelegEnv , HasCast-DelegEnv) ])
 
 
@@ -269,8 +282,6 @@ private variable
   vDelegs voteDelegs     : VoteDelegs
   pools fPools           : Pools
   retiring               : Retiring
-  wdrls                  : Withdrawals
-  dd                     : DirectDeposits
   A                      : Type
   deposits deposits'     : A ⇀ Coin
 
@@ -419,24 +430,24 @@ data _⊢_⇀⦇_,POOL⦈_ : PoolEnv → PState → DCert → PState → Type wh
 ## `GOVCERT`{.AgdaDatatype} Transition System
 
 ```agda
-data _⊢_⇀⦇_,GOVCERT⦈_ : CertEnv → GState → DCert → GState → Type where
+data _⊢_⇀⦇_,GOVCERT⦈_ : GovCertEnv → GState → DCert → GState → Type where
 
   GOVCERT-regdrep :
     ∙ (d ≡ pp .drepDeposit × c ∉ dom dReps) ⊎ (d ≡ 0 × c ∈ dom dReps)
       ────────────────────────────────
-      ⟦ e , pp , vs , wdrls , cc , dd ⟧ ⊢ ⟦ dReps , ccKeys , deposits ⟧ ⇀⦇ regdrep c d an ,GOVCERT⦈ ⟦ ❴ c , e + pp .drepActivity ❵ ∪ˡ dReps , ccKeys , deposits ∪⁺ ❴ c , d ❵ ⟧
+      ⟦ e , pp , cc ⟧ ⊢ ⟦ dReps , ccKeys , deposits ⟧ ⇀⦇ regdrep c d an ,GOVCERT⦈ ⟦ ❴ c , e + pp .drepActivity ❵ ∪ˡ dReps , ccKeys , deposits ∪⁺ ❴ c , d ❵ ⟧
 
   GOVCERT-deregdrep :
     ∙ c ∈ dom dReps
     ∙ (c , d) ∈ deposits
       ────────────────────────────────
-      ⟦ e , pp , vs , wdrls , cc , dd ⟧ ⊢ ⟦ dReps , ccKeys , deposits ⟧ ⇀⦇ deregdrep c d ,GOVCERT⦈ ⟦ dReps ∣ ❴ c ❵ ᶜ , ccKeys , deposits ∣ ❴ c ❵ ᶜ ⟧
+      ⟦ e , pp  , cc ⟧ ⊢ ⟦ dReps , ccKeys , deposits ⟧ ⇀⦇ deregdrep c d ,GOVCERT⦈ ⟦ dReps ∣ ❴ c ❵ ᶜ , ccKeys , deposits ∣ ❴ c ❵ ᶜ ⟧
 
   GOVCERT-ccreghot :
     ∙ (c , nothing) ∉ ccKeys
     ∙ c ∈ cc
       ────────────────────────────────
-      ⟦ e , pp , vs , wdrls , cc , dd ⟧ ⊢ ⟦ dReps , ccKeys , deposits ⟧ ⇀⦇ ccreghot c mc ,GOVCERT⦈ ⟦ dReps , ❴ c , mc ❵ ∪ˡ ccKeys , deposits ⟧
+      ⟦ e , pp , cc ⟧ ⊢ ⟦ dReps , ccKeys , deposits ⟧ ⇀⦇ ccreghot c mc ,GOVCERT⦈ ⟦ dReps , ❴ c , mc ❵ ∪ˡ ccKeys , deposits ⟧
 ```
 
 # `CERT`{.AgdaDatatype} Transition System
@@ -445,19 +456,19 @@ data _⊢_⇀⦇_,GOVCERT⦈_ : CertEnv → GState → DCert → GState → Type
 data _⊢_⇀⦇_,CERT⦈_  : CertEnv → CertState → DCert → CertState → Type where
 
   CERT-deleg :
-    ∙ ⟦ pp , PState.pools stᵖ , dom (GState.dreps stᵍ) ⟧ ⊢ stᵈ ⇀⦇ dCert ,DELEG⦈ stᵈ'
+    ∙ ⟦ pp , PoolsOf stᵖ , dom (DRepsOf stᵍ) ⟧ ⊢ stᵈ ⇀⦇ dCert ,DELEG⦈ stᵈ'
       ────────────────────────────────
-      ⟦ e , pp , vs , wdrls , cc , dd ⟧ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ' , stᵖ , stᵍ ⟧
+      ⟦ e , pp , cc ⟧ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ' , stᵖ , stᵍ ⟧
 
   CERT-pool :
     ∙ pp ⊢ stᵖ ⇀⦇ dCert ,POOL⦈ stᵖ'
       ────────────────────────────────
-      ⟦ e , pp , vs , wdrls , cc , dd ⟧ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ , stᵖ' , stᵍ ⟧
+      ⟦ e , pp , cc ⟧ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ , stᵖ' , stᵍ ⟧
 
   CERT-gov :
-    ∙ Γ ⊢ stᵍ ⇀⦇ dCert ,GOVCERT⦈ stᵍ'
+    ∙ ⟦ e , pp , cc ⟧ ⊢ stᵍ ⇀⦇ dCert ,GOVCERT⦈ stᵍ'
       ────────────────────────────────
-      Γ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ , stᵖ , stᵍ' ⟧
+      ⟦ e , pp , cc ⟧ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ , stᵖ , stᵍ' ⟧
 ```
 
 # `CERTS`{.AgdaDatatype} Transition System
