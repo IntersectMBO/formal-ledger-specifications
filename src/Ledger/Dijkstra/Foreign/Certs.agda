@@ -33,6 +33,11 @@ instance
     • withName "DelegEnv"
   Conv-DelegEnv = autoConvert DelegEnv
 
+  HsTy-GovCertEnv = autoHsType GovCertEnv
+    ⊣ withConstructor "MkGovCertEnv"
+    • fieldPrefix "gce"
+  Conv-GovCertEnv = autoConvert GovCertEnv
+
   HsTy-PState = autoHsType PState
     ⊣ withConstructor "MkPState"
     • fieldPrefix "ps"
@@ -49,32 +54,11 @@ instance
     • fieldPrefix "gs"
   Conv-GState = autoConvert GState
 
--- CertEnv needs a wrapper because the votes field uses GovVote
--- which requires non-trivial conversion through GovVote'.
-
-record CertEnv' : Type where
-  field
-    epoch          : Epoch
-    pp             : PParams
-    votes          : List GovVote'
-    wdrls          : RewardAddress ⇀ Coin
-    coldCreds      : ℙ Credential
-    directDeposits : DirectDeposits
-
-instance
-  HsTy-CertEnv' = autoHsType CertEnv'
+  HsTy-CertEnv = autoHsType CertEnv
     ⊣ withConstructor "MkCertEnv"
     • withName "CertEnv"
     • fieldPrefix "ce"
-  Conv-CertEnv' = autoConvert CertEnv'
-
-  mkCertEnv' : Convertible CertEnv CertEnv'
-  mkCertEnv' = λ where
-    .to   ce → let module ce = CertEnv ce in record { epoch = ce.epoch ; pp = ce.pp ; votes = to ce.votes ; wdrls = ce.wdrls ; coldCreds = ce.coldCreds ; directDeposits = ce.directDeposits }
-    .from ce → let module ce = CertEnv' ce in record { epoch = ce.epoch ; pp = ce.pp ; votes = from ce.votes ; wdrls = ce.wdrls ; coldCreds = ce.coldCreds ; directDeposits = ce.directDeposits }
-
-  HsTy-CertEnv = mkHsType CertEnv (HsType CertEnv')
-  Conv-CertEnv = mkCertEnv' ⨾ Conv-CertEnv'
+  Conv-CertEnv = autoConvert CertEnv
 
 -- Computational step functions
 
@@ -88,7 +72,7 @@ pool-step = to (compute Computational-POOL)
 
 {-# COMPILE GHC pool-step as poolStep #-}
 
-govcert-step : HsType (CertEnv → GState → DCert → ComputationResult String GState)
+govcert-step : HsType (GovCertEnv → GState → DCert → ComputationResult String GState)
 govcert-step = to (compute Computational-GOVCERT)
 
 {-# COMPILE GHC govcert-step as govCertStep #-}
