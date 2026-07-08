@@ -60,7 +60,7 @@ instance
                                            × mv ∈ mapˢ (just ∘ vDelegCredential) (DelegEnv.delegatees de) ∪
                                                fromList ( nothing ∷ just vDelegAbstain ∷ just vDelegNoConfidence ∷ [] )
                                            × mc ∈ mapˢ just (dom (DelegEnv.pools de)) ∪ ❴ nothing ❵ ¿) p .proj₂ = refl
-  Computational-DELEG .completeness _ ds (dereg c d) _ (DELEG-dereg h@(p , q))
+  Computational-DELEG .completeness _ ds (dereg c d) _ (DELEG-dereg (p , q))
     with ¿ (c , 0) ∈ (RewardsOf ds) × (c , d) ∈ (DepositsOf ds) ¿
   ... | yes p = refl
   ... | no ¬p = ⊥-elim (¬p (p , q))
