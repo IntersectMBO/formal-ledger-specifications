@@ -33,7 +33,6 @@
 
 ## Conway spec
 
-- State the claim that governance action deposits are eventually refunded (statement only; see #414)
 - Change `RwdAddr` to `RewardAddress`
 - Do not count pool deposits a second time when reregistering pools
 - Allow reregistration of pools in the POOL transition relation
