@@ -69,12 +69,12 @@ instance
   Computational-POOL .computeProof _ stᵖ (regpool c _)
     with ¿ Is-just (lookupᵐ? (PoolsOf stᵖ) c) ¿
   ... | yes p = success (-, (POOL-rereg p))
-  ... | no ¬p = success (-, (POOL-reg (¬Is-just↔Is-nothing _ .to ¬p)))
+  ... | no ¬p = success (-, (POOL-reg ¬p))
   Computational-POOL .computeProof _ stᵖ (retirepool c e) = success (-, POOL-retirepool)
   Computational-POOL .computeProof _ stᵖ _ = failure "Unexpected certificate in POOL"
   Computational-POOL .completeness _ stᵖ (regpool c _) _ (POOL-reg p)
     with ¿ Is-just (lookupᵐ? (PoolsOf stᵖ) c) ¿
-  ... | yes p' = ⊥-elim (¬Is-just↔Is-nothing _ .from p p')
+  ... | yes p' = ⊥-elim (p p')
   ... | no _ = refl
   Computational-POOL .completeness _ stᵖ (regpool c _) _ (POOL-rereg p)
     with ¿ Is-just (lookupᵐ? (PoolsOf stᵖ) c) ¿

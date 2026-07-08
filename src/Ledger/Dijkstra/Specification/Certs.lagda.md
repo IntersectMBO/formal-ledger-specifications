@@ -79,6 +79,9 @@ cwitness (regdrep c _ _)     = just c
 cwitness (deregdrep c _)     = just c
 cwitness (ccreghot c _)      = just c
 
+IsPoolRegistered : Pools -> KeyHash -> Type
+IsPoolRegistered ps kh = Is-just (lookupᵐ? ps kh)
+
 -- Certification Types
 record CertEnv : Type where
   field
@@ -274,7 +277,6 @@ private variable
   an          : Anchor
   Γ           : CertEnv
   d           : Coin
-  md          : Maybe Coin
   c           : Credential
   mc          : Maybe Credential
   delegatees  : ℙ Credential
@@ -313,13 +315,16 @@ refunded deposits.
 ```agda
 module _ (pp : PParams) where
 
-  newCertDeposits : List DCert → Coin
-  newCertDeposits = foldl addNewCertDeposit 0
+  newCertDeposits : ℙ KeyHash → List DCert → Coin
+  newCertDeposits pools = proj₁ ∘ foldl addNewCertDeposit (0 , pools)
     where
-      addNewCertDeposit : DCert → Coin → Coin
-      addNewCertDeposit (delegate _ _ _ d) acc = acc + d
-      addNewCertDeposit (regpool _ _)      acc = acc + pp .poolDeposit
-      addNewCertDeposit (regdrep _ d _)    acc = acc + d
+      addNewCertDeposit : DCert → Coin × ℙ KeyHash → Coin × ℙ KeyHash
+      addNewCertDeposit (delegate _ _ _ d) (dep , pools) = dep + d , pools
+      addNewCertDeposit (regpool kh _)     (dep , pools) =
+        if kh ∈ pools
+          then (dep , pools)
+          else (dep + pp .poolDeposit , pools ∪ ❴ kh ❵)
+      addNewCertDeposit (regdrep _ d _)    (dep , pools) = dep + d , pools
       addNewCertDeposit _                  acc = acc
 
   refundCertDeposits : List DCert → Coin
@@ -365,10 +370,6 @@ data _⊢_⇀⦇_,DELEG⦈_ : DelegEnv → DState → DCert → DState → Type 
     ∙ (c , d) ∈ deposits
       ────────────────────────────────
       ⟦ pp , pools , delegatees ⟧ ⊢ ⟦ vDelegs , sDelegs , rwds , deposits ⟧ ⇀⦇ dereg c d ,DELEG⦈ ⟦ vDelegs ∣ ❴ c ❵ ᶜ , sDelegs ∣ ❴ c ❵ ᶜ , rwds ∣ ❴ c ❵ ᶜ , deposits ∣ ❴ c ❵ ᶜ ⟧
-
-
-isPoolRegistered : Pools -> KeyHash -> Maybe StakePoolParams
-isPoolRegistered ps kh = lookupᵐ? ps kh
 ```
 
 ## `POOL`{.AgdaDatatype} Transition System
@@ -377,7 +378,7 @@ isPoolRegistered ps kh = lookupᵐ? ps kh
 data _⊢_⇀⦇_,POOL⦈_ : PoolEnv → PState → DCert → PState → Type where
 
   POOL-reg :
-    ∙ Is-nothing (isPoolRegistered pools kh)
+    ∙ ¬ (IsPoolRegistered pools kh)
     ────────────────────────────────
     pp ⊢ ⟦ pools
          , fPools
@@ -391,7 +392,7 @@ data _⊢_⇀⦇_,POOL⦈_ : PoolEnv → PState → DCert → PState → Type wh
          ⟧
 
   POOL-rereg :
-    ∙ Is-just (isPoolRegistered pools kh)
+    ∙ IsPoolRegistered pools kh
     ────────────────────────────────
     pp ⊢ ⟦ pools
          , fPools
