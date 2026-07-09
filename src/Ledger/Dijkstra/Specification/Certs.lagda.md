@@ -63,7 +63,7 @@ StakeDelegs = Credential ⇀ KeyHash
 
 data DCert : Type where
   delegate    : Credential → Maybe VDeleg → Maybe KeyHash → Coin → DCert
-  dereg       : Credential → Maybe Coin → DCert
+  dereg       : Credential → Coin → DCert
   regpool     : KeyHash → StakePoolParams → DCert
   retirepool  : KeyHash → Epoch → DCert
   regdrep     : Credential → Coin → Anchor → DCert
@@ -78,6 +78,9 @@ cwitness (retirepool kh _)   = just $ KeyHashObj kh
 cwitness (regdrep c _ _)     = just c
 cwitness (deregdrep c _)     = just c
 cwitness (ccreghot c _)      = just c
+
+IsPoolRegistered : Pools → KeyHash → Type
+IsPoolRegistered ps kh = kh ∈ dom ps
 
 -- Certification Types
 record CertEnv : Type where
@@ -274,7 +277,6 @@ private variable
   an          : Anchor
   Γ           : CertEnv
   d           : Coin
-  md          : Maybe Coin
   c           : Credential
   mc          : Maybe Credential
   delegatees  : ℙ Credential
@@ -303,70 +305,32 @@ rewardsBalance ds = ∑[ x ← RewardsOf ds ] x
 
 Functions in this section compute the effect that a `DCert`{.AgdaRecord} list has on
 the three deposit fields (`DState.deposits`{.AgdaField}, `PState.deposits`{.AgdaField},
-`GState.deposits`{.AgdaField}) carried by a `CertState`{.AgdaRecord}.  They describe
-the deposit evolution for a single `DCert` and mirror that of the corresponding
-`CERT` sub-rule.
+`GState.deposits`{.AgdaField}) carried by a `CertState`{.AgdaRecord}.
 
-### Helper Functions
-
-The three deposit fields carried by a `CertState`{.AgdaRecord} have types
-`Credential ⇀ Coin`, `KeyHash ⇀ Coin`, and `Credential ⇀ Coin`, respectively,
-and we package them up as a triple of values which are computed via
-`coinFromDepositTriple`{.AgdaFunction}.  By definition,
-
-    coinFromDeposits cs ≡ coinFromDepositTriple (depositTripleOf cs).
+In Dijkstra, delegation and `DRep` (de)registration certificates carry their deposit explicitly, so new and refunded deposits can be computed from the certificate list alone.  The exception is pool registration: `regpool`{.AgdaInductiveConstructor} carries no deposit, and whether it charges `poolDeposit`{.AgdaField} depends on whether the pool is already registered. `newCertDeposits` therefore additionally takes the set of registered pool keys (`pools : ℙ KeyHash`), and threads it through the certificate list, charging each newly registered pool exactly once.
 
 ```agda
-DepositTriple : Type
-DepositTriple = (Credential ⇀ Coin) × (KeyHash ⇀ Coin) × (Credential ⇀ Coin)
-
-depositTripleOf : CertState → DepositTriple
-depositTripleOf cs = DepositsOf (DStateOf cs) , DepositsOf (PStateOf cs) , DepositsOf (GStateOf cs)
-
-coinFromDepositTriple : DepositTriple → Coin
-coinFromDepositTriple (dd , dp , dg) = getCoin dd + getCoin dp + getCoin dg
-
 module _ (pp : PParams) where
 
-  updateCertDeposit : DCert → DepositTriple → DepositTriple
-  updateCertDeposit cert (dd , dp , dg) = case cert of λ where
-    (delegate c _ _ d)  → (dd ∪⁺ ❴ c , d ❵  , dp                              , dg)
-    (dereg c _)         → (dd ∣ ❴ c ❵ ᶜ     , dp                              , dg)
-    (regpool kh _)      → (dd               , dp ∪ˡ ❴ kh , pp .poolDeposit ❵  , dg)
-    (regdrep c d _)     → (dd               , dp                              , dg ∪⁺ ❴ c , d ❵)
-    (deregdrep c _)     → (dd               , dp                              , dg ∣ ❴ c ❵ ᶜ)
-    _                   → (dd               , dp                              , dg)
-
-  updateCertDepositsStep : CertState → DCert → CertState
-  updateCertDepositsStep cs c =
-    let (dd , dp , dg) = updateCertDeposit c (depositTripleOf cs) in
-    ⟦ record dState { deposits = dd } , record pState { deposits = dp } , record gState { deposits = dg } ⟧
-    where open CertState cs
-```
-
-Note that any drift between the `updateCertDepositsStep`{.AgdaFunction} and the
-`CERT` sub-rule semantics is a soundness problem: it would allow the UTXO
-batch-balance equation to accept transactions whose actual `CertState` evolution
-doesn't balance.
-
-```agda
-coinFromDeposits : CertState → Coin
-coinFromDeposits cs = coinFromDepositTriple (depositTripleOf cs)
-
-module _ (pp : PParams) (certState : CertState) where
-
-  updateCertDeposits : List DCert → CertState
-  updateCertDeposits = foldl (updateCertDepositsStep pp) certState
-
-  depositsChange : List DCert → ℤ
-  depositsChange certs =
-    coinFromDeposits (updateCertDeposits certs) - coinFromDeposits certState
-
-  newCertDeposits : List DCert → Coin
-  newCertDeposits certs = posPart (depositsChange certs)
+  newCertDeposits : ℙ KeyHash → List DCert → Coin
+  newCertDeposits pools = proj₁ ∘ foldl addNewCertDeposit (0 , pools)
+    where
+      addNewCertDeposit : Coin × ℙ KeyHash → DCert → Coin × ℙ KeyHash
+      addNewCertDeposit (dep , pools) (delegate _ _ _ d) = dep + d , pools
+      addNewCertDeposit (dep , pools) (regpool kh _)     =
+        if kh ∈ pools
+          then (dep , pools)
+          else (dep + pp .poolDeposit , pools ∪ ❴ kh ❵)
+      addNewCertDeposit (dep , pools) (regdrep _ d _) = dep + d , pools
+      addNewCertDeposit acc           _               = acc
 
   refundCertDeposits : List DCert → Coin
-  refundCertDeposits certs = negPart (depositsChange certs)
+  refundCertDeposits = foldl addRefundCertDeposit 0
+    where
+      addRefundCertDeposit : Coin → DCert → Coin
+      addRefundCertDeposit acc (dereg _ d)     = acc + d
+      addRefundCertDeposit acc (deregdrep _ d) = acc + d
+      addRefundCertDeposit acc _               = acc
 ```
 
 <!--
@@ -401,13 +365,8 @@ data _⊢_⇀⦇_,DELEG⦈_ : DelegEnv → DState → DCert → DState → Type 
   DELEG-dereg :
     ∙ (c , 0) ∈ rwds
     ∙ (c , d) ∈ deposits
-    ∙ md ≡ nothing ⊎ md ≡ just d
       ────────────────────────────────
-      ⟦ pp , pools , delegatees ⟧ ⊢ ⟦ vDelegs , sDelegs , rwds , deposits ⟧ ⇀⦇ dereg c md ,DELEG⦈ ⟦ vDelegs ∣ ❴ c ❵ ᶜ , sDelegs ∣ ❴ c ❵ ᶜ , rwds ∣ ❴ c ❵ ᶜ , deposits ∣ ❴ c ❵ ᶜ ⟧
-
-
-isPoolRegistered : Pools -> KeyHash -> Maybe StakePoolParams
-isPoolRegistered ps kh = lookupᵐ? ps kh
+      ⟦ pp , pools , delegatees ⟧ ⊢ ⟦ vDelegs , sDelegs , rwds , deposits ⟧ ⇀⦇ dereg c d ,DELEG⦈ ⟦ vDelegs ∣ ❴ c ❵ ᶜ , sDelegs ∣ ❴ c ❵ ᶜ , rwds ∣ ❴ c ❵ ᶜ , deposits ∣ ❴ c ❵ ᶜ ⟧
 ```
 
 ## `POOL`{.AgdaDatatype} Transition System
@@ -416,7 +375,7 @@ isPoolRegistered ps kh = lookupᵐ? ps kh
 data _⊢_⇀⦇_,POOL⦈_ : PoolEnv → PState → DCert → PState → Type where
 
   POOL-reg :
-    ∙ Is-nothing (isPoolRegistered pools kh)
+    ∙ ¬ (IsPoolRegistered pools kh)
     ────────────────────────────────
     pp ⊢ ⟦ pools
          , fPools
@@ -430,7 +389,7 @@ data _⊢_⇀⦇_,POOL⦈_ : PoolEnv → PState → DCert → PState → Type wh
          ⟧
 
   POOL-rereg :
-    ∙ Is-just (isPoolRegistered pools kh)
+    ∙ IsPoolRegistered pools kh
     ────────────────────────────────
     pp ⊢ ⟦ pools
          , fPools

@@ -15,24 +15,13 @@ open import Ledger.Prelude
 open import Ledger.Dijkstra.Specification.Gov.Actions govStructure hiding (yes; no)
 open import Ledger.Dijkstra.Specification.Certs govStructure
 
-open import stdlib.Data.Maybe
 open import stdlib-meta.Tactic.GenError using (genErrors)
 import Data.Maybe.Relation.Unary.Any as M
-import Data.Maybe.Relation.Unary.All as M
 
 open GovStructure govStructure
 open RewardAddress
-open Inverse
 
 open Computational ⦃...⦄
-
-private
-  lookupᵐ?? :
-    {K V : Type} →
-    ⦃ _ : DecEq K ⦄ →
-    (m : K ⇀ V) (k : K) →
-    Dec (Any (λ (k' , _) → k ≡ k') (m ˢ))
-  lookupᵐ?? m k = any? (λ { _ → ¿ _ ¿ }) (m ˢ)
 
 instance
   Computational-DELEG : Computational _⊢_⇀⦇_,DELEG⦈_ String
@@ -45,16 +34,13 @@ instance
                                 × mc ∈ mapˢ just (dom (DelegEnv.pools de)) ∪ ❴ nothing ❵ ¿ of λ where
       (yes p) → success (-, DELEG-delegate p)
       (no ¬p) → failure (genErrors ¬p)
-    (dereg c md) → case lookupᵐ?? (DepositsOf ds) c of λ where
-      (yes ((_ , d) , _ , _)) →
+    (dereg c d) →
         case
           ¿ (c , 0) ∈ (RewardsOf ds)
           × (c , d) ∈ (DepositsOf ds)
-          × (md ≡ nothing ⊎ md ≡ just d)
           ¿ of λ where
             (yes q) → success (-, DELEG-dereg q)
             (no ¬q) → failure (genErrors ¬q)
-      (no ¬p) → failure (genErrors ¬p)
     _ → failure "Unexpected certificate in DELEG"
 
   Computational-DELEG .completeness de ds (delegate c mv mc d)
@@ -63,37 +49,24 @@ instance
                                            × mv ∈ mapˢ (just ∘ vDelegCredential) (DelegEnv.delegatees de) ∪
                                                fromList ( nothing ∷ just vDelegAbstain ∷ just vDelegNoConfidence ∷ [] )
                                            × mc ∈ mapˢ just (dom (DelegEnv.pools de)) ∪ ❴ nothing ❵ ¿) p .proj₂ = refl
-  Computational-DELEG .completeness _ ds (dereg c nothing) _ (DELEG-dereg {d = d} h@(p , q , r))
-    with lookupᵐ?? (DepositsOf ds) c
-  ... | (yes ((_ , d') , s₂ , refl)) rewrite dec-yes
-          (¿ (c , 0) ∈ (RewardsOf ds)
-           × (c , d') ∈ (DepositsOf ds)
-           × (nothing ≡ nothing {A = ℕ} ⊎ nothing ≡ just d')
-           ¿) (p , s₂ , inj₁ refl) .proj₂ = refl
-  Computational-DELEG .completeness _ ds (dereg c nothing) _ (DELEG-dereg h@(p , q , r))
-      | (no ¬s) = ⊥-elim (¬s (_ , q , refl))
-  Computational-DELEG .completeness _ ds (dereg c (just d)) _ (DELEG-dereg h@(p , q , inj₂ refl))
-    with lookupᵐ?? (DepositsOf ds) c
-  ... | (yes ((_ , d') , q' , refl)) rewrite dec-yes
-          (¿ (c , 0) ∈ (RewardsOf ds)
-           × (c , d') ∈ (DepositsOf ds)
-           × (just d ≡ nothing {A = ℕ} ⊎ just d ≡ just d')
-           ¿) (p , q' , inj₂ (cong just (proj₂ (DepositsOf ds) q q'))) .proj₂ = refl
-  ... | (no ¬s) = ⊥-elim (¬s (_ , q , refl))
+  Computational-DELEG .completeness _ ds (dereg c d) _ (DELEG-dereg (p , q))
+    with ¿ (c , 0) ∈ (RewardsOf ds) × (c , d) ∈ (DepositsOf ds) ¿
+  ... | yes p = refl
+  ... | no ¬p = ⊥-elim (¬p (p , q))
 
   Computational-POOL : Computational _⊢_⇀⦇_,POOL⦈_ String
   Computational-POOL .computeProof _ stᵖ (regpool c _)
-    with ¿ Is-just (lookupᵐ? (PoolsOf stᵖ) c) ¿
+    with ¿ IsPoolRegistered (PoolsOf stᵖ) c ¿
   ... | yes p = success (-, (POOL-rereg p))
-  ... | no ¬p = success (-, (POOL-reg (¬Is-just↔Is-nothing _ .to ¬p)))
+  ... | no ¬p = success (-, (POOL-reg ¬p))
   Computational-POOL .computeProof _ stᵖ (retirepool c e) = success (-, POOL-retirepool)
   Computational-POOL .computeProof _ stᵖ _ = failure "Unexpected certificate in POOL"
   Computational-POOL .completeness _ stᵖ (regpool c _) _ (POOL-reg p)
-    with ¿ Is-just (lookupᵐ? (PoolsOf stᵖ) c) ¿
-  ... | yes p' = ⊥-elim (¬Is-just↔Is-nothing _ .from p p')
+    with ¿ IsPoolRegistered (PoolsOf stᵖ) c ¿
+  ... | yes p' = ⊥-elim (p p')
   ... | no _ = refl
   Computational-POOL .completeness _ stᵖ (regpool c _) _ (POOL-rereg p)
-    with ¿ Is-just (lookupᵐ? (PoolsOf stᵖ) c) ¿
+    with ¿ IsPoolRegistered (PoolsOf stᵖ) c ¿
   ... | yes _ = refl
   ... | no ¬p = ⊥-elim (¬p p)
   Computational-POOL .completeness _ _ (retirepool _ _) _ POOL-retirepool = refl

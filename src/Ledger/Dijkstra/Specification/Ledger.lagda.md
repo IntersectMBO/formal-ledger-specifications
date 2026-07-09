@@ -176,7 +176,7 @@ allColdCreds govSt es =
 
 1. UTxO state (UTxO balance plus fees plus donations)
 2. the rewards balance in `DState.rewards`{.AgdaField};
-3. The three `CertState`{.AgdaRecord} deposit fields, via coinFromDeposits:
+3. The three `CertState`{.AgdaRecord} deposit fields, via `getCoin`{.AgdaFunction}:
 
    + `DState.deposits`{.AgdaField} (stake-key deposits, `Credential ⇀ Coin`)
    + `PState.deposits`{.AgdaField} (pool deposits, `KeyHash ⇀ Coin`)
@@ -188,7 +188,7 @@ instance
   HasCoin-LedgerState : HasCoin LedgerState
   HasCoin-LedgerState .getCoin s =  getCoin (UTxOStateOf s)
                                     + rewardsBalance (DStateOf (CertStateOf s))
-                                    + coinFromDeposits (CertStateOf s)
+                                    + getCoin (DepositsOf (DStateOf s)) + getCoin (DepositsOf (PStateOf s)) + getCoin (DepositsOf (GStateOf s))
 ```
 -->
 
