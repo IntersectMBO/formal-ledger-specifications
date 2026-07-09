@@ -5,13 +5,15 @@
       "locked": {
         "lastModified": 1763124721,
         "narHash": "sha256-m+1qltoHALohYnPeQPWie93gewuv3NuUByZ0+HN+Qc0=",
+        "owner": "input-output-hk",
+        "repo": "agda-sets",
         "rev": "bc721845dba3208ce0aca59b09242f06d659fd97",
-        "type": "git",
-        "url": "https://github.com/input-output-hk/agda-sets"
+        "type": "github"
       },
       "original": {
-        "type": "git",
-        "url": "https://github.com/input-output-hk/agda-sets"
+        "owner": "input-output-hk",
+        "repo": "agda-sets",
+        "type": "github"
       }
     },
     "agda-nix": {
@@ -28,13 +30,15 @@
       "locked": {
         "lastModified": 1764061971,
         "narHash": "sha256-Fmr1f7SEySDRZ9vQa5lzDZOPQj8I+XzYMW2vLxhw9bI=",
+        "owner": "input-output-hk",
+        "repo": "agda.nix",
         "rev": "bab6d761051211b8fdb4ee8cd9a0b8369fb0a11d",
-        "type": "git",
-        "url": "https://github.com/input-output-hk/agda.nix"
+        "type": "github"
       },
       "original": {
-        "type": "git",
-        "url": "https://github.com/input-output-hk/agda.nix"
+        "owner": "input-output-hk",
+        "repo": "agda.nix",
+        "type": "github"
       }
     },
     "flake-parts": {
@@ -44,13 +48,15 @@
       "locked": {
         "lastModified": 1769996383,
         "narHash": "sha256-AnYjnFWgS49RlqX7LrC4uA+sCCDBj0Ry/WOJ5XWAsa0=",
+        "owner": "hercules-ci",
+        "repo": "flake-parts",
         "rev": "57928607ea566b5db3ad13af0e57e921e6b12381",
-        "type": "git",
-        "url": "https://github.com/hercules-ci/flake-parts"
+        "type": "github"
       },
       "original": {
-        "type": "git",
-        "url": "https://github.com/hercules-ci/flake-parts"
+        "owner": "hercules-ci",
+        "repo": "flake-parts",
+        "type": "github"
       }
     },
     "flake-utils": {
@@ -60,13 +66,15 @@
       "locked": {
         "lastModified": 1731533236,
         "narHash": "sha256-l0KFg5HjrsfsO/JpG+r7fRrqm12kzFHyUHqHCVpMMbI=",
+        "owner": "numtide",
+        "repo": "flake-utils",
         "rev": "11707dc2f618dd54ca8739b309ec4fc024de578b",
-        "type": "git",
-        "url": "https://github.com/numtide/flake-utils"
+        "type": "github"
       },
       "original": {
-        "type": "git",
-        "url": "https://github.com/numtide/flake-utils"
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "type": "github"
       }
     },
     "iog-prelude": {
@@ -74,39 +82,45 @@
       "locked": {
         "lastModified": 1760101570,
         "narHash": "sha256-1WS4cx9Qo73rJ4mJxIJ0RFoxQQrvto8kRyC/zrLmFVo=",
+        "owner": "input-output-hk",
+        "repo": "iog-agda-prelude",
         "rev": "c6d5b0a46c60680e1ac11cec8b3a7749e9943839",
-        "type": "git",
-        "url": "https://github.com/input-output-hk/iog-agda-prelude"
+        "type": "github"
       },
       "original": {
-        "type": "git",
-        "url": "https://github.com/input-output-hk/iog-agda-prelude"
+        "owner": "input-output-hk",
+        "repo": "iog-agda-prelude",
+        "type": "github"
       }
     },
     "nixpkgs": {
       "locked": {
         "lastModified": 1771267558,
         "narHash": "sha256-qk68yfxVN3n3KNR9uQcnfYbHf9oD1QkcSxAbcnQP80c=",
+        "owner": "NixOs",
+        "repo": "nixpkgs",
         "rev": "15051cd1652ce24da5f2e32d5e8623735d39d3b1",
-        "type": "git",
-        "url": "https://github.com/NixOs/nixpkgs"
+        "type": "github"
       },
       "original": {
-        "type": "git",
-        "url": "https://github.com/NixOs/nixpkgs"
+        "owner": "NixOs",
+        "repo": "nixpkgs",
+        "type": "github"
       }
     },
     "nixpkgs-lib": {
       "locked": {
         "lastModified": 1769909678,
         "narHash": "sha256-cBEymOf4/o3FD5AZnzC3J9hLbiZ+QDT/KDuyHXVJOpM=",
+        "owner": "nix-community",
+        "repo": "nixpkgs.lib",
         "rev": "72716169fe93074c333e8d0173151350670b824c",
-        "type": "git",
-        "url": "https://github.com/nix-community/nixpkgs.lib"
+        "type": "github"
       },
       "original": {
-        "type": "git",
-        "url": "https://github.com/nix-community/nixpkgs.lib"
+        "owner": "nix-community",
+        "repo": "nixpkgs.lib",
+        "type": "github"
       }
     },
     "root": {
@@ -121,13 +135,15 @@
       "locked": {
         "lastModified": 1754406591,
         "narHash": "sha256-tuXuZcwu6XNFP979oSZg0yfFY9eMyqpkUNddk+QchVc=",
+        "owner": "agda",
+        "repo": "agda-stdlib-classes",
         "rev": "e732956fb01eb616bb3429f290d9434f4ab59b6a",
-        "type": "git",
-        "url": "https://github.com/agda/agda-stdlib-classes"
+        "type": "github"
       },
       "original": {
-        "type": "git",
-        "url": "https://github.com/agda/agda-stdlib-classes"
+        "owner": "agda",
+        "repo": "agda-stdlib-classes",
+        "type": "github"
       }
     },
     "standard-library-meta": {
@@ -135,26 +151,30 @@
       "locked": {
         "lastModified": 1754406588,
         "narHash": "sha256-YH8OqGsQ2DKhKqhSUWBDTimQSZsNCnqwZqNqQwnnVS0=",
+        "owner": "agda",
+        "repo": "agda-stdlib-meta",
         "rev": "ba0159a198c99185bda86541362f8e0a4a82538a",
-        "type": "git",
-        "url": "https://github.com/agda/agda-stdlib-meta"
+        "type": "github"
       },
       "original": {
-        "type": "git",
-        "url": "https://github.com/agda/agda-stdlib-meta"
+        "owner": "agda",
+        "repo": "agda-stdlib-meta",
+        "type": "github"
       }
     },
     "systems": {
       "locked": {
         "lastModified": 1681028828,
         "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
+        "owner": "nix-systems",
+        "repo": "default",
         "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
-        "type": "git",
-        "url": "https://github.com/nix-systems/default"
+        "type": "github"
       },
       "original": {
-        "type": "git",
-        "url": "https://github.com/nix-systems/default"
+        "owner": "nix-systems",
+        "repo": "default",
+        "type": "github"
       }
     }
   },

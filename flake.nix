@@ -2,22 +2,15 @@
 {
   description = "Formal Ledger Specifications";
 
-  # NOTE: inputs are declared as `git+https://github.com/...` rather than the
-  # usual `github:...` shorthand. The `github:` fetcher downloads tarballs from
-  # api.github.com / codeload.github.com, which the Claude Code web GitHub proxy
-  # scopes to the current session's repositories (returning HTTP 403 for
-  # everything else). Plain git-over-https is served by that proxy for any
-  # public repo, so `git+https` inputs resolve where `github:` inputs 403.
-  # The resulting narHashes are identical to the github fetcher's.
   inputs = {
-    nixpkgs.url = "git+https://github.com/NixOs/nixpkgs";
+    nixpkgs.url = "github:NixOs/nixpkgs";
 
     flake-parts = {
-      url = "git+https://github.com/hercules-ci/flake-parts";
+      url = "github:hercules-ci/flake-parts";
     };
 
     agda-nix = {
-      url = "git+https://github.com/input-output-hk/agda.nix";
+      url = "github:input-output-hk/agda.nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
