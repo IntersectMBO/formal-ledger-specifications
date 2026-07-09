@@ -23,13 +23,6 @@ open RewardAddress
 
 open Computational ⦃...⦄
 
-private
-  lookupᵐ?? :
-    {K V : Type} →
-    ⦃ _ : DecEq K ⦄ →
-    (m : K ⇀ V) (k : K) →
-    Dec (Any (λ (k' , _) → k ≡ k') (m ˢ))
-
 instance
   Computational-DELEG : Computational _⊢_⇀⦇_,DELEG⦈_ String
   Computational-DELEG .computeProof de ds =
