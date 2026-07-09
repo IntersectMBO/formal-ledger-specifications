@@ -13,4 +13,6 @@ source-dirs:
   - src
 library:
   exposed-modules:
-    - MAlonzo.Code.Ledger.Foreign.API
+    - MAlonzo.Code.Ledger.Core.Foreign.API
+    - MAlonzo.Code.Ledger.Conway.Foreign.API
+    - MAlonzo.Code.Ledger.Dijkstra.Foreign.API

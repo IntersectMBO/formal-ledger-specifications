@@ -17,8 +17,10 @@ import MAlonzo.RTE (coe, erased, AgdaAny, addInt, subInt, mulInt,
                     rem64, lt64, eq64, word64FromNat, word64ToNat)
 import qualified MAlonzo.RTE
 import qualified Data.Text
+import qualified MAlonzo.Code.Agda.Builtin.Bool
 import qualified MAlonzo.Code.Agda.Builtin.Equality
 import qualified MAlonzo.Code.Agda.Builtin.FromNat
+import qualified MAlonzo.Code.Agda.Builtin.Unit
 import qualified MAlonzo.Code.Agda.Primitive
 import qualified MAlonzo.Code.Class.DecEq.Core
 import qualified MAlonzo.Code.Class.DecEq.Instances
@@ -26,11 +28,14 @@ import qualified MAlonzo.Code.Class.Decidable.Core
 import qualified MAlonzo.Code.Data.Integer.Base
 import qualified MAlonzo.Code.Data.Integer.Literals
 import qualified MAlonzo.Code.Data.Maybe.Relation.Binary.Connected
+import qualified MAlonzo.Code.Data.Nat.Base
 import qualified MAlonzo.Code.Data.Nat.Literals
 import qualified MAlonzo.Code.Data.Rational.Literals
 import qualified MAlonzo.Code.Data.Sign.Base
 import qualified MAlonzo.Code.Data.Unit.Polymorphic.Base
 import qualified MAlonzo.Code.Level
+import qualified MAlonzo.Code.Relation.Nullary.Decidable.Core
+import qualified MAlonzo.Code.Relation.Nullary.Reflects
 
 -- Prelude.Poly-tt
 d_Poly'45'tt_2 ::
@@ -119,3 +124,22 @@ d_'8760''8801'posPart'8854'_86 ::
   Integer ->
   Integer -> MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
 d_'8760''8801'posPart'8854'_86 = erased
+-- Prelude.Dec-NonZero
+d_Dec'45'NonZero_98 ::
+  Integer -> MAlonzo.Code.Class.Decidable.Core.T__'8263'_10
+d_Dec'45'NonZero_98 v0
+  = coe
+      MAlonzo.Code.Class.Decidable.Core.C_'8263'__30
+      (case coe v0 of
+         0 -> coe
+                MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                (coe MAlonzo.Code.Agda.Builtin.Bool.C_false_8)
+                (coe MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
+         _ -> coe
+                MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
+                (coe MAlonzo.Code.Agda.Builtin.Bool.C_true_10)
+                (coe
+                   MAlonzo.Code.Relation.Nullary.Reflects.C_of'696'_22
+                   (coe
+                      MAlonzo.Code.Data.Nat.Base.C_constructor_120
+                      (coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8))))

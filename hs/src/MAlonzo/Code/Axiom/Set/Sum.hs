@@ -46,204 +46,204 @@ import qualified MAlonzo.Code.Relation.Nullary.Decidable.Core
 
 -- Axiom.Set.Sum._._∪_
 d__'8746'__18 ::
-  MAlonzo.Code.Axiom.Set.T_Theory_96 ->
+  MAlonzo.Code.Axiom.Set.T_Theory_118 ->
   () -> AgdaAny -> AgdaAny -> AgdaAny
 d__'8746'__18 v0 v1 v2 v3
-  = coe MAlonzo.Code.Axiom.Set.du__'8746'__682 (coe v0) v2 v3
+  = coe MAlonzo.Code.Axiom.Set.du__'8746'__708 (coe v0) v2 v3
 -- Axiom.Set.Sum._._≡ᵉ_
 d__'8801''7497'__20 ::
-  MAlonzo.Code.Axiom.Set.T_Theory_96 ->
+  MAlonzo.Code.Axiom.Set.T_Theory_118 ->
   () -> AgdaAny -> AgdaAny -> ()
 d__'8801''7497'__20 = erased
 -- Axiom.Set.Sum._.FinSet
-d_FinSet_32 :: MAlonzo.Code.Axiom.Set.T_Theory_96 -> () -> ()
+d_FinSet_32 :: MAlonzo.Code.Axiom.Set.T_Theory_118 -> () -> ()
 d_FinSet_32 = erased
 -- Axiom.Set.Sum._.disjoint
 d_disjoint_46 ::
-  MAlonzo.Code.Axiom.Set.T_Theory_96 ->
+  MAlonzo.Code.Axiom.Set.T_Theory_118 ->
   () -> AgdaAny -> AgdaAny -> ()
 d_disjoint_46 = erased
 -- Axiom.Set.Sum._.finite
 d_finite_50 ::
-  MAlonzo.Code.Axiom.Set.T_Theory_96 -> () -> AgdaAny -> ()
+  MAlonzo.Code.Axiom.Set.T_Theory_118 -> () -> AgdaAny -> ()
 d_finite_50 = erased
 -- Axiom.Set.Sum._.spec-∈
-d_spec'45''8712'_78 ::
-  MAlonzo.Code.Axiom.Set.T_Theory_96 -> () -> ()
-d_spec'45''8712'_78 = erased
+d_spec'45''8712'_80 ::
+  MAlonzo.Code.Axiom.Set.T_Theory_118 -> () -> ()
+d_spec'45''8712'_80 = erased
 -- Axiom.Set.Sum._.∅
-d_'8709'_92 :: MAlonzo.Code.Axiom.Set.T_Theory_96 -> () -> AgdaAny
-d_'8709'_92 v0 v1
-  = coe MAlonzo.Code.Axiom.Set.du_'8709'_444 (coe v0)
+d_'8709'_94 :: MAlonzo.Code.Axiom.Set.T_Theory_118 -> () -> AgdaAny
+d_'8709'_94 v0 v1
+  = coe MAlonzo.Code.Axiom.Set.du_'8709'_470 (coe v0)
 -- Axiom.Set.Sum._.❴_❵
-d_'10100'_'10101'_124 ::
-  MAlonzo.Code.Axiom.Set.T_Theory_96 -> () -> AgdaAny -> AgdaAny
-d_'10100'_'10101'_124 v0
-  = coe MAlonzo.Code.Axiom.Set.du_'10100'_'10101'_454 (coe v0)
+d_'10100'_'10101'_126 ::
+  MAlonzo.Code.Axiom.Set.T_Theory_118 -> () -> AgdaAny -> AgdaAny
+d_'10100'_'10101'_126 v0
+  = coe MAlonzo.Code.Axiom.Set.du_'10100'_'10101'_480 (coe v0)
 -- Axiom.Set.Sum._._ᶠ
-d__'7584'_138 ::
-  MAlonzo.Code.Axiom.Set.T_Theory_96 ->
+d__'7584'_140 ::
+  MAlonzo.Code.Axiom.Set.T_Theory_118 ->
   () ->
   AgdaAny ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d__'7584'_138 ~v0 = du__'7584'_138
-du__'7584'_138 ::
+d__'7584'_140 ~v0 = du__'7584'_140
+du__'7584'_140 ::
   () ->
   AgdaAny ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-du__'7584'_138 v0 v1 v2
-  = coe MAlonzo.Code.Axiom.Set.Factor.du__'7584'_318 v1 v2
+du__'7584'_140 v0 v1 v2
+  = coe MAlonzo.Code.Axiom.Set.Factor.du__'7584'_328 v1 v2
 -- Axiom.Set.Sum._.∪-preserves-finite'
-d_'8746''45'preserves'45'finite''_140 ::
-  MAlonzo.Code.Axiom.Set.T_Theory_96 ->
+d_'8746''45'preserves'45'finite''_142 ::
+  MAlonzo.Code.Axiom.Set.T_Theory_118 ->
   () ->
   AgdaAny ->
   AgdaAny ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_'8746''45'preserves'45'finite''_140 v0 v1 v2 v3 v4 v5
+d_'8746''45'preserves'45'finite''_142 v0 v1 v2 v3 v4 v5
   = coe
-      MAlonzo.Code.Axiom.Set.Factor.du_'8746''45'preserves'45'finite''_328
+      MAlonzo.Code.Axiom.Set.Factor.du_'8746''45'preserves'45'finite''_338
       (coe v0) v2 v3 v4 v5
 -- Axiom.Set.Sum._._≡_⨿_
-d__'8801'_'10815'__170 ::
-  MAlonzo.Code.Axiom.Set.T_Theory_96 ->
+d__'8801'_'10815'__172 ::
+  MAlonzo.Code.Axiom.Set.T_Theory_118 ->
   () -> AgdaAny -> AgdaAny -> AgdaAny -> ()
-d__'8801'_'10815'__170 = erased
+d__'8801'_'10815'__172 = erased
 -- Axiom.Set.Sum._.singleton-finite
-d_singleton'45'finite_230 ::
-  MAlonzo.Code.Axiom.Set.T_Theory_96 ->
+d_singleton'45'finite_240 ::
+  MAlonzo.Code.Axiom.Set.T_Theory_118 ->
   () -> AgdaAny -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_singleton'45'finite_230 v0 v1 v2
+d_singleton'45'finite_240 v0 v1 v2
   = coe
-      MAlonzo.Code.Axiom.Set.Properties.du_singleton'45'finite_672
+      MAlonzo.Code.Axiom.Set.Properties.du_singleton'45'finite_910
       (coe v0) v2
 -- Axiom.Set.Sum._.∅-finite
-d_'8709''45'finite_240 ::
-  MAlonzo.Code.Axiom.Set.T_Theory_96 ->
+d_'8709''45'finite_250 ::
+  MAlonzo.Code.Axiom.Set.T_Theory_118 ->
   () -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_'8709''45'finite_240 ~v0 = du_'8709''45'finite_240
-du_'8709''45'finite_240 ::
+d_'8709''45'finite_250 ~v0 = du_'8709''45'finite_250
+du_'8709''45'finite_250 ::
   () -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-du_'8709''45'finite_240 v0
-  = coe MAlonzo.Code.Axiom.Set.Properties.du_'8709''45'finite_438
+du_'8709''45'finite_250 v0
+  = coe MAlonzo.Code.Axiom.Set.Properties.du_'8709''45'finite_440
 -- Axiom.Set.Sum._.Rel
-d_Rel_350 :: MAlonzo.Code.Axiom.Set.T_Theory_96 -> () -> () -> ()
-d_Rel_350 = erased
+d_Rel_362 :: MAlonzo.Code.Axiom.Set.T_Theory_118 -> () -> () -> ()
+d_Rel_362 = erased
 -- Axiom.Set.Sum._.dom
-d_dom_354 ::
-  MAlonzo.Code.Axiom.Set.T_Theory_96 ->
+d_dom_366 ::
+  MAlonzo.Code.Axiom.Set.T_Theory_118 ->
   () -> () -> AgdaAny -> AgdaAny
-d_dom_354 v0 v1 v2
-  = coe MAlonzo.Code.Axiom.Set.Rel.du_dom_344 (coe v0)
+d_dom_366 v0 v1 v2
+  = coe MAlonzo.Code.Axiom.Set.Rel.du_dom_354 (coe v0)
 -- Axiom.Set.Sum._.FinMap
-d_FinMap_486 ::
-  MAlonzo.Code.Axiom.Set.T_Theory_96 -> () -> () -> ()
-d_FinMap_486 = erased
+d_FinMap_502 ::
+  MAlonzo.Code.Axiom.Set.T_Theory_118 -> () -> () -> ()
+d_FinMap_502 = erased
 -- Axiom.Set.Sum._.toRel
-d_toRel_552 ::
-  MAlonzo.Code.Axiom.Set.T_Theory_96 ->
+d_toRel_576 ::
+  MAlonzo.Code.Axiom.Set.T_Theory_118 ->
   () -> () -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 -> AgdaAny
-d_toRel_552 ~v0 = du_toRel_552
-du_toRel_552 ::
+d_toRel_576 ~v0 = du_toRel_576
+du_toRel_576 ::
   () -> () -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 -> AgdaAny
-du_toRel_552 v0 v1 v2
-  = coe MAlonzo.Code.Axiom.Set.Map.du_toRel_628 v2
+du_toRel_576 v0 v1 v2
+  = coe MAlonzo.Code.Axiom.Set.Map.du_toRel_644 v2
 -- Axiom.Set.Sum._.Unionᵐ._∪ˡ'_
-d__'8746''737'''__634 ::
-  MAlonzo.Code.Axiom.Set.T_Theory_96 ->
+d__'8746''737'''__664 ::
+  MAlonzo.Code.Axiom.Set.T_Theory_118 ->
   () -> (AgdaAny -> AgdaAny) -> () -> AgdaAny -> AgdaAny -> AgdaAny
-d__'8746''737'''__634 v0 v1 v2 v3 v4 v5
+d__'8746''737'''__664 v0 v1 v2 v3 v4 v5
   = coe
-      MAlonzo.Code.Axiom.Set.Map.du__'8746''737'''__896 (coe v0) v2 v4 v5
+      MAlonzo.Code.Axiom.Set.Map.du__'8746''737'''__990 (coe v0) v2 v4 v5
 -- Axiom.Set.Sum.M-Reasoning._._∙_
-d__'8729'__654 ::
-  MAlonzo.Code.Axiom.Set.T_Theory_96 ->
+d__'8729'__686 ::
+  MAlonzo.Code.Axiom.Set.T_Theory_118 ->
   () ->
   MAlonzo.Code.Class.CommutativeMonoid.Core.T_CommutativeMonoid_12 ->
   AgdaAny -> AgdaAny -> AgdaAny
-d__'8729'__654 ~v0 ~v1 v2 = du__'8729'__654 v2
-du__'8729'__654 ::
+d__'8729'__686 ~v0 ~v1 v2 = du__'8729'__686 v2
+du__'8729'__686 ::
   MAlonzo.Code.Class.CommutativeMonoid.Core.T_CommutativeMonoid_12 ->
   AgdaAny -> AgdaAny -> AgdaAny
-du__'8729'__654 v0
+du__'8729'__686 v0
   = coe
       MAlonzo.Code.Class.Semigroup.Core.d__'9671'__16
       (coe
          MAlonzo.Code.Class.CommutativeMonoid.Core.d_semigroup_30 (coe v0))
 -- Axiom.Set.Sum.M-Reasoning._._≈_
-d__'8776'__656 ::
-  MAlonzo.Code.Axiom.Set.T_Theory_96 ->
+d__'8776'__688 ::
+  MAlonzo.Code.Axiom.Set.T_Theory_118 ->
   () ->
   MAlonzo.Code.Class.CommutativeMonoid.Core.T_CommutativeMonoid_12 ->
   AgdaAny -> AgdaAny -> ()
-d__'8776'__656 = erased
+d__'8776'__688 = erased
 -- Axiom.Set.Sum.M-Reasoning._.ε
-d_ε_714 ::
-  MAlonzo.Code.Axiom.Set.T_Theory_96 ->
+d_ε_746 ::
+  MAlonzo.Code.Axiom.Set.T_Theory_118 ->
   () ->
   MAlonzo.Code.Class.CommutativeMonoid.Core.T_CommutativeMonoid_12 ->
   AgdaAny
-d_ε_714 ~v0 ~v1 v2 = du_ε_714 v2
-du_ε_714 ::
+d_ε_746 ~v0 ~v1 v2 = du_ε_746 v2
+du_ε_746 ::
   MAlonzo.Code.Class.CommutativeMonoid.Core.T_CommutativeMonoid_12 ->
   AgdaAny
-du_ε_714 v0
+du_ε_746 v0
   = coe
       MAlonzo.Code.Class.Monoid.Core.d_ε_20
       (coe
          MAlonzo.Code.Class.CommutativeMonoid.Core.d_monoid_32 (coe v0))
 -- Axiom.Set.Sum._._._∙_
-d__'8729'__796 ::
-  MAlonzo.Code.Axiom.Set.T_Theory_96 ->
+d__'8729'__828 ::
+  MAlonzo.Code.Axiom.Set.T_Theory_118 ->
   () ->
   MAlonzo.Code.Class.CommutativeMonoid.Core.T_CommutativeMonoid_12 ->
   AgdaAny -> AgdaAny -> AgdaAny
-d__'8729'__796 ~v0 ~v1 v2 = du__'8729'__796 v2
-du__'8729'__796 ::
+d__'8729'__828 ~v0 ~v1 v2 = du__'8729'__828 v2
+du__'8729'__828 ::
   MAlonzo.Code.Class.CommutativeMonoid.Core.T_CommutativeMonoid_12 ->
   AgdaAny -> AgdaAny -> AgdaAny
-du__'8729'__796 v0
+du__'8729'__828 v0
   = coe
       MAlonzo.Code.Class.Semigroup.Core.d__'9671'__16
       (coe
          MAlonzo.Code.Class.CommutativeMonoid.Core.d_semigroup_30 (coe v0))
 -- Axiom.Set.Sum._._._≈_
-d__'8776'__798 ::
-  MAlonzo.Code.Axiom.Set.T_Theory_96 ->
+d__'8776'__830 ::
+  MAlonzo.Code.Axiom.Set.T_Theory_118 ->
   () ->
   MAlonzo.Code.Class.CommutativeMonoid.Core.T_CommutativeMonoid_12 ->
   AgdaAny -> AgdaAny -> ()
-d__'8776'__798 = erased
+d__'8776'__830 = erased
 -- Axiom.Set.Sum._._.ε
-d_ε_882 ::
-  MAlonzo.Code.Axiom.Set.T_Theory_96 ->
+d_ε_914 ::
+  MAlonzo.Code.Axiom.Set.T_Theory_118 ->
   () ->
   MAlonzo.Code.Class.CommutativeMonoid.Core.T_CommutativeMonoid_12 ->
   AgdaAny
-d_ε_882 ~v0 ~v1 v2 = du_ε_882 v2
-du_ε_882 ::
+d_ε_914 ~v0 ~v1 v2 = du_ε_914 v2
+du_ε_914 ::
   MAlonzo.Code.Class.CommutativeMonoid.Core.T_CommutativeMonoid_12 ->
   AgdaAny
-du_ε_882 v0
+du_ε_914 v0
   = coe
       MAlonzo.Code.Class.Monoid.Core.d_ε_20
       (coe
          MAlonzo.Code.Class.CommutativeMonoid.Core.d_monoid_32 (coe v0))
 -- Axiom.Set.Sum._.indexedSumL
-d_indexedSumL_900 ::
-  MAlonzo.Code.Axiom.Set.T_Theory_96 ->
+d_indexedSumL_932 ::
+  MAlonzo.Code.Axiom.Set.T_Theory_118 ->
   () ->
   MAlonzo.Code.Class.CommutativeMonoid.Core.T_CommutativeMonoid_12 ->
   () -> (AgdaAny -> AgdaAny) -> [AgdaAny] -> AgdaAny
-d_indexedSumL_900 ~v0 ~v1 v2 ~v3 v4 = du_indexedSumL_900 v2 v4
-du_indexedSumL_900 ::
+d_indexedSumL_932 ~v0 ~v1 v2 ~v3 v4 = du_indexedSumL_932 v2 v4
+du_indexedSumL_932 ::
   MAlonzo.Code.Class.CommutativeMonoid.Core.T_CommutativeMonoid_12 ->
   (AgdaAny -> AgdaAny) -> [AgdaAny] -> AgdaAny
-du_indexedSumL_900 v0 v1
+du_indexedSumL_932 v0 v1
   = coe
       MAlonzo.Code.Data.List.Base.du_foldr_216
       (coe
@@ -257,26 +257,26 @@ du_indexedSumL_900 v0 v1
          (coe
             MAlonzo.Code.Class.CommutativeMonoid.Core.d_monoid_32 (coe v0)))
 -- Axiom.Set.Sum._.indexedSumL'
-d_indexedSumL''_908 ::
-  MAlonzo.Code.Axiom.Set.T_Theory_96 ->
+d_indexedSumL''_940 ::
+  MAlonzo.Code.Axiom.Set.T_Theory_118 ->
   () ->
   MAlonzo.Code.Class.CommutativeMonoid.Core.T_CommutativeMonoid_12 ->
   () ->
   (AgdaAny -> AgdaAny) ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 -> AgdaAny
-d_indexedSumL''_908 ~v0 ~v1 v2 ~v3 v4 v5
-  = du_indexedSumL''_908 v2 v4 v5
-du_indexedSumL''_908 ::
+d_indexedSumL''_940 ~v0 ~v1 v2 ~v3 v4 v5
+  = du_indexedSumL''_940 v2 v4 v5
+du_indexedSumL''_940 ::
   MAlonzo.Code.Class.CommutativeMonoid.Core.T_CommutativeMonoid_12 ->
   (AgdaAny -> AgdaAny) ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 -> AgdaAny
-du_indexedSumL''_908 v0 v1 v2
+du_indexedSumL''_940 v0 v1 v2
   = coe
-      du_indexedSumL_900 v0 v1
+      du_indexedSumL_932 v0 v1
       (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe v2))
 -- Axiom.Set.Sum._.fold-cong↭
-d_fold'45'cong'8621'_924 ::
-  MAlonzo.Code.Axiom.Set.T_Theory_96 ->
+d_fold'45'cong'8621'_956 ::
+  MAlonzo.Code.Axiom.Set.T_Theory_118 ->
   () ->
   MAlonzo.Code.Class.CommutativeMonoid.Core.T_CommutativeMonoid_12 ->
   () ->
@@ -285,16 +285,16 @@ d_fold'45'cong'8621'_924 ::
   [AgdaAny] ->
   MAlonzo.Code.Data.List.Relation.Binary.Permutation.Propositional.T__'8621'__34 ->
   AgdaAny
-d_fold'45'cong'8621'_924 ~v0 ~v1 v2 ~v3 v4 v5 v6 v7
-  = du_fold'45'cong'8621'_924 v2 v4 v5 v6 v7
-du_fold'45'cong'8621'_924 ::
+d_fold'45'cong'8621'_956 ~v0 ~v1 v2 ~v3 v4 v5 v6 v7
+  = du_fold'45'cong'8621'_956 v2 v4 v5 v6 v7
+du_fold'45'cong'8621'_956 ::
   MAlonzo.Code.Class.CommutativeMonoid.Core.T_CommutativeMonoid_12 ->
   (AgdaAny -> AgdaAny) ->
   [AgdaAny] ->
   [AgdaAny] ->
   MAlonzo.Code.Data.List.Relation.Binary.Permutation.Propositional.T__'8621'__34 ->
   AgdaAny
-du_fold'45'cong'8621'_924 v0 v1 v2 v3 v4
+du_fold'45'cong'8621'_956 v0 v1 v2 v3 v4
   = case coe v4 of
       MAlonzo.Code.Data.List.Relation.Binary.Permutation.Propositional.C_refl_36
         -> coe
@@ -417,7 +417,7 @@ du_fold'45'cong'8621'_924 v0 v1 v2 v3 v4
                                     MAlonzo.Code.Class.CommutativeMonoid.Core.d_monoid_32 (coe v0)))
                               (coe v12))
                            (coe
-                              du_fold'45'cong'8621'_924 (coe v0) (coe v1) (coe v10) (coe v12)
+                              du_fold'45'cong'8621'_956 (coe v0) (coe v1) (coe v10) (coe v12)
                               (coe v8))
                     _ -> MAlonzo.RTE.mazUnreachableError
              _ -> MAlonzo.RTE.mazUnreachableError
@@ -445,7 +445,7 @@ du_fold'45'cong'8621'_924 v0 v1 v2 v3 v4
                                                MAlonzo.Code.Class.Semigroup.Core.d__'9671'__16
                                                (MAlonzo.Code.Class.CommutativeMonoid.Core.d_semigroup_30
                                                   (coe v0))
-                                               (coe v1 v12) (coe du_indexedSumL_900 v0 v1 v13)))
+                                               (coe v1 v12) (coe du_indexedSumL_932 v0 v1 v13)))
                                          (coe
                                             MAlonzo.Code.Class.Semigroup.Core.d__'9671'__16
                                             (MAlonzo.Code.Class.CommutativeMonoid.Core.d_semigroup_30
@@ -455,7 +455,7 @@ du_fold'45'cong'8621'_924 v0 v1 v2 v3 v4
                                                MAlonzo.Code.Class.Semigroup.Core.d__'9671'__16
                                                (MAlonzo.Code.Class.CommutativeMonoid.Core.d_semigroup_30
                                                   (coe v0))
-                                               (coe v1 v10) (coe du_indexedSumL_900 v0 v1 v17)))
+                                               (coe v1 v10) (coe du_indexedSumL_932 v0 v1 v17)))
                                          (coe
                                             MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8776''45''10217'_370
                                             (coe
@@ -482,7 +482,7 @@ du_fold'45'cong'8621'_924 v0 v1 v2 v3 v4
                                                   MAlonzo.Code.Class.Semigroup.Core.d__'9671'__16
                                                   (MAlonzo.Code.Class.CommutativeMonoid.Core.d_semigroup_30
                                                      (coe v0))
-                                                  (coe v1 v12) (coe du_indexedSumL_900 v0 v1 v13)))
+                                                  (coe v1 v12) (coe du_indexedSumL_932 v0 v1 v13)))
                                             (coe
                                                MAlonzo.Code.Class.Semigroup.Core.d__'9671'__16
                                                (MAlonzo.Code.Class.CommutativeMonoid.Core.d_semigroup_30
@@ -492,7 +492,7 @@ du_fold'45'cong'8621'_924 v0 v1 v2 v3 v4
                                                   MAlonzo.Code.Class.Semigroup.Core.d__'9671'__16
                                                   (MAlonzo.Code.Class.CommutativeMonoid.Core.d_semigroup_30
                                                      (coe v0))
-                                                  (coe v1 v10) (coe du_indexedSumL_900 v0 v1 v13)))
+                                                  (coe v1 v10) (coe du_indexedSumL_932 v0 v1 v13)))
                                             (coe
                                                MAlonzo.Code.Class.Semigroup.Core.d__'9671'__16
                                                (MAlonzo.Code.Class.CommutativeMonoid.Core.d_semigroup_30
@@ -502,7 +502,7 @@ du_fold'45'cong'8621'_924 v0 v1 v2 v3 v4
                                                   MAlonzo.Code.Class.Semigroup.Core.d__'9671'__16
                                                   (MAlonzo.Code.Class.CommutativeMonoid.Core.d_semigroup_30
                                                      (coe v0))
-                                                  (coe v1 v10) (coe du_indexedSumL_900 v0 v1 v17)))
+                                                  (coe v1 v10) (coe du_indexedSumL_932 v0 v1 v17)))
                                             (coe
                                                MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8776''45''10217'_370
                                                (coe
@@ -530,7 +530,7 @@ du_fold'45'cong'8621'_924 v0 v1 v2 v3 v4
                                                      (MAlonzo.Code.Class.CommutativeMonoid.Core.d_semigroup_30
                                                         (coe v0))
                                                      (coe v1 v10)
-                                                     (coe du_indexedSumL_900 v0 v1 v13)))
+                                                     (coe du_indexedSumL_932 v0 v1 v13)))
                                                (coe
                                                   MAlonzo.Code.Class.Semigroup.Core.d__'9671'__16
                                                   (MAlonzo.Code.Class.CommutativeMonoid.Core.d_semigroup_30
@@ -541,7 +541,7 @@ du_fold'45'cong'8621'_924 v0 v1 v2 v3 v4
                                                      (MAlonzo.Code.Class.CommutativeMonoid.Core.d_semigroup_30
                                                         (coe v0))
                                                      (coe v1 v10)
-                                                     (coe du_indexedSumL_900 v0 v1 v17)))
+                                                     (coe du_indexedSumL_932 v0 v1 v17)))
                                                (coe
                                                   MAlonzo.Code.Class.Semigroup.Core.d__'9671'__16
                                                   (MAlonzo.Code.Class.CommutativeMonoid.Core.d_semigroup_30
@@ -552,7 +552,7 @@ du_fold'45'cong'8621'_924 v0 v1 v2 v3 v4
                                                      (MAlonzo.Code.Class.CommutativeMonoid.Core.d_semigroup_30
                                                         (coe v0))
                                                      (coe v1 v10)
-                                                     (coe du_indexedSumL_900 v0 v1 v17)))
+                                                     (coe du_indexedSumL_932 v0 v1 v17)))
                                                (coe
                                                   MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du__'8718'_494
                                                   (coe
@@ -580,7 +580,7 @@ du_fold'45'cong'8621'_924 v0 v1 v2 v3 v4
                                                         (MAlonzo.Code.Class.CommutativeMonoid.Core.d_semigroup_30
                                                            (coe v0))
                                                         (coe v1 v10)
-                                                        (coe du_indexedSumL_900 v0 v1 v17))))
+                                                        (coe du_indexedSumL_932 v0 v1 v17))))
                                                (coe
                                                   MAlonzo.Code.Algebra.Consequences.Base.du_'8729''45'cong'737'_42
                                                   (MAlonzo.Code.Algebra.Structures.d_'8729''45'cong_188
@@ -738,7 +738,7 @@ du_fold'45'cong'8621'_924 v0 v1 v2 v3 v4
                                                               (coe v0)))
                                                         (coe v17))
                                                      (coe
-                                                        du_fold'45'cong'8621'_924 (coe v0) (coe v1)
+                                                        du_fold'45'cong'8621'_956 (coe v0) (coe v1)
                                                         (coe v13) (coe v17) (coe v9)))))
                                             (coe
                                                MAlonzo.Code.Algebra.Properties.CommutativeSemigroup.du_x'8729'yz'8776'y'8729'xz_296
@@ -748,7 +748,7 @@ du_fold'45'cong'8621'_924 v0 v1 v2 v3 v4
                                                      MAlonzo.Code.Class.CommutativeMonoid.Core.du_toBundle_46
                                                      (coe v0)))
                                                (coe v1 v10) (coe v1 v12)
-                                               (coe du_indexedSumL_900 v0 v1 v13)))
+                                               (coe du_indexedSumL_932 v0 v1 v13)))
                                   _ -> MAlonzo.RTE.mazUnreachableError
                            _ -> MAlonzo.RTE.mazUnreachableError
                     _ -> MAlonzo.RTE.mazUnreachableError
@@ -806,64 +806,64 @@ du_fold'45'cong'8621'_924 v0 v1 v2 v3 v4
                       MAlonzo.Code.Class.CommutativeMonoid.Core.d_monoid_32 (coe v0)))
                 (coe v3))
              (coe
-                du_fold'45'cong'8621'_924 (coe v0) (coe v1) (coe v2) (coe v6)
+                du_fold'45'cong'8621'_956 (coe v0) (coe v1) (coe v2) (coe v6)
                 (coe v8))
              (coe
-                du_fold'45'cong'8621'_924 (coe v0) (coe v1) (coe v6) (coe v3)
+                du_fold'45'cong'8621'_956 (coe v0) (coe v1) (coe v6) (coe v3)
                 (coe v9))
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Axiom.Set.Sum._.indexedSum
-d_indexedSum_946 ::
-  MAlonzo.Code.Axiom.Set.T_Theory_96 ->
+d_indexedSum_978 ::
+  MAlonzo.Code.Axiom.Set.T_Theory_118 ->
   () ->
   MAlonzo.Code.Class.CommutativeMonoid.Core.T_CommutativeMonoid_12 ->
   () ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   (AgdaAny -> AgdaAny) ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 -> AgdaAny
-d_indexedSum_946 ~v0 ~v1 v2 ~v3 v4 v5 = du_indexedSum_946 v2 v4 v5
-du_indexedSum_946 ::
+d_indexedSum_978 ~v0 ~v1 v2 ~v3 v4 v5 = du_indexedSum_978 v2 v4 v5
+du_indexedSum_978 ::
   MAlonzo.Code.Class.CommutativeMonoid.Core.T_CommutativeMonoid_12 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   (AgdaAny -> AgdaAny) ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 -> AgdaAny
-du_indexedSum_946 v0 v1 v2
+du_indexedSum_978 v0 v1 v2
   = coe
-      MAlonzo.Code.Axiom.Set.Factor.du_factor_350
+      MAlonzo.Code.Axiom.Set.Factor.du_factor_360
       (coe
-         MAlonzo.Code.Axiom.Set.Factor.du_ext_430 (coe v1)
-         (coe du_indexedSumL''_908 (coe v0) (coe v2)))
+         MAlonzo.Code.Axiom.Set.Factor.du_ext_440 (coe v1)
+         (coe du_indexedSumL''_940 (coe v0) (coe v2)))
 -- Axiom.Set.Sum._.indexedSumL-++
-d_indexedSumL'45''43''43'_972 ::
-  MAlonzo.Code.Axiom.Set.T_Theory_96 ->
+d_indexedSumL'45''43''43'_1004 ::
+  MAlonzo.Code.Axiom.Set.T_Theory_118 ->
   () ->
   MAlonzo.Code.Class.CommutativeMonoid.Core.T_CommutativeMonoid_12 ->
   () -> (AgdaAny -> AgdaAny) -> [AgdaAny] -> [AgdaAny] -> AgdaAny
-d_indexedSumL'45''43''43'_972 ~v0 ~v1 v2 ~v3 v4 v5 v6
-  = du_indexedSumL'45''43''43'_972 v2 v4 v5 v6
-du_indexedSumL'45''43''43'_972 ::
+d_indexedSumL'45''43''43'_1004 ~v0 ~v1 v2 ~v3 v4 v5 v6
+  = du_indexedSumL'45''43''43'_1004 v2 v4 v5 v6
+du_indexedSumL'45''43''43'_1004 ::
   MAlonzo.Code.Class.CommutativeMonoid.Core.T_CommutativeMonoid_12 ->
   (AgdaAny -> AgdaAny) -> [AgdaAny] -> [AgdaAny] -> AgdaAny
-du_indexedSumL'45''43''43'_972 v0 v1 v2 v3
+du_indexedSumL'45''43''43'_1004 v0 v1 v2 v3
   = coe
       MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_begin__46
       (\ v4 v5 v6 ->
          coe
            MAlonzo.Code.Relation.Binary.Reasoning.Base.Single.du_start_36 v6)
       (coe
-         du_indexedSumL_900 v0 v1
+         du_indexedSumL_932 v0 v1
          (coe
             MAlonzo.Code.Data.List.Base.du__'43''43'__32 (coe v2) (coe v3)))
       (coe
          MAlonzo.Code.Class.Semigroup.Core.d__'9671'__16
          (MAlonzo.Code.Class.CommutativeMonoid.Core.d_semigroup_30 (coe v0))
-         (coe du_indexedSumL_900 v0 v1 v2)
-         (coe du_indexedSumL_900 v0 v1 v3))
+         (coe du_indexedSumL_932 v0 v1 v2)
+         (coe du_indexedSumL_932 v0 v1 v3))
       (coe
          MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8801''45''10217'_438
          (\ v4 v5 v6 v7 v8 -> v8)
          (coe
-            du_indexedSumL_900 v0 v1
+            du_indexedSumL_932 v0 v1
             (coe
                MAlonzo.Code.Data.List.Base.du__'43''43'__32 (coe v2) (coe v3)))
          (coe
@@ -874,12 +874,12 @@ du_indexedSumL'45''43''43'_972 v0 v1 v2 v3
                     MAlonzo.Code.Class.Semigroup.Core.d__'9671'__16
                     (MAlonzo.Code.Class.CommutativeMonoid.Core.d_semigroup_30 (coe v0))
                     (coe v1 v4)))
-            (coe du_indexedSumL_900 v0 v1 v3) (coe v2))
+            (coe du_indexedSumL_932 v0 v1 v3) (coe v2))
          (coe
             MAlonzo.Code.Class.Semigroup.Core.d__'9671'__16
             (MAlonzo.Code.Class.CommutativeMonoid.Core.d_semigroup_30 (coe v0))
-            (coe du_indexedSumL_900 v0 v1 v2)
-            (coe du_indexedSumL_900 v0 v1 v3))
+            (coe du_indexedSumL_932 v0 v1 v2)
+            (coe du_indexedSumL_932 v0 v1 v3))
          (coe
             MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8776''45''10217'_370
             (coe
@@ -905,17 +905,17 @@ du_indexedSumL'45''43''43'_972 v0 v1 v2 v3
                        MAlonzo.Code.Class.Semigroup.Core.d__'9671'__16
                        (MAlonzo.Code.Class.CommutativeMonoid.Core.d_semigroup_30 (coe v0))
                        (coe v1 v4)))
-               (coe du_indexedSumL_900 v0 v1 v3) (coe v2))
+               (coe du_indexedSumL_932 v0 v1 v3) (coe v2))
             (coe
                MAlonzo.Code.Class.Semigroup.Core.d__'9671'__16
                (MAlonzo.Code.Class.CommutativeMonoid.Core.d_semigroup_30 (coe v0))
-               (coe du_indexedSumL_900 v0 v1 v2)
-               (coe du_indexedSumL_900 v0 v1 v3))
+               (coe du_indexedSumL_932 v0 v1 v2)
+               (coe du_indexedSumL_932 v0 v1 v3))
             (coe
                MAlonzo.Code.Class.Semigroup.Core.d__'9671'__16
                (MAlonzo.Code.Class.CommutativeMonoid.Core.d_semigroup_30 (coe v0))
-               (coe du_indexedSumL_900 v0 v1 v2)
-               (coe du_indexedSumL_900 v0 v1 v3))
+               (coe du_indexedSumL_932 v0 v1 v2)
+               (coe du_indexedSumL_932 v0 v1 v3))
             (coe
                MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du__'8718'_494
                (coe
@@ -936,15 +936,15 @@ du_indexedSumL'45''43''43'_972 v0 v1 v2 v3
                (coe
                   MAlonzo.Code.Class.Semigroup.Core.d__'9671'__16
                   (MAlonzo.Code.Class.CommutativeMonoid.Core.d_semigroup_30 (coe v0))
-                  (coe du_indexedSumL_900 v0 v1 v2)
-                  (coe du_indexedSumL_900 v0 v1 v3)))
+                  (coe du_indexedSumL_932 v0 v1 v2)
+                  (coe du_indexedSumL_932 v0 v1 v3)))
             (coe
-               du_helper_994 (coe v0) (coe du_indexedSumL_900 v0 v1 v3) (coe v2)
+               du_helper_1026 (coe v0) (coe du_indexedSumL_932 v0 v1 v3) (coe v2)
                (coe v1)))
          erased)
 -- Axiom.Set.Sum._._.helper
-d_helper_994 ::
-  MAlonzo.Code.Axiom.Set.T_Theory_96 ->
+d_helper_1026 ::
+  MAlonzo.Code.Axiom.Set.T_Theory_118 ->
   () ->
   MAlonzo.Code.Class.CommutativeMonoid.Core.T_CommutativeMonoid_12 ->
   () ->
@@ -952,12 +952,12 @@ d_helper_994 ::
   [AgdaAny] ->
   [AgdaAny] ->
   () -> AgdaAny -> [AgdaAny] -> (AgdaAny -> AgdaAny) -> AgdaAny
-d_helper_994 ~v0 ~v1 v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8 v9 v10
-  = du_helper_994 v2 v8 v9 v10
-du_helper_994 ::
+d_helper_1026 ~v0 ~v1 v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8 v9 v10
+  = du_helper_1026 v2 v8 v9 v10
+du_helper_1026 ::
   MAlonzo.Code.Class.CommutativeMonoid.Core.T_CommutativeMonoid_12 ->
   AgdaAny -> [AgdaAny] -> (AgdaAny -> AgdaAny) -> AgdaAny
-du_helper_994 v0 v1 v2 v3
+du_helper_1026 v0 v1 v2 v3
   = case coe v2 of
       []
         -> coe
@@ -1073,7 +1073,7 @@ du_helper_994 v0 v1 v2 v3
                 (coe
                    MAlonzo.Code.Class.Semigroup.Core.d__'9671'__16
                    (MAlonzo.Code.Class.CommutativeMonoid.Core.d_semigroup_30 (coe v0))
-                   (coe v3 v4) (coe du_indexedSumL_900 v0 v3 v5))
+                   (coe v3 v4) (coe du_indexedSumL_932 v0 v3 v5))
                 v1)
              (coe
                 MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8776''45''10217'_370
@@ -1112,14 +1112,14 @@ du_helper_994 v0 v1 v2 v3
                    (coe
                       MAlonzo.Code.Class.Semigroup.Core.d__'9671'__16
                       (MAlonzo.Code.Class.CommutativeMonoid.Core.d_semigroup_30 (coe v0))
-                      (coe du_indexedSumL_900 v0 v3 v5) v1))
+                      (coe du_indexedSumL_932 v0 v3 v5) v1))
                 (coe
                    MAlonzo.Code.Class.Semigroup.Core.d__'9671'__16
                    (MAlonzo.Code.Class.CommutativeMonoid.Core.d_semigroup_30 (coe v0))
                    (coe
                       MAlonzo.Code.Class.Semigroup.Core.d__'9671'__16
                       (MAlonzo.Code.Class.CommutativeMonoid.Core.d_semigroup_30 (coe v0))
-                      (coe v3 v4) (coe du_indexedSumL_900 v0 v3 v5))
+                      (coe v3 v4) (coe du_indexedSumL_932 v0 v3 v5))
                    v1)
                 (coe
                    MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8776''728'_376
@@ -1157,14 +1157,14 @@ du_helper_994 v0 v1 v2 v3
                       (coe
                          MAlonzo.Code.Class.Semigroup.Core.d__'9671'__16
                          (MAlonzo.Code.Class.CommutativeMonoid.Core.d_semigroup_30 (coe v0))
-                         (coe du_indexedSumL_900 v0 v3 v5) v1))
+                         (coe du_indexedSumL_932 v0 v3 v5) v1))
                    (coe
                       MAlonzo.Code.Class.Semigroup.Core.d__'9671'__16
                       (MAlonzo.Code.Class.CommutativeMonoid.Core.d_semigroup_30 (coe v0))
                       (coe
                          MAlonzo.Code.Class.Semigroup.Core.d__'9671'__16
                          (MAlonzo.Code.Class.CommutativeMonoid.Core.d_semigroup_30 (coe v0))
-                         (coe v3 v4) (coe du_indexedSumL_900 v0 v3 v5))
+                         (coe v3 v4) (coe du_indexedSumL_932 v0 v3 v5))
                       v1)
                    (coe
                       MAlonzo.Code.Class.Semigroup.Core.d__'9671'__16
@@ -1172,7 +1172,7 @@ du_helper_994 v0 v1 v2 v3
                       (coe
                          MAlonzo.Code.Class.Semigroup.Core.d__'9671'__16
                          (MAlonzo.Code.Class.CommutativeMonoid.Core.d_semigroup_30 (coe v0))
-                         (coe v3 v4) (coe du_indexedSumL_900 v0 v3 v5))
+                         (coe v3 v4) (coe du_indexedSumL_932 v0 v3 v5))
                       v1)
                    (coe
                       MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du__'8718'_494
@@ -1197,7 +1197,7 @@ du_helper_994 v0 v1 v2 v3
                          (coe
                             MAlonzo.Code.Class.Semigroup.Core.d__'9671'__16
                             (MAlonzo.Code.Class.CommutativeMonoid.Core.d_semigroup_30 (coe v0))
-                            (coe v3 v4) (coe du_indexedSumL_900 v0 v3 v5))
+                            (coe v3 v4) (coe du_indexedSumL_932 v0 v3 v5))
                          v1))
                    (coe
                       MAlonzo.Code.Algebra.Structures.d_assoc_498
@@ -1207,7 +1207,7 @@ du_helper_994 v0 v1 v2 v3
                             (coe
                                MAlonzo.Code.Class.CommutativeMonoid.Core.d_isCommutativeMonoid_34
                                (coe v0))))
-                      (coe v3 v4) (coe du_indexedSumL_900 v0 v3 v5) v1))
+                      (coe v3 v4) (coe du_indexedSumL_932 v0 v3 v5) v1))
                 (coe
                    MAlonzo.Code.Algebra.Consequences.Base.du_'8729''45'cong'737'_42
                    (MAlonzo.Code.Algebra.Structures.d_'8729''45'cong_188
@@ -1245,12 +1245,12 @@ du_helper_994 v0 v1 v2 v3
                    (coe
                       MAlonzo.Code.Class.Semigroup.Core.d__'9671'__16
                       (MAlonzo.Code.Class.CommutativeMonoid.Core.d_semigroup_30 (coe v0))
-                      (coe du_indexedSumL_900 v0 v3 v5) v1)
-                   (coe du_helper_994 (coe v0) (coe v1) (coe v5) (coe v3))))
+                      (coe du_indexedSumL_932 v0 v3 v5) v1)
+                   (coe du_helper_1026 (coe v0) (coe v1) (coe v5) (coe v3))))
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Axiom.Set.Sum._._.indexedSum-cong
-d_indexedSum'45'cong_1048 ::
-  MAlonzo.Code.Axiom.Set.T_Theory_96 ->
+d_indexedSum'45'cong_1080 ::
+  MAlonzo.Code.Axiom.Set.T_Theory_118 ->
   () ->
   MAlonzo.Code.Class.CommutativeMonoid.Core.T_CommutativeMonoid_12 ->
   () ->
@@ -1259,60 +1259,60 @@ d_indexedSum'45'cong_1048 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 -> AgdaAny
-d_indexedSum'45'cong_1048 ~v0 ~v1 v2 ~v3 v4 v5 v6 v7
-  = du_indexedSum'45'cong_1048 v2 v4 v5 v6 v7
-du_indexedSum'45'cong_1048 ::
+d_indexedSum'45'cong_1080 ~v0 ~v1 v2 ~v3 v4 v5 v6 v7
+  = du_indexedSum'45'cong_1080 v2 v4 v5 v6 v7
+du_indexedSum'45'cong_1080 ::
   MAlonzo.Code.Class.CommutativeMonoid.Core.T_CommutativeMonoid_12 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   (AgdaAny -> AgdaAny) ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 -> AgdaAny
-du_indexedSum'45'cong_1048 v0 v1 v2 v3 v4
+du_indexedSum'45'cong_1080 v0 v1 v2 v3 v4
   = coe
-      MAlonzo.Code.Axiom.Set.Factor.du_factor'45'cong_354
+      MAlonzo.Code.Axiom.Set.Factor.du_factor'45'cong_364
       (coe
-         MAlonzo.Code.Axiom.Set.Factor.du_ext'45'cong_436 (coe v1)
+         MAlonzo.Code.Axiom.Set.Factor.du_ext'45'cong_446 (coe v1)
          (coe
             (\ v5 v6 ->
                coe
-                 du_fold'45'cong'8621'_924 (coe v0) (coe v2)
+                 du_fold'45'cong'8621'_956 (coe v0) (coe v2)
                  (coe MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe v5))
                  (coe MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe v6)))))
       (coe v3) (coe v4)
 -- Axiom.Set.Sum._._.indexedSum-∅
-d_indexedSum'45''8709'_1054 ::
-  MAlonzo.Code.Axiom.Set.T_Theory_96 ->
+d_indexedSum'45''8709'_1086 ::
+  MAlonzo.Code.Axiom.Set.T_Theory_118 ->
   () ->
   MAlonzo.Code.Class.CommutativeMonoid.Core.T_CommutativeMonoid_12 ->
   () ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   (AgdaAny -> AgdaAny) -> AgdaAny
-d_indexedSum'45''8709'_1054 v0 ~v1 v2 ~v3 v4 v5
-  = du_indexedSum'45''8709'_1054 v0 v2 v4 v5
-du_indexedSum'45''8709'_1054 ::
-  MAlonzo.Code.Axiom.Set.T_Theory_96 ->
+d_indexedSum'45''8709'_1086 v0 ~v1 v2 ~v3 v4 v5
+  = du_indexedSum'45''8709'_1086 v0 v2 v4 v5
+du_indexedSum'45''8709'_1086 ::
+  MAlonzo.Code.Axiom.Set.T_Theory_118 ->
   MAlonzo.Code.Class.CommutativeMonoid.Core.T_CommutativeMonoid_12 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   (AgdaAny -> AgdaAny) -> AgdaAny
-du_indexedSum'45''8709'_1054 v0 v1 v2 v3
+du_indexedSum'45''8709'_1086 v0 v1 v2 v3
   = coe
       MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_begin__46
       (\ v4 v5 v6 ->
          coe
            MAlonzo.Code.Relation.Binary.Reasoning.Base.Single.du_start_36 v6)
       (coe
-         du_indexedSum_946 v1 v2 v3
+         du_indexedSum_978 v1 v2 v3
          (coe
             MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
-            (coe MAlonzo.Code.Axiom.Set.du_'8709'_444 (coe v0))
-            (coe MAlonzo.Code.Axiom.Set.Properties.du_'8709''45'finite_438)))
+            (coe MAlonzo.Code.Axiom.Set.du_'8709'_470 (coe v0))
+            (coe MAlonzo.Code.Axiom.Set.Properties.du_'8709''45'finite_440)))
       (coe
-         du_indexedSum_946 v1 v2 v3
+         du_indexedSum_978 v1 v2 v3
          (coe
             MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
-            (coe MAlonzo.Code.Axiom.Set.du_'8709'_444 (coe v0))
-            (coe MAlonzo.Code.Axiom.Set.Properties.du_'8709''45'finite_438)))
+            (coe MAlonzo.Code.Axiom.Set.du_'8709'_470 (coe v0))
+            (coe MAlonzo.Code.Axiom.Set.Properties.du_'8709''45'finite_440)))
       (coe
          MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du__'8718'_494
          (coe
@@ -1331,14 +1331,14 @@ du_indexedSum'45''8709'_1054 v0 v1 v2 v3
                               MAlonzo.Code.Class.CommutativeMonoid.Core.d_isCommutativeMonoid_34
                               (coe v1))))))))
          (coe
-            du_indexedSum_946 v1 v2 v3
+            du_indexedSum_978 v1 v2 v3
             (coe
                MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
-               (coe MAlonzo.Code.Axiom.Set.du_'8709'_444 (coe v0))
-               (coe MAlonzo.Code.Axiom.Set.Properties.du_'8709''45'finite_438))))
+               (coe MAlonzo.Code.Axiom.Set.du_'8709'_470 (coe v0))
+               (coe MAlonzo.Code.Axiom.Set.Properties.du_'8709''45'finite_440))))
 -- Axiom.Set.Sum._._.indexedSum-∪
-d_indexedSum'45''8746'_1060 ::
-  MAlonzo.Code.Axiom.Set.T_Theory_96 ->
+d_indexedSum'45''8746'_1092 ::
+  MAlonzo.Code.Axiom.Set.T_Theory_118 ->
   () ->
   MAlonzo.Code.Class.CommutativeMonoid.Core.T_CommutativeMonoid_12 ->
   () ->
@@ -1352,17 +1352,17 @@ d_indexedSum'45''8746'_1060 ::
    AgdaAny ->
    AgdaAny -> MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20) ->
   AgdaAny
-d_indexedSum'45''8746'_1060 ~v0 ~v1 v2 ~v3 v4 v5 ~v6 ~v7 v8 v9 ~v10
-  = du_indexedSum'45''8746'_1060 v2 v4 v5 v8 v9
-du_indexedSum'45''8746'_1060 ::
+d_indexedSum'45''8746'_1092 ~v0 ~v1 v2 ~v3 v4 v5 ~v6 ~v7 v8 v9 ~v10
+  = du_indexedSum'45''8746'_1092 v2 v4 v5 v8 v9
+du_indexedSum'45''8746'_1092 ::
   MAlonzo.Code.Class.CommutativeMonoid.Core.T_CommutativeMonoid_12 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   (AgdaAny -> AgdaAny) ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 -> AgdaAny
-du_indexedSum'45''8746'_1060 v0 v1 v2 v3 v4
+du_indexedSum'45''8746'_1092 v0 v1 v2 v3 v4
   = coe
-      MAlonzo.Code.Axiom.Set.Factor.du_factor'45''8746'''_472 (coe v3)
+      MAlonzo.Code.Axiom.Set.Factor.du_factor'45''8746'''_482 (coe v3)
       (coe v4)
       (coe
          (\ v5 v6 v7 ->
@@ -1418,18 +1418,18 @@ du_indexedSum'45''8746'_1060 v0 v1 v2 v3 v4
                  MAlonzo.Code.Class.Semigroup.Core.d__'9671'__16
                  (MAlonzo.Code.Class.CommutativeMonoid.Core.d_semigroup_30 (coe v0))
                  (coe
-                    du_indexedSumL_900 v0 v2
+                    du_indexedSumL_932 v0 v2
                     (coe
                        MAlonzo.Code.Data.List.Base.du_deduplicate_882
                        (coe MAlonzo.Code.Class.DecEq.Core.d__'8799'__16 (coe v1))
                        (coe v5)))
                  (coe
-                    du_indexedSumL_900 v0 v2
+                    du_indexedSumL_932 v0 v2
                     (coe
                        MAlonzo.Code.Data.List.Ext.Properties.du_deduplicate'8801'_168 v1
                        v6)))
               (coe
-                 du_fold'45'cong'8621'_924 (coe v0) (coe v2)
+                 du_fold'45'cong'8621'_956 (coe v0) (coe v2)
                  (coe
                     MAlonzo.Code.Data.List.Ext.Properties.du_deduplicate'8801'_168 v1
                     (coe
@@ -1446,7 +1446,7 @@ du_indexedSum'45''8746'_1060 v0 v1 v2 v3 v4
                     MAlonzo.Code.Data.List.Ext.Properties.du_dedup'45''43''43''45''8621'_188
                     (coe v1) (coe v5) (coe v6)))
               (coe
-                 du_indexedSumL'45''43''43'_972 (coe v0) (coe v2)
+                 du_indexedSumL'45''43''43'_1004 (coe v0) (coe v2)
                  (coe
                     MAlonzo.Code.Data.List.Base.du_deduplicate_882
                     (coe MAlonzo.Code.Class.DecEq.Core.d__'8799'__16 (coe v1))
@@ -1455,19 +1455,19 @@ du_indexedSum'45''8746'_1060 v0 v1 v2 v3 v4
                     MAlonzo.Code.Data.List.Ext.Properties.du_deduplicate'8801'_168 v1
                     v6))))
 -- Axiom.Set.Sum._._.indexedSum-singleton
-d_indexedSum'45'singleton_1076 ::
-  MAlonzo.Code.Axiom.Set.T_Theory_96 ->
+d_indexedSum'45'singleton_1108 ::
+  MAlonzo.Code.Axiom.Set.T_Theory_118 ->
   () ->
   MAlonzo.Code.Class.CommutativeMonoid.Core.T_CommutativeMonoid_12 ->
   () ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   (AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny
-d_indexedSum'45'singleton_1076 ~v0 ~v1 v2 ~v3 ~v4 v5 v6
-  = du_indexedSum'45'singleton_1076 v2 v5 v6
-du_indexedSum'45'singleton_1076 ::
+d_indexedSum'45'singleton_1108 ~v0 ~v1 v2 ~v3 ~v4 v5 v6
+  = du_indexedSum'45'singleton_1108 v2 v5 v6
+du_indexedSum'45'singleton_1108 ::
   MAlonzo.Code.Class.CommutativeMonoid.Core.T_CommutativeMonoid_12 ->
   (AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny
-du_indexedSum'45'singleton_1076 v0 v1 v2
+du_indexedSum'45'singleton_1108 v0 v1 v2
   = coe
       MAlonzo.Code.Algebra.Structures.du_identity'691'_754
       (MAlonzo.Code.Algebra.Structures.d_isMonoid_774
@@ -1476,23 +1476,23 @@ du_indexedSum'45'singleton_1076 v0 v1 v2
             (coe v0)))
       (coe v1 v2)
 -- Axiom.Set.Sum._._.indexedSum-singleton'
-d_indexedSum'45'singleton''_1082 ::
-  MAlonzo.Code.Axiom.Set.T_Theory_96 ->
+d_indexedSum'45'singleton''_1114 ::
+  MAlonzo.Code.Axiom.Set.T_Theory_118 ->
   () ->
   MAlonzo.Code.Class.CommutativeMonoid.Core.T_CommutativeMonoid_12 ->
   () ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   (AgdaAny -> AgdaAny) ->
   AgdaAny -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 -> AgdaAny
-d_indexedSum'45'singleton''_1082 v0 ~v1 v2 ~v3 v4 v5 v6 v7
-  = du_indexedSum'45'singleton''_1082 v0 v2 v4 v5 v6 v7
-du_indexedSum'45'singleton''_1082 ::
-  MAlonzo.Code.Axiom.Set.T_Theory_96 ->
+d_indexedSum'45'singleton''_1114 v0 ~v1 v2 ~v3 v4 v5 v6 v7
+  = du_indexedSum'45'singleton''_1114 v0 v2 v4 v5 v6 v7
+du_indexedSum'45'singleton''_1114 ::
+  MAlonzo.Code.Axiom.Set.T_Theory_118 ->
   MAlonzo.Code.Class.CommutativeMonoid.Core.T_CommutativeMonoid_12 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   (AgdaAny -> AgdaAny) ->
   AgdaAny -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 -> AgdaAny
-du_indexedSum'45'singleton''_1082 v0 v1 v2 v3 v4 v5
+du_indexedSum'45'singleton''_1114 v0 v1 v2 v3 v4 v5
   = coe
       MAlonzo.Code.Relation.Binary.Structures.d_trans_40
       (MAlonzo.Code.Algebra.Structures.d_isEquivalence_186
@@ -1507,50 +1507,50 @@ du_indexedSum'45'singleton''_1082 v0 v1 v2 v3 v4 v5
                      (coe v1))))))
       (coe
          MAlonzo.Code.Function.Base.du__'45''10216'_'8739'_292
-         (coe du_indexedSum_946 (coe v1) (coe v2) (coe v3)) (\ v6 v7 -> v6)
+         (coe du_indexedSum_978 (coe v1) (coe v2) (coe v3)) (\ v6 v7 -> v6)
          (coe
             MAlonzo.Code.Data.Product.Base.du_'45''44'__92
-            (coe MAlonzo.Code.Axiom.Set.du_'10100'_'10101'_454 v0 erased v4)
+            (coe MAlonzo.Code.Axiom.Set.du_'10100'_'10101'_480 v0 erased v4)
             (coe v5))
          (coe
             MAlonzo.Code.Data.Product.Base.du_'45''44'__92
-            (coe MAlonzo.Code.Axiom.Set.du_'10100'_'10101'_454 v0 erased v4)
+            (coe MAlonzo.Code.Axiom.Set.du_'10100'_'10101'_480 v0 erased v4)
             (coe
-               MAlonzo.Code.Axiom.Set.Properties.du_singleton'45'finite_672
+               MAlonzo.Code.Axiom.Set.Properties.du_singleton'45'finite_910
                (coe v0) (coe v4))))
       (coe
          MAlonzo.Code.Function.Base.du_'8739'_'10217''45'__298
-         (\ v6 v7 -> v7) (coe du_indexedSum_946 (coe v1) (coe v2) (coe v3))
+         (\ v6 v7 -> v7) (coe du_indexedSum_978 (coe v1) (coe v2) (coe v3))
          (coe
             MAlonzo.Code.Data.Product.Base.du_'45''44'__92
-            (coe MAlonzo.Code.Axiom.Set.du_'10100'_'10101'_454 v0 erased v4)
+            (coe MAlonzo.Code.Axiom.Set.du_'10100'_'10101'_480 v0 erased v4)
             (coe v5))
          (coe
             MAlonzo.Code.Data.Product.Base.du_'45''44'__92
-            (coe MAlonzo.Code.Axiom.Set.du_'10100'_'10101'_454 v0 erased v4)
+            (coe MAlonzo.Code.Axiom.Set.du_'10100'_'10101'_480 v0 erased v4)
             (coe
-               MAlonzo.Code.Axiom.Set.Properties.du_singleton'45'finite_672
+               MAlonzo.Code.Axiom.Set.Properties.du_singleton'45'finite_910
                (coe v0) (coe v4))))
       (coe v3 v4)
       (coe
-         du_indexedSum'45'cong_1048 v1 v2 v3
+         du_indexedSum'45'cong_1080 v1 v2 v3
          (coe
             MAlonzo.Code.Data.Product.Base.du_'45''44'__92
-            (coe MAlonzo.Code.Axiom.Set.du_'10100'_'10101'_454 v0 erased v4)
+            (coe MAlonzo.Code.Axiom.Set.du_'10100'_'10101'_480 v0 erased v4)
             (coe v5))
          (coe
             MAlonzo.Code.Data.Product.Base.du_'45''44'__92
-            (coe MAlonzo.Code.Axiom.Set.du_'10100'_'10101'_454 v0 erased v4)
+            (coe MAlonzo.Code.Axiom.Set.du_'10100'_'10101'_480 v0 erased v4)
             (coe
-               MAlonzo.Code.Axiom.Set.Properties.du_singleton'45'finite_672
+               MAlonzo.Code.Axiom.Set.Properties.du_singleton'45'finite_910
                (coe v0) (coe v4)))
          (coe
             MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 (coe (\ v6 v7 -> v7))
             (coe (\ v6 v7 -> v7))))
-      (coe du_indexedSum'45'singleton_1076 (coe v1) (coe v3) (coe v4))
+      (coe du_indexedSum'45'singleton_1108 (coe v1) (coe v3) (coe v4))
 -- Axiom.Set.Sum._.indexedSumᵐ
-d_indexedSum'7504'_1120 ::
-  MAlonzo.Code.Axiom.Set.T_Theory_96 ->
+d_indexedSum'7504'_1152 ::
+  MAlonzo.Code.Axiom.Set.T_Theory_118 ->
   () ->
   () ->
   () ->
@@ -1559,21 +1559,21 @@ d_indexedSum'7504'_1120 ::
   MAlonzo.Code.Class.CommutativeMonoid.Core.T_CommutativeMonoid_12 ->
   (MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 -> AgdaAny) ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 -> AgdaAny
-d_indexedSum'7504'_1120 ~v0 ~v1 ~v2 ~v3 v4 v5 v6 v7 v8
-  = du_indexedSum'7504'_1120 v4 v5 v6 v7 v8
-du_indexedSum'7504'_1120 ::
+d_indexedSum'7504'_1152 ~v0 ~v1 ~v2 ~v3 v4 v5 v6 v7 v8
+  = du_indexedSum'7504'_1152 v4 v5 v6 v7 v8
+du_indexedSum'7504'_1152 ::
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.CommutativeMonoid.Core.T_CommutativeMonoid_12 ->
   (MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 -> AgdaAny) ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 -> AgdaAny
-du_indexedSum'7504'_1120 v0 v1 v2 v3 v4
+du_indexedSum'7504'_1152 v0 v1 v2 v3 v4
   = case coe v4 of
       MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v5 v6
         -> case coe v6 of
              MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v7 v8
                -> coe
-                    du_indexedSum_946 v2
+                    du_indexedSum_978 v2
                     (coe
                        MAlonzo.Code.Class.DecEq.Instances.du_DecEq'45''215'_182 (coe v0)
                        (coe v1))
@@ -1582,8 +1582,8 @@ du_indexedSum'7504'_1120 v0 v1 v2 v3 v4
              _ -> MAlonzo.RTE.mazUnreachableError
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Axiom.Set.Sum._.indexedSumᵛ
-d_indexedSum'7515'_1128 ::
-  MAlonzo.Code.Axiom.Set.T_Theory_96 ->
+d_indexedSum'7515'_1160 ::
+  MAlonzo.Code.Axiom.Set.T_Theory_118 ->
   () ->
   () ->
   () ->
@@ -1592,23 +1592,23 @@ d_indexedSum'7515'_1128 ::
   MAlonzo.Code.Class.CommutativeMonoid.Core.T_CommutativeMonoid_12 ->
   (AgdaAny -> AgdaAny) ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 -> AgdaAny
-d_indexedSum'7515'_1128 ~v0 ~v1 ~v2 ~v3 v4 v5 v6 v7
-  = du_indexedSum'7515'_1128 v4 v5 v6 v7
-du_indexedSum'7515'_1128 ::
+d_indexedSum'7515'_1160 ~v0 ~v1 ~v2 ~v3 v4 v5 v6 v7
+  = du_indexedSum'7515'_1160 v4 v5 v6 v7
+du_indexedSum'7515'_1160 ::
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.CommutativeMonoid.Core.T_CommutativeMonoid_12 ->
   (AgdaAny -> AgdaAny) ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 -> AgdaAny
-du_indexedSum'7515'_1128 v0 v1 v2 v3
+du_indexedSum'7515'_1160 v0 v1 v2 v3
   = coe
-      du_indexedSum'7504'_1120 (coe v0) (coe v1) (coe v2)
+      du_indexedSum'7504'_1152 (coe v0) (coe v1) (coe v2)
       (coe
          (\ v4 ->
             coe v3 (MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30 (coe v4))))
 -- Axiom.Set.Sum._.indexedSumᵐ-cong
-d_indexedSum'7504''45'cong_1134 ::
-  MAlonzo.Code.Axiom.Set.T_Theory_96 ->
+d_indexedSum'7504''45'cong_1166 ::
+  MAlonzo.Code.Axiom.Set.T_Theory_118 ->
   () ->
   () ->
   () ->
@@ -1619,9 +1619,9 @@ d_indexedSum'7504''45'cong_1134 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 -> AgdaAny
-d_indexedSum'7504''45'cong_1134 ~v0 ~v1 ~v2 ~v3 v4 v5 v6 v7 v8 v9
-  = du_indexedSum'7504''45'cong_1134 v4 v5 v6 v7 v8 v9
-du_indexedSum'7504''45'cong_1134 ::
+d_indexedSum'7504''45'cong_1166 ~v0 ~v1 ~v2 ~v3 v4 v5 v6 v7 v8 v9
+  = du_indexedSum'7504''45'cong_1166 v4 v5 v6 v7 v8 v9
+du_indexedSum'7504''45'cong_1166 ::
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.CommutativeMonoid.Core.T_CommutativeMonoid_12 ->
@@ -1629,7 +1629,7 @@ du_indexedSum'7504''45'cong_1134 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 -> AgdaAny
-du_indexedSum'7504''45'cong_1134 v0 v1 v2 v3 v4 v5
+du_indexedSum'7504''45'cong_1166 v0 v1 v2 v3 v4 v5
   = case coe v4 of
       MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v6 v7
         -> case coe v7 of
@@ -1639,7 +1639,7 @@ du_indexedSum'7504''45'cong_1134 v0 v1 v2 v3 v4 v5
                       -> case coe v11 of
                            MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v12 v13
                              -> coe
-                                  du_indexedSum'45'cong_1048 (coe v2)
+                                  du_indexedSum'45'cong_1080 (coe v2)
                                   (coe
                                      MAlonzo.Code.Class.DecEq.Instances.du_DecEq'45''215'_182
                                      (coe v0) (coe v1))
@@ -1654,8 +1654,8 @@ du_indexedSum'7504''45'cong_1134 v0 v1 v2 v3 v4 v5
              _ -> MAlonzo.RTE.mazUnreachableError
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Axiom.Set.Sum.IndexedSumUnionᵐ._._∪ˡ'_
-d__'8746''737'''__1166 ::
-  MAlonzo.Code.Axiom.Set.T_Theory_96 ->
+d__'8746''737'''__1198 ::
+  MAlonzo.Code.Axiom.Set.T_Theory_118 ->
   () ->
   () ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
@@ -1665,18 +1665,18 @@ d__'8746''737'''__1166 ::
    AgdaAny ->
    MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20) ->
   () -> AgdaAny -> AgdaAny -> AgdaAny
-d__'8746''737'''__1166 v0 ~v1 ~v2 ~v3 ~v4 v5 ~v6
-  = du__'8746''737'''__1166 v0 v5
-du__'8746''737'''__1166 ::
-  MAlonzo.Code.Axiom.Set.T_Theory_96 ->
+d__'8746''737'''__1198 v0 ~v1 ~v2 ~v3 ~v4 v5 ~v6
+  = du__'8746''737'''__1198 v0 v5
+du__'8746''737'''__1198 ::
+  MAlonzo.Code.Axiom.Set.T_Theory_118 ->
   (AgdaAny -> AgdaAny) -> () -> AgdaAny -> AgdaAny -> AgdaAny
-du__'8746''737'''__1166 v0 v1 v2 v3 v4
+du__'8746''737'''__1198 v0 v1 v2 v3 v4
   = coe
-      MAlonzo.Code.Axiom.Set.Map.du__'8746''737'''__896 (coe v0) (coe v1)
+      MAlonzo.Code.Axiom.Set.Map.du__'8746''737'''__990 (coe v0) (coe v1)
       v3 v4
 -- Axiom.Set.Sum.IndexedSumUnionᵐ.∪ˡ-finite
-d_'8746''737''45'finite_1182 ::
-  MAlonzo.Code.Axiom.Set.T_Theory_96 ->
+d_'8746''737''45'finite_1216 ::
+  MAlonzo.Code.Axiom.Set.T_Theory_118 ->
   () ->
   () ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
@@ -1690,10 +1690,10 @@ d_'8746''737''45'finite_1182 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_'8746''737''45'finite_1182 v0 ~v1 ~v2 ~v3 ~v4 v5 v6 v7 v8 v9 v10
-  = du_'8746''737''45'finite_1182 v0 v5 v6 v7 v8 v9 v10
-du_'8746''737''45'finite_1182 ::
-  MAlonzo.Code.Axiom.Set.T_Theory_96 ->
+d_'8746''737''45'finite_1216 v0 ~v1 ~v2 ~v3 ~v4 v5 v6 v7 v8 v9 v10
+  = du_'8746''737''45'finite_1216 v0 v5 v6 v7 v8 v9 v10
+du_'8746''737''45'finite_1216 ::
+  MAlonzo.Code.Axiom.Set.T_Theory_118 ->
   (AgdaAny -> AgdaAny) ->
   (AgdaAny ->
    AgdaAny ->
@@ -1703,44 +1703,44 @@ du_'8746''737''45'finite_1182 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-du_'8746''737''45'finite_1182 v0 v1 v2 v3 v4 v5 v6
+du_'8746''737''45'finite_1216 v0 v1 v2 v3 v4 v5 v6
   = coe
-      MAlonzo.Code.Axiom.Set.Properties.du_'8746''45'preserves'45'finite_744
+      MAlonzo.Code.Axiom.Set.Properties.du_'8746''45'preserves'45'finite_982
       (coe v0) (coe v3)
       (coe
-         MAlonzo.Code.Axiom.Set.du_filter_422 v0
+         MAlonzo.Code.Axiom.Set.du_filter_448 v0
          (coe
-            MAlonzo.Code.Axiom.Set.d_sp'45''8728'_68
-            (MAlonzo.Code.Axiom.Set.d_sp_164 (coe v0)) erased erased erased
+            MAlonzo.Code.Axiom.Set.d_sp'45''8728'_74
+            (MAlonzo.Code.Axiom.Set.d_sp_188 (coe v0)) erased erased erased
             (coe
-               MAlonzo.Code.Axiom.Set.d_sp'45''172'_70
-               (MAlonzo.Code.Axiom.Set.d_sp_164 (coe v0)) erased erased
-               (coe v1 (coe MAlonzo.Code.Axiom.Set.Rel.du_dom_344 v0 v3)))
+               MAlonzo.Code.Axiom.Set.d_sp'45''172'_76
+               (MAlonzo.Code.Axiom.Set.d_sp_188 (coe v0)) erased erased
+               (coe v1 (coe MAlonzo.Code.Axiom.Set.Rel.du_dom_354 v0 v3)))
             (\ v7 -> MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe v7)))
          v4)
       (coe v5)
       (coe
-         MAlonzo.Code.Axiom.Set.Properties.du_filter'45'finite_686 (coe v0)
+         MAlonzo.Code.Axiom.Set.Properties.du_filter'45'finite_924 (coe v0)
          (coe v4)
          (coe
-            MAlonzo.Code.Axiom.Set.d_sp'45''8728'_68
-            (MAlonzo.Code.Axiom.Set.d_sp_164 (coe v0)) erased erased erased
+            MAlonzo.Code.Axiom.Set.d_sp'45''8728'_74
+            (MAlonzo.Code.Axiom.Set.d_sp_188 (coe v0)) erased erased erased
             (coe
-               MAlonzo.Code.Axiom.Set.d_sp'45''172'_70
-               (MAlonzo.Code.Axiom.Set.d_sp_164 (coe v0)) erased erased
-               (coe v1 (coe MAlonzo.Code.Axiom.Set.Rel.du_dom_344 v0 v3)))
+               MAlonzo.Code.Axiom.Set.d_sp'45''172'_76
+               (MAlonzo.Code.Axiom.Set.d_sp_188 (coe v0)) erased erased
+               (coe v1 (coe MAlonzo.Code.Axiom.Set.Rel.du_dom_354 v0 v3)))
             (\ v7 -> MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe v7)))
          (coe
             (\ v7 ->
                coe
                  MAlonzo.Code.Relation.Nullary.Decidable.Core.du_'172''63'_76
                  (coe
-                    v2 (coe MAlonzo.Code.Axiom.Set.Rel.du_dom_344 v0 v3)
+                    v2 (coe MAlonzo.Code.Axiom.Set.Rel.du_dom_354 v0 v3)
                     (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe v7)))))
          (coe v6))
 -- Axiom.Set.Sum.IndexedSumUnionᵐ._∪ˡᶠ_
-d__'8746''737''7584'__1188 ::
-  MAlonzo.Code.Axiom.Set.T_Theory_96 ->
+d__'8746''737''7584'__1222 ::
+  MAlonzo.Code.Axiom.Set.T_Theory_118 ->
   () ->
   () ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
@@ -1752,10 +1752,10 @@ d__'8746''737''7584'__1188 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d__'8746''737''7584'__1188 v0 ~v1 ~v2 ~v3 ~v4 v5 v6 v7 v8
-  = du__'8746''737''7584'__1188 v0 v5 v6 v7 v8
-du__'8746''737''7584'__1188 ::
-  MAlonzo.Code.Axiom.Set.T_Theory_96 ->
+d__'8746''737''7584'__1222 v0 ~v1 ~v2 ~v3 ~v4 v5 v6 v7 v8
+  = du__'8746''737''7584'__1222 v0 v5 v6 v7 v8
+du__'8746''737''7584'__1222 ::
+  MAlonzo.Code.Axiom.Set.T_Theory_118 ->
   (AgdaAny -> AgdaAny) ->
   (AgdaAny ->
    AgdaAny ->
@@ -1763,7 +1763,7 @@ du__'8746''737''7584'__1188 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-du__'8746''737''7584'__1188 v0 v1 v2 v3 v4
+du__'8746''737''7584'__1222 v0 v1 v2 v3 v4
   = case coe v3 of
       MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v5 v6
         -> case coe v6 of
@@ -1773,9 +1773,9 @@ du__'8746''737''7584'__1188 v0 v1 v2 v3 v4
                       -> case coe v10 of
                            MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v11 v12
                              -> coe
-                                  MAlonzo.Code.Axiom.Set.Map.du_toFinMap_614
+                                  MAlonzo.Code.Axiom.Set.Map.du_toFinMap_630
                                   (coe
-                                     MAlonzo.Code.Axiom.Set.Map.du__'8746''737'__902 (coe v0)
+                                     MAlonzo.Code.Axiom.Set.Map.du__'8746''737'__1042 (coe v0)
                                      (coe v1)
                                      (coe
                                         MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 (coe v5)
@@ -1784,15 +1784,15 @@ du__'8746''737''7584'__1188 v0 v1 v2 v3 v4
                                         MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 (coe v9)
                                         (coe v11)))
                                   (coe
-                                     du_'8746''737''45'finite_1182 (coe v0) (coe v1) (coe v2)
+                                     du_'8746''737''45'finite_1216 (coe v0) (coe v1) (coe v2)
                                      (coe v5) (coe v9) (coe v8) (coe v12))
                            _ -> MAlonzo.RTE.mazUnreachableError
                     _ -> MAlonzo.RTE.mazUnreachableError
              _ -> MAlonzo.RTE.mazUnreachableError
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Axiom.Set.Sum.IndexedSumUnionᵐ.indexedSumᵐ-∪
-d_indexedSum'7504''45''8746'_1206 ::
-  MAlonzo.Code.Axiom.Set.T_Theory_96 ->
+d_indexedSum'7504''45''8746'_1240 ::
+  MAlonzo.Code.Axiom.Set.T_Theory_118 ->
   () ->
   () ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
@@ -1810,11 +1810,11 @@ d_indexedSum'7504''45''8746'_1206 ::
    AgdaAny ->
    AgdaAny -> MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20) ->
   AgdaAny
-d_indexedSum'7504''45''8746'_1206 v0 ~v1 ~v2 v3 v4 v5 v6 ~v7 v8 v9
+d_indexedSum'7504''45''8746'_1240 v0 ~v1 ~v2 v3 v4 v5 v6 ~v7 v8 v9
                                   v10 v11 ~v12
-  = du_indexedSum'7504''45''8746'_1206 v0 v3 v4 v5 v6 v8 v9 v10 v11
-du_indexedSum'7504''45''8746'_1206 ::
-  MAlonzo.Code.Axiom.Set.T_Theory_96 ->
+  = du_indexedSum'7504''45''8746'_1240 v0 v3 v4 v5 v6 v8 v9 v10 v11
+du_indexedSum'7504''45''8746'_1240 ::
+  MAlonzo.Code.Axiom.Set.T_Theory_118 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   (AgdaAny -> AgdaAny) ->
@@ -1826,7 +1826,7 @@ du_indexedSum'7504''45''8746'_1206 ::
   (MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 -> AgdaAny) ->
   MAlonzo.Code.Class.CommutativeMonoid.Core.T_CommutativeMonoid_12 ->
   AgdaAny
-du_indexedSum'7504''45''8746'_1206 v0 v1 v2 v3 v4 v5 v6 v7 v8
+du_indexedSum'7504''45''8746'_1240 v0 v1 v2 v3 v4 v5 v6 v7 v8
   = case coe v5 of
       MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v9 v10
         -> case coe v10 of
@@ -1842,19 +1842,19 @@ du_indexedSum'7504''45''8746'_1206 v0 v1 v2 v3 v4 v5 v6 v7 v8
                                        MAlonzo.Code.Relation.Binary.Reasoning.Base.Single.du_start_36
                                        v19)
                                   (coe
-                                     du_indexedSum'7504'_1120 (coe v1) (coe v2) (coe v8) (coe v7)
+                                     du_indexedSum'7504'_1152 (coe v1) (coe v2) (coe v8) (coe v7)
                                      (coe
-                                        du__'8746''737''7584'__1188 (coe v0) (coe v3) (coe v4)
+                                        du__'8746''737''7584'__1222 (coe v0) (coe v3) (coe v4)
                                         (coe v5) (coe v6)))
                                   (coe
                                      MAlonzo.Code.Class.Semigroup.Core.d__'9671'__16
                                      (MAlonzo.Code.Class.CommutativeMonoid.Core.d_semigroup_30
                                         (coe v8))
                                      (coe
-                                        du_indexedSum'7504'_1120 (coe v1) (coe v2) (coe v8) (coe v7)
+                                        du_indexedSum'7504'_1152 (coe v1) (coe v2) (coe v8) (coe v7)
                                         (coe v5))
                                      (coe
-                                        du_indexedSum'7504'_1120 (coe v1) (coe v2) (coe v8) (coe v7)
+                                        du_indexedSum'7504'_1152 (coe v1) (coe v2) (coe v8) (coe v7)
                                         (coe v6)))
                                   (coe
                                      MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8776''45''10217'_370
@@ -1874,33 +1874,33 @@ du_indexedSum'7504''45''8746'_1206 v0 v1 v2 v3 v4 v5 v6 v7 v8
                                                           MAlonzo.Code.Class.CommutativeMonoid.Core.d_isCommutativeMonoid_34
                                                           (coe v8))))))))
                                      (coe
-                                        du_indexedSum'7504'_1120 (coe v1) (coe v2) (coe v8) (coe v7)
+                                        du_indexedSum'7504'_1152 (coe v1) (coe v2) (coe v8) (coe v7)
                                         (coe
-                                           du__'8746''737''7584'__1188 (coe v0) (coe v3) (coe v4)
+                                           du__'8746''737''7584'__1222 (coe v0) (coe v3) (coe v4)
                                            (coe v5) (coe v6)))
                                      (coe
-                                        du_indexedSum_946 v8
+                                        du_indexedSum_978 v8
                                         (coe
                                            MAlonzo.Code.Class.DecEq.Instances.du_DecEq'45''215'_182
                                            (coe v1) (coe v2))
                                         v7
                                         (coe
-                                           MAlonzo.Code.Axiom.Set.Factor.du__'7584'_318
+                                           MAlonzo.Code.Axiom.Set.Factor.du__'7584'_328
                                            (coe
-                                              MAlonzo.Code.Axiom.Set.du__'8746'__682 (coe v0)
+                                              MAlonzo.Code.Axiom.Set.du__'8746'__708 (coe v0)
                                               (coe v9) (coe v13))
                                            (coe
-                                              MAlonzo.Code.Axiom.Set.Properties.du_'8746''45'preserves'45'finite_744
+                                              MAlonzo.Code.Axiom.Set.Properties.du_'8746''45'preserves'45'finite_982
                                               (coe v0) (coe v9) (coe v13) (coe v12) (coe v16))))
                                      (coe
                                         MAlonzo.Code.Class.Semigroup.Core.d__'9671'__16
                                         (MAlonzo.Code.Class.CommutativeMonoid.Core.d_semigroup_30
                                            (coe v8))
                                         (coe
-                                           du_indexedSum'7504'_1120 (coe v1) (coe v2) (coe v8)
+                                           du_indexedSum'7504'_1152 (coe v1) (coe v2) (coe v8)
                                            (coe v7) (coe v5))
                                         (coe
-                                           du_indexedSum'7504'_1120 (coe v1) (coe v2) (coe v8)
+                                           du_indexedSum'7504'_1152 (coe v1) (coe v2) (coe v8)
                                            (coe v7) (coe v6)))
                                      (coe
                                         MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8776''45''10217'_370
@@ -1920,38 +1920,38 @@ du_indexedSum'7504''45''8746'_1206 v0 v1 v2 v3 v4 v5 v6 v7 v8
                                                              MAlonzo.Code.Class.CommutativeMonoid.Core.d_isCommutativeMonoid_34
                                                              (coe v8))))))))
                                         (coe
-                                           du_indexedSum_946 v8
+                                           du_indexedSum_978 v8
                                            (coe
                                               MAlonzo.Code.Class.DecEq.Instances.du_DecEq'45''215'_182
                                               (coe v1) (coe v2))
                                            v7
                                            (coe
-                                              MAlonzo.Code.Axiom.Set.Factor.du__'7584'_318
+                                              MAlonzo.Code.Axiom.Set.Factor.du__'7584'_328
                                               (coe
-                                                 MAlonzo.Code.Axiom.Set.du__'8746'__682 (coe v0)
+                                                 MAlonzo.Code.Axiom.Set.du__'8746'__708 (coe v0)
                                                  (coe v9) (coe v13))
                                               (coe
-                                                 MAlonzo.Code.Axiom.Set.Properties.du_'8746''45'preserves'45'finite_744
+                                                 MAlonzo.Code.Axiom.Set.Properties.du_'8746''45'preserves'45'finite_982
                                                  (coe v0) (coe v9) (coe v13) (coe v12) (coe v16))))
                                         (coe
                                            MAlonzo.Code.Class.Semigroup.Core.d__'9671'__16
                                            (MAlonzo.Code.Class.CommutativeMonoid.Core.d_semigroup_30
                                               (coe v8))
                                            (coe
-                                              du_indexedSum'7504'_1120 (coe v1) (coe v2) (coe v8)
+                                              du_indexedSum'7504'_1152 (coe v1) (coe v2) (coe v8)
                                               (coe v7) (coe v5))
                                            (coe
-                                              du_indexedSum'7504'_1120 (coe v1) (coe v2) (coe v8)
+                                              du_indexedSum'7504'_1152 (coe v1) (coe v2) (coe v8)
                                               (coe v7) (coe v6)))
                                         (coe
                                            MAlonzo.Code.Class.Semigroup.Core.d__'9671'__16
                                            (MAlonzo.Code.Class.CommutativeMonoid.Core.d_semigroup_30
                                               (coe v8))
                                            (coe
-                                              du_indexedSum'7504'_1120 (coe v1) (coe v2) (coe v8)
+                                              du_indexedSum'7504'_1152 (coe v1) (coe v2) (coe v8)
                                               (coe v7) (coe v5))
                                            (coe
-                                              du_indexedSum'7504'_1120 (coe v1) (coe v2) (coe v8)
+                                              du_indexedSum'7504'_1152 (coe v1) (coe v2) (coe v8)
                                               (coe v7) (coe v6)))
                                         (coe
                                            MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du__'8718'_494
@@ -1975,19 +1975,19 @@ du_indexedSum'7504''45''8746'_1206 v0 v1 v2 v3 v4 v5 v6 v7 v8
                                               (MAlonzo.Code.Class.CommutativeMonoid.Core.d_semigroup_30
                                                  (coe v8))
                                               (coe
-                                                 du_indexedSum'7504'_1120 (coe v1) (coe v2) (coe v8)
+                                                 du_indexedSum'7504'_1152 (coe v1) (coe v2) (coe v8)
                                                  (coe v7) (coe v5))
                                               (coe
-                                                 du_indexedSum'7504'_1120 (coe v1) (coe v2) (coe v8)
+                                                 du_indexedSum'7504'_1152 (coe v1) (coe v2) (coe v8)
                                                  (coe v7) (coe v6))))
                                         (coe
-                                           du_indexedSum'45''8746'_1060 (coe v8)
+                                           du_indexedSum'45''8746'_1092 (coe v8)
                                            (coe
                                               MAlonzo.Code.Class.DecEq.Instances.du_DecEq'45''215'_182
                                               (coe v1) (coe v2))
                                            (coe v7) (coe v12) (coe v16)))
                                      (coe
-                                        du_indexedSum'45'cong_1048 v8
+                                        du_indexedSum'45'cong_1080 v8
                                         (coe
                                            MAlonzo.Code.Class.DecEq.Instances.du_DecEq'45''215'_182
                                            (coe v1) (coe v2))
@@ -1995,32 +1995,32 @@ du_indexedSum'7504''45''8746'_1206 v0 v1 v2 v3 v4 v5 v6 v7 v8
                                         (coe
                                            MAlonzo.Code.Data.Product.Base.du_'45''44'__92
                                            (coe
-                                              MAlonzo.Code.Axiom.Set.Map.du__'8746''737'''__896
+                                              MAlonzo.Code.Axiom.Set.Map.du__'8746''737'''__990
                                               (coe v0) (coe v3) (coe v9) (coe v13))
                                            (coe
-                                              du_'8746''737''45'finite_1182 (coe v0) (coe v3)
+                                              du_'8746''737''45'finite_1216 (coe v0) (coe v3)
                                               (coe v4) (coe v9) (coe v13) (coe v12) (coe v16)))
                                         (coe
-                                           MAlonzo.Code.Axiom.Set.Factor.du__'7584'_318
+                                           MAlonzo.Code.Axiom.Set.Factor.du__'7584'_328
                                            (coe
-                                              MAlonzo.Code.Axiom.Set.du__'8746'__682 (coe v0)
+                                              MAlonzo.Code.Axiom.Set.du__'8746'__708 (coe v0)
                                               (coe v9) (coe v13))
                                            (coe
-                                              MAlonzo.Code.Axiom.Set.Properties.du_'8746''45'preserves'45'finite_744
+                                              MAlonzo.Code.Axiom.Set.Properties.du_'8746''45'preserves'45'finite_982
                                               (coe v0) (coe v9) (coe v13) (coe v12) (coe v16)))
                                         (coe
-                                           MAlonzo.Code.Axiom.Set.Map.du_disjoint'45''8746''737''45''8746'_916
+                                           MAlonzo.Code.Axiom.Set.Map.du_disjoint'45''8746''737''45''8746'_1108
                                            (coe v0) (coe v3)
-                                           (coe MAlonzo.Code.Axiom.Set.Map.du_toRel_628 (coe v5))
-                                           (coe MAlonzo.Code.Axiom.Set.Map.du_toRel_628 (coe v6))
+                                           (coe MAlonzo.Code.Axiom.Set.Map.du_toRel_644 (coe v5))
+                                           (coe MAlonzo.Code.Axiom.Set.Map.du_toRel_644 (coe v6))
                                            erased)))
                            _ -> MAlonzo.RTE.mazUnreachableError
                     _ -> MAlonzo.RTE.mazUnreachableError
              _ -> MAlonzo.RTE.mazUnreachableError
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Axiom.Set.Sum.IndexedSumUnionᵐ._._
-d___1228 ::
-  MAlonzo.Code.Axiom.Set.T_Theory_96 ->
+d___1262 ::
+  MAlonzo.Code.Axiom.Set.T_Theory_118 ->
   () ->
   () ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
@@ -2050,16 +2050,16 @@ d___1228 ::
    AgdaAny ->
    AgdaAny -> MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20) ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d___1228 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 ~v9 v10 ~v11 ~v12 ~v13
+d___1262 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 ~v9 v10 ~v11 ~v12 ~v13
          ~v14 ~v15 ~v16
-  = du___1228 v10
-du___1228 ::
+  = du___1262 v10
+du___1262 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-du___1228 v0 = coe v0
+du___1262 v0 = coe v0
 -- Axiom.Set.Sum.IndexedSumUnionᵐ._._
-d___1230 ::
-  MAlonzo.Code.Axiom.Set.T_Theory_96 ->
+d___1264 ::
+  MAlonzo.Code.Axiom.Set.T_Theory_118 ->
   () ->
   () ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
@@ -2089,16 +2089,16 @@ d___1230 ::
    AgdaAny ->
    AgdaAny -> MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20) ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d___1230 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 ~v9 ~v10 ~v11 ~v12 v13
+d___1264 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 ~v9 ~v10 ~v11 ~v12 v13
          ~v14 ~v15 ~v16
-  = du___1230 v13
-du___1230 ::
+  = du___1264 v13
+du___1264 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-du___1230 v0 = coe v0
+du___1264 v0 = coe v0
 -- Axiom.Set.Sum.IndexedSumUnionᵐ.indexedSumᵐ-partition
-d_indexedSum'7504''45'partition_1242 ::
-  MAlonzo.Code.Axiom.Set.T_Theory_96 ->
+d_indexedSum'7504''45'partition_1276 ::
+  MAlonzo.Code.Axiom.Set.T_Theory_118 ->
   () ->
   () ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
@@ -2114,12 +2114,12 @@ d_indexedSum'7504''45'partition_1242 ::
   (MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 -> AgdaAny) ->
   MAlonzo.Code.Class.CommutativeMonoid.Core.T_CommutativeMonoid_12 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 -> AgdaAny
-d_indexedSum'7504''45'partition_1242 v0 ~v1 ~v2 v3 v4 v5 v6 ~v7 v8
+d_indexedSum'7504''45'partition_1276 v0 ~v1 ~v2 v3 v4 v5 v6 ~v7 v8
                                      v9 v10 v11 v12 v13
-  = du_indexedSum'7504''45'partition_1242
+  = du_indexedSum'7504''45'partition_1276
       v0 v3 v4 v5 v6 v8 v9 v10 v11 v12 v13
-du_indexedSum'7504''45'partition_1242 ::
-  MAlonzo.Code.Axiom.Set.T_Theory_96 ->
+du_indexedSum'7504''45'partition_1276 ::
+  MAlonzo.Code.Axiom.Set.T_Theory_118 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   (AgdaAny -> AgdaAny) ->
@@ -2132,7 +2132,7 @@ du_indexedSum'7504''45'partition_1242 ::
   (MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 -> AgdaAny) ->
   MAlonzo.Code.Class.CommutativeMonoid.Core.T_CommutativeMonoid_12 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 -> AgdaAny
-du_indexedSum'7504''45'partition_1242 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9
+du_indexedSum'7504''45'partition_1276 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9
                                       v10
   = coe
       MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_begin__46
@@ -2140,16 +2140,16 @@ du_indexedSum'7504''45'partition_1242 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9
          coe
            MAlonzo.Code.Relation.Binary.Reasoning.Base.Single.du_start_36 v13)
       (coe
-         du_indexedSum'7504'_1120 (coe v1) (coe v2) (coe v9) (coe v8)
+         du_indexedSum'7504'_1152 (coe v1) (coe v2) (coe v9) (coe v8)
          (coe v5))
       (coe
          MAlonzo.Code.Class.Semigroup.Core.d__'9671'__16
          (MAlonzo.Code.Class.CommutativeMonoid.Core.d_semigroup_30 (coe v9))
          (coe
-            du_indexedSum'7504'_1120 (coe v1) (coe v2) (coe v9) (coe v8)
+            du_indexedSum'7504'_1152 (coe v1) (coe v2) (coe v9) (coe v8)
             (coe v6))
          (coe
-            du_indexedSum'7504'_1120 (coe v1) (coe v2) (coe v9) (coe v8)
+            du_indexedSum'7504'_1152 (coe v1) (coe v2) (coe v9) (coe v8)
             (coe v7)))
       (coe
          MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8776''45''10217'_370
@@ -2169,21 +2169,21 @@ du_indexedSum'7504''45'partition_1242 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9
                               MAlonzo.Code.Class.CommutativeMonoid.Core.d_isCommutativeMonoid_34
                               (coe v9))))))))
          (coe
-            du_indexedSum'7504'_1120 (coe v1) (coe v2) (coe v9) (coe v8)
+            du_indexedSum'7504'_1152 (coe v1) (coe v2) (coe v9) (coe v8)
             (coe v5))
          (coe
-            du_indexedSum'7504'_1120 (coe v1) (coe v2) (coe v9) (coe v8)
+            du_indexedSum'7504'_1152 (coe v1) (coe v2) (coe v9) (coe v8)
             (coe
-               du__'8746''737''7584'__1188 (coe v0) (coe v3) (coe v4) (coe v6)
+               du__'8746''737''7584'__1222 (coe v0) (coe v3) (coe v4) (coe v6)
                (coe v7)))
          (coe
             MAlonzo.Code.Class.Semigroup.Core.d__'9671'__16
             (MAlonzo.Code.Class.CommutativeMonoid.Core.d_semigroup_30 (coe v9))
             (coe
-               du_indexedSum'7504'_1120 (coe v1) (coe v2) (coe v9) (coe v8)
+               du_indexedSum'7504'_1152 (coe v1) (coe v2) (coe v9) (coe v8)
                (coe v6))
             (coe
-               du_indexedSum'7504'_1120 (coe v1) (coe v2) (coe v9) (coe v8)
+               du_indexedSum'7504'_1152 (coe v1) (coe v2) (coe v9) (coe v8)
                (coe v7)))
          (coe
             MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8776''45''10217'_370
@@ -2203,27 +2203,27 @@ du_indexedSum'7504''45'partition_1242 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9
                                  MAlonzo.Code.Class.CommutativeMonoid.Core.d_isCommutativeMonoid_34
                                  (coe v9))))))))
             (coe
-               du_indexedSum'7504'_1120 (coe v1) (coe v2) (coe v9) (coe v8)
+               du_indexedSum'7504'_1152 (coe v1) (coe v2) (coe v9) (coe v8)
                (coe
-                  du__'8746''737''7584'__1188 (coe v0) (coe v3) (coe v4) (coe v6)
+                  du__'8746''737''7584'__1222 (coe v0) (coe v3) (coe v4) (coe v6)
                   (coe v7)))
             (coe
                MAlonzo.Code.Class.Semigroup.Core.d__'9671'__16
                (MAlonzo.Code.Class.CommutativeMonoid.Core.d_semigroup_30 (coe v9))
                (coe
-                  du_indexedSum'7504'_1120 (coe v1) (coe v2) (coe v9) (coe v8)
+                  du_indexedSum'7504'_1152 (coe v1) (coe v2) (coe v9) (coe v8)
                   (coe v6))
                (coe
-                  du_indexedSum'7504'_1120 (coe v1) (coe v2) (coe v9) (coe v8)
+                  du_indexedSum'7504'_1152 (coe v1) (coe v2) (coe v9) (coe v8)
                   (coe v7)))
             (coe
                MAlonzo.Code.Class.Semigroup.Core.d__'9671'__16
                (MAlonzo.Code.Class.CommutativeMonoid.Core.d_semigroup_30 (coe v9))
                (coe
-                  du_indexedSum'7504'_1120 (coe v1) (coe v2) (coe v9) (coe v8)
+                  du_indexedSum'7504'_1152 (coe v1) (coe v2) (coe v9) (coe v8)
                   (coe v6))
                (coe
-                  du_indexedSum'7504'_1120 (coe v1) (coe v2) (coe v9) (coe v8)
+                  du_indexedSum'7504'_1152 (coe v1) (coe v2) (coe v9) (coe v8)
                   (coe v7)))
             (coe
                MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du__'8718'_494
@@ -2246,24 +2246,24 @@ du_indexedSum'7504''45'partition_1242 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9
                   MAlonzo.Code.Class.Semigroup.Core.d__'9671'__16
                   (MAlonzo.Code.Class.CommutativeMonoid.Core.d_semigroup_30 (coe v9))
                   (coe
-                     du_indexedSum'7504'_1120 (coe v1) (coe v2) (coe v9) (coe v8)
+                     du_indexedSum'7504'_1152 (coe v1) (coe v2) (coe v9) (coe v8)
                      (coe v6))
                   (coe
-                     du_indexedSum'7504'_1120 (coe v1) (coe v2) (coe v9) (coe v8)
+                     du_indexedSum'7504'_1152 (coe v1) (coe v2) (coe v9) (coe v8)
                      (coe v7))))
             (coe
-               du_indexedSum'7504''45''8746'_1206 (coe v0) (coe v1) (coe v2)
+               du_indexedSum'7504''45''8746'_1240 (coe v0) (coe v1) (coe v2)
                (coe v3) (coe v4) (coe v6) (coe v7) (coe v8) (coe v9)))
          (coe
-            du_indexedSum'7504''45'cong_1134 v1 v2 v9 v8 v5
+            du_indexedSum'7504''45'cong_1166 v1 v2 v9 v8 v5
             (coe
-               du__'8746''737''7584'__1188 (coe v0) (coe v3) (coe v4) (coe v6)
+               du__'8746''737''7584'__1222 (coe v0) (coe v3) (coe v4) (coe v6)
                (coe v7))
             (coe
-               du_helper_1272 (coe v0) (coe v3) (coe v6) (coe v7) (coe v10))))
+               du_helper_1306 (coe v0) (coe v3) (coe v6) (coe v7) (coe v10))))
 -- Axiom.Set.Sum.IndexedSumUnionᵐ._.disj-dom'
-d_disj'45'dom''_1270 ::
-  MAlonzo.Code.Axiom.Set.T_Theory_96 ->
+d_disj'45'dom''_1304 ::
+  MAlonzo.Code.Axiom.Set.T_Theory_118 ->
   () ->
   () ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
@@ -2281,10 +2281,10 @@ d_disj'45'dom''_1270 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   AgdaAny ->
   AgdaAny -> AgdaAny -> MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20
-d_disj'45'dom''_1270 = erased
+d_disj'45'dom''_1304 = erased
 -- Axiom.Set.Sum.IndexedSumUnionᵐ._.helper
-d_helper_1272 ::
-  MAlonzo.Code.Axiom.Set.T_Theory_96 ->
+d_helper_1306 ::
+  MAlonzo.Code.Axiom.Set.T_Theory_118 ->
   () ->
   () ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
@@ -2301,17 +2301,17 @@ d_helper_1272 ::
   MAlonzo.Code.Class.CommutativeMonoid.Core.T_CommutativeMonoid_12 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_helper_1272 v0 ~v1 ~v2 ~v3 ~v4 v5 ~v6 ~v7 ~v8 v9 v10 ~v11 ~v12
+d_helper_1306 v0 ~v1 ~v2 ~v3 ~v4 v5 ~v6 ~v7 ~v8 v9 v10 ~v11 ~v12
               v13
-  = du_helper_1272 v0 v5 v9 v10 v13
-du_helper_1272 ::
-  MAlonzo.Code.Axiom.Set.T_Theory_96 ->
+  = du_helper_1306 v0 v5 v9 v10 v13
+du_helper_1306 ::
+  MAlonzo.Code.Axiom.Set.T_Theory_118 ->
   (AgdaAny -> AgdaAny) ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-du_helper_1272 v0 v1 v2 v3 v4
+du_helper_1306 v0 v1 v2 v3 v4
   = coe
       MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
       (coe
@@ -2320,14 +2320,14 @@ du_helper_1272 v0 v1 v2 v3 v4
               MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
               (let v7
                      = coe
-                         MAlonzo.Code.Axiom.Set.Map.du_disjoint'45''8746''737''45''8746'_916
+                         MAlonzo.Code.Axiom.Set.Map.du_disjoint'45''8746''737''45''8746'_1108
                          (coe v0) (coe v1)
                          (coe
-                            MAlonzo.Code.Axiom.Set.Map.du__'738'_554
-                            (coe MAlonzo.Code.Axiom.Set.Map.du_toMap_622 (coe v2)))
+                            MAlonzo.Code.Axiom.Set.Map.du__'738'_570
+                            (coe MAlonzo.Code.Axiom.Set.Map.du_toMap_638 (coe v2)))
                          (coe
-                            MAlonzo.Code.Axiom.Set.Map.du__'738'_554
-                            (coe MAlonzo.Code.Axiom.Set.Map.du_toMap_622 (coe v3)))
+                            MAlonzo.Code.Axiom.Set.Map.du__'738'_570
+                            (coe MAlonzo.Code.Axiom.Set.Map.du_toMap_638 (coe v3)))
                          erased in
                coe
                  (case coe v7 of
@@ -2348,14 +2348,14 @@ du_helper_1272 v0 v1 v2 v3 v4
                  MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
                  (let v7
                         = coe
-                            MAlonzo.Code.Axiom.Set.Map.du_disjoint'45''8746''737''45''8746'_916
+                            MAlonzo.Code.Axiom.Set.Map.du_disjoint'45''8746''737''45''8746'_1108
                             (coe v0) (coe v1)
                             (coe
-                               MAlonzo.Code.Axiom.Set.Map.du__'738'_554
-                               (coe MAlonzo.Code.Axiom.Set.Map.du_toMap_622 (coe v2)))
+                               MAlonzo.Code.Axiom.Set.Map.du__'738'_570
+                               (coe MAlonzo.Code.Axiom.Set.Map.du_toMap_638 (coe v2)))
                             (coe
-                               MAlonzo.Code.Axiom.Set.Map.du__'738'_554
-                               (coe MAlonzo.Code.Axiom.Set.Map.du_toMap_622 (coe v3)))
+                               MAlonzo.Code.Axiom.Set.Map.du__'738'_570
+                               (coe MAlonzo.Code.Axiom.Set.Map.du_toMap_638 (coe v3)))
                             erased in
                   coe
                     (case coe v7 of
