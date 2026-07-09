@@ -60,8 +60,9 @@
 
 .agda-tooltip.hidden {
   opacity: 0;
-  /* Tooltip is purely informational; hide by opacity. */
-  /* (JS is already preventing pointer events when hidden.) */
+  /* Tooltip is purely informational; hide by opacity, but also remove it
+     from hit-testing and the accessibility tree while hidden. */
+  visibility: hidden;
 }
 
 /* === Inner layout ======================================================== */
@@ -121,11 +122,16 @@
   overflow-y: hidden;
 }
 
-/* When no snippet could be extracted */
+/* When no snippet could be extracted (or is still loading) */
 .agda-tip-empty {
   margin: .12rem 0 0 0;
   font-size: calc(var(--agda-font-base) - 0.04rem);
   opacity: .85;
+}
+
+.agda-tip-loading {
+  font-style: italic;
+  opacity: .6;
 }
 
 /* === Legacy / unused bits (kept inert) ================================== */
