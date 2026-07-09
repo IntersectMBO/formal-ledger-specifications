@@ -12,6 +12,7 @@ open import Ledger.Core.Foreign.Address
 open import Ledger.Dijkstra.Foreign.HSStructures
 open import Ledger.Dijkstra.Foreign.Gov.Core
 open import Ledger.Dijkstra.Foreign.PParams
+open import Ledger.Dijkstra.Foreign.Cert
 open import Ledger.Dijkstra.Specification.Entities DummyGovStructure
 open import Ledger.Dijkstra.Specification.Entities.Properties.Computational DummyGovStructure
 
@@ -22,15 +23,15 @@ record EntitiesEnv' : Type where
     epoch           : Epoch
     pp              : PParams
     votes           : List GovVote'
-    withdrawals     : RewardAddress ⇀ Coin
     coldCredentials : ℙ Credential
+    withdrawals     : RewardAddress ⇀ Coin
     directDeposits  : DirectDeposits
 
 instance
   HsTy-EntitiesEnv' = autoHsType EntitiesEnv'
     ⊣ withConstructor "MkEntitiesEnv"
     • withName "EntitiesEnv"
-    • fieldPrefix "ce"
+    • fieldPrefix "ee"
   Conv-EntitiesEnv' = autoConvert EntitiesEnv'
 
   mkEntitiesEnv' : Convertible EntitiesEnv EntitiesEnv'
@@ -40,3 +41,8 @@ instance
 
   HsTy-EntitiesEnv = mkHsType EntitiesEnv (HsType EntitiesEnv')
   Conv-EntitiesEnv = mkEntitiesEnv' ⨾ Conv-EntitiesEnv'
+
+entities-step : HsType (EntitiesEnv → CertState → List DCert → ComputationResult String CertState)
+entities-step = to (compute Computational-ENTITIES)
+
+{-# COMPILE GHC entities-step as entitiesStep #-}

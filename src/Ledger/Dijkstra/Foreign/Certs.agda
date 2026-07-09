@@ -56,7 +56,6 @@ instance
 
   HsTy-CertEnv = autoHsType CertEnv
     ⊣ withConstructor "MkCertEnv"
-    • withName "CertEnv"
     • fieldPrefix "ce"
   Conv-CertEnv = autoConvert CertEnv
 

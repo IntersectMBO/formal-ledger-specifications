@@ -81,7 +81,7 @@ IsPoolRegistered ps kh = kh ∈ dom ps
 
 record CertEnv : Type where
   field
-    e               : Epoch
+    epoch           : Epoch
     pp              : PParams
     coldCredentials : ℙ Credential
 
@@ -125,8 +125,8 @@ PoolEnv = PParams
 
 record GovCertEnv : Type where
   field
-    e  : Epoch
-    pp : PParams
+    epoch           : Epoch
+    pp              : PParams
     coldCredentials : ℙ Credential
 ```
 
@@ -259,10 +259,10 @@ instance
   HasStakeDelegs-CertState .StakeDelegsOf = StakeDelegsOf ∘ DStateOf
 
   HasEpoch-GovCertEnv : HasEpoch GovCertEnv
-  HasEpoch-GovCertEnv .EpochOf = GovCertEnv.e
+  HasEpoch-GovCertEnv .EpochOf = GovCertEnv.epoch
 
   HasEpoch-CertEnv : HasEpoch CertEnv
-  HasEpoch-CertEnv .EpochOf = CertEnv.e
+  HasEpoch-CertEnv .EpochOf = CertEnv.epoch
 
   unquoteDecl HasCast-CertEnv HasCast-DState HasCast-PState HasCast-GState HasCast-CertState HasCast-DelegEnv HasCast-GovCertEnv = derive-HasCast
     (   (quote CertEnv , HasCast-CertEnv)
@@ -441,7 +441,7 @@ data _⊢_⇀⦇_,GOVCERT⦈_ : GovCertEnv → GState → DCert → GState → T
     ∙ c ∈ dom dReps
     ∙ (c , d) ∈ deposits
       ────────────────────────────────
-      ⟦ e , pp  , cc ⟧ ⊢ ⟦ dReps , ccKeys , deposits ⟧ ⇀⦇ deregdrep c d ,GOVCERT⦈ ⟦ dReps ∣ ❴ c ❵ ᶜ , ccKeys , deposits ∣ ❴ c ❵ ᶜ ⟧
+      ⟦ e , pp , cc ⟧ ⊢ ⟦ dReps , ccKeys , deposits ⟧ ⇀⦇ deregdrep c d ,GOVCERT⦈ ⟦ dReps ∣ ❴ c ❵ ᶜ , ccKeys , deposits ∣ ❴ c ❵ ᶜ ⟧
 
   GOVCERT-ccreghot :
     ∙ (c , nothing) ∉ ccKeys

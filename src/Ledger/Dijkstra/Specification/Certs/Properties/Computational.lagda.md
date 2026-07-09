@@ -82,7 +82,7 @@ instance
       (yes p) → success (-, GOVCERT-deregdrep p)
       (no ¬p)  → failure (genErrors ¬p)
   Computational-GOVCERT .computeProof ce gs (ccreghot c _) =
-    case ¿ ((c , nothing) ∉ CCHotKeysOf gs ˢ) × c ∈ (ColdCredentialsOf ce) ¿ of λ where
+    case ¿ ((c , nothing) ∉ CCHotKeysOf gs ˢ) × c ∈ ColdCredentialsOf ce ¿ of λ where
       (yes p) → success (-, GOVCERT-ccreghot p)
       (no ¬p) → failure (genErrors ¬p)
   Computational-GOVCERT .computeProof _ _ _ = failure "Unexpected certificate in GOVCERT"
@@ -94,7 +94,7 @@ instance
   Computational-GOVCERT .completeness _ gs (deregdrep c d) _ (GOVCERT-deregdrep p)
     rewrite dec-yes ¿ c ∈ dom (DRepsOf gs) × (c , d) ∈ (DepositsOf gs) ¿ p .proj₂ = refl
   Computational-GOVCERT .completeness ce gs (ccreghot c _) _ (GOVCERT-ccreghot p)
-    rewrite dec-yes ¿ (c , nothing) ∉ CCHotKeysOf gs ˢ × c ∈ (ColdCredentialsOf ce) ¿ p .proj₂ = refl
+    rewrite dec-yes ¿ (c , nothing) ∉ CCHotKeysOf gs ˢ × c ∈ ColdCredentialsOf ce ¿ p .proj₂ = refl
 
   Computational-CERT : Computational _⊢_⇀⦇_,CERT⦈_ String
   Computational-CERT .computeProof ce cs dCert
