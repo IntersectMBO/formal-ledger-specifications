@@ -315,22 +315,22 @@ module _ (pp : PParams) where
   newCertDeposits : ℙ KeyHash → List DCert → Coin
   newCertDeposits pools = proj₁ ∘ foldl addNewCertDeposit (0 , pools)
     where
-      addNewCertDeposit : DCert → Coin × ℙ KeyHash → Coin × ℙ KeyHash
-      addNewCertDeposit (delegate _ _ _ d) (dep , pools) = dep + d , pools
-      addNewCertDeposit (regpool kh _)     (dep , pools) =
+      addNewCertDeposit : Coin × ℙ KeyHash → DCert → Coin × ℙ KeyHash
+      addNewCertDeposit (dep , pools) (delegate _ _ _ d) = dep + d , pools
+      addNewCertDeposit (dep , pools) (regpool kh _)     =
         if kh ∈ pools
           then (dep , pools)
           else (dep + pp .poolDeposit , pools ∪ ❴ kh ❵)
-      addNewCertDeposit (regdrep _ d _)    (dep , pools) = dep + d , pools
-      addNewCertDeposit _                  acc = acc
+      addNewCertDeposit (dep , pools) (regdrep _ d _) = dep + d , pools
+      addNewCertDeposit acc           _               = acc
 
   refundCertDeposits : List DCert → Coin
   refundCertDeposits = foldl addRefundCertDeposit 0
     where
-      addRefundCertDeposit : DCert → Coin → Coin
-      addRefundCertDeposit (dereg _ d)     acc = acc + d
-      addRefundCertDeposit (deregdrep _ d) acc = acc + d
-      addRefundCertDeposit _               acc = acc
+      addRefundCertDeposit : Coin → DCert → Coin
+      addRefundCertDeposit acc (dereg _ d)     = acc + d
+      addRefundCertDeposit acc (deregdrep _ d) = acc + d
+      addRefundCertDeposit acc _               = acc
 ```
 
 <!--

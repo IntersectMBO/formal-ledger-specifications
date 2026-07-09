@@ -63,17 +63,17 @@ instance
 
   Computational-POOL : Computational _⊢_⇀⦇_,POOL⦈_ String
   Computational-POOL .computeProof _ stᵖ (regpool c _)
-    with ¿ Is-just (lookupᵐ? (PoolsOf stᵖ) c) ¿
+    with ¿ IsPoolRegistered (PoolsOf stᵖ) c ¿
   ... | yes p = success (-, (POOL-rereg p))
   ... | no ¬p = success (-, (POOL-reg ¬p))
   Computational-POOL .computeProof _ stᵖ (retirepool c e) = success (-, POOL-retirepool)
   Computational-POOL .computeProof _ stᵖ _ = failure "Unexpected certificate in POOL"
   Computational-POOL .completeness _ stᵖ (regpool c _) _ (POOL-reg p)
-    with ¿ Is-just (lookupᵐ? (PoolsOf stᵖ) c) ¿
+    with ¿ IsPoolRegistered (PoolsOf stᵖ) c ¿
   ... | yes p' = ⊥-elim (p p')
   ... | no _ = refl
   Computational-POOL .completeness _ stᵖ (regpool c _) _ (POOL-rereg p)
-    with ¿ Is-just (lookupᵐ? (PoolsOf stᵖ) c) ¿
+    with ¿ IsPoolRegistered (PoolsOf stᵖ) c ¿
   ... | yes _ = refl
   ... | no ¬p = ⊥-elim (¬p p)
   Computational-POOL .completeness _ _ (retirepool _ _) _ POOL-retirepool = refl
