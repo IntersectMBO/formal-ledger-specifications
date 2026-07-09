@@ -63,6 +63,7 @@ extra_css:
   # KaTeX CSS for math rendering
   - https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css
   - css/custom.css
+  - css/agda-hover.css
   - Agda.css
 extra_javascript:
   # KaTeX JavaScript
