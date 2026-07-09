@@ -79,8 +79,8 @@ cwitness (regdrep c _ _)     = just c
 cwitness (deregdrep c _)     = just c
 cwitness (ccreghot c _)      = just c
 
-IsPoolRegistered : Pools -> KeyHash -> Type
-IsPoolRegistered ps kh = Is-just (lookupᵐ? ps kh)
+IsPoolRegistered : Pools → KeyHash → Type
+IsPoolRegistered ps kh = kh ∈ dom ps
 
 -- Certification Types
 record CertEnv : Type where
@@ -307,10 +307,7 @@ Functions in this section compute the effect that a `DCert`{.AgdaRecord} list ha
 the three deposit fields (`DState.deposits`{.AgdaField}, `PState.deposits`{.AgdaField},
 `GState.deposits`{.AgdaField}) carried by a `CertState`{.AgdaRecord}.
 
-In Dijkstra, both registration and deregistration certificates carry
-the explicit deposit. Hence, it is sufficient to use the list of
-certificates in a transaction to compute the amount from new and
-refunded deposits.
+In Dijkstra, delegation and `DRep` (de)registration certificates carry their deposit explicitly, so new and refunded deposits can be computed from the certificate list alone.  The exception is pool registration: `regpool`{.AgdaInductiveConstructor} carries no deposit, and whether it charges `poolDeposit`{.AgdaField} depends on whether the pool is already registered. `newCertDeposits` therefore additionally takes the set of registered pool keys (`pools : ℙ KeyHash`), and threads it through the certificate list, charging each newly registered pool exactly once.
 
 ```agda
 module _ (pp : PParams) where

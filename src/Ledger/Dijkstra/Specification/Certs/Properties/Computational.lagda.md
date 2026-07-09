@@ -15,14 +15,11 @@ open import Ledger.Prelude
 open import Ledger.Dijkstra.Specification.Gov.Actions govStructure hiding (yes; no)
 open import Ledger.Dijkstra.Specification.Certs govStructure
 
-open import stdlib.Data.Maybe
 open import stdlib-meta.Tactic.GenError using (genErrors)
 import Data.Maybe.Relation.Unary.Any as M
-import Data.Maybe.Relation.Unary.All as M
 
 open GovStructure govStructure
 open RewardAddress
-open Inverse
 
 open Computational ⦃...⦄
 
@@ -32,7 +29,6 @@ private
     ⦃ _ : DecEq K ⦄ →
     (m : K ⇀ V) (k : K) →
     Dec (Any (λ (k' , _) → k ≡ k') (m ˢ))
-  lookupᵐ?? m k = any? (λ { _ → ¿ _ ¿ }) (m ˢ)
 
 instance
   Computational-DELEG : Computational _⊢_⇀⦇_,DELEG⦈_ String
