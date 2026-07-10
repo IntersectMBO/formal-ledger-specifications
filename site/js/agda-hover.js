@@ -31,15 +31,12 @@
   let hideTimer = null;
   let showTimer = null;
   let activeAnchor = null;         // the <a> the pointer is currently over
-  let describedAnchor = null;      // the <a> currently carrying aria-describedby
 
   function createTooltip() {
     if (tooltipEl) return tooltipEl;
     tooltipEl = document.createElement('div');
     tooltipEl.className = 'agda-tooltip hidden';
-    tooltipEl.id = 'agda-tooltip';
     tooltipEl.setAttribute('role', 'tooltip');
-    tooltipEl.setAttribute('aria-hidden', 'true');
     tooltipEl.innerHTML = '<div class="agda-tooltip-inner"></div>';
     document.body.appendChild(tooltipEl);
     // Keep tooltip from flickering if user hovers the tooltip itself
@@ -286,28 +283,16 @@
     const el = createTooltip();
     el.querySelector('.agda-tooltip-inner').innerHTML = content;
     el.classList.remove('hidden');
-    el.setAttribute('aria-hidden', 'false');
-    // Associate the tooltip with the hovered/focused token so screen
-    // readers announce its content for keyboard users.
-    if (describedAnchor && describedAnchor !== a) {
-      describedAnchor.removeAttribute('aria-describedby');
-    }
-    a.setAttribute('aria-describedby', 'agda-tooltip');
-    describedAnchor = a;
     positionTooltip(evt, a);
   }
 
   function hideTooltip() {
     if (!tooltipEl) return;
     tooltipEl.classList.add('hidden');
-    tooltipEl.setAttribute('aria-hidden', 'true');
-    if (describedAnchor) {
-      describedAnchor.removeAttribute('aria-describedby');
-      describedAnchor = null;
-    }
   }
 
-  function handleEnter(evt, a) {
+  function handleEnter(evt) {
+    const a = evt.currentTarget;
     activeAnchor = a;
     clearTimeout(hideTimer);
     clearTimeout(showTimer);
@@ -331,64 +316,33 @@
     }, HOVER_DELAY_MS);
   }
 
-  function handleLeave(a) {
-    if (activeAnchor === a) activeAnchor = null;
+  function handleLeave(evt) {
+    if (activeAnchor === evt.currentTarget) activeAnchor = null;
     clearTimeout(showTimer);
     hideTimer = setTimeout(hideTooltip, 60);
   }
 
-  function handleMove(evt, a) {
+  function handleMove(evt) {
     if (!tooltipEl || tooltipEl.classList.contains('hidden')) return;
-    positionTooltip(evt, a);
-  }
-
-  // Resolve an event to a hoverable Agda token anchor (or null).
-  function anchorFromEvent(evt) {
-    const t = evt.target;
-    const a = t && t.closest ? t.closest(HOVER_SELECTOR) : null;
-    if (!a) return null;
-    // Skip in-page and non-document links
-    const href = a.getAttribute('href');
-    if (!href || href.startsWith('#') || href.startsWith('mailto:')) return null;
-    return a;
+    positionTooltip(evt, evt.currentTarget);
   }
 
   function wireUp() {
     // Hover is meaningless on touch-only devices; don't intercept taps.
     if (window.matchMedia && window.matchMedia('(hover: none)').matches) return;
 
-    // Agda pages contain thousands of token anchors, so instead of wiring
-    // listeners on each one, delegate a single set of listeners on the
-    // document. (mouseenter/mouseleave don't bubble; mouseover/mouseout do,
-    // so those are used with relatedTarget checks.)
-    document.addEventListener('mouseover', evt => {
-      const a = anchorFromEvent(evt);
-      if (!a || a === activeAnchor) return;
-      handleEnter(evt, a);
-    }, { passive: true });
+    const anchors = document.querySelectorAll(HOVER_SELECTOR);
+    anchors.forEach(a => {
+      // Skip in-page and non-document links
+      const href = a.getAttribute('href');
+      if (!href || href.startsWith('#') || href.startsWith('mailto:')) return;
 
-    document.addEventListener('mouseout', evt => {
-      const a = anchorFromEvent(evt);
-      if (!a) return;
-      if (evt.relatedTarget && a.contains(evt.relatedTarget)) return; // still inside
-      handleLeave(a);
-    }, { passive: true });
-
-    document.addEventListener('mousemove', evt => {
-      if (!activeAnchor) return;
-      const a = anchorFromEvent(evt);
-      if (a === activeAnchor) handleMove(evt, a);
-    }, { passive: true });
-
-    // Keyboard focus gets the same treatment (positioned by the element box)
-    document.addEventListener('focusin', evt => {
-      const a = anchorFromEvent(evt);
-      if (a) handleEnter(evt, a);
-    });
-
-    document.addEventListener('focusout', evt => {
-      const a = anchorFromEvent(evt);
-      if (a) handleLeave(a);
+      a.addEventListener('mouseenter', handleEnter, { passive: true });
+      a.addEventListener('mouseleave', handleLeave, { passive: true });
+      a.addEventListener('mousemove', handleMove,   { passive: true });
+      // Keyboard focus gets the same treatment (positioned by the element box)
+      a.addEventListener('focus', handleEnter, { passive: true });
+      a.addEventListener('blur', handleLeave,  { passive: true });
     });
   }
 
