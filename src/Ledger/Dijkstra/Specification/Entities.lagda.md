@@ -9,16 +9,14 @@ source_path: src/Ledger/Dijkstra/Specification/Entities.lagda.md
 ```agda
 {-# OPTIONS --safe #-}
 
-open import Ledger.Dijkstra.Specification.Gov.Base using (GovStructure)
+open import Ledger.Dijkstra.Specification.Transaction using (TransactionStructure)
 
 module Ledger.Dijkstra.Specification.Entities
-  (gs : GovStructure) (open GovStructure gs) where
+  (txs : TransactionStructure) (open TransactionStructure txs) where
 
 open import Ledger.Prelude renaming (filterˢ to filter)
 open import Ledger.Prelude.Numeric.UnitInterval
-open import Ledger.Dijkstra.Specification.Gov.Actions gs hiding (yes; no)
-open import Ledger.Dijkstra.Specification.Account gs
-open import Ledger.Dijkstra.Specification.Certs gs
+open import Ledger.Dijkstra.Specification.Certs govStructure
 open RewardAddress
 open PParams
 ```
@@ -29,19 +27,25 @@ open PParams
 ```agda
 record EntitiesEnv : Type where
   field
-    epoch           : Epoch
-    pp              : PParams
-    votes           : List GovVote
-    coldCredentials : ℙ Credential
-    withdrawals     : Withdrawals
-    directDeposits  : DirectDeposits
+    epoch                   : Epoch
+    pp                      : PParams
+    coldCredentials         : ℙ Credential
+    legacyMode              : Bool
+    rewards₀                : Rewards
 
+record SubEntitiesEnv : Type where
+  field
+    epoch                   : Epoch
+    pp                      : PParams
+    coldCredentials         : ℙ Credential
+    rewards₀                : Rewards
 ```
 
 <!--
 ```agda
-unquoteDecl HasCast-EntitiesEnv = derive-HasCast
-  [ (quote EntitiesEnv , HasCast-EntitiesEnv) ]
+unquoteDecl HasCast-EntitiesEnv HasCast-SubEntitiesEnv = derive-HasCast
+  ( (quote SubEntitiesEnv , HasCast-SubEntitiesEnv) ∷
+  [ (quote EntitiesEnv , HasCast-EntitiesEnv) ])
 
 instance
   EntitiesEnv-HasEpoch : HasEpoch EntitiesEnv
@@ -87,92 +91,119 @@ applyWithdrawals = applyToRewards _∸_
 
 # `ENTITIES`{.AgdaDatatype} Transition System
 
-In Dijkstra, the `ENTITIES`{.AgdaDatatype} rule replaces pre-Dijkstra
-`CERTS`{.AgdaDatatype} rule. This rule processes withdrawals,
-certificates and direct deposits.
+In Dijkstra, the new `ENTITIES`{.AgdaDatatype} rule subsumes the
+pre-Dijkstra `CERTS`{.AgdaDatatype} rule. This rule in addition to
+processing certificates via `CERTS`{.AgdaDatatype}, processes
+withdrawals, direct deposits, and account balance intervals.
 
-## Withdrawal Processing
+CIP-159 introduces two new fields to transactions: `directDeposits`
+and `balanceIntervals`. Direct deposits represent value that flows
+from the transaction into account addresses. Balance intervals enable
+transactions to assert predicates about account balances.
+
+## Withdrawals 
 
 The `ENTITIES`{.AgdaDatatype} rule applies withdrawals, via
 `applyWithdrawals`{.AgdaFunction} before certificate evaluation.  In
-the Dijkstra era, CIP-159 extends the withdrawal semantics from an
-"all-or-nothing" model (where the withdrawn amount must equal the full
-account balance) to a "partial withdrawal" model (where any amount up
-to the full balance may be withdrawn).
+the Dijkstra era, withdrawals can be partial, unless in legacy mode.
 
-Premise (1) ensures that each withdrawal targets a registered
-account and that the withdrawal amount does not exceed the account's
-current balance.
+## Direct Deposits
 
-The phantom-asset prohibition of CIP-159 — that withdrawals in one
-sub-transaction may not draw from deposits made by an earlier
-sub-transaction in the same batch — is enforced separately in the
-`Utxo`{.AgdaModule} (see [Phantom Asset
-Prevention](Ledger.Dijkstra.Specification.Utxo.md#subsubsec:phantom-asset-prevention)).
-
-## Direct Deposit Application (CIP-159)
-
-The `ENTITIES`{.AgdaDatatype} rule applies CIP-159 direct deposits to the
-`CertState`{.AgdaRecord} after all individual `CERT`{.AgdaDatatype} steps
-for the transaction have run, alongside its existing `voteDelegs`{.AgdaField}
-filtering. Specifically:
-
-+  `voteDelegs`{.AgdaField} is restricted to credentials that delegate to a
-   currently-registered `DRep`{.AgdaInductiveConstructor} (or to the abstain /
-   no-confidence pseudo-DReps).
-+  `rewards`{.AgdaField} is augmented by `directDeposits`{.AgdaField} via
-   `∪⁺`{.AgdaFunction} (union with addition) — equivalently,
-   `applyDirectDeposits directDeposits` is applied to the threaded
-   `DState`{.AgdaRecord}.
-
-Premise (2) ensures that `applyDirectDeposits`{.AgdaFunction} does not
-silently re-introduce a credential into `rewards`{.AgdaField} that was
-deregistered earlier in the same transaction's `CERT`{.AgdaDatatype}
-steps (and is therefore no longer present in `voteDelegs`{.AgdaField},
-`stakeDelegs`{.AgdaField}, or `deposits`{.AgdaField}), which would
-produce an inconsistent `DState`{.AgdaRecord}.
+The `ENTITIES`{.AgdaDatatype} rule applies direct deposits to the
+`CertState`{.AgdaRecord} after  `CERTS`{.AgdaDatatype}.
 
 <!--
 ```agda
 open GovVote using (voter)
 
 private variable
-  rewards₀ rewards₁ : Rewards
+  txTop : TopLevelTx
+  txSub : SubLevelTx
+  rewards rewards' : Rewards
   dReps : DReps
-  stakeDelegs stakeDelegs₀ stakeDelegs₁ : StakeDelegs
+  stakeDelegs stakeDelegs' : StakeDelegs
   ccHotKeys : CCHotKeys
-  voteDelegs₀ voteDelegs₁ : VoteDelegs
-  wdrls : Withdrawals
-  dd : DirectDeposits
-  depositsᵍ depositsᵈ₀ depositsᵈ₁ : Credential ⇀ Coin
+  voteDelegs voteDelegs' : VoteDelegs
+  rewards₀ : Rewards
+  depositsᵍ depositsᵈ depositsᵈ' : Credential ⇀ Coin
+  legacyMode : Bool
 
-  dCerts : List DCert
   e : Epoch
-  vs : List GovVote
   pp : PParams
   cc : ℙ Credential
 
-  gState₁ : GState
-  pState₀ pState₁ : PState
+  gState' : GState
+  pState pState' : PState
 ```
 -->
 
 ```agda
-data _⊢_⇀⦇_,ENTITIES⦈_ : EntitiesEnv → CertState → List DCert → CertState → Type where
+data _⊢_⇀⦇_,SUBENTITIES⦈_ : SubEntitiesEnv → CertState → SubLevelTx → CertState → Type where
+
+  SUBENTITIES :
+    let refresh         = mapPartial (isGovVoterDRep ∘ voter) (fromList (ListOfGovVotesOf txSub))
+        refreshedDReps  = mapValueRestricted (const (e + pp .drepActivity)) dReps refresh
+        activeVDelegs   = mapˢ vDelegCredential (dom (DRepsOf gState'))
+                               ∪ fromList (vDelegNoConfidence ∷ vDelegAbstain ∷ [])
+
+        withdrawals               = WithdrawalsOf txSub
+        withdrawalsCredentials    = mapˢ stake (dom withdrawals)
+        accountBalanceIntervals   = BalanceIntervalsOf txSub
+        directDeposits            = DirectDepositsOf txSub
+        directDepositsCredentials = mapˢ stake (dom directDeposits)
+    in
+    ∙ ∀[ a ∈ dom withdrawals ] NetworkIdOf a ≡ NetworkId
+    ∙ withdrawalsCredentials ⊆ dom rewards₀
+    ∙ withdrawalsCredentials ⊆ dom rewards
+
+    ∙ dom accountBalanceIntervals ⊆ dom rewards
+    ∙ ∀[ (c , interval) ∈ accountBalanceIntervals ˢ ]
+        (InBalanceInterval (maybe id 0 (lookupᵐ? rewards c)) interval)
+
+    ∙ ⟦ e , pp , cc ⟧ ⊢ ⟦ ⟦ voteDelegs , stakeDelegs , applyWithdrawals withdrawals rewards , depositsᵈ ⟧ , pState , ⟦ refreshedDReps , ccHotKeys , depositsᵍ ⟧ ⟧ ⇀⦇ DCertsOf txSub  ,CERTS⦈ ⟦ ⟦ voteDelegs' , stakeDelegs' , rewards' , depositsᵈ' ⟧ , pState' , gState' ⟧
+
+    ∙ ∀[ a ∈ dom directDeposits ] NetworkIdOf a ≡ NetworkId
+    ∙ directDepositsCredentials ⊆ dom rewards'
+      ────────────────────────────────
+      ⟦ e , pp , cc , rewards₀ ⟧ ⊢ ⟦ ⟦ voteDelegs , stakeDelegs , rewards , depositsᵈ ⟧ , pState , ⟦ dReps , ccHotKeys , depositsᵍ ⟧ ⟧ ⇀⦇ txSub ,SUBENTITIES⦈ ⟦ ⟦ voteDelegs' ∣^ activeVDelegs , stakeDelegs' , applyDirectDeposits directDeposits rewards' , depositsᵈ' ⟧ , pState' , gState' ⟧
+```
+
+```agda
+data _⊢_⇀⦇_,ENTITIES⦈_ : EntitiesEnv → CertState → TopLevelTx → CertState → Type where
 
   ENTITIES :
-    let refresh         = mapPartial (isGovVoterDRep ∘ voter) (fromList vs)
+    let refresh         = mapPartial (isGovVoterDRep ∘ voter) (fromList (ListOfGovVotesOf txTop))
         refreshedDReps  = mapValueRestricted (const (e + pp .drepActivity)) dReps refresh
-        wdrlCreds       = mapˢ stake (dom wdrls)
-        ddCreds         = mapˢ stake (dom dd)
-        activeVDelegs   = mapˢ vDelegCredential (dom (DRepsOf gState₁))
+        activeVDelegs   = mapˢ vDelegCredential (dom (DRepsOf gState'))
                                ∪ fromList (vDelegNoConfidence ∷ vDelegAbstain ∷ [])
+
+        withdrawalsSubTxs          = foldl (λ acc txSub → acc ∪⁺ WithdrawalsOf txSub) ∅ (SubTransactionsOf txTop)
+        withdrawals                = WithdrawalsOf txTop
+        withdrawalsCredentials     = mapˢ stake (dom withdrawals)
+        accountBalanceIntervals    = BalanceIntervalsOf txTop
+        directDeposits             = DirectDepositsOf txTop
+        directDepositsCredentials  = mapˢ stake (dom directDeposits)
     in
-    ∙ filter isKeyHash wdrlCreds ⊆ dom voteDelegs₀
-    ∙ wdrlCreds ⊆ dom rewards₀
-    ∙ ∀[ (addr , amt) ∈ wdrls ˢ ] amt ≤ maybe id 0 (lookupᵐ? rewards₀ (stake addr)) -- (1)
-    ∙ ⟦ e , pp , cc ⟧ ⊢ ⟦ ⟦ voteDelegs₀ , stakeDelegs₀ , applyWithdrawals wdrls rewards₀ , depositsᵈ₀ ⟧ , pState₀ , ⟦ refreshedDReps , ccHotKeys , depositsᵍ ⟧ ⟧ ⇀⦇ dCerts  ,CERTS⦈ ⟦ ⟦ voteDelegs₁ , stakeDelegs₁ , rewards₁ , depositsᵈ₁ ⟧ , pState₁ , gState₁ ⟧
-    ∙ ddCreds ⊆ dom rewards₁ -- (2)
+
+    ∙ ∀[ a ∈ dom withdrawals ] NetworkIdOf a ≡ NetworkId
+    ∙ withdrawalsCredentials ⊆ dom rewards
+
+    ∙ (legacyMode ≡ true →
+        ∙ ∀[ (addr , amt) ∈ withdrawals ˢ ] amt ≡ maybe id 0 (lookupᵐ? rewards (stake addr))
+        ∙ ∀[ (addr , amt) ∈ withdrawalsSubTxs ˢ ] amt ≤ maybe id 0 (lookupᵐ? rewards₀ (stake addr)))
+
+    ∙ (legacyMode ≡ false →
+        ∙ withdrawalsCredentials ⊆ dom rewards₀
+        ∙ ∀[ (addr , amt) ∈ (withdrawalsSubTxs ∪⁺ withdrawals) ˢ ] amt ≤ maybe id 0 (lookupᵐ? rewards₀ (stake addr)))
+
+    ∙ dom accountBalanceIntervals ⊆ dom rewards
+    ∙ ∀[ (c , interval) ∈ accountBalanceIntervals ˢ ]
+        (InBalanceInterval (maybe id 0 (lookupᵐ? rewards c)) interval)
+
+    ∙ ⟦ e , pp , cc ⟧ ⊢ ⟦ ⟦ voteDelegs , stakeDelegs , applyWithdrawals withdrawals rewards , depositsᵈ ⟧ , pState , ⟦ refreshedDReps , ccHotKeys , depositsᵍ ⟧ ⟧ ⇀⦇ DCertsOf txTop  ,CERTS⦈ ⟦ ⟦ voteDelegs' , stakeDelegs' , rewards' , depositsᵈ' ⟧ , pState' , gState' ⟧
+
+    ∙ ∀[ a ∈ dom directDeposits ] NetworkIdOf a ≡ NetworkId
+    ∙ directDepositsCredentials ⊆ dom rewards'
       ────────────────────────────────
-      ⟦ e , pp , vs , cc , wdrls , dd ⟧ ⊢ ⟦ ⟦ voteDelegs₀ , stakeDelegs₀ , rewards₀ , depositsᵈ₀ ⟧ , pState₀ , ⟦ dReps , ccHotKeys , depositsᵍ ⟧ ⟧ ⇀⦇ dCerts ,ENTITIES⦈ ⟦ ⟦ voteDelegs₁ ∣^ activeVDelegs , stakeDelegs₁ , applyDirectDeposits dd rewards₁ , depositsᵈ₁ ⟧ , pState₁ , gState₁ ⟧
+      ⟦ e , pp , cc , legacyMode , rewards₀ ⟧ ⊢ ⟦ ⟦ voteDelegs , stakeDelegs , rewards , depositsᵈ ⟧ , pState , ⟦ dReps , ccHotKeys , depositsᵍ ⟧ ⟧ ⇀⦇ txTop ,ENTITIES⦈ ⟦ ⟦ voteDelegs' ∣^ activeVDelegs , stakeDelegs' , applyDirectDeposits directDeposits rewards' , depositsᵈ' ⟧ , pState' , gState' ⟧
 ```

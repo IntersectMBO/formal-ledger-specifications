@@ -22,8 +22,8 @@ module Ledger.Dijkstra.Specification.Ledger.Properties.Computational
 
 open import Ledger.Prelude
 open import Ledger.Dijkstra.Specification.Certs govStructure
-open import Ledger.Dijkstra.Specification.Entities govStructure
-open import Ledger.Dijkstra.Specification.Entities.Properties.Computational govStructure
+open import Ledger.Dijkstra.Specification.Entities txs
+open import Ledger.Dijkstra.Specification.Entities.Properties.Computational txs
 open import Ledger.Dijkstra.Specification.Gov govStructure
 open import Ledger.Dijkstra.Specification.Gov.Properties.Computational txs
 open import Ledger.Dijkstra.Specification.Ledger txs abs
@@ -90,8 +90,8 @@ instance
       computeSubutxow : ∀ Γ s x → ComputationResult String (∃ λ s' → Γ ⊢ s ⇀⦇ x ,SUBUTXOW⦈ s')
       computeSubutxow = comp {STS = _⊢_⇀⦇_,SUBUTXOW⦈_}
 
-      computeEntities : ∀ Γ s x → ComputationResult String (∃ λ s' → Γ ⊢ s ⇀⦇ x ,ENTITIES⦈ s')
-      computeEntities = comp {STS = _⊢_⇀⦇_,ENTITIES⦈_}
+      computeSubentities : ∀ Γ s x → ComputationResult String (∃ λ s' → Γ ⊢ s ⇀⦇ x ,SUBENTITIES⦈ s')
+      computeSubentities = comp {STS = _⊢_⇀⦇_,SUBENTITIES⦈_}
 
       computeGov : ∀ Γ s x → ComputationResult String (∃ λ s' → Γ ⊢ s ⇀⦇ x ,GOVS⦈ s')
       computeGov = comp {STS = _⊢_⇀⦇_,GOVS⦈_}
@@ -102,19 +102,19 @@ instance
       completeSubutxow : ∀ Γ s x s' → Γ ⊢ s ⇀⦇ x ,SUBUTXOW⦈ s' → (proj₁ <$> computeSubutxow Γ s x) ≡ success s'
       completeSubutxow = complete {STS = _⊢_⇀⦇_,SUBUTXOW⦈_}
 
-      completeEntities : ∀ Γ s x s' → Γ ⊢ s ⇀⦇ x ,ENTITIES⦈ s' → (proj₁ <$> computeEntities Γ s x) ≡ success s'
-      completeEntities = complete {STS = _⊢_⇀⦇_,ENTITIES⦈_}
+      completeSubentities : ∀ Γ s x s' → Γ ⊢ s ⇀⦇ x ,SUBENTITIES⦈ s' → (proj₁ <$> computeSubentities Γ s x) ≡ success s'
+      completeSubentities = complete {STS = _⊢_⇀⦇_,SUBENTITIES⦈_}
 
     module go
-      (Γ   : SubLedgerEnv) (let open SubLedgerEnv Γ renaming (certState to certState'))
+      (Γ   : SubLedgerEnv) (let open SubLedgerEnv Γ)
       (s   : LedgerState)  (let open LedgerState s)
       (stx : SubLevelTx)
       where
       subUtxoΓ : SubUTxOEnv
-      subUtxoΓ = ⟦ slot , pparams , treasury , utxo₀ , certState' , allScripts , isTopLevelValid ⟧
+      subUtxoΓ = ⟦ slot , pparams , treasury , utxo₀ , allScripts , isTopLevelValid ⟧
 
-      entitiesΓ : EntitiesEnv
-      entitiesΓ = ⟦ epoch slot , pparams , ListOfGovVotesOf stx , allColdCreds govSt enactState , WithdrawalsOf stx , DirectDepositsOf stx ⟧
+      subentitiesΓ : SubEntitiesEnv
+      subentitiesΓ = ⟦ epoch slot , pparams , allColdCreds govSt enactState , rewards₀  ⟧
 
       govΓ : CertState → GovEnv
       govΓ certSt = ⟦ TxIdOf stx , epoch slot , pparams , ppolicy , enactState , certSt , dom (RewardsOf certSt) ⟧
@@ -130,7 +130,7 @@ instance
       computeProof = case isTopLevelValid ≟ true of λ where
         (yes p) → do
           (utxoSt' , utxoStep) ← computeSubutxow subUtxoΓ utxoSt stx
-          (certSt' , certStep) ← computeEntities entitiesΓ certState (DCertsOf stx)
+          (certSt' , certStep) ← computeSubentities subentitiesΓ certState stx
           (govSt'  , govStep)  ← computeGov (govΓ certSt') govSt (GovProposals+Votes stx)
           success (_ , SUBLEDGER-V (p , utxoStep , certStep , govStep))
         (no ¬p) → do
@@ -153,7 +153,7 @@ instance
       ... | yes refl
         with computeSubutxow subUtxoΓ utxoSt stx | completeSubutxow _ _ _ _ utxoStep
       ... | success (utxoSt' , _) | refl
-        with computeEntities entitiesΓ certState (DCertsOf stx) | completeEntities _ _ _ _ certStep
+        with computeSubentities subentitiesΓ certState stx | completeSubentities _ _ _ _ certStep
       ... | success (certSt' , _) | refl
         with computeGov (govΓ certSt') govSt (GovProposals+Votes stx)
            | completeGov (govΓ certSt') _ _ _ govStep
@@ -220,16 +220,16 @@ instance
       allScripts = getAllScripts txTop utxo₀
 
       subΓ : SubLedgerEnv
-      subΓ = ⟦ slot , ppolicy , pparams , enactState , treasury , utxo₀ , certState , allScripts , IsValidFlagOf txTop ⟧
+      subΓ = ⟦ slot , ppolicy , pparams , enactState , treasury , utxo₀ , RewardsOf (CertStateOf s) , allScripts , IsValidFlagOf txTop ⟧
 
-      entitiesΓ : GovState → EntitiesEnv
-      entitiesΓ govSt' = ⟦ epoch slot , pparams , ListOfGovVotesOf txTop , allColdCreds govSt' enactState , WithdrawalsOf txTop , DirectDepositsOf txTop ⟧
+      entitiesΓ : GovState → CertState → EntitiesEnv
+      entitiesΓ govSt certSt = ⟦ epoch slot , pparams , allColdCreds govSt enactState , true , RewardsOf certSt ⟧
 
       govΓ : CertState → GovEnv
       govΓ certSt = ⟦ TxIdOf txTop , epoch slot , pparams , ppolicy , enactState , certSt , dom (RewardsOf certSt) ⟧
 
       utxoΓ : UTxOEnv
-      utxoΓ = ⟦ slot , pparams , treasury , utxo₀ , certState , allScripts ⟧
+      utxoΓ = ⟦ slot , pparams , treasury , utxo₀ , PoolsOf (CertStateOf s) , allScripts ⟧
 ```
 -->
 
@@ -242,7 +242,7 @@ instance
       computeProof = case IsValidFlagOf txTop ≟ true of λ where
         (yes p) → do
           (s₁      , subStep)  ← computeSubledgers subΓ s (SubTransactionsOf txTop)
-          (certSt₂ , certStep) ← computeEntities (entitiesΓ (GovStateOf s₁)) (CertStateOf s₁) (DCertsOf txTop)
+          (certSt₂ , certStep) ← computeEntities (entitiesΓ (GovStateOf s₁) (CertStateOf s)) (CertStateOf s₁) txTop
           (govSt₂  , govStep)  ← computeGov (govΓ certSt₂) (GovStateOf s₁) (GovProposals+Votes txTop)
           (utxoSt₂ , utxoStep) ← computeUtxow utxoΓ (UTxOStateOf s₁) txTop
           success (_ , LEDGER-V (p , subStep , certStep , govStep , utxoStep))
@@ -271,8 +271,8 @@ instance
            | completeSubledgers subΓ s (SubTransactionsOf txTop)
                       (⟦ utxoSt₁ , govSt₁ , certSt₁ ⟧ˡ) subStep
       ... | success (⟦ utxoSt₁ , govSt₁ , certSt₁ ⟧ˡ , _) | refl
-        with computeEntities (entitiesΓ govSt₁) certSt₁ (DCertsOf txTop)
-           | completeEntities (entitiesΓ govSt₁) certSt₁ (DCertsOf txTop) certSt₂ entitiesStep
+        with computeEntities (entitiesΓ govSt₁ (CertStateOf s)) certSt₁ txTop
+           | completeEntities (entitiesΓ govSt₁ (CertStateOf s)) certSt₁ txTop certSt₂ entitiesStep
       ... | success (certSt₂ , _) | refl
         with computeGov (govΓ certSt₂) govSt₁ (GovProposals+Votes txTop)
            | completeGov (govΓ certSt₂) govSt₁ (GovProposals+Votes txTop) govSt₂ govStep

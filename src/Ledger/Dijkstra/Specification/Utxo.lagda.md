@@ -77,7 +77,7 @@ record UTxOEnv : Type where
     pparams           : PParams
     treasury          : Treasury
     utxo₀             : UTxO
-    certState         : CertState
+    pools₀            : Pools
     allScripts        : ℙ Script
 
 record SubUTxOEnv : Type where
@@ -86,7 +86,6 @@ record SubUTxOEnv : Type where
     pparams          : PParams
     treasury         : Treasury
     utxo₀            : UTxO
-    certState        : CertState
     allScripts       : ℙ Script
     isTopLevelValid  : Bool
 ```
@@ -158,14 +157,8 @@ instance
   HasUTxO-UTxOEnv : HasUTxO UTxOEnv
   HasUTxO-UTxOEnv .UTxOOf = UTxOEnv.utxo₀
 
-  HasCertState-UTxOEnv : HasCertState UTxOEnv
-  HasCertState-UTxOEnv .CertStateOf = UTxOEnv.certState
-
   HasScriptPool-UTxOEnv : HasScriptPool UTxOEnv
   HasScriptPool-UTxOEnv .ScriptPoolOf = UTxOEnv.allScripts
-
-  HasRewards-UTxOEnv : HasRewards UTxOEnv
-  HasRewards-UTxOEnv .RewardsOf = RewardsOf ∘ UTxOEnv.certState
 
   HasSlot-SubUTxOEnv : HasSlot SubUTxOEnv
   HasSlot-SubUTxOEnv .SlotOf = SubUTxOEnv.slot
@@ -185,9 +178,6 @@ instance
   HasScriptPool-SubUTxOEnv : HasScriptPool SubUTxOEnv
   HasScriptPool-SubUTxOEnv .ScriptPoolOf = SubUTxOEnv.allScripts
 
-  HasRewards-SubUTxOEnv : HasRewards SubUTxOEnv
-  HasRewards-SubUTxOEnv .RewardsOf = RewardsOf ∘ SubUTxOEnv.certState
-
   HasUTxO-UTxOState : HasUTxO UTxOState
   HasUTxO-UTxOState .UTxOOf = UTxOState.utxo
 
@@ -198,7 +188,7 @@ instance
   HasDonations-UTxOState .DonationsOf = UTxOState.donations
 
   HasPools-UTxOEnv : HasPools UTxOEnv
-  HasPools-UTxOEnv .PoolsOf = PoolsOf ∘ UTxOEnv.certState
+  HasPools-UTxOEnv .PoolsOf = UTxOEnv.pools₀
 
   unquoteDecl HasCast-UTxOEnv
               HasCast-SubUTxOEnv
@@ -345,43 +335,6 @@ the transaction and that amount is deposited into accounts.
                             + ∑ˡ[ stx ← SubTransactionsOf txTop ] (producedTx stx)
 ```
 
-## CIP-159 Notes
-
-### Preservation of Value
-
-CIP-159 introduces two new fields to transactions: `directDeposits` and
-`balanceIntervals`.  Direct deposits represent value that flows from the transaction
-into account addresses.
-
-In the preservation-of-value equation, direct deposits appear on the
-*produced* side: value leaves the UTxO and enters account balances.  The
-`getCoin (DirectDepositsOf tx)` term, appearing in the definition of
-`producedTx`{.AgdaFunction}, sums the ADA of all direct deposits in
-the transaction.
-
-### Phantom Asset Prevention {#subsubsec:phantom-asset-prevention}
-
-```agda
-NoPhantomWithdrawals : Rewards → TopLevelTx → Type
-NoPhantomWithdrawals preBalances txTop =
-  ∀[ (addr , amt) ∈ allWithdrawals txTop ˢ ]
-    amt ≤ maybe id 0 (lookupᵐ? preBalances (RewardAddress.stake addr))
-```
-
-**The Problem**.  CIP-159 identifies a "phantom asset" attack when nested
-transactions combine direct deposits and withdrawals to the same account within a
-single batch.  If a sub-transaction deposits ADA into an account and a later
-sub-transaction withdraws it, Plutus scripts may be tricked into believing native
-assets were minted.
-
-**The Solution**.  Withdrawals across the entire batch are bounded by the
-**pre-batch** account balances.  The `NoPhantomWithdrawals`{.AgdaFunction} predicate
-checks that the total withdrawal for each reward address (aggregated via
-`allWithdrawals`{.AgdaFunction}) does not exceed the pre-batch balance of the
-corresponding credential.  This mirrors the spend-side safety principle where
-spending inputs must come from the pre-batch UTxO snapshot (`utxo₀`{.AgdaField}).
-
-
 ## The <span class="AgdaDatatype">UTXOS</span> Transition System
 
 ### Phase-2 Validation
@@ -469,12 +422,6 @@ The [CIP][1] states:
    words, spending inputs across all top- and sub-level transactions
    are disjoint.
 
-4. Direct deposit targets must be registered accounts (their credentials
-   must appear in `dom (RewardsOf Γ)`).
-
-5. Each balance interval assertion must hold against the pre-batch account
-   balances; this is a Phase-1 validity condition.
-
 ```agda
 data _⊢_⇀⦇_,SUBUTXO⦈_ : SubUTxOEnv → UTxOState → SubLevelTx → UTxOState → Type where
 
@@ -494,14 +441,8 @@ data _⊢_⇀⦇_,SUBUTXO⦈_ : SubUTxOEnv → UTxOState → SubLevelTx → UTxO
     ∙ ∀[ (_ , o) ∈ ∣ TxOutsOf txSub ∣ ] (serializedSize (txOutToValue o) ≤ maxValSize (PParamsOf Γ))
     ∙ ∀[ (a , _) ∈ range (TxOutsOf txSub) ] (Sum.All (const ⊤) (λ a → AttrSizeOf a ≤ maxBootstrapAddrSize) a)
     ∙ ∀[ (a , _) ∈ range (TxOutsOf txSub) ] (netId a ≡ NetworkId)
-    ∙ ∀[ a ∈ dom (WithdrawalsOf txSub)] (NetworkIdOf a ≡ NetworkId)
-    ∙ ∀[ a ∈ dom (DirectDepositsOf txSub)] (NetworkIdOf a ≡ NetworkId)
     ∙ MaybeNetworkIdOf txSub ~ just NetworkId
     ∙ CurrentTreasuryOf txSub ~ just (TreasuryOf Γ)
-    ∙ mapˢ stake (dom (DirectDepositsOf txSub)) ⊆ dom (RewardsOf Γ)
-    ∙ dom (BalanceIntervalsOf txSub) ⊆ dom (RewardsOf Γ)
-    ∙ ∀[ (c , interval) ∈ BalanceIntervalsOf txSub ˢ ]
-        (InBalanceInterval (maybe id 0 (lookupᵐ? (RewardsOf Γ) c)) interval)
       ────────────────────────────────
     let
        s₁ = if IsTopLevelValidFlagOf Γ
@@ -558,14 +499,8 @@ data _⊢_⇀⦇_,UTXO⦈_ : UTxOEnv × Bool → UTxOState → TopLevelTx → UT
     ∙ ∀[ (_ , o) ∈ ∣ TxOutsOf txTop ∣ ] (serializedSize (txOutToValue o) ≤ maxValSize (PParamsOf Γ))
     ∙ ∀[ (a , _) ∈ range (TxOutsOf txTop) ] (Sum.All (const ⊤) (λ a → AttrSizeOf a ≤ maxBootstrapAddrSize)) a
     ∙ ∀[ (a , _) ∈ range (TxOutsOf txTop) ] (netId a ≡ NetworkId)
-    ∙ ∀[ a ∈ dom (WithdrawalsOf txTop)] NetworkIdOf a ≡ NetworkId
-    ∙ ∀[ a ∈ dom (DirectDepositsOf txTop)] (NetworkIdOf a ≡ NetworkId)
     ∙ MaybeNetworkIdOf txTop ~ just NetworkId
     ∙ CurrentTreasuryOf txTop  ~ just (TreasuryOf Γ)
-    ∙ mapˢ stake (dom (DirectDepositsOf txTop)) ⊆ dom (RewardsOf Γ)
-    ∙ dom (BalanceIntervalsOf txTop) ⊆ dom (RewardsOf Γ)
-    ∙ ∀[ (c , interval) ∈ BalanceIntervalsOf txTop ˢ ]
-        (InBalanceInterval (maybe id 0 (lookupᵐ? (RewardsOf Γ) c)) interval)
     ∙ Γ ⊢ _ ⇀⦇ txTop ,UTXOS⦈ _
       ────────────────────────────────
     let
@@ -578,8 +513,8 @@ data _⊢_⇀⦇_,UTXO⦈_ : UTxOEnv × Bool → UTxOState → TopLevelTx → UT
 <!--
 ```agda
 unquoteDecl UTXO-premises = genPremises UTXO-premises (quote UTXO)
-pattern UTXO-⋯ p₀ p₁ p₂ p₃ p₄ p₅ p₆ p₇ p₈ p₉ p₁₀ p₁₁ p₁₂ p₁₃ p₁₄ p₁₅ p₁₆ p₁₇ p₁₈ p₁₉ p₂₀ p₂₁ p₂₂ h
-  = UTXO (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , p₁₂ , p₁₃ , p₁₄ , p₁₅ , p₁₆ , p₁₇ , p₁₈ , p₁₉ , p₂₀ , p₂₁ , p₂₂ , h)
+pattern UTXO-⋯ p₀ p₁ p₂ p₃ p₄ p₅ p₆ p₇ p₈ p₉ p₁₀ p₁₁ p₁₂ p₁₃ p₁₄ p₁₅ p₁₆ p₁₇ h
+  = UTXO (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , p₁₂ , p₁₃ , p₁₄ , p₁₅ , p₁₆ , p₁₇ , h)
 ```
 -->
 
