@@ -181,9 +181,11 @@ data _⊢_⇀⦇_,LEDGER⦈_ : LEnv → LState → Tx → LState → Type where
 -->
 ```agda
          utxoEnv     = ⟦ Γ .LEnv.slot , pp , Γ .LEnv.treasury , blockType ⟧
-         -- flush feeRewards into dState.rewards and clear them
-         rwds'       = RewardsOf certState' ∪⁺ utxoSt' .UTxOState.feeRewards
-         dSt''       = record (DStateOf certState') { rewards = rwds' }
+         -- rewards after the usual per-tx update (certificate processing)
+         rwds'       = RewardsOf certState'
+         -- then flush in the pending fee-change credits collected by UTXOW
+         rwds''      = rwds' ∪⁺ utxoSt' .UTxOState.feeRewards
+         dSt''       = record (DStateOf certState') { rewards = rwds'' }
          certState'' = record certState' { dState = dSt'' }
          utxoSt''    = ⟦ utxoSt' .UTxOState.utxo , utxoSt' .UTxOState.fees
                         , utxoSt' .UTxOState.deposits , utxoSt' .UTxOState.donations

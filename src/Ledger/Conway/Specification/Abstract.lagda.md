@@ -28,7 +28,7 @@ record indexOf : Type where
     indexOfVote           : GovVoter       → List GovVoter     → Maybe Ix
     indexOfProposal       : GovProposal    → List GovProposal  → Maybe Ix
 
-record AbstractFunctions : Type where
+record AbstractFunctions : Type₁ where
   field txscriptfee  : Prices → ExUnits → Coin
         serSize      : Value → MemoryEstimate
         indexOfImp   : indexOf
@@ -36,4 +36,11 @@ record AbstractFunctions : Type where
         scriptSize   : Script → ℕ
         valContext   : TxInfo → ScriptPurpose → Data
         getLanguageView : PParams → Language → LangDepView
+        -- EB certificates (abstract for now); EB ids are KeyHashes (see BlockBody):
+        --   the endorsement type carried by an EB certificate
+        Endorsement : Type
+        --   checks the endorsements vouching for the EB named by an id
+        checkEndorsements : KeyHash → List Endorsement → Bool
+        --   checks that an EB id corresponds to a block with the given body hash
+        checkEBID         : KeyHash → KeyHash → Bool
 ```

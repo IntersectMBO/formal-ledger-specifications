@@ -191,6 +191,7 @@ record TransactionStructure : Type₁ where
       reqSignerHashes      : ℙ KeyHash
       scriptIntegrityHash  : Maybe ScriptHash
       tier : TxTier
+      -- this will be an Account address in later versions
       feeChangeAddr : Maybe RewardAddress
       -- txup              : Maybe Update   -- deprecated; leave for now
 ```
