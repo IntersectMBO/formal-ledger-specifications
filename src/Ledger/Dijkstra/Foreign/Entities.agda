@@ -13,11 +13,36 @@ open import Ledger.Dijkstra.Foreign.HSStructures
 open import Ledger.Dijkstra.Foreign.Gov.Core
 open import Ledger.Dijkstra.Foreign.PParams
 open import Ledger.Dijkstra.Foreign.Cert
+open import Ledger.Dijkstra.Specification.Entities DummyGovStructure
 open import Ledger.Dijkstra.Specification.Entities.Properties.Computational DummyGovStructure
 
 open Computational
 
-entities-step : HsType (CertEnv → CertState → List DCert → ComputationResult String CertState)
+record EntitiesEnv' : Type where
+  field
+    epoch           : Epoch
+    pp              : PParams
+    votes           : List GovVote'
+    coldCredentials : ℙ Credential
+    withdrawals     : RewardAddress ⇀ Coin
+    directDeposits  : DirectDeposits
+
+instance
+  HsTy-EntitiesEnv' = autoHsType EntitiesEnv'
+    ⊣ withConstructor "MkEntitiesEnv"
+    • withName "EntitiesEnv"
+    • fieldPrefix "ene"
+  Conv-EntitiesEnv' = autoConvert EntitiesEnv'
+
+  mkEntitiesEnv' : Convertible EntitiesEnv EntitiesEnv'
+  mkEntitiesEnv' = λ where
+    .to   ee → let module ee = EntitiesEnv ee in record { epoch = ee.epoch ; pp = ee.pp ; votes = to ee.votes ; withdrawals = ee.withdrawals ; coldCredentials = ee.coldCredentials ; directDeposits = ee.directDeposits }
+    .from ee → let module ee = EntitiesEnv' ee in record { epoch = ee.epoch ; pp = ee.pp ; votes = from ee.votes ; withdrawals = ee.withdrawals ; coldCredentials = ee.coldCredentials ; directDeposits = ee.directDeposits }
+
+  HsTy-EntitiesEnv = mkHsType EntitiesEnv (HsType EntitiesEnv')
+  Conv-EntitiesEnv = mkEntitiesEnv' ⨾ Conv-EntitiesEnv'
+
+entities-step : HsType (EntitiesEnv → CertState → List DCert → ComputationResult String CertState)
 entities-step = to (compute Computational-ENTITIES)
 
 {-# COMPILE GHC entities-step as entitiesStep #-}
