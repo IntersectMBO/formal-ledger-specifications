@@ -31,7 +31,7 @@ instance
   HsTy-EntitiesEnv' = autoHsType EntitiesEnv'
     ⊣ withConstructor "MkEntitiesEnv"
     • withName "EntitiesEnv"
-    • fieldPrefix "ee"
+    • fieldPrefix "ene"
   Conv-EntitiesEnv' = autoConvert EntitiesEnv'
 
   mkEntitiesEnv' : Convertible EntitiesEnv EntitiesEnv'
