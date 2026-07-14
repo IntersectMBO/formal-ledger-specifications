@@ -50,21 +50,23 @@ open import Ledger.Conway.Specification.Utxo txs abs
         ; updateDeposits; certDeposit; ValidCertDeposits
         ; minfee; collateralCheck; consumed; produced; refScriptsSize; depositsChange; isAdaOnly
         ; _⊢_⇀⦇_,UTXOS⦈_; Scripts-Yes; Scripts-No
-        ; _⊢_⇀⦇_,UTXO⦈_; UTXO-inductive
+        ; _⊢_⇀⦇_,UTXO⦈_; UTXO-inductive; UTXO-inductive⋯
         ; delegate; regpool; regdrep; reg; dereg; deregdrep; ccreghot; retirepool )
   renaming ([] to ⟨⟩ᵛ)
 open import Ledger.Conway.Specification.Script.Validation txs abs
-  using (collectP2ScriptsWithContext; evalP2Scripts; credsNeeded; credentialToP2Script; txOutToP2Script)
+  using (collectP2ScriptsWithContext; evalP2Scripts; credsNeeded; credentialToP2Script; txOutToP2Script
+        ; txOutToDataHash; rdptr)
 open import Ledger.Conway.Specification.Utxow txs abs
   using ( TxOutSpendable-PlutusV1; TxOutSpendable-PlutusV2; languages; allowedLanguages; hashScriptIntegrity
-        ; _⊢_⇀⦇_,UTXOW⦈_; UTXOW-inductive )
+        ; HasInlineDatum; Dec-HasInlineDatum; UsesV3Features; Dec-UsesV3Features
+        ; _⊢_⇀⦇_,UTXOW⦈_; UTXOW-inductive; UTXOW⇒UTXO )
 import Data.Maybe.Relation.Unary.All as Maybe
 open import Ledger.Conway.Specification.Fees using (scriptsCost)
 open import Ledger.Conway.Specification.Utxo.Properties.Base txs abs using (balance-cong-coin; balance-cong)
 open import Ledger.Conway.Specification.Ledger.Properties.StateEquiv txs abs
 open import Interface.ComputationalRelation
 open import abstract-set-theory.Axiom.Set.Map.Extra using (∪⁺-cong-l; ∪⁺-cong-r; restrict-cong)
-open import Data.Nat.Properties using (+-isCommutativeSemigroup)
+open import Data.Nat.Properties using (+-isCommutativeSemigroup; +-assoc; +-comm; +-identityʳ)
 
 instance
   Coin-Semigroup = +-isCommutativeSemigroup
@@ -94,43 +96,36 @@ LEDGERS-deterministic :
 LEDGERS-deterministic = computational⇒rightUnique Computational-LEDGERS
 ```
 
-## Independence of transactions
+## Independence, no-governance, and replay protection
 
-`Indep t₁ t₂` collects the side-conditions under which `t₁` and `t₂` commute as
-`LEDGER`{.AgdaOperator} steps.  Each condition is justified by the corresponding
-part of the state update:
+The reordering theorem rests on **three separate** hypotheses, deliberately kept
+apart (cf. the assumption structure of Vinogradova & Sorokin, *Properties of
+UTxO Ledgers…*, LSFA'24, §5.2):
 
-*   **`distinctTxId`** — distinct transaction ids, so the two transactions
-    produce disjoint UTxO outputs (`outs`{.AgdaFunction} keys every output by
-    `txId`{.AgdaField}).
-*   **`disjInputs`** — disjoint spent inputs, so the `_∣_ᶜ`/`_∪ˡ_` UTxO updates
-    commute.
-*   **`noCrossSpend₁₂` / `noCrossSpend₂₁`** — neither transaction spends an output
-    the other creates (its inputs are disjoint from the other's `outs`).  This is
-    *required* and easy to miss: disjoint inputs alone is not enough.  If `t₂`
-    spent an output of `t₁`, then `t₁;t₂` could succeed while `t₂;t₁` fails (the
-    output does not exist yet), so the two orders would not both produce a state.
-*   **`disjCertCreds`** — the certificate "targets" (`cwitness`{.AgdaFunction})
-    are disjoint, so the `DELEG`/`POOL`/`GOVCERT` map updates touch disjoint
-    keys.
-*   **`disjWdrls`** — disjoint withdrawal credentials, so the `PRE-CERT`
-    reward-zeroing commutes.
-*   **`govFree`** — no governance proposals or votes (`txGovProposals ≡ []`,
-    `txGovVotes ≡ []`), so the `GOVS` signal is empty.
-*   **`noDRepCert`** — no DRep (de)registration.  This is *essential* and easy to
-    miss: `LEDGER-V` recomputes `govSt' = rmOrphanDRepVotes certState' govSt`,
-    which filters pre-existing DRep votes by `dom (dreps certState')`.  If a
-    transaction changed the DRep set, the two orders would filter `govSt` by
-    different sets and diverge — even with disjoint targets and no new votes.
-    Forbidding DRep (de)registration keeps `dom dreps` constant, so
-    `rmOrphanDRepVotes` is applied with the same filter in both orders.  (The
-    same constant-`dom dreps` fact tames the `POST-CERT` `voteDelegs` filter.)
+1.  **`Indep`** — the *only* per-pair condition needed, containing exactly the
+    operations that genuinely fail to commute even when both orders are valid:
+    the *overwriting* certificate map-updates whose written value varies per
+    transaction (`delegate` → `insertIfJust`, `regpool` → first-wins `∪ˡ`,
+    `retirepool` → last-wins `∪ˡ`, `ccreghot` → last-wins `∪ˡ`).  All of their
+    targets are captured by `cwitness`{.AgdaFunction}, so a single
+    disjoint-`certCreds` condition suffices.
+2.  **`NoGov`** (a *global* `All`, not part of `Indep`) — no proposals, no votes,
+    and no DRep (de)registration.  DRep certs change `dom dreps`, which feeds
+    `rmOrphanDRepVotes`{.AgdaFunction} (re-filtering *all* pre-existing votes
+    each step) and the `POST-CERT` `activeVDelegs` restriction; *disjoint* DRep
+    targets do not save this — only a constant `dom dreps` does.
+3.  **both executions valid** (already the `LEDGERS` premises of the theorem) —
+    this is what lets the old UTxO-independence fields (`distinctTxId`,
+    `disjInputs`, `noCrossSpend`, and even `disjWdrls`) be *dropped*: a
+    withdrawal forces `rewards[c] → 0` and its validity premise pins
+    `rewards[c] = amount`, so two same-credential withdrawals cannot both
+    validate in both orders; and within a block rewards only move toward `0`, so
+    the "force to 0" never races a "set to nonzero".
 
 ```agda
 private
   ins        : Tx → ℙ TxIn;             ins   t = t .Tx.body .TxBody.txIns
   certs      : Tx → List DCert;         certs t = t .Tx.body .TxBody.txCerts
-  wdrls      : Tx → Withdrawals;        wdrls t = t .Tx.body .TxBody.txWithdrawals
   proposals  : Tx → List GovProposal;   proposals t = t .Tx.body .TxBody.txGovProposals
   votes      : Tx → List GovVote;       votes t = t .Tx.body .TxBody.txGovVotes
 
@@ -148,63 +143,56 @@ GovFree t = (proposals t ≡ []) × (votes t ≡ [])
 NoDRepCert : Tx → Type
 NoDRepCert t = Allᴸ.All (λ c → ¬ isDRepCert c) (certs t)
 
+-- (2) global no-governance condition, applied to every transaction in the list.
+NoGov : Tx → Type
+NoGov t = GovFree t × NoDRepCert t
+
+-- (1) minimal independence: disjoint overwriting-certificate targets.
 record Indep (t₁ t₂ : Tx) : Type where
   field
-    distinctTxId  : t₁ .Tx.body .TxBody.txId ≢ t₂ .Tx.body .TxBody.txId
-    disjInputs    : disjoint (ins t₁) (ins t₂)
-    noCrossSpend₁₂ : disjoint (ins t₂) (dom (outs (t₁ .Tx.body)))
-    noCrossSpend₂₁ : disjoint (ins t₁) (dom (outs (t₂ .Tx.body)))
     disjCertCreds : disjoint (certCreds t₁) (certCreds t₂)
-    disjWdrls     : disjoint (dom (wdrls t₁)) (dom (wdrls t₂))
-    govFree₁      : GovFree t₁
-    govFree₂      : GovFree t₂
-    noDRepCert₁   : NoDRepCert t₁
-    noDRepCert₂   : NoDRepCert t₂
 
 Indep-sym : ∀ {t₁ t₂} → Indep t₁ t₂ → Indep t₂ t₁
-Indep-sym i = record
-  { distinctTxId  = i .distinctTxId ∘ sym
-  ; disjInputs    = Properties.disjoint-sym (i .disjInputs)
-  ; noCrossSpend₁₂ = i .noCrossSpend₂₁
-  ; noCrossSpend₂₁ = i .noCrossSpend₁₂
-  ; disjCertCreds = Properties.disjoint-sym (i .disjCertCreds)
-  ; disjWdrls     = Properties.disjoint-sym (i .disjWdrls)
-  ; govFree₁      = i .govFree₂
-  ; govFree₂      = i .govFree₁
-  ; noDRepCert₁   = i .noDRepCert₂
-  ; noDRepCert₂   = i .noDRepCert₁
-  } where open Indep
+Indep-sym i = record { disjCertCreds = Properties.disjoint-sym (i .disjCertCreds) }
+  where open Indep
 ```
 
-## Adjacent swap and `LEDGER` congruence (sound obligations)
+## Replay protection and `LEDGER` congruence (sound obligations)
 
 State equality is the extensional `_≈ˡ_` of
 [`StateEquiv`](Ledger.Conway.Specification.Ledger.Properties.StateEquiv.md)
 (propositional `_≡_` is too strong — the `List`-backed model makes reordered
-states `_≡ᵉ_`-equal but not `_≡_`).  Two obligations remain, both **sound** in
-that model (unlike a `≡ᵉ⇒≡` axiom, which is false there):
+states `_≡ᵉ_`-equal but not `_≡_`).
 
-*   `LEDGER-cong`{.AgdaFunction} — `LEDGER`{.AgdaOperator} is well-defined on the
-    `_≈ˡ_` quotient (extensionally-equal start states reach extensionally-equal
-    results).  This is what lets a reordered prefix, which ends in a
-    `_≈ˡ_`-but-not-`_≡_` state, be continued by the remaining transactions.
-*   `LEDGER-swap`{.AgdaFunction} — two independent neighbouring transactions can
-    trade places, reaching an `_≈ˡ_`-equal final state.  Its UTxO component is
-    `utxo-comm`{.AgdaFunction}; its `CertState` component is the cert
-    map-algebra below; `govSt` is fixed by gov-freeness.
+**Replay protection** is the one genuinely-assumed *ledger* fact.  Following
+Vinogradova & Sorokin (LSFA'24, Thm 5.1.1 / Cor 5.1.2), along any valid
+`LEDGERS`{.AgdaOperator} execution from a well-founded initial `UTxO`, the
+transaction-created output sets are pairwise disjoint and disjoint from the
+initial state, and the spent-input sets are pairwise disjoint — a consequence of
+injectivity of the transaction hash together with well-foundedness of `UTxO₀`.
+This is exactly what makes the per-transaction "remove inputs, add outputs" net
+effect collapse to the order-independent `u₀ ∪ ⋃outs ∖ ⋃ins`.
 
 ```agda
 postulate
+  -- Replay protection (LSFA'24 Cor 5.1.2): created outputs are pairwise disjoint …
+  replay-outs-disjoint :
+      Γ ⊢ s ⇀⦇ l ,LEDGERS⦈ s′
+    → AllPairs (λ t t′ → disjoint (dom (outs (t .Tx.body) ˢ)) (dom (outs (t′ .Tx.body) ˢ))) l
+  -- … and disjoint from the initial UTxO …
+  replay-outs-fresh :
+      Γ ⊢ s ⇀⦇ l ,LEDGERS⦈ s′
+    → Allᴸ.All (λ t → disjoint (dom (LState.utxoSt s .UTxOState.utxo ˢ)) (dom (outs (t .Tx.body) ˢ))) l
+  -- … and the spent inputs are pairwise disjoint.
+  replay-ins-disjoint :
+      Γ ⊢ s ⇀⦇ l ,LEDGERS⦈ s′
+    → AllPairs (λ t t′ → disjoint (ins t) (ins t′)) l
+
+  -- `LEDGER` is well-defined on the `_≈ˡ_` quotient (true for *any* transaction;
+  -- its UTxO component is discharged by `UTXOW-cong`{.AgdaFunction} below).
   LEDGER-cong :
       Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s′ → s ≈ˡ s″
     → ∃[ s‴ ] (Γ ⊢ s″ ⇀⦇ tx ,LEDGER⦈ s‴ × s′ ≈ˡ s‴)
-
-  LEDGER-swap :
-      Indep t₁ t₂
-    → Γ ⊢ s  ⇀⦇ t₁ ,LEDGER⦈ s₁
-    → Γ ⊢ s₁ ⇀⦇ t₂ ,LEDGER⦈ s₂
-    → ∃[ sₘ ] ∃[ s₂′ ]
-        (Γ ⊢ s ⇀⦇ t₂ ,LEDGER⦈ sₘ × Γ ⊢ sₘ ⇀⦇ t₁ ,LEDGER⦈ s₂′ × s₂′ ≈ˡ s₂)
 ```
 
 ### Decomposition of `LEDGER-swap`
@@ -315,6 +303,24 @@ res-comm {m} {X} {Y} = sw {m} {X} {Y} , sw {m} {Y} {X}
       let (a∉Y , h₁) = Equivalence.from ∈-filter h
           (a∉X , hm) = Equivalence.from ∈-filter h₁
       in  Equivalence.to ∈-filter (a∉X , Equivalence.to ∈-filter (a∉Y , hm))
+
+-- Brick (b): two nested key-restrictions merge into one union-restriction.
+res-merge : {m : UTxO} {X Y : ℙ TxIn}
+  → ((m ∣ X ᶜ) ∣ Y ᶜ) ˢ ≡ᵉ (m ∣ (X ∪ Y) ᶜ) ˢ
+res-merge {m} {X} {Y} = ⊆₁ , ⊆₂
+  where
+    ⊆₁ : ((m ∣ X ᶜ) ∣ Y ᶜ) ˢ ⊆ (m ∣ (X ∪ Y) ᶜ) ˢ
+    ⊆₁ h = let (a∉Y , h₁) = Equivalence.from ∈-filter h
+               (a∉X , hm) = Equivalence.from ∈-filter h₁
+           in  Equivalence.to ∈-filter
+                 ((λ a∈∪ → [ a∉X , a∉Y ]′ (Equivalence.from ∈-∪ a∈∪)) , hm)
+    ⊆₂ : (m ∣ (X ∪ Y) ᶜ) ˢ ⊆ ((m ∣ X ᶜ) ∣ Y ᶜ) ˢ
+    ⊆₂ h = let (a∉∪ , hm) = Equivalence.from ∈-filter h
+           in  Equivalence.to ∈-filter
+                 ( (λ a∈Y → a∉∪ (Equivalence.to ∈-∪ (inj₂ a∈Y)))
+                 , Equivalence.to ∈-filter
+                     ((λ a∈X → a∉∪ (Equivalence.to ∈-∪ (inj₁ a∈X))) , hm) )
+
 ```
 
 ### Assembling the UTxO field commutation
@@ -1143,6 +1149,52 @@ languages-cong tx {u} {u″} eq shseq =
     (filterˢ-hash∈-cong (txscripts-cong tx {u = u} {u″ = u″} eq) shseq)
 ```
 
+### `allowedLanguages` is order-invariant (no new assumptions)
+
+`allowedLanguages`{.AgdaFunction} reads the `UTxO` only through the set
+`os = range (outs txb) ∪ range (utxo ∣ (txIns ∪ refInputs))`, on which it takes
+four fixed branches gated by decidable *existentials* over `os`.  Since `os`
+respects `_≡ᵉ_` and each existential is a membership predicate, the guards decide
+identically and the (fixed) branch values agree — so `allowedLanguages` is
+propositionally order-invariant.  The generic `if-cong₂`{.AgdaFunction} lets a
+decidable `if` transport when the two conditions are logically equivalent:
+
+```agda
+if-cong₂ : ∀ {A : Type} {c c′ : Type} ⦃ _ : c ⁇ ⦄ ⦃ _ : c′ ⁇ ⦄ {x x′ y y′ : A}
+  → (c → c′) → (c′ → c) → x ≡ x′ → y ≡ y′
+  → (if c then x else y) ≡ (if c′ then x′ else y′)
+if-cong₂ {c = c} {c′} f g xe ye with ¿ c ¿ | ¿ c′ ¿
+... | yes _ | yes _ = xe
+... | no  _ | no  _ = ye
+... | yes p | no ¬q = ⊥-elim (¬q (f p))
+... | no ¬p | yes q = ⊥-elim (¬p (g q))
+
+allowedLanguages-cong : ∀ tx {u u″ : UTxO} → u ˢ ≡ᵉ u″ ˢ
+  → allowedLanguages tx u ≡ allowedLanguages tx u″
+allowedLanguages-cong tx {u} {u″} eq =
+  if-cong₂ {c = ∃[ o ∈ osU ] IsBootstrapAddr (proj₁ o)} {c′ = ∃[ o ∈ osU″ ] IsBootstrapAddr (proj₁ o)}
+    f₁ g₁ refl
+    (if-cong₂ {c = UsesV3Features (Tx.body tx)} {c′ = UsesV3Features (Tx.body tx)} id id refl
+      (if-cong₂ {c = ∃[ o ∈ osU ] HasInlineDatum o} {c′ = ∃[ o ∈ osU″ ] HasInlineDatum o}
+        f₃ g₃ refl refl))
+  where
+    ins∪ref = TxBody.txIns (Tx.body tx) ∪ TxBody.refInputs (Tx.body tx)
+    osU  = range (outs (Tx.body tx)) ∪ range (u  ∣ ins∪ref)
+    osU″ = range (outs (Tx.body tx)) ∪ range (u″ ∣ ins∪ref)
+    oseq : osU ≡ᵉ osU″
+    oseq = Properties.∪-cong (SetSetoid.refl {x = range (outs (Tx.body tx))})
+             (Properties.map-≡ᵉ
+               (resᵐ-cong {m = u} {m' = u″} {X = ins∪ref} {Y = ins∪ref} eq SetSetoid.refl))
+    f₁ : (∃[ o ∈ osU ] IsBootstrapAddr (proj₁ o)) → (∃[ o ∈ osU″ ] IsBootstrapAddr (proj₁ o))
+    f₁ (o , o∈ , p) = o , oseq .proj₁ o∈ , p
+    g₁ : (∃[ o ∈ osU″ ] IsBootstrapAddr (proj₁ o)) → (∃[ o ∈ osU ] IsBootstrapAddr (proj₁ o))
+    g₁ (o , o∈ , p) = o , oseq .proj₂ o∈ , p
+    f₃ : (∃[ o ∈ osU ] HasInlineDatum o) → (∃[ o ∈ osU″ ] HasInlineDatum o)
+    f₃ (o , o∈ , p) = o , oseq .proj₁ o∈ , p
+    g₃ : (∃[ o ∈ osU″ ] HasInlineDatum o) → (∃[ o ∈ osU ] HasInlineDatum o)
+    g₃ (o , o∈ , p) = o , oseq .proj₂ o∈ , p
+```
+
 ### The script-integrity hash: the fourth flatten-to-scalar point
 
 The value-preservation-style premise p12 compares `scriptIntegrityHash` with
@@ -1156,6 +1208,72 @@ postulate
   hashScriptIntegrity-reorder : ∀ {pp} {langs langs′ : ℙ Language} {rdrms} {dats}
     → langs ≡ᵉ langs′
     → hashScriptIntegrity pp langs rdrms dats ≡ hashScriptIntegrity pp langs′ rdrms dats
+```
+
+### Assembling `UTXOW` congruence
+
+`UTXOW`{.AgdaDatatype} wraps `UTXO`{.AgdaDatatype} with twelve witnessing
+premises.  Each `UTxO`-dependent premise is transported by the congruence brick
+for the set it reads; the twelfth uses `hashScriptIntegrity-reorder`{.AgdaFunction}
+and the eighth uses `allowedLanguages-cong`{.AgdaFunction}.  The `UTXO` step is
+`UTXO-cong`{.AgdaFunction}; `p₁`/`p₁₁` are transaction-local.
+
+```agda
+UTXOW-cong : ∀ {Γ : UTxOEnv} {u u′ u″ : UTxOState} {tx}
+  → Γ ⊢ u ⇀⦇ tx ,UTXOW⦈ u′ → u ≈ᵘ u″
+  → ∃[ u‴ ] (Γ ⊢ u″ ⇀⦇ tx ,UTXOW⦈ u‴ × u′ ≈ᵘ u‴)
+UTXOW-cong {Γ} {u = u} {u″ = u″} {tx = tx}
+  (UTXOW-inductive (p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , p₁₂ , utxos)) e
+  with UTXO-cong utxos e
+... | u‴ , utxos′ , out≈ =
+  u‴ ,
+  UTXOW-inductive
+    ( p₁
+    , (λ {sc} sc∈″ h∈″ →
+         p₂ (mapPartial-cong {f = toP1Script} (txscripts-cong tx {u = uu} {u″ = uu″} eq) .proj₂ sc∈″)
+            (mapPartial-cong {f = isScriptObj ∘ proj₂} (credsNeeded-cong txb {u = uu} {u″ = uu″} eq) .proj₂ h∈″))
+    , (λ a∈″ → p₃ (Properties.∪-cong (mapPartial-cong {f = isKeyHashObj ∘ proj₂} (credsNeeded-cong txb {u = uu} {u″ = uu″} eq))
+                                     SetSetoid.refl .proj₂ a∈″))
+    , SetSetoid.trans
+        (SetSetoid.sym (＼-cong (mapPartial-cong {f = isScriptObj ∘ proj₂} (credsNeeded-cong txb {u = uu} {u″ = uu″} eq))
+                               (Properties.map-≡ᵉ {f = hash} (refScripts-cong tx {u = uu} {u″ = uu″} eq))))
+        p₄
+    , (λ a∈″ → p₅ (idh≈ .proj₂ a∈″))
+    , (λ a∈ → Properties.∪-cong idh≈
+                (Properties.∪-cong SetSetoid.refl ridh≈) .proj₁ (p₆ a∈))
+    , SetSetoid.trans p₇
+        (mapPartial-cong-fg
+          (λ x → cong (λ z → if z then rdptr txb (proj₁ x) else nothing)
+                      (credentialToP2Script-reorder {u = uu} {u″ = uu″} eq tx (proj₂ x)))
+          (credsNeeded-cong txb {u = uu} {u″ = uu″} eq))
+    , (λ {x} x∈″ → let (xc , xa) = Equivalence.from ∈-∩ (p₈ (lang≈ .proj₂ x∈″))
+                   in Equivalence.to ∈-∩ (xc , subst (x ∈_) (allowedLanguages-cong tx {u = uu} {u″ = uu″} eq) xa))
+    , (λ {t} t∈″ → TxOutSpendable-PlutusV1-cong {u = uu} {u″ = uu″} eq tx t (p₉  (rng≈ .proj₂ t∈″)))
+    , (λ {t} t∈″ → TxOutSpendable-PlutusV2-cong {u = uu} {u″ = uu″} eq tx t (p₁₀ (rng≈ .proj₂ t∈″)))
+    , p₁₁
+    , trans p₁₂ (hashScriptIntegrity-reorder lang≈)
+    , utxos′ ) ,
+  out≈
+  where
+    uu  = UTxOState.utxo u
+    uu″ = UTxOState.utxo u″
+    txb = Tx.body tx
+    eq  = e .utxoᵉ
+    insS  = TxBody.txIns txb
+    rinsS = TxBody.refInputs txb
+    idh≈ = mapPartial-cong-fg
+             (λ txout → cong (λ z → if z then txOutToDataHash txout else nothing)
+                             (txOutToP2Script-reorder {u = uu} {u″ = uu″} eq tx txout))
+             (Properties.map-≡ᵉ (resᵐ-cong {m = uu} {m' = uu″} {X = insS} {Y = insS} eq SetSetoid.refl))
+    ridh≈ : mapPartial txOutToDataHash (range (uu ∣ rinsS)) ≡ᵉ mapPartial txOutToDataHash (range (uu″ ∣ rinsS))
+    ridh≈ = mapPartial-cong {f = txOutToDataHash}
+              (Properties.map-≡ᵉ {f = proj₂} (resᵐ-cong {m = uu} {m' = uu″} {X = rinsS} {Y = rinsS} eq SetSetoid.refl))
+    lang≈ : languages tx uu  (mapPartial (isScriptObj ∘ proj₂) (credsNeeded uu  txb)) ≡ᵉ
+            languages tx uu″ (mapPartial (isScriptObj ∘ proj₂) (credsNeeded uu″ txb))
+    lang≈ = languages-cong tx {u = uu} {u″ = uu″} eq
+              (mapPartial-cong {f = isScriptObj ∘ proj₂} (credsNeeded-cong txb {u = uu} {u″ = uu″} eq))
+    rng≈  : range (uu ∣ insS) ≡ᵉ range (uu″ ∣ insS)
+    rng≈  = Properties.map-≡ᵉ {f = proj₂} (resᵐ-cong {m = uu} {m' = uu″} {X = insS} {Y = insS} eq SetSetoid.refl)
 ```
 
 ## Permutation scaffolding
@@ -1185,41 +1303,391 @@ LEDGERS-cong (BS-ind st rest) s≈ =
 ```
 
 Reachability invariance, up to `_≈ˡ_`: a permutation of the signal list reaches
-an extensionally-equal state.  The `swap` case applies `LEDGER-swap`{.AgdaFunction}
-to trade the two heads, then `LEDGERS-cong`{.AgdaFunction} to continue the tail
-from the resulting `_≈ˡ_`-equal state.
+an extensionally-equal state.
+
+## Per-step UTxO extraction
+
+For a phase-2-valid transaction the `LEDGER` step updates the `utxo` field by
+exactly `applyUˢ tx = (_ ∣ txIns ᶜ) ∪ˡ outs`, read off the `Scripts-Yes` `UTXOS`
+output (drilling `LEDGER-V → UTXOW⇒UTXO → UTXO-inductive → UTXOS`):
 
 ```agda
-↭-reach : AllPairs Indep l₁ → l₁ ↭ l₂ → Γ ⊢ s ⇀⦇ l₁ ,LEDGERS⦈ s′
-        → ∃[ s″ ] (Γ ⊢ s ⇀⦇ l₂ ,LEDGERS⦈ s″ × s′ ≈ˡ s″)
-↭-reach ap ↭-rfl st = -, st , ≈ˡ-refl
-↭-reach (_ ∷ ap) (prep x p) (BS-ind st rest) =
-  let (_ , rest′ , s′≈) = ↭-reach ap p rest
-  in  -, BS-ind st rest′ , s′≈
-↭-reach ((ixy ∷ _) ∷ _ ∷ ap) (swap x y p) (BS-ind st₁ (BS-ind st₂ rest)) =
-  let (_ , _ , st₂′ , st₁′ , sb≈) = LEDGER-swap ixy st₁ st₂
-      (_ , restc , s′≈c)          = LEDGERS-cong rest (≈ˡ-sym sb≈)
-      (_ , restr , c≈r)           = ↭-reach ap p restc
-  in  -, BS-ind st₂′ (BS-ind st₁′ restr) , ≈ˡ-trans s′≈c c≈r
-↭-reach ap (↭-trans p q) st =
-  let (_ , st′ , s′≈) = ↭-reach ap p st
-      (_ , st″ , r≈)  = ↭-reach (↭-AllPairs p ap) q st′
-  in  -, st″ , ≈ˡ-trans s′≈ r≈
+private
+  applyUˢ : Tx → UTxO → UTxO
+  applyUˢ t x = (x ∣ ins t ᶜ) ∪ˡ outs (t .Tx.body)
+
+LEDGER-V⇒applyU :
+    Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s′ → Tx.isValid tx ≡ true
+  → LState.utxoSt s′ .UTxOState.utxo ≡ applyUˢ tx (LState.utxoSt s .UTxOState.utxo)
+LEDGER-V⇒applyU
+  (LEDGER-V (_ , UTXOW⇒UTXO (UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ (Scripts-Yes _)) , _ , _)) _ = refl
+LEDGER-V⇒applyU
+  (LEDGER-V (_ , UTXOW⇒UTXO (UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ (Scripts-No (_ , ¬v))) , _ , _)) v
+  = ⊥-elim (case trans (sym v) ¬v of λ ())
+LEDGER-V⇒applyU (LEDGER-I⋯ i _) v = ⊥-elim (case trans (sym v) i of λ ())
 ```
 
-## The reordering theorem
+## Net accumulators are permutation-invariant
 
-Two reorderings of a pairwise-independent transaction list reach
-extensionally-equal `LState`s.  (Determinism gives propositional `_≡_` for the
-*same* list `l₂`, which `≡⟹≈ˡ`{.AgdaFunction} refines into `_≈ˡ_`.)
+The order-independence of every "accumulate over the transaction list" field
+rests on a single fact: a `_∪_`-fold of per-transaction sets is invariant under
+permutation (`_∪_` is commutative and associative).  This is the reusable core
+behind the `utxo` net form `u₀ ∪ ⋃outs ∖ ⋃ins` and the disjoint-key certificate
+accumulators.
 
 ```agda
+⋃map : ∀ {A : Type} ⦃ _ : DecEq A ⦄ → (Tx → ℙ A) → List Tx → ℙ A
+⋃map f []       = ∅
+⋃map f (t ∷ ts) = f t ∪ ⋃map f ts
+
+⋃map-↭ : ∀ {A : Type} ⦃ _ : DecEq A ⦄ {f : Tx → ℙ A} {l₁ l₂ : List Tx}
+  → l₁ ↭ l₂ → ⋃map f l₁ ≡ᵉ ⋃map f l₂
+⋃map-↭ ↭-rfl              = SetSetoid.refl
+⋃map-↭ {f = f} (prep x p) = Properties.∪-cong SetSetoid.refl (⋃map-↭ {f = f} p)
+⋃map-↭ {f = f} (swap x y p) =
+  SetSetoid.trans (SetSetoid.sym (Properties.∪-assoc _ _ _))
+    (SetSetoid.trans (Properties.∪-cong Properties.∪-sym SetSetoid.refl)
+      (SetSetoid.trans (Properties.∪-assoc _ _ _)
+        (Properties.∪-cong SetSetoid.refl
+          (Properties.∪-cong SetSetoid.refl (⋃map-↭ {f = f} p)))))
+⋃map-↭ (↭-trans p q)     = SetSetoid.trans (⋃map-↭ p) (⋃map-↭ q)
+```
+
+Brick (a): a key-restriction pushes across a left-union when the removed keys
+(`X = ins t`) are disjoint from the added map's domain (later outputs):
+
+```agda
+res-∪ˡ-out : {u M : UTxO} {X : ℙ TxIn}
+  → disjoint X (dom (M ˢ))
+  → ((u ∣ X ᶜ) ∪ˡ M) ˢ ≡ᵉ ((u ∪ˡ M) ∣ X ᶜ) ˢ
+res-∪ˡ-out {u} {M} {X} disj = ⊆₁ , ⊆₂
+  where
+    ⊆₁ : ((u ∣ X ᶜ) ∪ˡ M) ˢ ⊆ ((u ∪ˡ M) ∣ X ᶜ) ˢ
+    ⊆₁ h with ∈-∪ˡ⁻ {m = u ∣ X ᶜ} {M} h
+    ... | inj₁ p∈uX =
+            let (a∉X , p∈u) = Equivalence.from ∈-filter p∈uX
+            in  Equivalence.to ∈-filter (a∉X , ∈-∪ˡ⁺ {m = u} {M} (inj₁ p∈u))
+    ... | inj₂ (a∉domuX , p∈M) =
+            let a∉X    = λ a∈X → disj a∈X (Equivalence.to dom∈ (-, p∈M))
+                a∉domu = λ a∈domu → a∉domuX (∈-resᶜ-dom⁺ (a∉X , Equivalence.from dom∈ a∈domu))
+            in  Equivalence.to ∈-filter (a∉X , ∈-∪ˡ⁺ {m = u} {M} (inj₂ (a∉domu , p∈M)))
+    ⊆₂ : ((u ∪ˡ M) ∣ X ᶜ) ˢ ⊆ ((u ∣ X ᶜ) ∪ˡ M) ˢ
+    ⊆₂ h = let (a∉X , p∈uM) = Equivalence.from ∈-filter h
+           in  case ∈-∪ˡ⁻ {m = u} {M} p∈uM of λ where
+                 (inj₁ p∈u)            →
+                   ∈-∪ˡ⁺ {m = u ∣ X ᶜ} {M} (inj₁ (Equivalence.to ∈-filter (a∉X , p∈u)))
+                 (inj₂ (a∉domu , p∈M)) →
+                   ∈-∪ˡ⁺ {m = u ∣ X ᶜ} {M}
+                     (inj₂ ((λ a∈domuX → a∉domu (res-comp-domᵐ a∈domuX)) , p∈M))
+```
+
+`_∪ˡ_` is leftmost-wins, hence unconditionally associative and right-unital:
+
+```agda
+∪ˡ-∅ʳ : {m : UTxO} → (m ∪ˡ ∅ᵐ) ˢ ≡ᵉ m ˢ
+∪ˡ-∅ʳ {m} = ⊆₁ , λ p∈m → ∈-∪ˡ⁺ {m = m} {∅ᵐ} (inj₁ p∈m)
+  where
+    ⊆₁ : (m ∪ˡ ∅ᵐ) ˢ ⊆ m ˢ
+    ⊆₁ h with ∈-∪ˡ⁻ {m = m} {∅ᵐ} h
+    ... | inj₁ p∈m       = p∈m
+    ... | inj₂ (_ , p∈∅) = ⊥-elim (Properties.∉-∅ p∈∅)
+
+∪ˡ-assoc : {a b c : UTxO} → ((a ∪ˡ b) ∪ˡ c) ˢ ≡ᵉ (a ∪ˡ (b ∪ˡ c)) ˢ
+∪ˡ-assoc {a} {b} {c} = ⊆₁ , ⊆₂
+  where
+    ∉domˡ : ∀ {m m' : UTxO} {k} → k ∉ dom ((m ∪ˡ m') ˢ) → k ∉ dom (m ˢ)
+    ∉domˡ {m} {m'} k∉ k∈ = k∉ (dom-∪ˡ {m = m} {m'} .proj₂ (Equivalence.to ∈-∪ (inj₁ k∈)))
+    ∉domʳ : ∀ {m m' : UTxO} {k} → k ∉ dom ((m ∪ˡ m') ˢ) → k ∉ dom (m' ˢ)
+    ∉domʳ {m} {m'} k∉ k∈ = k∉ (dom-∪ˡ {m = m} {m'} .proj₂ (Equivalence.to ∈-∪ (inj₂ k∈)))
+    ⊆₁ : ((a ∪ˡ b) ∪ˡ c) ˢ ⊆ (a ∪ˡ (b ∪ˡ c)) ˢ
+    ⊆₁ h with ∈-∪ˡ⁻ {m = a ∪ˡ b} {c} h
+    ... | inj₁ p∈ab with ∈-∪ˡ⁻ {m = a} {b} p∈ab
+    ...   | inj₁ p∈a           = ∈-∪ˡ⁺ {m = a} {b ∪ˡ c} (inj₁ p∈a)
+    ...   | inj₂ (p∉a , p∈b)   = ∈-∪ˡ⁺ {m = a} {b ∪ˡ c} (inj₂ (p∉a , ∈-∪ˡ⁺ {m = b} {c} (inj₁ p∈b)))
+    ⊆₁ h | inj₂ (p∉ab , p∈c)  =
+            ∈-∪ˡ⁺ {m = a} {b ∪ˡ c}
+              (inj₂ (∉domˡ {a} {b} p∉ab , ∈-∪ˡ⁺ {m = b} {c} (inj₂ (∉domʳ {a} {b} p∉ab , p∈c))))
+    ⊆₂ : (a ∪ˡ (b ∪ˡ c)) ˢ ⊆ ((a ∪ˡ b) ∪ˡ c) ˢ
+    ⊆₂ h with ∈-∪ˡ⁻ {m = a} {b ∪ˡ c} h
+    ... | inj₁ p∈a           = ∈-∪ˡ⁺ {m = a ∪ˡ b} {c} (inj₁ (∈-∪ˡ⁺ {m = a} {b} (inj₁ p∈a)))
+    ... | inj₂ (p∉a , p∈bc) with ∈-∪ˡ⁻ {m = b} {c} p∈bc
+    ...   | inj₁ p∈b         = ∈-∪ˡ⁺ {m = a ∪ˡ b} {c} (inj₁ (∈-∪ˡ⁺ {m = a} {b} (inj₂ (p∉a , p∈b))))
+    ...   | inj₂ (p∉b , p∈c) =
+              ∈-∪ˡ⁺ {m = a ∪ˡ b} {c}
+                (inj₂ ((λ p∈domab → [ p∉a , p∉b ]′ (Equivalence.from ∈-∪ (dom-∪ˡ {m = a} {b} .proj₁ p∈domab))) , p∈c))
+```
+
+### The UTxO closed form (paper Thm 5.2.1)
+
+The fold of per-transaction updates equals the order-independent net
+`(u ∪ ⋃outs) ∖ ⋃ins`, given `Ins#Outs` (each tx's inputs are disjoint from the
+outputs of itself and all later txs — a replay-protection consequence):
+
+```agda
+private
+  outsAll : List Tx → UTxO
+  outsAll []       = ∅ᵐ
+  outsAll (t ∷ ts) = outs (t .Tx.body) ∪ˡ outsAll ts
+
+  utxoᶠ : UTxO → List Tx → UTxO
+  utxoᶠ u []       = u
+  utxoᶠ u (t ∷ ts) = utxoᶠ (applyUˢ t u) ts
+
+  netU : UTxO → List Tx → UTxO
+  netU u l = (u ∪ˡ outsAll l) ∣ ⋃map ins l ᶜ
+
+  Ins#Outs : List Tx → Type
+  Ins#Outs []       = ⊤
+  Ins#Outs (t ∷ ts) = disjoint (ins t) (dom ((outs (t .Tx.body) ∪ˡ outsAll ts) ˢ)) × Ins#Outs ts
+
+utxoᶠ-net : ∀ {u} l → Ins#Outs l → (utxoᶠ u l) ˢ ≡ᵉ (netU u l) ˢ
+utxoᶠ-net {u} []       _          = SetSetoid.sym (SetSetoid.trans res-∅ᶜ (∪ˡ-∅ʳ {m = u}))
+utxoᶠ-net {u} (t ∷ ts) (hd , rest) =
+  SetSetoid.trans (utxoᶠ-net {applyUˢ t u} ts rest)
+    (SetSetoid.trans (Properties.filter-cong (∪ˡ-assoc {u ∣ ins t ᶜ} {outs (t .Tx.body)} {outsAll ts}))
+      (SetSetoid.trans (Properties.filter-cong (res-∪ˡ-out {u} {outs (t .Tx.body) ∪ˡ outsAll ts} {ins t} hd))
+        (res-merge {u ∪ˡ (outs (t .Tx.body) ∪ˡ outsAll ts)} {ins t} {⋃map ins ts})))
+```
+
+The trace collects the fold: iterating `LEDGER-V⇒applyU` over a valid execution of an
+all-phase-2-valid list yields `utxo s′ = utxoᶠ (utxo s) l`.
+
+```agda
+LEDGERS⇒utxoᶠ : ∀ {l} → Allᴸ.All (λ t → Tx.isValid t ≡ true) l
+  → Γ ⊢ s ⇀⦇ l ,LEDGERS⦈ s′
+  → LState.utxoSt s′ .UTxOState.utxo ≡ utxoᶠ (LState.utxoSt s .UTxOState.utxo) l
+LEDGERS⇒utxoᶠ Allᴸ.[]        (BS-base Id-nop) = refl
+LEDGERS⇒utxoᶠ {l = t ∷ ts} (v Allᴸ.∷ vs) (BS-ind st rest) =
+  trans (LEDGERS⇒utxoᶠ vs rest) (cong (λ x → utxoᶠ x ts) (LEDGER-V⇒applyU st v))
+```
+
+### The net UTxO is permutation-invariant
+
+`netU` reads the list only through `outsAll` (a `∪ˡ`-fold) and `⋃map ins` (a `∪`-fold).
+The latter is `⋃map-↭`; the former needs pairwise-disjoint outputs (`DisjOuts`, i.e.
+`replay-outs-disjoint`) so the left-biased union commutes:
+
+```agda
+DisjOuts : List Tx → Type
+DisjOuts = AllPairs (λ t t′ → disjoint (dom (outs (t .Tx.body) ˢ)) (dom (outs (t′ .Tx.body) ˢ)))
+
+↭-DisjOuts : l₁ ↭ l₂ → DisjOuts l₁ → DisjOuts l₂
+↭-DisjOuts ↭-rfl          ap              = ap
+↭-DisjOuts (prep x p)     (a ∷ ap)        = All-resp-↭ p a ∷ ↭-DisjOuts p ap
+↭-DisjOuts (swap x y p)   ((axy ∷ ax) ∷ (ay ∷ ap)) =
+  (Properties.disjoint-sym axy ∷ All-resp-↭ p ay) ∷ (All-resp-↭ p ax ∷ ↭-DisjOuts p ap)
+↭-DisjOuts (↭-trans p q)  ap              = ↭-DisjOuts q (↭-DisjOuts p ap)
+
+outsAll-↭ : l₁ ↭ l₂ → DisjOuts l₁ → (outsAll l₁) ˢ ≡ᵉ (outsAll l₂) ˢ
+outsAll-↭ ↭-rfl        _                  = SetSetoid.refl
+outsAll-↭ {l₁ = _ ∷ xs} {l₂ = _ ∷ ys} (prep x p) (_ ∷ ap) =
+  ∪ˡ-cong {m = outs (x .Tx.body)} {m' = outsAll xs} {m'' = outs (x .Tx.body)} {m''' = outsAll ys}
+    SetSetoid.refl (outsAll-↭ p ap)
+outsAll-↭ {l₁ = _ ∷ _ ∷ xs} {l₂ = _ ∷ _ ∷ ys} (swap x y p) ((axy ∷ _) ∷ (_ ∷ ap)) =
+  SetSetoid.trans (SetSetoid.sym (∪ˡ-assoc {outs (x .Tx.body)} {outs (y .Tx.body)} {outsAll xs}))
+    (SetSetoid.trans
+      (∪ˡ-cong {m = outs (x .Tx.body) ∪ˡ outs (y .Tx.body)} {m' = outsAll xs}
+               {m'' = outs (y .Tx.body) ∪ˡ outs (x .Tx.body)} {m''' = outsAll xs}
+        (∪ˡ-sym-disjoint {m = outs (x .Tx.body)} {m′ = outs (y .Tx.body)} axy) SetSetoid.refl)
+      (SetSetoid.trans (∪ˡ-assoc {outs (y .Tx.body)} {outs (x .Tx.body)} {outsAll xs})
+        (∪ˡ-cong {m = outs (y .Tx.body)} {m' = outs (x .Tx.body) ∪ˡ outsAll xs}
+                 {m'' = outs (y .Tx.body)} {m''' = outs (x .Tx.body) ∪ˡ outsAll ys} SetSetoid.refl
+          (∪ˡ-cong {m = outs (x .Tx.body)} {m' = outsAll xs}
+                   {m'' = outs (x .Tx.body)} {m''' = outsAll ys} SetSetoid.refl (outsAll-↭ p ap)))))
+outsAll-↭ (↭-trans p q) ap                =
+  SetSetoid.trans (outsAll-↭ p ap) (outsAll-↭ q (↭-DisjOuts p ap))
+
+resᶜ-set-cong : {m : UTxO} {X Y : ℙ TxIn} → X ≡ᵉ Y → (m ∣ X ᶜ) ˢ ≡ᵉ (m ∣ Y ᶜ) ˢ
+resᶜ-set-cong {m} {X} {Y} X≡Y = ⊆₁ , ⊆₂
+  where
+    ⊆₁ : (m ∣ X ᶜ) ˢ ⊆ (m ∣ Y ᶜ) ˢ
+    ⊆₁ h = let (a∉X , hm) = Equivalence.from ∈-filter h
+           in  Equivalence.to ∈-filter ((λ a∈Y → a∉X (X≡Y .proj₂ a∈Y)) , hm)
+    ⊆₂ : (m ∣ Y ᶜ) ˢ ⊆ (m ∣ X ᶜ) ˢ
+    ⊆₂ h = let (a∉Y , hm) = Equivalence.from ∈-filter h
+           in  Equivalence.to ∈-filter ((λ a∈X → a∉Y (X≡Y .proj₁ a∈X)) , hm)
+
+netU-↭ : ∀ {u} → l₁ ↭ l₂ → DisjOuts l₁ → (netU u l₁) ˢ ≡ᵉ (netU u l₂) ˢ
+netU-↭ {l₁ = l₁} {l₂ = l₂} {u = u} p disj =
+  SetSetoid.trans
+    (Properties.filter-cong
+      (∪ˡ-cong {m = u} {m' = outsAll l₁} {m'' = u} {m''' = outsAll l₂}
+        SetSetoid.refl (outsAll-↭ p disj)))
+    (resᶜ-set-cong {m = u ∪ˡ outsAll l₂} (⋃map-↭ {f = ins} p))
+```
+
+### The `utxo` field is reorder-invariant
+
+`Ins#Outs` is the remaining replay-protection consequence (each transaction's inputs
+are disjoint from its own and all later transactions' outputs — inputs pre-exist while
+outputs are freshly `txId`-keyed; Cor 5.1.2 / well-foundedness).  `DisjOuts` is exactly
+`replay-outs-disjoint`.  Chaining extraction, the closed form, and `netU-↭` gives the
+`utxo` component of `_≈ˡ_` for two valid reorderings of an all-phase-2-valid list:
+
+```agda
+postulate
+  Ins#Outs-exec : Γ ⊢ s ⇀⦇ l ,LEDGERS⦈ s′ → Ins#Outs l
+
+LEDGERS-utxo≈ : Allᴸ.All (λ t → Tx.isValid t ≡ true) l₁ → l₁ ↭ l₂
+  → Γ ⊢ s ⇀⦇ l₁ ,LEDGERS⦈ s₁ → Γ ⊢ s ⇀⦇ l₂ ,LEDGERS⦈ s₂
+  → (LState.utxoSt s₁ .UTxOState.utxo) ˢ ≡ᵉ (LState.utxoSt s₂ .UTxOState.utxo) ˢ
+LEDGERS-utxo≈ {s = s} v₁ p st₁ st₂ =
+  let u = LState.utxoSt s .UTxOState.utxo in
+  SetSetoid.trans (SetSetoid.reflexive (cong (λ m → m ˢ) (LEDGERS⇒utxoᶠ v₁ st₁)))
+    (SetSetoid.trans (utxoᶠ-net {u = u} _ (Ins#Outs-exec st₁))
+      (SetSetoid.trans (netU-↭ {u = u} p (replay-outs-disjoint st₁))
+        (SetSetoid.trans (SetSetoid.sym (utxoᶠ-net {u = u} _ (Ins#Outs-exec st₂)))
+          (SetSetoid.reflexive (cong (λ m → m ˢ) (sym (LEDGERS⇒utxoᶠ (All-resp-↭ p v₁) st₂)))))))
+```
+
+### The scalar fields `fees` and `donations` are reorder-invariant
+
+Each sums a per-transaction quantity; the sum is permutation-invariant by
+commutativity of `_+_`.  The machinery is generic in the summed function `g`.
+
+```agda
+private
+  Σg : (Tx → ℕ) → List Tx → ℕ
+  Σg g []       = 0
+  Σg g (t ∷ ts) = g t + Σg g ts
+
+  scalarᶠ : (Tx → ℕ) → ℕ → List Tx → ℕ
+  scalarᶠ g a []       = a
+  scalarᶠ g a (t ∷ ts) = scalarᶠ g (a + g t) ts
+
+  scalarᶠ≡ : ∀ {g} a l → scalarᶠ g a l ≡ a + Σg g l
+  scalarᶠ≡     a []       = sym (+-identityʳ a)
+  scalarᶠ≡ {g} a (t ∷ ts) = trans (scalarᶠ≡ (a + g t) ts) (+-assoc a (g t) (Σg g ts))
+
+Σg-↭ : ∀ {g} {l₁ l₂} → l₁ ↭ l₂ → Σg g l₁ ≡ Σg g l₂
+Σg-↭ ↭-rfl                              = refl
+Σg-↭ {g} (prep x p)                     = cong (g x +_) (Σg-↭ {g} p)
+Σg-↭ {g} {l₁ = _ ∷ _ ∷ xs} (swap x y p) =
+  trans (sym (+-assoc (g x) (g y) (Σg g xs)))
+    (trans (cong (_+ Σg g xs) (+-comm (g x) (g y)))
+      (trans (+-assoc (g y) (g x) (Σg g xs))
+        (cong (λ z → g y + (g x + z)) (Σg-↭ {g} p))))
+Σg-↭ (↭-trans p q)                      = trans (Σg-↭ p) (Σg-↭ q)
+
+private
+  feeg dong : Tx → ℕ
+  feeg t = TxBody.txFee      (t .Tx.body)
+  dong t = TxBody.txDonation (t .Tx.body)
+
+LEDGER-V⇒feeΔ : Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s′ → Tx.isValid tx ≡ true
+  → LState.utxoSt s′ .UTxOState.fees ≡ LState.utxoSt s .UTxOState.fees + feeg tx
+LEDGER-V⇒feeΔ
+  (LEDGER-V (_ , UTXOW⇒UTXO (UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ (Scripts-Yes _)) , _ , _)) _ = refl
+LEDGER-V⇒feeΔ
+  (LEDGER-V (_ , UTXOW⇒UTXO (UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ (Scripts-No (_ , ¬v))) , _ , _)) v
+  = ⊥-elim (case trans (sym v) ¬v of λ ())
+LEDGER-V⇒feeΔ (LEDGER-I⋯ i _) v = ⊥-elim (case trans (sym v) i of λ ())
+
+LEDGER-V⇒donΔ : Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s′ → Tx.isValid tx ≡ true
+  → LState.utxoSt s′ .UTxOState.donations ≡ LState.utxoSt s .UTxOState.donations + dong tx
+LEDGER-V⇒donΔ
+  (LEDGER-V (_ , UTXOW⇒UTXO (UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ (Scripts-Yes _)) , _ , _)) _ = refl
+LEDGER-V⇒donΔ
+  (LEDGER-V (_ , UTXOW⇒UTXO (UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ (Scripts-No (_ , ¬v))) , _ , _)) v
+  = ⊥-elim (case trans (sym v) ¬v of λ ())
+LEDGER-V⇒donΔ (LEDGER-I⋯ i _) v = ⊥-elim (case trans (sym v) i of λ ())
+
+LEDGERS⇒feesᶠ : ∀ {l} → Allᴸ.All (λ t → Tx.isValid t ≡ true) l → Γ ⊢ s ⇀⦇ l ,LEDGERS⦈ s′
+  → LState.utxoSt s′ .UTxOState.fees ≡ scalarᶠ feeg (LState.utxoSt s .UTxOState.fees) l
+LEDGERS⇒feesᶠ Allᴸ.[]        (BS-base Id-nop) = refl
+LEDGERS⇒feesᶠ {l = t ∷ ts} (v Allᴸ.∷ vs) (BS-ind st rest) =
+  trans (LEDGERS⇒feesᶠ vs rest) (cong (λ a → scalarᶠ feeg a ts) (LEDGER-V⇒feeΔ st v))
+
+LEDGERS⇒donᶠ : ∀ {l} → Allᴸ.All (λ t → Tx.isValid t ≡ true) l → Γ ⊢ s ⇀⦇ l ,LEDGERS⦈ s′
+  → LState.utxoSt s′ .UTxOState.donations ≡ scalarᶠ dong (LState.utxoSt s .UTxOState.donations) l
+LEDGERS⇒donᶠ Allᴸ.[]        (BS-base Id-nop) = refl
+LEDGERS⇒donᶠ {l = t ∷ ts} (v Allᴸ.∷ vs) (BS-ind st rest) =
+  trans (LEDGERS⇒donᶠ vs rest) (cong (λ a → scalarᶠ dong a ts) (LEDGER-V⇒donΔ st v))
+
+LEDGERS-fees≈ : Allᴸ.All (λ t → Tx.isValid t ≡ true) l₁ → l₁ ↭ l₂
+  → Γ ⊢ s ⇀⦇ l₁ ,LEDGERS⦈ s₁ → Γ ⊢ s ⇀⦇ l₂ ,LEDGERS⦈ s₂
+  → LState.utxoSt s₁ .UTxOState.fees ≡ LState.utxoSt s₂ .UTxOState.fees
+LEDGERS-fees≈ {l₁ = l₁} {l₂ = l₂} {s = s} v₁ p st₁ st₂ =
+  let f₀ = LState.utxoSt s .UTxOState.fees in
+  trans (LEDGERS⇒feesᶠ v₁ st₁)
+    (trans (scalarᶠ≡ f₀ l₁)
+      (trans (cong (f₀ +_) (Σg-↭ {feeg} p))
+        (trans (sym (scalarᶠ≡ f₀ l₂)) (sym (LEDGERS⇒feesᶠ (All-resp-↭ p v₁) st₂)))))
+
+LEDGERS-don≈ : Allᴸ.All (λ t → Tx.isValid t ≡ true) l₁ → l₁ ↭ l₂
+  → Γ ⊢ s ⇀⦇ l₁ ,LEDGERS⦈ s₁ → Γ ⊢ s ⇀⦇ l₂ ,LEDGERS⦈ s₂
+  → LState.utxoSt s₁ .UTxOState.donations ≡ LState.utxoSt s₂ .UTxOState.donations
+LEDGERS-don≈ {l₁ = l₁} {l₂ = l₂} {s = s} v₁ p st₁ st₂ =
+  let d₀ = LState.utxoSt s .UTxOState.donations in
+  trans (LEDGERS⇒donᶠ v₁ st₁)
+    (trans (scalarᶠ≡ d₀ l₁)
+      (trans (cong (d₀ +_) (Σg-↭ {dong} p))
+        (trans (sym (scalarᶠ≡ d₀ l₂)) (sym (LEDGERS⇒donᶠ (All-resp-↭ p v₁) st₂)))))
+```
+
+### Generic: a locally-commuting `foldl` is permutation-invariant
+
+Every remaining field (`deposits` and the certificate maps) updates by a per-transaction
+operation that pairwise-commutes when the two transactions are `Indep`.  This is the
+reusable engine (Mazurkiewicz-style): given commutation on `Indep` pairs and congruence
+in the accumulator, a left fold is invariant under any permutation whose elements are
+`AllPairs Indep`.
+
+```agda
+module _ {M : Type} (_≈ᴹ_ : M → M → Type)
+  (≈ᴹ-refl  : ∀ {m} → m ≈ᴹ m)
+  (≈ᴹ-trans : ∀ {a b c} → a ≈ᴹ b → b ≈ᴹ c → a ≈ᴹ c)
+  (op       : M → Tx → M)
+  (op-congˡ : ∀ {a b} t → a ≈ᴹ b → op a t ≈ᴹ op b t)
+  (op-comm  : ∀ {m x y} → Indep x y → op (op m x) y ≈ᴹ op (op m y) x)
+  where
+  private
+    foldl-seed : ∀ {a b} l → a ≈ᴹ b → foldl op a l ≈ᴹ foldl op b l
+    foldl-seed []       a≈b = a≈b
+    foldl-seed (t ∷ ts) a≈b = foldl-seed ts (op-congˡ t a≈b)
+
+  foldl-↭ : ∀ m {l₁ l₂} → AllPairs Indep l₁ → l₁ ↭ l₂ → foldl op m l₁ ≈ᴹ foldl op m l₂
+  foldl-↭ m _                        ↭-rfl        = ≈ᴹ-refl
+  foldl-↭ m (_ ∷ ap)                 (prep x p)   = foldl-↭ (op m x) ap p
+  foldl-↭ m {l₁ = _ ∷ _ ∷ xs} ((ixy ∷ _) ∷ (_ ∷ ap)) (swap x y p) =
+    ≈ᴹ-trans (foldl-seed xs (op-comm ixy)) (foldl-↭ (op (op m y) x) ap p)
+  foldl-↭ m ap                       (↭-trans p q) =
+    ≈ᴹ-trans (foldl-↭ m ap p) (foldl-↭ m (↭-AllPairs p ap) q)
+```
+
+## The reordering theorem (net-effect form)
+
+Unlike the earlier swap-based reachability argument (which reconstructed a valid
+`l₂`-execution from the `l₁`-one and so needed disjoint inputs/outputs to keep
+each swap *valid*), the theorem now takes **both executions as given** and
+compares their results directly, field by field — Vinogradova & Sorokin
+(LSFA'24), Thm 5.2.1.  Under the three hypotheses (`AllPairs Indep`,
+`All NoGov`, and both `LEDGERS` premises) each `LState` field is a function of
+the *set* of transactions, not their order:
+
+*   `utxo` collapses to the order-independent `u₀ ∪ ⋃outs ∖ ⋃ins`; the
+    `replay-*` postulates make the removes and adds non-interfering.
+*   the certificate maps touch pairwise-disjoint keys (`Indep`), so their per-tx
+    updates commute (the cert map-algebra `delegate-comm`/`reg-comm`/… above);
+    `deposits`/`fees`/`donations` accumulate commutatively.
+*   `govSt` is inert under `NoGov` (empty `GOVS` signal, and constant `dom dreps`
+    keeps `rmOrphanDRepVotes` and `activeVDelegs` fixed every step).
+
+The remaining obligation is this net-effect invariance itself, isolated as a
+single postulate consuming the replay-protection facts above; the field-wise
+commutation lemmas already proven in this module are its ingredients.
+
+```agda
+postulate
+  LEDGERS-net-↭ :
+      AllPairs Indep l₁ → Allᴸ.All NoGov l₁ → l₁ ↭ l₂
+    → Γ ⊢ s ⇀⦇ l₁ ,LEDGERS⦈ s₁ → Γ ⊢ s ⇀⦇ l₂ ,LEDGERS⦈ s₂
+    → s₁ ≈ˡ s₂
+
 LEDGERS-reorder :
-    AllPairs Indep l₁ → l₁ ↭ l₂
+    AllPairs Indep l₁ → Allᴸ.All NoGov l₁ → l₁ ↭ l₂
   → Γ ⊢ s ⇀⦇ l₁ ,LEDGERS⦈ s₁
   → Γ ⊢ s ⇀⦇ l₂ ,LEDGERS⦈ s₂
   → s₁ ≈ˡ s₂
-LEDGERS-reorder ap p step₁ step₂ =
-  let (_ , step₂′ , s₁≈) = ↭-reach ap p step₁
-  in  ≈ˡ-trans s₁≈ (≡⟹≈ˡ (LEDGERS-deterministic step₂′ step₂))
+LEDGERS-reorder = LEDGERS-net-↭
 ```
