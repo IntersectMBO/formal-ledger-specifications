@@ -711,22 +711,6 @@ allowed to inspect utxo for its inputs.
   lookupScriptHash : ScriptHash → Tx txLevel → UTxO → Maybe Script
   lookupScriptHash sh tx utxo = lookupHash sh (getTxScripts tx utxo)
 
-  -- Direct deposits from different sub-transactions targeting the same credential
-  -- should be summed using ∪⁺ (union-with-addition).
-  allDirectDeposits : TopLevelTx → DirectDeposits
-  allDirectDeposits txTop =
-    foldl (λ acc txSub → acc ∪⁺ DirectDepositsOf txSub)
-          (DirectDepositsOf txTop)
-          (SubTransactionsOf txTop)
-
-  -- Batch-wide withdrawal aggregation: sums withdrawal amounts for the same reward
-  -- address across the top-level transaction and all sub-transactions.
-  allWithdrawals : TopLevelTx → Withdrawals
-  allWithdrawals txTop =
-    foldl  (λ acc txSub → acc ∪⁺ WithdrawalsOf txSub)
-           (WithdrawalsOf txTop)
-           (SubTransactionsOf txTop)
-
   -- Batch-wide certificates
   allDCerts : TopLevelTx → List DCert
   allDCerts txTop = concatMap DCertsOf (SubTransactionsOf txTop) ++ DCertsOf txTop
