@@ -24,7 +24,7 @@ import MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs             as X
   ( StakePoolParams(..), PState(..), DelegEnv(..), GovCertEnv(..), CertEnv(..), DState(..), DCert(..), GState(..)
   , delegStep, govCertStep, poolStep)
 import MAlonzo.Code.Ledger.Dijkstra.Foreign.Entities          as X
-  (EntitiesEnv(..), entitiesStep)
+  (EntitiesEnv(..), entitiesStep, SubEntitiesEnv(..), subentitiesStep)
 import MAlonzo.Code.Ledger.Dijkstra.Foreign.Enact             as X
   (EnactState(..), EnactEnv(..), enactStep)
 import MAlonzo.Code.Ledger.Dijkstra.Foreign.Epoch             as X

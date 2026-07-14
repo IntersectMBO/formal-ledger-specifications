@@ -13,36 +13,31 @@ open import Ledger.Dijkstra.Foreign.HSStructures
 open import Ledger.Dijkstra.Foreign.Gov.Core
 open import Ledger.Dijkstra.Foreign.PParams
 open import Ledger.Dijkstra.Foreign.Cert
-open import Ledger.Dijkstra.Specification.Entities DummyGovStructure
-open import Ledger.Dijkstra.Specification.Entities.Properties.Computational DummyGovStructure
+open import Ledger.Dijkstra.Foreign.Transaction
+open import Ledger.Dijkstra.Specification.Entities DummyTransactionStructure
+open import Ledger.Dijkstra.Specification.Entities.Properties.Computational DummyTransactionStructure
 
 open Computational
 
-record EntitiesEnv' : Type where
-  field
-    epoch           : Epoch
-    pp              : PParams
-    votes           : List GovVote'
-    coldCredentials : ℙ Credential
-    withdrawals     : RewardAddress ⇀ Coin
-    directDeposits  : DirectDeposits
-
 instance
-  HsTy-EntitiesEnv' = autoHsType EntitiesEnv'
+  HsTy-EntitiesEnv = autoHsType EntitiesEnv
     ⊣ withConstructor "MkEntitiesEnv"
     • withName "EntitiesEnv"
     • fieldPrefix "ene"
-  Conv-EntitiesEnv' = autoConvert EntitiesEnv'
+  Conv-EntitiesEnv = autoConvert EntitiesEnv
 
-  mkEntitiesEnv' : Convertible EntitiesEnv EntitiesEnv'
-  mkEntitiesEnv' = λ where
-    .to   ee → let module ee = EntitiesEnv ee in record { epoch = ee.epoch ; pp = ee.pp ; votes = to ee.votes ; withdrawals = ee.withdrawals ; coldCredentials = ee.coldCredentials ; directDeposits = ee.directDeposits }
-    .from ee → let module ee = EntitiesEnv' ee in record { epoch = ee.epoch ; pp = ee.pp ; votes = from ee.votes ; withdrawals = ee.withdrawals ; coldCredentials = ee.coldCredentials ; directDeposits = ee.directDeposits }
+  HsTy-SubEntitiesEnv = autoHsType SubEntitiesEnv
+    ⊣ withConstructor "MkSubEntitiesEnv"
+    • withName "SubEntitiesEnv"
+    • fieldPrefix "sene"
+  Conv-SubEntitiesEnv = autoConvert SubEntitiesEnv
 
-  HsTy-EntitiesEnv = mkHsType EntitiesEnv (HsType EntitiesEnv')
-  Conv-EntitiesEnv = mkEntitiesEnv' ⨾ Conv-EntitiesEnv'
-
-entities-step : HsType (EntitiesEnv → CertState → List DCert → ComputationResult String CertState)
+entities-step : HsType (EntitiesEnv → CertState → Tx TxLevelTop → ComputationResult String CertState)
 entities-step = to (compute Computational-ENTITIES)
 
 {-# COMPILE GHC entities-step as entitiesStep #-}
+
+subentities-step : HsType (SubEntitiesEnv → CertState → Tx TxLevelSub → ComputationResult String CertState)
+subentities-step = to (compute Computational-SUBENTITIES)
+
+{-# COMPILE GHC subentities-step as subentitiesStep #-}
