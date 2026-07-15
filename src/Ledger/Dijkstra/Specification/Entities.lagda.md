@@ -106,6 +106,10 @@ transactions to assert predicates about account balances.
 The `ENTITIES`{.AgdaDatatype} rule applies withdrawals, via
 `applyWithdrawals`{.AgdaFunction} before certificate evaluation.  In
 the Dijkstra era, withdrawals can be partial, unless in legacy mode.
+Whether legacy mode applies is decided in the `LEDGER`{.AgdaDatatype}
+rule (via `isLegacyMode`{.AgdaFunction}, defined in the
+`Utxow`{.AgdaModule} module) and provided here through the
+`legacyMode`{.AgdaField} field of `EntitiesEnv`{.AgdaRecord}.
 
 ## Direct Deposits
 

@@ -126,6 +126,35 @@ allowedLanguages tx utxo =
     fromList (PlutusV4 ∷ [])
 ```
 
+## Deciding the Operation Mode {#sec:deciding-the-operation-mode}
+
+The phase-2 scripts a transaction *needs* are the scripts in the (batch-wide)
+script pool whose hashes appear among the credentials the transaction needs.
+
+```agda
+neededP2Scripts : UTxO → ℙ Script → Tx ℓ → ℙ P2Script
+neededP2Scripts utxo scriptPool tx = mapPartial toP2Script scriptsNeeded
+  where
+    scriptHashesNeeded : ℙ ScriptHash
+    scriptHashesNeeded = mapPartial isScriptObj (mapˢ proj₂ (credsNeeded utxo tx))
+
+    scriptsNeeded : ℙ Script
+    scriptsNeeded = filterˢ (λ s → hash s ∈ scriptHashesNeeded) scriptPool
+```
+
+A top-level transaction is processed in *legacy mode* exactly when some
+phase-2 script it needs uses a Plutus language older than V4.  This decision
+is made once, in the `LEDGER`{.AgdaDatatype} rule, and the result is threaded
+through the rules via the `legacyMode`{.AgdaField} field of
+`UTxOEnv`{.AgdaRecord} and of `EntitiesEnv`{.AgdaRecord}.
+
+```agda
+isLegacyMode : UTxO → ℙ Script → TopLevelTx → Bool
+isLegacyMode utxo scriptPool txTop =
+  ¿ ∃[ s ∈ neededP2Scripts utxo scriptPool txTop ]
+      language s ∈ fromList (PlutusV1 ∷ PlutusV2 ∷ PlutusV3 ∷ []) ¿ᵇ
+```
+
 ## Checking the script integrity hash
 
 The script integrity hash helps determining that the cost model for execution
@@ -261,9 +290,12 @@ different operating modes, **normal mode** and **legacy mode**. These correspond
 the rules `UTXOW-normal`{.AgdaInductiveConstructor} and
 `UTXOW-legacy`{.AgdaInductiveConstructor}.
 
-The mode is denoted by a Boolean in the second component of the environment,
-(`Γ`{.AgdaBound} , `legacyMode`{.AgdaBound}), so a computation can select one
-mode up front rather than deciding both.
+The mode itself is not decided here: it is decided once, in the
+`LEDGER`{.AgdaDatatype} rule, by `isLegacyMode`{.AgdaFunction} (see
+[above](#sec:deciding-the-operation-mode)), and communicated through the
+`legacyMode`{.AgdaField} field of the environment.  Each rule selects on that
+field, so a computation can pick the applicable mode up front rather than
+attempting both.
 
 ### Normal Mode
 
@@ -338,6 +370,7 @@ mode up front rather than deciding both.
                                       (credsNeeded utxo₀ txTop)
     in
 
+    ∙ LegacyModeOf Γ ≡ false
     ∙ ∀[ s ∈ p2ScriptsNeeded ] language s ∈ fromList (PlutusV4 ∷ []) -- (1)
     ∙ concatMapˡ (λ txSub → mapˢ proj₁ (TopLevelGuardsOf txSub)) (SubTransactionsOf txTop) ⊆ GuardsOf txTop -- (2)
     ∙ ∀[ (vk , σ) ∈ TxWitnesses.vKeySigs (Tx.txWitnesses txTop) ] isSigned vk (txidBytes (TxIdOf txTop)) σ
@@ -351,7 +384,7 @@ mode up front rather than deciding both.
     ∙ languages p2ScriptsNeeded ⊆ dom (PParams.costmdls (PParamsOf Γ)) ∩ allowedLanguages txTop utxo₀
     ∙ txADhash ≡ map hash txAuxData
     ∙ scriptIntegrityHash ≡ hashScriptIntegrity (PParamsOf Γ) (languages p2ScriptsNeeded) txRedeemers txData
-    ∙ (Γ , false) ⊢ s ⇀⦇ txTop ,UTXO⦈ s'
+    ∙ Γ ⊢ s ⇀⦇ txTop ,UTXO⦈ s'
       ────────────────────────────────
       Γ ⊢ s ⇀⦇ txTop ,UTXOW⦈ s'
 ```
@@ -430,6 +463,7 @@ mode up front rather than deciding both.
                                       (credsNeeded utxo₀ txTop)
     in
 
+    ∙ LegacyModeOf Γ ≡ true
     ∙ ∃[ s ∈ p2ScriptsNeeded ] language s ∈ fromList (PlutusV1 ∷ PlutusV2 ∷ PlutusV3 ∷ []) -- (1)
     ∙ concatMapˡ (λ txSub → mapˢ proj₁ (TopLevelGuardsOf txSub)) (SubTransactionsOf txTop) ⊆ GuardsOf txTop -- (2)
     ∙ ∀[ (vk , σ) ∈ vKeySigs ] isSigned vk (txidBytes (TxIdOf txTop)) σ
@@ -443,7 +477,7 @@ mode up front rather than deciding both.
     ∙ languages p2ScriptsNeeded ⊆ dom (PParams.costmdls (PParamsOf Γ)) ∩ allowedLanguagesLegacy txTop utxo₀
     ∙ txADhash ≡ map hash txAuxData
     ∙ scriptIntegrityHash ≡ hashScriptIntegrity (PParamsOf Γ) (languages p2ScriptsNeeded) txRedeemers txData
-    ∙ (Γ , true) ⊢ s ⇀⦇ txTop ,UTXO⦈ s'
+    ∙ Γ ⊢ s ⇀⦇ txTop ,UTXO⦈ s'
       ────────────────────────────────
       Γ ⊢ s ⇀⦇ txTop ,UTXOW⦈ s'
 ```
@@ -453,8 +487,8 @@ mode up front rather than deciding both.
 unquoteDecl UTXOW-normal-premises = genPremises UTXOW-normal-premises (quote UTXOW-normal)
 unquoteDecl UTXOW-legacy-premises = genPremises UTXOW-legacy-premises (quote UTXOW-legacy)
 unquoteDecl SUBUTXOW-premises = genPremises SUBUTXOW-premises (quote SUBUTXOW)
-pattern UTXOW-normal-⋯ p₀ p₁ p₂ p₃ p₄ p₅ p₆ p₇ p₈ p₉ p₁₀ p₁₁ p₁₂ h = UTXOW-normal (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , p₁₂ , h)
-pattern UTXOW-legacy-⋯ p₀ p₁ p₂ p₃ p₄ p₅ p₆ p₇ p₈ p₉ p₁₀ p₁₁ p₁₂ h = UTXOW-legacy (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , p₁₂ , h)
+pattern UTXOW-normal-⋯ p₀ p₁ p₂ p₃ p₄ p₅ p₆ p₇ p₈ p₉ p₁₀ p₁₁ p₁₂ p₁₃ h = UTXOW-normal (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , p₁₂ , p₁₃ , h)
+pattern UTXOW-legacy-⋯ p₀ p₁ p₂ p₃ p₄ p₅ p₆ p₇ p₈ p₉ p₁₀ p₁₁ p₁₂ p₁₃ h = UTXOW-legacy (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , p₁₂ , p₁₃ , h)
 pattern SUBUTXOW-⋯ p₀ p₁ p₂ p₃ p₄ p₅ p₆ p₇ p₈ p₉ p₁₀ p₁₁ h = SUBUTXOW (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , h)
 ```
 -->
