@@ -68,39 +68,58 @@ with `-- CHG:` / `-- NEW:` comments in the Agda block.
 
 # Reordering Commutativity: What We Have
 
-In `Reorder.lagda.md` (Conway ledger, WIP branch `polina/commutativity`):
+In `Reorder.lagda.md` (Conway ledger, branch `polina/commutativity`):
 
-- **Statement.** Two blocks whose transaction lists are permutations of
-  one another, both applied successfully via `LEDGERS`, reach the *same*
-  final `LState` — up to extensional set-equality `≈ˡ`, not propositional
-  `≡` (the set model is `List`-backed, so `≡` is too strong). Matches
-  Vinogradova & Sorokin, LSFA'24, Thm 5.2.1.
+- **Statement (net-effect form).** If two transaction lists are permutations
+  of one another, both execute successfully via `LEDGERS`, every pair is
+  `Indep`endent, and no transaction touches governance (`NoGov`), the two
+  final `LState`s agree — up to extensional set-equality `≈ˡ`, not
+  propositional `≡` (the set model is `List`-backed, so `≡` is too strong).
+  Matches Vinogradova & Sorokin, LSFA'24, Thm 5.2.1: both executions are
+  *given*, and each state field is compared as a function of the tx *set*.
 
-- **Proven.** Full `UTxO` commutation (`utxo-comm`); the certificate
-  map-algebra (`insert` commutes on distinct keys); and the congruence
-  bricks — `UTXO-cong`, `UTXOS-cong`, and the `UTXOW` pieces
-  (`refScripts`, `txscripts`, `credsNeeded`, `languages`, …).
+- **`Indep` is minimal and explicit.** Just two disjointness conditions per
+  pair: overwriting-certificate targets (`cwitness`) and deposit-map keys
+  (`certDepositKey` — total on `reg`, unlike `cwitness`, catching `reg c 0`).
+  The old disjoint-inputs/withdrawals conditions are *gone* — both-sequence
+  validity replaces them.
 
-- **Isolated as model axioms.** Five "flatten-to-scalar" facts (value
-  summation, script-integrity hash, Plutus evaluation, `refScriptsSize`,
-  script lookup) — each collapses a `UTxO`-derived *set* into a scalar or
-  serialised value. This is the honest answer to *what does not commute*.
+- **Proven: the entire `UTxOState`.**
+  `utxo` via the order-free closed form `(u₀ ∪ ⋃outs) ∖ ⋃ins`;
+  `fees`/`donations` as permutation-invariant scalar sums;
+  `deposits` via a new *locality* framework (`MapCommutativity.agda`):
+  each certificate's deposit update is a single-key map operation
+  (`∪⁺`/`∪ˡ`/delete), any two ops local at distinct keys commute
+  (`local-comm`), and a generic locally-commuting-`foldl` engine lifts
+  this through the fold and the permutation.
+
+- **Trust base of the theorem: exactly four postulates.** Replay
+  protection (pairwise-disjoint outputs; inputs fresh from later outputs)
+  and the two open field obligations (`LEDGERS-cert≈`, `LEDGERS-govSt≈`).
+  Separately, five "flatten-to-scalar" model axioms (value summation,
+  script-integrity hash, Plutus evaluation, `refScriptsSize`, script
+  lookup) support the fully-proven `UTXOW` congruence stack — the honest
+  answer to *what the abstract set interface cannot see*.
 
 ---
 
 # What Is Left, and the Final Aim
 
-- **Still open.** Two sound obligations remain postulated: `LEDGER-cong`
-  (`LEDGER` respects `≈ˡ`) and `LEDGER-swap` (independent transactions
-  commute). All building blocks exist; the `UTXOW-cong` / `CERTS-cong`
-  / `GOVS-cong` assembly that discharges them is not yet written.
+- **Still open: the certificate state and `govSt` fields.** A pure
+  per-pair swap is provably *false* for the certificate maps — e.g.
+  `reg c 0` vs `dereg c`, or withdrawal-zeroing vs `dereg` — the
+  counterexamples are excluded only by both-sequence *validity*. So these
+  two fields need a validity-aware net-effect argument, not more
+  disjointness. All the map-commutation bricks, `≈ᶜ` machinery, and the
+  per-certificate congruence pipeline are already proven as ingredients.
 
-- **Current scope is conservative.** We require the two transactions to
-  be *fully independent* — disjoint inputs, certificates, and
-  withdrawals, and governance-free (the `Indep` predicate). Only then do
-  we claim their order does not matter.
+- **Housekeeping done.** Everything not specific to reordering (insert/
+  `∪ˡ`/restriction algebra, generic congruences, permutation-invariant
+  folds, the `foldl-↭` engine, the `∪⁺` locality framework) is staged in
+  `GeneralLemmas.lagda.md` / `MapCommutativity.agda` next to the proof,
+  ready for library integration.
 
-- **The aim.** Drop full independence. Even when transactions *do*
-  interact, *any* ordering that is itself valid should produce the same
-  state update (given no governance actions are included, etc.). The
-  guarantee should rest on validity of the ordering, not on independence.
+- **The aim.** Discharge `cert≈`/`govSt≈` and then weaken `Indep` further:
+  even when transactions *do* interact, any ordering that is itself valid
+  should produce the same state — the guarantee resting on validity of
+  the ordering, not on independence.
