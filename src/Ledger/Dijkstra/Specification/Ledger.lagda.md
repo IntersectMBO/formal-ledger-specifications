@@ -227,6 +227,13 @@ top-level in the `LEDGER`{.AgdaDatatype} rule. This is threaded through
     scripts referenced/witnessed by every subtransaction (computed by
     `getAllScripts`).
 
+  -  legacyMode : Bool records whether the top-level transaction must be
+    processed in *legacy mode*, i.e., whether some phase-2 script it needs
+    uses a Plutus language older than V4 (computed by `isLegacyMode`).  The
+    decision is made once, here, and threaded to
+    `UTXOW`{.AgdaDatatype}/`UTXO`{.AgdaDatatype} via `UTxOEnv`{.AgdaRecord}
+    and to `ENTITIES`{.AgdaDatatype} via `EntitiesEnv`{.AgdaRecord}.
+
 ### Design Rationale for Ledger Rule Premises
 
 +  **Batch-scoped phase-2 context**.
@@ -305,12 +312,15 @@ data _⊢_⇀⦇_,LEDGER⦈_ : LedgerEnv → LedgerState → TopLevelTx → Ledg
 
          allScripts : ℙ Script
          allScripts = getAllScripts tx utxo₀
+
+         legacyMode : Bool
+         legacyMode = isLegacyMode utxo₀ allScripts tx
     in
       ∙ IsValidFlagOf tx ≡ true
       ∙ ⟦ slot , ppolicy , pp , enactState , treasury , utxo₀ , rewards₀ , allScripts , IsValidFlagOf tx ⟧ ⊢ ⟦ utxoState₀ , govState₀ , certState₀ ⟧ ⇀⦇ SubTransactionsOf tx ,SUBLEDGERS⦈ ⟦ utxoState₁ , govState₁ , certState₁ ⟧
-      ∙ ⟦ epoch slot , pp , allColdCreds govState₁ enactState , true , rewards₀ ⟧ ⊢ certState₁ ⇀⦇ tx ,ENTITIES⦈ certState₂
+      ∙ ⟦ epoch slot , pp , allColdCreds govState₁ enactState , legacyMode , rewards₀ ⟧ ⊢ certState₁ ⇀⦇ tx ,ENTITIES⦈ certState₂
       ∙ ⟦ TxIdOf tx , epoch slot , pp , ppolicy , enactState , certState₂ , dom (RewardsOf certState₂) ⟧ ⊢ govState₁ ⇀⦇ GovProposals+Votes tx ,GOVS⦈ govState₂
-      ∙ ⟦ slot , pp , treasury , utxo₀ , PoolsOf certState₀ , allScripts ⟧ ⊢ utxoState₁ ⇀⦇ tx ,UTXOW⦈ utxoState₂
+      ∙ ⟦ slot , pp , treasury , utxo₀ , PoolsOf certState₀ , allScripts , legacyMode ⟧ ⊢ utxoState₁ ⇀⦇ tx ,UTXOW⦈ utxoState₂
         ────────────────────────────────
         ⟦ slot , ppolicy , pp , enactState , treasury ⟧ ⊢ ⟦ utxoState₀ , govState₀ , certState₀ ⟧ ⇀⦇ tx ,LEDGER⦈ ⟦ utxoState₂ , rmOrphanDRepVotes certState₂ govState₂ , certState₂ ⟧
 
@@ -323,10 +333,13 @@ data _⊢_⇀⦇_,LEDGER⦈_ : LedgerEnv → LedgerState → TopLevelTx → Ledg
 
          allScripts : ℙ Script
          allScripts = getAllScripts tx utxo₀
+
+         legacyMode : Bool
+         legacyMode = isLegacyMode utxo₀ allScripts tx
     in
       ∙ IsValidFlagOf tx ≡ false
       ∙ ⟦ slot , ppolicy , pp , enactState , treasury , utxo₀ , rewards₀ , allScripts , IsValidFlagOf tx ⟧ ⊢ ⟦ utxoState₀ , govState₀ , certState₀ ⟧ ⇀⦇ SubTransactionsOf tx ,SUBLEDGERS⦈ ⟦ utxoState₀ , govState₀ , certState₀ ⟧
-      ∙ ⟦ slot , pp , treasury , utxo₀ , PoolsOf certState₀ , allScripts ⟧ ⊢ utxoState₀ ⇀⦇ tx ,UTXOW⦈ utxoState₁
+      ∙ ⟦ slot , pp , treasury , utxo₀ , PoolsOf certState₀ , allScripts , legacyMode ⟧ ⊢ utxoState₀ ⇀⦇ tx ,UTXOW⦈ utxoState₁
         ────────────────────────────────
         ⟦ slot , ppolicy , pp , enactState , treasury ⟧ ⊢ ⟦ utxoState₀ , govState₀ , certState₀ ⟧ ⇀⦇ tx ,LEDGER⦈ ⟦ utxoState₁ , govState₀ , certState₀ ⟧
 

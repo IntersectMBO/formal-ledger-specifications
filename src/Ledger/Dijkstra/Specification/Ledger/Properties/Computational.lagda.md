@@ -219,17 +219,20 @@ instance
       allScripts : ℙ Script
       allScripts = getAllScripts txTop utxo₀
 
+      legacyMode : Bool
+      legacyMode = isLegacyMode utxo₀ allScripts txTop
+
       subΓ : SubLedgerEnv
       subΓ = ⟦ slot , ppolicy , pparams , enactState , treasury , utxo₀ , RewardsOf (CertStateOf s) , allScripts , IsValidFlagOf txTop ⟧
 
       entitiesΓ : GovState → CertState → EntitiesEnv
-      entitiesΓ govSt certSt = ⟦ epoch slot , pparams , allColdCreds govSt enactState , true , RewardsOf certSt ⟧
+      entitiesΓ govSt certSt = ⟦ epoch slot , pparams , allColdCreds govSt enactState , legacyMode , RewardsOf certSt ⟧
 
       govΓ : CertState → GovEnv
       govΓ certSt = ⟦ TxIdOf txTop , epoch slot , pparams , ppolicy , enactState , certSt , dom (RewardsOf certSt) ⟧
 
       utxoΓ : UTxOEnv
-      utxoΓ = ⟦ slot , pparams , treasury , utxo₀ , PoolsOf (CertStateOf s) , allScripts ⟧
+      utxoΓ = ⟦ slot , pparams , treasury , utxo₀ , PoolsOf (CertStateOf s) , allScripts , legacyMode ⟧
 ```
 -->
 

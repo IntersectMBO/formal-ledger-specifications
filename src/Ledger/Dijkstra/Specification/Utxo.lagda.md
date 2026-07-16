@@ -79,6 +79,7 @@ record UTxOEnv : Type where
     utxo₀             : UTxO
     pools₀            : Pools
     allScripts        : ℙ Script
+    legacyMode        : Bool
 
 record SubUTxOEnv : Type where
   field
@@ -96,6 +97,10 @@ The `UTxOEnv`{.AgdaRecord} carries
 +  `allScripts`{.AgdaField}: *batch-wide script pool* containing all scripts available
    to the batch (witness scripts plus reference scripts resolved from allowed
    reference inputs and batch outputs);
++  `legacyMode`{.AgdaField}: whether the top-level transaction is processed in
+   *legacy mode*.  This is decided once, in the `LEDGER`{.AgdaDatatype} rule
+   (via `isLegacyMode`{.AgdaFunction}, defined in the `Utxow`{.AgdaModule}
+   module), and threaded through the rules via this environment field;
 
 The pre-batch UTxO snapshot `utxo₀`{.AgdaField} is used to resolve all
 *spend-side* lookups (inputs, collateral, and datum lookup for spent outputs).
@@ -132,6 +137,10 @@ record HasIsTopLevelValidFlag {a} (A : Type a) : Type a where
   field IsTopLevelValidFlagOf : A → Bool
 open HasIsTopLevelValidFlag ⦃...⦄ public
 
+record HasLegacyMode {a} (A : Type a) : Type a where
+  field LegacyModeOf : A → Bool
+open HasLegacyMode ⦃...⦄ public
+
 record HasScriptPool {a} (A : Type a) : Type a where
   field ScriptPoolOf : A → ℙ Script
 open HasScriptPool ⦃...⦄ public
@@ -159,6 +168,9 @@ instance
 
   HasScriptPool-UTxOEnv : HasScriptPool UTxOEnv
   HasScriptPool-UTxOEnv .ScriptPoolOf = UTxOEnv.allScripts
+
+  HasLegacyMode-UTxOEnv : HasLegacyMode UTxOEnv
+  HasLegacyMode-UTxOEnv .LegacyModeOf = UTxOEnv.legacyMode
 
   HasSlot-SubUTxOEnv : HasSlot SubUTxOEnv
   HasSlot-SubUTxOEnv .SlotOf = SubUTxOEnv.slot
@@ -202,7 +214,6 @@ private
     ℓ          : TxLevel
     A          : Type
     Γ          : A
-    legacyMode : Bool
     s₀         : UTxOState
     txTop      : TopLevelTx
     txSub      : SubLevelTx
@@ -474,7 +485,7 @@ unquoteDecl SUBUTXO-premises = genPremises SUBUTXO-premises (quote SUBUTXO)
 4. In Legacy Mode: The top-level transaction must be self-balancing.
 
 ```agda
-data _⊢_⇀⦇_,UTXO⦈_ : UTxOEnv × Bool → UTxOState → TopLevelTx → UTxOState → Type where
+data _⊢_⇀⦇_,UTXO⦈_ : UTxOEnv → UTxOState → TopLevelTx → UTxOState → Type where
 
   UTXO :
     let
@@ -489,7 +500,7 @@ data _⊢_⇀⦇_,UTXO⦈_ : UTxOEnv × Bool → UTxOState → TopLevelTx → UT
     ∙ minfee (PParamsOf Γ) txTop (UTxOOf Γ) ≤ TxFeesOf txTop
     ∙ coin (MintedValueOf txTop) ≡ 0
     ∙ consumedBatch (PParamsOf Γ) txTop (UTxOOf Γ) ≡ producedBatch (PParamsOf Γ) (PoolsOf Γ) txTop
-    ∙ (legacyMode ≡ true → consumed (PParamsOf Γ) txTop (UTxOOf Γ) ≡ produced (PParamsOf Γ) (PoolsOf Γ) txTop)  -- (4)
+    ∙ (LegacyModeOf Γ ≡ true → consumed (PParamsOf Γ) txTop (UTxOOf Γ) ≡ produced (PParamsOf Γ) (PoolsOf Γ) txTop)  -- (4)
     ∙ SizeOf txTop ≤ maxTxSize (PParamsOf Γ)
     ∙ ∑ˡ[ x ← setToList (allReferenceScripts txTop (UTxOOf Γ)) ] scriptSize x ≤ (PParamsOf Γ) .maxRefScriptSizePerTx
     ∙ ((RedeemersOf txTop ˢ ≢ ∅) ⊎ (List.Any (λ txSub → RedeemersOf txSub ˢ ≢ ∅) (SubTransactionsOf txTop))
@@ -507,7 +518,7 @@ data _⊢_⇀⦇_,UTXO⦈_ : UTxOEnv × Bool → UTxOState → TopLevelTx → UT
        s₁ = if IsValidFlagOf txTop
             then ⟦ (UTxOOf s₀ ∣ SpendInputsOf txTop ᶜ) ∪ˡ outs txTop , FeesOf s₀ + TxFeesOf txTop , DonationsOf s₀ + DonationsOf txTop ⟧ else ⟦ UTxOOf s₀ ∣ (CollateralInputsOf txTop) ᶜ , FeesOf s₀ + cbalance (UTxOOf s₀ ∣ CollateralInputsOf txTop) , DonationsOf s₀ ⟧
     in
-      (Γ , legacyMode)  ⊢ s₀ ⇀⦇ txTop ,UTXO⦈ s₁
+      Γ ⊢ s₀ ⇀⦇ txTop ,UTXO⦈ s₁
 
 ```
 <!--

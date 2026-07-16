@@ -46,7 +46,7 @@ instance
 unquoteDecl = do
   hsTypeAlias UTxO
   
-utxo-step : HsType (UTxOEnv × Bool → UTxOState → Tx TxLevelTop → ComputationResult String UTxOState)
+utxo-step : HsType (UTxOEnv → UTxOState → Tx TxLevelTop → ComputationResult String UTxOState)
 utxo-step = to (compute Computational-UTXO)
 
 {-# COMPILE GHC utxo-step as utxoStep #-}

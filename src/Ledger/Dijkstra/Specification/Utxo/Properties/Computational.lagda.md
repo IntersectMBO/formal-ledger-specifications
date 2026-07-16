@@ -101,29 +101,29 @@ instance
 <!--
 ```agda
   Computational-UTXO = record {go} where
-    module go (Γ,legacyMode : UTxOEnv × Bool) (s₀ : UTxOState) (txTop : TopLevelTx)
-      (let H , ⁇ H? = UTXO-premises {txTop = txTop} {Γ = proj₁ Γ,legacyMode} {s₀ = s₀} {legacyMode = proj₂ Γ,legacyMode})
+    module go (Γ : UTxOEnv) (s₀ : UTxOState) (txTop : TopLevelTx)
+      (let H , ⁇ H? = UTXO-premises {txTop = txTop} {Γ = Γ} {s₀ = s₀})
       where
 
       module UTXOS = Computational Computational-UTXOS
 
       computeProof-aux
         : Dec H
-        → ComputationResult String (∃[ s₁ ] (Γ,legacyMode .proj₁) ⊢ tt ⇀⦇ txTop ,UTXOS⦈ s₁)
-        → ComputationResult String (∃[ s₁ ] Γ,legacyMode ⊢ s₀ ⇀⦇ txTop ,UTXO⦈ s₁)
+        → ComputationResult String (∃[ s₁ ] Γ ⊢ tt ⇀⦇ txTop ,UTXOS⦈ s₁)
+        → ComputationResult String (∃[ s₁ ] Γ ⊢ s₀ ⇀⦇ txTop ,UTXO⦈ s₁)
       computeProof-aux d (failure x) = failure "UTXO" 
       computeProof-aux (no ¬p) (success x) = failure "UTXO"
       computeProof-aux (yes (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , p₁₂ , p₁₃ , p₁₄ , p₁₅ , p₁₆ , p₁₇ )) (success h)
         = success (-, UTXO (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , p₁₂ , p₁₃ , p₁₄ , p₁₅ , p₁₆ , p₁₇ , proj₂ h))
 
-      computeProof : ComputationResult String (∃[ s₁ ] Γ,legacyMode ⊢ s₀ ⇀⦇ txTop ,UTXO⦈ s₁)
-      computeProof = computeProof-aux H? (UTXOS.computeProof (Γ,legacyMode .proj₁) tt txTop)
+      computeProof : ComputationResult String (∃[ s₁ ] Γ ⊢ s₀ ⇀⦇ txTop ,UTXO⦈ s₁)
+      computeProof = computeProof-aux H? (UTXOS.computeProof Γ tt txTop)
 
-      completeness : ∀ s₁ → Γ,legacyMode ⊢ s₀ ⇀⦇ txTop ,UTXO⦈ s₁ → map proj₁ computeProof ≡ success s₁
+      completeness : ∀ s₁ → Γ ⊢ s₀ ⇀⦇ txTop ,UTXO⦈ s₁ → map proj₁ computeProof ≡ success s₁
       completeness s₁ (UTXO-⋯ p₀ p₁ p₂ p₃ p₄ p₅ p₆ p₇ p₈ p₉ p₁₀ p₁₁ p₁₂ p₁₃ p₁₄ p₁₅ p₁₆ p₁₇ h)
         with H?
       ... | no ¬p = ⊥-elim (¬p ((p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , p₁₂ , p₁₃ , p₁₄ , p₁₅ , p₁₆ , p₁₇ )))
       ... | yes _
-        with UTXOS.computeProof (Γ,legacyMode .proj₁) tt txTop | UTXOS.completeness _ _ _ _ h
+        with UTXOS.computeProof Γ tt txTop | UTXOS.completeness _ _ _ _ h
       ... | success h | refl = refl
 ```
