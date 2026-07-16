@@ -11238,3 +11238,613 @@ du_lem'45'del'45'excluded_5038 v0 v1 v2 v3
                                                 v10))
                                           (coe v11))))
                           _ -> MAlonzo.RTE.mazUnreachableError))))))
+-- abstract-set-theory.Axiom.Set.Map.Extra.lookupᵐ?-insert
+d_lookup'7504''63''45'insert_5056 ::
+  () ->
+  () ->
+  MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
+  MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
+  AgdaAny ->
+  AgdaAny -> MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
+d_lookup'7504''63''45'insert_5056 = erased
+-- abstract-set-theory.Axiom.Set.Map.Extra.∈-insert-≢
+d_'8712''45'insert'45''8802'_5080 ::
+  () ->
+  () ->
+  MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
+  MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
+  AgdaAny ->
+  AgdaAny ->
+  AgdaAny ->
+  AgdaAny ->
+  (MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 ->
+   MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20) ->
+  MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34 ->
+  MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34
+d_'8712''45'insert'45''8802'_5080 ~v0 ~v1 v2 v3 v4 v5 v6 v7 v8 v9
+  = du_'8712''45'insert'45''8802'_5080 v2 v3 v4 v5 v6 v7 v8 v9
+du_'8712''45'insert'45''8802'_5080 ::
+  MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
+  MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
+  AgdaAny ->
+  AgdaAny ->
+  AgdaAny ->
+  AgdaAny ->
+  (MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 ->
+   MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20) ->
+  MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34 ->
+  MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34
+du_'8712''45'insert'45''8802'_5080 v0 v1 v2 v3 v4 v5 v6 v7
+  = coe
+      MAlonzo.Code.Axiom.Set.Properties.du_'8712''45''8746''8314'_216
+      (MAlonzo.Code.Axiom.Set.d_th_1516
+         (coe
+            MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+      (coe
+         MAlonzo.Code.Axiom.Set.Map.du__'738'_570
+         (coe
+            MAlonzo.Code.Axiom.Set.Map.du_'10100'_'10101''7504'_844
+            (coe
+               MAlonzo.Code.Axiom.Set.d_th_1516
+               (coe
+                  MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+            (coe
+               MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 (coe v2) (coe v4))))
+      (coe
+         MAlonzo.Code.Axiom.Set.Map.du__'738'_570
+         (coe
+            MAlonzo.Code.Axiom.Set.Map.du_filter'7504'_758
+            (coe
+               MAlonzo.Code.Axiom.Set.d_th_1516
+               (coe
+                  MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+            (coe
+               MAlonzo.Code.Axiom.Set.d_sp'45''8728'_74
+               (MAlonzo.Code.Axiom.Set.d_sp_188
+                  (coe
+                     MAlonzo.Code.Axiom.Set.d_th_1516
+                     (coe
+                        MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8)))
+               erased erased erased
+               (coe
+                  MAlonzo.Code.Axiom.Set.d_sp'45''172'_76
+                  (MAlonzo.Code.Axiom.Set.d_sp_188
+                     (coe
+                        MAlonzo.Code.Axiom.Set.d_th_1516
+                        (coe
+                           MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8)))
+                  erased erased
+                  (coe
+                     MAlonzo.Code.Axiom.Set.d_'8712''45'sp_1648
+                     MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8
+                     erased v0
+                     (let v8
+                            = MAlonzo.Code.Axiom.Set.d_th_1516
+                                (coe
+                                   MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8) in
+                      coe
+                        (coe
+                           MAlonzo.Code.Axiom.Set.Rel.du_dom_354 v8
+                           (coe
+                              MAlonzo.Code.Axiom.Set.Map.du__'738'_570
+                              (coe
+                                 MAlonzo.Code.Axiom.Set.Map.du_'10100'_'10101''7504'_844
+                                 (coe
+                                    MAlonzo.Code.Axiom.Set.d_th_1516
+                                    (coe
+                                       MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                 (coe
+                                    MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 (coe v2)
+                                    (coe v4))))))))
+               (\ v8 -> MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe v8)))
+            (coe v1)))
+      (coe MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 (coe v3) (coe v5))
+      (coe
+         MAlonzo.Code.Data.Sum.Base.C_inj'8322'_42
+         (coe
+            MAlonzo.Code.Function.Bundles.d_to_1868
+            (coe
+               MAlonzo.Code.Axiom.Set.du_'8712''45'filter_454
+               (coe
+                  MAlonzo.Code.Axiom.Set.d_th_1516
+                  (coe
+                     MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+               (coe MAlonzo.Code.Axiom.Set.Map.du__'738'_570 (coe v1))
+               (coe
+                  MAlonzo.Code.Axiom.Set.d_sp'45''8728'_74
+                  (MAlonzo.Code.Axiom.Set.d_sp_188
+                     (coe
+                        MAlonzo.Code.Axiom.Set.d_th_1516
+                        (coe
+                           MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8)))
+                  erased erased erased
+                  (coe
+                     MAlonzo.Code.Axiom.Set.d_sp'45''172'_76
+                     (MAlonzo.Code.Axiom.Set.d_sp_188
+                        (coe
+                           MAlonzo.Code.Axiom.Set.d_th_1516
+                           (coe
+                              MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8)))
+                     erased erased
+                     (coe
+                        MAlonzo.Code.Axiom.Set.d_'8712''45'sp_1648
+                        MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8
+                        erased v0
+                        (let v8
+                               = MAlonzo.Code.Axiom.Set.d_th_1516
+                                   (coe
+                                      MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8) in
+                         coe
+                           (coe
+                              MAlonzo.Code.Axiom.Set.Rel.du_dom_354 v8
+                              (coe
+                                 MAlonzo.Code.Axiom.Set.Map.du__'738'_570
+                                 (coe
+                                    MAlonzo.Code.Axiom.Set.Map.du_'10100'_'10101''7504'_844
+                                    (coe
+                                       MAlonzo.Code.Axiom.Set.d_th_1516
+                                       (coe
+                                          MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                    (coe
+                                       MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 (coe v2)
+                                       (coe v4))))))))
+                  (\ v8 -> MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe v8)))
+               (coe
+                  MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 (coe v3) (coe v5)))
+            (coe
+               MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
+               (coe (\ v8 -> coe v6 erased)) (coe v7))))
+-- abstract-set-theory.Axiom.Set.Map.Extra.∈-insert-≢⁻
+d_'8712''45'insert'45''8802''8315'_5108 ::
+  () ->
+  () ->
+  MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
+  MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
+  AgdaAny ->
+  AgdaAny ->
+  AgdaAny ->
+  AgdaAny ->
+  (MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 ->
+   MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20) ->
+  MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34 ->
+  MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34
+d_'8712''45'insert'45''8802''8315'_5108 ~v0 ~v1 v2 v3 v4 v5 v6 v7
+                                        ~v8 v9
+  = du_'8712''45'insert'45''8802''8315'_5108 v2 v3 v4 v5 v6 v7 v9
+du_'8712''45'insert'45''8802''8315'_5108 ::
+  MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
+  MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
+  AgdaAny ->
+  AgdaAny ->
+  AgdaAny ->
+  AgdaAny ->
+  MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34 ->
+  MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34
+du_'8712''45'insert'45''8802''8315'_5108 v0 v1 v2 v3 v4 v5 v6
+  = let v7
+          = coe
+              MAlonzo.Code.Function.Bundles.d_from_1870
+              (coe
+                 MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
+                 (coe
+                    MAlonzo.Code.Axiom.Set.d_unions_224
+                    (MAlonzo.Code.Axiom.Set.d_th_1516
+                       (coe
+                          MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                    erased
+                    (coe
+                       MAlonzo.Code.Axiom.Set.du_fromList_456
+                       (coe
+                          MAlonzo.Code.Axiom.Set.d_th_1516
+                          (coe
+                             MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                       (coe
+                          MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
+                          (coe
+                             MAlonzo.Code.Axiom.Set.Map.du__'738'_570
+                             (coe
+                                MAlonzo.Code.Axiom.Set.Map.du_'10100'_'10101''7504'_844
+                                (coe
+                                   MAlonzo.Code.Axiom.Set.d_th_1516
+                                   (coe
+                                      MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                (coe
+                                   MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 (coe v2) (coe v4))))
+                          (coe
+                             MAlonzo.Code.Data.List.Base.du_'91'_'93'_270
+                             (coe
+                                MAlonzo.Code.Axiom.Set.Map.du__'738'_570
+                                (coe
+                                   MAlonzo.Code.Axiom.Set.Map.du_filter'7504'_758
+                                   (coe
+                                      MAlonzo.Code.Axiom.Set.d_th_1516
+                                      (coe
+                                         MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                   (coe
+                                      MAlonzo.Code.Axiom.Set.d_sp'45''8728'_74
+                                      (MAlonzo.Code.Axiom.Set.d_sp_188
+                                         (coe
+                                            MAlonzo.Code.Axiom.Set.d_th_1516
+                                            (coe
+                                               MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8)))
+                                      erased erased erased
+                                      (coe
+                                         MAlonzo.Code.Axiom.Set.d_sp'45''172'_76
+                                         (MAlonzo.Code.Axiom.Set.d_sp_188
+                                            (coe
+                                               MAlonzo.Code.Axiom.Set.d_th_1516
+                                               (coe
+                                                  MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8)))
+                                         erased erased
+                                         (coe
+                                            MAlonzo.Code.Axiom.Set.d_'8712''45'sp_1648
+                                            MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8
+                                            erased v0
+                                            (let v7
+                                                   = MAlonzo.Code.Axiom.Set.d_th_1516
+                                                       (coe
+                                                          MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8) in
+                                             coe
+                                               (coe
+                                                  MAlonzo.Code.Axiom.Set.Rel.du_dom_354 v7
+                                                  (coe
+                                                     MAlonzo.Code.Axiom.Set.Map.du__'738'_570
+                                                     (coe
+                                                        MAlonzo.Code.Axiom.Set.Map.du_'10100'_'10101''7504'_844
+                                                        (coe
+                                                           MAlonzo.Code.Axiom.Set.d_th_1516
+                                                           (coe
+                                                              MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                        (coe
+                                                           MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
+                                                           (coe v2) (coe v4))))))))
+                                      (\ v7 -> MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe v7)))
+                                   (coe v1)))))))
+                 (coe
+                    MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 (coe v3) (coe v5)))
+              v6 in
+    coe
+      (let v8
+             = coe
+                 MAlonzo.Code.Function.Bundles.d_from_1870
+                 (coe
+                    MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
+                    (coe
+                       MAlonzo.Code.Axiom.Set.d_listing_244
+                       (MAlonzo.Code.Axiom.Set.d_th_1516
+                          (coe
+                             MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                       erased
+                       (coe
+                          MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
+                          (coe
+                             MAlonzo.Code.Axiom.Set.Map.du__'738'_570
+                             (coe
+                                MAlonzo.Code.Axiom.Set.Map.du_'10100'_'10101''7504'_844
+                                (coe
+                                   MAlonzo.Code.Axiom.Set.d_th_1516
+                                   (coe
+                                      MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                (coe
+                                   MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 (coe v2) (coe v4))))
+                          (coe
+                             MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
+                             (coe
+                                MAlonzo.Code.Axiom.Set.Map.du__'738'_570
+                                (coe
+                                   MAlonzo.Code.Axiom.Set.Map.du_filter'7504'_758
+                                   (coe
+                                      MAlonzo.Code.Axiom.Set.d_th_1516
+                                      (coe
+                                         MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                   (coe
+                                      MAlonzo.Code.Axiom.Set.d_sp'45''8728'_74
+                                      (MAlonzo.Code.Axiom.Set.d_sp_188
+                                         (coe
+                                            MAlonzo.Code.Axiom.Set.d_th_1516
+                                            (coe
+                                               MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8)))
+                                      erased erased erased
+                                      (coe
+                                         MAlonzo.Code.Axiom.Set.d_sp'45''172'_76
+                                         (MAlonzo.Code.Axiom.Set.d_sp_188
+                                            (coe
+                                               MAlonzo.Code.Axiom.Set.d_th_1516
+                                               (coe
+                                                  MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8)))
+                                         erased erased
+                                         (coe
+                                            MAlonzo.Code.Axiom.Set.d_'8712''45'sp_1648
+                                            MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8
+                                            erased v0
+                                            (let v8
+                                                   = MAlonzo.Code.Axiom.Set.d_th_1516
+                                                       (coe
+                                                          MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8) in
+                                             coe
+                                               (coe
+                                                  MAlonzo.Code.Axiom.Set.Rel.du_dom_354 v8
+                                                  (coe
+                                                     MAlonzo.Code.Axiom.Set.Map.du__'738'_570
+                                                     (coe
+                                                        MAlonzo.Code.Axiom.Set.Map.du_'10100'_'10101''7504'_844
+                                                        (coe
+                                                           MAlonzo.Code.Axiom.Set.d_th_1516
+                                                           (coe
+                                                              MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                        (coe
+                                                           MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
+                                                           (coe v2) (coe v4))))))))
+                                      (\ v8 -> MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe v8)))
+                                   (coe v1)))
+                             (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))
+                    (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                       (coe
+                          MAlonzo.Code.Function.Bundles.d_from_1870
+                          (coe
+                             MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
+                             (coe
+                                MAlonzo.Code.Axiom.Set.d_unions_224
+                                (MAlonzo.Code.Axiom.Set.d_th_1516
+                                   (coe
+                                      MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                erased
+                                (coe
+                                   MAlonzo.Code.Axiom.Set.du_fromList_456
+                                   (coe
+                                      MAlonzo.Code.Axiom.Set.d_th_1516
+                                      (coe
+                                         MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                   (coe
+                                      MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
+                                      (coe
+                                         MAlonzo.Code.Axiom.Set.Map.du__'738'_570
+                                         (coe
+                                            MAlonzo.Code.Axiom.Set.Map.du_'10100'_'10101''7504'_844
+                                            (coe
+                                               MAlonzo.Code.Axiom.Set.d_th_1516
+                                               (coe
+                                                  MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                            (coe
+                                               MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 (coe v2)
+                                               (coe v4))))
+                                      (coe
+                                         MAlonzo.Code.Data.List.Base.du_'91'_'93'_270
+                                         (coe
+                                            MAlonzo.Code.Axiom.Set.Map.du__'738'_570
+                                            (coe
+                                               MAlonzo.Code.Axiom.Set.Map.du_filter'7504'_758
+                                               (coe
+                                                  MAlonzo.Code.Axiom.Set.d_th_1516
+                                                  (coe
+                                                     MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                               (coe
+                                                  MAlonzo.Code.Axiom.Set.d_sp'45''8728'_74
+                                                  (MAlonzo.Code.Axiom.Set.d_sp_188
+                                                     (coe
+                                                        MAlonzo.Code.Axiom.Set.d_th_1516
+                                                        (coe
+                                                           MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8)))
+                                                  erased erased erased
+                                                  (coe
+                                                     MAlonzo.Code.Axiom.Set.d_sp'45''172'_76
+                                                     (MAlonzo.Code.Axiom.Set.d_sp_188
+                                                        (coe
+                                                           MAlonzo.Code.Axiom.Set.d_th_1516
+                                                           (coe
+                                                              MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8)))
+                                                     erased erased
+                                                     (coe
+                                                        MAlonzo.Code.Axiom.Set.d_'8712''45'sp_1648
+                                                        MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8
+                                                        erased v0
+                                                        (let v8
+                                                               = MAlonzo.Code.Axiom.Set.d_th_1516
+                                                                   (coe
+                                                                      MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8) in
+                                                         coe
+                                                           (coe
+                                                              MAlonzo.Code.Axiom.Set.Rel.du_dom_354
+                                                              v8
+                                                              (coe
+                                                                 MAlonzo.Code.Axiom.Set.Map.du__'738'_570
+                                                                 (coe
+                                                                    MAlonzo.Code.Axiom.Set.Map.du_'10100'_'10101''7504'_844
+                                                                    (coe
+                                                                       MAlonzo.Code.Axiom.Set.d_th_1516
+                                                                       (coe
+                                                                          MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                    (coe
+                                                                       MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
+                                                                       (coe v2) (coe v4))))))))
+                                                  (\ v8 ->
+                                                     MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                       (coe v8)))
+                                               (coe v1)))))))
+                             (coe
+                                MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 (coe v3) (coe v5)))
+                          v6)))
+                 (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                    (coe
+                       MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
+                       (coe
+                          MAlonzo.Code.Function.Bundles.d_from_1870
+                          (coe
+                             MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
+                             (coe
+                                MAlonzo.Code.Axiom.Set.d_unions_224
+                                (MAlonzo.Code.Axiom.Set.d_th_1516
+                                   (coe
+                                      MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                erased
+                                (coe
+                                   MAlonzo.Code.Axiom.Set.du_fromList_456
+                                   (coe
+                                      MAlonzo.Code.Axiom.Set.d_th_1516
+                                      (coe
+                                         MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                   (coe
+                                      MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
+                                      (coe
+                                         MAlonzo.Code.Axiom.Set.Map.du__'738'_570
+                                         (coe
+                                            MAlonzo.Code.Axiom.Set.Map.du_'10100'_'10101''7504'_844
+                                            (coe
+                                               MAlonzo.Code.Axiom.Set.d_th_1516
+                                               (coe
+                                                  MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                            (coe
+                                               MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 (coe v2)
+                                               (coe v4))))
+                                      (coe
+                                         MAlonzo.Code.Data.List.Base.du_'91'_'93'_270
+                                         (coe
+                                            MAlonzo.Code.Axiom.Set.Map.du__'738'_570
+                                            (coe
+                                               MAlonzo.Code.Axiom.Set.Map.du_filter'7504'_758
+                                               (coe
+                                                  MAlonzo.Code.Axiom.Set.d_th_1516
+                                                  (coe
+                                                     MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                               (coe
+                                                  MAlonzo.Code.Axiom.Set.d_sp'45''8728'_74
+                                                  (MAlonzo.Code.Axiom.Set.d_sp_188
+                                                     (coe
+                                                        MAlonzo.Code.Axiom.Set.d_th_1516
+                                                        (coe
+                                                           MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8)))
+                                                  erased erased erased
+                                                  (coe
+                                                     MAlonzo.Code.Axiom.Set.d_sp'45''172'_76
+                                                     (MAlonzo.Code.Axiom.Set.d_sp_188
+                                                        (coe
+                                                           MAlonzo.Code.Axiom.Set.d_th_1516
+                                                           (coe
+                                                              MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8)))
+                                                     erased erased
+                                                     (coe
+                                                        MAlonzo.Code.Axiom.Set.d_'8712''45'sp_1648
+                                                        MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8
+                                                        erased v0
+                                                        (let v8
+                                                               = MAlonzo.Code.Axiom.Set.d_th_1516
+                                                                   (coe
+                                                                      MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8) in
+                                                         coe
+                                                           (coe
+                                                              MAlonzo.Code.Axiom.Set.Rel.du_dom_354
+                                                              v8
+                                                              (coe
+                                                                 MAlonzo.Code.Axiom.Set.Map.du__'738'_570
+                                                                 (coe
+                                                                    MAlonzo.Code.Axiom.Set.Map.du_'10100'_'10101''7504'_844
+                                                                    (coe
+                                                                       MAlonzo.Code.Axiom.Set.d_th_1516
+                                                                       (coe
+                                                                          MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                    (coe
+                                                                       MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
+                                                                       (coe v2) (coe v4))))))))
+                                                  (\ v8 ->
+                                                     MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                       (coe v8)))
+                                               (coe v1)))))))
+                             (coe
+                                MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 (coe v3) (coe v5)))
+                          v6))) in
+       coe
+         (case coe v8 of
+            MAlonzo.Code.Data.List.Relation.Unary.Any.C_here_46 v11
+              -> coe MAlonzo.Code.Data.Empty.du_'8869''45'elim_12
+            MAlonzo.Code.Data.List.Relation.Unary.Any.C_there_54 v11
+              -> let v12
+                       = seq
+                           (coe v11)
+                           (case coe v7 of
+                              MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v12 v13
+                                -> coe
+                                     MAlonzo.Code.Data.Sum.Base.C_inj'8322'_42
+                                     (coe MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30 (coe v13))
+                              _ -> MAlonzo.RTE.mazUnreachableError) in
+                 coe
+                   (case coe v12 of
+                      MAlonzo.Code.Data.Sum.Base.C_inj'8321'_38 v13
+                        -> coe MAlonzo.Code.Data.Empty.du_'8869''45'elim_12
+                      MAlonzo.Code.Data.Sum.Base.C_inj'8322'_42 v13
+                        -> coe
+                             MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
+                             (coe
+                                MAlonzo.Code.Function.Bundles.d_from_1870
+                                (coe
+                                   MAlonzo.Code.Axiom.Set.du_'8712''45'filter_454
+                                   (coe
+                                      MAlonzo.Code.Axiom.Set.d_th_1516
+                                      (coe
+                                         MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                   (coe MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe v1))
+                                   (coe
+                                      MAlonzo.Code.Axiom.Set.d_sp'45''8728'_74
+                                      (MAlonzo.Code.Axiom.Set.d_sp_188
+                                         (coe
+                                            MAlonzo.Code.Axiom.Set.d_th_1516
+                                            (coe
+                                               MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8)))
+                                      erased erased erased
+                                      (coe
+                                         MAlonzo.Code.Axiom.Set.d_sp'45''172'_76
+                                         (MAlonzo.Code.Axiom.Set.d_sp_188
+                                            (coe
+                                               MAlonzo.Code.Axiom.Set.d_th_1516
+                                               (coe
+                                                  MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8)))
+                                         erased erased
+                                         (coe
+                                            MAlonzo.Code.Axiom.Set.d_'8712''45'sp_1648
+                                            MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8
+                                            erased v0
+                                            (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                               (coe
+                                                  MAlonzo.Code.Axiom.Set.d_replacement_236
+                                                  (MAlonzo.Code.Axiom.Set.d_th_1516
+                                                     (coe
+                                                        MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                  erased erased
+                                                  (\ v14 ->
+                                                     MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                       (coe v14))
+                                                  (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                                     (coe
+                                                        MAlonzo.Code.Axiom.Set.d_listing_244
+                                                        (MAlonzo.Code.Axiom.Set.d_th_1516
+                                                           (coe
+                                                              MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                        erased
+                                                        (coe
+                                                           MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
+                                                           (coe
+                                                              MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
+                                                              (coe v2) (coe v4))
+                                                           (coe
+                                                              MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))))))
+                                      (\ v14 -> MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe v14)))
+                                   (coe
+                                      MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 (coe v3)
+                                      (coe v5)))
+                                v13)
+                      _ -> MAlonzo.RTE.mazUnreachableError)
+            _ -> MAlonzo.RTE.mazUnreachableError))
+-- abstract-set-theory.Axiom.Set.Map.Extra.lookupᵐ?-insert-≢
+d_lookup'7504''63''45'insert'45''8802'_5148 ::
+  () ->
+  () ->
+  MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
+  MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
+  AgdaAny ->
+  AgdaAny ->
+  AgdaAny ->
+  (MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 ->
+   MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20) ->
+  MAlonzo.Code.Class.Decidable.Core.T__'8263'_10 ->
+  MAlonzo.Code.Class.Decidable.Core.T__'8263'_10 ->
+  MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
+d_lookup'7504''63''45'insert'45''8802'_5148 = erased

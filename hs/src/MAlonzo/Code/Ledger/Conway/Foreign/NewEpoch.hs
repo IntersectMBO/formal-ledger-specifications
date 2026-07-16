@@ -82,25 +82,25 @@ d_EpochStateFromConf_14 ::
   MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.T__'8866'_'11078''8305'__16
 d_EpochStateFromConf_14
   = coe
-      MAlonzo.Code.Ledger.Conway.Conformance.Epoch.du_EpochStateFromConf_4864
+      MAlonzo.Code.Ledger.Conway.Conformance.Epoch.du_EpochStateFromConf_4876
 -- Ledger.Conway.Foreign.NewEpoch._.EpochStateToConf
 d_EpochStateToConf_16 ::
   MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.T__'8866'_'11078''8305'__16
 d_EpochStateToConf_16
   = coe
-      MAlonzo.Code.Ledger.Conway.Conformance.Epoch.du_EpochStateToConf_4880
+      MAlonzo.Code.Ledger.Conway.Conformance.Epoch.du_EpochStateToConf_4892
 -- Ledger.Conway.Foreign.NewEpoch._.HasCast-EpochState
 d_HasCast'45'EpochState_18 ::
   MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.T_HasCast_16
 d_HasCast'45'EpochState_18
   = coe
-      MAlonzo.Code.Ledger.Conway.Conformance.Epoch.du_HasCast'45'EpochState_4860
+      MAlonzo.Code.Ledger.Conway.Conformance.Epoch.du_HasCast'45'EpochState_4872
 -- Ledger.Conway.Foreign.NewEpoch._.HasCast-NewEpochState
 d_HasCast'45'NewEpochState_20 ::
   MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.T_HasCast_16
 d_HasCast'45'NewEpochState_20
   = coe
-      MAlonzo.Code.Ledger.Conway.Conformance.Epoch.du_HasCast'45'NewEpochState_4862
+      MAlonzo.Code.Ledger.Conway.Conformance.Epoch.du_HasCast'45'NewEpochState_4874
 -- Ledger.Conway.Foreign.NewEpoch._.NewEpochState
 d_NewEpochState_22 = ()
 -- Ledger.Conway.Foreign.NewEpoch._.NewEpochStateFromConf
@@ -108,98 +108,98 @@ d_NewEpochStateFromConf_26 ::
   MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.T__'8866'_'11078''8305'__16
 d_NewEpochStateFromConf_26
   = coe
-      MAlonzo.Code.Ledger.Conway.Conformance.Epoch.du_NewEpochStateFromConf_4898
+      MAlonzo.Code.Ledger.Conway.Conformance.Epoch.du_NewEpochStateFromConf_4910
 -- Ledger.Conway.Foreign.NewEpoch._.NewEpochStateToConf
 d_NewEpochStateToConf_28 ::
   MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.T__'8866'_'11078''8305'__16
 d_NewEpochStateToConf_28
   = coe
-      MAlonzo.Code.Ledger.Conway.Conformance.Epoch.du_NewEpochStateToConf_4916
+      MAlonzo.Code.Ledger.Conway.Conformance.Epoch.du_NewEpochStateToConf_4928
 -- Ledger.Conway.Foreign.NewEpoch._.EpochState.acnt
 d_acnt_34 ::
-  MAlonzo.Code.Ledger.Conway.Conformance.Epoch.T_EpochState_4808 ->
+  MAlonzo.Code.Ledger.Conway.Conformance.Epoch.T_EpochState_4820 ->
   MAlonzo.Code.Ledger.Conway.Specification.PParams.T_Acnt_188
 d_acnt_34 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_acnt_4820 (coe v0)
+      MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_acnt_4832 (coe v0)
 -- Ledger.Conway.Foreign.NewEpoch._.EpochState.es
 d_es_36 ::
-  MAlonzo.Code.Ledger.Conway.Conformance.Epoch.T_EpochState_4808 ->
+  MAlonzo.Code.Ledger.Conway.Conformance.Epoch.T_EpochState_4820 ->
   MAlonzo.Code.Ledger.Conway.Specification.Enact.T_EnactState_1176
 d_es_36 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_es_4826 (coe v0)
+      MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_es_4838 (coe v0)
 -- Ledger.Conway.Foreign.NewEpoch._.EpochState.fut
 d_fut_38 ::
-  MAlonzo.Code.Ledger.Conway.Conformance.Epoch.T_EpochState_4808 ->
+  MAlonzo.Code.Ledger.Conway.Conformance.Epoch.T_EpochState_4820 ->
   MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyState_1900
 d_fut_38 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_fut_4828 (coe v0)
+      MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_fut_4840 (coe v0)
 -- Ledger.Conway.Foreign.NewEpoch._.EpochState.ls
 d_ls_40 ::
-  MAlonzo.Code.Ledger.Conway.Conformance.Epoch.T_EpochState_4808 ->
-  MAlonzo.Code.Ledger.Conway.Conformance.Ledger.T_LState_2702
+  MAlonzo.Code.Ledger.Conway.Conformance.Epoch.T_EpochState_4820 ->
+  MAlonzo.Code.Ledger.Conway.Conformance.Ledger.T_LState_2714
 d_ls_40 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_ls_4824 (coe v0)
+      MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_ls_4836 (coe v0)
 -- Ledger.Conway.Foreign.NewEpoch._.EpochState.ss
 d_ss_42 ::
-  MAlonzo.Code.Ledger.Conway.Conformance.Epoch.T_EpochState_4808 ->
-  MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_Snapshots_3096
+  MAlonzo.Code.Ledger.Conway.Conformance.Epoch.T_EpochState_4820 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_Snapshots_3108
 d_ss_42 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_ss_4822 (coe v0)
+      MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_ss_4834 (coe v0)
 -- Ledger.Conway.Foreign.NewEpoch._.NewEpochState.bcur
 d_bcur_46 ::
-  MAlonzo.Code.Ledger.Conway.Conformance.Epoch.T_NewEpochState_4832 ->
+  MAlonzo.Code.Ledger.Conway.Conformance.Epoch.T_NewEpochState_4844 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_bcur_46 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_bcur_4850 (coe v0)
+      MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_bcur_4862 (coe v0)
 -- Ledger.Conway.Foreign.NewEpoch._.NewEpochState.bprev
 d_bprev_48 ::
-  MAlonzo.Code.Ledger.Conway.Conformance.Epoch.T_NewEpochState_4832 ->
+  MAlonzo.Code.Ledger.Conway.Conformance.Epoch.T_NewEpochState_4844 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_bprev_48 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_bprev_4848 (coe v0)
+      MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_bprev_4860 (coe v0)
 -- Ledger.Conway.Foreign.NewEpoch._.NewEpochState.epochState
 d_epochState_50 ::
-  MAlonzo.Code.Ledger.Conway.Conformance.Epoch.T_NewEpochState_4832 ->
-  MAlonzo.Code.Ledger.Conway.Conformance.Epoch.T_EpochState_4808
+  MAlonzo.Code.Ledger.Conway.Conformance.Epoch.T_NewEpochState_4844 ->
+  MAlonzo.Code.Ledger.Conway.Conformance.Epoch.T_EpochState_4820
 d_epochState_50 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_epochState_4852
+      MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_epochState_4864
       (coe v0)
 -- Ledger.Conway.Foreign.NewEpoch._.NewEpochState.lastEpoch
 d_lastEpoch_52 ::
-  MAlonzo.Code.Ledger.Conway.Conformance.Epoch.T_NewEpochState_4832 ->
+  MAlonzo.Code.Ledger.Conway.Conformance.Epoch.T_NewEpochState_4844 ->
   Integer
 d_lastEpoch_52 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_lastEpoch_4846
+      MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_lastEpoch_4858
       (coe v0)
 -- Ledger.Conway.Foreign.NewEpoch._.NewEpochState.pd
 d_pd_54 ::
-  MAlonzo.Code.Ledger.Conway.Conformance.Epoch.T_NewEpochState_4832 ->
+  MAlonzo.Code.Ledger.Conway.Conformance.Epoch.T_NewEpochState_4844 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_pd_54 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_pd_4856 (coe v0)
+      MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_pd_4868 (coe v0)
 -- Ledger.Conway.Foreign.NewEpoch._.NewEpochState.ru
 d_ru_56 ::
-  MAlonzo.Code.Ledger.Conway.Conformance.Epoch.T_NewEpochState_4832 ->
+  MAlonzo.Code.Ledger.Conway.Conformance.Epoch.T_NewEpochState_4844 ->
   Maybe
-    MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_RewardUpdate_3002
+    MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_RewardUpdate_3014
 d_ru_56 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_ru_4854 (coe v0)
+      MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_ru_4866 (coe v0)
 -- Ledger.Conway.Foreign.NewEpoch.Show-NEWEPOCH
 d_Show'45'NEWEPOCH_64 ::
-  MAlonzo.Code.Ledger.Conway.Specification.Epoch.T_NewEpochState_3344 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Epoch.T_NewEpochState_3356 ->
   Integer ->
-  MAlonzo.Code.Ledger.Conway.Specification.Epoch.T_NewEpochState_3344 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Epoch.T_NewEpochState_3356 ->
   MAlonzo.Code.Class.Show.Core.T_Show_10
 d_Show'45'NEWEPOCH_64 ~v0 ~v1 ~v2 = du_Show'45'NEWEPOCH_64
 du_Show'45'NEWEPOCH_64 :: MAlonzo.Code.Class.Show.Core.T_Show_10
@@ -209,7 +209,7 @@ du_Show'45'NEWEPOCH_64
       (coe
          (\ v0 ->
             case coe v0 of
-              MAlonzo.Code.Ledger.Conway.Specification.Epoch.C_NEWEPOCH'45'New_4026 v9
+              MAlonzo.Code.Ledger.Conway.Specification.Epoch.C_NEWEPOCH'45'New_4038 v9
                 -> case coe v9 of
                      MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v10 v11
                        -> coe
@@ -220,9 +220,9 @@ du_Show'45'NEWEPOCH_64
                                (coe MAlonzo.Code.Ledger.Conway.Foreign.Epoch.du_Show'45'EPOCH_338)
                                v11)
                      _ -> MAlonzo.RTE.mazUnreachableError
-              MAlonzo.Code.Ledger.Conway.Specification.Epoch.C_NEWEPOCH'45'Not'45'New_4032
+              MAlonzo.Code.Ledger.Conway.Specification.Epoch.C_NEWEPOCH'45'Not'45'New_4044
                 -> coe ("NEWEPOCH-Not-New" :: Data.Text.Text)
-              MAlonzo.Code.Ledger.Conway.Specification.Epoch.C_NEWEPOCH'45'No'45'Reward'45'Update_4042 v8
+              MAlonzo.Code.Ledger.Conway.Specification.Epoch.C_NEWEPOCH'45'No'45'Reward'45'Update_4054 v8
                 -> coe ("NEWEPOCH-No-Reward-Update" :: Data.Text.Text)
               _ -> MAlonzo.RTE.mazUnreachableError))
 -- Ledger.Conway.Foreign.NewEpoch.HsTy-NewEpochState
@@ -238,7 +238,7 @@ d_Conv'45'NewEpochState_74
       (coe
          (\ v0 ->
             case coe v0 of
-              MAlonzo.Code.Ledger.Conway.Conformance.Epoch.C_constructor_4858 v1 v2 v3 v4 v5 v6
+              MAlonzo.Code.Ledger.Conway.Conformance.Epoch.C_constructor_4870 v1 v2 v3 v4 v5 v6
                 -> coe
                      C_MkNewEpochState_5693 (coe v1)
                      (coe
@@ -270,11 +270,11 @@ d_Conv'45'NewEpochState_74
                            (coe
                               MAlonzo.Code.Ledger.Conway.Specification.PParams.d_treasury_194
                               (coe
-                                 MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_acnt_4820 (coe v4)))
+                                 MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_acnt_4832 (coe v4)))
                            (coe
                               MAlonzo.Code.Ledger.Conway.Specification.PParams.d_reserves_196
                               (coe
-                                 MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_acnt_4820
+                                 MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_acnt_4832
                                  (coe v4))))
                         (coe
                            MAlonzo.Code.Ledger.Conway.Foreign.Rewards.C_MkSnapshots_4191
@@ -294,11 +294,11 @@ d_Conv'45'NewEpochState_74
                                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                     (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                        (coe
-                                          MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_stake_3046
+                                          MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_stake_3058
                                           (coe
-                                             MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_mark_3106
+                                             MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_mark_3118
                                              (coe
-                                                MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_ss_4822
+                                                MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_ss_4834
                                                 (coe v4)))))))
                               (coe
                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
@@ -314,11 +314,11 @@ d_Conv'45'NewEpochState_74
                                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                     (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                        (coe
-                                          MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_delegations_3048
+                                          MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_delegations_3060
                                           (coe
-                                             MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_mark_3106
+                                             MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_mark_3118
                                              (coe
-                                                MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_ss_4822
+                                                MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_ss_4834
                                                 (coe v4)))))))
                               (coe
                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
@@ -334,11 +334,11 @@ d_Conv'45'NewEpochState_74
                                              MAlonzo.Code.Ledger.Conway.Foreign.Certs.d_Conv'45'StakePoolParams_68)))
                                     (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                        (coe
-                                          MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_pools_3050
+                                          MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_pools_3062
                                           (coe
-                                             MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_mark_3106
+                                             MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_mark_3118
                                              (coe
-                                                MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_ss_4822
+                                                MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_ss_4834
                                                 (coe v4))))))))
                            (coe
                               MAlonzo.Code.Ledger.Conway.Foreign.Rewards.C_MkSnapshot_1435
@@ -356,11 +356,11 @@ d_Conv'45'NewEpochState_74
                                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                     (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                        (coe
-                                          MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_stake_3046
+                                          MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_stake_3058
                                           (coe
-                                             MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_set_3108
+                                             MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_set_3120
                                              (coe
-                                                MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_ss_4822
+                                                MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_ss_4834
                                                 (coe v4)))))))
                               (coe
                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
@@ -376,11 +376,11 @@ d_Conv'45'NewEpochState_74
                                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                     (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                        (coe
-                                          MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_delegations_3048
+                                          MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_delegations_3060
                                           (coe
-                                             MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_set_3108
+                                             MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_set_3120
                                              (coe
-                                                MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_ss_4822
+                                                MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_ss_4834
                                                 (coe v4)))))))
                               (coe
                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
@@ -396,11 +396,11 @@ d_Conv'45'NewEpochState_74
                                              MAlonzo.Code.Ledger.Conway.Foreign.Certs.d_Conv'45'StakePoolParams_68)))
                                     (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                        (coe
-                                          MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_pools_3050
+                                          MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_pools_3062
                                           (coe
-                                             MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_set_3108
+                                             MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_set_3120
                                              (coe
-                                                MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_ss_4822
+                                                MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_ss_4834
                                                 (coe v4))))))))
                            (coe
                               MAlonzo.Code.Ledger.Conway.Foreign.Rewards.C_MkSnapshot_1435
@@ -418,11 +418,11 @@ d_Conv'45'NewEpochState_74
                                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                     (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                        (coe
-                                          MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_stake_3046
+                                          MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_stake_3058
                                           (coe
-                                             MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_go_3110
+                                             MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_go_3122
                                              (coe
-                                                MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_ss_4822
+                                                MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_ss_4834
                                                 (coe v4)))))))
                               (coe
                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
@@ -438,11 +438,11 @@ d_Conv'45'NewEpochState_74
                                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                     (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                        (coe
-                                          MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_delegations_3048
+                                          MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_delegations_3060
                                           (coe
-                                             MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_go_3110
+                                             MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_go_3122
                                              (coe
-                                                MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_ss_4822
+                                                MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_ss_4834
                                                 (coe v4)))))))
                               (coe
                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
@@ -458,16 +458,16 @@ d_Conv'45'NewEpochState_74
                                              MAlonzo.Code.Ledger.Conway.Foreign.Certs.d_Conv'45'StakePoolParams_68)))
                                     (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                        (coe
-                                          MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_pools_3050
+                                          MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_pools_3062
                                           (coe
-                                             MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_go_3110
+                                             MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_go_3122
                                              (coe
-                                                MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_ss_4822
+                                                MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_ss_4834
                                                 (coe v4))))))))
                            (coe
-                              MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_feeSS_3112
+                              MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_feeSS_3124
                               (coe
-                                 MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_ss_4822 (coe v4))))
+                                 MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_ss_4834 (coe v4))))
                         (coe
                            MAlonzo.Code.Ledger.Conway.Foreign.Ledger.C_MkLState_2827
                            (coe
@@ -518,18 +518,18 @@ d_Conv'45'NewEpochState_74
                                                             MAlonzo.Code.Ledger.Conway.Foreign.Transaction.d_Conv'45'HSPlutusScript_22))))))))
                                     (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                        (coe
-                                          MAlonzo.Code.Ledger.Conway.Specification.Utxo.d_utxo_2506
+                                          MAlonzo.Code.Ledger.Conway.Specification.Utxo.d_utxo_2518
                                           (coe
-                                             MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_utxoSt_2710
+                                             MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_utxoSt_2722
                                              (coe
-                                                MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_ls_4824
+                                                MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_ls_4836
                                                 (coe v4)))))))
                               (coe
-                                 MAlonzo.Code.Ledger.Conway.Specification.Utxo.d_fees_2508
+                                 MAlonzo.Code.Ledger.Conway.Specification.Utxo.d_fees_2520
                                  (coe
-                                    MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_utxoSt_2710
+                                    MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_utxoSt_2722
                                     (coe
-                                       MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_ls_4824
+                                       MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_ls_4836
                                        (coe v4))))
                               (coe
                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
@@ -545,18 +545,18 @@ d_Conv'45'NewEpochState_74
                                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                     (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                        (coe
-                                          MAlonzo.Code.Ledger.Conway.Specification.Utxo.d_deposits_2510
+                                          MAlonzo.Code.Ledger.Conway.Specification.Utxo.d_deposits_2522
                                           (coe
-                                             MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_utxoSt_2710
+                                             MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_utxoSt_2722
                                              (coe
-                                                MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_ls_4824
+                                                MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_ls_4836
                                                 (coe v4)))))))
                               (coe
-                                 MAlonzo.Code.Ledger.Conway.Specification.Utxo.d_donations_2512
+                                 MAlonzo.Code.Ledger.Conway.Specification.Utxo.d_donations_2524
                                  (coe
-                                    MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_utxoSt_2710
+                                    MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_utxoSt_2722
                                     (coe
-                                       MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_ls_4824
+                                       MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_ls_4836
                                        (coe v4)))))
                            (coe
                               MAlonzo.Code.Class.Functor.Core.du_fmap_22
@@ -573,9 +573,9 @@ d_Conv'45'NewEpochState_74
                                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
                                     (coe
                                        MAlonzo.Code.Ledger.Conway.Foreign.Gov.d_Conv'45'GovActionState_908)))
-                              (MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_govSt_2712
+                              (MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_govSt_2724
                                  (coe
-                                    MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_ls_4824
+                                    MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_ls_4836
                                     (coe v4))))
                            (coe
                               MAlonzo.Code.Ledger.Conway.Foreign.Cert.C_MkCertState_713
@@ -599,9 +599,9 @@ d_Conv'45'NewEpochState_74
                                              (coe
                                                 MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dState_1624
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_certState_2714
+                                                   MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_certState_2726
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_ls_4824
+                                                      MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_ls_4836
                                                       (coe v4))))))))
                                  (coe
                                     MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
@@ -621,9 +621,9 @@ d_Conv'45'NewEpochState_74
                                              (coe
                                                 MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dState_1624
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_certState_2714
+                                                   MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_certState_2726
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_ls_4824
+                                                      MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_ls_4836
                                                       (coe v4))))))))
                                  (coe
                                     MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
@@ -643,9 +643,9 @@ d_Conv'45'NewEpochState_74
                                              (coe
                                                 MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dState_1624
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_certState_2714
+                                                   MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_certState_2726
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_ls_4824
+                                                      MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_ls_4836
                                                       (coe v4))))))))
                                  (coe
                                     MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
@@ -665,9 +665,9 @@ d_Conv'45'NewEpochState_74
                                              (coe
                                                 MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dState_1624
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_certState_2714
+                                                   MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_certState_2726
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_ls_4824
+                                                      MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_ls_4836
                                                       (coe v4)))))))))
                               (coe
                                  MAlonzo.Code.Ledger.Conway.Foreign.Certs.C_MkPState_6089
@@ -689,9 +689,9 @@ d_Conv'45'NewEpochState_74
                                              (coe
                                                 MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_pState_1626
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_certState_2714
+                                                   MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_certState_2726
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_ls_4824
+                                                      MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_ls_4836
                                                       (coe v4))))))))
                                  (coe
                                     MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
@@ -711,9 +711,9 @@ d_Conv'45'NewEpochState_74
                                              (coe
                                                 MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_pState_1626
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_certState_2714
+                                                   MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_certState_2726
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_ls_4824
+                                                      MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_ls_4836
                                                       (coe v4))))))))
                                  (coe
                                     MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
@@ -733,9 +733,9 @@ d_Conv'45'NewEpochState_74
                                              (coe
                                                 MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_pState_1626
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_certState_2714
+                                                   MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_certState_2726
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_ls_4824
+                                                      MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_ls_4836
                                                       (coe v4)))))))))
                               (coe
                                  MAlonzo.Code.Ledger.Conway.Foreign.Certs.C_MkGState_24713
@@ -757,9 +757,9 @@ d_Conv'45'NewEpochState_74
                                              (coe
                                                 MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_gState_1628
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_certState_2714
+                                                   MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_certState_2726
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_ls_4824
+                                                      MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_ls_4836
                                                       (coe v4))))))))
                                  (coe
                                     MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
@@ -781,9 +781,9 @@ d_Conv'45'NewEpochState_74
                                              (coe
                                                 MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_gState_1628
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_certState_2714
+                                                   MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_certState_2726
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_ls_4824
+                                                      MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_ls_4836
                                                       (coe v4))))))))
                                  (coe
                                     MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
@@ -803,9 +803,9 @@ d_Conv'45'NewEpochState_74
                                              (coe
                                                 MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_gState_1628
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_certState_2714
+                                                   MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_certState_2726
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_ls_4824
+                                                      MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_ls_4836
                                                       (coe v4)))))))))))
                         (coe
                            MAlonzo.Code.Ledger.Conway.Foreign.Enact.C_MkEnactState_161
@@ -861,7 +861,7 @@ d_Conv'45'NewEpochState_74
                                  (coe
                                     MAlonzo.Code.Ledger.Conway.Specification.Enact.d_cc_1188
                                     (coe
-                                       MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_es_4826
+                                       MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_es_4838
                                        (coe v4)))))
                            (coe
                               MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44 () erased () erased
@@ -890,7 +890,7 @@ d_Conv'45'NewEpochState_74
                                  (coe
                                     MAlonzo.Code.Ledger.Conway.Specification.Enact.d_constitution_1190
                                     (coe
-                                       MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_es_4826
+                                       MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_es_4838
                                        (coe v4)))))
                            (coe
                               MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44 () erased () erased
@@ -917,7 +917,7 @@ d_Conv'45'NewEpochState_74
                                  (coe
                                     MAlonzo.Code.Ledger.Conway.Specification.Enact.d_pv_1192
                                     (coe
-                                       MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_es_4826
+                                       MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_es_4838
                                        (coe v4)))))
                            (coe
                               MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44 () erased () erased
@@ -940,7 +940,7 @@ d_Conv'45'NewEpochState_74
                                  (coe
                                     MAlonzo.Code.Ledger.Conway.Specification.Enact.d_pparams_1194
                                     (coe
-                                       MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_es_4826
+                                       MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_es_4838
                                        (coe v4)))))
                            (coe
                               MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
@@ -958,7 +958,7 @@ d_Conv'45'NewEpochState_74
                                     (coe
                                        MAlonzo.Code.Ledger.Conway.Specification.Enact.d_withdrawals_1196
                                        (coe
-                                          MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_es_4826
+                                          MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_es_4838
                                           (coe v4)))))))
                         (coe
                            MAlonzo.Code.Ledger.Conway.Foreign.Ratify.C_MkRatifyState_12361
@@ -1018,7 +1018,7 @@ d_Conv'45'NewEpochState_74
                                        (coe
                                           MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_es_1908
                                           (coe
-                                             MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_fut_4828
+                                             MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_fut_4840
                                              (coe v4))))))
                               (coe
                                  MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44 () erased () erased
@@ -1049,7 +1049,7 @@ d_Conv'45'NewEpochState_74
                                        (coe
                                           MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_es_1908
                                           (coe
-                                             MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_fut_4828
+                                             MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_fut_4840
                                              (coe v4))))))
                               (coe
                                  MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44 () erased () erased
@@ -1078,7 +1078,7 @@ d_Conv'45'NewEpochState_74
                                        (coe
                                           MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_es_1908
                                           (coe
-                                             MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_fut_4828
+                                             MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_fut_4840
                                              (coe v4))))))
                               (coe
                                  MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44 () erased () erased
@@ -1103,7 +1103,7 @@ d_Conv'45'NewEpochState_74
                                        (coe
                                           MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_es_1908
                                           (coe
-                                             MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_fut_4828
+                                             MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_fut_4840
                                              (coe v4))))))
                               (coe
                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
@@ -1123,7 +1123,7 @@ d_Conv'45'NewEpochState_74
                                           (coe
                                              MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_es_1908
                                              (coe
-                                                MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_fut_4828
+                                                MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_fut_4840
                                                 (coe v4))))))))
                            (coe
                               MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSSet_68
@@ -1143,12 +1143,12 @@ d_Conv'45'NewEpochState_74
                                           MAlonzo.Code.Ledger.Conway.Foreign.Gov.d_Conv'45'GovActionState_908)))
                                  (MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_removed_1910
                                     (coe
-                                       MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_fut_4828
+                                       MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_fut_4840
                                        (coe v4)))))
                            (coe
                               MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_delay_1912
                               (coe
-                                 MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_fut_4828
+                                 MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_fut_4840
                                  (coe v4)))))
                      (coe
                         MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -1175,7 +1175,7 @@ d_Conv'45'NewEpochState_74
             case coe v0 of
               C_MkNewEpochState_5693 v1 v2 v3 v4 v5 v6
                 -> coe
-                     MAlonzo.Code.Ledger.Conway.Conformance.Epoch.C_constructor_4858
+                     MAlonzo.Code.Ledger.Conway.Conformance.Epoch.C_constructor_4870
                      (coe v1)
                      (coe
                         MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
@@ -1240,7 +1240,7 @@ d_Conv'45'NewEpochState_74
                            (coe
                               (\ v7 ->
                                  case coe v7 of
-                                   MAlonzo.Code.Ledger.Conway.Conformance.Epoch.C_'10214'_'44'_'44'_'44'_'44'_'10215''7497'''_4830 v8 v9 v10 v11 v12
+                                   MAlonzo.Code.Ledger.Conway.Conformance.Epoch.C_'10214'_'44'_'44'_'44'_'44'_'10215''7497'''_4842 v8 v9 v10 v11 v12
                                      -> coe
                                           MAlonzo.Code.Ledger.Conway.Foreign.Epoch.C_MkEpochState_4137
                                           (coe
@@ -1269,9 +1269,9 @@ d_Conv'45'NewEpochState_74
                                                                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                                       (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_stake_3046
+                                                            MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_stake_3058
                                                             (coe
-                                                               MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_mark_3106
+                                                               MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_mark_3118
                                                                (coe v9))))))
                                                 (coe
                                                    MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
@@ -1287,9 +1287,9 @@ d_Conv'45'NewEpochState_74
                                                                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                                       (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_delegations_3048
+                                                            MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_delegations_3060
                                                             (coe
-                                                               MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_mark_3106
+                                                               MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_mark_3118
                                                                (coe v9))))))
                                                 (coe
                                                    MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
@@ -1305,9 +1305,9 @@ d_Conv'45'NewEpochState_74
                                                                MAlonzo.Code.Ledger.Conway.Foreign.Certs.d_Conv'45'StakePoolParams_68)))
                                                       (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_pools_3050
+                                                            MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_pools_3062
                                                             (coe
-                                                               MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_mark_3106
+                                                               MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_mark_3118
                                                                (coe v9)))))))
                                              (coe
                                                 MAlonzo.Code.Ledger.Conway.Foreign.Rewards.C_MkSnapshot_1435
@@ -1325,9 +1325,9 @@ d_Conv'45'NewEpochState_74
                                                                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                                       (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_stake_3046
+                                                            MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_stake_3058
                                                             (coe
-                                                               MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_set_3108
+                                                               MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_set_3120
                                                                (coe v9))))))
                                                 (coe
                                                    MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
@@ -1343,9 +1343,9 @@ d_Conv'45'NewEpochState_74
                                                                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                                       (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_delegations_3048
+                                                            MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_delegations_3060
                                                             (coe
-                                                               MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_set_3108
+                                                               MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_set_3120
                                                                (coe v9))))))
                                                 (coe
                                                    MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
@@ -1361,9 +1361,9 @@ d_Conv'45'NewEpochState_74
                                                                MAlonzo.Code.Ledger.Conway.Foreign.Certs.d_Conv'45'StakePoolParams_68)))
                                                       (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_pools_3050
+                                                            MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_pools_3062
                                                             (coe
-                                                               MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_set_3108
+                                                               MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_set_3120
                                                                (coe v9)))))))
                                              (coe
                                                 MAlonzo.Code.Ledger.Conway.Foreign.Rewards.C_MkSnapshot_1435
@@ -1381,9 +1381,9 @@ d_Conv'45'NewEpochState_74
                                                                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                                       (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_stake_3046
+                                                            MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_stake_3058
                                                             (coe
-                                                               MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_go_3110
+                                                               MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_go_3122
                                                                (coe v9))))))
                                                 (coe
                                                    MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
@@ -1399,9 +1399,9 @@ d_Conv'45'NewEpochState_74
                                                                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                                       (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_delegations_3048
+                                                            MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_delegations_3060
                                                             (coe
-                                                               MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_go_3110
+                                                               MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_go_3122
                                                                (coe v9))))))
                                                 (coe
                                                    MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
@@ -1417,12 +1417,12 @@ d_Conv'45'NewEpochState_74
                                                                MAlonzo.Code.Ledger.Conway.Foreign.Certs.d_Conv'45'StakePoolParams_68)))
                                                       (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_pools_3050
+                                                            MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_pools_3062
                                                             (coe
-                                                               MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_go_3110
+                                                               MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_go_3122
                                                                (coe v9)))))))
                                              (coe
-                                                MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_feeSS_3112
+                                                MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_feeSS_3124
                                                 (coe v9)))
                                           (coe
                                              MAlonzo.Code.Ledger.Conway.Foreign.Ledger.C_MkLState_2827
@@ -1474,14 +1474,14 @@ d_Conv'45'NewEpochState_74
                                                                               MAlonzo.Code.Ledger.Conway.Foreign.Transaction.d_Conv'45'HSPlutusScript_22))))))))
                                                       (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Conway.Specification.Utxo.d_utxo_2506
+                                                            MAlonzo.Code.Ledger.Conway.Specification.Utxo.d_utxo_2518
                                                             (coe
-                                                               MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_utxoSt_2710
+                                                               MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_utxoSt_2722
                                                                (coe v10))))))
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Conway.Specification.Utxo.d_fees_2508
+                                                   MAlonzo.Code.Ledger.Conway.Specification.Utxo.d_fees_2520
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_utxoSt_2710
+                                                      MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_utxoSt_2722
                                                       (coe v10)))
                                                 (coe
                                                    MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
@@ -1497,14 +1497,14 @@ d_Conv'45'NewEpochState_74
                                                                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                                       (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Conway.Specification.Utxo.d_deposits_2510
+                                                            MAlonzo.Code.Ledger.Conway.Specification.Utxo.d_deposits_2522
                                                             (coe
-                                                               MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_utxoSt_2710
+                                                               MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_utxoSt_2722
                                                                (coe v10))))))
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Conway.Specification.Utxo.d_donations_2512
+                                                   MAlonzo.Code.Ledger.Conway.Specification.Utxo.d_donations_2524
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_utxoSt_2710
+                                                      MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_utxoSt_2722
                                                       (coe v10))))
                                              (coe
                                                 MAlonzo.Code.Class.Functor.Core.du_fmap_22
@@ -1521,7 +1521,7 @@ d_Conv'45'NewEpochState_74
                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
                                                       (coe
                                                          MAlonzo.Code.Ledger.Conway.Foreign.Gov.d_Conv'45'GovActionState_908)))
-                                                (MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_govSt_2712
+                                                (MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_govSt_2724
                                                    (coe v10)))
                                              (coe
                                                 MAlonzo.Code.Ledger.Conway.Foreign.Cert.C_MkCertState_713
@@ -1545,7 +1545,7 @@ d_Conv'45'NewEpochState_74
                                                                (coe
                                                                   MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dState_1624
                                                                   (coe
-                                                                     MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_certState_2714
+                                                                     MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_certState_2726
                                                                      (coe v10)))))))
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
@@ -1565,7 +1565,7 @@ d_Conv'45'NewEpochState_74
                                                                (coe
                                                                   MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dState_1624
                                                                   (coe
-                                                                     MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_certState_2714
+                                                                     MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_certState_2726
                                                                      (coe v10)))))))
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
@@ -1585,7 +1585,7 @@ d_Conv'45'NewEpochState_74
                                                                (coe
                                                                   MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dState_1624
                                                                   (coe
-                                                                     MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_certState_2714
+                                                                     MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_certState_2726
                                                                      (coe v10)))))))
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
@@ -1605,7 +1605,7 @@ d_Conv'45'NewEpochState_74
                                                                (coe
                                                                   MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dState_1624
                                                                   (coe
-                                                                     MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_certState_2714
+                                                                     MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_certState_2726
                                                                      (coe v10))))))))
                                                 (coe
                                                    MAlonzo.Code.Ledger.Conway.Foreign.Certs.C_MkPState_6089
@@ -1627,7 +1627,7 @@ d_Conv'45'NewEpochState_74
                                                                (coe
                                                                   MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_pState_1626
                                                                   (coe
-                                                                     MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_certState_2714
+                                                                     MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_certState_2726
                                                                      (coe v10)))))))
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
@@ -1647,7 +1647,7 @@ d_Conv'45'NewEpochState_74
                                                                (coe
                                                                   MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_pState_1626
                                                                   (coe
-                                                                     MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_certState_2714
+                                                                     MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_certState_2726
                                                                      (coe v10)))))))
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
@@ -1667,7 +1667,7 @@ d_Conv'45'NewEpochState_74
                                                                (coe
                                                                   MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_pState_1626
                                                                   (coe
-                                                                     MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_certState_2714
+                                                                     MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_certState_2726
                                                                      (coe v10))))))))
                                                 (coe
                                                    MAlonzo.Code.Ledger.Conway.Foreign.Certs.C_MkGState_24713
@@ -1689,7 +1689,7 @@ d_Conv'45'NewEpochState_74
                                                                (coe
                                                                   MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_gState_1628
                                                                   (coe
-                                                                     MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_certState_2714
+                                                                     MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_certState_2726
                                                                      (coe v10)))))))
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
@@ -1711,7 +1711,7 @@ d_Conv'45'NewEpochState_74
                                                                (coe
                                                                   MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_gState_1628
                                                                   (coe
-                                                                     MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_certState_2714
+                                                                     MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_certState_2726
                                                                      (coe v10)))))))
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
@@ -1731,7 +1731,7 @@ d_Conv'45'NewEpochState_74
                                                                (coe
                                                                   MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_gState_1628
                                                                   (coe
-                                                                     MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_certState_2714
+                                                                     MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_certState_2726
                                                                      (coe v10))))))))))
                                           (coe
                                              MAlonzo.Code.Ledger.Conway.Foreign.Enact.C_MkEnactState_161
@@ -2074,7 +2074,7 @@ d_Conv'45'NewEpochState_74
                                  case coe v7 of
                                    MAlonzo.Code.Ledger.Conway.Foreign.Epoch.C_MkEpochState_4137 v8 v9 v10 v11 v12
                                      -> coe
-                                          MAlonzo.Code.Ledger.Conway.Conformance.Epoch.C_'10214'_'44'_'44'_'44'_'44'_'10215''7497'''_4830
+                                          MAlonzo.Code.Ledger.Conway.Conformance.Epoch.C_'10214'_'44'_'44'_'44'_'44'_'10215''7497'''_4842
                                           (coe
                                              MAlonzo.Code.Class.Convertible.Core.d_from_22
                                              (coe
@@ -2103,7 +2103,7 @@ d_Conv'45'NewEpochState_74
                                                 (coe
                                                    (\ v13 ->
                                                       case coe v13 of
-                                                        MAlonzo.Code.Ledger.Conway.Specification.Rewards.C_constructor_3114 v14 v15 v16 v17
+                                                        MAlonzo.Code.Ledger.Conway.Specification.Rewards.C_constructor_3126 v14 v15 v16 v17
                                                           -> coe
                                                                MAlonzo.Code.Ledger.Conway.Foreign.Rewards.C_MkSnapshots_4191
                                                                (coe
@@ -2122,7 +2122,7 @@ d_Conv'45'NewEpochState_74
                                                                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                                                         (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                            (coe
-                                                                              MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_stake_3046
+                                                                              MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_stake_3058
                                                                               (coe v14)))))
                                                                   (coe
                                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
@@ -2138,7 +2138,7 @@ d_Conv'45'NewEpochState_74
                                                                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                                                         (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                            (coe
-                                                                              MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_delegations_3048
+                                                                              MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_delegations_3060
                                                                               (coe v14)))))
                                                                   (coe
                                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
@@ -2154,7 +2154,7 @@ d_Conv'45'NewEpochState_74
                                                                                  MAlonzo.Code.Ledger.Conway.Foreign.Certs.d_Conv'45'StakePoolParams_68)))
                                                                         (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                            (coe
-                                                                              MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_pools_3050
+                                                                              MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_pools_3062
                                                                               (coe v14))))))
                                                                (coe
                                                                   MAlonzo.Code.Ledger.Conway.Foreign.Rewards.C_MkSnapshot_1435
@@ -2172,7 +2172,7 @@ d_Conv'45'NewEpochState_74
                                                                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                                                         (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                            (coe
-                                                                              MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_stake_3046
+                                                                              MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_stake_3058
                                                                               (coe v15)))))
                                                                   (coe
                                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
@@ -2188,7 +2188,7 @@ d_Conv'45'NewEpochState_74
                                                                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                                                         (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                            (coe
-                                                                              MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_delegations_3048
+                                                                              MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_delegations_3060
                                                                               (coe v15)))))
                                                                   (coe
                                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
@@ -2204,7 +2204,7 @@ d_Conv'45'NewEpochState_74
                                                                                  MAlonzo.Code.Ledger.Conway.Foreign.Certs.d_Conv'45'StakePoolParams_68)))
                                                                         (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                            (coe
-                                                                              MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_pools_3050
+                                                                              MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_pools_3062
                                                                               (coe v15))))))
                                                                (coe
                                                                   MAlonzo.Code.Ledger.Conway.Foreign.Rewards.C_MkSnapshot_1435
@@ -2222,7 +2222,7 @@ d_Conv'45'NewEpochState_74
                                                                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                                                         (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                            (coe
-                                                                              MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_stake_3046
+                                                                              MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_stake_3058
                                                                               (coe v16)))))
                                                                   (coe
                                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
@@ -2238,7 +2238,7 @@ d_Conv'45'NewEpochState_74
                                                                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                                                         (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                            (coe
-                                                                              MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_delegations_3048
+                                                                              MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_delegations_3060
                                                                               (coe v16)))))
                                                                   (coe
                                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
@@ -2254,7 +2254,7 @@ d_Conv'45'NewEpochState_74
                                                                                  MAlonzo.Code.Ledger.Conway.Foreign.Certs.d_Conv'45'StakePoolParams_68)))
                                                                         (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                            (coe
-                                                                              MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_pools_3050
+                                                                              MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_pools_3062
                                                                               (coe v16))))))
                                                                (coe v17)
                                                         _ -> MAlonzo.RTE.mazUnreachableError))
@@ -2263,7 +2263,7 @@ d_Conv'45'NewEpochState_74
                                                       case coe v13 of
                                                         MAlonzo.Code.Ledger.Conway.Foreign.Rewards.C_MkSnapshots_4191 v14 v15 v16 v17
                                                           -> coe
-                                                               MAlonzo.Code.Ledger.Conway.Specification.Rewards.C_constructor_3114
+                                                               MAlonzo.Code.Ledger.Conway.Specification.Rewards.C_constructor_3126
                                                                (coe
                                                                   MAlonzo.Code.Class.Convertible.Core.d_from_22
                                                                   (coe
@@ -2271,7 +2271,7 @@ d_Conv'45'NewEpochState_74
                                                                      (coe
                                                                         (\ v18 ->
                                                                            case coe v18 of
-                                                                             MAlonzo.Code.Ledger.Conway.Specification.Rewards.C_constructor_3052 v19 v20 v21
+                                                                             MAlonzo.Code.Ledger.Conway.Specification.Rewards.C_constructor_3064 v19 v20 v21
                                                                                -> coe
                                                                                     MAlonzo.Code.Ledger.Conway.Foreign.Rewards.C_MkSnapshot_1435
                                                                                     (coe
@@ -2325,7 +2325,7 @@ d_Conv'45'NewEpochState_74
                                                                            case coe v18 of
                                                                              MAlonzo.Code.Ledger.Conway.Foreign.Rewards.C_MkSnapshot_1435 v19 v20 v21
                                                                                -> coe
-                                                                                    MAlonzo.Code.Ledger.Conway.Specification.Rewards.C_constructor_3052
+                                                                                    MAlonzo.Code.Ledger.Conway.Specification.Rewards.C_constructor_3064
                                                                                     (coe
                                                                                        MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
                                                                                        (coe
@@ -2490,7 +2490,7 @@ d_Conv'45'NewEpochState_74
                                                                      (coe
                                                                         (\ v18 ->
                                                                            case coe v18 of
-                                                                             MAlonzo.Code.Ledger.Conway.Specification.Rewards.C_constructor_3052 v19 v20 v21
+                                                                             MAlonzo.Code.Ledger.Conway.Specification.Rewards.C_constructor_3064 v19 v20 v21
                                                                                -> coe
                                                                                     MAlonzo.Code.Ledger.Conway.Foreign.Rewards.C_MkSnapshot_1435
                                                                                     (coe
@@ -2544,7 +2544,7 @@ d_Conv'45'NewEpochState_74
                                                                            case coe v18 of
                                                                              MAlonzo.Code.Ledger.Conway.Foreign.Rewards.C_MkSnapshot_1435 v19 v20 v21
                                                                                -> coe
-                                                                                    MAlonzo.Code.Ledger.Conway.Specification.Rewards.C_constructor_3052
+                                                                                    MAlonzo.Code.Ledger.Conway.Specification.Rewards.C_constructor_3064
                                                                                     (coe
                                                                                        MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
                                                                                        (coe
@@ -2709,7 +2709,7 @@ d_Conv'45'NewEpochState_74
                                                                      (coe
                                                                         (\ v18 ->
                                                                            case coe v18 of
-                                                                             MAlonzo.Code.Ledger.Conway.Specification.Rewards.C_constructor_3052 v19 v20 v21
+                                                                             MAlonzo.Code.Ledger.Conway.Specification.Rewards.C_constructor_3064 v19 v20 v21
                                                                                -> coe
                                                                                     MAlonzo.Code.Ledger.Conway.Foreign.Rewards.C_MkSnapshot_1435
                                                                                     (coe
@@ -2763,7 +2763,7 @@ d_Conv'45'NewEpochState_74
                                                                            case coe v18 of
                                                                              MAlonzo.Code.Ledger.Conway.Foreign.Rewards.C_MkSnapshot_1435 v19 v20 v21
                                                                                -> coe
-                                                                                    MAlonzo.Code.Ledger.Conway.Specification.Rewards.C_constructor_3052
+                                                                                    MAlonzo.Code.Ledger.Conway.Specification.Rewards.C_constructor_3064
                                                                                     (coe
                                                                                        MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
                                                                                        (coe
@@ -2931,7 +2931,7 @@ d_Conv'45'NewEpochState_74
                                                 (coe
                                                    (\ v13 ->
                                                       case coe v13 of
-                                                        MAlonzo.Code.Ledger.Conway.Conformance.Ledger.C_'10214'_'44'_'44'_'10215''737'_2716 v14 v15 v16
+                                                        MAlonzo.Code.Ledger.Conway.Conformance.Ledger.C_'10214'_'44'_'44'_'10215''737'_2728 v14 v15 v16
                                                           -> coe
                                                                MAlonzo.Code.Ledger.Conway.Foreign.Ledger.C_MkLState_2827
                                                                (coe
@@ -2982,10 +2982,10 @@ d_Conv'45'NewEpochState_74
                                                                                                 MAlonzo.Code.Ledger.Conway.Foreign.Transaction.d_Conv'45'HSPlutusScript_22))))))))
                                                                         (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                            (coe
-                                                                              MAlonzo.Code.Ledger.Conway.Specification.Utxo.d_utxo_2506
+                                                                              MAlonzo.Code.Ledger.Conway.Specification.Utxo.d_utxo_2518
                                                                               (coe v14)))))
                                                                   (coe
-                                                                     MAlonzo.Code.Ledger.Conway.Specification.Utxo.d_fees_2508
+                                                                     MAlonzo.Code.Ledger.Conway.Specification.Utxo.d_fees_2520
                                                                      (coe v14))
                                                                   (coe
                                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
@@ -3001,10 +3001,10 @@ d_Conv'45'NewEpochState_74
                                                                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                                                         (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                            (coe
-                                                                              MAlonzo.Code.Ledger.Conway.Specification.Utxo.d_deposits_2510
+                                                                              MAlonzo.Code.Ledger.Conway.Specification.Utxo.d_deposits_2522
                                                                               (coe v14)))))
                                                                   (coe
-                                                                     MAlonzo.Code.Ledger.Conway.Specification.Utxo.d_donations_2512
+                                                                     MAlonzo.Code.Ledger.Conway.Specification.Utxo.d_donations_2524
                                                                      (coe v14)))
                                                                (coe
                                                                   MAlonzo.Code.Class.Functor.Core.du_fmap_22
@@ -3218,7 +3218,7 @@ d_Conv'45'NewEpochState_74
                                                       case coe v13 of
                                                         MAlonzo.Code.Ledger.Conway.Foreign.Ledger.C_MkLState_2827 v14 v15 v16
                                                           -> coe
-                                                               MAlonzo.Code.Ledger.Conway.Conformance.Ledger.C_'10214'_'44'_'44'_'10215''737'_2716
+                                                               MAlonzo.Code.Ledger.Conway.Conformance.Ledger.C_'10214'_'44'_'44'_'10215''737'_2728
                                                                (coe
                                                                   MAlonzo.Code.Class.Convertible.Core.d_from_22
                                                                   (coe
@@ -3226,7 +3226,7 @@ d_Conv'45'NewEpochState_74
                                                                      (coe
                                                                         (\ v17 ->
                                                                            case coe v17 of
-                                                                             MAlonzo.Code.Ledger.Conway.Specification.Utxo.C_'10214'_'44'_'44'_'44'_'10215''7512'_2514 v18 v19 v20 v21
+                                                                             MAlonzo.Code.Ledger.Conway.Specification.Utxo.C_'10214'_'44'_'44'_'44'_'10215''7512'_2526 v18 v19 v20 v21
                                                                                -> coe
                                                                                     MAlonzo.Code.Ledger.Conway.Foreign.Utxo.C_MkUTxOState_1155
                                                                                     (coe
@@ -3299,7 +3299,7 @@ d_Conv'45'NewEpochState_74
                                                                            case coe v17 of
                                                                              MAlonzo.Code.Ledger.Conway.Foreign.Utxo.C_MkUTxOState_1155 v18 v19 v20 v21
                                                                                -> coe
-                                                                                    MAlonzo.Code.Ledger.Conway.Specification.Utxo.C_'10214'_'44'_'44'_'44'_'10215''7512'_2514
+                                                                                    MAlonzo.Code.Ledger.Conway.Specification.Utxo.C_'10214'_'44'_'44'_'44'_'10215''7512'_2526
                                                                                     (coe
                                                                                        MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
                                                                                        (coe
@@ -5370,7 +5370,7 @@ du_newepoch'45'step_76 ::
 du_newepoch'45'step_76 v0 v1
   = let v2
           = coe
-              MAlonzo.Code.Ledger.Conway.Specification.Epoch.Properties.Computational.du_NEWEPOCH'45'total_3434
+              MAlonzo.Code.Ledger.Conway.Specification.Epoch.Properties.Computational.du_NEWEPOCH'45'total_3446
               (coe
                  MAlonzo.Code.Ledger.Conway.Foreign.ExternalStructures.d_HSTransactionStructure_682
                  (coe
@@ -5379,7 +5379,7 @@ du_newepoch'45'step_76 v0 v1
               (coe
                  MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.du_conv_86
                  (coe
-                    MAlonzo.Code.Ledger.Conway.Conformance.Epoch.du_NewEpochStateFromConf_4898)
+                    MAlonzo.Code.Ledger.Conway.Conformance.Epoch.du_NewEpochStateFromConf_4910)
                  (coe
                     MAlonzo.Code.Class.Convertible.Core.d_from_22
                     (coe
@@ -5387,7 +5387,7 @@ du_newepoch'45'step_76 v0 v1
                        (coe
                           (\ v2 ->
                              case coe v2 of
-                               MAlonzo.Code.Ledger.Conway.Conformance.Epoch.C_constructor_4858 v3 v4 v5 v6 v7 v8
+                               MAlonzo.Code.Ledger.Conway.Conformance.Epoch.C_constructor_4870 v3 v4 v5 v6 v7 v8
                                  -> coe
                                       C_MkNewEpochState_5693 (coe v3)
                                       (coe
@@ -5423,12 +5423,12 @@ du_newepoch'45'step_76 v0 v1
                                             (coe
                                                MAlonzo.Code.Ledger.Conway.Specification.PParams.d_treasury_194
                                                (coe
-                                                  MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_acnt_4820
+                                                  MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_acnt_4832
                                                   (coe v6)))
                                             (coe
                                                MAlonzo.Code.Ledger.Conway.Specification.PParams.d_reserves_196
                                                (coe
-                                                  MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_acnt_4820
+                                                  MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_acnt_4832
                                                   (coe v6))))
                                          (coe
                                             MAlonzo.Code.Ledger.Conway.Foreign.Rewards.C_MkSnapshots_4191
@@ -5448,11 +5448,11 @@ du_newepoch'45'step_76 v0 v1
                                                               MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                                      (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                         (coe
-                                                           MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_stake_3046
+                                                           MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_stake_3058
                                                            (coe
-                                                              MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_mark_3106
+                                                              MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_mark_3118
                                                               (coe
-                                                                 MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_ss_4822
+                                                                 MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_ss_4834
                                                                  (coe v6)))))))
                                                (coe
                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
@@ -5468,11 +5468,11 @@ du_newepoch'45'step_76 v0 v1
                                                               MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                                      (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                         (coe
-                                                           MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_delegations_3048
+                                                           MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_delegations_3060
                                                            (coe
-                                                              MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_mark_3106
+                                                              MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_mark_3118
                                                               (coe
-                                                                 MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_ss_4822
+                                                                 MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_ss_4834
                                                                  (coe v6)))))))
                                                (coe
                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
@@ -5488,11 +5488,11 @@ du_newepoch'45'step_76 v0 v1
                                                               MAlonzo.Code.Ledger.Conway.Foreign.Certs.d_Conv'45'StakePoolParams_68)))
                                                      (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                         (coe
-                                                           MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_pools_3050
+                                                           MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_pools_3062
                                                            (coe
-                                                              MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_mark_3106
+                                                              MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_mark_3118
                                                               (coe
-                                                                 MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_ss_4822
+                                                                 MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_ss_4834
                                                                  (coe v6))))))))
                                             (coe
                                                MAlonzo.Code.Ledger.Conway.Foreign.Rewards.C_MkSnapshot_1435
@@ -5510,11 +5510,11 @@ du_newepoch'45'step_76 v0 v1
                                                               MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                                      (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                         (coe
-                                                           MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_stake_3046
+                                                           MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_stake_3058
                                                            (coe
-                                                              MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_set_3108
+                                                              MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_set_3120
                                                               (coe
-                                                                 MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_ss_4822
+                                                                 MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_ss_4834
                                                                  (coe v6)))))))
                                                (coe
                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
@@ -5530,11 +5530,11 @@ du_newepoch'45'step_76 v0 v1
                                                               MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                                      (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                         (coe
-                                                           MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_delegations_3048
+                                                           MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_delegations_3060
                                                            (coe
-                                                              MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_set_3108
+                                                              MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_set_3120
                                                               (coe
-                                                                 MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_ss_4822
+                                                                 MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_ss_4834
                                                                  (coe v6)))))))
                                                (coe
                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
@@ -5550,11 +5550,11 @@ du_newepoch'45'step_76 v0 v1
                                                               MAlonzo.Code.Ledger.Conway.Foreign.Certs.d_Conv'45'StakePoolParams_68)))
                                                      (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                         (coe
-                                                           MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_pools_3050
+                                                           MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_pools_3062
                                                            (coe
-                                                              MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_set_3108
+                                                              MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_set_3120
                                                               (coe
-                                                                 MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_ss_4822
+                                                                 MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_ss_4834
                                                                  (coe v6))))))))
                                             (coe
                                                MAlonzo.Code.Ledger.Conway.Foreign.Rewards.C_MkSnapshot_1435
@@ -5572,11 +5572,11 @@ du_newepoch'45'step_76 v0 v1
                                                               MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                                      (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                         (coe
-                                                           MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_stake_3046
+                                                           MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_stake_3058
                                                            (coe
-                                                              MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_go_3110
+                                                              MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_go_3122
                                                               (coe
-                                                                 MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_ss_4822
+                                                                 MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_ss_4834
                                                                  (coe v6)))))))
                                                (coe
                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
@@ -5592,11 +5592,11 @@ du_newepoch'45'step_76 v0 v1
                                                               MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                                      (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                         (coe
-                                                           MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_delegations_3048
+                                                           MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_delegations_3060
                                                            (coe
-                                                              MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_go_3110
+                                                              MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_go_3122
                                                               (coe
-                                                                 MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_ss_4822
+                                                                 MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_ss_4834
                                                                  (coe v6)))))))
                                                (coe
                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
@@ -5612,16 +5612,16 @@ du_newepoch'45'step_76 v0 v1
                                                               MAlonzo.Code.Ledger.Conway.Foreign.Certs.d_Conv'45'StakePoolParams_68)))
                                                      (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                         (coe
-                                                           MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_pools_3050
+                                                           MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_pools_3062
                                                            (coe
-                                                              MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_go_3110
+                                                              MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_go_3122
                                                               (coe
-                                                                 MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_ss_4822
+                                                                 MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_ss_4834
                                                                  (coe v6))))))))
                                             (coe
-                                               MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_feeSS_3112
+                                               MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_feeSS_3124
                                                (coe
-                                                  MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_ss_4822
+                                                  MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_ss_4834
                                                   (coe v6))))
                                          (coe
                                             MAlonzo.Code.Ledger.Conway.Foreign.Ledger.C_MkLState_2827
@@ -5673,18 +5673,18 @@ du_newepoch'45'step_76 v0 v1
                                                                              MAlonzo.Code.Ledger.Conway.Foreign.Transaction.d_Conv'45'HSPlutusScript_22))))))))
                                                      (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                         (coe
-                                                           MAlonzo.Code.Ledger.Conway.Specification.Utxo.d_utxo_2506
+                                                           MAlonzo.Code.Ledger.Conway.Specification.Utxo.d_utxo_2518
                                                            (coe
-                                                              MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_utxoSt_2710
+                                                              MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_utxoSt_2722
                                                               (coe
-                                                                 MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_ls_4824
+                                                                 MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_ls_4836
                                                                  (coe v6)))))))
                                                (coe
-                                                  MAlonzo.Code.Ledger.Conway.Specification.Utxo.d_fees_2508
+                                                  MAlonzo.Code.Ledger.Conway.Specification.Utxo.d_fees_2520
                                                   (coe
-                                                     MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_utxoSt_2710
+                                                     MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_utxoSt_2722
                                                      (coe
-                                                        MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_ls_4824
+                                                        MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_ls_4836
                                                         (coe v6))))
                                                (coe
                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
@@ -5700,18 +5700,18 @@ du_newepoch'45'step_76 v0 v1
                                                               MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                                      (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                         (coe
-                                                           MAlonzo.Code.Ledger.Conway.Specification.Utxo.d_deposits_2510
+                                                           MAlonzo.Code.Ledger.Conway.Specification.Utxo.d_deposits_2522
                                                            (coe
-                                                              MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_utxoSt_2710
+                                                              MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_utxoSt_2722
                                                               (coe
-                                                                 MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_ls_4824
+                                                                 MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_ls_4836
                                                                  (coe v6)))))))
                                                (coe
-                                                  MAlonzo.Code.Ledger.Conway.Specification.Utxo.d_donations_2512
+                                                  MAlonzo.Code.Ledger.Conway.Specification.Utxo.d_donations_2524
                                                   (coe
-                                                     MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_utxoSt_2710
+                                                     MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_utxoSt_2722
                                                      (coe
-                                                        MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_ls_4824
+                                                        MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_ls_4836
                                                         (coe v6)))))
                                             (coe
                                                MAlonzo.Code.Class.Functor.Core.du_fmap_22
@@ -5728,9 +5728,9 @@ du_newepoch'45'step_76 v0 v1
                                                            MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
                                                      (coe
                                                         MAlonzo.Code.Ledger.Conway.Foreign.Gov.d_Conv'45'GovActionState_908)))
-                                               (MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_govSt_2712
+                                               (MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_govSt_2724
                                                   (coe
-                                                     MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_ls_4824
+                                                     MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_ls_4836
                                                      (coe v6))))
                                             (coe
                                                MAlonzo.Code.Ledger.Conway.Foreign.Cert.C_MkCertState_713
@@ -5754,9 +5754,9 @@ du_newepoch'45'step_76 v0 v1
                                                               (coe
                                                                  MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dState_1624
                                                                  (coe
-                                                                    MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_certState_2714
+                                                                    MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_certState_2726
                                                                     (coe
-                                                                       MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_ls_4824
+                                                                       MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_ls_4836
                                                                        (coe v6))))))))
                                                   (coe
                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
@@ -5776,9 +5776,9 @@ du_newepoch'45'step_76 v0 v1
                                                               (coe
                                                                  MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dState_1624
                                                                  (coe
-                                                                    MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_certState_2714
+                                                                    MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_certState_2726
                                                                     (coe
-                                                                       MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_ls_4824
+                                                                       MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_ls_4836
                                                                        (coe v6))))))))
                                                   (coe
                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
@@ -5798,9 +5798,9 @@ du_newepoch'45'step_76 v0 v1
                                                               (coe
                                                                  MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dState_1624
                                                                  (coe
-                                                                    MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_certState_2714
+                                                                    MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_certState_2726
                                                                     (coe
-                                                                       MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_ls_4824
+                                                                       MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_ls_4836
                                                                        (coe v6))))))))
                                                   (coe
                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
@@ -5820,9 +5820,9 @@ du_newepoch'45'step_76 v0 v1
                                                               (coe
                                                                  MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dState_1624
                                                                  (coe
-                                                                    MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_certState_2714
+                                                                    MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_certState_2726
                                                                     (coe
-                                                                       MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_ls_4824
+                                                                       MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_ls_4836
                                                                        (coe v6)))))))))
                                                (coe
                                                   MAlonzo.Code.Ledger.Conway.Foreign.Certs.C_MkPState_6089
@@ -5844,9 +5844,9 @@ du_newepoch'45'step_76 v0 v1
                                                               (coe
                                                                  MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_pState_1626
                                                                  (coe
-                                                                    MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_certState_2714
+                                                                    MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_certState_2726
                                                                     (coe
-                                                                       MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_ls_4824
+                                                                       MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_ls_4836
                                                                        (coe v6))))))))
                                                   (coe
                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
@@ -5866,9 +5866,9 @@ du_newepoch'45'step_76 v0 v1
                                                               (coe
                                                                  MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_pState_1626
                                                                  (coe
-                                                                    MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_certState_2714
+                                                                    MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_certState_2726
                                                                     (coe
-                                                                       MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_ls_4824
+                                                                       MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_ls_4836
                                                                        (coe v6))))))))
                                                   (coe
                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
@@ -5888,9 +5888,9 @@ du_newepoch'45'step_76 v0 v1
                                                               (coe
                                                                  MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_pState_1626
                                                                  (coe
-                                                                    MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_certState_2714
+                                                                    MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_certState_2726
                                                                     (coe
-                                                                       MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_ls_4824
+                                                                       MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_ls_4836
                                                                        (coe v6)))))))))
                                                (coe
                                                   MAlonzo.Code.Ledger.Conway.Foreign.Certs.C_MkGState_24713
@@ -5912,9 +5912,9 @@ du_newepoch'45'step_76 v0 v1
                                                               (coe
                                                                  MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_gState_1628
                                                                  (coe
-                                                                    MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_certState_2714
+                                                                    MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_certState_2726
                                                                     (coe
-                                                                       MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_ls_4824
+                                                                       MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_ls_4836
                                                                        (coe v6))))))))
                                                   (coe
                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
@@ -5936,9 +5936,9 @@ du_newepoch'45'step_76 v0 v1
                                                               (coe
                                                                  MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_gState_1628
                                                                  (coe
-                                                                    MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_certState_2714
+                                                                    MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_certState_2726
                                                                     (coe
-                                                                       MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_ls_4824
+                                                                       MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_ls_4836
                                                                        (coe v6))))))))
                                                   (coe
                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
@@ -5958,9 +5958,9 @@ du_newepoch'45'step_76 v0 v1
                                                               (coe
                                                                  MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_gState_1628
                                                                  (coe
-                                                                    MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_certState_2714
+                                                                    MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_certState_2726
                                                                     (coe
-                                                                       MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_ls_4824
+                                                                       MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_ls_4836
                                                                        (coe v6)))))))))))
                                          (coe
                                             MAlonzo.Code.Ledger.Conway.Foreign.Enact.C_MkEnactState_161
@@ -6018,7 +6018,7 @@ du_newepoch'45'step_76 v0 v1
                                                   (coe
                                                      MAlonzo.Code.Ledger.Conway.Specification.Enact.d_cc_1188
                                                      (coe
-                                                        MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_es_4826
+                                                        MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_es_4838
                                                         (coe v6)))))
                                             (coe
                                                MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44 ()
@@ -6049,7 +6049,7 @@ du_newepoch'45'step_76 v0 v1
                                                   (coe
                                                      MAlonzo.Code.Ledger.Conway.Specification.Enact.d_constitution_1190
                                                      (coe
-                                                        MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_es_4826
+                                                        MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_es_4838
                                                         (coe v6)))))
                                             (coe
                                                MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44 ()
@@ -6078,7 +6078,7 @@ du_newepoch'45'step_76 v0 v1
                                                   (coe
                                                      MAlonzo.Code.Ledger.Conway.Specification.Enact.d_pv_1192
                                                      (coe
-                                                        MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_es_4826
+                                                        MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_es_4838
                                                         (coe v6)))))
                                             (coe
                                                MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44 ()
@@ -6103,7 +6103,7 @@ du_newepoch'45'step_76 v0 v1
                                                   (coe
                                                      MAlonzo.Code.Ledger.Conway.Specification.Enact.d_pparams_1194
                                                      (coe
-                                                        MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_es_4826
+                                                        MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_es_4838
                                                         (coe v6)))))
                                             (coe
                                                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
@@ -6121,7 +6121,7 @@ du_newepoch'45'step_76 v0 v1
                                                      (coe
                                                         MAlonzo.Code.Ledger.Conway.Specification.Enact.d_withdrawals_1196
                                                         (coe
-                                                           MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_es_4826
+                                                           MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_es_4838
                                                            (coe v6)))))))
                                          (coe
                                             MAlonzo.Code.Ledger.Conway.Foreign.Ratify.C_MkRatifyState_12361
@@ -6183,7 +6183,7 @@ du_newepoch'45'step_76 v0 v1
                                                         (coe
                                                            MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_es_1908
                                                            (coe
-                                                              MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_fut_4828
+                                                              MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_fut_4840
                                                               (coe v6))))))
                                                (coe
                                                   MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44 ()
@@ -6216,7 +6216,7 @@ du_newepoch'45'step_76 v0 v1
                                                         (coe
                                                            MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_es_1908
                                                            (coe
-                                                              MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_fut_4828
+                                                              MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_fut_4840
                                                               (coe v6))))))
                                                (coe
                                                   MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44 ()
@@ -6247,7 +6247,7 @@ du_newepoch'45'step_76 v0 v1
                                                         (coe
                                                            MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_es_1908
                                                            (coe
-                                                              MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_fut_4828
+                                                              MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_fut_4840
                                                               (coe v6))))))
                                                (coe
                                                   MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44 ()
@@ -6274,7 +6274,7 @@ du_newepoch'45'step_76 v0 v1
                                                         (coe
                                                            MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_es_1908
                                                            (coe
-                                                              MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_fut_4828
+                                                              MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_fut_4840
                                                               (coe v6))))))
                                                (coe
                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
@@ -6294,7 +6294,7 @@ du_newepoch'45'step_76 v0 v1
                                                            (coe
                                                               MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_es_1908
                                                               (coe
-                                                                 MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_fut_4828
+                                                                 MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_fut_4840
                                                                  (coe v6))))))))
                                             (coe
                                                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSSet_68
@@ -6314,12 +6314,12 @@ du_newepoch'45'step_76 v0 v1
                                                            MAlonzo.Code.Ledger.Conway.Foreign.Gov.d_Conv'45'GovActionState_908)))
                                                   (MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_removed_1910
                                                      (coe
-                                                        MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_fut_4828
+                                                        MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_fut_4840
                                                         (coe v6)))))
                                             (coe
                                                MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_delay_1912
                                                (coe
-                                                  MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_fut_4828
+                                                  MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_fut_4840
                                                   (coe v6)))))
                                       (coe
                                          MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -6349,7 +6349,7 @@ du_newepoch'45'step_76 v0 v1
                              case coe v2 of
                                C_MkNewEpochState_5693 v3 v4 v5 v6 v7 v8
                                  -> coe
-                                      MAlonzo.Code.Ledger.Conway.Conformance.Epoch.C_constructor_4858
+                                      MAlonzo.Code.Ledger.Conway.Conformance.Epoch.C_constructor_4870
                                       (coe v3)
                                       (coe
                                          MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
@@ -6420,7 +6420,7 @@ du_newepoch'45'step_76 v0 v1
                                             (coe
                                                (\ v9 ->
                                                   case coe v9 of
-                                                    MAlonzo.Code.Ledger.Conway.Conformance.Epoch.C_'10214'_'44'_'44'_'44'_'44'_'10215''7497'''_4830 v10 v11 v12 v13 v14
+                                                    MAlonzo.Code.Ledger.Conway.Conformance.Epoch.C_'10214'_'44'_'44'_'44'_'44'_'10215''7497'''_4842 v10 v11 v12 v13 v14
                                                       -> coe
                                                            MAlonzo.Code.Ledger.Conway.Foreign.Epoch.C_MkEpochState_4137
                                                            (coe
@@ -6449,9 +6449,9 @@ du_newepoch'45'step_76 v0 v1
                                                                                 MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                                                        (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                           (coe
-                                                                             MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_stake_3046
+                                                                             MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_stake_3058
                                                                              (coe
-                                                                                MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_mark_3106
+                                                                                MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_mark_3118
                                                                                 (coe v11))))))
                                                                  (coe
                                                                     MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
@@ -6467,9 +6467,9 @@ du_newepoch'45'step_76 v0 v1
                                                                                 MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                                                        (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                           (coe
-                                                                             MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_delegations_3048
+                                                                             MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_delegations_3060
                                                                              (coe
-                                                                                MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_mark_3106
+                                                                                MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_mark_3118
                                                                                 (coe v11))))))
                                                                  (coe
                                                                     MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
@@ -6485,9 +6485,9 @@ du_newepoch'45'step_76 v0 v1
                                                                                 MAlonzo.Code.Ledger.Conway.Foreign.Certs.d_Conv'45'StakePoolParams_68)))
                                                                        (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                           (coe
-                                                                             MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_pools_3050
+                                                                             MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_pools_3062
                                                                              (coe
-                                                                                MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_mark_3106
+                                                                                MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_mark_3118
                                                                                 (coe v11)))))))
                                                               (coe
                                                                  MAlonzo.Code.Ledger.Conway.Foreign.Rewards.C_MkSnapshot_1435
@@ -6505,9 +6505,9 @@ du_newepoch'45'step_76 v0 v1
                                                                                 MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                                                        (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                           (coe
-                                                                             MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_stake_3046
+                                                                             MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_stake_3058
                                                                              (coe
-                                                                                MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_set_3108
+                                                                                MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_set_3120
                                                                                 (coe v11))))))
                                                                  (coe
                                                                     MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
@@ -6523,9 +6523,9 @@ du_newepoch'45'step_76 v0 v1
                                                                                 MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                                                        (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                           (coe
-                                                                             MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_delegations_3048
+                                                                             MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_delegations_3060
                                                                              (coe
-                                                                                MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_set_3108
+                                                                                MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_set_3120
                                                                                 (coe v11))))))
                                                                  (coe
                                                                     MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
@@ -6541,9 +6541,9 @@ du_newepoch'45'step_76 v0 v1
                                                                                 MAlonzo.Code.Ledger.Conway.Foreign.Certs.d_Conv'45'StakePoolParams_68)))
                                                                        (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                           (coe
-                                                                             MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_pools_3050
+                                                                             MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_pools_3062
                                                                              (coe
-                                                                                MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_set_3108
+                                                                                MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_set_3120
                                                                                 (coe v11)))))))
                                                               (coe
                                                                  MAlonzo.Code.Ledger.Conway.Foreign.Rewards.C_MkSnapshot_1435
@@ -6561,9 +6561,9 @@ du_newepoch'45'step_76 v0 v1
                                                                                 MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                                                        (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                           (coe
-                                                                             MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_stake_3046
+                                                                             MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_stake_3058
                                                                              (coe
-                                                                                MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_go_3110
+                                                                                MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_go_3122
                                                                                 (coe v11))))))
                                                                  (coe
                                                                     MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
@@ -6579,9 +6579,9 @@ du_newepoch'45'step_76 v0 v1
                                                                                 MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                                                        (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                           (coe
-                                                                             MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_delegations_3048
+                                                                             MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_delegations_3060
                                                                              (coe
-                                                                                MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_go_3110
+                                                                                MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_go_3122
                                                                                 (coe v11))))))
                                                                  (coe
                                                                     MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
@@ -6597,12 +6597,12 @@ du_newepoch'45'step_76 v0 v1
                                                                                 MAlonzo.Code.Ledger.Conway.Foreign.Certs.d_Conv'45'StakePoolParams_68)))
                                                                        (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                           (coe
-                                                                             MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_pools_3050
+                                                                             MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_pools_3062
                                                                              (coe
-                                                                                MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_go_3110
+                                                                                MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_go_3122
                                                                                 (coe v11)))))))
                                                               (coe
-                                                                 MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_feeSS_3112
+                                                                 MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_feeSS_3124
                                                                  (coe v11)))
                                                            (coe
                                                               MAlonzo.Code.Ledger.Conway.Foreign.Ledger.C_MkLState_2827
@@ -6654,14 +6654,14 @@ du_newepoch'45'step_76 v0 v1
                                                                                                MAlonzo.Code.Ledger.Conway.Foreign.Transaction.d_Conv'45'HSPlutusScript_22))))))))
                                                                        (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                           (coe
-                                                                             MAlonzo.Code.Ledger.Conway.Specification.Utxo.d_utxo_2506
+                                                                             MAlonzo.Code.Ledger.Conway.Specification.Utxo.d_utxo_2518
                                                                              (coe
-                                                                                MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_utxoSt_2710
+                                                                                MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_utxoSt_2722
                                                                                 (coe v12))))))
                                                                  (coe
-                                                                    MAlonzo.Code.Ledger.Conway.Specification.Utxo.d_fees_2508
+                                                                    MAlonzo.Code.Ledger.Conway.Specification.Utxo.d_fees_2520
                                                                     (coe
-                                                                       MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_utxoSt_2710
+                                                                       MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_utxoSt_2722
                                                                        (coe v12)))
                                                                  (coe
                                                                     MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
@@ -6677,14 +6677,14 @@ du_newepoch'45'step_76 v0 v1
                                                                                 MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                                                        (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                           (coe
-                                                                             MAlonzo.Code.Ledger.Conway.Specification.Utxo.d_deposits_2510
+                                                                             MAlonzo.Code.Ledger.Conway.Specification.Utxo.d_deposits_2522
                                                                              (coe
-                                                                                MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_utxoSt_2710
+                                                                                MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_utxoSt_2722
                                                                                 (coe v12))))))
                                                                  (coe
-                                                                    MAlonzo.Code.Ledger.Conway.Specification.Utxo.d_donations_2512
+                                                                    MAlonzo.Code.Ledger.Conway.Specification.Utxo.d_donations_2524
                                                                     (coe
-                                                                       MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_utxoSt_2710
+                                                                       MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_utxoSt_2722
                                                                        (coe v12))))
                                                               (coe
                                                                  MAlonzo.Code.Class.Functor.Core.du_fmap_22
@@ -6701,7 +6701,7 @@ du_newepoch'45'step_76 v0 v1
                                                                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
                                                                        (coe
                                                                           MAlonzo.Code.Ledger.Conway.Foreign.Gov.d_Conv'45'GovActionState_908)))
-                                                                 (MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_govSt_2712
+                                                                 (MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_govSt_2724
                                                                     (coe v12)))
                                                               (coe
                                                                  MAlonzo.Code.Ledger.Conway.Foreign.Cert.C_MkCertState_713
@@ -6725,7 +6725,7 @@ du_newepoch'45'step_76 v0 v1
                                                                                 (coe
                                                                                    MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dState_1624
                                                                                    (coe
-                                                                                      MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_certState_2714
+                                                                                      MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_certState_2726
                                                                                       (coe
                                                                                          v12)))))))
                                                                     (coe
@@ -6746,7 +6746,7 @@ du_newepoch'45'step_76 v0 v1
                                                                                 (coe
                                                                                    MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dState_1624
                                                                                    (coe
-                                                                                      MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_certState_2714
+                                                                                      MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_certState_2726
                                                                                       (coe
                                                                                          v12)))))))
                                                                     (coe
@@ -6767,7 +6767,7 @@ du_newepoch'45'step_76 v0 v1
                                                                                 (coe
                                                                                    MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dState_1624
                                                                                    (coe
-                                                                                      MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_certState_2714
+                                                                                      MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_certState_2726
                                                                                       (coe
                                                                                          v12)))))))
                                                                     (coe
@@ -6788,7 +6788,7 @@ du_newepoch'45'step_76 v0 v1
                                                                                 (coe
                                                                                    MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dState_1624
                                                                                    (coe
-                                                                                      MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_certState_2714
+                                                                                      MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_certState_2726
                                                                                       (coe
                                                                                          v12))))))))
                                                                  (coe
@@ -6811,7 +6811,7 @@ du_newepoch'45'step_76 v0 v1
                                                                                 (coe
                                                                                    MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_pState_1626
                                                                                    (coe
-                                                                                      MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_certState_2714
+                                                                                      MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_certState_2726
                                                                                       (coe
                                                                                          v12)))))))
                                                                     (coe
@@ -6832,7 +6832,7 @@ du_newepoch'45'step_76 v0 v1
                                                                                 (coe
                                                                                    MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_pState_1626
                                                                                    (coe
-                                                                                      MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_certState_2714
+                                                                                      MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_certState_2726
                                                                                       (coe
                                                                                          v12)))))))
                                                                     (coe
@@ -6853,7 +6853,7 @@ du_newepoch'45'step_76 v0 v1
                                                                                 (coe
                                                                                    MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_pState_1626
                                                                                    (coe
-                                                                                      MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_certState_2714
+                                                                                      MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_certState_2726
                                                                                       (coe
                                                                                          v12))))))))
                                                                  (coe
@@ -6876,7 +6876,7 @@ du_newepoch'45'step_76 v0 v1
                                                                                 (coe
                                                                                    MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_gState_1628
                                                                                    (coe
-                                                                                      MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_certState_2714
+                                                                                      MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_certState_2726
                                                                                       (coe
                                                                                          v12)))))))
                                                                     (coe
@@ -6899,7 +6899,7 @@ du_newepoch'45'step_76 v0 v1
                                                                                 (coe
                                                                                    MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_gState_1628
                                                                                    (coe
-                                                                                      MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_certState_2714
+                                                                                      MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_certState_2726
                                                                                       (coe
                                                                                          v12)))))))
                                                                     (coe
@@ -6920,7 +6920,7 @@ du_newepoch'45'step_76 v0 v1
                                                                                 (coe
                                                                                    MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_gState_1628
                                                                                    (coe
-                                                                                      MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_certState_2714
+                                                                                      MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_certState_2726
                                                                                       (coe
                                                                                          v12))))))))))
                                                            (coe
@@ -7270,7 +7270,7 @@ du_newepoch'45'step_76 v0 v1
                                                   case coe v9 of
                                                     MAlonzo.Code.Ledger.Conway.Foreign.Epoch.C_MkEpochState_4137 v10 v11 v12 v13 v14
                                                       -> coe
-                                                           MAlonzo.Code.Ledger.Conway.Conformance.Epoch.C_'10214'_'44'_'44'_'44'_'44'_'10215''7497'''_4830
+                                                           MAlonzo.Code.Ledger.Conway.Conformance.Epoch.C_'10214'_'44'_'44'_'44'_'44'_'10215''7497'''_4842
                                                            (coe
                                                               MAlonzo.Code.Class.Convertible.Core.d_from_22
                                                               (coe
@@ -7299,7 +7299,7 @@ du_newepoch'45'step_76 v0 v1
                                                                  (coe
                                                                     (\ v15 ->
                                                                        case coe v15 of
-                                                                         MAlonzo.Code.Ledger.Conway.Specification.Rewards.C_constructor_3114 v16 v17 v18 v19
+                                                                         MAlonzo.Code.Ledger.Conway.Specification.Rewards.C_constructor_3126 v16 v17 v18 v19
                                                                            -> coe
                                                                                 MAlonzo.Code.Ledger.Conway.Foreign.Rewards.C_MkSnapshots_4191
                                                                                 (coe
@@ -7318,7 +7318,7 @@ du_newepoch'45'step_76 v0 v1
                                                                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                                                                          (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                                             (coe
-                                                                                               MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_stake_3046
+                                                                                               MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_stake_3058
                                                                                                (coe
                                                                                                   v16)))))
                                                                                    (coe
@@ -7335,7 +7335,7 @@ du_newepoch'45'step_76 v0 v1
                                                                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                                                                          (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                                             (coe
-                                                                                               MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_delegations_3048
+                                                                                               MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_delegations_3060
                                                                                                (coe
                                                                                                   v16)))))
                                                                                    (coe
@@ -7352,7 +7352,7 @@ du_newepoch'45'step_76 v0 v1
                                                                                                   MAlonzo.Code.Ledger.Conway.Foreign.Certs.d_Conv'45'StakePoolParams_68)))
                                                                                          (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                                             (coe
-                                                                                               MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_pools_3050
+                                                                                               MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_pools_3062
                                                                                                (coe
                                                                                                   v16))))))
                                                                                 (coe
@@ -7371,7 +7371,7 @@ du_newepoch'45'step_76 v0 v1
                                                                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                                                                          (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                                             (coe
-                                                                                               MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_stake_3046
+                                                                                               MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_stake_3058
                                                                                                (coe
                                                                                                   v17)))))
                                                                                    (coe
@@ -7388,7 +7388,7 @@ du_newepoch'45'step_76 v0 v1
                                                                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                                                                          (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                                             (coe
-                                                                                               MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_delegations_3048
+                                                                                               MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_delegations_3060
                                                                                                (coe
                                                                                                   v17)))))
                                                                                    (coe
@@ -7405,7 +7405,7 @@ du_newepoch'45'step_76 v0 v1
                                                                                                   MAlonzo.Code.Ledger.Conway.Foreign.Certs.d_Conv'45'StakePoolParams_68)))
                                                                                          (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                                             (coe
-                                                                                               MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_pools_3050
+                                                                                               MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_pools_3062
                                                                                                (coe
                                                                                                   v17))))))
                                                                                 (coe
@@ -7424,7 +7424,7 @@ du_newepoch'45'step_76 v0 v1
                                                                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                                                                          (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                                             (coe
-                                                                                               MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_stake_3046
+                                                                                               MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_stake_3058
                                                                                                (coe
                                                                                                   v18)))))
                                                                                    (coe
@@ -7441,7 +7441,7 @@ du_newepoch'45'step_76 v0 v1
                                                                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                                                                          (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                                             (coe
-                                                                                               MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_delegations_3048
+                                                                                               MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_delegations_3060
                                                                                                (coe
                                                                                                   v18)))))
                                                                                    (coe
@@ -7458,7 +7458,7 @@ du_newepoch'45'step_76 v0 v1
                                                                                                   MAlonzo.Code.Ledger.Conway.Foreign.Certs.d_Conv'45'StakePoolParams_68)))
                                                                                          (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                                             (coe
-                                                                                               MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_pools_3050
+                                                                                               MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_pools_3062
                                                                                                (coe
                                                                                                   v18))))))
                                                                                 (coe v19)
@@ -7468,7 +7468,7 @@ du_newepoch'45'step_76 v0 v1
                                                                        case coe v15 of
                                                                          MAlonzo.Code.Ledger.Conway.Foreign.Rewards.C_MkSnapshots_4191 v16 v17 v18 v19
                                                                            -> coe
-                                                                                MAlonzo.Code.Ledger.Conway.Specification.Rewards.C_constructor_3114
+                                                                                MAlonzo.Code.Ledger.Conway.Specification.Rewards.C_constructor_3126
                                                                                 (coe
                                                                                    MAlonzo.Code.Class.Convertible.Core.d_from_22
                                                                                    (coe
@@ -7477,7 +7477,7 @@ du_newepoch'45'step_76 v0 v1
                                                                                          (\ v20 ->
                                                                                             case coe
                                                                                                    v20 of
-                                                                                              MAlonzo.Code.Ledger.Conway.Specification.Rewards.C_constructor_3052 v21 v22 v23
+                                                                                              MAlonzo.Code.Ledger.Conway.Specification.Rewards.C_constructor_3064 v21 v22 v23
                                                                                                 -> coe
                                                                                                      MAlonzo.Code.Ledger.Conway.Foreign.Rewards.C_MkSnapshot_1435
                                                                                                      (coe
@@ -7532,7 +7532,7 @@ du_newepoch'45'step_76 v0 v1
                                                                                                    v20 of
                                                                                               MAlonzo.Code.Ledger.Conway.Foreign.Rewards.C_MkSnapshot_1435 v21 v22 v23
                                                                                                 -> coe
-                                                                                                     MAlonzo.Code.Ledger.Conway.Specification.Rewards.C_constructor_3052
+                                                                                                     MAlonzo.Code.Ledger.Conway.Specification.Rewards.C_constructor_3064
                                                                                                      (coe
                                                                                                         MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
                                                                                                         (coe
@@ -7704,7 +7704,7 @@ du_newepoch'45'step_76 v0 v1
                                                                                          (\ v20 ->
                                                                                             case coe
                                                                                                    v20 of
-                                                                                              MAlonzo.Code.Ledger.Conway.Specification.Rewards.C_constructor_3052 v21 v22 v23
+                                                                                              MAlonzo.Code.Ledger.Conway.Specification.Rewards.C_constructor_3064 v21 v22 v23
                                                                                                 -> coe
                                                                                                      MAlonzo.Code.Ledger.Conway.Foreign.Rewards.C_MkSnapshot_1435
                                                                                                      (coe
@@ -7759,7 +7759,7 @@ du_newepoch'45'step_76 v0 v1
                                                                                                    v20 of
                                                                                               MAlonzo.Code.Ledger.Conway.Foreign.Rewards.C_MkSnapshot_1435 v21 v22 v23
                                                                                                 -> coe
-                                                                                                     MAlonzo.Code.Ledger.Conway.Specification.Rewards.C_constructor_3052
+                                                                                                     MAlonzo.Code.Ledger.Conway.Specification.Rewards.C_constructor_3064
                                                                                                      (coe
                                                                                                         MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
                                                                                                         (coe
@@ -7931,7 +7931,7 @@ du_newepoch'45'step_76 v0 v1
                                                                                          (\ v20 ->
                                                                                             case coe
                                                                                                    v20 of
-                                                                                              MAlonzo.Code.Ledger.Conway.Specification.Rewards.C_constructor_3052 v21 v22 v23
+                                                                                              MAlonzo.Code.Ledger.Conway.Specification.Rewards.C_constructor_3064 v21 v22 v23
                                                                                                 -> coe
                                                                                                      MAlonzo.Code.Ledger.Conway.Foreign.Rewards.C_MkSnapshot_1435
                                                                                                      (coe
@@ -7986,7 +7986,7 @@ du_newepoch'45'step_76 v0 v1
                                                                                                    v20 of
                                                                                               MAlonzo.Code.Ledger.Conway.Foreign.Rewards.C_MkSnapshot_1435 v21 v22 v23
                                                                                                 -> coe
-                                                                                                     MAlonzo.Code.Ledger.Conway.Specification.Rewards.C_constructor_3052
+                                                                                                     MAlonzo.Code.Ledger.Conway.Specification.Rewards.C_constructor_3064
                                                                                                      (coe
                                                                                                         MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
                                                                                                         (coe
@@ -8160,7 +8160,7 @@ du_newepoch'45'step_76 v0 v1
                                                                  (coe
                                                                     (\ v15 ->
                                                                        case coe v15 of
-                                                                         MAlonzo.Code.Ledger.Conway.Conformance.Ledger.C_'10214'_'44'_'44'_'10215''737'_2716 v16 v17 v18
+                                                                         MAlonzo.Code.Ledger.Conway.Conformance.Ledger.C_'10214'_'44'_'44'_'10215''737'_2728 v16 v17 v18
                                                                            -> coe
                                                                                 MAlonzo.Code.Ledger.Conway.Foreign.Ledger.C_MkLState_2827
                                                                                 (coe
@@ -8211,11 +8211,11 @@ du_newepoch'45'step_76 v0 v1
                                                                                                                  MAlonzo.Code.Ledger.Conway.Foreign.Transaction.d_Conv'45'HSPlutusScript_22))))))))
                                                                                          (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                                             (coe
-                                                                                               MAlonzo.Code.Ledger.Conway.Specification.Utxo.d_utxo_2506
+                                                                                               MAlonzo.Code.Ledger.Conway.Specification.Utxo.d_utxo_2518
                                                                                                (coe
                                                                                                   v16)))))
                                                                                    (coe
-                                                                                      MAlonzo.Code.Ledger.Conway.Specification.Utxo.d_fees_2508
+                                                                                      MAlonzo.Code.Ledger.Conway.Specification.Utxo.d_fees_2520
                                                                                       (coe v16))
                                                                                    (coe
                                                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
@@ -8231,11 +8231,11 @@ du_newepoch'45'step_76 v0 v1
                                                                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                                                                          (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                                             (coe
-                                                                                               MAlonzo.Code.Ledger.Conway.Specification.Utxo.d_deposits_2510
+                                                                                               MAlonzo.Code.Ledger.Conway.Specification.Utxo.d_deposits_2522
                                                                                                (coe
                                                                                                   v16)))))
                                                                                    (coe
-                                                                                      MAlonzo.Code.Ledger.Conway.Specification.Utxo.d_donations_2512
+                                                                                      MAlonzo.Code.Ledger.Conway.Specification.Utxo.d_donations_2524
                                                                                       (coe v16)))
                                                                                 (coe
                                                                                    MAlonzo.Code.Class.Functor.Core.du_fmap_22
@@ -8460,7 +8460,7 @@ du_newepoch'45'step_76 v0 v1
                                                                        case coe v15 of
                                                                          MAlonzo.Code.Ledger.Conway.Foreign.Ledger.C_MkLState_2827 v16 v17 v18
                                                                            -> coe
-                                                                                MAlonzo.Code.Ledger.Conway.Conformance.Ledger.C_'10214'_'44'_'44'_'10215''737'_2716
+                                                                                MAlonzo.Code.Ledger.Conway.Conformance.Ledger.C_'10214'_'44'_'44'_'10215''737'_2728
                                                                                 (coe
                                                                                    MAlonzo.Code.Class.Convertible.Core.d_from_22
                                                                                    (coe
@@ -8469,7 +8469,7 @@ du_newepoch'45'step_76 v0 v1
                                                                                          (\ v19 ->
                                                                                             case coe
                                                                                                    v19 of
-                                                                                              MAlonzo.Code.Ledger.Conway.Specification.Utxo.C_'10214'_'44'_'44'_'44'_'10215''7512'_2514 v20 v21 v22 v23
+                                                                                              MAlonzo.Code.Ledger.Conway.Specification.Utxo.C_'10214'_'44'_'44'_'44'_'10215''7512'_2526 v20 v21 v22 v23
                                                                                                 -> coe
                                                                                                      MAlonzo.Code.Ledger.Conway.Foreign.Utxo.C_MkUTxOState_1155
                                                                                                      (coe
@@ -8545,7 +8545,7 @@ du_newepoch'45'step_76 v0 v1
                                                                                                    v19 of
                                                                                               MAlonzo.Code.Ledger.Conway.Foreign.Utxo.C_MkUTxOState_1155 v20 v21 v22 v23
                                                                                                 -> coe
-                                                                                                     MAlonzo.Code.Ledger.Conway.Specification.Utxo.C_'10214'_'44'_'44'_'44'_'10215''7512'_2514
+                                                                                                     MAlonzo.Code.Ledger.Conway.Specification.Utxo.C_'10214'_'44'_'44'_'44'_'10215''7512'_2526
                                                                                                      (coe
                                                                                                         MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
                                                                                                         (coe
@@ -10664,7 +10664,7 @@ du_newepoch'45'step_76 v0 v1
                       (coe
                          MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.du_conv_86
                          (coe
-                            MAlonzo.Code.Ledger.Conway.Conformance.Epoch.du_NewEpochStateToConf_4916)
+                            MAlonzo.Code.Ledger.Conway.Conformance.Epoch.du_NewEpochStateToConf_4928)
                          (coe v3))
                       (coe
                          MAlonzo.Code.Class.Show.Core.d_show_16 (coe du_Show'45'NEWEPOCH_64)
