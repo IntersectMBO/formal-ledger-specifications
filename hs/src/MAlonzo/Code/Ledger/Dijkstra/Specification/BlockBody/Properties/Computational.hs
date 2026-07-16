@@ -113,37 +113,37 @@ d_Computational'45'LEDGER_2740 ::
   MAlonzo.Code.Interface.ComputationalRelation.T_Computational_232
 d_Computational'45'LEDGER_2740 v0 v1
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.Properties.Computational.d_Computational'45'LEDGER_4124
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.Properties.Computational.d_Computational'45'LEDGER_4142
       (coe v0) (coe v1)
 -- Ledger.Dijkstra.Specification.BlockBody.Properties.Computational._.completeness
-d_completeness_2982 ::
+d_completeness_2996 ::
   MAlonzo.Code.Interface.ComputationalRelation.T_Computational_232 ->
   AgdaAny ->
   AgdaAny ->
   AgdaAny ->
   AgdaAny ->
   AgdaAny -> MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_completeness_2982 = erased
+d_completeness_2996 = erased
 -- Ledger.Dijkstra.Specification.BlockBody.Properties.Computational._.computeProof
-d_computeProof_2988 ::
+d_computeProof_3002 ::
   MAlonzo.Code.Interface.ComputationalRelation.T_Computational_232 ->
   AgdaAny ->
   AgdaAny ->
   AgdaAny ->
   MAlonzo.Code.Interface.ComputationalRelation.T_ComputationResult_34
-d_computeProof_2988 v0
+d_computeProof_3002 v0
   = coe
       MAlonzo.Code.Interface.ComputationalRelation.d_computeProof_272
       (coe v0)
 -- Ledger.Dijkstra.Specification.BlockBody.Properties.Computational.BBODY-computeProof
-d_BBODY'45'computeProof_3008 ::
+d_BBODY'45'computeProof_3022 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3096 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.T_Block_2966 ->
   MAlonzo.Code.Interface.ComputationalRelation.T_ComputationResult_34
-d_BBODY'45'computeProof_3008 v0 v1 v2 v3 v4
+d_BBODY'45'computeProof_3022 v0 v1 v2 v3 v4
   = case coe v3 of
       MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v5 v6
         -> let v7
@@ -191,7 +191,7 @@ d_BBODY'45'computeProof_3008 v0 v1 v2 v3 v4
                                            (coe
                                               MAlonzo.Code.Interface.ComputationalRelation.du_Computational'45'Id_740)
                                            (coe
-                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.Properties.Computational.d_Computational'45'LEDGER_4124
+                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.Properties.Computational.d_Computational'45'LEDGER_4142
                                               (coe v0) (coe v1))
                                            (coe
                                               MAlonzo.Code.Interface.ComputationalRelation.du_InjectError'45''8869'_728)
@@ -227,7 +227,7 @@ d_BBODY'45'computeProof_3008 v0 v1 v2 v3 v4
                                                                    MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                    (coe
                                                                       (MAlonzo.RTE.QName
-                                                                         (3692 :: Integer)
+                                                                         (3710 :: Integer)
                                                                          (2632180534421049758 ::
                                                                             Integer)
                                                                          "Ledger.Dijkstra.Specification.Ledger.LedgerEnv"
@@ -274,7 +274,7 @@ d_BBODY'45'computeProof_3008 v0 v1 v2 v3 v4
                                                                       MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                       (coe
                                                                          (MAlonzo.RTE.QName
-                                                                            (3692 :: Integer)
+                                                                            (3710 :: Integer)
                                                                             (2632180534421049758 ::
                                                                                Integer)
                                                                             "Ledger.Dijkstra.Specification.Ledger.LedgerEnv"
@@ -376,7 +376,7 @@ d_BBODY'45'computeProof_3008 v0 v1 v2 v3 v4
                                                                          MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                          (coe
                                                                             (MAlonzo.RTE.QName
-                                                                               (3692 :: Integer)
+                                                                               (3710 :: Integer)
                                                                                (2632180534421049758 ::
                                                                                   Integer)
                                                                                "Ledger.Dijkstra.Specification.Ledger.LedgerEnv"
@@ -423,7 +423,7 @@ d_BBODY'45'computeProof_3008 v0 v1 v2 v3 v4
                                                                             MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                             (coe
                                                                                (MAlonzo.RTE.QName
-                                                                                  (3692 :: Integer)
+                                                                                  (3710 :: Integer)
                                                                                   (2632180534421049758 ::
                                                                                      Integer)
                                                                                   "Ledger.Dijkstra.Specification.Ledger.LedgerEnv"
@@ -471,7 +471,7 @@ d_BBODY'45'computeProof_3008 v0 v1 v2 v3 v4
                                                                                MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                                (coe
                                                                                   (MAlonzo.RTE.QName
-                                                                                     (3692 ::
+                                                                                     (3710 ::
                                                                                         Integer)
                                                                                      (2632180534421049758 ::
                                                                                         Integer)
@@ -503,7 +503,7 @@ d_BBODY'45'computeProof_3008 v0 v1 v2 v3 v4
                                                                    (coe
                                                                       MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))))))
                                                  (coe
-                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.C_constructor_3714)))
+                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.C_constructor_3732)))
                                            (coe
                                               MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                               (coe
@@ -640,7 +640,7 @@ d_BBODY'45'computeProof_3008 v0 v1 v2 v3 v4
                 _ -> MAlonzo.RTE.mazUnreachableError)
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Dijkstra.Specification.BlockBody.Properties.Computational.BBODY-completeness
-d_BBODY'45'completeness_3052 ::
+d_BBODY'45'completeness_3066 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3096 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
@@ -649,13 +649,13 @@ d_BBODY'45'completeness_3052 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.T__'8866'_'8640''10631'_'44'BBODY'10632'__3004 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_BBODY'45'completeness_3052 = erased
+d_BBODY'45'completeness_3066 = erased
 -- Ledger.Dijkstra.Specification.BlockBody.Properties.Computational.Computational-BBODY
-d_Computational'45'BBODY_3110 ::
+d_Computational'45'BBODY_3124 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3096 ->
   MAlonzo.Code.Interface.ComputationalRelation.T_Computational_232
-d_Computational'45'BBODY_3110 v0 v1
+d_Computational'45'BBODY_3124 v0 v1
   = coe
       MAlonzo.Code.Interface.ComputationalRelation.C_MkComputational_412
-      (d_BBODY'45'computeProof_3008 (coe v0) (coe v1))
+      (d_BBODY'45'computeProof_3022 (coe v0) (coe v1))
