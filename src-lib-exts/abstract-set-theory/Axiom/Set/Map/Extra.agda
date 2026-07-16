@@ -701,3 +701,53 @@ module _  {A B : Type}
 
       lem-del-excluded : ∀ m → ¬ P k → filterᵐ P′ (m ∣ ❴ k ❵ ᶜ) ≡ᵐ filterᵐ P′ m
       lem-del-excluded m ¬p = filterᵐ-restrict m ⟨≈⟩ restrict-singleton-filterᵐ-false m ¬p
+
+
+-- Map lemmas: lookup after insert
+
+-- Looking up a freshly inserted key returns the inserted value.
+-- Since `insert m k v = ❴ k , v ❵ᵐ ∪ˡ m` (singleton on the left),
+-- `(k , v)` is in the inserted map, and `∈⇒lookup≡just` reads it back.
+lookupᵐ?-insert : ∀ {A B : Type} ⦃ _ : DecEq A ⦄ (m : A ⇀ B) (k : A) (v : B)
+  → lookupᵐ? (insert m k v) k ≡ just v
+lookupᵐ?-insert m k v =
+  ∈⇒lookup≡just (insert m k v) k (Properties.∈-∪⁺ (inj₁ (Equivalence.to ∈-singleton refl)))
+
+-- Inserting at a *different* key preserves membership in both directions (`insert` is a
+-- left-biased union with the singleton `❴ k₀ , v₀ ❵ᵐ`, which only touches the key `k₀`).
+∈-insert-≢ : ∀ {A B : Type} ⦃ _ : DecEq A ⦄ {m : A ⇀ B} {k₀ k : A} {v₀ y : B}
+  → k₀ ≢ k → (k , y) ∈ m ˢ → (k , y) ∈ (insert m k₀ v₀) ˢ
+∈-insert-≢ {k₀ = k₀} {k} ne ky∈m =
+  Properties.∈-∪⁺ (inj₂ (Equivalence.to ∈-filter
+    ((λ k∈ → ne (sym (cong proj₁ (Equivalence.from ∈-singleton (proj₂ (Equivalence.from dom∈ k∈)))))) , ky∈m)))
+
+∈-insert-≢⁻ : ∀ {A B : Type} ⦃ _ : DecEq A ⦄ {m : A ⇀ B} {k₀ k : A} {v₀ y : B}
+  → k₀ ≢ k → (k , y) ∈ (insert m k₀ v₀) ˢ → (k , y) ∈ m ˢ
+∈-insert-≢⁻ ne ky∈ins with Properties.∈-∪⁻ ky∈ins
+... | inj₁ ky∈sing = ⊥-elim (ne (sym (cong proj₁ (Equivalence.from ∈-singleton ky∈sing))))
+... | inj₂ ky∈filt = proj₂ (Equivalence.from ∈-filter ky∈filt)
+
+-- Hence looking up a *different* key is unaffected by `insert`.  We match both `⁇` instances
+-- (so each `lookupᵐ?` reduces, as in `∈⇒lookup≡just`; the "present in one but not the other"
+-- cases are impossible by membership preservation:
+lookupᵐ?-insert-≢ : ∀ {A B : Type} ⦃ _ : DecEq A ⦄ (m : A ⇀ B) {k₀ k : A} {v₀ : B}
+  → k₀ ≢ k
+  → ⦃ i1 : (k ∈ dom ((insert m k₀ v₀) ˢ)) ⁇ ⦄ → ⦃ i2 : (k ∈ dom (m ˢ)) ⁇ ⦄
+  → lookupᵐ? (insert m k₀ v₀) k ⦃ i1 ⦄ ≡ lookupᵐ? m k ⦃ i2 ⦄
+lookupᵐ?-insert-≢ m {k₀} {k} {v₀} ne ⦃ ⁇ yes k∈ins ⦄ ⦃ ⁇ yes k∈m ⦄ =
+  let (y , ky∈m) = Equivalence.from dom∈ k∈m
+      ky∈ins : (k , y) ∈ (insert m k₀ v₀) ˢ
+      ky∈ins = ∈-insert-≢ {m = m} {v₀ = v₀} ne ky∈m
+  in trans (∈⇒lookup≡just (insert m k₀ v₀) k ky∈ins ⦃ ⁇ yes k∈ins ⦄)
+           (sym (∈⇒lookup≡just m k ky∈m ⦃ ⁇ yes k∈m ⦄))
+lookupᵐ?-insert-≢ m {k₀} {k} {v₀} ne ⦃ ⁇ yes k∈ins ⦄ ⦃ ⁇ no k∉m ⦄ =
+  let (y , ky∈ins) = Equivalence.from dom∈ k∈ins
+      ky∈m : (k , y) ∈ m ˢ
+      ky∈m = ∈-insert-≢⁻ {m = m} {v₀ = v₀} ne ky∈ins
+  in ⊥-elim (k∉m (Equivalence.to dom∈ (y , ky∈m)))
+lookupᵐ?-insert-≢ m {k₀} {k} {v₀} ne ⦃ ⁇ no k∉ins ⦄ ⦃ ⁇ yes k∈m ⦄ =
+  let (y , ky∈m) = Equivalence.from dom∈ k∈m
+      ky∈ins : (k , y) ∈ (insert m k₀ v₀) ˢ
+      ky∈ins = ∈-insert-≢ {m = m} {v₀ = v₀} ne ky∈m
+  in ⊥-elim (k∉ins (Equivalence.to dom∈ (y , ky∈ins)))
+lookupᵐ?-insert-≢ m {k₀} {k} {v₀} ne ⦃ ⁇ no k∉ins ⦄ ⦃ ⁇ no k∉m ⦄ = refl
