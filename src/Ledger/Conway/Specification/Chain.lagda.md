@@ -112,3 +112,13 @@ data _⊢_⇀⦇_,CHAIN⦈_ : ⊤ → ChainState → Block → ChainState → Ty
       ────────────────────────────────
       _ ⊢ cs ⇀⦇ b ,CHAIN⦈ cs'
 ```
+
+## The <span class="AgdaDatatype">CHAINS</span> Transition System {#sec:the-chains-transition-system}
+
+The `CHAINS`{.AgdaFunction} transition system extends a chain state along a list of
+blocks; it is the reflexive-transitive closure of `CHAIN`{.AgdaDatatype}.
+
+```agda
+_⊢_⇀⦇_,CHAINS⦈_ : ⊤ → ChainState → List Block → ChainState → Type
+_⊢_⇀⦇_,CHAINS⦈_ = ReflexiveTransitiveClosure {sts = _⊢_⇀⦇_,CHAIN⦈_}
+```

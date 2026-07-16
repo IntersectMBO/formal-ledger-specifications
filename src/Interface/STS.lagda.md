@@ -171,3 +171,24 @@ RTC-preserves-inv : ∀ {STS : C → S → Sig → S → Type} {P}
                   → LedgerInvariant STS P → LedgerInvariant (ReflexiveTransitiveClosure {sts = STS}) P
 RTC-preserves-inv inv (BS-base Id-nop) = id
 RTC-preserves-inv inv (BS-ind p₁ p₂)   = RTC-preserves-inv inv p₂ ∘ inv p₁
+```
+
+While an invariant in the above sense is *preserved* by every step of a relation, it
+is sometimes useful to *assert* a predicate at every state that a particular trace
+passes through.  `RTC-All P tr` states that `P` holds at the target state of every
+step of the trace `tr` (the initial state is not constrained), and `RTC-All-last`
+reads the predicate off at the final state of a nonempty trace.
+
+```agda
+module _ {STS : C → S → Sig → S → Type} (P : S → Type) where
+
+  RTC-All : ReflexiveTransitiveClosure {sts = STS} Γ s sigs s' → Type
+  RTC-All (BS-base Id-nop)         = ⊤
+  RTC-All (BS-ind {s' = s₁} _ tr)  = P s₁ × RTC-All tr
+
+  RTC-All-last :
+    (tr : ReflexiveTransitiveClosure {sts = STS} Γ s (sig ∷ sigs) s')
+    → RTC-All tr → P s'
+  RTC-All-last (BS-ind _ (BS-base Id-nop))  (p , _)   = p
+  RTC-All-last (BS-ind _ tr@(BS-ind _ _))   (_ , ps)  = RTC-All-last tr ps
+```
