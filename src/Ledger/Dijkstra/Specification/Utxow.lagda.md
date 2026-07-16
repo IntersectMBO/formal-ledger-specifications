@@ -371,7 +371,7 @@ attempting both.
     in
 
     ∙ LegacyModeOf Γ ≡ false
-    ∙ ∀[ s ∈ p2ScriptsNeeded ] language s ∈ fromList (PlutusV4 ∷ []) -- (1)
+    ∙ isLegacyMode utxo₀ scriptsProvided txTop ≡ false -- (1)
     ∙ concatMapˡ (λ txSub → mapˢ proj₁ (TopLevelGuardsOf txSub)) (SubTransactionsOf txTop) ⊆ GuardsOf txTop -- (2)
     ∙ ∀[ (vk , σ) ∈ TxWitnesses.vKeySigs (Tx.txWitnesses txTop) ] isSigned vk (txidBytes (TxIdOf txTop)) σ
     ∙ ∀[ s ∈ p1ScriptsNeeded ] validP1Script vKeyHashesProvided (GuardsOf txTop) txVldt s
@@ -464,7 +464,7 @@ attempting both.
     in
 
     ∙ LegacyModeOf Γ ≡ true
-    ∙ ∃[ s ∈ p2ScriptsNeeded ] language s ∈ fromList (PlutusV1 ∷ PlutusV2 ∷ PlutusV3 ∷ []) -- (1)
+    ∙ isLegacyMode utxo₀ scriptsProvided txTop ≡ true -- (1)
     ∙ concatMapˡ (λ txSub → mapˢ proj₁ (TopLevelGuardsOf txSub)) (SubTransactionsOf txTop) ⊆ GuardsOf txTop -- (2)
     ∙ ∀[ (vk , σ) ∈ vKeySigs ] isSigned vk (txidBytes (TxIdOf txTop)) σ
     ∙ ∀[ s ∈ p1ScriptsNeeded ] validP1Script vKeyHashesProvided (GuardsOf txTop) txVldt s
