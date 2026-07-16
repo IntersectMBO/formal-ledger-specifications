@@ -19,6 +19,7 @@ import qualified MAlonzo.RTE
 import qualified Data.Text
 import qualified MAlonzo.Code.Agda.Builtin.Equality
 import qualified MAlonzo.Code.Agda.Builtin.Sigma
+import qualified MAlonzo.Code.Agda.Builtin.Unit
 import qualified MAlonzo.Code.Agda.Primitive
 import qualified MAlonzo.Code.Class.Functor.Core
 import qualified MAlonzo.Code.Class.Functor.Instances
@@ -1102,6 +1103,15 @@ du_maxRefScriptSizePerBlock_3612 v0
                (coe
                   MAlonzo.Code.Ledger.Conway.Specification.Epoch.d_epochState_3364
                   (coe v0)))))
+-- Ledger.Conway.Specification.Chain._⊢_⇀⦇_,CHAINS⦈_
+d__'8866'_'8640''10631'_'44'CHAINS'10632'__3618 ::
+  MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_2502 ->
+  MAlonzo.Code.Agda.Builtin.Unit.T_'8868'_6 ->
+  T_ChainState_3476 ->
+  [MAlonzo.Code.Ledger.Conway.Specification.BlockBody.T_Block_2344] ->
+  T_ChainState_3476 -> ()
+d__'8866'_'8640''10631'_'44'CHAINS'10632'__3618 = erased
 -- Ledger.Conway.Specification.Chain..generalizedField-ls'
 d_'46'generalizedField'45'ls''_19381 ::
   T_GeneralizeTel_19383 ->
