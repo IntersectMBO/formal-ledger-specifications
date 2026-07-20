@@ -222,10 +222,8 @@ Of particular note in the Dijkstra era are
    this field collects the guard *credentials* (keys or scripts) required by
    this transaction and/or by its subtransactions;
 
-
-+  `txRequiredTopLevelGuards`{.AgdaField}: only present in sub-level transactions,
-   this field collects the guards (credential, optional datum) required by a
-   subtransaction.
++ `txRequiredTopLevelGuards`{.AgdaField}: this field collects the
+   guards (credential, optional datum) required by top- or sub-level transactions.
 
 +  `txDirectDeposits`{.AgdaField}: present at both transaction levels, this field
    records the ADA being deposited into account addresses by this transaction.
@@ -273,7 +271,7 @@ Of particular note in the Dijkstra era are
         -- New in Dijkstra --
         txSubTransactions         : InTopLevel txLevel (List (Tx TxLevelSub))
         txGuards                  : ℙ Credential
-        txRequiredTopLevelGuards  : InSubLevel txLevel (ℙ (Credential × Maybe Datum))
+        txRequiredTopLevelGuards  : ℙ (Credential × Maybe Datum)
         txDirectDeposits          : DirectDeposits
         txBalanceIntervals        : AccountBalanceIntervals
         ---------------------
@@ -341,12 +339,6 @@ could be either of them.
     field SubTransactionsOf : A → InTopLevel txLevel (List (Tx TxLevelSub))
   open HasSubTransactions ⦃...⦄ public
 
-  -- (sub-level only) --
-  record HasTopLevelGuards {txLevel} {a} (A : Type a) : Type a where
-    field TopLevelGuardsOf : A → InSubLevel txLevel (ℙ (Credential × Maybe Datum))
-  open HasTopLevelGuards ⦃...⦄ public
-
-
   -- Level-Independent Type Classes --
   record HasTxId {a} (A : Type a) : Type a where
     field TxIdOf : A → TxId
@@ -355,6 +347,10 @@ could be either of them.
   record HasSize {a} (A : Type a) : Type a where
     field SizeOf : A → ℕ
   open HasSize ⦃...⦄ public
+
+  record HasTopLevelGuards {a} (A : Type a) : Type a where
+    field TopLevelGuardsOf : A → ℙ (Credential × Maybe Datum)
+  open HasTopLevelGuards ⦃...⦄ public
 
   record HasValidInterval {a} (A : Type a) : Type a where
     field ValidIntervalOf : A → Maybe Slot × Maybe Slot
@@ -454,6 +450,9 @@ could be either of them.
 
     HasSubTransactions-TopLevelTx : HasSubTransactions TopLevelTx
     HasSubTransactions-TopLevelTx .SubTransactionsOf = TxBody.txSubTransactions ∘ TxBodyOf
+
+    HasTopLevelGuards-TopLevelTx : HasTopLevelGuards TopLevelTx
+    HasTopLevelGuards-TopLevelTx .TopLevelGuardsOf = TxBody.txRequiredTopLevelGuards ∘ TxBodyOf
 
     HasTopLevelGuards-SubLevelTx : HasTopLevelGuards SubLevelTx
     HasTopLevelGuards-SubLevelTx .TopLevelGuardsOf = TxBody.txRequiredTopLevelGuards ∘ TxBodyOf

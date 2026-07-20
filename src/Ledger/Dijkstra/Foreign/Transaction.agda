@@ -105,27 +105,28 @@ instance
 
 record TxBodyTop : Type where
   field
-    txIns               : ℙ TxIn
-    referenceInputs     : ℙ TxIn
-    collateralInputs    : ℙ TxIn
-    txOuts              : Ix ⇀ TxOut
-    txId                : TxId
-    txCerts             : List DCert
-    txFee               : Fees
-    txWithdrawals       : Withdrawals
-    txVldt              : Maybe Slot × Maybe Slot
-    txADhash            : Maybe ADHash
-    txDonation          : Donations
-    txGovVotes          : List GovVote
-    txGovProposals      : List GovProposal
-    txNetworkId         : Maybe Network
-    currentTreasury     : Maybe Coin
-    mint                : Value
-    scriptIntegrityHash : Maybe ScriptHash
-    txSubTransactions   : List (Tx TxLevelSub)
-    txGuards            : ℙ Credential
-    txDirectDeposits    : DirectDeposits
-    txBalanceIntervals  : AccountBalanceIntervals
+    txIns                    : ℙ TxIn
+    referenceInputs          : ℙ TxIn
+    collateralInputs         : ℙ TxIn
+    txOuts                   : Ix ⇀ TxOut
+    txId                     : TxId
+    txCerts                  : List DCert
+    txFee                    : Fees
+    txWithdrawals            : Withdrawals
+    txVldt                   : Maybe Slot × Maybe Slot
+    txADhash                 : Maybe ADHash
+    txDonation               : Donations
+    txGovVotes               : List GovVote
+    txGovProposals           : List GovProposal
+    txNetworkId              : Maybe Network
+    currentTreasury          : Maybe Coin
+    mint                     : Value
+    scriptIntegrityHash      : Maybe ScriptHash
+    txSubTransactions        : List (Tx TxLevelSub)
+    txRequiredTopLevelGuards : ℙ (Credential × Maybe Datum)
+    txGuards                 : ℙ Credential
+    txDirectDeposits         : DirectDeposits
+    txBalanceIntervals       : AccountBalanceIntervals
 
 instance
   convTxBodyTop : Convertible (TxBody TxLevelTop) TxBodyTop
