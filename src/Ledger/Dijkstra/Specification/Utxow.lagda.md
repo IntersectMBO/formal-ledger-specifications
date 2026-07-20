@@ -301,8 +301,8 @@ attempting both.
 
 1. All needed phase-2 scripts use Plutus language V4.
 
-2. The required top-level guards of subtransactions appear in the set of
-   guards at the top-level.
+2. The set of required top-level guards of the top-level transaction and the
+   subtransactions appear in the set of guards at the top-level.
 
 ```agda
   UTXOW-normal :
@@ -372,7 +372,8 @@ attempting both.
 
     ∙ LegacyModeOf Γ ≡ false
     ∙ isLegacyMode utxo₀ scriptsProvided txTop ≡ false -- (1)
-    ∙ concatMapˡ (λ txSub → mapˢ proj₁ (TopLevelGuardsOf txSub)) (SubTransactionsOf txTop) ⊆ GuardsOf txTop -- (2)
+    ∙ concatMapˡ (λ txSub → mapˢ proj₁ (TopLevelGuardsOf txSub)) (SubTransactionsOf txTop) ∪ mapˢ proj₁ (TopLevelGuardsOf txTop) ⊆ GuardsOf txTop -- (2)
+    ∙ ∀[ tlg ∈ TopLevelGuardsOf txTop ] TopLevelGuardWellFormed scriptsProvided tlg -- (3)
     ∙ ∀[ (vk , σ) ∈ TxWitnesses.vKeySigs (Tx.txWitnesses txTop) ] isSigned vk (txidBytes (TxIdOf txTop)) σ
     ∙ ∀[ s ∈ p1ScriptsNeeded ] validP1Script vKeyHashesProvided (GuardsOf txTop) txVldt s
     ∙ vKeyHashesNeeded ⊆ vKeyHashesProvided
@@ -394,8 +395,8 @@ attempting both.
 1. There is at least a needed phase-2 script with Plutus language version V1, V2
    or V3. Note that Plutus V4 scripts are allowed in legacy mode.
 
-2. The required top-level guards of subtransactions appear in the set of
-   guards at the top-level.
+2. The set of required top-level guards of the top-level transaction and the
+   subtransactions appear in the set of guards at the top-level.
 
 ```agda
   UTXOW-legacy :
@@ -465,7 +466,8 @@ attempting both.
 
     ∙ LegacyModeOf Γ ≡ true
     ∙ isLegacyMode utxo₀ scriptsProvided txTop ≡ true -- (1)
-    ∙ concatMapˡ (λ txSub → mapˢ proj₁ (TopLevelGuardsOf txSub)) (SubTransactionsOf txTop) ⊆ GuardsOf txTop -- (2)
+    ∙ concatMapˡ (λ txSub → mapˢ proj₁ (TopLevelGuardsOf txSub)) (SubTransactionsOf txTop) ∪ mapˢ proj₁ (TopLevelGuardsOf txTop) ⊆ GuardsOf txTop -- (2)
+    ∙ ∀[ tlg ∈ TopLevelGuardsOf txTop ] TopLevelGuardWellFormed scriptsProvided tlg -- (3)
     ∙ ∀[ (vk , σ) ∈ vKeySigs ] isSigned vk (txidBytes (TxIdOf txTop)) σ
     ∙ ∀[ s ∈ p1ScriptsNeeded ] validP1Script vKeyHashesProvided (GuardsOf txTop) txVldt s
     ∙ vKeyHashesNeeded ⊆ vKeyHashesProvided
@@ -487,8 +489,8 @@ attempting both.
 unquoteDecl UTXOW-normal-premises = genPremises UTXOW-normal-premises (quote UTXOW-normal)
 unquoteDecl UTXOW-legacy-premises = genPremises UTXOW-legacy-premises (quote UTXOW-legacy)
 unquoteDecl SUBUTXOW-premises = genPremises SUBUTXOW-premises (quote SUBUTXOW)
-pattern UTXOW-normal-⋯ p₀ p₁ p₂ p₃ p₄ p₅ p₆ p₇ p₈ p₉ p₁₀ p₁₁ p₁₂ p₁₃ h = UTXOW-normal (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , p₁₂ , p₁₃ , h)
-pattern UTXOW-legacy-⋯ p₀ p₁ p₂ p₃ p₄ p₅ p₆ p₇ p₈ p₉ p₁₀ p₁₁ p₁₂ p₁₃ h = UTXOW-legacy (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , p₁₂ , p₁₃ , h)
+pattern UTXOW-normal-⋯ p₀ p₁ p₂ p₃ p₄ p₅ p₆ p₇ p₈ p₉ p₁₀ p₁₁ p₁₂ p₁₃ p₁₄ h = UTXOW-normal (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , p₁₂ , p₁₃ , p₁₄ , h)
+pattern UTXOW-legacy-⋯ p₀ p₁ p₂ p₃ p₄ p₅ p₆ p₇ p₈ p₉ p₁₀ p₁₁ p₁₂ p₁₃ p₁₄ h = UTXOW-legacy (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , p₁₂ , p₁₃ , p₁₄ , h)
 pattern SUBUTXOW-⋯ p₀ p₁ p₂ p₃ p₄ p₅ p₆ p₇ p₈ p₉ p₁₀ p₁₁ h = SUBUTXOW (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , h)
 ```
 -->
