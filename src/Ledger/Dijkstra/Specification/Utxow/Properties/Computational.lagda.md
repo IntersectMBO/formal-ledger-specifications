@@ -77,7 +77,9 @@ instance
       computeProof-aux (no _) (yes (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , p₁₂ , p₁₃ , p₁₄)) =
         map (map₂′ (λ h → UTXOW-normal {txTop = txTop} {Γ = Γ} (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , p₁₂ , p₁₃ , p₁₄ , h)))
             (UTXO.computeProof Γ s₀ txTop)
-      computeProof-aux (no p) (no p') = failure (genErrors p S.++ genErrors p')
+      computeProof-aux (no p) (no p') = failure "UTXOW"
+      -- TODO: see https://github.com/IntersectMBO/formal-ledger-specifications/issues/1269
+      -- computeProof-aux (no p) (no p') = failure $ genErrors p S.++ genErrors p'
 
       computeProof : ComputationResult String (∃[ s₁ ] (Γ ⊢ s₀ ⇀⦇ txTop ,UTXOW⦈ s₁))
       computeProof = computeProof-aux H?-legacy H?-normal
