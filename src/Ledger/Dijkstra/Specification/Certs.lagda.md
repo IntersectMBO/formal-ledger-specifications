@@ -79,6 +79,13 @@ cwitness (ccreghot c _)      = just c
 IsPoolRegistered : Pools → KeyHash → Type
 IsPoolRegistered ps kh = kh ∈ dom ps
 
+IsConwayCert : DCert → Type
+IsConwayCert (regdrep _ _ _)           = ⊤
+IsConwayCert (deregdrep _ _)           = ⊤
+IsConwayCert (ccreghot _ _)            = ⊤
+IsConwayCert (delegate _ (just _) _ _) = ⊤
+IsConwayCert _                         = ⊥
+
 record CertEnv : Type where
   field
     epoch           : Epoch
