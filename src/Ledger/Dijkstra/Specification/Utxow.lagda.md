@@ -23,6 +23,7 @@ open import Ledger.Dijkstra.Specification.Utxo txs abs
 open import Ledger.Dijkstra.Specification.Script.Validation txs abs
 import Data.List.Relation.Unary.Any as L
 import Data.List.Relation.Unary.All as L
+import Data.Maybe.Relation.Unary.All as Maybe
 
 private variable
   ℓ     : TxLevel
@@ -44,11 +45,14 @@ UsesBootstrapAddress utxo tx
   where
     open Tx tx; open TxBody txBody
 
+HasInlineDatum : TxOut → Type
+HasInlineDatum txout = Is-just (txOutToDatum txout)
+
+HasDataHash : TxOut → Type
+HasDataHash txout = Is-just (txOutToDataHash txout)
+
 module _ (tx : TopLevelTx) where
   module _ (utxo : UTxO) where
-    HasInlineDatum : TxOut → Type
-    HasInlineDatum txout = Is-just (txOutToDatum txout)
-
     UsesV2Features : Type
     UsesV2Features = ∃[ o ∈ (range (TxOutsOf tx)) ∪ range (utxo ∣ (SpendInputsOf tx ∪ ReferenceInputsOf tx)) ] HasInlineDatum o
 
@@ -137,6 +141,13 @@ allowedLanguagesLegacy tx utxo =
     then fromList (PlutusV4 ∷ PlutusV3 ∷ PlutusV2 ∷ [])
   else
     fromList (PlutusV4 ∷ PlutusV3 ∷ PlutusV2 ∷ PlutusV1 ∷ [])
+
+TxOutSpendable-PlutusV1-V2 : ℙ Script → TxOut → Type
+TxOutSpendable-PlutusV1-V2 scripts txOut
+  = Maybe.All (λ s → language s ≡ PlutusV1 → HasDataHash txOut) (txOutToP2Script scripts txOut)
+    ×
+    Maybe.All (λ s → language s ≡ PlutusV2 → HasDataHash txOut ⊎ HasInlineDatum txOut)
+              (txOutToP2Script scripts txOut)
 
 allowedLanguages : Tx ℓ → UTxO → ℙ Language
 allowedLanguages tx utxo =
@@ -497,6 +508,7 @@ attempting both.
     ∙ dataHashesProvided ⊆ dataHashesNeededSpendInputs ∪ dataHashesOutputs ∪ dataHashesReferenceInputs
     ∙ dom txRedeemers ≡ᵉ scriptRedeemerPtrs
     ∙ languages p2ScriptsNeeded ⊆ dom (PParams.costmdls (PParamsOf Γ)) ∩ allowedLanguagesLegacy txTop utxo₀
+    ∙ ∀[ txOut ∈ range (utxo₀ ∣ SpendInputsOf txTop) ] TxOutSpendable-PlutusV1-V2 scriptsProvided txOut
     ∙ txADhash ≡ map hash txAuxData
     ∙ scriptIntegrityHash ≡ hashScriptIntegrity (PParamsOf Γ) (languages p2ScriptsNeeded) txRedeemers txData
     ∙ Γ ⊢ s ⇀⦇ txTop ,UTXO⦈ s'
@@ -510,7 +522,7 @@ unquoteDecl UTXOW-normal-premises = genPremises UTXOW-normal-premises (quote UTX
 unquoteDecl UTXOW-legacy-premises = genPremises UTXOW-legacy-premises (quote UTXOW-legacy)
 unquoteDecl SUBUTXOW-premises = genPremises SUBUTXOW-premises (quote SUBUTXOW)
 pattern UTXOW-normal-⋯ p₀ p₁ p₂ p₃ p₄ p₅ p₆ p₇ p₈ p₉ p₁₀ p₁₁ p₁₂ p₁₃ p₁₄ h = UTXOW-normal (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , p₁₂ , p₁₃ , p₁₄ , h)
-pattern UTXOW-legacy-⋯ p₀ p₁ p₂ p₃ p₄ p₅ p₆ p₇ p₈ p₉ p₁₀ p₁₁ p₁₂ p₁₃ p₁₄ h = UTXOW-legacy (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , p₁₂ , p₁₃ , p₁₄ , h)
+pattern UTXOW-legacy-⋯ p₀ p₁ p₂ p₃ p₄ p₅ p₆ p₇ p₈ p₉ p₁₀ p₁₁ p₁₂ p₁₃ p₁₄ p₁₅ h = UTXOW-legacy (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , p₁₂ , p₁₃ , p₁₄ , p₁₅ , h)
 pattern SUBUTXOW-⋯ p₀ p₁ p₂ p₃ p₄ p₅ p₆ p₇ p₈ p₉ p₁₀ p₁₁ h = SUBUTXOW (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , h)
 ```
 -->

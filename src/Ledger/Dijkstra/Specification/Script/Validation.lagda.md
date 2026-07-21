@@ -139,6 +139,9 @@ credentialToP1Script c scripts =
   do sh ← isScriptObj c
      s  ← lookupHash sh scripts
      toP1Script s
+
+txOutToP2Script : ℙ Script → TxOut → Maybe P2Script
+txOutToP2Script scripts txOut = credentialToP2Script (payCred (proj₁ txOut)) scripts
 ```
 
 ```agda
