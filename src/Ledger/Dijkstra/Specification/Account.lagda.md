@@ -37,7 +37,7 @@ DirectDeposits = RewardAddress ⇀ Coin
 
 [CIP 159][] allows a transaction to assert that an account's balance falls within a
 given interval.  The interval is half-open: `[lb, ub)`.  Either bound may be omitted,
-but not both.  The three constructors correspond to the three cases in the CIP's CDDL
+but not both.  The four constructors correspond to the four cases in the CIP's CDDL
 `required_balance_interval` type.
 
 ```agda
@@ -45,6 +45,7 @@ data BalanceInterval : Type where
   ⟦_,_⦆ : Coin → Coin → BalanceInterval
   ⟦_,∞⦆ : Coin → BalanceInterval
   ⟦0,_⦆ : Coin → BalanceInterval
+  Exact : Coin → BalanceInterval
 ```
 
 
@@ -59,6 +60,7 @@ data InBalanceInterval (c : Coin) : BalanceInterval → Type where
   bounded       : {lb ub : Coin}  → lb ≤ c → c < ub  → InBalanceInterval c ⟦ lb , ub ⦆
   lowerBounded  : {lb : Coin}     → lb ≤ c           → InBalanceInterval c ⟦ lb ,∞⦆
   upperBounded  : {ub : Coin}     → c < ub           → InBalanceInterval c ⟦0, ub ⦆
+  exact         : {c' : Coin}     → c ≡ c'           → InBalanceInterval c (Exact c')
 ```
 
 Note that in the `upperBounded` case, `c` is not only upper-bounded (by `ub`), but
@@ -78,6 +80,9 @@ instance
   Dec-InBalanceInterval {c} {⟦0, hi ⦆} .dec with c <? hi
   ... | no ¬p = no  (λ where (upperBounded ubp) → ¬p ubp)
   ... | yes p = yes (upperBounded p)
+  Dec-InBalanceInterval {c} {Exact c'} .dec with ¿ c ≡ c' ¿
+  ... | no ¬p = no  (λ where (exact c') → ¬p c')
+  ... | yes p = yes (exact p)
 
   unquoteDecl DecEq-BalanceInterval = derive-DecEq
     ((quote BalanceInterval , DecEq-BalanceInterval) ∷ [])
