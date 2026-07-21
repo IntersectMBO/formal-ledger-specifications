@@ -79,6 +79,13 @@ cwitness (ccreghot c _)      = just c
 IsPoolRegistered : Pools → KeyHash → Type
 IsPoolRegistered ps kh = kh ∈ dom ps
 
+IsConwayCert : DCert → Type
+IsConwayCert (regdrep _ _ _)           = ⊤
+IsConwayCert (deregdrep _ _)           = ⊤
+IsConwayCert (ccreghot _ _)            = ⊤
+IsConwayCert (delegate _ (just _) _ _) = ⊤
+IsConwayCert _                         = ⊥
+
 record CertEnv : Type where
   field
     epoch           : Epoch
@@ -132,6 +139,18 @@ record GovCertEnv : Type where
 
 <!--
 ```agda
+-- instance
+--   IsConwayCert? : IsConwayCert ⁇¹
+--   IsConwayCert? {x} .dec with x
+--   ... | regdrep _ _ _ = yes tt
+--   ... | deregdrep _ _ = yes tt
+--   ... | ccreghot _ _  = yes tt
+--   ... | delegate _ (just _) _ _ = yes tt
+--   ... | delegate _ nothing  _ _ = no (λ ())
+--   ... | dereg _ _ = no (λ ())
+--   ... | regpool _ _ = no (λ ())
+--   ... | retirepool _ _ = no (λ ())
+
 record HasDeposits (A : Type) {K : Type} : Type where
   field DepositsOf : A → K ⇀ Coin
 open HasDeposits ⦃...⦄ public

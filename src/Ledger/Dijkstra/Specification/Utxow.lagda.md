@@ -18,6 +18,7 @@ module Ledger.Dijkstra.Specification.Utxow
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
 
+open import Ledger.Dijkstra.Specification.Certs govStructure
 open import Ledger.Dijkstra.Specification.Utxo txs abs
 open import Ledger.Dijkstra.Specification.Script.Validation txs abs
 import Data.List.Relation.Unary.Any as L
@@ -52,10 +53,11 @@ module _ (tx : TopLevelTx) where
     UsesV2Features = ∃[ o ∈ (range (TxOutsOf tx)) ∪ range (utxo ∣ (SpendInputsOf tx ∪ ReferenceInputsOf tx)) ] HasInlineDatum o
 
   data UsesV3Features : Set where
-    hasVotes     : ¬ (Is-[] (ListOfGovVotesOf tx))      → UsesV3Features
-    hasProposals : ¬ (Is-[] (ListOfGovProposalsOf tx))  → UsesV3Features
-    hasDonation  : NonZero (DonationsOf tx)             → UsesV3Features
-    hasTreasure  : Is-just (CurrentTreasuryOf tx)       → UsesV3Features
+    hasVotes       : ¬ (Is-[] (ListOfGovVotesOf tx))      → UsesV3Features
+    hasProposals   : ¬ (Is-[] (ListOfGovProposalsOf tx))  → UsesV3Features
+    hasDonation    : NonZero (DonationsOf tx)             → UsesV3Features
+    hasTreasure    : Is-just (CurrentTreasuryOf tx)       → UsesV3Features
+    hasConwayCerts : L.Any IsConwayCert (DCertsOf tx)     → UsesV3Features
 
   data UsesV4Features : Set where
     hasScriptGuards      : ¬ (∀[ g ∈ GuardsOf tx ] IsKeyHashObj g) → UsesV4Features
@@ -65,18 +67,36 @@ module _ (tx : TopLevelTx) where
 
 <!--
 ```agda
+private
+  IsConwayCert? : IsConwayCert ⁇¹
+  IsConwayCert? {x} .dec with x
+  ... | regdrep _ _ _ = yes tt
+  ... | deregdrep _ _ = yes tt
+  ... | ccreghot _ _  = yes tt
+  ... | delegate _ (just _) _ _ = yes tt
+  ... | delegate _ nothing  _ _ = no (λ ())
+  ... | dereg _ _ = no (λ ())
+  ... | regpool _ _ = no (λ ())
+  ... | retirepool _ _ = no (λ ())
+
 module _ {tx : TopLevelTx} where
   instance
     Dec-UsesV3Features : UsesV3Features tx ⁇
     Dec-UsesV3Features .dec
       with ¿ ¬ Is-[] (ListOfGovVotesOf tx) ¿ | ¿ ¬ Is-[] (ListOfGovProposalsOf tx) ¿
          | ¿ NonZero (DonationsOf tx)   ¿ | ¿ Is-just (CurrentTreasuryOf tx)  ¿
-    ... | yes p | _ | _ | _ = yes (hasVotes p)
-    ... | _ | yes p | _ | _ = yes (hasProposals p)
-    ... | _ | _ | yes p | _ = yes (hasDonation p)
-    ... | _ | _ | _ | yes p = yes (hasTreasure p)
-    ... | no p₁ | no p₂ | no p₃ | no p₄
-      = no λ { (hasVotes x) → p₁ x ; (hasProposals x) → p₂ x ; (hasDonation x) → p₃ x ; (hasTreasure x) → p₄ x}
+         | ¿ L.Any IsConwayCert (DCertsOf tx)  ¿ ⦃ Dec-Any ⦃ IsConwayCert? ⦄ ⦄
+    ... | yes p | _ | _ | _ | _ = yes (hasVotes p)
+    ... | _ | yes p | _ | _ | _ = yes (hasProposals p)
+    ... | _ | _ | yes p | _ | _ = yes (hasDonation p)
+    ... | _ | _ | _ | yes p | _ = yes (hasTreasure p)
+    ... | _ | _ | _ | _ | yes p = yes (hasConwayCerts p)
+    ... | no p₁ | no p₂ | no p₃ | no p₄ | no p₅
+      = no λ { (hasVotes x) → p₁ x
+             ; (hasProposals x) → p₂ x
+             ; (hasDonation x) → p₃ x
+             ; (hasTreasure x) → p₄ x
+             ; (hasConwayCerts x) → p₅ x }
 
 module _ {tx : TopLevelTx} where
   open Tx tx
