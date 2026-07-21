@@ -1,0 +1,30 @@
+<!DOCTYPE HTML>
+<html><head><meta charset="utf-8"><title>Ledger.Dijkstra.Foreign.Account</title><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css"><link rel="stylesheet" href="Agda.css"><script src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/contrib/auto-render.min.js"></script><script src="AgdaKaTeX.js" defer=""></script></head><body><pre class="Agda"><a id="1" class="Keyword">module</a> <a id="8" href="Ledger.Dijkstra.Foreign.Account.html" class="Module">Ledger.Dijkstra.Foreign.Account</a> <a id="40" class="Keyword">where</a>
+
+<a id="47" class="Keyword">open</a> <a id="52" class="Keyword">import</a> <a id="59" href="Class.Convertible.html" class="Module">Class.Convertible</a>
+<a id="77" class="Keyword">open</a> <a id="82" class="Keyword">import</a> <a id="89" href="Class.Convertible.Foreign.html" class="Module">Class.Convertible.Foreign</a>
+<a id="115" class="Keyword">open</a> <a id="120" class="Keyword">import</a> <a id="127" href="Tactic.Derive.Convertible.html" class="Module">Tactic.Derive.Convertible</a>
+<a id="153" class="Keyword">open</a> <a id="158" class="Keyword">import</a> <a id="165" href="Class.HasHsType.html" class="Module">Class.HasHsType</a>
+<a id="181" class="Keyword">open</a> <a id="186" class="Keyword">import</a> <a id="193" href="Class.HasHsType.Foreign.html" class="Module">Class.HasHsType.Foreign</a>
+<a id="217" class="Keyword">open</a> <a id="222" class="Keyword">import</a> <a id="229" href="Tactic.Derive.HsType.html" class="Module">Tactic.Derive.HsType</a>
+<a id="250" class="Keyword">import</a> <a id="257" href="Data.String.html" class="Module">Data.String</a> <a id="269" class="Symbol">as</a> <a id="272" class="Module">S</a>
+
+<a id="275" class="Keyword">open</a> <a id="280" class="Keyword">import</a> <a id="287" href="Ledger.Prelude.html" class="Module">Ledger.Prelude</a>
+<a id="302" class="Keyword">open</a> <a id="307" class="Keyword">import</a> <a id="314" href="Ledger.Prelude.Foreign.HSTypes.html" class="Module">Ledger.Prelude.Foreign.HSTypes</a>
+
+<a id="346" class="Keyword">open</a> <a id="351" class="Keyword">import</a> <a id="358" href="Ledger.Core.Foreign.Address.html" class="Module">Ledger.Core.Foreign.Address</a>
+<a id="386" class="Keyword">open</a> <a id="391" class="Keyword">import</a> <a id="398" href="Ledger.Core.Foreign.Crypto.Base.html" class="Module">Ledger.Core.Foreign.Crypto.Base</a>
+<a id="430" class="Keyword">open</a> <a id="435" class="Keyword">import</a> <a id="442" href="Ledger.Dijkstra.Foreign.HSStructures.html" class="Module">Ledger.Dijkstra.Foreign.HSStructures</a>
+
+<a id="480" class="Keyword">private</a>
+  <a id="toHaskellConstr"></a><a id="490" href="Ledger.Dijkstra.Foreign.Account.html#490" class="Function">toHaskellConstr</a> <a id="506" class="Symbol">:</a> <a id="508" href="Agda.Builtin.String.html#335" class="Postulate">String</a> <a id="515" class="Symbol">→</a> <a id="517" href="Agda.Builtin.String.html#335" class="Postulate">String</a>
+  <a id="526" href="Ledger.Dijkstra.Foreign.Account.html#490" class="Function">toHaskellConstr</a> <a id="542" href="Ledger.Dijkstra.Foreign.Account.html#542" class="Bound">s</a> <a id="544" class="Symbol">=</a>
+    <a id="550" href="Class.ToBool.html#342" class="Function Operator">if</a>      <a id="558" href="Ledger.Dijkstra.Foreign.Account.html#542" class="Bound">s</a> <a id="560" href="Class.DecEq.Core.html#168" class="Field Operator">≟</a> <a id="562" class="String">&quot;⟦_,_⦆&quot;</a> <a id="570" href="Class.ToBool.html#342" class="Function Operator">then</a> <a id="575" class="String">&quot;Both&quot;</a>
+    <a id="586" href="Class.ToBool.html#342" class="Function Operator">else</a> <a id="591" href="Class.ToBool.html#342" class="Function Operator">if</a> <a id="594" href="Ledger.Dijkstra.Foreign.Account.html#542" class="Bound">s</a> <a id="596" href="Class.DecEq.Core.html#168" class="Field Operator">≟</a> <a id="598" class="String">&quot;⟦_,∞⦆&quot;</a> <a id="606" href="Class.ToBool.html#342" class="Function Operator">then</a> <a id="611" class="String">&quot;Lower&quot;</a>
+    <a id="623" href="Class.ToBool.html#342" class="Function Operator">else</a> <a id="628" href="Class.ToBool.html#342" class="Function Operator">if</a> <a id="631" href="Ledger.Dijkstra.Foreign.Account.html#542" class="Bound">s</a> <a id="633" href="Class.DecEq.Core.html#168" class="Field Operator">≟</a> <a id="635" class="String">&quot;⟦0,_⦆&quot;</a> <a id="643" href="Class.ToBool.html#342" class="Function Operator">then</a> <a id="648" class="String">&quot;Upper&quot;</a>
+    <a id="660" href="Class.ToBool.html#342" class="Function Operator">else</a> <a id="665" href="Ledger.Dijkstra.Foreign.Account.html#542" class="Bound">s</a>
+
+<a id="668" class="Keyword">instance</a>
+  <a id="HsTy-BalanceInterval"></a><a id="679" href="Ledger.Dijkstra.Foreign.Account.html#679" class="Function">HsTy-BalanceInterval</a> <a id="700" class="Symbol">=</a> <a id="702" href="Tactic.Derive.HsType.html#12259" class="Macro Operator">autoHsType</a> <a id="713" href="Ledger.Dijkstra.Specification.Account.html#1196" class="Datatype">BalanceInterval</a> <a id="729" href="Tactic.Derive.HsType.html#12259" class="Macro Operator">⊣</a> <a id="731" href="Tactic.Derive.HsType.html#2847" class="Function">onConstructors</a> <a id="746" href="Ledger.Dijkstra.Foreign.Account.html#490" class="Function">toHaskellConstr</a>
+  <a id="Conv-BalanceInterval"></a><a id="764" href="Ledger.Dijkstra.Foreign.Account.html#764" class="Function">Conv-BalanceInterval</a> <a id="785" class="Symbol">=</a> <a id="787" href="Tactic.Derive.Convertible.html#6475" class="Macro">autoConvert</a> <a id="799" href="Ledger.Dijkstra.Specification.Account.html#1196" class="Datatype">BalanceInterval</a>
+</pre></body></html>
