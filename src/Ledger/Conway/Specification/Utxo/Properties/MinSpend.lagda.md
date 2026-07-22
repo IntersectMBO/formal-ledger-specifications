@@ -69,7 +69,7 @@ module _
 *Proof*.
 
 ```agda
-    utxoMinSpend step@(UTXO-inductive⋯ tx Γ utxoSt _ _ _ _ _ _ c≡p cmint≡0 _ _ _ _ _ _ _ _ _ _ _) nrf =
+    utxoMinSpend step@(UTXO-inductive⋯ tx Γ utxoSt _ _ _ _ _ c≡p cmint≡0 _ _ _ _ _ _ _ _ _ _ _) nrf =
       begin
       length txGovProposals * govActionDeps
         ≡˘⟨ updatePropDeps≡ gc-hom txGovProposals ⟩
