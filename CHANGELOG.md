@@ -33,6 +33,7 @@
 
 ## Conway spec
 
+- Move `txIns ∩ refInputs ≡ ∅` precondition to `allowedLanguages` to allow non-disjoint tx and ref. inputs for Plutus V1-V2
 - State and prove the claim that a voter's (last) vote in a block is applied to the governance action (see #417)
 - Change `RwdAddr` to `RewardAddress`
 - Do not count pool deposits a second time when reregistering pools
