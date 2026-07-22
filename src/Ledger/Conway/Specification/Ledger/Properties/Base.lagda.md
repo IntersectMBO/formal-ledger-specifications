@@ -71,7 +71,7 @@ In the remainder of this section, we show some utility lemmas without proofs.
 <!--
 ```agda
 module ≡ᵉ = IsEquivalence (≡ᵉ-isEquivalence {DepositPurpose})
-pattern UTXOW-UTXOS x = UTXOW⇒UTXO (UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ x)
+pattern UTXOW-UTXOS x = UTXOW⇒UTXO (UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ x)
 
 open Equivalence
 ```
