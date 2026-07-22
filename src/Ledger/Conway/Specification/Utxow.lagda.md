@@ -67,18 +67,17 @@ IsConwayCert (delegate _ (just _) _ _) = ⊤
 IsConwayCert _               = ⊥
 
 private
-  instance
-    IsConwayCert? : IsConwayCert ⁇¹
-    IsConwayCert? {x} .dec with x
-    ... | regdrep _ _ _ = yes tt
-    ... | deregdrep _ _ = yes tt
-    ... | ccreghot _ _  = yes tt
-    ... | delegate _ (just _) _ _ = yes tt
-    ... | delegate _ nothing  _ _ = no (λ ())
-    ... | dereg _ _ = no (λ ())
-    ... | regpool _ _ = no (λ ())
-    ... | retirepool _ _ = no (λ ())
-    ... | reg _ _ = no (λ ())
+  IsConwayCert? : IsConwayCert ⁇¹
+  IsConwayCert? {x} .dec with x
+  ... | regdrep _ _ _ = yes tt
+  ... | deregdrep _ _ = yes tt
+  ... | ccreghot _ _  = yes tt
+  ... | delegate _ (just _) _ _ = yes tt
+  ... | delegate _ nothing  _ _ = no (λ ())
+  ... | dereg _ _ = no (λ ())
+  ... | regpool _ _ = no (λ ())
+  ... | retirepool _ _ = no (λ ())
+  ... | reg _ _ = no (λ ())
 
 module _ (txb : TxBody) (let open TxBody txb) where
 
@@ -92,7 +91,7 @@ module _ (txb : TxBody) (let open TxBody txb) where
 instance
   Dec-UsesV3Features : ∀ {txb} → UsesV3Features txb ⁇
   Dec-UsesV3Features {record { txCerts = txCerts; txGovVotes = [] ; txGovProposals = [] ; txDonation = zero ; currentTreasury = nothing }}
-    with ¿ L.Any IsConwayCert txCerts ¿
+    with ¿ L.Any IsConwayCert txCerts ¿ ⦃ Dec-Any ⦃ IsConwayCert? ⦄ ⦄
   ... | yes p = ⁇ yes (HasConwayCerts p)
   ... | no ¬p
     = ⁇ no λ where (HasVotes x)    → x refl
@@ -133,17 +132,32 @@ Only inline datums are now disallowed from appearing together with a Plutus V1 s
 ```agda
 allowedLanguages : Tx → UTxO → ℙ Language
 allowedLanguages tx utxo =
-  if (∃[ o ∈ os ] IsBootstrapAddr (proj₁ o))
-    then ∅
-  else if UsesV3Features txb
-    then fromList (PlutusV3 ∷ [])
-  else if ∃[ o ∈ os ] HasInlineDatum o
-    then fromList (PlutusV2 ∷ PlutusV3 ∷ [])
-  else
-    fromList (PlutusV1 ∷ PlutusV2 ∷ PlutusV3 ∷ [])
+  (
+    if ¬ usesBootstraAddr × txIns ∩ refInputs ≡ ∅
+      then ❴ PlutusV3 ❵
+      else ∅
+  )
+  ∪
+  (
+    if ¬ usesBootstraAddr × ¬ usesV3Features
+      then ❴ PlutusV2 ❵
+      else ∅
+  )
+  ∪
+  (
+    if ¬ usesBootstraAddr × ¬ usesV3Features × ¬ usesV2Features
+      then ❴ PlutusV1 ❵
+      else ∅
+  )
   where
     txb = tx .Tx.body; open TxBody txb
     os = range (outs txb) ∪ range (utxo ∣ (txIns ∪ refInputs))
+
+    usesBootstraAddr = ∃[ (a , _) ∈ os ] IsBootstrapAddr a
+
+    usesV3Features = UsesV3Features txb
+
+    usesV2Features = ∃[ o ∈ os ] HasInlineDatum o
 ```
 
 ## Checking the script integrity hash
