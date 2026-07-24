@@ -73,35 +73,44 @@ instance
 
   HsTy-TxBodySub = autoHsType TxBodySub ⊣ withConstructor "MkTxBodySub"
                                         • fieldPrefix "txbsub"
-  Conv-TxBodySub' = autoConvert TxBodySub
+  Conv-TxBodySub = autoConvert TxBodySub
 
-  HsTy-TxBodySub' : HasHsType (TxBody TxLevelSub)
-  HsTy-TxBodySub' = mkHsType (TxBody TxLevelSub) (HsType TxBodySub)
-  Conv-TxBodySub'' : Convertible (TxBody TxLevelSub) (HsType TxBodySub)
-  Conv-TxBodySub'' = convTxBodySub ⨾ Conv-TxBodySub'
+  HsTy-TxBody-TxLevelSub : HasHsType (TxBody TxLevelSub)
+  HsTy-TxBody-TxLevelSub = mkHsType (TxBody TxLevelSub) (HsType TxBodySub)
+
+  Conv-TxBody-TxLevelSub : Convertible (TxBody TxLevelSub) (HsType TxBodySub)
+  Conv-TxBody-TxLevelSub = convTxBodySub ⨾ Conv-TxBodySub
 
 record TxSub : Type where
   field
-    txBody       : TxBody TxLevelSub
+    txBody       : TxBodySub
     txWitnesses  : TxWitnesses
     txSize       : ℕ
-    isValid      : ⊤
     txAuxData    : Maybe AuxiliaryData
 
 instance
   convTxSub : Convertible (Tx TxLevelSub) TxSub
   convTxSub = λ where
-    .to   t → record { Tx t }
-    .from t → record { TxSub t }
+    .to   t → let open Tx t
+     in record { txBody = to txBody
+               ; txWitnesses = txWitnesses
+               ; txSize = txSize
+               ; txAuxData = txAuxData }
+    .from t → let open TxSub t
+     in record { txBody = from txBody
+               ; txWitnesses = txWitnesses
+               ; txSize = txSize
+               ; txAuxData = txAuxData }
 
   HsTy-TxSub = autoHsType TxSub ⊣ withConstructor "MkTxSub"
                                 • fieldPrefix "txsub"
-  Conv-TxSub' = autoConvert TxSub
+  Conv-TxSub = autoConvert TxSub
 
-  HsTy-TxSub' : HasHsType (Tx TxLevelSub)
-  HsTy-TxSub' = mkHsType (Tx TxLevelSub) (HsType TxSub)
-  Conv-TxSub'' : Convertible (Tx TxLevelSub) (HsType TxSub)
-  Conv-TxSub'' = convTxSub ⨾ Conv-TxSub'
+  HsTy-Tx-TxLevelSub : HasHsType (Tx TxLevelSub)
+  HsTy-Tx-TxLevelSub = mkHsType (Tx TxLevelSub) (HsType TxSub)
+
+  Conv-Tx-TxLevelSub : Convertible (Tx TxLevelSub) (HsType TxSub)
+  Conv-Tx-TxLevelSub = convTxSub ⨾ Conv-TxSub
 
 record TxBodyTop : Type where
   field
@@ -136,16 +145,16 @@ instance
 
   HsTy-TxBodyTop = autoHsType TxBodyTop ⊣ withConstructor "MkTxBodyTop"
                                         • fieldPrefix "txbtop"
-  Conv-TxBodyTop' = autoConvert TxBodyTop
+  Conv-TxBodyTop = autoConvert TxBodyTop
 
-  HsTy-TxBodyTop' : HasHsType (TxBody TxLevelTop)
-  HsTy-TxBodyTop' = mkHsType (TxBody TxLevelTop) (HsType TxBodyTop)
-  Conv-TxBodyTop'' : Convertible (TxBody TxLevelTop) (HsType TxBodyTop)
-  Conv-TxBodyTop'' = convTxBodyTop ⨾ Conv-TxBodyTop'
+  HsTy-TxBody-TxLevelTop : HasHsType (TxBody TxLevelTop)
+  HsTy-TxBody-TxLevelTop = mkHsType (TxBody TxLevelTop) (HsType TxBodyTop)
+  Conv-TxBody-TxLevelTop : Convertible (TxBody TxLevelTop) (HsType TxBodyTop)
+  Conv-TxBody-TxLevelTop = convTxBodyTop ⨾ Conv-TxBodyTop
 
 record TxTop : Type where
   field
-    txBody       : TxBody TxLevelTop
+    txBody       : TxBodyTop
     txWitnesses  : TxWitnesses
     txSize       : ℕ
     isValid      : Bool
@@ -154,17 +163,27 @@ record TxTop : Type where
 instance
   convTxTop : Convertible (Tx TxLevelTop) TxTop
   convTxTop = λ where
-    .to   t → record { Tx t }
-    .from t → record { TxTop t }
+    .to   t → let open Tx t
+     in record { txBody = to txBody
+               ; txWitnesses = txWitnesses
+               ; txSize = txSize
+               ; isValid = isValid
+               ; txAuxData = txAuxData }
+    .from t → let open TxTop t
+     in record { txBody = from txBody
+               ; txWitnesses = txWitnesses
+               ; txSize = txSize
+               ; isValid = isValid
+               ; txAuxData = txAuxData }
 
   HsTy-TxTop = autoHsType TxTop ⊣ withConstructor "MkTxTop"
                                 • fieldPrefix "txtop"
-  Conv-TxTop' = autoConvert TxTop
+  Conv-TxTop = autoConvert TxTop
 
-  HsTy-TxTop' : HasHsType (Tx TxLevelTop)
-  HsTy-TxTop' = mkHsType (Tx TxLevelTop) (HsType TxTop)
-  Conv-TxTop'' : Convertible (Tx TxLevelTop) (HsType TxTop)
-  Conv-TxTop'' = convTxTop ⨾ Conv-TxTop'
+  HsTy-Tx-TxLevelTop : HasHsType (Tx TxLevelTop)
+  HsTy-Tx-TxLevelTop = mkHsType (Tx TxLevelTop) (HsType TxTop)
+  Conv-Tx-TxLevelTop : Convertible (Tx TxLevelTop) (HsType TxTop)
+  Conv-Tx-TxLevelTop = convTxTop ⨾ Conv-TxTop
 
 unquoteDecl = do
   hsTypeAlias TxId
