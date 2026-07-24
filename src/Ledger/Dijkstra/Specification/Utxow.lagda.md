@@ -119,16 +119,39 @@ languages p2Scripts = mapˢ language p2Scripts
 
 allowedLanguagesLegacy : TopLevelTx → UTxO → ℙ Language
 allowedLanguagesLegacy tx utxo =
-  if UsesBootstrapAddress utxo tx
-    then ∅
-  else if UsesV4Features tx
-    then ∅
-  else if UsesV3Features tx
-    then fromList (PlutusV4 ∷ PlutusV3 ∷ [])
-  else if UsesV2Features tx utxo
-    then fromList (PlutusV4 ∷ PlutusV3 ∷ PlutusV2 ∷ [])
-  else
-    fromList (PlutusV4 ∷ PlutusV3 ∷ PlutusV2 ∷ PlutusV1 ∷ [])
+  (
+    if ¬ usesBootstrapAddr
+      then ❴ PlutusV4 ❵
+      else ∅
+  )
+  ∪
+  (
+    if ¬ usesBootstrapAddr × ¬ usesV4Features × SpendInputsOf tx ∩ ReferenceInputsOf tx ≡ ∅
+      then ❴ PlutusV3 ❵
+      else ∅
+  )
+  ∪
+  (
+    if ¬ usesBootstrapAddr × ¬ usesV4Features × ¬ usesV3Features
+      then ❴ PlutusV2 ❵
+      else ∅
+  )
+  ∪
+  (
+    if ¬ usesBootstrapAddr × ¬ usesV4Features × ¬ usesV3Features × ¬ usesV2Features
+      then ❴ PlutusV1 ❵
+      else ∅
+  )
+  where
+    os = range (TxOutsOf tx) ∪ range (utxo ∣ (SpendInputsOf tx ∪ ReferenceInputsOf tx))
+
+    usesBootstrapAddr = ∃[ (a , _) ∈ os ] IsBootstrapAddr a
+
+    usesV4Features = UsesV4Features tx
+
+    usesV3Features = UsesV3Features tx
+
+    usesV2Features = ∃[ o ∈ os ] HasInlineDatum o
 
 allowedLanguages : Tx ℓ → UTxO → ℙ Language
 allowedLanguages tx utxo =
