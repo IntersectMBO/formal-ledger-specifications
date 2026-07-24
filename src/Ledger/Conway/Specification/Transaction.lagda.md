@@ -145,8 +145,8 @@ record TransactionStructure : Type₁ where
   -- TODO should wait time be Block or Slot?
   WaitTime = ℕ
   TierNo = ℕ
-  fastTier = 0
-  slowTier = 1
+  priorityTier = 0
+  regularTier = 1
   TierCoeff = ℕ -- TODO define correctly
 
   data BlockType : Type where

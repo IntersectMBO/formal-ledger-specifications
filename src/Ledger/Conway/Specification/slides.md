@@ -14,9 +14,9 @@ All under `ouroboros-consensus/src/ouroboros-consensus/Ouroboros/Consensus/Mempo
   contain an EB directly.
 
 - **`MempoolLeiosPricing.lagda.md`** — Tiered-pricing extension on top of
-  Leios. Two tiers (fast, slow). Tier-aware admission, forging, and
+  Leios. Two tiers (priority, regular). Tier-aware admission, forging, and
   peer exchange. Includes a light-load EB-suppression rule and a
-  fast-fee refund for fast txs that end up in an EB.
+  priority-fee refund for priority txs that end up in an EB.
 
 Each file is self-contained. The pricing doc marks its deltas from Leios
 with `-- CHG:` / `-- NEW:` comments in the Agda block.
@@ -25,17 +25,17 @@ with `-- CHG:` / `-- NEW:` comments in the Agda block.
 
 # Pricing Mempool: Key Changes vs. Leios
 
-- **Two tiers.** `fastTxs` destined for the RB body, `slowTxs` for
-  the announced EB. Separate caps: `fastCap` (one RB `TxMeasure`) and
-  `slowCap` (CIP-164 per-EB caps: `S_EB`, `S_EB-tx`, per-EB Plutus).
+- **Two tiers.** `priorityTxs` destined for the RB body, `regularTxs` for
+  the announced EB. Separate caps: `priorityCap` (one RB `TxMeasure`) and
+  `regularCap` (CIP-164 per-EB caps: `S_EB`, `S_EB-tx`, per-EB Plutus).
 
 - **Layered ledger stack.** `ledger` (chain tip) → `ebLedger : Maybe`
-  (with `heldEB` applied) → `fastUpdatedLedger` (fasts on top)
-  → `slowUpdatedLedger` (slows on top). Each new tx validates
+  (with `heldEB` applied) → `priorityUpdatedLedger` (priority txs on top)
+  → `regularUpdatedLedger` (regular txs on top). Each new tx validates
   against its tier's post-state.
 
-- **Fast admission cascades.** `addTx Fast t` validates against
-  `fastUpdatedLedger`, then unconditionally revalidates `slowTxs`
+- **Priority admission cascades.** `addTx Priority t` validates against
+  `priorityUpdatedLedger`, then unconditionally revalidates `regularTxs`
   on the new post-state. Commutativity-based option-1 admission is
   tracked as a future variant, pending the WIP proof at
   `IntersectMBO/formal-ledger-specifications:polina/commutativity`.
@@ -45,23 +45,23 @@ with `-- CHG:` / `-- NEW:` comments in the Agda block.
   ledger-stack fields shift. O(1) transition.
 
 - **`forgeBlock` reapplies against `ledger`.** Safe to call regardless of
-  `heldEB`. Fast overflow (fast txs that don't fit `fastCap`)
-  flows into the EB body ahead of slows.
+  `heldEB`. Priority overflow (priority txs that don't fit `priorityCap`)
+  flows into the EB body ahead of regular txs.
 
-- **Fee on an EB-landed fast tx.** The ledger charges/refunds on the tier
-  the tx *actually* lands in (`actualTier`: EB ⇒ slow), not its claimed
+- **Fee on an EB-landed priority tx.** The ledger charges/refunds on the tier
+  the tx *actually* lands in (`actualTier`: EB ⇒ regular), not its claimed
   tier — but only if it named a `feeChangeAddr`: then it is charged the
-  slow fee and refunded `txFee − slowCoeff·minfee`. With no change address
+  regular fee and refunded `txFee − regularCoeff·minfee`. With no change address
   it forfeits everything above `minfee` to the treasury. The admission
-  check still used its *claimed* (fast) tier (`tier.tierCoeff·minfee ≤ txFee`).
+  check still used its *claimed* (priority) tier (`tier.tierCoeff·minfee ≤ txFee`).
 
 - **EB suppression under light load.** No EB when the EB body is below
   `ebFloor` (= ½ a full RB) in every dimension. Exact complement of the
   ledger's `sdChecks EB`, measured on the same EB body.
 
 - **Peer exchange.** Inbound routes by tier tag on each tx.
-  Outbound pulls fast-first: keep asking peers for fast txs;
-  fall back to slows only when fast requests come back empty.
+  Outbound pulls priority-first: keep asking peers for priority txs;
+  fall back to regular txs only when priority requests come back empty.
   `snapshotTxsAfter` becomes a per-tier cursor pair.
 
 - **Explicit `discardEB`.** The pricing model's one expensive undo of a
@@ -112,18 +112,18 @@ In `Reorder.lagda.md` (Conway ledger, WIP branch `polina/commutativity`):
 
 # Ledger Changes: Tiered Fees & Block Diversity
 
-Conway ledger, WIP branch `polina/dynamic`. Two tiers — `fastTier` (0) and
-`slowTier` (1) — and two block types, Endorser (`EB`) and Ranking (`RB`). The
+Conway ledger, WIP branch `polina/dynamic`. Two tiers — `priorityTier` (0) and
+`regularTier` (1) — and two block types, Endorser (`EB`) and Ranking (`RB`). The
 fee-change mechanism follows the draft CIP:
 [cardano-foundation/CIPs#1218](https://github.com/cardano-foundation/CIPs/pull/1218).
 
 - **Fee split.** The admission gate is on the *claimed* tier
   (`tier.tierCoeff·minfee ≤ txFee`), but the fee is charged/refunded on the
   tier the tx *actually* lands in — `actualCoeff = coeffRange(dp[actualTier])`,
-  EB ⇒ slow, RB ⇒ fast. The pot always keeps `minfee`. With a `feeChangeAddr`:
+  EB ⇒ regular, RB ⇒ priority. The pot always keeps `minfee`. With a `feeChangeAddr`:
   the treasury gets `(actualCoeff−1)·minfee` and `txFee − actualCoeff·minfee`
-  is refunded to the address (so a fast-claimed tx bumped to an EB is charged
-  the *slow* fee). With no `feeChangeAddr`: the whole `txFee − minfee` goes to
+  is refunded to the address (so a priority-claimed tx bumped to an EB is charged
+  the *regular* fee). With no `feeChangeAddr`: the whole `txFee − minfee` goes to
   the treasury — no actual-tier discount, the excess is forfeited. Refund
   credits accumulate in `feeRewards`, flushed into the reward accounts per tx
   in `LEDGER`. On script failure (`Scripts-No`) the full collateral is
@@ -131,9 +131,9 @@ fee-change mechanism follows the draft CIP:
 
 - **Tier admission by block type.** Both block types gate on
   `tier.tierCoeff·minfee ≤ txFee`. `RB` blocks additionally accept only
-  fast-tier txs (both requested `tier.tierNo` and placed `actualTier` =
-  `fastTier`); an `EB` places txs of any tier. The tier coefficient is thus a
-  fast *signal* (you must be able to pay `coeff·minfee`), while what you
+  priority-tier txs (both requested `tier.tierNo` and placed `actualTier` =
+  `priorityTier`); an `EB` places txs of any tier. The tier coefficient is thus a
+  priority *signal* (you must be able to pay `coeff·minfee`), while what you
   ultimately keep-vs-donate is set by the split above.
 
 - **EB size floor.** An `EB` must reach the fullness floor `ebFloor` in at
@@ -146,25 +146,25 @@ fee-change mechanism follows the draft CIP:
   same four dimensions, same `ebFloor`, same EB body measured — so an EB is
   suppressed there iff rejected here. (The "small in *every* dimension"
   quantifier is probably up for discussion. `ebFloor` is a lower bound,
-  distinct from the CIP-164 per-EB *capacity* `slowCap`, which the ledger
+  distinct from the CIP-164 per-EB *capacity* `regularCap`, which the ledger
   doesn't yet enforce — TODO.)
 
 - **Mempool-compatible.** These are exactly the ledger-side counterparts of
-  the pricing-mempool tiers: the fast/slow split mirrors the
-  fast/slow tier tag and its **tier sorting**, the EB-size floor is the
+  the pricing-mempool tiers: the priority/regular split mirrors the
+  priority/regular tier tag and its **tier sorting**, the EB-size floor is the
   exact complement of the mempool's light-load EB-suppression rule (same four
   dimensions, same `ebFloor` = ½ full RB, EB body measured on both sides),
-  and the fast-fee refund is realised here as the `feeChangeAddr`
+  and the priority-fee refund is realised here as the `feeChangeAddr`
   overpayment credit.
 
 - **Knobs to tune (not yet fixed).** The per-tier coefficients `coeffRange`
-  (γᵢ; fast vs slow) live in the *ledger state* — `DiversityPolicy` inside
+  (γᵢ; priority vs regular) live in the *ledger state* — `DiversityPolicy` inside
   `UTxOState.policyState`, not in protocol parameters — and are updated
-  dynamically by `DIVUP`. The gap between the fast and slow coefficients sets
-  how strong a **fast signal** costs; the `DIVUP` block-fit thresholds and
+  dynamically by `DIVUP`. The gap between the priority and regular coefficients sets
+  how strong a **priority signal** costs; the `DIVUP` block-fit thresholds and
   the EB size floor drive **congestion control**. (A per-tier maturity delay
   `WaitTime` / `timeToWait` is stubbed but not yet wired in.) All of these are
-  values we will have to tune to make fast signalling and congestion
+  values we will have to tune to make priority signalling and congestion
   control behave well.
 
 ---

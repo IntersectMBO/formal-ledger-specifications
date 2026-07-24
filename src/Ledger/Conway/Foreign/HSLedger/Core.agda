@@ -102,6 +102,10 @@ module Implementation where
   Ix              = ℕ
   AuxiliaryData   = ℕ
   DocHash         = ℕ
+  Endorsement     = ⊤
+  -- EB-certificate checks (trivially accepting stubs; abstract in the spec)
+  checkEndorsements = λ _ _ → true
+  checkEBID         = λ _ _ → true
   tokenAlgebra    = Coin-TokenAlgebra
     where open import Ledger.Conway.Specification.TokenAlgebra.Coin ScriptHash
             using (Coin-TokenAlgebra)

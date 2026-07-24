@@ -484,8 +484,8 @@ that their difference is the identity function.
   -- Block-type tier admissibility of a transaction. In both block types the tx must
   -- pay at least its tier fee, `tier.tierCoeff * minfee ≤ txFee` — the coefficient the
   -- tx declares in its TxTier, pinned to the diversity policy by `checkPolicyState`.
-  -- RB blocks additionally require every tx to be fast tier: both the requested tier
-  -- (tier.tierNo) and the actual placement (actualTier) must equal fastTier. EB blocks
+  -- RB blocks additionally require every tx to be priority tier: both the requested tier
+  -- (tier.tierNo) and the actual placement (actualTier) must equal priorityTier. EB blocks
   -- place txs of any tier. (How the fee above `minfee` is distributed — tier premium
   -- and overpayment to treasury / feeChangeAddr — is handled in the UTXOS rule.)
   tierFeeCheck : BlockType → PParams → UTxO → Tx → Set
@@ -497,8 +497,8 @@ that their difference is the identity function.
     let open Tx tx
         base = minfee pp utxo tx
     in (body .TxBody.tier .TxTier.tierCoeff * base ≤ body .TxBody.txFee)
-     × (body .TxBody.tier .TxTier.tierNo ≡ fastTier)
-     × (actualTier ≡ fastTier)
+     × (body .TxBody.tier .TxTier.tierNo ≡ priorityTier)
+     × (actualTier ≡ priorityTier)
 
 ```
 
@@ -539,7 +539,7 @@ data _⊢_⇀⦇_,UTXOS⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Typ
          ps'             = processTxTiers tier txsize (refScriptsSize utxo tx) (totExUnits tx) policyState
          base            = minfee pp utxo tx
          -- the fee is charged/refunded on the tier the tx ACTUALLY landed in
-         -- (actualTier: EB ⇒ slow, RB ⇒ fast), while the admission gate (tierFeeCheck)
+         -- (actualTier: EB ⇒ regular, RB ⇒ priority), while the admission gate (tierFeeCheck)
          -- is on the CLAIMED tier (tier.tierCoeff). actualCoeff assumes ≥ 1 for value
          -- preservation (guaranteed by updateTiers; see Tiers).
          actualCoeff     = M.fromMaybe 1 (M.map PolicyClause.coeffRange
@@ -612,11 +612,12 @@ data _⊢_⇀⦇_,UTXO⦈_ where
     ∙ txIns ≢ ∅                              ∙ txIns ∪ refInputs ⊆ dom utxo
     ∙ txIns ∩ refInputs ≡ ∅                  ∙ inInterval slot txVldt
     -- per-tier minimum-fee gate (tier.tierCoeff·minfee ≤ txFee) plus block-type rule:
-    --   RB blocks contain only fast-tier txs; EB blocks place txs of any tier
+    --   RB blocks contain only priority-tier txs; EB blocks place txs of any tier
     ∙ tierFeeCheck (Γ .UTxOEnv.blockType) pp utxo tx
-    -- a tx may be placed in its claimed tier or a SLOWER one (never faster than it
-    -- paid the gate for): actualTier is no faster than the claimed tier, so its
-    -- coefficient is no larger. (fastTier = 0 < slowTier = 1, fastCoeff ≥ slowCoeff.)
+    -- a tx may be placed in its claimed tier or a LOWER-PRIORITY one (never a
+    -- higher-priority one than it paid the gate for): actualTier is of no higher
+    -- priority than the claimed tier, so its coefficient is no larger.
+    -- (priorityTier = 0 < regularTier = 1, priorityCoeff ≥ regularCoeff.)
     ∙ tier .TxTier.tierNo ≤ actualTier
     ∙ coeffR ≤ tier .TxTier.tierCoeff
     ∙ (txrdmrs ˢ ≢ ∅ → collateralCheck pp tx utxo)
