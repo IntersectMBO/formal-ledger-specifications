@@ -72,30 +72,41 @@ In `Reorder.lagda.md` (Conway ledger, branch `polina/commutativity`):
 
 - **Statement (net-effect form).** If two transaction lists are permutations
   of one another, both execute successfully via `LEDGERS`, every pair is
-  `Indep`endent, and no transaction touches governance (`NoGov`), the two
-  final `LState`s agree — up to extensional set-equality `≈ˡ`, not
-  propositional `≡` (the set model is `List`-backed, so `≡` is too strong).
+  `Indep`endent, and no transaction submits proposals or DRep
+  (de)registrations (`NoGov` — governance *votes* are allowed!), the two
+  final `LState`s agree — up to the structural equality `≈ˡ` (`≡ᵉ` on maps,
+  `≈ᵍ` on the governance list: same spine, vote maps up to `≡ᵉ`).
   Matches Vinogradova & Sorokin, LSFA'24, Thm 5.2.1: both executions are
   *given*, and each state field is compared as a function of the tx *set*.
+  **No assumption on the phase-2 `isValid` tags**: invalid transactions
+  (`LEDGER-I`, collateral consumption) are covered.
 
-- **`Indep` is minimal and explicit.** Just two disjointness conditions per
-  pair: overwriting-certificate targets (`cwitness`) and deposit-map keys
-  (`certDepositKey` — total on `reg`, unlike `cwitness`, catching `reg c 0`).
-  The old disjoint-inputs/withdrawals conditions are *gone* — both-sequence
-  validity replaces them.
+- **`Indep` is minimal and explicit.** Three disjointness conditions per
+  pair, all computed from the transactions themselves: overwriting-certificate
+  targets (`cwitness`), deposit-map keys (`certDepositKey` — total on `reg`,
+  catching `reg c 0`), and vote targets (`disjVotes`: distinct
+  *(action, voter)* pairs — same-target votes are last-wins).  A spec **bug
+  fix** fell out of this work: the `UTXO` rule was missing the
+  implementation's `collateralInputs ⊆ dom utxo` check (Babbage
+  `validateBadInputsUTxO`); with it fixed, *no* collateral condition is
+  needed — both-sequence validity excludes every collateral race.
+  The old disjoint-inputs/withdrawals conditions are *gone* too.
 
-- **Proven: the entire `UTxOState`.**
-  `utxo` via the order-free closed form `(u₀ ∪ ⋃outs) ∖ ⋃ins`;
-  `fees`/`donations` as permutation-invariant scalar sums;
+- **Proven: the entire `UTxOState`, mixed validity.**
+  `utxo` via the order-free closed form `(u₀ ∪ ⋃added) ∖ ⋃removed` (invalid
+  txs remove collateral, add nothing);
+  `fees`/`donations` as permutation-invariant sums — an invalid tx's fee
+  delta (its reachable collateral balance) is pinned to the *initial* UTxO
+  by `collSafe`;
   `deposits` via a new *locality* framework (`MapCommutativity.agda`):
   each certificate's deposit update is a single-key map operation
   (`∪⁺`/`∪ˡ`/delete), any two ops local at distinct keys commute
   (`local-comm`), and a generic locally-commuting-`foldl` engine lifts
-  this through the fold and the permutation.
+  this through the fold and the permutation (invalid txs are the identity).
 
 - **Trust base of the theorem: exactly four postulates.** Replay
-  protection (pairwise-disjoint outputs; inputs fresh from later outputs)
-  and the two open field obligations (`LEDGERS-cert≈`, `LEDGERS-govSt≈`).
+  protection (outputs pairwise disjoint and fresh; removed keys disjoint
+  from later-added) and the single open field obligation (`LEDGERS-cert≈`).
   Separately, five "flatten-to-scalar" model axioms (value summation,
   script-integrity hash, Plutus evaluation, `refScriptsSize`, script
   lookup) support the fully-proven `UTXOW` congruence stack — the honest
@@ -103,15 +114,51 @@ In `Reorder.lagda.md` (Conway ledger, branch `polina/commutativity`):
 
 ---
 
+# What Doesn't Commute → What We Assume
+
+Per-pair (`Indep`), all computable from the two transactions alone:
+
+- **Overwriting cert-map writes** (`delegate`, `regpool`, `retirepool`,
+  `ccreghot`: last-/first-wins with per-tx values)
+  → `disjCertCreds`: disjoint `cwitness` targets.
+- **Deposit add vs. remove at one key** (`reg c 0` + `dereg c`; `reg c 0` is
+  invisible to `cwitness`)
+  → `disjDeposits`: disjoint `certDepositKey` targets.
+- **Same-target votes** (last-wins insert into an action's vote map)
+  → `disjVotes`: disjoint *(action, voter)* pairs.
+
+Global (`NoGov`):
+
+- **Proposals** append to the `govSt` list — position is semantically
+  meaningful (ratification order/lineage) → `NoProp`: no proposals.
+- **DRep (de)registration** changes `dom dreps`, which re-filters *all*
+  existing votes every step (`rmOrphanDRepVotes`) — a global effect
+  disjointness cannot fix → `NoDRepCert`.
+
+Assumed *facts* (postulates, not conditions): replay protection — outputs
+pairwise disjoint & fresh, removed keys disjoint from later-added
+(Cor 5.1.2, hash injectivity).
+
+**Not** assumed: disjoint inputs, withdrawals, collateral, validity tags —
+both-sequence validity covers all of those.
+
+---
+
 # What Is Left, and the Final Aim
 
-- **Still open: the certificate state and `govSt` fields.** A pure
-  per-pair swap is provably *false* for the certificate maps — e.g.
-  `reg c 0` vs `dereg c`, or withdrawal-zeroing vs `dereg` — the
-  counterexamples are excluded only by both-sequence *validity*. So these
-  two fields need a validity-aware net-effect argument, not more
-  disjointness. All the map-commutation bricks, `≈ᶜ` machinery, and the
-  per-certificate congruence pipeline are already proven as ingredients.
+- **Proven: `govSt`, votes-only.** Per transaction, governance is an
+  `addVote` fold behind `rmOrphanDRepVotes`; the filter reads only
+  `dom dreps` (constant under `NoDRepCert`, proved by CERTS inversion),
+  registered votes pass through it, and `disjVotes` commutes the folds.
+  `LEDGERS-govSt≈` is now a theorem, not a postulate.
+
+- **Still open: the certificate state.** A pure per-pair swap is provably
+  *false* for the certificate maps — e.g. `reg c 0` vs `dereg c`, or
+  withdrawal-zeroing vs `dereg` — the counterexamples are excluded only by
+  both-sequence *validity*. So this last field needs a validity-aware
+  net-effect argument, not more disjointness. All the map-commutation
+  bricks, `≈ᶜ` machinery, and the per-certificate congruence pipeline are
+  already proven as ingredients.
 
 - **Housekeeping done.** Everything not specific to reordering (insert/
   `∪ˡ`/restriction algebra, generic congruences, permutation-invariant

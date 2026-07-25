@@ -326,6 +326,65 @@ module _ {A B : Type} ⦃ _ : DecEq A ⦄ where
       ⊆₂ : (m ∣ Y ᶜ) ˢ ⊆ (m ∣ X ᶜ) ˢ
       ⊆₂ h = let (a∉Y , hm) = Equivalence.from ∈-filter h
              in  Equivalence.to ∈-filter ((λ a∈X → a∉Y (X≡Y .proj₁ a∈X)) , hm)
+
+  -- A restriction to keys that all exist in `m` is determined by any
+  -- left-unique extension `W` of `m` (the values are pinned by `W`).
+  res-⊆-unique : {m W : A ⇀ B} {X : ℙ A} → X ⊆ dom (m ˢ) → m ˢ ⊆ W ˢ
+    → (m ∣ X) ˢ ≡ᵉ (W ∣ X) ˢ
+  res-⊆-unique {m} {W} {X} X⊆dom m⊆W = ⊆₁ , ⊆₂
+    where
+      ⊆₁ : (m ∣ X) ˢ ⊆ (W ∣ X) ˢ
+      ⊆₁ h = let (aX , ab∈m) = Equivalence.from ∈-filter h
+             in Equivalence.to ∈-filter (aX , m⊆W ab∈m)
+      ⊆₂ : (W ∣ X) ˢ ⊆ (m ∣ X) ˢ
+      ⊆₂ {a , b} h =
+        let (aX , ab∈W)  = Equivalence.from ∈-filter h
+            (b′ , ab′∈m) = Equivalence.from dom∈ (X⊆dom aX)
+        in Equivalence.to ∈-filter
+             (aX , subst (λ • → (a , •) ∈ m ˢ) (W .proj₂ (m⊆W ab′∈m) ab∈W) ab′∈m)
+
+
+  -- `_∪ˡ_` is left-unital.
+  ∪ˡ-∅ˡ : {m : A ⇀ B} → (∅ᵐ ∪ˡ m) ˢ ≡ᵉ m ˢ
+  ∪ˡ-∅ˡ {m} = ⊆₁ , ⊆₂
+    where
+      ⊆₁ : (∅ᵐ ∪ˡ m) ˢ ⊆ m ˢ
+      ⊆₁ h with ∈-∪ˡ⁻ {∅ᵐ} {m} h
+      ... | inj₁ p∈∅       = ⊥-elim (Properties.∉-∅ p∈∅)
+      ... | inj₂ (_ , p∈m) = p∈m
+      ⊆₂ : m ˢ ⊆ (∅ᵐ ∪ˡ m) ˢ
+      ⊆₂ p∈m = ∈-∪ˡ⁺ {∅ᵐ} {m}
+        (inj₂ ((λ p∈d∅ → Properties.∉-∅ (proj₂ (Equivalence.from dom∈ p∈d∅))) , p∈m))
+
+  -- Adding a map whose domain is disjoint from `X` does not affect `_∣ X`.
+  res-∪ˡ-disjointʳ : {m m′ : A ⇀ B} {X : ℙ A} → disjoint (dom (m′ ˢ)) X
+    → ((m ∪ˡ m′) ∣ X) ˢ ≡ᵉ (m ∣ X) ˢ
+  res-∪ˡ-disjointʳ {m} {m′} {X} disj = ⊆₁ , ⊆₂
+    where
+      ⊆₁ : ((m ∪ˡ m′) ∣ X) ˢ ⊆ (m ∣ X) ˢ
+      ⊆₁ h = let (aX , ab∈) = Equivalence.from ∈-filter h
+             in case ∈-∪ˡ⁻ {m} {m′} ab∈ of λ where
+                  (inj₁ ab∈m)        → Equivalence.to ∈-filter (aX , ab∈m)
+                  (inj₂ (_ , ab∈m′)) →
+                    ⊥-elim (disj (Equivalence.to dom∈ (-, ab∈m′)) aX)
+      ⊆₂ : (m ∣ X) ˢ ⊆ ((m ∪ˡ m′) ∣ X) ˢ
+      ⊆₂ h = let (aX , ab∈m) = Equivalence.from ∈-filter h
+             in Equivalence.to ∈-filter (aX , ∈-∪ˡ⁺ {m} {m′} (inj₁ ab∈m))
+
+  -- Removing keys disjoint from `X` does not affect `_∣ X`.
+  resᶜ-res-disjoint : {m : A ⇀ B} {R X : ℙ A} → disjoint R X
+    → (((m ∣ R ᶜ) ∣ X) ˢ) ≡ᵉ ((m ∣ X) ˢ)
+  resᶜ-res-disjoint {m} {R} {X} disj = ⊆₁ , ⊆₂
+    where
+      ⊆₁ : ((m ∣ R ᶜ) ∣ X) ˢ ⊆ (m ∣ X) ˢ
+      ⊆₁ h = let (aX , ab∈r)  = Equivalence.from ∈-filter h
+                 (a∉R , ab∈m) = Equivalence.from ∈-filter ab∈r
+             in Equivalence.to ∈-filter (aX , ab∈m)
+      ⊆₂ : (m ∣ X) ˢ ⊆ ((m ∣ R ᶜ) ∣ X) ˢ
+      ⊆₂ h = let (aX , ab∈m) = Equivalence.from ∈-filter h
+             in Equivalence.to ∈-filter
+                  (aX , Equivalence.to ∈-filter ((λ aR → disj aR aX) , ab∈m))
+
 ```
 
 ## Generic congruences
@@ -451,6 +510,14 @@ module _ {X : Type} where
   scalarᶠ≡ : ∀ {g} a l → scalarᶠ g a l ≡ a + Σg g l
   scalarᶠ≡     a []       = sym (+-identityʳ a)
   scalarᶠ≡ {g} a (t ∷ ts) = trans (scalarᶠ≡ (a + g t) ts) (+-assoc a (g t) (Σg g ts))
+
+  -- `scalarᶠ` only depends on the pointwise values of `g` on the list.
+  scalarᶠ-ext : ∀ {g h : X → ℕ} a {l} → Allᴸ.All (λ x → g x ≡ h x) l
+    → scalarᶠ g a l ≡ scalarᶠ h a l
+  scalarᶠ-ext a Allᴸ.[] = refl
+  scalarᶠ-ext {g} {h} a {l = t ∷ ts} (e Allᴸ.∷ es) =
+    trans (scalarᶠ-ext (a + g t) es) (cong (λ n → scalarᶠ h (a + n) ts) e)
+
 
   Σg-↭ : ∀ {g} {l₁ l₂} → l₁ ↭ l₂ → Σg g l₁ ≡ Σg g l₂
   Σg-↭ ↭-rfl                              = refl

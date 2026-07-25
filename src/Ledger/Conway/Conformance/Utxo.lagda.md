@@ -92,7 +92,7 @@ data _⊢_⇀⦇_,UTXO⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Type
         txOutsʰ = (mapValues txOutHash txOuts)
         overhead = 160
     in
-    ∙ txIns ≢ ∅                              ∙ txIns ∪ refInputs ⊆ dom utxo
+    ∙ txIns ≢ ∅                              ∙ txIns ∪ refInputs ∪ collateralInputs ⊆ dom utxo
     ∙ txIns ∩ refInputs ≡ ∅                  ∙ L.inInterval slot txVldt
     ∙ L.minfee pp utxo tx ≤ txFee            ∙ (txrdmrs ˢ ≢ ∅ → L.collateralCheck pp tx utxo)
     ∙ consumed pp s txb ≡ produced pp s txb  ∙ coin mint ≡ 0
