@@ -539,7 +539,7 @@ data _⊢_⇀⦇_,UTXOS⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Typ
          ps'             = processTxTiers tier txsize (refScriptsSize utxo tx) (totExUnits tx) policyState
          base            = minfee pp utxo tx
          -- the fee is charged/refunded on the tier the tx ACTUALLY landed in
-         -- (actualTier: EB ⇒ regular, RB ⇒ priority), while the admission gate (tierFeeCheck)
+         -- (actualTier: EB ⇒ standard, RB ⇒ priority), while the admission gate (tierFeeCheck)
          -- is on the CLAIMED tier (tier.tierCoeff). actualCoeff assumes ≥ 1 for value
          -- preservation (guaranteed by updateTiers; see Tiers).
          actualCoeff     = M.fromMaybe 1 (M.map PolicyClause.coeffRange
@@ -617,7 +617,7 @@ data _⊢_⇀⦇_,UTXO⦈_ where
     -- a tx may be placed in its claimed tier or a LOWER-PRIORITY one (never a
     -- higher-priority one than it paid the gate for): actualTier is of no higher
     -- priority than the claimed tier, so its coefficient is no larger.
-    -- (priorityTier = 0 < regularTier = 1, priorityCoeff ≥ regularCoeff.)
+    -- (priorityTier = 0 < standardTier = 1, priorityCoeff ≥ standardCoeff.)
     ∙ tier .TxTier.tierNo ≤ actualTier
     ∙ coeffR ≤ tier .TxTier.tierCoeff
     ∙ (txrdmrs ˢ ≢ ∅ → collateralCheck pp tx utxo)

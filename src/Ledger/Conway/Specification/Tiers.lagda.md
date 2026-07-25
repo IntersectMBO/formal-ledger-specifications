@@ -2,11 +2,11 @@
 
 This module and the changes it depends on are additions on top of the upstream
 `master` formal-ledger-specifications. They introduce a two-tier, block-type-aware
-fee/diversity scheme (priority tier = 0, regular tier = 1; Endorser Blocks vs Ranking
+fee/diversity scheme (priority tier = 0, standard tier = 1; Endorser Blocks vs Ranking
 Blocks). The changes made relative to the `master` starting point are, per file:
 
 - **Transaction** (`Transaction.lagda.md`) — new tier primitives: `TierNo`,
-  `priorityTier`/`regularTier`, `TierCoeff`, `WaitTime`, `BlockType` (`EB`/`RB`) and the
+  `priorityTier`/`standardTier`, `TierCoeff`, `WaitTime`, `BlockType` (`EB`/`RB`) and the
   `TxTier` record (`tierNo`, `tierCoeff`). `TxBody` gains `tier : TxTier` and
   `feeChangeAddr : Maybe RewardAddress`; `Tx` gains `actualTier : TierNo` (the tier
   the tx is actually placed in, ≤ `body.tier.tierNo`).
@@ -39,7 +39,7 @@ Blocks). The changes made relative to the `master` starting point are, per file:
   `underHalfRB`, which measures the same EB body against the same `ebFloor` — so an EB is
   suppressed there iff rejected here (measurement gap closed). NOTE the "small in every
   dimension" quantifier is probably up for discussion. `ebFloor` (the fullness *floor*,
-  lower bound) is distinct from the CIP-164 per-EB *capacity* (`regularCap`/`S_EB`, upper
+  lower bound) is distinct from the CIP-164 per-EB *capacity* (`standardCap`/`S_EB`, upper
   bound), which the ledger does **not** yet enforce — TODO.
 
 - **UTxO** (`Utxo.lagda.md`) — `UTxOEnv` gains `blockType`; `UTxOState` gains
@@ -50,11 +50,11 @@ Blocks). The changes made relative to the `master` starting point are, per file:
       `tier.tierCoeff` — `tier.tierCoeff · minfee ≤ txFee`;
     * the fee pot always keeps exactly `minfee`;
     * with `actualCoeff = coeffRange(dp[actualTier])` (the tier the tx actually landed
-      in — EB ⇒ regular, RB ⇒ priority): *with* a `feeChangeAddr`, the treasury gets the
+      in — EB ⇒ standard, RB ⇒ priority): *with* a `feeChangeAddr`, the treasury gets the
       actual-tier premium `(actualCoeff − 1)·minfee` and `txFee − actualCoeff·minfee` is
       refunded to the address; *without* one, the whole `txFee − minfee` goes to the
       treasury (no actual-tier discount — the excess is forfeited).
-  So a priority-claimed tx bumped into an EB is charged the *regular* fee only if it names a
+  So a priority-claimed tx bumped into an EB is charged the *standard* fee only if it names a
   change address. The split always sums to `txFee`, so `produced` need only account the
   full `txFee` and no longer depends on `BlockType`. In the `Scripts-No` case (script
   validation fails) the collateral is collected **in full** into the fee pot
@@ -76,10 +76,10 @@ Blocks). The changes made relative to the `master` starting point are, per file:
   the treasury.
 
   Placement premises: a tx may land in its claimed tier or a *lower-priority* one (a
-  priority tx can be bumped into an EB, where it is charged the cheaper regular fee and
+  priority tx can be bumped into an EB, where it is charged the cheaper standard fee and
   so gets more refunded), never a higher-priority one. Encoded in `UTXO-inductive` as
-  `tier.tierNo ≤ actualTier` and `coeffR ≤ tier.tierCoeff` (with `priority = 0 < regular = 1`,
-  `priorityCoeff ≥ regularCoeff`). This also keeps the actual-tier refund `txFee − actualCoeff·minfee`
+  `tier.tierNo ≤ actualTier` and `coeffR ≤ tier.tierCoeff` (with `priority = 0 < standard = 1`,
+  `priorityCoeff ≥ standardCoeff`). This also keeps the actual-tier refund `txFee − actualCoeff·minfee`
   non-negative, since `actualCoeff ≤ tier.tierCoeff` and the gate gives
   `tier.tierCoeff·minfee ≤ txFee`.
 
@@ -126,7 +126,7 @@ private
   εᵉ : ExUnits
   εᵉ = Monoid.ε (ExUnit-CommutativeMonoid .CommutativeMonoid.monoid)
 
--- Definition 2 (Diversity policy clause). Fixed 2 tiers: priorityTier (0) and regularTier (1).
+-- Definition 2 (Diversity policy clause). Fixed 2 tiers: priorityTier (0) and standardTier (1).
 record PolicyClause : Type where
   constructor ⟦_⟧ᵖᶜ
   field
@@ -134,7 +134,7 @@ record PolicyClause : Type where
     -- blockPercentageExUnits : ExUnits  -- ExUnits allocation for this tier (use pp.maxBlockExUnits instead)
     coeffRange             : ℕ        -- price/delay ratio constraint (γᵢ in paper)
 
--- tier number (priorityTier=0, regularTier=1) → PolicyClause
+-- tier number (priorityTier=0, standardTier=1) → PolicyClause
 DiversityPolicy = TierNo ⇀ PolicyClause
 
 record SDPolicy : Type where
@@ -149,7 +149,7 @@ record SDPolicy : Type where
 -- `underHalfRB` rule (MempoolLeiosPricing.lagda.md in ouroboros-consensus): tx-body
 -- byte size, reference-script byte size, and ExUnits (the ≥ᵉ comparison covers both
 -- the mem and CPU ExUnits dimensions pointwise).
---  * RB blocks: the regular tier (1) must fit within the RB limits, i.e. its totalSize /
+--  * RB blocks: the standard tier (1) must fit within the RB limits, i.e. its totalSize /
 --    totalRefScriptSize / totalExUnits must not exceed pp.maxBlockSize /
 --    pp.maxRefScriptSizePerBlock / pp.maxBlockExUnits.
 --  * EB blocks: an endorser block is rejected only when it is below the fullness floor
@@ -166,22 +166,22 @@ record SDPolicy : Type where
 --    probably up for discussion — the alternative is requiring ≥ `ebFloor` in every
 --    dimension (a conjunction).
 --    (`ebFloor` is the fullness *floor*; distinct from the CIP-164 per-EB *capacity*
---    (`regularCap`/`S_EB`, an upper bound) which the ledger does not yet enforce — TODO.)
+--    (`standardCap`/`S_EB`, an upper bound) which the ledger does not yet enforce — TODO.)
 sdChecks : PParams → SDPolicy → BlockType → Set
 sdChecks pp sd EB =
   let szTot = M.fromMaybe 0   (lookupᵐ? (sd .SDPolicy.totalSize)          priorityTier)
-            + M.fromMaybe 0   (lookupᵐ? (sd .SDPolicy.totalSize)          regularTier)
+            + M.fromMaybe 0   (lookupᵐ? (sd .SDPolicy.totalSize)          standardTier)
       rsTot = M.fromMaybe 0   (lookupᵐ? (sd .SDPolicy.totalRefScriptSize) priorityTier)
-            + M.fromMaybe 0   (lookupᵐ? (sd .SDPolicy.totalRefScriptSize) regularTier)
+            + M.fromMaybe 0   (lookupᵐ? (sd .SDPolicy.totalRefScriptSize) standardTier)
       euTot = M.fromMaybe εᵉ  (lookupᵐ? (sd .SDPolicy.totalExUnits)       priorityTier)
-            ◇ M.fromMaybe εᵉ  (lookupᵐ? (sd .SDPolicy.totalExUnits)       regularTier)
+            ◇ M.fromMaybe εᵉ  (lookupᵐ? (sd .SDPolicy.totalExUnits)       standardTier)
   in (pp .PParams.maxBlockSize             ≤ 2 * szTot)
    ⊎ (pp .PParams.maxRefScriptSizePerBlock ≤ 2 * rsTot)
    ⊎ ((euTot ◇ euTot) ≥ᵉ pp .PParams.maxBlockExUnits)
 sdChecks pp sd RB =
-  let sz = M.fromMaybe 0   (lookupᵐ? (sd .SDPolicy.totalSize)          regularTier)
-      rs = M.fromMaybe 0   (lookupᵐ? (sd .SDPolicy.totalRefScriptSize) regularTier)
-      eu = M.fromMaybe εᵉ  (lookupᵐ? (sd .SDPolicy.totalExUnits)       regularTier)
+  let sz = M.fromMaybe 0   (lookupᵐ? (sd .SDPolicy.totalSize)          standardTier)
+      rs = M.fromMaybe 0   (lookupᵐ? (sd .SDPolicy.totalRefScriptSize) standardTier)
+      eu = M.fromMaybe εᵉ  (lookupᵐ? (sd .SDPolicy.totalExUnits)       standardTier)
   in sz ≤ pp .PParams.maxBlockSize
    × rs ≤ pp .PParams.maxRefScriptSizePerBlock
    × pp .PParams.maxBlockExUnits ≥ᵉ eu
@@ -199,7 +199,7 @@ private variable
   bt : BlockType
 
 -- Diversity policy update rule.
--- Checks that the current regular tier is within RB block capacity (EB blocks skip),
+-- Checks that the current standard tier is within RB block capacity (EB blocks skip),
 -- then applies updateTiers, resetting per-block stats.
 data _⊢_⇀⦇_,DIVUP⦈_ : PParams × BlockType → SDPolicy → ⊤ → SDPolicy → Type where
 

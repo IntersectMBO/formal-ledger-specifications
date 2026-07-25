@@ -146,7 +146,7 @@ record TransactionStructure : Type₁ where
   WaitTime = ℕ
   TierNo = ℕ
   priorityTier = 0
-  regularTier = 1
+  standardTier = 1
   TierCoeff = ℕ -- TODO define correctly
 
   data BlockType : Type where
