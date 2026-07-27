@@ -467,10 +467,10 @@ d_GovState_956 = erased
 -- Ledger.Dijkstra.Specification.Gov.Properties.Computational._.HasEpoch-GovEnv
 d_HasEpoch'45'GovEnv_966 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasEpoch_1718
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasEpoch_1726
 d_HasEpoch'45'GovEnv_966 ~v0 = du_HasEpoch'45'GovEnv_966
 du_HasEpoch'45'GovEnv_966 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasEpoch_1718
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasEpoch_1726
 du_HasEpoch'45'GovEnv_966
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.du_HasEpoch'45'GovEnv_2014
@@ -553,7 +553,7 @@ d_validHFAction_1046 = erased
 -- Ledger.Dijkstra.Specification.Gov.Properties.Computational._.GovEnv.certState
 d_certState_1064 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.T_GovEnv_1928 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_CertState_1400
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_CertState_1408
 d_certState_1064 v0
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.d_certState_1954
@@ -1830,9 +1830,9 @@ d_isRegistered'63'_2318 v0 v1 v2
                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1360
                                                (coe v0)))))
                                    (coe
-                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_ccHotKeys_1394
+                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_ccHotKeys_1402
                                       (coe
-                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_gState_1412
+                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_gState_1420
                                          (coe
                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.d_certState_1954
                                             (coe v1))))
@@ -1882,9 +1882,9 @@ d_isRegistered'63'_2318 v0 v1 v2
                              (coe
                                 MAlonzo.Code.Axiom.Set.Map.du__'738'_570
                                 (coe
-                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_dreps_1392
+                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_dreps_1400
                                    (coe
-                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_gState_1412
+                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_gState_1420
                                       (coe
                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.d_certState_1954
                                          (coe v1))))))))
@@ -1916,9 +1916,9 @@ d_isRegistered'63'_2318 v0 v1 v2
                              (coe
                                 MAlonzo.Code.Axiom.Set.Map.du__'738'_570
                                 (coe
-                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_pools_1374
+                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_pools_1382
                                    (coe
-                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_pState_1410
+                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_pState_1418
                                       (coe
                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.d_certState_1954
                                          (coe v1))))))))
@@ -2185,7 +2185,7 @@ d_H_2542 v0 v1 v2 v3
                   (MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.d_ppolicy_1950
                      (coe du_Γ_2332 (coe v1)))
                   (coe
-                     MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_EpochOf_1726
+                     MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_EpochOf_1734
                      (coe
                         MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.du_HasEpoch'45'GovEnv_2014)
                      (coe du_Γ_2332 (coe v1)))
@@ -2382,7 +2382,7 @@ d_computeProof_2550 v0 v1 v2 v3
                                                                                                                                                                           v43 ->
                                                                                                                                                                           v42)
                                                                                                                                                                        (coe
-                                                                                                                                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_EpochOf_1726
+                                                                                                                                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_EpochOf_1734
                                                                                                                                                                           (coe
                                                                                                                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.du_HasEpoch'45'GovEnv_2014)
                                                                                                                                                                           (coe
@@ -2401,7 +2401,7 @@ d_computeProof_2550 v0 v1 v2 v3
                                                                                                                                                                              (coe
                                                                                                                                                                                 v0)))
                                                                                                                                                                        (coe
-                                                                                                                                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_EpochOf_1726
+                                                                                                                                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_EpochOf_1734
                                                                                                                                                                           (coe
                                                                                                                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.du_HasEpoch'45'GovEnv_2014)
                                                                                                                                                                           (coe
@@ -2843,7 +2843,7 @@ d_computeProof_2550 v0 v1 v2 v3
                                                          (MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.d_ppolicy_1950
                                                             (coe du_Γ_2332 (coe v1)))
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_EpochOf_1726
+                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_EpochOf_1734
                                                             (coe
                                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.du_HasEpoch'45'GovEnv_2014)
                                                             (coe du_Γ_2332 (coe v1)))

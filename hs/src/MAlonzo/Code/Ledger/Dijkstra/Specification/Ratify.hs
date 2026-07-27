@@ -75,43 +75,43 @@ d_Pools_226 = erased
 d_StakePoolParams_246 a0 = ()
 -- Ledger.Dijkstra.Specification.Ratify._.StakePoolParams.cost
 d_cost_444 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_StakePoolParams_1252 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_StakePoolParams_1260 ->
   Integer
 d_cost_444 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_cost_1266
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_cost_1274
       (coe v0)
 -- Ledger.Dijkstra.Specification.Ratify._.StakePoolParams.margin
 d_margin_446 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_StakePoolParams_1252 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_StakePoolParams_1260 ->
   MAlonzo.Code.Data.Refinement.Base.T_Refinement_28
 d_margin_446 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_margin_1268
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_margin_1276
       (coe v0)
 -- Ledger.Dijkstra.Specification.Ratify._.StakePoolParams.owners
 d_owners_448 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_StakePoolParams_1252 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_StakePoolParams_1260 ->
   [AgdaAny]
 d_owners_448 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_owners_1264
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_owners_1272
       (coe v0)
 -- Ledger.Dijkstra.Specification.Ratify._.StakePoolParams.pledge
 d_pledge_450 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_StakePoolParams_1252 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_StakePoolParams_1260 ->
   Integer
 d_pledge_450 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_pledge_1270
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_pledge_1278
       (coe v0)
 -- Ledger.Dijkstra.Specification.Ratify._.StakePoolParams.rewardAccount
 d_rewardAccount_452 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_StakePoolParams_1252 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_StakePoolParams_1260 ->
   MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20
 d_rewardAccount_452 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_rewardAccount_1272
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_rewardAccount_1280
       (coe v0)
 -- Ledger.Dijkstra.Specification.Ratify._._⊢_⇀⦇_,ENACT⦈_
 d__'8866'_'8640''10631'_'44'ENACT'10632'__456 a0 a1 a2 a3 a4 = ()
@@ -3920,7 +3920,7 @@ du_defaultVote_2292 v0 v1 v2 v3 v4
                               MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                         (coe v1)
                         (coe
-                           MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_rewardAccount_1272
+                           MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_rewardAccount_1280
                            (coe v6))
                         (coe
                            MAlonzo.Code.Class.Decidable.Core.du_'8263''178'__102
@@ -3946,7 +3946,7 @@ du_defaultVote_2292 v0 v1 v2 v3 v4
                                        MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_292
                                        (coe v7) (coe v8)))))
                            (coe
-                              MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_rewardAccount_1272
+                              MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_rewardAccount_1280
                               (coe v6))
                            (let v7
                                   = MAlonzo.Code.Axiom.Set.d_th_1516
