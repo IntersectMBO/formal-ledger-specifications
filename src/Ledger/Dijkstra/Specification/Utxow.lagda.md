@@ -71,18 +71,6 @@ module _ (tx : TopLevelTx) where
 
 <!--
 ```agda
-private
-  IsConwayCert? : IsConwayCert ⁇¹
-  IsConwayCert? {x} .dec with x
-  ... | regdrep _ _ _ = yes tt
-  ... | deregdrep _ _ = yes tt
-  ... | ccreghot _ _  = yes tt
-  ... | delegate _ (just _) _ _ = yes tt
-  ... | delegate _ nothing  _ _ = no (λ ())
-  ... | dereg _ _ = no (λ ())
-  ... | regpool _ _ = no (λ ())
-  ... | retirepool _ _ = no (λ ())
-
 module _ {tx : TopLevelTx} where
   instance
     Dec-UsesV3Features : UsesV3Features tx ⁇
@@ -142,19 +130,21 @@ allowedLanguagesLegacy tx utxo =
   else
     fromList (PlutusV4 ∷ PlutusV3 ∷ PlutusV2 ∷ PlutusV1 ∷ [])
 
-TxOutSpendable-PlutusV1-V2 : ℙ Script → TxOut → Type
-TxOutSpendable-PlutusV1-V2 scripts txOut
-  = Maybe.All (λ s → language s ≡ PlutusV1 → HasDataHash txOut) (txOutToP2Script scripts txOut)
-    ×
-    Maybe.All (λ s → language s ≡ PlutusV2 → HasDataHash txOut ⊎ HasInlineDatum txOut)
-              (txOutToP2Script scripts txOut)
-
 allowedLanguages : Tx ℓ → UTxO → ℙ Language
 allowedLanguages tx utxo =
   if UsesBootstrapAddress utxo tx
     then ∅
   else
     fromList (PlutusV4 ∷ [])
+```
+
+```agda
+TxOutSpendable-PlutusV1-V2 : ℙ Script → TxOut → Type
+TxOutSpendable-PlutusV1-V2 scripts txOut
+  = Maybe.All (λ s → language s ≡ PlutusV1 → HasDataHash txOut) (txOutToP2Script scripts txOut)
+    ×
+    Maybe.All (λ s → language s ≡ PlutusV2 → HasDataHash txOut ⊎ HasInlineDatum txOut)
+              (txOutToP2Script scripts txOut)
 ```
 
 ## Deciding the Operation Mode {#sec:deciding-the-operation-mode}

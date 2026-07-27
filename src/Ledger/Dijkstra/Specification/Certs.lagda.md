@@ -139,6 +139,17 @@ record GovCertEnv : Type where
 
 <!--
 ```agda
+IsConwayCert? : IsConwayCert ⁇¹
+IsConwayCert? {x} .dec with x
+... | regdrep _ _ _ = yes tt
+... | deregdrep _ _ = yes tt
+... | ccreghot _ _  = yes tt
+... | delegate _ (just _) _ _ = yes tt
+... | delegate _ nothing  _ _ = no (λ ())
+... | dereg _ _ = no (λ ())
+... | regpool _ _ = no (λ ())
+... | retirepool _ _ = no (λ ())
+
 record HasDeposits (A : Type) {K : Type} : Type where
   field DepositsOf : A → K ⇀ Coin
 open HasDeposits ⦃...⦄ public
