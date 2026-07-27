@@ -302,8 +302,8 @@ attempting both.
 
 1. All needed phase-2 scripts use Plutus language V4.
 
-2. The set of required top-level guards of the top-level transaction and the
-   subtransactions appear in the set of guards at the top-level.
+2. The required top-level guards of the top-level transaction and of its
+   subtransactions must appear in the top-level guard set.
 
 3. Required top-level guards are well-formed.
 
