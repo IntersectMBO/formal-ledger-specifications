@@ -37,7 +37,8 @@ DirectDeposits = RewardAddress ⇀ Coin
 
 [CIP 159][] allows a transaction to assert that an account's balance falls within a
 given interval.  The interval is half-open: `[lb, ub)`.  Either bound may be omitted,
-but not both.  The four constructors correspond to the four cases in the CIP's CDDL
+but not both. Alternatively, the balance may be asserted exactly. The four 
+constructors correspond to the four cases in the CIP's CDDL
 `required_balance_interval` type.
 
 ```agda
