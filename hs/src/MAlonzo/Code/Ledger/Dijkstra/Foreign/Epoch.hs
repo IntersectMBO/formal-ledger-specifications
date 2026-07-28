@@ -1138,7 +1138,7 @@ d_Conv'45'EpochState_278
                            MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_feeSS_3830
                            (coe v2)))
                      (coe
-                        MAlonzo.Code.Ledger.Dijkstra.Foreign.Ledger.C_MkLedgerState_33305
+                        MAlonzo.Code.Ledger.Dijkstra.Foreign.Ledger.C_MkLedgerState_33253
                         (coe
                            MAlonzo.Code.Ledger.Dijkstra.Foreign.Utxo.C_MkUTxOState_40959
                            (coe
@@ -2556,7 +2556,7 @@ d_Conv'45'EpochState_278
                                  case coe v6 of
                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.C_'10214'_'44'_'44'_'10215''737'_3786 v7 v8 v9
                                      -> coe
-                                          MAlonzo.Code.Ledger.Dijkstra.Foreign.Ledger.C_MkLedgerState_33305
+                                          MAlonzo.Code.Ledger.Dijkstra.Foreign.Ledger.C_MkLedgerState_33253
                                           (coe
                                              MAlonzo.Code.Ledger.Dijkstra.Foreign.Utxo.C_MkUTxOState_40959
                                              (coe
@@ -2841,7 +2841,7 @@ d_Conv'45'EpochState_278
                            (coe
                               (\ v6 ->
                                  case coe v6 of
-                                   MAlonzo.Code.Ledger.Dijkstra.Foreign.Ledger.C_MkLedgerState_33305 v7 v8 v9
+                                   MAlonzo.Code.Ledger.Dijkstra.Foreign.Ledger.C_MkLedgerState_33253 v7 v8 v9
                                      -> coe
                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.C_'10214'_'44'_'44'_'10215''737'_3786
                                           (coe
@@ -4935,7 +4935,7 @@ pattern C_MkEpochState_645 a0 a1 a2 a3 a4 = MkEpochState a0 a1 a2 a3 a4
 check_MkEpochState_645 ::
   MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.T_Acnt_11713 ->
   MAlonzo.Code.Ledger.Dijkstra.Foreign.Rewards.T_Snapshots_2905 ->
-  MAlonzo.Code.Ledger.Dijkstra.Foreign.Ledger.T_LedgerState_33303 ->
+  MAlonzo.Code.Ledger.Dijkstra.Foreign.Ledger.T_LedgerState_33251 ->
   MAlonzo.Code.Ledger.Dijkstra.Foreign.Enact.T_EnactState_1621 ->
   MAlonzo.Code.Ledger.Dijkstra.Foreign.Ratify.T_RatifyState_11881 ->
   T_EpochState_643

@@ -5788,7 +5788,7 @@ d_Conv'45'SubEntitiesEnv_104
 entitiesStep ::
   T_EntitiesEnv_215 ->
   MAlonzo.Code.Ledger.Dijkstra.Foreign.Cert.T_CertState_41 ->
-  MAlonzo.Code.Ledger.Dijkstra.Foreign.Transaction.T_TxTop_243905 ->
+  MAlonzo.Code.Ledger.Dijkstra.Foreign.Transaction.T_TxTop_243083 ->
   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.T_HSComputationResult_110
     MAlonzo.Code.Agda.Builtin.String.T_String_6
     MAlonzo.Code.Ledger.Dijkstra.Foreign.Cert.T_CertState_41
@@ -5796,7 +5796,7 @@ entitiesStep = coe d_entities'45'step_106
 d_entities'45'step_106 ::
   T_EntitiesEnv_215 ->
   MAlonzo.Code.Ledger.Dijkstra.Foreign.Cert.T_CertState_41 ->
-  MAlonzo.Code.Ledger.Dijkstra.Foreign.Transaction.T_TxTop_243905 ->
+  MAlonzo.Code.Ledger.Dijkstra.Foreign.Transaction.T_TxTop_243083 ->
   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.T_HSComputationResult_110
     MAlonzo.Code.Agda.Builtin.String.T_String_6
     MAlonzo.Code.Ledger.Dijkstra.Foreign.Cert.T_CertState_41
@@ -5810,7 +5810,7 @@ d_entities'45'step_106 v0
          (coe
             MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'Fun_34
             (coe
-               MAlonzo.Code.Ledger.Dijkstra.Foreign.Transaction.d_Conv'45'TxTop''''_556)
+               MAlonzo.Code.Ledger.Dijkstra.Foreign.Transaction.d_Conv'45'Tx'45'TxLevelTop_542)
             (coe
                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.du_Conv'45'HSComputationResult_134
                (coe MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvString_12)
@@ -5831,7 +5831,7 @@ d_entities'45'step_106 v0
 subentitiesStep ::
   T_SubEntitiesEnv_3781 ->
   MAlonzo.Code.Ledger.Dijkstra.Foreign.Cert.T_CertState_41 ->
-  MAlonzo.Code.Ledger.Dijkstra.Foreign.Transaction.T_TxSub_113173 ->
+  MAlonzo.Code.Ledger.Dijkstra.Foreign.Transaction.T_TxSub_113195 ->
   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.T_HSComputationResult_110
     MAlonzo.Code.Agda.Builtin.String.T_String_6
     MAlonzo.Code.Ledger.Dijkstra.Foreign.Cert.T_CertState_41
@@ -5839,7 +5839,7 @@ subentitiesStep = coe d_subentities'45'step_108
 d_subentities'45'step_108 ::
   T_SubEntitiesEnv_3781 ->
   MAlonzo.Code.Ledger.Dijkstra.Foreign.Cert.T_CertState_41 ->
-  MAlonzo.Code.Ledger.Dijkstra.Foreign.Transaction.T_TxSub_113173 ->
+  MAlonzo.Code.Ledger.Dijkstra.Foreign.Transaction.T_TxSub_113195 ->
   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.T_HSComputationResult_110
     MAlonzo.Code.Agda.Builtin.String.T_String_6
     MAlonzo.Code.Ledger.Dijkstra.Foreign.Cert.T_CertState_41
@@ -5853,7 +5853,7 @@ d_subentities'45'step_108 v0
          (coe
             MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'Fun_34
             (coe
-               MAlonzo.Code.Ledger.Dijkstra.Foreign.Transaction.d_Conv'45'TxSub''''_282)
+               MAlonzo.Code.Ledger.Dijkstra.Foreign.Transaction.d_Conv'45'Tx'45'TxLevelSub_272)
             (coe
                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.du_Conv'45'HSComputationResult_134
                (coe MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvString_12)

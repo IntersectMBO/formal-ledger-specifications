@@ -6492,14 +6492,14 @@ d_Conv'45'UTxOState_282
 utxoStep ::
   T_UTxOEnv_885 ->
   T_UTxOState_40957 ->
-  MAlonzo.Code.Ledger.Dijkstra.Foreign.Transaction.T_TxTop_243905 ->
+  MAlonzo.Code.Ledger.Dijkstra.Foreign.Transaction.T_TxTop_243083 ->
   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.T_HSComputationResult_110
     MAlonzo.Code.Agda.Builtin.String.T_String_6 T_UTxOState_40957
 utxoStep = coe d_utxo'45'step_284
 d_utxo'45'step_284 ::
   T_UTxOEnv_885 ->
   T_UTxOState_40957 ->
-  MAlonzo.Code.Ledger.Dijkstra.Foreign.Transaction.T_TxTop_243905 ->
+  MAlonzo.Code.Ledger.Dijkstra.Foreign.Transaction.T_TxTop_243083 ->
   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.T_HSComputationResult_110
     MAlonzo.Code.Agda.Builtin.String.T_String_6 T_UTxOState_40957
 d_utxo'45'step_284 v0
@@ -6511,7 +6511,7 @@ d_utxo'45'step_284 v0
          (coe
             MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'Fun_34
             (coe
-               MAlonzo.Code.Ledger.Dijkstra.Foreign.Transaction.d_Conv'45'TxTop''''_556)
+               MAlonzo.Code.Ledger.Dijkstra.Foreign.Transaction.d_Conv'45'Tx'45'TxLevelTop_542)
             (coe
                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.du_Conv'45'HSComputationResult_134
                (coe MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvString_12)
@@ -6535,14 +6535,14 @@ d_utxo'45'step_284 v0
 utxowStep ::
   T_UTxOEnv_885 ->
   T_UTxOState_40957 ->
-  MAlonzo.Code.Ledger.Dijkstra.Foreign.Transaction.T_TxTop_243905 ->
+  MAlonzo.Code.Ledger.Dijkstra.Foreign.Transaction.T_TxTop_243083 ->
   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.T_HSComputationResult_110
     MAlonzo.Code.Agda.Builtin.String.T_String_6 T_UTxOState_40957
 utxowStep = coe d_utxow'45'step_286
 d_utxow'45'step_286 ::
   T_UTxOEnv_885 ->
   T_UTxOState_40957 ->
-  MAlonzo.Code.Ledger.Dijkstra.Foreign.Transaction.T_TxTop_243905 ->
+  MAlonzo.Code.Ledger.Dijkstra.Foreign.Transaction.T_TxTop_243083 ->
   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.T_HSComputationResult_110
     MAlonzo.Code.Agda.Builtin.String.T_String_6 T_UTxOState_40957
 d_utxow'45'step_286 v0
@@ -6554,7 +6554,7 @@ d_utxow'45'step_286 v0
          (coe
             MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'Fun_34
             (coe
-               MAlonzo.Code.Ledger.Dijkstra.Foreign.Transaction.d_Conv'45'TxTop''''_556)
+               MAlonzo.Code.Ledger.Dijkstra.Foreign.Transaction.d_Conv'45'Tx'45'TxLevelTop_542)
             (coe
                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.du_Conv'45'HSComputationResult_134
                (coe MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvString_12)
