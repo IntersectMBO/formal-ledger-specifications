@@ -151,7 +151,7 @@ allowedLanguagesLegacy tx utxo =
 
     usesV3Features = UsesV3Features tx
 
-    usesV2Features = ∃[ o ∈ os ] HasInlineDatum o
+    usesV2Features = UsesV2Features tx utxo
 
 allowedLanguages : Tx ℓ → UTxO → ℙ Language
 allowedLanguages tx utxo =
