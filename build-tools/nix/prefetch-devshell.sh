@@ -18,7 +18,11 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
 cd "$REPO_ROOT"
 
-export NIX_CONFIG="experimental-features = nix-command flakes"
+# Enable flakes, *preserving* any NIX_CONFIG the environment already set
+# (e.g. `build-users-group =` / `sandbox = false` for a root single-user
+# install, or extra substituters).
+export NIX_CONFIG="experimental-features = nix-command flakes${NIX_CONFIG:+
+$NIX_CONFIG}"
 
 if ! command -v nix >/dev/null 2>&1; then
   echo "prefetch-devshell: 'nix' not found on PATH; nothing to do." >&2
@@ -35,7 +39,13 @@ echo "prefetch-devshell: realising dev shell into the store (gc-root: $GCROOT_DI
 
 # `--profile` doubles as a persistent gc-root. `--command true` builds the
 # shell environment and exits without dropping into an interactive shell.
-nix develop --profile "$GCROOT_DIR" --command true
+#
+# The flake is referenced as `path:` rather than the (default) git fetcher:
+# Claude Code web clones are *shallow*, and Nix's git fetcher fails on
+# shallow repositories while walking parent commits ("object not found").
+# The `path:` fetcher hashes the working tree directly and needs no git
+# history at all.
+nix develop --profile "$GCROOT_DIR" "path:$REPO_ROOT" --command true
 
 echo "prefetch-devshell: done. Verifying Agda is available:"
-nix develop --profile "$GCROOT_DIR" --command agda --version
+nix develop --profile "$GCROOT_DIR" "path:$REPO_ROOT" --command agda --version

@@ -9,8 +9,12 @@
   # everything else). Plain git-over-https is served by that proxy for any
   # public repo, so `git+https` inputs resolve where `github:` inputs 403.
   # The resulting narHashes are identical to the github fetcher's.
+  #
+  # nixpkgs additionally sets `shallow=1`: when the pinned source cannot be
+  # substituted by narHash from a binary cache, a shallow fetch of the locked
+  # rev avoids cloning nixpkgs' full history.
   inputs = {
-    nixpkgs.url = "git+https://github.com/NixOs/nixpkgs";
+    nixpkgs.url = "git+https://github.com/NixOs/nixpkgs?shallow=1";
 
     flake-parts = {
       url = "git+https://github.com/hercules-ci/flake-parts";

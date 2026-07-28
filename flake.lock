@@ -88,10 +88,12 @@
         "lastModified": 1771267558,
         "narHash": "sha256-qk68yfxVN3n3KNR9uQcnfYbHf9oD1QkcSxAbcnQP80c=",
         "rev": "15051cd1652ce24da5f2e32d5e8623735d39d3b1",
+        "shallow": true,
         "type": "git",
         "url": "https://github.com/NixOs/nixpkgs"
       },
       "original": {
+        "shallow": true,
         "type": "git",
         "url": "https://github.com/NixOs/nixpkgs"
       }
