@@ -120,7 +120,7 @@ languages p2Scripts = mapˢ language p2Scripts
 allowedLanguagesLegacy : TopLevelTx → UTxO → ℙ Language
 allowedLanguagesLegacy tx utxo =
   (
-    if ¬ usesBootstrapAddr
+    if ¬ usesBootstrapAddr × SpendInputsOf tx ∩ ReferenceInputsOf tx ≡ ∅
       then ❴ PlutusV4 ❵
       else ∅
   )
@@ -155,10 +155,9 @@ allowedLanguagesLegacy tx utxo =
 
 allowedLanguages : Tx ℓ → UTxO → ℙ Language
 allowedLanguages tx utxo =
-  if UsesBootstrapAddress utxo tx
-    then ∅
-  else
-    fromList (PlutusV4 ∷ [])
+  if ¬ UsesBootstrapAddress utxo tx × SpendInputsOf tx ∩ ReferenceInputsOf tx ≡ ∅
+    then ❴ PlutusV4 ❵
+    else ∅
 ```
 
 ```agda
