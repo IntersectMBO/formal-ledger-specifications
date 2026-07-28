@@ -541,7 +541,7 @@ data _⊢_⇀⦇_,UTXO⦈_ where
         txOutsʰ   = mapValues txOutHash txOuts
         overhead  = 160
     in
-    ∙ txIns ≢ ∅                              ∙ txIns ∪ refInputs ⊆ dom utxo
+    ∙ txIns ≢ ∅                              ∙ txIns ∪ refInputs ∪ collateralInputs ⊆ dom utxo
     ∙ txIns ∩ refInputs ≡ ∅                  ∙ inInterval slot txVldt
     ∙ minfee pp utxo tx ≤ txFee              ∙ (txrdmrs ˢ ≢ ∅ → collateralCheck pp tx utxo)
     ∙ consumed pp s txb ≡ produced pp s txb  ∙ coin mint ≡ 0
