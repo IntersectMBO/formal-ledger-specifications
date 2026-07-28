@@ -22,7 +22,7 @@ import qualified MAlonzo.Code.Class.HasHsType.Core
 import qualified MAlonzo.Code.Ledger.Dijkstra.Specification.Account
 
 import GHC.Generics (Generic)
-data BalanceInterval = Both Integer Integer | Lower Integer | Upper Integer
+data BalanceInterval = Both Integer Integer | Lower Integer | Upper Integer | Exact Integer
   deriving (Show, Eq, Generic)
 -- Ledger.Dijkstra.Foreign.Account.HsTy-BalanceInterval
 d_HsTy'45'BalanceInterval_12 ::
@@ -37,27 +37,33 @@ d_Conv'45'BalanceInterval_14
       (coe
          (\ v0 ->
             case coe v0 of
-              MAlonzo.Code.Ledger.Dijkstra.Specification.Account.C_'10214'_'44'_'10630'_870 v1 v2
+              MAlonzo.Code.Ledger.Dijkstra.Specification.Account.C_'10214'_'44'_'10630'_850 v1 v2
                 -> coe C_Both_921 (coe v1) (coe v2)
-              MAlonzo.Code.Ledger.Dijkstra.Specification.Account.C_'10214'_'44''8734''10630'_872 v1
+              MAlonzo.Code.Ledger.Dijkstra.Specification.Account.C_'10214'_'44''8734''10630'_852 v1
                 -> coe C_Lower_977 (coe v1)
-              MAlonzo.Code.Ledger.Dijkstra.Specification.Account.C_'10214'0'44'_'10630'_874 v1
+              MAlonzo.Code.Ledger.Dijkstra.Specification.Account.C_'10214'0'44'_'10630'_854 v1
                 -> coe C_Upper_991 (coe v1)
+              MAlonzo.Code.Ledger.Dijkstra.Specification.Account.C_Exact_856 v1
+                -> coe C_Exact_1005 (coe v1)
               _ -> MAlonzo.RTE.mazUnreachableError))
       (coe
          (\ v0 ->
             case coe v0 of
               C_Both_921 v1 v2
                 -> coe
-                     MAlonzo.Code.Ledger.Dijkstra.Specification.Account.C_'10214'_'44'_'10630'_870
+                     MAlonzo.Code.Ledger.Dijkstra.Specification.Account.C_'10214'_'44'_'10630'_850
                      (coe v1) (coe v2)
               C_Lower_977 v1
                 -> coe
-                     MAlonzo.Code.Ledger.Dijkstra.Specification.Account.C_'10214'_'44''8734''10630'_872
+                     MAlonzo.Code.Ledger.Dijkstra.Specification.Account.C_'10214'_'44''8734''10630'_852
                      (coe v1)
               C_Upper_991 v1
                 -> coe
-                     MAlonzo.Code.Ledger.Dijkstra.Specification.Account.C_'10214'0'44'_'10630'_874
+                     MAlonzo.Code.Ledger.Dijkstra.Specification.Account.C_'10214'0'44'_'10630'_854
+                     (coe v1)
+              C_Exact_1005 v1
+                -> coe
+                     MAlonzo.Code.Ledger.Dijkstra.Specification.Account.C_Exact_856
                      (coe v1)
               _ -> MAlonzo.RTE.mazUnreachableError))
 -- Ledger.Dijkstra.Foreign.Account.BalanceInterval
@@ -66,15 +72,19 @@ type T_BalanceInterval_919 = BalanceInterval
 pattern C_Both_921 a0 a1 = Both a0 a1
 pattern C_Lower_977 a0 = Lower a0
 pattern C_Upper_991 a0 = Upper a0
+pattern C_Exact_1005 a0 = Exact a0
 check_Both_921 :: Integer -> Integer -> T_BalanceInterval_919
 check_Both_921 = Both
 check_Lower_977 :: Integer -> T_BalanceInterval_919
 check_Lower_977 = Lower
 check_Upper_991 :: Integer -> T_BalanceInterval_919
 check_Upper_991 = Upper
+check_Exact_1005 :: Integer -> T_BalanceInterval_919
+check_Exact_1005 = Exact
 cover_BalanceInterval_919 :: BalanceInterval -> ()
 cover_BalanceInterval_919 x
   = case x of
       Both _ _ -> ()
       Lower _ -> ()
       Upper _ -> ()
+      Exact _ -> ()

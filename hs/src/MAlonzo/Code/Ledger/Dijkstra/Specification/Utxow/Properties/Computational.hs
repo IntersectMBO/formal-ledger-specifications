@@ -18,267 +18,190 @@ import MAlonzo.RTE (coe, erased, AgdaAny, addInt, subInt, mulInt,
 import qualified MAlonzo.RTE
 import qualified Data.Text
 import qualified MAlonzo.Code.Agda.Builtin.Equality
-import qualified MAlonzo.Code.Agda.Builtin.List
 import qualified MAlonzo.Code.Agda.Builtin.Sigma
-import qualified MAlonzo.Code.Axiom.Set
 import qualified MAlonzo.Code.Class.Bifunctor
 import qualified MAlonzo.Code.Class.Decidable.Core
 import qualified MAlonzo.Code.Class.Functor.Core
-import qualified MAlonzo.Code.Class.IsSet
-import qualified MAlonzo.Code.Data.List.Relation.Unary.Any
 import qualified MAlonzo.Code.Data.Sum.Base
 import qualified MAlonzo.Code.Interface.ComputationalRelation
-import qualified MAlonzo.Code.Interface.TypeClasses.Hashable
-import qualified MAlonzo.Code.Ledger.Core.Specification.Address
-import qualified MAlonzo.Code.Ledger.Core.Specification.Crypto
 import qualified MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract
-import qualified MAlonzo.Code.Ledger.Dijkstra.Specification.Certs
 import qualified MAlonzo.Code.Ledger.Dijkstra.Specification.PParams
-import qualified MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base
-import qualified MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Validation
 import qualified MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction
 import qualified MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo
 import qualified MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.Properties.Computational
 import qualified MAlonzo.Code.Ledger.Dijkstra.Specification.Utxow
 import qualified MAlonzo.Code.Relation.Nullary.Decidable.Core
 import qualified MAlonzo.Code.Relation.Nullary.Reflects
-import qualified MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory
 
--- _.Hashable-Script
-d_Hashable'45'Script_628 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  MAlonzo.Code.Interface.TypeClasses.Hashable.T_Hashable_10
-d_Hashable'45'Script_628 v0
-  = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.du_Hashable'45'Script_648
-      (coe
-         MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_scriptStructure_2150
-         (coe v0))
--- _.PlutusV1
-d_PlutusV1_740 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  AgdaAny
-d_PlutusV1_740 v0
-  = let v1
-          = MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_scriptStructure_2150
-              (coe v0) in
-    coe
-      (coe
-         MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.du_PlutusV1_482
-         (coe
-            MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.d_ps_568
-            (coe v1)))
--- _.PlutusV2
-d_PlutusV2_742 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  AgdaAny
-d_PlutusV2_742 v0
-  = let v1
-          = MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_scriptStructure_2150
-              (coe v0) in
-    coe
-      (coe
-         MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.du_PlutusV2_484
-         (coe
-            MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.d_ps_568
-            (coe v1)))
--- _.PlutusV3
-d_PlutusV3_744 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  AgdaAny
-d_PlutusV3_744 v0
-  = let v1
-          = MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_scriptStructure_2150
-              (coe v0) in
-    coe
-      (coe
-         MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.du_PlutusV3_486
-         (coe
-            MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.d_ps_568
-            (coe v1)))
--- _.PlutusV4
-d_PlutusV4_746 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  AgdaAny
-d_PlutusV4_746 v0
-  = let v1
-          = MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_scriptStructure_2150
-              (coe v0) in
-    coe
-      (coe
-         MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.du_PlutusV4_488
-         (coe
-            MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.d_ps_568
-            (coe v1)))
 -- _.SubLevelTx
-d_SubLevelTx_880 ::
+d_SubLevelTx_884 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
   ()
-d_SubLevelTx_880 = erased
+d_SubLevelTx_884 = erased
 -- _.TopLevelTx
-d_TopLevelTx_900 ::
+d_TopLevelTx_904 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
   ()
-d_TopLevelTx_900 = erased
+d_TopLevelTx_904 = erased
 -- Ledger.Dijkstra.Specification.Utxow.Properties.Computational._._⊢_⇀⦇_,SUBUTXOW⦈_
-d__'8866'_'8640''10631'_'44'SUBUTXOW'10632'__2624 a0 a1 a2 a3 a4 a5
+d__'8866'_'8640''10631'_'44'SUBUTXOW'10632'__2632 a0 a1 a2 a3 a4 a5
   = ()
 -- Ledger.Dijkstra.Specification.Utxow.Properties.Computational._._⊢_⇀⦇_,UTXOW⦈_
-d__'8866'_'8640''10631'_'44'UTXOW'10632'__2626 a0 a1 a2 a3 a4 a5
+d__'8866'_'8640''10631'_'44'UTXOW'10632'__2634 a0 a1 a2 a3 a4 a5
   = ()
 -- Ledger.Dijkstra.Specification.Utxow.Properties.Computational._.SubUTxOEnv
-d_SubUTxOEnv_2796 a0 a1 = ()
+d_SubUTxOEnv_2818 a0 a1 = ()
 -- Ledger.Dijkstra.Specification.Utxow.Properties.Computational._.UTxOEnv
-d_UTxOEnv_2808 a0 a1 = ()
+d_UTxOEnv_2830 a0 a1 = ()
 -- Ledger.Dijkstra.Specification.Utxow.Properties.Computational._.UTxOState
-d_UTxOState_2812 a0 a1 = ()
+d_UTxOState_2834 a0 a1 = ()
 -- Ledger.Dijkstra.Specification.Utxow.Properties.Computational._.SubUTxOEnv.allScripts
-d_allScripts_2902 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_SubUTxOEnv_3100 ->
+d_allScripts_2928 ::
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_SubUTxOEnv_3122 ->
   [MAlonzo.Code.Data.Sum.Base.T__'8846'__30]
-d_allScripts_2902 v0
+d_allScripts_2928 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_allScripts_3126
-      (coe v0)
--- Ledger.Dijkstra.Specification.Utxow.Properties.Computational._.SubUTxOEnv.certState
-d_certState_2904 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_SubUTxOEnv_3100 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_CertState_1416
-d_certState_2904 v0
-  = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_certState_3124
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_allScripts_3144
       (coe v0)
 -- Ledger.Dijkstra.Specification.Utxow.Properties.Computational._.SubUTxOEnv.isTopLevelValid
-d_isTopLevelValid_2906 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_SubUTxOEnv_3100 ->
+d_isTopLevelValid_2930 ::
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_SubUTxOEnv_3122 ->
   Bool
-d_isTopLevelValid_2906 v0
+d_isTopLevelValid_2930 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_isTopLevelValid_3128
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_isTopLevelValid_3146
       (coe v0)
 -- Ledger.Dijkstra.Specification.Utxow.Properties.Computational._.SubUTxOEnv.pparams
-d_pparams_2908 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_SubUTxOEnv_3100 ->
+d_pparams_2932 ::
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_SubUTxOEnv_3122 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParams_312
-d_pparams_2908 v0
+d_pparams_2932 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_pparams_3118
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_pparams_3138
       (coe v0)
 -- Ledger.Dijkstra.Specification.Utxow.Properties.Computational._.SubUTxOEnv.slot
-d_slot_2910 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_SubUTxOEnv_3100 ->
+d_slot_2934 ::
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_SubUTxOEnv_3122 ->
   AgdaAny
-d_slot_2910 v0
+d_slot_2934 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_slot_3116
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_slot_3136
       (coe v0)
 -- Ledger.Dijkstra.Specification.Utxow.Properties.Computational._.SubUTxOEnv.treasury
-d_treasury_2912 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_SubUTxOEnv_3100 ->
+d_treasury_2936 ::
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_SubUTxOEnv_3122 ->
   Integer
-d_treasury_2912 v0
+d_treasury_2936 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_treasury_3120
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_treasury_3140
       (coe v0)
 -- Ledger.Dijkstra.Specification.Utxow.Properties.Computational._.SubUTxOEnv.utxo₀
-d_utxo'8320'_2914 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_SubUTxOEnv_3100 ->
+d_utxo'8320'_2938 ::
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_SubUTxOEnv_3122 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_utxo'8320'_2914 v0
+d_utxo'8320'_2938 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_utxo'8320'_3122
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_utxo'8320'_3142
       (coe v0)
 -- Ledger.Dijkstra.Specification.Utxow.Properties.Computational._.UTxOEnv.allScripts
-d_allScripts_2918 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOEnv_3072 ->
+d_allScripts_2942 ::
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOEnv_3090 ->
   [MAlonzo.Code.Data.Sum.Base.T__'8846'__30]
-d_allScripts_2918 v0
+d_allScripts_2942 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_allScripts_3096
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_allScripts_3116
       (coe v0)
--- Ledger.Dijkstra.Specification.Utxow.Properties.Computational._.UTxOEnv.certState
-d_certState_2920 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOEnv_3072 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_CertState_1416
-d_certState_2920 v0
+-- Ledger.Dijkstra.Specification.Utxow.Properties.Computational._.UTxOEnv.legacyMode
+d_legacyMode_2944 ::
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOEnv_3090 ->
+  Bool
+d_legacyMode_2944 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_certState_3094
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_legacyMode_3118
+      (coe v0)
+-- Ledger.Dijkstra.Specification.Utxow.Properties.Computational._.UTxOEnv.pools₀
+d_pools'8320'_2946 ::
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOEnv_3090 ->
+  MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_pools'8320'_2946 v0
+  = coe
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_pools'8320'_3114
       (coe v0)
 -- Ledger.Dijkstra.Specification.Utxow.Properties.Computational._.UTxOEnv.pparams
-d_pparams_2922 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOEnv_3072 ->
+d_pparams_2948 ::
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOEnv_3090 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParams_312
-d_pparams_2922 v0
+d_pparams_2948 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_pparams_3088
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_pparams_3108
       (coe v0)
 -- Ledger.Dijkstra.Specification.Utxow.Properties.Computational._.UTxOEnv.slot
-d_slot_2924 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOEnv_3072 ->
+d_slot_2950 ::
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOEnv_3090 ->
   AgdaAny
-d_slot_2924 v0
+d_slot_2950 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_slot_3086
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_slot_3106
       (coe v0)
 -- Ledger.Dijkstra.Specification.Utxow.Properties.Computational._.UTxOEnv.treasury
-d_treasury_2926 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOEnv_3072 ->
+d_treasury_2952 ::
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOEnv_3090 ->
   Integer
-d_treasury_2926 v0
+d_treasury_2952 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_treasury_3090
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_treasury_3110
       (coe v0)
 -- Ledger.Dijkstra.Specification.Utxow.Properties.Computational._.UTxOEnv.utxo₀
-d_utxo'8320'_2928 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOEnv_3072 ->
+d_utxo'8320'_2954 ::
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOEnv_3090 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_utxo'8320'_2928 v0
+d_utxo'8320'_2954 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_utxo'8320'_3092
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_utxo'8320'_3112
       (coe v0)
 -- Ledger.Dijkstra.Specification.Utxow.Properties.Computational._.UTxOState.donations
-d_donations_2932 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOState_3132 ->
+d_donations_2958 ::
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOState_3150 ->
   Integer
-d_donations_2932 v0
+d_donations_2958 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_donations_3144
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_donations_3162
       (coe v0)
 -- Ledger.Dijkstra.Specification.Utxow.Properties.Computational._.UTxOState.fees
-d_fees_2934 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOState_3132 ->
+d_fees_2960 ::
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOState_3150 ->
   Integer
-d_fees_2934 v0
+d_fees_2960 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_fees_3142
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_fees_3160
       (coe v0)
 -- Ledger.Dijkstra.Specification.Utxow.Properties.Computational._.UTxOState.utxo
-d_utxo_2936 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOState_3132 ->
+d_utxo_2962 ::
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOState_3150 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_utxo_2936 v0
+d_utxo_2962 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_utxo_3140
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_utxo_3158
       (coe v0)
 -- Ledger.Dijkstra.Specification.Utxow.Properties.Computational.Computational-SUBUTXOW
-d_Computational'45'SUBUTXOW_2956 ::
+d_Computational'45'SUBUTXOW_2982 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3098 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3114 ->
   MAlonzo.Code.Interface.ComputationalRelation.T_Computational_232
-d_Computational'45'SUBUTXOW_2956 v0 v1
+d_Computational'45'SUBUTXOW_2982 v0 v1
   = coe
       MAlonzo.Code.Interface.ComputationalRelation.C_MkComputational_412
-      (d_computeProof_3028 (coe v0) (coe v1))
+      (d_computeProof_3054 (coe v0) (coe v1))
 -- Ledger.Dijkstra.Specification.Utxow.Properties.Computational._.go.computeProof-aux
-d_computeProof'45'aux_2996 ::
+d_computeProof'45'aux_3022 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3098 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_SubUTxOEnv_3100 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOState_3132 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3662 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3114 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_SubUTxOEnv_3122 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOState_3150 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3670 ->
   MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20 ->
   MAlonzo.Code.Interface.ComputationalRelation.T_ComputationResult_34
-d_computeProof'45'aux_2996 v0 v1 v2 v3 v4 v5
+d_computeProof'45'aux_3022 v0 v1 v2 v3 v4 v5
   = case coe v5 of
       MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v6 v7
         -> if coe v6
@@ -324,7 +247,7 @@ d_computeProof'45'aux_2996 v0 v1 v2 v3 v4 v5
                                                                                                               (\ v31
                                                                                                                  v32 ->
                                                                                                                  coe
-                                                                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Utxow.C_SUBUTXOW_3270
+                                                                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Utxow.C_SUBUTXOW_3782
                                                                                                                    (coe
                                                                                                                       MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                                                                       (coe
@@ -375,7 +298,7 @@ d_computeProof'45'aux_2996 v0 v1 v2 v3 v4 v5
                                                                                                                                                           v30)
                                                                                                                                                        (coe
                                                                                                                                                           v32))))))))))))))))
-                                                                                                        (MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.Properties.Computational.d_computeProof_2922
+                                                                                                        (MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.Properties.Computational.d_computeProof_2926
                                                                                                            (coe
                                                                                                               v0)
                                                                                                            (coe
@@ -405,360 +328,352 @@ d_computeProof'45'aux_2996 v0 v1 v2 v3 v4 v5
                        (coe ("SUBUTXOW" :: Data.Text.Text)))
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Dijkstra.Specification.Utxow.Properties.Computational._.go.computeProof
-d_computeProof_3028 ::
+d_computeProof_3054 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3098 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_SubUTxOEnv_3100 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOState_3132 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3662 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3114 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_SubUTxOEnv_3122 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOState_3150 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3670 ->
   MAlonzo.Code.Interface.ComputationalRelation.T_ComputationResult_34
-d_computeProof_3028 v0 v1 v2 v3 v4
+d_computeProof_3054 v0 v1 v2 v3 v4
   = coe
-      d_computeProof'45'aux_2996 (coe v0) (coe v1) (coe v2) (coe v3)
+      d_computeProof'45'aux_3022 (coe v0) (coe v1) (coe v2) (coe v3)
       (coe v4)
       (coe
          MAlonzo.Code.Class.Decidable.Core.d_dec_16
          (coe
             MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
             (coe
-               MAlonzo.Code.Ledger.Dijkstra.Specification.Utxow.d_SUBUTXOW'45'premises_3558
+               MAlonzo.Code.Ledger.Dijkstra.Specification.Utxow.d_SUBUTXOW'45'premises_4072
                (coe v0) (coe v1) (coe v4) (coe v2))))
 -- Ledger.Dijkstra.Specification.Utxow.Properties.Computational._.go.completeness-aux
-d_completeness'45'aux_3034 ::
+d_completeness'45'aux_3060 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3098 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_SubUTxOEnv_3100 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOState_3132 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3662 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3114 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_SubUTxOEnv_3122 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOState_3150 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3670 ->
   MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOState_3132 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxow.T__'8866'_'8640''10631'_'44'SUBUTXOW'10632'__3138 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOState_3150 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxow.T__'8866'_'8640''10631'_'44'SUBUTXOW'10632'__3650 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_completeness'45'aux_3034 = erased
+d_completeness'45'aux_3060 = erased
 -- Ledger.Dijkstra.Specification.Utxow.Properties.Computational._.go.completeness
-d_completeness_3074 ::
+d_completeness_3100 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3098 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_SubUTxOEnv_3100 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOState_3132 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3662 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOState_3132 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxow.T__'8866'_'8640''10631'_'44'SUBUTXOW'10632'__3138 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3114 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_SubUTxOEnv_3122 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOState_3150 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3670 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOState_3150 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxow.T__'8866'_'8640''10631'_'44'SUBUTXOW'10632'__3650 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_completeness_3074 = erased
+d_completeness_3100 = erased
 -- Ledger.Dijkstra.Specification.Utxow.Properties.Computational.Computational-UTXOW
-d_Computational'45'UTXOW_3076 ::
+d_Computational'45'UTXOW_3102 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3098 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3114 ->
   MAlonzo.Code.Interface.ComputationalRelation.T_Computational_232
-d_Computational'45'UTXOW_3076 v0 v1
+d_Computational'45'UTXOW_3102 v0 v1
   = coe
       MAlonzo.Code.Interface.ComputationalRelation.C_MkComputational_412
-      (d_computeProof_3274 (coe v0) (coe v1))
--- Ledger.Dijkstra.Specification.Utxow.Properties.Computational._.go.V1,V2,V3∩V4⊆∅
-d_V1'44'V2'44'V3'8745'V4'8838''8709'_3110 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3098 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOEnv_3072 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOState_3132 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3662 ->
-  AgdaAny ->
-  MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34 ->
-  MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34
-d_V1'44'V2'44'V3'8745'V4'8838''8709'_3110 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5
-                                          ~v6
-  = du_V1'44'V2'44'V3'8745'V4'8838''8709'_3110
-du_V1'44'V2'44'V3'8745'V4'8838''8709'_3110 ::
-  MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34
-du_V1'44'V2'44'V3'8745'V4'8838''8709'_3110
-  = MAlonzo.RTE.mazUnreachableError
--- Ledger.Dijkstra.Specification.Utxow.Properties.Computational._.go.DecV3
-d_DecV3_3208 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3098 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOEnv_3072 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOState_3132 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3662 ->
-  ()
-d_DecV3_3208 = erased
+      (d_computeProof_3220 (coe v0) (coe v1))
 -- Ledger.Dijkstra.Specification.Utxow.Properties.Computational._.go.computeProof-aux
-d_computeProof'45'aux_3214 ::
+d_computeProof'45'aux_3146 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3098 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOEnv_3072 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOState_3132 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3662 ->
-  MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3114 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOEnv_3090 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOState_3150 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3670 ->
   MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20 ->
   MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20 ->
   MAlonzo.Code.Interface.ComputationalRelation.T_ComputationResult_34
-d_computeProof'45'aux_3214 v0 v1 v2 v3 v4 v5 v6 v7
+d_computeProof'45'aux_3146 v0 v1 v2 v3 v4 v5 v6
   = case coe v5 of
-      MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v8 v9
-        -> if coe v8
-             then coe
-                    seq (coe v9)
-                    (case coe v6 of
-                       MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v10 v11
-                         -> if coe v10
-                              then case coe v11 of
-                                     MAlonzo.Code.Relation.Nullary.Reflects.C_of'696'_22 v12
-                                       -> case coe v12 of
-                                            MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v13 v14
-                                              -> case coe v14 of
-                                                   MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v15 v16
-                                                     -> case coe v16 of
-                                                          MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v17 v18
-                                                            -> case coe v18 of
-                                                                 MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v19 v20
-                                                                   -> case coe v20 of
-                                                                        MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v21 v22
-                                                                          -> case coe v22 of
-                                                                               MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v23 v24
-                                                                                 -> case coe v24 of
-                                                                                      MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v25 v26
-                                                                                        -> case coe
-                                                                                                  v26 of
-                                                                                             MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v27 v28
-                                                                                               -> case coe
-                                                                                                         v28 of
-                                                                                                    MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v29 v30
-                                                                                                      -> case coe
-                                                                                                                v30 of
-                                                                                                           MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v31 v32
-                                                                                                             -> case coe
-                                                                                                                       v32 of
-                                                                                                                  MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v33 v34
-                                                                                                                    -> case coe
-                                                                                                                              v34 of
-                                                                                                                         MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v35 v36
-                                                                                                                           -> coe
-                                                                                                                                MAlonzo.Code.Class.Functor.Core.du_fmap_22
-                                                                                                                                (coe
-                                                                                                                                   MAlonzo.Code.Interface.ComputationalRelation.du_Functor'45'ComputationResult_138)
-                                                                                                                                ()
-                                                                                                                                erased
-                                                                                                                                ()
-                                                                                                                                erased
-                                                                                                                                (coe
-                                                                                                                                   MAlonzo.Code.Class.Bifunctor.du_map'8322''8242'_54
-                                                                                                                                   (coe
-                                                                                                                                      MAlonzo.Code.Class.Bifunctor.du_Bifunctor'45'Σ_74)
-                                                                                                                                   (coe
-                                                                                                                                      (\ v37
-                                                                                                                                         v38 ->
-                                                                                                                                         coe
-                                                                                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Utxow.C_UTXOW'45'legacy_3552
-                                                                                                                                           (coe
-                                                                                                                                              MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
-                                                                                                                                              (coe
-                                                                                                                                                 v13)
-                                                                                                                                              (coe
-                                                                                                                                                 MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
-                                                                                                                                                 (coe
-                                                                                                                                                    v15)
-                                                                                                                                                 (coe
-                                                                                                                                                    MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
-                                                                                                                                                    (coe
-                                                                                                                                                       v17)
-                                                                                                                                                    (coe
-                                                                                                                                                       MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
-                                                                                                                                                       (coe
-                                                                                                                                                          v19)
-                                                                                                                                                       (coe
-                                                                                                                                                          MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
-                                                                                                                                                          (coe
-                                                                                                                                                             v21)
-                                                                                                                                                          (coe
-                                                                                                                                                             MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
-                                                                                                                                                             (coe
-                                                                                                                                                                v23)
-                                                                                                                                                             (coe
-                                                                                                                                                                MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
-                                                                                                                                                                (coe
-                                                                                                                                                                   v25)
-                                                                                                                                                                (coe
-                                                                                                                                                                   MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
-                                                                                                                                                                   (coe
-                                                                                                                                                                      v27)
-                                                                                                                                                                   (coe
-                                                                                                                                                                      MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
-                                                                                                                                                                      (coe
-                                                                                                                                                                         v29)
-                                                                                                                                                                      (coe
-                                                                                                                                                                         MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
-                                                                                                                                                                         (coe
-                                                                                                                                                                            v31)
-                                                                                                                                                                         (coe
-                                                                                                                                                                            MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
-                                                                                                                                                                            (coe
-                                                                                                                                                                               v33)
-                                                                                                                                                                            (coe
-                                                                                                                                                                               MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
-                                                                                                                                                                               (coe
-                                                                                                                                                                                  v35)
-                                                                                                                                                                               (coe
-                                                                                                                                                                                  MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
-                                                                                                                                                                                  (coe
-                                                                                                                                                                                     v36)
-                                                                                                                                                                                  (coe
-                                                                                                                                                                                     v38)))))))))))))))))
-                                                                                                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.Properties.Computational.d_computeProof_3094
-                                                                                                                                   (coe
-                                                                                                                                      v0)
-                                                                                                                                   (coe
-                                                                                                                                      v1)
-                                                                                                                                   (coe
-                                                                                                                                      MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
-                                                                                                                                      (coe
-                                                                                                                                         v2)
-                                                                                                                                      (coe
-                                                                                                                                         v10))
-                                                                                                                                   (coe
-                                                                                                                                      v3)
-                                                                                                                                   (coe
-                                                                                                                                      v4))
-                                                                                                                         _ -> MAlonzo.RTE.mazUnreachableError
-                                                                                                                  _ -> MAlonzo.RTE.mazUnreachableError
-                                                                                                           _ -> MAlonzo.RTE.mazUnreachableError
-                                                                                                    _ -> MAlonzo.RTE.mazUnreachableError
-                                                                                             _ -> MAlonzo.RTE.mazUnreachableError
-                                                                                      _ -> MAlonzo.RTE.mazUnreachableError
-                                                                               _ -> MAlonzo.RTE.mazUnreachableError
-                                                                        _ -> MAlonzo.RTE.mazUnreachableError
-                                                                 _ -> MAlonzo.RTE.mazUnreachableError
-                                                          _ -> MAlonzo.RTE.mazUnreachableError
-                                                   _ -> MAlonzo.RTE.mazUnreachableError
-                                            _ -> MAlonzo.RTE.mazUnreachableError
-                                     _ -> MAlonzo.RTE.mazUnreachableError
-                              else coe
-                                     seq (coe v11)
-                                     (coe
-                                        MAlonzo.Code.Interface.ComputationalRelation.C_failure_44
-                                        (coe ("UTXOW" :: Data.Text.Text)))
-                       _ -> MAlonzo.RTE.mazUnreachableError)
+      MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v7 v8
+        -> if coe v7
+             then case coe v8 of
+                    MAlonzo.Code.Relation.Nullary.Reflects.C_of'696'_22 v9
+                      -> case coe v9 of
+                           MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v10 v11
+                             -> case coe v11 of
+                                  MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v12 v13
+                                    -> case coe v13 of
+                                         MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v14 v15
+                                           -> case coe v15 of
+                                                MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v16 v17
+                                                  -> case coe v17 of
+                                                       MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v18 v19
+                                                         -> case coe v19 of
+                                                              MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v20 v21
+                                                                -> case coe v21 of
+                                                                     MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v22 v23
+                                                                       -> case coe v23 of
+                                                                            MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v24 v25
+                                                                              -> case coe v25 of
+                                                                                   MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v26 v27
+                                                                                     -> case coe
+                                                                                               v27 of
+                                                                                          MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v28 v29
+                                                                                            -> case coe
+                                                                                                      v29 of
+                                                                                                 MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v30 v31
+                                                                                                   -> case coe
+                                                                                                             v31 of
+                                                                                                        MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v32 v33
+                                                                                                          -> case coe
+                                                                                                                    v33 of
+                                                                                                               MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v34 v35
+                                                                                                                 -> case coe
+                                                                                                                           v35 of
+                                                                                                                      MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v36 v37
+                                                                                                                        -> case coe
+                                                                                                                                  v37 of
+                                                                                                                             MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v38 v39
+                                                                                                                               -> coe
+                                                                                                                                    MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                                                                                                                                    (coe
+                                                                                                                                       MAlonzo.Code.Interface.ComputationalRelation.du_Functor'45'ComputationResult_138)
+                                                                                                                                    ()
+                                                                                                                                    erased
+                                                                                                                                    ()
+                                                                                                                                    erased
+                                                                                                                                    (coe
+                                                                                                                                       MAlonzo.Code.Class.Bifunctor.du_map'8322''8242'_54
+                                                                                                                                       (coe
+                                                                                                                                          MAlonzo.Code.Class.Bifunctor.du_Bifunctor'45'Σ_74)
+                                                                                                                                       (coe
+                                                                                                                                          (\ v40
+                                                                                                                                             v41 ->
+                                                                                                                                             coe
+                                                                                                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Utxow.C_UTXOW'45'legacy_4066
+                                                                                                                                               (coe
+                                                                                                                                                  MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
+                                                                                                                                                  (coe
+                                                                                                                                                     v10)
+                                                                                                                                                  (coe
+                                                                                                                                                     MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
+                                                                                                                                                     (coe
+                                                                                                                                                        v12)
+                                                                                                                                                     (coe
+                                                                                                                                                        MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
+                                                                                                                                                        (coe
+                                                                                                                                                           v14)
+                                                                                                                                                        (coe
+                                                                                                                                                           MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
+                                                                                                                                                           (coe
+                                                                                                                                                              v16)
+                                                                                                                                                           (coe
+                                                                                                                                                              MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
+                                                                                                                                                              (coe
+                                                                                                                                                                 v18)
+                                                                                                                                                              (coe
+                                                                                                                                                                 MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
+                                                                                                                                                                 (coe
+                                                                                                                                                                    v20)
+                                                                                                                                                                 (coe
+                                                                                                                                                                    MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
+                                                                                                                                                                    (coe
+                                                                                                                                                                       v22)
+                                                                                                                                                                    (coe
+                                                                                                                                                                       MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
+                                                                                                                                                                       (coe
+                                                                                                                                                                          v24)
+                                                                                                                                                                       (coe
+                                                                                                                                                                          MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
+                                                                                                                                                                          (coe
+                                                                                                                                                                             v26)
+                                                                                                                                                                          (coe
+                                                                                                                                                                             MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
+                                                                                                                                                                             (coe
+                                                                                                                                                                                v28)
+                                                                                                                                                                             (coe
+                                                                                                                                                                                MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
+                                                                                                                                                                                (coe
+                                                                                                                                                                                   v30)
+                                                                                                                                                                                (coe
+                                                                                                                                                                                   MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
+                                                                                                                                                                                   (coe
+                                                                                                                                                                                      v32)
+                                                                                                                                                                                   (coe
+                                                                                                                                                                                      MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
+                                                                                                                                                                                      (coe
+                                                                                                                                                                                         v34)
+                                                                                                                                                                                      (coe
+                                                                                                                                                                                         MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
+                                                                                                                                                                                         (coe
+                                                                                                                                                                                            v36)
+                                                                                                                                                                                         (coe
+                                                                                                                                                                                            MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
+                                                                                                                                                                                            (coe
+                                                                                                                                                                                               v38)
+                                                                                                                                                                                            (coe
+                                                                                                                                                                                               MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
+                                                                                                                                                                                               (coe
+                                                                                                                                                                                                  v39)
+                                                                                                                                                                                               (coe
+                                                                                                                                                                                                  v41))))))))))))))))))))
+                                                                                                                                    (MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.Properties.Computational.d_computeProof_3088
+                                                                                                                                       (coe
+                                                                                                                                          v0)
+                                                                                                                                       (coe
+                                                                                                                                          v1)
+                                                                                                                                       (coe
+                                                                                                                                          v2)
+                                                                                                                                       (coe
+                                                                                                                                          v3)
+                                                                                                                                       (coe
+                                                                                                                                          v4))
+                                                                                                                             _ -> MAlonzo.RTE.mazUnreachableError
+                                                                                                                      _ -> MAlonzo.RTE.mazUnreachableError
+                                                                                                               _ -> MAlonzo.RTE.mazUnreachableError
+                                                                                                        _ -> MAlonzo.RTE.mazUnreachableError
+                                                                                                 _ -> MAlonzo.RTE.mazUnreachableError
+                                                                                          _ -> MAlonzo.RTE.mazUnreachableError
+                                                                                   _ -> MAlonzo.RTE.mazUnreachableError
+                                                                            _ -> MAlonzo.RTE.mazUnreachableError
+                                                                     _ -> MAlonzo.RTE.mazUnreachableError
+                                                              _ -> MAlonzo.RTE.mazUnreachableError
+                                                       _ -> MAlonzo.RTE.mazUnreachableError
+                                                _ -> MAlonzo.RTE.mazUnreachableError
+                                         _ -> MAlonzo.RTE.mazUnreachableError
+                                  _ -> MAlonzo.RTE.mazUnreachableError
+                           _ -> MAlonzo.RTE.mazUnreachableError
+                    _ -> MAlonzo.RTE.mazUnreachableError
              else coe
-                    seq (coe v9)
-                    (case coe v7 of
-                       MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v10 v11
-                         -> if coe v10
-                              then case coe v11 of
-                                     MAlonzo.Code.Relation.Nullary.Reflects.C_of'696'_22 v12
-                                       -> case coe v12 of
-                                            MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v13 v14
-                                              -> case coe v14 of
-                                                   MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v15 v16
-                                                     -> case coe v16 of
-                                                          MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v17 v18
-                                                            -> case coe v18 of
-                                                                 MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v19 v20
-                                                                   -> case coe v20 of
-                                                                        MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v21 v22
-                                                                          -> case coe v22 of
-                                                                               MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v23 v24
-                                                                                 -> case coe v24 of
-                                                                                      MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v25 v26
+                    seq (coe v8)
+                    (case coe v6 of
+                       MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v9 v10
+                         -> if coe v9
+                              then case coe v10 of
+                                     MAlonzo.Code.Relation.Nullary.Reflects.C_of'696'_22 v11
+                                       -> case coe v11 of
+                                            MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v12 v13
+                                              -> case coe v13 of
+                                                   MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v14 v15
+                                                     -> case coe v15 of
+                                                          MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v16 v17
+                                                            -> case coe v17 of
+                                                                 MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v18 v19
+                                                                   -> case coe v19 of
+                                                                        MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v20 v21
+                                                                          -> case coe v21 of
+                                                                               MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v22 v23
+                                                                                 -> case coe v23 of
+                                                                                      MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v24 v25
                                                                                         -> case coe
-                                                                                                  v26 of
-                                                                                             MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v27 v28
+                                                                                                  v25 of
+                                                                                             MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v26 v27
                                                                                                -> case coe
-                                                                                                         v28 of
-                                                                                                    MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v29 v30
+                                                                                                         v27 of
+                                                                                                    MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v28 v29
                                                                                                       -> case coe
-                                                                                                                v30 of
-                                                                                                           MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v31 v32
+                                                                                                                v29 of
+                                                                                                           MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v30 v31
                                                                                                              -> case coe
-                                                                                                                       v32 of
-                                                                                                                  MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v33 v34
+                                                                                                                       v31 of
+                                                                                                                  MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v32 v33
                                                                                                                     -> case coe
-                                                                                                                              v34 of
-                                                                                                                         MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v35 v36
-                                                                                                                           -> coe
-                                                                                                                                MAlonzo.Code.Class.Functor.Core.du_fmap_22
-                                                                                                                                (coe
-                                                                                                                                   MAlonzo.Code.Interface.ComputationalRelation.du_Functor'45'ComputationResult_138)
-                                                                                                                                ()
-                                                                                                                                erased
-                                                                                                                                ()
-                                                                                                                                erased
-                                                                                                                                (coe
-                                                                                                                                   MAlonzo.Code.Class.Bifunctor.du_map'8322''8242'_54
-                                                                                                                                   (coe
-                                                                                                                                      MAlonzo.Code.Class.Bifunctor.du_Bifunctor'45'Σ_74)
-                                                                                                                                   (coe
-                                                                                                                                      (\ v37
-                                                                                                                                         v38 ->
-                                                                                                                                         coe
-                                                                                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Utxow.C_UTXOW'45'normal_3412
-                                                                                                                                           (coe
-                                                                                                                                              MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
+                                                                                                                              v33 of
+                                                                                                                         MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v34 v35
+                                                                                                                           -> case coe
+                                                                                                                                     v35 of
+                                                                                                                                MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v36 v37
+                                                                                                                                  -> case coe
+                                                                                                                                            v37 of
+                                                                                                                                       MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v38 v39
+                                                                                                                                         -> coe
+                                                                                                                                              MAlonzo.Code.Class.Functor.Core.du_fmap_22
                                                                                                                                               (coe
-                                                                                                                                                 v13)
+                                                                                                                                                 MAlonzo.Code.Interface.ComputationalRelation.du_Functor'45'ComputationResult_138)
+                                                                                                                                              ()
+                                                                                                                                              erased
+                                                                                                                                              ()
+                                                                                                                                              erased
                                                                                                                                               (coe
-                                                                                                                                                 MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
+                                                                                                                                                 MAlonzo.Code.Class.Bifunctor.du_map'8322''8242'_54
                                                                                                                                                  (coe
-                                                                                                                                                    v15)
+                                                                                                                                                    MAlonzo.Code.Class.Bifunctor.du_Bifunctor'45'Σ_74)
                                                                                                                                                  (coe
-                                                                                                                                                    MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
-                                                                                                                                                    (coe
-                                                                                                                                                       v17)
-                                                                                                                                                    (coe
-                                                                                                                                                       MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
-                                                                                                                                                       (coe
-                                                                                                                                                          v19)
-                                                                                                                                                       (coe
-                                                                                                                                                          MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
-                                                                                                                                                          (coe
-                                                                                                                                                             v21)
-                                                                                                                                                          (coe
-                                                                                                                                                             MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
-                                                                                                                                                             (coe
-                                                                                                                                                                v23)
-                                                                                                                                                             (coe
-                                                                                                                                                                MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
-                                                                                                                                                                (coe
-                                                                                                                                                                   v25)
-                                                                                                                                                                (coe
-                                                                                                                                                                   MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
-                                                                                                                                                                   (coe
-                                                                                                                                                                      v27)
-                                                                                                                                                                   (coe
-                                                                                                                                                                      MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
-                                                                                                                                                                      (coe
-                                                                                                                                                                         v29)
-                                                                                                                                                                      (coe
-                                                                                                                                                                         MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
-                                                                                                                                                                         (coe
-                                                                                                                                                                            v31)
-                                                                                                                                                                         (coe
-                                                                                                                                                                            MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
-                                                                                                                                                                            (coe
-                                                                                                                                                                               v33)
-                                                                                                                                                                            (coe
-                                                                                                                                                                               MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
-                                                                                                                                                                               (coe
-                                                                                                                                                                                  v35)
-                                                                                                                                                                               (coe
-                                                                                                                                                                                  MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
-                                                                                                                                                                                  (coe
-                                                                                                                                                                                     v36)
-                                                                                                                                                                                  (coe
-                                                                                                                                                                                     v38)))))))))))))))))
-                                                                                                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.Properties.Computational.d_computeProof_3094
-                                                                                                                                   (coe
-                                                                                                                                      v0)
-                                                                                                                                   (coe
-                                                                                                                                      v1)
-                                                                                                                                   (coe
-                                                                                                                                      MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
-                                                                                                                                      (coe
-                                                                                                                                         v2)
-                                                                                                                                      (coe
-                                                                                                                                         v8))
-                                                                                                                                   (coe
-                                                                                                                                      v3)
-                                                                                                                                   (coe
-                                                                                                                                      v4))
+                                                                                                                                                    (\ v40
+                                                                                                                                                       v41 ->
+                                                                                                                                                       coe
+                                                                                                                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Utxow.C_UTXOW'45'normal_3924
+                                                                                                                                                         (coe
+                                                                                                                                                            MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
+                                                                                                                                                            (coe
+                                                                                                                                                               v12)
+                                                                                                                                                            (coe
+                                                                                                                                                               MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
+                                                                                                                                                               (coe
+                                                                                                                                                                  v14)
+                                                                                                                                                               (coe
+                                                                                                                                                                  MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
+                                                                                                                                                                  (coe
+                                                                                                                                                                     v16)
+                                                                                                                                                                  (coe
+                                                                                                                                                                     MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
+                                                                                                                                                                     (coe
+                                                                                                                                                                        v18)
+                                                                                                                                                                     (coe
+                                                                                                                                                                        MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
+                                                                                                                                                                        (coe
+                                                                                                                                                                           v20)
+                                                                                                                                                                        (coe
+                                                                                                                                                                           MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
+                                                                                                                                                                           (coe
+                                                                                                                                                                              v22)
+                                                                                                                                                                           (coe
+                                                                                                                                                                              MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
+                                                                                                                                                                              (coe
+                                                                                                                                                                                 v24)
+                                                                                                                                                                              (coe
+                                                                                                                                                                                 MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
+                                                                                                                                                                                 (coe
+                                                                                                                                                                                    v26)
+                                                                                                                                                                                 (coe
+                                                                                                                                                                                    MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
+                                                                                                                                                                                    (coe
+                                                                                                                                                                                       v28)
+                                                                                                                                                                                    (coe
+                                                                                                                                                                                       MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
+                                                                                                                                                                                       (coe
+                                                                                                                                                                                          v30)
+                                                                                                                                                                                       (coe
+                                                                                                                                                                                          MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
+                                                                                                                                                                                          (coe
+                                                                                                                                                                                             v32)
+                                                                                                                                                                                          (coe
+                                                                                                                                                                                             MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
+                                                                                                                                                                                             (coe
+                                                                                                                                                                                                v34)
+                                                                                                                                                                                             (coe
+                                                                                                                                                                                                MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
+                                                                                                                                                                                                (coe
+                                                                                                                                                                                                   v36)
+                                                                                                                                                                                                (coe
+                                                                                                                                                                                                   MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
+                                                                                                                                                                                                   (coe
+                                                                                                                                                                                                      v38)
+                                                                                                                                                                                                   (coe
+                                                                                                                                                                                                      MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
+                                                                                                                                                                                                      (coe
+                                                                                                                                                                                                         v39)
+                                                                                                                                                                                                      (coe
+                                                                                                                                                                                                         v41)))))))))))))))))))
+                                                                                                                                              (MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.Properties.Computational.d_computeProof_3088
+                                                                                                                                                 (coe
+                                                                                                                                                    v0)
+                                                                                                                                                 (coe
+                                                                                                                                                    v1)
+                                                                                                                                                 (coe
+                                                                                                                                                    v2)
+                                                                                                                                                 (coe
+                                                                                                                                                    v3)
+                                                                                                                                                 (coe
+                                                                                                                                                    v4))
+                                                                                                                                       _ -> MAlonzo.RTE.mazUnreachableError
+                                                                                                                                _ -> MAlonzo.RTE.mazUnreachableError
                                                                                                                          _ -> MAlonzo.RTE.mazUnreachableError
                                                                                                                   _ -> MAlonzo.RTE.mazUnreachableError
                                                                                                            _ -> MAlonzo.RTE.mazUnreachableError
@@ -773,179 +688,59 @@ d_computeProof'45'aux_3214 v0 v1 v2 v3 v4 v5 v6 v7
                                             _ -> MAlonzo.RTE.mazUnreachableError
                                      _ -> MAlonzo.RTE.mazUnreachableError
                               else coe
-                                     seq (coe v11)
+                                     seq (coe v10)
                                      (coe
                                         MAlonzo.Code.Interface.ComputationalRelation.C_failure_44
                                         (coe ("UTXOW" :: Data.Text.Text)))
                        _ -> MAlonzo.RTE.mazUnreachableError)
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Dijkstra.Specification.Utxow.Properties.Computational._.go.computeProof
-d_computeProof_3274 ::
+d_computeProof_3220 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3098 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOEnv_3072 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOState_3132 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3662 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3114 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOEnv_3090 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOState_3150 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3670 ->
   MAlonzo.Code.Interface.ComputationalRelation.T_ComputationResult_34
-d_computeProof_3274 v0 v1 v2 v3 v4
+d_computeProof_3220 v0 v1 v2 v3 v4
   = coe
-      d_computeProof'45'aux_3214 (coe v0) (coe v1) (coe v2) (coe v3)
+      d_computeProof'45'aux_3146 (coe v0) (coe v1) (coe v2) (coe v3)
       (coe v4)
       (coe
          MAlonzo.Code.Class.Decidable.Core.d_dec_16
          (coe
-            MAlonzo.Code.Class.Decidable.Core.du_'8263''185'__74
-            (coe
-               MAlonzo.Code.Axiom.Set.d_any'63'_1666
-               MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8
-               erased erased
-               (coe
-                  MAlonzo.Code.Class.Decidable.Core.du_dec'185'_72
-                  (coe
-                     (\ v5 ->
-                        coe
-                          MAlonzo.Code.Axiom.Set.du_Dec'45''8712'_1720
-                          (coe
-                             MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8)
-                          (coe
-                             MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.d_DecEq'45'Language_466
-                             (coe
-                                MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.d_ps_568
-                                (coe
-                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_scriptStructure_2150
-                                   (coe v0))))
-                          (coe
-                             MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.d_language_516
-                             (MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.d_ps_568
-                                (coe
-                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_scriptStructure_2150
-                                   (coe v0)))
-                             v5)
-                          (coe
-                             MAlonzo.Code.Axiom.Set.du_fromList_456
-                             (coe
-                                MAlonzo.Code.Axiom.Set.d_th_1516
-                                (coe
-                                   MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
-                             (coe
-                                MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
-                                (coe
-                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.du_PlutusV1_482
-                                   (coe
-                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.d_ps_568
-                                      (coe
-                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_scriptStructure_2150
-                                         (coe v0))))
-                                (coe
-                                   MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
-                                   (coe
-                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.du_PlutusV2_484
-                                      (coe
-                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.d_ps_568
-                                         (coe
-                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_scriptStructure_2150
-                                            (coe v0))))
-                                   (coe
-                                      MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
-                                      (coe
-                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.du_PlutusV3_486
-                                         (coe
-                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.d_ps_568
-                                            (coe
-                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_scriptStructure_2150
-                                               (coe v0))))
-                                      (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))))))))
-            (coe
-               MAlonzo.Code.Axiom.Set.du_mapPartial_604
-               (MAlonzo.Code.Axiom.Set.d_th_1516
-                  (coe
-                     MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
-               (coe
-                  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.du_toP2Script_674)
-               (coe
-                  MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.du_filter'738'_1266
-                  (\ v5 ->
-                     coe
-                       MAlonzo.Code.Class.Decidable.Core.du_'8263''178'__102
-                       (coe
-                          MAlonzo.Code.Axiom.Set.d__'8712''63'__1650
-                          MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8
-                          erased
-                          (MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_210
-                             (coe
-                                MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1360
-                                (coe v0))))
-                       (coe
-                          MAlonzo.Code.Interface.TypeClasses.Hashable.d_hash_18
-                          (coe
-                             MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.du_Hashable'45'Script_648
-                             (coe
-                                MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_scriptStructure_2150
-                                (coe v0)))
-                          v5)
-                       (coe
-                          MAlonzo.Code.Class.IsSet.d_toSet_526
-                          (coe MAlonzo.Code.Class.IsSet.du_IsSet'45'Set_590)
-                          (coe
-                             MAlonzo.Code.Axiom.Set.du_mapPartial_604
-                             (MAlonzo.Code.Axiom.Set.d_th_1516
-                                (coe
-                                   MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
-                             (coe
-                                MAlonzo.Code.Ledger.Core.Specification.Address.du_isScriptObj_68)
-                             (coe
-                                MAlonzo.Code.Axiom.Set.du_map_426
-                                (MAlonzo.Code.Axiom.Set.d_th_1516
-                                   (coe
-                                      MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
-                                (\ v6 -> MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30 (coe v6))
-                                (coe
-                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Validation.du_credsNeeded_3306
-                                   (coe v0)
-                                   (coe
-                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.C_TxLevelTop_10)
-                                   (coe
-                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_utxo'8320'_3092
-                                      (coe v2))
-                                   (coe v4))))))
-                  (MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_allScripts_3096
-                     (coe v2))))))
-      (coe
-         MAlonzo.Code.Class.Decidable.Core.d_dec_16
-         (coe
             MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
             (coe
-               MAlonzo.Code.Ledger.Dijkstra.Specification.Utxow.d_UTXOW'45'legacy'45'premises_3556
+               MAlonzo.Code.Ledger.Dijkstra.Specification.Utxow.d_UTXOW'45'legacy'45'premises_4070
                (coe v0) (coe v1) (coe v4) (coe v2))))
       (coe
          MAlonzo.Code.Class.Decidable.Core.d_dec_16
          (coe
             MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
             (coe
-               MAlonzo.Code.Ledger.Dijkstra.Specification.Utxow.d_UTXOW'45'normal'45'premises_3554
+               MAlonzo.Code.Ledger.Dijkstra.Specification.Utxow.d_UTXOW'45'normal'45'premises_4068
                (coe v0) (coe v1) (coe v4) (coe v2))))
 -- Ledger.Dijkstra.Specification.Utxow.Properties.Computational._.go.completeness-aux
-d_completeness'45'aux_3284 ::
+d_completeness'45'aux_3228 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3098 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOEnv_3072 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOState_3132 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3662 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3114 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOEnv_3090 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOState_3150 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3670 ->
   MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20 ->
   MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20 ->
-  MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOState_3132 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxow.T__'8866'_'8640''10631'_'44'UTXOW'10632'__3272 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOState_3150 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxow.T__'8866'_'8640''10631'_'44'UTXOW'10632'__3784 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_completeness'45'aux_3284 = erased
+d_completeness'45'aux_3228 = erased
 -- Ledger.Dijkstra.Specification.Utxow.Properties.Computational._.go.completeness
-d_completeness_3372 ::
+d_completeness_3318 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3098 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOEnv_3072 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOState_3132 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3662 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOState_3132 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxow.T__'8866'_'8640''10631'_'44'UTXOW'10632'__3272 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3114 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOEnv_3090 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOState_3150 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3670 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOState_3150 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxow.T__'8866'_'8640''10631'_'44'UTXOW'10632'__3784 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_completeness_3372 = erased
+d_completeness_3318 = erased
