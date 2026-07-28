@@ -4,6 +4,18 @@
 
 ### WIP
 
+- Prove preservation of value for the `LEDGER` rule (`LEDGER-pov`, #1187), in new module
+  `Ledger.Properties.PoV`.  Supporting modules: `Entities.Properties.PoV`
+  (`ENTITIES-pov`, `SUBENTITIES-pov`) and `Entities.Properties.ApplyToRewardsPoV`
+  (`applyWithdrawals-pov`, `applyDirectDeposits-pov`).  The supporting UTxO, Certs, and
+  Gov facts are module parameters, to be discharged by #1186, #1210, and a future
+  `Gov.Properties.PoV`.
+- Count governance-action deposits in `getCoin LedgerState` via a new
+  `coinFromGovDeposit : GovState → Coin` (sum of `GovActionState.deposit`).  These
+  deposits live in `GovActionState.deposit`, not `GState.deposits`, so the three
+  `CertState` deposit pots alone do not account for them.
+- Make `getCoin` on `CertState` total (rewards balance plus the three deposit pots) and
+  add the `coinFromRewards`/`coinFromDeposits` projections in `Certs`.
 - Move cert-deposit helpers from `Utxo` to `Certs`.
 - Fix `updateCertDeposits`: use `foldl` (CERTS is head-first).
 - Add `HasCoin-UTxOState` and `HasCoin-LedgerState` instances; the latter sums UTxO total, rewards balance, and all three deposit fields.
