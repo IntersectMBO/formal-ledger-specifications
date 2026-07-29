@@ -725,7 +725,7 @@ d_Conv'45'HSBlock_186
                         () erased
                         (MAlonzo.Code.Class.Convertible.Core.d_to_20
                            (coe
-                              MAlonzo.Code.Ledger.Dijkstra.Foreign.Transaction.d_Conv'45'TxTop''''_556))
+                              MAlonzo.Code.Ledger.Dijkstra.Foreign.Transaction.d_Conv'45'Tx'45'TxLevelTop_542))
                         v2)
                      (coe v3) (coe v4)
               _ -> MAlonzo.RTE.mazUnreachableError))
@@ -842,7 +842,7 @@ d_Conv'45'HSBlock_186
                         () erased
                         (MAlonzo.Code.Class.Convertible.Core.d_from_22
                            (coe
-                              MAlonzo.Code.Ledger.Dijkstra.Foreign.Transaction.d_Conv'45'TxTop''''_556))
+                              MAlonzo.Code.Ledger.Dijkstra.Foreign.Transaction.d_Conv'45'Tx'45'TxLevelTop_542))
                         v2)
                      (coe v3) (coe v4)
               _ -> MAlonzo.RTE.mazUnreachableError))
@@ -1140,7 +1140,7 @@ d_Conv'45'ChainState_194
                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_epochState_4090
                                        (coe v1)))))
                            (coe
-                              MAlonzo.Code.Ledger.Dijkstra.Foreign.Ledger.C_MkLedgerState_33305
+                              MAlonzo.Code.Ledger.Dijkstra.Foreign.Ledger.C_MkLedgerState_33253
                               (coe
                                  MAlonzo.Code.Ledger.Dijkstra.Foreign.Utxo.C_MkUTxOState_40959
                                  (coe
@@ -2159,7 +2159,7 @@ d_Conv'45'ChainState_194
                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ss_4018
                                                       (coe v6))))
                                              (coe
-                                                MAlonzo.Code.Ledger.Dijkstra.Foreign.Ledger.C_MkLedgerState_33305
+                                                MAlonzo.Code.Ledger.Dijkstra.Foreign.Ledger.C_MkLedgerState_33253
                                                 (coe
                                                    MAlonzo.Code.Ledger.Dijkstra.Foreign.Utxo.C_MkUTxOState_40959
                                                    (coe
@@ -3145,7 +3145,7 @@ d_Conv'45'ChainState_194
                                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_feeSS_3836
                                                                      (coe v11)))
                                                                (coe
-                                                                  MAlonzo.Code.Ledger.Dijkstra.Foreign.Ledger.C_MkLedgerState_33305
+                                                                  MAlonzo.Code.Ledger.Dijkstra.Foreign.Ledger.C_MkLedgerState_33253
                                                                   (coe
                                                                      MAlonzo.Code.Ledger.Dijkstra.Foreign.Utxo.C_MkUTxOState_40959
                                                                      (coe
@@ -4707,7 +4707,7 @@ d_Conv'45'ChainState_194
                                                                            case coe v15 of
                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.C_'10214'_'44'_'44'_'10215''737'_3790 v16 v17 v18
                                                                                -> coe
-                                                                                    MAlonzo.Code.Ledger.Dijkstra.Foreign.Ledger.C_MkLedgerState_33305
+                                                                                    MAlonzo.Code.Ledger.Dijkstra.Foreign.Ledger.C_MkLedgerState_33253
                                                                                     (coe
                                                                                        MAlonzo.Code.Ledger.Dijkstra.Foreign.Utxo.C_MkUTxOState_40959
                                                                                        (coe
@@ -5006,7 +5006,7 @@ d_Conv'45'ChainState_194
                                                                      (coe
                                                                         (\ v15 ->
                                                                            case coe v15 of
-                                                                             MAlonzo.Code.Ledger.Dijkstra.Foreign.Ledger.C_MkLedgerState_33305 v16 v17 v18
+                                                                             MAlonzo.Code.Ledger.Dijkstra.Foreign.Ledger.C_MkLedgerState_33253 v16 v17 v18
                                                                                -> coe
                                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.C_'10214'_'44'_'44'_'10215''737'_3790
                                                                                     (coe
@@ -7300,7 +7300,7 @@ check_MkBlock_5635 ::
   T_BHeader_2553 ->
   MAlonzo.Code.Agda.Builtin.List.T_List_10
     ()
-    MAlonzo.Code.Ledger.Dijkstra.Foreign.Transaction.T_TxTop_243905 ->
+    MAlonzo.Code.Ledger.Dijkstra.Foreign.Transaction.T_TxTop_243083 ->
   Integer -> Integer -> T_Block_5633
 check_MkBlock_5635 = MkBlock
 cover_Block_5633 :: Block -> ()

@@ -1188,7 +1188,7 @@ d_Conv'45'NewEpochState_278
                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ss_4018
                                  (coe v4))))
                         (coe
-                           MAlonzo.Code.Ledger.Dijkstra.Foreign.Ledger.C_MkLedgerState_33305
+                           MAlonzo.Code.Ledger.Dijkstra.Foreign.Ledger.C_MkLedgerState_33253
                            (coe
                               MAlonzo.Code.Ledger.Dijkstra.Foreign.Utxo.C_MkUTxOState_40959
                               (coe
@@ -2146,7 +2146,7 @@ d_Conv'45'NewEpochState_278
                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_feeSS_3836
                                                 (coe v9)))
                                           (coe
-                                             MAlonzo.Code.Ledger.Dijkstra.Foreign.Ledger.C_MkLedgerState_33305
+                                             MAlonzo.Code.Ledger.Dijkstra.Foreign.Ledger.C_MkLedgerState_33253
                                              (coe
                                                 MAlonzo.Code.Ledger.Dijkstra.Foreign.Utxo.C_MkUTxOState_40959
                                                 (coe
@@ -3656,7 +3656,7 @@ d_Conv'45'NewEpochState_278
                                                       case coe v13 of
                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.C_'10214'_'44'_'44'_'10215''737'_3790 v14 v15 v16
                                                           -> coe
-                                                               MAlonzo.Code.Ledger.Dijkstra.Foreign.Ledger.C_MkLedgerState_33305
+                                                               MAlonzo.Code.Ledger.Dijkstra.Foreign.Ledger.C_MkLedgerState_33253
                                                                (coe
                                                                   MAlonzo.Code.Ledger.Dijkstra.Foreign.Utxo.C_MkUTxOState_40959
                                                                   (coe
@@ -3941,7 +3941,7 @@ d_Conv'45'NewEpochState_278
                                                 (coe
                                                    (\ v13 ->
                                                       case coe v13 of
-                                                        MAlonzo.Code.Ledger.Dijkstra.Foreign.Ledger.C_MkLedgerState_33305 v14 v15 v16
+                                                        MAlonzo.Code.Ledger.Dijkstra.Foreign.Ledger.C_MkLedgerState_33253 v14 v15 v16
                                                           -> coe
                                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.C_'10214'_'44'_'44'_'10215''737'_3790
                                                                (coe
