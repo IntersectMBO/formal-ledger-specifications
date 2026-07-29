@@ -186,7 +186,7 @@ module _
     stepS : Γ ⊢ ⟦ utxo  , fees  , deposits  , donations  ⟧ ⇀⦇ tx ,UTXOS⦈
                 ⟦ utxo' , fees' , deposits' , donations' ⟧
     stepS = case step of λ where
-      (UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ h) → h
+      (UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ h) → h
 
     pp : PParams
     pp = UTxOEnv.pparams Γ
@@ -208,13 +208,13 @@ module _
     newBal' : Γ ⊢ ⟦ utxo  , fees  , deposits  , donations  ⟧ ⇀⦇ tx ,UTXO⦈
                   ⟦ utxo' , fees' , deposits' , donations' ⟧
             → consumed pp utxoSt txb ≡ produced pp utxoSt txb
-    newBal' (UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ x _ _ _ _ _ _ _ _ _ _ _ _) = x
+    newBal' (UTXO-inductive⋯ _ _ _ _ _ _ _ _ x _ _ _ _ _ _ _ _ _ _ _ _) = x
     newBal : consumed pp utxoSt txb ≡ produced pp utxoSt txb
     newBal = newBal' step
     noMintAda' : Γ ⊢ ⟦ utxo  , fees  , deposits  , donations  ⟧ ⇀⦇ tx ,UTXO⦈
                      ⟦ utxo' , fees' , deposits' , donations' ⟧
                → coin (mint) ≡ 0
-    noMintAda' (UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ _ x _ _ _ _ _ _ _ _ _ _ _) = x
+    noMintAda' (UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ x _ _ _ _ _ _ _ _ _ _ _) = x
     noMintAda : coin mint ≡ 0
     noMintAda = noMintAda' step
     remDepTot : Coin
