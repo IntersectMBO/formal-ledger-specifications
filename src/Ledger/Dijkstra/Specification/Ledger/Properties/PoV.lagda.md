@@ -116,10 +116,12 @@ module Ledger.Dijkstra.Specification.Ledger.Properties.PoV
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
 
+open import Data.Nat.Base using () renaming (_+_ to infixl 6 _+ᴺ_)
 open import Data.Nat.Properties
   using (+-comm; +-assoc; +-0-monoid; +-identityʳ; +-cancelʳ-≡)
-open import Data.Integer using (ℤ; 0ℤ; _-_; _⊖_)
-open import Data.Integer.Properties using ([1+m]⊖[1+n]≡m⊖n) renaming (+-comm to +ℤ-comm)
+open import Data.Nat.Tactic.RingSolver using (solve-∀; solve)
+open import Data.Integer using (ℤ; _⊖_)
+open import Data.Integer.Properties using ([1+m]⊖[1+n]≡m⊖n)
 open import Data.List.Relation.Unary.Unique.Propositional using (Unique)
 
 open import Ledger.Prelude
@@ -348,10 +350,24 @@ the `left-unique` field as an unresolved meta.
 
 ## Small arithmetic helpers
 
+The pure `+`-rearrangement lemmas in this module are discharged by the reflective
+ring solver over the commutative semiring of naturals
+(`Data.Nat.Tactic.RingSolver`): `solve-∀`{.AgdaMacro} proves a closed, universally
+quantified equation outright, and the in-context `solve`{.AgdaMacro} (applied to the
+list of atoms) proves an equation whose variables are already in scope — needed
+where a lemma's trailing variables are implicit, since `solve-∀`{.AgdaMacro} only
+handles visible binders.  Only the statements remain, which keeps the equational
+chains readable.
+
+One wrinkle: the solver recognises the ring's operations *syntactically*, so the
+`Ledger.Prelude` overloaded `_+_` (a `HasAdd`{.AgdaRecord} method, which merely
+*reduces* to `Data.Nat._+_`) defeats it.  The solver-facing statements are therefore
+written with the raw natural-number addition, imported as `_+ᴺ_` — definitionally
+equal to `_+_` at `Coin`, so the lemmas discharge `_+_` goals unchanged.
+
 ```agda
-  swap-right : ∀ a b c → a + b + c ≡ a + c + b
-  swap-right a b c = trans (+-assoc a b c)
-                           (trans (cong (a +_) (+-comm b c)) (sym (+-assoc a c b)))
+  swap-right : ∀ a b c → a +ᴺ b +ᴺ c ≡ a +ᴺ c +ᴺ b
+  swap-right = solve-∀
 
   -- Per-sub-tx withdrawal and direct-deposit totals.
   wdrwl : SubLevelTx → Coin
@@ -652,20 +668,11 @@ the gov-deposit accounting).
 
 The proof uses a handful of arithmetic shuffles — `abcd-to-acdb`, the five
 `arithmetic-N` helpers, and `mid-extract`/`rearr3`/`outer-rearr` (for the gov summand)
-— all pure `+`-monoid rearrangements.  Commutative steps go through `swap-right`, so
-`solve-macro` (a *non-normalising* monoid solver) cannot discharge them directly; they
-are stated explicitly to keep the chain readable.
+— all pure `+`-rearrangements, discharged by the ring solver.
 
 ```agda
-      abcd-to-acdb : ∀ a b c d → a + b + c + d ≡ a + c + d + b
-      abcd-to-acdb a b c d = begin
-        a + b + c + d     ≡⟨ cong (_+ d) (+-assoc a b c) ⟩
-        a + (b + c) + d   ≡⟨ cong (λ x → a + x + d) (+-comm b c) ⟩
-        a + (c + b) + d   ≡⟨ cong (_+ d) (sym (+-assoc a c b)) ⟩
-        a + c + b + d     ≡⟨ +-assoc (a + c) b d ⟩
-        a + c + (b + d)   ≡⟨ cong ((a + c) +_) (+-comm b d) ⟩
-        a + c + (d + b)   ≡⟨ sym (+-assoc (a + c) d b) ⟩
-        a + c + d + b     ∎
+      abcd-to-acdb : ∀ a b c d → a +ᴺ b +ᴺ c +ᴺ d ≡ a +ᴺ c +ᴺ d +ᴺ b
+      abcd-to-acdb = solve-∀
 
       U₀ U₁ U₂ : Coin
       U₀ = getCoin (UTxOStateOf s)
@@ -709,26 +716,15 @@ are stated explicitly to keep the chain readable.
                            (SubTransactionsOf tx))
       totGov    = topGov + subGovSum
 
-      -- Pure +-monoid rearrangements for threading the gov summand.
-      mid-extract : ∀ a b c d → a + (b + d) + c ≡ a + b + c + d
-      mid-extract a b c d = trans (cong (_+ c) (sym (+-assoc a b d)))
-                                  (swap-right (a + b) d c)
+      -- Pure +-rearrangements for threading the gov summand.
+      mid-extract : ∀ a b c d → a +ᴺ (b +ᴺ d) +ᴺ c ≡ a +ᴺ b +ᴺ c +ᴺ d
+      mid-extract = solve-∀
 
-      rearr3 : ∀ a b c → a + b + c ≡ c + b + a
-      rearr3 a b c = begin
-        a + b + c   ≡⟨ swap-right a b c ⟩
-        a + c + b   ≡⟨ cong (_+ b) (+-comm a c) ⟩
-        c + a + b   ≡⟨ swap-right c a b ⟩
-        c + b + a   ∎
+      rearr3 : ∀ a b c → a +ᴺ b +ᴺ c ≡ c +ᴺ b +ᴺ a
+      rearr3 = solve-∀
 
-      outer-rearr : ∀ u a d g r → u + a + d + g + r ≡ u + r + d + g + a
-      outer-rearr u a d g r = begin
-        u + a + d + g + r   ≡⟨ swap-right (u + a + d) g r ⟩
-        u + a + d + r + g   ≡⟨ cong (_+ g) (swap-right (u + a) d r) ⟩
-        u + a + r + d + g   ≡⟨ cong (λ x → x + d + g) (swap-right u a r) ⟩
-        u + r + a + d + g   ≡⟨ cong (_+ g) (swap-right (u + r) a d) ⟩
-        u + r + d + a + g   ≡⟨ swap-right (u + r + d) a g ⟩
-        u + r + d + g + a   ∎
+      outer-rearr : ∀ u a d g r → u +ᴺ a +ᴺ d +ᴺ g +ᴺ r ≡ u +ᴺ r +ᴺ d +ᴺ g +ᴺ a
+      outer-rearr = solve-∀
 ```
 
 The "combined" `ENTITIES-pov` invocation: pre-batch `certState` + all direct deposits
@@ -868,32 +864,12 @@ The batch balance, rephrased to expose direct deposits and bring withdrawals tog
         net-arith A B G PZ NZ Pt Ps Nt Ns D0 D2 bal sf pn =
           +-cancelʳ-≡ (D0 + PZ) (A + Nt + Ns) (B + Pt + Ps + G) big
           where
-          rearr-X : (A + Nt + Ns) + (D2 + NZ) ≡ (A + NZ) + (Nt + Ns + D2)
-          rearr-X = begin
-            (A + Nt + Ns) + (D2 + NZ)   ≡˘⟨ +-assoc (A + Nt + Ns) D2 NZ ⟩
-            A + Nt + Ns + D2 + NZ        ≡⟨ swap-right (A + Nt + Ns) D2 NZ ⟩
-            A + Nt + Ns + NZ + D2        ≡⟨ cong (_+ D2) (swap-right (A + Nt) Ns NZ) ⟩
-            A + Nt + NZ + Ns + D2        ≡⟨ cong (λ w → w + Ns + D2) (swap-right A Nt NZ) ⟩
-            A + NZ + Nt + Ns + D2        ≡⟨ +-assoc (A + NZ + Nt) Ns D2 ⟩
-            A + NZ + Nt + (Ns + D2)      ≡⟨ +-assoc (A + NZ) Nt (Ns + D2) ⟩
-            A + NZ + (Nt + (Ns + D2))    ≡⟨ cong (A + NZ +_) (sym (+-assoc Nt Ns D2)) ⟩
-            (A + NZ) + (Nt + Ns + D2)    ∎
-          rearr-Y : Nt + Ns + D2 ≡ D2 + Nt + Ns
-          rearr-Y = trans (+-comm (Nt + Ns) D2) (sym (+-assoc D2 Nt Ns))
-          rearr-Z : (B + PZ + G) + (D0 + Pt + Ps) ≡ (B + Pt + Ps + G) + (D0 + PZ)
-          rearr-Z = begin
-            (B + PZ + G) + (D0 + Pt + Ps)   ≡˘⟨ +-assoc (B + PZ + G) (D0 + Pt) Ps ⟩
-            (B + PZ + G) + (D0 + Pt) + Ps    ≡˘⟨ cong (_+ Ps) (+-assoc (B + PZ + G) D0 Pt) ⟩
-            (B + PZ + G) + D0 + Pt + Ps      ≡⟨ cong (λ w → w + D0 + Pt + Ps) (swap-right B PZ G) ⟩
-            B + G + PZ + D0 + Pt + Ps        ≡⟨ cong (λ w → w + Pt + Ps) (swap-right (B + G) PZ D0) ⟩
-            B + G + D0 + PZ + Pt + Ps        ≡⟨ cong (_+ Ps) (swap-right (B + G + D0) PZ Pt) ⟩
-            B + G + D0 + Pt + PZ + Ps        ≡⟨ swap-right (B + G + D0 + Pt) PZ Ps ⟩
-            B + G + D0 + Pt + Ps + PZ        ≡⟨ cong (λ w → w + Ps + PZ) (swap-right (B + G) D0 Pt) ⟩
-            B + G + Pt + D0 + Ps + PZ        ≡⟨ cong (λ w → w + PZ) (swap-right (B + G + Pt) D0 Ps) ⟩
-            B + G + Pt + Ps + D0 + PZ        ≡⟨ cong (λ w → w + Ps + D0 + PZ) (swap-right B G Pt) ⟩
-            B + Pt + G + Ps + D0 + PZ        ≡⟨ cong (λ w → w + D0 + PZ) (swap-right (B + Pt) G Ps) ⟩
-            B + Pt + Ps + G + D0 + PZ        ≡⟨ +-assoc (B + Pt + Ps + G) D0 PZ ⟩
-            (B + Pt + Ps + G) + (D0 + PZ)    ∎
+          rearr-X : (A +ᴺ Nt +ᴺ Ns) +ᴺ (D2 +ᴺ NZ) ≡ (A +ᴺ NZ) +ᴺ (Nt +ᴺ Ns +ᴺ D2)
+          rearr-X = solve (A ∷ Nt ∷ Ns ∷ D2 ∷ NZ ∷ [])
+          rearr-Y : Nt +ᴺ Ns +ᴺ D2 ≡ D2 +ᴺ Nt +ᴺ Ns
+          rearr-Y = solve (Nt ∷ Ns ∷ D2 ∷ [])
+          rearr-Z : (B +ᴺ PZ +ᴺ G) +ᴺ (D0 +ᴺ Pt +ᴺ Ps) ≡ (B +ᴺ Pt +ᴺ Ps +ᴺ G) +ᴺ (D0 +ᴺ PZ)
+          rearr-Z = solve (B ∷ PZ ∷ G ∷ D0 ∷ Pt ∷ Ps ∷ [])
           big : (A + Nt + Ns) + (D0 + PZ) ≡ (B + Pt + Ps + G) + (D0 + PZ)
           big = begin
             (A + Nt + Ns) + (D0 + PZ)     ≡⟨ cong (A + Nt + Ns +_) sf ⟩
@@ -938,19 +914,15 @@ The batch balance, rephrased to expose direct deposits and bring withdrawals tog
         reshuffle-to-DD :
             O + F + DN + DDtop + posPart dct + (Psub + subDirectDepsCoin) + posPart dcs
           ≡ O + F + DN + (DDtop + subDirectDepsCoin) + Psub + posPart dct + posPart dcs
-        reshuffle-to-DD = begin
-          O + F + DN + DDtop + posPart dct + (Psub + subDirectDepsCoin) + posPart dcs
-            ≡⟨ cong (_+ posPart dcs) (sym (+-assoc (O + F + DN + DDtop + posPart dct) Psub subDirectDepsCoin)) ⟩
-          O + F + DN + DDtop + posPart dct + Psub + subDirectDepsCoin + posPart dcs
-            ≡⟨ cong (_+ posPart dcs) (swap-right (O + F + DN + DDtop + posPart dct) Psub subDirectDepsCoin) ⟩
-          O + F + DN + DDtop + posPart dct + subDirectDepsCoin + Psub + posPart dcs
-            ≡⟨ cong (λ x → x + Psub + posPart dcs) (swap-right (O + F + DN + DDtop) (posPart dct) subDirectDepsCoin) ⟩
-          O + F + DN + DDtop + subDirectDepsCoin + posPart dct + Psub + posPart dcs
-            ≡⟨ cong (_+ posPart dcs) (swap-right (O + F + DN + DDtop + subDirectDepsCoin) (posPart dct) Psub) ⟩
-          O + F + DN + DDtop + subDirectDepsCoin + Psub + posPart dct + posPart dcs
-            ≡⟨ cong (λ x → x + Psub + posPart dct + posPart dcs) (+-assoc (O + F + DN) DDtop subDirectDepsCoin) ⟩
-          O + F + DN + (DDtop + subDirectDepsCoin) + Psub + posPart dct + posPart dcs
-            ∎
+        reshuffle-to-DD =
+          go O F DN DDtop (posPart dct) Psub subDirectDepsCoin (posPart dcs)
+          where
+          -- `solve` matches its atoms syntactically, which the `where`-bound
+          -- abbreviations above defeat; generalise to a closed ∀-goal instead.
+          go : ∀ o f dn dd pt psub sdd pcs
+             → o +ᴺ f +ᴺ dn +ᴺ dd +ᴺ pt +ᴺ (psub +ᴺ sdd) +ᴺ pcs
+             ≡ o +ᴺ f +ᴺ dn +ᴺ (dd +ᴺ sdd) +ᴺ psub +ᴺ pt +ᴺ pcs
+          go = solve-∀
 ```
 
 The main inner chain, showing LHS + E ≡ RHS + E:
@@ -999,74 +971,32 @@ The main inner chain, showing LHS + E ≡ RHS + E:
         where
 ```
 
-The five `arithmetic-N` helpers are pure `+`-monoid rearrangements, each unfolded
-explicitly:
+The five `arithmetic-N` helpers are pure `+`-rearrangements.  Their trailing
+variables are implicit (each is determined by the goal at the call site), so they are
+discharged by the in-context `solve`{.AgdaMacro} rather than `solve-∀`{.AgdaMacro}:
 
 ```agda
         arithmetic-1 : ∀ a b c {d}{e}{f}{g}
-          → a + b + c + (d + e + f + g) ≡ a + b + c + d + e + f + g
-        arithmetic-1 a b c {d}{e}{f}{g} = begin
-          a + b + c + (d + e + f + g)  ≡˘⟨ +-assoc (a + b + c) (d + e + f) g ⟩
-          a + b + c + (d + e + f) + g  ≡˘⟨ cong (_+ g) (+-assoc (a + b + c) (d + e) f) ⟩
-          a + b + c + (d + e) + f + g  ≡˘⟨ cong (λ x → x + f + g) (+-assoc (a + b + c) d e) ⟩
-          a + b + c + d + e + f + g    ∎
+          → a +ᴺ b +ᴺ c +ᴺ (d +ᴺ e +ᴺ f +ᴺ g) ≡ a +ᴺ b +ᴺ c +ᴺ d +ᴺ e +ᴺ f +ᴺ g
+        arithmetic-1 a b c {d}{e}{f}{g} = solve (a ∷ b ∷ c ∷ d ∷ e ∷ f ∷ g ∷ [])
 
         arithmetic-2 : ∀ a b c {d}{e}{f}{g}
-          → a + b + c + d + e + f + g ≡ a + e + b + (c + f + g) + d
-        arithmetic-2 a b c {d}{e}{f}{g} = begin
-          a + b + c + d + e + f + g    ≡⟨ cong (λ x → x + f + g) (swap-right (a + b + c) d e) ⟩
-          a + b + c + e + d + f + g    ≡⟨ cong (_+ g) (swap-right (a + b + c + e) d f) ⟩
-          a + b + c + e + f + d + g    ≡⟨ swap-right (a + b + c + e + f) d g ⟩
-          a + b + c + e + f + g + d    ≡⟨ cong (λ x → x + f + g + d) (swap-right (a + b) c e) ⟩
-          a + b + e + c + f + g + d    ≡⟨ cong (λ x → x + c + f + g + d) (swap-right a b e) ⟩
-          a + e + b + c + f + g + d    ≡⟨ cong (_+ d) reassoc-middle ⟩
-          a + e + b + (c + f + g) + d  ∎
-          where
-          reassoc-middle : a + e + b + c + f + g ≡ a + e + b + (c + f + g)
-          reassoc-middle = trans (+-assoc (a + e + b + c) f g)
-                                 (trans (+-assoc (a + e + b) c (f + g))
-                                        (cong (a + e + b +_) (sym (+-assoc c f g))))
+          → a +ᴺ b +ᴺ c +ᴺ d +ᴺ e +ᴺ f +ᴺ g ≡ a +ᴺ e +ᴺ b +ᴺ (c +ᴺ f +ᴺ g) +ᴺ d
+        arithmetic-2 a b c {d}{e}{f}{g} = solve (a ∷ b ∷ c ∷ d ∷ e ∷ f ∷ g ∷ [])
 
         arithmetic-3 : ∀ a b c {d}{e}{f}{g}
-          → a + b + c + (d + e + f) + g ≡ a + (g + c + b + e + f) + d
-        arithmetic-3 a b c {d}{e}{f}{g} = begin
-          a + b + c + (d + e + f) + g  ≡˘⟨ cong (_+ g) (+-assoc (a + b + c) (d + e) f) ⟩
-          a + b + c + (d + e) + f + g  ≡˘⟨ cong (λ x → x + f + g) (+-assoc (a + b + c) d e) ⟩
-          a + b + c + d + e + f + g    ≡⟨ swap-right (a + b + c + d + e) f g ⟩
-          a + b + c + d + e + g + f    ≡⟨ cong (_+ f) (swap-right (a + b + c + d) e g) ⟩
-          a + b + c + d + g + e + f    ≡⟨ cong (λ x → x + e + f) (swap-right (a + b + c) d g) ⟩
-          a + b + c + g + d + e + f    ≡⟨ cong (λ x → x + d + e + f) (swap-right (a + b) c g) ⟩
-          a + b + g + c + d + e + f    ≡⟨ cong (λ x → x + c + d + e + f) (swap-right a b g) ⟩
-          a + g + b + c + d + e + f    ≡⟨ cong (λ x → x + d + e + f) (swap-right (a + g) b c) ⟩
-          a + g + c + b + d + e + f    ≡⟨ cong (_+ f) (swap-right (a + g + c + b) d e) ⟩
-          a + g + c + b + e + d + f    ≡⟨ swap-right (a + g + c + b + e) d f ⟩
-          a + g + c + b + e + f + d    ≡⟨ cong (λ x → x + b + e + f + d) (+-assoc a g c) ⟩
-          a + (g + c) + b + e + f + d  ≡⟨ cong (λ x → x + e + f + d) (+-assoc a (g + c) b) ⟩
-          a + (g + c + b) + e + f + d  ≡⟨ cong (λ x → x + f + d) (+-assoc a (g + c + b) e) ⟩
-          a + (g + c + b + e) + f + d  ≡⟨ cong (_+ d) (+-assoc a (g + c + b + e) f) ⟩
-          a + (g + c + b + e + f) + d  ∎
+          → a +ᴺ b +ᴺ c +ᴺ (d +ᴺ e +ᴺ f) +ᴺ g ≡ a +ᴺ (g +ᴺ c +ᴺ b +ᴺ e +ᴺ f) +ᴺ d
+        arithmetic-3 a b c {d}{e}{f}{g} = solve (a ∷ b ∷ c ∷ d ∷ e ∷ f ∷ g ∷ [])
 
         arithmetic-4 : ∀ a b c {d}{e}{f}{g}{h}{i}
-          → a + (b + c + d + e + f + g + h) + i ≡ a + b + c + d + e + f + g + h + i
-        arithmetic-4 a b c {d}{e}{f}{g}{h}{i} = cong (_+ i) $
-          begin
-          a + (b + c + d + e + f + g + h)  ≡˘⟨ +-assoc a _ h ⟩
-          a + (b + c + d + e + f + g) + h  ≡˘⟨ cong (_+ h) (+-assoc a _ g) ⟩
-          a + (b + c + d + e + f) + g + h  ≡˘⟨ cong (λ x → x + g + h) (+-assoc a _ f) ⟩
-          a + (b + c + d + e) + f + g + h  ≡˘⟨ cong (λ x → x + f + g + h) (+-assoc a _ e) ⟩
-          a + (b + c + d) + e + f + g + h  ≡˘⟨ cong (λ x → x + e + f + g + h) (+-assoc a _ d) ⟩
-          a + (b + c) + d + e + f + g + h  ≡˘⟨ cong (λ x → x + d + e + f + g + h) (+-assoc a b c) ⟩
-          a + b + c + d + e + f + g + h    ∎
+          → a +ᴺ (b +ᴺ c +ᴺ d +ᴺ e +ᴺ f +ᴺ g +ᴺ h) +ᴺ i
+          ≡ a +ᴺ b +ᴺ c +ᴺ d +ᴺ e +ᴺ f +ᴺ g +ᴺ h +ᴺ i
+        arithmetic-4 a b c {d}{e}{f}{g}{h}{i} =
+          solve (a ∷ b ∷ c ∷ d ∷ e ∷ f ∷ g ∷ h ∷ i ∷ [])
 
         arithmetic-5 : ∀ a b c {d}{e}{f}{g}
-          → a + b + c + d + e + f + g ≡ a + c + g + b + d + e + f
-        arithmetic-5 a b c {d}{e}{f}{g} = begin
-          a + b + c + d + e + f + g  ≡⟨ cong (λ x → x + d + e + f + g) (swap-right a b c) ⟩
-          a + c + b + d + e + f + g  ≡⟨ swap-right (a + c + b + d + e) f g ⟩
-          a + c + b + d + e + g + f  ≡⟨ cong (_+ f) (swap-right (a + c + b + d) e g) ⟩
-          a + c + b + d + g + e + f  ≡⟨ cong (λ x → x + e + f) (swap-right (a + c + b) d g) ⟩
-          a + c + b + g + d + e + f  ≡⟨ cong (λ x → x + d + e + f) (swap-right (a + c) b g) ⟩
-          a + c + g + b + d + e + f  ∎
+          → a +ᴺ b +ᴺ c +ᴺ d +ᴺ e +ᴺ f +ᴺ g ≡ a +ᴺ c +ᴺ g +ᴺ b +ᴺ d +ᴺ e +ᴺ f
+        arithmetic-5 a b c {d}{e}{f}{g} = solve (a ∷ b ∷ c ∷ d ∷ e ∷ f ∷ g ∷ [])
 ```
 
 Finally, `step-ii`: extract the actual equation from `LHS+E≡RHS+E` by cancelling `E`
