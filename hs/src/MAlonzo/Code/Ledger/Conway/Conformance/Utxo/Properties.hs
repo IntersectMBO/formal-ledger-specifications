@@ -1153,16 +1153,27 @@ d_computeProofH_2958 v0 v1 v2 v3 v4 v5
                                                         MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_body_3646
                                                         (coe v4)))
                                                   (coe
-                                                     MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_refInputs_3474
+                                                     MAlonzo.Code.Axiom.Set.du__'8746'__708
                                                      (coe
-                                                        MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_body_3646
-                                                        (coe v4)))))
+                                                        MAlonzo.Code.Axiom.Set.d_th_1516
+                                                        (coe
+                                                           MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                     (coe
+                                                        MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_refInputs_3474
+                                                        (coe
+                                                           MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_body_3646
+                                                           (coe v4)))
+                                                     (coe
+                                                        MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_collateralInputs_3476
+                                                        (coe
+                                                           MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_body_3646
+                                                           (coe v4))))))
                                             erased in
                                   coe
                                     (case coe v10 of
                                        MAlonzo.Code.Data.Sum.Base.C_inj'8321'_38 v11
                                          -> coe
-                                              ("\172\n(HasSubset-Set HasSubset.\8838\n (.Axiom.Set.Theory\7496.th List-Model\7496 Axiom.Set.Theory.\8746\n  .TransactionStructure.TxBody.txIns\n  (.TransactionStructure.Tx.body tx))\n (.TransactionStructure.TxBody.refInputs\n  (.TransactionStructure.Tx.body tx)))\n(Class.IsSet.dom (.Axiom.Set.Theory\7496.th List-Model\7496)\n (.Ledger.Conway.Specification.Utxo.UTxOState.utxo s))"
+                                              ("\172\n(HasSubset-Set HasSubset.\8838\n (.Axiom.Set.Theory\7496.th List-Model\7496 Axiom.Set.Theory.\8746\n  .TransactionStructure.TxBody.txIns\n  (.TransactionStructure.Tx.body tx))\n ((.Axiom.Set.Theory\7496.th List-Model\7496 Axiom.Set.Theory.\8746\n   .TransactionStructure.TxBody.refInputs\n   (.TransactionStructure.Tx.body tx))\n  (.TransactionStructure.TxBody.collateralInputs\n   (.TransactionStructure.Tx.body tx))))\n(Class.IsSet.dom (.Axiom.Set.Theory\7496.th List-Model\7496)\n (.Ledger.Conway.Specification.Utxo.UTxOState.utxo s))"
                                                ::
                                                Data.Text.Text)
                                        MAlonzo.Code.Data.Sum.Base.C_inj'8322'_42 v11
