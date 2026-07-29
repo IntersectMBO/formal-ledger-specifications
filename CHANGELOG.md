@@ -4,6 +4,18 @@
 
 ### WIP
 
+- Prove the UTxO-side preservation-of-value facts (#1186), discharging the corresponding
+  `Ledger.Properties.PoV` module parameters.  New modules: `Utxo.Properties.Base` (the
+  balance algebra — `balance-∪`, `split-balance`, `newTxid⇒disj`/`outs-disjoint`,
+  `∙-homo-Coin`, `coin-∑ˡ`), `Utxo.Properties.PoV` (the coin projection of the batch
+  balance premise `consumedBatch ≡ producedBatch` in closed form, and the mechanical
+  `getCoin` state-change equations for the valid/invalid cases), and
+  `Utxow.Properties.PoV` (`utxow-pov-invalid`, `UTXOW-V-mechanical`,
+  `UTXOW-batch-balance-coin`, `subutxow-step-coin`, each reduced to its UTXO-level
+  counterpart via `UTXOW⇒UTXO`/`SUBUTXOW⇒SUBUTXO` extractors).  `subutxow-step-coin`
+  remains conditional on two batch-threading invariants (per-sub-transaction TxId
+  freshness, and spend-input balance agreement between the running UTxO and the
+  pre-batch snapshot), deferred as module parameters of `SUBUTXOW-PoV`.
 - Prove preservation of value for the `LEDGER` rule (`LEDGER-pov`, #1187), under a
   `PoolDepositsRegistered` hypothesis on the initial state, in new module
   `Ledger.Properties.PoV`.  Supporting modules: `Entities.Properties.PoV`
