@@ -77,43 +77,43 @@ instance
         genErr  ¬p = case dec-de-morgan ¬p of λ where
           (inj₁ a) → "¬ TxBody.txIns (Tx.body tx) ≢ ∅"
           (inj₂ b) → case dec-de-morgan b of λ where
-            (inj₁ a₁) → "¬ TxBody.txIns (Tx.body tx) ⊆ dom (UTxOOf s)"
+            (inj₁ a₁) → "¬ txIns ∪ refInputs ∪ collateralInputs ⊆ dom (UTxOOf s)"
             (inj₂ b₁) → case dec-de-morgan b₁ of λ where
-                (inj₁ a₁') → "¬ refInputs ⊆ dom utxo "
+                (inj₁ a₁') → "¬ txIns ∩ refInputs ≡ ∅"
                 (inj₂ b₂') → case dec-de-morgan b₂' of λ where
                   (inj₁ a₂) → "¬ inInterval (UTxOEnv.slot Γ) (txvldt (Tx.body tx))"
                   (inj₂ b₂) → case dec-de-morgan b₂ of λ where
-                    (inj₁ a₃) → "¬ feesOK pp tx utxo"
+                    (inj₁ a₃) → "¬ minfee pp utxo tx ≤ txFee"
                     (inj₂ b₃) → case dec-de-morgan b₃ of λ where
-                        (inj₁ a₄) →
-                          let
-                            pp = PParamsOf Γ
-                            txb = TxBodyOf tx
-                            con = consumed pp s txb
-                            prod = produced pp s txb
-                            showValue = show ∘ coin
-                          in
-                            ( "¬consumed (UTxOEnv.pparams Γ) s (Tx.body tx) ≡ produced (PParamsOf Γ) s (Tx.body tx)"
-                            +ˢ "\n  consumed =\t\t" +ˢ showValue con
-                            +ˢ "\n    ins  =\t\t" +ˢ showValue (balance (UTxOOf s ∣ txb .TxBody.txIns))
-                            +ˢ "\n    mint =\t\t" +ˢ showValue (TxBody.mint txb)
-                            +ˢ "\n    depositRefunds =\t" +ˢ showValue (inject (depositRefunds pp s txb))
-                            +ˢ "\n  produced =\t\t" +ˢ showValue prod
-                            +ˢ "\n    outs =\t\t" +ˢ showValue (balance $ outs txb)
-                            +ˢ "\n    fee  =\t\t" +ˢ show (FeesOf tx)
-                            +ˢ "\n    newDeposits  =\t" +ˢ show (newDeposits pp s txb)
-                            +ˢ "\n    donation  =\t\t" +ˢ show (DonationsOf txb)
-                            )
+                        (inj₁ a₄) → "¬ (txrdmrs ˢ ≢ ∅ → collateralCheck pp tx utxo)"
                         (inj₂ b₄) → case dec-de-morgan b₄ of λ where
-                          (inj₁ a₅) → "¬ coin (TxBody.mint (Tx.body tx)) ≡ 0"
+                          (inj₁ a₅) →
+                            let
+                              pp = PParamsOf Γ
+                              txb = TxBodyOf tx
+                              con = consumed pp s txb
+                              prod = produced pp s txb
+                              showValue = show ∘ coin
+                            in
+                              ( "¬consumed (UTxOEnv.pparams Γ) s (Tx.body tx) ≡ produced (PParamsOf Γ) s (Tx.body tx)"
+                              +ˢ "\n  consumed =\t\t" +ˢ showValue con
+                              +ˢ "\n    ins  =\t\t" +ˢ showValue (balance (UTxOOf s ∣ txb .TxBody.txIns))
+                              +ˢ "\n    mint =\t\t" +ˢ showValue (TxBody.mint txb)
+                              +ˢ "\n    depositRefunds =\t" +ˢ showValue (inject (depositRefunds pp s txb))
+                              +ˢ "\n  produced =\t\t" +ˢ showValue prod
+                              +ˢ "\n    outs =\t\t" +ˢ showValue (balance $ outs txb)
+                              +ˢ "\n    fee  =\t\t" +ˢ show (FeesOf tx)
+                              +ˢ "\n    newDeposits  =\t" +ˢ show (newDeposits pp s txb)
+                              +ˢ "\n    donation  =\t\t" +ˢ show (DonationsOf txb)
+                              )
                           (inj₂ b₅) → case dec-de-morgan b₅ of λ where
-                              (inj₁ a₆) → "¬((Tx.txsize tx) Data.Nat.Base.≤ maxTxSize (UTxOEnv.pparams Γ))"
+                              (inj₁ a₆) → "¬ coin (TxBody.mint (Tx.body tx)) ≡ 0"
                               (inj₂ b₆) → case dec-de-morgan b₆ of λ where
-                                (inj₁ a₇) → "∀[ (_ , txout) ∈ txOuts .proj₁ ] inject (utxoEntrySize txout * coinsPerUTxOByte pp) ≤ᵗ getValue txout"
+                                (inj₁ a₇) → "¬ (∅ᵐ ≢ᵐ txrdmrs × nothing ≢ proj₂ txVldt → map epochInfoSlotToUTCTime (proj₂ txVldt) ≢ nothing)"
                                 (inj₂ b₇) → case dec-de-morgan b₇ of λ where
-                                    (inj₁ a₈) → "∀[ (_ , txout) ∈ txOuts .proj₁ ] serSize (getValue txout) ≤ maxValSize pp"
+                                    (inj₁ a₈) → "¬ ((Tx.txsize tx) Data.Nat.Base.≤ maxTxSize (UTxOEnv.pparams Γ))"
                                     (inj₂ b₈) → case dec-de-morgan b₈ of λ where
-                                      (inj₁ a₉) → "∀[ (a , _) ∈ range txOuts ] Sum.All (const ⊤) (λ a → a .BootstrapAddr.attrsSize ≤ 64) a"
+                                      (inj₁ a₉) → "¬ refScriptsSize utxo tx ≤ maxRefScriptSizePerTx pp"
                                       (inj₂ _) → "something else broke"
 
         computeProofH : Dec H → ComputationResult String (∃[ s' ] Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s')
