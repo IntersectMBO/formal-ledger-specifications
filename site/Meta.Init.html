@@ -1,0 +1,15 @@
+<!DOCTYPE HTML>
+<html><head><meta charset="utf-8"><title>Meta.Init</title><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css"><link rel="stylesheet" href="Agda.css"><script src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/contrib/auto-render.min.js"></script><script src="AgdaKaTeX.js" defer=""></script></head><body><pre class="Agda"><a id="1" class="Symbol">{-#</a> <a id="5" class="Keyword">OPTIONS</a> <a id="13" class="Pragma">--safe</a> <a id="20" class="Pragma">--without-K</a> <a id="32" class="Symbol">#-}</a>
+
+<a id="37" class="Keyword">module</a> <a id="44" href="Meta.Init.html" class="Module">Meta.Init</a> <a id="54" class="Keyword">where</a>
+
+<a id="61" class="Keyword">open</a> <a id="66" class="Keyword">import</a> <a id="73" href="Reflection.Debug.html" class="Module">Reflection.Debug</a> <a id="90" class="Keyword">public</a>
+<a id="97" class="Keyword">open</a> <a id="102" class="Keyword">import</a> <a id="109" href="Reflection.TCI.html" class="Module">Reflection.TCI</a> <a id="124" class="Keyword">public</a>
+<a id="131" class="Keyword">open</a> <a id="136" class="Keyword">import</a> <a id="143" href="Reflection.Syntax.html" class="Module">Reflection.Syntax</a> <a id="161" class="Keyword">public</a>
+
+<a id="169" class="Keyword">instance</a>
+  <a id="iMonad-TC"></a><a id="180" href="Meta.Init.html#180" class="Function">iMonad-TC</a> <a id="190" class="Symbol">=</a> <a id="192" href="Reflection.TCI.html#598" class="Function">Monad-TC</a>
+  <a id="iMonadTC-TCI"></a><a id="203" href="Meta.Init.html#203" class="Function">iMonadTC-TCI</a> <a id="216" class="Symbol">=</a> <a id="218" href="Reflection.TCI.html#4137" class="Function">MonadTC-TCI</a>
+  <a id="iMonadReader-TC"></a><a id="232" href="Meta.Init.html#232" class="Function">iMonadReader-TC</a> <a id="248" class="Symbol">=</a> <a id="250" href="Reflection.TCI.html#644" class="Function">MonadReader-TC</a>
+  <a id="iMonadError-TC"></a><a id="267" href="Meta.Init.html#267" class="Function">iMonadError-TC</a> <a id="282" class="Symbol">=</a> <a id="284" href="Reflection.TCI.html#778" class="Function">MonadError-TC</a>
+</pre></body></html>
