@@ -39,7 +39,7 @@ gov-deposit growth `G' − G₀` is matched against the produced-side `totGov` (
 
 ??? note "**Status: complete**"
 
-    `LEDGER-pov`{.AgdaFunction}n typechecks end-to-end under `--safe` (no
+    `LEDGER-pov`{.AgdaFunction} typechecks end-to-end under `--safe` (no
     postulates or holes).  Following the top-down plan, this module proves only the
     top-level `LEDGER` preservation-of-value statement and leaves the supporting facts
     as *module parameters*, discharged downstream:
