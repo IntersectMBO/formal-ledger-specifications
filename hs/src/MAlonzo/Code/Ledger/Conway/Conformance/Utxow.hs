@@ -379,7 +379,7 @@ d_hashScriptIntegrity_2594 ::
   [AgdaAny] -> Maybe AgdaAny
 d_hashScriptIntegrity_2594 v0 v1
   = coe
-      MAlonzo.Code.Ledger.Conway.Specification.Utxow.d_hashScriptIntegrity_2912
+      MAlonzo.Code.Ledger.Conway.Specification.Utxow.d_hashScriptIntegrity_2920
       (coe v0) (coe v1)
 -- Ledger.Conway.Conformance.Utxow.L._.languages
 d_languages_2596 ::
@@ -1721,7 +1721,7 @@ d_UTXOW'45'inductive'45'premises_2972 v0 v1 v2 v3 v4
                                                 MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_body_3646
                                                 (coe v2)))
                                           (coe
-                                             MAlonzo.Code.Ledger.Conway.Specification.Utxow.d_hashScriptIntegrity_2912
+                                             MAlonzo.Code.Ledger.Conway.Specification.Utxow.d_hashScriptIntegrity_2920
                                              (coe v0) (coe v1)
                                              (coe
                                                 MAlonzo.Code.Ledger.Conway.Specification.Utxo.d_pparams_2502

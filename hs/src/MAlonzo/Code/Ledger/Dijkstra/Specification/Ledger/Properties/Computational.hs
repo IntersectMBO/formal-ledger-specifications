@@ -633,7 +633,7 @@ d_SUBUTXOW'45'noop_3820 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOState_3150 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3670 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxow.T__'8866'_'8640''10631'_'44'SUBUTXOW'10632'__3650 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxow.T__'8866'_'8640''10631'_'44'SUBUTXOW'10632'__3668 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
 d_SUBUTXOW'45'noop_3820 = erased
 -- Ledger.Dijkstra.Specification.Ledger.Properties.Computational.SUBLEDGER-step-noop
@@ -751,7 +751,7 @@ d_completeSubutxow_3932 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOState_3150 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3670 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOState_3150 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxow.T__'8866'_'8640''10631'_'44'SUBUTXOW'10632'__3650 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxow.T__'8866'_'8640''10631'_'44'SUBUTXOW'10632'__3668 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
 d_completeSubutxow_3932 = erased
 -- Ledger.Dijkstra.Specification.Ledger.Properties.Computational._.completeSubentities
@@ -2263,7 +2263,7 @@ d_completeUtxow_4254 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOState_3150 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3670 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOState_3150 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxow.T__'8866'_'8640''10631'_'44'UTXOW'10632'__3784 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxow.T__'8866'_'8640''10631'_'44'UTXOW'10632'__3802 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
 d_completeUtxow_4254 = erased
 -- Ledger.Dijkstra.Specification.Ledger.Properties.Computational._.completeEntities
@@ -2340,7 +2340,7 @@ du_legacyMode_4316 ::
   Bool
 du_legacyMode_4316 v0 v1 v2
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Utxow.du_isLegacyMode_3590
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Utxow.du_isLegacyMode_3608
       (coe v0) (coe du_utxo'8320'_4312 (coe v1))
       (coe du_allScripts_4314 (coe v0) (coe v1) (coe v2)) (coe v2)
 -- Ledger.Dijkstra.Specification.Ledger.Properties.Computational._._._.go.subΓ
