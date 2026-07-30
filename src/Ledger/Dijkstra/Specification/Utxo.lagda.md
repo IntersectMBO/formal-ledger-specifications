@@ -473,8 +473,8 @@ unquoteDecl SUBUTXO-premises = genPremises SUBUTXO-premises (quote SUBUTXO)
 1. The set of spending inputs must be nonempty. This prevents replay
    attacks.
 
-2. The set of spending and reference inputs must exist in the UTxO _before_
-   applying the transaction (or partially applying any part of it).
+2. The set of spending, reference, and collateral inputs must exist in the
+   UTxO _before_ applying the transaction (or partially applying any part of it).
 
 3. The set of spending inputs must exist in the UTXO state, which has
    been updated by other sub-transactions in the batch. This prevents
@@ -493,7 +493,7 @@ data _⊢_⇀⦇_,UTXO⦈_ : UTxOEnv → UTxOState → TopLevelTx → UTxOState 
       maxBootstrapAddrSize = 64
     in
     ∙ SpendInputsOf txTop ≢ ∅
-    ∙ SpendInputsOf txTop ⊆ dom (UTxOOf Γ) -- (2)
+    ∙ SpendInputsOf txTop ∪ CollateralInputsOf txTop ⊆ dom (UTxOOf Γ) -- (2)
     ∙ ReferenceInputsOf txTop ⊆ dom (UTxOOf Γ) -- (2)
     ∙ SpendInputsOf txTop ⊆ dom (UTxOOf s₀) -- (3)
     ∙ inInterval (SlotOf Γ) (ValidIntervalOf txTop)
