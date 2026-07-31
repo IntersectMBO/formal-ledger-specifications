@@ -9,7 +9,7 @@ This module provides the `UTXOW`{.AgdaDatatype}-level preservation-of-value
 facts consumed by `Ledger.Properties.PoV`{.AgdaModule}: it discharges the
 `utxow-pov-invalid`, `UTXOW-V-mechanical`, `UTXOW-batch-balance-coin` and
 `subutxow-step-coin` module parameters of the `LEDGER-PoV`{.AgdaModule}
-consumer (issue #1186), with statements matching those parameters verbatim.
+consumer, with statements matching those parameters verbatim.
 
 The `UTXOW`{.AgdaDatatype} rules perform witness checks (signatures, scripts,
 datums) and delegate the state change to the `UTXO`{.AgdaDatatype} rule: both
@@ -136,13 +136,10 @@ against the *pre-batch snapshot* `UTxOOf Γ`, so — as explained in
 `Utxo.Properties.PoV`{.AgdaModule} — it holds only given two batch-threading
 facts that the per-step premises do not provide: freshness of the
 sub-transaction's TxId in the running UTxO, and agreement of the running UTxO
-with the snapshot on the sub-transaction's spend inputs.  Both follow from
-batch-wide input disjointness and TxId freshness, which the outer
-`UTXO`{.AgdaDatatype} rule establishes at the batch level but does not expose
-per step.  They are module parameters here, to be discharged by a
-batch-threading invariant (the same follow-up family as the
+with the snapshot on the sub-transaction's spend inputs.  They are module
+parameters here, in the same batch-threading family as the
 `utxo₁-tx-spend-eq` and `fresh-top-tx-id` parameters of
-`Ledger.Properties.PoV`{.AgdaModule}).
+`Ledger.Properties.PoV`{.AgdaModule}.
 
 ```agda
 module SUBUTXOW-PoV
