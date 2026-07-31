@@ -4717,11 +4717,16 @@ d_coinFromDeposits_1960 v0 v1
                MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3476))
          (coe (\ v2 -> v2))
          (coe d_deposits_1388 (coe d_pState_1418 (coe v1))))
+-- Ledger.Dijkstra.Specification.Certs.PoolDepositsRegistered
+d_PoolDepositsRegistered_1964 ::
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Base.T_GovStructure_10 ->
+  T_CertState_1408 -> ()
+d_PoolDepositsRegistered_1964 = erased
 -- Ledger.Dijkstra.Specification.Certs.HasCoin-CertState
-d_HasCoin'45'CertState_1964 ::
+d_HasCoin'45'CertState_1968 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Base.T_GovStructure_10 ->
   MAlonzo.Code.Ledger.Prelude.HasCoin.T_HasCoin_10
-d_HasCoin'45'CertState_1964 v0
+d_HasCoin'45'CertState_1968 v0
   = coe
       MAlonzo.Code.Ledger.Prelude.HasCoin.C_constructor_20
       (coe
@@ -4730,10 +4735,10 @@ d_HasCoin'45'CertState_1964 v0
               (coe d_coinFromDeposits_1960 (coe v0) (coe v1))
               (coe d_coinFromRewards_1958 (coe v0) (coe v1))))
 -- Ledger.Dijkstra.Specification.Certs.DecEq-StakePoolParams
-d_DecEq'45'StakePoolParams_1968 ::
+d_DecEq'45'StakePoolParams_1972 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Base.T_GovStructure_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
-d_DecEq'45'StakePoolParams_1968 v0
+d_DecEq'45'StakePoolParams_1972 v0
   = coe
       MAlonzo.Code.Class.DecEq.Core.C_constructor_32
       (coe
@@ -4962,10 +4967,10 @@ d_DecEq'45'StakePoolParams_1968 v0
                           _ -> MAlonzo.RTE.mazUnreachableError)
               _ -> MAlonzo.RTE.mazUnreachableError))
 -- Ledger.Dijkstra.Specification.Certs.DecEq-DCert
-d_DecEq'45'DCert_1970 ::
+d_DecEq'45'DCert_1974 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Base.T_GovStructure_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
-d_DecEq'45'DCert_1970 v0
+d_DecEq'45'DCert_1974 v0
   = coe
       MAlonzo.Code.Class.DecEq.Core.C_constructor_32
       (coe
@@ -5900,32 +5905,32 @@ d_DecEq'45'DCert_1970 v0
                           _ -> MAlonzo.RTE.mazUnreachableError)
               _ -> MAlonzo.RTE.mazUnreachableError))
 -- Ledger.Dijkstra.Specification.Certs._⊢_⇀⦇_,DELEG⦈_
-d__'8866'_'8640''10631'_'44'DELEG'10632'__1972 a0 a1 a2 a3 a4 = ()
-data T__'8866'_'8640''10631'_'44'DELEG'10632'__1972
-  = C_DELEG'45'delegate_1974 MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 |
-    C_DELEG'45'dereg_1976 MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d__'8866'_'8640''10631'_'44'DELEG'10632'__1976 a0 a1 a2 a3 a4 = ()
+data T__'8866'_'8640''10631'_'44'DELEG'10632'__1976
+  = C_DELEG'45'delegate_1978 MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 |
+    C_DELEG'45'dereg_1980 MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 -- Ledger.Dijkstra.Specification.Certs._⊢_⇀⦇_,POOL⦈_
-d__'8866'_'8640''10631'_'44'POOL'10632'__1978 a0 a1 a2 a3 a4 = ()
-data T__'8866'_'8640''10631'_'44'POOL'10632'__1978
-  = C_POOL'45'reg_1980 |
-    C_POOL'45'rereg_1982 MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34 |
-    C_POOL'45'retirepool_1984
+d__'8866'_'8640''10631'_'44'POOL'10632'__1982 a0 a1 a2 a3 a4 = ()
+data T__'8866'_'8640''10631'_'44'POOL'10632'__1982
+  = C_POOL'45'reg_1984 |
+    C_POOL'45'rereg_1986 MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34 |
+    C_POOL'45'retirepool_1988
 -- Ledger.Dijkstra.Specification.Certs._⊢_⇀⦇_,GOVCERT⦈_
-d__'8866'_'8640''10631'_'44'GOVCERT'10632'__1986 a0 a1 a2 a3 a4
+d__'8866'_'8640''10631'_'44'GOVCERT'10632'__1990 a0 a1 a2 a3 a4
   = ()
-data T__'8866'_'8640''10631'_'44'GOVCERT'10632'__1986
-  = C_GOVCERT'45'regdrep_1988 MAlonzo.Code.Data.Sum.Base.T__'8846'__30 |
-    C_GOVCERT'45'deregdrep_1990 MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 |
-    C_GOVCERT'45'ccreghot_1992 MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+data T__'8866'_'8640''10631'_'44'GOVCERT'10632'__1990
+  = C_GOVCERT'45'regdrep_1992 MAlonzo.Code.Data.Sum.Base.T__'8846'__30 |
+    C_GOVCERT'45'deregdrep_1994 MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 |
+    C_GOVCERT'45'ccreghot_1996 MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 -- Ledger.Dijkstra.Specification.Certs._⊢_⇀⦇_,CERT⦈_
-d__'8866'_'8640''10631'_'44'CERT'10632'__1994 a0 a1 a2 a3 a4 = ()
-data T__'8866'_'8640''10631'_'44'CERT'10632'__1994
-  = C_CERT'45'deleg_1996 T__'8866'_'8640''10631'_'44'DELEG'10632'__1972 |
-    C_CERT'45'pool_1998 T__'8866'_'8640''10631'_'44'POOL'10632'__1978 |
-    C_CERT'45'gov_2000 T__'8866'_'8640''10631'_'44'GOVCERT'10632'__1986
+d__'8866'_'8640''10631'_'44'CERT'10632'__1998 a0 a1 a2 a3 a4 = ()
+data T__'8866'_'8640''10631'_'44'CERT'10632'__1998
+  = C_CERT'45'deleg_2000 T__'8866'_'8640''10631'_'44'DELEG'10632'__1976 |
+    C_CERT'45'pool_2002 T__'8866'_'8640''10631'_'44'POOL'10632'__1982 |
+    C_CERT'45'gov_2004 T__'8866'_'8640''10631'_'44'GOVCERT'10632'__1990
 -- Ledger.Dijkstra.Specification.Certs._⊢_⇀⦇_,CERTS⦈_
-d__'8866'_'8640''10631'_'44'CERTS'10632'__2002 ::
+d__'8866'_'8640''10631'_'44'CERTS'10632'__2006 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Base.T_GovStructure_10 ->
   T_CertEnv_1336 ->
   T_CertState_1408 -> [T_DCert_1296] -> T_CertState_1408 -> ()
-d__'8866'_'8640''10631'_'44'CERTS'10632'__2002 = erased
+d__'8866'_'8640''10631'_'44'CERTS'10632'__2006 = erased

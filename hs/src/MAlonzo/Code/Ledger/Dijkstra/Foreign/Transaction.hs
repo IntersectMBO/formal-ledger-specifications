@@ -328,7 +328,7 @@ d_Conv'45'TxWitnesses_26
       (coe
          (\ v0 ->
             case coe v0 of
-              MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.C_constructor_3814 v1 v2 v3 v4
+              MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.C_constructor_3816 v1 v2 v3 v4
                 -> coe
                      C_MkTxWitnesses_4917
                      (coe
@@ -390,7 +390,7 @@ d_Conv'45'TxWitnesses_26
             case coe v0 of
               C_MkTxWitnesses_4917 v1 v2 v3 v4
                 -> coe
-                     MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.C_constructor_3814
+                     MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.C_constructor_3816
                      (coe
                         MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
                         (coe
@@ -668,66 +668,66 @@ d_convTxBodySub_108
             coe
               C_constructor_106
               (coe
-                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txIns_3748
+                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txIns_3750
                  (coe v0))
               (coe
-                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_referenceInputs_3750
+                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_referenceInputs_3752
                  (coe v0))
               (coe
-                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txOuts_3754
+                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txOuts_3756
                  (coe v0))
               (coe
-                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txId_3756
+                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txId_3758
                  (coe v0))
               (coe
-                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txCerts_3758
+                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txCerts_3760
                  (coe v0))
               (coe
-                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txWithdrawals_3762
+                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txWithdrawals_3764
                  (coe v0))
               (coe
-                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txVldt_3764
+                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txVldt_3766
                  (coe v0))
               (coe
-                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txADhash_3766
+                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txADhash_3768
                  (coe v0))
               (coe
-                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txDonation_3768
+                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txDonation_3770
                  (coe v0))
               (coe
-                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txGovVotes_3770
+                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txGovVotes_3772
                  (coe v0))
               (coe
-                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txGovProposals_3772
+                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txGovProposals_3774
                  (coe v0))
               (coe
-                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txNetworkId_3774
+                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txNetworkId_3776
                  (coe v0))
               (coe
-                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_currentTreasury_3776
+                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_currentTreasury_3778
                  (coe v0))
               (coe
-                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_mint_3778
+                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_mint_3780
                  (coe v0))
               (coe
-                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_scriptIntegrityHash_3780
+                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_scriptIntegrityHash_3782
                  (coe v0))
               (coe
-                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txGuards_3784
+                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txGuards_3786
                  (coe v0))
               (coe
-                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txRequiredTopLevelGuards_3786
+                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txRequiredTopLevelGuards_3788
                  (coe v0))
               (coe
-                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txDirectDeposits_3788
+                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txDirectDeposits_3790
                  (coe v0))
               (coe
-                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBalanceIntervals_3790
+                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBalanceIntervals_3792
                  (coe v0))))
       (coe
          (\ v0 ->
             coe
-              MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.C_constructor_3794
+              MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.C_constructor_3796
               (coe d_txIns_68 (coe v0)) (coe d_referenceInputs_70 (coe v0))
               (coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8)
               (coe d_txOuts_72 (coe v0)) (coe d_txId_74 (coe v0))
@@ -1441,7 +1441,7 @@ d_Conv'45'TxBody'45'TxLevelSub_214
 d_TxSub_216 = ()
 data T_TxSub_216
   = C_constructor_234 T_TxBodySub_28
-                      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TxWitnesses_3676
+                      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TxWitnesses_3678
                       Integer (Maybe Integer)
 -- Ledger.Dijkstra.Foreign.Transaction.TxSub.txBody
 d_txBody_226 :: T_TxSub_216 -> T_TxBodySub_28
@@ -1452,7 +1452,7 @@ d_txBody_226 v0
 -- Ledger.Dijkstra.Foreign.Transaction.TxSub.txWitnesses
 d_txWitnesses_228 ::
   T_TxSub_216 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TxWitnesses_3676
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TxWitnesses_3678
 d_txWitnesses_228 v0
   = case coe v0 of
       C_constructor_234 v1 v2 v3 v4 -> coe v2
@@ -1488,66 +1488,66 @@ d_convTxSub_236
                           coe
                             C_constructor_106
                             (coe
-                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txIns_3748
+                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txIns_3750
                                (coe v1))
                             (coe
-                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_referenceInputs_3750
+                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_referenceInputs_3752
                                (coe v1))
                             (coe
-                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txOuts_3754
+                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txOuts_3756
                                (coe v1))
                             (coe
-                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txId_3756
+                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txId_3758
                                (coe v1))
                             (coe
-                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txCerts_3758
+                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txCerts_3760
                                (coe v1))
                             (coe
-                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txWithdrawals_3762
+                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txWithdrawals_3764
                                (coe v1))
                             (coe
-                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txVldt_3764
+                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txVldt_3766
                                (coe v1))
                             (coe
-                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txADhash_3766
+                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txADhash_3768
                                (coe v1))
                             (coe
-                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txDonation_3768
+                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txDonation_3770
                                (coe v1))
                             (coe
-                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txGovVotes_3770
+                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txGovVotes_3772
                                (coe v1))
                             (coe
-                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txGovProposals_3772
+                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txGovProposals_3774
                                (coe v1))
                             (coe
-                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txNetworkId_3774
+                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txNetworkId_3776
                                (coe v1))
                             (coe
-                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_currentTreasury_3776
+                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_currentTreasury_3778
                                (coe v1))
                             (coe
-                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_mint_3778
+                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_mint_3780
                                (coe v1))
                             (coe
-                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_scriptIntegrityHash_3780
+                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_scriptIntegrityHash_3782
                                (coe v1))
                             (coe
-                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txGuards_3784
+                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txGuards_3786
                                (coe v1))
                             (coe
-                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txRequiredTopLevelGuards_3786
+                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txRequiredTopLevelGuards_3788
                                (coe v1))
                             (coe
-                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txDirectDeposits_3788
+                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txDirectDeposits_3790
                                (coe v1))
                             (coe
-                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBalanceIntervals_3790
+                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBalanceIntervals_3792
                                (coe v1))))
                     (coe
                        (\ v1 ->
                           coe
-                            MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.C_constructor_3794
+                            MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.C_constructor_3796
                             (coe d_txIns_68 (coe v1)) (coe d_referenceInputs_70 (coe v1))
                             (coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8)
                             (coe d_txOuts_72 (coe v1)) (coe d_txId_74 (coe v1))
@@ -1563,21 +1563,21 @@ d_convTxSub_236
                             (coe d_txRequiredTopLevelGuards_100 (coe v1))
                             (coe d_txDirectDeposits_102 (coe v1))
                             (coe d_txBalanceIntervals_104 (coe v1)))))
-                 (MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3690
+                 (MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3692
                     (coe v0)))
               (coe
-                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txWitnesses_3692
+                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txWitnesses_3694
                  (coe v0))
               (coe
-                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txSize_3694
+                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txSize_3696
                  (coe v0))
               (coe
-                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txAuxData_3698
+                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txAuxData_3700
                  (coe v0))))
       (coe
          (\ v0 ->
             coe
-              MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.C_constructor_3700
+              MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.C_constructor_3702
               (coe
                  MAlonzo.Code.Class.Convertible.Core.d_from_22
                  (coe
@@ -1587,66 +1587,66 @@ d_convTxSub_236
                           coe
                             C_constructor_106
                             (coe
-                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txIns_3748
+                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txIns_3750
                                (coe v1))
                             (coe
-                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_referenceInputs_3750
+                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_referenceInputs_3752
                                (coe v1))
                             (coe
-                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txOuts_3754
+                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txOuts_3756
                                (coe v1))
                             (coe
-                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txId_3756
+                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txId_3758
                                (coe v1))
                             (coe
-                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txCerts_3758
+                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txCerts_3760
                                (coe v1))
                             (coe
-                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txWithdrawals_3762
+                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txWithdrawals_3764
                                (coe v1))
                             (coe
-                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txVldt_3764
+                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txVldt_3766
                                (coe v1))
                             (coe
-                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txADhash_3766
+                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txADhash_3768
                                (coe v1))
                             (coe
-                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txDonation_3768
+                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txDonation_3770
                                (coe v1))
                             (coe
-                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txGovVotes_3770
+                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txGovVotes_3772
                                (coe v1))
                             (coe
-                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txGovProposals_3772
+                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txGovProposals_3774
                                (coe v1))
                             (coe
-                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txNetworkId_3774
+                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txNetworkId_3776
                                (coe v1))
                             (coe
-                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_currentTreasury_3776
+                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_currentTreasury_3778
                                (coe v1))
                             (coe
-                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_mint_3778
+                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_mint_3780
                                (coe v1))
                             (coe
-                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_scriptIntegrityHash_3780
+                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_scriptIntegrityHash_3782
                                (coe v1))
                             (coe
-                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txGuards_3784
+                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txGuards_3786
                                (coe v1))
                             (coe
-                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txRequiredTopLevelGuards_3786
+                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txRequiredTopLevelGuards_3788
                                (coe v1))
                             (coe
-                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txDirectDeposits_3788
+                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txDirectDeposits_3790
                                (coe v1))
                             (coe
-                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBalanceIntervals_3790
+                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBalanceIntervals_3792
                                (coe v1))))
                     (coe
                        (\ v1 ->
                           coe
-                            MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.C_constructor_3794
+                            MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.C_constructor_3796
                             (coe d_txIns_68 (coe v1)) (coe d_referenceInputs_70 (coe v1))
                             (coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8)
                             (coe d_txOuts_72 (coe v1)) (coe d_txId_74 (coe v1))
@@ -1678,7 +1678,7 @@ d_txSize_262 v0 = coe d_txSize_230 (coe v0)
 -- Ledger.Dijkstra.Foreign.Transaction._.txWitnesses
 d_txWitnesses_264 ::
   T_TxSub_216 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TxWitnesses_3676
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TxWitnesses_3678
 d_txWitnesses_264 v0 = coe d_txWitnesses_228 (coe v0)
 -- Ledger.Dijkstra.Foreign.Transaction.HsTy-TxSub
 d_HsTy'45'TxSub_266 ::
@@ -1917,7 +1917,7 @@ d_Conv'45'TxSub_268
                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                               (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                  (coe
-                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_vKeySigs_3804
+                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_vKeySigs_3806
                                     (coe v2)))))
                         (coe
                            MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSSet_68
@@ -1929,7 +1929,7 @@ d_Conv'45'TxSub_268
                                     MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Either_10
                                     (coe d_Conv'45'HSNativeScript_18)
                                     (coe d_Conv'45'HSPlutusScript_22)))
-                              (MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_scripts_3806
+                              (MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_scripts_3808
                                  (coe v2))))
                         (coe
                            MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSSet_68
@@ -1938,7 +1938,7 @@ d_Conv'45'TxSub_268
                               (coe
                                  MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                  (coe MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                              (MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txData_3808
+                              (MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txData_3810
                                  (coe v2))))
                         (coe
                            MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
@@ -1965,7 +1965,7 @@ d_Conv'45'TxSub_268
                                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))))
                               (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                  (coe
-                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txRedeemers_3810
+                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txRedeemers_3812
                                     (coe v2))))))
                      (coe v3)
                      (coe
@@ -2603,7 +2603,7 @@ d_Conv'45'TxSub_268
                            (coe
                               (\ v5 ->
                                  case coe v5 of
-                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.C_constructor_3814 v6 v7 v8 v9
+                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.C_constructor_3816 v6 v7 v8 v9
                                      -> coe
                                           C_MkTxWitnesses_4917
                                           (coe
@@ -2671,7 +2671,7 @@ d_Conv'45'TxSub_268
                                  case coe v5 of
                                    C_MkTxWitnesses_4917 v6 v7 v8 v9
                                      -> coe
-                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.C_constructor_3814
+                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.C_constructor_3816
                                           (coe
                                              MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
                                              (coe
@@ -2815,7 +2815,7 @@ data T_TxBodyTop_274
                       [MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovVote_922]
                       [MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovProposal_976]
                       (Maybe Integer) (Maybe Integer) Integer (Maybe Integer)
-                      [MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3670]
+                      [MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3672]
                       [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
                       [MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20]
                       MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
@@ -2954,7 +2954,7 @@ d_scriptIntegrityHash_352 v0
 -- Ledger.Dijkstra.Foreign.Transaction.TxBodyTop.txSubTransactions
 d_txSubTransactions_354 ::
   T_TxBodyTop_274 ->
-  [MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3670]
+  [MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3672]
 d_txSubTransactions_354 v0
   = case coe v0 of
       C_constructor_364 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12 v13 v14 v15 v16 v17 v18 v19 v20 v21 v22
@@ -3004,75 +3004,75 @@ d_convTxBodyTop_366
             coe
               C_constructor_364
               (coe
-                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txIns_3748
+                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txIns_3750
                  (coe v0))
               (coe
-                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_referenceInputs_3750
+                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_referenceInputs_3752
                  (coe v0))
               (coe
-                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_collateralInputs_3752
+                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_collateralInputs_3754
                  (coe v0))
               (coe
-                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txOuts_3754
+                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txOuts_3756
                  (coe v0))
               (coe
-                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txId_3756
+                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txId_3758
                  (coe v0))
               (coe
-                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txCerts_3758
+                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txCerts_3760
                  (coe v0))
               (coe
-                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txFee_3760
+                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txFee_3762
                  (coe v0))
               (coe
-                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txWithdrawals_3762
+                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txWithdrawals_3764
                  (coe v0))
               (coe
-                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txVldt_3764
+                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txVldt_3766
                  (coe v0))
               (coe
-                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txADhash_3766
+                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txADhash_3768
                  (coe v0))
               (coe
-                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txDonation_3768
+                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txDonation_3770
                  (coe v0))
               (coe
-                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txGovVotes_3770
+                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txGovVotes_3772
                  (coe v0))
               (coe
-                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txGovProposals_3772
+                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txGovProposals_3774
                  (coe v0))
               (coe
-                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txNetworkId_3774
+                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txNetworkId_3776
                  (coe v0))
               (coe
-                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_currentTreasury_3776
+                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_currentTreasury_3778
                  (coe v0))
               (coe
-                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_mint_3778
+                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_mint_3780
                  (coe v0))
               (coe
-                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_scriptIntegrityHash_3780
+                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_scriptIntegrityHash_3782
                  (coe v0))
               (coe
-                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txSubTransactions_3782
+                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txSubTransactions_3784
                  (coe v0))
               (coe
-                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txRequiredTopLevelGuards_3786
+                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txRequiredTopLevelGuards_3788
                  (coe v0))
               (coe
-                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txGuards_3784
+                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txGuards_3786
                  (coe v0))
               (coe
-                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txDirectDeposits_3788
+                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txDirectDeposits_3790
                  (coe v0))
               (coe
-                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBalanceIntervals_3790
+                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBalanceIntervals_3792
                  (coe v0))))
       (coe
          (\ v0 ->
             coe
-              MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.C_constructor_3794
+              MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.C_constructor_3796
               (coe d_txIns_320 (coe v0)) (coe d_referenceInputs_322 (coe v0))
               (coe d_collateralInputs_324 (coe v0)) (coe d_txOuts_326 (coe v0))
               (coe d_txId_328 (coe v0)) (coe d_txCerts_330 (coe v0))
@@ -3165,7 +3165,7 @@ d_txRequiredTopLevelGuards_464 v0
 -- Ledger.Dijkstra.Foreign.Transaction._.txSubTransactions
 d_txSubTransactions_466 ::
   T_TxBodyTop_274 ->
-  [MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3670]
+  [MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3672]
 d_txSubTransactions_466 v0 = coe d_txSubTransactions_354 (coe v0)
 -- Ledger.Dijkstra.Foreign.Transaction._.txVldt
 d_txVldt_468 ::
@@ -3797,7 +3797,7 @@ d_Conv'45'TxBody'45'TxLevelTop_478
 d_TxTop_480 = ()
 data T_TxTop_480
   = C_constructor_502 T_TxBodyTop_274
-                      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TxWitnesses_3676
+                      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TxWitnesses_3678
                       Integer Bool (Maybe Integer)
 -- Ledger.Dijkstra.Foreign.Transaction.TxTop.txBody
 d_txBody_492 :: T_TxTop_480 -> T_TxBodyTop_274
@@ -3808,7 +3808,7 @@ d_txBody_492 v0
 -- Ledger.Dijkstra.Foreign.Transaction.TxTop.txWitnesses
 d_txWitnesses_494 ::
   T_TxTop_480 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TxWitnesses_3676
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TxWitnesses_3678
 d_txWitnesses_494 v0
   = case coe v0 of
       C_constructor_502 v1 v2 v3 v4 v5 -> coe v2
@@ -3850,75 +3850,75 @@ d_convTxTop_504
                           coe
                             C_constructor_364
                             (coe
-                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txIns_3748
+                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txIns_3750
                                (coe v1))
                             (coe
-                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_referenceInputs_3750
+                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_referenceInputs_3752
                                (coe v1))
                             (coe
-                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_collateralInputs_3752
+                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_collateralInputs_3754
                                (coe v1))
                             (coe
-                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txOuts_3754
+                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txOuts_3756
                                (coe v1))
                             (coe
-                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txId_3756
+                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txId_3758
                                (coe v1))
                             (coe
-                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txCerts_3758
+                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txCerts_3760
                                (coe v1))
                             (coe
-                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txFee_3760
+                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txFee_3762
                                (coe v1))
                             (coe
-                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txWithdrawals_3762
+                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txWithdrawals_3764
                                (coe v1))
                             (coe
-                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txVldt_3764
+                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txVldt_3766
                                (coe v1))
                             (coe
-                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txADhash_3766
+                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txADhash_3768
                                (coe v1))
                             (coe
-                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txDonation_3768
+                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txDonation_3770
                                (coe v1))
                             (coe
-                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txGovVotes_3770
+                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txGovVotes_3772
                                (coe v1))
                             (coe
-                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txGovProposals_3772
+                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txGovProposals_3774
                                (coe v1))
                             (coe
-                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txNetworkId_3774
+                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txNetworkId_3776
                                (coe v1))
                             (coe
-                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_currentTreasury_3776
+                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_currentTreasury_3778
                                (coe v1))
                             (coe
-                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_mint_3778
+                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_mint_3780
                                (coe v1))
                             (coe
-                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_scriptIntegrityHash_3780
+                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_scriptIntegrityHash_3782
                                (coe v1))
                             (coe
-                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txSubTransactions_3782
+                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txSubTransactions_3784
                                (coe v1))
                             (coe
-                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txRequiredTopLevelGuards_3786
+                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txRequiredTopLevelGuards_3788
                                (coe v1))
                             (coe
-                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txGuards_3784
+                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txGuards_3786
                                (coe v1))
                             (coe
-                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txDirectDeposits_3788
+                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txDirectDeposits_3790
                                (coe v1))
                             (coe
-                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBalanceIntervals_3790
+                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBalanceIntervals_3792
                                (coe v1))))
                     (coe
                        (\ v1 ->
                           coe
-                            MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.C_constructor_3794
+                            MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.C_constructor_3796
                             (coe d_txIns_320 (coe v1)) (coe d_referenceInputs_322 (coe v1))
                             (coe d_collateralInputs_324 (coe v1)) (coe d_txOuts_326 (coe v1))
                             (coe d_txId_328 (coe v1)) (coe d_txCerts_330 (coe v1))
@@ -3934,24 +3934,24 @@ d_convTxTop_504
                             (coe d_txRequiredTopLevelGuards_356 (coe v1))
                             (coe d_txDirectDeposits_360 (coe v1))
                             (coe d_txBalanceIntervals_362 (coe v1)))))
-                 (MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3690
+                 (MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3692
                     (coe v0)))
               (coe
-                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txWitnesses_3692
+                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txWitnesses_3694
                  (coe v0))
               (coe
-                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txSize_3694
+                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txSize_3696
                  (coe v0))
               (coe
-                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_isValid_3696
+                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_isValid_3698
                  (coe v0))
               (coe
-                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txAuxData_3698
+                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txAuxData_3700
                  (coe v0))))
       (coe
          (\ v0 ->
             coe
-              MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.C_constructor_3700
+              MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.C_constructor_3702
               (coe
                  MAlonzo.Code.Class.Convertible.Core.d_from_22
                  (coe
@@ -3961,75 +3961,75 @@ d_convTxTop_504
                           coe
                             C_constructor_364
                             (coe
-                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txIns_3748
+                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txIns_3750
                                (coe v1))
                             (coe
-                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_referenceInputs_3750
+                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_referenceInputs_3752
                                (coe v1))
                             (coe
-                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_collateralInputs_3752
+                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_collateralInputs_3754
                                (coe v1))
                             (coe
-                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txOuts_3754
+                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txOuts_3756
                                (coe v1))
                             (coe
-                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txId_3756
+                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txId_3758
                                (coe v1))
                             (coe
-                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txCerts_3758
+                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txCerts_3760
                                (coe v1))
                             (coe
-                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txFee_3760
+                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txFee_3762
                                (coe v1))
                             (coe
-                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txWithdrawals_3762
+                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txWithdrawals_3764
                                (coe v1))
                             (coe
-                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txVldt_3764
+                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txVldt_3766
                                (coe v1))
                             (coe
-                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txADhash_3766
+                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txADhash_3768
                                (coe v1))
                             (coe
-                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txDonation_3768
+                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txDonation_3770
                                (coe v1))
                             (coe
-                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txGovVotes_3770
+                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txGovVotes_3772
                                (coe v1))
                             (coe
-                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txGovProposals_3772
+                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txGovProposals_3774
                                (coe v1))
                             (coe
-                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txNetworkId_3774
+                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txNetworkId_3776
                                (coe v1))
                             (coe
-                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_currentTreasury_3776
+                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_currentTreasury_3778
                                (coe v1))
                             (coe
-                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_mint_3778
+                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_mint_3780
                                (coe v1))
                             (coe
-                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_scriptIntegrityHash_3780
+                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_scriptIntegrityHash_3782
                                (coe v1))
                             (coe
-                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txSubTransactions_3782
+                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txSubTransactions_3784
                                (coe v1))
                             (coe
-                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txRequiredTopLevelGuards_3786
+                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txRequiredTopLevelGuards_3788
                                (coe v1))
                             (coe
-                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txGuards_3784
+                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txGuards_3786
                                (coe v1))
                             (coe
-                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txDirectDeposits_3788
+                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txDirectDeposits_3790
                                (coe v1))
                             (coe
-                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBalanceIntervals_3790
+                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBalanceIntervals_3792
                                (coe v1))))
                     (coe
                        (\ v1 ->
                           coe
-                            MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.C_constructor_3794
+                            MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.C_constructor_3796
                             (coe d_txIns_320 (coe v1)) (coe d_referenceInputs_322 (coe v1))
                             (coe d_collateralInputs_324 (coe v1)) (coe d_txOuts_326 (coe v1))
                             (coe d_txId_328 (coe v1)) (coe d_txCerts_330 (coe v1))
@@ -4063,7 +4063,7 @@ d_txSize_532 v0 = coe d_txSize_496 (coe v0)
 -- Ledger.Dijkstra.Foreign.Transaction._.txWitnesses
 d_txWitnesses_534 ::
   T_TxTop_480 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TxWitnesses_3676
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TxWitnesses_3678
 d_txWitnesses_534 v0 = coe d_txWitnesses_494 (coe v0)
 -- Ledger.Dijkstra.Foreign.Transaction.HsTy-TxTop
 d_HsTy'45'TxTop_536 ::
@@ -4322,7 +4322,7 @@ d_Conv'45'TxTop_538
                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                               (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                  (coe
-                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_vKeySigs_3804
+                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_vKeySigs_3806
                                     (coe v2)))))
                         (coe
                            MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSSet_68
@@ -4334,7 +4334,7 @@ d_Conv'45'TxTop_538
                                     MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Either_10
                                     (coe d_Conv'45'HSNativeScript_18)
                                     (coe d_Conv'45'HSPlutusScript_22)))
-                              (MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_scripts_3806
+                              (MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_scripts_3808
                                  (coe v2))))
                         (coe
                            MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSSet_68
@@ -4343,7 +4343,7 @@ d_Conv'45'TxTop_538
                               (coe
                                  MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                  (coe MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                              (MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txData_3808
+                              (MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txData_3810
                                  (coe v2))))
                         (coe
                            MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
@@ -4370,7 +4370,7 @@ d_Conv'45'TxTop_538
                                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))))
                               (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                  (coe
-                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txRedeemers_3810
+                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txRedeemers_3812
                                     (coe v2))))))
                      (coe v3) (coe v4)
                      (coe
@@ -5055,7 +5055,7 @@ d_Conv'45'TxTop_538
                            (coe
                               (\ v6 ->
                                  case coe v6 of
-                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.C_constructor_3814 v7 v8 v9 v10
+                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.C_constructor_3816 v7 v8 v9 v10
                                      -> coe
                                           C_MkTxWitnesses_4917
                                           (coe
@@ -5123,7 +5123,7 @@ d_Conv'45'TxTop_538
                                  case coe v6 of
                                    C_MkTxWitnesses_4917 v7 v8 v9 v10
                                      -> coe
-                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.C_constructor_3814
+                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.C_constructor_3816
                                           (coe
                                              MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
                                              (coe
