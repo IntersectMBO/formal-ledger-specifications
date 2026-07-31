@@ -4,6 +4,12 @@
 
 ### WIP
 
+- Prove the governance-deposit preservation-of-value facts (#1276), in new module
+  `Gov.Properties.PoV`: `rmOrphanDRepVotes-coinFromGovDeposit` (`rmOrphanDRepVotes`
+  leaves `coinFromGovDeposit` unchanged) and `GOVS-coinFromGovDeposit` (a `GOVS` step
+  grows `coinFromGovDeposit` by exactly `govProposalsDeposits` of its signal's
+  proposals).  These discharge the two Gov module parameters of `LEDGER-PoV` in
+  `Ledger.Properties.PoV`; the rewiring is #1277.
 - Prove preservation of value for the `LEDGER` rule (`LEDGER-pov`, #1187), under a
   `PoolDepositsRegistered` hypothesis on the initial state, in new module
   `Ledger.Properties.PoV`.  Supporting modules: `Entities.Properties.PoV`
