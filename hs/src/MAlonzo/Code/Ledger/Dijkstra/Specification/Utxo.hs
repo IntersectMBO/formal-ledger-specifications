@@ -3291,10 +3291,21 @@ d_UTXO'45'premises_3650 v0 v1 v2 v3 v4
                           (coe MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_594)
                           (coe d_utxo'8320'_3108 (coe v3)))))
                (coe
-                  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_SpendInputsOf_4046
+                  MAlonzo.Code.Axiom.Set.du__'8746'__708
                   (coe
-                     MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.du_HasSpendInputs'45'Tx_4418)
-                  v2))
+                     MAlonzo.Code.Axiom.Set.d_th_1516
+                     (coe
+                        MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                  (coe
+                     MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_SpendInputsOf_4046
+                     (coe
+                        MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.du_HasSpendInputs'45'Tx_4418)
+                     v2)
+                  (coe
+                     MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_collateralInputs_3748
+                     (coe
+                        MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3686
+                        (coe v2)))))
             (coe
                MAlonzo.Code.Class.Decidable.Instances.du_Dec'45''215'_14
                (coe

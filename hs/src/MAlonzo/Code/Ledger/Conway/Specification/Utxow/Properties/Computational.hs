@@ -105,7 +105,7 @@ d_computeProof_2350 v0 v1 v2 v3 v4
               (coe
                  MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
                  (coe
-                    MAlonzo.Code.Ledger.Conway.Specification.Utxow.d_UTXOW'45'inductive'45'premises_3124
+                    MAlonzo.Code.Ledger.Conway.Specification.Utxow.d_UTXOW'45'inductive'45'premises_3132
                     (coe v0) (coe v1) (coe v4) (coe v3) (coe v2))) in
     coe
       (case coe v5 of
@@ -153,7 +153,7 @@ d_computeProof_2350 v0 v1 v2 v3 v4
                                                                                                                  (\ v31
                                                                                                                     v32 ->
                                                                                                                     coe
-                                                                                                                      MAlonzo.Code.Ledger.Conway.Specification.Utxow.C_UTXOW'45'inductive_3090
+                                                                                                                      MAlonzo.Code.Ledger.Conway.Specification.Utxow.C_UTXOW'45'inductive_3098
                                                                                                                       (coe
                                                                                                                          MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                                                                          (coe
@@ -206,7 +206,7 @@ d_computeProof_2350 v0 v1 v2 v3 v4
                                                                                                                                                              v32))))))))))))))))
                                                                                                            (coe
                                                                                                               MAlonzo.Code.Interface.ComputationalRelation.d_computeProof_272
-                                                                                                              (MAlonzo.Code.Ledger.Conway.Specification.Utxo.Properties.Computational.d_Computational'45'UTXO_3166
+                                                                                                              (MAlonzo.Code.Ledger.Conway.Specification.Utxo.Properties.Computational.d_Computational'45'UTXO_3078
                                                                                                                  (coe
                                                                                                                     v0)
                                                                                                                  (coe
@@ -1604,6 +1604,6 @@ d_completeness_2382 ::
   MAlonzo.Code.Ledger.Conway.Specification.Utxo.T_UTxOState_2508 ->
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_Tx_3634 ->
   MAlonzo.Code.Ledger.Conway.Specification.Utxo.T_UTxOState_2508 ->
-  MAlonzo.Code.Ledger.Conway.Specification.Utxow.T__'8866'_'8640''10631'_'44'UTXOW'10632'__2982 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Utxow.T__'8866'_'8640''10631'_'44'UTXOW'10632'__2990 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
 d_completeness_2382 = erased
