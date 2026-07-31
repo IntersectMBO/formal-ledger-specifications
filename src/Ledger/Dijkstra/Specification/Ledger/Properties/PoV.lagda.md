@@ -9,8 +9,9 @@ This module proves the top-level preservation-of-value (PoV) theorem for the Dij
 `LEDGER`{.AgdaDatatype} rule.  If
 
 +  `Γ` is a ledger environment,
-+  `tx` is top-level transaction, and
-+  `s` and `s'` are ledger states related by `LEDGER`{.AgdaDatatype},
++  `tx` is a top-level transaction,
++  `s` and `s'` are ledger states related by `LEDGER`{.AgdaDatatype}, and
++  `s` satisfies `PoolDepositsRegistered`{.AgdaFunction} (see `Certs`{.AgdaModule}),
 
 then `getCoin s ≡ getCoin s'`.
 
@@ -24,56 +25,20 @@ Recall (from `Ledger.lagda.md`) that `getCoin (LedgerState)` is
 This is the sum of UTxO coin, the cert-state rewards balance
 (`coinFromRewards`{.AgdaFunction}), the deposits from `DState`{.AgdaRecord},
 `PState`{.AgdaRecord}, and `GState`{.AgdaRecord} (`coinFromDeposits`{.AgdaFunction}),
-and the governance-action deposits (`coinFromGovDeposit`{.AgdaFunction}).
+and the governance-action deposits (`coinFromGovDeposit`{.AgdaFunction}); the two
+middle summands are exactly `getCoin (CertStateOf s)`.
 
-Note `getCoin (CertState)` itself now sums the rewards balance *and* the deposit pots
-(`coinFromRewards + coinFromDeposits`), so the two middle summands are exactly
-`getCoin (CertStateOf s)`.
+The `LEDGER-V` chain accounts for all four summands.  The cert deposits cancel via
+the direct-deposit trick (see *Proof Strategy*), and the gov-deposit growth
+`G' − G₀` is matched against the produced-side `totGov` (the `gov-acc` lemma, from
+`SUBLEDGERS-gov-coin` + `GOVS-coinFromGovDeposit`).
 
-`getCoin` on a `LedgerState` has the four summands above — UTxO coin, rewards
-balance, the cert-deposit pots (`coinFromDeposits`), and the gov-action deposits
-(`coinFromGovDeposit`) — and the `LEDGER-V` chain accounts for all four.  The cert
-deposits cancel via the direct-deposit trick (see *Proof Strategy*), and the
-gov-deposit growth `G' − G₀` is matched against the produced-side `totGov` (the
-`gov-acc` lemma, from `SUBLEDGERS-gov-coin` + `GOVS-coinFromGovDeposit`).
-
-??? note "**Status: complete**"
-
-    `LEDGER-pov`{.AgdaFunction} typechecks end-to-end under `--safe` (no
-    postulates or holes).  Following the top-down plan, this module proves only the
-    top-level `LEDGER` preservation-of-value statement and leaves the supporting facts
-    as *module parameters*, discharged downstream:
-
-    +  **Certs-PoV** (`CERTS-pov`, `batch-cert-deposits-bridge`).
-
-    +  **Utxo/Utxow-PoV** (`utxow-pov-invalid`, `UTXOW-V-mechanical`,
-       `UTXOW-batch-balance-coin`, and the UTxO algebra `balance-∪`, `split-balance`,
-       `subutxow-step-coin`, `utxo₁-tx-spend-eq`, `fresh-top-tx-id`, etc.).
-
-       `UTXOW-batch-balance-coin` is the coin projection of the spec's
-       `consumedBatch ≡ producedBatch` premise, with the produced-side
-       `govProposalsDeposits` collected into a single trailing `totGov` term.
-       Its cert-deposit summands are obtained from `refundCertDeposits` and
-       `newCertDeposits` over `allDCerts tx`, against the pre-batch registered-pool
-       set, keeping it a pure UTxO obligation; `bat'` converts these to the chain's
-       top/sub two-level form using the `batch-cert-deposits-bridge` and
-       `posNeg-deposits`.
-
-    +  **Gov-deposit accounting** (`rmOrphanDRepVotes-coinFromGovDeposit`,
-       `GOVS-coinFromGovDeposit`), to be supplied by a future `Gov.Properties.PoV`.
-
-    +  **No-truncation bounds** (`ENTITIES-wdrls-bounded`, `SUBENTITIES-wdrls-bounded`).
-
-       Each withdrawal amount is bounded by the account's balance in the input state of
-       the `ENTITIES`/`SUBENTITIES` step that consumes it.
-
-       **N.B.**  The premises of the spec transition rules bound withdrawals only
-       against the *pre-batch* snapshot `rewards₀` (except top-level legacy mode,
-       which forces exact-balance withdrawals), which does not by itself bound them
-       against the input state of a later step in the batch. This is the
-       phantom-withdrawal gap.[^1] As such, these module parameters should be
-       discharged in the follow-up to that discussion, either by spec rule premises
-       or by a batch-threading invariant.
+The `PoolDepositsRegistered`{.AgdaFunction} hypothesis is necessary, not an artifact
+of the proof: the batch balance charges `newCertDeposits`{.AgdaFunction} against the
+registered-pool set, while `POOL-reg`{.AgdaInductiveConstructor}'s left-biased pot
+update silently keeps a stale entry for an unregistered pool — at a state with such
+an entry, a pool registration destroys the charged deposit and the theorem is false.
+On-chain states satisfy the hypothesis by construction.
 
 ## Proof Strategy
 
@@ -89,14 +54,18 @@ the central trick — direct-deposit value appears both on the UTxO side (via
 `producedBatch`) and on the CertState side (via `applyDirectDeposits` inside
 `ENTITIES`) and cancels in the total.
 
-Concretely, the proof uses three helper lemmas.
+Concretely, the proof composes four inductions over the `SUBLEDGERS`{.AgdaDatatype}
+reflexive-transitive closure, plus one arithmetic identity.
 
-+  **`SUBLEDGERS-utxo-coin`{.AgdaFunction}** inducts over the `SUBLEDGERS`{.AgdaDatatype}
-   reflexive-transitive closure, threading the per-`SUBUTXOW` coin equation
++  **`SUBLEDGERS-utxo-coin`{.AgdaFunction}** threads the per-`SUBUTXOW` coin equation
    (`subutxow-step-coin`).
-+  **`SUBLEDGERS-certs-pov`{.AgdaFunction}** is parallel induction over
-   `SUBLEDGERS`{.AgdaDatatype}, composing per-sub-transaction
-   `SUBENTITIES-pov`{.AgdaFunction} invocations.
++  **`SUBLEDGERS-certs-pov`{.AgdaFunction}** composes per-sub-transaction
+   `SUBENTITIES-pov`{.AgdaFunction} invocations (the rewards flow).
++  **`SUBLEDGERS-deposits`{.AgdaFunction}** (with `SUBLEDGERS-registered`{.AgdaFunction})
+   telescopes the per-step closed-form deposit accounting into the batch-wide
+   equation consumed by `bat'`.
++  **`SUBLEDGERS-gov-coin`{.AgdaFunction}** accumulates the per-`GOVS` gov-deposit
+   growth.
 +  **`posNeg-deposits`{.AgdaFunction}** equationally relates the pre-/post-batch deposit
    totals to the `posPart`/`negPart` of `calculateDepositsChange`.
 
@@ -122,6 +91,7 @@ open import Data.Nat.Properties
 open import Data.Nat.Tactic.RingSolver using (solve-∀; solve)
 open import Data.Integer using (ℤ; _⊖_)
 open import Data.Integer.Properties using ([1+m]⊖[1+n]≡m⊖n)
+open import Data.List.Properties using (++-assoc)
 open import Data.List.Relation.Unary.Unique.Propositional using (Unique)
 
 open import Ledger.Prelude
@@ -152,25 +122,24 @@ instance
 
 ## The `LEDGER-PoV` module
 
-`LEDGER-pov`{.AgdaFunction} currently depends on module parameters from the following
-groups:
+The supporting facts about the auxiliary transition systems are module parameters,
+in five groups:
 
-+  the three set/map identities from `ApplyToRewards-PoV`{.AgdaModule}
++  the set/map identities consumed by `ApplyToRewards-PoV`{.AgdaModule}
    (`∪ˡ-lookup-preserve`, `sum-map-proj₂≡getCoin`, `setToList-Unique`);
-+  the UTxO arithmetic / freshness assumptions and batch-wide invariants
++  the UTxO facts: coin equations for the `UTXOW`/`SUBUTXOW` steps and batch-wide
+   freshness/disjointness invariants
    (`balance-∪`, `split-balance`, `noMintTx`, `noMintSubTx`, `outs-disjoint`,
    `subutxow-step-coin`, `utxo₁-tx-spend-eq`, `fresh-top-tx-id`,
    `utxow-pov-invalid`, `UTXOW-V-mechanical`, `UTXOW-batch-balance-coin`);
-+  the Certs facts (`CERTS-pov`, `batch-cert-deposits-bridge`);
++  the Certs facts: value accounting for a single `CERTS`{.AgdaDatatype} run
+   (`CERTS-rewards-pov`, `CERTS-deposits-pov`, `CERTS-deposits-registered`,
+   `CERTS-new-thread`, `refundCertDeposits-++`);
 +  the governance-deposit facts (`rmOrphanDRepVotes-coinFromGovDeposit`,
-   `GOVS-coinFromGovDeposit`) from a future `Gov.Properties.PoV`;
+   `GOVS-coinFromGovDeposit`);
 +  the no-truncation withdrawal bounds (`ENTITIES-wdrls-bounded`,
-   `SUBENTITIES-wdrls-bounded`), the phantom-withdrawal gap,[^1]
-   to be discharged by a spec-side premise or a batch-threading invariant.
-
-All are stated with detailed provenance notes in comments and are to be discharged in
-follow-up work.  This parameter list is the frozen interface between this proof and
-the follow-ups.
+   `SUBENTITIES-wdrls-bounded`); see `Entities.Properties.PoV`{.AgdaModule} for why
+   these are not consequences of the rules' own premises.
 
 ```agda
 noMintingSubTxs : TopLevelTx → Type
@@ -237,37 +206,41 @@ module LEDGER-PoV
       → subΓ ⊢ s ⇀⦇ SubTransactionsOf tx ,SUBLEDGERS⦈ ⟦ utxoSt₁ , govSt₁ , certState₁ ⟧ˡ
       → TxIdOf tx ∉ mapˢ proj₁ (dom (UTxOOf utxoSt₁)) )
 
-  -- Certs-PoV stubs to be discharged in follow-up PR
-  ( CERTS-pov : {Γ : CertEnv} {s s' : CertState} {dCerts : List DCert}
+  -- Value accounting for a single CERTS run (consumed via `ENTITIES-PoV`):
+  -- rewards preservation; closed-form deposit accounting (which needs the
+  -- pool-deposit registration invariant, see `PoolDepositsRegistered` in `Certs`);
+  -- preservation of that invariant; and the `newCertDeposits` split at a CERTS-run
+  -- boundary, against the run's final pool set — what lets per-step accounting
+  -- compose across a batch.
+  ( CERTS-rewards-pov : {Γ : CertEnv} {s s' : CertState} {dCerts : List DCert}
       → Γ ⊢ s ⇀⦇ dCerts ,CERTS⦈ s' → coinFromRewards s ≡ coinFromRewards s' )
 
-  -- Batch-wide cert-deposit bridge (discharged later).  The closed-form
-  -- deposit accounting over *all* batch certs balances against actual
-  -- `coinFromDeposits` evolution from pre-batch cert state `CertStateOf ls₀` to
-  -- post-`ENTITIES` cert state `cs₂`:
-  --
-  --     D₀ + newCertDeposits ≡ D₂ + refundCertDeposits
-  --
-  -- The premises pin `cs₂` to the batch's cert evolution (`SUBLEDGERS` over sub-txs,
-  -- then top-level `ENTITIES`); composing per-step cert bridges across the batch is
-  -- follow-up (CERTS PoV) work.
-  ( batch-cert-deposits-bridge :
-      {Γsub : SubLedgerEnv} {ls₀ ls₁ : LedgerState} {Γe : EntitiesEnv} {cs₂ : CertState}
-      → SubLedgerEnv.isTopLevelValid Γsub ≡ true
-      → Γsub ⊢ ls₀ ⇀⦇ SubTransactionsOf tx ,SUBLEDGERS⦈ ls₁
-      → Γe ⊢ CertStateOf ls₁ ⇀⦇ tx ,ENTITIES⦈ cs₂
-      → coinFromDeposits (CertStateOf ls₀)
-          + newCertDeposits (PParamsOf Γe) (dom (PoolsOf (CertStateOf ls₀))) (allDCerts tx)
-        ≡ coinFromDeposits cs₂
-          + refundCertDeposits (PParamsOf Γe) (allDCerts tx) )
+  ( CERTS-deposits-pov : {Γ : CertEnv} {s s' : CertState} {dCerts : List DCert}
+      → PoolDepositsRegistered s
+      → Γ ⊢ s ⇀⦇ dCerts ,CERTS⦈ s'
+      → coinFromDeposits s  + newCertDeposits (PParamsOf Γ) (dom (PoolsOf s)) dCerts
+      ≡ coinFromDeposits s' + refundCertDeposits (PParamsOf Γ) dCerts )
 
-  -- No-truncation withdrawal bounds (the phantom-withdrawal gap; see review of #1256).
-  -- `applyWithdrawals` subtracts with `_∸_`, so ENTITIES/SUBENTITIES value-flow
-  -- equations need each withdrawal amount bounded by account's balance in the
-  -- *input* state of the step that consumes it.  Premises bound withdrawals only
-  -- against the pre-batch `rewards₀` (except top-level legacy mode), so these facts
-  -- are assumed here, to be discharged by a spec-side premise or a batch-threading
-  -- invariant in follow-up to that discussion.
+  ( CERTS-deposits-registered : {Γ : CertEnv} {s s' : CertState} {dCerts : List DCert}
+      → PoolDepositsRegistered s
+      → Γ ⊢ s ⇀⦇ dCerts ,CERTS⦈ s'
+      → PoolDepositsRegistered s' )
+
+  ( CERTS-new-thread : {Γ : CertEnv} {s s' : CertState} {dCerts : List DCert}
+      → Γ ⊢ s ⇀⦇ dCerts ,CERTS⦈ s'
+      → (ys : List DCert)
+      → newCertDeposits (PParamsOf Γ) (dom (PoolsOf s)) (dCerts ++ ys)
+      ≡ newCertDeposits (PParamsOf Γ) (dom (PoolsOf s)) dCerts
+        + newCertDeposits (PParamsOf Γ) (dom (PoolsOf s')) ys )
+
+  -- `refundCertDeposits` is a plain fold over the certificate list; it distributes
+  -- over concatenation.
+  ( refundCertDeposits-++ : (pp' : PParams) (xs ys : List DCert)
+      → refundCertDeposits pp' (xs ++ ys)
+      ≡ refundCertDeposits pp' xs + refundCertDeposits pp' ys )
+
+  -- No-truncation withdrawal bounds; see `Entities.Properties.PoV` for why these
+  -- are hypotheses rather than consequences of the rules' own premises.
   ( ENTITIES-wdrls-bounded : {Γe : EntitiesEnv} {cs cs' : CertState}
       → Γe ⊢ cs ⇀⦇ tx ,ENTITIES⦈ cs'
       → ∀[ (addr , amt) ∈ (WithdrawalsOf tx) ˢ ]
@@ -277,9 +250,9 @@ module LEDGER-PoV
       → ∀[ (addr , amt) ∈ (WithdrawalsOf stx) ˢ ]
           amt ≤ maybe id 0 (lookupᵐ? (RewardsOf cs) (stake addr)) )
 
-  -- Governance-deposit accounting (to be discharged by future `Gov.Properties.PoV`).
-  -- `rmOrphanDRepVotes` only rewrites `votes.gvDRep`, never `GovActionState.deposit`,
-  -- so it leaves `coinFromGovDeposit` unchanged.
+  -- Governance-deposit accounting.  `rmOrphanDRepVotes` only rewrites
+  -- `votes.gvDRep`, never `GovActionState.deposit`, so it leaves
+  -- `coinFromGovDeposit` unchanged.
   ( rmOrphanDRepVotes-coinFromGovDeposit :
       (cs : CertState) (g : GovState)
       → coinFromGovDeposit (rmOrphanDRepVotes cs g) ≡ coinFromGovDeposit g )
@@ -292,7 +265,7 @@ module LEDGER-PoV
       → coinFromGovDeposit govSt′
         ≡ coinFromGovDeposit govSt + govProposalsDeposits (PParamsOf Γ) (proposalsOf props) )
 
-  -- Utxo/Utxow-PoV facts (discharged later) --
+  -- Utxo/Utxow-PoV facts --
 
   -- Invalid top-level tx: the UTXOW step preserves UTxO coin.
   ( utxow-pov-invalid : {Γ' : UTxOEnv} {s₀ s₁ : UTxOState}
@@ -308,11 +281,11 @@ module LEDGER-PoV
         ≡ getCoin s₁ + cbalance (UTxOOf s₀ ∣ SpendInputsOf tx) )
 
   -- Closed-form coin projection of the batch balance `consumedBatch ≡ producedBatch`
-  -- (discharged by UTXO/UTXOW PoV; minted terms drop by `noMintTx`/`noMintSubTx`).
-  -- cert-deposit summands are in spec's *closed form*:
-  -- `refundCertDeposits`/`newCertDeposits` over `allDCerts tx`, with pool set drawn
-  -- from environment's pre-batch `pools₀`, keeping this a pure UTxO obligation.
-  -- governance-deposit summands sit on produced side, matching `producedTx`.
+  -- (the minted terms drop by `noMintTx`/`noMintSubTx`).  The cert-deposit summands
+  -- are in the spec's *closed form* — `refundCertDeposits`/`newCertDeposits` over
+  -- `allDCerts tx`, with the pool set drawn from the environment's pre-batch
+  -- `pools₀` — keeping this a pure UTxO obligation.  The governance-deposit summands
+  -- sit on the produced side, matching `producedTx`.
   ( UTXOW-batch-balance-coin : {Γ' : UTxOEnv} {s₀ s₁ : UTxOState}
       → Γ' ⊢ s₀ ⇀⦇ tx ,UTXOW⦈ s₁
       → cbalance (UTxOOf Γ' ∣ SpendInputsOf tx) + getCoin (WithdrawalsOf tx)
@@ -328,10 +301,9 @@ module LEDGER-PoV
                        (SubTransactionsOf tx)) ) )
   where
 
-  open ENTITIES-PoV ∪ˡ-lookup-preserve sum-map-proj₂≡getCoin setToList-Unique CERTS-pov
-
-  -- When UTXOW PoV proof lands, we'll uncomment the following line, adding appropriate args.
-  -- open UTXOW-PoV ...
+  open ENTITIES-PoV ∪ˡ-lookup-preserve sum-map-proj₂≡getCoin setToList-Unique
+                    CERTS-rewards-pov CERTS-deposits-pov CERTS-deposits-registered
+                    CERTS-new-thread
 ```
 
 ## Small arithmetic helpers
@@ -341,7 +313,7 @@ ring solver over the commutative semiring of naturals (`Data.Nat.Tactic.RingSolv
 `solve-∀`{.AgdaMacro} proves a closed, universally quantified equation outright, and
 the in-context `solve`{.AgdaMacro} (applied to the list of atoms) proves an equation
 whose variables are already in scope; this is needed where a lemma's trailing
-variables are implicit, since `solve-∀`{.AgdaMacro} only handles visible binders.[^2]
+variables are implicit, since `solve-∀`{.AgdaMacro} only handles visible binders.[^1]
 
 ```agda
   swap-right : ∀ a b c → a +ᴺ b +ᴺ c ≡ a +ᴺ c +ᴺ b
@@ -360,8 +332,9 @@ variables are implicit, since `solve-∀`{.AgdaMacro} only handles visible binde
 The cert-deposit change is the integer delta of `coinFromDeposits`{.AgdaFunction} at
 the top and sub levels.  The `LEDGER-V` chain tracks the deposit pots in this
 two-level `posPart`/`negPart` form; `bat'` obtains it from the closed-form
-`UTXOW-batch-balance-coin`{.AgdaFunction} parameter via the
-`batch-cert-deposits-bridge`{.AgdaFunction} and `posNeg-deposits`{.AgdaFunction}.
+`UTXOW-batch-balance-coin`{.AgdaFunction} parameter via the batch-wide deposit
+accounting (`bridgeEq`, composed by `SUBLEDGERS-deposits`{.AgdaFunction}) and
+`posNeg-deposits`{.AgdaFunction}.
 
 ```agda
   DepositsChange : Type
@@ -525,6 +498,109 @@ invocations.  The `NetworkId` witnesses and domain conditions are premises of th
     ih = SUBLEDGERS-certs-pov isV rest
 ```
 
+## `SUBLEDGERS-deposits`
+
+Composing the per-step deposit accounting across the batch.
+`refund-concatMap`{.AgdaFunction} distributes `refundCertDeposits`{.AgdaFunction}
+over the batch's certificate lists; `SUBLEDGERS-registered`{.AgdaFunction} threads
+the pool-deposit registration invariant; and `SUBLEDGERS-deposits`{.AgdaFunction}
+telescopes the per-step closed forms, using
+`SUBENTITIES-new-thread`{.AgdaFunction} to split `newCertDeposits`{.AgdaFunction} at
+each step boundary — necessary because the pool set a `regpool` is charged against
+evolves through the batch.  The trailing certificate list `ys`{.AgdaBound}
+generalises the statement so the induction goes through; the `LEDGER-V` proof
+instantiates it with the top-level transaction's certificates.
+
+```agda
+  refund-concatMap : (pp' : PParams) (stxs : List SubLevelTx)
+    → refundCertDeposits pp' (concatMap DCertsOf stxs)
+    ≡ sum (map (refundCertDeposits pp' ∘ DCertsOf) stxs)
+  refund-concatMap pp' []           = refl
+  refund-concatMap pp' (stx ∷ stxs) =
+    trans (refundCertDeposits-++ pp' (DCertsOf stx) (concatMap DCertsOf stxs))
+          (cong (refundCertDeposits pp' (DCertsOf stx) +_) (refund-concatMap pp' stxs))
+
+  SUBLEDGERS-registered :
+    {Γ : SubLedgerEnv}
+    {s₀ s₁ : LedgerState}
+    {stxs : List SubLevelTx}
+    → Γ .isTopLevelValid ≡ true
+    → PoolDepositsRegistered (CertStateOf s₀)
+    → Γ ⊢ s₀ ⇀⦇ stxs ,SUBLEDGERS⦈ s₁
+    → PoolDepositsRegistered (CertStateOf s₁)
+
+  SUBLEDGERS-registered _ registered (BS-base Id-nop) = registered
+
+  SUBLEDGERS-registered isV _ (BS-ind (SUBLEDGER-I (isI , _)) _) =
+    ⊥-elim (case trans (sym isV) isI of λ ())
+
+  SUBLEDGERS-registered isV registered (BS-ind (SUBLEDGER-V (_ , _ , entitiesStep , _)) rest) =
+    SUBLEDGERS-registered isV (SUBENTITIES-deposits-registered registered entitiesStep) rest
+
+  SUBLEDGERS-deposits :
+    {Γ : SubLedgerEnv}
+    {s₀ s₁ : LedgerState}
+    {stxs : List SubLevelTx}
+    → Γ .isTopLevelValid ≡ true
+    → PoolDepositsRegistered (CertStateOf s₀)
+    → Γ ⊢ s₀ ⇀⦇ stxs ,SUBLEDGERS⦈ s₁
+    → (ys : List DCert)
+    → coinFromDeposits (CertStateOf s₀)
+        + newCertDeposits (Γ .pparams) (dom (PoolsOf (CertStateOf s₀))) (concatMap DCertsOf stxs ++ ys)
+    ≡ coinFromDeposits (CertStateOf s₁)
+        + sum (map (refundCertDeposits (Γ .pparams) ∘ DCertsOf) stxs)
+        + newCertDeposits (Γ .pparams) (dom (PoolsOf (CertStateOf s₁))) ys
+
+  SUBLEDGERS-deposits {Γ} {s₀ = s₀} _ _ (BS-base Id-nop) ys =
+    cong (_+ newCertDeposits (Γ .pparams) (dom (PoolsOf (CertStateOf s₀))) ys)
+         (sym (+-identityʳ (coinFromDeposits (CertStateOf s₀))))
+
+  SUBLEDGERS-deposits isV _ (BS-ind (SUBLEDGER-I (isI , _)) _) ys =
+    ⊥-elim (case trans (sym isV) isI of λ ())
+
+  SUBLEDGERS-deposits {Γ} isV registered (BS-ind {s = s₀} {s' = s₁} {sigs} {s'' = sₙ}
+    (SUBLEDGER-V {stx = stx} (_ , _ , entitiesStep , _)) rest) ys =
+    begin
+      D₀ + new P₀ ((DCertsOf stx ++ concatMap DCertsOf sigs) ++ ys)
+        ≡⟨ cong (λ l → D₀ + new P₀ l) (++-assoc (DCertsOf stx) (concatMap DCertsOf sigs) ys) ⟩
+      D₀ + new P₀ (DCertsOf stx ++ (concatMap DCertsOf sigs ++ ys))
+        ≡⟨ cong (D₀ +_) (SUBENTITIES-new-thread entitiesStep (concatMap DCertsOf sigs ++ ys)) ⟩
+      D₀ + (new P₀ (DCertsOf stx) + new P₁ (concatMap DCertsOf sigs ++ ys))
+        ≡˘⟨ +-assoc D₀ (new P₀ (DCertsOf stx)) (new P₁ (concatMap DCertsOf sigs ++ ys)) ⟩
+      D₀ + new P₀ (DCertsOf stx) + new P₁ (concatMap DCertsOf sigs ++ ys)
+        ≡⟨ cong (_+ new P₁ (concatMap DCertsOf sigs ++ ys))
+                (SUBENTITIES-deposits-pov registered entitiesStep) ⟩
+      D₁ + refund₀ + new P₁ (concatMap DCertsOf sigs ++ ys)
+        ≡⟨ swap-right D₁ refund₀ (new P₁ (concatMap DCertsOf sigs ++ ys)) ⟩
+      D₁ + new P₁ (concatMap DCertsOf sigs ++ ys) + refund₀
+        ≡⟨ cong (_+ refund₀) (SUBLEDGERS-deposits isV registered₁ rest ys) ⟩
+      Dₙ + refundSum + new Pₙ ys + refund₀
+        ≡⟨ resh Dₙ refundSum (new Pₙ ys) refund₀ ⟩
+      Dₙ + (refund₀ + refundSum) + new Pₙ ys
+        ∎
+    where
+    new : ℙ KeyHash → List DCert → Coin
+    new = newCertDeposits (Γ .pparams)
+
+    D₀ D₁ Dₙ refund₀ refundSum : Coin
+    D₀ = coinFromDeposits (CertStateOf s₀)
+    D₁ = coinFromDeposits (CertStateOf s₁)
+    Dₙ = coinFromDeposits (CertStateOf sₙ)
+    refund₀   = refundCertDeposits (Γ .pparams) (DCertsOf stx)
+    refundSum = sum (map (refundCertDeposits (Γ .pparams) ∘ DCertsOf) sigs)
+
+    P₀ P₁ Pₙ : ℙ KeyHash
+    P₀ = dom (PoolsOf (CertStateOf s₀))
+    P₁ = dom (PoolsOf (CertStateOf s₁))
+    Pₙ = dom (PoolsOf (CertStateOf sₙ))
+
+    registered₁ : PoolDepositsRegistered (CertStateOf s₁)
+    registered₁ = SUBENTITIES-deposits-registered registered entitiesStep
+
+    resh : ∀ a b c d → a +ᴺ b +ᴺ c +ᴺ d ≡ a +ᴺ (d +ᴺ b) +ᴺ c
+    resh = solve-∀
+```
+
 ## `SUBLEDGERS-gov-coin`
 
 Induct over `SUBLEDGERS`, threading the per-`GOVS` gov-deposit growth: each
@@ -593,8 +669,12 @@ premise).  `SUBLEDGER-I` is ruled out by the top-level validity flag.
 
 ## `LEDGER-pov`
 
+The pool-deposit registration hypothesis concerns the initial state only; it is
+threaded through the batch by `SUBLEDGERS-registered`{.AgdaFunction} where needed.
+
 ```agda
   LEDGER-pov : {Γ : LedgerEnv} {s s' : LedgerState}
+    → PoolDepositsRegistered (CertStateOf s)
     → Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s' → getCoin s ≡ getCoin s'
 ```
 
@@ -605,7 +685,7 @@ are unchanged.  Only the `UTXOW` step affects `getCoin`, and it preserves it via
 `utxow-pov-invalid`.
 
 ```agda
-  LEDGER-pov {Γ} {s} (LEDGER-I (invalid , _ , utxoStep)) =
+  LEDGER-pov {Γ} {s} _ (LEDGER-I (invalid , _ , utxoStep)) =
     cong  ( λ u → u  + coinFromRewards (CertStateOf s) + coinFromDeposits (CertStateOf s)
                      + coinFromGovDeposit (GovStateOf s) )
           ( utxow-pov-invalid utxoStep invalid )
@@ -634,7 +714,7 @@ The body assembles the four-summand goal from two `where`-lemmas.
 +  **`gov-acc`**: `totGov+G₀ ≡ G'`, the gov-deposit accounting.
 
 ```agda
-  LEDGER-pov {Γ} {s}
+  LEDGER-pov {Γ} {s} registered₀
     (LEDGER-V {utxoState₁ = us₁} {govState₁ = govSt₁} {certState₁ = cs₁}
               {certState₂ = cs₂} {govState₂ = govSt₂} {utxoState₂ = us₂}
               (valid , subStep , entitiesStep , govStep , utxoStep)) =
@@ -865,18 +945,53 @@ The batch balance, rephrased to expose direct deposits and bring withdrawals tog
             (B + PZ + G) + (D0 + Pt + Ps) ≡⟨ rearr-Z ⟩
             (B + Pt + Ps + G) + (D0 + PZ) ∎
 
-        -- The #1186 closed-form batch balance (cert deposits in the spec's closed
-        -- form, over `allDCerts tx` against the pre-batch registered-pool set).
+        -- The closed-form batch balance (cert deposits in the spec's closed form,
+        -- over `allDCerts tx` against the pre-batch registered-pool set).
         closedEq : Ctop + Wtop + CsubW + refundCertDeposits pp (allDCerts tx)
                  ≡ O + F + DN + DDtop + PsubDD
                    + newCertDeposits pp (dom (PoolsOf (CertStateOf s))) (allDCerts tx) + totGov
         closedEq = UTXOW-batch-balance-coin utxoStep
 
-        -- The #1210 batch cert-deposit bridge, in ℕ form:
-        -- pre-batch deposits + new deposits ≡ post-batch deposits + refunds.
+        -- Batch-wide cert-deposit accounting, in ℕ form: pre-batch deposits + new
+        -- deposits ≡ post-batch deposits + refunds.  Composed from the per-step
+        -- SUBENTITIES/ENTITIES deposit equations: `SUBLEDGERS-deposits` telescopes
+        -- the sub-transactions (leaving the top-level certificates as the trailing
+        -- list), `ENTITIES-deposits-pov` accounts for the top-level step, and the
+        -- refunds recombine via `refund-concatMap`/`refundCertDeposits-++`.
         bridgeEq : D₀ + newCertDeposits pp (dom (PoolsOf (CertStateOf s))) (allDCerts tx)
                  ≡ D₂ + refundCertDeposits pp (allDCerts tx)
-        bridgeEq = batch-cert-deposits-bridge valid subStep entitiesStep
+        bridgeEq = begin
+          D₀ + newCertDeposits pp (dom (PoolsOf (CertStateOf s))) (allDCerts tx)
+            ≡⟨ SUBLEDGERS-deposits valid registered₀ subStep (DCertsOf tx) ⟩
+          D₁' + refundSubs + newCertDeposits pp P₁ (DCertsOf tx)
+            ≡⟨ swap-right D₁' refundSubs (newCertDeposits pp P₁ (DCertsOf tx)) ⟩
+          D₁' + newCertDeposits pp P₁ (DCertsOf tx) + refundSubs
+            ≡⟨ cong (_+ refundSubs) (ENTITIES-deposits-pov registered₁ entitiesStep) ⟩
+          D₂ + refundCertDeposits pp (DCertsOf tx) + refundSubs
+            ≡⟨ swap-right D₂ (refundCertDeposits pp (DCertsOf tx)) refundSubs ⟩
+          D₂ + refundSubs + refundCertDeposits pp (DCertsOf tx)
+            ≡˘⟨ cong (λ x → D₂ + x + refundCertDeposits pp (DCertsOf tx))
+                     (refund-concatMap pp (SubTransactionsOf tx)) ⟩
+          D₂ + refundCertDeposits pp (concatMap DCertsOf (SubTransactionsOf tx))
+             + refundCertDeposits pp (DCertsOf tx)
+            ≡⟨ +-assoc D₂ (refundCertDeposits pp (concatMap DCertsOf (SubTransactionsOf tx)))
+                          (refundCertDeposits pp (DCertsOf tx)) ⟩
+          D₂ + ( refundCertDeposits pp (concatMap DCertsOf (SubTransactionsOf tx))
+               + refundCertDeposits pp (DCertsOf tx) )
+            ≡˘⟨ cong (D₂ +_)
+                     (refundCertDeposits-++ pp (concatMap DCertsOf (SubTransactionsOf tx)) (DCertsOf tx)) ⟩
+          D₂ + refundCertDeposits pp (allDCerts tx)
+            ∎
+          where
+          D₁' refundSubs : Coin
+          D₁' = coinFromDeposits cs₁
+          refundSubs = sum (map (refundCertDeposits pp ∘ DCertsOf) (SubTransactionsOf tx))
+
+          P₁ : ℙ KeyHash
+          P₁ = dom (PoolsOf cs₁)
+
+          registered₁ : PoolDepositsRegistered cs₁
+          registered₁ = SUBLEDGERS-registered valid registered₀ subStep
 
         -- Convert the closed-form balance to the chain's two-level posPart/negPart
         -- form, via `net-arith` fed the bridge (`bridgeEq`) and the two-level
@@ -1021,9 +1136,7 @@ on both sides:
                                   (proposalsOf-Proposals+Votes tx))
 ```
 
-[^1]: See the review of PR #1256.
-
-[^2]: One wrinkle: the solver recognises the ring's operations *syntactically*, so
+[^1]: One wrinkle: the solver recognises the ring's operations *syntactically*, so
       the `Ledger.Prelude` overloaded `_+_` (a `HasAdd`{.AgdaRecord} method, which merely
       *reduces* to `Data.Nat._+_`) defeats it.  The solver-facing statements are therefore
       written with the raw natural-number addition, imported as `_+ᴺ_` — definitionally

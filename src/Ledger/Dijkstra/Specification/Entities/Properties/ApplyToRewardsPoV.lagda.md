@@ -142,8 +142,7 @@ split-by-lookup acc c bal lookup-eq =
 ### The `ApplyToRewards-PoV` module
 
 The three assumed identities below are the same set/map identities used by the Conway
-PoV proofs; they are stated as module parameters here, to be discharged in a
-follow-up against the `agda-sets` library.
+PoV proofs; they are stated as module parameters here.
 
 +  `∪ˡ-lookup-preserve`: lookup in a left-biased union with a singleton at `c` agrees
    with lookup in the right map for any key `c' ≠ c`.
