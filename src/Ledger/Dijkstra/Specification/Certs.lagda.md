@@ -302,6 +302,8 @@ private variable
   retiring               : Retiring
   A                      : Type
   deposits deposits'     : A ⇀ Coin
+  depositsᵍ depositsᵍ'    : Credential ⇀ Coin
+  depositsᵈ depositsᵈ'    : Credential ⇀ Coin
 
   an          : Anchor
   Γ           : CertEnv
@@ -321,6 +323,7 @@ private variable
   stᵈ stᵈ' : DState
   stᵍ stᵍ' : GState
   stᵖ stᵖ' : PState
+  stᶜ stᶜ' : CertState
   cc : ℙ Credential
 ```
 -->
@@ -448,24 +451,24 @@ data _⊢_⇀⦇_,POOL⦈_ : PoolEnv → PState → DCert → PState → Type wh
 ## `GOVCERT`{.AgdaDatatype} Transition System
 
 ```agda
-data _⊢_⇀⦇_,GOVCERT⦈_ : GovCertEnv → GState → DCert → GState → Type where
+data _⊢_⇀⦇_,GOVCERT⦈_ : GovCertEnv → CertState → DCert → CertState → Type where
 
   GOVCERT-regdrep :
     ∙ (d ≡ pp .drepDeposit × c ∉ dom dReps) ⊎ (d ≡ 0 × c ∈ dom dReps)
       ────────────────────────────────
-      ⟦ e , pp , cc ⟧ ⊢ ⟦ dReps , ccKeys , deposits ⟧ ⇀⦇ regdrep c d an ,GOVCERT⦈ ⟦ ❴ c , e + pp .drepActivity ❵ ∪ˡ dReps , ccKeys , deposits ∪⁺ ❴ c , d ❵ ⟧
+      ⟦ e , pp , cc ⟧ ⊢ ⟦ stᵈ , stᵖ , ⟦ dReps , ccKeys , depositsᵍ ⟧ ⟧ ⇀⦇ regdrep c d an ,GOVCERT⦈ ⟦ stᵈ , stᵖ , ⟦ ❴ c , e + pp .drepActivity ❵ ∪ˡ dReps , ccKeys , depositsᵍ ∪⁺ ❴ c , d ❵ ⟧ ⟧
 
   GOVCERT-deregdrep :
     ∙ c ∈ dom dReps
-    ∙ (c , d) ∈ deposits
+    ∙ (c , d) ∈ depositsᵍ
       ────────────────────────────────
-      ⟦ e , pp , cc ⟧ ⊢ ⟦ dReps , ccKeys , deposits ⟧ ⇀⦇ deregdrep c d ,GOVCERT⦈ ⟦ dReps ∣ ❴ c ❵ ᶜ , ccKeys , deposits ∣ ❴ c ❵ ᶜ ⟧
+      ⟦ e , pp , cc ⟧ ⊢ ⟦ ⟦ vDelegs , sDelegs , rwds , depositsᵈ ⟧ , stᵖ , ⟦ dReps , ccKeys , depositsᵍ ⟧ ⟧ ⇀⦇ deregdrep c d ,GOVCERT⦈ ⟦ ⟦ vDelegs ∣^ ❴ vDelegCredential c ❵ ᶜ , sDelegs , rwds , depositsᵈ ⟧ , stᵖ , ⟦ dReps ∣ ❴ c ❵ ᶜ , ccKeys , depositsᵍ ∣ ❴ c ❵ ᶜ ⟧ ⟧
 
   GOVCERT-ccreghot :
     ∙ (c , nothing) ∉ ccKeys
     ∙ c ∈ cc
       ────────────────────────────────
-      ⟦ e , pp , cc ⟧ ⊢ ⟦ dReps , ccKeys , deposits ⟧ ⇀⦇ ccreghot c mc ,GOVCERT⦈ ⟦ dReps , ❴ c , mc ❵ ∪ˡ ccKeys , deposits ⟧
+      ⟦ e , pp , cc ⟧ ⊢ ⟦ stᵈ , stᵖ , ⟦ dReps , ccKeys , depositsᵍ ⟧ ⟧ ⇀⦇ ccreghot c mc ,GOVCERT⦈ ⟦ stᵈ , stᵖ , ⟦ dReps , ❴ c , mc ❵ ∪ˡ ccKeys , depositsᵍ ⟧ ⟧
 ```
 
 # `CERT`{.AgdaDatatype} Transition System
@@ -484,9 +487,9 @@ data _⊢_⇀⦇_,CERT⦈_  : CertEnv → CertState → DCert → CertState → 
       ⟦ e , pp , cc ⟧ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ , stᵖ' , stᵍ ⟧
 
   CERT-gov :
-    ∙ ⟦ e , pp , cc ⟧ ⊢ stᵍ ⇀⦇ dCert ,GOVCERT⦈ stᵍ'
+    ∙ ⟦ e , pp , cc ⟧ ⊢ stᶜ ⇀⦇ dCert ,GOVCERT⦈ stᶜ'
       ────────────────────────────────
-      ⟦ e , pp , cc ⟧ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ , stᵖ , stᵍ' ⟧
+      ⟦ e , pp , cc ⟧ ⊢ stᶜ ⇀⦇ dCert ,CERT⦈ stᶜ'
 ```
 
 # `CERTS`{.AgdaDatatype} Transition System
