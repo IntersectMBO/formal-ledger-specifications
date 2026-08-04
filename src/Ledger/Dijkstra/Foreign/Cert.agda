@@ -17,10 +17,6 @@ open import Ledger.Dijkstra.Specification.Certs.Properties.Computational DummyGo
 
 open Computational
 
-instance
-  HsTy-CertState = autoHsType CertState ⊣ withConstructor "MkCertState"
-  Conv-CertState = autoConvert CertState
-
 cert-step : HsType (CertEnv → CertState → DCert → ComputationResult String CertState)
 cert-step = to (compute Computational-CERT)
 

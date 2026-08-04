@@ -147,8 +147,6 @@ data _⊢_⇀⦇_,SUBENTITIES⦈_ : SubEntitiesEnv → CertState → SubLevelTx 
   SUBENTITIES :
     let refresh         = mapPartial (isGovVoterDRep ∘ voter) (fromList (ListOfGovVotesOf txSub))
         refreshedDReps  = mapValueRestricted (const (e + pp .drepActivity)) dReps refresh
-        activeVDelegs   = mapˢ vDelegCredential (dom (DRepsOf gState'))
-                               ∪ fromList (vDelegNoConfidence ∷ vDelegAbstain ∷ [])
 
         withdrawals               = WithdrawalsOf txSub
         withdrawalsCredentials    = mapˢ stake (dom withdrawals)
@@ -169,7 +167,7 @@ data _⊢_⇀⦇_,SUBENTITIES⦈_ : SubEntitiesEnv → CertState → SubLevelTx 
     ∙ ∀[ a ∈ dom directDeposits ] NetworkIdOf a ≡ NetworkId
     ∙ directDepositsCredentials ⊆ dom rewards'
       ────────────────────────────────
-      ⟦ e , pp , cc , rewards₀ ⟧ ⊢ ⟦ ⟦ voteDelegs , stakeDelegs , rewards , depositsᵈ ⟧ , pState , ⟦ dReps , ccHotKeys , depositsᵍ ⟧ ⟧ ⇀⦇ txSub ,SUBENTITIES⦈ ⟦ ⟦ voteDelegs' ∣^ activeVDelegs , stakeDelegs' , applyDirectDeposits directDeposits rewards' , depositsᵈ' ⟧ , pState' , gState' ⟧
+      ⟦ e , pp , cc , rewards₀ ⟧ ⊢ ⟦ ⟦ voteDelegs , stakeDelegs , rewards , depositsᵈ ⟧ , pState , ⟦ dReps , ccHotKeys , depositsᵍ ⟧ ⟧ ⇀⦇ txSub ,SUBENTITIES⦈ ⟦ ⟦ voteDelegs' , stakeDelegs' , applyDirectDeposits directDeposits rewards' , depositsᵈ' ⟧ , pState' , gState' ⟧
 ```
 
 ```agda
@@ -178,8 +176,6 @@ data _⊢_⇀⦇_,ENTITIES⦈_ : EntitiesEnv → CertState → TopLevelTx → Ce
   ENTITIES :
     let refresh         = mapPartial (isGovVoterDRep ∘ voter) (fromList (ListOfGovVotesOf txTop))
         refreshedDReps  = mapValueRestricted (const (e + pp .drepActivity)) dReps refresh
-        activeVDelegs   = mapˢ vDelegCredential (dom (DRepsOf gState'))
-                               ∪ fromList (vDelegNoConfidence ∷ vDelegAbstain ∷ [])
 
         withdrawalsSubTxs          = foldl (λ acc txSub → acc ∪⁺ WithdrawalsOf txSub) ∅ (SubTransactionsOf txTop)
         withdrawals                = WithdrawalsOf txTop
@@ -209,5 +205,5 @@ data _⊢_⇀⦇_,ENTITIES⦈_ : EntitiesEnv → CertState → TopLevelTx → Ce
     ∙ ∀[ a ∈ dom directDeposits ] NetworkIdOf a ≡ NetworkId
     ∙ directDepositsCredentials ⊆ dom rewards'
       ────────────────────────────────
-      ⟦ e , pp , cc , legacyMode , rewards₀ ⟧ ⊢ ⟦ ⟦ voteDelegs , stakeDelegs , rewards , depositsᵈ ⟧ , pState , ⟦ dReps , ccHotKeys , depositsᵍ ⟧ ⟧ ⇀⦇ txTop ,ENTITIES⦈ ⟦ ⟦ voteDelegs' ∣^ activeVDelegs , stakeDelegs' , applyDirectDeposits directDeposits rewards' , depositsᵈ' ⟧ , pState' , gState' ⟧
+      ⟦ e , pp , cc , legacyMode , rewards₀ ⟧ ⊢ ⟦ ⟦ voteDelegs , stakeDelegs , rewards , depositsᵈ ⟧ , pState , ⟦ dReps , ccHotKeys , depositsᵍ ⟧ ⟧ ⇀⦇ txTop ,ENTITIES⦈ ⟦ ⟦ voteDelegs' , stakeDelegs' , applyDirectDeposits directDeposits rewards' , depositsᵈ' ⟧ , pState' , gState' ⟧
 ```
