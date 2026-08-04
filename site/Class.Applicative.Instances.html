@@ -1,0 +1,65 @@
+<!DOCTYPE HTML>
+<html><head><meta charset="utf-8"><title>Class.Applicative.Instances</title><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css"><link rel="stylesheet" href="Agda.css"><script src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/contrib/auto-render.min.js"></script><script src="AgdaKaTeX.js" defer=""></script></head><body><pre class="Agda"><a id="1" class="Symbol">{-#</a> <a id="5" class="Keyword">OPTIONS</a> <a id="13" class="Pragma">--cubical-compatible</a> <a id="34" class="Symbol">#-}</a>
+<a id="38" class="Keyword">module</a> <a id="45" href="Class.Applicative.Instances.html" class="Module">Class.Applicative.Instances</a> <a id="73" class="Keyword">where</a>
+
+<a id="80" class="Keyword">open</a> <a id="85" class="Keyword">import</a> <a id="92" href="Class.Prelude.html" class="Module">Class.Prelude</a>
+<a id="106" class="Keyword">open</a> <a id="111" class="Keyword">import</a> <a id="118" href="Class.Functor.Core.html" class="Module">Class.Functor.Core</a>
+<a id="137" class="Keyword">open</a> <a id="142" class="Keyword">import</a> <a id="149" href="Class.Functor.Instances.html" class="Module">Class.Functor.Instances</a>
+<a id="173" class="Keyword">open</a> <a id="178" class="Keyword">import</a> <a id="185" href="Class.Applicative.Core.html" class="Module">Class.Applicative.Core</a>
+
+<a id="209" class="Keyword">instance</a>
+  <a id="Applicative-Maybe"></a><a id="220" href="Class.Applicative.Instances.html#220" class="Function">Applicative-Maybe</a> <a id="238" class="Symbol">:</a> <a id="240" href="Class.Applicative.Core.html#163" class="Record">Applicative</a> <a id="252" href="Agda.Builtin.Maybe.html#135" class="Datatype">Maybe</a>
+  <a id="260" href="Class.Applicative.Instances.html#220" class="Function">Applicative-Maybe</a> <a id="278" class="Symbol">=</a> <a id="280" class="Symbol">λ</a> <a id="282" class="Keyword">where</a>
+    <a id="292" class="Symbol">.</a><a id="293" href="Class.Applicative.Core.html#304" class="Field">pure</a> <a id="298" class="Symbol">→</a> <a id="300" href="Agda.Builtin.Maybe.html#173" class="InductiveConstructor">just</a>
+    <a id="309" class="Symbol">.</a><a id="310" href="Class.Applicative.Core.html#323" class="Field Operator">_&lt;*&gt;_</a> <a id="316" class="Symbol">→</a> <a id="318" href="Data.Maybe.Base.html#1276" class="Function">maybe</a> <a id="324" href="Class.Functor.Core.html#272" class="Function">fmap</a> <a id="329" class="Symbol">(</a><a id="330" href="Function.Base.html#725" class="Function">const</a> <a id="336" href="Agda.Builtin.Maybe.html#194" class="InductiveConstructor">nothing</a><a id="343" class="Symbol">)</a>
+
+  <a id="Applicative₀-Maybe"></a><a id="348" href="Class.Applicative.Instances.html#348" class="Function">Applicative₀-Maybe</a> <a id="367" class="Symbol">:</a> <a id="369" href="Class.Applicative.Core.html#728" class="Record">Applicative₀</a> <a id="382" href="Agda.Builtin.Maybe.html#135" class="Datatype">Maybe</a>
+  <a id="390" href="Class.Applicative.Instances.html#348" class="Function">Applicative₀-Maybe</a> <a id="409" class="Symbol">.</a><a id="410" href="Class.Applicative.Core.html#817" class="Field">ε₀</a> <a id="413" class="Symbol">=</a> <a id="415" href="Agda.Builtin.Maybe.html#194" class="InductiveConstructor">nothing</a>
+
+  <a id="Alternative-Maybe"></a><a id="426" href="Class.Applicative.Instances.html#426" class="Function">Alternative-Maybe</a> <a id="444" class="Symbol">:</a> <a id="446" href="Class.Applicative.Core.html#865" class="Record">Alternative</a> <a id="458" href="Agda.Builtin.Maybe.html#135" class="Datatype">Maybe</a>
+  <a id="466" href="Class.Applicative.Instances.html#426" class="Function">Alternative-Maybe</a> <a id="484" class="Symbol">.</a><a id="485" href="Class.Applicative.Core.html#928" class="Field Operator">_&lt;|&gt;_</a> <a id="491" class="Symbol">=</a> <a id="493" href="Data.Maybe.Base.html#2264" class="Function Operator">May._&lt;∣&gt;_</a>
+    <a id="507" class="Keyword">where</a> <a id="513" class="Keyword">import</a> <a id="520" href="Data.Maybe.html" class="Module">Data.Maybe</a> <a id="531" class="Symbol">as</a> <a id="534" class="Module">May</a>
+
+  <a id="Applicative-List"></a><a id="541" href="Class.Applicative.Instances.html#541" class="Function">Applicative-List</a> <a id="558" class="Symbol">:</a> <a id="560" href="Class.Applicative.Core.html#163" class="Record">Applicative</a> <a id="572" href="Agda.Builtin.List.html#147" class="Datatype">List</a>
+  <a id="579" href="Class.Applicative.Instances.html#541" class="Function">Applicative-List</a> <a id="596" class="Symbol">=</a> <a id="598" class="Symbol">λ</a> <a id="600" class="Keyword">where</a>
+    <a id="610" class="Symbol">.</a><a id="611" href="Class.Applicative.Core.html#304" class="Field">pure</a> <a id="616" class="Symbol">→</a> <a id="618" href="Data.List.Base.html#4907" class="Function Operator">[_]</a>
+    <a id="626" class="Symbol">.</a><a id="627" href="Class.Applicative.Core.html#323" class="Field Operator">_&lt;*&gt;_</a> <a id="633" class="Symbol">→</a> <a id="635" href="Function.Base.html#1657" class="Function">flip</a> <a id="640" href="Function.Base.html#1993" class="Function Operator">$</a> <a id="642" href="Data.List.Base.html#4384" class="Function">concatMap</a> <a id="652" href="Function.Base.html#1134" class="Function Operator">∘</a> <a id="654" href="Class.Functor.Core.html#337" class="Function Operator">_&lt;&amp;&gt;_</a>
+
+  <a id="Applicative₀-List"></a><a id="663" href="Class.Applicative.Instances.html#663" class="Function">Applicative₀-List</a> <a id="681" class="Symbol">:</a> <a id="683" href="Class.Applicative.Core.html#728" class="Record">Applicative₀</a> <a id="696" href="Agda.Builtin.List.html#147" class="Datatype">List</a>
+  <a id="703" href="Class.Applicative.Instances.html#663" class="Function">Applicative₀-List</a> <a id="721" class="Symbol">.</a><a id="722" href="Class.Applicative.Core.html#817" class="Field">ε₀</a> <a id="725" class="Symbol">=</a> <a id="727" href="Agda.Builtin.List.html#184" class="InductiveConstructor">[]</a>
+
+  <a id="Alternative-List"></a><a id="733" href="Class.Applicative.Instances.html#733" class="Function">Alternative-List</a> <a id="750" class="Symbol">:</a> <a id="752" href="Class.Applicative.Core.html#865" class="Record">Alternative</a> <a id="764" href="Agda.Builtin.List.html#147" class="Datatype">List</a>
+  <a id="771" href="Class.Applicative.Instances.html#733" class="Function">Alternative-List</a> <a id="788" class="Symbol">.</a><a id="789" href="Class.Applicative.Core.html#928" class="Field Operator">_&lt;|&gt;_</a> <a id="795" class="Symbol">=</a> <a id="797" href="Data.List.Base.html#1712" class="Function Operator">_++_</a>
+
+  <a id="Applicative-List⁺"></a><a id="805" href="Class.Applicative.Instances.html#805" class="Function">Applicative-List⁺</a> <a id="823" class="Symbol">:</a> <a id="825" href="Class.Applicative.Core.html#163" class="Record">Applicative</a> <a id="837" href="Data.List.NonEmpty.Base.html#1285" class="Record">List⁺</a>
+  <a id="845" href="Class.Applicative.Instances.html#805" class="Function">Applicative-List⁺</a> <a id="863" class="Symbol">=</a> <a id="865" class="Symbol">λ</a> <a id="867" class="Keyword">where</a>
+    <a id="877" class="Symbol">.</a><a id="878" href="Class.Applicative.Core.html#304" class="Field">pure</a> <a id="883" class="Symbol">→</a> <a id="885" href="Data.List.NonEmpty.Base.html#1547" class="Function Operator">L⁺.[_]</a>
+    <a id="896" class="Symbol">.</a><a id="897" href="Class.Applicative.Core.html#323" class="Field Operator">_&lt;*&gt;_</a> <a id="903" class="Symbol">→</a> <a id="905" href="Function.Base.html#1657" class="Function">flip</a> <a id="910" href="Function.Base.html#1993" class="Function Operator">$</a> <a id="912" href="Data.List.NonEmpty.Base.html#3734" class="Function">L⁺.concatMap</a> <a id="925" href="Function.Base.html#1134" class="Function Operator">∘</a> <a id="927" href="Class.Functor.Core.html#337" class="Function Operator">_&lt;&amp;&gt;_</a>
+   <a id="936" class="Keyword">where</a> <a id="942" class="Keyword">import</a> <a id="949" href="Data.List.NonEmpty.html" class="Module">Data.List.NonEmpty</a> <a id="968" class="Symbol">as</a> <a id="971" class="Module">L⁺</a>
+
+  <a id="Applicative-Vec"></a><a id="977" href="Class.Applicative.Instances.html#977" class="Function">Applicative-Vec</a> <a id="993" class="Symbol">:</a> <a id="995" class="Symbol">∀</a> <a id="997" class="Symbol">{</a><a id="998" href="Class.Applicative.Instances.html#998" class="Bound">n</a><a id="999" class="Symbol">}</a> <a id="1001" class="Symbol">→</a> <a id="1003" href="Class.Applicative.Core.html#163" class="Record">Applicative</a> <a id="1015" class="Symbol">(</a><a id="1016" href="Function.Base.html#1657" class="Function">flip</a> <a id="1021" href="Data.Vec.Base.html#1119" class="Datatype">Vec</a> <a id="1025" href="Class.Applicative.Instances.html#998" class="Bound">n</a><a id="1026" class="Symbol">)</a>
+  <a id="1030" href="Class.Applicative.Instances.html#977" class="Function">Applicative-Vec</a> <a id="1046" class="Symbol">=</a> <a id="1048" class="Symbol">λ</a> <a id="1050" class="Keyword">where</a>
+    <a id="1060" class="Symbol">.</a><a id="1061" href="Class.Applicative.Core.html#304" class="Field">pure</a> <a id="1066" class="Symbol">→</a> <a id="1068" href="Data.Vec.Base.html#6493" class="Function">V.replicate</a> <a id="1080" class="Symbol">_</a>
+    <a id="1086" class="Symbol">.</a><a id="1087" href="Class.Applicative.Core.html#323" class="Field Operator">_&lt;*&gt;_</a> <a id="1093" class="Symbol">→</a> <a id="1095" href="Data.Vec.Base.html#4477" class="Function Operator">V._⊛_</a>
+   <a id="1104" class="Keyword">where</a> <a id="1110" class="Keyword">import</a> <a id="1117" href="Data.Vec.html" class="Module">Data.Vec</a> <a id="1126" class="Symbol">as</a> <a id="1129" class="Module">V</a>
+
+
+  <a id="Applicative₀-Vec"></a><a id="1135" href="Class.Applicative.Instances.html#1135" class="Function">Applicative₀-Vec</a> <a id="1152" class="Symbol">:</a> <a id="1154" href="Class.Applicative.Core.html#728" class="Record">Applicative₀</a> <a id="1167" class="Symbol">(</a><a id="1168" href="Function.Base.html#1657" class="Function">flip</a> <a id="1173" href="Data.Vec.Base.html#1119" class="Datatype">Vec</a> <a id="1177" class="Number">0</a><a id="1178" class="Symbol">)</a>
+  <a id="1182" href="Class.Applicative.Instances.html#1135" class="Function">Applicative₀-Vec</a> <a id="1199" class="Symbol">.</a><a id="1200" href="Class.Applicative.Core.html#817" class="Field">ε₀</a> <a id="1203" class="Symbol">=</a> <a id="1205" href="Data.Vec.Base.html#1155" class="InductiveConstructor">[]</a>
+
+  <a id="1211" class="Comment">-- Applicative-∃Vec : Applicative (∃ ∘ Vec)</a>
+  <a id="1257" class="Comment">-- Applicative-∃Vec = λ where</a>
+  <a id="1289" class="Comment">--   .pure x → 1 , pure x</a>
+  <a id="1317" class="Comment">--   ._&lt;*&gt;_ (n , xs) (m , ys) →</a>
+  <a id="1351" class="Comment">--     {! (n ⊔ m) , zipWith _$_ xs ys (+ zipWith-⊔ lemma) !}</a>
+
+  <a id="1415" class="Keyword">private</a> <a id="1423" class="Keyword">module</a> <a id="M"></a><a id="1430" href="Class.Applicative.Instances.html#1430" class="Module">M</a> <a id="1432" class="Keyword">where</a>
+    <a id="1442" class="Keyword">open</a> <a id="1447" class="Keyword">import</a> <a id="1454" href="Reflection.TCM.Syntax.html" class="Module">Reflection.TCM.Syntax</a> <a id="1476" class="Keyword">public</a>
+    <a id="1487" class="Keyword">open</a> <a id="1492" class="Keyword">import</a> <a id="1499" href="Reflection.TCM.html" class="Module">Reflection.TCM</a> <a id="1514" class="Keyword">public</a>
+
+  <a id="Alternative-TC"></a><a id="1524" href="Class.Applicative.Instances.html#1524" class="Function">Alternative-TC</a> <a id="1539" class="Symbol">:</a> <a id="1541" href="Class.Applicative.Core.html#865" class="Record">Alternative</a> <a id="1553" href="Agda.Builtin.Reflection.html#8617" class="Postulate">TC</a>
+  <a id="1558" href="Class.Applicative.Instances.html#1524" class="Function">Alternative-TC</a> <a id="1573" class="Symbol">=</a> <a id="1575" class="Keyword">record</a> <a id="1582" class="Symbol">{</a><a id="1583" href="Class.Applicative.Instances.html#1430" class="Module">M</a><a id="1584" class="Symbol">}</a>
+
+  <a id="Applicative-TC"></a><a id="1589" href="Class.Applicative.Instances.html#1589" class="Function">Applicative-TC</a> <a id="1604" class="Symbol">:</a> <a id="1606" href="Class.Applicative.Core.html#163" class="Record">Applicative</a> <a id="1618" href="Agda.Builtin.Reflection.html#8617" class="Postulate">TC</a>
+  <a id="1623" href="Class.Applicative.Instances.html#1589" class="Function">Applicative-TC</a> <a id="1638" class="Symbol">=</a> <a id="1640" class="Keyword">record</a> <a id="1647" class="Symbol">{</a><a id="1648" href="Class.Applicative.Instances.html#1430" class="Module">M</a><a id="1649" class="Symbol">}</a>
+</pre></body></html>
