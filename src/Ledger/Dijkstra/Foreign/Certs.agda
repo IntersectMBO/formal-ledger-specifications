@@ -59,6 +59,9 @@ instance
     • fieldPrefix "ce"
   Conv-CertEnv = autoConvert CertEnv
 
+  HsTy-CertState = autoHsType CertState ⊣ withConstructor "MkCertState"
+  Conv-CertState = autoConvert CertState
+
 -- Computational step functions
 
 deleg-step : HsType (DelegEnv → DState → DCert → ComputationResult String DState)
@@ -71,7 +74,7 @@ pool-step = to (compute Computational-POOL)
 
 {-# COMPILE GHC pool-step as poolStep #-}
 
-govcert-step : HsType (GovCertEnv → GState → DCert → ComputationResult String GState)
+govcert-step : HsType (GovCertEnv → CertState → DCert → ComputationResult String CertState)
 govcert-step = to (compute Computational-GOVCERT)
 
 {-# COMPILE GHC govcert-step as govCertStep #-}

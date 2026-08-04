@@ -78,7 +78,7 @@ instance
       (yes p) → success (-, GOVCERT-regdrep p)
       (no ¬p) → failure (genErrors ¬p)
   Computational-GOVCERT .computeProof ce gs (deregdrep c d) =
-    case ¿ c ∈ dom (DRepsOf gs) × (c , d) ∈  (DepositsOf gs) ¿ of λ where
+    case ¿ c ∈ dom (DRepsOf gs) × (c , d) ∈  (DepositsOf (GStateOf gs)) ¿ of λ where
       (yes p) → success (-, GOVCERT-deregdrep p)
       (no ¬p)  → failure (genErrors ¬p)
   Computational-GOVCERT .computeProof ce gs (ccreghot c _) =
@@ -92,7 +92,7 @@ instance
          ⊎ (d ≡ 0 × c ∈ dom (DRepsOf gs))
       ¿ p .proj₂ = refl
   Computational-GOVCERT .completeness _ gs (deregdrep c d) _ (GOVCERT-deregdrep p)
-    rewrite dec-yes ¿ c ∈ dom (DRepsOf gs) × (c , d) ∈ (DepositsOf gs) ¿ p .proj₂ = refl
+    rewrite dec-yes ¿ c ∈ dom (DRepsOf gs) × (c , d) ∈ (DepositsOf (GStateOf gs)) ¿ p .proj₂ = refl
   Computational-GOVCERT .completeness ce gs (ccreghot c _) _ (GOVCERT-ccreghot p)
     rewrite dec-yes ¿ (c , nothing) ∉ CCHotKeysOf gs ˢ × c ∈ ColdCredentialsOf ce ¿ p .proj₂ = refl
 
@@ -100,7 +100,7 @@ instance
   Computational-CERT .computeProof ce cs dCert
     with computeProof ⟦ PParamsOf ce , PoolsOf cs , dom (DRepsOf cs) ⟧ (DStateOf cs) dCert
          | computeProof (PParamsOf ce) (PStateOf cs) dCert
-         | computeProof ⟦ EpochOf ce , PParamsOf ce , ColdCredentialsOf ce ⟧ (GStateOf cs) dCert
+         | computeProof ⟦ EpochOf ce , PParamsOf ce , ColdCredentialsOf ce ⟧ cs dCert
 
   ... | success (_ , h) | _               | _               = success (-, CERT-deleg h)
   ... | failure _       | success (_ , h) | _               = success (-, CERT-pool h)
@@ -127,17 +127,17 @@ instance
     with completeness _ _ _ _ h
   ... | refl = refl
   Computational-CERT .completeness Γ cs
-    dCert@(regdrep c _ _) cs' (CERT-gov h)
-    with computeProof ⟦ EpochOf Γ , PParamsOf Γ , ColdCredentialsOf Γ ⟧ (CertState.gState cs) dCert | completeness _ _ _ _ h
-  ... | success _ | refl = refl
+    (regdrep c d an) _ (CERT-gov (GOVCERT-regdrep p))
+    rewrite dec-yes
+      ¿  (d ≡ PParams.drepDeposit (PParamsOf Γ) × c ∉ dom (DRepsOf cs))
+         ⊎ (d ≡ 0 × c ∈ dom (DRepsOf cs))
+      ¿ p .proj₂ = refl
   Computational-CERT .completeness Γ cs
-    dCert@(deregdrep c _) cs' (CERT-gov h)
-    with computeProof ⟦ EpochOf Γ , PParamsOf Γ , ColdCredentialsOf Γ ⟧ (CertState.gState cs) dCert | completeness _ _ _ _ h
-  ... | success _ | refl = refl
+    (deregdrep c d) _ (CERT-gov (GOVCERT-deregdrep p))
+    rewrite dec-yes ¿ c ∈ dom (DRepsOf cs) × (c , d) ∈ (DepositsOf (GStateOf cs)) ¿ p .proj₂ = refl
   Computational-CERT .completeness Γ cs
-    dCert@(ccreghot c mkh) cs' (CERT-gov h)
-    with computeProof ⟦ EpochOf Γ , PParamsOf Γ , ColdCredentialsOf Γ ⟧ (CertState.gState cs) dCert | completeness _ _ _ _ h
-  ... | success _ | refl = refl
+    (ccreghot c mc) _ (CERT-gov (GOVCERT-ccreghot p))
+    rewrite dec-yes ¿ (c , nothing) ∉ CCHotKeysOf cs ˢ × c ∈ ColdCredentialsOf Γ ¿ p .proj₂ = refl
 
 Computational-CERTS : Computational _⊢_⇀⦇_,CERTS⦈_ String
 Computational-CERTS = it
