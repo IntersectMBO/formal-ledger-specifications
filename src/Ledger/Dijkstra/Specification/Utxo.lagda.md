@@ -322,6 +322,10 @@ module _ (pp : PParams) where
   consumedBatch : TopLevelTx → UTxO → Value
   consumedBatch txTop utxo = consumed txTop utxo
                              + ∑ˡ[ stx ← SubTransactionsOf txTop ] (consumedTx stx utxo)
+
+  consumedLegacy : TopLevelTx → UTxO → Value
+  consumedLegacy txTop utxo = consumedTx txTop utxo
+                       + inject (refundCertDeposits pp (DCertsOf txTop))
 ```
 
 Direct deposits can be made into account addresses.
@@ -344,6 +348,16 @@ the transaction and that amount is deposited into accounts.
   producedBatch : Pools → TopLevelTx → Value
   producedBatch pools txTop = produced pools txTop
                             + ∑ˡ[ stx ← SubTransactionsOf txTop ] (producedTx stx)
+
+  producedLegacy : Pools → TopLevelTx → Value
+  producedLegacy pools txTop = producedTx txTop
+                   + inject (TxFeesOf txTop)
+                   + inject (newCertDeposits pp pools' (DCertsOf txTop))
+    where
+      pools' = foldl (λ { pools (regpool kh _) → pools ∪ ❴ kh ❵
+                        ; pools _              → pools
+                        })
+                     (dom pools) (concatMap DCertsOf (SubTransactionsOf txTop))
 ```
 
 ## The <span class="AgdaDatatype">UTXOS</span> Transition System
@@ -500,7 +514,7 @@ data _⊢_⇀⦇_,UTXO⦈_ : UTxOEnv → UTxOState → TopLevelTx → UTxOState 
     ∙ minfee (PParamsOf Γ) txTop (UTxOOf Γ) ≤ TxFeesOf txTop
     ∙ coin (MintedValueOf txTop) ≡ 0
     ∙ consumedBatch (PParamsOf Γ) txTop (UTxOOf Γ) ≡ producedBatch (PParamsOf Γ) (PoolsOf Γ) txTop
-    ∙ (LegacyModeOf Γ ≡ true → consumed (PParamsOf Γ) txTop (UTxOOf Γ) ≡ produced (PParamsOf Γ) (PoolsOf Γ) txTop)  -- (4)
+    ∙ (LegacyModeOf Γ ≡ true → consumedLegacy (PParamsOf Γ) txTop (UTxOOf Γ) ≡ producedLegacy (PParamsOf Γ) (PoolsOf Γ) txTop)  -- (4)
     ∙ SizeOf txTop ≤ maxTxSize (PParamsOf Γ)
     ∙ ∑ˡ[ x ← setToList (allReferenceScripts txTop (UTxOOf Γ)) ] scriptSize x ≤ (PParamsOf Γ) .maxRefScriptSizePerTx
     ∙ ((RedeemersOf txTop ˢ ≢ ∅) ⊎ (List.Any (λ txSub → RedeemersOf txSub ˢ ≢ ∅) (SubTransactionsOf txTop))
