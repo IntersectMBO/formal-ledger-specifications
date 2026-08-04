@@ -5,12 +5,58 @@ source_path: src/Ledger/Dijkstra/Specification/Utxo/Properties/PoV.lagda.md
 
 # UTXO Properties: Preservation of Value {#sec:utxo-pov}
 
-This module proves the `UTXO`{.AgdaDatatype}-level preservation-of-value facts
-consumed by the `LEDGER`{.AgdaDatatype} PoV proof
-(`Ledger.Properties.PoV`{.AgdaModule}): the mechanical
-`getCoin`{.AgdaField} state-change equations for the valid and invalid cases, and
-the coin projection of the batch balance premise
-`consumedBatch ≡ producedBatch`{.AgdaFunction}.
+This module proves the `UTXO`{.AgdaDatatype}-level facts behind preservation of
+value.  In the simplest terms: a `UTXO`{.AgdaDatatype} step moves coin between the
+three `UTxOState`{.AgdaRecord} pots (UTxO, fees, donations) and the world outside
+`UTxOState`{.AgdaRecord} (rewards withdrawals flow in; certificate and governance
+deposits flow out), and this module proves two kinds of facts about that
+movement:
+
+1.  **the mechanical state change** — equations saying *exactly how much* a step
+    `Γ ⊢ s₀ ⇀⦇ tx ,UTXO⦈ s₁` moves: `getCoin s₀` and `getCoin s₁` differ by
+    exactly the spent balance on one side and outputs, fee, and donation on the
+    other (and an invalid transaction preserves `getCoin`{.AgdaField} exactly);
+
+2.  **the batch coin balance** — the `coin`{.AgdaField} projection of the rule's
+    balance premise `consumedBatch ≡ producedBatch`{.AgdaFunction}: everything
+    the batch consumes equals everything it produces, summand by summand.
+
+Neither fact alone is preservation of value, and their combination is *not*
+proved here: `Ledger.Properties.PoV`{.AgdaModule} performs it, together with the
+accounting for the non-UTxO pots.  The next section explains why the split falls
+exactly this way; the sections after it descend into the details.
+
+## Why the proof splits in two
+
+The two pieces speak about *different UTxOs*, and keeping this in mind makes
+every statement below readable.
+
++   The **mechanical** equations are about the *running* state: the spent balance
+    they account for is `cbalance (UTxOOf s₀ ∣ SpendInputsOf tx)`, resolved
+    against the UTxO actually being stepped.  At the `LEDGER`{.AgdaDatatype}
+    level, `s₀` for the top-level step is the *post-`SUBLEDGERS`* state — the
+    sub-transactions have already executed on it.
+
++   The **batch balance** is about the *pre-batch snapshot*: the spec states the
+    balance premise (premise 8 of the `UTXO`{.AgdaDatatype} rule) against
+    `UTxOOf Γ`, the snapshot carried by the environment.  Its
+    coin projection therefore contains *no state variables at all* — neither `s₀`
+    nor `s₁` occurs in it; every summand is computed from the environment
+    (`UTxOOf Γ`, `PParamsOf Γ`, the pre-batch pool set `PoolsOf Γ`) and the
+    transaction alone.  Where a step derivation appears as a hypothesis
+    (`UTXO-batch-balance-coin`{.AgdaFunction}), it is there only so that premises
+    7 and 8 can be extracted from it.
+
+Combining the two means equating the running-state spent balance of piece 1 with
+the snapshot spent balance of piece 2, and that requires knowing how the running
+UTxO relates to the snapshot after part of the batch has executed.  The
+`UTXO`{.AgdaDatatype} rule establishes this batch-wide (spend inputs are mutually
+disjoint across the batch, TxIds are fresh) but does not expose it per step.
+Consequently — unlike in Conway, where the balance premise is per-transaction and
+stated against the same UTxO the rule steps — no standalone
+`getCoin s₀ ≡ getCoin s₁` theorem for the valid case is provable at this level.
+The combination happens in `LEDGER-pov`{.AgdaFunction}, which holds the required
+batch-threading facts as module parameters.
 
 ## Key differences from Conway
 
@@ -35,9 +81,9 @@ the coin projection of the batch balance premise
 4.  **Governance-action deposits appear on the produced side**, one
     `govProposalsDeposits`{.AgdaFunction} summand per transaction in the batch.
 
-## Proof architecture
+## Proof map
 
-The `UTXO`{.AgdaDatatype} PoV facts split into two orthogonal pieces.
+In terms of the lemmas below, the two pieces are:
 
 +   **Mechanical state change** (`UTXO-pov-invalid`{.AgdaFunction},
     `UTXO-V-mechanical`{.AgdaFunction}, `subutxo-step-coin`{.AgdaFunction}): how
@@ -60,13 +106,6 @@ The `UTXO`{.AgdaDatatype} PoV facts split into two orthogonal pieces.
     `UTXO`{.AgdaDatatype} rule does not expose — it is discharged at the
     `LEDGER`{.AgdaDatatype} level, where the `SUBLEDGERS`{.AgdaDatatype} steps
     are in scope).
-
-Unlike Conway, no *standalone* `getCoin s₀ ≡ getCoin s₁` theorem holds at the
-`UTXO`{.AgdaDatatype} level for the valid case: the state `s₀` passed to the
-`UTXO`{.AgdaDatatype} rule at the `LEDGER`{.AgdaDatatype} level is the
-*post-`SUBLEDGERS`* state while the batch balance speaks about the *pre-batch*
-snapshot `UTxOOf Γ`, so combining the two pieces requires batch-threading
-information available only to `LEDGER-pov`{.AgdaFunction}.
 
 <!--
 ```agda
@@ -437,7 +476,12 @@ For a valid transaction the rule spends `SpendInputsOf tx` from the running
 UTxO `u` and adds `outs tx`, the transaction fee, and the donation.  Given
 freshness of `TxIdOf tx` in `u` (so that `outs tx` splits off cleanly via
 `balance-∪`{.AgdaFunction}), `getCoin`{.AgdaField} changes by exactly the
-spent balance on one side and the outputs/fee/donation on the other:
+spent balance on one side and the outputs/fee/donation on the other.  Note
+that the spent balance is `cbalance (UTxOOf s₀ ∣ SpendInputsOf tx)` — the
+*running*-state resolution of piece 1; `LEDGER-pov`{.AgdaFunction} equates it
+with the snapshot resolution appearing in
+`UTXO-batch-balance-coin`{.AgdaFunction} via its `utxo₁-tx-spend-eq`
+batch-threading parameter.
 
 ```agda
   UTXO-V-mechanical : ∀ {Γ : UTxOEnv} {s₀ s₁ : UTxOState}
@@ -472,8 +516,13 @@ spent balance on one side and the outputs/fee/donation on the other:
 
 The coin projection of the batch balance premise (premise 8 of the
 `UTXO`{.AgdaDatatype} rule), in the closed form consumed by
-`LEDGER-pov`{.AgdaFunction}.  The top-level no-mint fact is premise 7 of the
-same rule; the sub-level ones are the module parameter.
+`LEDGER-pov`{.AgdaFunction}.  As laid out in *Why the proof splits in two*, the
+step hypothesis serves only to extract premises 7 (top-level no-mint) and 8
+(the balance): neither `s₀` nor `s₁` occurs in the conclusion, whose two sides
+are sums computed from the environment's pre-batch snapshot and the transaction
+alone.  Given the premises, the proof is pure substitution — apply
+`cong coin` to premise 8 and rewrite each side with the Layer-3 equations
+(the sub-level no-mint facts come from the module parameter).
 
 ```agda
   UTXO-batch-balance-coin : ∀ {Γ : UTxOEnv} {s₀ s₁ : UTxOState}
