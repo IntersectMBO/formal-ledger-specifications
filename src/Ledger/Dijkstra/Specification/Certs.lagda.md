@@ -460,7 +460,7 @@ data _⊢_⇀⦇_,GOVCERT⦈_ : GovCertEnv → CertState → DCert → CertState
     ∙ c ∈ dom dReps
     ∙ (c , d) ∈ deposits
       ────────────────────────────────
-      ⟦ e , pp , cc ⟧ ⊢ ⟦ ⟦ vDelegs , sDelegs , rwds , deposits' ⟧ᵈ , stᵖ ,  ⟦ dReps , ccKeys , deposits ⟧ ⟧ ⇀⦇ deregdrep c d ,GOVCERT⦈ ⟦ ⟦ vDelegs ∣^ ❴ vDelegCredential c ❵ ᶜ , sDelegs , rwds , deposits' ⟧ᵈ , stᵖ , ⟦ dReps ∣ ❴ c ❵ ᶜ , ccKeys , deposits ∣ ❴ c ❵ ᶜ ⟧ ⟧
+      ⟦ e , pp , cc ⟧ ⊢ ⟦ ⟦ vDelegs , sDelegs , rwds , deposits' ⟧ᵈ , stᵖ , ⟦ dReps , ccKeys , deposits ⟧ ⟧ ⇀⦇ deregdrep c d ,GOVCERT⦈ ⟦ ⟦ vDelegs ∣^ ❴ vDelegCredential c ❵ ᶜ , sDelegs , rwds , deposits' ⟧ᵈ , stᵖ , ⟦ dReps ∣ ❴ c ❵ ᶜ , ccKeys , deposits ∣ ❴ c ❵ ᶜ ⟧ ⟧
 
   GOVCERT-ccreghot :
     ∙ (c , nothing) ∉ ccKeys

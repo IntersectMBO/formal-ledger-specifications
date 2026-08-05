@@ -91,7 +91,9 @@ CERT-pov {s = ⟦ _ , stᵖ , stᵍ ⟧ᶜˢ}{⟦ _ , stᵖ' , stᵍ' ⟧ᶜˢ}
                             ( ≡ᵉ.trans (∪-cong ≡ᵉ.refl (res-singleton'{m = rwds} x))
                                        (≡ᵉ.sym $ disjoint-∪ˡ-∪ disj) )
 CERT-pov (CERT-pool x) = refl
-CERT-pov (CERT-vdel x) = refl
+CERT-pov (CERT-vdel (GOVCERT-regdrep _)) = refl
+CERT-pov (CERT-vdel (GOVCERT-deregdrep _)) = refl
+CERT-pov (CERT-vdel (GOVCERT-ccreghot _)) = refl
 
 injOn : (wdls : Withdrawals)
         → ∀[ a ∈ dom (wdls ˢ) ] NetworkIdOf a ≡ NetworkId
@@ -184,30 +186,30 @@ value of the withdrawals in `Γ`{.AgdaBound}.  In other terms,
 ```
 -->
 
-**Lemma (`POST-CERT`{.AgdaOperator} rule preserves value).**
+**Lemma (the trace base case preserves value).**
 
 *Informally*.
 
 Let `Γ`{.AgdaBound} : `CertEnv`{.AgdaRecord} be a certificate environment, and let
-`s`{.AgdaBound}, `s'`{.AgdaBound} : `CertState`{.AgdaRecord} be certificate states such that
-`s`{.AgdaBound} `⇀⦇`{.AgdaDatatype} \_ `,POST-CERT⦈`{.AgdaDatatype} `s'`{.AgdaBound}.
-Then, the value of `s`{.AgdaBound} is equal to the value of `s'`{.AgdaBound}.
-In other terms,
+`s`{.AgdaBound}, `s'`{.AgdaBound} : `CertState`{.AgdaRecord} be certificate states related by
+the identity transition `IdSTS`{.AgdaDatatype} (the base case of the reflexive-transitive
+closure of `CERT`{.AgdaDatatype}).  Then, the value of `s`{.AgdaBound} is equal to the value
+of `s'`{.AgdaBound}.  In other terms,
 
 `getCoin`{.AgdaField} `s`{.AgdaBound} $≡$ `getCoin`{.AgdaField} `s'`{.AgdaBound}.
 
 *Formally*.
 
 ```agda
-    POST-CERT-pov : {Γ : CertEnv} {s s' : CertState}
-      → Γ ⊢ s ⇀⦇ _ ,POST-CERT⦈ s'
+    base-pov : {Γ : CertEnv} {s s' : CertState}
+      → IdSTS {CertEnv} {CertState} Γ s tt s'
       → getCoin s ≡ getCoin s'
 ```
 
 *Proof*.
 
 ```agda
-    POST-CERT-pov CERT-post = refl
+    base-pov Id-nop = refl
 ```
 
 **Lemma (iteration of `CERT`{.AgdaOperator} rule preserves value).**
@@ -222,13 +224,13 @@ Then, the value of `s₁`{.AgdaBound} is equal to the value of `sₙ`{.AgdaBound
 
 ```agda
     sts-pov : {Γ : CertEnv} {s₁ sₙ : CertState} {sigs : List DCert}
-      → RunTraceAndThen _⊢_⇀⦇_,CERT⦈_ _⊢_⇀⦇_,POST-CERT⦈_ Γ s₁ sigs sₙ
+      → ReflexiveTransitiveClosure {sts = _⊢_⇀⦇_,CERT⦈_} Γ s₁ sigs sₙ
       → getCoin s₁ ≡ getCoin sₙ
 ```
 
 *Proof*.
 
 ```agda
-    sts-pov (run-[] x) = POST-CERT-pov x
-    sts-pov (run-∷ x xs) = trans (CERT-pov x) (sts-pov xs)
+    sts-pov (BS-base x) = base-pov x
+    sts-pov (BS-ind x xs) = trans (CERT-pov x) (sts-pov xs)
 ```
