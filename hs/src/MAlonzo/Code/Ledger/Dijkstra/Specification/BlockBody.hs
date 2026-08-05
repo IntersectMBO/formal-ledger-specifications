@@ -126,37 +126,37 @@ d_withdrawals_2678 v0
 d__'8866'_'8640''10631'_'44'LEDGERS'10632'__2686 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3110 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.T_LedgerEnv_3732 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.T_LedgerState_3772 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.T_LedgerEnv_3736 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.T_LedgerState_3776 ->
   [MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3666] ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.T_LedgerState_3772 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.T_LedgerState_3776 ->
   ()
 d__'8866'_'8640''10631'_'44'LEDGERS'10632'__2686 = erased
 -- Ledger.Dijkstra.Specification.BlockBody._.LedgerState
 d_LedgerState_2754 a0 a1 = ()
 -- Ledger.Dijkstra.Specification.BlockBody._.LedgerState.certState
 d_certState_2806 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.T_LedgerState_3772 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.T_LedgerState_3776 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_CertState_1408
 d_certState_2806 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_certState_3784
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_certState_3788
       (coe v0)
 -- Ledger.Dijkstra.Specification.BlockBody._.LedgerState.govSt
 d_govSt_2808 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.T_LedgerState_3772 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.T_LedgerState_3776 ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
 d_govSt_2808 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_govSt_3782
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_govSt_3786
       (coe v0)
 -- Ledger.Dijkstra.Specification.BlockBody._.LedgerState.utxoSt
 d_utxoSt_2810 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.T_LedgerState_3772 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.T_LedgerState_3776 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOState_3146
 d_utxoSt_2810 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_utxoSt_3780
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_utxoSt_3784
       (coe v0)
 -- Ledger.Dijkstra.Specification.BlockBody._.BlocksMade
 d_BlocksMade_2836 ::
