@@ -207,4 +207,187 @@ sum-map-+ f g (x ∷ xs) =
   f x + g x + (sum (map f xs) + sum (map g xs)) ≡⟨ +-interleave {f x} ⟩
   f x + sum (map f xs) + (g x + sum (map g xs)) ∎
   where open ≡-Reasoning
+
+module _ {A B : Type} ⦃ _ : DecEq A ⦄ where
+
+  open Equivalence
+
+  -- The domain of a left-biased union with a singleton adds exactly the singleton's key.
+  dom-∪ˡ-singleton : (m : A ⇀ B) {k : A} {v : B}
+    → dom ((m ∪ˡ ❴ k , v ❵ᵐ) ˢ) ≡ᵉ dom (m ˢ) ∪ ❴ k ❵
+  dom-∪ˡ-singleton m {k} {v} = ⊆-dir , ⊇-dir
+    where
+    ⊆-dir : ∀ {a} → a ∈ dom ((m ∪ˡ ❴ k , v ❵ᵐ) ˢ) → a ∈ dom (m ˢ) ∪ ❴ k ❵
+    ⊆-dir {a} a∈ with from ∈-∪ (proj₁ dom∪ a∈)
+    ... | inj₁ h = to ∈-∪ (inj₁ h)
+    ... | inj₂ h with from dom∈ h
+    ...   | b , ab∈f =
+      to ∈-∪ (inj₂ (to ∈-singleton
+        (from ∈-dom-singleton-pair (to dom∈ (b , proj₂ (from ∈-filter ab∈f))))))
+
+    ⊇-dir : ∀ {a} → a ∈ dom (m ˢ) ∪ ❴ k ❵ → a ∈ dom ((m ∪ˡ ❴ k , v ❵ᵐ) ˢ)
+    ⊇-dir {a} a∈ with from ∈-∪ a∈
+    ... | inj₁ a∈m = proj₂ dom∪ (to ∈-∪ (inj₁ a∈m))
+    ... | inj₂ a∈k with a ∈? dom (m ˢ)
+    ...   | yes a∈m = proj₂ dom∪ (to ∈-∪ (inj₁ a∈m))
+    ...   | no  a∉m = proj₂ dom∪ (to ∈-∪ (inj₂ (to dom∈
+      (v , to ∈-filter (a∉m , to ∈-singleton (cong (_, v) (from ∈-singleton a∈k)))))))
+
+module _ {A : Type} ⦃ _ : DecEq A ⦄ where
+
+  open import Axiom.Set.Properties th
+    using (∪-sym; disjoint-sym; Dec-∈-singleton; ≡ᵉ-isEquivalence)
+  open import Relation.Binary using (IsEquivalence)
+  import Algebra.Structures as AlgStructs
+  open AlgStructs {A = Coin} _≡_ using (IsCommutativeSemigroup)
+  open import Data.Nat.Properties using (+-isCommutativeSemigroup)
+  open Equivalence
+
+  private instance
+    Coin-CommutativeSemigroup : IsCommutativeSemigroup _+_
+    Coin-CommutativeSemigroup = +-isCommutativeSemigroup
+
+  -- Removing an entry with known value from a map splits its coin total.
+  getCoin-remove : (m : A ⇀ Coin) {c : A} {d : Coin}
+    → (c , d) ∈ m ˢ
+    → getCoin m ≡ getCoin (m ∣ ❴ c ❵ ᶜ) + d
+  getCoin-remove m {c} {d} cd∈ = begin
+    getCoin m
+      ≡˘⟨ ≡ᵉ-getCoin ((m ∣ ❴ c ❵ ᶜ) ∪ˡ (m ∣ ❴ c ❵)) m decomp≡ᵉ ⟩
+    getCoin ((m ∣ ❴ c ❵ ᶜ) ∪ˡ (m ∣ ❴ c ❵))
+      ≡⟨ indexedSumᵛ'-∪ (m ∣ ❴ c ❵ ᶜ) (m ∣ ❴ c ❵) (disjoint-sym res-ex-disjoint) ⟩
+    getCoin (m ∣ ❴ c ❵ ᶜ) + getCoin (m ∣ ❴ c ❵)
+      ≡⟨ cong (getCoin (m ∣ ❴ c ❵ ᶜ) +_)
+              (trans (≡ᵉ-getCoin (m ∣ ❴ c ❵) ❴ c , d ❵ᵐ (res-singleton' {m = m} cd∈))
+                     getCoin-singleton) ⟩
+    getCoin (m ∣ ❴ c ❵ ᶜ) + d ∎
+    where
+    open ≡-Reasoning
+    module ≡ᵉ = IsEquivalence (≡ᵉ-isEquivalence {A × Coin})
+    decomp≡ᵉ : ((m ∣ ❴ c ❵ ᶜ) ∪ˡ (m ∣ ❴ c ❵)) ˢ ≡ᵉ m ˢ
+    decomp≡ᵉ = ≡ᵉ.trans (disjoint-∪ˡ-∪ (disjoint-sym res-ex-disjoint))
+                        (≡ᵉ.trans ∪-sym (res-ex-∪ Dec-∈-singleton))
+
+  -- Restricting away an absent key changes nothing.
+  resᶜ-singleton-∉ : (m : A ⇀ Coin) {c : A}
+    → c ∉ dom (m ˢ)
+    → (m ∣ ❴ c ❵ ᶜ) ˢ ≡ᵉ m ˢ
+  resᶜ-singleton-∉ m {c} c∉ = ex-⊆ , ⊇-dir
+    where
+    ⊇-dir : ∀ {x} → x ∈ m ˢ → x ∈ (m ∣ ❴ c ❵ ᶜ) ˢ
+    ⊇-dir {(a , w)} aw∈ = resᶜ-dom∉⁺ m
+      (aw∈ , λ a∈c → c∉ (subst (_∈ dom (m ˢ)) (from ∈-singleton a∈c) (to dom∈ (w , aw∈))))
+
+  -- Value of an additive union at a key present in only one operand, or in both.
+  private
+    ∥∪⁺∥-∉ˡ : (m m' : A ⇀ Coin) {a : A} {v : Coin}
+      → a ∉ dom (m ˢ) → (a , v) ∈ m' ˢ
+      → (q : a ∈ dom (m ˢ) ∪ dom (m' ˢ))
+      → ∥ m ∪⁺ m' ∥ q ≡ v
+    ∥∪⁺∥-∉ˡ m m' {a} {v} a∉m av∈m' q with a ∈? dom (m ˢ) | a ∈? dom (m' ˢ)
+    ... | yes a∈m | _        = ⊥-elim (a∉m a∈m)
+    ... | no _    | yes a∈m' = proj₂ m' (proj₂ (from dom∈ a∈m')) av∈m'
+    ... | no _    | no a∉m'  = ⊥-elim (a∉m' (to dom∈ (v , av∈m')))
+
+    ∥∪⁺∥-∉ʳ : (m m' : A ⇀ Coin) {a : A} {v : Coin}
+      → (a , v) ∈ m ˢ → a ∉ dom (m' ˢ)
+      → (q : a ∈ dom (m ˢ) ∪ dom (m' ˢ))
+      → ∥ m ∪⁺ m' ∥ q ≡ v
+    ∥∪⁺∥-∉ʳ m m' {a} {v} av∈m a∉m' q with a ∈? dom (m ˢ) | a ∈? dom (m' ˢ)
+    ... | _       | yes a∈m' = ⊥-elim (a∉m' a∈m')
+    ... | yes a∈m | no _     = proj₂ m (proj₂ (from dom∈ a∈m)) av∈m
+    ... | no a∉m  | no _     = ⊥-elim (a∉m (to dom∈ (v , av∈m)))
+
+    ∥∪⁺∥-∈-both : (m m' : A ⇀ Coin) {a : A} {v w : Coin}
+      → (a , v) ∈ m ˢ → (a , w) ∈ m' ˢ
+      → (q : a ∈ dom (m ˢ) ∪ dom (m' ˢ))
+      → ∥ m ∪⁺ m' ∥ q ≡ v + w
+    ∥∪⁺∥-∈-both m m' {a} {v} {w} av∈m aw∈m' q with a ∈? dom (m ˢ) | a ∈? dom (m' ˢ)
+    ... | yes a∈m | yes a∈m' = cong₂ _+_ (proj₂ m  (proj₂ (from dom∈ a∈m))  av∈m)
+                                         (proj₂ m' (proj₂ (from dom∈ a∈m')) aw∈m')
+    ... | yes _   | no a∉m'  = ⊥-elim (a∉m' (to dom∈ (w , aw∈m')))
+    ... | no a∉m  | _        = ⊥-elim (a∉m (to dom∈ (v , av∈m)))
+
+  -- Membership in an additive union with a singleton, value made explicit.
+  ∈-∪⁺-singleton : (m : A ⇀ Coin) {c : A} {v d : Coin}
+    → (c , v) ∈ m ˢ
+    → (c , v + d) ∈ (m ∪⁺ ❴ c , d ❵ᵐ) ˢ
+  ∈-∪⁺-singleton m {c} {v} {d} cv∈ =
+    subst (λ z → (c , z) ∈ (m ∪⁺ ❴ c , d ❵ᵐ) ˢ)
+          (∥∪⁺∥-∈-both m ❴ c , d ❵ᵐ cv∈ (to ∈-singleton refl) (∈-incl-set q .proj₁))
+          (k×∥∪⁺∥∈∪⁺' q)
+    where
+    q : c ∈ dom (m ˢ) ∪ dom (❴ c , d ❵ᵐ ˢ)
+    q = to ∈-∪ (inj₁ (to dom∈ (v , cv∈)))
+
+  ∈-∪⁺-singleton-∉ : (m : A ⇀ Coin) {c : A} {d : Coin}
+    → c ∉ dom (m ˢ)
+    → (c , d) ∈ (m ∪⁺ ❴ c , d ❵ᵐ) ˢ
+  ∈-∪⁺-singleton-∉ m {c} {d} c∉ =
+    subst (λ z → (c , z) ∈ (m ∪⁺ ❴ c , d ❵ᵐ) ˢ)
+          (∥∪⁺∥-∉ˡ m ❴ c , d ❵ᵐ c∉ (to ∈-singleton refl) (∈-incl-set q .proj₁))
+          (k×∥∪⁺∥∈∪⁺' q)
+    where
+    q : c ∈ dom (m ˢ) ∪ dom (❴ c , d ❵ᵐ ˢ)
+    q = to ∈-∪ (inj₂ (to dom∈ (d , to ∈-singleton refl)))
+
+  -- Adding at a key does not disturb the restriction away from that key.
+  ∪⁺-singleton-resᶜ : (m : A ⇀ Coin) {c : A} {d : Coin}
+    → ((m ∪⁺ ❴ c , d ❵ᵐ) ∣ ❴ c ❵ ᶜ) ˢ ≡ᵉ (m ∣ ❴ c ❵ ᶜ) ˢ
+  ∪⁺-singleton-resᶜ m {c} {d} = ⊆-dir , ⊇-dir
+    where
+    a∉sing-dom : ∀ {a} → a ∉ ❴ c ❵ → a ∉ dom (❴ c , d ❵ᵐ ˢ)
+    a∉sing-dom a∉ a∈ = a∉ (to ∈-singleton (from ∈-dom-singleton-pair a∈))
+
+    ⊆-dir : ∀ {x} → x ∈ ((m ∪⁺ ❴ c , d ❵ᵐ) ∣ ❴ c ❵ ᶜ) ˢ → x ∈ (m ∣ ❴ c ❵ ᶜ) ˢ
+    ⊆-dir {(a , w)} x∈ with resᶜ-dom∉⁻ (m ∪⁺ ❴ c , d ❵ᵐ) x∈
+    ... | aw∈m⁺ , a∉c with from ∈-∪ (∪⁺-dom∪ aw∈m⁺)
+    ...   | inj₂ h = ⊥-elim (a∉sing-dom a∉c h)
+    ...   | inj₁ a∈m = resᶜ-dom∉⁺ m
+            (subst (λ z → (a , z) ∈ m ˢ) (sym w≡v) (proj₂ (from dom∈ a∈m)) , a∉c)
+      where
+      q : _ ∈ dom (m ˢ) ∪ dom (❴ c , d ❵ᵐ ˢ)
+      q = to ∈-∪ (inj₁ a∈m)
+      w≡v : w ≡ proj₁ (from dom∈ a∈m)
+      w≡v = trans (proj₂ (m ∪⁺ ❴ c , d ❵ᵐ) aw∈m⁺ (k×∥∪⁺∥∈∪⁺' q))
+                  (∥∪⁺∥-∉ʳ m ❴ c , d ❵ᵐ (proj₂ (from dom∈ a∈m)) (a∉sing-dom a∉c)
+                           (∈-incl-set q .proj₁))
+
+    ⊇-dir : ∀ {x} → x ∈ (m ∣ ❴ c ❵ ᶜ) ˢ → x ∈ ((m ∪⁺ ❴ c , d ❵ᵐ) ∣ ❴ c ❵ ᶜ) ˢ
+    ⊇-dir {(a , w)} x∈ with resᶜ-dom∉⁻ m x∈
+    ... | aw∈m , a∉c = resᶜ-dom∉⁺ (m ∪⁺ ❴ c , d ❵ᵐ)
+            (subst (λ z → (a , z) ∈ (m ∪⁺ ❴ c , d ❵ᵐ) ˢ) v≡w (k×∥∪⁺∥∈∪⁺' q) , a∉c)
+      where
+      q : _ ∈ dom (m ˢ) ∪ dom (❴ c , d ❵ᵐ ˢ)
+      q = to ∈-∪ (inj₁ (to dom∈ (w , aw∈m)))
+      v≡w : ∥ m ∪⁺ ❴ c , d ❵ᵐ ∥ (∈-incl-set q .proj₁) ≡ w
+      v≡w = ∥∪⁺∥-∉ʳ m ❴ c , d ❵ᵐ aw∈m (a∉sing-dom a∉c) (∈-incl-set q .proj₁)
+
+  -- Additive union with a singleton adds its coin to the total.
+  getCoin-∪⁺-singleton : (m : A ⇀ Coin) {c : A} {d : Coin}
+    → getCoin (m ∪⁺ ❴ c , d ❵ᵐ) ≡ getCoin m + d
+  getCoin-∪⁺-singleton m {c} {d} with c ∈? dom (m ˢ)
+  ... | no c∉m = begin
+        getCoin (m ∪⁺ ❴ c , d ❵ᵐ)
+          ≡⟨ getCoin-remove (m ∪⁺ ❴ c , d ❵ᵐ) (∈-∪⁺-singleton-∉ m c∉m) ⟩
+        getCoin ((m ∪⁺ ❴ c , d ❵ᵐ) ∣ ❴ c ❵ ᶜ) + d
+          ≡⟨ cong (_+ d) (≡ᵉ-getCoin ((m ∪⁺ ❴ c , d ❵ᵐ) ∣ ❴ c ❵ ᶜ) (m ∣ ❴ c ❵ ᶜ)
+                                     (∪⁺-singleton-resᶜ m)) ⟩
+        getCoin (m ∣ ❴ c ❵ ᶜ) + d
+          ≡⟨ cong (_+ d) (≡ᵉ-getCoin (m ∣ ❴ c ❵ ᶜ) m (resᶜ-singleton-∉ m c∉m)) ⟩
+        getCoin m + d ∎
+        where open ≡-Reasoning
+  ... | yes c∈m = begin
+        getCoin (m ∪⁺ ❴ c , d ❵ᵐ)
+          ≡⟨ getCoin-remove (m ∪⁺ ❴ c , d ❵ᵐ) (∈-∪⁺-singleton m (proj₂ (from dom∈ c∈m))) ⟩
+        getCoin ((m ∪⁺ ❴ c , d ❵ᵐ) ∣ ❴ c ❵ ᶜ) + (proj₁ (from dom∈ c∈m) + d)
+          ≡⟨ cong (_+ (proj₁ (from dom∈ c∈m) + d))
+                  (≡ᵉ-getCoin ((m ∪⁺ ❴ c , d ❵ᵐ) ∣ ❴ c ❵ ᶜ) (m ∣ ❴ c ❵ ᶜ)
+                              (∪⁺-singleton-resᶜ m)) ⟩
+        getCoin (m ∣ ❴ c ❵ ᶜ) + (proj₁ (from dom∈ c∈m) + d)
+          ≡˘⟨ +-assoc (getCoin (m ∣ ❴ c ❵ ᶜ)) (proj₁ (from dom∈ c∈m)) d ⟩
+        getCoin (m ∣ ❴ c ❵ ᶜ) + proj₁ (from dom∈ c∈m) + d
+          ≡˘⟨ cong (_+ d) (getCoin-remove m (proj₂ (from dom∈ c∈m))) ⟩
+        getCoin m + d ∎
+        where open ≡-Reasoning
 ```
