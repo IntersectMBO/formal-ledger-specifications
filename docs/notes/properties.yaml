@@ -92,8 +92,8 @@ properties:
     defs: [GADepositsEventuallyRefunded]
     issues: [414]
     notes: >
-      Statement stub drafted this session (branch claude/414-property-eventually-refunded,
-      PR pending on a fork). Marked `planned` until merged; then becomes `stated`.
+      Proved on master: `gaDepositsEventuallyRefunded` inhabits
+      `GADepositsEventuallyRefunded`; #414 closed 2026-07-16.
 
   - id: conway-epoch-voting-power-self-proposal
     title: "Voting power of a stake credential does not decrease on self-funded proposal"
@@ -128,8 +128,11 @@ properties:
     defs: [vote-applied-to-GA, last-vote-applied-to-GA]
     issues: [417]
     notes: >
-      Statement stub drafted this session (branch claude/417-property-last-vote-applied-to-GA,
-      PR pending on a fork). Marked `planned` until merged; then becomes `stated`.
+      Proved on master: `vote-applied` and `last-vote-applied` (the latter with
+      the `GovEnv.txid Γ ≢ proj₁ aid` precondition); #417 closed 2026-07-16.
+      A LEDGER-level lift exists in
+      `Ledger.Conway.Specification.Ledger.Properties.LastVoteApplied` (not
+      cataloged separately yet).
 
   # --- Issue #45 comment properties (no dedicated issue yet) -----------------
 
