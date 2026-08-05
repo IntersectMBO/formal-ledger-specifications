@@ -40,6 +40,9 @@ does—it processes a list of signals, transforming state.
    +  `RunTraceAfterAndThen`: run a given transition (`Init`), then run a transition
       (`Step`) for a each signal in a given list, then, once the list is empty, run a
       final (`Last`) transition.
+   +  `RunTraceAfter`: run a given transition (`Init`), then run a transition (`Step`)
+      for each signal in a given list. This is `RunTraceAfterAndThen` with a trivial
+      final transition, built on the reflexive-transitive closure of `Step`.
 
 ## High-level picture
 
@@ -140,6 +143,20 @@ ReflexiveTransitiveClosureᵢ {sts = sts} = _⊢_⇀⟦_⟧ᵢ*_ {_⊢_⇀⟦_�
 
 ReflexiveTransitiveClosureᵢᵇ = _⊢_⇀⟦_⟧ᵢ*_
 ReflexiveTransitiveClosureᵇ = _⊢_⇀⟦_⟧*_
+```
+
+### Running a Trace After an Initial Transition
+
+```agda
+data RunTraceAfter (Init : C → S → ⊤ → S → Type)
+                   (Step : C → S → Sig → S → Type) :
+  C → S → List Sig → S → Type where
+
+    run :
+        ∙ Init Γ s tt s'
+        ∙ ReflexiveTransitiveClosure {sts = Step} Γ s' sigs s''
+        ─────────────────────────────────────────────
+        RunTraceAfter Init Step Γ s sigs s''
 ```
 
 ## Totality
