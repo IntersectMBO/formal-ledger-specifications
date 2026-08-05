@@ -19,7 +19,7 @@ private module Certs = Ledger.Conway.Specification.Certs gs
 open Certs public
   hiding (DState; GState; CertState; HasCast-DState; HasCast-GState; HasCast-CertState;
           _⊢_⇀⦇_,DELEG⦈_; _⊢_⇀⦇_,GOVCERT⦈_;
-          _⊢_⇀⦇_,CERT⦈_; _⊢_⇀⦇_,PRE-CERT⦈_; _⊢_⇀⦇_,POST-CERT⦈_; _⊢_⇀⦇_,CERTS⦈_; ⟦_,_,_⟧ᵈ)
+          _⊢_⇀⦇_,CERT⦈_; _⊢_⇀⦇_,PRE-CERT⦈_; _⊢_⇀⦇_,CERTS⦈_; ⟦_,_,_⟧ᵈ)
 open RewardAddress
 
 record DState : Type where
@@ -105,6 +105,7 @@ private variable
   stᵈ stᵈ' : DState
   stᵍ stᵍ' : GState
   stᵖ stᵖ' : PState
+  stᶜ stᶜ' : CertState
 
 open GovVote
 
@@ -149,31 +150,31 @@ data _⊢_⇀⦇_,DELEG⦈_ where
         ⟦ vDelegs , sDelegs , rwds ∪ˡ ❴ c , 0 ❵
         , updateCertDeposit pp (reg c d) dep ⟧
 
-data _⊢_⇀⦇_,GOVCERT⦈_ : CertEnv → GState → DCert → GState → Type where
+data _⊢_⇀⦇_,GOVCERT⦈_ : CertEnv → CertState → DCert → CertState → Type where
   GOVCERT-regdrep : ∀ {pp} → let open PParams pp in
     ∙ (d ≡ drepDeposit × c ∉ dom dReps) ⊎ (d ≡ 0 × c ∈ dom dReps)
       ────────────────────────────────
       ⟦ e , pp , vs , wdrls , cc ⟧ ⊢
-      ⟦ dReps , ccKeys , dep ⟧
+      ⟦ stᵈ , stᵖ , ⟦ dReps , ccKeys , dep ⟧ ⟧
         ⇀⦇ regdrep c d an ,GOVCERT⦈
-      ⟦ ❴ c , e + drepActivity ❵ ∪ˡ dReps , ccKeys
-      , updateCertDeposit pp (regdrep c d an ) dep ⟧
+      ⟦ stᵈ , stᵖ , ⟦ ❴ c , e + drepActivity ❵ ∪ˡ dReps , ccKeys
+      , updateCertDeposit pp (regdrep c d an ) dep ⟧ ⟧
 
   GOVCERT-deregdrep :
     ∙ c ∈ dom dReps
     ∙ (DRepDeposit c , d) ∈ dep
       ────────────────────────────────
-      ⟦ e , pp , vs , wdrls , cc ⟧ ⊢ ⟦ dReps , ccKeys , dep ⟧
+      ⟦ e , pp , vs , wdrls , cc ⟧ ⊢ ⟦ ⟦ vDelegs , sDelegs , rwds , ddep ⟧ᵈ , stᵖ , ⟦ dReps , ccKeys , dep ⟧ ⟧
           ⇀⦇ deregdrep c d ,GOVCERT⦈
-          ⟦ dReps ∣ ❴ c ❵ ᶜ , ccKeys , updateCertDeposit pp (deregdrep c d) dep ⟧
+          ⟦ ⟦ vDelegs ∣^ ❴ vDelegCredential c ❵ ᶜ , sDelegs , rwds , ddep ⟧ᵈ , stᵖ , ⟦ dReps ∣ ❴ c ❵ ᶜ , ccKeys , updateCertDeposit pp (deregdrep c d) dep ⟧ ⟧
 
   GOVCERT-ccreghot :
     ∙ (c , nothing) ∉ ccKeys
     ∙ c ∈ cc
       ────────────────────────────────
-      ⟦ e , pp , vs , wdrls , cc ⟧ ⊢ ⟦ dReps , ccKeys , dep ⟧
+      ⟦ e , pp , vs , wdrls , cc ⟧ ⊢ ⟦ stᵈ , stᵖ , ⟦ dReps , ccKeys , dep ⟧ ⟧
           ⇀⦇ ccreghot c mc ,GOVCERT⦈
-          ⟦ dReps , ❴ c , mc ❵ ∪ˡ ccKeys , updateCertDeposit pp (ccreghot c mc) dep ⟧
+          ⟦ stᵈ , stᵖ , ⟦ dReps , ❴ c , mc ❵ ∪ˡ ccKeys , updateCertDeposit pp (ccreghot c mc) dep ⟧ ⟧
 
 data _⊢_⇀⦇_,CERT⦈_ : CertEnv → CertState → DCert → CertState → Type where
   CERT-deleg :
@@ -187,9 +188,9 @@ data _⊢_⇀⦇_,CERT⦈_ : CertEnv → CertState → DCert → CertState → T
       ⟦ e , pp , vs , wdrls , cc ⟧ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ , stᵖ' , stᵍ ⟧
 
   CERT-vdel :
-    ∙ Γ ⊢ stᵍ ⇀⦇ dCert ,GOVCERT⦈ stᵍ'
+    ∙ Γ ⊢ stᶜ ⇀⦇ dCert ,GOVCERT⦈ stᶜ'
       ────────────────────────────────
-      Γ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ , stᵖ , stᵍ' ⟧
+      Γ ⊢ stᶜ ⇀⦇ dCert ,CERT⦈ stᶜ'
 
 data _⊢_⇀⦇_,PRE-CERT⦈_ : CertEnv → CertState → ⊤ → CertState → Type where
 
@@ -206,15 +207,6 @@ data _⊢_⇀⦇_,PRE-CERT⦈_ : CertEnv → CertState → ⊤ → CertState →
       ⇀⦇ _ ,PRE-CERT⦈
       ⟦ ⟦ voteDelegs , stakeDelegs , constMap wdrlCreds 0 ∪ˡ rewards , ddep ⟧ , stᵖ , ⟦ refreshedDReps , ccHotKeys , gdep ⟧ ⟧
 
-data _⊢_⇀⦇_,POST-CERT⦈_ : CertEnv → CertState → ⊤ → CertState → Type where
-
-  CERT-post :
-      ⟦ e , pp , vs , wdrls , cc ⟧
-      ⊢ ⟦ ⟦ voteDelegs , stakeDelegs , rewards , ddep ⟧ , stᵖ , stᵍ ⟧
-        ⇀⦇ _ ,POST-CERT⦈
-        ⟦ ⟦ voteDelegs ∣^ (mapˢ vDelegCredential (dom (GState.dreps stᵍ)) ∪ fromList (vDelegNoConfidence ∷ vDelegAbstain ∷ []))
-          , stakeDelegs , rewards , ddep ⟧ , stᵖ , stᵍ ⟧
-
 _⊢_⇀⦇_,CERTS⦈_  : CertEnv → CertState  → List DCert  → CertState  → Type
-_⊢_⇀⦇_,CERTS⦈_ = RunTraceAfterAndThen _⊢_⇀⦇_,PRE-CERT⦈_ _⊢_⇀⦇_,CERT⦈_ _⊢_⇀⦇_,POST-CERT⦈_
+_⊢_⇀⦇_,CERTS⦈_ = RunTraceAfter _⊢_⇀⦇_,PRE-CERT⦈_ _⊢_⇀⦇_,CERT⦈_
 ```

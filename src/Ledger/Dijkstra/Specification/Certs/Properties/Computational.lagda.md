@@ -72,29 +72,29 @@ instance
   Computational-POOL .completeness _ _ (retirepool _ _) _ POOL-retirepool = refl
 
   Computational-GOVCERT : Computational _⊢_⇀⦇_,GOVCERT⦈_ String
-  Computational-GOVCERT .computeProof ce gs (regdrep c d _) =
-    case ¿ d ≡ PParams.drepDeposit (PParamsOf ce) × c ∉ dom (DRepsOf gs)
-         ⊎ d ≡ 0 × c ∈ dom (DRepsOf gs) ¿ of λ where
+  Computational-GOVCERT .computeProof ce cs (regdrep c d _) =
+    case ¿ d ≡ PParams.drepDeposit (PParamsOf ce) × c ∉ dom (DRepsOf cs)
+         ⊎ d ≡ 0 × c ∈ dom (DRepsOf cs) ¿ of λ where
       (yes p) → success (-, GOVCERT-regdrep p)
       (no ¬p) → failure (genErrors ¬p)
-  Computational-GOVCERT .computeProof ce gs (deregdrep c d) =
-    case ¿ c ∈ dom (DRepsOf gs) × (c , d) ∈  (DepositsOf (GStateOf gs)) ¿ of λ where
+  Computational-GOVCERT .computeProof ce cs (deregdrep c d) =
+    case ¿ c ∈ dom (DRepsOf cs) × (c , d) ∈  (DepositsOf (GStateOf cs)) ¿ of λ where
       (yes p) → success (-, GOVCERT-deregdrep p)
       (no ¬p)  → failure (genErrors ¬p)
-  Computational-GOVCERT .computeProof ce gs (ccreghot c _) =
-    case ¿ ((c , nothing) ∉ CCHotKeysOf gs ˢ) × c ∈ ColdCredentialsOf ce ¿ of λ where
+  Computational-GOVCERT .computeProof ce cs (ccreghot c _) =
+    case ¿ ((c , nothing) ∉ CCHotKeysOf cs ˢ) × c ∈ ColdCredentialsOf ce ¿ of λ where
       (yes p) → success (-, GOVCERT-ccreghot p)
       (no ¬p) → failure (genErrors ¬p)
   Computational-GOVCERT .computeProof _ _ _ = failure "Unexpected certificate in GOVCERT"
-  Computational-GOVCERT .completeness ce gs (regdrep c d _) _ (GOVCERT-regdrep p)
+  Computational-GOVCERT .completeness ce cs (regdrep c d _) _ (GOVCERT-regdrep p)
     rewrite dec-yes
-      ¿  (d ≡ PParams.drepDeposit (PParamsOf ce) × c ∉ dom (DRepsOf gs))
-         ⊎ (d ≡ 0 × c ∈ dom (DRepsOf gs))
+      ¿  (d ≡ PParams.drepDeposit (PParamsOf ce) × c ∉ dom (DRepsOf cs))
+         ⊎ (d ≡ 0 × c ∈ dom (DRepsOf cs))
       ¿ p .proj₂ = refl
-  Computational-GOVCERT .completeness _ gs (deregdrep c d) _ (GOVCERT-deregdrep p)
-    rewrite dec-yes ¿ c ∈ dom (DRepsOf gs) × (c , d) ∈ (DepositsOf (GStateOf gs)) ¿ p .proj₂ = refl
-  Computational-GOVCERT .completeness ce gs (ccreghot c _) _ (GOVCERT-ccreghot p)
-    rewrite dec-yes ¿ (c , nothing) ∉ CCHotKeysOf gs ˢ × c ∈ ColdCredentialsOf ce ¿ p .proj₂ = refl
+  Computational-GOVCERT .completeness _ cs (deregdrep c d) _ (GOVCERT-deregdrep p)
+    rewrite dec-yes ¿ c ∈ dom (DRepsOf cs) × (c , d) ∈ (DepositsOf (GStateOf cs)) ¿ p .proj₂ = refl
+  Computational-GOVCERT .completeness ce cs (ccreghot c _) _ (GOVCERT-ccreghot p)
+    rewrite dec-yes ¿ (c , nothing) ∉ CCHotKeysOf cs ˢ × c ∈ ColdCredentialsOf ce ¿ p .proj₂ = refl
 
   Computational-CERT : Computational _⊢_⇀⦇_,CERT⦈_ String
   Computational-CERT .computeProof ce cs dCert

@@ -583,3 +583,27 @@ module _ {Init : C → S → ⊤ → S → Type} ⦃ _ : Computational Init Err�
               | completeness {Err = Err} _ _ _ _ rtat
         ...   | success (t' , r) | refl = refl
 ```
+
+```agda
+module _ {Init : C → S → ⊤ → S → Type} ⦃ _ : Computational Init Err₂ ⦄ where
+  module _ {Step : C → S → Sig → S → Type} ⦃ _ : Computational Step Err₁ ⦄
+           ⦃ _ : InjectError Err₁ Err ⦄ ⦃ _ : InjectError Err₂ Err ⦄ where
+
+    instance
+      Computational-RunTraceAfter : Computational (RunTraceAfter Init Step) Err
+
+      Computational-RunTraceAfter .computeProof Γ s sigs
+        with computeProof {STS = Init} Γ s tt
+      ... | failure e = failure (injectError it e)
+      ... | success (s' , h)
+            with computeProof {STS = ReflexiveTransitiveClosure {sts = Step}} {Err = Err} Γ s' sigs
+      ...   | failure e = failure e
+      ...   | success (t , r) = success (t , run (h , r))
+
+      Computational-RunTraceAfter .completeness Γ s sigs t (run (init , rtc))
+        with computeProof {STS = Init} Γ s tt | completeness _ _ _ _ init
+      ... | success (s' , h) | refl
+            with computeProof {STS = ReflexiveTransitiveClosure {sts = Step}} {Err = Err} Γ s' sigs
+            | completeness {Err = Err} _ _ _ _ rtc
+      ...   | success (t' , r) | refl = refl
+```
