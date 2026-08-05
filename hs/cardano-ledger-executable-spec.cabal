@@ -468,7 +468,6 @@ library
       MAlonzo.Code.Ledger.Conway.Conformance.Certs
       MAlonzo.Code.Ledger.Conway.Conformance.Certs.Properties
       MAlonzo.Code.Ledger.Conway.Conformance.Epoch
-      MAlonzo.Code.Ledger.Conway.Conformance.Epoch.Properties
       MAlonzo.Code.Ledger.Conway.Conformance.Equivalence
       MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Bisimilarity
       MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Certs
@@ -599,6 +598,7 @@ library
       MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger
       MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.Properties.Computational
       MAlonzo.Code.Ledger.Dijkstra.Specification.PoolReap
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PoolReap.Properties.Computational
       MAlonzo.Code.Ledger.Dijkstra.Specification.PParams
       MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify
       MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.Properties.Computational

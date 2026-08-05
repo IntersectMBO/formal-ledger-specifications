@@ -213,3 +213,56 @@ du_RTC'45'preserves'45'inv_194 v0 v1 v2 v3 v4
                          (coe v0 v1 v2 v13 v8 v11 v15))
              _ -> MAlonzo.RTE.mazUnreachableError
       _ -> MAlonzo.RTE.mazUnreachableError
+-- Interface.STS._.RTC-All
+d_RTC'45'All_218 ::
+  () ->
+  () ->
+  () ->
+  (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> ()) ->
+  (AgdaAny -> ()) ->
+  AgdaAny ->
+  AgdaAny ->
+  [AgdaAny] ->
+  AgdaAny -> T__'8866'_'8640''10214'_'10215''42'__80 -> ()
+d_RTC'45'All_218 = erased
+-- Interface.STS._.RTC-All-last
+d_RTC'45'All'45'last_226 ::
+  () ->
+  () ->
+  () ->
+  (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> ()) ->
+  (AgdaAny -> ()) ->
+  AgdaAny ->
+  AgdaAny ->
+  AgdaAny ->
+  [AgdaAny] ->
+  AgdaAny ->
+  T__'8866'_'8640''10214'_'10215''42'__80 -> AgdaAny -> AgdaAny
+d_RTC'45'All'45'last_226 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8 ~v9 v10
+                         v11
+  = du_RTC'45'All'45'last_226 v8 v10 v11
+du_RTC'45'All'45'last_226 ::
+  [AgdaAny] ->
+  T__'8866'_'8640''10214'_'10215''42'__80 -> AgdaAny -> AgdaAny
+du_RTC'45'All'45'last_226 v0 v1 v2
+  = case coe v1 of
+      C_BS'45'ind_84 v6 v9 v10
+        -> case coe v10 of
+             C_BS'45'base_82 v14
+               -> coe
+                    seq (coe v14)
+                    (case coe v2 of
+                       MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v15 v16 -> coe v15
+                       _ -> MAlonzo.RTE.mazUnreachableError)
+             C_BS'45'ind_84 v14 v17 v18
+               -> case coe v0 of
+                    (:) v19 v20
+                      -> case coe v2 of
+                           MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v21 v22
+                             -> coe
+                                  du_RTC'45'All'45'last_226 (coe v20)
+                                  (coe C_BS'45'ind_84 v14 v17 v18) (coe v22)
+                           _ -> MAlonzo.RTE.mazUnreachableError
+                    _ -> MAlonzo.RTE.mazUnreachableError
+             _ -> MAlonzo.RTE.mazUnreachableError
+      _ -> MAlonzo.RTE.mazUnreachableError

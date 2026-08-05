@@ -22,7 +22,7 @@ import qualified MAlonzo.Code.Class.HasHsType.Core
 import qualified MAlonzo.Code.Ledger.Dijkstra.Specification.Account
 
 import GHC.Generics (Generic)
-data BalanceInterval = Both Integer Integer | Lower Integer | Upper Integer
+data BalanceInterval = Both Integer Integer | Lower Integer | Upper Integer | Exact Integer
   deriving (Show, Eq, Generic)
 -- Ledger.Dijkstra.Foreign.Account.HsTy-BalanceInterval
 d_HsTy'45'BalanceInterval_12 ::
@@ -43,6 +43,8 @@ d_Conv'45'BalanceInterval_14
                 -> coe C_Lower_977 (coe v1)
               MAlonzo.Code.Ledger.Dijkstra.Specification.Account.C_'10214'0'44'_'10630'_854 v1
                 -> coe C_Upper_991 (coe v1)
+              MAlonzo.Code.Ledger.Dijkstra.Specification.Account.C_Exact_856 v1
+                -> coe C_Exact_1005 (coe v1)
               _ -> MAlonzo.RTE.mazUnreachableError))
       (coe
          (\ v0 ->
@@ -59,6 +61,10 @@ d_Conv'45'BalanceInterval_14
                 -> coe
                      MAlonzo.Code.Ledger.Dijkstra.Specification.Account.C_'10214'0'44'_'10630'_854
                      (coe v1)
+              C_Exact_1005 v1
+                -> coe
+                     MAlonzo.Code.Ledger.Dijkstra.Specification.Account.C_Exact_856
+                     (coe v1)
               _ -> MAlonzo.RTE.mazUnreachableError))
 -- Ledger.Dijkstra.Foreign.Account.BalanceInterval
 d_BalanceInterval_919 = ()
@@ -66,15 +72,19 @@ type T_BalanceInterval_919 = BalanceInterval
 pattern C_Both_921 a0 a1 = Both a0 a1
 pattern C_Lower_977 a0 = Lower a0
 pattern C_Upper_991 a0 = Upper a0
+pattern C_Exact_1005 a0 = Exact a0
 check_Both_921 :: Integer -> Integer -> T_BalanceInterval_919
 check_Both_921 = Both
 check_Lower_977 :: Integer -> T_BalanceInterval_919
 check_Lower_977 = Lower
 check_Upper_991 :: Integer -> T_BalanceInterval_919
 check_Upper_991 = Upper
+check_Exact_1005 :: Integer -> T_BalanceInterval_919
+check_Exact_1005 = Exact
 cover_BalanceInterval_919 :: BalanceInterval -> ()
 cover_BalanceInterval_919 x
   = case x of
       Both _ _ -> ()
       Lower _ -> ()
       Upper _ -> ()
+      Exact _ -> ()
