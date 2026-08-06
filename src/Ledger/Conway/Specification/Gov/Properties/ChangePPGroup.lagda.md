@@ -28,17 +28,10 @@ private
 
 *Informally*.
 
-Let `p`{.AgdaBound} : `GovProposal`{.AgdaRecord} be a governance proposal whose
-`action`{.AgdaField} is a `ChangePParams`{.AgdaInductiveConstructor} action carrying the
-parameter update `pu`{.AgdaBound} : `PParamsUpdate`{.AgdaField}. If the
-`GOV`{.AgdaDatatype} rule accepts `p`{.AgdaBound}, then the set
-`updateGroups`{.AgdaField} `pu`{.AgdaBound} is nonempty.
-
-The `GOV`{.AgdaDatatype} premise cannot be dropped. Nothing stops a transaction body
-from listing a degenerate proposal whose update touches no parameter group; what rules
-such a proposal out is the premise `actionWellFormed`{.AgdaFunction} of the
-`GOV-Propose`{.AgdaInductiveConstructor} rule. So the property is about proposals the
-ledger *accepts*, not about proposals a transaction merely mentions.
+Let `p : ``GovProposal`{.AgdaRecord} be a governance proposal whose
+`action`{.AgdaField} is a `ChangePParams`{.AgdaInductiveConstructor} action carrying
+the parameter update `pu : ``PParamsUpdate`{.AgdaField}.  If the `GOV`{.AgdaDatatype}
+rule accepts `p`, then the set `updateGroups`{.AgdaField}` pu` is nonempty.[^1]
 
 *Formally*.
 
@@ -50,17 +43,17 @@ ChangePPHasGroup :
   {p     : GovProposal}
   {pu    : PParamsUpdate}
   → (Γ , k) ⊢ s ⇀⦇ inj₂ p ,GOV⦈ s'
-  → p .GovProposal.action ≡ ⟦ ChangePParams , pu ⟧ᵍᵃ
+  → GovActionOf p ≡ ⟦ ChangePParams , pu ⟧ᵍᵃ
   → updateGroups pu ≢ ∅
 ```
 
 *Proof*.
 
-A proposal signal can only be consumed by `GOV-Propose`{.AgdaInductiveConstructor}, whose
-first premise is `actionWellFormed`{.AgdaFunction} `a`{.AgdaBound} for the proposed action
-`a`{.AgdaBound}. Substituting the hypothesis `a`{.AgdaBound} `≡ ⟦ ChangePParams , pu ⟧ᵍᵃ`
-makes that premise reduce to `ppdWellFormed`{.AgdaFunction} `pu`{.AgdaBound}, whose first
-component is the claim.
+A proposal signal can only be consumed by `GOV-Propose`{.AgdaInductiveConstructor},
+whose first premise is `actionWellFormed`{.AgdaFunction}` a` for the proposed action
+`a`.  Substituting the hypothesis `a ≡ ⟦ ChangePParams , pu ⟧ᵍᵃ` makes that
+premise reduce to `ppdWellFormed`{.AgdaFunction}` pu`, whose first component is the
+claim.
 
 ```agda
 ChangePPHasGroup (GOV-Propose (awf , _)) eq = subst actionWellFormed eq awf .proj₁
@@ -73,11 +66,11 @@ The same holds for every proposal in a list of signals accepted by
 processes the governance signals of a single transaction.
 
 The lift is an induction on the derivation: the step that consumes
-`inj₂ p`{.AgdaInductiveConstructor} is a `GOV`{.AgdaDatatype} step, to which the previous
-result applies, and every other step is handled by the induction hypothesis. The
-induction runs over `GOVS'`{.AgdaFunction}, the general indexed closure
-`_⊢_⇀⟦_⟧ᵢ*'_`{.AgdaDatatype} of `GOV`{.AgdaDatatype}, since the index advances along the
-trace.
+`inj₂`{.AgdaInductiveConstructor}` p` is a `GOV`{.AgdaDatatype} step, to which the
+previous result applies, and every other step is handled by the induction hypothesis.
+The induction runs over `GOVS'`{.AgdaFunction}, the general indexed closure
+`_⊢_⇀⟦_⟧ᵢ*'_`{.AgdaDatatype} of `GOV`{.AgdaDatatype}, since the index advances along
+the trace.
 
 ```agda
 ChangePPHasGroupᵢ :
@@ -89,11 +82,11 @@ ChangePPHasGroupᵢ :
   {pu    : PParamsUpdate}
   → GOVS' (Γ , k) s sigs s'
   → inj₂ p ∈ˡ sigs
-  → p .GovProposal.action ≡ ⟦ ChangePParams , pu ⟧ᵍᵃ
+  → GovActionOf p ≡ ⟦ ChangePParams , pu ⟧ᵍᵃ
   → updateGroups pu ≢ ∅
-ChangePPHasGroupᵢ (BS-base _)      ()
-ChangePPHasGroupᵢ (BS-ind st _)    (here refl)  eq = ChangePPHasGroup st eq
-ChangePPHasGroupᵢ (BS-ind _ rest)  (there mem)  eq = ChangePPHasGroupᵢ rest mem eq
+ChangePPHasGroupᵢ (BS-base _) ()
+ChangePPHasGroupᵢ (BS-ind st _) (here refl) eq = ChangePPHasGroup st eq
+ChangePPHasGroupᵢ (BS-ind _ rest) (there mem) eq = ChangePPHasGroupᵢ rest mem eq
 ```
 
 `GOVS`{.AgdaFunction} is that closure at index `0`, so the statement for
@@ -108,7 +101,16 @@ GOVS-ChangePPHasGroup :
   {pu    : PParamsUpdate}
   → Γ ⊢ s ⇀⦇ sigs ,GOVS⦈ s'
   → inj₂ p ∈ˡ sigs
-  → p .GovProposal.action ≡ ⟦ ChangePParams , pu ⟧ᵍᵃ
+  → GovActionOf p ≡ ⟦ ChangePParams , pu ⟧ᵍᵃ
   → updateGroups pu ≢ ∅
 GOVS-ChangePPHasGroup = ChangePPHasGroupᵢ
 ```
+
+---
+
+[^1]: The `GOV`{.AgdaDatatype} premise cannot be dropped.  Nothing stops a
+      transaction body from listing a degenerate proposal whose update touches
+      no parameter group; what rules such a proposal out is the premise
+      `actionWellFormed`{.AgdaFunction} of the `GOV-Propose`{.AgdaInductiveConstructor}
+      rule.  So the property is about proposals the ledger *accepts*, not proposals a
+      transaction merely mentions.
