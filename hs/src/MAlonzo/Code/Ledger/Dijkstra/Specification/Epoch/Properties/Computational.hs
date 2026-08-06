@@ -95,7 +95,7 @@ d_Governance'45'Update_3066 a0 a1 = ()
 d_mkStakeDistrs_3170 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3116 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T_Snapshot_3764 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T_Snapshot_3768 ->
   AgdaAny ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOState_3152 ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] ->
@@ -105,7 +105,7 @@ d_mkStakeDistrs_3170 ::
 d_mkStakeDistrs_3170 v0 ~v1 = du_mkStakeDistrs_3170 v0
 du_mkStakeDistrs_3170 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T_Snapshot_3764 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T_Snapshot_3768 ->
   AgdaAny ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOState_3152 ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] ->
@@ -114,60 +114,60 @@ du_mkStakeDistrs_3170 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.T_StakeDistrs_1940
 du_mkStakeDistrs_3170 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_mkStakeDistrs_4418
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_mkStakeDistrs_4422
       (coe v0)
 -- Ledger.Dijkstra.Specification.Epoch.Properties.Computational._.EpochState.acnt
 d_acnt_3192 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.T_EpochState_4006 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.T_EpochState_4010 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_Acnt_194
 d_acnt_3192 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4018
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4022
       (coe v0)
 -- Ledger.Dijkstra.Specification.Epoch.Properties.Computational._.EpochState.es
 d_es_3194 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.T_EpochState_4006 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.T_EpochState_4010 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.T_EnactState_1230
 d_es_3194 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_es_4024 (coe v0)
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_es_4028 (coe v0)
 -- Ledger.Dijkstra.Specification.Epoch.Properties.Computational._.EpochState.fut
 d_fut_3196 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.T_EpochState_4006 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.T_EpochState_4010 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.T_RatifyState_1984
 d_fut_3196 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
       (coe v0)
 -- Ledger.Dijkstra.Specification.Epoch.Properties.Computational._.EpochState.ls
 d_ls_3198 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.T_EpochState_4006 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.T_LedgerState_3778
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.T_EpochState_4010 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.T_LedgerState_3782
 d_ls_3198 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022 (coe v0)
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026 (coe v0)
 -- Ledger.Dijkstra.Specification.Epoch.Properties.Computational._.EpochState.ss
 d_ss_3200 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.T_EpochState_4006 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T_Snapshots_3822
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.T_EpochState_4010 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T_Snapshots_3826
 d_ss_3200 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ss_4020 (coe v0)
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ss_4024 (coe v0)
 -- Ledger.Dijkstra.Specification.Epoch.Properties.Computational._.Governance-Update.govSt'
 d_govSt''_3204 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.T_Governance'45'Update_4518 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.T_Governance'45'Update_4522 ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
 d_govSt''_3204 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_govSt''_4526
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_govSt''_4530
       (coe v0)
 -- Ledger.Dijkstra.Specification.Epoch.Properties.Computational._.Governance-Update.removedGovActions
 d_removedGovActions_3206 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.T_Governance'45'Update_4518 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.T_Governance'45'Update_4522 ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
 d_removedGovActions_3206 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_removedGovActions_4524
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_removedGovActions_4528
       (coe v0)
 -- Ledger.Dijkstra.Specification.Epoch.Properties.Computational._.EnactState
 d_EnactState_3322 a0 a1 = ()
@@ -220,7 +220,7 @@ du_HasCCHotKeys'45'LedgerState_3398 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasCCHotKeys_1506
 du_HasCCHotKeys'45'LedgerState_3398
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasCCHotKeys'45'LedgerState_3836
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasCCHotKeys'45'LedgerState_3840
 -- Ledger.Dijkstra.Specification.Epoch.Properties.Computational._.HasDReps-LedgerState
 d_HasDReps'45'LedgerState_3410 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
@@ -232,7 +232,7 @@ du_HasDReps'45'LedgerState_3410 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasDReps_1186
 du_HasDReps'45'LedgerState_3410
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDReps'45'LedgerState_3838
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDReps'45'LedgerState_3842
 -- Ledger.Dijkstra.Specification.Epoch.Properties.Computational._.HasPools-LedgerState
 d_HasPools'45'LedgerState_3436 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
@@ -244,7 +244,7 @@ du_HasPools'45'LedgerState_3436 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasPools_1546
 du_HasPools'45'LedgerState_3436
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasPools'45'LedgerState_3822
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasPools'45'LedgerState_3826
 -- Ledger.Dijkstra.Specification.Epoch.Properties.Computational._.HasVoteDelegs-LedgerState
 d_HasVoteDelegs'45'LedgerState_3446 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
@@ -256,32 +256,32 @@ du_HasVoteDelegs'45'LedgerState_3446 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasVoteDelegs_1070
 du_HasVoteDelegs'45'LedgerState_3446
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasVoteDelegs'45'LedgerState_3830
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasVoteDelegs'45'LedgerState_3834
 -- Ledger.Dijkstra.Specification.Epoch.Properties.Computational._.LedgerState
 d_LedgerState_3456 a0 a1 = ()
 -- Ledger.Dijkstra.Specification.Epoch.Properties.Computational._.LedgerState.certState
 d_certState_3510 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.T_LedgerState_3778 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.T_LedgerState_3782 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_CertState_1408
 d_certState_3510 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_certState_3790
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_certState_3794
       (coe v0)
 -- Ledger.Dijkstra.Specification.Epoch.Properties.Computational._.LedgerState.govSt
 d_govSt_3512 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.T_LedgerState_3778 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.T_LedgerState_3782 ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
 d_govSt_3512 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_govSt_3788
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_govSt_3792
       (coe v0)
 -- Ledger.Dijkstra.Specification.Epoch.Properties.Computational._.LedgerState.utxoSt
 d_utxoSt_3514 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.T_LedgerState_3778 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.T_LedgerState_3782 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOState_3152
 d_utxoSt_3514 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_utxoSt_3786
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_utxoSt_3790
       (coe v0)
 -- Ledger.Dijkstra.Specification.Epoch.Properties.Computational._.PoolReapState
 d_PoolReapState_3544 a0 a1 = ()
@@ -344,13 +344,13 @@ d_computeProof_3896 v0
 d_EPOCH'45'total_3918 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3116 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.T_EpochState_4006 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.T_EpochState_4010 ->
   AgdaAny -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_EPOCH'45'total_3918 v0 ~v1 v2 v3
   = du_EPOCH'45'total_3918 v0 v2 v3
 du_EPOCH'45'total_3918 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.T_EpochState_4006 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.T_EpochState_4010 ->
   AgdaAny -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 du_EPOCH'45'total_3918 v0 v1 v2
   = coe
@@ -358,22 +358,22 @@ du_EPOCH'45'total_3918 v0 v1 v2
       (coe
          MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_52
          (coe
-            MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_HasCast'45'EpochState_4160)
+            MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_HasCast'45'EpochState_4164)
          (coe
             MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
             (coe
-               MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt''''_4642
+               MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt''''_4646
                (coe
-                  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4686
+                  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4690
                   (coe v0)
                   (coe
                      MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_EnactStateOf_1266
                      (coe
                         MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.du_HasEnactState'45'RatifyState_2020)
-                     (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                     (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                         (coe v1)))
                   (coe
-                     MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                     MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                      (coe v1))
                   (coe
                      MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_52
@@ -392,38 +392,38 @@ du_EPOCH'45'total_3918 v0 v1 v2
                                  (coe
                                     MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                     (coe
-                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4018
+                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4022
                                        (coe v1))
                                     (coe
                                        MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                        (coe
                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_DStateOf_1654
                                           (coe
-                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3826)
-                                          (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3830)
+                                          (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                              (coe v1)))
                                        (coe
-                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4580
+                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4584
                                           (coe
-                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4632
+                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4636
                                              (coe v0)
                                              (coe
-                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                 (coe v1))
                                              (coe
                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_EnactStateOf_1266
                                                 (coe
                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.du_HasEnactState'45'RatifyState_2020)
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                    (coe v1)))
                                              (coe
-                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4570
+                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4574
                                                 (coe v0)
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                    (coe v1))
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                    (coe v1))))))))))
                         (coe
                            MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
@@ -456,38 +456,38 @@ du_EPOCH'45'total_3918 v0 v1 v2
                                           (coe
                                              MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                              (coe
-                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4018
+                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4022
                                                 (coe v1))
                                              (coe
                                                 MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                 (coe
                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_DStateOf_1654
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3826)
-                                                   (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3830)
+                                                   (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                       (coe v1)))
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4580
+                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4584
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4632
+                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4636
                                                       (coe v0)
                                                       (coe
-                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                          (coe v1))
                                                       (coe
                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_EnactStateOf_1266
                                                          (coe
                                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.du_HasEnactState'45'RatifyState_2020)
-                                                         (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                         (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                             (coe v1)))
                                                       (coe
-                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4570
+                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4574
                                                          (coe v0)
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                             (coe v1))
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                             (coe v1))))))))))
                                  (let v4
                                         = MAlonzo.Code.Ledger.Core.Specification.Epoch.d_DecEq'45'Epoch_80
@@ -516,38 +516,38 @@ du_EPOCH'45'total_3918 v0 v1 v2
                                                 (coe
                                                    MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4018
+                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4022
                                                       (coe v1))
                                                    (coe
                                                       MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                       (coe
                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_DStateOf_1654
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3826)
-                                                         (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3830)
+                                                         (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                             (coe v1)))
                                                       (coe
-                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4580
+                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4584
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4632
+                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4636
                                                             (coe v0)
                                                             (coe
-                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                (coe v1))
                                                             (coe
                                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_EnactStateOf_1266
                                                                (coe
                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.du_HasEnactState'45'RatifyState_2020)
-                                                               (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                               (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                   (coe v1)))
                                                             (coe
-                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4570
+                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4574
                                                                (coe v0)
                                                                (coe
-                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                   (coe v1))
                                                                (coe
-                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                   (coe v1))))))))))
                                        (coe v2)))))
                            (coe
@@ -580,38 +580,38 @@ du_EPOCH'45'total_3918 v0 v1 v2
                                           (coe
                                              MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                              (coe
-                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4018
+                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4022
                                                 (coe v1))
                                              (coe
                                                 MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                 (coe
                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_DStateOf_1654
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3826)
-                                                   (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3830)
+                                                   (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                       (coe v1)))
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4580
+                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4584
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4632
+                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4636
                                                       (coe v0)
                                                       (coe
-                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                          (coe v1))
                                                       (coe
                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_EnactStateOf_1266
                                                          (coe
                                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.du_HasEnactState'45'RatifyState_2020)
-                                                         (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                         (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                             (coe v1)))
                                                       (coe
-                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4570
+                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4574
                                                          (coe v0)
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                             (coe v1))
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                             (coe v1))))))))))
                                  (let v3
                                         = coe
@@ -706,38 +706,38 @@ du_EPOCH'45'total_3918 v0 v1 v2
                                                                (coe
                                                                   MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                   (coe
-                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4018
+                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4022
                                                                      (coe v1))
                                                                   (coe
                                                                      MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                      (coe
                                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_DStateOf_1654
                                                                         (coe
-                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3826)
-                                                                        (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3830)
+                                                                        (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                            (coe v1)))
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4580
+                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4584
                                                                         (coe
-                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4632
+                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4636
                                                                            (coe v0)
                                                                            (coe
-                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                               (coe v1))
                                                                            (coe
                                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_EnactStateOf_1266
                                                                               (coe
                                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.du_HasEnactState'45'RatifyState_2020)
-                                                                              (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                              (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                                  (coe v1)))
                                                                            (coe
-                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4570
+                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4574
                                                                               (coe v0)
                                                                               (coe
-                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                  (coe v1))
                                                                               (coe
-                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                                  (coe v1))))))))))
                                                       (let v5
                                                              = MAlonzo.Code.Ledger.Core.Specification.Epoch.d_DecEq'45'Epoch_80
@@ -766,38 +766,38 @@ du_EPOCH'45'total_3918 v0 v1 v2
                                                                      (coe
                                                                         MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                         (coe
-                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4018
+                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4022
                                                                            (coe v1))
                                                                         (coe
                                                                            MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                            (coe
                                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_DStateOf_1654
                                                                               (coe
-                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3826)
-                                                                              (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3830)
+                                                                              (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                  (coe v1)))
                                                                            (coe
-                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4580
+                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4584
                                                                               (coe
-                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4632
+                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4636
                                                                                  (coe v0)
                                                                                  (coe
-                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                     (coe v1))
                                                                                  (coe
                                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_EnactStateOf_1266
                                                                                     (coe
                                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.du_HasEnactState'45'RatifyState_2020)
-                                                                                    (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                                    (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                                        (coe v1)))
                                                                                  (coe
-                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4570
+                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4574
                                                                                     (coe v0)
                                                                                     (coe
-                                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                        (coe v1))
                                                                                     (coe
-                                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                                        (coe
                                                                                           v1))))))))))
                                                             (coe v2)))))))
@@ -812,38 +812,38 @@ du_EPOCH'45'total_3918 v0 v1 v2
                                                    (coe
                                                       MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                       (coe
-                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4018
+                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4022
                                                          (coe v1))
                                                       (coe
                                                          MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                          (coe
                                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_DStateOf_1654
                                                             (coe
-                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3826)
-                                                            (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3830)
+                                                            (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                (coe v1)))
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4580
+                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4584
                                                             (coe
-                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4632
+                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4636
                                                                (coe v0)
                                                                (coe
-                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                   (coe v1))
                                                                (coe
                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_EnactStateOf_1266
                                                                   (coe
                                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.du_HasEnactState'45'RatifyState_2020)
-                                                                  (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                  (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                      (coe v1)))
                                                                (coe
-                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4570
+                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4574
                                                                   (coe v0)
                                                                   (coe
-                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                      (coe v1))
                                                                   (coe
-                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                      (coe v1)))))))))))
                                        (coe
                                           MAlonzo.Code.Class.IsSet.du_dom_586
@@ -863,38 +863,38 @@ du_EPOCH'45'total_3918 v0 v1 v2
                                                    (coe
                                                       MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                       (coe
-                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4018
+                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4022
                                                          (coe v1))
                                                       (coe
                                                          MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                          (coe
                                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_DStateOf_1654
                                                             (coe
-                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3826)
-                                                            (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3830)
+                                                            (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                (coe v1)))
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4580
+                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4584
                                                             (coe
-                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4632
+                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4636
                                                                (coe v0)
                                                                (coe
-                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                   (coe v1))
                                                                (coe
                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_EnactStateOf_1266
                                                                   (coe
                                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.du_HasEnactState'45'RatifyState_2020)
-                                                                  (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                  (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                      (coe v1)))
                                                                (coe
-                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4570
+                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4574
                                                                   (coe v0)
                                                                   (coe
-                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                      (coe v1))
                                                                   (coe
-                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                      (coe v1))))))))))))))
                               (coe
                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_deposits_1368
@@ -907,38 +907,38 @@ du_EPOCH'45'total_3918 v0 v1 v2
                                        (coe
                                           MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                           (coe
-                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4018
+                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4022
                                              (coe v1))
                                           (coe
                                              MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                              (coe
                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_DStateOf_1654
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3826)
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3830)
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                    (coe v1)))
                                              (coe
-                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4580
+                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4584
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4632
+                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4636
                                                    (coe v0)
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                       (coe v1))
                                                    (coe
                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_EnactStateOf_1266
                                                       (coe
                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.du_HasEnactState'45'RatifyState_2020)
-                                                      (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                      (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                          (coe v1)))
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4570
+                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4574
                                                       (coe v0)
                                                       (coe
-                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                          (coe v1))
                                                       (coe
-                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                          (coe v1))))))))))))))
                   (coe
                      MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_52
@@ -1065,38 +1065,38 @@ du_EPOCH'45'total_3918 v0 v1 v2
                                                             (coe
                                                                MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                (coe
-                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4018
+                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4022
                                                                   (coe v1))
                                                                (coe
                                                                   MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                   (coe
                                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_DStateOf_1654
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3826)
-                                                                     (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3830)
+                                                                     (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                         (coe v1)))
                                                                   (coe
-                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4580
+                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4584
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4632
+                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4636
                                                                         (coe v0)
                                                                         (coe
-                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                            (coe v1))
                                                                         (coe
                                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_EnactStateOf_1266
                                                                            (coe
                                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.du_HasEnactState'45'RatifyState_2020)
-                                                                           (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                           (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                               (coe v1)))
                                                                         (coe
-                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4570
+                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4574
                                                                            (coe v0)
                                                                            (coe
-                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                               (coe v1))
                                                                            (coe
-                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                               (coe v1))))))))))
                                                    (let v5
                                                           = MAlonzo.Code.Ledger.Core.Specification.Epoch.d_DecEq'45'Epoch_80
@@ -1125,38 +1125,38 @@ du_EPOCH'45'total_3918 v0 v1 v2
                                                                   (coe
                                                                      MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4018
+                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4022
                                                                         (coe v1))
                                                                      (coe
                                                                         MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                         (coe
                                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_DStateOf_1654
                                                                            (coe
-                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3826)
-                                                                           (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3830)
+                                                                           (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                               (coe v1)))
                                                                         (coe
-                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4580
+                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4584
                                                                            (coe
-                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4632
+                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4636
                                                                               (coe v0)
                                                                               (coe
-                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                  (coe v1))
                                                                               (coe
                                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_EnactStateOf_1266
                                                                                  (coe
                                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.du_HasEnactState'45'RatifyState_2020)
-                                                                                 (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                                 (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                                     (coe v1)))
                                                                               (coe
-                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4570
+                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4574
                                                                                  (coe v0)
                                                                                  (coe
-                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                     (coe v1))
                                                                                  (coe
-                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                                     (coe
                                                                                        v1))))))))))
                                                          (coe v2)))))))
@@ -1171,38 +1171,38 @@ du_EPOCH'45'total_3918 v0 v1 v2
                                                 (coe
                                                    MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4018
+                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4022
                                                       (coe v1))
                                                    (coe
                                                       MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                       (coe
                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_DStateOf_1654
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3826)
-                                                         (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3830)
+                                                         (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                             (coe v1)))
                                                       (coe
-                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4580
+                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4584
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4632
+                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4636
                                                             (coe v0)
                                                             (coe
-                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                (coe v1))
                                                             (coe
                                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_EnactStateOf_1266
                                                                (coe
                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.du_HasEnactState'45'RatifyState_2020)
-                                                               (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                               (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                   (coe v1)))
                                                             (coe
-                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4570
+                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4574
                                                                (coe v0)
                                                                (coe
-                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                   (coe v1))
                                                                (coe
-                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                   (coe v1)))))))))))
                                     (coe
                                        MAlonzo.Code.Class.IsSet.du_dom_586
@@ -1222,38 +1222,38 @@ du_EPOCH'45'total_3918 v0 v1 v2
                                                 (coe
                                                    MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4018
+                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4022
                                                       (coe v1))
                                                    (coe
                                                       MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                       (coe
                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_DStateOf_1654
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3826)
-                                                         (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3830)
+                                                         (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                             (coe v1)))
                                                       (coe
-                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4580
+                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4584
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4632
+                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4636
                                                             (coe v0)
                                                             (coe
-                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                (coe v1))
                                                             (coe
                                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_EnactStateOf_1266
                                                                (coe
                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.du_HasEnactState'45'RatifyState_2020)
-                                                               (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                               (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                   (coe v1)))
                                                             (coe
-                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4570
+                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4574
                                                                (coe v0)
                                                                (coe
-                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                   (coe v1))
                                                                (coe
-                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                   (coe v1))))))))))))))
                            (coe
                               MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_treasury_200
@@ -1266,38 +1266,38 @@ du_EPOCH'45'total_3918 v0 v1 v2
                                     (coe
                                        MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                        (coe
-                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4018
+                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4022
                                           (coe v1))
                                        (coe
                                           MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                           (coe
                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_DStateOf_1654
                                              (coe
-                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3826)
-                                             (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3830)
+                                             (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                 (coe v1)))
                                           (coe
-                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4580
+                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4584
                                              (coe
-                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4632
+                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4636
                                                 (coe v0)
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                    (coe v1))
                                                 (coe
                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_EnactStateOf_1266
                                                    (coe
                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.du_HasEnactState'45'RatifyState_2020)
-                                                   (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                   (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                       (coe v1)))
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4570
+                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4574
                                                    (coe v0)
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                       (coe v1))
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                       (coe v1)))))))))))
                         (coe
                            MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_reserves_202
@@ -1310,47 +1310,47 @@ du_EPOCH'45'total_3918 v0 v1 v2
                                  (coe
                                     MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                     (coe
-                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4018
+                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4022
                                        (coe v1))
                                     (coe
                                        MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                        (coe
                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_DStateOf_1654
                                           (coe
-                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3826)
-                                          (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3830)
+                                          (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                              (coe v1)))
                                        (coe
-                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4580
+                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4584
                                           (coe
-                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4632
+                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4636
                                              (coe v0)
                                              (coe
-                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                 (coe v1))
                                              (coe
                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_EnactStateOf_1266
                                                 (coe
                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.du_HasEnactState'45'RatifyState_2020)
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                    (coe v1)))
                                              (coe
-                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4570
+                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4574
                                                 (coe v0)
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                    (coe v1))
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                    (coe v1))))))))))))
                   (coe
-                     MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4570
+                     MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4574
                      (coe v0)
                      (coe
-                        MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                        MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                         (coe v1))
                      (coe
-                        MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                        MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                         (coe v1)))))
             (coe
                MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
@@ -1360,70 +1360,70 @@ du_EPOCH'45'total_3918 v0 v1 v2
                      MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.Properties.Computational.du_SNAP'45'total_2886
                      (coe v0)
                      (coe
-                        MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                        MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                         (coe v1))
                      (coe
-                        MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ss_4020
+                        MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ss_4024
                         (coe v1))))
                (coe
                   MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                   (coe
                      MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_52
                      (coe
-                        MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasCast'45'LedgerState_3840)
+                        MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasCast'45'LedgerState_3844)
                      (coe
                         MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                         (coe
-                           MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_utxoSt''_4584
+                           MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_utxoSt''_4588
                            (coe
-                              MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4632
+                              MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4636
                               (coe v0)
                               (coe
-                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                  (coe v1))
                               (coe
                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_EnactStateOf_1266
                                  (coe
                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.du_HasEnactState'45'RatifyState_2020)
-                                 (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                 (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                     (coe v1)))
                               (coe
-                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4570
+                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4574
                                  (coe v0)
                                  (coe
-                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                     (coe v1))
                                  (coe
-                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                     (coe v1)))))
                         (coe
                            MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                            (coe
-                              MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_govSt''_4526
+                              MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_govSt''_4530
                               (coe
-                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4570
+                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4574
                                  (coe v0)
                                  (coe
-                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                     (coe v1))
                                  (coe
-                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                     (coe v1))))
                            (coe
                               MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.C_'10214'_'44'_'44'_'10215''7580''738'_1422
                               (coe
-                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_dState''''_4640
+                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_dState''''_4644
                                  (coe
-                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4686
+                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4690
                                     (coe v0)
                                     (coe
                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_EnactStateOf_1266
                                        (coe
                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.du_HasEnactState'45'RatifyState_2020)
-                                       (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                       (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                           (coe v1)))
                                     (coe
-                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                        (coe v1))
                                     (coe
                                        MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_52
@@ -1442,38 +1442,38 @@ du_EPOCH'45'total_3918 v0 v1 v2
                                                    (coe
                                                       MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                       (coe
-                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4018
+                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4022
                                                          (coe v1))
                                                       (coe
                                                          MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                          (coe
                                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_DStateOf_1654
                                                             (coe
-                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3826)
-                                                            (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3830)
+                                                            (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                (coe v1)))
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4580
+                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4584
                                                             (coe
-                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4632
+                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4636
                                                                (coe v0)
                                                                (coe
-                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                   (coe v1))
                                                                (coe
                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_EnactStateOf_1266
                                                                   (coe
                                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.du_HasEnactState'45'RatifyState_2020)
-                                                                  (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                  (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                      (coe v1)))
                                                                (coe
-                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4570
+                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4574
                                                                   (coe v0)
                                                                   (coe
-                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                      (coe v1))
                                                                   (coe
-                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                      (coe v1))))))))))
                                           (coe
                                              MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
@@ -1506,38 +1506,38 @@ du_EPOCH'45'total_3918 v0 v1 v2
                                                             (coe
                                                                MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                (coe
-                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4018
+                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4022
                                                                   (coe v1))
                                                                (coe
                                                                   MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                   (coe
                                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_DStateOf_1654
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3826)
-                                                                     (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3830)
+                                                                     (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                         (coe v1)))
                                                                   (coe
-                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4580
+                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4584
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4632
+                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4636
                                                                         (coe v0)
                                                                         (coe
-                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                            (coe v1))
                                                                         (coe
                                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_EnactStateOf_1266
                                                                            (coe
                                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.du_HasEnactState'45'RatifyState_2020)
-                                                                           (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                           (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                               (coe v1)))
                                                                         (coe
-                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4570
+                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4574
                                                                            (coe v0)
                                                                            (coe
-                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                               (coe v1))
                                                                            (coe
-                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                               (coe v1))))))))))
                                                    (let v4
                                                           = MAlonzo.Code.Ledger.Core.Specification.Epoch.d_DecEq'45'Epoch_80
@@ -1566,38 +1566,38 @@ du_EPOCH'45'total_3918 v0 v1 v2
                                                                   (coe
                                                                      MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4018
+                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4022
                                                                         (coe v1))
                                                                      (coe
                                                                         MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                         (coe
                                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_DStateOf_1654
                                                                            (coe
-                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3826)
-                                                                           (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3830)
+                                                                           (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                               (coe v1)))
                                                                         (coe
-                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4580
+                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4584
                                                                            (coe
-                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4632
+                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4636
                                                                               (coe v0)
                                                                               (coe
-                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                  (coe v1))
                                                                               (coe
                                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_EnactStateOf_1266
                                                                                  (coe
                                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.du_HasEnactState'45'RatifyState_2020)
-                                                                                 (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                                 (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                                     (coe v1)))
                                                                               (coe
-                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4570
+                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4574
                                                                                  (coe v0)
                                                                                  (coe
-                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                     (coe v1))
                                                                                  (coe
-                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                                     (coe
                                                                                        v1))))))))))
                                                          (coe v2)))))
@@ -1631,38 +1631,38 @@ du_EPOCH'45'total_3918 v0 v1 v2
                                                             (coe
                                                                MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                (coe
-                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4018
+                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4022
                                                                   (coe v1))
                                                                (coe
                                                                   MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                   (coe
                                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_DStateOf_1654
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3826)
-                                                                     (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3830)
+                                                                     (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                         (coe v1)))
                                                                   (coe
-                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4580
+                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4584
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4632
+                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4636
                                                                         (coe v0)
                                                                         (coe
-                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                            (coe v1))
                                                                         (coe
                                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_EnactStateOf_1266
                                                                            (coe
                                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.du_HasEnactState'45'RatifyState_2020)
-                                                                           (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                           (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                               (coe v1)))
                                                                         (coe
-                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4570
+                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4574
                                                                            (coe v0)
                                                                            (coe
-                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                               (coe v1))
                                                                            (coe
-                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                               (coe v1))))))))))
                                                    (let v3
                                                           = coe
@@ -1758,44 +1758,44 @@ du_EPOCH'45'total_3918 v0 v1 v2
                                                                                  (coe
                                                                                     MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                                     (coe
-                                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4018
+                                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4022
                                                                                        (coe v1))
                                                                                     (coe
                                                                                        MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                                        (coe
                                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_DStateOf_1654
                                                                                           (coe
-                                                                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3826)
-                                                                                          (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3830)
+                                                                                          (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                              (coe
                                                                                                 v1)))
                                                                                        (coe
-                                                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4580
+                                                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4584
                                                                                           (coe
-                                                                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4632
+                                                                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4636
                                                                                              (coe
                                                                                                 v0)
                                                                                              (coe
-                                                                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                                 (coe
                                                                                                    v1))
                                                                                              (coe
                                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_EnactStateOf_1266
                                                                                                 (coe
                                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.du_HasEnactState'45'RatifyState_2020)
-                                                                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                                                    (coe
                                                                                                       v1)))
                                                                                              (coe
-                                                                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4570
+                                                                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4574
                                                                                                 (coe
                                                                                                    v0)
                                                                                                 (coe
-                                                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                                    (coe
                                                                                                       v1))
                                                                                                 (coe
-                                                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                                                    (coe
                                                                                                       v1))))))))))
                                                                         (let v5
@@ -1825,7 +1825,7 @@ du_EPOCH'45'total_3918 v0 v1 v2
                                                                                        (coe
                                                                                           MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                                           (coe
-                                                                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4018
+                                                                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4022
                                                                                              (coe
                                                                                                 v1))
                                                                                           (coe
@@ -1833,37 +1833,37 @@ du_EPOCH'45'total_3918 v0 v1 v2
                                                                                              (coe
                                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_DStateOf_1654
                                                                                                 (coe
-                                                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3826)
-                                                                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3830)
+                                                                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                                    (coe
                                                                                                       v1)))
                                                                                              (coe
-                                                                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4580
+                                                                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4584
                                                                                                 (coe
-                                                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4632
+                                                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4636
                                                                                                    (coe
                                                                                                       v0)
                                                                                                    (coe
-                                                                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                                       (coe
                                                                                                          v1))
                                                                                                    (coe
                                                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_EnactStateOf_1266
                                                                                                       (coe
                                                                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.du_HasEnactState'45'RatifyState_2020)
-                                                                                                      (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                                                      (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                                                          (coe
                                                                                                             v1)))
                                                                                                    (coe
-                                                                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4570
+                                                                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4574
                                                                                                       (coe
                                                                                                          v0)
                                                                                                       (coe
-                                                                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                                          (coe
                                                                                                             v1))
                                                                                                       (coe
-                                                                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                                                          (coe
                                                                                                             v1))))))))))
                                                                               (coe v2)))))))
@@ -1878,38 +1878,38 @@ du_EPOCH'45'total_3918 v0 v1 v2
                                                                      (coe
                                                                         MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                         (coe
-                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4018
+                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4022
                                                                            (coe v1))
                                                                         (coe
                                                                            MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                            (coe
                                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_DStateOf_1654
                                                                               (coe
-                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3826)
-                                                                              (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3830)
+                                                                              (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                  (coe v1)))
                                                                            (coe
-                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4580
+                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4584
                                                                               (coe
-                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4632
+                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4636
                                                                                  (coe v0)
                                                                                  (coe
-                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                     (coe v1))
                                                                                  (coe
                                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_EnactStateOf_1266
                                                                                     (coe
                                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.du_HasEnactState'45'RatifyState_2020)
-                                                                                    (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                                    (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                                        (coe v1)))
                                                                                  (coe
-                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4570
+                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4574
                                                                                     (coe v0)
                                                                                     (coe
-                                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                        (coe v1))
                                                                                     (coe
-                                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                                        (coe
                                                                                           v1)))))))))))
                                                          (coe
@@ -1931,38 +1931,38 @@ du_EPOCH'45'total_3918 v0 v1 v2
                                                                      (coe
                                                                         MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                         (coe
-                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4018
+                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4022
                                                                            (coe v1))
                                                                         (coe
                                                                            MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                            (coe
                                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_DStateOf_1654
                                                                               (coe
-                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3826)
-                                                                              (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3830)
+                                                                              (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                  (coe v1)))
                                                                            (coe
-                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4580
+                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4584
                                                                               (coe
-                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4632
+                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4636
                                                                                  (coe v0)
                                                                                  (coe
-                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                     (coe v1))
                                                                                  (coe
                                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_EnactStateOf_1266
                                                                                     (coe
                                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.du_HasEnactState'45'RatifyState_2020)
-                                                                                    (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                                    (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                                        (coe v1)))
                                                                                  (coe
-                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4570
+                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4574
                                                                                     (coe v0)
                                                                                     (coe
-                                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                        (coe v1))
                                                                                     (coe
-                                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                                        (coe
                                                                                           v1))))))))))))))
                                                 (coe
@@ -1976,38 +1976,38 @@ du_EPOCH'45'total_3918 v0 v1 v2
                                                          (coe
                                                             MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                             (coe
-                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4018
+                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4022
                                                                (coe v1))
                                                             (coe
                                                                MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                (coe
                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_DStateOf_1654
                                                                   (coe
-                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3826)
-                                                                  (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3830)
+                                                                  (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                      (coe v1)))
                                                                (coe
-                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4580
+                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4584
                                                                   (coe
-                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4632
+                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4636
                                                                      (coe v0)
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                         (coe v1))
                                                                      (coe
                                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_EnactStateOf_1266
                                                                         (coe
                                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.du_HasEnactState'45'RatifyState_2020)
-                                                                        (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                        (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                            (coe v1)))
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4570
+                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4574
                                                                         (coe v0)
                                                                         (coe
-                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                            (coe v1))
                                                                         (coe
-                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                            (coe v1))))))))))))))
                                     (coe
                                        MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_52
@@ -2136,42 +2136,42 @@ du_EPOCH'45'total_3918 v0 v1 v2
                                                                               (coe
                                                                                  MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                                  (coe
-                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4018
+                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4022
                                                                                     (coe v1))
                                                                                  (coe
                                                                                     MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                                     (coe
                                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_DStateOf_1654
                                                                                        (coe
-                                                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3826)
-                                                                                       (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3830)
+                                                                                       (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                           (coe v1)))
                                                                                     (coe
-                                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4580
+                                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4584
                                                                                        (coe
-                                                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4632
+                                                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4636
                                                                                           (coe v0)
                                                                                           (coe
-                                                                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                              (coe
                                                                                                 v1))
                                                                                           (coe
                                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_EnactStateOf_1266
                                                                                              (coe
                                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.du_HasEnactState'45'RatifyState_2020)
-                                                                                             (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                                             (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                                                 (coe
                                                                                                    v1)))
                                                                                           (coe
-                                                                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4570
+                                                                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4574
                                                                                              (coe
                                                                                                 v0)
                                                                                              (coe
-                                                                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                                 (coe
                                                                                                    v1))
                                                                                              (coe
-                                                                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                                                 (coe
                                                                                                    v1))))))))))
                                                                      (let v5
@@ -2201,44 +2201,44 @@ du_EPOCH'45'total_3918 v0 v1 v2
                                                                                     (coe
                                                                                        MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                                        (coe
-                                                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4018
+                                                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4022
                                                                                           (coe v1))
                                                                                        (coe
                                                                                           MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                                           (coe
                                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_DStateOf_1654
                                                                                              (coe
-                                                                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3826)
-                                                                                             (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3830)
+                                                                                             (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                                 (coe
                                                                                                    v1)))
                                                                                           (coe
-                                                                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4580
+                                                                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4584
                                                                                              (coe
-                                                                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4632
+                                                                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4636
                                                                                                 (coe
                                                                                                    v0)
                                                                                                 (coe
-                                                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                                    (coe
                                                                                                       v1))
                                                                                                 (coe
                                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_EnactStateOf_1266
                                                                                                    (coe
                                                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.du_HasEnactState'45'RatifyState_2020)
-                                                                                                   (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                                                   (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                                                       (coe
                                                                                                          v1)))
                                                                                                 (coe
-                                                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4570
+                                                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4574
                                                                                                    (coe
                                                                                                       v0)
                                                                                                    (coe
-                                                                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                                       (coe
                                                                                                          v1))
                                                                                                    (coe
-                                                                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                                                       (coe
                                                                                                          v1))))))))))
                                                                            (coe v2)))))))
@@ -2253,38 +2253,38 @@ du_EPOCH'45'total_3918 v0 v1 v2
                                                                   (coe
                                                                      MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4018
+                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4022
                                                                         (coe v1))
                                                                      (coe
                                                                         MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                         (coe
                                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_DStateOf_1654
                                                                            (coe
-                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3826)
-                                                                           (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3830)
+                                                                           (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                               (coe v1)))
                                                                         (coe
-                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4580
+                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4584
                                                                            (coe
-                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4632
+                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4636
                                                                               (coe v0)
                                                                               (coe
-                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                  (coe v1))
                                                                               (coe
                                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_EnactStateOf_1266
                                                                                  (coe
                                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.du_HasEnactState'45'RatifyState_2020)
-                                                                                 (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                                 (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                                     (coe v1)))
                                                                               (coe
-                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4570
+                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4574
                                                                                  (coe v0)
                                                                                  (coe
-                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                     (coe v1))
                                                                                  (coe
-                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                                     (coe
                                                                                        v1)))))))))))
                                                       (coe
@@ -2306,38 +2306,38 @@ du_EPOCH'45'total_3918 v0 v1 v2
                                                                   (coe
                                                                      MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4018
+                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4022
                                                                         (coe v1))
                                                                      (coe
                                                                         MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                         (coe
                                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_DStateOf_1654
                                                                            (coe
-                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3826)
-                                                                           (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3830)
+                                                                           (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                               (coe v1)))
                                                                         (coe
-                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4580
+                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4584
                                                                            (coe
-                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4632
+                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4636
                                                                               (coe v0)
                                                                               (coe
-                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                  (coe v1))
                                                                               (coe
                                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_EnactStateOf_1266
                                                                                  (coe
                                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.du_HasEnactState'45'RatifyState_2020)
-                                                                                 (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                                 (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                                     (coe v1)))
                                                                               (coe
-                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4570
+                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4574
                                                                                  (coe v0)
                                                                                  (coe
-                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                     (coe v1))
                                                                                  (coe
-                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                                     (coe
                                                                                        v1))))))))))))))
                                              (coe
@@ -2351,38 +2351,38 @@ du_EPOCH'45'total_3918 v0 v1 v2
                                                       (coe
                                                          MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4018
+                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4022
                                                             (coe v1))
                                                          (coe
                                                             MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                             (coe
                                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_DStateOf_1654
                                                                (coe
-                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3826)
-                                                               (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3830)
+                                                               (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                   (coe v1)))
                                                             (coe
-                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4580
+                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4584
                                                                (coe
-                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4632
+                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4636
                                                                   (coe v0)
                                                                   (coe
-                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                      (coe v1))
                                                                   (coe
                                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_EnactStateOf_1266
                                                                      (coe
                                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.du_HasEnactState'45'RatifyState_2020)
-                                                                     (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                     (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                         (coe v1)))
                                                                   (coe
-                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4570
+                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4574
                                                                      (coe v0)
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                         (coe v1))
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                         (coe v1)))))))))))
                                           (coe
                                              MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_reserves_202
@@ -2395,47 +2395,47 @@ du_EPOCH'45'total_3918 v0 v1 v2
                                                    (coe
                                                       MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                       (coe
-                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4018
+                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4022
                                                          (coe v1))
                                                       (coe
                                                          MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                          (coe
                                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_DStateOf_1654
                                                             (coe
-                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3826)
-                                                            (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3830)
+                                                            (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                (coe v1)))
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4580
+                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4584
                                                             (coe
-                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4632
+                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4636
                                                                (coe v0)
                                                                (coe
-                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                   (coe v1))
                                                                (coe
                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_EnactStateOf_1266
                                                                   (coe
                                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.du_HasEnactState'45'RatifyState_2020)
-                                                                  (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                  (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                      (coe v1)))
                                                                (coe
-                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4570
+                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4574
                                                                   (coe v0)
                                                                   (coe
-                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                      (coe v1))
                                                                   (coe
-                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                      (coe v1))))))))))))
                                     (coe
-                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4570
+                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4574
                                        (coe v0)
                                        (coe
-                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                           (coe v1))
                                        (coe
-                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                           (coe v1)))))
                               (coe
                                  MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_52
@@ -2472,38 +2472,38 @@ du_EPOCH'45'total_3918 v0 v1 v2
                                                    (coe
                                                       MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                       (coe
-                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4018
+                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4022
                                                          (coe v1))
                                                       (coe
                                                          MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                          (coe
                                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_DStateOf_1654
                                                             (coe
-                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3826)
-                                                            (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3830)
+                                                            (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                (coe v1)))
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4580
+                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4584
                                                             (coe
-                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4632
+                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4636
                                                                (coe v0)
                                                                (coe
-                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                   (coe v1))
                                                                (coe
                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_EnactStateOf_1266
                                                                   (coe
                                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.du_HasEnactState'45'RatifyState_2020)
-                                                                  (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                  (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                      (coe v1)))
                                                                (coe
-                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4570
+                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4574
                                                                   (coe v0)
                                                                   (coe
-                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                      (coe v1))
                                                                   (coe
-                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                      (coe v1))))))))))
                                           (let v4
                                                  = MAlonzo.Code.Ledger.Core.Specification.Epoch.d_DecEq'45'Epoch_80
@@ -2532,38 +2532,38 @@ du_EPOCH'45'total_3918 v0 v1 v2
                                                          (coe
                                                             MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                             (coe
-                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4018
+                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4022
                                                                (coe v1))
                                                             (coe
                                                                MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                (coe
                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_DStateOf_1654
                                                                   (coe
-                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3826)
-                                                                  (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3830)
+                                                                  (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                      (coe v1)))
                                                                (coe
-                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4580
+                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4584
                                                                   (coe
-                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4632
+                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4636
                                                                      (coe v0)
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                         (coe v1))
                                                                      (coe
                                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_EnactStateOf_1266
                                                                         (coe
                                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.du_HasEnactState'45'RatifyState_2020)
-                                                                        (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                        (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                            (coe v1)))
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4570
+                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4574
                                                                         (coe v0)
                                                                         (coe
-                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                            (coe v1))
                                                                         (coe
-                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                            (coe v1))))))))))
                                                 (coe v2)))))
                                     (coe
@@ -2597,38 +2597,38 @@ du_EPOCH'45'total_3918 v0 v1 v2
                                                       (coe
                                                          MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4018
+                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4022
                                                             (coe v1))
                                                          (coe
                                                             MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                             (coe
                                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_DStateOf_1654
                                                                (coe
-                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3826)
-                                                               (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3830)
+                                                               (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                   (coe v1)))
                                                             (coe
-                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4580
+                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4584
                                                                (coe
-                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4632
+                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4636
                                                                   (coe v0)
                                                                   (coe
-                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                      (coe v1))
                                                                   (coe
                                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_EnactStateOf_1266
                                                                      (coe
                                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.du_HasEnactState'45'RatifyState_2020)
-                                                                     (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                     (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                         (coe v1)))
                                                                   (coe
-                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4570
+                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4574
                                                                      (coe v0)
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                         (coe v1))
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                         (coe v1))))))))))
                                              (let v4
                                                     = MAlonzo.Code.Ledger.Core.Specification.Epoch.d_DecEq'45'Epoch_80
@@ -2657,38 +2657,38 @@ du_EPOCH'45'total_3918 v0 v1 v2
                                                             (coe
                                                                MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                (coe
-                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4018
+                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4022
                                                                   (coe v1))
                                                                (coe
                                                                   MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                   (coe
                                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_DStateOf_1654
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3826)
-                                                                     (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3830)
+                                                                     (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                         (coe v1)))
                                                                   (coe
-                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4580
+                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4584
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4632
+                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4636
                                                                         (coe v0)
                                                                         (coe
-                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                            (coe v1))
                                                                         (coe
                                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_EnactStateOf_1266
                                                                            (coe
                                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.du_HasEnactState'45'RatifyState_2020)
-                                                                           (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                           (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                               (coe v1)))
                                                                         (coe
-                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4570
+                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4574
                                                                            (coe v0)
                                                                            (coe
-                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                               (coe v1))
                                                                            (coe
-                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                               (coe v1))))))))))
                                                    (coe v2)))))
                                        (coe
@@ -2722,38 +2722,38 @@ du_EPOCH'45'total_3918 v0 v1 v2
                                                          (coe
                                                             MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                             (coe
-                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4018
+                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4022
                                                                (coe v1))
                                                             (coe
                                                                MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                (coe
                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_DStateOf_1654
                                                                   (coe
-                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3826)
-                                                                  (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3830)
+                                                                  (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                      (coe v1)))
                                                                (coe
-                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4580
+                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4584
                                                                   (coe
-                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4632
+                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4636
                                                                      (coe v0)
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                         (coe v1))
                                                                      (coe
                                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_EnactStateOf_1266
                                                                         (coe
                                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.du_HasEnactState'45'RatifyState_2020)
-                                                                        (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                        (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                            (coe v1)))
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4570
+                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4574
                                                                         (coe v0)
                                                                         (coe
-                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                            (coe v1))
                                                                         (coe
-                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                            (coe v1))))))))))
                                                 (let v4
                                                        = MAlonzo.Code.Ledger.Core.Specification.Epoch.d_DecEq'45'Epoch_80
@@ -2782,38 +2782,38 @@ du_EPOCH'45'total_3918 v0 v1 v2
                                                                (coe
                                                                   MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                   (coe
-                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4018
+                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4022
                                                                      (coe v1))
                                                                   (coe
                                                                      MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                      (coe
                                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_DStateOf_1654
                                                                         (coe
-                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3826)
-                                                                        (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3830)
+                                                                        (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                            (coe v1)))
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4580
+                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4584
                                                                         (coe
-                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4632
+                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4636
                                                                            (coe v0)
                                                                            (coe
-                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                               (coe v1))
                                                                            (coe
                                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_EnactStateOf_1266
                                                                               (coe
                                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.du_HasEnactState'45'RatifyState_2020)
-                                                                              (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                              (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                                  (coe v1)))
                                                                            (coe
-                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4570
+                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4574
                                                                               (coe v0)
                                                                               (coe
-                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                  (coe v1))
                                                                               (coe
-                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                                  (coe v1))))))))))
                                                       (coe v2)))))
                                           (let v3
@@ -2845,38 +2845,38 @@ du_EPOCH'45'total_3918 v0 v1 v2
                                                          (coe
                                                             MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                             (coe
-                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4018
+                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4022
                                                                (coe v1))
                                                             (coe
                                                                MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                (coe
                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_DStateOf_1654
                                                                   (coe
-                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3826)
-                                                                  (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3830)
+                                                                  (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                      (coe v1)))
                                                                (coe
-                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4580
+                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4584
                                                                   (coe
-                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4632
+                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4636
                                                                      (coe v0)
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                         (coe v1))
                                                                      (coe
                                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_EnactStateOf_1266
                                                                         (coe
                                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.du_HasEnactState'45'RatifyState_2020)
-                                                                        (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                        (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                            (coe v1)))
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4570
+                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4574
                                                                         (coe v0)
                                                                         (coe
-                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                            (coe v1))
                                                                         (coe
-                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                            (coe v1))))))))))
                                                 (let v4
                                                        = MAlonzo.Code.Ledger.Core.Specification.Epoch.d_DecEq'45'Epoch_80
@@ -2905,62 +2905,62 @@ du_EPOCH'45'total_3918 v0 v1 v2
                                                                (coe
                                                                   MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                   (coe
-                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4018
+                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4022
                                                                      (coe v1))
                                                                   (coe
                                                                      MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                      (coe
                                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_DStateOf_1654
                                                                         (coe
-                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3826)
-                                                                        (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3830)
+                                                                        (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                            (coe v1)))
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4580
+                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4584
                                                                         (coe
-                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4632
+                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4636
                                                                            (coe v0)
                                                                            (coe
-                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                               (coe v1))
                                                                            (coe
                                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_EnactStateOf_1266
                                                                               (coe
                                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.du_HasEnactState'45'RatifyState_2020)
-                                                                              (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                              (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                                  (coe v1)))
                                                                            (coe
-                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4570
+                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4574
                                                                               (coe v0)
                                                                               (coe
-                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                  (coe v1))
                                                                               (coe
-                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                                  (coe v1))))))))))
                                                       (coe v2)))))))))
                               (coe
-                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_gState''_4582
+                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_gState''_4586
                                  (coe
-                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4632
+                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4636
                                     (coe v0)
                                     (coe
-                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                        (coe v1))
                                     (coe
                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_EnactStateOf_1266
                                        (coe
                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.du_HasEnactState'45'RatifyState_2020)
-                                       (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                       (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                           (coe v1)))
                                     (coe
-                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4570
+                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4574
                                        (coe v0)
                                        (coe
-                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                           (coe v1))
                                        (coe
-                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                           (coe v1)))))))))
                   (coe
                      MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
@@ -2972,7 +2972,7 @@ du_EPOCH'45'total_3918 v0 v1 v2
                               MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_EnactStateOf_1266
                               (coe
                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.du_HasEnactState'45'RatifyState_2020)
-                              (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                              (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                  (coe v1))))
                         (coe
                            MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_constitution_1244
@@ -2980,7 +2980,7 @@ du_EPOCH'45'total_3918 v0 v1 v2
                               MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_EnactStateOf_1266
                               (coe
                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.du_HasEnactState'45'RatifyState_2020)
-                              (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                              (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                  (coe v1))))
                         (coe
                            MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_pv_1246
@@ -2988,7 +2988,7 @@ du_EPOCH'45'total_3918 v0 v1 v2
                               MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_EnactStateOf_1266
                               (coe
                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.du_HasEnactState'45'RatifyState_2020)
-                              (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                              (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                  (coe v1))))
                         (coe
                            MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_pparams_1248
@@ -2996,7 +2996,7 @@ du_EPOCH'45'total_3918 v0 v1 v2
                               MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_EnactStateOf_1266
                               (coe
                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.du_HasEnactState'45'RatifyState_2020)
-                              (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                              (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                  (coe v1))))
                         (coe
                            MAlonzo.Code.Class.HasEmptySet.d_'8709'_332
@@ -3018,67 +3018,67 @@ du_EPOCH'45'total_3918 v0 v1 v2
                               (coe
                                  MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                  (coe
-                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_mkStakeDistrs_4418
+                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_mkStakeDistrs_4422
                                     (coe v0)
                                     (coe
-                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_mark_3832
+                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_mark_3836
                                        (coe
                                           MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                           (coe
                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.Properties.Computational.du_SNAP'45'total_2886
                                              (coe v0)
                                              (coe
-                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                 (coe v1))
                                              (coe
-                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ss_4020
+                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ss_4024
                                                 (coe v1)))))
                                     (coe v2)
                                     (coe
-                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_utxoSt''_4584
+                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_utxoSt''_4588
                                        (coe
-                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4632
+                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4636
                                           (coe v0)
                                           (coe
-                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                              (coe v1))
                                           (coe
                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_EnactStateOf_1266
                                              (coe
                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.du_HasEnactState'45'RatifyState_2020)
-                                             (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                             (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                 (coe v1)))
                                           (coe
-                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4570
+                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4574
                                              (coe v0)
                                              (coe
-                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                 (coe v1))
                                              (coe
-                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                 (coe v1)))))
                                     (coe
-                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_govSt''_4526
+                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_govSt''_4530
                                        (coe
-                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4570
+                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4574
                                           (coe v0)
                                           (coe
-                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                              (coe v1))
                                           (coe
-                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                              (coe v1))))
                                     (coe
                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_GStateOf_1694
                                        (coe
-                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasGState'45'LedgerState_3824)
-                                       (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasGState'45'LedgerState_3828)
+                                       (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                           (coe v1)))
                                     (coe
                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_DStateOf_1654
                                        (coe
-                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3826)
-                                       (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3830)
+                                       (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                           (coe v1))))
                                  (coe
                                     MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 (coe v2)
@@ -3087,16 +3087,16 @@ du_EPOCH'45'total_3918 v0 v1 v2
                                        (coe
                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_DRepsOf_1194
                                           (coe
-                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDReps'45'LedgerState_3838)
-                                          (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDReps'45'LedgerState_3842)
+                                          (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                              (coe v1)))
                                        (coe
                                           MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                           (coe
                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_CCHotKeysOf_1514
                                              (coe
-                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasCCHotKeys'45'LedgerState_3836)
-                                             (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasCCHotKeys'45'LedgerState_3840)
+                                             (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                 (coe v1)))
                                           (coe
                                              MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
@@ -3104,18 +3104,18 @@ du_EPOCH'45'total_3918 v0 v1 v2
                                                 MAlonzo.Code.Ledger.Prelude.Base.d_TreasuryOf_88
                                                 (coe
                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.du_HasTreasury'45'Acnt_226)
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt''''_4642
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt''''_4646
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4686
+                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4690
                                                       (coe v0)
                                                       (coe
                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_EnactStateOf_1266
                                                          (coe
                                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.du_HasEnactState'45'RatifyState_2020)
-                                                         (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                         (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                             (coe v1)))
                                                       (coe
-                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                          (coe v1))
                                                       (coe
                                                          MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_52
@@ -3134,38 +3134,38 @@ du_EPOCH'45'total_3918 v0 v1 v2
                                                                      (coe
                                                                         MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                         (coe
-                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4018
+                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4022
                                                                            (coe v1))
                                                                         (coe
                                                                            MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                            (coe
                                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_DStateOf_1654
                                                                               (coe
-                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3826)
-                                                                              (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3830)
+                                                                              (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                  (coe v1)))
                                                                            (coe
-                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4580
+                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4584
                                                                               (coe
-                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4632
+                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4636
                                                                                  (coe v0)
                                                                                  (coe
-                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                     (coe v1))
                                                                                  (coe
                                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_EnactStateOf_1266
                                                                                     (coe
                                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.du_HasEnactState'45'RatifyState_2020)
-                                                                                    (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                                    (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                                        (coe v1)))
                                                                                  (coe
-                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4570
+                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4574
                                                                                     (coe v0)
                                                                                     (coe
-                                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                        (coe v1))
                                                                                     (coe
-                                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                                        (coe
                                                                                           v1))))))))))
                                                             (coe
@@ -3199,42 +3199,42 @@ du_EPOCH'45'total_3918 v0 v1 v2
                                                                               (coe
                                                                                  MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                                  (coe
-                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4018
+                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4022
                                                                                     (coe v1))
                                                                                  (coe
                                                                                     MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                                     (coe
                                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_DStateOf_1654
                                                                                        (coe
-                                                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3826)
-                                                                                       (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3830)
+                                                                                       (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                           (coe v1)))
                                                                                     (coe
-                                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4580
+                                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4584
                                                                                        (coe
-                                                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4632
+                                                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4636
                                                                                           (coe v0)
                                                                                           (coe
-                                                                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                              (coe
                                                                                                 v1))
                                                                                           (coe
                                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_EnactStateOf_1266
                                                                                              (coe
                                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.du_HasEnactState'45'RatifyState_2020)
-                                                                                             (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                                             (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                                                 (coe
                                                                                                    v1)))
                                                                                           (coe
-                                                                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4570
+                                                                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4574
                                                                                              (coe
                                                                                                 v0)
                                                                                              (coe
-                                                                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                                 (coe
                                                                                                    v1))
                                                                                              (coe
-                                                                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                                                 (coe
                                                                                                    v1))))))))))
                                                                      (let v4
@@ -3264,44 +3264,44 @@ du_EPOCH'45'total_3918 v0 v1 v2
                                                                                     (coe
                                                                                        MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                                        (coe
-                                                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4018
+                                                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4022
                                                                                           (coe v1))
                                                                                        (coe
                                                                                           MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                                           (coe
                                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_DStateOf_1654
                                                                                              (coe
-                                                                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3826)
-                                                                                             (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3830)
+                                                                                             (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                                 (coe
                                                                                                    v1)))
                                                                                           (coe
-                                                                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4580
+                                                                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4584
                                                                                              (coe
-                                                                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4632
+                                                                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4636
                                                                                                 (coe
                                                                                                    v0)
                                                                                                 (coe
-                                                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                                    (coe
                                                                                                       v1))
                                                                                                 (coe
                                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_EnactStateOf_1266
                                                                                                    (coe
                                                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.du_HasEnactState'45'RatifyState_2020)
-                                                                                                   (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                                                   (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                                                       (coe
                                                                                                          v1)))
                                                                                                 (coe
-                                                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4570
+                                                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4574
                                                                                                    (coe
                                                                                                       v0)
                                                                                                    (coe
-                                                                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                                       (coe
                                                                                                          v1))
                                                                                                    (coe
-                                                                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                                                       (coe
                                                                                                          v1))))))))))
                                                                            (coe v2)))))
@@ -3335,42 +3335,42 @@ du_EPOCH'45'total_3918 v0 v1 v2
                                                                               (coe
                                                                                  MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                                  (coe
-                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4018
+                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4022
                                                                                     (coe v1))
                                                                                  (coe
                                                                                     MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                                     (coe
                                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_DStateOf_1654
                                                                                        (coe
-                                                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3826)
-                                                                                       (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3830)
+                                                                                       (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                           (coe v1)))
                                                                                     (coe
-                                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4580
+                                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4584
                                                                                        (coe
-                                                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4632
+                                                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4636
                                                                                           (coe v0)
                                                                                           (coe
-                                                                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                              (coe
                                                                                                 v1))
                                                                                           (coe
                                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_EnactStateOf_1266
                                                                                              (coe
                                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.du_HasEnactState'45'RatifyState_2020)
-                                                                                             (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                                             (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                                                 (coe
                                                                                                    v1)))
                                                                                           (coe
-                                                                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4570
+                                                                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4574
                                                                                              (coe
                                                                                                 v0)
                                                                                              (coe
-                                                                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                                 (coe
                                                                                                    v1))
                                                                                              (coe
-                                                                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                                                 (coe
                                                                                                    v1))))))))))
                                                                      (let v3
@@ -3471,7 +3471,7 @@ du_EPOCH'45'total_3918 v0 v1 v2
                                                                                                    (coe
                                                                                                       MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                                                       (coe
-                                                                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4018
+                                                                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4022
                                                                                                          (coe
                                                                                                             v1))
                                                                                                       (coe
@@ -3479,37 +3479,37 @@ du_EPOCH'45'total_3918 v0 v1 v2
                                                                                                          (coe
                                                                                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_DStateOf_1654
                                                                                                             (coe
-                                                                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3826)
-                                                                                                            (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3830)
+                                                                                                            (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                                                (coe
                                                                                                                   v1)))
                                                                                                          (coe
-                                                                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4580
+                                                                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4584
                                                                                                             (coe
-                                                                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4632
+                                                                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4636
                                                                                                                (coe
                                                                                                                   v0)
                                                                                                                (coe
-                                                                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                                                   (coe
                                                                                                                      v1))
                                                                                                                (coe
                                                                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_EnactStateOf_1266
                                                                                                                   (coe
                                                                                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.du_HasEnactState'45'RatifyState_2020)
-                                                                                                                  (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                                                                  (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                                                                      (coe
                                                                                                                         v1)))
                                                                                                                (coe
-                                                                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4570
+                                                                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4574
                                                                                                                   (coe
                                                                                                                      v0)
                                                                                                                   (coe
-                                                                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                                                      (coe
                                                                                                                         v1))
                                                                                                                   (coe
-                                                                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                                                                      (coe
                                                                                                                         v1))))))))))
                                                                                           (let v5
@@ -3541,7 +3541,7 @@ du_EPOCH'45'total_3918 v0 v1 v2
                                                                                                          (coe
                                                                                                             MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                                                             (coe
-                                                                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4018
+                                                                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4022
                                                                                                                (coe
                                                                                                                   v1))
                                                                                                             (coe
@@ -3549,37 +3549,37 @@ du_EPOCH'45'total_3918 v0 v1 v2
                                                                                                                (coe
                                                                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_DStateOf_1654
                                                                                                                   (coe
-                                                                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3826)
-                                                                                                                  (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3830)
+                                                                                                                  (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                                                      (coe
                                                                                                                         v1)))
                                                                                                                (coe
-                                                                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4580
+                                                                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4584
                                                                                                                   (coe
-                                                                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4632
+                                                                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4636
                                                                                                                      (coe
                                                                                                                         v0)
                                                                                                                      (coe
-                                                                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                                                         (coe
                                                                                                                            v1))
                                                                                                                      (coe
                                                                                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_EnactStateOf_1266
                                                                                                                         (coe
                                                                                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.du_HasEnactState'45'RatifyState_2020)
-                                                                                                                        (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                                                                        (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                                                                            (coe
                                                                                                                               v1)))
                                                                                                                      (coe
-                                                                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4570
+                                                                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4574
                                                                                                                         (coe
                                                                                                                            v0)
                                                                                                                         (coe
-                                                                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                                                            (coe
                                                                                                                               v1))
                                                                                                                         (coe
-                                                                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                                                                            (coe
                                                                                                                               v1))))))))))
                                                                                                 (coe
@@ -3595,7 +3595,7 @@ du_EPOCH'45'total_3918 v0 v1 v2
                                                                                        (coe
                                                                                           MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                                           (coe
-                                                                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4018
+                                                                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4022
                                                                                              (coe
                                                                                                 v1))
                                                                                           (coe
@@ -3603,37 +3603,37 @@ du_EPOCH'45'total_3918 v0 v1 v2
                                                                                              (coe
                                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_DStateOf_1654
                                                                                                 (coe
-                                                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3826)
-                                                                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3830)
+                                                                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                                    (coe
                                                                                                       v1)))
                                                                                              (coe
-                                                                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4580
+                                                                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4584
                                                                                                 (coe
-                                                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4632
+                                                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4636
                                                                                                    (coe
                                                                                                       v0)
                                                                                                    (coe
-                                                                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                                       (coe
                                                                                                          v1))
                                                                                                    (coe
                                                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_EnactStateOf_1266
                                                                                                       (coe
                                                                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.du_HasEnactState'45'RatifyState_2020)
-                                                                                                      (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                                                      (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                                                          (coe
                                                                                                             v1)))
                                                                                                    (coe
-                                                                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4570
+                                                                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4574
                                                                                                       (coe
                                                                                                          v0)
                                                                                                       (coe
-                                                                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                                          (coe
                                                                                                             v1))
                                                                                                       (coe
-                                                                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                                                          (coe
                                                                                                             v1)))))))))))
                                                                            (coe
@@ -3655,7 +3655,7 @@ du_EPOCH'45'total_3918 v0 v1 v2
                                                                                        (coe
                                                                                           MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                                           (coe
-                                                                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4018
+                                                                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4022
                                                                                              (coe
                                                                                                 v1))
                                                                                           (coe
@@ -3663,37 +3663,37 @@ du_EPOCH'45'total_3918 v0 v1 v2
                                                                                              (coe
                                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_DStateOf_1654
                                                                                                 (coe
-                                                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3826)
-                                                                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3830)
+                                                                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                                    (coe
                                                                                                       v1)))
                                                                                              (coe
-                                                                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4580
+                                                                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4584
                                                                                                 (coe
-                                                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4632
+                                                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4636
                                                                                                    (coe
                                                                                                       v0)
                                                                                                    (coe
-                                                                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                                       (coe
                                                                                                          v1))
                                                                                                    (coe
                                                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_EnactStateOf_1266
                                                                                                       (coe
                                                                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.du_HasEnactState'45'RatifyState_2020)
-                                                                                                      (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                                                      (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                                                          (coe
                                                                                                             v1)))
                                                                                                    (coe
-                                                                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4570
+                                                                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4574
                                                                                                       (coe
                                                                                                          v0)
                                                                                                       (coe
-                                                                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                                          (coe
                                                                                                             v1))
                                                                                                       (coe
-                                                                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                                                          (coe
                                                                                                             v1))))))))))))))
                                                                   (coe
@@ -3707,40 +3707,40 @@ du_EPOCH'45'total_3918 v0 v1 v2
                                                                            (coe
                                                                               MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                               (coe
-                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4018
+                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4022
                                                                                  (coe v1))
                                                                               (coe
                                                                                  MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                                  (coe
                                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_DStateOf_1654
                                                                                     (coe
-                                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3826)
-                                                                                    (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3830)
+                                                                                    (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                        (coe v1)))
                                                                                  (coe
-                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4580
+                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4584
                                                                                     (coe
-                                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4632
+                                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4636
                                                                                        (coe v0)
                                                                                        (coe
-                                                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                           (coe v1))
                                                                                        (coe
                                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_EnactStateOf_1266
                                                                                           (coe
                                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.du_HasEnactState'45'RatifyState_2020)
-                                                                                          (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                                          (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                                              (coe
                                                                                                 v1)))
                                                                                        (coe
-                                                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4570
+                                                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4574
                                                                                           (coe v0)
                                                                                           (coe
-                                                                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                              (coe
                                                                                                 v1))
                                                                                           (coe
-                                                                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                                              (coe
                                                                                                 v1))))))))))))))
                                                       (coe
@@ -3871,7 +3871,7 @@ du_EPOCH'45'total_3918 v0 v1 v2
                                                                                                 (coe
                                                                                                    MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                                                    (coe
-                                                                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4018
+                                                                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4022
                                                                                                       (coe
                                                                                                          v1))
                                                                                                    (coe
@@ -3879,37 +3879,37 @@ du_EPOCH'45'total_3918 v0 v1 v2
                                                                                                       (coe
                                                                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_DStateOf_1654
                                                                                                          (coe
-                                                                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3826)
-                                                                                                         (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3830)
+                                                                                                         (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                                             (coe
                                                                                                                v1)))
                                                                                                       (coe
-                                                                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4580
+                                                                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4584
                                                                                                          (coe
-                                                                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4632
+                                                                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4636
                                                                                                             (coe
                                                                                                                v0)
                                                                                                             (coe
-                                                                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                                                (coe
                                                                                                                   v1))
                                                                                                             (coe
                                                                                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_EnactStateOf_1266
                                                                                                                (coe
                                                                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.du_HasEnactState'45'RatifyState_2020)
-                                                                                                               (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                                                               (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                                                                   (coe
                                                                                                                      v1)))
                                                                                                             (coe
-                                                                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4570
+                                                                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4574
                                                                                                                (coe
                                                                                                                   v0)
                                                                                                                (coe
-                                                                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                                                   (coe
                                                                                                                      v1))
                                                                                                                (coe
-                                                                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                                                                   (coe
                                                                                                                      v1))))))))))
                                                                                        (let v5
@@ -3941,7 +3941,7 @@ du_EPOCH'45'total_3918 v0 v1 v2
                                                                                                       (coe
                                                                                                          MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                                                          (coe
-                                                                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4018
+                                                                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4022
                                                                                                             (coe
                                                                                                                v1))
                                                                                                          (coe
@@ -3949,37 +3949,37 @@ du_EPOCH'45'total_3918 v0 v1 v2
                                                                                                             (coe
                                                                                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_DStateOf_1654
                                                                                                                (coe
-                                                                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3826)
-                                                                                                               (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3830)
+                                                                                                               (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                                                   (coe
                                                                                                                      v1)))
                                                                                                             (coe
-                                                                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4580
+                                                                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4584
                                                                                                                (coe
-                                                                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4632
+                                                                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4636
                                                                                                                   (coe
                                                                                                                      v0)
                                                                                                                   (coe
-                                                                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                                                      (coe
                                                                                                                         v1))
                                                                                                                   (coe
                                                                                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_EnactStateOf_1266
                                                                                                                      (coe
                                                                                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.du_HasEnactState'45'RatifyState_2020)
-                                                                                                                     (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                                                                     (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                                                                         (coe
                                                                                                                            v1)))
                                                                                                                   (coe
-                                                                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4570
+                                                                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4574
                                                                                                                      (coe
                                                                                                                         v0)
                                                                                                                      (coe
-                                                                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                                                         (coe
                                                                                                                            v1))
                                                                                                                      (coe
-                                                                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                                                                         (coe
                                                                                                                            v1))))))))))
                                                                                              (coe
@@ -3995,44 +3995,44 @@ du_EPOCH'45'total_3918 v0 v1 v2
                                                                                     (coe
                                                                                        MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                                        (coe
-                                                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4018
+                                                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4022
                                                                                           (coe v1))
                                                                                        (coe
                                                                                           MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                                           (coe
                                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_DStateOf_1654
                                                                                              (coe
-                                                                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3826)
-                                                                                             (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3830)
+                                                                                             (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                                 (coe
                                                                                                    v1)))
                                                                                           (coe
-                                                                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4580
+                                                                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4584
                                                                                              (coe
-                                                                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4632
+                                                                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4636
                                                                                                 (coe
                                                                                                    v0)
                                                                                                 (coe
-                                                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                                    (coe
                                                                                                       v1))
                                                                                                 (coe
                                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_EnactStateOf_1266
                                                                                                    (coe
                                                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.du_HasEnactState'45'RatifyState_2020)
-                                                                                                   (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                                                   (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                                                       (coe
                                                                                                          v1)))
                                                                                                 (coe
-                                                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4570
+                                                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4574
                                                                                                    (coe
                                                                                                       v0)
                                                                                                    (coe
-                                                                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                                       (coe
                                                                                                          v1))
                                                                                                    (coe
-                                                                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                                                       (coe
                                                                                                          v1)))))))))))
                                                                         (coe
@@ -4054,44 +4054,44 @@ du_EPOCH'45'total_3918 v0 v1 v2
                                                                                     (coe
                                                                                        MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                                        (coe
-                                                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4018
+                                                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4022
                                                                                           (coe v1))
                                                                                        (coe
                                                                                           MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                                           (coe
                                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_DStateOf_1654
                                                                                              (coe
-                                                                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3826)
-                                                                                             (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3830)
+                                                                                             (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                                 (coe
                                                                                                    v1)))
                                                                                           (coe
-                                                                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4580
+                                                                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4584
                                                                                              (coe
-                                                                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4632
+                                                                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4636
                                                                                                 (coe
                                                                                                    v0)
                                                                                                 (coe
-                                                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                                    (coe
                                                                                                       v1))
                                                                                                 (coe
                                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_EnactStateOf_1266
                                                                                                    (coe
                                                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.du_HasEnactState'45'RatifyState_2020)
-                                                                                                   (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                                                   (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                                                       (coe
                                                                                                          v1)))
                                                                                                 (coe
-                                                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4570
+                                                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4574
                                                                                                    (coe
                                                                                                       v0)
                                                                                                    (coe
-                                                                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                                       (coe
                                                                                                          v1))
                                                                                                    (coe
-                                                                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                                                       (coe
                                                                                                          v1))))))))))))))
                                                                (coe
@@ -4105,38 +4105,38 @@ du_EPOCH'45'total_3918 v0 v1 v2
                                                                         (coe
                                                                            MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                            (coe
-                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4018
+                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4022
                                                                               (coe v1))
                                                                            (coe
                                                                               MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                               (coe
                                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_DStateOf_1654
                                                                                  (coe
-                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3826)
-                                                                                 (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3830)
+                                                                                 (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                     (coe v1)))
                                                                               (coe
-                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4580
+                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4584
                                                                                  (coe
-                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4632
+                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4636
                                                                                     (coe v0)
                                                                                     (coe
-                                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                        (coe v1))
                                                                                     (coe
                                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_EnactStateOf_1266
                                                                                        (coe
                                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.du_HasEnactState'45'RatifyState_2020)
-                                                                                       (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                                       (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                                           (coe v1)))
                                                                                     (coe
-                                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4570
+                                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4574
                                                                                        (coe v0)
                                                                                        (coe
-                                                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                           (coe v1))
                                                                                        (coe
-                                                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                                           (coe
                                                                                              v1)))))))))))
                                                             (coe
@@ -4150,62 +4150,62 @@ du_EPOCH'45'total_3918 v0 v1 v2
                                                                      (coe
                                                                         MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                         (coe
-                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4018
+                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4022
                                                                            (coe v1))
                                                                         (coe
                                                                            MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                            (coe
                                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_DStateOf_1654
                                                                               (coe
-                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3826)
-                                                                              (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3830)
+                                                                              (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                  (coe v1)))
                                                                            (coe
-                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4580
+                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4584
                                                                               (coe
-                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4632
+                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4636
                                                                                  (coe v0)
                                                                                  (coe
-                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                     (coe v1))
                                                                                  (coe
                                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_EnactStateOf_1266
                                                                                     (coe
                                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.du_HasEnactState'45'RatifyState_2020)
-                                                                                    (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                                    (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                                        (coe v1)))
                                                                                  (coe
-                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4570
+                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4574
                                                                                     (coe v0)
                                                                                     (coe
-                                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                        (coe v1))
                                                                                     (coe
-                                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                                        (coe
                                                                                           v1))))))))))))
                                                       (coe
-                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4570
+                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4574
                                                          (coe v0)
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                             (coe v1))
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                             (coe v1))))))
                                              (coe
                                                 MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                 (coe
                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_PoolsOf_1554
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasPools'45'LedgerState_3822)
-                                                   (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasPools'45'LedgerState_3826)
+                                                   (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                       (coe v1)))
                                                 (coe
                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_VoteDelegsOf_1078
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasVoteDelegs'45'LedgerState_3830)
-                                                   (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasVoteDelegs'45'LedgerState_3834)
+                                                   (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                       (coe v1))))))))))
                            (coe
                               MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_52
@@ -4221,7 +4221,7 @@ du_EPOCH'45'total_3918 v0 v1 v2
                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_EnactStateOf_1266
                                           (coe
                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.du_HasEnactState'45'RatifyState_2020)
-                                          (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                          (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                              (coe v1))))
                                     (coe
                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_constitution_1244
@@ -4229,7 +4229,7 @@ du_EPOCH'45'total_3918 v0 v1 v2
                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_EnactStateOf_1266
                                           (coe
                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.du_HasEnactState'45'RatifyState_2020)
-                                          (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                          (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                              (coe v1))))
                                     (coe
                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_pv_1246
@@ -4237,7 +4237,7 @@ du_EPOCH'45'total_3918 v0 v1 v2
                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_EnactStateOf_1266
                                           (coe
                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.du_HasEnactState'45'RatifyState_2020)
-                                          (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                          (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                              (coe v1))))
                                     (coe
                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_pparams_1248
@@ -4245,7 +4245,7 @@ du_EPOCH'45'total_3918 v0 v1 v2
                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_EnactStateOf_1266
                                           (coe
                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.du_HasEnactState'45'RatifyState_2020)
-                                          (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                          (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                              (coe v1))))
                                     (coe
                                        MAlonzo.Code.Class.HasEmptySet.d_'8709'_332
@@ -4267,18 +4267,18 @@ du_EPOCH'45'total_3918 v0 v1 v2
                                                 MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))))
                                     (coe MAlonzo.Code.Agda.Builtin.Bool.C_false_8))))
                            (coe
-                              MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_govSt''_4526
+                              MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_govSt''_4530
                               (coe
-                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4570
+                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4574
                                  (coe v0)
                                  (coe
-                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                     (coe v1))
                                  (coe
-                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                     (coe v1)))))))))))
       (coe
-         MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.C_EPOCH_4712
+         MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.C_EPOCH_4716
          (coe
             MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_52
             (coe
@@ -4296,38 +4296,38 @@ du_EPOCH'45'total_3918 v0 v1 v2
                         (coe
                            MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                            (coe
-                              MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4018
+                              MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4022
                               (coe v1))
                            (coe
                               MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                               (coe
                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_DStateOf_1654
                                  (coe
-                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3826)
-                                 (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3830)
+                                 (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                     (coe v1)))
                               (coe
-                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4580
+                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4584
                                  (coe
-                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4632
+                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4636
                                     (coe v0)
                                     (coe
-                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                        (coe v1))
                                     (coe
                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_EnactStateOf_1266
                                        (coe
                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.du_HasEnactState'45'RatifyState_2020)
-                                       (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                       (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                           (coe v1)))
                                     (coe
-                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4570
+                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4574
                                        (coe v0)
                                        (coe
-                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                           (coe v1))
                                        (coe
-                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                           (coe v1))))))))))
                (coe
                   MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
@@ -4360,38 +4360,38 @@ du_EPOCH'45'total_3918 v0 v1 v2
                                  (coe
                                     MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                     (coe
-                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4018
+                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4022
                                        (coe v1))
                                     (coe
                                        MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                        (coe
                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_DStateOf_1654
                                           (coe
-                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3826)
-                                          (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3830)
+                                          (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                              (coe v1)))
                                        (coe
-                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4580
+                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4584
                                           (coe
-                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4632
+                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4636
                                              (coe v0)
                                              (coe
-                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                 (coe v1))
                                              (coe
                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_EnactStateOf_1266
                                                 (coe
                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.du_HasEnactState'45'RatifyState_2020)
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                    (coe v1)))
                                              (coe
-                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4570
+                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4574
                                                 (coe v0)
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                    (coe v1))
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                    (coe v1))))))))))
                         (let v4
                                = MAlonzo.Code.Ledger.Core.Specification.Epoch.d_DecEq'45'Epoch_80
@@ -4420,38 +4420,38 @@ du_EPOCH'45'total_3918 v0 v1 v2
                                        (coe
                                           MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                           (coe
-                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4018
+                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4022
                                              (coe v1))
                                           (coe
                                              MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                              (coe
                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_DStateOf_1654
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3826)
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3830)
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                    (coe v1)))
                                              (coe
-                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4580
+                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4584
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4632
+                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4636
                                                    (coe v0)
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                       (coe v1))
                                                    (coe
                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_EnactStateOf_1266
                                                       (coe
                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.du_HasEnactState'45'RatifyState_2020)
-                                                      (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                      (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                          (coe v1)))
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4570
+                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4574
                                                       (coe v0)
                                                       (coe
-                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                          (coe v1))
                                                       (coe
-                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                          (coe v1))))))))))
                               (coe v2)))))
                   (coe
@@ -4484,38 +4484,38 @@ du_EPOCH'45'total_3918 v0 v1 v2
                                  (coe
                                     MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                     (coe
-                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4018
+                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4022
                                        (coe v1))
                                     (coe
                                        MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                        (coe
                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_DStateOf_1654
                                           (coe
-                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3826)
-                                          (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3830)
+                                          (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                              (coe v1)))
                                        (coe
-                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4580
+                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4584
                                           (coe
-                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4632
+                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4636
                                              (coe v0)
                                              (coe
-                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                 (coe v1))
                                              (coe
                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_EnactStateOf_1266
                                                 (coe
                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.du_HasEnactState'45'RatifyState_2020)
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                    (coe v1)))
                                              (coe
-                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4570
+                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4574
                                                 (coe v0)
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                    (coe v1))
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                    (coe v1))))))))))
                         (let v3
                                = coe
@@ -4610,38 +4610,38 @@ du_EPOCH'45'total_3918 v0 v1 v2
                                                       (coe
                                                          MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4018
+                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4022
                                                             (coe v1))
                                                          (coe
                                                             MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                             (coe
                                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_DStateOf_1654
                                                                (coe
-                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3826)
-                                                               (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3830)
+                                                               (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                   (coe v1)))
                                                             (coe
-                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4580
+                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4584
                                                                (coe
-                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4632
+                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4636
                                                                   (coe v0)
                                                                   (coe
-                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                      (coe v1))
                                                                   (coe
                                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_EnactStateOf_1266
                                                                      (coe
                                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.du_HasEnactState'45'RatifyState_2020)
-                                                                     (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                     (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                         (coe v1)))
                                                                   (coe
-                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4570
+                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4574
                                                                      (coe v0)
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                         (coe v1))
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                         (coe v1))))))))))
                                              (let v5
                                                     = MAlonzo.Code.Ledger.Core.Specification.Epoch.d_DecEq'45'Epoch_80
@@ -4670,38 +4670,38 @@ du_EPOCH'45'total_3918 v0 v1 v2
                                                             (coe
                                                                MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                (coe
-                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4018
+                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4022
                                                                   (coe v1))
                                                                (coe
                                                                   MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                   (coe
                                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_DStateOf_1654
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3826)
-                                                                     (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3830)
+                                                                     (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                         (coe v1)))
                                                                   (coe
-                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4580
+                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4584
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4632
+                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4636
                                                                         (coe v0)
                                                                         (coe
-                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                            (coe v1))
                                                                         (coe
                                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_EnactStateOf_1266
                                                                            (coe
                                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.du_HasEnactState'45'RatifyState_2020)
-                                                                           (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                           (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                               (coe v1)))
                                                                         (coe
-                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4570
+                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4574
                                                                            (coe v0)
                                                                            (coe
-                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                               (coe v1))
                                                                            (coe
-                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                               (coe v1))))))))))
                                                    (coe v2)))))))
                                  (coe
@@ -4715,38 +4715,38 @@ du_EPOCH'45'total_3918 v0 v1 v2
                                           (coe
                                              MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                              (coe
-                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4018
+                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4022
                                                 (coe v1))
                                              (coe
                                                 MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                 (coe
                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_DStateOf_1654
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3826)
-                                                   (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3830)
+                                                   (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                       (coe v1)))
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4580
+                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4584
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4632
+                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4636
                                                       (coe v0)
                                                       (coe
-                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                          (coe v1))
                                                       (coe
                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_EnactStateOf_1266
                                                          (coe
                                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.du_HasEnactState'45'RatifyState_2020)
-                                                         (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                         (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                             (coe v1)))
                                                       (coe
-                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4570
+                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4574
                                                          (coe v0)
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                             (coe v1))
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                             (coe v1)))))))))))
                               (coe
                                  MAlonzo.Code.Class.IsSet.du_dom_586
@@ -4766,38 +4766,38 @@ du_EPOCH'45'total_3918 v0 v1 v2
                                           (coe
                                              MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                              (coe
-                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4018
+                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4022
                                                 (coe v1))
                                              (coe
                                                 MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                 (coe
                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_DStateOf_1654
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3826)
-                                                   (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3830)
+                                                   (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                       (coe v1)))
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4580
+                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4584
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4632
+                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4636
                                                       (coe v0)
                                                       (coe
-                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                          (coe v1))
                                                       (coe
                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_EnactStateOf_1266
                                                          (coe
                                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.du_HasEnactState'45'RatifyState_2020)
-                                                         (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                         (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                             (coe v1)))
                                                       (coe
-                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4570
+                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4574
                                                          (coe v0)
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                             (coe v1))
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                             (coe v1))))))))))))))
                      (coe
                         MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_deposits_1368
@@ -4810,38 +4810,38 @@ du_EPOCH'45'total_3918 v0 v1 v2
                               (coe
                                  MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                  (coe
-                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4018
+                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4022
                                     (coe v1))
                                  (coe
                                     MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                     (coe
                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_DStateOf_1654
                                        (coe
-                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3826)
-                                       (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3830)
+                                       (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                           (coe v1)))
                                     (coe
-                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4580
+                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4584
                                        (coe
-                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4632
+                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4636
                                           (coe v0)
                                           (coe
-                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                              (coe v1))
                                           (coe
                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_EnactStateOf_1266
                                              (coe
                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.du_HasEnactState'45'RatifyState_2020)
-                                             (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                             (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                 (coe v1)))
                                           (coe
-                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4570
+                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4574
                                              (coe v0)
                                              (coe
-                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                 (coe v1))
                                              (coe
-                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                 (coe v1))))))))))))))
          (coe
             MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_52
@@ -4968,38 +4968,38 @@ du_EPOCH'45'total_3918 v0 v1 v2
                                                    (coe
                                                       MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                       (coe
-                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4018
+                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4022
                                                          (coe v1))
                                                       (coe
                                                          MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                          (coe
                                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_DStateOf_1654
                                                             (coe
-                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3826)
-                                                            (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3830)
+                                                            (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                (coe v1)))
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4580
+                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4584
                                                             (coe
-                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4632
+                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4636
                                                                (coe v0)
                                                                (coe
-                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                   (coe v1))
                                                                (coe
                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_EnactStateOf_1266
                                                                   (coe
                                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.du_HasEnactState'45'RatifyState_2020)
-                                                                  (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                  (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                      (coe v1)))
                                                                (coe
-                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4570
+                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4574
                                                                   (coe v0)
                                                                   (coe
-                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                      (coe v1))
                                                                   (coe
-                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                      (coe v1))))))))))
                                           (let v5
                                                  = MAlonzo.Code.Ledger.Core.Specification.Epoch.d_DecEq'45'Epoch_80
@@ -5028,38 +5028,38 @@ du_EPOCH'45'total_3918 v0 v1 v2
                                                          (coe
                                                             MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                             (coe
-                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4018
+                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4022
                                                                (coe v1))
                                                             (coe
                                                                MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                (coe
                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_DStateOf_1654
                                                                   (coe
-                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3826)
-                                                                  (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3830)
+                                                                  (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                      (coe v1)))
                                                                (coe
-                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4580
+                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4584
                                                                   (coe
-                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4632
+                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4636
                                                                      (coe v0)
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                         (coe v1))
                                                                      (coe
                                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_EnactStateOf_1266
                                                                         (coe
                                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.du_HasEnactState'45'RatifyState_2020)
-                                                                        (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                        (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                            (coe v1)))
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4570
+                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4574
                                                                         (coe v0)
                                                                         (coe
-                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                            (coe v1))
                                                                         (coe
-                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                            (coe v1))))))))))
                                                 (coe v2)))))))
                               (coe
@@ -5073,38 +5073,38 @@ du_EPOCH'45'total_3918 v0 v1 v2
                                        (coe
                                           MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                           (coe
-                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4018
+                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4022
                                              (coe v1))
                                           (coe
                                              MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                              (coe
                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_DStateOf_1654
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3826)
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3830)
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                    (coe v1)))
                                              (coe
-                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4580
+                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4584
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4632
+                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4636
                                                    (coe v0)
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                       (coe v1))
                                                    (coe
                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_EnactStateOf_1266
                                                       (coe
                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.du_HasEnactState'45'RatifyState_2020)
-                                                      (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                      (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                          (coe v1)))
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4570
+                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4574
                                                       (coe v0)
                                                       (coe
-                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                          (coe v1))
                                                       (coe
-                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                          (coe v1)))))))))))
                            (coe
                               MAlonzo.Code.Class.IsSet.du_dom_586
@@ -5124,38 +5124,38 @@ du_EPOCH'45'total_3918 v0 v1 v2
                                        (coe
                                           MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                           (coe
-                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4018
+                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4022
                                              (coe v1))
                                           (coe
                                              MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                              (coe
                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_DStateOf_1654
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3826)
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3830)
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                    (coe v1)))
                                              (coe
-                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4580
+                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4584
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4632
+                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4636
                                                    (coe v0)
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                       (coe v1))
                                                    (coe
                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_EnactStateOf_1266
                                                       (coe
                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.du_HasEnactState'45'RatifyState_2020)
-                                                      (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                      (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                          (coe v1)))
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4570
+                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4574
                                                       (coe v0)
                                                       (coe
-                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                          (coe v1))
                                                       (coe
-                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                          (coe v1))))))))))))))
                   (coe
                      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_treasury_200
@@ -5168,38 +5168,38 @@ du_EPOCH'45'total_3918 v0 v1 v2
                            (coe
                               MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                               (coe
-                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4018
+                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4022
                                  (coe v1))
                               (coe
                                  MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                  (coe
                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_DStateOf_1654
                                     (coe
-                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3826)
-                                    (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3830)
+                                    (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                        (coe v1)))
                                  (coe
-                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4580
+                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4584
                                     (coe
-                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4632
+                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4636
                                        (coe v0)
                                        (coe
-                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                           (coe v1))
                                        (coe
                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_EnactStateOf_1266
                                           (coe
                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.du_HasEnactState'45'RatifyState_2020)
-                                          (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                          (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                              (coe v1)))
                                        (coe
-                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4570
+                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4574
                                           (coe v0)
                                           (coe
-                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                              (coe v1))
                                           (coe
-                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                              (coe v1)))))))))))
                (coe
                   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_reserves_202
@@ -5212,38 +5212,38 @@ du_EPOCH'45'total_3918 v0 v1 v2
                         (coe
                            MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                            (coe
-                              MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4018
+                              MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4022
                               (coe v1))
                            (coe
                               MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                               (coe
                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_DStateOf_1654
                                  (coe
-                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3826)
-                                 (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3830)
+                                 (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                     (coe v1)))
                               (coe
-                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4580
+                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4584
                                  (coe
-                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4632
+                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4636
                                     (coe v0)
                                     (coe
-                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                        (coe v1))
                                     (coe
                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_EnactStateOf_1266
                                        (coe
                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.du_HasEnactState'45'RatifyState_2020)
-                                       (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                       (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                           (coe v1)))
                                     (coe
-                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4570
+                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4574
                                        (coe v0)
                                        (coe
-                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                           (coe v1))
                                        (coe
-                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                           (coe v1))))))))))))
          (coe
             MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
@@ -5253,10 +5253,10 @@ du_EPOCH'45'total_3918 v0 v1 v2
                   MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.Properties.Computational.du_SNAP'45'total_2886
                   (coe v0)
                   (coe
-                     MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                     MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                      (coe v1))
                   (coe
-                     MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ss_4020
+                     MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ss_4024
                      (coe v1))))
             (coe
                MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
@@ -5272,38 +5272,38 @@ du_EPOCH'45'total_3918 v0 v1 v2
                         (coe
                            MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                            (coe
-                              MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4018
+                              MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4022
                               (coe v1))
                            (coe
                               MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                               (coe
                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_DStateOf_1654
                                  (coe
-                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3826)
-                                 (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3830)
+                                 (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                     (coe v1)))
                               (coe
-                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4580
+                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4584
                                  (coe
-                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4632
+                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4636
                                     (coe v0)
                                     (coe
-                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                        (coe v1))
                                     (coe
                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_EnactStateOf_1266
                                        (coe
                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.du_HasEnactState'45'RatifyState_2020)
-                                       (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                       (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                           (coe v1)))
                                     (coe
-                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4570
+                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4574
                                        (coe v0)
                                        (coe
-                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                           (coe v1))
                                        (coe
-                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                           (coe v1))))))))))
                (coe
                   MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
@@ -5317,67 +5317,67 @@ du_EPOCH'45'total_3918 v0 v1 v2
                         (coe
                            MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                            (coe
-                              MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_mkStakeDistrs_4418
+                              MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_mkStakeDistrs_4422
                               (coe v0)
                               (coe
-                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_mark_3832
+                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_mark_3836
                                  (coe
                                     MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                     (coe
                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.Properties.Computational.du_SNAP'45'total_2886
                                        (coe v0)
                                        (coe
-                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                           (coe v1))
                                        (coe
-                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ss_4020
+                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ss_4024
                                           (coe v1)))))
                               (coe v2)
                               (coe
-                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_utxoSt''_4584
+                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_utxoSt''_4588
                                  (coe
-                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4632
+                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4636
                                     (coe v0)
                                     (coe
-                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                        (coe v1))
                                     (coe
                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_EnactStateOf_1266
                                        (coe
                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.du_HasEnactState'45'RatifyState_2020)
-                                       (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                       (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                           (coe v1)))
                                     (coe
-                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4570
+                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4574
                                        (coe v0)
                                        (coe
-                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                           (coe v1))
                                        (coe
-                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                           (coe v1)))))
                               (coe
-                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_govSt''_4526
+                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_govSt''_4530
                                  (coe
-                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4570
+                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4574
                                     (coe v0)
                                     (coe
-                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                        (coe v1))
                                     (coe
-                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                        (coe v1))))
                               (coe
                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_GStateOf_1694
                                  (coe
-                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasGState'45'LedgerState_3824)
-                                 (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasGState'45'LedgerState_3828)
+                                 (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                     (coe v1)))
                               (coe
                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_DStateOf_1654
                                  (coe
-                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3826)
-                                 (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3830)
+                                 (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                     (coe v1))))
                            (coe
                               MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 (coe v2)
@@ -5386,16 +5386,16 @@ du_EPOCH'45'total_3918 v0 v1 v2
                                  (coe
                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_DRepsOf_1194
                                     (coe
-                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDReps'45'LedgerState_3838)
-                                    (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDReps'45'LedgerState_3842)
+                                    (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                        (coe v1)))
                                  (coe
                                     MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                     (coe
                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_CCHotKeysOf_1514
                                        (coe
-                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasCCHotKeys'45'LedgerState_3836)
-                                       (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasCCHotKeys'45'LedgerState_3840)
+                                       (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                           (coe v1)))
                                     (coe
                                        MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
@@ -5403,18 +5403,18 @@ du_EPOCH'45'total_3918 v0 v1 v2
                                           MAlonzo.Code.Ledger.Prelude.Base.d_TreasuryOf_88
                                           (coe
                                              MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.du_HasTreasury'45'Acnt_226)
-                                          (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt''''_4642
+                                          (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt''''_4646
                                              (coe
-                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4686
+                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4690
                                                 (coe v0)
                                                 (coe
                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_EnactStateOf_1266
                                                    (coe
                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.du_HasEnactState'45'RatifyState_2020)
-                                                   (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                   (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                       (coe v1)))
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                    (coe v1))
                                                 (coe
                                                    MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_52
@@ -5433,38 +5433,38 @@ du_EPOCH'45'total_3918 v0 v1 v2
                                                                (coe
                                                                   MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                   (coe
-                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4018
+                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4022
                                                                      (coe v1))
                                                                   (coe
                                                                      MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                      (coe
                                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_DStateOf_1654
                                                                         (coe
-                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3826)
-                                                                        (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3830)
+                                                                        (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                            (coe v1)))
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4580
+                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4584
                                                                         (coe
-                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4632
+                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4636
                                                                            (coe v0)
                                                                            (coe
-                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                               (coe v1))
                                                                            (coe
                                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_EnactStateOf_1266
                                                                               (coe
                                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.du_HasEnactState'45'RatifyState_2020)
-                                                                              (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                              (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                                  (coe v1)))
                                                                            (coe
-                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4570
+                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4574
                                                                               (coe v0)
                                                                               (coe
-                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                  (coe v1))
                                                                               (coe
-                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                                  (coe v1))))))))))
                                                       (coe
                                                          MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
@@ -5497,38 +5497,38 @@ du_EPOCH'45'total_3918 v0 v1 v2
                                                                         (coe
                                                                            MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                            (coe
-                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4018
+                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4022
                                                                               (coe v1))
                                                                            (coe
                                                                               MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                               (coe
                                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_DStateOf_1654
                                                                                  (coe
-                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3826)
-                                                                                 (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3830)
+                                                                                 (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                     (coe v1)))
                                                                               (coe
-                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4580
+                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4584
                                                                                  (coe
-                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4632
+                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4636
                                                                                     (coe v0)
                                                                                     (coe
-                                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                        (coe v1))
                                                                                     (coe
                                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_EnactStateOf_1266
                                                                                        (coe
                                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.du_HasEnactState'45'RatifyState_2020)
-                                                                                       (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                                       (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                                           (coe v1)))
                                                                                     (coe
-                                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4570
+                                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4574
                                                                                        (coe v0)
                                                                                        (coe
-                                                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                           (coe v1))
                                                                                        (coe
-                                                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                                           (coe
                                                                                              v1))))))))))
                                                                (let v4
@@ -5558,42 +5558,42 @@ du_EPOCH'45'total_3918 v0 v1 v2
                                                                               (coe
                                                                                  MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                                  (coe
-                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4018
+                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4022
                                                                                     (coe v1))
                                                                                  (coe
                                                                                     MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                                     (coe
                                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_DStateOf_1654
                                                                                        (coe
-                                                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3826)
-                                                                                       (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3830)
+                                                                                       (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                           (coe v1)))
                                                                                     (coe
-                                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4580
+                                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4584
                                                                                        (coe
-                                                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4632
+                                                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4636
                                                                                           (coe v0)
                                                                                           (coe
-                                                                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                              (coe
                                                                                                 v1))
                                                                                           (coe
                                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_EnactStateOf_1266
                                                                                              (coe
                                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.du_HasEnactState'45'RatifyState_2020)
-                                                                                             (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                                             (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                                                 (coe
                                                                                                    v1)))
                                                                                           (coe
-                                                                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4570
+                                                                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4574
                                                                                              (coe
                                                                                                 v0)
                                                                                              (coe
-                                                                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                                 (coe
                                                                                                    v1))
                                                                                              (coe
-                                                                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                                                 (coe
                                                                                                    v1))))))))))
                                                                      (coe v2)))))
@@ -5627,38 +5627,38 @@ du_EPOCH'45'total_3918 v0 v1 v2
                                                                         (coe
                                                                            MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                            (coe
-                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4018
+                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4022
                                                                               (coe v1))
                                                                            (coe
                                                                               MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                               (coe
                                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_DStateOf_1654
                                                                                  (coe
-                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3826)
-                                                                                 (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3830)
+                                                                                 (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                     (coe v1)))
                                                                               (coe
-                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4580
+                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4584
                                                                                  (coe
-                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4632
+                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4636
                                                                                     (coe v0)
                                                                                     (coe
-                                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                        (coe v1))
                                                                                     (coe
                                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_EnactStateOf_1266
                                                                                        (coe
                                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.du_HasEnactState'45'RatifyState_2020)
-                                                                                       (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                                       (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                                           (coe v1)))
                                                                                     (coe
-                                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4570
+                                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4574
                                                                                        (coe v0)
                                                                                        (coe
-                                                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                           (coe v1))
                                                                                        (coe
-                                                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                                           (coe
                                                                                              v1))))))))))
                                                                (let v3
@@ -5756,7 +5756,7 @@ du_EPOCH'45'total_3918 v0 v1 v2
                                                                                              (coe
                                                                                                 MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                                                 (coe
-                                                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4018
+                                                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4022
                                                                                                    (coe
                                                                                                       v1))
                                                                                                 (coe
@@ -5764,37 +5764,37 @@ du_EPOCH'45'total_3918 v0 v1 v2
                                                                                                    (coe
                                                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_DStateOf_1654
                                                                                                       (coe
-                                                                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3826)
-                                                                                                      (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3830)
+                                                                                                      (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                                          (coe
                                                                                                             v1)))
                                                                                                    (coe
-                                                                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4580
+                                                                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4584
                                                                                                       (coe
-                                                                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4632
+                                                                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4636
                                                                                                          (coe
                                                                                                             v0)
                                                                                                          (coe
-                                                                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                                             (coe
                                                                                                                v1))
                                                                                                          (coe
                                                                                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_EnactStateOf_1266
                                                                                                             (coe
                                                                                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.du_HasEnactState'45'RatifyState_2020)
-                                                                                                            (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                                                            (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                                                                (coe
                                                                                                                   v1)))
                                                                                                          (coe
-                                                                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4570
+                                                                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4574
                                                                                                             (coe
                                                                                                                v0)
                                                                                                             (coe
-                                                                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                                                (coe
                                                                                                                   v1))
                                                                                                             (coe
-                                                                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                                                                (coe
                                                                                                                   v1))))))))))
                                                                                     (let v5
@@ -5826,7 +5826,7 @@ du_EPOCH'45'total_3918 v0 v1 v2
                                                                                                    (coe
                                                                                                       MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                                                       (coe
-                                                                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4018
+                                                                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4022
                                                                                                          (coe
                                                                                                             v1))
                                                                                                       (coe
@@ -5834,37 +5834,37 @@ du_EPOCH'45'total_3918 v0 v1 v2
                                                                                                          (coe
                                                                                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_DStateOf_1654
                                                                                                             (coe
-                                                                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3826)
-                                                                                                            (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3830)
+                                                                                                            (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                                                (coe
                                                                                                                   v1)))
                                                                                                          (coe
-                                                                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4580
+                                                                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4584
                                                                                                             (coe
-                                                                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4632
+                                                                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4636
                                                                                                                (coe
                                                                                                                   v0)
                                                                                                                (coe
-                                                                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                                                   (coe
                                                                                                                      v1))
                                                                                                                (coe
                                                                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_EnactStateOf_1266
                                                                                                                   (coe
                                                                                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.du_HasEnactState'45'RatifyState_2020)
-                                                                                                                  (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                                                                  (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                                                                      (coe
                                                                                                                         v1)))
                                                                                                                (coe
-                                                                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4570
+                                                                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4574
                                                                                                                   (coe
                                                                                                                      v0)
                                                                                                                   (coe
-                                                                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                                                      (coe
                                                                                                                         v1))
                                                                                                                   (coe
-                                                                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                                                                      (coe
                                                                                                                         v1))))))))))
                                                                                           (coe
@@ -5880,44 +5880,44 @@ du_EPOCH'45'total_3918 v0 v1 v2
                                                                                  (coe
                                                                                     MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                                     (coe
-                                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4018
+                                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4022
                                                                                        (coe v1))
                                                                                     (coe
                                                                                        MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                                        (coe
                                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_DStateOf_1654
                                                                                           (coe
-                                                                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3826)
-                                                                                          (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3830)
+                                                                                          (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                              (coe
                                                                                                 v1)))
                                                                                        (coe
-                                                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4580
+                                                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4584
                                                                                           (coe
-                                                                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4632
+                                                                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4636
                                                                                              (coe
                                                                                                 v0)
                                                                                              (coe
-                                                                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                                 (coe
                                                                                                    v1))
                                                                                              (coe
                                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_EnactStateOf_1266
                                                                                                 (coe
                                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.du_HasEnactState'45'RatifyState_2020)
-                                                                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                                                    (coe
                                                                                                       v1)))
                                                                                              (coe
-                                                                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4570
+                                                                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4574
                                                                                                 (coe
                                                                                                    v0)
                                                                                                 (coe
-                                                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                                    (coe
                                                                                                       v1))
                                                                                                 (coe
-                                                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                                                    (coe
                                                                                                       v1)))))))))))
                                                                      (coe
@@ -5939,44 +5939,44 @@ du_EPOCH'45'total_3918 v0 v1 v2
                                                                                  (coe
                                                                                     MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                                     (coe
-                                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4018
+                                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4022
                                                                                        (coe v1))
                                                                                     (coe
                                                                                        MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                                        (coe
                                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_DStateOf_1654
                                                                                           (coe
-                                                                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3826)
-                                                                                          (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3830)
+                                                                                          (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                              (coe
                                                                                                 v1)))
                                                                                        (coe
-                                                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4580
+                                                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4584
                                                                                           (coe
-                                                                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4632
+                                                                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4636
                                                                                              (coe
                                                                                                 v0)
                                                                                              (coe
-                                                                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                                 (coe
                                                                                                    v1))
                                                                                              (coe
                                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_EnactStateOf_1266
                                                                                                 (coe
                                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.du_HasEnactState'45'RatifyState_2020)
-                                                                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                                                    (coe
                                                                                                       v1)))
                                                                                              (coe
-                                                                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4570
+                                                                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4574
                                                                                                 (coe
                                                                                                    v0)
                                                                                                 (coe
-                                                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                                    (coe
                                                                                                       v1))
                                                                                                 (coe
-                                                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                                                    (coe
                                                                                                       v1))))))))))))))
                                                             (coe
@@ -5990,38 +5990,38 @@ du_EPOCH'45'total_3918 v0 v1 v2
                                                                      (coe
                                                                         MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                         (coe
-                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4018
+                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4022
                                                                            (coe v1))
                                                                         (coe
                                                                            MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                            (coe
                                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_DStateOf_1654
                                                                               (coe
-                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3826)
-                                                                              (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3830)
+                                                                              (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                  (coe v1)))
                                                                            (coe
-                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4580
+                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4584
                                                                               (coe
-                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4632
+                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4636
                                                                                  (coe v0)
                                                                                  (coe
-                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                     (coe v1))
                                                                                  (coe
                                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_EnactStateOf_1266
                                                                                     (coe
                                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.du_HasEnactState'45'RatifyState_2020)
-                                                                                    (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                                    (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                                        (coe v1)))
                                                                                  (coe
-                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4570
+                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4574
                                                                                     (coe v0)
                                                                                     (coe
-                                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                        (coe v1))
                                                                                     (coe
-                                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                                        (coe
                                                                                           v1))))))))))))))
                                                 (coe
@@ -6152,7 +6152,7 @@ du_EPOCH'45'total_3918 v0 v1 v2
                                                                                           (coe
                                                                                              MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                                              (coe
-                                                                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4018
+                                                                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4022
                                                                                                 (coe
                                                                                                    v1))
                                                                                              (coe
@@ -6160,37 +6160,37 @@ du_EPOCH'45'total_3918 v0 v1 v2
                                                                                                 (coe
                                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_DStateOf_1654
                                                                                                    (coe
-                                                                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3826)
-                                                                                                   (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3830)
+                                                                                                   (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                                       (coe
                                                                                                          v1)))
                                                                                                 (coe
-                                                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4580
+                                                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4584
                                                                                                    (coe
-                                                                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4632
+                                                                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4636
                                                                                                       (coe
                                                                                                          v0)
                                                                                                       (coe
-                                                                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                                          (coe
                                                                                                             v1))
                                                                                                       (coe
                                                                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_EnactStateOf_1266
                                                                                                          (coe
                                                                                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.du_HasEnactState'45'RatifyState_2020)
-                                                                                                         (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                                                         (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                                                             (coe
                                                                                                                v1)))
                                                                                                       (coe
-                                                                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4570
+                                                                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4574
                                                                                                          (coe
                                                                                                             v0)
                                                                                                          (coe
-                                                                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                                             (coe
                                                                                                                v1))
                                                                                                          (coe
-                                                                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                                                             (coe
                                                                                                                v1))))))))))
                                                                                  (let v5
@@ -6221,7 +6221,7 @@ du_EPOCH'45'total_3918 v0 v1 v2
                                                                                                 (coe
                                                                                                    MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                                                    (coe
-                                                                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4018
+                                                                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4022
                                                                                                       (coe
                                                                                                          v1))
                                                                                                    (coe
@@ -6229,37 +6229,37 @@ du_EPOCH'45'total_3918 v0 v1 v2
                                                                                                       (coe
                                                                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_DStateOf_1654
                                                                                                          (coe
-                                                                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3826)
-                                                                                                         (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3830)
+                                                                                                         (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                                             (coe
                                                                                                                v1)))
                                                                                                       (coe
-                                                                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4580
+                                                                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4584
                                                                                                          (coe
-                                                                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4632
+                                                                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4636
                                                                                                             (coe
                                                                                                                v0)
                                                                                                             (coe
-                                                                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                                                (coe
                                                                                                                   v1))
                                                                                                             (coe
                                                                                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_EnactStateOf_1266
                                                                                                                (coe
                                                                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.du_HasEnactState'45'RatifyState_2020)
-                                                                                                               (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                                                               (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                                                                   (coe
                                                                                                                      v1)))
                                                                                                             (coe
-                                                                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4570
+                                                                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4574
                                                                                                                (coe
                                                                                                                   v0)
                                                                                                                (coe
-                                                                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                                                   (coe
                                                                                                                      v1))
                                                                                                                (coe
-                                                                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                                                                   (coe
                                                                                                                      v1))))))))))
                                                                                        (coe
@@ -6275,42 +6275,42 @@ du_EPOCH'45'total_3918 v0 v1 v2
                                                                               (coe
                                                                                  MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                                  (coe
-                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4018
+                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4022
                                                                                     (coe v1))
                                                                                  (coe
                                                                                     MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                                     (coe
                                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_DStateOf_1654
                                                                                        (coe
-                                                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3826)
-                                                                                       (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3830)
+                                                                                       (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                           (coe v1)))
                                                                                     (coe
-                                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4580
+                                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4584
                                                                                        (coe
-                                                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4632
+                                                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4636
                                                                                           (coe v0)
                                                                                           (coe
-                                                                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                              (coe
                                                                                                 v1))
                                                                                           (coe
                                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_EnactStateOf_1266
                                                                                              (coe
                                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.du_HasEnactState'45'RatifyState_2020)
-                                                                                             (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                                             (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                                                 (coe
                                                                                                    v1)))
                                                                                           (coe
-                                                                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4570
+                                                                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4574
                                                                                              (coe
                                                                                                 v0)
                                                                                              (coe
-                                                                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                                 (coe
                                                                                                    v1))
                                                                                              (coe
-                                                                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                                                 (coe
                                                                                                    v1)))))))))))
                                                                   (coe
@@ -6332,42 +6332,42 @@ du_EPOCH'45'total_3918 v0 v1 v2
                                                                               (coe
                                                                                  MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                                  (coe
-                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4018
+                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4022
                                                                                     (coe v1))
                                                                                  (coe
                                                                                     MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                                     (coe
                                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_DStateOf_1654
                                                                                        (coe
-                                                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3826)
-                                                                                       (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3830)
+                                                                                       (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                           (coe v1)))
                                                                                     (coe
-                                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4580
+                                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4584
                                                                                        (coe
-                                                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4632
+                                                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4636
                                                                                           (coe v0)
                                                                                           (coe
-                                                                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                              (coe
                                                                                                 v1))
                                                                                           (coe
                                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_EnactStateOf_1266
                                                                                              (coe
                                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.du_HasEnactState'45'RatifyState_2020)
-                                                                                             (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                                             (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                                                 (coe
                                                                                                    v1)))
                                                                                           (coe
-                                                                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4570
+                                                                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4574
                                                                                              (coe
                                                                                                 v0)
                                                                                              (coe
-                                                                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                                 (coe
                                                                                                    v1))
                                                                                              (coe
-                                                                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                                                 (coe
                                                                                                    v1))))))))))))))
                                                          (coe
@@ -6381,38 +6381,38 @@ du_EPOCH'45'total_3918 v0 v1 v2
                                                                   (coe
                                                                      MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4018
+                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4022
                                                                         (coe v1))
                                                                      (coe
                                                                         MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                         (coe
                                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_DStateOf_1654
                                                                            (coe
-                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3826)
-                                                                           (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3830)
+                                                                           (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                               (coe v1)))
                                                                         (coe
-                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4580
+                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4584
                                                                            (coe
-                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4632
+                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4636
                                                                               (coe v0)
                                                                               (coe
-                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                  (coe v1))
                                                                               (coe
                                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_EnactStateOf_1266
                                                                                  (coe
                                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.du_HasEnactState'45'RatifyState_2020)
-                                                                                 (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                                 (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                                     (coe v1)))
                                                                               (coe
-                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4570
+                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4574
                                                                                  (coe v0)
                                                                                  (coe
-                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                     (coe v1))
                                                                                  (coe
-                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                                     (coe
                                                                                        v1)))))))))))
                                                       (coe
@@ -6426,61 +6426,61 @@ du_EPOCH'45'total_3918 v0 v1 v2
                                                                (coe
                                                                   MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                   (coe
-                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4018
+                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4022
                                                                      (coe v1))
                                                                   (coe
                                                                      MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                      (coe
                                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_DStateOf_1654
                                                                         (coe
-                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3826)
-                                                                        (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3830)
+                                                                        (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                            (coe v1)))
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4580
+                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pState''_4584
                                                                         (coe
-                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4632
+                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4636
                                                                            (coe v0)
                                                                            (coe
-                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                               (coe v1))
                                                                            (coe
                                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_EnactStateOf_1266
                                                                               (coe
                                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.du_HasEnactState'45'RatifyState_2020)
-                                                                              (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                              (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                                  (coe v1)))
                                                                            (coe
-                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4570
+                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4574
                                                                               (coe v0)
                                                                               (coe
-                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                                                  (coe v1))
                                                                               (coe
-                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                                                  (coe v1))))))))))))
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4570
+                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4574
                                                    (coe v0)
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                       (coe v1))
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                                       (coe v1))))))
                                        (coe
                                           MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                           (coe
                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_PoolsOf_1554
                                              (coe
-                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasPools'45'LedgerState_3822)
-                                             (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasPools'45'LedgerState_3826)
+                                             (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                 (coe v1)))
                                           (coe
                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_VoteDelegsOf_1078
                                              (coe
-                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasVoteDelegs'45'LedgerState_3830)
-                                             (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasVoteDelegs'45'LedgerState_3834)
+                                             (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                                 (coe v1))))))))))
                      (coe
                         MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_52
@@ -6496,7 +6496,7 @@ du_EPOCH'45'total_3918 v0 v1 v2
                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_EnactStateOf_1266
                                     (coe
                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.du_HasEnactState'45'RatifyState_2020)
-                                    (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                    (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                        (coe v1))))
                               (coe
                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_constitution_1244
@@ -6504,7 +6504,7 @@ du_EPOCH'45'total_3918 v0 v1 v2
                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_EnactStateOf_1266
                                     (coe
                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.du_HasEnactState'45'RatifyState_2020)
-                                    (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                    (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                        (coe v1))))
                               (coe
                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_pv_1246
@@ -6512,7 +6512,7 @@ du_EPOCH'45'total_3918 v0 v1 v2
                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_EnactStateOf_1266
                                     (coe
                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.du_HasEnactState'45'RatifyState_2020)
-                                    (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                    (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                        (coe v1))))
                               (coe
                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_pparams_1248
@@ -6520,7 +6520,7 @@ du_EPOCH'45'total_3918 v0 v1 v2
                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_EnactStateOf_1266
                                     (coe
                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.du_HasEnactState'45'RatifyState_2020)
-                                    (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                                    (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                                        (coe v1))))
                               (coe
                                  MAlonzo.Code.Class.HasEmptySet.d_'8709'_332
@@ -6542,26 +6542,26 @@ du_EPOCH'45'total_3918 v0 v1 v2
                                           MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))))
                               (coe MAlonzo.Code.Agda.Builtin.Bool.C_false_8))))
                      (coe
-                        MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_govSt''_4526
+                        MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_govSt''_4530
                         (coe
-                           MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4570
+                           MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4574
                            (coe v0)
                            (coe
-                              MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4022
+                              MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                               (coe v1))
                            (coe
-                              MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4026
+                              MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4030
                               (coe v1)))))))))
 -- Ledger.Dijkstra.Specification.Epoch.Properties.Computational._.EPOCH-deterministic
 d_EPOCH'45'deterministic_3924 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3116 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.T_EpochState_4006 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.T_EpochState_4010 ->
   AgdaAny ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.T_EpochState_4006 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.T_EpochState_4006 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.T__'8866'_'8640''10631'_'44'EPOCH'10632'__4688 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.T__'8866'_'8640''10631'_'44'EPOCH'10632'__4688 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.T_EpochState_4010 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.T_EpochState_4010 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.T__'8866'_'8640''10631'_'44'EPOCH'10632'__4692 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.T__'8866'_'8640''10631'_'44'EPOCH'10632'__4692 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
 d_EPOCH'45'deterministic_3924 = erased
 -- Ledger.Dijkstra.Specification.Epoch.Properties.Computational._._.ls
@@ -6570,33 +6570,33 @@ d_ls_3962 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3116 ->
   AgdaAny ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.T_RatifyState_1984 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.T_LedgerState_3778 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.T_LedgerState_3782 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DState_1352 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_Acnt_194 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T_Snapshots_3822 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T_Snapshots_3822 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T_Snapshots_3826 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T_Snapshots_3826 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_Acnt_194 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_PState_1372 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.T_RatifyState_1984 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.T_EnactState_1230 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T__'8866'_'8640''10631'_'44'SNAP'10632'__3876 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T__'8866'_'8640''10631'_'44'SNAP'10632'__3880 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PoolReap.T__'8866'_'8640''10631'_'44'POOLREAP'10632'__3072 ->
   MAlonzo.Code.Interface.STS.T__'8866'_'8640''10214'_'10215''42'__80 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DState_1352 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_Acnt_194 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T_Snapshots_3822 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T_Snapshots_3826 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_PState_1372 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.T_RatifyState_1984 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T__'8866'_'8640''10631'_'44'SNAP'10632'__3876 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T__'8866'_'8640''10631'_'44'SNAP'10632'__3880 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PoolReap.T__'8866'_'8640''10631'_'44'POOLREAP'10632'__3072 ->
   MAlonzo.Code.Interface.STS.T__'8866'_'8640''10214'_'10215''42'__80 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.T_LedgerState_3778
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.T_LedgerState_3782
 d_ls_3962 ~v0 ~v1 ~v2 ~v3 v4 ~v5 ~v6 ~v7 ~v8 ~v9 ~v10 ~v11 ~v12
           ~v13 ~v14 ~v15 ~v16 ~v17 ~v18 ~v19 ~v20 ~v21 ~v22 ~v23
   = du_ls_3962 v4
 du_ls_3962 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.T_LedgerState_3778 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.T_LedgerState_3778
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.T_LedgerState_3782 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.T_LedgerState_3782
 du_ls_3962 v0 = coe v0
 -- Ledger.Dijkstra.Specification.Epoch.Properties.Computational._._.es
 d_es_3964 ::
@@ -6604,24 +6604,24 @@ d_es_3964 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3116 ->
   AgdaAny ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.T_RatifyState_1984 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.T_LedgerState_3778 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.T_LedgerState_3782 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DState_1352 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_Acnt_194 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T_Snapshots_3822 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T_Snapshots_3822 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T_Snapshots_3826 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T_Snapshots_3826 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_Acnt_194 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_PState_1372 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.T_RatifyState_1984 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.T_EnactState_1230 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T__'8866'_'8640''10631'_'44'SNAP'10632'__3876 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T__'8866'_'8640''10631'_'44'SNAP'10632'__3880 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PoolReap.T__'8866'_'8640''10631'_'44'POOLREAP'10632'__3072 ->
   MAlonzo.Code.Interface.STS.T__'8866'_'8640''10214'_'10215''42'__80 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DState_1352 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_Acnt_194 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T_Snapshots_3822 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T_Snapshots_3826 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_PState_1372 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.T_RatifyState_1984 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T__'8866'_'8640''10631'_'44'SNAP'10632'__3876 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T__'8866'_'8640''10631'_'44'SNAP'10632'__3880 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PoolReap.T__'8866'_'8640''10631'_'44'POOLREAP'10632'__3072 ->
   MAlonzo.Code.Interface.STS.T__'8866'_'8640''10214'_'10215''42'__80 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.T_EnactState_1230
@@ -6641,38 +6641,38 @@ d_govUpd_3966 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3116 ->
   AgdaAny ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.T_RatifyState_1984 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.T_LedgerState_3778 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.T_LedgerState_3782 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DState_1352 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_Acnt_194 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T_Snapshots_3822 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T_Snapshots_3822 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T_Snapshots_3826 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T_Snapshots_3826 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_Acnt_194 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_PState_1372 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.T_RatifyState_1984 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.T_EnactState_1230 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T__'8866'_'8640''10631'_'44'SNAP'10632'__3876 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T__'8866'_'8640''10631'_'44'SNAP'10632'__3880 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PoolReap.T__'8866'_'8640''10631'_'44'POOLREAP'10632'__3072 ->
   MAlonzo.Code.Interface.STS.T__'8866'_'8640''10214'_'10215''42'__80 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DState_1352 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_Acnt_194 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T_Snapshots_3822 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T_Snapshots_3826 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_PState_1372 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.T_RatifyState_1984 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T__'8866'_'8640''10631'_'44'SNAP'10632'__3876 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T__'8866'_'8640''10631'_'44'SNAP'10632'__3880 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PoolReap.T__'8866'_'8640''10631'_'44'POOLREAP'10632'__3072 ->
   MAlonzo.Code.Interface.STS.T__'8866'_'8640''10214'_'10215''42'__80 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.T_Governance'45'Update_4518
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.T_Governance'45'Update_4522
 d_govUpd_3966 v0 ~v1 ~v2 v3 v4 ~v5 ~v6 ~v7 ~v8 ~v9 ~v10 ~v11 ~v12
               ~v13 ~v14 ~v15 ~v16 ~v17 ~v18 ~v19 ~v20 ~v21 ~v22 ~v23
   = du_govUpd_3966 v0 v3 v4
 du_govUpd_3966 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.T_RatifyState_1984 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.T_LedgerState_3778 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.T_Governance'45'Update_4518
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.T_LedgerState_3782 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.T_Governance'45'Update_4522
 du_govUpd_3966 v0 v1 v2
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4570
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4574
       (coe v0) (coe v2) (coe v1)
 -- Ledger.Dijkstra.Specification.Epoch.Properties.Computational._._.govSt'
 d_govSt''_3968 ::
@@ -6680,24 +6680,24 @@ d_govSt''_3968 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3116 ->
   AgdaAny ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.T_RatifyState_1984 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.T_LedgerState_3778 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.T_LedgerState_3782 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DState_1352 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_Acnt_194 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T_Snapshots_3822 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T_Snapshots_3822 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T_Snapshots_3826 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T_Snapshots_3826 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_Acnt_194 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_PState_1372 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.T_RatifyState_1984 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.T_EnactState_1230 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T__'8866'_'8640''10631'_'44'SNAP'10632'__3876 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T__'8866'_'8640''10631'_'44'SNAP'10632'__3880 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PoolReap.T__'8866'_'8640''10631'_'44'POOLREAP'10632'__3072 ->
   MAlonzo.Code.Interface.STS.T__'8866'_'8640''10214'_'10215''42'__80 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DState_1352 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_Acnt_194 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T_Snapshots_3822 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T_Snapshots_3826 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_PState_1372 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.T_RatifyState_1984 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T__'8866'_'8640''10631'_'44'SNAP'10632'__3876 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T__'8866'_'8640''10631'_'44'SNAP'10632'__3880 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PoolReap.T__'8866'_'8640''10631'_'44'POOLREAP'10632'__3072 ->
   MAlonzo.Code.Interface.STS.T__'8866'_'8640''10214'_'10215''42'__80 ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
@@ -6707,11 +6707,11 @@ d_govSt''_3968 v0 ~v1 ~v2 v3 v4 ~v5 ~v6 ~v7 ~v8 ~v9 ~v10 ~v11 ~v12
 du_govSt''_3968 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.T_RatifyState_1984 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.T_LedgerState_3778 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.T_LedgerState_3782 ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
 du_govSt''_3968 v0 v1 v2
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_govSt''_4526
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_govSt''_4530
       (coe du_govUpd_3966 (coe v0) (coe v1) (coe v2))
 -- Ledger.Dijkstra.Specification.Epoch.Properties.Computational._._.ss'₁≡ss'₂
 d_ss'''8321''8801'ss'''8322'_3970 ::
@@ -6719,24 +6719,24 @@ d_ss'''8321''8801'ss'''8322'_3970 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3116 ->
   AgdaAny ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.T_RatifyState_1984 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.T_LedgerState_3778 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.T_LedgerState_3782 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DState_1352 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_Acnt_194 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T_Snapshots_3822 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T_Snapshots_3822 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T_Snapshots_3826 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T_Snapshots_3826 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_Acnt_194 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_PState_1372 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.T_RatifyState_1984 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.T_EnactState_1230 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T__'8866'_'8640''10631'_'44'SNAP'10632'__3876 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T__'8866'_'8640''10631'_'44'SNAP'10632'__3880 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PoolReap.T__'8866'_'8640''10631'_'44'POOLREAP'10632'__3072 ->
   MAlonzo.Code.Interface.STS.T__'8866'_'8640''10214'_'10215''42'__80 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DState_1352 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_Acnt_194 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T_Snapshots_3822 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T_Snapshots_3826 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_PState_1372 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.T_RatifyState_1984 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T__'8866'_'8640''10631'_'44'SNAP'10632'__3876 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T__'8866'_'8640''10631'_'44'SNAP'10632'__3880 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PoolReap.T__'8866'_'8640''10631'_'44'POOLREAP'10632'__3072 ->
   MAlonzo.Code.Interface.STS.T__'8866'_'8640''10214'_'10215''42'__80 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
@@ -6747,24 +6747,24 @@ d_utxoSt''_3978 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3116 ->
   AgdaAny ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.T_RatifyState_1984 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.T_LedgerState_3778 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.T_LedgerState_3782 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DState_1352 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_Acnt_194 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T_Snapshots_3822 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T_Snapshots_3822 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T_Snapshots_3826 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T_Snapshots_3826 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_Acnt_194 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_PState_1372 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.T_RatifyState_1984 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.T_EnactState_1230 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T__'8866'_'8640''10631'_'44'SNAP'10632'__3876 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T__'8866'_'8640''10631'_'44'SNAP'10632'__3880 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PoolReap.T__'8866'_'8640''10631'_'44'POOLREAP'10632'__3072 ->
   MAlonzo.Code.Interface.STS.T__'8866'_'8640''10214'_'10215''42'__80 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DState_1352 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_Acnt_194 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T_Snapshots_3822 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T_Snapshots_3826 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_PState_1372 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.T_RatifyState_1984 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T__'8866'_'8640''10631'_'44'SNAP'10632'__3876 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T__'8866'_'8640''10631'_'44'SNAP'10632'__3880 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PoolReap.T__'8866'_'8640''10631'_'44'POOLREAP'10632'__3072 ->
   MAlonzo.Code.Interface.STS.T__'8866'_'8640''10214'_'10215''42'__80 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOState_3152
@@ -6774,13 +6774,13 @@ d_utxoSt''_3978 v0 ~v1 ~v2 v3 v4 ~v5 ~v6 ~v7 ~v8 ~v9 ~v10 ~v11 ~v12
 du_utxoSt''_3978 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.T_RatifyState_1984 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.T_LedgerState_3778 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.T_LedgerState_3782 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOState_3152
 du_utxoSt''_3978 v0 v1 v2
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_utxoSt''_4584
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_utxoSt''_4588
       (coe
-         MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4632
+         MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4636
          (coe v0) (coe v2) (coe du_es_3964 (coe v1))
          (coe du_govUpd_3966 (coe v0) (coe v1) (coe v2)))
 -- Ledger.Dijkstra.Specification.Epoch.Properties.Computational._._.pPRUpd₁
@@ -6789,40 +6789,40 @@ d_pPRUpd'8321'_3980 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3116 ->
   AgdaAny ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.T_RatifyState_1984 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.T_LedgerState_3778 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.T_LedgerState_3782 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DState_1352 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_Acnt_194 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T_Snapshots_3822 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T_Snapshots_3822 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T_Snapshots_3826 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T_Snapshots_3826 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_Acnt_194 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_PState_1372 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.T_RatifyState_1984 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.T_EnactState_1230 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T__'8866'_'8640''10631'_'44'SNAP'10632'__3876 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T__'8866'_'8640''10631'_'44'SNAP'10632'__3880 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PoolReap.T__'8866'_'8640''10631'_'44'POOLREAP'10632'__3072 ->
   MAlonzo.Code.Interface.STS.T__'8866'_'8640''10214'_'10215''42'__80 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DState_1352 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_Acnt_194 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T_Snapshots_3822 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T_Snapshots_3826 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_PState_1372 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.T_RatifyState_1984 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T__'8866'_'8640''10631'_'44'SNAP'10632'__3876 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T__'8866'_'8640''10631'_'44'SNAP'10632'__3880 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PoolReap.T__'8866'_'8640''10631'_'44'POOLREAP'10632'__3072 ->
   MAlonzo.Code.Interface.STS.T__'8866'_'8640''10214'_'10215''42'__80 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.T_Post'45'POOLREAP'45'Update_4634
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.T_Post'45'POOLREAP'45'Update_4638
 d_pPRUpd'8321'_3980 v0 ~v1 ~v2 v3 v4 v5 v6 ~v7 ~v8 ~v9 ~v10 ~v11
                     ~v12 ~v13 ~v14 ~v15 ~v16 ~v17 ~v18 ~v19 ~v20 ~v21 ~v22 ~v23
   = du_pPRUpd'8321'_3980 v0 v3 v4 v5 v6
 du_pPRUpd'8321'_3980 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.T_RatifyState_1984 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.T_LedgerState_3778 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.T_LedgerState_3782 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DState_1352 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_Acnt_194 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.T_Post'45'POOLREAP'45'Update_4634
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.T_Post'45'POOLREAP'45'Update_4638
 du_pPRUpd'8321'_3980 v0 v1 v2 v3 v4
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4686
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4690
       (coe v0) (coe du_es_3964 (coe v1)) (coe v2) (coe v3) (coe v4)
       (coe du_govUpd_3966 (coe v0) (coe v1) (coe v2))
 -- Ledger.Dijkstra.Specification.Epoch.Properties.Computational._._.pPRUpd₂
@@ -6831,40 +6831,40 @@ d_pPRUpd'8322'_3988 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3116 ->
   AgdaAny ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.T_RatifyState_1984 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.T_LedgerState_3778 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.T_LedgerState_3782 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DState_1352 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_Acnt_194 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T_Snapshots_3822 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T_Snapshots_3822 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T_Snapshots_3826 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T_Snapshots_3826 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_Acnt_194 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_PState_1372 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.T_RatifyState_1984 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.T_EnactState_1230 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T__'8866'_'8640''10631'_'44'SNAP'10632'__3876 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T__'8866'_'8640''10631'_'44'SNAP'10632'__3880 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PoolReap.T__'8866'_'8640''10631'_'44'POOLREAP'10632'__3072 ->
   MAlonzo.Code.Interface.STS.T__'8866'_'8640''10214'_'10215''42'__80 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DState_1352 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_Acnt_194 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T_Snapshots_3822 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T_Snapshots_3826 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_PState_1372 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.T_RatifyState_1984 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T__'8866'_'8640''10631'_'44'SNAP'10632'__3876 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T__'8866'_'8640''10631'_'44'SNAP'10632'__3880 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PoolReap.T__'8866'_'8640''10631'_'44'POOLREAP'10632'__3072 ->
   MAlonzo.Code.Interface.STS.T__'8866'_'8640''10214'_'10215''42'__80 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.T_Post'45'POOLREAP'45'Update_4634
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.T_Post'45'POOLREAP'45'Update_4638
 d_pPRUpd'8322'_3988 v0 ~v1 ~v2 v3 v4 ~v5 ~v6 ~v7 ~v8 ~v9 ~v10 ~v11
                     ~v12 ~v13 ~v14 ~v15 v16 v17 ~v18 ~v19 ~v20 ~v21 ~v22 ~v23
   = du_pPRUpd'8322'_3988 v0 v3 v4 v16 v17
 du_pPRUpd'8322'_3988 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.T_RatifyState_1984 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.T_LedgerState_3778 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.T_LedgerState_3782 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DState_1352 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_Acnt_194 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.T_Post'45'POOLREAP'45'Update_4634
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.T_Post'45'POOLREAP'45'Update_4638
 du_pPRUpd'8322'_3988 v0 v1 v2 v3 v4
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4686
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_updates_4690
       (coe v0) (coe du_es_3964 (coe v1)) (coe v2) (coe v3) (coe v4)
       (coe du_govUpd_3966 (coe v0) (coe v1) (coe v2))
 -- Ledger.Dijkstra.Specification.Epoch.Properties.Computational._._.prs'≡prs''
@@ -6873,24 +6873,24 @@ d_prs'''8801'prs''''_3996 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3116 ->
   AgdaAny ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.T_RatifyState_1984 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.T_LedgerState_3778 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.T_LedgerState_3782 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DState_1352 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_Acnt_194 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T_Snapshots_3822 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T_Snapshots_3822 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T_Snapshots_3826 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T_Snapshots_3826 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_Acnt_194 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_PState_1372 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.T_RatifyState_1984 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.T_EnactState_1230 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T__'8866'_'8640''10631'_'44'SNAP'10632'__3876 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T__'8866'_'8640''10631'_'44'SNAP'10632'__3880 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PoolReap.T__'8866'_'8640''10631'_'44'POOLREAP'10632'__3072 ->
   MAlonzo.Code.Interface.STS.T__'8866'_'8640''10214'_'10215''42'__80 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DState_1352 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_Acnt_194 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T_Snapshots_3822 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T_Snapshots_3826 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_PState_1372 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.T_RatifyState_1984 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T__'8866'_'8640''10631'_'44'SNAP'10632'__3876 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T__'8866'_'8640''10631'_'44'SNAP'10632'__3880 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PoolReap.T__'8866'_'8640''10631'_'44'POOLREAP'10632'__3072 ->
   MAlonzo.Code.Interface.STS.T__'8866'_'8640''10214'_'10215''42'__80 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
@@ -6901,24 +6901,24 @@ d_pPRUpd'8321''8801'pPRUpd'8322'_3998 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3116 ->
   AgdaAny ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.T_RatifyState_1984 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.T_LedgerState_3778 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.T_LedgerState_3782 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DState_1352 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_Acnt_194 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T_Snapshots_3822 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T_Snapshots_3822 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T_Snapshots_3826 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T_Snapshots_3826 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_Acnt_194 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_PState_1372 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.T_RatifyState_1984 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.T_EnactState_1230 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T__'8866'_'8640''10631'_'44'SNAP'10632'__3876 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T__'8866'_'8640''10631'_'44'SNAP'10632'__3880 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PoolReap.T__'8866'_'8640''10631'_'44'POOLREAP'10632'__3072 ->
   MAlonzo.Code.Interface.STS.T__'8866'_'8640''10214'_'10215''42'__80 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DState_1352 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_Acnt_194 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T_Snapshots_3822 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T_Snapshots_3826 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_PState_1372 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.T_RatifyState_1984 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T__'8866'_'8640''10631'_'44'SNAP'10632'__3876 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T__'8866'_'8640''10631'_'44'SNAP'10632'__3880 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PoolReap.T__'8866'_'8640''10631'_'44'POOLREAP'10632'__3072 ->
   MAlonzo.Code.Interface.STS.T__'8866'_'8640''10214'_'10215''42'__80 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
@@ -6929,24 +6929,24 @@ d_stakeDistrs'8321''8801'stakeDistrs'8322'_4008 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3116 ->
   AgdaAny ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.T_RatifyState_1984 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.T_LedgerState_3778 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.T_LedgerState_3782 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DState_1352 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_Acnt_194 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T_Snapshots_3822 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T_Snapshots_3822 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T_Snapshots_3826 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T_Snapshots_3826 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_Acnt_194 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_PState_1372 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.T_RatifyState_1984 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.T_EnactState_1230 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T__'8866'_'8640''10631'_'44'SNAP'10632'__3876 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T__'8866'_'8640''10631'_'44'SNAP'10632'__3880 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PoolReap.T__'8866'_'8640''10631'_'44'POOLREAP'10632'__3072 ->
   MAlonzo.Code.Interface.STS.T__'8866'_'8640''10214'_'10215''42'__80 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DState_1352 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_Acnt_194 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T_Snapshots_3822 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T_Snapshots_3826 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_PState_1372 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.T_RatifyState_1984 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T__'8866'_'8640''10631'_'44'SNAP'10632'__3876 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T__'8866'_'8640''10631'_'44'SNAP'10632'__3880 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PoolReap.T__'8866'_'8640''10631'_'44'POOLREAP'10632'__3072 ->
   MAlonzo.Code.Interface.STS.T__'8866'_'8640''10214'_'10215''42'__80 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
@@ -6957,24 +6957,24 @@ d_Γ'8801'Γ''_4012 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3116 ->
   AgdaAny ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.T_RatifyState_1984 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.T_LedgerState_3778 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.T_LedgerState_3782 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DState_1352 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_Acnt_194 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T_Snapshots_3822 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T_Snapshots_3822 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T_Snapshots_3826 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T_Snapshots_3826 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_Acnt_194 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_PState_1372 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.T_RatifyState_1984 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.T_EnactState_1230 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T__'8866'_'8640''10631'_'44'SNAP'10632'__3876 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T__'8866'_'8640''10631'_'44'SNAP'10632'__3880 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PoolReap.T__'8866'_'8640''10631'_'44'POOLREAP'10632'__3072 ->
   MAlonzo.Code.Interface.STS.T__'8866'_'8640''10214'_'10215''42'__80 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DState_1352 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_Acnt_194 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T_Snapshots_3822 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T_Snapshots_3826 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_PState_1372 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.T_RatifyState_1984 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T__'8866'_'8640''10631'_'44'SNAP'10632'__3876 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T__'8866'_'8640''10631'_'44'SNAP'10632'__3880 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PoolReap.T__'8866'_'8640''10631'_'44'POOLREAP'10632'__3072 ->
   MAlonzo.Code.Interface.STS.T__'8866'_'8640''10214'_'10215''42'__80 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
@@ -6985,24 +6985,24 @@ d_fut'''8801'fut''''_4018 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3116 ->
   AgdaAny ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.T_RatifyState_1984 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.T_LedgerState_3778 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.T_LedgerState_3782 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DState_1352 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_Acnt_194 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T_Snapshots_3822 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T_Snapshots_3822 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T_Snapshots_3826 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T_Snapshots_3826 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_Acnt_194 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_PState_1372 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.T_RatifyState_1984 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.T_EnactState_1230 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T__'8866'_'8640''10631'_'44'SNAP'10632'__3876 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T__'8866'_'8640''10631'_'44'SNAP'10632'__3880 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PoolReap.T__'8866'_'8640''10631'_'44'POOLREAP'10632'__3072 ->
   MAlonzo.Code.Interface.STS.T__'8866'_'8640''10214'_'10215''42'__80 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DState_1352 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_Acnt_194 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T_Snapshots_3822 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T_Snapshots_3826 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_PState_1372 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.T_RatifyState_1984 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T__'8866'_'8640''10631'_'44'SNAP'10632'__3876 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T__'8866'_'8640''10631'_'44'SNAP'10632'__3880 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PoolReap.T__'8866'_'8640''10631'_'44'POOLREAP'10632'__3072 ->
   MAlonzo.Code.Interface.STS.T__'8866'_'8640''10214'_'10215''42'__80 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
@@ -7013,24 +7013,24 @@ d_eps'''8801'eps''''_4020 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3116 ->
   AgdaAny ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.T_RatifyState_1984 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.T_LedgerState_3778 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.T_LedgerState_3782 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DState_1352 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_Acnt_194 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T_Snapshots_3822 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T_Snapshots_3822 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T_Snapshots_3826 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T_Snapshots_3826 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_Acnt_194 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_PState_1372 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.T_RatifyState_1984 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.T_EnactState_1230 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T__'8866'_'8640''10631'_'44'SNAP'10632'__3876 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T__'8866'_'8640''10631'_'44'SNAP'10632'__3880 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PoolReap.T__'8866'_'8640''10631'_'44'POOLREAP'10632'__3072 ->
   MAlonzo.Code.Interface.STS.T__'8866'_'8640''10214'_'10215''42'__80 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DState_1352 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_Acnt_194 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T_Snapshots_3822 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T_Snapshots_3826 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_PState_1372 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.T_RatifyState_1984 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T__'8866'_'8640''10631'_'44'SNAP'10632'__3876 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T__'8866'_'8640''10631'_'44'SNAP'10632'__3880 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PoolReap.T__'8866'_'8640''10631'_'44'POOLREAP'10632'__3072 ->
   MAlonzo.Code.Interface.STS.T__'8866'_'8640''10214'_'10215''42'__80 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
@@ -7039,23 +7039,23 @@ d_eps'''8801'eps''''_4020 = erased
 d_EPOCH'45'complete_4044 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3116 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.T_EpochState_4006 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.T_EpochState_4010 ->
   AgdaAny ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.T_EpochState_4006 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.T__'8866'_'8640''10631'_'44'EPOCH'10632'__4688 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.T_EpochState_4010 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.T__'8866'_'8640''10631'_'44'EPOCH'10632'__4692 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
 d_EPOCH'45'complete_4044 = erased
 -- Ledger.Dijkstra.Specification.Epoch.Properties.Computational._.EPOCH-total'
 d_EPOCH'45'total''_4052 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3116 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.T_EpochState_4006 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.T_EpochState_4010 ->
   AgdaAny -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_EPOCH'45'total''_4052 v0 ~v1 v2 v3
   = du_EPOCH'45'total''_4052 v0 v2 v3
 du_EPOCH'45'total''_4052 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.T_EpochState_4006 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.T_EpochState_4010 ->
   AgdaAny -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 du_EPOCH'45'total''_4052 v0 v1 v2
   = coe du_EPOCH'45'total_3918 (coe v0) (coe v1) (coe v2)
@@ -7063,10 +7063,10 @@ du_EPOCH'45'total''_4052 v0 v1 v2
 d_EPOCH'45'complete''_4056 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3116 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.T_EpochState_4006 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.T_EpochState_4010 ->
   AgdaAny ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.T_EpochState_4006 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.T__'8866'_'8640''10631'_'44'EPOCH'10632'__4688 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.T_EpochState_4010 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.T__'8866'_'8640''10631'_'44'EPOCH'10632'__4692 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
 d_EPOCH'45'complete''_4056 = erased
 -- Ledger.Dijkstra.Specification.Epoch.Properties.Computational.Computational-EPOCH
@@ -7091,14 +7091,14 @@ d_NEWEPOCH'45'total_4086 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3116 ->
   AgdaAny ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.T_NewEpochState_4072 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.T_NewEpochState_4076 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_NEWEPOCH'45'total_4086 v0 ~v1 v2 v3
   = du_NEWEPOCH'45'total_4086 v0 v2 v3
 du_NEWEPOCH'45'total_4086 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
   AgdaAny ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.T_NewEpochState_4072 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.T_NewEpochState_4076 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 du_NEWEPOCH'45'total_4086 v0 v1 v2
   = let v3
@@ -7123,7 +7123,7 @@ du_NEWEPOCH'45'total_4086 v0 v1 v2
                        MAlonzo.Code.Ledger.Core.Specification.Epoch.d_firstSlot_92
                        (MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_epochStructure_1362
                           (coe v0))
-                       (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_lastEpoch_4086
+                       (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_lastEpoch_4090
                           (coe v2)))
                     (coe
                        MAlonzo.Code.Ledger.Core.Specification.Epoch.d_firstSlot_92
@@ -7136,7 +7136,7 @@ du_NEWEPOCH'45'total_4086 v0 v1 v2
                           (coe (1 :: Integer)))))) in
     coe
       (let v4
-             = MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ru_4094
+             = MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ru_4098
                  (coe v2) in
        coe
          (case coe v3 of
@@ -7147,7 +7147,7 @@ du_NEWEPOCH'45'total_4086 v0 v1 v2
                             -> case coe v4 of
                                  MAlonzo.Code.Agda.Builtin.Maybe.C_just_16 v8
                                    -> case coe v2 of
-                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.C_constructor_4098 v9 v10 v11 v12 v13 v14
+                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.C_constructor_4102 v9 v10 v11 v12 v13 v14
                                           -> coe
                                                MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                (coe
@@ -7180,7 +7180,7 @@ du_NEWEPOCH'45'total_4086 v0 v1 v2
                                                                           MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                           (coe
                                                                              (MAlonzo.RTE.QName
-                                                                                (4072 :: Integer)
+                                                                                (4076 :: Integer)
                                                                                 (15484594232291647456 ::
                                                                                    Integer)
                                                                                 "Ledger.Dijkstra.Specification.Epoch.NewEpochState"
@@ -7227,7 +7227,7 @@ du_NEWEPOCH'45'total_4086 v0 v1 v2
                                                                              MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                              (coe
                                                                                 (MAlonzo.RTE.QName
-                                                                                   (4072 :: Integer)
+                                                                                   (4076 :: Integer)
                                                                                    (15484594232291647456 ::
                                                                                       Integer)
                                                                                    "Ledger.Dijkstra.Specification.Epoch.NewEpochState"
@@ -7277,7 +7277,7 @@ du_NEWEPOCH'45'total_4086 v0 v1 v2
                                                                                 MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                                 (coe
                                                                                    (MAlonzo.RTE.QName
-                                                                                      (4072 ::
+                                                                                      (4076 ::
                                                                                          Integer)
                                                                                       (15484594232291647456 ::
                                                                                          Integer)
@@ -7329,7 +7329,7 @@ du_NEWEPOCH'45'total_4086 v0 v1 v2
                                                                                    MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                                    (coe
                                                                                       (MAlonzo.RTE.QName
-                                                                                         (4072 ::
+                                                                                         (4076 ::
                                                                                             Integer)
                                                                                          (15484594232291647456 ::
                                                                                             Integer)
@@ -7349,7 +7349,7 @@ du_NEWEPOCH'45'total_4086 v0 v1 v2
                                                                                    MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                                    (coe
                                                                                       (MAlonzo.RTE.QName
-                                                                                         (4006 ::
+                                                                                         (4010 ::
                                                                                             Integer)
                                                                                          (15484594232291647456 ::
                                                                                             Integer)
@@ -7381,7 +7381,7 @@ du_NEWEPOCH'45'total_4086 v0 v1 v2
                                                                                       MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                                       (coe
                                                                                          (MAlonzo.RTE.QName
-                                                                                            (4072 ::
+                                                                                            (4076 ::
                                                                                                Integer)
                                                                                             (15484594232291647456 ::
                                                                                                Integer)
@@ -7489,7 +7489,7 @@ du_NEWEPOCH'45'total_4086 v0 v1 v2
                                                                                          MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                                          (coe
                                                                                             (MAlonzo.RTE.QName
-                                                                                               (4072 ::
+                                                                                               (4076 ::
                                                                                                   Integer)
                                                                                                (15484594232291647456 ::
                                                                                                   Integer)
@@ -7509,7 +7509,7 @@ du_NEWEPOCH'45'total_4086 v0 v1 v2
                                                                                          MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                                          (coe
                                                                                             (MAlonzo.RTE.QName
-                                                                                               (4004 ::
+                                                                                               (4008 ::
                                                                                                   Integer)
                                                                                                (15484594232291647456 ::
                                                                                                   Integer)
@@ -7522,7 +7522,7 @@ du_NEWEPOCH'45'total_4086 v0 v1 v2
                                                                              (coe
                                                                                 MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))))))
                                                         (coe
-                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.C_constructor_4098)))
+                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.C_constructor_4102)))
                                                   (coe
                                                      MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                      (coe v1)
@@ -7545,7 +7545,7 @@ du_NEWEPOCH'45'total_4086 v0 v1 v2
                                                                     du_EPOCH'45'total''_4052
                                                                     (coe v0)
                                                                     (coe
-                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_applyRUpd_4296
+                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_applyRUpd_4300
                                                                        (coe v0) (coe v8) (coe v12))
                                                                     (coe v1)))
                                                               (coe
@@ -7553,24 +7553,24 @@ du_NEWEPOCH'45'total_4086 v0 v1 v2
                                                                  (coe
                                                                     MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18)
                                                                  (coe
-                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_calculatePoolDelegatedStake_4352
+                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_calculatePoolDelegatedStake_4356
                                                                     (coe v0)
                                                                     (coe
-                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_set_3834
+                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_set_3838
                                                                        (coe
-                                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ss_4020
+                                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ss_4024
                                                                           (coe
                                                                              MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                              (coe
                                                                                 du_EPOCH'45'total''_4052
                                                                                 (coe v0)
                                                                                 (coe
-                                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_applyRUpd_4296
+                                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_applyRUpd_4300
                                                                                    (coe v0) (coe v8)
                                                                                    (coe v12))
                                                                                 (coe v1))))))))))))
                                                (coe
-                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.C_NEWEPOCH'45'New_4726
+                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.C_NEWEPOCH'45'New_4730
                                                   (coe
                                                      MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                      (coe v7)
@@ -7579,13 +7579,13 @@ du_NEWEPOCH'45'total_4086 v0 v1 v2
                                                         (coe
                                                            du_EPOCH'45'total''_4052 (coe v0)
                                                            (coe
-                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_applyRUpd_4296
+                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_applyRUpd_4300
                                                               (coe v0) (coe v8) (coe v12))
                                                            (coe v1)))))
                                         _ -> MAlonzo.RTE.mazUnreachableError
                                  MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18
                                    -> case coe v2 of
-                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.C_constructor_4098 v8 v9 v10 v11 v12 v13
+                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.C_constructor_4102 v8 v9 v10 v11 v12 v13
                                           -> coe
                                                MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                (coe
@@ -7618,7 +7618,7 @@ du_NEWEPOCH'45'total_4086 v0 v1 v2
                                                                           MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                           (coe
                                                                              (MAlonzo.RTE.QName
-                                                                                (4072 :: Integer)
+                                                                                (4076 :: Integer)
                                                                                 (15484594232291647456 ::
                                                                                    Integer)
                                                                                 "Ledger.Dijkstra.Specification.Epoch.NewEpochState"
@@ -7665,7 +7665,7 @@ du_NEWEPOCH'45'total_4086 v0 v1 v2
                                                                              MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                              (coe
                                                                                 (MAlonzo.RTE.QName
-                                                                                   (4072 :: Integer)
+                                                                                   (4076 :: Integer)
                                                                                    (15484594232291647456 ::
                                                                                       Integer)
                                                                                    "Ledger.Dijkstra.Specification.Epoch.NewEpochState"
@@ -7715,7 +7715,7 @@ du_NEWEPOCH'45'total_4086 v0 v1 v2
                                                                                 MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                                 (coe
                                                                                    (MAlonzo.RTE.QName
-                                                                                      (4072 ::
+                                                                                      (4076 ::
                                                                                          Integer)
                                                                                       (15484594232291647456 ::
                                                                                          Integer)
@@ -7767,7 +7767,7 @@ du_NEWEPOCH'45'total_4086 v0 v1 v2
                                                                                    MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                                    (coe
                                                                                       (MAlonzo.RTE.QName
-                                                                                         (4072 ::
+                                                                                         (4076 ::
                                                                                             Integer)
                                                                                          (15484594232291647456 ::
                                                                                             Integer)
@@ -7787,7 +7787,7 @@ du_NEWEPOCH'45'total_4086 v0 v1 v2
                                                                                    MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                                    (coe
                                                                                       (MAlonzo.RTE.QName
-                                                                                         (4006 ::
+                                                                                         (4010 ::
                                                                                             Integer)
                                                                                          (15484594232291647456 ::
                                                                                             Integer)
@@ -7819,7 +7819,7 @@ du_NEWEPOCH'45'total_4086 v0 v1 v2
                                                                                       MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                                       (coe
                                                                                          (MAlonzo.RTE.QName
-                                                                                            (4072 ::
+                                                                                            (4076 ::
                                                                                                Integer)
                                                                                             (15484594232291647456 ::
                                                                                                Integer)
@@ -7927,7 +7927,7 @@ du_NEWEPOCH'45'total_4086 v0 v1 v2
                                                                                          MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                                          (coe
                                                                                             (MAlonzo.RTE.QName
-                                                                                               (4072 ::
+                                                                                               (4076 ::
                                                                                                   Integer)
                                                                                                (15484594232291647456 ::
                                                                                                   Integer)
@@ -7947,7 +7947,7 @@ du_NEWEPOCH'45'total_4086 v0 v1 v2
                                                                                          MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                                          (coe
                                                                                             (MAlonzo.RTE.QName
-                                                                                               (4004 ::
+                                                                                               (4008 ::
                                                                                                   Integer)
                                                                                                (15484594232291647456 ::
                                                                                                   Integer)
@@ -7960,7 +7960,7 @@ du_NEWEPOCH'45'total_4086 v0 v1 v2
                                                                              (coe
                                                                                 MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))))))
                                                         (coe
-                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.C_constructor_4098)))
+                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.C_constructor_4102)))
                                                   (coe
                                                      MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                      (coe v1)
@@ -7986,12 +7986,12 @@ du_NEWEPOCH'45'total_4086 v0 v1 v2
                                                                  MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                  (coe v4)
                                                                  (coe
-                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_calculatePoolDelegatedStake_4352
+                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_calculatePoolDelegatedStake_4356
                                                                     (coe v0)
                                                                     (coe
-                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_set_3834
+                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_set_3838
                                                                        (coe
-                                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ss_4020
+                                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ss_4024
                                                                           (coe
                                                                              MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                              (coe
@@ -7999,7 +7999,7 @@ du_NEWEPOCH'45'total_4086 v0 v1 v2
                                                                                 (coe v0) (coe v11)
                                                                                 (coe v1))))))))))))
                                                (coe
-                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.C_NEWEPOCH'45'No'45'Reward'45'Update_4742
+                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.C_NEWEPOCH'45'No'45'Reward'45'Update_4746
                                                   (coe
                                                      MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                      (coe v7)
@@ -8018,46 +8018,46 @@ du_NEWEPOCH'45'total_4086 v0 v1 v2
                              (coe
                                 MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_52
                                 (coe
-                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_HasCast'45'NewEpochState_4162)
+                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_HasCast'45'NewEpochState_4166)
                                 (coe
                                    MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                    (coe
-                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_lastEpoch_4086
+                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_lastEpoch_4090
                                       (coe v2))
                                    (coe
                                       MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                       (coe
-                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_bprev_4088
+                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_bprev_4092
                                          (coe v2))
                                       (coe
                                          MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                          (coe
-                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_bcur_4090
+                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_bcur_4094
                                             (coe v2))
                                          (coe
                                             MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                             (coe
-                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_epochState_4092
+                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_epochState_4096
                                                (coe v2))
                                             (coe
                                                MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                (coe
-                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ru_4094
+                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ru_4098
                                                   (coe v2))
                                                (coe
-                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pd_4096
+                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pd_4100
                                                   (coe v2))))))))
                              (coe
-                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.C_NEWEPOCH'45'Not'45'New_4732))
+                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.C_NEWEPOCH'45'Not'45'New_4736))
             _ -> MAlonzo.RTE.mazUnreachableError))
 -- Ledger.Dijkstra.Specification.Epoch.Properties.Computational._.NEWEPOCH-complete
 d_NEWEPOCH'45'complete_4112 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3116 ->
   AgdaAny ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.T_NewEpochState_4072 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.T_NewEpochState_4072 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.T__'8866'_'8640''10631'_'44'NEWEPOCH'10632'__4714 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.T_NewEpochState_4076 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.T_NewEpochState_4076 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.T__'8866'_'8640''10631'_'44'NEWEPOCH'10632'__4718 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
 d_NEWEPOCH'45'complete_4112 = erased
 -- Ledger.Dijkstra.Specification.Epoch.Properties.Computational.Computational-NEWEPOCH
