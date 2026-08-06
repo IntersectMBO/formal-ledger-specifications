@@ -109,13 +109,16 @@ proposals in `tx`{.AgdaBound}.
 
 ### Other Miscellaneous Properties
 
-+  **Claim** [Gov-ChangePPHasGroup][]. PParam updates have non-empty groups.
++  **Theorem** [Gov-ChangePPHasGroup][] and [Ledger-ChangePPHasGroup][].
+   PParam updates have non-empty groups.
 
    Let `p`{.AgdaBound} : `GovProposal`{.AgdaRecord} be a governance proposal and
    suppose the `GovActionType`{.AgdaDatatype} of `p`{.AgdaBound}
    `.action`{.AgdaField} is `ChangePParams`{.AgdaInductiveConstructor}.  Moreover,
-   suppose `pu`{.AgdaBound} is the data field of `p`{.AgdaBound}. Then the
-   set `updateGroups`{.AgdaField} `pu`{.AgdaBound} is nonempty.
+   suppose `pu`{.AgdaBound} is the data field of `p`{.AgdaBound}.  If the
+   `GOV`{.AgdaDatatype} rule accepts `p`{.AgdaBound}, then the set
+   `updateGroups`{.AgdaField} `pu`{.AgdaBound} is nonempty.  The same holds for every
+   proposal of a valid transaction accepted by the `LEDGER`{.AgdaDatatype} rule.
 
 
 +  **Theorem** [Gov-LastVoteApplied][] and [Ledger-LastVoteApplied][].

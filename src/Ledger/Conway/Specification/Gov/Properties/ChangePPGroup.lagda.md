@@ -3,44 +3,112 @@ source_branch: master
 source_path: src/Ledger/Conway/Specification/Gov/Properties/ChangePPGroup.lagda.md
 ---
 
-## Claim: <span class="AgdaRecord">PParam</span> updates have non-empty groups {#clm:ChangePPGroup}
+## Theorem: <span class="AgdaRecord">PParam</span> updates have non-empty groups {#clm:ChangePPGroup}
 
 <!--
 ```agda
 
 {-# OPTIONS --safe #-}
 
-open import Ledger.Conway.Specification.Transaction
+open import Ledger.Conway.Specification.Gov.Base
 
 module Ledger.Conway.Specification.Gov.Properties.ChangePPGroup
-  (txs : _) (open TransactionStructure txs)
+  (gs : GovStructure) (open GovStructure gs)
   where
 
 open import Ledger.Prelude
+open import Ledger.Conway.Specification.Gov.Actions gs hiding (yes; no)
+open import Ledger.Conway.Specification.Gov gs
+open import Data.List.Relation.Unary.Any using (here; there)
 
-instance
-  _ : IsSet TxBody GovProposal
-  _ = record { toSet = fromList ∘ TxBody.txGovProposals }
+private
+  GOVS' = _⊢_⇀⟦_⟧ᵢ*'_ {_⊢_⇀⟦_⟧ᵇ_ = IdSTS} {_⊢_⇀⦇_,GOV⦈_}
 ```
 -->
 
 *Informally*.
 
-Let `p`{.AgdaBound} : `GovProposal`{.AgdaRecord} be a governance proposal and suppose the
-`GovActionType`{.AgdaDatatype} of `p`{.AgdaBound} `.action`{.AgdaField} is `ChangePParams`{.AgdaInductiveConstructor}.
-If the data field of `p`{.AgdaBound}—that is
-`pu`{.AgdaBound} = `p`{.AgdaBound} `.action`{.AgdaField} `.gaData`{.AgdaField}—is
-denoted by `pu`{.AgdaBound} (for "parameter update"), then the set
+Let `p`{.AgdaBound} : `GovProposal`{.AgdaRecord} be a governance proposal whose
+`action`{.AgdaField} is a `ChangePParams`{.AgdaInductiveConstructor} action carrying the
+parameter update `pu`{.AgdaBound} : `PParamsUpdate`{.AgdaField}. If the
+`GOV`{.AgdaDatatype} rule accepts `p`{.AgdaBound}, then the set
 `updateGroups`{.AgdaField} `pu`{.AgdaBound} is nonempty.
 
+The `GOV`{.AgdaDatatype} premise cannot be dropped. Nothing stops a transaction body
+from listing a degenerate proposal whose update touches no parameter group; what rules
+such a proposal out is the premise `actionWellFormed`{.AgdaFunction} of the
+`GOV-Propose`{.AgdaInductiveConstructor} rule. So the property is about proposals the
+ledger *accepts*, not about proposals a transaction merely mentions.
 
 *Formally*.
 
 ```agda
-ChangePPHasGroup : {tx : Tx} {p : GovProposal} (pu : PParamsUpdate)
-  → p ∈ Tx.body tx → p .GovProposal.action ≡ ⟦ ChangePParams , pu ⟧ᵍᵃ
-  → Type
-ChangePPHasGroup pu _ _ = updateGroups pu ≢ ∅
+ChangePPHasGroup :
+  {Γ     : GovEnv}
+  {k     : ℕ}
+  {s s'  : GovState}
+  {p     : GovProposal}
+  {pu    : PParamsUpdate}
+  → (Γ , k) ⊢ s ⇀⦇ inj₂ p ,GOV⦈ s'
+  → p .GovProposal.action ≡ ⟦ ChangePParams , pu ⟧ᵍᵃ
+  → updateGroups pu ≢ ∅
 ```
 
-*Proof*. (coming soon)
+*Proof*.
+
+A proposal signal can only be consumed by `GOV-Propose`{.AgdaInductiveConstructor}, whose
+first premise is `actionWellFormed`{.AgdaFunction} `a`{.AgdaBound} for the proposed action
+`a`{.AgdaBound}. Substituting the hypothesis `a`{.AgdaBound} `≡ ⟦ ChangePParams , pu ⟧ᵍᵃ`
+makes that premise reduce to `ppdWellFormed`{.AgdaFunction} `pu`{.AgdaBound}, whose first
+component is the claim.
+
+```agda
+ChangePPHasGroup (GOV-Propose (awf , _)) eq = subst actionWellFormed eq awf .proj₁
+```
+
+### Lifting to <span class="AgdaFunction">GOVS</span>
+
+The same holds for every proposal in a list of signals accepted by
+`GOVS`{.AgdaFunction}, the reflexive transitive closure of `GOV`{.AgdaDatatype} that
+processes the governance signals of a single transaction.
+
+The lift is an induction on the derivation: the step that consumes
+`inj₂ p`{.AgdaInductiveConstructor} is a `GOV`{.AgdaDatatype} step, to which the previous
+result applies, and every other step is handled by the induction hypothesis. The
+induction runs over `GOVS'`{.AgdaFunction}, the general indexed closure
+`_⊢_⇀⟦_⟧ᵢ*'_`{.AgdaDatatype} of `GOV`{.AgdaDatatype}, since the index advances along the
+trace.
+
+```agda
+ChangePPHasGroupᵢ :
+  {Γ     : GovEnv}
+  {k     : ℕ}
+  {s s'  : GovState}
+  {sigs  : List (GovVote ⊎ GovProposal)}
+  {p     : GovProposal}
+  {pu    : PParamsUpdate}
+  → GOVS' (Γ , k) s sigs s'
+  → inj₂ p ∈ˡ sigs
+  → p .GovProposal.action ≡ ⟦ ChangePParams , pu ⟧ᵍᵃ
+  → updateGroups pu ≢ ∅
+ChangePPHasGroupᵢ (BS-base _)      ()
+ChangePPHasGroupᵢ (BS-ind st _)    (here refl)  eq = ChangePPHasGroup st eq
+ChangePPHasGroupᵢ (BS-ind _ rest)  (there mem)  eq = ChangePPHasGroupᵢ rest mem eq
+```
+
+`GOVS`{.AgdaFunction} is that closure at index `0`, so the statement for
+`GOVS`{.AgdaFunction} is an instance of the above.
+
+```agda
+GOVS-ChangePPHasGroup :
+  {Γ     : GovEnv}
+  {s s'  : GovState}
+  {sigs  : List (GovVote ⊎ GovProposal)}
+  {p     : GovProposal}
+  {pu    : PParamsUpdate}
+  → Γ ⊢ s ⇀⦇ sigs ,GOVS⦈ s'
+  → inj₂ p ∈ˡ sigs
+  → p .GovProposal.action ≡ ⟦ ChangePParams , pu ⟧ᵍᵃ
+  → updateGroups pu ≢ ∅
+GOVS-ChangePPHasGroup = ChangePPHasGroupᵢ
+```
