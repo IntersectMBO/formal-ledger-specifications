@@ -3,7 +3,7 @@ source_branch: master
 source_path: src/Ledger/Dijkstra/Specification/Entities/Properties/ApplyToRewardsPoV.lagda.md
 ---
 
-## `applyToRewards` Preservation of Value {#sec:apply-to-rewards-pov}
+# `applyToRewards` Preservation of Value {#sec:apply-to-rewards-pov}
 
 This module proves preservation of value for the two specializations of
 `applyToRewards`{.AgdaFunction} used inside the `ENTITIES`{.AgdaDatatype} rule.
@@ -60,7 +60,7 @@ open ≡-Reasoning
 ```
 -->
 
-### Shared helpers
+## Shared helpers
 
 ```agda
 getCoin-∪ˡ-overwrite : (acc : Rewards) (c : Credential) (v : Coin)
@@ -139,7 +139,7 @@ split-by-lookup acc c bal lookup-eq =
 ```
 -->
 
-### The `ApplyToRewards-PoV` module
+## The <span class="AgdaModule">ApplyToRewards-PoV</span> module
 
 The three assumed identities below are the same set/map identities used by the Conway
 PoV proofs; they are stated as module parameters here.
@@ -290,7 +290,7 @@ holds.
 ```
 -->
 
-### `applyWithdrawals-pov`
+#### `applyWithdrawals-pov`
 
 ```agda
   applyWithdrawals-pov : (wdrls : Withdrawals) (rwds : Rewards)
@@ -327,9 +327,9 @@ holds.
 ```
 -->
 
-## Direct-deposit preservation of value
+### Direct-deposit preservation of value
 
-### `applyOne-pov-add` (one direct-deposit step increases `getCoin` by `amt`)
+#### `applyOne-pov-add` (one direct-deposit step increases `getCoin` by `amt`)
 
 For addition, no `amt ≤ bal` premise is needed (the operation is total),
 and the per-step equation is `getCoin (...) ≡ getCoin acc + amt`
@@ -360,7 +360,7 @@ balance.
 ```
 -->
 
-### `foldl-applyOne-pov-add` (fold induction, no `Unique` needed)
+#### `foldl-applyOne-pov-add` (fold induction, no `Unique` needed)
 
 Unlike the withdrawal version, the additive fold induction needs only
 domain preservation — the `Unique`{.AgdaDatatype} witness drops out.
@@ -405,7 +405,7 @@ the same credential simply accumulates additions correctly.
 ```
 -->
 
-### `applyDirectDeposits-pov`
+#### `applyDirectDeposits-pov`
 
 Note the slimmed-down signature relative to `applyWithdrawals-pov`: no
 `NetworkId`{.AgdaFunction} premise (none is needed), no

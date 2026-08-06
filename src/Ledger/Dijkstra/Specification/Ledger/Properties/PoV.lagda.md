@@ -35,10 +35,10 @@ the direct-deposit trick (see *Proof Strategy*), and the gov-deposit growth
 
 The `PoolDepositsRegistered`{.AgdaFunction} hypothesis is necessary, not an artifact
 of the proof: the batch balance charges `newCertDeposits`{.AgdaFunction} against the
-registered-pool set, while `POOL-reg`{.AgdaInductiveConstructor}'s left-biased pot
-update silently keeps a stale entry for an unregistered pool — at a state with such
-an entry, a pool registration destroys the charged deposit and the theorem is false.
-On-chain states satisfy the hypothesis by construction.
+registered-pool set, while `POOL-reg`{.AgdaInductiveConstructor}'s left-biased update
+silently keeps a stale entry for an unregistered pool; at a state with such an entry,
+a pool registration destroys the charged deposit and the theorem is false.  On-chain
+states satisfy the hypothesis by construction.
 
 ## Proof Strategy
 
@@ -49,25 +49,24 @@ The Dijkstra `LEDGER-pov`{.AgdaFunction} does not decompose into independent
 may individually transfer value between UTxO and CertState without local balancing.
 
 Instead, the `LEDGER-V` proof is a single equational chain at the
-`LedgerState`{.AgdaRecord} level, with the cancellation of total direct deposits as
-the central trick — direct-deposit value appears both on the UTxO side (via
+`LedgerState`{.AgdaRecord} level, and cancellation of the *total* direct deposits is
+the key to the proof.  Direct-deposit value appears both on the UTxO side (via
 `producedBatch`) and on the CertState side (via `applyDirectDeposits` inside
 `ENTITIES`) and cancels in the total.
 
 Concretely, the proof composes four inductions over the `SUBLEDGERS`{.AgdaDatatype}
 reflexive-transitive closure, plus one arithmetic identity.
 
-+  **`SUBLEDGERS-utxo-coin`{.AgdaFunction}** threads the per-`SUBUTXOW` coin equation
-   (`subutxow-step-coin`).
-+  **`SUBLEDGERS-certs-pov`{.AgdaFunction}** composes per-sub-transaction
++  **`SUBLEDGERS-utxo-coin`{.AgdaFunction}** inducts over the subtransaction list,
+   applying the per-`SUBUTXOW` coin equation (`subutxow-step-coin`) at each step.
++  **`SUBLEDGERS-rewards-pov`{.AgdaFunction}** composes per-sub-transaction
    `SUBENTITIES-pov`{.AgdaFunction} invocations (the rewards flow).
 +  **`SUBLEDGERS-deposits`{.AgdaFunction}** (with `SUBLEDGERS-registered`{.AgdaFunction})
    telescopes the per-step closed-form deposit accounting into the batch-wide
    equation consumed by `bat'`.
-+  **`SUBLEDGERS-gov-coin`{.AgdaFunction}** accumulates the per-`GOVS` gov-deposit
-   growth.
-+  **`posNeg-deposits`{.AgdaFunction}** equationally relates the pre-/post-batch deposit
-   totals to the `posPart`/`negPart` of `calculateDepositsChange`.
++  **`SUBLEDGERS-gov-coin`{.AgdaFunction}** accumulates the per-`GOVS` gov-deposit growth.
++  **`posNeg-deposits`{.AgdaFunction}** relates the pre-/post-batch deposit totals to
+   the `posPart`/`negPart` of `calculateDepositsChange`.
 
 The `LEDGER-I` case is straightforward; `certState` and `govSt` are unchanged,
 `SUBLEDGERS` is a no-op, and only the `UTXOW` step affects `getCoin`, which it
@@ -105,10 +104,6 @@ open import Ledger.Dijkstra.Specification.Utxo txs abs
 open import Ledger.Dijkstra.Specification.Utxow txs abs
 
 open import Ledger.Dijkstra.Specification.Entities.Properties.PoV txs
-
--- We will import the following once the UTXO/UTXOW PoV proofs land:
--- open import Ledger.Dijkstra.Specification.Utxo.Properties.PoV txs abs
--- open import Ledger.Dijkstra.Specification.Utxow.Properties.PoV txs abs
 
 open import Interface.STS
 
@@ -394,8 +389,8 @@ same quantity (the sum of deposits across the batch), just rephrased to expose
 
 ## `SUBLEDGERS-utxo-coin`
 
-Induct over the `SUBLEDGERS` reflexive-transitive closure, threading the
-per-`SUBUTXOW` coin equation:
+Induct over the `SUBLEDGERS` reflexive-transitive closure, applying the
+per-`SUBUTXOW` coin equation at each step:
 
 ```agda
   SUBLEDGERS-utxo-coin :
@@ -450,7 +445,7 @@ per-`SUBUTXOW` coin equation:
     ih = SUBLEDGERS-utxo-coin isV rest
 ```
 
-## `SUBLEDGERS-certs-pov`
+## `SUBLEDGERS-rewards-pov`
 
 Parallel induction over `SUBLEDGERS`, composing per-sub-transaction `SUBENTITIES-pov`
 invocations.  The `NetworkId` witnesses and domain conditions are premises of the
@@ -460,7 +455,7 @@ invocations.  The `NetworkId` witnesses and domain conditions are premises of th
 ```agda
   open SubLedgerEnv
 
-  SUBLEDGERS-certs-pov :
+  SUBLEDGERS-rewards-pov :
     {Γ : SubLedgerEnv}
     {s₀ s₁ : LedgerState}
     {stxs : List SubLevelTx}
@@ -469,12 +464,12 @@ invocations.  The `NetworkId` witnesses and domain conditions are premises of th
     →  coinFromRewards (CertStateOf s₀) + sum (map ddwl stxs)
        ≡ coinFromRewards (CertStateOf s₁) + sum (map wdrwl stxs)
 
-  SUBLEDGERS-certs-pov _ (BS-base Id-nop) = refl
+  SUBLEDGERS-rewards-pov _ (BS-base Id-nop) = refl
 
-  SUBLEDGERS-certs-pov isV (BS-ind (SUBLEDGER-I (isI , _)) _) =
+  SUBLEDGERS-rewards-pov isV (BS-ind (SUBLEDGER-I (isI , _)) _) =
     ⊥-elim (case trans (sym isV) isI of λ ())
 
-  SUBLEDGERS-certs-pov {Γ} isV (BS-ind {s = s₀} {s' = s₁} {sigs} {s'' = sₙ}
+  SUBLEDGERS-rewards-pov {Γ} isV (BS-ind {s = s₀} {s' = s₁} {sigs} {s'' = sₙ}
     (SUBLEDGER-V {stx = stx} (_ , _ , entitiesStep , _)) rest) =
     begin
       coinFromRewards (CertStateOf s₀) + (getCoin (DirectDepositsOf stx) + sum (map ddwl sigs))
@@ -495,7 +490,7 @@ invocations.  The `NetworkId` witnesses and domain conditions are premises of th
     where
     ih : coinFromRewards (CertStateOf s₁) + sum (map ddwl sigs)
          ≡ coinFromRewards (CertStateOf sₙ) + sum (map wdrwl sigs)
-    ih = SUBLEDGERS-certs-pov isV rest
+    ih = SUBLEDGERS-rewards-pov isV rest
 ```
 
 ## `SUBLEDGERS-deposits`
@@ -814,7 +809,7 @@ itself; the no-truncation bound comes from `ENTITIES-wdrls-bounded`.)
           coinFromRewards (CertStateOf s) + (subDirectDepsCoin + getCoin (DirectDepositsOf tx))
             ≡˘⟨ +-assoc (coinFromRewards (CertStateOf s)) subDirectDepsCoin (getCoin (DirectDepositsOf tx)) ⟩
           coinFromRewards (CertStateOf s) + subDirectDepsCoin + getCoin (DirectDepositsOf tx)
-            ≡⟨ cong (_+ getCoin (DirectDepositsOf tx)) (SUBLEDGERS-certs-pov valid subStep) ⟩
+            ≡⟨ cong (_+ getCoin (DirectDepositsOf tx)) (SUBLEDGERS-rewards-pov valid subStep) ⟩
           coinFromRewards cs₁ + subWdrlsCoin + getCoin (DirectDepositsOf tx)
             ≡⟨ swap-right (coinFromRewards cs₁) subWdrlsCoin (getCoin (DirectDepositsOf tx)) ⟩
           coinFromRewards cs₁ + getCoin (DirectDepositsOf tx) + subWdrlsCoin
@@ -1038,10 +1033,7 @@ The main inner chain, showing LHS + E ≡ RHS + E:
           ≡⟨ arithmetic-2 U₀ allWdrls D₀ ⟩
         U₀ + Psub + allWdrls + (D₀ + posPart dct + posPart dcs) + Ctop
           ≡⟨ cong  (λ x → x + allWdrls + (D₀ + posPart dct + posPart dcs) + Ctop)
-                   (subst  (λ u → U₀ + Psub ≡ U₁ + sum (map  (λ stx → cbalance (u ∣ SpendInputsOf stx))
-                                                             (SubTransactionsOf tx)))
-                           (refl {x = UTxOOf (UTxOStateOf s)})
-                           (SUBLEDGERS-utxo-coin valid subStep)) ⟩
+                           (SUBLEDGERS-utxo-coin valid subStep) ⟩
         U₁ + Csub + allWdrls + (D₀ + posPart dct + posPart dcs) + Ctop
           ≡⟨ cong (λ x → (U₁ + Csub) + allWdrls + x + Ctop) posneg ⟩
         U₁ + Csub + allWdrls + (D₂ + negPart dct + negPart dcs) + Ctop

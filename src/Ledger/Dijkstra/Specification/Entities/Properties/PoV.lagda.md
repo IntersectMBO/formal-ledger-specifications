@@ -6,20 +6,21 @@ source_path: src/Ledger/Dijkstra/Specification/Entities/Properties/PoV.lagda.md
 ## Properties of `ENTITIES`: Preservation of Value {#thm:ENTITIES-PoV}
 
 This module proves preservation of value for the `ENTITIES`{.AgdaDatatype} and
-`SUBENTITIES`{.AgdaDatatype} rules.  Each rule wraps the inner `CERTS`{.AgdaDatatype}
-step with the withdrawal and direct-deposit handling of the transaction given as the
-signal, and its value accounting splits into the two components of
-`getCoin`{.AgdaFunction} on a `CertState`{.AgdaRecord}:
+`SUBENTITIES`{.AgdaDatatype} rules.
+
+Each rule wraps the inner `CERTS`{.AgdaDatatype} step with the withdrawal and
+direct-deposit handling of the transaction.  Each rule's value accounting splits into
+the following two components of `getCoin`{.AgdaFunction} on a `CertState`{.AgdaRecord}:
 
 +  **rewards flow** (`SUBENTITIES-pov`{.AgdaFunction}, `ENTITIES-pov`{.AgdaFunction}):
    the rewards balance grows by the transaction's direct deposits and shrinks by its
-   withdrawals — `CERTS`{.AgdaDatatype} itself preserves it;
+   withdrawals, whereas `CERTS`{.AgdaDatatype} preserves rewards balance;
 
 +  **deposit flow** (`SUBENTITIES-deposits-pov`{.AgdaFunction},
    `ENTITIES-deposits-pov`{.AgdaFunction}): the deposit pots change by exactly the
    new deposits minus the refunds of the transaction's certificates, in the closed
    form (`newCertDeposits`{.AgdaFunction}/`refundCertDeposits`{.AgdaFunction}) used
-   by the `UTXO`{.AgdaDatatype} batch-balance equation.
+   by the batch-balance equation of `UTXO`{.AgdaDatatype}.
 
 `SUBENTITIES-pov-total`{.AgdaFunction} and `ENTITIES-pov-total`{.AgdaFunction}
 combine the two into a single equation for the full `CertState`{.AgdaRecord} coin.
@@ -30,9 +31,10 @@ Two hypotheses appear, both about the rule's *input* state:
    the account's balance.  `applyWithdrawals`{.AgdaFunction} uses truncating
    subtraction (`_∸_`), so without this bound a withdrawal could claim more coin than
    actually leaves the rewards pot.  The rules' own premises bound withdrawals
-   against the *pre-batch* snapshot `rewards₀`{.AgdaField} (exactly, per account, in
-   top-level legacy mode), which does not by itself bound them against the input
-   state of a later step in the batch, so the bound is taken as a hypothesis here.
+   against the *pre-batch* snapshot `rewards₀`{.AgdaField}, which does not by itself
+   bound them against the input state of a later step in the batch, so the bound is
+   taken as a hypothesis here.  In legacy mode, however, the equality premise checks
+   against the rule's current input rewards, not `rewards₀`{.AgdaField}.
 
 +  `PoolDepositsRegistered`{.AgdaFunction}: every pool-deposit entry belongs to a
    registered pool (see `Certs`{.AgdaModule}).  Without it,
@@ -77,11 +79,10 @@ private variable
 +  `CERTS-deposits-pov`: over a `CERTS` run, the deposit pots satisfy the closed-form
    accounting *pre + new ≡ post + refunds*, with `newCertDeposits`{.AgdaFunction}
    threading the run's initial registered-pool set;
-+  `CERTS-deposits-registered`: `CERTS` preserves
-   `PoolDepositsRegistered`{.AgdaFunction};
++  `CERTS-deposits-registered`: `CERTS` preserves `PoolDepositsRegistered`{.AgdaFunction};
 +  `CERTS-new-thread`: `newCertDeposits`{.AgdaFunction} over an appended certificate
    list splits at a `CERTS` run boundary, the second half against the run's *final*
-   pool set — this is what lets per-step accounting compose across a batch.
+   pool set; this is what lets per-step accounting compose across a batch.
 
 ```agda
 module ENTITIES-PoV
@@ -132,10 +133,10 @@ account balance in `s`{.AgdaBound} (the `amts≤`{.AgdaBound} no-truncation
 hypothesis).  Then,
 
     coinFromRewards s + getCoin (DirectDepositsOf txSub)
-      ≡ coinFromRewards s' + getCoin (WithdrawalsOf txSub)
+    ≡ coinFromRewards s' + getCoin (WithdrawalsOf txSub)
 
-All other ingredients — the `NetworkId`{.AgdaFunction} witnesses and the two domain
-conditions — are premises of the rule itself.
+All other ingredients (the `NetworkId`{.AgdaFunction} witnesses and the two domain
+conditions) are premises of the rule itself.
 
 **Formally**.
 
@@ -173,6 +174,7 @@ conditions — are premises of the rule itself.
     dd  wdrls : Coin
     dd = getCoin (DirectDepositsOf txSub)
     wdrls = getCoin (WithdrawalsOf txSub)
+
     aw : Rewards
     aw = applyWithdrawals (WithdrawalsOf txSub) r₀
 ```
