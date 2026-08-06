@@ -3,41 +3,45 @@ source_branch: master
 source_path: src/Ledger/Dijkstra/Specification/Entities/Properties/PoV.lagda.md
 ---
 
-## Properties of `ENTITIES`: Preservation of Value {#thm:ENTITIES-PoV}
+# <span class="AgdaDatatype">ENTITIES</span> Preservation of Value {#thm:ENTITIES-PoV}
 
 This module proves preservation of value for the `ENTITIES`{.AgdaDatatype} and
-`SUBENTITIES`{.AgdaDatatype} rules.  Each rule wraps the inner `CERTS`{.AgdaDatatype}
-step with the withdrawal and direct-deposit handling of the transaction given as the
-signal, and its value accounting splits into the two components of
-`getCoin`{.AgdaFunction} on a `CertState`{.AgdaRecord}:
+`SUBENTITIES`{.AgdaDatatype} rules.
+
+Each rule wraps the inner `CERTS`{.AgdaDatatype} step with the withdrawal and
+direct-deposit handling of the transaction.  Each rule's value accounting splits into
+the following two components of `getCoin`{.AgdaFunction} on a `CertState`{.AgdaRecord}:
 
 +  **rewards flow** (`SUBENTITIES-pov`{.AgdaFunction}, `ENTITIES-pov`{.AgdaFunction}):
    the rewards balance grows by the transaction's direct deposits and shrinks by its
-   withdrawals — `CERTS`{.AgdaDatatype} itself preserves it;
+   withdrawals, whereas `CERTS`{.AgdaDatatype} preserves rewards balance;
 
-+  **deposit flow** (`SUBENTITIES-deposits-pov`{.AgdaFunction},
-   `ENTITIES-deposits-pov`{.AgdaFunction}): the deposit pots change by exactly the
-   new deposits minus the refunds of the transaction's certificates, in the closed
-   form (`newCertDeposits`{.AgdaFunction}/`refundCertDeposits`{.AgdaFunction}) used
-   by the `UTXO`{.AgdaDatatype} batch-balance equation.
++  **deposit flow**
+   (`SUBENTITIES-deposits-pov`{.AgdaFunction}, `ENTITIES-deposits-pov`{.AgdaFunction}):
+   the deposit pots change by exactly the new deposits minus the refunds of the
+   transaction's certificates, in the closed form
+   (`newCertDeposits`{.AgdaFunction}/`refundCertDeposits`{.AgdaFunction}) used by the
+   batch-balance equation of `UTXO`{.AgdaDatatype}.
 
 `SUBENTITIES-pov-total`{.AgdaFunction} and `ENTITIES-pov-total`{.AgdaFunction}
 combine the two into a single equation for the full `CertState`{.AgdaRecord} coin.
 
-Two hypotheses appear, both about the rule's *input* state:
+Two hypotheses appear, both about the rule's *input* state.
 
-+  a *no-truncation* bound `amts≤`{.AgdaBound}: each withdrawal amount is bounded by
-   the account's balance.  `applyWithdrawals`{.AgdaFunction} uses truncating
-   subtraction (`_∸_`), so without this bound a withdrawal could claim more coin than
-   actually leaves the rewards pot.  The rules' own premises bound withdrawals
-   against the *pre-batch* snapshot `rewards₀`{.AgdaField} (exactly, per account, in
-   top-level legacy mode), which does not by itself bound them against the input
-   state of a later step in the batch, so the bound is taken as a hypothesis here.
+1.  *no-truncation* bound `amts≤`{.AgdaBound}.
+    Each withdrawal amount is bounded by the account's balance.
+    `applyWithdrawals`{.AgdaFunction} uses truncating subtraction (`_∸_`), so without
+    this bound a withdrawal could claim more coin than actually leaves the rewards pot.
+    The rule's own premises bound withdrawals against the pre-batch snapshot
+    `rewards₀`{.AgdaField}, which does not by itself bound them against the input
+    state of a later step in the batch, so the bound is taken as a hypothesis here.
+    In legacy mode, however, the equality premise checks against the rule's current
+    input rewards, not `rewards₀`{.AgdaField}.
 
-+  `PoolDepositsRegistered`{.AgdaFunction}: every pool-deposit entry belongs to a
-   registered pool (see `Certs`{.AgdaModule}).  Without it,
-   `POOL-reg`{.AgdaInductiveConstructor}'s left-biased pot update can swallow a
-   deposit that the closed form counts.
+2.  `PoolDepositsRegistered`{.AgdaFunction}.
+    Every pool-deposit entry belongs to a registered pool.  Without it,
+    `POOL-reg`{.AgdaInductiveConstructor}'s left-biased pot update can swallow a
+    deposit that the closed form counts.
 
 <!--
 ```agda
@@ -67,21 +71,20 @@ private variable
 ```
 -->
 
-## The `ENTITIES-PoV` module
+## The <span class="AgdaModule">ENTITIES-PoV</span> module
 
 `ENTITIES-PoV`{.AgdaModule} inherits the three module parameters of
 `ApplyToRewards-PoV`{.AgdaModule} and assumes four facts about the inner
-`CERTS`{.AgdaDatatype} relation:
+`CERTS`{.AgdaDatatype} relation.
 
-+  `CERTS-rewards-pov`: `CERTS` preserves the rewards balance;
-+  `CERTS-deposits-pov`: over a `CERTS` run, the deposit pots satisfy the closed-form
-   accounting *pre + new ≡ post + refunds*, with `newCertDeposits`{.AgdaFunction}
-   threading the run's initial registered-pool set;
-+  `CERTS-deposits-registered`: `CERTS` preserves
-   `PoolDepositsRegistered`{.AgdaFunction};
-+  `CERTS-new-thread`: `newCertDeposits`{.AgdaFunction} over an appended certificate
-   list splits at a `CERTS` run boundary, the second half against the run's *final*
-   pool set — this is what lets per-step accounting compose across a batch.
+1.  `CERTS-rewards-pov`: `CERTS` preserves the rewards balance;
+2.  `CERTS-deposits-pov`: over a `CERTS` run, the deposit pots satisfy the closed-form
+    accounting *pre + new ≡ post + refunds*, with `newCertDeposits`{.AgdaFunction}
+    threading the run's initial registered-pool set;
+3.  `CERTS-deposits-registered`: `CERTS` preserves `PoolDepositsRegistered`{.AgdaFunction};
+4.  `CERTS-new-thread`: `newCertDeposits`{.AgdaFunction} over an appended certificate
+    list splits at a `CERTS` run boundary, the second half against the run's *final*
+    pool set; this is what lets per-step accounting compose across a batch.
 
 ```agda
 module ENTITIES-PoV
@@ -132,10 +135,10 @@ account balance in `s`{.AgdaBound} (the `amts≤`{.AgdaBound} no-truncation
 hypothesis).  Then,
 
     coinFromRewards s + getCoin (DirectDepositsOf txSub)
-      ≡ coinFromRewards s' + getCoin (WithdrawalsOf txSub)
+    ≡ coinFromRewards s' + getCoin (WithdrawalsOf txSub)
 
-All other ingredients — the `NetworkId`{.AgdaFunction} witnesses and the two domain
-conditions — are premises of the rule itself.
+All other ingredients (the `NetworkId`{.AgdaFunction} witnesses and the two domain
+conditions) are premises of the rule itself.
 
 **Formally**.
 
@@ -173,6 +176,7 @@ conditions — are premises of the rule itself.
     dd  wdrls : Coin
     dd = getCoin (DirectDepositsOf txSub)
     wdrls = getCoin (WithdrawalsOf txSub)
+
     aw : Rewards
     aw = applyWithdrawals (WithdrawalsOf txSub) r₀
 ```
@@ -219,12 +223,13 @@ normal mode the rule bounds withdrawals only against the pre-batch
 
 ## Deposit flow
 
-Withdrawals, direct deposits, and the vote-delegation restriction only touch the
-rewards map, so a `SUBENTITIES`{.AgdaDatatype}/`ENTITIES`{.AgdaDatatype} step changes
-the deposit pots exactly as its inner `CERTS`{.AgdaDatatype} run does: the closed-form
-accounting, the preservation of `PoolDepositsRegistered`{.AgdaFunction}, and the
-`newCertDeposits`{.AgdaFunction} split all transport from the corresponding `CERTS`
-assumptions, definitionally.
+Outside the inner CERTS run, a `SUBENTITIES`{.AgdaDatatype}/`ENTITIES`{.AgdaDatatype}
+step touches only the rewards map (withdrawals and direct deposits), and the DRep
+activity refresh, never the deposit pots.  So deposit pots change exactly as the
+inner `CERTS`{.AgdaDatatype} run does, that is, the closed-form accounting, the
+preservation of `PoolDepositsRegistered`{.AgdaFunction}, and the
+`newCertDeposits`{.AgdaFunction} split all transport from the corresponding
+`CERTS`{.AgdaDatatype} assumptions, definitionally.
 
 ```agda
   SUBENTITIES-deposits-pov : {Γ : SubEntitiesEnv} {s s' : CertState}
