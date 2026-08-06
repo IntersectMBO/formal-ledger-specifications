@@ -33,6 +33,7 @@
 
 ## Conway spec
 
+- State and prove that after a `CERTS` step every `voteDelegs` value is a `VDeleg` of a registered `DRep`, `vDelegAbstain`, or `vDelegNoConfidence` (see #1233)
 - Move `txIns ∩ refInputs ≡ ∅` precondition to `allowedLanguages` to allow non-disjoint tx and ref. inputs for Plutus V1-V2
 - Require collateral inputs to be present in the UTxO set in the UTXO rule
 - State and prove the claim that a voter's (last) vote in a block is applied to the governance action (see #417)

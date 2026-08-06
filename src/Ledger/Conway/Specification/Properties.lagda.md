@@ -159,15 +159,16 @@ proposals in `tx`{.AgdaBound}.
    `activeDReps`{.AgdaField} of `es` in the next epoch.
 
 
-+  **Claim** [Certs-VoteDelegsVDeleg][].
++  **Theorem** [Certs-VoteDelegsVDeleg][]. Vote delegations point at registered
+   `DReps`{.AgdaFunction}.
 
-   Suppose we have a collection `C`{.AgdaBound} of credentials—for instance, given
-   `d`{.AgdaBound} : `DState`{.AgdaDatatype}, take `C`{.AgdaBound} to be the domain
-   of the `voteDelegs`{.AgdaField} field of `d`{.AgdaBound}.  Then the set of
-   `VDelegs`{.AgdaDatatype} that results from applying
-   `vDelegCredential`{.AgdaInductiveConstructor} to the domain of the
-   `voteDelegs`{.AgdaField} of `d`{.AgdaBound} contains the range of the
-   `voteDelegs`{.AgdaField} of `d`{.AgdaBound}.
+   Let `s`{.AgdaBound}, `s'`{.AgdaBound} be `CertStates`{.AgdaRecord} and
+   `certs`{.AgdaBound} a list of `DCerts`{.AgdaDatatype} such that `s`{.AgdaBound}
+   `⇀⦇`{.AgdaDatatype} `certs`{.AgdaBound} `,CERTS⦈`{.AgdaDatatype} `s'`{.AgdaBound}.
+   Then every value of the `voteDelegs`{.AgdaField} map of `s'`{.AgdaBound} either wraps
+   the `Credential`{.AgdaDatatype} of a `DRep` registered in `s'`{.AgdaBound}, or is
+   `vDelegAbstain`{.AgdaInductiveConstructor}, or is
+   `vDelegNoConfidence`{.AgdaInductiveConstructor}.
 
 ---
 
