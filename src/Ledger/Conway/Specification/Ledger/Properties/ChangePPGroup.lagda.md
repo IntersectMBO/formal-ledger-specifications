@@ -31,14 +31,19 @@ instance
 
 *Informally*.
 
-This module lifts `GOVS-ChangePPHasGroup`{.AgdaFunction} to the
-`LEDGER`{.AgdaDatatype} rule, which restores the original formulation of the claim: the
-proposal is one carried by the transaction, rather than a `GOVS`{.AgdaFunction} signal.
+This module lifts the `GOVS-ChangePPHasGroup`{.AgdaFunction} property to the
+`LEDGER`{.AgdaDatatype} rule as the following claim:
 
-The transaction must be valid. An invalid transaction takes the
-`LEDGER-I`{.AgdaInductiveConstructor} rule, which never runs `GOVS`{.AgdaFunction}, so its
-proposals are not checked for well-formedness (they are also not recorded in the
-governance state).
+If `p : ``GovProposal`{.AgdaRecord} is a governance proposal carried by the
+transaction `tx` and the `action`{.AgdaField} of `p` is a
+`ChangePParams`{.AgdaInductiveConstructor} with parameter update
+`pu : ``PParamsUpdate`{.AgdaField}, then the set `updateGroups`{.AgdaField}` pu` is
+nonempty.
+
+The transaction must be valid.  An invalid transaction takes the
+`LEDGER-I`{.AgdaInductiveConstructor} rule, which never runs `GOVS`{.AgdaFunction},
+so its proposals are not checked for well-formedness.  (They are also not recorded in
+the governance state.)
 
 *Formally*.
 
@@ -51,17 +56,17 @@ LEDGER-ChangePPHasGroup :
   {pu    : PParamsUpdate}
   → Tx.isValid tx ≡ true
   → Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s'
-  → p ∈ Tx.body tx
-  → p .GovProposal.action ≡ ⟦ ChangePParams , pu ⟧ᵍᵃ
+  → p ∈ TxBodyOf tx
+  → GovActionOf p ≡ ⟦ ChangePParams , pu ⟧ᵍᵃ
   → updateGroups pu ≢ ∅
 ```
 
 *Proof*.
 
 The `LEDGER-V`{.AgdaInductiveConstructor} rule feeds `txgov`{.AgdaFunction}
-`txb`{.AgdaBound} `= map inj₂ txGovProposals ++ map inj₁ txGovVotes` to
-`GOVS`{.AgdaFunction}, so a proposal of the transaction occurs in that signal list, and
-`GOVS-ChangePPHasGroup`{.AgdaFunction} applies.
+`txb = map inj₂ txGovProposals ++ map inj₁ txGovVotes` to
+`GOVS`{.AgdaFunction}, so a proposal of the transaction occurs in that signal list,
+and `GOVS-ChangePPHasGroup`{.AgdaFunction} applies.
 
 ```agda
 LEDGER-ChangePPHasGroup refl (LEDGER-V⋯ _ _ _ govs) p∈ eq =
