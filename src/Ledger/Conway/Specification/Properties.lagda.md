@@ -142,7 +142,7 @@ proposals in `tx`{.AgdaBound}.
    has been produced in epoch `e`{.AgdaBound} or later), that deposit is no longer in the
    deposit pot.
 
-+  **Claim** [NEWEPOCH-ConstRwds][].  The rewards domain is left unchanged by the `NEWEPOCH`{.AgdaOperator} rule.
++  **Theorem** [NEWEPOCH-ConstRwds][].  The rewards domain is left unchanged by the `NEWEPOCH`{.AgdaOperator} rule.
 
    That is, if `es`{.AgdaBound} and `es'`{.AgdaBound} are two
    `NewEpochStates`{.AgdaRecord} such that `es`{.AgdaBound} `⇀⦇`{.AgdaDatatype}

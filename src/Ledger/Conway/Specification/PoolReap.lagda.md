@@ -45,6 +45,13 @@ instance
   unquoteDecl HasCast-PoolReapState = derive-HasCast
                 [ (quote PoolReapState , HasCast-PoolReapState) ]
 
+  HasDState-PoolReapState : HasDState PoolReapState
+  HasDState-PoolReapState .DStateOf = PoolReapState.dState
+
+  HasRewards-PoolReapState : HasRewards PoolReapState
+  HasRewards-PoolReapState .RewardsOf = RewardsOf ∘ DStateOf
+
+
 private variable
   e lastEpoch : Epoch
   poolReapState : PoolReapState
