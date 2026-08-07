@@ -4,9 +4,11 @@ on:
     branches:
     - master
     - legacy-latex  # ensure legacy-latex-artifacts branch gets created
+    - leios-main    # Leios integration branch; keeps leios-main-artifacts fresh
   pull_request:
     branches:
     - master
+    - leios-main
   # For running the workflow manually - useful for branches without PRs, for
   # which CI isn't run automatically
   workflow_dispatch:
