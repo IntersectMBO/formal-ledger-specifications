@@ -440,8 +440,8 @@ Our CI/CD pipeline, defined in `.github/workflows/`, automates the building and 
 
 + **Branches Covered by CI**
 
-   The full pipeline runs on every push to `master` or `leios-main`, and on every
-   pull request targeting one of those branches. For other branches without an open
+   The full pipeline runs on every push to `master`, `leios-main`, or `legacy-latex`, and on every
+   pull request targeting `master` or `leios-main`. For other branches without an open
    PR, the workflow can be triggered manually from the Actions tab
    (`workflow_dispatch`).
 
@@ -463,10 +463,10 @@ Our CI/CD pipeline, defined in `.github/workflows/`, automates the building and 
 
 Formalization of the ledger changes required by Ouroboros Leios is staged on the `leios-main` branch, which evolves in parallel to `master`:
 
-+  To work on Leios, branch off of `leios-main` and open a pull request targeting
++ To work on Leios, branch off of `leios-main` and open a pull request targeting
    `leios-main`. Such PRs run the same CI as PRs targeting `master`.
-   
-+  Changes required but independent of Leios (e.g. `Ledger.Core`, `Ledger.Prelude`, the STS
+
++ Changes required but independent of Leios (e.g. `Ledger.Core`, `Ledger.Prelude`, the STS
    machinery) should be made first on a PR to `master` and then merged into `leios-main`.
 ---
 
