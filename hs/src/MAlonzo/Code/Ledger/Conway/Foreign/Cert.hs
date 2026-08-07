@@ -63,7 +63,7 @@ d_Computational'45'CERTS_12 ::
   MAlonzo.Code.Interface.ComputationalRelation.T_Computational_232
 d_Computational'45'CERTS_12
   = coe
-      MAlonzo.Code.Ledger.Conway.Conformance.Certs.Properties.d_Computational'45'CERTS_2594
+      MAlonzo.Code.Ledger.Conway.Conformance.Certs.Properties.d_Computational'45'CERTS_2562
       (coe
          MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_govStructure_2654
          (coe
@@ -926,7 +926,7 @@ d_certs'45'step_474 v0
       (coe
          MAlonzo.Code.Interface.ComputationalRelation.du_compute_274
          (coe
-            MAlonzo.Code.Ledger.Conway.Conformance.Certs.Properties.d_Computational'45'CERTS_2594
+            MAlonzo.Code.Ledger.Conway.Conformance.Certs.Properties.d_Computational'45'CERTS_2562
             (coe
                MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_govStructure_2654
                (coe
