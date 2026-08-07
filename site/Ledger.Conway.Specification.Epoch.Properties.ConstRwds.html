@@ -86,7 +86,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#clm:NEWEPOCH-const-rwds" class="md-skip">
+        <a href="#thm:NEWEPOCH-const-rwds" class="md-skip">
           Skip to content
         </a>
       
@@ -2265,10 +2265,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#clm:NEWEPOCH-const-rwds" class="md-nav__link">
+  <a href="#thm:NEWEPOCH-const-rwds" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Claim: The NEWEPOCH rule leaves rewards unchanged
+        Theorem: NEWEPOCH preserves rewards domain
       
     </span>
   </a>
@@ -11378,10 +11378,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#clm:NEWEPOCH-const-rwds" class="md-nav__link">
+  <a href="#thm:NEWEPOCH-const-rwds" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Claim: The NEWEPOCH rule leaves rewards unchanged
+        Theorem: NEWEPOCH preserves rewards domain
       
     </span>
   </a>
@@ -11418,35 +11418,119 @@
 
   <h1>ConstRwds</h1>
 
-<h2 id="clm:NEWEPOCH-const-rwds">Claim: The <span class="AgdaDatatype">NEWEPOCH</span> rule leaves rewards unchanged<a class="headerlink" href="#clm:NEWEPOCH-const-rwds" title="Permanent link">&para;</a></h2>
+<h2 id="thm:NEWEPOCH-const-rwds">Theorem: <span class="AgdaDatatype">NEWEPOCH</span> preserves rewards domain<a class="headerlink" href="#thm:NEWEPOCH-const-rwds" title="Permanent link">&para;</a></h2>
 <pre class="Agda hidden-source">
-<a id="243" class="Symbol">{-#</a> <a id="247" class="Keyword">OPTIONS</a> <a id="255" class="Pragma">--safe</a> <a id="262" class="Symbol">#-}</a>
+<a id="236" class="Symbol">{-#</a> <a id="240" class="Keyword">OPTIONS</a> <a id="248" class="Pragma">--safe</a> <a id="255" class="Symbol">#-}</a>
 
-<a id="267" class="Keyword">open</a> <a id="272" class="Keyword">import</a> <a id="279" href="Ledger.Conway.Specification.Transaction.html" class="Module">Ledger.Conway.Specification.Transaction</a>
-<a id="319" class="Keyword">open</a> <a id="324" class="Keyword">import</a> <a id="331" href="Ledger.Conway.Specification.Abstract.html" class="Module">Ledger.Conway.Specification.Abstract</a>
+<a id="260" class="Keyword">open</a> <a id="265" class="Keyword">import</a> <a id="272" href="Ledger.Conway.Specification.Transaction.html" class="Module">Ledger.Conway.Specification.Transaction</a>
+<a id="312" class="Keyword">open</a> <a id="317" class="Keyword">import</a> <a id="324" href="Ledger.Conway.Specification.Abstract.html" class="Module">Ledger.Conway.Specification.Abstract</a>
 
-<a id="369" class="Keyword">module</a> <a id="376" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html" class="Module">Ledger.Conway.Specification.Epoch.Properties.ConstRwds</a>
-  <a id="433" class="Symbol">(</a><a id="434" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#434" class="Bound">txs</a> <a id="438" class="Symbol">:</a> <a id="440" class="Symbol">_)</a> <a id="443" class="Symbol">(</a><a id="444" class="Keyword">open</a> <a id="449" href="Ledger.Conway.Specification.Transaction.html#2459" class="Module">TransactionStructure</a> <a id="470" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#434" class="Bound">txs</a><a id="473" class="Symbol">)</a>
-  <a id="477" class="Symbol">(</a><a id="478" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#478" class="Bound">abs</a> <a id="482" class="Symbol">:</a> <a id="484" href="Ledger.Conway.Specification.Abstract.html#1523" class="Record">AbstractFunctions</a> <a id="502" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#434" class="Bound">txs</a><a id="505" class="Symbol">)</a> <a id="507" class="Symbol">(</a><a id="508" class="Keyword">open</a> <a id="513" href="Ledger.Conway.Specification.Abstract.html#1523" class="Module">AbstractFunctions</a> <a id="531" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#478" class="Bound">abs</a><a id="534" class="Symbol">)</a>
-  <a id="538" class="Keyword">where</a>
+<a id="362" class="Keyword">module</a> <a id="369" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html" class="Module">Ledger.Conway.Specification.Epoch.Properties.ConstRwds</a>
+  <a id="426" class="Symbol">(</a><a id="427" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#427" class="Bound">txs</a> <a id="431" class="Symbol">:</a> <a id="433" class="Symbol">_)</a> <a id="436" class="Symbol">(</a><a id="437" class="Keyword">open</a> <a id="442" href="Ledger.Conway.Specification.Transaction.html#2459" class="Module">TransactionStructure</a> <a id="463" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#427" class="Bound">txs</a><a id="466" class="Symbol">)</a>
+  <a id="470" class="Symbol">(</a><a id="471" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#471" class="Bound">abs</a> <a id="475" class="Symbol">:</a> <a id="477" href="Ledger.Conway.Specification.Abstract.html#1523" class="Record">AbstractFunctions</a> <a id="495" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#427" class="Bound">txs</a><a id="498" class="Symbol">)</a> <a id="500" class="Symbol">(</a><a id="501" class="Keyword">open</a> <a id="506" href="Ledger.Conway.Specification.Abstract.html#1523" class="Module">AbstractFunctions</a> <a id="524" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#471" class="Bound">abs</a><a id="527" class="Symbol">)</a>
+  <a id="531" class="Keyword">where</a>
 
-<a id="545" class="Keyword">open</a> <a id="550" class="Keyword">import</a> <a id="557" href="Ledger.Conway.Specification.Certs.html" class="Module">Ledger.Conway.Specification.Certs</a> <a id="591" href="Ledger.Conway.Specification.Transaction.html#3779" class="Function">govStructure</a>
-<a id="604" class="Keyword">open</a> <a id="609" class="Keyword">import</a> <a id="616" href="Ledger.Conway.Specification.Epoch.html" class="Module">Ledger.Conway.Specification.Epoch</a> <a id="650" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#434" class="Bound">txs</a> <a id="654" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#478" class="Bound">abs</a>
-<a id="658" class="Keyword">open</a> <a id="663" class="Keyword">import</a> <a id="670" href="Ledger.Prelude.html" class="Module">Ledger.Prelude</a>
+<a id="538" class="Keyword">open</a> <a id="543" class="Keyword">import</a> <a id="550" href="Ledger.Conway.Specification.Certs.html" class="Module">Ledger.Conway.Specification.Certs</a> <a id="584" href="Ledger.Conway.Specification.Transaction.html#3779" class="Function">govStructure</a>
+<a id="597" class="Keyword">open</a> <a id="602" class="Keyword">import</a> <a id="609" href="Ledger.Conway.Specification.Epoch.html" class="Module">Ledger.Conway.Specification.Epoch</a> <a id="643" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#427" class="Bound">txs</a> <a id="647" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#471" class="Bound">abs</a>
+<a id="651" class="Keyword">open</a> <a id="656" class="Keyword">import</a> <a id="663" href="Ledger.Conway.Specification.PoolReap.html" class="Module">Ledger.Conway.Specification.PoolReap</a> <a id="700" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#427" class="Bound">txs</a> <a id="704" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#471" class="Bound">abs</a>
+<a id="708" class="Keyword">open</a> <a id="713" class="Keyword">import</a> <a id="720" href="Ledger.Conway.Specification.Rewards.html" class="Module">Ledger.Conway.Specification.Rewards</a> <a id="756" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#427" class="Bound">txs</a> <a id="760" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#471" class="Bound">abs</a>
+<a id="764" class="Keyword">open</a> <a id="769" class="Keyword">import</a> <a id="776" href="Ledger.Prelude.html" class="Module">Ledger.Prelude</a>
+
+<a id="792" class="Keyword">open</a> <a id="797" class="Keyword">import</a> <a id="804" href="Axiom.Set.Properties.html" class="Module">Axiom.Set.Properties</a> <a id="825" href="Axiom.Set.html#10936" class="Function">th</a> <a id="828" class="Keyword">using</a> <a id="834" class="Symbol">(</a><a id="835" href="Axiom.Set.Properties.html#3710" class="Function">≡ᵉ-isEquivalence</a><a id="851" class="Symbol">)</a>
+<a id="853" class="Keyword">open</a> <a id="858" class="Keyword">import</a> <a id="865" href="Relation.Binary.html" class="Module">Relation.Binary</a> <a id="881" class="Keyword">using</a> <a id="887" class="Symbol">(</a><a id="888" href="Relation.Binary.Structures.html#1595" class="Record">IsEquivalence</a><a id="901" class="Symbol">)</a>
+
+<a id="904" class="Keyword">module</a> <a id="≡ᵉ"></a><a id="911" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#911" class="Module">≡ᵉ</a> <a id="914" class="Symbol">=</a> <a id="916" href="Relation.Binary.Structures.html#1595" class="Module">IsEquivalence</a> <a id="930" class="Symbol">(</a><a id="931" href="Axiom.Set.Properties.html#3710" class="Function">≡ᵉ-isEquivalence</a> <a id="948" class="Symbol">{</a><a id="949" href="Ledger.Core.Specification.Address.html#1214" class="Datatype">Credential</a><a id="959" class="Symbol">})</a>
 </pre>
 
 <p><em>Informally</em>.</p>
-<p>Rewards are left unchanged by the <code class="AgdaOperator">NEWEPOCH</code> rule.  That is, if
-<code class="AgdaBound">es</code> and <code class="AgdaBound">es'</code> are two <code class="AgdaRecord">NewEpochStates</code> such that
-<code class="AgdaBound">es</code> <code class="AgdaDatatype">⇀⦇</code> <code class="AgdaBound">e</code> <code class="AgdaDatatype">,NEWEPOCH⦈</code> <code class="AgdaBound">es'</code>,
-then the rewards of <code class="AgdaBound">es</code> and <code class="AgdaBound">es'</code> are equal.</p>
+<p>The <code class="AgdaDatatype">NEWEPOCH</code> rule pays out rewards and refunds, but it never
+registers or deregisters a reward account.</p>
+<p>More precisely, if <code class="AgdaBound">es</code> and <code class="AgdaBound">es'</code> are two
+<code class="AgdaRecord">NewEpochStates</code> such that
+<code class="AgdaDatatype">es ``⇀⦇</code><code class="AgdaDatatype">e ``,NEWEPOCH⦈</code><code>es'</code>,
+then the rewards maps of <code>es</code> and <code>es'</code> have the same domain.</p>
+<p>Only the domain is invariant (the reward values themselves change), and
+domains are abstract sets, so the claim is stated with the set equality
+<code class="AgdaFunction">_≡ᵉ_</code> rather than propositional equality.</p>
+<p>A <code class="AgdaDatatype">NEWEPOCH</code> step modifies the rewards map in three places, and
+each modification is an additive union <code class="AgdaOperator">_∪⁺_</code> with a map whose
+domain is contained in the domain of the rewards map:</p>
+<ul>
+<li>
+<p><code class="AgdaFunction">applyRUpd</code> adds <code class="AgdaFunction">regRU</code>, the reward update
+   restricted to the existing accounts (<code>rs ∣ dom rewards</code>);</p>
+</li>
+<li>
+<p>the <code class="AgdaDatatype">POOLREAP</code> rule adds the deposit <code class="AgdaFunction">refunds</code> of
+   retired pools restricted to <code>dom (dState .rewards)</code>;</p>
+</li>
+<li>
+<p>the <code class="AgdaDatatype">EPOCH</code> rule adds <code class="AgdaFunction">refunds</code> of
+   <code class="AgdaModule">Post-POOLREAPUpdate</code> — a <code class="AgdaFunction">pullbackMap</code> over
+   <code>dom (RewardsOf dState')</code> — so its domain is again contained in the rewards
+   domain.</p>
+</li>
+</ul>
+<p>Since <code>dom (m ∪⁺ n) ≡ᵉ dom m</code> whenever <code>dom n ⊆ dom m</code>,<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup> each of the three
+modifications preserves the domain.</p>
 <p><em>Formally</em>.</p>
-<pre class="Agda"><a id="dom-rwds-const"></a><a id="1067" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#1067" class="Function">dom-rwds-const</a> <a id="1082" class="Symbol">:</a> <a id="1084" class="Symbol">{</a><a id="1085" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#1085" class="Bound">e</a> <a id="1087" class="Symbol">:</a> <a id="1089" href="Ledger.Core.Specification.Epoch.html#742" class="Function">Epoch</a><a id="1094" class="Symbol">}</a> <a id="1096" class="Symbol">(</a><a id="1097" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#1097" class="Bound">es</a> <a id="1100" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#1100" class="Bound">es&#39;</a> <a id="1104" class="Symbol">:</a> <a id="1106" href="Ledger.Conway.Specification.Epoch.html#4280" class="Record">NewEpochState</a><a id="1119" class="Symbol">)</a>
-  <a id="1123" class="Symbol">→</a> <a id="1125" class="Symbol">_</a> <a id="1127" href="Ledger.Conway.Specification.Epoch.html#26001" class="Datatype Operator">⊢</a> <a id="1129" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#1097" class="Bound">es</a> <a id="1132" href="Ledger.Conway.Specification.Epoch.html#26001" class="Datatype Operator">⇀⦇</a> <a id="1135" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#1085" class="Bound">e</a> <a id="1137" href="Ledger.Conway.Specification.Epoch.html#26001" class="Datatype Operator">,NEWEPOCH⦈</a> <a id="1148" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#1100" class="Bound">es&#39;</a> <a id="1152" class="Symbol">→</a> <a id="1154" href="Agda.Primitive.html#388" class="Primitive">Type</a>
-
-<a id="1160" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#1067" class="Function">dom-rwds-const</a> <a id="1175" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#1175" class="Bound">es</a> <a id="1178" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#1178" class="Bound">es&#39;</a> <a id="1182" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#1182" class="Bound">step</a> <a id="1187" class="Symbol">=</a> <a id="1189" href="Class.IsSet.html#916" class="Function">dom</a> <a id="1193" class="Symbol">(</a><a id="1194" href="Ledger.Conway.Specification.Certs.html#2034" class="Field">RewardsOf</a> <a id="1204" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#1175" class="Bound">es</a><a id="1206" class="Symbol">)</a> <a id="1208" href="Agda.Builtin.Equality.html#150" class="Datatype Operator">≡</a> <a id="1210" href="Class.IsSet.html#916" class="Function">dom</a> <a id="1214" class="Symbol">(</a><a id="1215" href="Ledger.Conway.Specification.Certs.html#2034" class="Field">RewardsOf</a> <a id="1225" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#1178" class="Bound">es&#39;</a><a id="1228" class="Symbol">)</a>
+<p>We prove one lemma per modification site.</p>
+<p>First, <code class="AgdaFunction">applyRUpd</code> preserves the rewards domain:</p>
+<pre class="Agda"><a id="applyRUpd-dom-rwds-const"></a><a id="2514" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#2514" class="Function">applyRUpd-dom-rwds-const</a> <a id="2539" class="Symbol">:</a> <a id="2541" class="Symbol">(</a><a id="2542" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#2542" class="Bound">ru</a> <a id="2545" class="Symbol">:</a> <a id="2547" href="Ledger.Conway.Specification.Rewards.html#18058" class="Record">RewardUpdate</a><a id="2559" class="Symbol">)</a> <a id="2561" class="Symbol">(</a><a id="2562" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#2562" class="Bound">eps</a> <a id="2566" class="Symbol">:</a> <a id="2568" href="Ledger.Conway.Specification.Epoch.html#2226" class="Record">EpochState</a><a id="2578" class="Symbol">)</a>
+  <a id="2582" class="Symbol">→</a> <a id="2584" href="Class.IsSet.html#916" class="Function">dom</a> <a id="2588" class="Symbol">(</a><a id="2589" href="Ledger.Conway.Specification.Certs.html#2034" class="Field">RewardsOf</a> <a id="2599" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#2562" class="Bound">eps</a><a id="2602" class="Symbol">)</a> <a id="2604" href="Axiom.Set.html#2772" class="Function Operator">≡ᵉ</a> <a id="2607" href="Class.IsSet.html#916" class="Function">dom</a> <a id="2611" class="Symbol">(</a><a id="2612" href="Ledger.Conway.Specification.Certs.html#2034" class="Field">RewardsOf</a> <a id="2622" class="Symbol">(</a><a id="2623" href="Ledger.Conway.Specification.Epoch.html#12828" class="Function">applyRUpd</a> <a id="2633" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#2542" class="Bound">ru</a> <a id="2636" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#2562" class="Bound">eps</a><a id="2639" class="Symbol">))</a>
+<a id="2642" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#2514" class="Function">applyRUpd-dom-rwds-const</a> <a id="2667" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#2667" class="Bound">ru</a> <a id="2670" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#2670" class="Bound">eps</a> <a id="2674" class="Symbol">=</a> <a id="2676" href="Relation.Binary.Structures.html#1667" class="Function">≡ᵉ.sym</a> <a id="2683" class="Symbol">(</a><a id="2684" href="abstract-set-theory.Axiom.Set.Map.Extra.html#34116" class="Function">dom⊆→dom∪⁺</a> <a id="2695" href="Axiom.Set.Rel.html#6896" class="Function">res-dom</a><a id="2702" class="Symbol">)</a>
 </pre>
-<p><em>Proof</em>. (coming soon)</p>
+<p>Second, the <code class="AgdaDatatype">POOLREAP</code> rule preserves the rewards domain:</p>
+<pre class="Agda"><a id="POOLREAP-dom-rwds-const"></a><a id="2791" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#2791" class="Function">POOLREAP-dom-rwds-const</a> <a id="2815" class="Symbol">:</a> <a id="2817" class="Symbol">{</a><a id="2818" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#2818" class="Bound">e</a> <a id="2820" class="Symbol">:</a> <a id="2822" href="Ledger.Core.Specification.Epoch.html#742" class="Function">Epoch</a><a id="2827" class="Symbol">}</a> <a id="2829" class="Symbol">{</a><a id="2830" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#2830" class="Bound">prSt</a> <a id="2835" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#2835" class="Bound">prSt&#39;</a> <a id="2841" class="Symbol">:</a> <a id="2843" href="Ledger.Conway.Specification.PoolReap.html#624" class="Record">PoolReapState</a><a id="2856" class="Symbol">}</a>
+  <a id="2860" class="Symbol">→</a> <a id="2862" class="Symbol">_</a> <a id="2864" href="Ledger.Conway.Specification.PoolReap.html#1378" class="Datatype Operator">⊢</a> <a id="2866" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#2830" class="Bound">prSt</a> <a id="2871" href="Ledger.Conway.Specification.PoolReap.html#1378" class="Datatype Operator">⇀⦇</a> <a id="2874" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#2818" class="Bound">e</a> <a id="2876" href="Ledger.Conway.Specification.PoolReap.html#1378" class="Datatype Operator">,POOLREAP⦈</a> <a id="2887" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#2835" class="Bound">prSt&#39;</a>
+  <a id="2895" class="Symbol">→</a> <a id="2897" href="Class.IsSet.html#916" class="Function">dom</a> <a id="2901" class="Symbol">(</a><a id="2902" href="Ledger.Conway.Specification.Certs.html#2034" class="Field">RewardsOf</a> <a id="2912" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#2830" class="Bound">prSt</a><a id="2916" class="Symbol">)</a> <a id="2918" href="Axiom.Set.html#2772" class="Function Operator">≡ᵉ</a> <a id="2921" href="Class.IsSet.html#916" class="Function">dom</a> <a id="2925" class="Symbol">(</a><a id="2926" href="Ledger.Conway.Specification.Certs.html#2034" class="Field">RewardsOf</a> <a id="2936" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#2835" class="Bound">prSt&#39;</a><a id="2941" class="Symbol">)</a>
+<a id="2943" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#2791" class="Function">POOLREAP-dom-rwds-const</a> <a id="2967" href="Ledger.Conway.Specification.PoolReap.html#1455" class="InductiveConstructor">POOLREAP</a> <a id="2976" class="Symbol">=</a> <a id="2978" href="Relation.Binary.Structures.html#1667" class="Function">≡ᵉ.sym</a> <a id="2985" class="Symbol">(</a><a id="2986" href="abstract-set-theory.Axiom.Set.Map.Extra.html#34116" class="Function">dom⊆→dom∪⁺</a> <a id="2997" href="Axiom.Set.Rel.html#6896" class="Function">res-dom</a><a id="3004" class="Symbol">)</a>
+</pre>
+<p>Third, the <code class="AgdaDatatype">EPOCH</code> rule preserves the rewards domain: the
+<code class="AgdaDatatype">SNAP</code> and <code class="AgdaDatatype">RATIFIES</code> premises do not touch the
+rewards map, so the claim follows by composing the <code class="AgdaDatatype">POOLREAP</code>
+lemma with the domain restriction of the <code class="AgdaFunction">refunds</code> paid out by
+<code class="AgdaModule">Post-POOLREAPUpdate</code>.</p>
+<pre class="Agda"><a id="3362" class="Keyword">opaque</a>
+  <a id="3371" class="Keyword">unfolding</a> <a id="3381" href="Ledger.Conway.Specification.Epoch.html#23341" class="Function">Post-POOLREAPUpdate.refunds</a>
+
+  <a id="EPOCH-dom-rwds-const"></a><a id="3412" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#3412" class="Function">EPOCH-dom-rwds-const</a> <a id="3433" class="Symbol">:</a> <a id="3435" class="Symbol">{</a><a id="3436" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#3436" class="Bound">e</a> <a id="3438" class="Symbol">:</a> <a id="3440" href="Ledger.Core.Specification.Epoch.html#742" class="Function">Epoch</a><a id="3445" class="Symbol">}</a> <a id="3447" class="Symbol">{</a><a id="3448" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#3448" class="Bound">eps</a> <a id="3452" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#3452" class="Bound">eps&#39;</a> <a id="3457" class="Symbol">:</a> <a id="3459" href="Ledger.Conway.Specification.Epoch.html#2226" class="Record">EpochState</a><a id="3469" class="Symbol">}</a>
+    <a id="3475" class="Symbol">→</a> <a id="3477" class="Symbol">_</a> <a id="3479" href="Ledger.Conway.Specification.Epoch.html#24621" class="Datatype Operator">⊢</a> <a id="3481" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#3448" class="Bound">eps</a> <a id="3485" href="Ledger.Conway.Specification.Epoch.html#24621" class="Datatype Operator">⇀⦇</a> <a id="3488" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#3436" class="Bound">e</a> <a id="3490" href="Ledger.Conway.Specification.Epoch.html#24621" class="Datatype Operator">,EPOCH⦈</a> <a id="3498" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#3452" class="Bound">eps&#39;</a>
+    <a id="3507" class="Symbol">→</a> <a id="3509" href="Class.IsSet.html#916" class="Function">dom</a> <a id="3513" class="Symbol">(</a><a id="3514" href="Ledger.Conway.Specification.Certs.html#2034" class="Field">RewardsOf</a> <a id="3524" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#3448" class="Bound">eps</a><a id="3527" class="Symbol">)</a> <a id="3529" href="Axiom.Set.html#2772" class="Function Operator">≡ᵉ</a> <a id="3532" href="Class.IsSet.html#916" class="Function">dom</a> <a id="3536" class="Symbol">(</a><a id="3537" href="Ledger.Conway.Specification.Certs.html#2034" class="Field">RewardsOf</a> <a id="3547" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#3452" class="Bound">eps&#39;</a><a id="3551" class="Symbol">)</a>
+  <a id="3555" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#3412" class="Function">EPOCH-dom-rwds-const</a> <a id="3576" class="Symbol">(</a><a id="3577" href="Ledger.Conway.Specification.Epoch.html#24701" class="InductiveConstructor">EPOCH</a> <a id="3583" class="Symbol">(_</a> <a id="3586" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="3588" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#3588" class="Bound">poolReapStep</a> <a id="3601" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="3603" class="Symbol">_))</a> <a id="3607" class="Symbol">=</a>
+    <a id="3613" href="Relation.Binary.Structures.html#1693" class="Function">≡ᵉ.trans</a>  <a id="3623" class="Symbol">(</a><a id="3624" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#2791" class="Function">POOLREAP-dom-rwds-const</a> <a id="3648" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#3588" class="Bound">poolReapStep</a><a id="3660" class="Symbol">)</a>
+              <a id="3676" class="Symbol">(</a><a id="3677" href="Relation.Binary.Structures.html#1667" class="Function">≡ᵉ.sym</a> <a id="3684" class="Symbol">(</a><a id="3685" href="abstract-set-theory.Axiom.Set.Map.Extra.html#34116" class="Function">dom⊆→dom∪⁺</a> <a id="3696" class="Symbol">(</a><a id="3697" href="abstract-set-theory.Axiom.Set.Map.Extra.html#34515" class="Function">dom-pullbackMap-⊆</a> <a id="3715" class="Symbol">_</a> <a id="3717" href="Ledger.Conway.Specification.Epoch.html#6914" class="Function">toRewardAddress</a> <a id="3733" class="Symbol">_)))</a>
+</pre>
+<p>The main claim then follows by composing the above lemmas.</p>
+<pre class="Agda"><a id="NEWEPOCH-dom-rwds-const"></a><a id="3811" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#3811" class="Function">NEWEPOCH-dom-rwds-const</a> <a id="3835" class="Symbol">:</a> <a id="3837" class="Symbol">{</a><a id="3838" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#3838" class="Bound">e</a> <a id="3840" class="Symbol">:</a> <a id="3842" href="Ledger.Core.Specification.Epoch.html#742" class="Function">Epoch</a><a id="3847" class="Symbol">}</a> <a id="3849" class="Symbol">{</a><a id="3850" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#3850" class="Bound">es</a> <a id="3853" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#3853" class="Bound">es&#39;</a> <a id="3857" class="Symbol">:</a> <a id="3859" href="Ledger.Conway.Specification.Epoch.html#4401" class="Record">NewEpochState</a><a id="3872" class="Symbol">}</a>
+  <a id="3876" class="Symbol">→</a> <a id="3878" class="Symbol">_</a> <a id="3880" href="Ledger.Conway.Specification.Epoch.html#26122" class="Datatype Operator">⊢</a> <a id="3882" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#3850" class="Bound">es</a> <a id="3885" href="Ledger.Conway.Specification.Epoch.html#26122" class="Datatype Operator">⇀⦇</a> <a id="3888" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#3838" class="Bound">e</a> <a id="3890" href="Ledger.Conway.Specification.Epoch.html#26122" class="Datatype Operator">,NEWEPOCH⦈</a> <a id="3901" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#3853" class="Bound">es&#39;</a>
+  <a id="3907" class="Symbol">→</a> <a id="3909" href="Class.IsSet.html#916" class="Function">dom</a> <a id="3913" class="Symbol">(</a><a id="3914" href="Ledger.Conway.Specification.Certs.html#2034" class="Field">RewardsOf</a> <a id="3924" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#3850" class="Bound">es</a><a id="3926" class="Symbol">)</a> <a id="3928" href="Axiom.Set.html#2772" class="Function Operator">≡ᵉ</a> <a id="3931" href="Class.IsSet.html#916" class="Function">dom</a> <a id="3935" class="Symbol">(</a><a id="3936" href="Ledger.Conway.Specification.Certs.html#2034" class="Field">RewardsOf</a> <a id="3946" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#3853" class="Bound">es&#39;</a><a id="3949" class="Symbol">)</a>
+</pre>
+<p><em>Proof</em>.</p>
+<p>We proceed by cases on the <code class="AgdaDatatype">NEWEPOCH</code> rule.</p>
+<ul>
+<li><code class="AgdaInductiveConstructor">NEWEPOCH-Not-New</code> leaves the state unchanged, so the
+   claim holds by reflexivity;</li>
+<li><code class="AgdaInductiveConstructor">NEWEPOCH-No-Reward-Update</code> is an
+   <code class="AgdaDatatype">EPOCH</code> step;</li>
+<li><code class="AgdaInductiveConstructor">NEWEPOCH-New</code> is <code class="AgdaFunction">applyRUpd</code> followed
+   by an <code class="AgdaDatatype">EPOCH</code> step.</li>
+</ul>
+<pre class="Agda"><a id="4368" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#3811" class="Function">NEWEPOCH-dom-rwds-const</a> <a id="4392" class="Symbol">(</a><a id="4393" href="Ledger.Conway.Specification.Epoch.html#26620" class="InductiveConstructor">NEWEPOCH-Not-New</a> <a id="4410" class="Symbol">_)</a> <a id="4413" class="Symbol">=</a> <a id="4415" href="Relation.Binary.Structures.html#1641" class="Function">≡ᵉ.refl</a>
+<a id="4423" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#3811" class="Function">NEWEPOCH-dom-rwds-const</a> <a id="4447" class="Symbol">(</a><a id="4448" href="Ledger.Conway.Specification.Epoch.html#26867" class="InductiveConstructor">NEWEPOCH-No-Reward-Update</a> <a id="4474" class="Symbol">(_</a> <a id="4477" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="4479" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#4479" class="Bound">epochStep</a><a id="4488" class="Symbol">))</a> <a id="4491" class="Symbol">=</a>
+  <a id="4495" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#3412" class="Function">EPOCH-dom-rwds-const</a> <a id="4516" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#4479" class="Bound">epochStep</a>
+<a id="4526" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#3811" class="Function">NEWEPOCH-dom-rwds-const</a> <a id="4550" class="Symbol">(</a><a id="4551" href="Ledger.Conway.Specification.Epoch.html#26200" class="InductiveConstructor">NEWEPOCH-New</a> <a id="4564" class="Symbol">{</a><a id="4565" class="Argument">ru</a> <a id="4568" class="Symbol">=</a> <a id="4570" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#4570" class="Bound">ru</a><a id="4572" class="Symbol">}</a> <a id="4574" class="Symbol">{</a><a id="4575" class="Argument">eps</a> <a id="4579" class="Symbol">=</a> <a id="4581" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#4581" class="Bound">eps</a><a id="4584" class="Symbol">}</a> <a id="4586" class="Symbol">(_</a> <a id="4589" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="4591" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#4591" class="Bound">epochStep</a><a id="4600" class="Symbol">))</a> <a id="4603" class="Symbol">=</a>
+  <a id="4607" href="Relation.Binary.Structures.html#1693" class="Function">≡ᵉ.trans</a> <a id="4616" class="Symbol">(</a><a id="4617" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#2514" class="Function">applyRUpd-dom-rwds-const</a> <a id="4642" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#4570" class="Bound">ru</a> <a id="4645" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#4581" class="Bound">eps</a><a id="4648" class="Symbol">)</a> <a id="4650" class="Symbol">(</a><a id="4651" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#3412" class="Function">EPOCH-dom-rwds-const</a> <a id="4672" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html#4591" class="Bound">epochStep</a><a id="4681" class="Symbol">)</a>
+</pre>
+<hr />
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:1">
+<p>lemma <code class="AgdaFunction">dom⊆→dom∪⁺</code>&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
 
 
 
