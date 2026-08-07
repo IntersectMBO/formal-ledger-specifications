@@ -130,6 +130,7 @@ nav:
         - Computational: Ledger.Conway.Specification.Chain.Properties.Computational.md
         - CredDepsEqualDomRwds: Ledger.Conway.Specification.Chain.Properties.CredDepsEqualDomRwds.md
         - EpochStep: Ledger.Conway.Specification.Chain.Properties.EpochStep.md
+        - EventuallyRefunded: Ledger.Conway.Specification.Chain.Properties.EventuallyRefunded.md
         - GovDepsMatch: Ledger.Conway.Specification.Chain.Properties.GovDepsMatch.md
         - PParamsWellFormed: Ledger.Conway.Specification.Chain.Properties.PParamsWellFormed.md
     - Enact: Ledger.Conway.Specification.Enact.md
@@ -155,6 +156,7 @@ nav:
       - Properties/:
         - Computational: Ledger.Conway.Specification.Gov.Properties.Computational.md
         - ChangePPGroup: Ledger.Conway.Specification.Gov.Properties.ChangePPGroup.md
+        - LastVoteApplied: Ledger.Conway.Specification.Gov.Properties.LastVoteApplied.md
     - Ledger: Ledger.Conway.Specification.Ledger.md
     - Ledger/:
       - Properties: Ledger.Conway.Specification.Ledger.Properties.md
@@ -162,6 +164,7 @@ nav:
         - Base: Ledger.Conway.Specification.Ledger.Properties.Base.md
         - Computational: Ledger.Conway.Specification.Ledger.Properties.Computational.md
         - GovDepsMatch: Ledger.Conway.Specification.Ledger.Properties.GovDepsMatch.md
+        - LastVoteApplied: Ledger.Conway.Specification.Ledger.Properties.LastVoteApplied.md
         - PoV: Ledger.Conway.Specification.Ledger.Properties.PoV.md
     - PoolReap: Ledger.Conway.Specification.PoolReap.md
     - PoolReap/:
@@ -202,7 +205,7 @@ nav:
       - Properties/:
         - Base: Ledger.Conway.Specification.Utxo.Properties.Base.md
         - Computational: Ledger.Conway.Specification.Utxo.Properties.Computational.md
-        - GenMinspend: Ledger.Conway.Specification.Utxo.Properties.GenMinSpend.md
+        - GenMinSpend: Ledger.Conway.Specification.Utxo.Properties.GenMinSpend.md
         - MinSpend: Ledger.Conway.Specification.Utxo.Properties.MinSpend.md
         - PoV: Ledger.Conway.Specification.Utxo.Properties.PoV.md
     - Utxow: Ledger.Conway.Specification.Utxow.md
