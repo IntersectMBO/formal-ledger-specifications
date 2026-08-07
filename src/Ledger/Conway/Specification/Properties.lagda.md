@@ -142,12 +142,12 @@ proposals in `tx`{.AgdaBound}.
    has been produced in epoch `e`{.AgdaBound} or later), that deposit is no longer in the
    deposit pot.
 
-+  **Claim** [NEWEPOCH-ConstRwds][].  Rewards are left unchanged by the `NEWEPOCH`{.AgdaOperator} rule.
++  **Theorem** [NEWEPOCH-ConstRwds][].  The rewards domain is left unchanged by the `NEWEPOCH`{.AgdaOperator} rule.
 
    That is, if `es`{.AgdaBound} and `es'`{.AgdaBound} are two
    `NewEpochStates`{.AgdaRecord} such that `es`{.AgdaBound} `⇀⦇`{.AgdaDatatype}
-   `e`{.AgdaBound} `,NEWEPOCH⦈`{.AgdaDatatype} `es'`{.AgdaBound}, then the rewards of
-   `es`{.AgdaBound} and `es'`{.AgdaBound} are equal.
+   `e`{.AgdaBound} `,NEWEPOCH⦈`{.AgdaDatatype} `es'`{.AgdaBound}, then the rewards
+   maps of `es`{.AgdaBound} and `es'`{.AgdaBound} have the same domain.
 
 +  **Claim** [Epoch-NoPropSameDReps][]. The set of active `DReps`{.AgdaFunction} remains unchanged if
    there are no governance proposals.

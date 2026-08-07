@@ -751,3 +751,27 @@ lookupᵐ?-insert-≢ m {k₀} {k} {v₀} ne ⦃ ⁇ no k∉ins ⦄ ⦃ ⁇ yes 
       ky∈ins = ∈-insert-≢ {m = m} {v₀ = v₀} ne ky∈m
   in ⊥-elim (k∉ins (Equivalence.to dom∈ (y , ky∈ins)))
 lookupᵐ?-insert-≢ m {k₀} {k} {v₀} ne ⦃ ⁇ no k∉ins ⦄ ⦃ ⁇ no k∉m ⦄ = refl
+
+
+-- Map lemmas: domains of additive unions and pullback maps
+
+-- If `dom n ⊆ dom m`, then the additive union `m ∪⁺ n` has the same domain as `m`
+-- (the map analogue of `⊆→∪` in `Axiom.Set.Properties`).
+module _ {A B : Type} ⦃ _ : DecEq A ⦄ ⦃ _ : CommutativeMonoid _ _ B ⦄ where
+
+  dom⊆→dom∪⁺ : {m n : A ⇀ B} → dom n ⊆ dom m → dom (m ∪⁺ n) ≡ᵉ dom m
+  dom⊆→dom∪⁺ {m} {n} domn⊆domm =
+    (λ a∈ → case from ∈-∪ (dom∪⁺⊆∪dom a∈) of λ where
+      (inj₁ a∈m) → a∈m
+      (inj₂ a∈n) → domn⊆domm a∈n)
+    , λ a∈m → ∪dom⊆dom∪⁺ (to ∈-∪ (inj₁ a∈m))
+
+-- The domain of a pullback map is contained in the set being pulled back
+-- (`pullbackMap m f X` only assigns values to keys drawn from `X`).
+dom-pullbackMap-⊆ : {A A' B : Type} ⦃ _ : DecEq A ⦄
+  → (m : A ⇀ B) ⦃ dec : {x : A} → (x ∈ dom (m ˢ)) ⁇ ⦄ (f : A' → A) (X : ℙ A')
+  → dom (pullbackMap m ⦃ dec ⦄ f X) ⊆ X
+dom-pullbackMap-⊆ m ⦃ dec ⦄ f X a∈dom with from dom∈ a∈dom
+... | _ , ab∈ with ∈-mapMaybeWithKey {f = λ a _ → lookupᵐ? m (f a) ⦃ dec ⦄} ab∈
+... | _ , _ , aa∈id with from (∈-map {f = λ y → y , y}) aa∈id
+... | x , eq , x∈X = subst (_∈ X) (sym (proj₁ (×-≡,≡←≡ eq))) x∈X

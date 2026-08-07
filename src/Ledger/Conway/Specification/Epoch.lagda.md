@@ -102,6 +102,9 @@ instance
   HasDReps-EpochState : HasDReps EpochState
   HasDReps-EpochState .DRepsOf = DRepsOf ∘ CertStateOf ∘ LStateOf
 
+  HasRewards-EpochState : HasRewards EpochState
+  HasRewards-EpochState .RewardsOf = RewardsOf ∘ CertStateOf ∘ LStateOf
+
   HasTreasury-EpochState : HasTreasury EpochState
   HasTreasury-EpochState .TreasuryOf = Acnt.treasury ∘ EpochState.acnt
 

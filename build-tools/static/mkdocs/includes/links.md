@@ -68,7 +68,7 @@
 [Ledger-LastVoteApplied]: Ledger.Conway.Specification.Ledger.Properties.LastVoteApplied.md
 [LEDGER-PoV]: Ledger.Conway.Specification.Ledger.Properties.PoV.md#thm:LEDGER-PoV
 [NEWEPOCH]: Ledger.Conway.Specification.Epoch.md#sec:the-newepoch-transition-system
-[NEWEPOCH-ConstRwds]: Ledger.Conway.Specification.Epoch.Properties.ConstRwds.md#clm:NEWEPOCH-const-rwds
+[NEWEPOCH-ConstRwds]: Ledger.Conway.Specification.Epoch.Properties.ConstRwds.md#thm:NEWEPOCH-const-rwds
 [Notation]: Notation.md
 [Ouroboros Chronos blog post]: https://iohk.io/en/blog/posts/2021/10/27/ouroboros-chronos-provides-the-first-high-resilience-cryptographic-time-source-based-on-blockchain/
 [POOL]: Ledger.Conway.Specification.Certs.md#auxiliary-pool-transition-system
