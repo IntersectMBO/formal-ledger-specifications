@@ -438,19 +438,44 @@ browser.
 
 Our CI/CD pipeline, defined in `.github/workflows/`, automates the building and publishing of artifacts. Here are some key details:
 
++ **Branches Covered by CI**
+
+   The full pipeline runs on every push to `master` or `leios-main`, and on every
+   pull request targeting one of those branches. For other branches without an open
+   PR, the workflow can be triggered manually from the Actions tab
+   (`workflow_dispatch`).
+
 + **Caching**
 
    The initial `formal-ledger-agda` job type-checks the code and uploads the resulting `_build` directory as a GitHub artifact. Subsequent jobs download this artifact to avoid re-compiling Agda code.
 
 + **Artifact Branches**
 
-   For every push to `master` or a pull request branch, the CI creates a corresponding `<branch-name>-artifacts` branch. This branch stores the generated artifacts (PDFs, HTML, Haskell code).
+   For every push to `master` or `leios-main`, and for every pull request branch, the CI creates a corresponding `<branch-name>-artifacts` branch. This branch stores the generated artifacts (PDFs, HTML, Haskell code).
 
 + **PDF Generation Note**
 
    The CI workflow **does not** build PDFs from the current source. Instead, it
    checks out the `legacy-latex-artifacts` branch and copies the PDFs from
    there.
+
+### Leios development workflow
+
+Formalization of the ledger changes required by Ouroboros Leios is staged on the
+long-lived `leios-main` integration branch, which evolves in parallel with (but
+separate from) the era work on `master`:
+
++  To work on Leios, branch off of `leios-main` and open a pull request targeting
+   `leios-main`. Such PRs run the same full CI as PRs targeting `master`, and each
+   merge to `leios-main` refreshes the browsable `leios-main-artifacts` branch.
+
++  To limit drift, `master` is merged into `leios-main` regularly (merged, not
+   rebased, since the branch is shared).
+
++  Changes to shared infrastructure (e.g. `Ledger.Core`, `Ledger.Prelude`, the STS
+   machinery) that the Leios work requires should land on `master` first and then
+   be synced down to `leios-main`, so that the diff between the two branches stays
+   mostly additive.
 
 ---
 
