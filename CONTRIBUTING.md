@@ -461,22 +461,13 @@ Our CI/CD pipeline, defined in `.github/workflows/`, automates the building and 
 
 ### Leios development workflow
 
-Formalization of the ledger changes required by Ouroboros Leios is staged on the
-long-lived `leios-main` integration branch, which evolves in parallel with (but
-separate from) the era work on `master`:
+Formalization of the ledger changes required by Ouroboros Leios is staged on the `leios-main` branch, which evolves in parallel to `master`:
 
 +  To work on Leios, branch off of `leios-main` and open a pull request targeting
-   `leios-main`. Such PRs run the same full CI as PRs targeting `master`, and each
-   merge to `leios-main` refreshes the browsable `leios-main-artifacts` branch.
-
-+  To limit drift, `master` is merged into `leios-main` regularly (merged, not
-   rebased, since the branch is shared).
-
-+  Changes to shared infrastructure (e.g. `Ledger.Core`, `Ledger.Prelude`, the STS
-   machinery) that the Leios work requires should land on `master` first and then
-   be synced down to `leios-main`, so that the diff between the two branches stays
-   mostly additive.
-
+   `leios-main`. Such PRs run the same CI as PRs targeting `master`.
+   
++  Changes required but independent of Leios (e.g. `Ledger.Core`, `Ledger.Prelude`, the STS
+   machinery) should be made first on a PR to `master` and then merged into `leios-main`.
 ---
 
 <a id="setup-without-nix"></a>
