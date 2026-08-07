@@ -1,0 +1,37 @@
+name: properties-check
+
+# Reconcile the ledger-properties catalog (build-tools/properties.yaml) against
+# the Agda source and the generated dashboard. This is the no-network drift gate
+# described in docs/adr/0001-ledger-property-tracking.md. (The Agda --safe
+# typecheck that guarantees `proved` properties have no holes runs in ci.yml.)
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+    paths:
+      - 'build-tools/properties.yaml'
+      - 'build-tools/static/mkdocs/docs/ledger-properties-dashboard.md'
+      - 'build-tools/scripts/scan_properties.py'
+      - 'src/**/Properties/**'
+      - '.github/workflows/properties-check.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+      - name: Install dependencies
+        run: pip install pyyaml
+      - name: Reconcile catalog with Agda and check the dashboard is current
+        run: python3 build-tools/scripts/scan_properties.py --check
