@@ -361,6 +361,7 @@ private variable
   stᵈ stᵈ' : DState
   stᵍ stᵍ' : GState
   stᵖ stᵖ' : PState
+  stᶜ stᶜ' : CertState
   cc : ℙ Credential
 ```
 -->
@@ -519,23 +520,23 @@ data _⊢_⇀⦇_,POOL⦈_ : PoolEnv → PState → DCert → PState → Type wh
 ### Auxiliary <span class="AgdaDatatype">GOVCERT</span> transition system
 
 ```agda
-data _⊢_⇀⦇_,GOVCERT⦈_ : CertEnv → GState → DCert → GState → Type where
+data _⊢_⇀⦇_,GOVCERT⦈_ : CertEnv → CertState → DCert → CertState → Type where
 
   GOVCERT-regdrep :
     ∙ (d ≡ pp .drepDeposit × c ∉ dom dReps) ⊎ (d ≡ 0 × c ∈ dom dReps)
       ────────────────────────────────
-      ⟦ e , pp , vs , wdrls , cc ⟧ ⊢ ⟦ dReps , ccKeys ⟧ ⇀⦇ regdrep c d an ,GOVCERT⦈ ⟦ ❴ c , e + pp .drepActivity ❵ ∪ˡ dReps , ccKeys ⟧
+      ⟦ e , pp , vs , wdrls , cc ⟧ ⊢ ⟦ stᵈ , stᵖ , ⟦ dReps , ccKeys ⟧ ⟧ ⇀⦇ regdrep c d an ,GOVCERT⦈ ⟦ stᵈ , stᵖ , ⟦ ❴ c , e + pp .drepActivity ❵ ∪ˡ dReps , ccKeys ⟧ ⟧
 
   GOVCERT-deregdrep :
     ∙ c ∈ dom dReps
       ────────────────────────────────
-      ⟦ e , pp , vs , wdrls , cc ⟧ ⊢ ⟦ dReps , ccKeys ⟧ ⇀⦇ deregdrep c d ,GOVCERT⦈ ⟦ dReps ∣ ❴ c ❵ ᶜ , ccKeys ⟧
+      ⟦ e , pp , vs , wdrls , cc ⟧ ⊢ ⟦ ⟦ vDelegs , sDelegs , rwds ⟧ᵈ , stᵖ , ⟦ dReps , ccKeys ⟧ ⟧ ⇀⦇ deregdrep c d ,GOVCERT⦈ ⟦ ⟦ vDelegs ∣^ ❴ vDelegCredential c ❵ ᶜ , sDelegs , rwds ⟧ᵈ , stᵖ , ⟦ dReps ∣ ❴ c ❵ ᶜ , ccKeys ⟧ ⟧
 
   GOVCERT-ccreghot :
     ∙ (c , nothing) ∉ ccKeys
     ∙ c ∈ cc
       ────────────────────────────────
-      ⟦ e , pp , vs , wdrls , cc ⟧ ⊢ ⟦ dReps , ccKeys ⟧ ⇀⦇ ccreghot c mc ,GOVCERT⦈ ⟦ dReps , ❴ c , mc ❵ ∪ˡ ccKeys ⟧
+      ⟦ e , pp , vs , wdrls , cc ⟧ ⊢ ⟦ stᵈ , stᵖ , ⟦ dReps , ccKeys ⟧ ⟧ ⇀⦇ ccreghot c mc ,GOVCERT⦈ ⟦ stᵈ , stᵖ , ⟦ dReps , ❴ c , mc ❵ ∪ˡ ccKeys ⟧ ⟧
 ```
 
 ## The <span class="AgdaDatatype">CERTS</span> Transition System {#sec:the-certs-transition-system}
@@ -561,9 +562,9 @@ data _⊢_⇀⦇_,CERT⦈_  : CertEnv → CertState → DCert → CertState → 
       ⟦ e , pp , vs , wdrls , cc ⟧ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ , stᵖ' , stᵍ ⟧
 
   CERT-vdel :
-    ∙ Γ ⊢ stᵍ ⇀⦇ dCert ,GOVCERT⦈ stᵍ'
+    ∙ Γ ⊢ stᶜ ⇀⦇ dCert ,GOVCERT⦈ stᶜ'
       ────────────────────────────────
-      Γ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ , stᵖ , stᵍ' ⟧
+      Γ ⊢ stᶜ ⇀⦇ dCert ,CERT⦈ stᶜ'
 ```
 
 ### The <span class="AgdaDatatype">PRE-CERT</span> Transition Rule
@@ -607,23 +608,9 @@ data _⊢_⇀⦇_,PRE-CERT⦈_ : CertEnv → CertState → ⊤ → CertState →
       ⟦ e , pp , vs , wdrls , cc ⟧ ⊢ ⟦ ⟦ voteDelegs , stakeDelegs , rewards ⟧ , stᵖ , ⟦ dReps , ccHotKeys ⟧ ⟧ ⇀⦇ _ ,PRE-CERT⦈ ⟦ ⟦ voteDelegs , stakeDelegs , constMap wdrlCreds 0 ∪ˡ rewards ⟧ , stᵖ , ⟦ refreshedDReps , ccHotKeys ⟧ ⟧
 ```
 
-### The <span class="AgdaDatatype">POST-CERT</span> Transition Rule
-
-The `POST-CERT`{.AgdaFunction} transition rule is applied at the end of the
-`CERTS`{.AgdaDatatype} rule and it ensures that only valid registered
-`DReps`{.AgdaInductiveConstructor} are included in the final `CertState`{.AgdaRecord}.
-
 ```agda
-data _⊢_⇀⦇_,POST-CERT⦈_ : CertEnv → CertState → ⊤ → CertState → Type where
-
-  CERT-post :
-    let activeVDelegs = mapˢ vDelegCredential (dom (DRepsOf stᵍ))
-                         ∪ fromList (vDelegNoConfidence ∷ vDelegAbstain ∷ [])
-    in
-      ⟦ e , pp , vs , wdrls , cc ⟧ ⊢ ⟦ ⟦ voteDelegs , stakeDelegs , rewards ⟧ , stᵖ , stᵍ ⟧ ⇀⦇ _ ,POST-CERT⦈ ⟦ ⟦ voteDelegs ∣^ activeVDelegs , stakeDelegs , rewards ⟧ , stᵖ , stᵍ ⟧
-
 _⊢_⇀⦇_,CERTS⦈_  : CertEnv → CertState  → List DCert  → CertState  → Type
-_⊢_⇀⦇_,CERTS⦈_ = RunTraceAfterAndThen _⊢_⇀⦇_,PRE-CERT⦈_ _⊢_⇀⦇_,CERT⦈_ _⊢_⇀⦇_,POST-CERT⦈_
+_⊢_⇀⦇_,CERTS⦈_ = RunTraceAfter _⊢_⇀⦇_,PRE-CERT⦈_ _⊢_⇀⦇_,CERT⦈_
 ```
 
 # References {#references .unnumbered}
