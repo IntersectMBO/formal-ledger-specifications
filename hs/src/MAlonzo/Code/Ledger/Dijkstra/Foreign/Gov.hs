@@ -49,7 +49,6 @@ import qualified MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions
 import qualified MAlonzo.Code.Ledger.Core.Specification.Address
 import qualified MAlonzo.Code.Ledger.Core.Specification.Crypto
 import qualified MAlonzo.Code.Ledger.Core.Specification.Epoch
-import qualified MAlonzo.Code.Ledger.Dijkstra.Foreign.Cert
 import qualified MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs
 import qualified MAlonzo.Code.Ledger.Dijkstra.Foreign.Enact
 import qualified MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures
@@ -78,7 +77,7 @@ data GovProposal = MkGovProposal {gpAction :: MAlonzo.Code.Ledger.Dijkstra.Forei
   deriving (Show, Eq, Generic)
 data GovActionState = MkGovActionState {gasVotes :: MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Core.GovVotes, gasReturnAddr :: MAlonzo.Code.Ledger.Core.Foreign.Address.RewardAddress, gasExpiresIn :: Integer, gasAction :: MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Actions.GovAction, gasPrevAction :: (Integer, Integer), gasDeposit :: Integer}
   deriving (Show, Eq, Generic)
-data GovEnv = MkGovEnv {geTxid :: Integer, geEpoch :: Integer, gePparams :: MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.PParams, gePpolicy :: (Maybe Integer), geEnactState :: MAlonzo.Code.Ledger.Dijkstra.Foreign.Enact.EnactState, geCertState :: MAlonzo.Code.Ledger.Dijkstra.Foreign.Cert.CertState, geRewardCreds :: (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.HSSet MAlonzo.Code.Ledger.Core.Foreign.Address.Credential)}
+data GovEnv = MkGovEnv {geTxid :: Integer, geEpoch :: Integer, gePparams :: MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.PParams, gePpolicy :: (Maybe Integer), geEnactState :: MAlonzo.Code.Ledger.Dijkstra.Foreign.Enact.EnactState, geCertState :: MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.CertState, geRewardCreds :: (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.HSSet MAlonzo.Code.Ledger.Core.Foreign.Address.Credential)}
   deriving (Show, Eq, Generic)
 type GovActionID = (Integer, Integer)
 type GovState = [((Integer, Integer), MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.GovActionState)]
@@ -8527,7 +8526,7 @@ d_Conv'45'GovEnv_360
                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_withdrawals_1250
                                     (coe v5))))))
                      (coe
-                        MAlonzo.Code.Ledger.Dijkstra.Foreign.Cert.C_MkCertState_43
+                        MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.C_MkCertState_26151
                         (coe
                            MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.C_MkDState_16871
                            (coe
@@ -11039,7 +11038,7 @@ d_Conv'45'GovEnv_360
                                  case coe v8 of
                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.C_'10214'_'44'_'44'_'10215''7580''738'_1422 v9 v10 v11
                                      -> coe
-                                          MAlonzo.Code.Ledger.Dijkstra.Foreign.Cert.C_MkCertState_43
+                                          MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.C_MkCertState_26151
                                           (coe
                                              MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.C_MkDState_16871
                                              (coe
@@ -11228,7 +11227,7 @@ d_Conv'45'GovEnv_360
                            (coe
                               (\ v8 ->
                                  case coe v8 of
-                                   MAlonzo.Code.Ledger.Dijkstra.Foreign.Cert.C_MkCertState_43 v9 v10 v11
+                                   MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.C_MkCertState_26151 v9 v10 v11
                                      -> coe
                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.C_'10214'_'44'_'44'_'10215''7580''738'_1422
                                           (coe
@@ -12168,7 +12167,7 @@ check_MkGovEnv_10105 ::
   MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.T_PParams_12421 ->
   MAlonzo.Code.Agda.Builtin.Maybe.T_Maybe_10 () Integer ->
   MAlonzo.Code.Ledger.Dijkstra.Foreign.Enact.T_EnactState_1621 ->
-  MAlonzo.Code.Ledger.Dijkstra.Foreign.Cert.T_CertState_41 ->
+  MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.T_CertState_26149 ->
   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.T_HSSet_60
     MAlonzo.Code.Ledger.Core.Foreign.Address.T_Credential_615 ->
   T_GovEnv_10103

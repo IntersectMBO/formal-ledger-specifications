@@ -39,7 +39,6 @@ import qualified MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions
 import qualified MAlonzo.Code.Ledger.Core.Specification.Address
 import qualified MAlonzo.Code.Ledger.Core.Specification.Crypto
 import qualified MAlonzo.Code.Ledger.Core.Specification.Epoch
-import qualified MAlonzo.Code.Ledger.Dijkstra.Foreign.Cert
 import qualified MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs
 import qualified MAlonzo.Code.Ledger.Dijkstra.Foreign.Enact
 import qualified MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures
@@ -1217,7 +1216,7 @@ d_Conv'45'EpochState_278
                            (MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_govSt_3786
                               (coe v3)))
                         (coe
-                           MAlonzo.Code.Ledger.Dijkstra.Foreign.Cert.C_MkCertState_43
+                           MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.C_MkCertState_26151
                            (coe
                               MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.C_MkDState_16871
                               (coe
@@ -2630,7 +2629,7 @@ d_Conv'45'EpochState_278
                                                       MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.d_Conv'45'GovActionState_356)))
                                              v8)
                                           (coe
-                                             MAlonzo.Code.Ledger.Dijkstra.Foreign.Cert.C_MkCertState_43
+                                             MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.C_MkCertState_26151
                                              (coe
                                                 MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.C_MkDState_16871
                                                 (coe
@@ -3003,7 +3002,7 @@ d_Conv'45'EpochState_278
                                                       case coe v10 of
                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.C_'10214'_'44'_'44'_'10215''7580''738'_1422 v11 v12 v13
                                                           -> coe
-                                                               MAlonzo.Code.Ledger.Dijkstra.Foreign.Cert.C_MkCertState_43
+                                                               MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.C_MkCertState_26151
                                                                (coe
                                                                   MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.C_MkDState_16871
                                                                   (coe
@@ -3192,7 +3191,7 @@ d_Conv'45'EpochState_278
                                                 (coe
                                                    (\ v10 ->
                                                       case coe v10 of
-                                                        MAlonzo.Code.Ledger.Dijkstra.Foreign.Cert.C_MkCertState_43 v11 v12 v13
+                                                        MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.C_MkCertState_26151 v11 v12 v13
                                                           -> coe
                                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.C_'10214'_'44'_'44'_'10215''7580''738'_1422
                                                                (coe

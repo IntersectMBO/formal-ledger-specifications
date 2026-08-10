@@ -17,11 +17,11 @@ import MAlonzo.Code.Ledger.Dijkstra.Foreign.Transaction       as X
   , Redeemer, RedeemerPtr
   , NativeScript(..), HSNativeScript (..), HSPlutusScript (..))
 import MAlonzo.Code.Ledger.Dijkstra.Foreign.Cert              as X
-  (certStep, certsStep, CertState(..))
+  (certStep, certsStep)
 import MAlonzo.Code.Ledger.Dijkstra.Foreign.Chain             as X
   (ChainState(..), Block(..), chainStep)
 import MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs             as X
-  ( StakePoolParams(..), PState(..), DelegEnv(..), GovCertEnv(..), CertEnv(..), DState(..), DCert(..), GState(..)
+  ( StakePoolParams(..), PState(..), DelegEnv(..), GovCertEnv(..), CertEnv(..), DState(..), DCert(..), GState(..), CertState(..)
   , delegStep, govCertStep, poolStep)
 import MAlonzo.Code.Ledger.Dijkstra.Foreign.Entities          as X
   (EntitiesEnv(..), entitiesStep, SubEntitiesEnv(..), subentitiesStep)
