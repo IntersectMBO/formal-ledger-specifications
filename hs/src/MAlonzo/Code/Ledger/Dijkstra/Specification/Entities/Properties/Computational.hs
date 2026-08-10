@@ -294,7 +294,7 @@ d_compute_3266 v0
   = coe
       MAlonzo.Code.Interface.ComputationalRelation.du_compute_274
       (coe
-         MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.Properties.Computational.d_Computational'45'CERTS_2194
+         MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.Properties.Computational.d_Computational'45'CERTS_2150
          (coe
             MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_govStructure_2768
             (coe v0)))
@@ -317,7 +317,7 @@ d_computeProof_3270 v0
   = coe
       MAlonzo.Code.Interface.ComputationalRelation.d_computeProof_272
       (coe
-         MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.Properties.Computational.d_Computational'45'CERTS_2194
+         MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.Properties.Computational.d_Computational'45'CERTS_2150
          (coe
             MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_govStructure_2768
             (coe v0)))
@@ -343,7 +343,7 @@ d_failure'8660''8704''172'STS_3274 v0
   = coe
       MAlonzo.Code.Interface.ComputationalRelation.du_failure'8660''8704''172'STS_398
       (coe
-         MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.Properties.Computational.d_Computational'45'CERTS_2194
+         MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.Properties.Computational.d_Computational'45'CERTS_2150
          (coe
             MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_govStructure_2768
             (coe v0)))
@@ -360,7 +360,7 @@ d_recomputeProof_3276 v0 v1 v2 v3 v4 v5
   = coe
       MAlonzo.Code.Interface.ComputationalRelation.du_recomputeProof_410
       (coe
-         MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.Properties.Computational.d_Computational'45'CERTS_2194
+         MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.Properties.Computational.d_Computational'45'CERTS_2150
          (coe
             MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_govStructure_2768
             (coe v0)))
@@ -379,7 +379,7 @@ d_'8704''172'STS'8658'failure_3278 v0 v1 v2 v3 v4
   = coe
       MAlonzo.Code.Interface.ComputationalRelation.du_'8704''172'STS'8658'failure_360
       (coe
-         MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.Properties.Computational.d_Computational'45'CERTS_2194
+         MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.Properties.Computational.d_Computational'45'CERTS_2150
          (coe
             MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_govStructure_2768
             (coe v0)))
@@ -396,7 +396,7 @@ d_'8801''45'success'8660'STS_3280 v0
   = coe
       MAlonzo.Code.Interface.ComputationalRelation.du_'8801''45'success'8660'STS_300
       (coe
-         MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.Properties.Computational.d_Computational'45'CERTS_2194
+         MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.Properties.Computational.d_Computational'45'CERTS_2150
          (coe
             MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_govStructure_2768
             (coe v0)))
@@ -3150,83 +3150,12 @@ d_computeProof_3326 v0 v1 v2 v3
                                                                                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.du_HasCast'45'DState_1814)
                                                                                                                       (coe
                                                                                                                          MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
-                                                                                                                         (let v26
-                                                                                                                                = MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_DecEq'45'VDeleg_1286
-                                                                                                                                    (coe
-                                                                                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_govStructure_2768
-                                                                                                                                       (coe
-                                                                                                                                          v0)) in
-                                                                                                                          coe
+                                                                                                                         (coe
+                                                                                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_voteDelegs_1362
                                                                                                                             (coe
-                                                                                                                               MAlonzo.Code.Axiom.Set.Map.du__'8739''94'__2100
+                                                                                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_dState_1416
                                                                                                                                (coe
-                                                                                                                                  MAlonzo.Code.Axiom.Set.d_th_1516
-                                                                                                                                  (coe
-                                                                                                                                     MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
-                                                                                                                               (coe
-                                                                                                                                  MAlonzo.Code.Axiom.Set.d_'8712''45'sp_1648
-                                                                                                                                  MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8
-                                                                                                                                  erased
-                                                                                                                                  v26)
-                                                                                                                               (coe
-                                                                                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_voteDelegs_1362
-                                                                                                                                  (coe
-                                                                                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_dState_1416
-                                                                                                                                     (coe
-                                                                                                                                        v20)))
-                                                                                                                               (let v27
-                                                                                                                                      = MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8 in
-                                                                                                                                coe
-                                                                                                                                  (coe
-                                                                                                                                     MAlonzo.Code.Axiom.Set.du__'8746'__708
-                                                                                                                                     (coe
-                                                                                                                                        MAlonzo.Code.Axiom.Set.d_th_1516
-                                                                                                                                        (coe
-                                                                                                                                           v27))
-                                                                                                                                     (let v28
-                                                                                                                                            = MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8 in
-                                                                                                                                      coe
-                                                                                                                                        (coe
-                                                                                                                                           MAlonzo.Code.Axiom.Set.du_map_426
-                                                                                                                                           (MAlonzo.Code.Axiom.Set.d_th_1516
-                                                                                                                                              (coe
-                                                                                                                                                 v28))
-                                                                                                                                           (coe
-                                                                                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_vDelegCredential_960)
-                                                                                                                                           (coe
-                                                                                                                                              MAlonzo.Code.Class.IsSet.du_dom_586
-                                                                                                                                              (coe
-                                                                                                                                                 MAlonzo.Code.Axiom.Set.d_th_1516
-                                                                                                                                                 (coe
-                                                                                                                                                    MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
-                                                                                                                                              (coe
-                                                                                                                                                 MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_594)
-                                                                                                                                              (coe
-                                                                                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_DRepsOf_1194
-                                                                                                                                                 (coe
-                                                                                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.du_HasDReps'45'GState_1784)
-                                                                                                                                                 (MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_gState_1420
-                                                                                                                                                    (coe
-                                                                                                                                                       v20))))))
-                                                                                                                                     (let v28
-                                                                                                                                            = MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8 in
-                                                                                                                                      coe
-                                                                                                                                        (coe
-                                                                                                                                           MAlonzo.Code.Axiom.Set.du_fromList_456
-                                                                                                                                           (coe
-                                                                                                                                              MAlonzo.Code.Axiom.Set.d_th_1516
-                                                                                                                                              (coe
-                                                                                                                                                 v28))
-                                                                                                                                           (coe
-                                                                                                                                              MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
-                                                                                                                                              (coe
-                                                                                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_vDelegNoConfidence_964)
-                                                                                                                                              (coe
-                                                                                                                                                 MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
-                                                                                                                                                 (coe
-                                                                                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_vDelegAbstain_962)
-                                                                                                                                                 (coe
-                                                                                                                                                    MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))))))))
+                                                                                                                                  v20)))
                                                                                                                          (coe
                                                                                                                             MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                                                                             (coe
@@ -3267,12 +3196,7 @@ d_computeProof_3326 v0 v1 v2 v3
                                                                                                                          (coe
                                                                                                                             v20)))))
                                                                                                              (coe
-                                                                                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Entities.C_SUBENTITIES_3172
-                                                                                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_voteDelegs_1362
-                                                                                                                   (coe
-                                                                                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_dState_1416
-                                                                                                                      (coe
-                                                                                                                         v20)))
+                                                                                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Entities.C_SUBENTITIES_3170
                                                                                                                 (MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_rewards_1366
                                                                                                                    (coe
                                                                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_dState_1416
@@ -6452,83 +6376,12 @@ d_computeProof_3640 v0 v1 v2 v3
                                                                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.du_HasCast'45'DState_1814)
                                                                                                                              (coe
                                                                                                                                 MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
-                                                                                                                                (let v28
-                                                                                                                                       = MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_DecEq'45'VDeleg_1286
-                                                                                                                                           (coe
-                                                                                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_govStructure_2768
-                                                                                                                                              (coe
-                                                                                                                                                 v0)) in
-                                                                                                                                 coe
+                                                                                                                                (coe
+                                                                                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_voteDelegs_1362
                                                                                                                                    (coe
-                                                                                                                                      MAlonzo.Code.Axiom.Set.Map.du__'8739''94'__2100
+                                                                                                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_dState_1416
                                                                                                                                       (coe
-                                                                                                                                         MAlonzo.Code.Axiom.Set.d_th_1516
-                                                                                                                                         (coe
-                                                                                                                                            MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
-                                                                                                                                      (coe
-                                                                                                                                         MAlonzo.Code.Axiom.Set.d_'8712''45'sp_1648
-                                                                                                                                         MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8
-                                                                                                                                         erased
-                                                                                                                                         v28)
-                                                                                                                                      (coe
-                                                                                                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_voteDelegs_1362
-                                                                                                                                         (coe
-                                                                                                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_dState_1416
-                                                                                                                                            (coe
-                                                                                                                                               v22)))
-                                                                                                                                      (let v29
-                                                                                                                                             = MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8 in
-                                                                                                                                       coe
-                                                                                                                                         (coe
-                                                                                                                                            MAlonzo.Code.Axiom.Set.du__'8746'__708
-                                                                                                                                            (coe
-                                                                                                                                               MAlonzo.Code.Axiom.Set.d_th_1516
-                                                                                                                                               (coe
-                                                                                                                                                  v29))
-                                                                                                                                            (let v30
-                                                                                                                                                   = MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8 in
-                                                                                                                                             coe
-                                                                                                                                               (coe
-                                                                                                                                                  MAlonzo.Code.Axiom.Set.du_map_426
-                                                                                                                                                  (MAlonzo.Code.Axiom.Set.d_th_1516
-                                                                                                                                                     (coe
-                                                                                                                                                        v30))
-                                                                                                                                                  (coe
-                                                                                                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_vDelegCredential_960)
-                                                                                                                                                  (coe
-                                                                                                                                                     MAlonzo.Code.Class.IsSet.du_dom_586
-                                                                                                                                                     (coe
-                                                                                                                                                        MAlonzo.Code.Axiom.Set.d_th_1516
-                                                                                                                                                        (coe
-                                                                                                                                                           MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
-                                                                                                                                                     (coe
-                                                                                                                                                        MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_594)
-                                                                                                                                                     (coe
-                                                                                                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_DRepsOf_1194
-                                                                                                                                                        (coe
-                                                                                                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.du_HasDReps'45'GState_1784)
-                                                                                                                                                        (MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_gState_1420
-                                                                                                                                                           (coe
-                                                                                                                                                              v22))))))
-                                                                                                                                            (let v30
-                                                                                                                                                   = MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8 in
-                                                                                                                                             coe
-                                                                                                                                               (coe
-                                                                                                                                                  MAlonzo.Code.Axiom.Set.du_fromList_456
-                                                                                                                                                  (coe
-                                                                                                                                                     MAlonzo.Code.Axiom.Set.d_th_1516
-                                                                                                                                                     (coe
-                                                                                                                                                        v30))
-                                                                                                                                                  (coe
-                                                                                                                                                     MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
-                                                                                                                                                     (coe
-                                                                                                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_vDelegNoConfidence_964)
-                                                                                                                                                     (coe
-                                                                                                                                                        MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
-                                                                                                                                                        (coe
-                                                                                                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_vDelegAbstain_962)
-                                                                                                                                                        (coe
-                                                                                                                                                           MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))))))))
+                                                                                                                                         v22)))
                                                                                                                                 (coe
                                                                                                                                    MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                                                                                    (coe
@@ -6569,12 +6422,7 @@ d_computeProof_3640 v0 v1 v2 v3
                                                                                                                                 (coe
                                                                                                                                    v22)))))
                                                                                                                     (coe
-                                                                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Entities.C_ENTITIES_3226
-                                                                                                                       (MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_voteDelegs_1362
-                                                                                                                          (coe
-                                                                                                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_dState_1416
-                                                                                                                             (coe
-                                                                                                                                v22)))
+                                                                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Entities.C_ENTITIES_3222
                                                                                                                        (MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_rewards_1366
                                                                                                                           (coe
                                                                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_dState_1416
@@ -6650,6 +6498,6 @@ d_completeness_3742 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_CertState_1408 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3666 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_CertState_1408 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Entities.T__'8866'_'8640''10631'_'44'ENTITIES'10632'__3174 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Entities.T__'8866'_'8640''10631'_'44'ENTITIES'10632'__3172 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
 d_completeness_3742 = erased

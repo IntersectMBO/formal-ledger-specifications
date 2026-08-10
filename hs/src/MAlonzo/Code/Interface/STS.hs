@@ -100,13 +100,17 @@ d_ReflexiveTransitiveClosure'7495'_136 ::
   (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> ()) ->
   AgdaAny -> AgdaAny -> [AgdaAny] -> AgdaAny -> ()
 d_ReflexiveTransitiveClosure'7495'_136 = erased
+-- Interface.STS.RunTraceAfter
+d_RunTraceAfter_148 a0 a1 a2 a3 a4 a5 a6 a7 a8 = ()
+data T_RunTraceAfter_148
+  = C_run_154 AgdaAny MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 -- Interface.STS.STS-total
-d_STS'45'total_138 ::
+d_STS'45'total_156 ::
   () ->
   () -> () -> (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> ()) -> ()
-d_STS'45'total_138 = erased
+d_STS'45'total_156 = erased
 -- Interface.STS.ReflexiveTransitiveClosure-total
-d_ReflexiveTransitiveClosure'45'total_152 ::
+d_ReflexiveTransitiveClosure'45'total_170 ::
   () ->
   () ->
   () ->
@@ -115,15 +119,15 @@ d_ReflexiveTransitiveClosure'45'total_152 ::
    AgdaAny -> AgdaAny -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14) ->
   AgdaAny ->
   AgdaAny -> [AgdaAny] -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_ReflexiveTransitiveClosure'45'total_152 ~v0 ~v1 ~v2 ~v3 v4 v5 v6
+d_ReflexiveTransitiveClosure'45'total_170 ~v0 ~v1 ~v2 ~v3 v4 v5 v6
                                           v7
-  = du_ReflexiveTransitiveClosure'45'total_152 v4 v5 v6 v7
-du_ReflexiveTransitiveClosure'45'total_152 ::
+  = du_ReflexiveTransitiveClosure'45'total_170 v4 v5 v6 v7
+du_ReflexiveTransitiveClosure'45'total_170 ::
   (AgdaAny ->
    AgdaAny -> AgdaAny -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14) ->
   AgdaAny ->
   AgdaAny -> [AgdaAny] -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-du_ReflexiveTransitiveClosure'45'total_152 v0 v1 v2 v3
+du_ReflexiveTransitiveClosure'45'total_170 v0 v1 v2 v3
   = case coe v3 of
       []
         -> coe
@@ -131,11 +135,11 @@ du_ReflexiveTransitiveClosure'45'total_152 v0 v1 v2 v3
              (coe C_BS'45'base_82 (coe C_Id'45'nop_120))
       (:) v4 v5
         -> coe
-             du_'46'extendedlambda0_170 (coe v0) (coe v1) (coe v5)
+             du_'46'extendedlambda0_188 (coe v0) (coe v1) (coe v5)
              (coe v0 v1 v2 v4)
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Interface.STS..extendedlambda0
-d_'46'extendedlambda0_170 ::
+d_'46'extendedlambda0_188 ::
   () ->
   () ->
   () ->
@@ -148,16 +152,16 @@ d_'46'extendedlambda0_170 ::
   [AgdaAny] ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_'46'extendedlambda0_170 ~v0 ~v1 ~v2 ~v3 v4 v5 ~v6 ~v7 v8 v9
-  = du_'46'extendedlambda0_170 v4 v5 v8 v9
-du_'46'extendedlambda0_170 ::
+d_'46'extendedlambda0_188 ~v0 ~v1 ~v2 ~v3 v4 v5 ~v6 ~v7 v8 v9
+  = du_'46'extendedlambda0_188 v4 v5 v8 v9
+du_'46'extendedlambda0_188 ::
   (AgdaAny ->
    AgdaAny -> AgdaAny -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14) ->
   AgdaAny ->
   [AgdaAny] ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-du_'46'extendedlambda0_170 v0 v1 v2 v3
+du_'46'extendedlambda0_188 v0 v1 v2 v3
   = case coe v3 of
       MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v4 v5
         -> coe
@@ -165,19 +169,19 @@ du_'46'extendedlambda0_170 v0 v1 v2 v3
              (coe MAlonzo.Code.Class.Bifunctor.du_Bifunctor'45'Σ_74)
              (\ v6 -> coe C_BS'45'ind_84 v4 v5)
              (coe
-                du_ReflexiveTransitiveClosure'45'total_152 (coe v0) (coe v1)
+                du_ReflexiveTransitiveClosure'45'total_170 (coe v0) (coe v1)
                 (coe v4) (coe v2))
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Interface.STS.LedgerInvariant
-d_LedgerInvariant_176 ::
+d_LedgerInvariant_194 ::
   () ->
   () ->
   () ->
   (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> ()) ->
   (AgdaAny -> ()) -> ()
-d_LedgerInvariant_176 = erased
+d_LedgerInvariant_194 = erased
 -- Interface.STS.RTC-preserves-inv
-d_RTC'45'preserves'45'inv_194 ::
+d_RTC'45'preserves'45'inv_212 ::
   () ->
   () ->
   () ->
@@ -190,17 +194,17 @@ d_RTC'45'preserves'45'inv_194 ::
   [AgdaAny] ->
   AgdaAny ->
   T__'8866'_'8640''10214'_'10215''42'__80 -> AgdaAny -> AgdaAny
-d_RTC'45'preserves'45'inv_194 ~v0 ~v1 ~v2 ~v3 ~v4 v5 v6 v7 v8 ~v9
+d_RTC'45'preserves'45'inv_212 ~v0 ~v1 ~v2 ~v3 ~v4 v5 v6 v7 v8 ~v9
                               v10
-  = du_RTC'45'preserves'45'inv_194 v5 v6 v7 v8 v10
-du_RTC'45'preserves'45'inv_194 ::
+  = du_RTC'45'preserves'45'inv_212 v5 v6 v7 v8 v10
+du_RTC'45'preserves'45'inv_212 ::
   (AgdaAny ->
    AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
   [AgdaAny] ->
   T__'8866'_'8640''10214'_'10215''42'__80 -> AgdaAny -> AgdaAny
-du_RTC'45'preserves'45'inv_194 v0 v1 v2 v3 v4
+du_RTC'45'preserves'45'inv_212 v0 v1 v2 v3 v4
   = case coe v4 of
       C_BS'45'base_82 v8 -> coe seq (coe v8) (coe (\ v9 -> v9))
       C_BS'45'ind_84 v8 v11 v12
@@ -209,12 +213,12 @@ du_RTC'45'preserves'45'inv_194 v0 v1 v2 v3 v4
                -> coe
                     (\ v15 ->
                        coe
-                         du_RTC'45'preserves'45'inv_194 v0 v1 v8 v14 v12
+                         du_RTC'45'preserves'45'inv_212 v0 v1 v8 v14 v12
                          (coe v0 v1 v2 v13 v8 v11 v15))
              _ -> MAlonzo.RTE.mazUnreachableError
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Interface.STS._.RTC-All
-d_RTC'45'All_218 ::
+d_RTC'45'All_236 ::
   () ->
   () ->
   () ->
@@ -224,9 +228,9 @@ d_RTC'45'All_218 ::
   AgdaAny ->
   [AgdaAny] ->
   AgdaAny -> T__'8866'_'8640''10214'_'10215''42'__80 -> ()
-d_RTC'45'All_218 = erased
+d_RTC'45'All_236 = erased
 -- Interface.STS._.RTC-All-last
-d_RTC'45'All'45'last_226 ::
+d_RTC'45'All'45'last_244 ::
   () ->
   () ->
   () ->
@@ -238,13 +242,13 @@ d_RTC'45'All'45'last_226 ::
   [AgdaAny] ->
   AgdaAny ->
   T__'8866'_'8640''10214'_'10215''42'__80 -> AgdaAny -> AgdaAny
-d_RTC'45'All'45'last_226 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8 ~v9 v10
+d_RTC'45'All'45'last_244 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8 ~v9 v10
                          v11
-  = du_RTC'45'All'45'last_226 v8 v10 v11
-du_RTC'45'All'45'last_226 ::
+  = du_RTC'45'All'45'last_244 v8 v10 v11
+du_RTC'45'All'45'last_244 ::
   [AgdaAny] ->
   T__'8866'_'8640''10214'_'10215''42'__80 -> AgdaAny -> AgdaAny
-du_RTC'45'All'45'last_226 v0 v1 v2
+du_RTC'45'All'45'last_244 v0 v1 v2
   = case coe v1 of
       C_BS'45'ind_84 v6 v9 v10
         -> case coe v10 of
@@ -260,7 +264,7 @@ du_RTC'45'All'45'last_226 v0 v1 v2
                       -> case coe v2 of
                            MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v21 v22
                              -> coe
-                                  du_RTC'45'All'45'last_226 (coe v20)
+                                  du_RTC'45'All'45'last_244 (coe v20)
                                   (coe C_BS'45'ind_84 v14 v17 v18) (coe v22)
                            _ -> MAlonzo.RTE.mazUnreachableError
                     _ -> MAlonzo.RTE.mazUnreachableError

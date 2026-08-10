@@ -2904,7 +2904,7 @@ du_HasCoin'45'LedgerState_3932 v0
                              MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_fees_3156
                              (coe d_utxoSt_3784 (coe v1))))
                        (coe
-                          MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_rewardsBalance_1898
+                          MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_rewardsBalance_1910
                           (coe
                              MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_govStructure_2768
                              (coe v0))
