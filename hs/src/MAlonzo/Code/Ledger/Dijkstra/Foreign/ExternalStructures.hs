@@ -10129,7 +10129,7 @@ d_DecEq'45'DCert_3258 ::
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 d_DecEq'45'DCert_3258 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_DecEq'45'DCert_1974
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_DecEq'45'DCert_1986
       (coe
          MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_govStructure_2768
          (coe d_HSTransactionStructure_636 (coe v0)))
@@ -10139,7 +10139,7 @@ d_DecEq'45'StakePoolParams_3260 ::
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 d_DecEq'45'StakePoolParams_3260 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_DecEq'45'StakePoolParams_1972
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_DecEq'45'StakePoolParams_1984
       (coe
          MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_govStructure_2768
          (coe d_HSTransactionStructure_636 (coe v0)))
@@ -10275,7 +10275,7 @@ d_HasCoin'45'CertState_3312 ::
   MAlonzo.Code.Ledger.Prelude.HasCoin.T_HasCoin_10
 d_HasCoin'45'CertState_3312 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_HasCoin'45'CertState_1968
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_HasCoin'45'CertState_1980
       (coe
          MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_govStructure_2768
          (coe d_HSTransactionStructure_636 (coe v0)))
@@ -10668,7 +10668,7 @@ d_coinFromDeposits_3458 ::
   Integer
 d_coinFromDeposits_3458 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_coinFromDeposits_1960
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_coinFromDeposits_1972
       (coe
          MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_govStructure_2768
          (coe d_HSTransactionStructure_636 (coe v0)))
@@ -10679,7 +10679,7 @@ d_coinFromRewards_3460 ::
   Integer
 d_coinFromRewards_3460 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_coinFromRewards_1958
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_coinFromRewards_1970
       (coe
          MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_govStructure_2768
          (coe d_HSTransactionStructure_636 (coe v0)))
@@ -10706,7 +10706,7 @@ d_newCertDeposits_3470 ::
   Integer
 d_newCertDeposits_3470 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_newCertDeposits_1910
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_newCertDeposits_1922
       (coe
          MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_govStructure_2768
          (coe d_HSTransactionStructure_636 (coe v0)))
@@ -10723,7 +10723,7 @@ du_refundCertDeposits_3472 ::
   Integer
 du_refundCertDeposits_3472 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.du_refundCertDeposits_1940
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.du_refundCertDeposits_1952
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.rewardsBalance
 d_rewardsBalance_3480 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
@@ -10731,7 +10731,7 @@ d_rewardsBalance_3480 ::
   Integer
 d_rewardsBalance_3480 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_rewardsBalance_1898
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_rewardsBalance_1910
       (coe
          MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_govStructure_2768
          (coe d_HSTransactionStructure_636 (coe v0)))
@@ -11152,7 +11152,7 @@ d_HSAbstractFunctions_3702 v0
                        coe
                          MAlonzo.Code.Class.DecEq.Core.du__'61''61'__18 (coe ())
                          (coe
-                            MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_DecEq'45'DCert_1974
+                            MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_DecEq'45'DCert_1986
                             (coe
                                MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_govStructure_2768
                                (coe d_HSTransactionStructure_636 (coe v0))))

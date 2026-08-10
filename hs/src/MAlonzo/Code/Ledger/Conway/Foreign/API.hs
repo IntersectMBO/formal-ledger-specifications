@@ -12,11 +12,11 @@ import MAlonzo.Code.Ledger.Conway.Foreign.Transaction       as X
   , Script, Datum, DataHash, Value, TxOut, RdmrPtr, ScriptHash, AuxiliaryData, Withdrawals
   , HSTimelock (..), HSPlutusScript (..))
 import MAlonzo.Code.Ledger.Conway.Foreign.Cert              as X
-  (certStep, certsStep, CertState(..))
+  (certStep, certsStep)
 import MAlonzo.Code.Ledger.Conway.Foreign.Chain             as X
   (ChainState(..), HSBlock(..), chainStep)
 import MAlonzo.Code.Ledger.Conway.Foreign.Certs             as X
-  ( StakePoolParams(..), PState(..), DelegEnv(..), CertEnv(..), DState(..), DCert(..), GState(..)
+  ( StakePoolParams(..), PState(..), DelegEnv(..), CertEnv(..), DState(..), DCert(..), GState(..), CertState(..)
   , delegStep, govCertStep, poolStep, DepositPurpose(..))
 import MAlonzo.Code.Ledger.Conway.Foreign.Enact             as X
   (EnactState(..), EnactEnv(..), enactStep)

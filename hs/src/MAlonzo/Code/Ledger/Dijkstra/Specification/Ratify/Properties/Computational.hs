@@ -424,7 +424,7 @@ d_RATIFIES'45'total_3190 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_RATIFIES'45'total_3190 v0 v1 v2 v3
   = coe
-      MAlonzo.Code.Interface.STS.du_ReflexiveTransitiveClosure'45'total_152
+      MAlonzo.Code.Interface.STS.du_ReflexiveTransitiveClosure'45'total_170
       (coe
          (\ v4 v5 v6 ->
             d_RATIFY'45'total_3096 (coe v0) (coe v4) (coe v5) (coe v6)))

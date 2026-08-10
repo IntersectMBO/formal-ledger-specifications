@@ -44,7 +44,6 @@ import qualified MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions
 import qualified MAlonzo.Code.Ledger.Core.Specification.Address
 import qualified MAlonzo.Code.Ledger.Core.Specification.Crypto
 import qualified MAlonzo.Code.Ledger.Core.Specification.Epoch
-import qualified MAlonzo.Code.Ledger.Dijkstra.Foreign.Cert
 import qualified MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs
 import qualified MAlonzo.Code.Ledger.Dijkstra.Foreign.Enact
 import qualified MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures
@@ -79,7 +78,7 @@ data SubLedgerEnv = MkSubLedgerEnv {sleSlot :: Integer, slePpolicy :: (Maybe Int
   deriving (Show, Eq, Generic)
 data LedgerEnv = MkLedgerEnv {leSlot :: Integer, lePpolicy :: (Maybe Integer), lePparams :: MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.PParams, leEnactState :: MAlonzo.Code.Ledger.Dijkstra.Foreign.Enact.EnactState, leTreasury :: Integer}
   deriving (Show, Eq, Generic)
-data LedgerState = MkLedgerState {lsUtxoSt :: MAlonzo.Code.Ledger.Dijkstra.Foreign.Utxo.UTxOState, lsGovSt :: [((Integer, Integer), MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.GovActionState)], lsCertState :: MAlonzo.Code.Ledger.Dijkstra.Foreign.Cert.CertState}
+data LedgerState = MkLedgerState {lsUtxoSt :: MAlonzo.Code.Ledger.Dijkstra.Foreign.Utxo.UTxOState, lsGovSt :: [((Integer, Integer), MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.GovActionState)], lsCertState :: MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.CertState}
   deriving (Show, Eq, Generic)
 -- Ledger.Dijkstra.Foreign.Ledger._._⊢_⇀⦇_,LEDGERS⦈_
 d__'8866'_'8640''10631'_'44'LEDGERS'10632'__10 ::
@@ -6976,7 +6975,7 @@ d_Conv'45'LedgerState_168
                                  MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.d_Conv'45'GovActionState_356)))
                         v2)
                      (coe
-                        MAlonzo.Code.Ledger.Dijkstra.Foreign.Cert.C_MkCertState_43
+                        MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.C_MkCertState_26151
                         (coe
                            MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.C_MkDState_16871
                            (coe
@@ -7347,7 +7346,7 @@ d_Conv'45'LedgerState_168
                                  case coe v4 of
                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.C_'10214'_'44'_'44'_'10215''7580''738'_1422 v5 v6 v7
                                      -> coe
-                                          MAlonzo.Code.Ledger.Dijkstra.Foreign.Cert.C_MkCertState_43
+                                          MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.C_MkCertState_26151
                                           (coe
                                              MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.C_MkDState_16871
                                              (coe
@@ -7536,7 +7535,7 @@ d_Conv'45'LedgerState_168
                            (coe
                               (\ v4 ->
                                  case coe v4 of
-                                   MAlonzo.Code.Ledger.Dijkstra.Foreign.Cert.C_MkCertState_43 v5 v6 v7
+                                   MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.C_MkCertState_26151 v5 v6 v7
                                      -> coe
                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.C_'10214'_'44'_'44'_'10215''7580''738'_1422
                                           (coe
@@ -8484,7 +8483,7 @@ check_MkLedgerState_33253 ::
        () ()
        (MAlonzo.Code.Foreign.Haskell.Pair.T_Pair_22 () () Integer Integer)
        MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.T_GovActionState_6067) ->
-  MAlonzo.Code.Ledger.Dijkstra.Foreign.Cert.T_CertState_41 ->
+  MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.T_CertState_26149 ->
   T_LedgerState_33251
 check_MkLedgerState_33253 = MkLedgerState
 cover_LedgerState_33251 :: LedgerState -> ()

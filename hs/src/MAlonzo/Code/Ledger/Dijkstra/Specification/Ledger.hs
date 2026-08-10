@@ -2918,13 +2918,13 @@ du_HasCoin'45'LedgerState_3946 v0
                        MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_fees_3162
                        (coe d_utxoSt_3790 (coe v1))))
                  (coe
-                    MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_coinFromDeposits_1960
+                    MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_coinFromDeposits_1972
                     (coe
                        MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_govStructure_2768
                        (coe v0))
                     (coe d_certState_3794 (coe v1))))
               (coe
-                 MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_coinFromRewards_1958
+                 MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_coinFromRewards_1970
                  (coe
                     MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_govStructure_2768
                     (coe v0))

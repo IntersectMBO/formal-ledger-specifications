@@ -40,7 +40,6 @@ import qualified MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions
 import qualified MAlonzo.Code.Ledger.Core.Specification.Address
 import qualified MAlonzo.Code.Ledger.Core.Specification.Crypto
 import qualified MAlonzo.Code.Ledger.Core.Specification.Epoch
-import qualified MAlonzo.Code.Ledger.Dijkstra.Foreign.Cert
 import qualified MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs
 import qualified MAlonzo.Code.Ledger.Dijkstra.Foreign.Enact
 import qualified MAlonzo.Code.Ledger.Dijkstra.Foreign.Epoch
@@ -1277,7 +1276,7 @@ d_Conv'45'NewEpochState_278
                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4026
                                     (coe v4))))
                            (coe
-                              MAlonzo.Code.Ledger.Dijkstra.Foreign.Cert.C_MkCertState_43
+                              MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.C_MkCertState_26151
                               (coe
                                  MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.C_MkDState_16871
                                  (coe
@@ -2227,7 +2226,7 @@ d_Conv'45'NewEpochState_278
                                                 (MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_govSt_3792
                                                    (coe v10)))
                                              (coe
-                                                MAlonzo.Code.Ledger.Dijkstra.Foreign.Cert.C_MkCertState_43
+                                                MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.C_MkCertState_26151
                                                 (coe
                                                    MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.C_MkDState_16871
                                                    (coe
@@ -3730,7 +3729,7 @@ d_Conv'45'NewEpochState_278
                                                                            MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.d_Conv'45'GovActionState_356)))
                                                                   v15)
                                                                (coe
-                                                                  MAlonzo.Code.Ledger.Dijkstra.Foreign.Cert.C_MkCertState_43
+                                                                  MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.C_MkCertState_26151
                                                                   (coe
                                                                      MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.C_MkDState_16871
                                                                      (coe
@@ -4112,7 +4111,7 @@ d_Conv'45'NewEpochState_278
                                                                            case coe v17 of
                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.C_'10214'_'44'_'44'_'10215''7580''738'_1422 v18 v19 v20
                                                                                -> coe
-                                                                                    MAlonzo.Code.Ledger.Dijkstra.Foreign.Cert.C_MkCertState_43
+                                                                                    MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.C_MkCertState_26151
                                                                                     (coe
                                                                                        MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.C_MkDState_16871
                                                                                        (coe
@@ -4312,7 +4311,7 @@ d_Conv'45'NewEpochState_278
                                                                      (coe
                                                                         (\ v17 ->
                                                                            case coe v17 of
-                                                                             MAlonzo.Code.Ledger.Dijkstra.Foreign.Cert.C_MkCertState_43 v18 v19 v20
+                                                                             MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.C_MkCertState_26151 v18 v19 v20
                                                                                -> coe
                                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.C_'10214'_'44'_'44'_'10215''7580''738'_1422
                                                                                     (coe

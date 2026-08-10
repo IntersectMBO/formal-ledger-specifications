@@ -2274,7 +2274,7 @@ d_completeEntities_4270 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_CertState_1408 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3672 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_CertState_1408 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Entities.T__'8866'_'8640''10631'_'44'ENTITIES'10632'__3180 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Entities.T__'8866'_'8640''10631'_'44'ENTITIES'10632'__3178 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
 d_completeEntities_4270 = erased
 -- Ledger.Dijkstra.Specification.Ledger.Properties.Computational._.completeGov

@@ -2584,7 +2584,7 @@ du_consumed_3542 v0 v1 v2
          (MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_tokenAlgebra_2634
             (coe v0))
          (coe
-            MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.du_refundCertDeposits_1940
+            MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.du_refundCertDeposits_1952
             (coe
                MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.du_allDCerts_4622
                (coe v1))))
@@ -2650,7 +2650,7 @@ du_consumedLegacy_3556 v0 v1 v2
          (MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_tokenAlgebra_2634
             (coe v0))
          (coe
-            MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.du_refundCertDeposits_1940
+            MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.du_refundCertDeposits_1952
             (coe
                MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_DCertsOf_4132
                (coe
@@ -2797,7 +2797,7 @@ du_produced_3566 v0 v1 v2 v3
          MAlonzo.Code.Ledger.Conway.Specification.TokenAlgebra.Base.d_inject_216
          (MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_tokenAlgebra_2634
             (coe v0))
-         (MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_newCertDeposits_1910
+         (MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_newCertDeposits_1922
             (coe
                MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_govStructure_2768
                (coe v0))
@@ -2895,7 +2895,7 @@ du_producedLegacy_3580 v0 v1 v2 v3
          MAlonzo.Code.Ledger.Conway.Specification.TokenAlgebra.Base.d_inject_216
          (MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_tokenAlgebra_2634
             (coe v0))
-         (MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_newCertDeposits_1910
+         (MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_newCertDeposits_1922
             (coe
                MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_govStructure_2768
                (coe v0))
