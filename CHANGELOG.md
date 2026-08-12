@@ -4,15 +4,6 @@
 
 ### WIP
 
-- Prove preservation of value for the `LEDGER` rule (`LEDGER-pov`, #1187), under a
-  `PoolDepositsRegistered` hypothesis on the initial state, in new module
-  `Ledger.Properties.PoV`.  Supporting modules: `Entities.Properties.PoV`
-  (rewards flow `ENTITIES-pov`/`SUBENTITIES-pov`, deposit flow
-  `ENTITIES-deposits-pov`/`SUBENTITIES-deposits-pov`, and their combination
-  `ENTITIES-pov-total`/`SUBENTITIES-pov-total`) and
-  `Entities.Properties.ApplyToRewardsPoV` (`applyWithdrawals-pov`,
-  `applyDirectDeposits-pov`).  The supporting UTxO, Certs, and Gov facts are module
-  parameters, to be discharged by #1186, #1210, and a future `Gov.Properties.PoV`.
 - Add `PoolDepositsRegistered` (every pool-deposit entry belongs to a registered
   pool) to `Certs`; the deposit accounting genuinely fails without it, since
   `POOL-reg` adds its deposit with a left-biased union.

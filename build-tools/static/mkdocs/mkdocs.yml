@@ -241,7 +241,9 @@ nav:
     - Entities/:
       - Properties: Ledger.Dijkstra.Specification.Entities.Properties.md
       - Properties/:
+        - ApplyToRewardsPoV: Ledger.Dijkstra.Specification.Entities.Properties.ApplyToRewardsPoV.md
         - Computational: Ledger.Dijkstra.Specification.Entities.Properties.Computational.md
+        - PoV: Ledger.Dijkstra.Specification.Entities.Properties.PoV.md
     - Epoch: Ledger.Dijkstra.Specification.Epoch.md
     - Epoch/:
       - Properties: Ledger.Dijkstra.Specification.Epoch.Properties.md
@@ -260,6 +262,7 @@ nav:
       - Properties: Ledger.Dijkstra.Specification.Ledger.Properties.md
       - Properties/:
         - Computational: Ledger.Dijkstra.Specification.Ledger.Properties.Computational.md
+        - PoV: Ledger.Dijkstra.Specification.Ledger.Properties.PoV.md
     - PoolReap: Ledger.Dijkstra.Specification.PoolReap.md
     - PoolReap/:
       - Properties: Ledger.Dijkstra.Specification.PoolReap.Properties.md
