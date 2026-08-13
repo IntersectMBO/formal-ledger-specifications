@@ -589,25 +589,53 @@ See [the `conformance-example` directory][conformance-example].
 ## 🗃️ Miscellanea
 
 
-### Updating Agda dependencies in the Nix configuration
+### Updating Nix flake inputs
+
+The flake inputs are declared as `git+https://...` URLs rather than the
+`github:` shorthand, because some sandboxed environments block the GitHub
+tarball endpoints that `github:` uses (see the note in `flake.nix`). A plain
+`nix flake update` would re-introduce `github:` entries for the transitive
+inputs, so update all inputs with
+
+```
+./build-tools/nix/update-flake-inputs.sh
+```
+
+The script (bash + jq) runs `nix flake update`, then converts any `github:`-typed
+entries in `flake.lock` back to `git+https`, including entries for inputs that
+upstream flakes acquired since the last update.  Run it on a network with
+unrestricted GitHub access.
+
+
+#### Updating Agda dependencies in the Nix configuration
 
 The following example ilustrates the procedure
 
 ```
 nix flake update agda-nix/abstract-set-theory \
   --override-input agda-nix/abstract-set-theory \
-  github:input-output-hk/agda-sets/bbaa00abc4aef061896ae5d3cdec148bfbf5029f
+  'git+https://github.com/input-output-hk/agda-sets?rev=bbaa00abc4aef061896ae5d3cdec148bfbf5029f'
 nix build ./#fls-agdaWithPackages -o ~/ledger-agda
 ```
 
-The first line updates the commit hash to use for a dependency. In the example,
-it updates the dependency `agda-nix/abstract-set-theory` to point at the commit
-`bbaa00abc4aef061896ae5d3cdec148bfbf5029f` or the repository
-`github:input-output-hk/agda-sets`.
+The first line updates the commit hash to use for a dependency.  In the example, it
+updates the dependency `agda-nix/abstract-set-theory` to point at the commit
+`bbaa00abc4aef061896ae5d3cdec148bfbf5029f` of the repository `input-output-hk/agda-sets`.
+Use the `git+https` form rather than `github:` here, so the lock entry stays on the
+git fetcher.
 
-The second line rebuilds the Agda mode to use with emacs. This step is necessary
-for emacs to use the new version of the dependency when loading Agda code. This
-assumes that `~/ledger-agda/bin` is in your `PATH`.
+Note that re-locking one input this way can also refresh its sibling inputs and
+re-introduce `github:` entries for them.  Afterwards, convert those without updating
+anything further, as follows:
+
+```
+./build-tools/nix/update-flake-inputs.sh --convert-only
+```
+
+The second command in the example rebuilds the project's `agda` executable (with the
+updated libraries) and links the result at `~/ledger-agda`.  If `~/ledger-agda/bin`
+is on your `PATH`, emacs (via agda-mode) picks up the new dependency version the next
+time it loads Agda code.
 
 
 ### Plotting typechecking times

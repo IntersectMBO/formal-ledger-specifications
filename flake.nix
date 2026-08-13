@@ -11,26 +11,9 @@
   #
   # nixpkgs adds `shallow=1` so a binary-cache miss fetches only the locked rev.
   #
-  # UPDATING: a plain `nix flake update` re-reads transitive inputs from their
-  # upstream flakes (still declared github:) and would regress the lock.  Use:
-  #
-  #   nix flake update \
-  #     --override-input agda-nix/abstract-set-theory git+https://github.com/input-output-hk/agda-sets \
-  #     --override-input agda-nix/categorical-crypto git+https://github.com/input-output-hk/categorical-crypto \
-  #     --override-input agda-nix/flake-utils git+https://github.com/numtide/flake-utils \
-  #     --override-input agda-nix/flake-utils/systems git+https://github.com/nix-systems/default \
-  #     --override-input agda-nix/iog-prelude git+https://github.com/input-output-hk/iog-agda-prelude \
-  #     --override-input agda-nix/standard-library-classes git+https://github.com/agda/agda-stdlib-classes \
-  #     --override-input agda-nix/standard-library-meta git+https://github.com/agda/agda-stdlib-meta \
-  #     --override-input flake-parts/nixpkgs-lib git+https://github.com/nix-community/nixpkgs.lib
-  #
-  # then verify nothing github-locked slipped in (upstreams gain inputs over time;
-  # `nix flake metadata` shows a new input's path; append an override):
-  #
-  #   python3 -c "import json; L=json.load(open('flake.lock'))['nodes']; \
-  #     print(*[k for k,v in L.items() if v.get('locked',{}).get('type')=='github'] or ['OK'])"
-  #
-  # (Transitive *original* fields read github after an update; harmless since fetches go by *locked* entries.)
+  # To update the inputs, run build-tools/nix/update-flake-inputs.sh (see
+  # "Updating Nix flake inputs" in CONTRIBUTING.md); a plain `nix flake
+  # update` would regress transitive inputs to github:.
   inputs = {
     nixpkgs.url = "git+https://github.com/NixOs/nixpkgs?shallow=1";
 
