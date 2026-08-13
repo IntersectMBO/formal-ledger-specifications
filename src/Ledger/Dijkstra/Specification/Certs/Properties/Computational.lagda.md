@@ -23,6 +23,7 @@ open RewardAddress
 
 open Computational ⦃...⦄
 open StakePoolParams
+open PoolEnv
 open PParams
 
 instance
@@ -59,39 +60,43 @@ instance
   Computational-POOL : Computational _⊢_⇀⦇_,POOL⦈_ String
   Computational-POOL .computeProof _ stᵖ (regpool c poolParams)
     with ¿ IsPoolRegistered (PoolsOf stᵖ) c ¿
-  Computational-POOL .computeProof pp stᵖ (regpool c poolParams) | yes p
+  Computational-POOL .computeProof Γ stᵖ (regpool c poolParams) | yes p
     with ¿ ¬ (poolParams .vrf ∈ mapˢ vrf (range (PoolsOf stᵖ ∣ ❴ c ❵ ᶜ) ∪ range (FuturePoolsOf stᵖ ∣ ❴ c ❵ ᶜ)))
-         ∙ pp .minPoolCost ≤ poolParams .cost ¿
+         ∙ Γ .pp .minPoolCost ≤ poolParams .cost ¿
   ... | yes q = success (-, POOL-rereg (p , q))
   ... | no ¬q = failure (genErrors ¬q)
-  Computational-POOL .computeProof pp stᵖ (regpool c poolParams) | no ¬p
+  Computational-POOL .computeProof Γ stᵖ (regpool c poolParams) | no ¬p
     with ¿ ¬ (poolParams .vrf ∈ mapˢ vrf (range (PoolsOf stᵖ) ∪ range (FuturePoolsOf stᵖ)))
-         ∙ pp .minPoolCost ≤ poolParams .cost ¿
+         ∙ Γ .pp .minPoolCost ≤ poolParams .cost ¿
   ... | yes q = success (-, (POOL-reg (¬p , q)))
   ... | no ¬q = failure (genErrors ¬q)
-  Computational-POOL .computeProof _ stᵖ (retirepool c e)
-    with ¿ IsPoolRegistered (PoolsOf stᵖ) c ¿
+  Computational-POOL .computeProof Γ stᵖ (retirepool c e')
+    with ¿ IsPoolRegistered (PoolsOf stᵖ) c
+         ∙ Γ .epoch < e'
+         ∙ e' ≤  Γ .epoch + Γ .pp .Emax ¿
   ... | yes p = success (-, POOL-retirepool p)
   ... | no ¬q = failure (genErrors ¬q)
   Computational-POOL .computeProof _ stᵖ _ = failure "Unexpected certificate in POOL"
-  Computational-POOL .completeness pp stᵖ (regpool c poolParams) _ (POOL-reg (p , q))
+  Computational-POOL .completeness Γ stᵖ (regpool c poolParams) _ (POOL-reg (p , q))
     with ¿ IsPoolRegistered (PoolsOf stᵖ) c ¿
   ... | yes r = ⊥-elim (p r)
   ... | no ¬r
     with ¿ ¬ (poolParams .vrf ∈ mapˢ vrf (range (PoolsOf stᵖ) ∪ range (FuturePoolsOf stᵖ)))
-         ∙ pp .minPoolCost ≤ poolParams .cost ¿
+         ∙ Γ .pp .minPoolCost ≤ poolParams .cost ¿
   ... | yes _ = refl
   ... | no ¬s = ⊥-elim (¬s q)
-  Computational-POOL .completeness pp stᵖ (regpool c poolParams) _ (POOL-rereg (p , q))
+  Computational-POOL .completeness Γ stᵖ (regpool c poolParams) _ (POOL-rereg (p , q))
     with ¿ IsPoolRegistered (PoolsOf stᵖ) c ¿
   ... | no ¬r = ⊥-elim (¬r p)
   ... | yes r
     with ¿ ¬ (poolParams .vrf ∈ mapˢ vrf (range (PoolsOf stᵖ ∣ ❴ c ❵ ᶜ) ∪ range (FuturePoolsOf stᵖ ∣ ❴ c ❵ ᶜ)))
-         ∙ pp .minPoolCost ≤ poolParams .cost ¿
+         ∙ Γ .pp .minPoolCost ≤ poolParams .cost ¿
   ... | yes _ = refl
   ... | no ¬s = ⊥-elim (¬s q)
-  Computational-POOL .completeness _ stᵖ (retirepool c _) _ (POOL-retirepool p)
-    with ¿ IsPoolRegistered (PoolsOf stᵖ) c ¿
+  Computational-POOL .completeness Γ stᵖ (retirepool c e) _ (POOL-retirepool p)
+    with ¿ IsPoolRegistered (PoolsOf stᵖ) c
+         ∙ Γ .epoch < e
+         ∙ e ≤ Γ .epoch + Γ .pp .Emax ¿
   ... | yes _ = refl
   ... | no ¬q = ⊥-elim (¬q p)
 
@@ -123,7 +128,7 @@ instance
   Computational-CERT : Computational _⊢_⇀⦇_,CERT⦈_ String
   Computational-CERT .computeProof ce cs dCert
     with computeProof ⟦ PParamsOf ce , PoolsOf cs , dom (DRepsOf cs) ⟧ (DStateOf cs) dCert
-         | computeProof (PParamsOf ce) (PStateOf cs) dCert
+         | computeProof ⟦ EpochOf ce ,  PParamsOf ce ⟧ (PStateOf cs) dCert
          | computeProof ⟦ EpochOf ce , PParamsOf ce , ColdCredentialsOf ce ⟧ cs dCert
 
   ... | success (_ , h) | _               | _               = success (-, CERT-deleg h)
@@ -143,12 +148,12 @@ instance
   ... | success _ | refl = refl
   Computational-CERT .completeness ce cs
     dCert@(regpool c poolParams) cs' (CERT-pool h)
-    with computeProof (CertEnv.pp ce) (CertState.pState cs) dCert
+    with computeProof ⟦ CertEnv.epoch ce , CertEnv.pp ce ⟧ (CertState.pState cs) dCert
     | completeness _ _ _ _ h
   ... | success _ | refl = refl
   Computational-CERT .completeness ce cs
     dCert@(retirepool c e) cs' (CERT-pool h)
-    with computeProof (PParamsOf ce) (PStateOf cs) dCert | completeness _ _ _ _ h
+    with computeProof ⟦ EpochOf ce , PParamsOf ce ⟧ (PStateOf cs) dCert | completeness _ _ _ _ h
   ... | success _ | refl = refl
   Computational-CERT .completeness Γ cs
     (regdrep c d an) _ (CERT-gov (GOVCERT-regdrep p))

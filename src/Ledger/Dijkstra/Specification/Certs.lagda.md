@@ -128,8 +128,10 @@ record DelegEnv : Type where
     pools         : Pools
     delegatees    : ℙ Credential
 
-PoolEnv : Type
-PoolEnv = PParams
+record PoolEnv : Type where
+  field
+    epoch           : Epoch
+    pp              : PParams
 
 record GovCertEnv : Type where
   field
@@ -292,12 +294,13 @@ instance
   HasEpoch-CertEnv : HasEpoch CertEnv
   HasEpoch-CertEnv .EpochOf = CertEnv.epoch
 
-  unquoteDecl HasCast-CertEnv HasCast-DState HasCast-PState HasCast-GState HasCast-CertState HasCast-DelegEnv HasCast-GovCertEnv = derive-HasCast
+  unquoteDecl HasCast-CertEnv HasCast-DState HasCast-PState HasCast-GState HasCast-CertState HasCast-DelegEnv HasCast-PoolEnv HasCast-GovCertEnv = derive-HasCast
     (   (quote CertEnv , HasCast-CertEnv)
     ∷   (quote DState , HasCast-DState)
     ∷   (quote PState , HasCast-PState)
     ∷   (quote GState , HasCast-GState)
     ∷   (quote CertState , HasCast-CertState)
+    ∷   (quote PoolEnv , HasCast-PoolEnv)
     ∷   (quote GovCertEnv , HasCast-GovCertEnv)
     ∷ [ (quote DelegEnv , HasCast-DelegEnv) ])
 
@@ -322,7 +325,7 @@ private variable
   mc          : Maybe Credential
   delegatees  : ℙ Credential
   dCert       : DCert
-  e           : Epoch
+  e e'        : Epoch
   vs          : List GovVote
   kh          : KeyHash
   mkh         : Maybe KeyHash
@@ -421,7 +424,7 @@ data _⊢_⇀⦇_,POOL⦈_ : PoolEnv → PState → DCert → PState → Type wh
     ∙ ¬ (poolParams .vrf ∈ mapˢ vrf (range pools ∪ range fPools))
     ∙ pp .minPoolCost ≤ poolParams .cost
     ────────────────────────────────
-    pp ⊢ ⟦ pools
+    ⟦ e , pp ⟧ ⊢ ⟦ pools
          , fPools
          , retiring
          , deposits
@@ -437,7 +440,7 @@ data _⊢_⇀⦇_,POOL⦈_ : PoolEnv → PState → DCert → PState → Type wh
     ∙ ¬ (poolParams .vrf ∈ mapˢ vrf (range (pools ∣ ❴ kh ❵ ᶜ) ∪ range (fPools ∣ ❴ kh ❵ ᶜ)))
     ∙ pp .minPoolCost ≤ poolParams .cost
     ────────────────────────────────
-    pp ⊢ ⟦ pools
+    ⟦ e , pp ⟧ ⊢ ⟦ pools
          , fPools
          , retiring
          , deposits
@@ -450,15 +453,17 @@ data _⊢_⇀⦇_,POOL⦈_ : PoolEnv → PState → DCert → PState → Type wh
 
   POOL-retirepool :
     ∙ IsPoolRegistered pools kh
+    ∙ e < e'
+    ∙ e' ≤ e + pp .Emax
     ────────────────────────────────
-    pp ⊢ ⟦ pools
+    ⟦ e , pp ⟧ ⊢ ⟦ pools
          , fPools
          , retiring
          , deposits
-         ⟧ ⇀⦇ retirepool kh e ,POOL⦈ ⟦
+         ⟧ ⇀⦇ retirepool kh e' ,POOL⦈ ⟦
            pools
          , fPools
-         , ❴ kh , e ❵ ∪ˡ retiring
+         , ❴ kh , e' ❵ ∪ˡ retiring
          , deposits
          ⟧
 ```
@@ -497,7 +502,7 @@ data _⊢_⇀⦇_,CERT⦈_  : CertEnv → CertState → DCert → CertState → 
       ⟦ e , pp , cc ⟧ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ' , stᵖ , stᵍ ⟧
 
   CERT-pool :
-    ∙ pp ⊢ stᵖ ⇀⦇ dCert ,POOL⦈ stᵖ'
+    ∙ ⟦ e , pp ⟧ ⊢ stᵖ ⇀⦇ dCert ,POOL⦈ stᵖ'
       ────────────────────────────────
       ⟦ e , pp , cc ⟧ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ , stᵖ' , stᵍ ⟧
 
