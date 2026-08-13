@@ -140,7 +140,7 @@ record GovCertEnv : Type where
 
 <!--
 ```agda
-open StakePoolParams using (vrf)
+open StakePoolParams using (vrf; cost)
 
 IsConwayCert? : IsConwayCert ⁇¹
 IsConwayCert? {x} .dec with x
@@ -419,6 +419,7 @@ data _⊢_⇀⦇_,POOL⦈_ : PoolEnv → PState → DCert → PState → Type wh
   POOL-reg :
     ∙ ¬ (IsPoolRegistered pools kh)
     ∙ ¬ (poolParams .vrf ∈ mapˢ vrf (range pools ∪ range fPools))
+    ∙ pp .minPoolCost ≤ poolParams .cost
     ────────────────────────────────
     pp ⊢ ⟦ pools
          , fPools
@@ -434,6 +435,7 @@ data _⊢_⇀⦇_,POOL⦈_ : PoolEnv → PState → DCert → PState → Type wh
   POOL-rereg :
     ∙ IsPoolRegistered pools kh
     ∙ ¬ (poolParams .vrf ∈ mapˢ vrf (range (pools ∣ ❴ kh ❵ ᶜ) ∪ range (fPools ∣ ❴ kh ❵ ᶜ)))
+    ∙ pp .minPoolCost ≤ poolParams .cost
     ────────────────────────────────
     pp ⊢ ⟦ pools
          , fPools

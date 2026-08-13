@@ -22,7 +22,8 @@ open GovStructure govStructure
 open RewardAddress
 
 open Computational ⦃...⦄
-open StakePoolParams using (vrf)
+open StakePoolParams
+open PParams
 
 instance
   Computational-DELEG : Computational _⊢_⇀⦇_,DELEG⦈_ String
@@ -58,32 +59,36 @@ instance
   Computational-POOL : Computational _⊢_⇀⦇_,POOL⦈_ String
   Computational-POOL .computeProof _ stᵖ (regpool c poolParams)
     with ¿ IsPoolRegistered (PoolsOf stᵖ) c ¿
-  Computational-POOL .computeProof _ stᵖ (regpool c poolParams) | yes p
-    with ¿ ¬ (poolParams .vrf ∈ mapˢ vrf (range (PoolsOf stᵖ ∣ ❴ c ❵ ᶜ) ∪ range (FuturePoolsOf stᵖ ∣ ❴ c ❵ ᶜ))) ¿
+  Computational-POOL .computeProof pp stᵖ (regpool c poolParams) | yes p
+    with ¿ ¬ (poolParams .vrf ∈ mapˢ vrf (range (PoolsOf stᵖ ∣ ❴ c ❵ ᶜ) ∪ range (FuturePoolsOf stᵖ ∣ ❴ c ❵ ᶜ)))
+         ∙ pp .minPoolCost ≤ poolParams .cost ¿
   ... | yes q = success (-, POOL-rereg (p , q))
-  ... | no ¬q = failure "poolParams .vrf ∈ mapˢ vrf (range (PoolsOf stᵖ ∣ ❴ c ❵ ᶜ) ∪ range (FuturePoolsOf stᵖ ∣ ❴ c ❵ ᶜ)))"
-  Computational-POOL .computeProof _ stᵖ (regpool c poolParams) | no ¬p
-    with ¿ ¬ (poolParams .vrf ∈ mapˢ vrf (range (PoolsOf stᵖ) ∪ range (FuturePoolsOf stᵖ))) ¿
+  ... | no ¬q = failure (genErrors ¬q)
+  Computational-POOL .computeProof pp stᵖ (regpool c poolParams) | no ¬p
+    with ¿ ¬ (poolParams .vrf ∈ mapˢ vrf (range (PoolsOf stᵖ) ∪ range (FuturePoolsOf stᵖ)))
+         ∙ pp .minPoolCost ≤ poolParams .cost ¿
   ... | yes q = success (-, (POOL-reg (¬p , q)))
-  ... | no ¬q = failure "poolParams .vrf ∈ mapˢ vrf (range (PoolsOf stᵖ) ∪ range (FuturePoolsOf stᵖ))"
+  ... | no ¬q = failure (genErrors ¬q)
   Computational-POOL .computeProof _ stᵖ (retirepool c e)
     with ¿ IsPoolRegistered (PoolsOf stᵖ) c ¿
   ... | yes p = success (-, POOL-retirepool p)
-  ... | no ¬q = failure "Pool not registered"
+  ... | no ¬q = failure (genErrors ¬q)
   Computational-POOL .computeProof _ stᵖ _ = failure "Unexpected certificate in POOL"
-  Computational-POOL .completeness _ stᵖ (regpool c poolParams) _ (POOL-reg (p , q))
+  Computational-POOL .completeness pp stᵖ (regpool c poolParams) _ (POOL-reg (p , q))
     with ¿ IsPoolRegistered (PoolsOf stᵖ) c ¿
   ... | yes r = ⊥-elim (p r)
   ... | no ¬r
-    with ¿ ¬ (poolParams .vrf ∈ mapˢ vrf (range (PoolsOf stᵖ) ∪ range (FuturePoolsOf stᵖ))) ¿
-  ... | yes s = refl
+    with ¿ ¬ (poolParams .vrf ∈ mapˢ vrf (range (PoolsOf stᵖ) ∪ range (FuturePoolsOf stᵖ)))
+         ∙ pp .minPoolCost ≤ poolParams .cost ¿
+  ... | yes _ = refl
   ... | no ¬s = ⊥-elim (¬s q)
-  Computational-POOL .completeness _ stᵖ (regpool c poolParams) _ (POOL-rereg (p , q))
+  Computational-POOL .completeness pp stᵖ (regpool c poolParams) _ (POOL-rereg (p , q))
     with ¿ IsPoolRegistered (PoolsOf stᵖ) c ¿
   ... | no ¬r = ⊥-elim (¬r p)
   ... | yes r
-    with ¿ ¬ (poolParams .vrf ∈ mapˢ vrf (range (PoolsOf stᵖ ∣ ❴ c ❵ ᶜ) ∪ range (FuturePoolsOf stᵖ ∣ ❴ c ❵ ᶜ))) ¿
-  ... | yes s = refl
+    with ¿ ¬ (poolParams .vrf ∈ mapˢ vrf (range (PoolsOf stᵖ ∣ ❴ c ❵ ᶜ) ∪ range (FuturePoolsOf stᵖ ∣ ❴ c ❵ ᶜ)))
+         ∙ pp .minPoolCost ≤ poolParams .cost ¿
+  ... | yes _ = refl
   ... | no ¬s = ⊥-elim (¬s q)
   Computational-POOL .completeness _ stᵖ (retirepool c _) _ (POOL-retirepool p)
     with ¿ IsPoolRegistered (PoolsOf stᵖ) c ¿
