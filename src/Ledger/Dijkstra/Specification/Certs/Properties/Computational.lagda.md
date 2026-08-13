@@ -62,11 +62,13 @@ instance
     with ¿ IsPoolRegistered (PoolsOf stᵖ) c ¿
   Computational-POOL .computeProof Γ stᵖ (regpool c poolParams) | yes p
     with ¿ ¬ (poolParams .vrf ∈ mapˢ vrf (range (PoolsOf stᵖ ∣ ❴ c ❵ ᶜ) ∪ range (FuturePoolsOf stᵖ ∣ ❴ c ❵ ᶜ)))
+         ∙ NetworkIdOf (poolParams .rewardAccount) ≡ NetworkId
          ∙ Γ .pp .minPoolCost ≤ poolParams .cost ¿
   ... | yes q = success (-, POOL-rereg (p , q))
   ... | no ¬q = failure (genErrors ¬q)
   Computational-POOL .computeProof Γ stᵖ (regpool c poolParams) | no ¬p
     with ¿ ¬ (poolParams .vrf ∈ mapˢ vrf (range (PoolsOf stᵖ) ∪ range (FuturePoolsOf stᵖ)))
+         ∙ NetworkIdOf (poolParams .rewardAccount) ≡ NetworkId
          ∙ Γ .pp .minPoolCost ≤ poolParams .cost ¿
   ... | yes q = success (-, (POOL-reg (¬p , q)))
   ... | no ¬q = failure (genErrors ¬q)
@@ -82,6 +84,7 @@ instance
   ... | yes r = ⊥-elim (p r)
   ... | no ¬r
     with ¿ ¬ (poolParams .vrf ∈ mapˢ vrf (range (PoolsOf stᵖ) ∪ range (FuturePoolsOf stᵖ)))
+         ∙ NetworkIdOf (poolParams .rewardAccount) ≡ NetworkId
          ∙ Γ .pp .minPoolCost ≤ poolParams .cost ¿
   ... | yes _ = refl
   ... | no ¬s = ⊥-elim (¬s q)
@@ -90,6 +93,7 @@ instance
   ... | no ¬r = ⊥-elim (¬r p)
   ... | yes r
     with ¿ ¬ (poolParams .vrf ∈ mapˢ vrf (range (PoolsOf stᵖ ∣ ❴ c ❵ ᶜ) ∪ range (FuturePoolsOf stᵖ ∣ ❴ c ❵ ᶜ)))
+         ∙ NetworkIdOf (poolParams .rewardAccount) ≡ NetworkId
          ∙ Γ .pp .minPoolCost ≤ poolParams .cost ¿
   ... | yes _ = refl
   ... | no ¬s = ⊥-elim (¬s q)
