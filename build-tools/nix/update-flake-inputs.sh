@@ -46,7 +46,9 @@ paths() {
 }
 
 # For every github:-typed node, emit "--override-input <path> <git+https url>"
-# as tab-separated fields, preserving a declared branch or subdirectory.
+# as tab-separated fields. The URL pins the node's locked revision, so the
+# conversion changes the fetcher and nothing else; a declared branch or
+# subdirectory is preserved alongside it.
 overrides() {
   local path key
   while IFS=$'\t' read -r path key; do
@@ -54,9 +56,10 @@ overrides() {
       .nodes[$k]
       | select(.locked.type == "github")
       | (if .original.type == "github" then .original else .locked end) as $o
-      | ([$o.ref // empty | "ref=\(.)"] + [$o.dir // empty | "dir=\(.)"]) as $q
-      | "--override-input\t\($p)\tgit+https://github.com/\($o.owner)/\($o.repo)"
-        + (if ($q | length) > 0 then "?" + ($q | join("&")) else "" end)
+      | ([$o.ref // empty | "ref=\(.)"]
+         + ["rev=\(.locked.rev)"]
+         + [$o.dir // empty | "dir=\(.)"]) as $q
+      | "--override-input\t\($p)\tgit+https://github.com/\($o.owner)/\($o.repo)?\($q | join("&"))"
     ' flake.lock
   done
 }
