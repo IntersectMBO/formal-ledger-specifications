@@ -22,6 +22,7 @@ open GovStructure govStructure
 open RewardAddress
 
 open Computational ⦃...⦄
+open StakePoolParams using (vrf)
 
 instance
   Computational-DELEG : Computational _⊢_⇀⦇_,DELEG⦈_ String
@@ -55,20 +56,33 @@ instance
   ... | no ¬p = ⊥-elim (¬p (p , q))
 
   Computational-POOL : Computational _⊢_⇀⦇_,POOL⦈_ String
-  Computational-POOL .computeProof _ stᵖ (regpool c _)
+  Computational-POOL .computeProof _ stᵖ (regpool c poolParams)
     with ¿ IsPoolRegistered (PoolsOf stᵖ) c ¿
-  ... | yes p = success (-, (POOL-rereg p))
-  ... | no ¬p = success (-, (POOL-reg ¬p))
+  Computational-POOL .computeProof _ stᵖ (regpool c poolParams) | yes p
+    with ¿ ¬ (poolParams .vrf ∈ mapˢ vrf (range (PoolsOf stᵖ ∣ ❴ c ❵ ᶜ) ∪ range (FuturePoolsOf stᵖ ∣ ❴ c ❵ ᶜ))) ¿
+  ... | yes q = success (-, POOL-rereg (p , q))
+  ... | no ¬q = failure "poolParams .vrf ∈ mapˢ vrf (range (PoolsOf stᵖ ∣ ❴ c ❵ ᶜ) ∪ range (FuturePoolsOf stᵖ ∣ ❴ c ❵ ᶜ)))"
+  Computational-POOL .computeProof _ stᵖ (regpool c poolParams) | no ¬p
+    with ¿ ¬ (poolParams .vrf ∈ mapˢ vrf (range (PoolsOf stᵖ) ∪ range (FuturePoolsOf stᵖ))) ¿
+  ... | yes q = success (-, (POOL-reg (¬p , q)))
+  ... | no ¬q = failure "poolParams .vrf ∈ mapˢ vrf (range (PoolsOf stᵖ) ∪ range (FuturePoolsOf stᵖ))"
+
   Computational-POOL .computeProof _ stᵖ (retirepool c e) = success (-, POOL-retirepool)
   Computational-POOL .computeProof _ stᵖ _ = failure "Unexpected certificate in POOL"
-  Computational-POOL .completeness _ stᵖ (regpool c _) _ (POOL-reg p)
+  Computational-POOL .completeness _ stᵖ (regpool c poolParams) _ (POOL-reg (p , q))
     with ¿ IsPoolRegistered (PoolsOf stᵖ) c ¿
-  ... | yes p' = ⊥-elim (p p')
-  ... | no _ = refl
-  Computational-POOL .completeness _ stᵖ (regpool c _) _ (POOL-rereg p)
+  ... | yes r = ⊥-elim (p r)
+  ... | no ¬r
+    with ¿ ¬ (poolParams .vrf ∈ mapˢ vrf (range (PoolsOf stᵖ) ∪ range (FuturePoolsOf stᵖ))) ¿
+  ... | yes s = refl
+  ... | no ¬s = ⊥-elim (¬s q)
+  Computational-POOL .completeness _ stᵖ (regpool c poolParams) _ (POOL-rereg (p , q))
     with ¿ IsPoolRegistered (PoolsOf stᵖ) c ¿
-  ... | yes _ = refl
-  ... | no ¬p = ⊥-elim (¬p p)
+  ... | no ¬r = ⊥-elim (¬r p)
+  ... | yes r
+    with ¿ ¬ (poolParams .vrf ∈ mapˢ vrf (range (PoolsOf stᵖ ∣ ❴ c ❵ ᶜ) ∪ range (FuturePoolsOf stᵖ ∣ ❴ c ❵ ᶜ))) ¿
+  ... | yes s = refl
+  ... | no ¬s = ⊥-elim (¬s q)
   Computational-POOL .completeness _ _ (retirepool _ _) _ POOL-retirepool = refl
 
   Computational-GOVCERT : Computational _⊢_⇀⦇_,GOVCERT⦈_ String

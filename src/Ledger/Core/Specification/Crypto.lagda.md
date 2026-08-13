@@ -77,6 +77,9 @@ record CryptoStructure : Type₁ where
 
   open isHashableSet khs renaming (THash to KeyHash) hiding (DecEq-T) public
 
--- TODO: KES and VRF
+  field VRF : Type
+        ⦃ DecEq-VRF ⦄ : DecEq VRF
+
+-- TODO: KES
 ```
 -->
