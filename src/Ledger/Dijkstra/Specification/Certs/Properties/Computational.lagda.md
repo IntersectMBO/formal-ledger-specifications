@@ -66,8 +66,10 @@ instance
     with ¿ ¬ (poolParams .vrf ∈ mapˢ vrf (range (PoolsOf stᵖ) ∪ range (FuturePoolsOf stᵖ))) ¿
   ... | yes q = success (-, (POOL-reg (¬p , q)))
   ... | no ¬q = failure "poolParams .vrf ∈ mapˢ vrf (range (PoolsOf stᵖ) ∪ range (FuturePoolsOf stᵖ))"
-
-  Computational-POOL .computeProof _ stᵖ (retirepool c e) = success (-, POOL-retirepool)
+  Computational-POOL .computeProof _ stᵖ (retirepool c e)
+    with ¿ IsPoolRegistered (PoolsOf stᵖ) c ¿
+  ... | yes p = success (-, POOL-retirepool p)
+  ... | no ¬q = failure "Pool not registered"
   Computational-POOL .computeProof _ stᵖ _ = failure "Unexpected certificate in POOL"
   Computational-POOL .completeness _ stᵖ (regpool c poolParams) _ (POOL-reg (p , q))
     with ¿ IsPoolRegistered (PoolsOf stᵖ) c ¿
@@ -83,7 +85,10 @@ instance
     with ¿ ¬ (poolParams .vrf ∈ mapˢ vrf (range (PoolsOf stᵖ ∣ ❴ c ❵ ᶜ) ∪ range (FuturePoolsOf stᵖ ∣ ❴ c ❵ ᶜ))) ¿
   ... | yes s = refl
   ... | no ¬s = ⊥-elim (¬s q)
-  Computational-POOL .completeness _ _ (retirepool _ _) _ POOL-retirepool = refl
+  Computational-POOL .completeness _ stᵖ (retirepool c _) _ (POOL-retirepool p)
+    with ¿ IsPoolRegistered (PoolsOf stᵖ) c ¿
+  ... | yes _ = refl
+  ... | no ¬q = ⊥-elim (¬q p)
 
   Computational-GOVCERT : Computational _⊢_⇀⦇_,GOVCERT⦈_ String
   Computational-GOVCERT .computeProof ce cs (regdrep c d _) =
@@ -138,8 +143,8 @@ instance
   ... | success _ | refl = refl
   Computational-CERT .completeness ce cs
     dCert@(retirepool c e) cs' (CERT-pool h)
-    with completeness _ _ _ _ h
-  ... | refl = refl
+    with computeProof (PParamsOf ce) (PStateOf cs) dCert | completeness _ _ _ _ h
+  ... | success _ | refl = refl
   Computational-CERT .completeness Γ cs
     (regdrep c d an) _ (CERT-gov (GOVCERT-regdrep p))
     rewrite dec-yes

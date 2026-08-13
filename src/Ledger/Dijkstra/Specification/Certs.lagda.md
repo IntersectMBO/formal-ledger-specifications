@@ -447,6 +447,7 @@ data _⊢_⇀⦇_,POOL⦈_ : PoolEnv → PState → DCert → PState → Type wh
          ⟧
 
   POOL-retirepool :
+    ∙ IsPoolRegistered pools kh
     ────────────────────────────────
     pp ⊢ ⟦ pools
          , fPools
