@@ -132,7 +132,7 @@ instance
   Computational-CERT : Computational _⊢_⇀⦇_,CERT⦈_ String
   Computational-CERT .computeProof ce cs dCert
     with computeProof ⟦ PParamsOf ce , PoolsOf cs , dom (DRepsOf cs) ⟧ (DStateOf cs) dCert
-         | computeProof ⟦ EpochOf ce ,  PParamsOf ce ⟧ (PStateOf cs) dCert
+         | computeProof ⟦ EpochOf ce , PParamsOf ce ⟧ (PStateOf cs) dCert
          | computeProof ⟦ EpochOf ce , PParamsOf ce , ColdCredentialsOf ce ⟧ cs dCert
 
   ... | success (_ , h) | _               | _               = success (-, CERT-deleg h)
@@ -152,7 +152,7 @@ instance
   ... | success _ | refl = refl
   Computational-CERT .completeness ce cs
     dCert@(regpool c poolParams) cs' (CERT-pool h)
-    with computeProof ⟦ CertEnv.epoch ce , CertEnv.pp ce ⟧ (CertState.pState cs) dCert
+    with computeProof ⟦ EpochOf ce , PParamsOf ce ⟧ (PStateOf cs) dCert
     | completeness _ _ _ _ h
   ... | success _ | refl = refl
   Computational-CERT .completeness ce cs
