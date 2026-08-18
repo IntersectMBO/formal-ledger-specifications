@@ -304,6 +304,7 @@ nav:
       - Properties: Ledger.Dijkstra.Specification.Utxow.Properties.md
       - Properties/:
         - Computational: Ledger.Dijkstra.Specification.Utxow.Properties.Computational.md
+- Properties Dashboard: ledger-properties-dashboard.md
 - Appendix:
   - Background:
     - Definitions: Definitions.md
