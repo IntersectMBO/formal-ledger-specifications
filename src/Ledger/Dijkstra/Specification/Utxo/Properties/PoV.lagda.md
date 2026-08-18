@@ -7,7 +7,7 @@ source_path: src/Ledger/Dijkstra/Specification/Utxo/Properties/PoV.lagda.md
 
 This module proves the `UTXO`{.AgdaDatatype}-level preservation-of-value facts
 consumed by the `LEDGER`{.AgdaDatatype} PoV proof
-(`Ledger.Properties.PoV`{.AgdaModule}, issue #1187): the mechanical
+(`Ledger.Properties.PoV`{.AgdaModule}): the mechanical
 `getCoin`{.AgdaField} state-change equations for the valid and invalid cases, and
 the coin projection of the batch balance premise
 `consumedBatch ≡ producedBatch`{.AgdaFunction}.
@@ -101,13 +101,10 @@ private variable
 ## Arithmetic helpers
 
 The pure `+`-rearrangement lemmas in this module are discharged by the
-reflective ring solver over the commutative semiring of naturals
-(`Data.Nat.Tactic.RingSolver`).  The solver recognises the ring's operations
-*syntactically*, so the `Ledger.Prelude` overloaded `_+_` (a
-`HasAdd`{.AgdaRecord} method, which merely *reduces* to `Data.Nat._+_`) defeats
-it.  The solver-facing statements are therefore written with the raw
-natural-number addition, imported as `_+ᴺ_` — definitionally equal to `_+_` at
-`Coin`, so the lemmas discharge `_+_` goals unchanged.
+reflective ring solver (`Data.Nat.Tactic.RingSolver`), with the solver-facing
+statements written over the raw natural-number addition `_+ᴺ_`; see
+`Ledger.Properties.PoV`{.AgdaModule} for the solver conventions and the reason
+the overloaded `_+_` cannot appear in solver-facing statements.
 
 ```agda
 private
@@ -362,9 +359,9 @@ snapshot* `UTxOOf Γ`, so it holds only given two batch-threading facts that the
 Both facts follow from batch-wide input disjointness and TxId freshness, which
 the outer `UTXO`{.AgdaDatatype} rule establishes at the batch level but does not
 expose per step; they are taken as hypotheses here and threaded to module
-parameters of `Utxow.Properties.PoV`{.AgdaModule}, to be discharged by a
-batch-threading invariant (the same family as the `utxo₁-tx-spend-eq` and
-`fresh-top-tx-id` parameters of `Ledger.Properties.PoV`{.AgdaModule}).
+parameters of `Utxow.Properties.PoV`{.AgdaModule}, in the same batch-threading
+family as the `utxo₁-tx-spend-eq` and `fresh-top-tx-id` parameters of
+`Ledger.Properties.PoV`{.AgdaModule}.
 
 ```agda
 subutxo-step-coin : ∀ {Γ : SubUTxOEnv} {s₀ s₁ : UTxOState} {stx : SubLevelTx}
