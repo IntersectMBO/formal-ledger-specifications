@@ -165,6 +165,7 @@ def evaluate(p: dict):
 
 def render_region(cat: dict, results: dict) -> str:
     props = cat["properties"]
+    issue_url = f"https://github.com/{cat['meta']['repo']}/issues"
     lines = []
     lines.append(BEGIN)
     lines.append("")
@@ -197,8 +198,18 @@ def render_region(cat: dict, results: dict) -> str:
         for p in ep:
             status = results[p["id"]]["status"]
             badge = STATUS_BADGE.get(status, status)
-            mod = f"`{p['module']}`" if p.get("module") else "—"
-            issues = ", ".join(f"#{n}" for n in (p.get("issues") or [])) or "—"
+            # Module names link to the module's generated page (which lives in
+            # the same site directory as this dashboard). A `planned` module is
+            # not on this branch, so it has no page yet — plain text, or the
+            # strict mkdocs build would fail on the dangling link.
+            if not p.get("module"):
+                mod = "—"
+            elif status in ("proved", "stated"):
+                mod = f"[`{p['module']}`]({p['module']}.md)"
+            else:
+                mod = f"`{p['module']}`"
+            issues = ", ".join(f"[#{n}]({issue_url}/{n})"
+                               for n in (p.get("issues") or [])) or "—"
             title = p["title"].replace("|", "\\|")
             lines.append(f"| {badge} | {title} | {p['sts']} | {mod} | {issues} |")
         lines.append("")
