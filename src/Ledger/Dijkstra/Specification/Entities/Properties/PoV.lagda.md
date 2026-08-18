@@ -181,10 +181,12 @@ conditions) are premises of the rule itself.
     aw = applyWithdrawals (WithdrawalsOf txSub) r₀
 ```
 
-The top-level analogue, with signal `txTop`{.AgdaBound}, by the same argument.  (In
-legacy mode the rule's own premise forces each top-level withdrawal to equal the
-account's current balance, which implies the `amts≤`{.AgdaBound} hypothesis; in
-normal mode the rule bounds withdrawals only against the pre-batch
+## The `ENTITIES-pov` theorem
+
+The top-level analogue, with signal `txTop`{.AgdaBound}, follows
+by the same argument.  (In legacy mode the rule's own premise forces each top-level
+withdrawal to equal the account's current balance, which implies the `amts≤`{.AgdaBound}
+hypothesis; in normal mode the rule bounds withdrawals only against the pre-batch
 `rewards₀`{.AgdaField}, so the hypothesis is genuinely extra information.)
 
 ```agda
@@ -194,7 +196,11 @@ normal mode the rule bounds withdrawals only against the pre-batch
     → Γ ⊢ s ⇀⦇ txTop ,ENTITIES⦈ s'
     → coinFromRewards s  + getCoin (DirectDepositsOf txTop)
       ≡ coinFromRewards s' + getCoin (WithdrawalsOf txTop)
+```
 
+**Proof**.
+
+```agda
   ENTITIES-pov {txTop = txTop} {s = ⟦ ⟦ _ , _ , r₀ , _ ⟧ᵈ , _ , _ ⟧ᶜˢ}
     amts≤
     (ENTITIES {rewards' = r₁} (wd-netId , wdrls⊆ , _ , _ , _ , _ , certsStep , _ , ddCreds⊆)) =
