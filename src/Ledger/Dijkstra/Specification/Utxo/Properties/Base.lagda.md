@@ -7,22 +7,35 @@ source_path: src/Ledger/Dijkstra/Specification/Utxo/Properties/Base.lagda.md
 
 This module collects the pure `UTxO`{.AgdaFunction} algebra used by the
 preservation-of-value proofs in `Utxo.Properties.PoV`{.AgdaModule} and
-`Utxow.Properties.PoV`{.AgdaModule}:
+`Utxow.Properties.PoV`{.AgdaModule}.  The lemmas proved are as follows:
 
-+  `∙-homo-Coin`{.AgdaFunction}: `coin`{.AgdaField} distributes over `Value`{.AgdaField}
-   addition (the `_∙_` law of the `coin`{.AgdaField} monoid homomorphism).
-+  `coin-∑ˡ`{.AgdaFunction}: `coin`{.AgdaField} distributes over a list-indexed sum of
-   `Value`{.AgdaField}s.
-+  `newTxid⇒disj`{.AgdaFunction} / `outs-disjoint`{.AgdaFunction}: freshness of
-   `TxIdOf tx` in a UTxO implies the outputs of `tx` are disjoint from it.
-+  `balance-cong`{.AgdaFunction} / `balance-cong-coin`{.AgdaFunction}:
++  `∙-homo-Coin`{.AgdaFunction}.
+
+   `coin`{.AgdaField} distributes over `Value`{.AgdaField} addition (the `_∙_` law of
+   the `coin`{.AgdaField} monoid homomorphism).
+
++  `coin-∑ˡ`{.AgdaFunction}.
+
+   `coin`{.AgdaField} distributes over a list-indexed sum of `Value`{.AgdaField}s.
+
++  `newTxid⇒disj`{.AgdaFunction} / `outs-disjoint`{.AgdaFunction}.
+
+   Freshness of `TxIdOf tx` in a UTxO implies the outputs of `tx` are disjoint from it.
+
++  `balance-cong`{.AgdaFunction} / `balance-cong-coin`{.AgdaFunction}.
+
    `balance`{.AgdaFunction} is invariant under extensional equality of UTxOs.
-+  `balance-∪`{.AgdaFunction}: `cbalance`{.AgdaFunction} is additive on disjoint unions.
-+  `split-balance`{.AgdaFunction}: `cbalance`{.AgdaFunction} splits along a key-set
-   restriction and its complement.
+
++  `balance-∪`{.AgdaFunction}.
+
+   `cbalance`{.AgdaFunction} is additive on disjoint unions.
+
++  `split-balance`{.AgdaFunction}.
+
+   `cbalance`{.AgdaFunction} splits along a key-set restriction and its complement.
 
 The balance lemmas are ports of their Conway counterparts (in
-`Ledger.Conway.Specification.Utxo.Properties.Base`{.AgdaModule}): the Dijkstra
+`Ledger.Conway.Specification.Utxo.Properties.Base`{.AgdaModule}).  The Dijkstra
 `balance`{.AgdaFunction} is again an indexed sum over a finite map of transaction
 outputs (`∑[ x ← mapValues txOutToValue utxo ] x`), so the Conway proofs via
 `indexedSumᵐ-cong`{.AgdaFunction} and `indexedSumᵐ-∪`{.AgdaFunction} carry over,
