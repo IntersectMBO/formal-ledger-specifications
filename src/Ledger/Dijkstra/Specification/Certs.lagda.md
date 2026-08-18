@@ -393,6 +393,18 @@ coinFromDeposits cs =
   getCoin (DepositsOf (DStateOf cs)) + getCoin (DepositsOf (PStateOf cs)) + getCoin (DepositsOf (GStateOf cs))
 ```
 
+A `CertState`{.AgdaRecord} is *pool-deposit registered* when every entry of the pool
+deposit pot belongs to a registered pool.  Deposit accounting relies on this:
+`POOL-reg`{.AgdaInductiveConstructor} adds the pool deposit with a left-biased union,
+so a stale pot entry for an unregistered pool would silently swallow the added
+deposit.  The property is preserved by `CERTS`{.AgdaDatatype} (both maps gain exactly
+the new pool's key, and no rule removes a pool without its deposit).
+
+```agda
+PoolDepositsRegistered : CertState → Type
+PoolDepositsRegistered cs = dom (DepositsOf (PStateOf cs)) ⊆ dom (PoolsOf cs)
+```
+
 <!--
 ```agda
 instance

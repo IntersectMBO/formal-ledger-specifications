@@ -3,14 +3,14 @@ source_branch: master
 source_path: src/Ledger/Dijkstra/Specification/Entities/Properties/ApplyToRewardsPoV.lagda.md
 ---
 
-## `applyToRewards` Preservation of Value {#sec:apply-to-rewards-pov}
+# <span class="AgdaFunction">applyToRewards</span> Preservation of Value {#sec:apply-to-rewards-pov}
 
 This module proves preservation of value for the two specializations of
 `applyToRewards`{.AgdaFunction} used inside the `ENTITIES`{.AgdaDatatype} rule.
 
 +  `applyWithdrawals-pov`{.AgdaFunction}.
 
-   `applyWithdrawals`{.AgdaFunction} *decreases* the total rewards balance by exactly
+   `applyWithdrawals`{.AgdaFunction} decreases the total rewards balance by exactly
    the sum of withdrawal amounts.  Truncating subtraction (`_∸_`) means the per-step
    lemma requires `amt ≤ bal`, and the fold induction requires a
    `Unique`{.AgdaDatatype} witness on the stake-projected withdrawal list so that no
@@ -18,7 +18,7 @@ This module proves preservation of value for the two specializations of
 
 +  `applyDirectDeposits-pov`{.AgdaFunction}.
 
-   `applyDirectDeposits`{.AgdaFunction} *increases* the total rewards balance by
+   `applyDirectDeposits`{.AgdaFunction} increases the total rewards balance by
    exactly the sum of direct-deposit amounts.  Because `_+_` is total and
    commutative, revisiting a credential is harmless, so neither the
    `NetworkId`{.AgdaFunction} witness nor the `Unique`{.AgdaDatatype} premise is
@@ -27,7 +27,7 @@ This module proves preservation of value for the two specializations of
 Both lemmas share a common backbone: a per-step result about
 `applyOne`{.AgdaFunction} (the lambda body of `applyToRewards`{.AgdaFunction})
 together with a `foldl`-induction lemma over `setToList (m ˢ)`.  They are consumed
-directly by `ENTITIES-pov`{.AgdaFunction} in `Entities.Properties.PoV`.
+directly by `ENTITIES-pov`{.AgdaFunction} in `Entities.Properties.PoV`{.AgdaModule}.
 
 <!--
 ```agda
@@ -60,7 +60,7 @@ open ≡-Reasoning
 ```
 -->
 
-### Shared helpers
+## Shared helpers
 
 ```agda
 getCoin-∪ˡ-overwrite : (acc : Rewards) (c : Credential) (v : Coin)
@@ -139,11 +139,10 @@ split-by-lookup acc c bal lookup-eq =
 ```
 -->
 
-### The `ApplyToRewards-PoV` module
+## The <span class="AgdaModule">ApplyToRewards-PoV</span> module
 
 The three assumed identities below are the same set/map identities used by the Conway
-PoV proofs; they are stated as module parameters here, to be discharged in a
-follow-up against the `agda-sets` library.
+PoV proofs; they are stated as module parameters here.
 
 +  `∪ˡ-lookup-preserve`: lookup in a left-biased union with a singleton at `c` agrees
    with lookup in the right map for any key `c' ≠ c`.
@@ -223,8 +222,8 @@ The fold invariant tracks three things through the induction.
 3.  No credential is revisited (the `Unique`{.AgdaDatatype} witness on the
     stake-projected list).
 
-Uniqueness is essential here precisely because `applyOne _∸_` *modifies* the balance
-at the targeted credential — without it, a re-visit could attempt to subtract from an
+Uniqueness is essential here precisely because `applyOne _∸_` modifies the balance
+at the targeted credential; without it, a re-visit could attempt to subtract from an
 already-reduced balance for which the caller's original `amt ≤ bal` bound no longer
 holds.
 
@@ -291,7 +290,7 @@ holds.
 ```
 -->
 
-### `applyWithdrawals-pov`
+#### `applyWithdrawals-pov`
 
 ```agda
   applyWithdrawals-pov : (wdrls : Withdrawals) (rwds : Rewards)
@@ -328,9 +327,9 @@ holds.
 ```
 -->
 
-## Direct-deposit preservation of value
+### Direct-deposit preservation of value
 
-### `applyOne-pov-add` (one direct-deposit step increases `getCoin` by `amt`)
+#### `applyOne-pov-add` (one direct-deposit step increases `getCoin` by `amt`)
 
 For addition, no `amt ≤ bal` premise is needed (the operation is total),
 and the per-step equation is `getCoin (...) ≡ getCoin acc + amt`
@@ -361,10 +360,10 @@ balance.
 ```
 -->
 
-### `foldl-applyOne-pov-add` (fold induction, no `Unique` needed)
+#### `foldl-applyOne-pov-add` (fold induction, no `Unique` needed)
 
 Unlike the withdrawal version, the additive fold induction needs only
-domain preservation — the `Unique`{.AgdaDatatype} witness drops out.
+domain preservation; the `Unique`{.AgdaDatatype} witness drops out.
 The reason: `applyOne _+_` modifies the balance at the targeted
 credential, but since the per-step lemma `applyOne-pov-add` is
 unconditional on the prior balance and `_+_` is commutative, revisiting
@@ -406,7 +405,7 @@ the same credential simply accumulates additions correctly.
 ```
 -->
 
-### `applyDirectDeposits-pov`
+#### `applyDirectDeposits-pov`
 
 Note the slimmed-down signature relative to `applyWithdrawals-pov`: no
 `NetworkId`{.AgdaFunction} premise (none is needed), no
