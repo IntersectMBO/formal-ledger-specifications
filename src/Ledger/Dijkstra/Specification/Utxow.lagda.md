@@ -543,3 +543,10 @@ pattern UTXOW-legacy-⋯ p₀ p₁ p₂ p₃ p₄ p₅ p₆ p₇ p₈ p₉ p₁�
 pattern SUBUTXOW-⋯ p₀ p₁ p₂ p₃ p₄ p₅ p₆ p₇ p₈ p₉ p₁₀ p₁₁ h = SUBUTXOW (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , h)
 ```
 -->
+
+# References {#references .unnumbered}
+
+**\[VK21\]** <span id="alonzo-ledger-spec"
+label="alonzo-ledger-spec"></span> Polina Vinogradova and Andre Knispel.
+*A Formal Specification of the Cardano Ledger integrating Plutus Core*.
+2021.
