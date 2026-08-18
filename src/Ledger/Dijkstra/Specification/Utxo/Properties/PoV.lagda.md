@@ -5,12 +5,63 @@ source_path: src/Ledger/Dijkstra/Specification/Utxo/Properties/PoV.lagda.md
 
 # UTXO Properties: Preservation of Value {#sec:utxo-pov}
 
-This module proves the `UTXO`{.AgdaDatatype}-level preservation-of-value facts
-consumed by the `LEDGER`{.AgdaDatatype} PoV proof
-(`Ledger.Properties.PoV`{.AgdaModule}): the mechanical
-`getCoin`{.AgdaField} state-change equations for the valid and invalid cases, and
-the coin projection of the batch balance premise
-`consumedBatch ≡ producedBatch`{.AgdaFunction}.
+This module proves the `UTXO`{.AgdaDatatype}-level facts behind preservation of
+value.  In the simplest terms: a `UTXO`{.AgdaDatatype} step moves coin between the
+three `UTxOState`{.AgdaRecord} pots (UTxO, fees, donations) and the world outside
+`UTxOState`{.AgdaRecord} (rewards withdrawals flow in; certificate and governance
+deposits flow out), and this module proves two kinds of facts about that
+movement:
+
+1.  **the mechanical state change** — equations saying *exactly how much* a step
+    `Γ ⊢ s₀ ⇀⦇ tx ,UTXO⦈ s₁` moves: `getCoin s₀` and `getCoin s₁` differ by
+    exactly the spent balance on one side and outputs, fee, and donation on the
+    other (and an invalid transaction preserves `getCoin`{.AgdaField} exactly);
+
+2.  **the batch coin balance** — the `coin`{.AgdaField} projection of the rule's
+    balance premise `consumedBatch ≡ producedBatch`{.AgdaFunction}: everything
+    the batch consumes equals everything it produces, summand by summand.
+
+Neither fact alone is preservation of value, and their combination is *not*
+proved here: `Ledger.Properties.PoV`{.AgdaModule} performs it, together with the
+accounting for the non-UTxO pots.  The next section explains why the split falls
+exactly this way; the sections after it descend into the details.
+
+## Why the proof splits in two
+
+The two pieces speak about *different UTxOs*, and keeping this in mind makes
+every statement below readable.
+
++   The **mechanical** equations are about the *running* state: the spent balance
+    they account for is `cbalance (UTxOOf s₀ ∣ SpendInputsOf tx)`, resolved
+    against the UTxO actually being stepped.  At the `LEDGER`{.AgdaDatatype}
+    level, `s₀` for the top-level step is the *post-`SUBLEDGERS`* state — the
+    sub-transactions have already executed on it.
+
++   The **batch balance** is about the *pre-batch snapshot*: the spec states the
+    balance premise (premise 8 of the `UTXO`{.AgdaDatatype} rule) against
+    `UTxOOf Γ`, the snapshot carried by the environment.  Its coin projection
+    therefore contains *no state variables at all* — neither `s₀` nor `s₁` occurs in
+    it; every summand is computed from the environment (`UTxOOf Γ`, `PParamsOf Γ`,
+    the pre-batch pool set `PoolsOf Γ`) and the transaction alone.  Where a step
+    derivation appears as a hypothesis (`UTXO-batch-balance-coin`{.AgdaFunction}), it
+    is there only so that premises 7 and 8 can be extracted from it.
+
+Combining the two means equating the running-state spent balance of piece 1 with the
+snapshot spent balance of piece 2, and that requires knowing how the running UTxO
+relates to the snapshot after part of the batch has executed.
+
+The `UTXO`{.AgdaDatatype} rule establishes this batch-wide (spend inputs are mutually
+disjoint across the batch, TxIds are fresh) but does not expose it per step.
+Consequently, unlike in Conway (where the balance premise is per-transaction and
+stated against the same UTxO the rule steps) the valid case has no standalone theorem
+at this level.
+
+Even *with* the batch-threading facts, the valid-case statement could not be a plain
+`getCoin s₀ ≡ getCoin s₁` (nor Conway's `getCoin s₀ + withdrawals ≡ getCoin s₁`),
+because `UTxOState`{.AgdaRecord} holds no deposit pot.  Cert, governance and direct
+deposits leave that for `CertState`{.AgdaRecord}, so a correction term for each would
+be needed.  Instead, the combined calculation happens in `LEDGER-pov`{.AgdaFunction},
+which holds the required batch-level facts as module parameters.
 
 ## Key differences from Conway
 
@@ -35,38 +86,30 @@ the coin projection of the batch balance premise
 4.  **Governance-action deposits appear on the produced side**, one
     `govProposalsDeposits`{.AgdaFunction} summand per transaction in the batch.
 
-## Proof architecture
+## Proof map
 
-The `UTXO`{.AgdaDatatype} PoV facts split into two orthogonal pieces.
+In terms of the lemmas below, the two pieces are:
 
 +   **Mechanical state change** (`UTXO-pov-invalid`{.AgdaFunction},
-    `UTXO-V-mechanical`{.AgdaFunction}, `subutxo-step-coin`{.AgdaFunction}): how
-    `getCoin s₀` relates to `getCoin s₁` purely in terms of the state
+    `UTXO-V-mechanical`{.AgdaFunction}, `subutxo-step-coin`{.AgdaFunction}):
+    how `getCoin s₀` relates to `getCoin s₁` purely in terms of the state
     transition, via the balance algebra of
     `Utxo.Properties.Base`{.AgdaModule} (`split-balance`{.AgdaFunction},
     `balance-∪`{.AgdaFunction}, `outs-disjoint`{.AgdaFunction}).
 
-+   **Batch coin balance** (`UTXO-batch-balance-coin`{.AgdaFunction}): the coin
-    projection of the batch balance premise, proved in three layers —
-    per-transaction (`coin-consumedTx`{.AgdaFunction},
-    `coin-producedTx`{.AgdaFunction}), sums over sub-transactions
-    (`coin-∑-consumedTx-sub`{.AgdaFunction},
-    `coin-∑-producedTx-sub`{.AgdaFunction}), and batch level
-    (`coin-consumedBatch`{.AgdaFunction}, `coin-producedBatch`{.AgdaFunction}).
-    The minted values drop out: the top-level term by premise 7 of the
-    `UTXO`{.AgdaDatatype} rule, the sub-level terms by the
-    `noMintSubTx`{.AgdaBound} module parameter (a per-sub-transaction fact
-    established by the `SUBUTXO`{.AgdaDatatype} premises, which the
-    `UTXO`{.AgdaDatatype} rule does not expose — it is discharged at the
-    `LEDGER`{.AgdaDatatype} level, where the `SUBLEDGERS`{.AgdaDatatype} steps
-    are in scope).
++   **Batch coin balance** (`UTXO-batch-balance-coin`{.AgdaFunction}).
+    The coin projection of the batch balance premise, proved in three layers:
 
-Unlike Conway, no *standalone* `getCoin s₀ ≡ getCoin s₁` theorem holds at the
-`UTXO`{.AgdaDatatype} level for the valid case: the state `s₀` passed to the
-`UTXO`{.AgdaDatatype} rule at the `LEDGER`{.AgdaDatatype} level is the
-*post-`SUBLEDGERS`* state while the batch balance speaks about the *pre-batch*
-snapshot `UTxOOf Γ`, so combining the two pieces requires batch-threading
-information available only to `LEDGER-pov`{.AgdaFunction}.
+    1.  per-transaction
+        (`coin-consumedTx`{.AgdaFunction}, `coin-producedTx`{.AgdaFunction});
+    2.  sums over sub-transactions
+        (`coin-∑-consumedTx-sub`{.AgdaFunction}, `coin-∑-producedTx-sub`{.AgdaFunction});
+    3.  batch level
+        (`coin-consumedBatch`{.AgdaFunction}, `coin-producedBatch`{.AgdaFunction}).
+
+    The minted values drop out: the top-level term by premise 7 of the
+    `UTXO`{.AgdaDatatype} rule, the sub-level terms by the `noMintSubTx`{.AgdaBound}
+    module parameter.[^1]
 
 <!--
 ```agda
@@ -82,7 +125,9 @@ module Ledger.Dijkstra.Specification.Utxo.Properties.PoV
 
 open import Ledger.Prelude
 
-open import Data.List.Relation.Unary.Any using (here; there)
+-- open import Data.List.Relation.Unary.Any using (here; there)
+open import Data.List.Properties using (map-cong; map-cong-local)
+import Data.List.Relation.Unary.All as All
 open import Data.Nat.Base using () renaming (_+_ to infixl 6 _+ᴺ_)
 open import Data.Nat.Properties using (+-identityʳ)
 open import Data.Nat.Tactic.RingSolver using (solve-∀)
@@ -146,10 +191,10 @@ consumed version uses `coin (MintedValueOf t) ≡ 0` to cancel the mint term.
 ```agda
 module _ (pp : PParams) where
 
-  coin-consumedTx : ∀ (t : Tx ℓ) (u : UTxO)
-    → coin (MintedValueOf t) ≡ 0
-    → coin (consumedTx pp t u)
-      ≡ cbalance (u ∣ SpendInputsOf t) + getCoin (WithdrawalsOf t)
+  coin-consumedTx : (t : Tx ℓ) (u : UTxO) → coin (MintedValueOf t) ≡ 0
+    → coin (consumedTx pp t u) ≡  cbalance (u ∣ SpendInputsOf t)
+                                  + getCoin (WithdrawalsOf t)
+
   coin-consumedTx t u noMint = begin
     coin (balance (u ∣ SpendInputsOf t) + MintedValueOf t + inject wdrls)
       ≡⟨ coin-inject-lemma ⟩
@@ -161,12 +206,14 @@ module _ (pp : PParams) where
       ≡⟨ cong (_+ wdrls) (+-identityʳ _) ⟩
     cbalance (u ∣ SpendInputsOf t) + wdrls
       ∎
-    where wdrls = getCoin (WithdrawalsOf t)
+    where
+    wdrls : Coin
+    wdrls = getCoin (WithdrawalsOf t)
 
-  coin-producedTx : ∀ (t : Tx ℓ)
-    → coin (producedTx pp t)
-      ≡ cbalance (outs t) + DonationsOf t + getCoin (DirectDepositsOf t)
-        + govProposalsDeposits pp (ListOfGovProposalsOf t)
+  coin-producedTx : (t : Tx ℓ)
+    → coin (producedTx pp t) ≡  cbalance (outs t) + DonationsOf t
+                                + getCoin (DirectDepositsOf t)
+                                + govProposalsDeposits pp (ListOfGovProposalsOf t)
   coin-producedTx t = begin
     coin (balance (outs t) + inject (DonationsOf t) + inject dd + inject gov)
       ≡⟨ coin-inject-lemma ⟩
@@ -177,6 +224,7 @@ module _ (pp : PParams) where
     cbalance (outs t) + DonationsOf t + dd + gov
       ∎
     where
+    dd gov : Coin
     dd  = getCoin (DirectDepositsOf t)
     gov = govProposalsDeposits pp (ListOfGovProposalsOf t)
 ```
@@ -190,50 +238,35 @@ hypothesis through the list induction (the membership argument `mem` lets each
 element's no-mint fact be looked up).
 
 ```agda
-  coin-∑-consumedTx-sub : ∀ (tx : TopLevelTx) (u : UTxO)
-    → noMintingSubTxs tx
-    → coin (∑ˡ[ stx ← SubTransactionsOf tx ] consumedTx pp stx u)
-      ≡ sum (map (λ stx → cbalance (u ∣ SpendInputsOf stx) + getCoin (WithdrawalsOf stx))
-                 (SubTransactionsOf tx))
+  coin-∑-consumedTx-sub : (tx : TopLevelTx) (u : UTxO) → noMintingSubTxs tx
+    →  coin (∑ˡ[ stx ← SubTransactionsOf tx ] consumedTx pp stx u)
+       ≡ sum (map  (λ stx → cbalance (u ∣ SpendInputsOf stx) + getCoin (WithdrawalsOf stx))
+                   (SubTransactionsOf tx))
+
   coin-∑-consumedTx-sub tx u noMintSub = begin
     coin (∑ˡ[ stx ← SubTransactionsOf tx ] consumedTx pp stx u)
       ≡⟨ coin-∑ˡ (λ stx → consumedTx pp stx u) (SubTransactionsOf tx) ⟩
     sum (map (coin ∘ (λ stx → consumedTx pp stx u)) (SubTransactionsOf tx))
-      ≡⟨ go (SubTransactionsOf tx) (λ _ → id) ⟩
-    sum (map (λ stx → cbalance (u ∣ SpendInputsOf stx) + getCoin (WithdrawalsOf stx))
-             (SubTransactionsOf tx))
+      ≡⟨ cong sum (map-cong-local  (All.tabulate λ {stx} stx∈ →
+                                   coin-consumedTx stx u (noMintSub stx stx∈))) ⟩
+    sum (map  (λ stx → cbalance (u ∣ SpendInputsOf stx) + getCoin (WithdrawalsOf stx))
+              (SubTransactionsOf tx))
       ∎
-    where
-    go : (xs : List SubLevelTx)
-       → (∀ stx → stx ∈ˡ xs → stx ∈ˡ SubTransactionsOf tx)
-       → sum (map (coin ∘ (λ stx → consumedTx pp stx u)) xs)
-         ≡ sum (map (λ stx → cbalance (u ∣ SpendInputsOf stx) + getCoin (WithdrawalsOf stx)) xs)
-    go []         _   = refl
-    go (stx ∷ xs) mem =
-      cong₂ _+_ (coin-consumedTx stx u (noMintSub stx (mem stx (here refl))))
-                (go xs (λ stx' stx'∈ → mem stx' (there stx'∈)))
 
-  coin-∑-producedTx-sub : ∀ (tx : TopLevelTx)
-    → coin (∑ˡ[ stx ← SubTransactionsOf tx ] producedTx pp stx)
-      ≡ sum (map (λ stx → cbalance (outs stx) + DonationsOf stx + getCoin (DirectDepositsOf stx)
-                          + govProposalsDeposits pp (ListOfGovProposalsOf stx))
-                 (SubTransactionsOf tx))
+  coin-∑-producedTx-sub : (tx : TopLevelTx)
+    →  coin (∑ˡ[ stx ← SubTransactionsOf tx ] producedTx pp stx)
+       ≡ sum (map  (λ stx → cbalance (outs stx) + DonationsOf stx + getCoin (DirectDepositsOf stx)
+                            + govProposalsDeposits pp (ListOfGovProposalsOf stx))
+                   (SubTransactionsOf tx))
   coin-∑-producedTx-sub tx = begin
     coin (∑ˡ[ stx ← SubTransactionsOf tx ] producedTx pp stx)
       ≡⟨ coin-∑ˡ (producedTx pp) (SubTransactionsOf tx) ⟩
     sum (map (coin ∘ producedTx pp) (SubTransactionsOf tx))
-      ≡⟨ go (SubTransactionsOf tx) ⟩
-    sum (map (λ stx → cbalance (outs stx) + DonationsOf stx + getCoin (DirectDepositsOf stx)
-                      + govProposalsDeposits pp (ListOfGovProposalsOf stx))
-             (SubTransactionsOf tx))
+      ≡⟨ cong sum (map-cong (coin-producedTx {ℓ = TxLevelSub}) (SubTransactionsOf tx)) ⟩
+    sum (map  (λ stx →  cbalance (outs stx) + DonationsOf stx + getCoin (DirectDepositsOf stx)
+                        + govProposalsDeposits pp (ListOfGovProposalsOf stx))
+              (SubTransactionsOf tx))
       ∎
-    where
-    go : (xs : List SubLevelTx)
-       → sum (map (coin ∘ producedTx pp) xs)
-         ≡ sum (map (λ stx → cbalance (outs stx) + DonationsOf stx + getCoin (DirectDepositsOf stx)
-                             + govProposalsDeposits pp (ListOfGovProposalsOf stx)) xs)
-    go []         = refl
-    go (stx ∷ xs) = cong₂ _+_ (coin-producedTx stx) (go xs)
 ```
 
 ### Layer 3: batch-level coin equations
@@ -248,14 +281,15 @@ with the top-level one, into the trailing gov-deposit group expected by
 `LEDGER-pov`{.AgdaFunction}.
 
 ```agda
-  coin-consumedBatch : ∀ (tx : TopLevelTx) (u : UTxO)
+  coin-consumedBatch : (tx : TopLevelTx) (u : UTxO)
     → coin (MintedValueOf tx) ≡ 0
     → noMintingSubTxs tx
-    → coin (consumedBatch pp tx u)
-      ≡ cbalance (u ∣ SpendInputsOf tx) + getCoin (WithdrawalsOf tx)
-        + sum (map (λ stx → cbalance (u ∣ SpendInputsOf stx) + getCoin (WithdrawalsOf stx))
-                   (SubTransactionsOf tx))
-        + refundCertDeposits pp (allDCerts tx)
+    → coin (consumedBatch pp tx u) ≡  cbalance (u ∣ SpendInputsOf tx)
+                                      + getCoin (WithdrawalsOf tx)
+                                      + sum (map  (λ stx →  cbalance (u ∣ SpendInputsOf stx)
+                                                            + getCoin (WithdrawalsOf stx))
+                                                  (SubTransactionsOf tx))
+                                      + refundCertDeposits pp (allDCerts tx)
   coin-consumedBatch tx u noMintTop noMintSub = begin
     coin (consumed pp tx u + ∑ˡ[ stx ← SubTransactionsOf tx ] consumedTx pp stx u)
       ≡⟨ ∙-homo-Coin _ _ ⟩
@@ -268,50 +302,52 @@ with the top-level one, into the trailing gov-deposit group expected by
       + subSum + refundCertDeposits pp (allDCerts tx)
       ∎
     where
-    subSum = sum (map (λ stx → cbalance (u ∣ SpendInputsOf stx) + getCoin (WithdrawalsOf stx))
-                      (SubTransactionsOf tx))
+    subSum : Coin
+    subSum = sum (map  (λ stx →  cbalance (u ∣ SpendInputsOf stx)
+                                 + getCoin (WithdrawalsOf stx))
+                       (SubTransactionsOf tx))
 
-    consumed-top : coin (consumed pp tx u)
-                 ≡ cbalance (u ∣ SpendInputsOf tx) + getCoin (WithdrawalsOf tx)
-                   + refundCertDeposits pp (allDCerts tx)
+    consumed-top :
+      coin (consumed pp tx u) ≡  cbalance (u ∣ SpendInputsOf tx)
+                                 + getCoin (WithdrawalsOf tx)
+                                 + refundCertDeposits pp (allDCerts tx)
     consumed-top = begin
-      coin (consumedTx pp tx u + inject (refundCertDeposits pp (allDCerts tx)))
+      coin (consumedTx pp tx u + inject refdeps)
         ≡⟨ coin-inject-lemma ⟩
-      coin (consumedTx pp tx u) + refundCertDeposits pp (allDCerts tx)
-        ≡⟨ cong (_+ refundCertDeposits pp (allDCerts tx)) (coin-consumedTx tx u noMintTop) ⟩
-      cbalance (u ∣ SpendInputsOf tx) + getCoin (WithdrawalsOf tx)
-        + refundCertDeposits pp (allDCerts tx)
+      coin (consumedTx pp tx u) + refdeps
+        ≡⟨ cong  (_+ refdeps) (coin-consumedTx tx u noMintTop) ⟩
+      cbalance (u ∣ SpendInputsOf tx) + getCoin (WithdrawalsOf tx) + refdeps
         ∎
+      where
+      refdeps : Coin
+      refdeps = refundCertDeposits pp (allDCerts tx)
 
-  coin-producedBatch : ∀ (pools : Pools) (tx : TopLevelTx)
-    → coin (producedBatch pp pools tx)
-      ≡ cbalance (outs tx) + TxFeesOf tx + DonationsOf tx + getCoin (DirectDepositsOf tx)
-        + sum (map (λ stx → cbalance (outs stx) + DonationsOf stx + getCoin (DirectDepositsOf stx))
-                   (SubTransactionsOf tx))
-        + newCertDeposits pp (dom pools) (allDCerts tx)
-        + ( govProposalsDeposits pp (ListOfGovProposalsOf tx)
-          + sum (map (λ stx → govProposalsDeposits pp (ListOfGovProposalsOf stx))
-                     (SubTransactionsOf tx)) )
+  coin-producedBatch : (pools : Pools) (tx : TopLevelTx)
+    →  coin (producedBatch pp pools tx)
+       ≡  cbalance (outs tx) + TxFeesOf tx + DonationsOf tx + getCoin (DirectDepositsOf tx)
+          + sum (map  (λ stx →  cbalance (outs stx) + DonationsOf stx
+                                + getCoin (DirectDepositsOf stx))
+                      (SubTransactionsOf tx))
+          + newCertDeposits pp (dom pools) (allDCerts tx)
+          + ( govProposalsDeposits pp (ListOfGovProposalsOf tx)
+              + sum (map  (λ stx → govProposalsDeposits pp (ListOfGovProposalsOf stx))
+                          (SubTransactionsOf tx)) )
+
   coin-producedBatch pools tx = begin
     coin (produced pp pools tx + ∑ˡ[ stx ← SubTransactionsOf tx ] producedTx pp stx)
       ≡⟨ ∙-homo-Coin _ _ ⟩
     coin (produced pp pools tx) + coin (∑ˡ[ stx ← SubTransactionsOf tx ] producedTx pp stx)
       ≡⟨ cong₂ _+_ produced-top (coin-∑-producedTx-sub tx) ⟩
-    cbalance (outs tx) + DonationsOf tx + getCoin (DirectDepositsOf tx) + govTop
-      + TxFeesOf tx + newDeps + subSum₄
-      ≡⟨ cong (cbalance (outs tx) + DonationsOf tx + getCoin (DirectDepositsOf tx) + govTop
-               + TxFeesOf tx + newDeps +_)
-              (sum-map-+ (λ stx → cbalance (outs stx) + DonationsOf stx + getCoin (DirectDepositsOf stx))
-                         (λ stx → govProposalsDeposits pp (ListOfGovProposalsOf stx))
-                         (SubTransactionsOf tx)) ⟩
-    cbalance (outs tx) + DonationsOf tx + getCoin (DirectDepositsOf tx) + govTop
-      + TxFeesOf tx + newDeps + (subSum₃ + govSub)
-      ≡⟨ produced-shuffle (cbalance (outs tx)) (DonationsOf tx) (getCoin (DirectDepositsOf tx))
-                          govTop (TxFeesOf tx) newDeps subSum₃ govSub ⟩
+    cprefix + subSum₄
+      ≡⟨ cong (cprefix +_) subSum+govSub ⟩
+    cprefix + (subSum₃ + govSub)
+      ≡⟨ produced-shuffle  (cbalance (outs tx)) (DonationsOf tx) (getCoin (DirectDepositsOf tx))
+                           govTop (TxFeesOf tx) newDeps subSum₃ govSub ⟩
     cbalance (outs tx) + TxFeesOf tx + DonationsOf tx + getCoin (DirectDepositsOf tx)
       + subSum₃ + newDeps + (govTop + govSub)
       ∎
     where
+    govTop govSub newDeps subSum₃ subSum₄ : Coin
     govTop  = govProposalsDeposits pp (ListOfGovProposalsOf tx)
     govSub  = sum (map (λ stx → govProposalsDeposits pp (ListOfGovProposalsOf stx))
                        (SubTransactionsOf tx))
@@ -321,6 +357,15 @@ with the top-level one, into the trailing gov-deposit group expected by
     subSum₄ = sum (map (λ stx → cbalance (outs stx) + DonationsOf stx + getCoin (DirectDepositsOf stx)
                                 + govProposalsDeposits pp (ListOfGovProposalsOf stx))
                        (SubTransactionsOf tx))
+
+    cprefix = cbalance (outs tx) + DonationsOf tx + getCoin (DirectDepositsOf tx) + govTop + TxFeesOf tx + newDeps
+
+    subSum+govSub : subSum₄ ≡ subSum₃ + govSub
+    subSum+govSub =
+      sum-map-+  (λ stx → cbalance (outs stx) + DonationsOf stx + getCoin (DirectDepositsOf stx))
+                 (λ stx → govProposalsDeposits pp (ListOfGovProposalsOf stx))
+                 (SubTransactionsOf tx)
+
 
     produced-shuffle : ∀ o don dd g f n s₃ sg
       → o +ᴺ don +ᴺ dd +ᴺ g +ᴺ f +ᴺ n +ᴺ (s₃ +ᴺ sg)
@@ -344,52 +389,49 @@ with the top-level one, into the trailing gov-deposit group expected by
 
 ## `subutxo-step-coin`: the per-step SUBUTXO coin equation
 
-For a valid batch, a `SUBUTXO`{.AgdaDatatype} step moves the spend inputs out of
-the running UTxO and adds the sub-transaction's outputs and donation.  The
-resulting coin equation resolves the spent balance against the *pre-batch
-snapshot* `UTxOOf Γ`, so it holds only given two batch-threading facts that the
-`SUBUTXO`{.AgdaDatatype} premises do not provide:
+For a valid batch, a `SUBUTXO`{.AgdaDatatype} step moves the spend inputs out of the
+running UTxO and adds the sub-transaction's outputs and donation.  Stated against the
+running UTxO, as it is here, that accounting needs exactly one fact the
+`SUBUTXO`{.AgdaDatatype} premises do not provide: *freshness*, that `TxIdOf stx` does
+not occur in the running UTxO, which is what lets `balance-∪`{.AgdaFunction} split
+`outs stx` off again.  Freshness follows from batch-wide TxId freshness, which the
+outer `UTXO`{.AgdaDatatype} rule establishes at the batch level but does not expose
+per step, so it is a hypothesis here.
 
-+  *freshness* — `TxIdOf stx` does not occur in the running UTxO (needed for
-   `balance-∪`{.AgdaFunction} to split off `outs stx`), and
-+  *spend-input agreement* — the running UTxO and the snapshot assign the same
-   balance to `SpendInputsOf stx` (the premises put the spend inputs in *both
-   domains*, but say nothing about the values).
-
-Both facts follow from batch-wide input disjointness and TxId freshness, which
-the outer `UTXO`{.AgdaDatatype} rule establishes at the batch level but does not
-expose per step; they are taken as hypotheses here and threaded to module
-parameters of `Utxow.Properties.PoV`{.AgdaModule}, in the same batch-threading
-family as the `utxo₁-tx-spend-eq` and `fresh-top-tx-id` parameters of
-`Ledger.Properties.PoV`{.AgdaModule}.
+The `LEDGER`{.AgdaDatatype}-level consumer wants the spent balance resolved against
+the *pre-batch snapshot* `UTxOOf Γ` instead.  Converting between the two is a second,
+independent batch-threading fact — the premises put the spend inputs in *both*
+domains but say nothing about the values — and it is applied in
+`Utxow.Properties.PoV`{.AgdaModule}, where the batch-threading hypotheses are
+collected.
 
 ```agda
-subutxo-step-coin : ∀ {Γ : SubUTxOEnv} {s₀ s₁ : UTxOState} {stx : SubLevelTx}
+subutxo-step-coin :
+  {Γ      : SubUTxOEnv}
+  {s₀ s₁  : UTxOState}
+  {stx    : SubLevelTx}
   → IsTopLevelValidFlagOf Γ ≡ true
   → Γ ⊢ s₀ ⇀⦇ stx ,SUBUTXO⦈ s₁
   → TxIdOf stx ∉ mapˢ proj₁ (dom (UTxOOf s₀))
-  → cbalance (UTxOOf s₀ ∣ SpendInputsOf stx) ≡ cbalance (UTxOOf Γ ∣ SpendInputsOf stx)
-  → getCoin s₀ + cbalance (outs stx) + DonationsOf stx
-    ≡ getCoin s₁ + cbalance (UTxOOf Γ ∣ SpendInputsOf stx)
-subutxo-step-coin {Γ} {s₀ = ⟦ u , f , d ⟧ᵘ} {stx = stx} isV (SUBUTXO _) fresh spendEq
+  →  getCoin s₀ + cbalance (outs stx) + DonationsOf stx
+     ≡ getCoin s₁ + cbalance (UTxOOf s₀ ∣ SpendInputsOf stx)
+subutxo-step-coin {s₀ = ⟦ u , f , d ⟧ᵘ} {stx = stx} isV (SUBUTXO _) fresh
   rewrite isV = begin
     cbalance u + f + d + cbalance (outs stx) + DonationsOf stx
-      ≡⟨ cong (λ z → z + f + d + cbalance (outs stx) + DonationsOf stx)
-              (split-balance u (SpendInputsOf stx)) ⟩
-    cbalance (u ∣ SpendInputsOf stx ᶜ) + cbalance (u ∣ SpendInputsOf stx)
-      + f + d + cbalance (outs stx) + DonationsOf stx
-      ≡⟨ cong (λ z → cbalance (u ∣ SpendInputsOf stx ᶜ) + z
-                     + f + d + cbalance (outs stx) + DonationsOf stx) spendEq ⟩
-    cbalance (u ∣ SpendInputsOf stx ᶜ) + cΓ + f + d + cbalance (outs stx) + DonationsOf stx
-      ≡⟨ shuffle (cbalance (u ∣ SpendInputsOf stx ᶜ)) cΓ f d (cbalance (outs stx)) (DonationsOf stx) ⟩
-    cbalance (u ∣ SpendInputsOf stx ᶜ) + cbalance (outs stx) + f + (d + DonationsOf stx) + cΓ
-      ≡˘⟨ cong (λ z → z + f + (d + DonationsOf stx) + cΓ)
-               (balance-∪ {u ∣ SpendInputsOf stx ᶜ} {outs stx} (outs-disjoint stx {u} fresh)) ⟩
-    cbalance ((u ∣ SpendInputsOf stx ᶜ) ∪ˡ outs stx) + f + (d + DonationsOf stx) + cΓ
+      ≡⟨ cong  (λ z → z + f + d + cbalance (outs stx) + DonationsOf stx)
+               (split-balance u (SpendInputsOf stx)) ⟩
+    cbalance u|stxᶜ + cs + f + d + cbalance (outs stx) + DonationsOf stx
+      ≡⟨ shuffle (cbalance u|stxᶜ) cs f d (cbalance (outs stx)) (DonationsOf stx) ⟩
+    cbalance u|stxᶜ + cbalance (outs stx) + f + (d + DonationsOf stx) + cs
+      ≡˘⟨ cong  (λ z → z + f + (d + DonationsOf stx) + cs)
+                (balance-∪ u|stxᶜ (outs stx) (outs-disjoint stx {u} fresh)) ⟩
+    cbalance (u|stxᶜ ∪ˡ outs stx) + f + (d + DonationsOf stx) + cs
       ∎
   where
-  cΓ = cbalance (UTxOOf Γ ∣ SpendInputsOf stx)
-
+  cs : Coin
+  cs = cbalance (u ∣ SpendInputsOf stx)
+  u|stxᶜ : TxIn ⇀ TxOut
+  u|stxᶜ = (u ∣ SpendInputsOf stx ᶜ)
   shuffle : ∀ a c f d o w → a +ᴺ c +ᴺ f +ᴺ d +ᴺ o +ᴺ w ≡ a +ᴺ o +ᴺ f +ᴺ (d +ᴺ w) +ᴺ c
   shuffle = solve-∀
 ```
@@ -404,6 +446,7 @@ the `noMintingSubTxs`{.AgdaFunction} fact as the only assumption.
 module UTXO-PoV
   (tx : TopLevelTx)
   (noMintSubTx : noMintingSubTxs tx)
+  {Γ : UTxOEnv}
   where
 ```
 
@@ -415,18 +458,19 @@ so `getCoin`{.AgdaField} is preserved exactly, by
 `split-balance`{.AgdaFunction} at the collateral inputs.
 
 ```agda
-  UTXO-pov-invalid : ∀ {Γ : UTxOEnv} {s₀ s₁ : UTxOState}
-    → Γ ⊢ s₀ ⇀⦇ tx ,UTXO⦈ s₁
-    → IsValidFlagOf tx ≡ false
+  UTXO-pov-invalid : {s₀ s₁ : UTxOState}
+    → Γ ⊢ s₀ ⇀⦇ tx ,UTXO⦈ s₁ → IsValidFlagOf tx ≡ false
     → getCoin s₀ ≡ getCoin s₁
-  UTXO-pov-invalid {s₀ = ⟦ u , f , d ⟧ᵘ} (UTXO _) invalid rewrite invalid = begin
-    cbalance u + f + d
-      ≡⟨ cong (λ z → z + f + d) (split-balance u (CollateralInputsOf tx)) ⟩
-    cbalance (u ∣ CollateralInputsOf tx ᶜ) + cbalance (u ∣ CollateralInputsOf tx) + f + d
-      ≡⟨ shuffle (cbalance (u ∣ CollateralInputsOf tx ᶜ)) (cbalance (u ∣ CollateralInputsOf tx)) f d ⟩
-    cbalance (u ∣ CollateralInputsOf tx ᶜ) + (f + cbalance (u ∣ CollateralInputsOf tx)) + d
-      ∎
+
+  UTXO-pov-invalid {s₀ = ⟦ u , f , d ⟧ᵘ} (UTXO _) invalid rewrite invalid =
+    begin
+    cbalance u + f + d ≡⟨ cong (λ z → z + f + d) (split-balance u (CollateralInputsOf tx)) ⟩
+    csᶜ + cs + f + d   ≡⟨ shuffle csᶜ cs f d ⟩
+    csᶜ + (f + cs) + d ∎
     where
+    cs csᶜ : Coin
+    cs = cbalance (u ∣ CollateralInputsOf tx)
+    csᶜ = cbalance (u ∣ CollateralInputsOf tx ᶜ)
     shuffle : ∀ a b f d → a +ᴺ b +ᴺ f +ᴺ d ≡ a +ᴺ (f +ᴺ b) +ᴺ d
     shuffle = solve-∀
 ```
@@ -437,15 +481,19 @@ For a valid transaction the rule spends `SpendInputsOf tx` from the running
 UTxO `u` and adds `outs tx`, the transaction fee, and the donation.  Given
 freshness of `TxIdOf tx` in `u` (so that `outs tx` splits off cleanly via
 `balance-∪`{.AgdaFunction}), `getCoin`{.AgdaField} changes by exactly the
-spent balance on one side and the outputs/fee/donation on the other:
+spent balance on one side and the outputs/fee/donation on the other.  Note
+that the spent balance is `cbalance (UTxOOf s₀ ∣ SpendInputsOf tx)` — the
+*running*-state resolution of piece 1; `LEDGER-pov`{.AgdaFunction} equates it
+with the snapshot resolution appearing in
+`UTXO-batch-balance-coin`{.AgdaFunction} via its `utxo₁-tx-spend-eq`
+batch-threading parameter.
 
 ```agda
-  UTXO-V-mechanical : ∀ {Γ : UTxOEnv} {s₀ s₁ : UTxOState}
-    → Γ ⊢ s₀ ⇀⦇ tx ,UTXO⦈ s₁
-    → IsValidFlagOf tx ≡ true
+  UTXO-V-mechanical : {s₀ s₁ : UTxOState}
+    → Γ ⊢ s₀ ⇀⦇ tx ,UTXO⦈ s₁ → IsValidFlagOf tx ≡ true
     → TxIdOf tx ∉ mapˢ proj₁ (dom (UTxOOf s₀))
-    → getCoin s₀ + cbalance (outs tx) + TxFeesOf tx + DonationsOf tx
-      ≡ getCoin s₁ + cbalance (UTxOOf s₀ ∣ SpendInputsOf tx)
+    →  getCoin s₀ + cbalance (outs tx) + TxFeesOf tx + DonationsOf tx
+       ≡ getCoin s₁ + cbalance (UTxOOf s₀ ∣ SpendInputsOf tx)
   UTXO-V-mechanical {s₀ = ⟦ u , f , d ⟧ᵘ} (UTXO _) valid fresh rewrite valid = begin
     cbalance u + f + d + cbalance (outs tx) + TxFeesOf tx + DonationsOf tx
       ≡⟨ cong (λ z → z + f + d + cbalance (outs tx) + TxFeesOf tx + DonationsOf tx)
@@ -458,7 +506,7 @@ spent balance on one side and the outputs/fee/donation on the other:
       + (f + TxFeesOf tx) + (d + DonationsOf tx) + cbalance (u ∣ SpendInputsOf tx)
       ≡˘⟨ cong (λ z → z + (f + TxFeesOf tx) + (d + DonationsOf tx)
                       + cbalance (u ∣ SpendInputsOf tx))
-               (balance-∪ {u ∣ SpendInputsOf tx ᶜ} {outs tx} (outs-disjoint tx {u} fresh)) ⟩
+               (balance-∪ (u ∣ SpendInputsOf tx ᶜ) (outs tx) (outs-disjoint tx {u} fresh)) ⟩
     cbalance ((u ∣ SpendInputsOf tx ᶜ) ∪ˡ outs tx)
       + (f + TxFeesOf tx) + (d + DonationsOf tx) + cbalance (u ∣ SpendInputsOf tx)
       ∎
@@ -472,40 +520,62 @@ spent balance on one side and the outputs/fee/donation on the other:
 
 The coin projection of the batch balance premise (premise 8 of the
 `UTXO`{.AgdaDatatype} rule), in the closed form consumed by
-`LEDGER-pov`{.AgdaFunction}.  The top-level no-mint fact is premise 7 of the
-same rule; the sub-level ones are the module parameter.
+`LEDGER-pov`{.AgdaFunction}.  As laid out in *Why the proof splits in two*, the
+step hypothesis serves only to extract premises 7 (top-level no-mint) and 8
+(the balance): neither `s₀` nor `s₁` occurs in the conclusion, whose two sides
+are sums computed from the environment's pre-batch snapshot and the transaction
+alone.  Given the premises, the proof is pure substitution — apply
+`cong coin` to premise 8 and rewrite each side with the Layer-3 equations
+(the sub-level no-mint facts come from the module parameter).
 
 ```agda
-  UTXO-batch-balance-coin : ∀ {Γ : UTxOEnv} {s₀ s₁ : UTxOState}
+  UTXO-batch-balance-coin : {s₀ s₁ : UTxOState}
     → Γ ⊢ s₀ ⇀⦇ tx ,UTXO⦈ s₁
-    → cbalance (UTxOOf Γ ∣ SpendInputsOf tx) + getCoin (WithdrawalsOf tx)
-        + sum (map (λ stx → cbalance (UTxOOf Γ ∣ SpendInputsOf stx) + getCoin (WithdrawalsOf stx))
+    →  cbalance (UTxOOf Γ ∣ SpendInputsOf tx) + getCoin (WithdrawalsOf tx)
+       + sum (map  (λ stx →  cbalance (UTxOOf Γ ∣ SpendInputsOf stx)
+                             + getCoin (WithdrawalsOf stx))
                    (SubTransactionsOf tx))
-        + refundCertDeposits (PParamsOf Γ) (allDCerts tx)
-      ≡ cbalance (outs tx) + TxFeesOf tx + DonationsOf tx + getCoin (DirectDepositsOf tx)
-        + sum (map (λ stx → cbalance (outs stx) + DonationsOf stx + getCoin (DirectDepositsOf stx))
-                   (SubTransactionsOf tx))
-        + newCertDeposits (PParamsOf Γ) (dom (PoolsOf Γ)) (allDCerts tx)
-        + ( govProposalsDeposits (PParamsOf Γ) (ListOfGovProposalsOf tx)
-          + sum (map (λ stx → govProposalsDeposits (PParamsOf Γ) (ListOfGovProposalsOf stx))
-                     (SubTransactionsOf tx)) )
-  UTXO-batch-balance-coin {Γ}
-    (UTXO-⋯ _ _ _ _ _ _ noMintTop batchBal _ _ _ _ _ _ _ _ _ _ _) = begin
-    cbalance (UTxOOf Γ ∣ SpendInputsOf tx) + getCoin (WithdrawalsOf tx)
-      + sum (map (λ stx → cbalance (UTxOOf Γ ∣ SpendInputsOf stx) + getCoin (WithdrawalsOf stx))
-                 (SubTransactionsOf tx))
-      + refundCertDeposits (PParamsOf Γ) (allDCerts tx)
-      ≡˘⟨ coin-consumedBatch (PParamsOf Γ) tx (UTxOOf Γ) noMintTop noMintSubTx ⟩
-    coin (consumedBatch (PParamsOf Γ) tx (UTxOOf Γ))
+       + refundCertDeposits (PParamsOf Γ) (allDCerts tx)
+       ≡  cbalance (outs tx) + TxFeesOf tx + DonationsOf tx
+          + getCoin (DirectDepositsOf tx)
+          + sum (map  (λ stx →  cbalance (outs stx) + DonationsOf stx
+                                + getCoin (DirectDepositsOf stx))
+                      (SubTransactionsOf tx))
+          + newCertDeposits (PParamsOf Γ) (dom (PoolsOf Γ)) (allDCerts tx)
+          + (  govProposalsDeposits (PParamsOf Γ) (ListOfGovProposalsOf tx)
+               + sum (map  (λ stx → govProposalsDeposits  (PParamsOf Γ)
+                                                          (ListOfGovProposalsOf stx))
+                           (SubTransactionsOf tx)) )
+  UTXO-batch-balance-coin
+    (UTXO (_ , _ , _ , _ , _ , _ , noMintTop , batchBal , _)) = begin
+    cbalance (u ∣ SpendInputsOf tx) + getCoin (WithdrawalsOf tx)
+      + sum (map  (λ stx →  cbalance (u ∣ SpendInputsOf stx) + getCoin (WithdrawalsOf stx))
+                  (SubTransactionsOf tx))
+      + refundCertDeposits pp (allDCerts tx)
+      ≡˘⟨ coin-consumedBatch pp tx u noMintTop noMintSubTx ⟩
+    coin (consumedBatch pp tx u)
       ≡⟨ cong coin batchBal ⟩
-    coin (producedBatch (PParamsOf Γ) (PoolsOf Γ) tx)
-      ≡⟨ coin-producedBatch (PParamsOf Γ) (PoolsOf Γ) tx ⟩
+    coin (producedBatch pp (PoolsOf Γ) tx)
+      ≡⟨ coin-producedBatch pp (PoolsOf Γ) tx ⟩
     cbalance (outs tx) + TxFeesOf tx + DonationsOf tx + getCoin (DirectDepositsOf tx)
-      + sum (map (λ stx → cbalance (outs stx) + DonationsOf stx + getCoin (DirectDepositsOf stx))
-                 (SubTransactionsOf tx))
-      + newCertDeposits (PParamsOf Γ) (dom (PoolsOf Γ)) (allDCerts tx)
-      + ( govProposalsDeposits (PParamsOf Γ) (ListOfGovProposalsOf tx)
-        + sum (map (λ stx → govProposalsDeposits (PParamsOf Γ) (ListOfGovProposalsOf stx))
-                   (SubTransactionsOf tx)) )
+      + sum (map  (λ stx →  cbalance (outs stx) + DonationsOf stx
+                            + getCoin (DirectDepositsOf stx))
+                  (SubTransactionsOf tx))
+      + newCertDeposits pp (dom (PoolsOf Γ)) (allDCerts tx)
+      + ( govProposalsDeposits pp (ListOfGovProposalsOf tx)
+        + sum (map  (λ stx → govProposalsDeposits pp (ListOfGovProposalsOf stx))
+                    (SubTransactionsOf tx)) )
       ∎
+      where
+      pp : PParams
+      pp = PParamsOf Γ
+      u : UTxO
+      u = UTxOOf Γ
 ```
+
+---
+
+[^1]: This is a per-sub-transaction fact established by the `SUBUTXO`{.AgdaDatatype}
+      premises, which the `UTXO`{.AgdaDatatype} rule does not expose; it is
+      discharged at the `LEDGER`{.AgdaDatatype} level, where the
+      `SUBLEDGERS`{.AgdaDatatype} steps are in scope.
