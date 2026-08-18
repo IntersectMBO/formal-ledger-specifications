@@ -4,12 +4,9 @@
 
 ### WIP
 
-- Prove preservation of value for the `LEDGER` rule (`LEDGER-pov`, #1187), in new module
-  `Ledger.Properties.PoV`.  Supporting modules: `Entities.Properties.PoV`
-  (`ENTITIES-pov`, `SUBENTITIES-pov`) and `Entities.Properties.ApplyToRewardsPoV`
-  (`applyWithdrawals-pov`, `applyDirectDeposits-pov`).  The supporting UTxO, Certs, and
-  Gov facts are module parameters, to be discharged by #1186, #1210, and a future
-  `Gov.Properties.PoV`.
+- Add `PoolDepositsRegistered` (every pool-deposit entry belongs to a registered
+  pool) to `Certs`; the deposit accounting genuinely fails without it, since
+  `POOL-reg` adds its deposit with a left-biased union.
 - Count governance-action deposits in `getCoin LedgerState` via a new
   `coinFromGovDeposit : GovState → Coin` (sum of `GovActionState.deposit`).  These
   deposits live in `GovActionState.deposit`, not `GState.deposits`, so the three

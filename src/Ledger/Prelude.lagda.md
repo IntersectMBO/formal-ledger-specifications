@@ -107,12 +107,12 @@ indexedSumL-proj₂-zero ((a , v) ∷ xs) all-zero =
 
 +-interleave : {a b c d : ℕ} → a + b + (c + d) ≡ a + c + (b + d)
 +-interleave {a}{b}{c}{d} = begin
-  a + b + (c + d)  ≡⟨ +-assoc a b (c + d) ⟩
+  a + b + (c + d)    ≡⟨ +-assoc a b (c + d) ⟩
   a + (b + (c + d))  ≡⟨ cong (a +_) (sym (+-assoc b c d)) ⟩
   a + (b + c + d)    ≡⟨ cong (λ y → a + (y + d)) (+-comm b c) ⟩
   a + (c + b + d)    ≡⟨ cong (a +_) (+-assoc c b d) ⟩
   a + (c + (b + d))  ≡⟨ sym (+-assoc a c (b + d)) ⟩
-  a + c + (b + d)  ∎
+  a + c + (b + d)    ∎
   where open ≡-Reasoning
 
 module _ {A : Type} ⦃ _ : DecEq A ⦄ where
