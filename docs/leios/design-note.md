@@ -78,10 +78,13 @@ separate reapply relation.
 
 Phase-2 failures need no special account.  Spec-level transactions carry their
 `isValid` flag, so `LEDGERS` covers collateral-forfeiting transactions in a closure
-exactly as it does in a block body.  Whether the wire format should carry those flags
-is an open upstream question (the CIP's EB [CDDL][cip-cddl] has no validity bits,
-while the [design document][dd-blockval] proposes adding them) and does not touch the
-relational rules.
+exactly as it does in a block body.  The flag is not a free input: the `UTXOS` rule
+requires `evalP2Scripts … ≡ IsValidFlagOf txTop`, forcing the flag to agree with
+actual phase-2 evaluation against the state the closure runs in, so a closure
+matching an EB's references admits at most one derivable application.  Whether the
+wire format should carry those flags is an open upstream question (the CIP's EB
+[CDDL][cip-cddl] has no validity bits, while the [design document][dd-blockval]
+proposes adding them) and does not touch the relational rules.
 
 ## Environment and ordering
 
@@ -161,9 +164,12 @@ the design document:
 -   **Snapshot**.  The committee for an epoch derives from the stake distribution
     available at the epoch boundary, which is the pool-stake distribution the ledger
     already maintains for leader election (`PoolDistr` in the implementation;
-    [REQ-StakeBasedCommitteeSelection][dd-committee]).  This is materialized into the
-    epoch state at the boundary rather than recomputed per use
-    ([REQ-LedgerStateVotingCommittee][dd-certver]).
+    [REQ-StakeBasedCommitteeSelection][dd-committee]).  The implementation
+    materializes the committee in the ledger state at the boundary rather than
+    recomputing it per use ([REQ-LedgerStateVotingCommittee][dd-certver]); the
+    skeleton's rules consume the committee only through the announcement pin, and
+    materializing it as an epoch-state field is follow-up work together with the
+    concrete construction, which is why the module map edits no epoch module.
 -   **Order and indices**.  The descending-stake order fixes the seat indices that
     votes (`voter_id`) and certificate bitfields address.  The CIP names no
     tie-break; the design document breaks ties by pool id, and the skeleton adopts
@@ -218,8 +224,11 @@ Table 3's remaining row, the ranking-block max size `S_RB`, is the existing
 `maxBlockSize`; there is no new field ([#5965][cl-5965] maps it to
 `ppMaxBBSize`).  Well-formedness: `τ < σ_c` is normative ("Must satisfy
 `τ < σ_c`", [Table 3][cip-params]) and joins positivity of the periods and
-sizes in the parameter well-formedness predicate; the constraint is what
-keeps a quorum achievable inside the committee's guaranteed stake coverage.
+sizes in the parameter well-formedness predicate.  The constraint makes a quorum
+arithmetically reachable by a fully keyed committee (truncation guarantees committee
+stake of at least `σ_c` of the total, and `τ < σ_c` puts the threshold strictly
+inside that coverage); keyless seats can still leave the signable stake short of `τ`,
+as the committee section records.
 Types follow the spec's house conventions; [#5965][cl-5965]'s `SlotInterval`,
 `Word32`, and `OrdExUnits` are the Haskell counterparts, and name or type
 divergences get recorded in module prose.  The network characteristics of the
@@ -233,9 +242,12 @@ block, as the spec sees it, is the resolved block: alongside the certificate it
 carries the certified EB and the closure ("the ledger must be provided with all
 endorsed transactions resolved", [REQ-LedgerResolvedBlockValidation][dd-blockval]),
 and a matching premise checks the closure against the EB's references pointwise, hash
-and declared size.  Availability is a consensus and storage concern; CIP-164 keeps
-EBs out of chain validity altogether ("EBs are treated as auxiliary data that do not
-affect chain validity or selection decisions", [Chain Selection][cip-chainsel]), and
+and declared size; the CIP documents the reference hash as covering the complete
+transaction bytes ([Appendix B][cip-cddl]), so the references pin the closure's full
+content, not only the transaction bodies.  Availability is a consensus and storage
+concern; CIP-164 keeps EBs out of chain validity altogether ("EBs are treated as
+auxiliary data that do not affect chain validity or selection decisions",
+[Chain Selection][cip-chainsel]), and
 a certificate whose closure has not yet arrived is a block consensus cannot yet hand
 to the ledger, not a new failure mode.  Two wire artifacts deliberately stay out of
 the rules: the header's `certified_eb` bit is a syncing optimization, derived in the
