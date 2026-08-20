@@ -117,9 +117,16 @@ following total order:
     in the RB" ([Step 5][cip-step5]) — so its body contributes the certificate
     premises and the usual bookkeeping.
 
+One implementation constant already diverges from this window: the prototype's
+`minCertificationGap` is 10 slots where `3·L_hdr + L_vote + L_diff` gives 14 with
+the Musashi parameters.  Both sides are live and measured by the trace-verifier
+work; the divergence is flagged upstream, like the proof-of-possession divergence in
+the committee section.
+
 A block may announce its own EB while certifying its predecessor's ("it may
 optionally announce its own EB for future certification", [Step 5][cip-step5]); it
-consumes A's announcement and records its own afterwards.  Relationally, the
+consumes A's announcement and records its own afterwards; a block that neither
+certifies nor announces still clears the pending announcement.  Relationally, the
 certificate premises and the application premise are simultaneous conjuncts; only an
 executable implementation orders certificate verification against closure
 application.
@@ -155,8 +162,14 @@ the relational spec distinguishes why; a predicate-failure taxonomy belongs to t
 executability, and the five checks are its raw material when it comes.  The
 missing-certificate case needs no bookkeeping at all: only the immediate successor
 may certify, and otherwise "the EB certificate cannot be included and the EB is
-discarded" ([Step 5][cip-step5]); the pending announcement is simply replaced by the
-next one, with no ledger trace and no expiry accounting.  For consensus, the reading
+discarded" ([Step 5][cip-step5]).  The pending announcement is a function of the
+chain head alone: applying any block replaces it with that block's own announcement,
+or clears it when the block announces nothing, so no announcement survives an
+intervening block, with no ledger trace and no expiry accounting.  The
+protocol-level spec models the same rule: the certifiable EB is the one announced by
+`currentRB`, the head (`Leios/Protocol.lagda.md`, with the `Base₂` certificate
+premise in `Linear.lagda.md`; [ouroboros-leios-formal-spec][leios-formal-spec]).
+For consensus, the reading
 is the usual one: an invalid certificate makes an invalid block, nothing more drastic.
 
 ## The committee
@@ -181,16 +194,28 @@ the design document:
 -   **Order and indices**.  The descending-stake order fixes the seat indices that
     votes (`voter_id`) and certificate bitfields address.  The CIP names no
     tie-break; the design document breaks ties by pool id, and the skeleton adopts
-    that.  Selection enters the skeleton abstractly, as a function with stated laws
-    (registered pools, descending stake, coverage `σ_c`); the concrete construction can
-    land later without disturbing anything downstream of the laws.
+    that as a stated law, not a remark: equal-stake pools are common at the
+    committee tail, and two implementations that order ties differently disagree
+    about the validity of every certificate.  Selection enters the skeleton
+    abstractly, as a function with stated laws (membership by stake truncation at
+    coverage `σ_c`, independent of key registration; descending stake with ties
+    broken by ascending pool id; determinism of the order); the concrete
+    construction can land later without disturbing anything downstream of the laws,
+    but the order itself cannot.  The byte-exact comparison on pool ids is a
+    conformance detail to confirm upstream.
 -   **Keyless seats**.  Membership is by stake alone, "independent of key
     registration" ([REQ-KeylessSeat][dd-committee]): a selected pool without
     a registered voting key still occupies its seat and holds its weight, but
     the seat cannot sign, and a certificate whose bitfield sets a keyless
     seat is invalid ([REQ-LedgerCertificateVerification][dd-certver]).
     Keyless stake can therefore lower the quorum a certificate is able to
-    reach, never inflate it.
+    reach, never inflate it.  Parameter well-formedness therefore does not imply
+    certifiability: the skeleton names the gap with a `certifiable` predicate (keyed
+    committee stake at least `τ` of the total active stake), so the condition
+    implementers must monitor has a name.  The gap is not hypothetical: on the
+    Musashi testnet (2026-08, trace-verifier observations) 19 of 66 registered pools
+    had no voting key and certificates appeared on roughly 3% of blocks, with every
+    individual rule satisfied (cf. [ouroboros-leios #1046][ol-1046]).
 -   **Keys**.  Pool registration carries the voting key with its proof of
     possession, as in the prototype's `sppLeiosKey` on `StakePoolParams`
     ([#5626][cl-5626]; `spsLeiosKey` is its pool-state mirror), and
@@ -258,6 +283,12 @@ concern; CIP-164 keeps EBs out of chain validity altogether ("EBs are treated as
 auxiliary data that do not affect chain validity or selection decisions",
 [Chain Selection][cip-chainsel]), and a certificate whose closure has not yet
 arrived is a block consensus cannot yet hand to the ledger, not a new failure mode.
+
+One boundary in this section deserves an explicit warning.  The EB identifier is the
+hash of the reference structure itself, which the skeleton abstracts as `hashEBRefs`
+without pinning the byte-exact preimage.  Cardano has been here before (the
+block-body hash's segmented preimage exists only in implementation internals), so
+pinning that preimage is a named conformance prerequisite, not an afterthought.
 Two wire artifacts deliberately stay out of the rules: the header's `certified_eb`
 bit is a syncing optimization, derived in the spec from the presence of the body's
 certificate; and a wrong `announced_eb_size`
@@ -291,6 +322,17 @@ node-local vote conditions (header arrival, equivocation, deadlines, chain posit
 CIP [vote conditions 1–4][cip-step3]) stay on its side of the line, and `ValidEB`
 carries the ledger-checkable remainder (conditions 5 and 6).
 
+## Out of scope: rewards and incentives
+
+The skeleton models no change to the reward calculation, and neither does the
+protocol: "Leios does not require any changes to incentives in Cardano"
+([Incentives][cip-incentives]); the CIP cites the existing ledger-specification
+rewards module as "the current and unchanged specification of rewards".  Blocks-made
+accounting is likewise untouched (a certificate-bearing block counts like any
+other).  Should a Leios incentive mechanism ever become normative (rewards for
+voting or EB production, tiered fees), it enters through the full roadmap, not this
+skeleton.
+
 [CIP-164]: https://github.com/cardano-foundation/CIPs/blob/master/CIP-0164/README.md
 [cip-step3]: https://github.com/cardano-foundation/CIPs/blob/master/CIP-0164/README.md#step-3-committee-validation
 [cip-step5]: https://github.com/cardano-foundation/CIPs/blob/master/CIP-0164/README.md#step-5-chain-inclusion
@@ -314,3 +356,5 @@ carries the ledger-checkable remainder (conditions 5 and 6).
 [cl-5626]: https://github.com/IntersectMBO/cardano-ledger/pull/5626
 [cl-5965]: https://github.com/IntersectMBO/cardano-ledger/issues/5965
 [leios-formal-spec]: https://github.com/input-output-hk/ouroboros-leios-formal-spec
+[ol-1046]: https://github.com/input-output-hk/ouroboros-leios/issues/1046
+[cip-incentives]: https://github.com/cardano-foundation/CIPs/blob/master/CIP-0164/README.md#incentives
