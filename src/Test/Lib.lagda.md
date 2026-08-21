@@ -38,6 +38,17 @@ createEnv s = record { slot = s ; treasury = 0 ;
                                ; pv = 8 , 0
                                ; maxTxExUnits = 10000000000 , 14000000
                                ; maxBlockExUnits = 40000000000 , 62000000
+                               -- tiered pricing: EB capacity, announcement age
+                               -- escape, and controller calibration (Tiers.lagda.md).
+                               -- EB capacity is ~133x an RB, per the CIP.
+                               ; maxEBSize = 12000000
+                               ; maxEBExUnits = 5320000000000 , 8246000000
+                               ; ebAgeEscape = 10
+                               ; urgentTarget = mkUnitInterval (+ 1 / 2)
+                               ; standardTarget = mkUnitInterval (+ 3 / 4)
+                               ; maxChangeDenominator = 16
+                               ; urgentWindowSize = 5
+                               ; standardWindowSize = 20
                                ; a = 44
                                ; b = 155381
                                ; minUTxOValue = 0

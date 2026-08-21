@@ -181,7 +181,19 @@ This section defines new protocol parameters which denote the following concepts
 
 +  `drepActivity`{.AgdaField}: `DRep`{.AgdaInductiveConstructor} activity period;
 
-+  `minimumAVS`{.AgdaField}: the minimum active voting threshold.
++  `minimumAVS`{.AgdaField}: the minimum active voting threshold;
+
++  `ebAgeEscape`{.AgdaField}: number of Ranking Blocks after which a certificate
+   for a below-threshold Endorser Block may enter the chain;
+
++  `urgentTarget`{.AgdaField}, `standardTarget`{.AgdaField}: per-lane target
+   block utilisation steering each tier's fee coefficient;
+
++  `maxChangeDenominator`{.AgdaField}: bound on the size of a single tier
+   coefficient update;
+
++  `urgentWindowSize`{.AgdaField}, `standardWindowSize`{.AgdaField}: length of
+   each lane's sliding utilisation window, in samples.
 
 
 ```agda
@@ -200,6 +212,16 @@ record PParams : Type where
         maxBlockExUnits               : ExUnits
         maxValSize                    : ℕ
         maxCollateralInputs           : ℕ
+        -- Number of Ranking Blocks after which a certificate for a
+        -- below-threshold Endorser Block may enter the chain (K in the CIP).
+        -- Counted in Ranking Blocks, not slots, so the escape is measured in
+        -- the same resource it relieves: RB space consumed by certificates.
+        ebAgeEscape                   : ℕ
+        -- Endorser Block capacity. Much larger than a Ranking Block's, which is
+        -- why the standard controller must charge an EB sample against these
+        -- rather than against the RB limits (Tiers.lagda.md, capSizeOf).
+        maxEBSize                     : ℕ
+        maxEBExUnits                  : ExUnits
 ```
 
 <!--
@@ -223,6 +245,19 @@ record PParams : Type where
         maxRefScriptSizePerBlock      : ℕ
         refScriptCostStride           : ℕ⁺
         refScriptCostMultiplier       : ℚ
+        -- Tier-coefficient controller calibration (see Tiers.lagda.md).
+        -- Per-lane target utilisation: the coefficient rises above target and
+        -- falls below it. Recommended urgent 1/2, standard 3/4.
+        urgentTarget                  : UnitInterval
+        standardTarget                : UnitInterval
+        -- Bounds a single coefficient update to ±1/maxChangeDenominator of the
+        -- distance implied by the utilisation error. Recommended 16.
+        maxChangeDenominator          : ℕ
+        -- Length of each lane's sliding utilisation window, in samples. Per
+        -- lane because the two controllers are specified over windows of
+        -- different lengths. Recommended urgent 5, standard 20.
+        urgentWindowSize              : ℕ
+        standardWindowSize            : ℕ
 ```
 
 <!--
@@ -286,7 +321,13 @@ positivePParams : PParams → List ℕ
 positivePParams pp =  ( maxBlockSize ∷ maxTxSize ∷ maxHeaderSize
                       ∷ maxValSize ∷ coinsPerUTxOByte
                       ∷ poolDeposit ∷ collateralPercentage ∷ ccMaxTermLength
-                      ∷ govActionLifetime ∷ govActionDeposit ∷ drepDeposit ∷ [] )
+                      ∷ govActionLifetime ∷ govActionDeposit ∷ drepDeposit
+                      -- maxChangeDenominator divides in the coefficient update;
+                      -- a zero window would leave a controller with no signal;
+                      -- a zero age escape would exempt every EB from the
+                      -- announcement threshold.
+                      ∷ maxChangeDenominator ∷ urgentWindowSize
+                      ∷ standardWindowSize ∷ ebAgeEscape ∷ maxEBSize ∷ [] )
 ```
 
 <!--
@@ -358,12 +399,21 @@ module PParamsUpdate where
           govActionDeposit drepDeposit  : Maybe Coin
           drepActivity                  : Maybe Epoch
           ccMinSize ccMaxTermLength     : Maybe ℕ
+          ebAgeEscape                   : Maybe ℕ
+          maxEBSize                     : Maybe ℕ
+          maxEBExUnits                  : Maybe ExUnits
+          urgentTarget standardTarget   : Maybe UnitInterval
+          maxChangeDenominator          : Maybe ℕ
+          urgentWindowSize              : Maybe ℕ
+          standardWindowSize            : Maybe ℕ
 
   paramsUpdateWellFormed : PParamsUpdate → Type
   paramsUpdateWellFormed ppu =
        just 0 ∉ fromList ( maxBlockSize ∷ maxTxSize ∷ maxHeaderSize ∷ maxValSize
                          ∷ coinsPerUTxOByte ∷ poolDeposit ∷ collateralPercentage ∷ ccMaxTermLength
-                         ∷ govActionLifetime ∷ govActionDeposit ∷ drepDeposit ∷ [] )
+                         ∷ govActionLifetime ∷ govActionDeposit ∷ drepDeposit
+                         ∷ maxChangeDenominator ∷ urgentWindowSize
+                         ∷ standardWindowSize ∷ ebAgeEscape ∷ maxEBSize ∷ [] )
     where open PParamsUpdate ppu
 
   paramsUpdateWellFormed? : ( u : PParamsUpdate ) → Dec (paramsUpdateWellFormed u)
@@ -380,6 +430,9 @@ module PParamsUpdate where
       ∷ is-just maxTxExUnits
       ∷ is-just maxBlockExUnits
       ∷ is-just pv
+      ∷ is-just ebAgeEscape
+      ∷ is-just maxEBSize
+      ∷ is-just maxEBExUnits
       ∷ [])
 
   modifiesEconomicGroup : PParamsUpdate → Bool
@@ -399,6 +452,11 @@ module PParamsUpdate where
       ∷ is-just refScriptCostMultiplier
       ∷ is-just prices
       ∷ is-just minUTxOValue
+      ∷ is-just urgentTarget
+      ∷ is-just standardTarget
+      ∷ is-just maxChangeDenominator
+      ∷ is-just urgentWindowSize
+      ∷ is-just standardWindowSize
       ∷ [])
 
   modifiesTechnicalGroup : PParamsUpdate → Bool
@@ -437,6 +495,17 @@ module PParamsUpdate where
       ∷ is-just coinsPerUTxOByte
       ∷ is-just govActionDeposit
       ∷ is-just minFeeRefScriptCoinsPerByte
+      -- The tier machinery sets the fee every RB transaction must cover and
+      -- decides when an EB certificate may consume RB space, so it belongs to
+      -- the security group alongside the other fee and block-size parameters.
+      ∷ is-just ebAgeEscape
+      ∷ is-just maxEBSize
+      ∷ is-just maxEBExUnits
+      ∷ is-just urgentTarget
+      ∷ is-just standardTarget
+      ∷ is-just maxChangeDenominator
+      ∷ is-just urgentWindowSize
+      ∷ is-just standardWindowSize
       ∷ []
       )
 
@@ -475,6 +544,14 @@ module PParamsUpdate where
       ; maxHeaderSize               = U.maxHeaderSize ?↗ P.maxHeaderSize
       ; maxValSize                  = U.maxValSize ?↗ P.maxValSize
       ; maxCollateralInputs         = U.maxCollateralInputs ?↗ P.maxCollateralInputs
+      ; ebAgeEscape                 = U.ebAgeEscape ?↗ P.ebAgeEscape
+      ; maxEBSize                   = U.maxEBSize ?↗ P.maxEBSize
+      ; maxEBExUnits                = U.maxEBExUnits ?↗ P.maxEBExUnits
+      ; urgentTarget                = U.urgentTarget ?↗ P.urgentTarget
+      ; standardTarget              = U.standardTarget ?↗ P.standardTarget
+      ; maxChangeDenominator        = U.maxChangeDenominator ?↗ P.maxChangeDenominator
+      ; urgentWindowSize            = U.urgentWindowSize ?↗ P.urgentWindowSize
+      ; standardWindowSize          = U.standardWindowSize ?↗ P.standardWindowSize
       ; maxTxExUnits                = U.maxTxExUnits ?↗ P.maxTxExUnits
       ; maxBlockExUnits             = U.maxBlockExUnits ?↗ P.maxBlockExUnits
       ; pv                          = U.pv ?↗ P.pv

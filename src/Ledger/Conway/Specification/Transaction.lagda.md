@@ -145,15 +145,33 @@ record TransactionStructure : Type₁ where
   -- TODO should wait time be Block or Slot?
   WaitTime = ℕ
   TierNo = ℕ
-  priorityTier = 0
+  urgentTier = 0
   standardTier = 1
-  TierCoeff = ℕ -- TODO define correctly
+
+  -- Number of decimal digits of precision in the fixed-point representation of
+  -- every tier coefficient. A stored TierCoeff `c` denotes the real coefficient
+  -- `c / tierScale`. NOT a protocol parameter: changing it would silently
+  -- reinterpret every coefficient already stored in the diversity policy, so it
+  -- is fixed here in the specification. See `minfeeAt` in Utxo.lagda.md for the
+  -- one place a coefficient is turned into a Coin.
+  tierDec : ℕ
+  tierDec = 6
+
+  -- 10 ^ tierDec, written as a literal so that `NonZero tierScale` — which
+  -- fixed-point division needs — resolves without unfolding an exponential.
+  -- `tierScale` is the fixed-point representation of the real coefficient 1.0,
+  -- and hence the absolute coefficient floor: no tier may ever be priced below
+  -- the ordinary minimum fee.
+  tierScale : ℕ
+  tierScale = 1000000  -- 10 ^ tierDec
+
+  TierCoeff = ℕ  -- fixed-point, scaled by tierScale; always ≥ tierScale
 
   data BlockType : Type where
     EB RB : BlockType  -- Endorser Block / Ranking Block
 
   record TxTier : Set where
-    constructor ⟦_,_,_⟧ᵗˢ
+    constructor ⟦_,_⟧ᵗˢ
     field 
       tierNo : TierNo -- tier number TODO do we need it
       -- timeToWait : WaitTime -- blocks/slots to wait until tx is mature

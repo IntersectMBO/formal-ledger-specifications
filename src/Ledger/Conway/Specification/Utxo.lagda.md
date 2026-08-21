@@ -465,40 +465,51 @@ that their difference is the identity function.
      + inject (newDeposits pp st body)
      + inject don
 
-  -- updates SDPolicy state with transaction being processed
-  -- uses tier.tierNo directly as the key into totalSize/totalRefScriptSize/totalExUnits
+  -- Accumulate one transaction into `currentClause`, the in-progress clause for
+  -- the block being processed. Only the usage fields move here; `coeff` and the
+  -- capacity fields are filled in at block finalization (DIVUP in Tiers).
   processTxTiers : TxTier → ℕ → ℕ → ExUnits → SDPolicy → SDPolicy
-  processTxTiers tier txsize refsize txeu ⟦ dp , ts , rs , eu ⟧ˢᵈᵖ = ⟦ dp , ts' , rs' , eu' ⟧ˢᵈᵖ
+  processTxTiers tier txsize refsize txeu ⟦ cc , dp , n ⟧ˢᵈᵖ = ⟦ cc' , dp , n ⟧ˢᵈᵖ
     where
-      n   = tier .TxTier.tierNo
-      ts' = ts ∪ˡ ❴ n , M.fromMaybe 0   (lookupᵐ? ts n) + txsize  ❵ᵐ
-      rs' = rs ∪ˡ ❴ n , M.fromMaybe 0   (lookupᵐ? rs n) + refsize ❵ᵐ
-      eu' = eu ∪ˡ ❴ n , M.fromMaybe εᵉ (lookupᵐ? eu n) ◇ txeu ❵ᵐ
+      t   = tier .TxTier.tierNo
+      cur = M.fromMaybe εᵖᶜ (lookupᵐ? cc t)
+      cl  = record cur
+              { size          = cur .PolicyClause.size          + txsize
+              ; refScriptSize = cur .PolicyClause.refScriptSize + refsize
+              ; exUnits       = cur .PolicyClause.exUnits       ◇ txeu
+              }
+      cc' = cc ∪ˡ ❴ t , cl ❵ᵐ
 
-  -- checks if transaction's tier coefficient matches the diversity policy
+  -- The tx's claimed coefficient must be at least the coefficient currently in
+  -- force for the tier it claims. NOT equality: a tx may post a higher
+  -- coefficient than the current quote as headroom against the quote moving
+  -- between construction and inclusion, and the excess is refunded by the UTXOS
+  -- fee split rather than charged.
   checkPolicyState : TxTier → SDPolicy → Set
-  checkPolicyState tier ⟦ dp , ts , rs , eu ⟧ˢᵈᵖ =
-    just (tier .TxTier.tierCoeff) ≡
-      M.map PolicyClause.coeffRange (lookupᵐ? dp (tier .TxTier.tierNo))
+  checkPolicyState tier ⟦ cc , dp , n ⟧ˢᵈᵖ =
+    rawCoeff dp (tier .TxTier.tierNo) ≤ tier .TxTier.tierCoeff
 
   -- Block-type tier admissibility of a transaction. In both block types the tx must
-  -- pay at least its tier fee, `tier.tierCoeff * minfee ≤ txFee` — the coefficient the
-  -- tx declares in its TxTier, pinned to the diversity policy by `checkPolicyState`.
-  -- RB blocks additionally require every tx to be priority tier: both the requested tier
-  -- (tier.tierNo) and the actual placement (actualTier) must equal priorityTier. EB blocks
+  -- pay at least its tier fee, `minfeeAt tier.tierCoeff minfee ≤ txFee` — the
+  -- coefficient the tx declares in its TxTier, pinned to be no lower than the
+  -- diversity policy's by `checkPolicyState`. The conversion goes through
+  -- `minfeeAt` because tierCoeff is fixed-point (scaled by tierScale) while the
+  -- fee is a Coin.
+  -- RB blocks additionally require every tx to be urgent tier: both the requested tier
+  -- (tier.tierNo) and the actual placement (actualTier) must equal urgentTier. EB blocks
   -- place txs of any tier. (How the fee above `minfee` is distributed — tier premium
   -- and overpayment to treasury / feeChangeAddr — is handled in the UTXOS rule.)
   tierFeeCheck : BlockType → PParams → UTxO → Tx → Set
   tierFeeCheck EB pp utxo tx =
     let open Tx tx
         base = minfee pp utxo tx
-    in body .TxBody.tier .TxTier.tierCoeff * base ≤ body .TxBody.txFee
+    in minfeeAt (body .TxBody.tier .TxTier.tierCoeff) base ≤ body .TxBody.txFee
   tierFeeCheck RB pp utxo tx =
     let open Tx tx
         base = minfee pp utxo tx
-    in (body .TxBody.tier .TxTier.tierCoeff * base ≤ body .TxBody.txFee)
-     × (body .TxBody.tier .TxTier.tierNo ≡ priorityTier)
-     × (actualTier ≡ priorityTier)
+    in (minfeeAt (body .TxBody.tier .TxTier.tierCoeff) base ≤ body .TxBody.txFee)
+     × (body .TxBody.tier .TxTier.tierNo ≡ urgentTier)
+     × (actualTier ≡ urgentTier)
 
 ```
 
@@ -539,18 +550,21 @@ data _⊢_⇀⦇_,UTXOS⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Typ
          ps'             = processTxTiers tier txsize (refScriptsSize utxo tx) (totExUnits tx) policyState
          base            = minfee pp utxo tx
          -- the fee is charged/refunded on the tier the tx ACTUALLY landed in
-         -- (actualTier: EB ⇒ standard, RB ⇒ priority), while the admission gate (tierFeeCheck)
-         -- is on the CLAIMED tier (tier.tierCoeff). actualCoeff assumes ≥ 1 for value
-         -- preservation (guaranteed by updateTiers; see Tiers).
-         actualCoeff     = M.fromMaybe 1 (M.map PolicyClause.coeffRange
-                             (lookupᵐ? diversityPolicy actualTier))
+         -- (actualTier: EB ⇒ standard, RB ⇒ urgent), while the admission gate (tierFeeCheck)
+         -- is on the CLAIMED tier (tier.tierCoeff). actualCoeff is the coefficient
+         -- currently in force for that tier — the head of its window — and is
+         -- ≥ tierScale, which stepCoeff maintains as a floor (see Tiers).
+         actualCoeff     = rawCoeff diversityPolicy actualTier
+         -- The amount actually owed at the actual tier, in lovelace. Fixed-point,
+         -- so it goes through minfeeAt rather than multiplying by the coefficient.
+         actualFee       = minfeeAt actualCoeff base
          -- pot always keeps minfee; with a feeChangeAddr the treasury gets the actual-tier
-         -- premium (actualCoeff − 1)·minfee and the overpayment above actualCoeff·minfee is
+         -- premium `actualFee − minfee` and the overpayment above actualFee is
          -- refunded; with NO feeChangeAddr the whole txFee − minfee goes to the treasury.
-         refund          = txFee ∸ (actualCoeff * base)
+         refund          = txFee ∸ actualFee
          fr'             = M.maybe (λ addr → feeRewards ∪⁺ ❴ addr .RewardAddress.stake , refund ❵ᵐ) feeRewards feeChangeAddr
          fees'           = fees + base
-         trsFromFee      = M.maybe (const ((actualCoeff ∸ 1) * base)) (txFee ∸ base) feeChangeAddr
+         trsFromFee      = M.maybe (const (actualFee ∸ base)) (txFee ∸ base) feeChangeAddr
       in
         ∙ ValidCertDeposits pp deposits txCerts
         ∙ evalP2Scripts p2Scripts ≡ isValid
@@ -606,18 +620,17 @@ data _⊢_⇀⦇_,UTXO⦈_ where
 ```agda
         txOutsʰ   = mapValues txOutHash txOuts
         overhead  = 160
-        coeffR    = M.fromMaybe 1 (M.map PolicyClause.coeffRange
-                      (lookupᵐ? (diversityPolicy) actualTier))
+        coeffR    = rawCoeff diversityPolicy actualTier
     in
     ∙ txIns ≢ ∅                              ∙ txIns ∪ refInputs ⊆ dom utxo
     ∙ txIns ∩ refInputs ≡ ∅                  ∙ inInterval slot txVldt
-    -- per-tier minimum-fee gate (tier.tierCoeff·minfee ≤ txFee) plus block-type rule:
-    --   RB blocks contain only priority-tier txs; EB blocks place txs of any tier
+    -- per-tier minimum-fee gate (minfeeAt tier.tierCoeff minfee ≤ txFee) plus block-type rule:
+    --   RB blocks contain only urgent-tier txs; EB blocks place txs of any tier
     ∙ tierFeeCheck (Γ .UTxOEnv.blockType) pp utxo tx
-    -- a tx may be placed in its claimed tier or a LOWER-PRIORITY one (never a
-    -- higher-priority one than it paid the gate for): actualTier is of no higher
-    -- priority than the claimed tier, so its coefficient is no larger.
-    -- (priorityTier = 0 < standardTier = 1, priorityCoeff ≥ standardCoeff.)
+    -- a tx may be placed in its claimed tier or a LESS URGENT one (never a more
+    -- urgent one than it paid the gate for): actualTier is no more urgent than
+    -- the claimed tier, so its coefficient is no larger.
+    -- (urgentTier = 0 < standardTier = 1, urgentCoeff ≥ standardCoeff.)
     ∙ tier .TxTier.tierNo ≤ actualTier
     ∙ coeffR ≤ tier .TxTier.tierCoeff
     ∙ (txrdmrs ˢ ≢ ∅ → collateralCheck pp tx utxo)

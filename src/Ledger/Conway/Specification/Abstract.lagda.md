@@ -43,4 +43,12 @@ record AbstractFunctions : Type₁ where
         checkEndorsements : KeyHash → List Endorsement → Bool
         --   checks that an EB id corresponds to a block with the given body hash
         checkEBID         : KeyHash → KeyHash → Bool
+        --   The EB announcement age escape no longer lives here. It used to be
+        --   a chain-history oracle (`ebOverdue : Slot → Bool`, true iff no EB
+        --   had been announced within the last `ageScape` slots), which needed
+        --   unbounded lookback to decide and was measured in slots rather than
+        --   in the resource it relieves. It is now the `rbsSinceCert` counter
+        --   carried in SDPolicy (Tiers.lagda.md), compared against the
+        --   `ebAgeEscape` protocol parameter: O(1) per block, and counted in
+        --   Ranking Blocks.
 ```
