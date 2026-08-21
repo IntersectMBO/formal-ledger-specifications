@@ -48,7 +48,7 @@ open import Ledger.Prelude
 open import Ledger.Conway.Specification.Ledger txs abs
 open import Ledger.Conway.Specification.Ledger.Properties.StateEquiv txs abs
 open import Ledger.Conway.Specification.Ledger.Properties.Reorder txs abs
-  using (Indep; Indep-sym; NoGov; LEDGERS-reorder)
+  using (Indep; Indep-sym; GovDomStable; LEDGERS-reorder)
 
 open import Data.List.Properties using (++-identityʳ)
 import Data.List.Relation.Unary.All as Allᴸ
@@ -101,7 +101,7 @@ Why these and nothing more:
   trivial at empty withdrawals and `POST-CERT` has no premises, so the
   component fires at *any* `CertState` and the suffix's certificate writes are
   irrelevant.  With no proposals and no votes its `GOVS` component is the
-  trivial base step (`NoGov` is derived below), and its `Indep`
+  trivial base step (`GovDomStable` is derived below), and its `Indep`
   write-footprint is empty, so `Indep tx t` holds *vacuously* for every `t`.
   Note the UTxO side of `tx` is **unconstrained**: reference inputs, detached
   collateral, even phase-2 invalidity are fine, because `tx` re-fires exactly
@@ -128,8 +128,8 @@ private
   disj-map-[] refl a∈ _ with Equivalence.from ∈-fromList a∈
   ... | ()
 
-Simple⇒NoGov : SimpleTx tx → NoGov tx
-Simple⇒NoGov sx = sx .SimpleTx.noGovProps , All-[] (sx .SimpleTx.noCerts)
+Simple⇒GovDomStable : SimpleTx tx → GovDomStable tx
+Simple⇒GovDomStable sx = sx .SimpleTx.noGovProps , All-[] (sx .SimpleTx.noCerts)
 
 Simple⇒Indep : SimpleTx tx → ∀ t → Indep tx t
 Simple⇒Indep sx t = record
@@ -212,7 +212,7 @@ that run to the `[tx , t]` side.
 private
   hoist :
       SimpleTx tx
-    → Allᴸ.All NoGov txs2 → Allᴸ.All SpendOnly txs2
+    → Allᴸ.All GovDomStable txs2 → Allᴸ.All SpendOnly txs2
     → Γ ⊢ s ⇀⦇ txs2 ,LEDGERS⦈ s₁      -- the suffix, without tx
     → Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s′         -- validation #1: here
     → Γ ⊢ s₁ ⇀⦇ tx ,LEDGER⦈ s₂        -- validation #2: at the end
@@ -222,7 +222,7 @@ private
         (BS-ind t-step rest) tx-mid tx-end =
     let ((_ , tx-step₂) , (_ , t-step₂)) = LEDGER-defer sx sot tx-mid t-step rest tx-end
         e = LEDGERS-reorder
-              (ngt Allᴸ.∷ Simple⇒NoGov sx Allᴸ.∷ Allᴸ.[])
+              (ngt Allᴸ.∷ Simple⇒GovDomStable sx Allᴸ.∷ Allᴸ.[])
               ((Indep-sym (Simple⇒Indep sx t) Allᴸ.∷ Allᴸ.[]) ∷ (Allᴸ.[] ∷ []))
               (swap t tx ↭-rfl)
               (BS-ind t-step (BS-ind tx-step₂ (BS-base Id-nop)))
@@ -233,7 +233,7 @@ private
 
 insert-after :
     SimpleTx tx
-  → Allᴸ.All NoGov txs2 → Allᴸ.All SpendOnly txs2
+  → Allᴸ.All GovDomStable txs2 → Allᴸ.All SpendOnly txs2
   → Γ ⊢ s  ⇀⦇ txs1 ,LEDGERS⦈ s₀      -- the prefix (no conditions)
   → Γ ⊢ s₀ ⇀⦇ txs2 ,LEDGERS⦈ s₁      -- the suffix
   → Γ ⊢ s₀ ⇀⦇ tx ,LEDGER⦈ s′         -- validation #1: at the insertion point
@@ -255,7 +255,7 @@ entirely:
 ```agda
 insert-after-≈ :
     SimpleTx tx
-  → Allᴸ.All NoGov txs2 → Allᴸ.All SpendOnly txs2
+  → Allᴸ.All GovDomStable txs2 → Allᴸ.All SpendOnly txs2
   → AllPairs Indep txs2
   → Γ ⊢ s  ⇀⦇ txs1 ,LEDGERS⦈ s₀
   → Γ ⊢ s₀ ⇀⦇ txs2 ,LEDGERS⦈ s₁
@@ -267,7 +267,7 @@ insert-after-≈ {tx = tx} {txs2 = txs2} sx ngs sos ap pre suf tx-mid tx-end =
       full = BS-ind tx-mid suf′
       cmp  = LEDGERS-++ suf (BS-ind tx-end (BS-base Id-nop))
       e = LEDGERS-reorder
-            (AllPropᴸ.++⁺ ngs (Simple⇒NoGov sx Allᴸ.∷ Allᴸ.[]))
+            (AllPropᴸ.++⁺ ngs (Simple⇒GovDomStable sx Allᴸ.∷ Allᴸ.[]))
             (APPropᴸ.++⁺ ap (Allᴸ.[] ∷ [])
               (Allᴸ.tabulate (λ {t} _ → Indep-sym (Simple⇒Indep sx t) Allᴸ.∷ Allᴸ.[])))
             (↭-trans (shift tx txs2 []) (↭-reflexive (cong (tx ∷_) (++-identityʳ txs2))))

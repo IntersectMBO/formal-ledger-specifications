@@ -17,7 +17,7 @@ withdrawal credentials (against each other *and* against the other's
 certificate targets), and on the UTxO side spending inputs, collateral
 inputs, reference inputs, and created outputs.
 
-Under full independence (plus the global `NoGov`, which no pairwise condition
+Under full independence (plus the global `GovDomStable`, which no pairwise condition
 can replace — proposals and DRep (de)registration act through the global
 `rmOrphanDRepVotes` filter):
 
@@ -34,7 +34,7 @@ a step of `t₁` neither disables nor enables a fully-independent `t₂`.  Its
 soundness argument: `t₁`'s writes are its consumed inputs (spending or
 collateral), its freshly-keyed outputs, its certificate/deposit/vote targets
 and its withdrawal zero-outs — every one of which `FullIndep` separates from
-what `t₂`'s premises read; `NoGov` keeps `dom dreps`, and hence the orphan-vote
+what `t₂`'s premises read; `GovDomStable` keeps `dom dreps`, and hence the orphan-vote
 filter and `POST-CERT` restriction, constant.  Discharging it is the same
 window-form transport of the congruence stack as the insertion obligations.
 The derived results additionally consume `LEDGERS-reorder` (Reorder's four
@@ -58,7 +58,7 @@ open import Ledger.Conway.Specification.Ledger txs abs
 open import Ledger.Conway.Specification.Utxo txs abs using (outs)
 open import Ledger.Conway.Specification.Ledger.Properties.StateEquiv txs abs
 open import Ledger.Conway.Specification.Ledger.Properties.Reorder txs abs
-  using (Indep; Indep-sym; NoGov; LEDGERS-reorder)
+  using (Indep; Indep-sym; GovDomStable; LEDGERS-reorder)
 open import Ledger.Conway.Specification.Ledger.Properties.Insertion txs abs
   using (LEDGERS-cong; LEDGERS-++)
 open import Ledger.Conway.Specification.Ledger.Properties.GeneralLemmas
@@ -138,14 +138,14 @@ independence needs no validity information — unlike the insertion module's
 postulate
   -- A step of t₁ neither disables nor enables a fully-independent t₂:
   -- forward, t₂'s premises survive t₁'s writes (all separated by FullIndep,
-  -- with fresh outputs unable to shadow and NoGov keeping the orphan-vote
+  -- with fresh outputs unable to shadow and GovDomStable keeping the orphan-vote
   -- filter inert); backward, t₂'s premises at the post-state pull back to
   -- the pre-state (t₁'s outputs are not among t₂'s reads by disjOuts, its
   -- cert/wdrl writes not among t₂'s cert-premise reads).  Discharging this
   -- is the window-form transport of the UTXOW-congruence stack, plus its
   -- certificate/withdrawal analogue.
   LEDGER-frame :
-      NoGov t₁ → NoGov t₂ → FullIndep t₁ t₂
+      GovDomStable t₁ → GovDomStable t₂ → FullIndep t₁ t₂
     → Γ ⊢ s ⇀⦇ t₁ ,LEDGER⦈ s′
     → (∀ {s″} → Γ ⊢ s  ⇀⦇ t₂ ,LEDGER⦈ s″ → ∃[ s₃ ] (Γ ⊢ s′ ⇀⦇ t₂ ,LEDGER⦈ s₃))
     × (∀ {s″} → Γ ⊢ s′ ⇀⦇ t₂ ,LEDGER⦈ s″ → ∃[ s₃ ] (Γ ⊢ s  ⇀⦇ t₂ ,LEDGER⦈ s₃))
@@ -160,7 +160,7 @@ compares the results:
 
 ```agda
 LEDGER-comm :
-    NoGov t₁ → NoGov t₂ → FullIndep t₁ t₂
+    GovDomStable t₁ → GovDomStable t₂ → FullIndep t₁ t₂
   → Γ ⊢ s ⇀⦇ t₁ ,LEDGER⦈ s₁ → Γ ⊢ s₁ ⇀⦇ t₂ ,LEDGER⦈ s₂
   → ∃[ s₁′ ] ∃[ s₂′ ] (Γ ⊢ s ⇀⦇ t₂ ,LEDGER⦈ s₁′ × Γ ⊢ s₁′ ⇀⦇ t₁ ,LEDGER⦈ s₂′ × s₂ ≈ˡ s₂′)
 LEDGER-comm {t₁ = t₁} {t₂ = t₂} ng₁ ng₂ fi st₁ st₂ =
@@ -182,7 +182,7 @@ adjacent pairs and transporting the remainder across the resulting `≈ˡ` with
 
 ```agda
 LEDGERS-permute :
-    Allᴸ.All NoGov l₁ → AllPairs FullIndep l₁ → l₁ ↭ l₂
+    Allᴸ.All GovDomStable l₁ → AllPairs FullIndep l₁ → l₁ ↭ l₂
   → Γ ⊢ s ⇀⦇ l₁ ,LEDGERS⦈ s₁
   → ∃[ s₂ ] (Γ ⊢ s ⇀⦇ l₂ ,LEDGERS⦈ s₂ × s₁ ≈ˡ s₂)
 LEDGERS-permute _ _ ↭-rfl r = -, r , ≈ˡ-refl
@@ -209,7 +209,7 @@ frame direction, iterated:
 
 ```agda
 LEDGER-defers-run :
-    NoGov tx → Allᴸ.All NoGov l → Allᴸ.All (FullIndep tx) l
+    GovDomStable tx → Allᴸ.All GovDomStable l → Allᴸ.All (FullIndep tx) l
   → Γ ⊢ s ⇀⦇ l ,LEDGERS⦈ s₁ → Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s′
   → ∃[ s₂ ] (Γ ⊢ s₁ ⇀⦇ tx ,LEDGER⦈ s₂)
 LEDGER-defers-run _ _ _ (BS-base Id-nop) st = -, st
@@ -225,7 +225,7 @@ end validation stood in for the missing independence information):
 ```agda
 private
   hoistᶠ :
-      NoGov tx → Allᴸ.All NoGov txs2 → Allᴸ.All (FullIndep tx) txs2
+      GovDomStable tx → Allᴸ.All GovDomStable txs2 → Allᴸ.All (FullIndep tx) txs2
     → Γ ⊢ s ⇀⦇ txs2 ,LEDGERS⦈ s₁
     → Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s′
     → ∃[ s₃ ] (Γ ⊢ s′ ⇀⦇ txs2 ,LEDGERS⦈ s₃)
@@ -245,7 +245,7 @@ private
     in -, BS-ind t-step₂ ts-run′
 
 insert-indep :
-    NoGov tx → Allᴸ.All NoGov txs2 → Allᴸ.All (FullIndep tx) txs2
+    GovDomStable tx → Allᴸ.All GovDomStable txs2 → Allᴸ.All (FullIndep tx) txs2
   → Γ ⊢ s  ⇀⦇ txs1 ,LEDGERS⦈ s₀
   → Γ ⊢ s₀ ⇀⦇ txs2 ,LEDGERS⦈ s₁
   → Γ ⊢ s₀ ⇀⦇ tx ,LEDGER⦈ s′        -- the one validation, at the insertion point
@@ -262,7 +262,7 @@ comparison:
 
 ```agda
 insert-indep-≈ :
-    NoGov tx → Allᴸ.All NoGov txs2 → Allᴸ.All (FullIndep tx) txs2
+    GovDomStable tx → Allᴸ.All GovDomStable txs2 → Allᴸ.All (FullIndep tx) txs2
   → AllPairs Indep txs2
   → Γ ⊢ s  ⇀⦇ txs1 ,LEDGERS⦈ s₀
   → Γ ⊢ s₀ ⇀⦇ txs2 ,LEDGERS⦈ s₁

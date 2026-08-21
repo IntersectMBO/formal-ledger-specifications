@@ -9,7 +9,7 @@ This module proves a *restricted commutativity* property for the
 `LEDGERS`{.AgdaOperator} transition system: if two transaction lists `l₁` and
 `l₂` are permutations of one another, every pair of transactions in them is
 **independent** (`Indep`{.AgdaRecord}), no transaction touches governance
-(`NoGov`{.AgdaFunction}), and both lists take the initial state to *some*
+(`GovDomStable`{.AgdaFunction}), and both lists take the initial state to *some*
 final state, then the two final states are extensionally equal (`_≈ˡ_`).
 
 The theorem is in **net-effect form** (Vinogradova & Sorokin, LSFA'24,
@@ -24,7 +24,7 @@ the field-by-field arguments are summarized in one section per field below.
 This file is the **trust base**: it declares the postulates (each at its
 narrative point), instantiates the proof layer with them, and assembles the
 main theorem.  All proofs — including `LEDGERS-deterministic`{.AgdaFunction}
-and the shared vocabulary (`Indep`, `NoGov`, `Ins#Outs`, `_≈ᶜ_`) — live in
+and the shared vocabulary (`Indep`, `GovDomStable`, `Ins#Outs`, `_≈ᶜ_`) — live in
 [ReorderLemmas](Ledger.Conway.Specification.Ledger.Properties.ReorderLemmas.md),
 a module with **no postulates** whose `Assuming` sub-module takes the facts
 assumed here as parameters.
@@ -116,7 +116,7 @@ Ledgers…*, LSFA'24, §5.2):
     `cwitness ≡ nothing` yet still writes `CredentialDeposit c`), captured by
     disjoint `certDepositKey` targets (`disjDeposits`); and governance votes,
     captured by disjoint *(action, voter)* targets (`disjVotes`).
-2.  **`NoGov`** (a *global* `All`, not part of `Indep`) — no proposals and no
+2.  **`GovDomStable`** (a *global* `All`, not part of `Indep`) — no proposals and no
     DRep (de)registration; votes are permitted.  DRep certs change
     `dom dreps`, which feeds `rmOrphanDRepVotes`{.AgdaFunction}
     (re-filtering *all* pre-existing votes each step) and the `POST-CERT`
@@ -268,7 +268,7 @@ each *local at one deposit key* (`certDepositKey`) in the sense of
 first-wins insert (`regpool`), a deletion (`dereg`/`deregdrep`), or the
 identity.  Key-local operations at distinct keys commute regardless of shape
 (`local-comm`), `disjDeposits` supplies the key-distinctness across `Indep`
-transactions, under `NoGov` the proposal-deposit fold is the identity, and
+transactions, under `GovDomStable` the proposal-deposit fold is the identity, and
 invalid transactions leave deposits untouched.  The generic Mazurkiewicz-style
 engine `foldl-↭`{.AgdaFunction} (commutation on `Indep` pairs + congruence in
 the accumulator ⇒ fold invariant under `AllPairs Indep` permutations) then
@@ -281,7 +281,7 @@ governance effect is a fold of `addVote`{.AgdaFunction} updates over its
 votes, behind the per-step orphan-vote filter `rmOrphanDRepVotes` (an invalid
 transaction leaves `govSt` untouched).  Three facts normalize the folds:
 registered votes pass through the filter; the filter reads the certificate
-state only through `dom dreps`, which is *constant* along `NoGov` steps (the
+state only through `dom dreps`, which is *constant* along `GovDomStable` steps (the
 `PRE-CERT` refresh is dom-preserving, `DELEG`/`POOL` never touch `GState`,
 DRep certs are excluded); and two votes with distinct *(action, voter)*
 targets commute (`disjVotes`).  The same `foldl-↭` engine then discharges the
@@ -302,7 +302,7 @@ validity-aware argument.  It is isolated as the one open field obligation:
 ```agda
 postulate
   LEDGERS-cert≈ :
-      Allᴸ.All NoGov l₁ → AllPairs Indep l₁ → l₁ ↭ l₂
+      Allᴸ.All GovDomStable l₁ → AllPairs Indep l₁ → l₁ ↭ l₂
     → Γ ⊢ s ⇀⦇ l₁ ,LEDGERS⦈ s₁ → Γ ⊢ s ⇀⦇ l₂ ,LEDGERS⦈ s₂
     → LState.certState s₁ ≈ᶜ LState.certState s₂
 ```
@@ -322,7 +322,7 @@ open Assuming
   public
 
 LEDGERS-reorder :
-    Allᴸ.All NoGov l₁ → AllPairs Indep l₁ → l₁ ↭ l₂
+    Allᴸ.All GovDomStable l₁ → AllPairs Indep l₁ → l₁ ↭ l₂
   → Γ ⊢ s ⇀⦇ l₁ ,LEDGERS⦈ s₁
   → Γ ⊢ s ⇀⦇ l₂ ,LEDGERS⦈ s₂
   → s₁ ≈ˡ s₂

@@ -7,7 +7,7 @@ source_path: src/Ledger/Conway/Specification/Ledger/Properties/ReorderLemmas.lag
 
 Every proof behind the
 [reordering theorem](Ledger.Conway.Specification.Ledger.Properties.Reorder.md),
-with **no postulates**: the shared vocabulary (`Indep`, `NoGov`, `Ins#Outs`,
+with **no postulates**: the shared vocabulary (`Indep`, `GovDomStable`, `Ins#Outs`,
 `_≈ᶜ_`) is defined at the top level, and all proofs live in the module
 `Assuming`, whose *parameters* are exactly the facts that `Reorder` postulates.
 `Reorder` instantiates `Assuming` with its postulates and assembles the main
@@ -136,11 +136,24 @@ NoProp t = proposals t ≡ []
 NoDRepCert : Tx → Type
 NoDRepCert t = Allᴸ.All (λ c → ¬ isDRepCert c) (certs t)
 
--- (2) global no-governance condition, applied to every transaction in the list.
--- Governance *votes* are now permitted; only proposals and DRep
--- (de)registration are excluded.
-NoGov : Tx → Type
-NoGov t = NoProp t × NoDRepCert t
+-- (2) governance-domain stability, applied to every transaction in the list.
+--
+-- NOT a no-governance condition, despite what the former name (`NoGov`)
+-- suggested.  What it pins is exactly the two domains the transport lemmas
+-- need held fixed across a run:
+--
+--   NoProp t      ⇒  `dom govSt` is unchanged by t
+--   NoDRepCert t  ⇒  `dom (DRepsOf cs)` is unchanged by t
+--
+-- Everything else governance-related is permitted.  In particular:
+--   * VOTES are permitted — a vote writes into an existing `GovActionState`
+--     without touching either domain, and is handled pairwise by `disjVotes`
+--     inside `Indep`;
+--   * `ccreghot` is permitted — `rmOrphanDRepVotes` rewrites only the
+--     `gvDRep` component of each `GovActionState`, so constitutional-committee
+--     hot-key registration cannot orphan anything.
+GovDomStable : Tx → Type
+GovDomStable t = NoProp t × NoDRepCert t
 
 -- (1) minimal independence: disjoint overwriting-certificate targets, and
 -- disjoint deposit-map keys.  `disjDeposits` is *exactly* the condition on the
@@ -1218,9 +1231,9 @@ module Assuming
       tailDisj k∈₁ k∈₂ = disj (∈-cdKeys-∷ c cs₁ k∈₁) k∈₂
 
     -- Per-transaction deposits updates commute for `Indep` gov-free transactions:
-    -- under `NoGov` the proposal-deposit fold is the identity, and `disjDeposits`
+    -- under `GovDomStable` the proposal-deposit fold is the identity, and `disjDeposits`
     -- makes the two certificate folds key-disjoint.
-    updateDeposits-comm : ∀ pp {x y : Tx} (d : Deposits) → Indep x y → NoGov x → NoGov y
+    updateDeposits-comm : ∀ pp {x y : Tx} (d : Deposits) → Indep x y → GovDomStable x → GovDomStable y
       → (updateDeposits pp (y .Tx.body) (updateDeposits pp (x .Tx.body) d)) ˢ
         ≡ᵉ (updateDeposits pp (x .Tx.body) (updateDeposits pp (y .Tx.body) d)) ˢ
     updateDeposits-comm pp {x} {y} d i (px , _) (py , _)
@@ -1241,7 +1254,7 @@ module Assuming
     ... | true  = updateDeposits-cong pp (t .Tx.body) eq
     ... | false = eq
 
-    depOp-comm : ∀ pp {m : Deposits} {x y : Tx} → Indep x y → NoGov x → NoGov y
+    depOp-comm : ∀ pp {m : Deposits} {x y : Tx} → Indep x y → GovDomStable x → GovDomStable y
       → (depOp pp (depOp pp m x) y) ˢ ≡ᵉ (depOp pp (depOp pp m y) x) ˢ
     depOp-comm pp {m} {x} {y} i nx ny with x .Tx.isValid | y .Tx.isValid
     ... | true  | true  = updateDeposits-comm pp m i nx ny
@@ -1274,12 +1287,12 @@ module Assuming
           (cong (λ d → foldl (depOp (LEnv.pparams Γ)) d ts) (LEDGER⇒depΔ st))
 
   LEDGERS-deposits≈ :
-      Allᴸ.All NoGov l₁ → AllPairs Indep l₁ → l₁ ↭ l₂
+      Allᴸ.All GovDomStable l₁ → AllPairs Indep l₁ → l₁ ↭ l₂
     → Γ ⊢ s ⇀⦇ l₁ ,LEDGERS⦈ s₁ → Γ ⊢ s ⇀⦇ l₂ ,LEDGERS⦈ s₂
     → UTxOState.deposits (LState.utxoSt s₁) ˢ ≡ᵉ UTxOState.deposits (LState.utxoSt s₂) ˢ
   LEDGERS-deposits≈ {l₁ = l₁} {l₂ = l₂} {Γ = Γ} {s = s} ng ap p st₁ st₂
     rewrite LEDGERS⇒depᶠ st₁ | LEDGERS⇒depᶠ st₂ =
-    foldl-↭ (λ d₁ d₂ → d₁ ˢ ≡ᵉ d₂ ˢ) SetSetoid.refl SetSetoid.trans Indep Indep-sym NoGov
+    foldl-↭ (λ d₁ d₂ → d₁ ˢ ≡ᵉ d₂ ˢ) SetSetoid.refl SetSetoid.trans Indep Indep-sym GovDomStable
             (depOp (LEnv.pparams Γ))
             (λ t eq → depOp-congˡ (LEnv.pparams Γ) t eq)
             (λ i nx ny → depOp-comm (LEnv.pparams Γ) i nx ny)
@@ -1734,7 +1747,7 @@ module Assuming
     -- trace-level extraction, relative to the initial certificate state
     LEDGERS⇒govᶠ : ∀ {l : List Tx} {cs₀ : CertState}
       → dom (DRepsOf (LState.certState s)) ≡ᵉ dom (DRepsOf cs₀)
-      → Allᴸ.All NoGov l
+      → Allᴸ.All GovDomStable l
       → Γ ⊢ s ⇀⦇ l ,LEDGERS⦈ s′
       → (LState.govSt s′ ≈ᵍ foldl (govOp cs₀) (LState.govSt s) l)
         × Allᴸ.All (Pgov cs₀) l
@@ -1758,7 +1771,7 @@ module Assuming
           , ((λ v → ⊥-elim (case trans (sym iv) v of λ ())) Allᴸ.∷ ihAll)
 
   LEDGERS-govSt≈ :
-      Allᴸ.All NoGov l₁ → AllPairs Indep l₁ → l₁ ↭ l₂
+      Allᴸ.All GovDomStable l₁ → AllPairs Indep l₁ → l₁ ↭ l₂
     → Γ ⊢ s ⇀⦇ l₁ ,LEDGERS⦈ s₁ → Γ ⊢ s ⇀⦇ l₂ ,LEDGERS⦈ s₂
     → LState.govSt s₁ ≈ᵍ LState.govSt s₂
   LEDGERS-govSt≈ {l₁ = l₁} {l₂ = l₂} {s = s} ng ap p st₁ st₂ =
