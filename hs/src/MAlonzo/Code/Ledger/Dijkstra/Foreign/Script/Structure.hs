@@ -85,218 +85,218 @@ d_PlutusStructure_26 a0 = ()
 d_ScriptStructure_30 a0 = ()
 -- Ledger.Dijkstra.Foreign.Script.Structure._.P1ScriptStructure.Dec-validP1Script
 d_Dec'45'validP1Script_44 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.T_P1ScriptStructure_322 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.T_P1ScriptStructure_326 ->
   [Integer] ->
   [MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20] ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   AgdaAny -> MAlonzo.Code.Class.Decidable.Core.T__'8263'_10
 d_Dec'45'validP1Script_44 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.d_Dec'45'validP1Script_342
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.d_Dec'45'validP1Script_346
       (coe v0)
 -- Ledger.Dijkstra.Foreign.Script.Structure._.P1ScriptStructure.DecEq-P1Script
 d_DecEq'45'P1Script_46 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.T_P1ScriptStructure_322 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.T_P1ScriptStructure_326 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 d_DecEq'45'P1Script_46 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.d_DecEq'45'P1Script_346
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.d_DecEq'45'P1Script_350
       (coe v0)
 -- Ledger.Dijkstra.Foreign.Script.Structure._.P1ScriptStructure.Hashable-P1Script
 d_Hashable'45'P1Script_48 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.T_P1ScriptStructure_322 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.T_P1ScriptStructure_326 ->
   MAlonzo.Code.Interface.TypeClasses.Hashable.T_Hashable_10
 d_Hashable'45'P1Script_48 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.d_Hashable'45'P1Script_344
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.d_Hashable'45'P1Script_348
       (coe v0)
 -- Ledger.Dijkstra.Foreign.Script.Structure._.P1ScriptStructure.P1Script
 d_P1Script_50 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.T_P1ScriptStructure_322 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.T_P1ScriptStructure_326 ->
   ()
 d_P1Script_50 = erased
 -- Ledger.Dijkstra.Foreign.Script.Structure._.P1ScriptStructure.validP1Script
 d_validP1Script_52 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.T_P1ScriptStructure_322 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.T_P1ScriptStructure_326 ->
   [Integer] ->
   [MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20] ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 -> AgdaAny -> ()
 d_validP1Script_52 = erased
 -- Ledger.Dijkstra.Foreign.Script.Structure._.PlutusStructure._≥ᵉ_
 d__'8805''7497'__66 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.T_PlutusStructure_360 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.T_PlutusStructure_364 ->
   AgdaAny -> AgdaAny -> ()
 d__'8805''7497'__66 = erased
 -- Ledger.Dijkstra.Foreign.Script.Structure._.PlutusStructure.CostModel
 d_CostModel_68 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.T_PlutusStructure_360 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.T_PlutusStructure_364 ->
   ()
 d_CostModel_68 = erased
 -- Ledger.Dijkstra.Foreign.Script.Structure._.PlutusStructure.Dataʰ
 d_Data'688'_74 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.T_PlutusStructure_360 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.T_PlutusStructure_364 ->
   MAlonzo.Code.Ledger.Core.Specification.Crypto.T_HashableSet_36
 d_Data'688'_74 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.d_Data'688'_440
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.d_Data'688'_444
       (coe v0)
 -- Ledger.Dijkstra.Foreign.Script.Structure._.PlutusStructure.Dec-validPlutusScript
 d_Dec'45'validPlutusScript_78 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.T_PlutusStructure_360 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.T_PlutusStructure_364 ->
   AgdaAny ->
   [AgdaAny] ->
   AgdaAny ->
   AgdaAny -> MAlonzo.Code.Class.Decidable.Core.T__'8263'_10
 d_Dec'45'validPlutusScript_78 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.d_Dec'45'validPlutusScript_514
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.d_Dec'45'validPlutusScript_518
       (coe v0)
 -- Ledger.Dijkstra.Foreign.Script.Structure._.PlutusStructure.DecEQ-Prices
 d_DecEQ'45'Prices_80 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.T_PlutusStructure_360 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.T_PlutusStructure_364 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 d_DecEQ'45'Prices_80 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.d_DecEQ'45'Prices_476
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.d_DecEQ'45'Prices_480
       (coe v0)
 -- Ledger.Dijkstra.Foreign.Script.Structure._.PlutusStructure.DecEq-CostModel
 d_DecEq'45'CostModel_82 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.T_PlutusStructure_360 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.T_PlutusStructure_364 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 d_DecEq'45'CostModel_82 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.d_DecEq'45'CostModel_460
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.d_DecEq'45'CostModel_464
       (coe v0)
 -- Ledger.Dijkstra.Foreign.Script.Structure._.PlutusStructure.DecEq-ExUnits
 d_DecEq'45'ExUnits_84 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.T_PlutusStructure_360 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.T_PlutusStructure_364 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 d_DecEq'45'ExUnits_84 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.d_DecEq'45'ExUnits_474
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.d_DecEq'45'ExUnits_478
       (coe v0)
 -- Ledger.Dijkstra.Foreign.Script.Structure._.PlutusStructure.DecEq-LangDepView
 d_DecEq'45'LangDepView_86 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.T_PlutusStructure_360 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.T_PlutusStructure_364 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 d_DecEq'45'LangDepView_86 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.d_DecEq'45'LangDepView_462
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.d_DecEq'45'LangDepView_466
       (coe v0)
 -- Ledger.Dijkstra.Foreign.Script.Structure._.PlutusStructure.DecEq-Language
 d_DecEq'45'Language_88 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.T_PlutusStructure_360 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.T_PlutusStructure_364 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 d_DecEq'45'Language_88 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.d_DecEq'45'Language_466
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.d_DecEq'45'Language_470
       (coe v0)
 -- Ledger.Dijkstra.Foreign.Script.Structure._.PlutusStructure.ExUnit-CommutativeMonoid
 d_ExUnit'45'CommutativeMonoid_94 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.T_PlutusStructure_360 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.T_PlutusStructure_364 ->
   MAlonzo.Code.Class.CommutativeMonoid.Core.T_CommutativeMonoid_12
 d_ExUnit'45'CommutativeMonoid_94 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.d_ExUnit'45'CommutativeMonoid_456
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.d_ExUnit'45'CommutativeMonoid_460
       (coe v0)
 -- Ledger.Dijkstra.Foreign.Script.Structure._.PlutusStructure.ExUnits
 d_ExUnits_96 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.T_PlutusStructure_360 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.T_PlutusStructure_364 ->
   ()
 d_ExUnits_96 = erased
 -- Ledger.Dijkstra.Foreign.Script.Structure._.PlutusStructure.Hashable-PlutusScript
 d_Hashable'45'PlutusScript_98 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.T_PlutusStructure_360 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.T_PlutusStructure_364 ->
   MAlonzo.Code.Interface.TypeClasses.Hashable.T_Hashable_10
 d_Hashable'45'PlutusScript_98 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.d_Hashable'45'PlutusScript_458
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.d_Hashable'45'PlutusScript_462
       (coe v0)
 -- Ledger.Dijkstra.Foreign.Script.Structure._.PlutusStructure.LangDepView
 d_LangDepView_100 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.T_PlutusStructure_360 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.T_PlutusStructure_364 ->
   ()
 d_LangDepView_100 = erased
 -- Ledger.Dijkstra.Foreign.Script.Structure._.PlutusStructure.Language
 d_Language_102 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.T_PlutusStructure_360 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.T_PlutusStructure_364 ->
   ()
 d_Language_102 = erased
 -- Ledger.Dijkstra.Foreign.Script.Structure._.PlutusStructure.PlutusScript
 d_PlutusScript_104 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.T_PlutusStructure_360 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.T_PlutusStructure_364 ->
   ()
 d_PlutusScript_104 = erased
 -- Ledger.Dijkstra.Foreign.Script.Structure._.PlutusStructure.Prices
 d_Prices_114 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.T_PlutusStructure_360 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.T_PlutusStructure_364 ->
   ()
 d_Prices_114 = erased
 -- Ledger.Dijkstra.Foreign.Script.Structure._.PlutusStructure.Show-CostModel
 d_Show'45'CostModel_118 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.T_PlutusStructure_360 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.T_PlutusStructure_364 ->
   MAlonzo.Code.Class.Show.Core.T_Show_10
 d_Show'45'CostModel_118 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.d_Show'45'CostModel_464
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.d_Show'45'CostModel_468
       (coe v0)
 -- Ledger.Dijkstra.Foreign.Script.Structure._.PlutusStructure.Show-ExUnits
 d_Show'45'ExUnits_120 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.T_PlutusStructure_360 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.T_PlutusStructure_364 ->
   MAlonzo.Code.Class.Show.Core.T_Show_10
 d_Show'45'ExUnits_120 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.d_Show'45'ExUnits_478
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.d_Show'45'ExUnits_482
       (coe v0)
 -- Ledger.Dijkstra.Foreign.Script.Structure._.PlutusStructure.Show-Language
 d_Show'45'Language_122 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.T_PlutusStructure_360 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.T_PlutusStructure_364 ->
   MAlonzo.Code.Class.Show.Core.T_Show_10
 d_Show'45'Language_122 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.d_Show'45'Language_468
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.d_Show'45'Language_472
       (coe v0)
 -- Ledger.Dijkstra.Foreign.Script.Structure._.PlutusStructure.Show-Prices
 d_Show'45'Prices_124 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.T_PlutusStructure_360 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.T_PlutusStructure_364 ->
   MAlonzo.Code.Class.Show.Core.T_Show_10
 d_Show'45'Prices_124 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.d_Show'45'Prices_480
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.d_Show'45'Prices_484
       (coe v0)
 -- Ledger.Dijkstra.Foreign.Script.Structure._.PlutusStructure.fromPlutusLanguage
 d_fromPlutusLanguage_132 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.T_PlutusStructure_360 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.T_PlutusStructure_364 ->
   MAlonzo.Code.Function.Bundles.T_Injection_842
 d_fromPlutusLanguage_132 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.d_fromPlutusLanguage_454
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.d_fromPlutusLanguage_458
       (coe v0)
 -- Ledger.Dijkstra.Foreign.Script.Structure._.PlutusStructure.language
 d_language_134 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.T_PlutusStructure_360 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.T_PlutusStructure_364 ->
   AgdaAny -> AgdaAny
 d_language_134 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.d_language_516
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.d_language_520
       (coe v0)
 -- Ledger.Dijkstra.Foreign.Script.Structure._.PlutusStructure.validPlutusScript
 d_validPlutusScript_136 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.T_PlutusStructure_360 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.T_PlutusStructure_364 ->
   AgdaAny -> [AgdaAny] -> AgdaAny -> AgdaAny -> ()
 d_validPlutusScript_136 = erased
 -- Ledger.Dijkstra.Foreign.Script.Structure._.PlutusStructure.≥ᵉ-Dec
 d_'8805''7497''45'Dec_138 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.T_PlutusStructure_360 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.T_PlutusStructure_364 ->
   AgdaAny ->
   AgdaAny -> MAlonzo.Code.Class.Decidable.Core.T__'8263'_10
 d_'8805''7497''45'Dec_138 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.d_'8805''7497''45'Dec_472
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.d_'8805''7497''45'Dec_476
       (coe v0)
 -- Ledger.Dijkstra.Foreign.Script.Structure._.ScriptStructure.hashRespectsUnion
 d_hashRespectsUnion_230 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.T_ScriptStructure_520 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.T_ScriptStructure_524 ->
   () ->
   () ->
   () ->
@@ -305,23 +305,23 @@ d_hashRespectsUnion_230 ::
   MAlonzo.Code.Interface.TypeClasses.Hashable.T_Hashable_10
 d_hashRespectsUnion_230 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.d_hashRespectsUnion_566
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.d_hashRespectsUnion_570
       (coe v0)
 -- Ledger.Dijkstra.Foreign.Script.Structure._.ScriptStructure.p1s
 d_p1s_248 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.T_ScriptStructure_520 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.T_P1ScriptStructure_322
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.T_ScriptStructure_524 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.T_P1ScriptStructure_326
 d_p1s_248 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.d_p1s_546
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.d_p1s_550
       (coe v0)
 -- Ledger.Dijkstra.Foreign.Script.Structure._.ScriptStructure.ps
 d_ps_250 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.T_ScriptStructure_520 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.T_PlutusStructure_360
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.T_ScriptStructure_524 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.T_PlutusStructure_364
 d_ps_250 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.d_ps_568
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.d_ps_572
       (coe v0)
 -- Ledger.Dijkstra.Foreign.Script.Structure._.Dec-EvalNativeScript
 d_Dec'45'EvalNativeScript_268 ::
@@ -329,11 +329,11 @@ d_Dec'45'EvalNativeScript_268 ::
   [Integer] ->
   [MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20] ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Native.T_NativeScript_322 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Native.T_NativeScript_326 ->
   MAlonzo.Code.Class.Decidable.Core.T__'8263'_10
 d_Dec'45'EvalNativeScript_268 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Native.du_Dec'45'EvalNativeScript_392
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Native.du_Dec'45'EvalNativeScript_396
       (coe d___12 (coe v0)) (coe du___14)
       (coe
          MAlonzo.Code.Class.DecEq.Core.C_constructor_32
@@ -345,12 +345,12 @@ d_NativeScript_274 a0 = ()
 -- Ledger.Dijkstra.Foreign.Script.Structure.HSNativeScript
 d_HSNativeScript_336 a0 = ()
 data T_HSNativeScript_336
-  = C_constructor_350 MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Native.T_NativeScript_322
+  = C_constructor_350 MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Native.T_NativeScript_326
                       Integer Integer
 -- Ledger.Dijkstra.Foreign.Script.Structure.HSNativeScript.nativeScript
 d_nativeScript_344 ::
   T_HSNativeScript_336 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Native.T_NativeScript_322
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Native.T_NativeScript_326
 d_nativeScript_344 v0
   = case coe v0 of
       C_constructor_350 v1 v2 v3 -> coe v1
@@ -398,7 +398,7 @@ d_DecEq'45'HSNativeScript_354 v0
                                      = coe
                                          MAlonzo.Code.Class.DecEq.Core.d__'8799'__16
                                          (coe
-                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Native.du_DecEq'45'NativeScript_338
+                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Native.du_DecEq'45'NativeScript_342
                                             (coe d___12 (coe v0)) (coe du___14)
                                             (coe
                                                MAlonzo.Code.Class.DecEq.Core.C_constructor_32
@@ -452,13 +452,13 @@ d_DecEq'45'HSNativeScript_354 v0
 -- Ledger.Dijkstra.Foreign.Script.Structure.HSP1ScriptStructure
 d_HSP1ScriptStructure_356 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.T_P1ScriptStructure_322
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.T_P1ScriptStructure_326
 d_HSP1ScriptStructure_356 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.C_constructor_348
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.C_constructor_352
       (\ v1 v2 v3 v4 ->
          coe
-           MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Native.du_Dec'45'EvalNativeScript_392
+           MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Native.du_Dec'45'EvalNativeScript_396
            (coe d___12 (coe v0)) (coe du___14)
            (coe
               MAlonzo.Code.Class.DecEq.Core.C_constructor_32
@@ -504,79 +504,79 @@ du_fromPlutusLanguage_380
       (coe
          (\ v0 ->
             case coe v0 of
-              MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.C_V1_352
+              MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.C_V1_356
                 -> coe MAlonzo.Code.Ledger.Dijkstra.Foreign.Script.Base.C_PV1_12
-              MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.C_V2_354
+              MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.C_V2_358
                 -> coe MAlonzo.Code.Ledger.Dijkstra.Foreign.Script.Base.C_PV2_14
-              MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.C_V3_356
+              MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.C_V3_360
                 -> coe MAlonzo.Code.Ledger.Dijkstra.Foreign.Script.Base.C_PV3_16
-              MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.C_V4_358
+              MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.C_V4_362
                 -> coe MAlonzo.Code.Ledger.Dijkstra.Foreign.Script.Base.C_PV4_18
               _ -> MAlonzo.RTE.mazUnreachableError))
       erased
       (coe
          (\ v0 ->
             case coe v0 of
-              MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.C_V1_352
+              MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.C_V1_356
                 -> coe
                      (\ v1 ->
                         case coe v1 of
-                          MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.C_V1_352
+                          MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.C_V1_356
                             -> erased
-                          MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.C_V2_354
+                          MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.C_V2_358
                             -> coe (\ v2 -> MAlonzo.RTE.mazUnreachableError)
-                          MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.C_V3_356
+                          MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.C_V3_360
                             -> coe (\ v2 -> MAlonzo.RTE.mazUnreachableError)
-                          MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.C_V4_358
+                          MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.C_V4_362
                             -> coe (\ v2 -> MAlonzo.RTE.mazUnreachableError)
                           _ -> MAlonzo.RTE.mazUnreachableError)
-              MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.C_V2_354
+              MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.C_V2_358
                 -> coe
                      (\ v1 ->
                         case coe v1 of
-                          MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.C_V1_352
+                          MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.C_V1_356
                             -> coe (\ v2 -> MAlonzo.RTE.mazUnreachableError)
-                          MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.C_V2_354
+                          MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.C_V2_358
                             -> erased
-                          MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.C_V3_356
+                          MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.C_V3_360
                             -> coe (\ v2 -> MAlonzo.RTE.mazUnreachableError)
-                          MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.C_V4_358
+                          MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.C_V4_362
                             -> coe (\ v2 -> MAlonzo.RTE.mazUnreachableError)
                           _ -> MAlonzo.RTE.mazUnreachableError)
-              MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.C_V3_356
+              MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.C_V3_360
                 -> coe
                      (\ v1 ->
                         case coe v1 of
-                          MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.C_V1_352
+                          MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.C_V1_356
                             -> coe (\ v2 -> MAlonzo.RTE.mazUnreachableError)
-                          MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.C_V2_354
+                          MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.C_V2_358
                             -> coe (\ v2 -> MAlonzo.RTE.mazUnreachableError)
-                          MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.C_V3_356
+                          MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.C_V3_360
                             -> erased
-                          MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.C_V4_358
+                          MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.C_V4_362
                             -> coe (\ v2 -> MAlonzo.RTE.mazUnreachableError)
                           _ -> MAlonzo.RTE.mazUnreachableError)
-              MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.C_V4_358
+              MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.C_V4_362
                 -> coe
                      (\ v1 ->
                         case coe v1 of
-                          MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.C_V1_352
+                          MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.C_V1_356
                             -> coe (\ v2 -> MAlonzo.RTE.mazUnreachableError)
-                          MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.C_V2_354
+                          MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.C_V2_358
                             -> coe (\ v2 -> MAlonzo.RTE.mazUnreachableError)
-                          MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.C_V3_356
+                          MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.C_V3_360
                             -> coe (\ v2 -> MAlonzo.RTE.mazUnreachableError)
-                          MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.C_V4_358
+                          MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.C_V4_362
                             -> erased
                           _ -> MAlonzo.RTE.mazUnreachableError)
               _ -> MAlonzo.RTE.mazUnreachableError))
 -- Ledger.Dijkstra.Foreign.Script.Structure.HSP2ScriptStructure
 d_HSP2ScriptStructure_390 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.T_PlutusStructure_360
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.T_PlutusStructure_364
 d_HSP2ScriptStructure_390 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.C_constructor_518
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.C_constructor_522
       MAlonzo.Code.Ledger.Core.Foreign.Crypto.Base.d_HashableSet'45'ℕ_36
       (coe du_fromPlutusLanguage_380)
       (coe
@@ -647,10 +647,10 @@ du_Hashable'45'HSPlutusScript_402
 -- Ledger.Dijkstra.Foreign.Script.Structure.HSScriptStructure
 d_HSScriptStructure_418 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.T_ScriptStructure_520
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.T_ScriptStructure_524
 d_HSScriptStructure_418 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.C_constructor_692
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.C_constructor_696
       (coe d_HSP1ScriptStructure_356 (coe v0))
       (\ v1 v2 v3 v4 v5 -> coe du_hashRespectsUnion_430 v4 v5)
       (coe d_HSP2ScriptStructure_390 (coe v0))
