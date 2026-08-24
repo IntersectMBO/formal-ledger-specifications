@@ -426,15 +426,15 @@ data _⊢_⇀⦇_,POOL⦈_ : PoolEnv → PState → DCert → PState → Type wh
     ∙ pp .minPoolCost ≤ poolParams .cost
     ────────────────────────────────
     ⟦ e , pp ⟧ ⊢ ⟦ pools
-         , fPools
-         , retiring
-         , deposits
-         ⟧ ⇀⦇ regpool kh poolParams ,POOL⦈ ⟦
-           pools ∪ˡ ❴ kh , poolParams ❵
-         , fPools
-         , retiring
-         , deposits ∪ˡ ❴ kh , pp .poolDeposit ❵
-         ⟧
+                 , fPools
+                 , retiring
+                 , deposits
+                 ⟧ ⇀⦇ regpool kh poolParams ,POOL⦈ ⟦
+                   pools ∪ˡ ❴ kh , poolParams ❵
+                 , fPools
+                 , retiring
+                 , deposits ∪ˡ ❴ kh , pp .poolDeposit ❵
+                 ⟧
 
   POOL-rereg :
     ∙ IsPoolRegistered pools kh
@@ -443,15 +443,15 @@ data _⊢_⇀⦇_,POOL⦈_ : PoolEnv → PState → DCert → PState → Type wh
     ∙ pp .minPoolCost ≤ poolParams .cost
     ────────────────────────────────
     ⟦ e , pp ⟧ ⊢ ⟦ pools
-         , fPools
-         , retiring
-         , deposits
-         ⟧ ⇀⦇ regpool kh poolParams ,POOL⦈ ⟦
-           pools
-         , ❴ kh , poolParams ❵ ∪ˡ fPools
-         , retiring ∣ ❴ kh ❵ ᶜ
-         , deposits
-         ⟧
+                 , fPools
+                 , retiring
+                 , deposits
+                 ⟧ ⇀⦇ regpool kh poolParams ,POOL⦈ ⟦
+                   pools
+                 , ❴ kh , poolParams ❵ ∪ˡ fPools
+                 , retiring ∣ ❴ kh ❵ ᶜ
+                 , deposits
+                 ⟧
 
   POOL-retirepool :
     ∙ IsPoolRegistered pools kh
@@ -459,15 +459,15 @@ data _⊢_⇀⦇_,POOL⦈_ : PoolEnv → PState → DCert → PState → Type wh
     ∙ e' ≤ e + pp .Emax
     ────────────────────────────────
     ⟦ e , pp ⟧ ⊢ ⟦ pools
-         , fPools
-         , retiring
-         , deposits
-         ⟧ ⇀⦇ retirepool kh e' ,POOL⦈ ⟦
-           pools
-         , fPools
-         , ❴ kh , e' ❵ ∪ˡ retiring
-         , deposits
-         ⟧
+                 , fPools
+                 , retiring
+                 , deposits
+                 ⟧ ⇀⦇ retirepool kh e' ,POOL⦈ ⟦
+                   pools
+                 , fPools
+                 , ❴ kh , e' ❵ ∪ˡ retiring
+                 , deposits
+                 ⟧
 ```
 
 ## `GOVCERT`{.AgdaDatatype} Transition System
