@@ -22,6 +22,9 @@ open GovStructure govStructure
 open RewardAddress
 
 open Computational ⦃...⦄
+open StakePoolParams
+open PoolEnv
+open PParams
 
 instance
   Computational-DELEG : Computational _⊢_⇀⦇_,DELEG⦈_ String
@@ -55,21 +58,51 @@ instance
   ... | no ¬p = ⊥-elim (¬p (p , q))
 
   Computational-POOL : Computational _⊢_⇀⦇_,POOL⦈_ String
-  Computational-POOL .computeProof _ stᵖ (regpool c _)
+  Computational-POOL .computeProof _ stᵖ (regpool c poolParams)
     with ¿ IsPoolRegistered (PoolsOf stᵖ) c ¿
-  ... | yes p = success (-, (POOL-rereg p))
-  ... | no ¬p = success (-, (POOL-reg ¬p))
-  Computational-POOL .computeProof _ stᵖ (retirepool c e) = success (-, POOL-retirepool)
+  Computational-POOL .computeProof Γ stᵖ (regpool c poolParams) | yes p
+    with ¿ ¬ (poolParams .vrf ∈ mapˢ vrf (range (PoolsOf stᵖ ∣ ❴ c ❵ ᶜ) ∪ range (FuturePoolsOf stᵖ ∣ ❴ c ❵ ᶜ)))
+         ∙ NetworkIdOf (poolParams .rewardAccount) ≡ NetworkId
+         ∙ Γ .pp .minPoolCost ≤ poolParams .cost ¿
+  ... | yes q = success (-, POOL-rereg (p , q))
+  ... | no ¬q = failure (genErrors ¬q)
+  Computational-POOL .computeProof Γ stᵖ (regpool c poolParams) | no ¬p
+    with ¿ ¬ (poolParams .vrf ∈ mapˢ vrf (range (PoolsOf stᵖ) ∪ range (FuturePoolsOf stᵖ)))
+         ∙ NetworkIdOf (poolParams .rewardAccount) ≡ NetworkId
+         ∙ Γ .pp .minPoolCost ≤ poolParams .cost ¿
+  ... | yes q = success (-, (POOL-reg (¬p , q)))
+  ... | no ¬q = failure (genErrors ¬q)
+  Computational-POOL .computeProof Γ stᵖ (retirepool c e')
+    with ¿ IsPoolRegistered (PoolsOf stᵖ) c
+         ∙ Γ .epoch < e'
+         ∙ e' ≤  Γ .epoch + Γ .pp .Emax ¿
+  ... | yes p = success (-, POOL-retirepool p)
+  ... | no ¬q = failure (genErrors ¬q)
   Computational-POOL .computeProof _ stᵖ _ = failure "Unexpected certificate in POOL"
-  Computational-POOL .completeness _ stᵖ (regpool c _) _ (POOL-reg p)
+  Computational-POOL .completeness Γ stᵖ (regpool c poolParams) _ (POOL-reg (p , q))
     with ¿ IsPoolRegistered (PoolsOf stᵖ) c ¿
-  ... | yes p' = ⊥-elim (p p')
-  ... | no _ = refl
-  Computational-POOL .completeness _ stᵖ (regpool c _) _ (POOL-rereg p)
-    with ¿ IsPoolRegistered (PoolsOf stᵖ) c ¿
+  ... | yes r = ⊥-elim (p r)
+  ... | no ¬r
+    with ¿ ¬ (poolParams .vrf ∈ mapˢ vrf (range (PoolsOf stᵖ) ∪ range (FuturePoolsOf stᵖ)))
+         ∙ NetworkIdOf (poolParams .rewardAccount) ≡ NetworkId
+         ∙ Γ .pp .minPoolCost ≤ poolParams .cost ¿
   ... | yes _ = refl
-  ... | no ¬p = ⊥-elim (¬p p)
-  Computational-POOL .completeness _ _ (retirepool _ _) _ POOL-retirepool = refl
+  ... | no ¬s = ⊥-elim (¬s q)
+  Computational-POOL .completeness Γ stᵖ (regpool c poolParams) _ (POOL-rereg (p , q))
+    with ¿ IsPoolRegistered (PoolsOf stᵖ) c ¿
+  ... | no ¬r = ⊥-elim (¬r p)
+  ... | yes r
+    with ¿ ¬ (poolParams .vrf ∈ mapˢ vrf (range (PoolsOf stᵖ ∣ ❴ c ❵ ᶜ) ∪ range (FuturePoolsOf stᵖ ∣ ❴ c ❵ ᶜ)))
+         ∙ NetworkIdOf (poolParams .rewardAccount) ≡ NetworkId
+         ∙ Γ .pp .minPoolCost ≤ poolParams .cost ¿
+  ... | yes _ = refl
+  ... | no ¬s = ⊥-elim (¬s q)
+  Computational-POOL .completeness Γ stᵖ (retirepool c e) _ (POOL-retirepool p)
+    with ¿ IsPoolRegistered (PoolsOf stᵖ) c
+         ∙ Γ .epoch < e
+         ∙ e ≤ Γ .epoch + Γ .pp .Emax ¿
+  ... | yes _ = refl
+  ... | no ¬q = ⊥-elim (¬q p)
 
   Computational-GOVCERT : Computational _⊢_⇀⦇_,GOVCERT⦈_ String
   Computational-GOVCERT .computeProof ce cs (regdrep c d _) =
@@ -99,7 +132,7 @@ instance
   Computational-CERT : Computational _⊢_⇀⦇_,CERT⦈_ String
   Computational-CERT .computeProof ce cs dCert
     with computeProof ⟦ PParamsOf ce , PoolsOf cs , dom (DRepsOf cs) ⟧ (DStateOf cs) dCert
-         | computeProof (PParamsOf ce) (PStateOf cs) dCert
+         | computeProof ⟦ EpochOf ce , PParamsOf ce ⟧ (PStateOf cs) dCert
          | computeProof ⟦ EpochOf ce , PParamsOf ce , ColdCredentialsOf ce ⟧ cs dCert
 
   ... | success (_ , h) | _               | _               = success (-, CERT-deleg h)
@@ -119,13 +152,13 @@ instance
   ... | success _ | refl = refl
   Computational-CERT .completeness ce cs
     dCert@(regpool c poolParams) cs' (CERT-pool h)
-    with computeProof (CertEnv.pp ce) (CertState.pState cs) dCert
+    with computeProof ⟦ EpochOf ce , PParamsOf ce ⟧ (PStateOf cs) dCert
     | completeness _ _ _ _ h
   ... | success _ | refl = refl
   Computational-CERT .completeness ce cs
     dCert@(retirepool c e) cs' (CERT-pool h)
-    with completeness _ _ _ _ h
-  ... | refl = refl
+    with computeProof ⟦ EpochOf ce , PParamsOf ce ⟧ (PStateOf cs) dCert | completeness _ _ _ _ h
+  ... | success _ | refl = refl
   Computational-CERT .completeness Γ cs
     (regdrep c d an) _ (CERT-gov (GOVCERT-regdrep p))
     rewrite dec-yes

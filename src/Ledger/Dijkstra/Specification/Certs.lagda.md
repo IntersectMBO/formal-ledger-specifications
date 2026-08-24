@@ -30,7 +30,8 @@ record StakePoolParams : Type where
     cost            : Coin
     margin          : UnitInterval
     pledge          : Coin
-    rewardAccount   : Credential
+    rewardAccount   : RewardAddress
+    vrf             : VRF
 
 CCHotKeys : Type
 CCHotKeys = Credential ⇀ Maybe Credential
@@ -127,8 +128,10 @@ record DelegEnv : Type where
     pools         : Pools
     delegatees    : ℙ Credential
 
-PoolEnv : Type
-PoolEnv = PParams
+record PoolEnv : Type where
+  field
+    epoch           : Epoch
+    pp              : PParams
 
 record GovCertEnv : Type where
   field
@@ -139,6 +142,8 @@ record GovCertEnv : Type where
 
 <!--
 ```agda
+open StakePoolParams
+
 IsConwayCert? : IsConwayCert ⁇¹
 IsConwayCert? {x} .dec with x
 ... | regdrep _ _ _ = yes tt
@@ -165,6 +170,10 @@ open HasColdCredentials ⦃...⦄ public
 record HasPools {a} (A : Type a) : Type a where
   field PoolsOf : A → Pools
 open HasPools ⦃...⦄ public
+
+record HasFuturePools {a} (A : Type a) : Type a where
+  field FuturePoolsOf : A → Pools
+open HasFuturePools ⦃...⦄ public
 
 record HasRetiring {a} (A : Type a) : Type a where
   field RetiringOf : A → Retiring
@@ -234,6 +243,9 @@ instance
   HasPools-PState : HasPools PState
   HasPools-PState .PoolsOf = PState.pools
 
+  HasFuturePools-PState : HasFuturePools PState
+  HasFuturePools-PState .FuturePoolsOf = PState.fPools
+
   HasDeposits-PState : HasDeposits PState
   HasDeposits-PState .DepositsOf = PState.deposits
 
@@ -282,12 +294,13 @@ instance
   HasEpoch-CertEnv : HasEpoch CertEnv
   HasEpoch-CertEnv .EpochOf = CertEnv.epoch
 
-  unquoteDecl HasCast-CertEnv HasCast-DState HasCast-PState HasCast-GState HasCast-CertState HasCast-DelegEnv HasCast-GovCertEnv = derive-HasCast
+  unquoteDecl HasCast-CertEnv HasCast-DState HasCast-PState HasCast-GState HasCast-CertState HasCast-DelegEnv HasCast-PoolEnv HasCast-GovCertEnv = derive-HasCast
     (   (quote CertEnv , HasCast-CertEnv)
     ∷   (quote DState , HasCast-DState)
     ∷   (quote PState , HasCast-PState)
     ∷   (quote GState , HasCast-GState)
     ∷   (quote CertState , HasCast-CertState)
+    ∷   (quote PoolEnv , HasCast-PoolEnv)
     ∷   (quote GovCertEnv , HasCast-GovCertEnv)
     ∷ [ (quote DelegEnv , HasCast-DelegEnv) ])
 
@@ -312,7 +325,7 @@ private variable
   mc          : Maybe Credential
   delegatees  : ℙ Credential
   dCert       : DCert
-  e           : Epoch
+  e e'        : Epoch
   vs          : List GovVote
   kh          : KeyHash
   mkh         : Maybe KeyHash
@@ -408,44 +421,53 @@ data _⊢_⇀⦇_,POOL⦈_ : PoolEnv → PState → DCert → PState → Type wh
 
   POOL-reg :
     ∙ ¬ (IsPoolRegistered pools kh)
+    ∙ ¬ (poolParams .vrf ∈ mapˢ vrf (range pools ∪ range fPools))
+    ∙ NetworkIdOf (poolParams .rewardAccount) ≡ NetworkId
+    ∙ pp .minPoolCost ≤ poolParams .cost
     ────────────────────────────────
-    pp ⊢ ⟦ pools
-         , fPools
-         , retiring
-         , deposits
-         ⟧ ⇀⦇ regpool kh poolParams ,POOL⦈ ⟦
-           pools ∪ˡ ❴ kh , poolParams ❵
-         , fPools
-         , retiring
-         , deposits ∪ˡ ❴ kh , pp .poolDeposit ❵
-         ⟧
+    ⟦ e , pp ⟧ ⊢ ⟦ pools
+                 , fPools
+                 , retiring
+                 , deposits
+                 ⟧ ⇀⦇ regpool kh poolParams ,POOL⦈ ⟦
+                   pools ∪ˡ ❴ kh , poolParams ❵
+                 , fPools
+                 , retiring
+                 , deposits ∪ˡ ❴ kh , pp .poolDeposit ❵
+                 ⟧
 
   POOL-rereg :
     ∙ IsPoolRegistered pools kh
+    ∙ ¬ (poolParams .vrf ∈ mapˢ vrf (range (pools ∣ ❴ kh ❵ ᶜ) ∪ range (fPools ∣ ❴ kh ❵ ᶜ)))
+    ∙ NetworkIdOf (poolParams .rewardAccount) ≡ NetworkId
+    ∙ pp .minPoolCost ≤ poolParams .cost
     ────────────────────────────────
-    pp ⊢ ⟦ pools
-         , fPools
-         , retiring
-         , deposits
-         ⟧ ⇀⦇ regpool kh poolParams ,POOL⦈ ⟦
-           pools
-         , ❴ kh , poolParams ❵ ∪ˡ fPools
-         , retiring ∣ ❴ kh ❵ ᶜ
-         , deposits
-         ⟧
+    ⟦ e , pp ⟧ ⊢ ⟦ pools
+                 , fPools
+                 , retiring
+                 , deposits
+                 ⟧ ⇀⦇ regpool kh poolParams ,POOL⦈ ⟦
+                   pools
+                 , ❴ kh , poolParams ❵ ∪ˡ fPools
+                 , retiring ∣ ❴ kh ❵ ᶜ
+                 , deposits
+                 ⟧
 
   POOL-retirepool :
+    ∙ IsPoolRegistered pools kh
+    ∙ e < e'
+    ∙ e' ≤ e + pp .Emax
     ────────────────────────────────
-    pp ⊢ ⟦ pools
-         , fPools
-         , retiring
-         , deposits
-         ⟧ ⇀⦇ retirepool kh e ,POOL⦈ ⟦
-           pools
-         , fPools
-         , ❴ kh , e ❵ ∪ˡ retiring
-         , deposits
-         ⟧
+    ⟦ e , pp ⟧ ⊢ ⟦ pools
+                 , fPools
+                 , retiring
+                 , deposits
+                 ⟧ ⇀⦇ retirepool kh e' ,POOL⦈ ⟦
+                   pools
+                 , fPools
+                 , ❴ kh , e' ❵ ∪ˡ retiring
+                 , deposits
+                 ⟧
 ```
 
 ## `GOVCERT`{.AgdaDatatype} Transition System
@@ -482,7 +504,7 @@ data _⊢_⇀⦇_,CERT⦈_  : CertEnv → CertState → DCert → CertState → 
       ⟦ e , pp , cc ⟧ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ' , stᵖ , stᵍ ⟧
 
   CERT-pool :
-    ∙ pp ⊢ stᵖ ⇀⦇ dCert ,POOL⦈ stᵖ'
+    ∙ ⟦ e , pp ⟧ ⊢ stᵖ ⇀⦇ dCert ,POOL⦈ stᵖ'
       ────────────────────────────────
       ⟦ e , pp , cc ⟧ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ , stᵖ' , stᵍ ⟧
 

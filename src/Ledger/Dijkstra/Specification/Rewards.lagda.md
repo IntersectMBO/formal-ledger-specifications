@@ -133,7 +133,7 @@ rewardOnePool pp rewardPot n N poolParams stakeDistr σ σa tot = memberRewards 
                             (stakeDistr ∣ owners ᶜ)
 
   ownersRewards : Stake
-  ownersRewards =  ❴ poolParams .StakePoolParams.rewardAccount
+  ownersRewards =  ❴ CredentialOf (poolParams .StakePoolParams.rewardAccount)
                    , stakeMap[ rewardOwners ] ownerStake σ ❵ᵐ
 
 poolStake  : KeyHash → StakeDelegs → Stake → Stake

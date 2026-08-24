@@ -32,6 +32,7 @@ HSCryptoStructure : CryptoStructure
 HSCryptoStructure = record {
     pkk = HSPKKScheme
   ; ScriptHash = ℕ
+  ; VRF = ℕ
   }
 
 open CryptoStructure HSCryptoStructure

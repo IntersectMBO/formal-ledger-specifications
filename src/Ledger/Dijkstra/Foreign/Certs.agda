@@ -59,6 +59,11 @@ instance
     • fieldPrefix "ce"
   Conv-CertEnv = autoConvert CertEnv
 
+  HsTy-PoolEnv = autoHsType PoolEnv
+    ⊣ withConstructor "MkPoolEnv"
+    • fieldPrefix "pe"
+  Conv-PoolEnv = autoConvert PoolEnv
+
   HsTy-CertState = autoHsType CertState ⊣ withConstructor "MkCertState"
   Conv-CertState = autoConvert CertState
 
@@ -69,7 +74,7 @@ deleg-step = to (compute Computational-DELEG)
 
 {-# COMPILE GHC deleg-step as delegStep #-}
 
-pool-step : HsType (PParams → PState → DCert → ComputationResult String PState)
+pool-step : HsType (PoolEnv → PState → DCert → ComputationResult String PState)
 pool-step = to (compute Computational-POOL)
 
 {-# COMPILE GHC pool-step as poolStep #-}
