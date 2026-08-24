@@ -61,6 +61,7 @@ module Implementation where
 
   PlutusScript = ℕ × (List Data → Bool)
   ScriptHash = ℕ
+  VRF = ℕ
 
   ExUnits      = ℕ × ℕ
   ExUnit-CommutativeMonoid =
