@@ -26,7 +26,7 @@ module Ledger.Dijkstra.Specification.PParams
 
 open import Data.Product.Properties
 open import Data.Nat.Properties using (m+1+n≢m)
-open import Data.Rational using (ℚ)
+open import Data.Rational as ℚ using (ℚ)
 open import Relation.Nullary.Decidable
 open import Data.List.Relation.Unary.Any using (Any; here; there)
 
@@ -36,7 +36,7 @@ open import Ledger.Prelude
 open import Ledger.Core.Specification.Crypto
 open import Ledger.Core.Specification.Epoch
 -- open import Ledger.Dijkstra.Specification.Script.Base
-open import Ledger.Prelude.Numeric using (UnitInterval; ℕ⁺)
+open import Ledger.Prelude.Numeric using (UnitInterval; fromUnitInterval; ℕ⁺)
 
 
 private variable
@@ -207,23 +207,40 @@ is the proposal's own addition, the per-EB analogue of
 
 ## Protocol Parameter Well Formedness
 
+Besides the positivity of `positivePParams`{.AgdaFunction},
+`paramsWellFormed`{.AgdaFunction} imposes [CIP-164][cip-164]'s normative
+constraint that the quorum threshold lie strictly below the committee's stake
+coverage.  That constraint relates two fields, so a
+`PParamsUpdate`{.AgdaRecord}, which carries each field independently, cannot be
+checked for it on its own; `ppdWellFormed`{.AgdaFunction} imposes it on the
+parameters an update yields.
+
 ```agda
 positivePParams : PParams → List ℕ
 positivePParams pp =  ( maxBlockSize ∷ maxTxSize ∷ maxHeaderSize
                       ∷ maxValSize ∷ coinsPerUTxOByte
                       ∷ poolDeposit ∷ collateralPercentage ∷ ccMaxTermLength
-                      ∷ govActionLifetime ∷ govActionDeposit ∷ drepDeposit ∷ [] )
+                      ∷ govActionLifetime ∷ govActionDeposit ∷ drepDeposit
+                      ∷ leiosHeaderDiffusionPeriod ∷ leiosVotingPeriod
+                      ∷ leiosDiffusionPeriod ∷ leiosMaxEBSize
+                      ∷ leiosMaxEBTxsSize ∷ leiosMaxRefScriptSizePerEB ∷ [] )
   where open PParams pp
 
 paramsWellFormed : PParams → Type
-paramsWellFormed pp = 0 ∉ fromList (positivePParams pp)
+paramsWellFormed pp =  0 ∉ fromList (positivePParams pp)
+                     × τ ℚ.< σ
+  where
+    open PParams pp
+    τ σ : ℚ
+    τ = fromUnitInterval leiosQuorumStakeThreshold
+    σ = fromUnitInterval leiosCommitteeStakeCoverage
 ```
 
 <!--
 ```agda
 paramsWF-elim : (pp : PParams) → paramsWellFormed pp → (n : ℕ) → n ∈ˡ (positivePParams pp) → n > 0
 paramsWF-elim pp pwf (suc n) x = z<s
-paramsWF-elim pp pwf 0 0∈ = ⊥-elim (pwf (to ∈-fromList 0∈))
+paramsWF-elim pp (pwf , _) 0 0∈ = ⊥-elim (pwf (to ∈-fromList 0∈))
   where open Equivalence
 
 record HasPParams {a} (A : Type a) : Type a where
@@ -301,7 +318,9 @@ module PParamsUpdate where
   paramsUpdateWellFormed ppu =
        just 0 ∉ fromList ( maxBlockSize ∷ maxTxSize ∷ maxHeaderSize ∷ maxValSize
                          ∷ coinsPerUTxOByte ∷ poolDeposit ∷ collateralPercentage ∷ ccMaxTermLength
-                         ∷ govActionLifetime ∷ govActionDeposit ∷ drepDeposit ∷ [] )
+                         ∷ govActionLifetime ∷ govActionDeposit ∷ drepDeposit
+                         ∷ leiosHeaderDiffusionPeriod ∷ leiosVotingPeriod ∷ leiosDiffusionPeriod
+                         ∷ leiosMaxEBSize ∷ leiosMaxEBTxsSize ∷ leiosMaxRefScriptSizePerEB ∷ [] )
     where open PParamsUpdate ppu
 ```
 
