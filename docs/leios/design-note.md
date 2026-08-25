@@ -2,19 +2,18 @@
 
 # Leios ledger formalization (LLF) plan
 
-This note records the defaults behind the formalization of the Ouroboros Linear
-Leios ledger rules ([CIP-164]) in the Dijkstra-era specification, so that our
-Agda work merely encodes these decisions instead of debating them.
-Each subsection states one default, cites the source that fixes it, and gives the
-rationale; where every source is silent, the note picks a default and says so.
+The **Leios Ledger Formalization** (**LLF**) is the formalization, in Agda, of the
+ledger rules of Ouroboros Linear Leios ([CIP-164]) within the Dijkstra-era
+specification.  This note is the LLF plan: it records the design decisions our Agda
+work builds on, so that the code encodes settled decisions instead of debating open
+questions.  Each subsection states one decision, cites the source that fixes it, and
+gives the rationale; where every source is silent, the note picks a default and says
+so.
 
-We will refer to the plan that this note describes as the
-**Leios Ledger Formalization** plan, or **LLF** for short.
+Comments from the consensus and ledger implementers are welcome on all of it; work
+proceeds on these decisions, and corrections are folded in as they arrive.
 
-Comments from the consensus and ledger implementers are welcome on all of it; the
-LLF plan proceeds on these defaults and folds corrections in as they arrive.
-
-In protocol of [CIP-164], a block producer may announce an *endorser block* (EB), an
+In the protocol of [CIP-164], a block producer may announce an *endorser block* (EB), an
 ordered list of transaction references (hash and declared byte size), alongside its
 ordinary *ranking block* (RB).  A committee of stake pools votes on the announced EB,
 a quorum of votes is aggregated into a *certificate*, and the immediately following
@@ -24,9 +23,9 @@ resolved and taken in reference order.
 
 The note draws on the following sources:
 
-+  [CIP-164] (the normative text),
++  [CIP-164] (the normative text);
 +  the implementation team's [Leios design document][design-doc] with its requirement
-   register (`REQ-…`),
+   register (`REQ-…`);
 +  the cardano-ledger prototype ([#5626][cl-5626]: announcement, certificate bit,
    and voting-key carriage in the Dijkstra era) and its parameter proposal
    ([#5965][cl-5965]);
@@ -50,12 +49,14 @@ The abstract voting crypto is a `LeiosAbstract` record, included as a new field 
 `GovStructure`, the era's bundle of abstract structures, and supplied through
 `TransactionStructure`.  This placement is forced by the import order: the
 proof-of-possession premise lives in `POOL`, inside `Certs`, which sees only
-`GovStructure` and sits upstream of `AbstractFunctions`.
+`GovStructure` and sits upstream of `AbstractFunctions`, so nothing threaded
+through `AbstractFunctions` is in scope where the registration rule states that
+premise.
 
-A `GovStructure` field reaches `Certs` and every rule module downstream of the
-transaction telescope without changing any module signature.[^1]
+A `GovStructure` field, by contrast, reaches `Certs` and every rule module
+downstream of the transaction telescope without changing any module signature.[^1]
 
-**Placement of new modules and which existing modules to touch**.
+The new modules, and the edits to existing modules, are as follows:
 
 ```text
 src/Ledger/Dijkstra/Specification/
@@ -75,9 +76,8 @@ src/Ledger/Dijkstra/Specification/
 
 ## Certified application uses the full rules
 
-In this LLF plan, we will apply a certified EB's closure with the ordinary
-iterated `LEDGER` relation (`LEDGERS`), exactly as `BBODY` applies a block's own
-transactions.
+The LLF applies a certified EB's closure with the ordinary iterated `LEDGER`
+relation (`LEDGERS`), exactly as `BBODY` applies a block's own transactions.
 
 [CIP-164] fixes what a vote attests:
 
@@ -95,12 +95,11 @@ with minimal checks and UTxO updates", "omitting previously performed phase 1 & 
 validation" ([CIP-164 Table 2][cip-params]; [REQ-LedgerTxNoValidation and
 REQ-LedgerCheapReapply][dd-txlevels]).
 
-This LLF plan treats that as an optimization, not the semantics: the relation
-defines certified application by the full rules, and the theorem that minimal
-reapplication agrees with the full rules on a closure some quorum has validated is
-exactly the soundness result the optimization needs.  This would be a follow-up
-proof, but not part of the initial LLF plan, so we will not include a separate
-reapply relation.
+The LLF treats that as an optimization, not the semantics: the relation defines
+certified application by the full rules, and the theorem that minimal reapplication
+agrees with the full rules on a closure some quorum has validated is exactly the
+soundness result the optimization needs.  That theorem is follow-up work, outside
+the initial LLF, so the rules include no separate reapply relation.
 
 Phase-2 failures need no special accounting.  Spec-level transactions carry their
 `isValid` flag, so `LEDGERS` covers collateral-forfeiting transactions in a closure
@@ -157,12 +156,13 @@ which the CIP is silent: everything about an announced EB is evaluated in the
 announcing world.  The closure runs under `A`'s parameters; the certificate is
 checked against the committee, the total active stake, and the quorum threshold
 `τ` pinned at announcement; the timing window uses the period lengths in force at
-A.  A certificate proves what the voters checked, and the voters could check only
+`A`.  A certificate proves what the voters checked, and the voters could check only
 `A`'s world; validating it against data none of them could have seen would break
 that reading.  The vote signature is bound to `s_A` for the same reason: the
 binding "ensures voters validated the EB against the same ledger state it extends
 when certified on chain" ([Vote Structure][cip-vote]).
-*This corollary is assumed in order to fix this LLF plan, but it should be confirm with the implementers.*
+*The LLF assumes this corollary as a working default, pending confirmation from
+the implementers.*
 
 This ordering also answers the following open question of the design document:
 "How much of the work lives in `BBODY` itself versus a dedicated EB-body rule, and
@@ -175,15 +175,15 @@ chain-level context and application ordered before the tick, as above.
 ## Certificate failure is the absence of a transition
 
 CIP-164's [Certificate Validation][cip-certval] lists five checks that must pass
-"before accepting the block."  The LFF plan renders failure the way the spec
+"before accepting the block."  The LLF renders failure the way the spec
 renders every block fault: a block whose certificate fails a check, or that pairs
 a certificate with transactions of its own, or that certifies before the window
 opens, simply admits no `BBODY`/`CHAIN` derivation.  The block is invalid, and
 nothing in the relational spec distinguishes why.
 
 A predicate-failure taxonomy belongs to the `Computational` instances and the
-conformance work, deferred with the rest of executability, and the five checks are
-its raw material if/when it arrives as follow-up work.
+conformance work, deferred with the rest of executability; the five checks are the
+raw material for that follow-up work.
 
 The missing-certificate case needs no bookkeeping at all: only the immediate
 successor may certify, and otherwise "the EB certificate cannot be included and
@@ -218,7 +218,8 @@ The LLF adds the following defaults, each grounded in the design document:
    The implementation materializes the committee in the ledger state at the
    boundary rather than recomputing it per use
    ([REQ-LedgerStateVotingCommittee][dd-certver]); the LLF's rules consume the
-   committee only through the announcement pin, and materializing it as an
+   committee only through the announcement pin (see **The pin** below), and
+   materializing it as an
    epoch-state field is follow-up work together with the concrete construction,
    which is why no epoch module appears among the touched modules in the [Module
    placement](#module-placement) section above.
@@ -227,7 +228,7 @@ The LLF adds the following defaults, each grounded in the design document:
    votes (`voter_id`) and certificate bitfields address.
 
    The CIP names no tie-break; the design document breaks ties by pool id, and the
-   LLF plan adopts that as a stated law, not a remark: equal-stake pools are
+   LLF adopts it as a stated law, not a remark: equal-stake pools are
    common at the committee tail, and two implementations that order ties
    differently disagree about the validity of every certificate.
 
@@ -235,8 +236,8 @@ The LLF adds the following defaults, each grounded in the design document:
    by stake truncation at coverage `σ_c`, independent of key registration;
    descending stake with ties broken by ascending pool id; determinism of the
    order); the concrete construction can land later without disturbing anything
-   downstream of the laws, but the order itself cannot.  The byte-exact comparison
-   on pool ids is a conformance detail to confirm upstream.
+   downstream of the laws; the order itself, being a law, cannot be deferred.  The
+   byte-exact comparison on pool ids is a conformance detail to confirm upstream.
 
 +  **Keyless seats**.  Membership is by stake alone, "independent of key
    registration" ([REQ-KeylessSeat][dd-committee]): a selected pool without a
@@ -279,8 +280,8 @@ cardano-ledger [#5965][cl-5965] maps them onto the Dijkstra `PParams` and adds o
 bound the table lacks.
 
 The LLF adds nine fields, with the mechanical `PParamsUpdate` and group
-companions; every field sits in the network and security groups, the assignment
-[#5965][cl-5965] gives all of its proposed parameters.
+companions; every field sits in the network and security groups, matching the
+assignment [#5965][cl-5965] gives its proposed parameters.
 
 | Field                         | CIP-164 (Table 3)                         | Type         | Notes |
 | ----------------------------- | ----------------------------------------- | ------------ | ----- |
@@ -318,7 +319,7 @@ The block, as the spec sees it, is the resolved block: alongside the certificate
 it carries the certified EB and the closure ("the ledger must be provided with all
 endorsed transactions resolved", [REQ-LedgerResolvedBlockValidation][dd-blockval]),
 and a matching premise checks the closure against the EB's references pointwise,
-hash and declared size; the CIP documents the reference hash as covering the
+hash and declared size.  The CIP documents the reference hash as covering the
 complete transaction bytes ([Appendix B][cip-cddl]), so the references pin the
 closure's full content, not only the transaction bodies.
 
@@ -335,18 +336,18 @@ before (the block-body hash's segmented preimage exists only in implementation
 internals), so pinning that preimage is a named conformance prerequisite, not an
 afterthought.
 
-Two wire artifacts deliberately stay out of the rules: the header's `certified_eb`
+Two wire artifacts deliberately stay out of the rules.  The header's `certified_eb`
 bit is a syncing optimization, derived in the spec from the presence of the body's
-certificate; a wrong `announced_eb_size` makes nothing invalid: "neither the RB
+certificate.  A wrong `announced_eb_size` makes nothing invalid: "neither the RB
 header nor the RB are invalid. But no honest node should vote for the EB"
-([Inclusion Rules][cip-inclusion]).  Thus, announcement-size agreement belongs to
-the voters' checks, not to block validity.
+([Inclusion Rules][cip-inclusion]); announcement-size agreement therefore belongs
+to the voters' checks, not to block validity.
 
 ## The consensus↔ledger interface
 
 The interface proposed by Nicolas Frisby in the implementation design discussion
-shapes the consensus↔ledger boundary as eight functions.  The table maps each to
-its LLF counterpart, or records what stays outside the LLF and why.
+shapes the consensus↔ledger boundary as eight functions.  The following table maps
+each to its LLF counterpart, or records what stays outside the LLF and why.
 
 | Proposed function             | LLF counterpart |
 | ----------------------------- | -------------------- |
@@ -366,20 +367,23 @@ the certificate check `V-chkCerts`, the role `ValidCert` is intended to fill.
 (An intended correspondence: that specification declares the hook but its
 transition rules do not yet call it.)
 
-The node-local vote conditions (header arrival, equivocation, deadlines, chain
-position: CIP [vote conditions 1–4][cip-step3]) stay on its side of the line, and
-`ValidEB` carries the ledger-checkable remainder (conditions 5 and 6).
+CIP-164's six vote-casting conditions split across the same boundary: conditions 1–4
+(header arrival, equivocation detection, validation deadlines, chain position) are
+node-local, so they stay with the protocol-level specification and never enter the
+ledger rules; conditions 5 (the closure is a valid extension) and 6 (the EB is
+nonempty) are ledger-checkable and land in `ValidEB`, together with the
+reference/closure agreement and the per-EB bounds ([vote conditions][cip-step3]).
 
 ## Out of scope: rewards and incentives
 
-The LLF plan models no change to the reward calculation, and neither does the
+The LLF models no change to the reward calculation, and neither does the
 protocol: "Leios does not require any changes to incentives in Cardano"
 ([Incentives][cip-incentives]); the CIP cites the existing ledger-specification
 rewards module as "the current and unchanged specification of rewards".
 Blocks-made accounting is likewise untouched (a certificate-bearing block counts
 like any other).  Should a Leios incentive mechanism ever become normative
 (rewards for voting or EB production, tiered fees), it enters through the full
-roadmap, not this LLF.
+roadmap, not the LLF.
 
 ---
 
