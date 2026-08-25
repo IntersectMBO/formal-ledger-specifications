@@ -36,8 +36,8 @@ The note draws on the following sources:
 ## Module placement
 
 Leios lands in the Dijkstra era as an additive subtree
-`Ledger.Dijkstra.Specification.Leios.*` plus minimal edits to six existing modules;
-no separate era, and no change to `Ledger.Core`.
+`Ledger.Dijkstra.Specification.Leios.*` plus edits to six existing modules and
+their derived layers; no separate era, and no change to `Ledger.Core`.
 
 [CIP-164] requires a new ledger era for the block-format change
 ([Versioning][cip-versioning]), and the implementation prototypes Leios in
@@ -73,6 +73,15 @@ src/Ledger/Dijkstra/Specification/
 ├── BlockBody.lagda.md      -- edit: announcement/certificate fields, BBODY premises
 └── Chain.lagda.md          -- edit: pending-announcement threading, window check
 ```
+
+The map lists the modules where design decisions land.  The era's derived layers
+construct and pattern-match the very records and premises these edits change — the
+`Computational` instances (`Computational.lagda.md` and the per-rule
+`*/Properties/Computational.lagda.md`), the `Properties` proofs, and the `Foreign`
+mirror — so each rule change updates them mechanically in the same PR, as the
+type-checker directs; the voting-crypto interface work already does this for
+`Foreign`.  The gate is unchanged either way: the full `Ledger.Dijkstra` import
+closure type-checks before a PR is done.
 
 ## Certified application uses the full rules
 
@@ -251,10 +260,15 @@ The LLF adds the following defaults, each grounded in the design document:
    `τ` of the total active stake), so the condition implementers must monitor has
    a name.
 
-   The gap is not hypothetical: on the Musashi testnet (2026-08, trace-verifier
-   observations) 19 of 66 registered pools had no voting key and certificates
-   appeared on roughly 3% of blocks, with every individual rule satisfied
-   (cf. [ouroboros-leios #1046][ol-1046]).
+   The gap is not hypothetical.  During the Musashi certification outage of
+   2026-08-12/13 ([ouroboros-leios #1046][ol-1046]), the committee's participating
+   weight sat at 73% against a 75% quorum threshold for almost seven hours and only
+   two EBs certified, while Praos block production continued and every individual
+   rule was satisfied; the margin was consumed by deliberately withheld keys,
+   silent nodes, and a retired pool whose snapshot stake sat in the committee as
+   structurally un-voteable weight.  Registration-side metrics showed full key
+   adoption throughout: on-chain registration and node-side participation are
+   different quantities, and `certifiable` names only the part the ledger can see.
 
 +  **Keys**.  Pool registration carries the voting key with its proof of
    possession, as in the prototype's `sppLeiosKey` on `StakePoolParams`
