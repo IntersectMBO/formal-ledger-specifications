@@ -29,6 +29,9 @@ The note draws on the following sources:
 +  the cardano-ledger prototype ([#5626][cl-5626]: announcement, certificate bit,
    and voting-key carriage in the Dijkstra era) and its parameter proposal
    ([#5965][cl-5965]);
++  the consensus↔ledger interface proposal circulated by Nicolas Frisby in the
+   implementation team's design discussion (2026-08; quoted here because it is
+   not yet recorded in any public artifact);
 +  the protocol-level Agda specification
    [ouroboros-leios-formal-spec][leios-formal-spec], for which the ledger is the
    base layer.
@@ -60,12 +63,11 @@ The new modules, and the edits to existing modules, are as follows:
 
 ```text
 src/Ledger/Dijkstra/Specification/
-├── Leios.lagda.md          -- umbrella: overview prose, re-exports
 ├── Leios/
 │   ├── Abstract.lagda.md   -- LeiosAbstract: abstract voting crypto
 │   ├── Types.lagda.md      -- EndorserBlock, Announcement, Vote, Certificate
-│   ├── Committee.lagda.md  -- Seat, Committee, quorum arithmetic
-│   └── Validity.lagda.md   -- ValidVote, ValidCert, ValidEB
+│   └── Validity.lagda.md   -- Seat, Committee, quorum arithmetic;
+│                           --   ValidVote, ValidCert, ValidEB
 ├── Gov/Base.lagda.md       -- edit: leiosAbstract field in GovStructure
 ├── Transaction.lagda.md    -- edit: supply leiosAbstract via TransactionStructure
 ├── PParams.lagda.md        -- edit: the Leios parameter block
@@ -233,8 +235,10 @@ The LLF adds the following defaults, each grounded in the design document:
    which is why no epoch module appears among the touched modules in the [Module
    placement](#module-placement) section above.
 
-+  **Order and indices**.  The descending-stake order fixes the seat indices that
-   votes (`voter_id`) and certificate bitfields address.
++  **Order and indices**.  A *seat* is a position in the committee's canonical
+   order, carrying its pool, its weight, and (optionally) its voting key.  The
+   descending-stake order fixes the seat indices that votes (`voter_id`) and
+   certificate bitfields address.
 
    The CIP names no tie-break; the design document breaks ties by pool id, and the
    LLF adopts it as a stated law, not a remark: equal-stake pools are
@@ -368,7 +372,7 @@ each to its LLF counterpart, or records what stays outside the LLF and why.
 | `applyCertifiedEb`            | The certificate branch of the block and chain rules: `ValidCert` plus the closure applied via `LEDGERS` from the announcing state, per the ordering above. |
 | `validateCertificate`         | `ValidCert` (`Leios.Validity`): signers are seats of the pinned committee, the aggregate signature verifies over (slot, EB hash), and the signers' stake meets τ times the total active stake.  The contextual half — agreement with the pending announcement, the timing window — sits as block/chain premises. |
 | `validateVote`                | `ValidVote` (`Leios.Validity`): the voter index denotes a keyed committee seat whose key verifies the signature over (slot, EB hash).  Votes never appear on-chain individually; this is the meaning consensus uses to filter votes before aggregation. |
-| `doesEpochCommitteeIncludeMe` | Decidable membership on `Committee` (`Leios.Committee`), a seat lookup by pool.  The "me" binding is consensus-local; the ledger side is the seat lookup, which the implementation serves from its materialized committee ([REQ-LedgerStateVotingCommittee][dd-certver]). |
+| `doesEpochCommitteeIncludeMe` | Decidable membership on `Committee` (`Leios.Validity`), a seat lookup by pool.  The "me" binding is consensus-local; the ledger side is the seat lookup, which the implementation serves from its materialized committee ([REQ-LedgerStateVotingCommittee][dd-certver]). |
 | `initializeVotingLedgerState` | Follow-up (the voting-state interface).  Meaning fixed now: the announcing block's post-`BBODY` state paired with fresh EB accumulators, one per cumulative `ValidEB` bound: referenced-transaction bytes, `ExUnits`, and reference-script bytes. |
 | `applyTxForVoting`            | Follow-up.  Meaning fixed now: one LEDGER step plus accumulator updates and bound checks; folding it over the closure from the initialized state succeeds exactly when `ValidEB`'s extension-and-bounds conjuncts hold. |
 | `reapplyTxForVoting`          | Follow-up.  The minimal-checks variant; its agreement with `applyTxForVoting` on previously validated transactions is the certified-application soundness theorem. |
@@ -399,6 +403,117 @@ like any other).  Should a Leios incentive mechanism ever become normative
 (rewards for voting or EB production, tiered fees), it enters through the full
 roadmap, not the LLF.
 
+## Addendum: two design questions raised in review
+
+### Why a `Vote` type at all?
+
+No ledger transition rule consumes a `Vote`.  Votes never reach the chain, and
+CIP-164 draws the line accordingly: certificate validation is block validity,
+while the vote-casting conditions are node behavior.  If "consumed by a rule"
+were the only criterion for a type's existence, `Vote` would fail it.
+
+But rules are not a specification's only consumers, and creation is no
+criterion at all: the ledger creates neither votes nor certificates, yet
+nobody disputes `Certificate`.  Three consumers need the vote's fields.
+
+1.  **The certificate's meaning**.  A certificate is a compressed set of
+    votes: `cSig` is an aggregate signature over precisely the message each
+    vote signs, `(slot, EB-hash)`, under the keys of the seats named in the
+    bitfield (a bitfield index is a `voter_id` in another encoding).  The
+    CIP's reason for signing the slot is a replay-protection argument about
+    votes ("binding the vote signature to `slot_no` … ensures voters validated
+    the EB against the same ledger state it extends").  Without a `Vote` type,
+    the aggregate check verifies an unexplained pair of bytes; with one, the
+    certificate is a definition instead of an incantation.  The price is one
+    four-field record.
+
+2.  **The implementation's own requirements**.  The consensus↔ledger
+    interface proposed by Nicolas Frisby in the implementation team's design
+    discussion (2026-08; not yet recorded in a public artifact; the interface
+    section above gives it durable form) includes `validateVote`, with its
+    stated reason: "To receive/relay votes, we also need to validate them.
+    They're never in a block, but we get at least the epoch's committee
+    member's public key from the ledger state."  And the design document's
+    requirement register includes
+    [`REQ-LedgerSerializationVote`][dd-serialization] ("The vote structure
+    must be deterministically de-/serializable from/to bytes using CBOR
+    encoding"): the ledger owns the vote wire format, alongside RB and EB.  A
+    ledger spec without a vote type can give neither requirement a formal
+    counterpart.
+
+3.  **Vocabulary for the metatheory**.  Quorum safety, the statement that a
+    valid certificate implies some honest committee member attested `ValidEB`,
+    is the justification for certified application skipping re-validation, and
+    it is a statement about votes: honest voters vote only for valid EBs; a
+    quorum of stake signed; hence an honest vote exists.  The proof is
+    deferred; the statement needs votes as objects.
+
+The design isolates the question by construction: `ValidCert` never mentions
+`Vote`, so dropping `Vote` and `ValidVote` costs exactly one record and one
+relation, and nothing else moves.  The fallback is correspondingly principled:
+the `validateVote` interface row becomes "consensus-side composition of
+ledger-provided pieces, namely committee seat lookup plus `isSignedVote`,
+which `LeiosAbstract` exports regardless".
+
+The fallback has an owner, though, and it is not this note.  Whether the
+ledger owns vote validation and serialization is fixed, today, in the
+implementation team's own artifacts: `validateVote` in the proposed interface
+and `REQ-LedgerSerializationVote` in the design document.  If the answer is to
+become "no", those artifacts must change first; a ledger spec that silently
+drops `Vote` while they stand manufactures a spec–implementation divergence.
+
+**Recommendation**.  Keep `Vote`/`ValidVote` as definitions serving the
+interface and the metatheory, consumed by no rule; this is the framing the
+note already uses for the protocol spec's declared-but-uncalled `V-chkCerts`.
+
+### Why a Leios subtree instead of folding into existing modules?
+
+One concession first, because it clarifies the question: the rule edits land
+in `BlockBody`, `Chain`, `Certs`, and `PParams` regardless; premises live
+where rules live.  The question is only where the shared type definitions go.
+One placement is already settled by constraint, not taste: the abstract crypto
+cannot live in `AbstractFunctions`, because `Certs` sits upstream of it and
+the proof-of-possession premise would be unstatable there.
+
+For the rest, every Leios type has more than one consumer, as follows:
+
++  `Certificate`: `BlockBody`'s field and `ValidCert`;
++  `EndorserBlock`: `BlockBody`'s payload and `ValidEB`;
++  `Announcement`: `BlockBody`'s header and `Chain`'s `PendingEB`;
++  the committee: `Chain`'s pin and both validity relations.
+
+Shared definitions need one home upstream of their consumers, and the lowest
+existing candidate is `BlockBody`.  "Fold into existing modules" therefore
+means "put essentially everything in `BlockBody.lagda.md`", which makes
+`BlockBody` the Leios module in all but name: same content, worse label, and
+entangled with a rule module that `master` actively churns.  Hence the
+practical arguments:
+
++  **Merge economics**.  `leios-main` lives by routine merges from `master`,
+   and the fold targets are `master`'s most active files: `Certs` and
+   `PParams` churn with parameter work, and the preservation-of-value stack is
+   touching the `*/Properties` families now.  New files never conflict; edits
+   to shared files can.  The subtree is the shape that keeps a long-lived
+   parallel branch's merges cheap.
++  **Ripple economics**.  The derived layers (`Computational`, `Properties`,
+   `Foreign`) mirror the records and premises of the modules they shadow, so
+   adding fields to shared records breaks them immediately, while standalone
+   type modules defer that cost until a rule consumes the types.  Both data
+   points exist on this branch: the `GovStructure` field needed only a
+   `Foreign` stub, while the `StakePoolParams` field, a fold-style edit, is
+   the one with real `Foreign` fallout.
++  **Reversibility asymmetry**.  Inlining later is trivial: move each
+   definition into its consumer and delete the module.  Extracting later means
+   editing the shared modules again, a second pass through the conflict
+   surface.  Under residual doubt, the cheap-to-reverse choice is
+   separate-first.
++  **Precedent**.  The consensus implementation keeps Leios in Leios-named
+   modules (`LeiosVoting.hs`, `Shelley/Ledger/Leios.hs`); the protocol-level
+   Agda spec has its own namespace; and this specification already organizes
+   by concern (`Gov/`, `Certs/`, `Utxo/`).  A concern-scoped subtree is the
+   house style.  The protocol has also pivoted once (Full → Linear); if it
+   moves again, a subtree contains the blast radius.
+
 ---
 
 [^1]: Promoting the aggregate-signature abstraction into `Ledger.Core`
@@ -425,6 +540,7 @@ roadmap, not the LLF.
 [dd-committee]: https://github.com/input-output-hk/ouroboros-leios/blob/main/docs/leios-design/README.md#committee-selection
 [dd-certver]: https://github.com/input-output-hk/ouroboros-leios/blob/main/docs/leios-design/README.md#certificate-verification
 [dd-blockval]: https://github.com/input-output-hk/ouroboros-leios/blob/main/docs/leios-design/README.md#block-validation
+[dd-serialization]: https://github.com/input-output-hk/ouroboros-leios/blob/main/docs/leios-design/README.md#serialization
 [cl-5626]: https://github.com/IntersectMBO/cardano-ledger/pull/5626
 [cl-5965]: https://github.com/IntersectMBO/cardano-ledger/issues/5965
 [leios-formal-spec]: https://github.com/input-output-hk/ouroboros-leios-formal-spec
