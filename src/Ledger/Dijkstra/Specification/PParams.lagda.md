@@ -113,6 +113,17 @@ record PParams : Type where
     maxCollateralInputs           : ℕ
     pv                            : ProtVer -- retired, keep for now
 
+    -- Network group (Leios)
+    leiosHeaderDiffusionPeriod    : ℕ
+    leiosVotingPeriod             : ℕ
+    leiosDiffusionPeriod          : ℕ
+    leiosMaxEBSize                : ℕ
+    leiosMaxEBTxsSize             : ℕ
+    leiosCommitteeStakeCoverage   : UnitInterval
+    leiosQuorumStakeThreshold     : UnitInterval
+    leiosMaxEBExUnits             : ExUnits
+    leiosMaxRefScriptSizePerEB    : ℕ
+
     -- Economic group
     a                             : ℕ
     b                             : ℕ
@@ -152,6 +163,34 @@ record PParams : Type where
   costmdls = fromListᵐ (languageCostModels costmdlsAssoc)
 ```
 
+*Leios parameters*
+
+Leios adds the *endorser block* (EB), an ordered list of transaction references
+that a block producer announces alongside its ranking block; a committee of
+stake pools votes on the EB, and a certificate carried by the following ranking
+block brings the referenced transactions into the ledger.  Three of the nine
+parameters measure a Leios round in slots (header diffusion, voting, and the
+additional diffusion that follows voting), four bound an EB (its reference list,
+the transactions listed, their script execution, and their reference scripts),
+and two are fractions of the total active stake:
+`leiosCommitteeStakeCoverage`{.AgdaField} (`σ_c`) is the stake the committee is
+selected to cover, `leiosQuorumStakeThreshold`{.AgdaField} (`τ`) the stake a
+certificate's signers must carry.  The ranking block keeps its existing bound
+`maxBlockSize`{.AgdaField}, so Leios adds no field for it.
+
+The field names are this specification's; the cardano-ledger proposal
+[#5965][cl-5965], which maps the same parameters onto the Haskell `PParams`,
+uses different ones.  Its periods are `SlotInterval` lenses suffixed `Length`,
+the diffusion one further prefixed `Additional`.  Its two size bounds are
+`Word32` lenses named for the endorser-block *header* and *body*, its terms for
+the reference list and the transactions listed; those two bounds are
+`leiosMaxEBSize`{.AgdaField} and `leiosMaxEBTxsSize`{.AgdaField} here.  Its
+`OrdExUnits` lens is `leiosMaxEBExUnits`{.AgdaField}, one field for
+[CIP-164][cip-164]'s separate per-EB steps and memory budgets.  The remaining
+field, `leiosMaxRefScriptSizePerEB`{.AgdaField}, has no CIP-164 row at all; it
+is the proposal's own addition, the per-EB analogue of
+`maxRefScriptSizePerBlock`{.AgdaField}.
+
 *Security group*
 
 `maxBlockSize`{.AgdaField} `maxTxSize`{.AgdaField}
@@ -159,6 +198,11 @@ record PParams : Type where
 `maxBlockExUnits`{.AgdaField} `a`{.AgdaField} `b`{.AgdaField}
 `minFeeRefScriptCoinsPerByte`{.AgdaField} `coinsPerUTxOByte`{.AgdaField}
 `govActionDeposit`{.AgdaField}
+`leiosHeaderDiffusionPeriod`{.AgdaField} `leiosVotingPeriod`{.AgdaField}
+`leiosDiffusionPeriod`{.AgdaField} `leiosMaxEBSize`{.AgdaField}
+`leiosMaxEBTxsSize`{.AgdaField} `leiosCommitteeStakeCoverage`{.AgdaField}
+`leiosQuorumStakeThreshold`{.AgdaField} `leiosMaxEBExUnits`{.AgdaField}
+`leiosMaxRefScriptSizePerEB`{.AgdaField}
 
 
 ## Protocol Parameter Well Formedness
@@ -218,6 +262,15 @@ module PParamsUpdate where
           maxCollateralInputs           : Maybe ℕ
           maxTxExUnits maxBlockExUnits  : Maybe ExUnits
           pv                            : Maybe ProtVer -- retired, keep for now
+          leiosHeaderDiffusionPeriod    : Maybe ℕ
+          leiosVotingPeriod             : Maybe ℕ
+          leiosDiffusionPeriod          : Maybe ℕ
+          leiosMaxEBSize                : Maybe ℕ
+          leiosMaxEBTxsSize             : Maybe ℕ
+          leiosCommitteeStakeCoverage   : Maybe UnitInterval
+          leiosQuorumStakeThreshold     : Maybe UnitInterval
+          leiosMaxEBExUnits             : Maybe ExUnits
+          leiosMaxRefScriptSizePerEB    : Maybe ℕ
           a b                           : Maybe ℕ
           keyDeposit                    : Maybe Coin
           poolDeposit                   : Maybe Coin
@@ -268,6 +321,15 @@ module PParamsUpdate where
       ∷ is-just maxTxExUnits
       ∷ is-just maxBlockExUnits
       ∷ is-just pv
+      ∷ is-just leiosHeaderDiffusionPeriod
+      ∷ is-just leiosVotingPeriod
+      ∷ is-just leiosDiffusionPeriod
+      ∷ is-just leiosMaxEBSize
+      ∷ is-just leiosMaxEBTxsSize
+      ∷ is-just leiosCommitteeStakeCoverage
+      ∷ is-just leiosQuorumStakeThreshold
+      ∷ is-just leiosMaxEBExUnits
+      ∷ is-just leiosMaxRefScriptSizePerEB
       ∷ [])
 
   modifiesEconomicGroup : PParamsUpdate → Bool
@@ -326,6 +388,15 @@ module PParamsUpdate where
       ∷ is-just coinsPerUTxOByte
       ∷ is-just govActionDeposit
       ∷ is-just minFeeRefScriptCoinsPerByte
+      ∷ is-just leiosHeaderDiffusionPeriod
+      ∷ is-just leiosVotingPeriod
+      ∷ is-just leiosDiffusionPeriod
+      ∷ is-just leiosMaxEBSize
+      ∷ is-just leiosMaxEBTxsSize
+      ∷ is-just leiosCommitteeStakeCoverage
+      ∷ is-just leiosQuorumStakeThreshold
+      ∷ is-just leiosMaxEBExUnits
+      ∷ is-just leiosMaxRefScriptSizePerEB
       ∷ []
       )
 
@@ -370,6 +441,15 @@ module PParamsUpdate where
       ; maxTxExUnits                = U.maxTxExUnits ?↗ P.maxTxExUnits
       ; maxBlockExUnits             = U.maxBlockExUnits ?↗ P.maxBlockExUnits
       ; pv                          = U.pv ?↗ P.pv
+      ; leiosHeaderDiffusionPeriod  = U.leiosHeaderDiffusionPeriod ?↗ P.leiosHeaderDiffusionPeriod
+      ; leiosVotingPeriod           = U.leiosVotingPeriod ?↗ P.leiosVotingPeriod
+      ; leiosDiffusionPeriod        = U.leiosDiffusionPeriod ?↗ P.leiosDiffusionPeriod
+      ; leiosMaxEBSize              = U.leiosMaxEBSize ?↗ P.leiosMaxEBSize
+      ; leiosMaxEBTxsSize           = U.leiosMaxEBTxsSize ?↗ P.leiosMaxEBTxsSize
+      ; leiosCommitteeStakeCoverage = U.leiosCommitteeStakeCoverage ?↗ P.leiosCommitteeStakeCoverage
+      ; leiosQuorumStakeThreshold   = U.leiosQuorumStakeThreshold ?↗ P.leiosQuorumStakeThreshold
+      ; leiosMaxEBExUnits           = U.leiosMaxEBExUnits ?↗ P.leiosMaxEBExUnits
+      ; leiosMaxRefScriptSizePerEB  = U.leiosMaxRefScriptSizePerEB ?↗ P.leiosMaxRefScriptSizePerEB
       ; a                           = U.a ?↗ P.a
       ; b                           = U.b ?↗ P.b
       ; keyDeposit                  = U.keyDeposit ?↗ P.keyDeposit
@@ -441,3 +521,6 @@ record GovParams : Type₁ where
 and Andre Knispel and Matthias Benkort and Kevin Hammond and Charles
 Hoskinson and Samuel Leathers. *A First Step Towards On-Chain
 Decentralized Governance*. 2023.
+
+[cip-164]: https://github.com/cardano-foundation/CIPs/blob/master/CIP-0164/README.md#protocol-parameters "CIP-164 | Protocol parameters"
+[cl-5965]: https://github.com/IntersectMBO/cardano-ledger/issues/5965 "cardano-ledger | Add Leios related protocol parameters"
