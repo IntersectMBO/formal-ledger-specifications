@@ -4,6 +4,8 @@
 
 ### WIP
 
+- Add the nine Leios protocol parameters to `PParams`, in the network and security groups, with their `PParamsUpdate` companions (CIP-164 Table 3; cardano-ledger #5965).
+- Require `τ < σ_c` in `paramsWellFormed`, and positivity of the Leios periods and size bounds.
 - Move cert-deposit helpers from `Utxo` to `Certs`.
 - Fix `updateCertDeposits`: use `foldl` (CERTS is head-first).
 - Add `HasCoin-UTxOState` and `HasCoin-LedgerState` instances; the latter sums UTxO total, rewards balance, and all three deposit fields.
