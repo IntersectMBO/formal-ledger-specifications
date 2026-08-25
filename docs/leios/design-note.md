@@ -1,3 +1,5 @@
+<!-- File: docs/leios/design-note.md -->
+
 # Leios ledger formalization (LLF) plan
 
 This note records the defaults behind the formalization of the Ouroboros Linear
