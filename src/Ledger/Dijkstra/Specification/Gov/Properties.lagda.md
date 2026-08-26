@@ -14,4 +14,5 @@ module Ledger.Dijkstra.Specification.Gov.Properties where
 
 ```agda
 open import Ledger.Dijkstra.Specification.Gov.Properties.Computational
+open import Ledger.Dijkstra.Specification.Gov.Properties.PoV
 ```
