@@ -182,17 +182,6 @@ ranking block keeps its existing bound `maxBlockSize`{.AgdaField}, so Leios
 adds no field for it.  Zero-valued Leios parameters are meaningful: they are the protocol's
 disabled state during rollout.
 
-The field names are this specification's; the cardano-ledger implementation
-([#6002][cl-6002]), which carries the same parameters in the Haskell `PParams`
-of the Dijkstra era, names them after CIP-164's roles.  Its periods are
-`Milliseconds` lenses `leiosAnnouncementPeriodLength`, `leiosVotePeriodLength`
-and `leiosDiffusionPeriodLength`; its EB bounds are
-`maxEndorserBlockReferencesSize` and `maxEndorserBlockTxsSize`, which are
-`leiosMaxEBSize`{.AgdaField} and `leiosMaxEBTxsSize`{.AgdaField} here.  Its `OrdExUnits` lens
-`maxEndorserBlockExUnits` is `leiosMaxEBExUnits`{.AgdaField}, one field for
-[CIP-164][cip-164]'s separate per-EB steps and memory budgets, and
-`maxRefScriptSizePerEndorserBlock` is `leiosMaxRefScriptSizePerEB`{.AgdaField}.
-
 *Security group*
 
 `maxBlockSize`{.AgdaField} `maxTxSize`{.AgdaField}
