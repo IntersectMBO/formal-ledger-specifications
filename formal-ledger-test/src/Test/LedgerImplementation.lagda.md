@@ -17,7 +17,7 @@ import      Data.Integer as ℤ
 open import Data.Rational using (0ℚ; ½)
 import      Data.Rational as ℚ
 open import Algebra.Morphism    using (module MonoidMorphisms)
-open import Data.Nat.Properties using (+-0-commutativeMonoid)
+open import Data.Nat.Properties using (+-0-commutativeMonoid; <-isStrictTotalOrder)
 open import Relation.Binary.Morphism.Structures
 open import Algebra.Construct.DirectProduct
 open import Ledger.Core.Specification.Crypto
@@ -47,6 +47,7 @@ module Implementation where
   MaxLovelaceSupplyᶜ = 1000000000000000000
   Quorum           = 1
   NetworkId        = 0
+  BlsKeyMaxAgeᶜ    = 20
 
   SKey = ℕ
   VKey = ℕ
@@ -55,6 +56,17 @@ module Implementation where
 
   isKeyPair  = _≡_
   sign       = _+_
+
+  _<ᵏʰ_ : ℕ → ℕ → Type
+  _<ᵏʰ_ = _<_
+  <ᵏʰ-isSTO = <-isStrictTotalOrder
+  BlsVKey = ℕ
+  BlsSig  = ℕ
+  BlsPoP  = ℕ
+  isValidPoP : BlsVKey → BlsPoP → Type
+  isValidPoP = _≡_
+  isSignedByAggregate : List BlsVKey → Ser → BlsSig → Type
+  isSignedByAggregate = λ vks m σ → foldr _+_ 0 vks + m ≡ σ
 
   Data         = D
   Dataʰ        = mkHashableSet D
