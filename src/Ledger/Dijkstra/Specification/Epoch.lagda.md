@@ -42,6 +42,7 @@ open import Ledger.Dijkstra.Specification.Certs govStructure
 open import Ledger.Dijkstra.Specification.Enact govStructure
 open import Ledger.Dijkstra.Specification.Gov govStructure
 open import Ledger.Dijkstra.Specification.Ledger txs abs
+open import Ledger.Dijkstra.Specification.Leios govStructure
 open import Ledger.Dijkstra.Specification.PoolReap txs
 open import Ledger.Dijkstra.Specification.Ratify govStructure
 open import Ledger.Dijkstra.Specification.Rewards txs abs
@@ -126,13 +127,18 @@ instance
 ```agda
 record NewEpochState : Type where
   field
-    lastEpoch   : Epoch
-    bprev       : BlocksMade
-    bcur        : BlocksMade
-    epochState  : EpochState
-    ru          : Maybe RewardUpdate
-    pd          : PoolDelegatedStake
+    lastEpoch       : Epoch
+    bprev           : BlocksMade
+    bcur            : BlocksMade
+    epochState      : EpochState
+    ru              : Maybe RewardUpdate
+    pd              : PoolDelegatedStake
+    leiosCommittee  : LeiosCommittee
 ```
+
+The `leiosCommittee`{.AgdaField} is the materialized Leios voting committee of
+the current epoch, selected from the same stake distribution as
+`pd`{.AgdaField} (CIP-0164).
 
 ??? info "Differences with the Shelley Specification"
 
@@ -559,6 +565,7 @@ private variable
   ru : RewardUpdate
   mru : Maybe RewardUpdate
   pd : PoolDelegatedStake
+  cmt : LeiosCommittee
 ```
 -->
 
@@ -795,26 +802,28 @@ data _⊢_⇀⦇_,NEWEPOCH⦈_ : ⊤ → NewEpochState → Epoch → NewEpochSta
       eps' = applyRUpd ru eps
       ss   = EpochState.ss eps''
       pd'  = calculatePoolDelegatedStake (Snapshots.set ss)
+      cmt' = selectCommittee (PParams.leiosCommitteeSize (PParamsOf eps'')) e pd' (PoolsOf (Snapshots.set ss))
     in
       ∙ e ≡ lastEpoch + 1
       ∙ _ ⊢ eps' ⇀⦇ e ,EPOCH⦈ eps''
       ──────────────────────────────────────────────
-      _ ⊢ ⟦ lastEpoch , bprev , bcur , eps , just ru , pd ⟧ ⇀⦇ e ,NEWEPOCH⦈ ⟦ e , bcur , ∅ᵐ  , eps'' , nothing , pd' ⟧
+      _ ⊢ ⟦ lastEpoch , bprev , bcur , eps , just ru , pd , cmt ⟧ ⇀⦇ e ,NEWEPOCH⦈ ⟦ e , bcur , ∅ᵐ  , eps'' , nothing , pd' , cmt' ⟧
 
   NEWEPOCH-Not-New : ∀ {bprev bcur : BlocksMade} →
     ∙ e ≢ lastEpoch + 1
       ──────────────────────────────────────────────
-      _ ⊢ ⟦ lastEpoch , bprev , bcur , eps , mru , pd ⟧ ⇀⦇ e ,NEWEPOCH⦈ ⟦ lastEpoch , bprev , bcur , eps , mru , pd ⟧
+      _ ⊢ ⟦ lastEpoch , bprev , bcur , eps , mru , pd , cmt ⟧ ⇀⦇ e ,NEWEPOCH⦈ ⟦ lastEpoch , bprev , bcur , eps , mru , pd , cmt ⟧
 
   NEWEPOCH-No-Reward-Update : ∀ {bprev bcur : BlocksMade} →
     let
-      ss  = EpochState.ss eps'
-      pd' = calculatePoolDelegatedStake (Snapshots.set ss)
+      ss   = EpochState.ss eps'
+      pd'  = calculatePoolDelegatedStake (Snapshots.set ss)
+      cmt' = selectCommittee (PParams.leiosCommitteeSize (PParamsOf eps')) e pd' (PoolsOf (Snapshots.set ss))
     in
       ∙ e ≡ lastEpoch + 1
       ∙ _ ⊢ eps ⇀⦇ e ,EPOCH⦈ eps'
       ──────────────────────────────────────────────
-      _ ⊢ ⟦ lastEpoch , bprev , bcur , eps , nothing , pd ⟧ ⇀⦇ e ,NEWEPOCH⦈ ⟦ e , bcur , ∅ᵐ , eps' , nothing , pd' ⟧
+      _ ⊢ ⟦ lastEpoch , bprev , bcur , eps , nothing , pd , cmt ⟧ ⇀⦇ e ,NEWEPOCH⦈ ⟦ e , bcur , ∅ᵐ , eps' , nothing , pd' , cmt' ⟧
 ```
 
 # References {#references .unnumbered}
