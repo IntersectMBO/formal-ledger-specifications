@@ -11,6 +11,8 @@ open import Ledger.Prelude
 open import Ledger.Prelude.Foreign.HSTypes
 open import Ledger.Prelude.Foreign.Util
 
+open import Data.Nat.Properties using (<-isStrictTotalOrder)
+
 open import Ledger.Core.Specification.Crypto
 open import Ledger.Core.Foreign.Crypto.Base
 
@@ -33,6 +35,13 @@ HSCryptoStructure = record {
     pkk = HSPKKScheme
   ; ScriptHash = ℕ
   ; VRF = ℕ
+  ; _<ᵏʰ_ = _<_
+  ; <ᵏʰ-isSTO = <-isStrictTotalOrder
+  ; BlsVKey = ℕ
+  ; BlsSig = ℕ
+  ; BlsPoP = ℕ
+  ; isValidPoP = λ vk pop → extIsSigned vk vk pop ≡ true
+  ; isSignedByAggregate = λ vks m σ → extIsSigned (sum vks) m σ ≡ true
   }
 
 open CryptoStructure HSCryptoStructure
