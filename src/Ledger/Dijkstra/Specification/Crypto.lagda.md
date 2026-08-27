@@ -21,7 +21,7 @@ of `CryptoStructure`{.AgdaRecord} that adds what Leios needs.  An inhabitant of
 module Ledger.Dijkstra.Specification.Crypto where
 
 open import Ledger.Prelude
-open import Relation.Binary using (IsStrictTotalOrder)
+open import Relation.Binary using (DecTotalOrder; IsDecTotalOrder)
 open import Ledger.Core.Specification.Crypto
 ```
 -->
@@ -57,24 +57,23 @@ signed, not by how often or in what order.
 
 ## Pool Ordering
 
-The committee of an epoch consists of a subset of pools, which includes those
-pools with the most active stake, with ties broken by pool id in ascending order
-([Committee Structure][cip-committee]; the procedure in
-[Committee Selection][cip-selection]).
-
-The stake order depends on the epoch's stake distribution, so it is defined in the
-committee module.
-
-The field `_<ᵏʰ_` exists exclusively for deciding tie-breaks.
-A pool id is a key hash and `KeyHash`{.AgdaField} is abstract with decidable
-equality and nothing else, so `_<ᵏʰ_` must be accompanied by the assertion
-that it is a strict total order.
+The committee of an epoch consists of a subset of pools, which
+includes those pools with the most active stake, with ties broken by
+pool id in ascending order ([Committee Structure][cip-committee]; the
+procedure in [Committee Selection][cip-selection]). Since
+type of pool id, `KeyHash`{.AgdaField}, is abstract, we augment it with a total ordering
+relation.
 
 ```agda
   field
-    _<ᵏʰ_      : KeyHash → KeyHash → Type
-    <ᵏʰ-isSTO  : IsStrictTotalOrder _≡_ _<ᵏʰ_
+    _≤ᵏʰ_      : KeyHash → KeyHash → Type
 ```
+
+<!--
+```agda
+    ≤ᵏʰ-isDTO  : IsDecTotalOrder _≡_ _≤ᵏʰ_
+```
+-->
 
 ## Leios Hashes
 
@@ -113,9 +112,8 @@ the identifier's byte-exact preimage is deliberately unpinned.
     ⦃ DecEq-TxRefHash ⦄          : DecEq TxRefHash
     ⦃ DecEq-RBHeaderHash ⦄       : DecEq RBHeaderHash
 
-  instance
-    Dec-<ᵏʰ : _<ᵏʰ_ ⁇²
-    Dec-<ᵏʰ = ⁇ (IsStrictTotalOrder._<?_ <ᵏʰ-isSTO _ _)
+  DTO-KeyHash : DecTotalOrder 0ℓ 0ℓ 0ℓ
+  DTO-KeyHash = record { Carrier = KeyHash ; _≈_ = _≡_ ; _≤_ = _≤ᵏʰ_ ; isDecTotalOrder = ≤ᵏʰ-isDTO }
 ```
 -->
 

@@ -17,7 +17,6 @@ open import Ledger.Core.Foreign.Address
 open import Ledger.Dijkstra.Specification.Transaction public
 open import Ledger.Core.Foreign.Crypto externalFunctions
 open import Ledger.Dijkstra.Specification.Crypto using (LeiosCryptoStructure)
-open import Data.Nat.Properties using (<-isStrictTotalOrder)
 open import Ledger.Dijkstra.Foreign.Script externalFunctions public
 
 open ExternalFunctions externalFunctions using (extIsSigned; extIsValidPoP)
@@ -74,8 +73,8 @@ instance
     ; BlsPoP               = ℕ
     ; isValidPoP           = λ vk pop → extIsValidPoP vk pop ≡ true
     ; isSignedByAggregate  = λ vks m σ → extIsSigned (sum (setToList vks)) m σ ≡ true
-    ; _<ᵏʰ_                = _<_
-    ; <ᵏʰ-isSTO            = <-isStrictTotalOrder
+    ; _≤ᵏʰ_                 = _≤_
+    ; ≤ᵏʰ-isDTO             = ℕ-≤-isDecTotalOrder
     ; EBHash               = ℕ
     ; TxRefHash            = ℕ
     ; RBHeaderHash         = ℕ
