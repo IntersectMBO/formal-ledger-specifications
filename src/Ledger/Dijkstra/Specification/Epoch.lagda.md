@@ -241,8 +241,8 @@ after an epoch:
       delegs : StakeDelegs
       delegs = StakeDelegsOf pstakego
 
-      poolParams : Pools
-      poolParams = PoolsOf pstakego
+      poolParams : KeyHash ⇀ StakePoolParams
+      poolParams = mapValues StakePoolState.params (PoolsOf pstakego)
 
       blocksMade : ℕ
       blocksMade = ∑[ m ← b ] m
@@ -665,7 +665,7 @@ module Pre-POOLREAPUpdate (ls : LedgerState)
   utxoSt' = ⟦ UTxOOf utxoSt , FeesOf utxoSt , 0 ⟧
 
   pState' : PState
-  pState' = ⟦ fPools ∪ˡ pools , ∅ , retiring , deposits ⟧
+  pState' = ⟦ applyFPools fPools pools , ∅ , retiring , deposits ⟧
 
   gState' : GState
   gState' =

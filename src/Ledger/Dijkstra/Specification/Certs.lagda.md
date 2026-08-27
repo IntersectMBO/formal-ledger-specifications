@@ -32,16 +32,43 @@ record StakePoolParams : Type where
     pledge          : Coin
     rewardAccount   : RewardAddress
     vrf             : VRF
+```
 
+The pool state extends the registered parameters with the pool's Leios voting
+key (CIP-0164): a BLS key together with the epoch it was registered in, from
+which its expiry is computed.  The key is registered through a dedicated
+certificate rather than `regpool`{.AgdaInductiveConstructor}, so it lives next
+to — not inside — the registration parameters.
+
+```agda
+record BlsKeyState : Type where
+  field
+    key         : BlsVKey
+    registered  : Epoch
+
+record StakePoolState : Type where
+  field
+    params  : StakePoolParams
+    blsKey  : Maybe BlsKeyState
+```
+
+```agda
 CCHotKeys : Type
 CCHotKeys = Credential ⇀ Maybe Credential
 
 Pools : Type
-Pools = KeyHash ⇀ StakePoolParams
+Pools = KeyHash ⇀ StakePoolState
+
+FPools : Type
+FPools = KeyHash ⇀ StakePoolParams
 
 Retiring : Type
 Retiring = KeyHash ⇀ Epoch
 ```
+
+Future pools (`FPools`{.AgdaDatatype}) carry only registration parameters:
+voting keys live exclusively in the current pool state, so a pending
+re-registration can never clobber one.
 
 In the Dijkstra era, the `Rewards`{.AgdaDatatype} map represents
 **account balances**, not just staking rewards.  An account's balance may increase
@@ -64,6 +91,7 @@ data DCert : Type where
   dereg       : Credential → Coin → DCert
   regpool     : KeyHash → StakePoolParams → DCert
   retirepool  : KeyHash → Epoch → DCert
+  regblskey   : KeyHash → BlsVKey → BlsPoP → DCert
   regdrep     : Credential → Coin → Anchor → DCert
   deregdrep   : Credential → Coin → DCert
   ccreghot    : Credential → Maybe Credential → DCert
@@ -73,6 +101,7 @@ cwitness (delegate c _ _ _)  = just c
 cwitness (dereg c _)         = just c
 cwitness (regpool kh _)      = just $ KeyHashObj kh
 cwitness (retirepool kh _)   = just $ KeyHashObj kh
+cwitness (regblskey kh _ _)  = just $ KeyHashObj kh
 cwitness (regdrep c _ _)     = just c
 cwitness (deregdrep c _)     = just c
 cwitness (ccreghot c _)      = just c
@@ -104,7 +133,7 @@ record DState : Type where
 record PState : Type where
   field
     pools     : Pools
-    fPools    : Pools
+    fPools    : FPools
     retiring  : KeyHash ⇀ Epoch
     deposits  : KeyHash ⇀ Coin
 
@@ -143,6 +172,7 @@ record GovCertEnv : Type where
 <!--
 ```agda
 open StakePoolParams
+open StakePoolState using (params; blsKey)
 
 IsConwayCert? : IsConwayCert ⁇¹
 IsConwayCert? {x} .dec with x
@@ -154,6 +184,7 @@ IsConwayCert? {x} .dec with x
 ... | dereg _ _ = no (λ ())
 ... | regpool _ _ = no (λ ())
 ... | retirepool _ _ = no (λ ())
+... | regblskey _ _ _ = no (λ ())
 
 record HasDeposits (A : Type) {K : Type} : Type where
   field DepositsOf : A → K ⇀ Coin
@@ -172,7 +203,7 @@ record HasPools {a} (A : Type a) : Type a where
 open HasPools ⦃...⦄ public
 
 record HasFuturePools {a} (A : Type a) : Type a where
-  field FuturePoolsOf : A → Pools
+  field FuturePoolsOf : A → FPools
 open HasFuturePools ⦃...⦄ public
 
 record HasRetiring {a} (A : Type a) : Type a where
@@ -294,8 +325,10 @@ instance
   HasEpoch-CertEnv : HasEpoch CertEnv
   HasEpoch-CertEnv .EpochOf = CertEnv.epoch
 
-  unquoteDecl HasCast-CertEnv HasCast-DState HasCast-PState HasCast-GState HasCast-CertState HasCast-DelegEnv HasCast-PoolEnv HasCast-GovCertEnv = derive-HasCast
-    (   (quote CertEnv , HasCast-CertEnv)
+  unquoteDecl HasCast-BlsKeyState HasCast-StakePoolState HasCast-CertEnv HasCast-DState HasCast-PState HasCast-GState HasCast-CertState HasCast-DelegEnv HasCast-PoolEnv HasCast-GovCertEnv = derive-HasCast
+    (   (quote BlsKeyState , HasCast-BlsKeyState)
+    ∷   (quote StakePoolState , HasCast-StakePoolState)
+    ∷   (quote CertEnv , HasCast-CertEnv)
     ∷   (quote DState , HasCast-DState)
     ∷   (quote PState , HasCast-PState)
     ∷   (quote GState , HasCast-GState)
@@ -311,7 +344,8 @@ private variable
   sDelegs stakeDelegs    : StakeDelegs
   ccKeys ccHotKeys       : CCHotKeys
   vDelegs voteDelegs     : VoteDelegs
-  pools fPools           : Pools
+  pools                  : Pools
+  fPools                 : FPools
   retiring               : Retiring
   A                      : Type
   deposits deposits'     : A ⇀ Coin
@@ -330,6 +364,8 @@ private variable
   kh          : KeyHash
   mkh         : Maybe KeyHash
   poolParams  : StakePoolParams
+  vk          : BlsVKey
+  pop         : BlsPoP
   pp          : PParams
   mvd         : Maybe VDeleg
 
@@ -386,6 +422,10 @@ instance
 
   unquoteDecl DecEq-StakePoolParams = derive-DecEq
     ((quote StakePoolParams , DecEq-StakePoolParams) ∷ [])
+  unquoteDecl DecEq-BlsKeyState = derive-DecEq
+    ((quote BlsKeyState , DecEq-BlsKeyState) ∷ [])
+  unquoteDecl DecEq-StakePoolState = derive-DecEq
+    ((quote StakePoolState , DecEq-StakePoolState) ∷ [])
   unquoteDecl DecEq-DCert = derive-DecEq
     ((quote DCert , DecEq-DCert) ∷ [])
 ```
@@ -416,12 +456,33 @@ data _⊢_⇀⦇_,DELEG⦈_ : DelegEnv → DState → DCert → DState → Type 
 
 ## `POOL`{.AgdaDatatype} Transition System
 
+Helpers to read and update the Leios voting key of a pool, and to apply pending
+future re-registrations at the epoch boundary: `applyFPools`{.AgdaFunction}
+updates only the parameters of already registered pools, so registered voting
+keys survive parameter re-registration.
+
+```agda
+poolVrfs : Pools → ℙ VRF
+poolVrfs ps = mapˢ (vrf ∘ params) (range ps)
+
+poolBlsKey : Pools → KeyHash → Maybe BlsKeyState
+poolBlsKey ps kh = lookupᵐ? ps kh >>= blsKey
+
+installBlsKey : KeyHash → BlsKeyState → Pools → Pools
+installBlsKey kh k = mapWithKey λ kh' s → if kh' ≡ kh then record s { blsKey = just k } else s
+
+applyFPools : FPools → Pools → Pools
+applyFPools fps = mapWithKey λ kh s → case lookupᵐ? fps kh of λ where
+  (just p) → record s { params = p }
+  nothing  → s
+```
+
 ```agda
 data _⊢_⇀⦇_,POOL⦈_ : PoolEnv → PState → DCert → PState → Type where
 
   POOL-reg :
     ∙ ¬ (IsPoolRegistered pools kh)
-    ∙ ¬ (poolParams .vrf ∈ mapˢ vrf (range pools ∪ range fPools))
+    ∙ ¬ (poolParams .vrf ∈ poolVrfs pools ∪ mapˢ vrf (range fPools))
     ∙ NetworkIdOf (poolParams .rewardAccount) ≡ NetworkId
     ∙ pp .minPoolCost ≤ poolParams .cost
     ────────────────────────────────
@@ -430,7 +491,7 @@ data _⊢_⇀⦇_,POOL⦈_ : PoolEnv → PState → DCert → PState → Type wh
                  , retiring
                  , deposits
                  ⟧ ⇀⦇ regpool kh poolParams ,POOL⦈ ⟦
-                   pools ∪ˡ ❴ kh , poolParams ❵
+                   pools ∪ˡ ❴ kh , ⟦ poolParams , nothing ⟧ ❵
                  , fPools
                  , retiring
                  , deposits ∪ˡ ❴ kh , pp .poolDeposit ❵
@@ -438,7 +499,7 @@ data _⊢_⇀⦇_,POOL⦈_ : PoolEnv → PState → DCert → PState → Type wh
 
   POOL-rereg :
     ∙ IsPoolRegistered pools kh
-    ∙ ¬ (poolParams .vrf ∈ mapˢ vrf (range (pools ∣ ❴ kh ❵ ᶜ) ∪ range (fPools ∣ ❴ kh ❵ ᶜ)))
+    ∙ ¬ (poolParams .vrf ∈ poolVrfs (pools ∣ ❴ kh ❵ ᶜ) ∪ mapˢ vrf (range (fPools ∣ ❴ kh ❵ ᶜ)))
     ∙ NetworkIdOf (poolParams .rewardAccount) ≡ NetworkId
     ∙ pp .minPoolCost ≤ poolParams .cost
     ────────────────────────────────
@@ -450,6 +511,21 @@ data _⊢_⇀⦇_,POOL⦈_ : PoolEnv → PState → DCert → PState → Type wh
                    pools
                  , ❴ kh , poolParams ❵ ∪ˡ fPools
                  , retiring ∣ ❴ kh ❵ ᶜ
+                 , deposits
+                 ⟧
+
+  POOL-regblskey :
+    ∙ IsPoolRegistered pools kh
+    ∙ isValidPoP vk pop
+    ────────────────────────────────
+    ⟦ e , pp ⟧ ⊢ ⟦ pools
+                 , fPools
+                 , retiring
+                 , deposits
+                 ⟧ ⇀⦇ regblskey kh vk pop ,POOL⦈ ⟦
+                   installBlsKey kh ⟦ vk , e ⟧ pools
+                 , fPools
+                 , retiring
                  , deposits
                  ⟧
 

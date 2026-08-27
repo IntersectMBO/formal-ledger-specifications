@@ -102,7 +102,7 @@ record RatifyEnv : Type where
     dreps         : Credential ⇀ Epoch
     ccHotKeys     : Credential ⇀ Maybe Credential
     treasury      : Treasury
-    pools         : KeyHash ⇀ StakePoolParams
+    pools         : Pools
     delegatees    : VoteDelegs
 
 record RatifyState : Type where
@@ -255,7 +255,7 @@ module AcceptedBySPO (delegatees : VoteDelegs)
   defaultVote : KeyHash → Vote
   defaultVote kh = case lookupᵐ? pools kh of λ where
     nothing   → Vote.no
-    (just  p) → case lookupᵐ? delegatees (CredentialOf (StakePoolParams.rewardAccount p)) , gaType action of
+    (just  p) → case lookupᵐ? delegatees (CredentialOf (StakePoolParams.rewardAccount (StakePoolState.params p))) , gaType action of
       λ where
       ( _                        , TriggerHardFork  )  → Vote.no
       ( just vDelegNoConfidence  , NoConfidence     )  → Vote.yes
