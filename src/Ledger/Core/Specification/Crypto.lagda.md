@@ -16,6 +16,7 @@ module Ledger.Core.Specification.Crypto where
 
 open import Ledger.Prelude hiding (T)
 open import Ledger.Prelude.Numeric.UnitInterval
+open import Relation.Binary using (IsStrictTotalOrder)
 
 record isHashableSet (T : Type) : Type₁ where
   constructor mkIsHashableSet
@@ -79,6 +80,21 @@ record CryptoStructure : Type₁ where
 
   field VRF : Type
         ⦃ DecEq-VRF ⦄ : DecEq VRF
+
+  -- Byte-wise ascending order on key hashes; the Leios committee tie-break.
+  field _<ᵏʰ_ : KeyHash → KeyHash → Type
+        <ᵏʰ-isSTO : IsStrictTotalOrder _≡_ _<ᵏʰ_
+        ⦃ Dec-<ᵏʰ ⦄ : _<ᵏʰ_ ⁇²
+
+  -- BLS12-381 signature scheme used for Leios voting (CIP-0164).
+  field BlsVKey BlsSig BlsPoP : Type
+        isValidPoP          : BlsVKey → BlsPoP → Type
+        isSignedByAggregate : List BlsVKey → Ser → BlsSig → Type
+        ⦃ DecEq-BlsVKey ⦄ : DecEq BlsVKey
+        ⦃ DecEq-BlsSig  ⦄ : DecEq BlsSig
+        ⦃ DecEq-BlsPoP  ⦄ : DecEq BlsPoP
+        ⦃ Dec-isValidPoP ⦄ : isValidPoP ⁇²
+        ⦃ Dec-isSignedByAggregate ⦄ : isSignedByAggregate ⁇³
 
 -- TODO: KES
 ```

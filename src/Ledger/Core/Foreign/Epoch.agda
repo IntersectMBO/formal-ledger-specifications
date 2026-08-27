@@ -19,6 +19,7 @@ HSGlobalConstants = record {
   ; MaxLovelaceSupplyᶜ = 1
   ; Quorum = 1
   ; NetworkId = 0
+  ; BlsKeyMaxAgeᶜ = 20
   }
 
 HSEpochStructure : EpochStructure
