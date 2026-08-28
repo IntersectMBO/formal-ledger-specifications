@@ -22,7 +22,6 @@ import qualified MAlonzo.Code.Class.DecEq.Core
 import qualified MAlonzo.Code.Class.DecEq.Instances
 import qualified MAlonzo.Code.Class.Decidable.Core
 import qualified MAlonzo.Code.Class.Show.Core
-import qualified MAlonzo.Code.Class.Show.Instances
 import qualified MAlonzo.Code.Data.Nat.Properties
 import qualified MAlonzo.Code.Data.Nat.Show
 import qualified MAlonzo.Code.Interface.TypeClasses.Hashable
@@ -64,7 +63,7 @@ d_HSCryptoStructure_34 ::
   MAlonzo.Code.Ledger.Core.Specification.Crypto.T_CryptoStructure_140
 d_HSCryptoStructure_34 v0
   = coe
-      MAlonzo.Code.Ledger.Core.Specification.Crypto.C_constructor_224
+      MAlonzo.Code.Ledger.Core.Specification.Crypto.C_constructor_242
       (d_HSPKKScheme_18 (coe v0))
       (coe
          MAlonzo.Code.Ledger.Core.Specification.Crypto.C_mkIsHashableSet_34
@@ -81,5 +80,10 @@ d_HSCryptoStructure_34 v0
                (\ v1 ->
                   MAlonzo.Code.Ledger.Core.Foreign.Crypto.Base.d_hvkStoredHash_18
                     (coe v1)))))
+      (coe
+         MAlonzo.Code.Class.DecEq.Core.C_constructor_32
+         (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796))
+      (coe
+         MAlonzo.Code.Class.Show.Core.C_mkShow_18
+         (coe MAlonzo.Code.Data.Nat.Show.d_show_56))
       MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22
-      MAlonzo.Code.Class.Show.Instances.d_Show'45'ℕ_36
