@@ -23,7 +23,10 @@ resolved and taken in reference order.
 
 The note draws on the following sources:
 
-+  [CIP-164] (the normative text);
++  [CIP-164] (the normative text), as amended by
+   [cardano-foundation/CIPs #1250][cip-1250], the revision this note quotes: the
+   `cip-…` links resolve on that revision's branch and move back to `master` when
+   it merges;
 +  the implementation team's [Leios design document][design-doc] with its requirement
    register (`REQ-…`);
 +  the cardano-ledger prototype ([#5626][cl-5626]: announcement, certificate bit,
@@ -126,8 +129,9 @@ proposes adding them) and does not touch the relational rules.
 
 For a block `B` at slot `s_B` carrying a certificate for the EB announced by its
 predecessor `A` at slot `s_A` (admissible only when
-`s_B ≥ s_A + 3·L_hdr + L_vote + L_diff`; [Step 5][cip-step5]), the rules fix the
-following total order:
+`s_B ≥ s_A + ⌈(3·L_hdr + L_vote + L_diff) / slotLength⌉` — the periods being
+wall-clock durations, rounded up to whole slots exactly here; [Step 5][cip-step5]),
+the rules fix the following total order:
 
 1.  **EB application**.  The closure applies via `LEDGERS` to the ledger state
     left by `A`'s block-body transition, in `A`'s environment: slot `s_A` and the
@@ -148,9 +152,10 @@ following total order:
     transactions are allowed in the RB" ([Step 5][cip-step5]); so its body
     contributes the certificate premises and the usual bookkeeping.
 
-(The implementation already diverges from the lower bound
-`s_B ≥ s_A + 3·L_hdr + L_vote + L_diff`.  The prototype's `minCertificationGap` is
-10 slots whereas `3·L_hdr + L_vote + L_diff` gives 14 with the Musashi parameters.
+(The implementation already diverges from the lower bound.  The prototype's
+`minCertificationGap` is 10 slots whereas the formula gives 14 with the Musashi
+parameters, whose slot and wall-clock readings coincide at a one-second
+`slotLength`.
 Both sides are live and measured by the trace-verifier work; the divergence is
 flagged upstream, like the proof-of-possession divergence in the committee section.)
 
@@ -169,9 +174,10 @@ checked against the committee, the total active stake, and the quorum threshold
 `τ` pinned at announcement; the timing window uses the period lengths in force at
 `A`.  A certificate proves what the voters checked, and the voters could check only
 `A`'s world; validating it against data none of them could have seen would break
-that reading.  The vote signature is bound to `s_A` for the same reason: the
-binding "ensures voters validated the EB against the same ledger state it extends
-when certified on chain" ([Vote Structure][cip-vote]).
+that reading.  The vote signature is bound to the hash of `A`'s header for the
+same reason: the binding "ensures voters validated the EB against the same ledger
+state it extends when certified on chain", and it also disambiguates among
+multiple headers announcing the same EB ([Vote Structure][cip-vote]).
 *The LLF assumes this corollary as a working default, pending confirmation from
 the implementers.*
 
@@ -212,12 +218,16 @@ invalid block.
 
 ## The committee
 
-[CIP-164] fixes the committee once per epoch by stake-based truncation: "pools are
-ordered by stake in descending order and selected, in order, until the cumulative
-selected stake reaches" the coverage target `σ_c`, and the resulting committee
-"is fixed for the entire epoch", with no per-EB sortition and no non-persistent
-voters ([Committee Structure][cip-committee]; the boundary procedure in [Epoch
-Boundary][cip-epoch]).
+[CIP-164] fixes the committee once per epoch by stake-based truncation: the "top
+`N_c` pools by active stake", where `N_c` is the `committeeSize` protocol
+parameter, "ordered by active stake in descending order (ties broken by pool ID
+in ascending order)", all of them if fewer than `N_c` are registered; the
+resulting committee "is fixed for the entire epoch", with no per-EB sortition and
+no non-persistent voters ([Committee Structure][cip-committee]; the boundary
+procedure in [Epoch Boundary][cip-epoch]).  Earlier revisions sized the committee
+by a cumulative-stake coverage target `σ_c`; [#1250][cip-1250] replaced it with
+the seat count, whose coverage `σ(N_c)` is read off the stake distribution rather
+than declared.
 
 The LLF adds the following defaults, each grounded in the design document:
 
@@ -229,10 +239,9 @@ The LLF adds the following defaults, each grounded in the design document:
    The implementation materializes the committee in the ledger state at the
    boundary rather than recomputing it per use
    ([REQ-LedgerStateVotingCommittee][dd-certver]); the LLF's rules consume the
-   committee only through the announcement pin (see **The pin** below), and
-   materializing it as an
-   epoch-state field is follow-up work together with the concrete construction,
-   which is why no epoch module appears among the touched modules in the [Module
+   committee only through the announcement pin (see **The pin** below).  Whether
+   the LLF also stores the committee in the epoch state is a representation
+   choice; if it does, the epoch module joins the touched modules of the [Module
    placement](#module-placement) section above.
 
 +  **Order and indices**.  A *seat* is a position in the committee's canonical
@@ -240,28 +249,35 @@ The LLF adds the following defaults, each grounded in the design document:
    descending-stake order fixes the seat indices that votes (`voter_id`) and
    certificate bitfields address.
 
-   The CIP names no tie-break; the design document breaks ties by pool id, and the
-   LLF adopts it as a stated law, not a remark: equal-stake pools are
-   common at the committee tail, and two implementations that order ties
-   differently disagree about the validity of every certificate.
+   The CIP now pins the tie-break itself, byte-wise ascending on the pool's key
+   hash, together with the fewer-than-`N_c` case ([Epoch Boundary][cip-epoch]);
+   the design document had the same order, and the LLF still states it as a law,
+   not a remark: equal-stake pools are common at the committee tail, and two
+   implementations that order ties differently disagree about the validity of
+   every certificate.
 
-   Selection enters the LLF abstractly, as a function with stated laws (membership
-   by stake truncation at coverage `σ_c`, independent of key registration;
-   descending stake with ties broken by ascending pool id; determinism of the
-   order); the concrete construction can land later without disturbing anything
-   downstream of the laws; the order itself, being a law, cannot be deferred.  The
-   byte-exact comparison on pool ids is a conformance detail to confirm upstream.
+   Selection entered the LLF plan abstractly, as a function with stated laws,
+   when the CIP fixed only the coverage target and left the rest underdetermined.
+   [#1250][cip-1250] specifies the whole procedure, and a sort-free construction
+   exists (a pool's seat index is the number of pools strictly ahead of it in the
+   committee order), so the LLF takes selection concretely; the former laws
+   (membership by top-`N_c` truncation independent of key registration,
+   descending stake with the pinned tie-break, determinism) become provable
+   lemmas rather than assumptions.
 
 +  **Keyless seats**.  Membership is by stake alone, "independent of key
-   registration" ([REQ-KeylessSeat][dd-committee]): a selected pool without a
+   registration" ([REQ-KeylessSeat][dd-committee]), a requirement [#1250][cip-1250]
+   adopts into the CIP: a selected pool without a
    registered voting key still occupies its seat and holds its weight, but the
-   seat cannot sign, and a certificate whose bitfield sets a keyless seat is
-   invalid ([REQ-LedgerCertificateVerification][dd-certver]).  Keyless stake can
+   seat "cannot sign, and any certificate marking a keyless seat as a signer must
+   be rejected" ([Key Registration and Rotation][cip-keyreg];
+   [REQ-LedgerCertificateVerification][dd-certver]).  Keyless stake can
    therefore lower the quorum a certificate is able to reach, never inflate it.
 
-   Parameter well-formedness therefore does not imply certifiability: the LLF
+   No parameter constraint implies certifiability (with the committee sized by
+   seats, even the coverage `σ(N_c)` is emergent), so the LLF
    names the gap with a `certifiable` predicate (keyed committee stake at least
-   `τ` of the total active stake), so the condition implementers must monitor has
+   `τ` of the total active stake), and the condition implementers must monitor has
    a name.
 
    The gap is not hypothetical.  During the Musashi certification outage of
@@ -274,16 +290,24 @@ The LLF adds the following defaults, each grounded in the design document:
    adoption throughout: on-chain registration and node-side participation are
    different quantities, and `certifiable` names only the part the ledger can see.
 
-+  **Keys**.  Pool registration carries the voting key with its proof of
-   possession, as in the prototype's `sppLeiosKey` on `StakePoolParams`
-   ([#5626][cl-5626]; `spsLeiosKey` is its pool-state mirror), and *registration*
-   checks the proof ([REQ-CheckProofOfPossession][dd-committee]); however, the
-   prototype stores the key *without checking the proof*, which is a divergence to
-   flag upstream.
++  **Keys**.  [#1250][cip-1250] makes registration normative: the pool
+   registration certificate carries an optional `bls_key`, the public key with its
+   proof of possession, and the proof "is mandatory and verified at registration",
+   against rogue-key attacks on BLS aggregation ([Key Registration and
+   Rotation][cip-keyreg]; [REQ-CheckProofOfPossession][dd-committee]).  The
+   prototype's `sppLeiosKey` on `StakePoolParams` ([#5626][cl-5626];
+   `spsLeiosKey` is its pool-state mirror) stores the key *without checking the
+   proof*, a divergence to flag with the implementers.
 
-   Rotation is re-registration, activated at an epoch boundary
-   ([REQ-RotateBLSKeys][dd-keys]); CIP-164 leaves the real rotation mechanism
-   "to a follow-up PR amending this CIP" ([Design Decisions][cip-design]).
+   Rotation is re-registration ([REQ-RotateBLSKeys][dd-keys]), on a cadence
+   comparable to KES rotation, with activation at an epoch boundary aligned to
+   VRF-key rotation ([Key Registration and Rotation][cip-keyreg]).  A competing
+   design is in active discussion: a dedicated registration certificate with a
+   ledger-enforced key expiry, its TTL a genesis constant
+   ([cardano-scaling/CIPs #38][cs-38]; [ouroboros-leios #1024][ol-1024]), moving
+   the key from the registration parameters into its own certificate and
+   pool-state field.  The LLF's default follows the CIP text and switches if the
+   amendment lands.
 
 +  **The pin**.  A certificate is validated against the committee of the epoch in
    which the announcing RB was produced; the CIP sizes the signer bitfield by
@@ -294,41 +318,57 @@ The LLF adds the following defaults, each grounded in the design document:
 ## Protocol parameters
 
 CIP-164's [Table 3][cip-params] declares the Leios parameters governance-tunable;
-cardano-ledger [#5965][cl-5965] maps them onto the Dijkstra `PParams` and adds one
-bound the table lacks.
+cardano-ledger [#5965][cl-5965] maps an earlier revision of the table onto the
+Dijkstra `PParams`.
 
 The LLF adds nine fields, with the mechanical `PParamsUpdate` and group
 companions; every field sits in the network and security groups, matching the
 assignment [#5965][cl-5965] gives its proposed parameters.
 
-| Field                         | CIP-164 (Table 3)                         | Type         | Notes |
-| ----------------------------- | ----------------------------------------- | ------------ | ----- |
-| `leiosHeaderDiffusionPeriod`  | `L_hdr`, header diffusion period          | ℕ (slots)    |       |
-| `leiosVotingPeriod`           | `L_vote`, voting period                   | ℕ (slots)    |       |
-| `leiosDiffusionPeriod`        | `L_diff`, diffusion period                | ℕ (slots)    | [#5965][cl-5965] renames it the *additional* diffusion period |
-| `leiosMaxEBSize`              | `S_EB`, endorser block max size           | ℕ (bytes)    | bounds the reference structure itself, which [#5965][cl-5965] calls the EB *header* |
-| `leiosMaxEBTxsSize`           | `S_EB-tx`, referenceable transaction size | ℕ (bytes)    | bounds the closure's total bytes, [#5965][cl-5965]'s EB *body* |
-| `leiosCommitteeStakeCoverage` | `σ_c`, committee stake coverage           | UnitInterval |       |
-| `leiosQuorumStakeThreshold`   | `τ`, quorum stake threshold               | UnitInterval | normative constraint `τ < σ_c` |
-| `leiosMaxEBExUnits`           | max Plutus steps and memory per EB        | ExUnits      | Table 3's two budget rows in one field, after [#5965][cl-5965]'s `OrdExUnits` |
-| `leiosMaxRefScriptSizePerEB`  | (not in the table)                        | ℕ (bytes)    | from [#5965][cl-5965]; the per-EB analog of `maxRefScriptSizePerBlock` |
+| Field                        | CIP-164 (Table 3)                          | Type         | Notes |
+| ---------------------------- | ------------------------------------------ | ------------ | ----- |
+| `leiosHeaderPeriod`          | `L_hdr`, header diffusion period length    | Milliseconds |       |
+| `leiosVotingPeriod`          | `L_vote`, voting period length             | Milliseconds |       |
+| `leiosDiffusionPeriod`       | `L_diff`, diffusion period length          | Milliseconds | [#5965][cl-5965] names it the *additional* diffusion period |
+| `leiosMaxEBSize`             | `S_EB`, endorser block max size            | ℕ (bytes)    | bounds the reference structure itself, which [#5965][cl-5965] calls the EB *header* |
+| `leiosMaxEBTxsSize`          | `S_EB-tx`, referenceable transaction size  | ℕ (bytes)    | bounds the closure's total bytes, [#5965][cl-5965]'s EB *body* |
+| `leiosCommitteeSize`         | `N_c`, committee size                      | ℕ (seats)    | replaced the stake-coverage target `σ_c` of earlier revisions ([#1250][cip-1250]) |
+| `leiosQuorumStakeThreshold`  | `τ`, quorum stake threshold                | UnitInterval | normative constraint `0.5 < τ < σ(N_c)` |
+| `leiosMaxEBExUnits`          | max Plutus steps and memory per EB         | ExUnits      | Table 3's two budget rows in one field, after [#5965][cl-5965]'s `OrdExUnits` |
+| `leiosMaxRefScriptSizePerEB` | `S_EB-ref`, reference script size per EB   | ℕ (bytes)    | entered as [#5965][cl-5965]'s own addition; a Table 3 row since [#1250][cip-1250] |
 
 Table 3's remaining row, the ranking-block max size `S_RB`, is the existing
 `maxBlockSize`; there is no new field ([#5965][cl-5965] maps it to `ppMaxBBSize`).
 
-Well-formedness: `τ < σ_c` is normative ("Must satisfy `τ < σ_c`",
-[Table 3][cip-params]) and joins positivity of the periods and sizes in the
-parameter well-formedness predicate.  The constraint makes a quorum arithmetically
-reachable by a fully keyed committee (truncation guarantees committee stake of at
-least `σ_c` of the total, and `τ < σ_c` puts the threshold strictly inside that
-coverage); keyless seats can still leave the signable stake short of `τ`, as the
-committee section records.
+The three periods are wall-clock durations, stated in Table 3 in seconds the way
+the genesis `slotLength` is, so that Leios timing does not silently retune when
+`slotLength` changes ([Timing parameters][cip-params]).  The LLF carries them as
+`Milliseconds`, the fixed-precision form of those fractional seconds.  Slot
+granularity enters the timing rules in exactly one place, the certification
+window's `⌈(3·L_hdr + L_vote + L_diff) / slotLength⌉`, rounded up so a
+certificate cannot land before the durations have elapsed ([Step 5][cip-step5]);
+the voters' own deadlines are node-local timers and never convert
+([Step 3][cip-step3]).
+
+Well-formedness: the Leios parameters stay outside the positivity predicate,
+because zero values are the protocol's off state and governance must be able to
+reach it: a zero voting window admits no votes and hence no certificates.  Of the
+CIP's quorum constraint `0.5 < τ < σ(N_c)`, only the lower bound is a property of
+the parameters; the upper bound compares `τ` against the committee's emergent
+coverage, which lives in the stake distribution, so it cannot sit in a parameter
+predicate ([choosing the quorum threshold][cip-quorum]).  The LLF imposes
+`0.5 < τ` in the parameter well-formedness predicate (the disabled state never
+needs `τ ≡ 0`) and leaves `τ < σ(N_c)` to the CIP's operational guidance for
+choosing `N_c`.  The earlier revisions' `τ < σ_c`, which made a quorum
+arithmetically reachable by a fully keyed committee, has no seat-count
+counterpart at the parameter level; reachability is exactly what the committee
+section's `certifiable` predicate names.
 
 Types follow the spec's house conventions; [#5965][cl-5965]'s `SlotInterval`,
-`Word32`, and `OrdExUnits` are the Haskell counterparts, and name or type
-divergences get recorded in module prose.  The network characteristics of the
-CIP's Tables 1 and 2 (the Δ quantities) are not protocol parameters and do not
-enter the spec.
+`Word32`, and `OrdExUnits` lenses track the earlier table revision, and name or
+type divergences get recorded in module prose.  The network characteristics of
+the CIP's Tables 1 and 2 (the Δ quantities) are not protocol parameters and do
+not enter the spec.
 
 ## Availability
 
@@ -370,8 +410,8 @@ each to its LLF counterpart, or records what stays outside the LLF and why.
 | Proposed function             | LLF counterpart |
 | ----------------------------- | -------------------- |
 | `applyCertifiedEb`            | The certificate branch of the block and chain rules: `ValidCert` plus the closure applied via `LEDGERS` from the announcing state, per the ordering above. |
-| `validateCertificate`         | `ValidCert` (`Leios.Validity`): signers are seats of the pinned committee, the aggregate signature verifies over (slot, EB hash), and the signers' stake meets τ times the total active stake.  The contextual half — agreement with the pending announcement, the timing window — sits as block/chain premises. |
-| `validateVote`                | `ValidVote` (`Leios.Validity`): the voter index denotes a keyed committee seat whose key verifies the signature over (slot, EB hash).  Votes never appear on-chain individually; this is the meaning consensus uses to filter votes before aggregation. |
+| `validateCertificate`         | `ValidCert` (`Leios.Validity`): signers are keyed seats of the pinned committee, the aggregate signature verifies over the announcing header's hash, and the signers' stake meets τ times the total active stake.  The contextual half — agreement with the pending announcement, the timing window — sits as block/chain premises. |
+| `validateVote`                | `ValidVote` (`Leios.Validity`): the voter index denotes a keyed committee seat whose key verifies the signature over the announcing header's hash.  Votes never appear on-chain individually; this is the meaning consensus uses to filter votes before aggregation. |
 | `doesEpochCommitteeIncludeMe` | Decidable membership on `Committee` (`Leios.Validity`), a seat lookup by pool.  The "me" binding is consensus-local; the ledger side is the seat lookup, which the implementation serves from its materialized committee ([REQ-LedgerStateVotingCommittee][dd-certver]). |
 | `initializeVotingLedgerState` | Follow-up (the voting-state interface).  Meaning fixed now: the announcing block's post-`BBODY` state paired with fresh EB accumulators, one per cumulative `ValidEB` bound: referenced-transaction bytes, `ExUnits`, and reference-script bytes. |
 | `applyTxForVoting`            | Follow-up.  Meaning fixed now: one LEDGER step plus accumulator updates and bound checks; folding it over the closure from the initialized state succeeds exactly when `ValidEB`'s extension-and-bounds conjuncts hold. |
@@ -418,14 +458,14 @@ nobody disputes `Certificate`.  Three consumers need the vote's fields.
 
 1.  **The certificate's meaning**.  A certificate is a compressed set of
     votes: `cSig` is an aggregate signature over precisely the message each
-    vote signs, `(slot, EB-hash)`, under the keys of the seats named in the
-    bitfield (a bitfield index is a `voter_id` in another encoding).  The
-    CIP's reason for signing the slot is a replay-protection argument about
-    votes ("binding the vote signature to `slot_no` … ensures voters validated
+    vote signs, the hash of the announcing RB's header, under the keys of the
+    seats named in the bitfield (a bitfield index is a `voter_id` in another
+    encoding).  The CIP's reason for the message choice is an argument about
+    votes ("binding the vote to `announcing_rb_hash` ensures voters validated
     the EB against the same ledger state it extends").  Without a `Vote` type,
-    the aggregate check verifies an unexplained pair of bytes; with one, the
+    the aggregate check verifies an unexplained hash; with one, the
     certificate is a definition instead of an incantation.  The price is one
-    four-field record.
+    three-field record.
 
 2.  **The implementation's own requirements**.  The consensus↔ledger
     interface proposed by Nicolas Frisby in the implementation team's design
@@ -520,20 +560,25 @@ practical arguments:
       (`CryptoStructure`), where Peras could share it, could be done as follow-up
       work.
 
-[CIP-164]: https://github.com/cardano-foundation/CIPs/blob/master/CIP-0164/README.md
-[cip-step3]: https://github.com/cardano-foundation/CIPs/blob/master/CIP-0164/README.md#step-3-committee-validation
-[cip-step5]: https://github.com/cardano-foundation/CIPs/blob/master/CIP-0164/README.md#step-5-chain-inclusion
-[cip-params]: https://github.com/cardano-foundation/CIPs/blob/master/CIP-0164/README.md#protocol-parameters
-[cip-ledger]: https://github.com/cardano-foundation/CIPs/blob/master/CIP-0164/README.md#ledger-management
-[cip-chainsel]: https://github.com/cardano-foundation/CIPs/blob/master/CIP-0164/README.md#chain-selection
-[cip-epoch]: https://github.com/cardano-foundation/CIPs/blob/master/CIP-0164/README.md#epoch-boundary
-[cip-certval]: https://github.com/cardano-foundation/CIPs/blob/master/CIP-0164/README.md#certificate-validation
-[cip-committee]: https://github.com/cardano-foundation/CIPs/blob/master/CIP-0164/README.md#committee-structure
-[cip-vote]: https://github.com/cardano-foundation/CIPs/blob/master/CIP-0164/README.md#vote-structure
-[cip-inclusion]: https://github.com/cardano-foundation/CIPs/blob/master/CIP-0164/README.md#rb-inclusion-rules
-[cip-cddl]: https://github.com/cardano-foundation/CIPs/blob/master/CIP-0164/README.md#appendix-b-cddl
-[cip-design]: https://github.com/cardano-foundation/CIPs/blob/master/CIP-0164/README.md#design-decisions
-[cip-versioning]: https://github.com/cardano-foundation/CIPs/blob/master/CIP-0164/README.md#versioning
+[CIP-164]: https://github.com/cardano-scaling/CIPs/blob/leios/CIP-0164/README.md
+[cip-step3]: https://github.com/cardano-scaling/CIPs/blob/leios/CIP-0164/README.md#step-3-committee-validation
+[cip-step5]: https://github.com/cardano-scaling/CIPs/blob/leios/CIP-0164/README.md#step-5-chain-inclusion
+[cip-params]: https://github.com/cardano-scaling/CIPs/blob/leios/CIP-0164/README.md#protocol-parameters
+[cip-ledger]: https://github.com/cardano-scaling/CIPs/blob/leios/CIP-0164/README.md#ledger-management
+[cip-chainsel]: https://github.com/cardano-scaling/CIPs/blob/leios/CIP-0164/README.md#chain-selection
+[cip-epoch]: https://github.com/cardano-scaling/CIPs/blob/leios/CIP-0164/README.md#epoch-boundary
+[cip-certval]: https://github.com/cardano-scaling/CIPs/blob/leios/CIP-0164/README.md#certificate-validation
+[cip-committee]: https://github.com/cardano-scaling/CIPs/blob/leios/CIP-0164/README.md#committee-structure
+[cip-vote]: https://github.com/cardano-scaling/CIPs/blob/leios/CIP-0164/README.md#vote-structure
+[cip-inclusion]: https://github.com/cardano-scaling/CIPs/blob/leios/CIP-0164/README.md#rb-inclusion-rules
+[cip-cddl]: https://github.com/cardano-scaling/CIPs/blob/leios/CIP-0164/README.md#appendix-b-cddl
+[cip-design]: https://github.com/cardano-scaling/CIPs/blob/leios/CIP-0164/README.md#design-decisions
+[cip-versioning]: https://github.com/cardano-scaling/CIPs/blob/leios/CIP-0164/README.md#versioning
+[cip-keyreg]: https://github.com/cardano-scaling/CIPs/blob/leios/CIP-0164/README.md#key-registration
+[cip-quorum]: https://github.com/cardano-scaling/CIPs/blob/leios/CIP-0164/README.md#choosing-quorum-threshold
+[cip-1250]: https://github.com/cardano-foundation/CIPs/pull/1250
+[cs-38]: https://github.com/cardano-scaling/CIPs/pull/38
+[ol-1024]: https://github.com/input-output-hk/ouroboros-leios/issues/1024
 [design-doc]: https://github.com/input-output-hk/ouroboros-leios/blob/main/docs/leios-design/README.md
 [dd-txlevels]: https://github.com/input-output-hk/ouroboros-leios/blob/main/docs/leios-design/README.md#transaction-validation-levels
 [dd-keys]: https://github.com/input-output-hk/ouroboros-leios/blob/main/docs/leios-design/README.md#key-registration-and-rotation
@@ -545,4 +590,4 @@ practical arguments:
 [cl-5965]: https://github.com/IntersectMBO/cardano-ledger/issues/5965
 [leios-formal-spec]: https://github.com/input-output-hk/ouroboros-leios-formal-spec
 [ol-1046]: https://github.com/input-output-hk/ouroboros-leios/issues/1046
-[cip-incentives]: https://github.com/cardano-foundation/CIPs/blob/master/CIP-0164/README.md#incentives
+[cip-incentives]: https://github.com/cardano-scaling/CIPs/blob/leios/CIP-0164/README.md#incentives
