@@ -42,7 +42,7 @@ d_scriptsCost_26 ::
   MAlonzo.Code.Ledger.Core.Specification.Epoch.T_EpochStructure_22 ->
   () ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.T_ScriptStructure_520 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.T_ScriptStructure_524 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParams_312 ->
   Integer -> Integer
 d_scriptsCost_26 v0 v1 ~v2 v3 v4 v5 v6
@@ -51,7 +51,7 @@ du_scriptsCost_26 ::
   MAlonzo.Code.Ledger.Core.Specification.Crypto.T_CryptoStructure_140 ->
   MAlonzo.Code.Ledger.Core.Specification.Epoch.T_EpochStructure_22 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.T_ScriptStructure_520 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.T_ScriptStructure_524 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParams_312 ->
   Integer -> Integer
 du_scriptsCost_26 v0 v1 v2 v3 v4 v5
@@ -65,7 +65,7 @@ d_minFeeRefScriptCoinsPerByte_34 ::
   MAlonzo.Code.Ledger.Core.Specification.Epoch.T_EpochStructure_22 ->
   () ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.T_ScriptStructure_520 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.T_ScriptStructure_524 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParams_312 ->
   Integer -> MAlonzo.Code.Data.Rational.Base.T_ℚ_6
 d_minFeeRefScriptCoinsPerByte_34 ~v0 ~v1 ~v2 ~v3 ~v4 v5 ~v6
@@ -75,7 +75,7 @@ du_minFeeRefScriptCoinsPerByte_34 ::
   MAlonzo.Code.Data.Rational.Base.T_ℚ_6
 du_minFeeRefScriptCoinsPerByte_34 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_minFeeRefScriptCoinsPerByte_416
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_minFeeRefScriptCoinsPerByte_420
       (coe v0)
 -- Ledger.Dijkstra.Specification.Fees._.refScriptCostMultiplier
 d_refScriptCostMultiplier_36 ::
@@ -83,7 +83,7 @@ d_refScriptCostMultiplier_36 ::
   MAlonzo.Code.Ledger.Core.Specification.Epoch.T_EpochStructure_22 ->
   () ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.T_ScriptStructure_520 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.T_ScriptStructure_524 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParams_312 ->
   Integer -> MAlonzo.Code.Data.Rational.Base.T_ℚ_6
 d_refScriptCostMultiplier_36 ~v0 ~v1 ~v2 ~v3 ~v4 v5 ~v6
@@ -93,7 +93,7 @@ du_refScriptCostMultiplier_36 ::
   MAlonzo.Code.Data.Rational.Base.T_ℚ_6
 du_refScriptCostMultiplier_36 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_refScriptCostMultiplier_424
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_refScriptCostMultiplier_428
       (coe v0)
 -- Ledger.Dijkstra.Specification.Fees._.refScriptCostStride
 d_refScriptCostStride_38 ::
@@ -101,7 +101,7 @@ d_refScriptCostStride_38 ::
   MAlonzo.Code.Ledger.Core.Specification.Epoch.T_EpochStructure_22 ->
   () ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.T_ScriptStructure_520 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.T_ScriptStructure_524 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParams_312 ->
   Integer -> MAlonzo.Code.Data.Refinement.Base.T_Refinement_28
 d_refScriptCostStride_38 ~v0 ~v1 ~v2 ~v3 ~v4 v5 ~v6
@@ -111,7 +111,7 @@ du_refScriptCostStride_38 ::
   MAlonzo.Code.Data.Refinement.Base.T_Refinement_28
 du_refScriptCostStride_38 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_refScriptCostStride_422
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_refScriptCostStride_426
       (coe v0)
 -- Ledger.Dijkstra.Specification.Fees._.scriptsCostAux
 d_scriptsCostAux_42 ::
@@ -119,7 +119,7 @@ d_scriptsCostAux_42 ::
   MAlonzo.Code.Ledger.Core.Specification.Epoch.T_EpochStructure_22 ->
   () ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.T_ScriptStructure_520 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.T_ScriptStructure_524 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParams_312 ->
   Integer ->
   MAlonzo.Code.Data.Rational.Base.T_ℚ_6 ->
@@ -131,7 +131,7 @@ du_scriptsCostAux_42 ::
   MAlonzo.Code.Ledger.Core.Specification.Crypto.T_CryptoStructure_140 ->
   MAlonzo.Code.Ledger.Core.Specification.Epoch.T_EpochStructure_22 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.T_ScriptStructure_520 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.T_ScriptStructure_524 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParams_312 ->
   Integer ->
   MAlonzo.Code.Data.Rational.Base.T_ℚ_6 ->
@@ -157,7 +157,7 @@ d_suc'8760''8804'_60 ::
   MAlonzo.Code.Ledger.Core.Specification.Epoch.T_EpochStructure_22 ->
   () ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.T_ScriptStructure_520 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.T_ScriptStructure_524 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParams_312 ->
   Integer ->
   MAlonzo.Code.Data.Rational.Base.T_ℚ_6 ->
@@ -206,7 +206,7 @@ d_'46'extendedlambda0_70 ::
   MAlonzo.Code.Ledger.Core.Specification.Epoch.T_EpochStructure_22 ->
   () ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.T_ScriptStructure_520 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.T_ScriptStructure_524 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParams_312 ->
   Integer ->
   MAlonzo.Code.Data.Rational.Base.T_ℚ_6 ->
@@ -222,7 +222,7 @@ du_'46'extendedlambda0_70 ::
   MAlonzo.Code.Ledger.Core.Specification.Crypto.T_CryptoStructure_140 ->
   MAlonzo.Code.Ledger.Core.Specification.Epoch.T_EpochStructure_22 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.T_ScriptStructure_520 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.T_ScriptStructure_524 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParams_312 ->
   Integer ->
   MAlonzo.Code.Data.Rational.Base.T_ℚ_6 ->
