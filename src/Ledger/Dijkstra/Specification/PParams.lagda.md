@@ -168,30 +168,30 @@ record PParams : Type where
 Leios adds the *endorser block* (EB), an ordered list of transaction references
 that a block producer announces alongside its ranking block; a committee of
 stake pools votes on the EB, and a certificate carried by the following ranking
-block brings the referenced transactions into the ledger.  Three of the nine
+block brings the referenced transactions into the ledger.  Three of the ten
 parameters measure a Leios round in wall-clock time (header diffusion, voting,
 and the additional diffusion that follows voting), four bound an EB (its
 reference list, the transactions listed, their script execution, and their
 reference scripts), `leiosCommitteeSize`{.AgdaField} (`N_c`) is the number of
 committee seats — the committee being the `N_c` pools with the most active
-stake — and `leiosQuorumStakeThreshold`{.AgdaField} (`τ`) is the fraction of
-the total active stake a certificate's signers must carry.  The ranking block
-keeps its existing bound `maxBlockSize`{.AgdaField}, so Leios adds no field for
-it.  Zero-valued Leios parameters are meaningful: they are the protocol's
+stake — `leiosQuorumStakeThreshold`{.AgdaField} (`τ`) is the fraction of
+the total active stake a certificate's signers must carry.  The voting key age
+bound is not a parameter: it is derived from the KES setup
+(`maxKeyAgeEpochs`{.AgdaFunction} in the `Epoch`{.AgdaModule} module).  The
+ranking block keeps its existing bound `maxBlockSize`{.AgdaField}, so Leios
+adds no field for it.  Zero-valued Leios parameters are meaningful: they are the protocol's
 disabled state during rollout.
 
 The field names are this specification's; the cardano-ledger proposal
 [#5965][cl-5965], which maps the same parameters onto the Haskell `PParams`,
-uses different ones.  Its periods are `SlotInterval` lenses suffixed `Length`,
-the diffusion one further prefixed `Additional`.  Its two size bounds are
-`Word32` lenses named for the endorser-block *header* and *body*, its terms for
-the reference list and the transactions listed; those two bounds are
-`leiosMaxEBSize`{.AgdaField} and `leiosMaxEBTxsSize`{.AgdaField} here.  Its
-`OrdExUnits` lens is `leiosMaxEBExUnits`{.AgdaField}, one field for
-[CIP-164][cip-164]'s separate per-EB steps and memory budgets.  The remaining
-field, `leiosMaxRefScriptSizePerEB`{.AgdaField}, has no CIP-164 row at all; it
-is the proposal's own addition, the per-EB analogue of
-`maxRefScriptSizePerBlock`{.AgdaField}.
+uses CIP-164's wording throughout.  Its periods are `Milliseconds` lenses
+`leiosHeaderPeriodLength`, `leiosVotingPeriodLength` and
+`leiosDiffusionPeriodLength`; its EB bounds are `maxEndorserBlockSize` and
+`maxEndorserBlockTxsSize`, which are `leiosMaxEBSize`{.AgdaField} and
+`leiosMaxEBTxsSize`{.AgdaField} here.  Its `OrdExUnits` lens
+`maxEndorserBlockExUnits` is `leiosMaxEBExUnits`{.AgdaField}, one field for
+[CIP-164][cip-164]'s separate per-EB steps and memory budgets, and
+`maxRefScriptSizePerEndorserBlock` is `leiosMaxRefScriptSizePerEB`{.AgdaField}.
 
 *Security group*
 

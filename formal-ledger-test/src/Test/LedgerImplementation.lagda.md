@@ -47,7 +47,8 @@ module Implementation where
   MaxLovelaceSupplyᶜ = 1000000000000000000
   Quorum           = 1
   NetworkId        = 0
-  BlsKeyMaxAgeᶜ    = 20
+  MaxKESEvoᶜ       = 10
+  SlotsPerKESPeriodᶜ = 864  -- derives a key age of 4 epochs
 
   SKey = ℕ
   VKey = ℕ
