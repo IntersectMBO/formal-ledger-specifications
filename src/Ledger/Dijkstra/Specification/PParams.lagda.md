@@ -271,9 +271,9 @@ module PParamsUpdate where
           maxCollateralInputs           : Maybe ℕ
           maxTxExUnits maxBlockExUnits  : Maybe ExUnits
           pv                            : Maybe ProtVer -- retired, keep for now
-          leiosHeaderPeriod             : Maybe ℕ
-          leiosVotingPeriod             : Maybe ℕ
-          leiosDiffusionPeriod          : Maybe ℕ
+          leiosHeaderPeriod             : Maybe Milliseconds
+          leiosVotingPeriod             : Maybe Milliseconds
+          leiosDiffusionPeriod          : Maybe Milliseconds
           leiosMaxEBSize                : Maybe ℕ
           leiosMaxEBTxsSize             : Maybe ℕ
           leiosCommitteeSize            : Maybe ℕ
