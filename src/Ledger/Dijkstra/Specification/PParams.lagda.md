@@ -310,7 +310,7 @@ module PParamsUpdate where
   paramsUpdateWellFormed ppu =
        just 0 ∉ fromList ( maxBlockSize ∷ maxTxSize ∷ maxHeaderSize ∷ maxValSize
                          ∷ coinsPerUTxOByte ∷ poolDeposit ∷ collateralPercentage ∷ ccMaxTermLength
-                         ∷ govActionLifetime ∷ govActionDeposit ∷ drepDeposit [] )
+                         ∷ govActionLifetime ∷ govActionDeposit ∷ drepDeposit ∷ [] )
     where open PParamsUpdate ppu
 ```
 
