@@ -387,7 +387,7 @@ allP2ScriptsWithContext Γ txTop =
       p2ScriptsWithContext : Tx ℓ → List (P2Script × List Data × ExUnits × CostModel)
       p2ScriptsWithContext t =
         collectP2ScriptsWithContext (PParamsOf Γ)
-                                    txTop
+                                    t
                                     (UTxOOf Γ)        -- (1)
                                     (ScriptPoolOf Γ)  -- (2)
 ```
