@@ -16,10 +16,8 @@ The primary guiding design principles are
 +  **Spend-side safety**.  All spending inputs across the whole batch must
    come from a pre-batch UTxO snapshot (see point 6 of the
    [Changes to Transaction Validity][1] section of CIP-0118);
-+  **Batch-scoped witnesses**.  Scripts and datums are collected once per batch and
-   then shared for phase-2 evaluation; CIP-0118 explicitly states that reference
-   scripts, and by implication reference-input-resolved UTxO entries, could be
-   outputs of preceding transactions in the batch (see point 5 of the
++  **Batch-scoped witnesses**.  Scripts are collected once per batch and
+   then shared for phase-2 evaluation (see point 5 of the
    [Changes to Transaction Validity][1] section of CIP-0118);
 +  **Batch-consistency**. No two transactions in the batch may spend the
    same input.  This is enforced explicitly at the top level by a predicate
