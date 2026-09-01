@@ -41,9 +41,10 @@ The note draws on the following sources:
 
 ## Module placement
 
-Leios lands in the Dijkstra era as an additive subtree
-`Ledger.Dijkstra.Specification.Leios.*` plus edits to six existing modules and
-their derived layers; no separate era, and no change to `Ledger.Core`.
+Leios lands in the Dijkstra era as additive Leios modules plus edits to
+existing modules and their derived layers; no separate era.  The one
+`Ledger.Core` change is deliberate: the BLS voting primitives join the core
+`CryptoStructure`, where Peras can share them.
 
 [CIP-164] requires a new ledger era for the block-format change
 ([Versioning][cip-versioning]), and the implementation prototypes Leios in
@@ -51,30 +52,31 @@ Dijkstra ([#5626][cl-5626] targets `eras/dijkstra`), so the Dijkstra specificati
 is where the rules belong; keeping the new material in its own subtree keeps
 merges from `master` cheap.
 
-The abstract voting crypto is a `LeiosAbstract` record, included as a new field of
-`GovStructure`, the era's bundle of abstract structures, and supplied through
-`TransactionStructure`.  This placement is forced by the import order: the
-proof-of-possession premise lives in `POOL`, inside `Certs`, which sees only
-`GovStructure` and sits upstream of `AbstractFunctions`, so nothing threaded
-through `AbstractFunctions` is in scope where the registration rule states that
-premise.
-
-A `GovStructure` field, by contrast, reaches `Certs` and every rule module
-downstream of the transaction telescope without changing any module signature.[^1]
+The abstract voting crypto lives in `Ledger.Core.Specification.Crypto`: the
+`CryptoStructure` gains the BLS carriers and verification predicates (keys,
+signatures, proofs of possession, aggregate verification over the
+serialization type) and a strict total order on key hashes, the committee
+tie-break.  `CryptoStructure` is ambient in every rule module, `Certs`
+included, so the proof-of-possession premise is statable with no module
+signature changing, and the core placement lets Peras share the
+aggregate-signature abstraction instead of migrating it later.  (Settled
+2026-08-31 with Sebastian Nagel; an earlier draft threaded a Dijkstra-local
+`LeiosAbstract` record through `GovStructure`, which also reached `Certs` but
+overloaded a governance-named structure with voting crypto.)
 
 The new modules, and the edits to existing modules, are as follows:
 
 ```text
+src/Ledger/Core/Specification/
+└── Crypto.lagda.md         -- edit: BLS primitives; key-hash order (the tie-break)
 src/Ledger/Dijkstra/Specification/
-├── Leios/
-│   ├── Abstract.lagda.md   -- LeiosAbstract: abstract voting crypto
-│   ├── Types.lagda.md      -- EndorserBlock, Announcement, Vote, Certificate
-│   └── Validity.lagda.md   -- Seat, Committee, quorum arithmetic;
-│                           --   ValidVote, ValidCert, ValidEB
-├── Gov/Base.lagda.md       -- edit: leiosAbstract field in GovStructure
-├── Transaction.lagda.md    -- edit: supply leiosAbstract via TransactionStructure
+├── Leios.lagda.md          -- seats, committee selection, quorum arithmetic;
+│                           --   certificate, vote, and EB validity
+├── Leios/Types.lagda.md    -- EndorserBlock, Announcement, Vote
 ├── PParams.lagda.md        -- edit: the Leios parameter block
-├── Certs.lagda.md          -- edit: voting key in StakePoolParams
+├── Certs.lagda.md          -- edit: voting-key registration (mechanism per the
+│                           --   Keys bullet of the committee section)
+├── Epoch.lagda.md          -- edit: the committee materialized at the boundary
 ├── BlockBody.lagda.md      -- edit: announcement/certificate fields, BBODY premises
 └── Chain.lagda.md          -- edit: pending-announcement threading, window check
 ```
@@ -410,9 +412,9 @@ each to its LLF counterpart, or records what stays outside the LLF and why.
 | Proposed function             | LLF counterpart |
 | ----------------------------- | -------------------- |
 | `applyCertifiedEb`            | The certificate branch of the block and chain rules: `ValidCert` plus the closure applied via `LEDGERS` from the announcing state, per the ordering above. |
-| `validateCertificate`         | `ValidCert` (`Leios.Validity`): signers are keyed seats of the pinned committee, the aggregate signature verifies over the announcing header's hash, and the signers' stake meets τ times the total active stake.  The contextual half — agreement with the pending announcement, the timing window — sits as block/chain premises. |
-| `validateVote`                | `ValidVote` (`Leios.Validity`): the voter index denotes a keyed committee seat whose key verifies the signature over the announcing header's hash.  Votes never appear on-chain individually; this is the meaning consensus uses to filter votes before aggregation. |
-| `doesEpochCommitteeIncludeMe` | Decidable membership on `Committee` (`Leios.Validity`), a seat lookup by pool.  The "me" binding is consensus-local; the ledger side is the seat lookup, which the implementation serves from its materialized committee ([REQ-LedgerStateVotingCommittee][dd-certver]). |
+| `validateCertificate`         | `ValidCert` (`Leios`): signers are keyed seats of the pinned committee, the aggregate signature verifies over the announcing header's hash, and the signers' stake meets τ times the total active stake.  The contextual half — agreement with the pending announcement, the timing window — sits as block/chain premises. |
+| `validateVote`                | `ValidVote` (`Leios`): the voter index denotes a keyed committee seat whose key verifies the signature over the announcing header's hash.  Votes never appear on-chain individually; this is the meaning consensus uses to filter votes before aggregation. |
+| `doesEpochCommitteeIncludeMe` | Decidable membership on `Committee` (`Leios`), a seat lookup by pool.  The "me" binding is consensus-local; the ledger side is the seat lookup, which the implementation serves from its materialized committee ([REQ-LedgerStateVotingCommittee][dd-certver]). |
 | `initializeVotingLedgerState` | Follow-up (the voting-state interface).  Meaning fixed now: the announcing block's post-`BBODY` state paired with fresh EB accumulators, one per cumulative `ValidEB` bound: referenced-transaction bytes, `ExUnits`, and reference-script bytes. |
 | `applyTxForVoting`            | Follow-up.  Meaning fixed now: one LEDGER step plus accumulator updates and bound checks; folding it over the closure from the initialized state succeeds exactly when `ValidEB`'s extension-and-bounds conjuncts hold. |
 | `reapplyTxForVoting`          | Follow-up.  The minimal-checks variant; its agreement with `applyTxForVoting` on previously validated transactions is the certified-application soundness theorem. |
@@ -493,7 +495,7 @@ The design isolates the question by construction: `ValidCert` never mentions
 relation, and nothing else moves.  The fallback is correspondingly principled:
 the `validateVote` interface row becomes "consensus-side composition of
 ledger-provided pieces, namely committee seat lookup plus `isSignedVote`,
-which `LeiosAbstract` exports regardless".
+which the core crypto structure exports regardless".
 
 The fallback has an owner, though, and it is not this note.  Whether the
 ledger owns vote validation and serialization is fixed, today, in the
@@ -505,15 +507,18 @@ drops `Vote` while they stand manufactures a spec–implementation divergence.
 **Recommendation**.  Keep `Vote`/`ValidVote` as definitions serving the
 interface and the metatheory, consumed by no rule; this is the framing the
 note already uses for the protocol spec's declared-but-uncalled `V-chkCerts`.
+Settled 2026-08-31 with Sebastian Nagel: the definitions stay, and they stay
+rule-free, since a transition rule would have no transition to gate; votes
+never reach the chain.
 
 ### Why a Leios subtree instead of folding into existing modules?
 
 One concession first, because it clarifies the question: the rule edits land
 in `BlockBody`, `Chain`, `Certs`, and `PParams` regardless; premises live
 where rules live.  The question is only where the shared type definitions go.
-One placement is already settled by constraint, not taste: the abstract crypto
-cannot live in `AbstractFunctions`, because `Certs` sits upstream of it and
-the proof-of-possession premise would be unstatable there.
+One placement is settled elsewhere: the abstract crypto lives in the core
+`CryptoStructure` (see [Module placement](#module-placement)), which every
+rule module already sees, so reachability constrains nothing here.
 
 For the rest, every Leios type has more than one consumer, as follows:
 
@@ -554,11 +559,12 @@ practical arguments:
    house style.  The protocol has also pivoted once (Full → Linear); if it
    moves again, a subtree contains the blast radius.
 
----
+*Postscript, 2026-08-31.*  As built, the shape is two Leios-named modules
+(`Leios` for the committee and the validity relations, `Leios/Types` for the
+primitive types) with the crypto in the core structure: flatter than the
+subtree argued for above, Leios-named as it argues, and inlined nowhere.
 
-[^1]: Promoting the aggregate-signature abstraction into `Ledger.Core`
-      (`CryptoStructure`), where Peras could share it, could be done as follow-up
-      work.
+---
 
 [CIP-164]: https://github.com/cardano-scaling/CIPs/blob/leios/CIP-0164/README.md
 [cip-step3]: https://github.com/cardano-scaling/CIPs/blob/leios/CIP-0164/README.md#step-3-committee-validation
