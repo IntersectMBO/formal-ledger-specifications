@@ -114,9 +114,9 @@ record PParams : Type where
     pv                            : ProtVer -- retired, keep for now
 
     -- Network group (Leios)
-    leiosHeaderPeriod             : ℕ
-    leiosVotingPeriod             : ℕ
-    leiosDiffusionPeriod          : ℕ
+    leiosHeaderPeriod             : Milliseconds
+    leiosVotingPeriod             : Milliseconds
+    leiosDiffusionPeriod          : Milliseconds
     leiosMaxEBSize                : ℕ
     leiosMaxEBTxsSize             : ℕ
     leiosCommitteeSize            : ℕ
