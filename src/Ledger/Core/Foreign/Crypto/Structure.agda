@@ -43,6 +43,10 @@ HSCryptoStructure = record {
   ; isValidPoP = λ vk pop → extIsSigned vk vk pop ≡ true
   ; isSignedBy = λ vk m σ → extIsSigned vk m σ ≡ true
   ; isSignedByAggregate = λ vks m σ → extIsSigned (sum vks) m σ ≡ true
+  ; EBHash = ℕ
+  ; TxRefHash = ℕ
+  ; RBHeaderHash = ℕ
+  ; hashEBRefs = λ refs → sum (map proj₁ refs)
   }
 
 open CryptoStructure HSCryptoStructure

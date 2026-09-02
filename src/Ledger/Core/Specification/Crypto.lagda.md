@@ -121,6 +121,23 @@ comparison:
         <ᵏʰ-isSTO : IsStrictTotalOrder _≡_ _<ᵏʰ_
 ```
 
+## Leios Hashes
+
+Leios also names its objects by hash: `EBHash`{.AgdaField} identifies an
+endorser block, `TxRefHash`{.AgdaField} a referenced transaction (the hash of
+the complete transaction bytes per [CIP-164] Appendix B, not the body-only
+transaction id), and `RBHeaderHash`{.AgdaField} the announcing ranking-block
+header; the last is the message a committee vote signs.
+`hashEBRefs`{.AgdaField} computes an endorser block's identifier from its
+reference list; all four stay abstract, and
+`Ledger.Dijkstra.Specification.Leios.Types`{.AgdaModule} records why the
+identifier's byte-exact preimage is deliberately unpinned.
+
+```agda
+  field EBHash TxRefHash RBHeaderHash : Type
+        hashEBRefs : List (TxRefHash × ℕ) → EBHash
+```
+
 <!--
 ```agda
   field ⦃ Dec-<ᵏʰ ⦄ : _<ᵏʰ_ ⁇²
@@ -130,6 +147,9 @@ comparison:
         ⦃ Dec-isValidPoP ⦄ : isValidPoP ⁇²
         ⦃ Dec-isSignedBy ⦄ : isSignedBy ⁇³
         ⦃ Dec-isSignedByAggregate ⦄ : isSignedByAggregate ⁇³
+        ⦃ DecEq-EBHash       ⦄ : DecEq EBHash
+        ⦃ DecEq-TxRefHash    ⦄ : DecEq TxRefHash
+        ⦃ DecEq-RBHeaderHash ⦄ : DecEq RBHeaderHash
 
 -- TODO: KES
 ```

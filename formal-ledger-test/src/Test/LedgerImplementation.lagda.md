@@ -69,6 +69,11 @@ module Implementation where
   isSignedBy = λ vk m σ → vk + m ≡ σ
   isSignedByAggregate : List BlsVKey → Ser → BlsSig → Type
   isSignedByAggregate = λ vks m σ → foldr _+_ 0 vks + m ≡ σ
+  EBHash       = ℕ
+  TxRefHash    = ℕ
+  RBHeaderHash = ℕ
+  hashEBRefs : List (TxRefHash × ℕ) → EBHash
+  hashEBRefs = λ refs → foldr _+_ 0 (map proj₁ refs)
 
   Data         = D
   Dataʰ        = mkHashableSet D
