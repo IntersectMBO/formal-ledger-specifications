@@ -65,6 +65,8 @@ module Implementation where
   BlsPoP  = ℕ
   isValidPoP : BlsVKey → BlsPoP → Type
   isValidPoP = _≡_
+  isSignedBy : BlsVKey → Ser → BlsSig → Type
+  isSignedBy = λ vk m σ → vk + m ≡ σ
   isSignedByAggregate : List BlsVKey → Ser → BlsSig → Type
   isSignedByAggregate = λ vks m σ → foldr _+_ 0 vks + m ≡ σ
 
