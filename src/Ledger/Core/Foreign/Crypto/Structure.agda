@@ -41,6 +41,7 @@ HSCryptoStructure = record {
   ; BlsSig = ℕ
   ; BlsPoP = ℕ
   ; isValidPoP = λ vk pop → extIsSigned vk vk pop ≡ true
+  ; isSignedBy = λ vk m σ → extIsSigned vk m σ ≡ true
   ; isSignedByAggregate = λ vks m σ → extIsSigned (sum vks) m σ ≡ true
   }
 
