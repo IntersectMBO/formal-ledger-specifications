@@ -21,7 +21,7 @@ import MAlonzo.Code.Ledger.Dijkstra.Foreign.Cert              as X
 import MAlonzo.Code.Ledger.Dijkstra.Foreign.Chain             as X
   (ChainState(..), Block(..), chainStep)
 import MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs             as X
-  ( StakePoolParams(..), PState(..), DelegEnv(..), GovCertEnv(..), CertEnv(..), DState(..), DCert(..), GState(..), CertState(..)
+  ( StakePoolParams(..), PState(..), DelegEnv(..), GovCertEnv(..), PoolEnv(..), CertEnv(..), DState(..), DCert(..), GState(..), CertState(..)
   , delegStep, govCertStep, poolStep)
 import MAlonzo.Code.Ledger.Dijkstra.Foreign.Entities          as X
   (EntitiesEnv(..), entitiesStep, SubEntitiesEnv(..), subentitiesStep)
