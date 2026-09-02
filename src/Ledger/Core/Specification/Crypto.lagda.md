@@ -80,22 +80,59 @@ record CryptoStructure : Type₁ where
 
   field VRF : Type
         ⦃ DecEq-VRF ⦄ : DecEq VRF
+```
+-->
 
-  -- Byte-wise ascending order on key hashes; the Leios committee tie-break.
-  field _<ᵏʰ_ : KeyHash → KeyHash → Type
-        <ᵏʰ-isSTO : IsStrictTotalOrder _≡_ _<ᵏʰ_
-        ⦃ Dec-<ᵏʰ ⦄ : _<ᵏʰ_ ⁇²
+## Leios Voting Crypto
 
-  -- BLS12-381 signature scheme used for Leios voting (CIP-0164).
+Leios ([CIP-164]) adds a second signature scheme beside the payment scheme
+above: an epoch's voting committee signs endorser-block announcements with
+registered voting keys, and a certificate compresses a quorum of votes into
+one aggregate signature.  The scheme enters the specification abstractly and
+verification-only, like `isSigned`{.AgdaField} above; the implementation
+instantiates it with BLS12-381 MinSig, 96-byte verification keys with 48-byte
+signatures and proofs of possession.  It lives here, beside the payment
+scheme, so other protocol extensions that aggregate votes (Peras) can share
+it.
+
+```agda
   field BlsVKey BlsSig BlsPoP : Type
         isValidPoP          : BlsVKey → BlsPoP → Type
+        isSignedBy          : BlsVKey → Ser → BlsSig → Type
         isSignedByAggregate : List BlsVKey → Ser → BlsSig → Type
+```
+
+`isValidPoP`{.AgdaField} checks a key's *proof of possession*, required with
+every registration because aggregation is otherwise open to rogue-key attacks
+(a key crafted relative to others' keys, making an aggregate appear to include
+voters who never signed).  `isSignedBy`{.AgdaField} verifies a single vote,
+the meaning by which consensus filters votes before aggregation;
+`isSignedByAggregate`{.AgdaField} verifies a certificate's aggregate signature
+against its signers' keys.  Only verification enters the rules: the ledger
+never creates votes or certificates, so the scheme has no signing side and no
+correctness law relating one.
+
+The committee orders pools by stake, ties broken by ascending pool id, so the
+key-hash type carries a strict total order, the implementation's byte-wise
+comparison:
+
+```agda
+  field _<ᵏʰ_ : KeyHash → KeyHash → Type
+        <ᵏʰ-isSTO : IsStrictTotalOrder _≡_ _<ᵏʰ_
+```
+
+<!--
+```agda
+  field ⦃ Dec-<ᵏʰ ⦄ : _<ᵏʰ_ ⁇²
         ⦃ DecEq-BlsVKey ⦄ : DecEq BlsVKey
         ⦃ DecEq-BlsSig  ⦄ : DecEq BlsSig
         ⦃ DecEq-BlsPoP  ⦄ : DecEq BlsPoP
         ⦃ Dec-isValidPoP ⦄ : isValidPoP ⁇²
+        ⦃ Dec-isSignedBy ⦄ : isSignedBy ⁇³
         ⦃ Dec-isSignedByAggregate ⦄ : isSignedByAggregate ⁇³
 
 -- TODO: KES
 ```
 -->
+
+[CIP-164]: https://github.com/cardano-foundation/CIPs/blob/master/CIP-0164/README.md
