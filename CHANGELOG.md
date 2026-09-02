@@ -4,6 +4,7 @@
 
 ### WIP
 
+- Add abstract BLS primitives and a strict total order on key hashes to `CryptoStructure`, and the voting-key expiry period `BlsKeyMaxAgeᶜ` to `GlobalConstants` (CIP-164).
 - Move cert-deposit helpers from `Utxo` to `Certs`.
 - Fix `updateCertDeposits`: use `foldl` (CERTS is head-first).
 - Add `HasCoin-UTxOState` and `HasCoin-LedgerState` instances; the latter sums UTxO total, rewards balance, and all three deposit fields.
