@@ -6,8 +6,8 @@ property's status **derived from the Agda source** by
 `build-tools/scripts/scan_properties.py`. Do not edit the generated region below
 by hand; edit the catalog and regenerate.
 
-See `docs/adr/0001-ledger-property-tracking.md` for the design, conventions,
-and workflow.
+See the "Tracking Properties of the Ledger" section of `CONTRIBUTING.md` for
+the conventions and workflow.
 
 Status legend: ✅ proved · 🟡 stated (proof pending) · 🟦 planned (drafted on
 another branch/PR) · ⚪ idea (not yet in Agda).

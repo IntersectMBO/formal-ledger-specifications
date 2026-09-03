@@ -222,8 +222,8 @@ def issue_body(p: dict, umbrella: int | None) -> str:
     lines += [
         "",
         "---",
-        "Tracked in `build-tools/properties.yaml`; see ADR "
-        "`docs/adr/0001-ledger-property-tracking.md` and the dashboard "
+        "Tracked in `build-tools/properties.yaml`; see the \"Tracking Properties "
+        "of the Ledger\" section of CONTRIBUTING.md and the dashboard "
         "`build-tools/static/mkdocs/docs/ledger-properties-dashboard.md`.",
     ]
     if umbrella:
@@ -274,7 +274,7 @@ def main() -> int:
             title = f"Properties of the ledger — {era} era"
             body = (f"Umbrella tracking issue for **{era}** ledger properties.\n\n"
                     f"Sub-issues are generated from `build-tools/properties.yaml`. "
-                    f"See ADR `docs/adr/0001-ledger-property-tracking.md`.")
+                    f"See CONTRIBUTING.md (\"Tracking Properties of the Ledger\").")
             num = create_issue(gh, title, body, ["property", f"era:{era}"])
             if num:
                 umbrellas[era] = num

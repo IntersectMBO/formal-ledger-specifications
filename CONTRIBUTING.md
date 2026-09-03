@@ -11,6 +11,7 @@
 [📖 HTML Documentation][]  
 [🖥️ IDE Integration][]  
 [🧑‍🔧 Working on the Agda source code][]  
+[📋 Tracking Properties of the Ledger][]  
 [🔁 CI/CD Workflow][]  
 [🎛️️ Setup Without Nix][]  
 [🕵️‍♀️ Conformance Testing][]  
@@ -433,6 +434,93 @@ browser.
 
 ---
 
+<a id="tracking-properties-of-the-ledger"></a>
+## 📋 Tracking Properties of the Ledger
+
+Ledger properties (preservation of value, governance invariants, and so on) are
+tracked across eras by the following three artifacts, each the single source of
+truth for one concern:
+
++  **the Agda** under `src/**/Properties/` decides whether a property is *proved*;
++  **the catalog** (`build-tools/properties.yaml`), curated by hand, records each
+   property's identity: era, STS, Agda module, key definitions, and tracking
+   issue; it deliberately declares **no** status;
++  **GitHub issues** carry the coordination: discussion, assignment, open/closed.
+
+### The scanner: `scan_properties.py`
+
+A property's status is *derived*, never asserted.
+`build-tools/scripts/scan_properties.py` resolves each catalog entry's `module`
+against the Agda on disk and classifies the entry as one of the following:
+
++  `idea`: no module named (nothing in Agda yet);
++  `planned`: module named, but the file is not on this branch;
++  `stated`: the file contains a `coming soon` marker (statement present, proof
+   pending);
++  `proved`: the file is present with no pending marker.
+
+The scanner regenerates the dashboard
+(`build-tools/static/mkdocs/docs/ledger-properties-dashboard.md`, published on
+the documentation site as the **Properties Dashboard** page), and
+`scan_properties.py --check` fails when the committed dashboard is stale or the
+catalog is malformed.  The check runs in CI
+(`.github/workflows/properties-check.yml`), so a proof that lands without a
+regenerated dashboard fails the pull request; the Agda `--safe` typecheck in the
+main CI is what makes `proved` mean proved.
+
+Run the scanner from the default development shell (`nix develop` provides
+`python3` with PyYAML; without Nix, any Python 3.8+ with the `pyyaml` package
+works):
+
+```bash
+python3 build-tools/scripts/scan_properties.py          # regenerate the dashboard
+python3 build-tools/scripts/scan_properties.py --check  # what CI runs: fail on drift
+```
+
+### Conventions for property modules
+
++  One focused module per property, in the STS's `Properties/` directory (e.g.
+   `Chain/Properties/EpochStep.lagda.md`); aggregator modules
+   (`X/Properties.lagda.md`) just re-export.
++  While unproved, the module states the proposition and ends with
+   `*Proof*. (coming soon)`.  When proved, the proof replaces that line.  The
+   `coming soon` string is the machine-readable pending signal; keep it.
++  Headings carry a stable anchor: `## Claim: … {#clm:Foo}` or
+   `## Theorem: … {#thm:Foo}`.
++  The catalog records the dotted `module`, the `anchor`, the key `defs`, and
+   the tracking `issues`; this is where the property↔issue link lives, in-repo
+   and machine-checkable.
+
+### Typical workflows
+
++  **Add a property**.  Add a catalog entry (no status field; with no module it
+   derives as `idea`), write the module with the statement and `coming soon`
+   (it now derives as `stated`), run the scanner, and commit the catalog
+   together with the regenerated dashboard.
++  **Record a proof**.  Replace `coming soon` with the proof (it now derives as
+   `proved`), run the scanner, commit the regenerated dashboard, and close the
+   tracking issue.
+
+### Syncing with GitHub issues
+
+Two companion scripts keep the catalog and the GitHub issues aligned.  Both are
+run locally by maintainers and are documented in `build-tools/scripts/README.md`;
+they need the [GitHub CLI](https://cli.github.com/) (`gh`), authenticated (the
+Nix shell does not provide `gh`).
+
++  `gh_project_populate.py` (catalog → GitHub) creates labels, the per-era
+   umbrella issues, and one tracking issue per catalog entry that has none,
+   writing the new issue numbers back into the catalog; for already-tracked
+   issues it reconciles the derived `status:*` label.  Run it, with `--dry-run`
+   first, after adding catalog entries that need issues.
++  `gh_project_render.py` (GitHub → repo) regenerates the issues view
+   (`build-tools/static/mkdocs/docs/ledger-properties-issues.md`) with live
+   open/closed/assignee state.  Run it to refresh that coordination view;
+   formal status never comes from issues, since closing an issue by hand does
+   not make a proof exist.
+
+---
+
 <a id="cicd-workflow"></a>
 ## 🔁 CI/CD Workflow
 
@@ -781,6 +869,7 @@ This repository is maintained by [@carlostome][], [@WhatisRT][], and [@williamde
 [Building and viewing the formal specification]: #building-and-viewing-the-formal-specification
 [Browsing the source code]: #browsing-the-source-code
 [🧑‍🔧 Working on the Agda source code]: #working-on-the-agda-source-code
+[📋 Tracking Properties of the Ledger]: #tracking-properties-of-the-ledger
 [🕵️‍♀️ Conformance Testing]: #conformance-testing
 [🖥️ IDE Integration]: #ide-integration
 [🔁 CI/CD Workflow]: #cicd-workflow

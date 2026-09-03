@@ -19,8 +19,8 @@
 # dashboard matches what the Agda currently implies, so the bookkeeping cannot
 # silently drift from the code.
 #
-# Workflow and conventions are documented in
-#   docs/adr/0001-ledger-property-tracking.md
+# Workflow and conventions are documented in CONTRIBUTING.md, in the
+#   "Tracking Properties of the Ledger" section.
 #
 # Field reference (per property):
 #   id      : stable slug, unique across the catalog (used by the scripts)

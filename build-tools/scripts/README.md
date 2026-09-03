@@ -4,8 +4,8 @@
 
 Tooling for the ledger-properties catalog (this README covers the three
 `scan_properties.py` / `gh_project_*.py` scripts; the other scripts in this
-directory are unrelated build helpers). Design and rationale:
-[`docs/adr/0001-ledger-property-tracking.md`](../../docs/adr/0001-ledger-property-tracking.md).
+directory are unrelated build helpers). Workflow and conventions: the
+"Tracking Properties of the Ledger" section of [CONTRIBUTING.md](../../CONTRIBUTING.md).
 
 The catalog [`build-tools/properties.yaml`](../properties.yaml) declares
 every property (identity, era, STS, Agda module, tracking issue). It is what we humans edit.
