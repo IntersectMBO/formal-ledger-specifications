@@ -136,6 +136,7 @@ record TxBodyTop : Type where
     txGuards                 : ℙ Credential
     txDirectDeposits         : DirectDeposits
     txBalanceIntervals       : AccountBalanceIntervals
+    txStartingBalanceIntervals : AccountBalanceIntervals
 
 instance
   convTxBodyTop : Convertible (TxBody TxLevelTop) TxBodyTop
