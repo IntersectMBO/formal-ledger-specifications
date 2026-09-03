@@ -22,7 +22,7 @@ Recall (from `Ledger.lagda.md`) that `getCoin (LedgerState)` is
     + coinFromDeposits (CertStateOf s)
     + coinFromGovDeposit (GovStateOf s)
 
-This is the sum of UTxO coin, the cert-state rewards balance
+This is the sum of UTxO coin, the `CertState`{.AgdaRecord} rewards balance
 (`coinFromRewards`{.AgdaFunction}), the deposits from `DState`{.AgdaRecord},
 `PState`{.AgdaRecord}, and `GState`{.AgdaRecord} (`coinFromDeposits`{.AgdaFunction}),
 and the governance-action deposits (`coinFromGovDeposit`{.AgdaFunction}); the two
