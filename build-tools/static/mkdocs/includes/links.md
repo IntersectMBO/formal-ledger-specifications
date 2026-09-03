@@ -61,9 +61,11 @@
 [Introduction]: Ledger.Introduction.md
 [LEDGER]: Ledger.Conway.Specification.Ledger.md#ledger-transition-system
 [Ledger.Properties]: Ledger.Conway.Specification.Ledger.Properties.md
+[Ledger.Properties.ChangePPGroup]: Ledger.Conway.Specification.Ledger.Properties.ChangePPGroup.md
 [Ledger.Properties.GovDepsMatch]: Ledger.Conway.Specification.Ledger.Properties.GovDepsMatch.md
 [Ledger.Properties.PoV]: Ledger.Conway.Specification.Ledger.Properties.PoV.md
 [LEDGERS]: Ledger.Conway.Specification.Ledger.md#ledgers-transition-system
+[Ledger-ChangePPHasGroup]: Ledger.Conway.Specification.Ledger.Properties.ChangePPGroup.md#thm:LEDGER-ChangePPGroup
 [LEDGER-GovDepsMatch]: Ledger.Conway.Specification.Ledger.Properties.GovDepsMatch.md#lem:LedgerGovDepsMatch
 [Ledger-LastVoteApplied]: Ledger.Conway.Specification.Ledger.Properties.LastVoteApplied.md
 [LEDGER-PoV]: Ledger.Conway.Specification.Ledger.Properties.PoV.md#thm:LEDGER-PoV

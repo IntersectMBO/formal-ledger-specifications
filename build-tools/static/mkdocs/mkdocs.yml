@@ -160,6 +160,7 @@ nav:
       - Properties: Ledger.Conway.Specification.Ledger.Properties.md
       - Properties/:
         - Base: Ledger.Conway.Specification.Ledger.Properties.Base.md
+        - ChangePPGroup: Ledger.Conway.Specification.Ledger.Properties.ChangePPGroup.md
         - Computational: Ledger.Conway.Specification.Ledger.Properties.Computational.md
         - GovDepsMatch: Ledger.Conway.Specification.Ledger.Properties.GovDepsMatch.md
         - PoV: Ledger.Conway.Specification.Ledger.Properties.PoV.md
