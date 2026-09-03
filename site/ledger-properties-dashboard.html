@@ -11616,8 +11616,8 @@
 property's status <strong>derived from the Agda source</strong> by
 <code>build-tools/scripts/scan_properties.py</code>. Do not edit the generated region below
 by hand; edit the catalog and regenerate.</p>
-<p>See <code>docs/adr/0001-ledger-property-tracking.md</code> for the design, conventions,
-and workflow.</p>
+<p>See the "Tracking Properties of the Ledger" section of <code>CONTRIBUTING.md</code> for
+the conventions and workflow.</p>
 <p>Status legend: ✅ proved · 🟡 stated (proof pending) · 🟦 planned (drafted on
 another branch/PR) · ⚪ idea (not yet in Agda).</p>
 <!-- BEGIN GENERATED: dashboard (scan_properties.py) -->
@@ -11638,9 +11638,9 @@ another branch/PR) · ⚪ idea (not yet in Agda).</p>
 <tbody>
 <tr>
 <td>conway</td>
-<td style="text-align: right;">13</td>
-<td style="text-align: right;">6</td>
-<td style="text-align: right;">1</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">0</td>
 <td style="text-align: right;">2</td>
 <td style="text-align: right;">22</td>
 </tr>
@@ -11703,10 +11703,24 @@ another branch/PR) · ⚪ idea (not yet in Agda).</p>
 </tr>
 <tr>
 <td>✅ proved</td>
+<td>ChangePParams proposals have a non-empty update group</td>
+<td>GOV</td>
+<td><a href="Ledger.Conway.Specification.Gov.Properties.ChangePPGroup.html"><code>Ledger.Conway.Specification.Gov.Properties.ChangePPGroup</code></a></td>
+<td><a href="https://github.com/intersectmbo/formal-ledger-specifications/issues/1234">#1234</a></td>
+</tr>
+<tr>
+<td>✅ proved</td>
 <td>A voter's (last) vote in a block is applied to the GA</td>
 <td>GOV</td>
 <td><a href="Ledger.Conway.Specification.Gov.Properties.LastVoteApplied.html"><code>Ledger.Conway.Specification.Gov.Properties.LastVoteApplied</code></a></td>
 <td><a href="https://github.com/intersectmbo/formal-ledger-specifications/issues/417">#417</a></td>
+</tr>
+<tr>
+<td>✅ proved</td>
+<td>ChangePParams proposals of an accepted transaction have a non-empty update group</td>
+<td>LEDGER</td>
+<td><a href="Ledger.Conway.Specification.Ledger.Properties.ChangePPGroup.html"><code>Ledger.Conway.Specification.Ledger.Properties.ChangePPGroup</code></a></td>
+<td><a href="https://github.com/intersectmbo/formal-ledger-specifications/issues/1234">#1234</a></td>
 </tr>
 <tr>
 <td>✅ proved</td>
@@ -11791,20 +11805,6 @@ another branch/PR) · ⚪ idea (not yet in Agda).</p>
 <td>EPOCH</td>
 <td><a href="Ledger.Conway.Specification.Epoch.Properties.NoPropSameDReps.html"><code>Ledger.Conway.Specification.Epoch.Properties.NoPropSameDReps</code></a></td>
 <td><a href="https://github.com/intersectmbo/formal-ledger-specifications/issues/1232">#1232</a></td>
-</tr>
-<tr>
-<td>🟡 stated</td>
-<td>ChangePParams proposals have a non-empty update group</td>
-<td>GOV</td>
-<td><a href="Ledger.Conway.Specification.Gov.Properties.ChangePPGroup.html"><code>Ledger.Conway.Specification.Gov.Properties.ChangePPGroup</code></a></td>
-<td><a href="https://github.com/intersectmbo/formal-ledger-specifications/issues/1234">#1234</a></td>
-</tr>
-<tr>
-<td>🟦 planned</td>
-<td>ChangePParams proposals of an accepted transaction have a non-empty update group</td>
-<td>LEDGER</td>
-<td><code>Ledger.Conway.Specification.Ledger.Properties.ChangePPGroup</code></td>
-<td><a href="https://github.com/intersectmbo/formal-ledger-specifications/issues/1234">#1234</a></td>
 </tr>
 <tr>
 <td>⚪ idea</td>
