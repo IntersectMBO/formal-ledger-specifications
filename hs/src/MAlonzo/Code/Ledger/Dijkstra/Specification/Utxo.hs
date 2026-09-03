@@ -2976,12 +2976,16 @@ d_allP2ScriptsWithContext_3626 v0 v1 v2 v3
   = coe
       MAlonzo.Code.Data.List.Base.du__'43''43'__32
       (coe
-         du_p2ScriptsWithContext_3636 (coe v0) (coe v1) (coe v2) (coe v3))
+         du_p2ScriptsWithContext_3636 (coe v0) (coe v1) (coe v2)
+         (coe
+            MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.C_TxLevelTop_10)
+         (coe v3))
       (coe
          MAlonzo.Code.Data.List.Base.du_concatMap_246
-         (\ v4 ->
-            coe
-              du_p2ScriptsWithContext_3636 (coe v0) (coe v1) (coe v2) (coe v3))
+         (coe
+            du_p2ScriptsWithContext_3636 (coe v0) (coe v1) (coe v2)
+            (coe
+               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.C_TxLevelSub_12))
          (coe
             MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txSubTransactions_3818
             (coe
@@ -2996,21 +3000,19 @@ d_p2ScriptsWithContext_3636 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TxLevel_8 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3706 ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
-d_p2ScriptsWithContext_3636 v0 v1 v2 v3 ~v4 ~v5
-  = du_p2ScriptsWithContext_3636 v0 v1 v2 v3
+d_p2ScriptsWithContext_3636 v0 v1 v2 ~v3 v4 v5
+  = du_p2ScriptsWithContext_3636 v0 v1 v2 v4 v5
 du_p2ScriptsWithContext_3636 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3142 ->
   T_UTxOEnv_3118 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TxLevel_8 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3706 ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
-du_p2ScriptsWithContext_3636 v0 v1 v2 v3
+du_p2ScriptsWithContext_3636 v0 v1 v2 v3 v4
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Validation.d_collectP2ScriptsWithContext_3404
-      (coe v0) (coe v1)
-      (coe
-         MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.C_TxLevelTop_10)
-      (coe d_pparams_3136 (coe v2)) (coe v3)
+      (coe v0) (coe v1) (coe v3) (coe d_pparams_3136 (coe v2)) (coe v4)
       (coe d_utxo'8320'_3140 (coe v2)) (coe d_allScripts_3144 (coe v2))
 -- Ledger.Dijkstra.Specification.Utxo._⊢_⇀⦇_,UTXOS⦈_
 d__'8866'_'8640''10631'_'44'UTXOS'10632'__3640 a0 a1 a2 a3 a4 a5
