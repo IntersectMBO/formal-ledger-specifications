@@ -236,6 +236,10 @@ Of particular note in the Dijkstra era are
    interval as a Phase-1 validity condition, analogous to how slot validity
    intervals constrain the time at which a transaction may be processed.
 
++  `txStartingBalanceIntervals`{.AgdaField}: only present in top-level transactions,
+   this field records the account balance interval assertions that this transaction
+   makes about account balances before any sub-transaction is processed.
+
 ```agda
   mutual
     record Tx (txLevel : TxLevel) : Type where
@@ -269,11 +273,12 @@ Of particular note in the Dijkstra era are
         scriptIntegrityHash  : Maybe ScriptHash
 
         -- New in Dijkstra --
-        txSubTransactions         : InTopLevel txLevel (List (Tx TxLevelSub))
-        txGuards                  : ℙ Credential
-        txRequiredTopLevelGuards  : ℙ (Credential × Maybe Datum)
-        txDirectDeposits          : DirectDeposits
-        txBalanceIntervals        : AccountBalanceIntervals
+        txSubTransactions          : InTopLevel txLevel (List (Tx TxLevelSub))
+        txGuards                   : ℙ Credential
+        txRequiredTopLevelGuards   : ℙ (Credential × Maybe Datum)
+        txDirectDeposits           : DirectDeposits
+        txBalanceIntervals         : AccountBalanceIntervals
+        txStartingBalanceIntervals : InTopLevel txLevel AccountBalanceIntervals
         ---------------------
 
       requiredSignerHashes : ℙ KeyHash
@@ -420,6 +425,10 @@ could be either of them.
     field BalanceIntervalsOf : A → AccountBalanceIntervals
   open HasBalanceIntervals ⦃...⦄ public
 
+  record HasStartingBalanceIntervals {a} (A : Type a) : Type a where
+    field StartingBalanceIntervalsOf : A → AccountBalanceIntervals
+  open HasStartingBalanceIntervals ⦃...⦄ public
+
   record HasIsValidFlag {a} (A : Type a) : Type a where
     field IsValidFlagOf : A → Bool
   open HasIsValidFlag ⦃...⦄ public
@@ -475,6 +484,11 @@ could be either of them.
     HasBalanceIntervals-TxBody .BalanceIntervalsOf = TxBody.txBalanceIntervals
     HasBalanceIntervals-Tx : HasBalanceIntervals (Tx txLevel)
     HasBalanceIntervals-Tx .BalanceIntervalsOf = BalanceIntervalsOf ∘ TxBodyOf
+
+    HasStartingBalanceIntervals-TxBody : HasStartingBalanceIntervals (TxBody TxLevelTop)
+    HasStartingBalanceIntervals-TxBody .StartingBalanceIntervalsOf = TxBody.txStartingBalanceIntervals
+    HasStartingBalanceIntervals-Tx : HasStartingBalanceIntervals TopLevelTx
+    HasStartingBalanceIntervals-Tx .StartingBalanceIntervalsOf = StartingBalanceIntervalsOf ∘ TxBodyOf
 
     HasValidInterval-TxBody : HasValidInterval (TxBody txLevel)
     HasValidInterval-TxBody .ValidIntervalOf = TxBody.txVldt
