@@ -61,17 +61,22 @@ instance
   Computational-POOL .computeProof _ stᵖ (regpool c poolParams)
     with ¿ IsPoolRegistered (PoolsOf stᵖ) c ¿
   Computational-POOL .computeProof Γ stᵖ (regpool c poolParams) | yes p
-    with ¿ ¬ (poolParams .vrf ∈ mapˢ vrf (range (PoolsOf stᵖ ∣ ❴ c ❵ ᶜ) ∪ range (FuturePoolsOf stᵖ ∣ ❴ c ❵ ᶜ)))
+    with ¿ ¬ (poolParams .vrf ∈ poolVrfs (PoolsOf stᵖ ∣ ❴ c ❵ ᶜ) ∪ mapˢ vrf (range (FuturePoolsOf stᵖ ∣ ❴ c ❵ ᶜ)))
          ∙ NetworkIdOf (poolParams .rewardAccount) ≡ NetworkId
          ∙ Γ .pp .minPoolCost ≤ poolParams .cost ¿
   ... | yes q = success (-, POOL-rereg (p , q))
   ... | no ¬q = failure (genErrors ¬q)
   Computational-POOL .computeProof Γ stᵖ (regpool c poolParams) | no ¬p
-    with ¿ ¬ (poolParams .vrf ∈ mapˢ vrf (range (PoolsOf stᵖ) ∪ range (FuturePoolsOf stᵖ)))
+    with ¿ ¬ (poolParams .vrf ∈ poolVrfs (PoolsOf stᵖ) ∪ mapˢ vrf (range (FuturePoolsOf stᵖ)))
          ∙ NetworkIdOf (poolParams .rewardAccount) ≡ NetworkId
          ∙ Γ .pp .minPoolCost ≤ poolParams .cost ¿
   ... | yes q = success (-, (POOL-reg (¬p , q)))
   ... | no ¬q = failure (genErrors ¬q)
+  Computational-POOL .computeProof Γ stᵖ (regblskey c vk pop)
+    with ¿ IsPoolRegistered (PoolsOf stᵖ) c
+         ∙ isValidPoP vk pop ¿
+  ... | yes p = success (-, POOL-regblskey p)
+  ... | no ¬p = failure (genErrors ¬p)
   Computational-POOL .computeProof Γ stᵖ (retirepool c e')
     with ¿ IsPoolRegistered (PoolsOf stᵖ) c
          ∙ Γ .epoch < e'
@@ -83,7 +88,7 @@ instance
     with ¿ IsPoolRegistered (PoolsOf stᵖ) c ¿
   ... | yes r = ⊥-elim (p r)
   ... | no ¬r
-    with ¿ ¬ (poolParams .vrf ∈ mapˢ vrf (range (PoolsOf stᵖ) ∪ range (FuturePoolsOf stᵖ)))
+    with ¿ ¬ (poolParams .vrf ∈ poolVrfs (PoolsOf stᵖ) ∪ mapˢ vrf (range (FuturePoolsOf stᵖ)))
          ∙ NetworkIdOf (poolParams .rewardAccount) ≡ NetworkId
          ∙ Γ .pp .minPoolCost ≤ poolParams .cost ¿
   ... | yes _ = refl
@@ -92,11 +97,16 @@ instance
     with ¿ IsPoolRegistered (PoolsOf stᵖ) c ¿
   ... | no ¬r = ⊥-elim (¬r p)
   ... | yes r
-    with ¿ ¬ (poolParams .vrf ∈ mapˢ vrf (range (PoolsOf stᵖ ∣ ❴ c ❵ ᶜ) ∪ range (FuturePoolsOf stᵖ ∣ ❴ c ❵ ᶜ)))
+    with ¿ ¬ (poolParams .vrf ∈ poolVrfs (PoolsOf stᵖ ∣ ❴ c ❵ ᶜ) ∪ mapˢ vrf (range (FuturePoolsOf stᵖ ∣ ❴ c ❵ ᶜ)))
          ∙ NetworkIdOf (poolParams .rewardAccount) ≡ NetworkId
          ∙ Γ .pp .minPoolCost ≤ poolParams .cost ¿
   ... | yes _ = refl
   ... | no ¬s = ⊥-elim (¬s q)
+  Computational-POOL .completeness Γ stᵖ (regblskey c vk pop) _ (POOL-regblskey p)
+    with ¿ IsPoolRegistered (PoolsOf stᵖ) c
+         ∙ isValidPoP vk pop ¿
+  ... | yes _ = refl
+  ... | no ¬p = ⊥-elim (¬p p)
   Computational-POOL .completeness Γ stᵖ (retirepool c e) _ (POOL-retirepool p)
     with ¿ IsPoolRegistered (PoolsOf stᵖ) c
          ∙ Γ .epoch < e
@@ -157,6 +167,10 @@ instance
   ... | success _ | refl = refl
   Computational-CERT .completeness ce cs
     dCert@(retirepool c e) cs' (CERT-pool h)
+    with computeProof ⟦ EpochOf ce , PParamsOf ce ⟧ (PStateOf cs) dCert | completeness _ _ _ _ h
+  ... | success _ | refl = refl
+  Computational-CERT .completeness ce cs
+    dCert@(regblskey c vk pop) cs' (CERT-pool h)
     with computeProof ⟦ EpochOf ce , PParamsOf ce ⟧ (PStateOf cs) dCert | completeness _ _ _ _ h
   ... | success _ | refl = refl
   Computational-CERT .completeness Γ cs

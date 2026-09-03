@@ -19,6 +19,8 @@ HSGlobalConstants = record {
   ; MaxLovelaceSupplyᶜ = 1
   ; Quorum = 1
   ; NetworkId = 0
+  ; MaxKESEvoᶜ = 10
+  ; SlotsPerKESPeriodᶜ = 864  -- derives a key age of 4 epochs
   }
 
 HSEpochStructure : EpochStructure

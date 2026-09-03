@@ -11,12 +11,17 @@ open import Ledger.Prelude.Foreign.HSTypes
 open import Ledger.Dijkstra.Foreign.HSStructures
 open import Ledger.Dijkstra.Foreign.Epoch
 open import Ledger.Dijkstra.Foreign.Rewards
+open import Ledger.Dijkstra.Specification.Leios DummyGovStructure
 open import Ledger.Dijkstra.Specification.Epoch it DummyAbstractFunctions
 open import Ledger.Dijkstra.Specification.Epoch.Properties.Computational it DummyAbstractFunctions
 
 open Computational
 
 instance
+  HsTy-LeiosSeat = autoHsType LeiosSeat ⊣ withConstructor "MkLeiosSeat"
+                                          • fieldPrefix "ls"
+  Conv-LeiosSeat = autoConvert LeiosSeat
+
   HsTy-NewEpochState = autoHsType NewEpochState ⊣ withConstructor "MkNewEpochState"
                                                   • fieldPrefix "nes"
   Conv-NewEpochState = autoConvert NewEpochState

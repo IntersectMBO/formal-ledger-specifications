@@ -5,6 +5,9 @@
 ### WIP
 
 - Add the nine Leios protocol parameters to `PParams`, in the network and security groups, with their `PParamsUpdate` companions (CIP-164 Table 3; cardano-ledger #5965).  The committee is governed by size (`leiosCommitteeSize`), and zero-valued Leios parameters stay well-formed as the protocol's disabled state.
+- Add abstract BLS primitives and a strict total order on key hashes to `CryptoStructure`, and the voting-key expiry period `BlsKeyMaxAgeᶜ` to `GlobalConstants` (CIP-164).
+- Register Leios voting keys with a dedicated `regblskey` certificate: keys live in the new `StakePoolState` beside the registration parameters, expire `BlsKeyMaxAgeᶜ` epochs after (re-)registration, survive parameter re-registration (`applyFPools`), and are reaped with their pool.
+- Materialize the Leios voting committee in `NewEpochState` at `NEWEPOCH` (top `leiosCommitteeSize` pools by stake from the set snapshot, ties by pool id), and define `LeiosCert` validity: keyed signers only, valid aggregate signature, quorum over total active stake.  Block-level rules (CIP-164 step 5) are deferred; see the note in `Ledger.Dijkstra.Specification.Leios`.
 - Move cert-deposit helpers from `Utxo` to `Certs`.
 - Fix `updateCertDeposits`: use `foldl` (CERTS is head-first).
 - Add `HasCoin-UTxOState` and `HasCoin-LedgerState` instances; the latter sums UTxO total, rewards balance, and all three deposit fields.
