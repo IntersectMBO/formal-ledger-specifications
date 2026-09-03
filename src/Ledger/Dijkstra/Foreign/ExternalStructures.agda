@@ -73,6 +73,7 @@ instance
     ; cryptoStructure = it
     ; govParams       = HsGovParams
     ; txidBytes       = id
+    ; poolVoteBytes   = suc  -- disjoint from txidBytes in the ℕ mock
     ; scriptStructure = it
     ; adHashingScheme = isHashableSet-ℕ
     ; Hashable-ScriptIntegrity = record { hash = λ x → 0 }

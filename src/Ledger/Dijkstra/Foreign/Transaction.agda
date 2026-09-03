@@ -35,6 +35,9 @@ instance
   HsTy-HSPlutusScript = autoHsType HSPlutusScript
   Conv-HSPlutusScript = autoConvert HSPlutusScript
 
+  HsTy-PoolVoteWitness = autoHsType PoolVoteWitness ⊣ withName "PoolVoteWitness"
+  Conv-PoolVoteWitness = autoConvert PoolVoteWitness
+
   HsTy-TxWitnesses = autoHsType TxWitnesses ⊣ withConstructor "MkTxWitnesses"
                                               • fieldPrefix "txw"
   Conv-TxWitnesses = autoConvert TxWitnesses

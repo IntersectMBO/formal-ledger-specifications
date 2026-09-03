@@ -468,6 +468,13 @@ poolVrfs ps = mapˢ (vrf ∘ params) (range ps)
 poolBlsKey : Pools → KeyHash → Maybe BlsKeyState
 poolBlsKey ps kh = lookupᵐ? ps kh >>= blsKey
 
+-- A registered voting key is honoured until maxKeyAgeEpochs epochs after its
+-- registration, judged against the epoch the key is used in.
+honouredBlsKey : ℕ → Epoch → Maybe BlsKeyState → Maybe BlsVKey
+honouredBlsKey maxAge e nothing   = nothing
+honouredBlsKey maxAge e (just k)  =
+  if e < BlsKeyState.registered k + ℕtoEpoch maxAge then just (BlsKeyState.key k) else nothing
+
 installBlsKey : KeyHash → BlsKeyState → Pools → Pools
 installBlsKey kh k = mapWithKey λ kh' s → if kh' ≡ kh then record s { blsKey = just k } else s
 

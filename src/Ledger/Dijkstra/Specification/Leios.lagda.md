@@ -57,20 +57,14 @@ instance
 -->
 
 A registered voting key is honoured until `maxKeyAgeEpochs`{.AgdaFunction}
-epochs — a bound derived from the KES setup — after its registration.  Expiry
-is judged against the epoch the committee is
-selected for, not the epoch its stake snapshot was taken in: the seat's key
+epochs — a bound derived from the KES setup — after its registration
+(`honouredBlsKey`{.AgdaFunction}, defined in the `Certs`{.AgdaModule} module).
+Expiry is judged against the epoch the committee is selected for, not the
+epoch its stake snapshot was taken in: the seat's key
 comes from a snapshot and may therefore have been registered several epochs
 ago, while the age bound is applied afresh at each epoch boundary.  A committee
 thus has a stable set of usable keys throughout its epoch, and a key that ages
 out does so on a boundary rather than mid-epoch.
-
-```agda
-honouredBlsKey : ℕ → Epoch → Maybe BlsKeyState → Maybe BlsVKey
-honouredBlsKey maxAge e nothing   = nothing
-honouredBlsKey maxAge e (just k)  =
-  if e < BlsKeyState.registered k + ℕtoEpoch maxAge then just (BlsKeyState.key k) else nothing
-```
 
 The committee for an epoch consists of the `leiosCommitteeSize`{.AgdaField}
 pools with the most active stake, ties broken by ascending pool id.  Instead of

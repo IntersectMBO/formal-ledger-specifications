@@ -11,7 +11,7 @@ import MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams           as X
   (LanguageCostModels(..), DrepThresholds(..), PoolThresholds(..), Acnt(..), PParams(..), PParamsUpdate(..))
 import MAlonzo.Code.Ledger.Dijkstra.Foreign.Transaction       as X
   ( TxBodyTop(..), TxTop(..), TxBodySub(..), TxSub(..)
-  , Tag(..), TxWitnesses(..)
+  , Tag(..), TxWitnesses(..), PoolVoteWitness(..)
   , TxId, Ix, TxIn, ExUnits, P1Script, P2Script
   , Script, Datum, DataHash, Value, TxOut, ScriptHash, AuxiliaryData, Withdrawals
   , Redeemer, RedeemerPtr

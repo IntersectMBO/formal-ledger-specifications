@@ -87,6 +87,7 @@ record SubUTxOEnv : Type where
     pparams          : PParams
     treasury         : Treasury
     utxo₀            : UTxO
+    pools₀           : Pools
     allScripts       : ℙ Script
     isTopLevelValid  : Bool
 ```
@@ -201,6 +202,9 @@ instance
 
   HasPools-UTxOEnv : HasPools UTxOEnv
   HasPools-UTxOEnv .PoolsOf = UTxOEnv.pools₀
+
+  HasPools-SubUTxOEnv : HasPools SubUTxOEnv
+  HasPools-SubUTxOEnv .PoolsOf = SubUTxOEnv.pools₀
 
   unquoteDecl HasCast-UTxOEnv
               HasCast-SubUTxOEnv
