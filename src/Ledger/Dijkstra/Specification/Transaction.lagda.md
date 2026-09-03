@@ -136,6 +136,9 @@ record TransactionStructure : Type₁ where
     govParams              : GovParams
     tokenAlgebra           : TokenAlgebra
     txidBytes              : TxId → Ser
+    -- Pool-vote message: the tx id under the "cardano-pool-vote" augmentation
+    -- context, domain-separating governance votes from Leios votes (CIP-0164).
+    poolVoteBytes          : TxId → Ser
 ```
 <!--
 ```agda
@@ -195,6 +198,19 @@ record TransactionStructure : Type₁ where
   record HasUTxO {a} (A : Type a) : Type a where
     field UTxOOf : A → UTxO
   open HasUTxO ⦃...⦄ public
+```
+
+## Pool-Vote Witnesses
+
+A pool-vote witness authorizes an SPO governance vote with the pool's
+registered Leios voting key (CIP-0164) instead of the pool cold key.  The type
+is a tagged sum so that future authorization schemes extend it with new
+constructors rather than new witness-set fields; for now the only scheme is a
+BLS signature over `poolVoteBytes`{.AgdaField} of the transaction id.
+
+```agda
+  data PoolVoteWitness : Type where
+    blsW : BlsSig → PoolVoteWitness
 ```
 
 ## The Main Transaction Types
@@ -283,10 +299,11 @@ Of particular note in the Dijkstra era are
     record TxWitnesses : Type where
       inductive
       field
-        vKeySigs     : VKey ⇀ Sig
-        scripts      : ℙ Script
-        txData       : ℙ Datum
-        txRedeemers  : RedeemerPtr ⇀ Redeemer × ExUnits
+        vKeySigs      : VKey ⇀ Sig
+        poolVoteSigs  : KeyHash ⇀ PoolVoteWitness
+        scripts       : ℙ Script
+        txData        : ℙ Datum
+        txRedeemers   : RedeemerPtr ⇀ Redeemer × ExUnits
 
       scriptsP1 : ℙ P1Script
       scriptsP1 = mapPartial isInj₁ scripts
@@ -321,6 +338,10 @@ could be either of them.
   record HasTxWitnesses {a} (A : Type a) : Type a where
     field TxWitnessesOf : A → TxWitnesses
   open HasTxWitnesses ⦃...⦄ public
+
+  record HasPoolVoteSigs {a} (A : Type a) : Type a where
+    field PoolVoteSigsOf : A → KeyHash ⇀ PoolVoteWitness
+  open HasPoolVoteSigs ⦃...⦄ public
 
   record HasRedeemers {a} (A : Type a) : Type a where
     field RedeemersOf : A → RedeemerPtr ⇀ Redeemer × ExUnits
@@ -534,6 +555,11 @@ could be either of them.
     HasData-TxWitnesses .DataOf = TxWitnesses.txData
     HasData-Tx : HasData (Tx txLevel)
     HasData-Tx .DataOf = DataOf ∘ TxWitnessesOf
+
+    HasPoolVoteSigs-TxWitnesses : HasPoolVoteSigs TxWitnesses
+    HasPoolVoteSigs-TxWitnesses .PoolVoteSigsOf = TxWitnesses.poolVoteSigs
+    HasPoolVoteSigs-Tx : HasPoolVoteSigs (Tx txLevel)
+    HasPoolVoteSigs-Tx .PoolVoteSigsOf = PoolVoteSigsOf ∘ TxWitnessesOf
 
     HasGuards-TxBody : HasGuards (TxBody txLevel)
     HasGuards-TxBody .GuardsOf = TxBody.txGuards

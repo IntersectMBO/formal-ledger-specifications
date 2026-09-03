@@ -148,6 +148,10 @@ isGovVoterDRep : GovVoter → Maybe Credential
 isGovVoterDRep ⟦ DRep , c ⟧ᵍᵛ = just c
 isGovVoterDRep _ = nothing
 
+isGovVoterSPO : GovVoter → Maybe KeyHash
+isGovVoterSPO ⟦ SPO , kh ⟧ᵍᵛ = just kh
+isGovVoterSPO _ = nothing
+
 govVoterCredential : GovVoter → Credential
 govVoterCredential ⟦ CC   , c  ⟧ᵍᵛ = c
 govVoterCredential ⟦ DRep , c  ⟧ᵍᵛ = c

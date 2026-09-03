@@ -24,6 +24,7 @@ open import Ledger.Dijkstra.Specification.Script.Validation txs abs
 import Data.List.Relation.Unary.Any as L
 import Data.List.Relation.Unary.All as L
 import Data.Maybe.Relation.Unary.All as Maybe
+import Data.Maybe.Relation.Unary.Any as MAny
 
 private variable
   ℓ     : TxLevel
@@ -242,6 +243,38 @@ instance
 ```
 -->
 
+## Pool-Vote Witnesses {#sec:pool-vote-witnesses}
+
+A pool-vote witness authorizes the SPO votes of the pool it is keyed by, so
+each entry must name an SPO voter of the transaction and carry a signature by
+the pool's honoured (registered, unexpired) voting key over
+`poolVoteBytes`{.AgdaField} of the transaction id.  Covered votes contribute no
+cold-key credential to `credsNeeded`{.AgdaFunction} (see the
+`Script.Validation`{.AgdaModule} module); requiring every entry to match a vote
+is what keeps these witnesses from authorizing anything else.
+
+```agda
+spoVoters : Tx ℓ → ℙ KeyHash
+spoVoters tx = mapPartial isGovVoterSPO (fromList (map GovVoterOf (ListOfGovVotesOf tx)))
+
+PoolVoteAuthorized : Pools → ℕ → Epoch → Ser → KeyHash → PoolVoteWitness → Type
+PoolVoteAuthorized pools maxAge e msg kh (blsW σ) =
+  MAny.Any  (λ vk → isSignedByAggregate (vk ∷ []) msg σ)
+            (honouredBlsKey maxAge e (poolBlsKey pools kh))
+```
+
+<!--
+```agda
+instance
+  Dec-PoolVoteAuthorized :
+    {pools : Pools} {maxAge : ℕ} {e : Epoch} {msg : Ser} {kh : KeyHash} {w : PoolVoteWitness}
+    → PoolVoteAuthorized pools maxAge e msg kh w ⁇
+  Dec-PoolVoteAuthorized {pools} {maxAge} {e} {msg} {kh} {w = blsW σ} .dec =
+    MAny.dec  (λ vk → ¿ isSignedByAggregate (vk ∷ []) msg σ ¿)
+              (honouredBlsKey maxAge e (poolBlsKey pools kh))
+```
+-->
+
 ## The <span class="AgdaDatatype">SUBUTXOW</span> Transition System {#sec:the-subutxow-transition-system}
 
 1. All needed phase-2 scripts use Plutus language V4.
@@ -311,6 +344,9 @@ data _⊢_⇀⦇_,SUBUTXOW⦈_ : SubUTxOEnv → UTxOState → SubLevelTx → UTx
     ∙ ∀[ s ∈ p1ScriptsNeeded ] validP1Script vKeyHashesProvided (GuardsOf txSub) txVldt s
     ∙ ∀[ tlg ∈ TopLevelGuardsOf txSub ] TopLevelGuardWellFormed scriptsProvided tlg -- (2)
     ∙ vKeyHashesNeeded ⊆ vKeyHashesProvided
+    ∙ ∀[ (kh , w) ∈ poolVoteSigs ]
+        (  kh ∈ spoVoters txSub
+         × PoolVoteAuthorized (PoolsOf Γ) maxKeyAgeEpochs (epoch (SlotOf Γ)) (poolVoteBytes txId) kh w)
     ∙ scriptHashesNeeded ⊆ mapˢ hash scriptsProvided
     ∙ dataHashesNeededSpendInputs ⊆ dataHashesProvided
     ∙ dataHashesProvided ⊆ dataHashesNeededSpendInputs ∪ dataHashesOutputs ∪ dataHashesReferenceInputs
@@ -423,6 +459,9 @@ attempting both.
     ∙ ∀[ (vk , σ) ∈ TxWitnesses.vKeySigs (Tx.txWitnesses txTop) ] isSigned vk (txidBytes (TxIdOf txTop)) σ
     ∙ ∀[ s ∈ p1ScriptsNeeded ] validP1Script vKeyHashesProvided (GuardsOf txTop) txVldt s
     ∙ vKeyHashesNeeded ⊆ vKeyHashesProvided
+    ∙ ∀[ (kh , w) ∈ poolVoteSigs ]
+        (  kh ∈ spoVoters txTop
+         × PoolVoteAuthorized (PoolsOf Γ) maxKeyAgeEpochs (epoch (SlotOf Γ)) (poolVoteBytes txId) kh w)
     ∙ allScriptHashesNeeded - allReferenceScriptHashes ≡ᵉ allWitnessScriptHashes
     ∙ scriptHashesNeeded ⊆ mapˢ hash scriptsProvided
     ∙ dataHashesNeededSpendInputs ⊆ dataHashesProvided
@@ -519,6 +558,9 @@ attempting both.
     ∙ ∀[ (vk , σ) ∈ vKeySigs ] isSigned vk (txidBytes (TxIdOf txTop)) σ
     ∙ ∀[ s ∈ p1ScriptsNeeded ] validP1Script vKeyHashesProvided (GuardsOf txTop) txVldt s
     ∙ vKeyHashesNeeded ⊆ vKeyHashesProvided
+    ∙ ∀[ (kh , w) ∈ poolVoteSigs ]
+        (  kh ∈ spoVoters txTop
+         × PoolVoteAuthorized (PoolsOf Γ) maxKeyAgeEpochs (epoch (SlotOf Γ)) (poolVoteBytes txId) kh w)
     ∙ allScriptHashesNeeded - allReferenceScriptHashes ≡ᵉ allWitnessScriptHashes
     ∙ scriptHashesNeeded ⊆ mapˢ hash scriptsProvided
     ∙ dataHashesNeededSpendInputs ⊆ dataHashesProvided
@@ -538,8 +580,8 @@ attempting both.
 unquoteDecl UTXOW-normal-premises = genPremises UTXOW-normal-premises (quote UTXOW-normal)
 unquoteDecl UTXOW-legacy-premises = genPremises UTXOW-legacy-premises (quote UTXOW-legacy)
 unquoteDecl SUBUTXOW-premises = genPremises SUBUTXOW-premises (quote SUBUTXOW)
-pattern UTXOW-normal-⋯ p₀ p₁ p₂ p₃ p₄ p₅ p₆ p₇ p₈ p₉ p₁₀ p₁₁ p₁₂ p₁₃ p₁₄ h = UTXOW-normal (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , p₁₂ , p₁₃ , p₁₄ , h)
-pattern UTXOW-legacy-⋯ p₀ p₁ p₂ p₃ p₄ p₅ p₆ p₇ p₈ p₉ p₁₀ p₁₁ p₁₂ p₁₃ p₁₄ p₁₅ h = UTXOW-legacy (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , p₁₂ , p₁₃ , p₁₄ , p₁₅ , h)
-pattern SUBUTXOW-⋯ p₀ p₁ p₂ p₃ p₄ p₅ p₆ p₇ p₈ p₉ p₁₀ p₁₁ h = SUBUTXOW (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , h)
+pattern UTXOW-normal-⋯ p₀ p₁ p₂ p₃ p₄ p₅ p₆ p₇ p₈ p₉ p₁₀ p₁₁ p₁₂ p₁₃ p₁₄ p₁₅ h = UTXOW-normal (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , p₁₂ , p₁₃ , p₁₄ , p₁₅ , h)
+pattern UTXOW-legacy-⋯ p₀ p₁ p₂ p₃ p₄ p₅ p₆ p₇ p₈ p₉ p₁₀ p₁₁ p₁₂ p₁₃ p₁₄ p₁₅ p₁₆ h = UTXOW-legacy (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , p₁₂ , p₁₃ , p₁₄ , p₁₅ , p₁₆ , h)
+pattern SUBUTXOW-⋯ p₀ p₁ p₂ p₃ p₄ p₅ p₆ p₇ p₈ p₉ p₁₀ p₁₁ p₁₂ h = SUBUTXOW (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , p₁₂ , h)
 ```
 -->

@@ -144,14 +144,23 @@ txOutToP2Script : ℙ Script → TxOut → Maybe P2Script
 txOutToP2Script scripts txOut = credentialToP2Script (payCred (proj₁ txOut)) scripts
 ```
 
+An SPO vote covered by a pool-vote witness needs no credential here — it is
+authorized by the pool's registered voting key instead, checked in the
+`Utxow`{.AgdaModule} module.  All other voters contribute their credential.
+
 ```agda
+voterCredNeeded : (KeyHash ⇀ PoolVoteWitness) → GovVoter → Maybe Credential
+voterCredNeeded pvs v = case isGovVoterSPO v of λ where
+  (just kh)  → if kh ∈ dom pvs then nothing else just (KeyHashObj kh)
+  nothing    → just (govVoterCredential v)
+
 credsNeeded : UTxO → Tx ℓ → ℙ (ScriptPurpose × Credential)
 credsNeeded utxo tx =
     mapˢ        (λ (i , o) → (⟦ Spend  , i ⟧ˢᵖ , payCred (proj₁ o)))     ((utxo ∣ (SpendInputsOf tx ∪ collateralInputs tx)) ˢ)
   ∪ mapˢ        (λ a       → (⟦ Reward , a ⟧ˢᵖ , CredentialOf a))        (dom ∣ WithdrawalsOf tx ∣)
   ∪ mapPartial  (λ c       → ((⟦ Cert  , c ⟧ˢᵖ ,_) <$> cwitness c))      (fromList (DCertsOf tx))
   ∪ mapˢ        (λ x       → (⟦ Mint   , x ⟧ˢᵖ , ScriptObj x))           (policies (MintedValueOf tx))
-  ∪ mapˢ        (λ v       → (⟦ Vote   , v ⟧ˢᵖ , govVoterCredential v))  (fromList (map GovVoterOf (ListOfGovVotesOf tx)))
+  ∪ mapPartial  (λ v       → ((⟦ Vote  , v ⟧ˢᵖ ,_) <$> voterCredNeeded (PoolVoteSigsOf tx) v))  (fromList (map GovVoterOf (ListOfGovVotesOf tx)))
   ∪ mapPartial  (λ p       →  if PolicyOf p
                                  then (λ {sh} → just (⟦ Propose , p ⟧ˢᵖ , ScriptObj sh))
                                  else nothing)                           (fromList (ListOfGovProposalsOf tx))
