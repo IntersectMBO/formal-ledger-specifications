@@ -197,7 +197,7 @@ normal mode the rule bounds withdrawals only against the pre-batch
 
   ENTITIES-pov {txTop = txTop} {s = ⟦ ⟦ _ , _ , r₀ , _ ⟧ᵈ , _ , _ ⟧ᶜˢ}
     amts≤
-    (ENTITIES {rewards' = r₁} (wd-netId , wdrls⊆ , _ , _ , _ , _ , certsStep , _ , ddCreds⊆)) =
+    (ENTITIES {rewards' = r₁} (wd-netId , wdrls⊆ , _ , _ , _ , _ , _ , _ , certsStep , _ , ddCreds⊆)) =
     begin
       getCoin r₀ + dd
         ≡⟨ cong (_+ dd) (applyWithdrawals-pov (WithdrawalsOf txTop) r₀ wdrls⊆ wd-netId amts≤) ⟩
@@ -249,7 +249,7 @@ preservation of `PoolDepositsRegistered`{.AgdaFunction}, and the
         + newCertDeposits (EntitiesEnv.pp Γ) (dom (PoolsOf s)) (DCertsOf txTop)
       ≡ coinFromDeposits s'
         + refundCertDeposits (EntitiesEnv.pp Γ) (DCertsOf txTop)
-  ENTITIES-deposits-pov registered (ENTITIES (_ , _ , _ , _ , _ , _ , certsStep , _ , _)) =
+  ENTITIES-deposits-pov registered (ENTITIES (_ , _ , _ , _ , _ , _ , _ , _ , certsStep , _ , _)) =
     CERTS-deposits-pov registered certsStep
 
   SUBENTITIES-deposits-registered : {Γ : SubEntitiesEnv} {s s' : CertState}
@@ -263,7 +263,7 @@ preservation of `PoolDepositsRegistered`{.AgdaFunction}, and the
     → PoolDepositsRegistered s
     → Γ ⊢ s ⇀⦇ txTop ,ENTITIES⦈ s'
     → PoolDepositsRegistered s'
-  ENTITIES-deposits-registered registered (ENTITIES (_ , _ , _ , _ , _ , _ , certsStep , _ , _)) =
+  ENTITIES-deposits-registered registered (ENTITIES (_ , _ , _ , _ , _ , _ , _ , _ , certsStep , _ , _)) =
     CERTS-deposits-registered registered certsStep
 
   SUBENTITIES-new-thread : {Γ : SubEntitiesEnv} {s s' : CertState}
