@@ -444,19 +444,19 @@ truth for one concern:
 +  **the Agda** under `src/**/Properties/` decides whether a property is *proved*;
 +  **the catalog** (`build-tools/properties.yaml`), curated by hand, records each
    property's identity: era, STS, Agda module, key definitions, and tracking
-   issue; it deliberately declares **no** status;
+   issue; it does NOT declare a property's status;
 +  **GitHub issues** carry the coordination: discussion, assignment, open/closed.
 
-### The scanner: `scan_properties.py`
+### The scanner script: `scan_properties.py`
 
 A property's status is *derived*, never asserted.
+
 `build-tools/scripts/scan_properties.py` resolves each catalog entry's `module`
 against the Agda on disk and classifies the entry as one of the following:
 
 +  `idea`: no module named (nothing in Agda yet);
 +  `planned`: module named, but the file is not on this branch;
-+  `stated`: the file contains a `coming soon` marker (statement present, proof
-   pending);
++  `stated`: the file contains a `coming soon` marker (statement present, proof pending);
 +  `proved`: the file is present with no pending marker.
 
 The scanner regenerates the dashboard

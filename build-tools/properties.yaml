@@ -1,13 +1,13 @@
-# =============================================================================
+# ===============================================================================
 # Ledger properties catalog
-# =============================================================================
+# ===============================================================================
 #
 # This file is the human-curated CATALOG of ledger properties we care about,
-# across eras. It is the single place where a property's identity, location,
-# and tracking issue are declared.
+# across eras.  It is the single place where a property's identity, location, and
+# tracking issue are declared.
 #
-# It deliberately does NOT declare a `status:`. Status is *derived* from the
-# Agda by `build-tools/scripts/scan_properties.py`, from the `module:` reference and
+# It deliberately does NOT declare a `status:`.  Status is *derived* from the Agda
+# by `build-tools/scripts/scan_properties.py`, from the `module:` reference and
 # the source on disk:
 #   no module          -> idea     (identified; nothing in Agda yet)
 #   module file absent -> planned  (drafted on another branch/PR; not here yet)
@@ -263,7 +263,7 @@ properties:
     sts: EPOCH
     module: Ledger.Conway.Specification.Epoch.Properties.GovDepsMatch
     anchor: lem:EpochGovDepsMatch
-    defs: []
+    defs: [EPOCH-govDepsMatch]
     issues: [1237]
     notes: ""
 
@@ -273,7 +273,7 @@ properties:
     sts: LEDGER
     module: Ledger.Conway.Specification.Ledger.Properties.PoV
     anchor: thm:LEDGER-PoV
-    defs: []
+    defs: [LEDGER-pov]
     issues: [1238]
     notes: ""
 
@@ -293,7 +293,7 @@ properties:
     sts: CERTS
     module: Ledger.Conway.Specification.Certs.Properties.PoV
     anchor: thm:CERTS-PoV
-    defs: []
+    defs: [CERTS-pov]
     issues: [1240]
     notes: "Covers both thm:CERT-PoV and thm:CERTS-PoV."
 
