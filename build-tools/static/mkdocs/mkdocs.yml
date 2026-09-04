@@ -299,11 +299,14 @@ nav:
       - Properties: Ledger.Dijkstra.Specification.Utxo.Properties.md
       - Properties/:
         - Computational: Ledger.Dijkstra.Specification.Utxo.Properties.Computational.md
+        - Base: Ledger.Dijkstra.Specification.Utxo.Properties.Base.md
+        - PoV: Ledger.Dijkstra.Specification.Utxo.Properties.PoV.md
     - Utxow: Ledger.Dijkstra.Specification.Utxow.md
     - Utxow/:
       - Properties: Ledger.Dijkstra.Specification.Utxow.Properties.md
       - Properties/:
         - Computational: Ledger.Dijkstra.Specification.Utxow.Properties.Computational.md
+        - PoV: Ledger.Dijkstra.Specification.Utxow.Properties.PoV.md
 - Appendix:
   - Background:
     - Definitions: Definitions.md
