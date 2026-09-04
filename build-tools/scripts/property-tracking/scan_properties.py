@@ -6,7 +6,7 @@
 # Derive the real status of every ledger property from the Agda source and
 # regenerate the dashboard (build-tools/static/mkdocs/docs/ledger-properties-dashboard.md).
 #
-#   * The CATALOG (build-tools/properties.yaml) declares what we care about:
+#   * The CATALOG (build-tools/scripts/property-tracking/properties.yaml) declares what we care about:
 #     a property's identity, era, STS, Agda module, key defs, and tracking
 #     issues. It does NOT declare a status — status is derived, never asserted.
 #   * The AGDA (plus the filesystem) is the single source of truth for status:
@@ -44,7 +44,7 @@ except ImportError:  # pragma: no cover
     sys.exit("error: PyYAML is required (pip install pyyaml)")
 
 REPO_ROOT = Path(__file__).resolve().parents[3]
-DEFAULT_CATALOG = REPO_ROOT / "build-tools" / "properties.yaml"
+DEFAULT_CATALOG = Path(__file__).resolve().parent / "properties.yaml"
 # The dashboard is generated directly into the mkdocs site tree
 # (build-tools/static/mkdocs is copied verbatim into the site by the shake
 # `mkdocs` rule) and published as the "Properties Dashboard" page.
@@ -222,7 +222,7 @@ DEFAULT_PREAMBLE = """\
 # Ledger properties dashboard
 
 This is the human-facing dashboard of ledger properties across eras. It is
-**generated** from the catalog (`build-tools/properties.yaml`) with each
+**generated** from the catalog (`build-tools/scripts/property-tracking/properties.yaml`) with each
 property's status **derived from the Agda source** by
 `build-tools/scripts/property-tracking/scan_properties.py`. Do not edit the generated region below
 by hand; edit the catalog and regenerate.

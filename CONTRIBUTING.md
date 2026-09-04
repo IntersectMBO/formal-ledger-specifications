@@ -442,7 +442,7 @@ tracked across eras by the following three artifacts, each the single source of
 truth for one concern:
 
 +  **the Agda** under `src/**/Properties/` decides whether a property is *proved*;
-+  **the catalog** (`build-tools/properties.yaml`), curated by hand, records each
++  **the catalog** (`build-tools/scripts/property-tracking/properties.yaml`), curated by hand, records each
    property's identity: era, STS, Agda module, key definitions, and tracking
    issue; it does NOT declare a property's status;
 +  **GitHub issues** carry the coordination: discussion, assignment, open/closed.
@@ -500,7 +500,7 @@ python3 build-tools/scripts/property-tracking/scan_properties.py --check  # what
 
 **Note**: you never set the property status yourself.
 
-1.  **Add a property**.  Add a catalog entry to the `build-tools/properties.yaml`
+1.  **Add a property**.  Add a catalog entry to the `build-tools/scripts/property-tracking/properties.yaml`
     file.  (Property status: `idea`.)
 
 2.  **Create a new Agda module** for the property and encode the property as a type.

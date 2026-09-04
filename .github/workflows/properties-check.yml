@@ -1,6 +1,6 @@
 name: properties-check
 
-# Reconcile the ledger-properties catalog (build-tools/properties.yaml) against
+# Reconcile the ledger-properties catalog (build-tools/scripts/property-tracking/properties.yaml) against
 # the Agda source and the generated dashboard. This is the no-network drift gate
 # described in CONTRIBUTING.md ("Tracking Properties of the Ledger"). (The Agda --safe
 # typecheck that guarantees `proved` properties have no holes runs in ci.yml.)
@@ -13,7 +13,6 @@ on:
     branches:
       - master
     paths:
-      - 'build-tools/properties.yaml'
       - 'build-tools/static/mkdocs/docs/ledger-properties-dashboard.md'
       - 'build-tools/scripts/property-tracking/**'
       - 'src/**/Properties/**'

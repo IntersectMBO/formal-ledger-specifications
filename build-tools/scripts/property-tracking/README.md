@@ -12,7 +12,7 @@ three `scan_properties.py` / `gh_project_*.py` scripts.
 See the "Tracking Properties of the Ledger" section of
 [CONTRIBUTING.md](../../../CONTRIBUTING.md).
 
-The catalog [`build-tools/properties.yaml`](../../properties.yaml) declares every
+The catalog [`build-tools/scripts/property-tracking/properties.yaml`](properties.yaml) declares every
 property (identity, era, STS, Agda module, tracking issue). It is what we humans edit.
 It declares **no** status; **formal status is derived from the Agda**, and `scan_properties.py`
 regenerates the properties dashboard from Agda and the catalog; it fails if the

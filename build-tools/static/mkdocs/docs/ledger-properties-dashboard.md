@@ -1,7 +1,7 @@
 # Ledger properties dashboard
 
 This is the human-facing dashboard of ledger properties across eras. It is
-**generated** from the catalog (`build-tools/properties.yaml`) with each
+**generated** from the catalog (`build-tools/scripts/property-tracking/properties.yaml`) with each
 property's status **derived from the Agda source** by
 `build-tools/scripts/property-tracking/scan_properties.py`. Do not edit the generated region below
 by hand; edit the catalog and regenerate.

@@ -3,7 +3,7 @@
 # gh_project_populate.py
 # =============================================================================
 #
-# Seed GitHub from the property catalog (build-tools/properties.yaml):
+# Seed GitHub from the property catalog (build-tools/scripts/property-tracking/properties.yaml):
 #   * create the era umbrella tracking issues (reuse existing where set),
 #   * create labels (property, era:*, status:*, sts:*),
 #   * create one issue per catalog property that has no issue yet,
@@ -45,7 +45,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from scan_properties import derive_status, display_path  # noqa: E402
 
 REPO_ROOT = Path(__file__).resolve().parents[3]
-DEFAULT_CATALOG = REPO_ROOT / "build-tools" / "properties.yaml"
+DEFAULT_CATALOG = Path(__file__).resolve().parent / "properties.yaml"
 
 
 def prop_status(p: dict) -> str:
@@ -222,7 +222,7 @@ def issue_body(p: dict, umbrella: int | None) -> str:
     lines += [
         "",
         "---",
-        "Tracked in `build-tools/properties.yaml`; see the \"Tracking Properties "
+        "Tracked in `build-tools/scripts/property-tracking/properties.yaml`; see the \"Tracking Properties "
         "of the Ledger\" section of CONTRIBUTING.md and the dashboard "
         "`build-tools/static/mkdocs/docs/ledger-properties-dashboard.md`.",
     ]
@@ -273,7 +273,7 @@ def main() -> int:
         if not umbrellas.get(era):
             title = f"Properties of the ledger — {era} era"
             body = (f"Umbrella tracking issue for **{era}** ledger properties.\n\n"
-                    f"Sub-issues are generated from `build-tools/properties.yaml`. "
+                    f"Sub-issues are generated from `build-tools/scripts/property-tracking/properties.yaml`. "
                     f"See CONTRIBUTING.md (\"Tracking Properties of the Ledger\").")
             num = create_issue(gh, title, body, ["property", f"era:{era}"])
             if num:
