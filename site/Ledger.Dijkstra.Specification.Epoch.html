@@ -15,7 +15,7 @@
         <link rel="canonical" href="https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Dijkstra.Specification.Epoch.html">
       
       
-        <link rel="prev" href="Ledger.Dijkstra.Specification.Entities.Properties.Computational.html">
+        <link rel="prev" href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html">
       
       
         <link rel="next" href="Ledger.Dijkstra.Specification.Epoch.Properties.html">
@@ -6099,6 +6099,34 @@
   
   
     <li class="md-nav__item">
+      <a href="Ledger.Dijkstra.Specification.Entities.Properties.ApplyToRewardsPoV.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ApplyToRewardsPoV
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="Ledger.Dijkstra.Specification.Entities.Properties.Computational.html" class="md-nav__link">
         
   
@@ -6107,6 +6135,34 @@
     
   
     Computational
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PoV
   
 
     
@@ -6978,6 +7034,34 @@
     
   
     Computational
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Dijkstra.Specification.Ledger.Properties.PoV.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PoV
   
 
     
@@ -11850,7 +11934,7 @@ reward calculation.</p>
 <a id="1918" class="Keyword">open</a> <a id="1923" class="Keyword">import</a> <a id="1930" href="Ledger.Dijkstra.Specification.Rewards.html" class="Module">Ledger.Dijkstra.Specification.Rewards</a> <a id="1968" href="Ledger.Dijkstra.Specification.Epoch.html#420" class="Bound">txs</a> <a id="1972" href="Ledger.Dijkstra.Specification.Epoch.html#464" class="Bound">abs</a>
 <a id="1976" class="Keyword">open</a> <a id="1981" class="Keyword">import</a> <a id="1988" href="Ledger.Dijkstra.Specification.Utxo.html" class="Module">Ledger.Dijkstra.Specification.Utxo</a> <a id="2023" href="Ledger.Dijkstra.Specification.Epoch.html#420" class="Bound">txs</a> <a id="2027" href="Ledger.Dijkstra.Specification.Epoch.html#464" class="Bound">abs</a>
 
-<a id="2032" class="Keyword">open</a> <a id="2037" href="Ledger.Prelude.html#2483" class="Module">Filter</a> <a id="2044" class="Keyword">using</a> <a id="2050" class="Symbol">(</a><a id="2051" href="Ledger.Prelude.html#2498" class="Function">filter</a><a id="2057" class="Symbol">)</a>
+<a id="2032" class="Keyword">open</a> <a id="2037" href="Ledger.Prelude.html#2501" class="Module">Filter</a> <a id="2044" class="Keyword">using</a> <a id="2050" class="Symbol">(</a><a id="2051" href="Ledger.Prelude.html#2516" class="Function">filter</a><a id="2057" class="Symbol">)</a>
 <a id="2059" class="Keyword">open</a> <a id="2064" href="Agda.Builtin.FromNat.html#196" class="Module">Number</a> <a id="2071" href="Data.Rational.Literals.html#740" class="Function">number</a> <a id="2078" class="Keyword">renaming</a> <a id="2087" class="Symbol">(</a><a id="2088" href="Agda.Builtin.FromNat.html#281" class="Field">fromNat</a> <a id="2096" class="Symbol">to</a> <a id="2099" class="Field">fromℕ</a><a id="2104" class="Symbol">)</a>
 <a id="2106" class="Keyword">open</a> <a id="2111" href="Ledger.Dijkstra.Specification.Gov.Actions.html#3884" class="Module">GovActionState</a> <a id="2126" class="Keyword">using</a> <a id="2132" class="Symbol">(</a><a id="2133" href="Ledger.Dijkstra.Specification.Gov.Actions.html#3951" class="Field">returnAddr</a><a id="2143" class="Symbol">;</a> <a id="2145" href="Ledger.Dijkstra.Specification.Gov.Actions.html#4079" class="Field">deposit</a><a id="2152" class="Symbol">)</a>
 </pre>
@@ -12025,7 +12109,7 @@ after an epoch:</p>
 
       <a id="8041" href="Ledger.Dijkstra.Specification.Epoch.html#8041" class="Function">ρ</a> <a id="8043" href="Ledger.Dijkstra.Specification.Epoch.html#8043" class="Function">η</a> <a id="8045" href="Ledger.Dijkstra.Specification.Epoch.html#8045" class="Function">τ</a> <a id="8047" class="Symbol">:</a> <a id="8049" href="Data.Rational.Base.html#1421" class="Record">ℚ</a>
       <a id="8057" href="Ledger.Dijkstra.Specification.Epoch.html#8041" class="Function">ρ</a> <a id="8059" class="Symbol">=</a> <a id="8061" href="Ledger.Prelude.Numeric.UnitInterval.html#2089" class="Function">fromUnitInterval</a> <a id="8078" class="Symbol">(</a><a id="8079" href="Ledger.Dijkstra.Specification.Epoch.html#7564" class="Function">prevPp</a> <a id="8086" class="Symbol">.</a><a id="8087" href="Ledger.Dijkstra.Specification.PParams.html#3159" class="Field">PParams.monetaryExpansion</a><a id="8112" class="Symbol">)</a>
-      <a id="8120" href="Ledger.Dijkstra.Specification.Epoch.html#8043" class="Function">η</a> <a id="8122" class="Symbol">=</a> <a id="8124" href="Ledger.Dijkstra.Specification.Epoch.html#2099" class="Function">fromℕ</a> <a id="8130" href="Ledger.Dijkstra.Specification.Epoch.html#7987" class="Function">blocksMade</a> <a id="8141" href="Ledger.Prelude.html#2111" class="Function Operator">÷₀</a> <a id="8144" class="Symbol">(</a><a id="8145" href="Ledger.Dijkstra.Specification.Epoch.html#2099" class="Function">fromℕ</a> <a id="8151" href="Ledger.Dijkstra.Specification.Epoch.html#7231" class="Bound">slotsPerEpoch</a> <a id="8165" href="Data.Rational.Base.html#6394" class="Function Operator">*</a> <a id="8167" href="Ledger.Core.Specification.Epoch.html#2581" class="Function">ActiveSlotCoeff</a><a id="8182" class="Symbol">)</a>
+      <a id="8120" href="Ledger.Dijkstra.Specification.Epoch.html#8043" class="Function">η</a> <a id="8122" class="Symbol">=</a> <a id="8124" href="Ledger.Dijkstra.Specification.Epoch.html#2099" class="Function">fromℕ</a> <a id="8130" href="Ledger.Dijkstra.Specification.Epoch.html#7987" class="Function">blocksMade</a> <a id="8141" href="Ledger.Prelude.html#2129" class="Function Operator">÷₀</a> <a id="8144" class="Symbol">(</a><a id="8145" href="Ledger.Dijkstra.Specification.Epoch.html#2099" class="Function">fromℕ</a> <a id="8151" href="Ledger.Dijkstra.Specification.Epoch.html#7231" class="Bound">slotsPerEpoch</a> <a id="8165" href="Data.Rational.Base.html#6394" class="Function Operator">*</a> <a id="8167" href="Ledger.Core.Specification.Epoch.html#2581" class="Function">ActiveSlotCoeff</a><a id="8182" class="Symbol">)</a>
       <a id="8190" href="Ledger.Dijkstra.Specification.Epoch.html#8045" class="Function">τ</a> <a id="8192" class="Symbol">=</a> <a id="8194" href="Ledger.Prelude.Numeric.UnitInterval.html#2089" class="Function">fromUnitInterval</a> <a id="8211" class="Symbol">(</a><a id="8212" href="Ledger.Dijkstra.Specification.Epoch.html#7564" class="Function">prevPp</a> <a id="8219" class="Symbol">.</a><a id="8220" href="Ledger.Dijkstra.Specification.PParams.html#3225" class="Field">PParams.treasuryCut</a><a id="8239" class="Symbol">)</a>
 
       <a id="8248" href="Ledger.Dijkstra.Specification.Epoch.html#8248" class="Function">Δr₁</a> <a id="8252" href="Ledger.Dijkstra.Specification.Epoch.html#8252" class="Function">rewardPot</a> <a id="8262" href="Ledger.Dijkstra.Specification.Epoch.html#8262" class="Function">Δt₁</a> <a id="8266" href="Ledger.Dijkstra.Specification.Epoch.html#8266" class="Function">R</a> <a id="8268" class="Symbol">:</a> <a id="8270" href="Agda.Builtin.Int.html#245" class="Datatype">ℤ</a>
@@ -12057,7 +12141,7 @@ after an epoch:</p>
             <a id="9041" class="Symbol">(</a><a id="9042" href="Ledger.Dijkstra.Specification.Epoch.html#8923" class="Bound">t₁</a> <a id="9045" href="Data.Integer.Base.html#5064" class="Function Operator">ℤ.+</a> <a id="9049" class="Symbol">(</a><a id="9050" class="Number">0</a> <a id="9052" href="Data.Integer.Base.html#5245" class="Function Operator">ℤ.-</a> <a id="9056" href="Ledger.Dijkstra.Specification.Epoch.html#8944" class="Bound">r₁</a> <a id="9059" href="Data.Integer.Base.html#5064" class="Function Operator">ℤ.+</a> <a id="9063" class="Symbol">((</a><a id="9065" href="Ledger.Dijkstra.Specification.Epoch.html#8965" class="Bound">f</a> <a id="9067" href="Data.Integer.Base.html#5064" class="Function Operator">ℤ.+</a> <a id="9071" href="Ledger.Dijkstra.Specification.Epoch.html#8944" class="Bound">r₁</a> <a id="9074" href="Data.Integer.Base.html#5245" class="Function Operator">ℤ.-</a> <a id="9078" href="Ledger.Dijkstra.Specification.Epoch.html#8923" class="Bound">t₁</a><a id="9080" class="Symbol">)</a> <a id="9082" href="Data.Integer.Base.html#5245" class="Function Operator">ℤ.-</a> <a id="9086" href="Ledger.Dijkstra.Specification.Epoch.html#8992" class="Bound">z</a><a id="9087" class="Symbol">))</a> <a id="9090" href="Data.Integer.Base.html#5064" class="Function Operator">ℤ.+</a> <a id="9094" class="Symbol">(</a><a id="9095" class="Number">0</a> <a id="9097" href="Data.Integer.Base.html#5245" class="Function Operator">ℤ.-</a> <a id="9101" href="Ledger.Dijkstra.Specification.Epoch.html#8965" class="Bound">f</a><a id="9102" class="Symbol">)</a> <a id="9104" href="Data.Integer.Base.html#5064" class="Function Operator">ℤ.+</a> <a id="9108" href="Ledger.Dijkstra.Specification.Epoch.html#8992" class="Bound">z</a><a id="9109" class="Symbol">)</a> <a id="9111" href="Agda.Builtin.Equality.html#150" class="Datatype Operator">≡</a> <a id="9113" class="Number">0</a>
       <a id="9121" href="Ledger.Dijkstra.Specification.Epoch.html#8892" class="Function">flowConservation</a> <a id="9138" class="Symbol">=</a> <a id="9140" href="Ledger.Dijkstra.Specification.Epoch.html#8746" class="Function">lemmaFlow</a> <a id="9150" href="Ledger.Dijkstra.Specification.Epoch.html#8262" class="Function">Δt₁</a> <a id="9154" href="Ledger.Dijkstra.Specification.Epoch.html#8248" class="Function">Δr₁</a> <a id="9158" class="Symbol">(</a><a id="9159" href="Ledger.Dijkstra.Specification.Epoch.html#664" class="InductiveConstructor">pos</a> <a id="9163" href="Ledger.Dijkstra.Specification.Epoch.html#7749" class="Function">feeSS</a><a id="9168" class="Symbol">)</a> <a id="9170" class="Symbol">(</a><a id="9171" href="Ledger.Dijkstra.Specification.Epoch.html#664" class="InductiveConstructor">pos</a> <a id="9175" class="Symbol">(</a><a id="9176" href="abstract-set-theory.FiniteSetTheory.html#4373" class="Function">∑[</a> <a id="9179" href="Ledger.Dijkstra.Specification.Epoch.html#9179" class="Bound">c</a> <a id="9181" href="abstract-set-theory.FiniteSetTheory.html#4373" class="Function">←</a> <a id="9183" href="Ledger.Dijkstra.Specification.Epoch.html#8489" class="Function">rs</a> <a id="9186" href="abstract-set-theory.FiniteSetTheory.html#4373" class="Function">]</a> <a id="9188" href="Ledger.Dijkstra.Specification.Epoch.html#9179" class="Bound">c</a><a id="9189" class="Symbol">))</a>
 
-      <a id="9199" href="Ledger.Dijkstra.Specification.Epoch.html#9199" class="Function">÷₀-0≤⇒0≤</a> <a id="9208" class="Symbol">:</a> <a id="9210" class="Symbol">∀</a> <a id="9212" class="Symbol">(</a><a id="9213" href="Ledger.Dijkstra.Specification.Epoch.html#9213" class="Bound">x</a> <a id="9215" href="Ledger.Dijkstra.Specification.Epoch.html#9215" class="Bound">y</a> <a id="9217" class="Symbol">:</a> <a id="9219" href="Data.Rational.Base.html#1421" class="Record">ℚ</a><a id="9220" class="Symbol">)</a> <a id="9222" class="Symbol">→</a> <a id="9224" class="Number">0</a> <a id="9226" href="Class.HasOrder.Core.html#613" class="Field Operator">≤</a> <a id="9228" href="Ledger.Dijkstra.Specification.Epoch.html#9213" class="Bound">x</a> <a id="9230" class="Symbol">→</a> <a id="9232" class="Number">0</a> <a id="9234" href="Class.HasOrder.Core.html#613" class="Field Operator">≤</a> <a id="9236" href="Ledger.Dijkstra.Specification.Epoch.html#9215" class="Bound">y</a> <a id="9238" class="Symbol">→</a> <a id="9240" class="Number">0</a> <a id="9242" href="Class.HasOrder.Core.html#613" class="Field Operator">≤</a> <a id="9244" class="Symbol">(</a><a id="9245" href="Ledger.Dijkstra.Specification.Epoch.html#9213" class="Bound">x</a> <a id="9247" href="Ledger.Prelude.html#2111" class="Function Operator">÷₀</a> <a id="9250" href="Ledger.Dijkstra.Specification.Epoch.html#9215" class="Bound">y</a><a id="9251" class="Symbol">)</a>
+      <a id="9199" href="Ledger.Dijkstra.Specification.Epoch.html#9199" class="Function">÷₀-0≤⇒0≤</a> <a id="9208" class="Symbol">:</a> <a id="9210" class="Symbol">∀</a> <a id="9212" class="Symbol">(</a><a id="9213" href="Ledger.Dijkstra.Specification.Epoch.html#9213" class="Bound">x</a> <a id="9215" href="Ledger.Dijkstra.Specification.Epoch.html#9215" class="Bound">y</a> <a id="9217" class="Symbol">:</a> <a id="9219" href="Data.Rational.Base.html#1421" class="Record">ℚ</a><a id="9220" class="Symbol">)</a> <a id="9222" class="Symbol">→</a> <a id="9224" class="Number">0</a> <a id="9226" href="Class.HasOrder.Core.html#613" class="Field Operator">≤</a> <a id="9228" href="Ledger.Dijkstra.Specification.Epoch.html#9213" class="Bound">x</a> <a id="9230" class="Symbol">→</a> <a id="9232" class="Number">0</a> <a id="9234" href="Class.HasOrder.Core.html#613" class="Field Operator">≤</a> <a id="9236" href="Ledger.Dijkstra.Specification.Epoch.html#9215" class="Bound">y</a> <a id="9238" class="Symbol">→</a> <a id="9240" class="Number">0</a> <a id="9242" href="Class.HasOrder.Core.html#613" class="Field Operator">≤</a> <a id="9244" class="Symbol">(</a><a id="9245" href="Ledger.Dijkstra.Specification.Epoch.html#9213" class="Bound">x</a> <a id="9247" href="Ledger.Prelude.html#2129" class="Function Operator">÷₀</a> <a id="9250" href="Ledger.Dijkstra.Specification.Epoch.html#9215" class="Bound">y</a><a id="9251" class="Symbol">)</a>
       <a id="9259" href="Ledger.Dijkstra.Specification.Epoch.html#9199" class="Function">÷₀-0≤⇒0≤</a> <a id="9268" href="Ledger.Dijkstra.Specification.Epoch.html#9268" class="Bound">x</a> <a id="9270" href="Ledger.Dijkstra.Specification.Epoch.html#9270" class="Bound">y</a> <a id="9272" href="Ledger.Dijkstra.Specification.Epoch.html#9272" class="Bound">0≤x</a> <a id="9276" href="Ledger.Dijkstra.Specification.Epoch.html#9276" class="Bound">0≤y</a> <a id="9280" class="Keyword">with</a> <a id="9285" href="Ledger.Dijkstra.Specification.Epoch.html#9270" class="Bound">y</a> <a id="9287" href="Data.Rational.Properties.html#4152" class="Function Operator">≟</a> <a id="9289" class="Number">0</a>
       <a id="9297" class="Symbol">...</a> <a id="9301" class="Symbol">|</a> <a id="9303" class="Symbol">(</a><a id="9304" href="Relation.Nullary.Decidable.Core.html#2099" class="InductiveConstructor">yes</a> <a id="9308" href="Ledger.Dijkstra.Specification.Epoch.html#9308" class="Bound">y≡0</a><a id="9311" class="Symbol">)</a> <a id="9313" class="Symbol">=</a> <a id="9315" href="Data.Rational.Properties.html#27061" class="Function">nonNegative⁻¹</a> <a id="9329" class="Number">0</a>
       <a id="9337" class="Symbol">...</a> <a id="9341" class="Symbol">|</a> <a id="9343" class="Symbol">(</a><a id="9344" href="Relation.Nullary.Decidable.Core.html#2136" class="InductiveConstructor">no</a> <a id="9347" href="Ledger.Dijkstra.Specification.Epoch.html#9347" class="Bound">y≢0</a><a id="9350" class="Symbol">)</a>  <a id="9353" class="Symbol">=</a> <a id="9355" href="stdlib.Data.Rational.Properties.html#2865" class="Function">÷-0≤⇒0≤</a> <a id="9363" class="Bound">x</a> <a id="9365" class="Bound">y</a> <a id="9367" class="Symbol">{{</a><a id="9369" href="Data.Rational.Base.html#4971" class="Function">≢-nonZero</a> <a id="9379" href="Ledger.Dijkstra.Specification.Epoch.html#9347" class="Bound">y≢0</a><a id="9382" class="Symbol">}}</a> <a id="9385" class="Bound">0≤x</a> <a id="9389" class="Bound">0≤y</a>
@@ -12370,7 +12454,7 @@ proofs about properties of the <code class="AgdaDatatype">EPOCH</code> transitio
   <a id="20510" class="Keyword">open</a> <a id="20515" href="Ledger.Dijkstra.Specification.Ratify.html#3699" class="Module">RatifyState</a> <a id="20527" href="Ledger.Dijkstra.Specification.Epoch.html#20420" class="Bound">fut</a>
 </pre>
 <pre class="Agda">  <a id="GovernanceUpdate.tmpGovSt"></a><a id="20549" href="Ledger.Dijkstra.Specification.Epoch.html#20549" class="Function">tmpGovSt</a> <a id="20558" class="Symbol">:</a> <a id="20560" href="Ledger.Dijkstra.Specification.Gov.html#1776" class="Function">GovState</a>
-  <a id="20571" href="Ledger.Dijkstra.Specification.Epoch.html#20549" class="Function">tmpGovSt</a> <a id="20580" class="Symbol">=</a> <a id="20582" href="Ledger.Prelude.html#2498" class="Function">filter</a> <a id="20589" class="Symbol">(λ</a> <a id="20592" href="Ledger.Dijkstra.Specification.Epoch.html#20592" class="Bound">x</a> <a id="20594" class="Symbol">→</a> <a id="20596" href="Data.Product.Base.html#636" class="Field">proj₁</a> <a id="20602" href="Ledger.Dijkstra.Specification.Epoch.html#20592" class="Bound">x</a> <a id="20604" href="Class.IsSet.html#462" class="Function Operator">∉</a> <a id="20606" href="abstract-set-theory.FiniteSetTheory.html#519" class="Function">mapˢ</a> <a id="20611" href="Data.Product.Base.html#636" class="Field">proj₁</a> <a id="20617" href="Ledger.Dijkstra.Specification.Ratify.html#3762" class="Field">removed</a><a id="20624" class="Symbol">)</a> <a id="20626" href="Ledger.Dijkstra.Specification.Ledger.html#2576" class="Function">govSt</a>
+  <a id="20571" href="Ledger.Dijkstra.Specification.Epoch.html#20549" class="Function">tmpGovSt</a> <a id="20580" class="Symbol">=</a> <a id="20582" href="Ledger.Prelude.html#2516" class="Function">filter</a> <a id="20589" class="Symbol">(λ</a> <a id="20592" href="Ledger.Dijkstra.Specification.Epoch.html#20592" class="Bound">x</a> <a id="20594" class="Symbol">→</a> <a id="20596" href="Data.Product.Base.html#636" class="Field">proj₁</a> <a id="20602" href="Ledger.Dijkstra.Specification.Epoch.html#20592" class="Bound">x</a> <a id="20604" href="Class.IsSet.html#462" class="Function Operator">∉</a> <a id="20606" href="abstract-set-theory.FiniteSetTheory.html#519" class="Function">mapˢ</a> <a id="20611" href="Data.Product.Base.html#636" class="Field">proj₁</a> <a id="20617" href="Ledger.Dijkstra.Specification.Ratify.html#3762" class="Field">removed</a><a id="20624" class="Symbol">)</a> <a id="20626" href="Ledger.Dijkstra.Specification.Ledger.html#2576" class="Function">govSt</a>
 
   <a id="GovernanceUpdate.orphans"></a><a id="20635" href="Ledger.Dijkstra.Specification.Epoch.html#20635" class="Function">orphans</a> <a id="20643" class="Symbol">:</a> <a id="20645" href="abstract-set-theory.FiniteSetTheory.html#488" class="Function Operator">ℙ</a> <a id="20647" class="Symbol">(</a><a id="20648" href="Ledger.Dijkstra.Specification.Gov.Actions.html#1920" class="Function">GovActionID</a> <a id="20660" href="Data.Product.Base.html#1618" class="Function Operator">×</a> <a id="20662" href="Ledger.Dijkstra.Specification.Gov.Actions.html#3884" class="Record">GovActionState</a><a id="20676" class="Symbol">)</a>
   <a id="20680" href="Ledger.Dijkstra.Specification.Epoch.html#20635" class="Function">orphans</a>  <a id="20689" class="Symbol">=</a> <a id="20691" href="Axiom.Set.html#5903" class="Function">fromList</a> <a id="20700" class="Symbol">(</a><a id="20701" href="Ledger.Dijkstra.Specification.Epoch.html#19629" class="Function">getOrphans</a> <a id="20712" href="Ledger.Dijkstra.Specification.Ratify.html#3736" class="Field">es</a> <a id="20715" href="Ledger.Dijkstra.Specification.Epoch.html#20549" class="Function">tmpGovSt</a><a id="20723" class="Symbol">)</a>
@@ -12382,7 +12466,7 @@ proofs about properties of the <code class="AgdaDatatype">EPOCH</code> transitio
   <a id="20853" href="Ledger.Dijkstra.Specification.Epoch.html#20806" class="Function">removedGovActions</a> <a id="20871" class="Symbol">=</a> <a id="20873" href="abstract-set-theory.FiniteSetTheory.html#519" class="Function">mapˢ</a> <a id="20878" class="Symbol">(λ</a> <a id="20881" class="Symbol">(_</a> <a id="20884" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="20886" href="Ledger.Dijkstra.Specification.Epoch.html#20886" class="Bound">gaSt</a><a id="20890" class="Symbol">)</a> <a id="20892" class="Symbol">→</a> <a id="20894" class="Symbol">(</a><a id="20895" href="Ledger.Dijkstra.Specification.Epoch.html#20886" class="Bound">gaSt</a> <a id="20900" class="Symbol">.</a><a id="20901" href="Ledger.Dijkstra.Specification.Gov.Actions.html#3951" class="Field">returnAddr</a> <a id="20912" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="20914" href="Ledger.Dijkstra.Specification.Epoch.html#20886" class="Bound">gaSt</a> <a id="20919" class="Symbol">.</a><a id="20920" href="Ledger.Dijkstra.Specification.Gov.Actions.html#4079" class="Field">deposit</a><a id="20927" class="Symbol">))</a> <a id="20930" href="Ledger.Dijkstra.Specification.Epoch.html#20728" class="Function">removed&#39;</a>
 
   <a id="GovernanceUpdate.govSt&#39;"></a><a id="20942" href="Ledger.Dijkstra.Specification.Epoch.html#20942" class="Function">govSt&#39;</a> <a id="20949" class="Symbol">:</a> <a id="20951" href="Ledger.Dijkstra.Specification.Gov.html#1776" class="Function">GovState</a>
-  <a id="20962" href="Ledger.Dijkstra.Specification.Epoch.html#20942" class="Function">govSt&#39;</a> <a id="20969" class="Symbol">=</a> <a id="20971" href="Ledger.Prelude.html#2498" class="Function">filter</a> <a id="20978" class="Symbol">(λ</a> <a id="20981" href="Ledger.Dijkstra.Specification.Epoch.html#20981" class="Bound">x</a> <a id="20983" class="Symbol">→</a> <a id="20985" href="Data.Product.Base.html#636" class="Field">proj₁</a> <a id="20991" href="Ledger.Dijkstra.Specification.Epoch.html#20981" class="Bound">x</a> <a id="20993" href="Class.IsSet.html#462" class="Function Operator">∉</a> <a id="20995" href="abstract-set-theory.FiniteSetTheory.html#519" class="Function">mapˢ</a> <a id="21000" href="Data.Product.Base.html#636" class="Field">proj₁</a> <a id="21006" href="Ledger.Dijkstra.Specification.Epoch.html#20728" class="Function">removed&#39;</a><a id="21014" class="Symbol">)</a> <a id="21016" href="Ledger.Dijkstra.Specification.Ledger.html#2576" class="Function">govSt</a>
+  <a id="20962" href="Ledger.Dijkstra.Specification.Epoch.html#20942" class="Function">govSt&#39;</a> <a id="20969" class="Symbol">=</a> <a id="20971" href="Ledger.Prelude.html#2516" class="Function">filter</a> <a id="20978" class="Symbol">(λ</a> <a id="20981" href="Ledger.Dijkstra.Specification.Epoch.html#20981" class="Bound">x</a> <a id="20983" class="Symbol">→</a> <a id="20985" href="Data.Product.Base.html#636" class="Field">proj₁</a> <a id="20991" href="Ledger.Dijkstra.Specification.Epoch.html#20981" class="Bound">x</a> <a id="20993" href="Class.IsSet.html#462" class="Function Operator">∉</a> <a id="20995" href="abstract-set-theory.FiniteSetTheory.html#519" class="Function">mapˢ</a> <a id="21000" href="Data.Product.Base.html#636" class="Field">proj₁</a> <a id="21006" href="Ledger.Dijkstra.Specification.Epoch.html#20728" class="Function">removed&#39;</a><a id="21014" class="Symbol">)</a> <a id="21016" href="Ledger.Dijkstra.Specification.Ledger.html#2576" class="Function">govSt</a>
 
   <a id="GovernanceUpdate.updates"></a><a id="21025" href="Ledger.Dijkstra.Specification.Epoch.html#21025" class="Function">updates</a> <a id="21033" class="Symbol">:</a> <a id="21035" href="Ledger.Dijkstra.Specification.Epoch.html#20199" class="Record">Governance-Update</a>
   <a id="21055" href="Ledger.Dijkstra.Specification.Epoch.html#21025" class="Function">updates</a> <a id="21063" class="Symbol">=</a> <a id="21065" href="Ledger.Dijkstra.Specification.Epoch.html#20244" class="InductiveConstructor">GovernanceUpdate</a> <a id="21082" href="Ledger.Dijkstra.Specification.Epoch.html#20806" class="Function">removedGovActions</a> <a id="21100" href="Ledger.Dijkstra.Specification.Epoch.html#20942" class="Function">govSt&#39;</a>
@@ -12594,7 +12678,7 @@ Deliverable SL-D1</em>. 2018.</p>
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="Ledger.Dijkstra.Specification.Entities.Properties.Computational.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: Computational">
+          <a href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: PoV">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
@@ -12604,7 +12688,7 @@ Deliverable SL-D1</em>. 2018.</p>
                 Previous
               </span>
               <div class="md-ellipsis">
-                Computational
+                PoV
               </div>
             </div>
           </a>
