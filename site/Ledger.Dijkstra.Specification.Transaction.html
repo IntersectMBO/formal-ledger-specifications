@@ -5996,6 +5996,34 @@
   
   
     <li class="md-nav__item">
+      <a href="Ledger.Dijkstra.Specification.Entities.Properties.ApplyToRewardsPoV.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ApplyToRewardsPoV
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="Ledger.Dijkstra.Specification.Entities.Properties.Computational.html" class="md-nav__link">
         
   
@@ -6004,6 +6032,34 @@
     
   
     Computational
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PoV
   
 
     
@@ -6700,6 +6756,34 @@
     
   
     Computational
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Dijkstra.Specification.Ledger.Properties.PoV.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PoV
   
 
     
@@ -12257,7 +12341,7 @@ allowed to inspect utxo for its inputs.</p>
   <a id="26404" class="Comment">-- this is a generalization of Conway&#39;s `coin mint ≡ 0`.</a>
 
   <a id="TransactionStructure.lookupScriptHash"></a><a id="26464" href="Ledger.Dijkstra.Specification.Transaction.html#26464" class="Function">lookupScriptHash</a> <a id="26481" class="Symbol">:</a> <a id="26483" href="Ledger.Core.Specification.Crypto.html#1721" class="Function">ScriptHash</a> <a id="26494" class="Symbol">→</a> <a id="26496" href="Ledger.Dijkstra.Specification.Transaction.html#8006" class="Record">Tx</a> <a id="26499" href="Ledger.Dijkstra.Specification.Transaction.html#2985" class="Generalizable">txLevel</a> <a id="26507" class="Symbol">→</a> <a id="26509" href="Ledger.Dijkstra.Specification.Transaction.html#5487" class="Function">UTxO</a> <a id="26514" class="Symbol">→</a> <a id="26516" href="Agda.Builtin.Maybe.html#135" class="Datatype">Maybe</a> <a id="26522" href="Ledger.Dijkstra.Specification.Script.Base.html#3182" class="Function">Script</a>
-  <a id="26531" href="Ledger.Dijkstra.Specification.Transaction.html#26464" class="Function">lookupScriptHash</a> <a id="26548" href="Ledger.Dijkstra.Specification.Transaction.html#26548" class="Bound">sh</a> <a id="26551" href="Ledger.Dijkstra.Specification.Transaction.html#26551" class="Bound">tx</a> <a id="26554" href="Ledger.Dijkstra.Specification.Transaction.html#26554" class="Bound">utxo</a> <a id="26559" class="Symbol">=</a> <a id="26561" href="Ledger.Prelude.html#2614" class="Function">lookupHash</a> <a id="26572" href="Ledger.Dijkstra.Specification.Transaction.html#26548" class="Bound">sh</a> <a id="26575" class="Symbol">(</a><a id="26576" href="Ledger.Dijkstra.Specification.Transaction.html#24565" class="Function">getTxScripts</a> <a id="26589" href="Ledger.Dijkstra.Specification.Transaction.html#26551" class="Bound">tx</a> <a id="26592" href="Ledger.Dijkstra.Specification.Transaction.html#26554" class="Bound">utxo</a><a id="26596" class="Symbol">)</a>
+  <a id="26531" href="Ledger.Dijkstra.Specification.Transaction.html#26464" class="Function">lookupScriptHash</a> <a id="26548" href="Ledger.Dijkstra.Specification.Transaction.html#26548" class="Bound">sh</a> <a id="26551" href="Ledger.Dijkstra.Specification.Transaction.html#26551" class="Bound">tx</a> <a id="26554" href="Ledger.Dijkstra.Specification.Transaction.html#26554" class="Bound">utxo</a> <a id="26559" class="Symbol">=</a> <a id="26561" href="Ledger.Prelude.html#2632" class="Function">lookupHash</a> <a id="26572" href="Ledger.Dijkstra.Specification.Transaction.html#26548" class="Bound">sh</a> <a id="26575" class="Symbol">(</a><a id="26576" href="Ledger.Dijkstra.Specification.Transaction.html#24565" class="Function">getTxScripts</a> <a id="26589" href="Ledger.Dijkstra.Specification.Transaction.html#26551" class="Bound">tx</a> <a id="26592" href="Ledger.Dijkstra.Specification.Transaction.html#26554" class="Bound">utxo</a><a id="26596" class="Symbol">)</a>
 
   <a id="26601" class="Comment">-- Batch-wide certificates</a>
   <a id="TransactionStructure.allDCerts"></a><a id="26630" href="Ledger.Dijkstra.Specification.Transaction.html#26630" class="Function">allDCerts</a> <a id="26640" class="Symbol">:</a> <a id="26642" href="Ledger.Dijkstra.Specification.Transaction.html#10039" class="Function">TopLevelTx</a> <a id="26653" class="Symbol">→</a> <a id="26655" href="Agda.Builtin.List.html#147" class="Datatype">List</a> <a id="26660" href="Ledger.Dijkstra.Specification.Certs.html#1475" class="Datatype">DCert</a>

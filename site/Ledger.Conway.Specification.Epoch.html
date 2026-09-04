@@ -6171,6 +6171,34 @@
   
   
     <li class="md-nav__item">
+      <a href="Ledger.Dijkstra.Specification.Entities.Properties.ApplyToRewardsPoV.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ApplyToRewardsPoV
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="Ledger.Dijkstra.Specification.Entities.Properties.Computational.html" class="md-nav__link">
         
   
@@ -6179,6 +6207,34 @@
     
   
     Computational
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Dijkstra.Specification.Entities.Properties.PoV.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PoV
   
 
     
@@ -6875,6 +6931,34 @@
     
   
     Computational
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Dijkstra.Specification.Ledger.Properties.PoV.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PoV
   
 
     
@@ -11720,7 +11804,7 @@ reward calculation.</p>
 <a id="1902" class="Keyword">open</a> <a id="1907" class="Keyword">import</a> <a id="1914" href="Ledger.Conway.Specification.Rewards.html" class="Module">Ledger.Conway.Specification.Rewards</a> <a id="1950" href="Ledger.Conway.Specification.Epoch.html#412" class="Bound">txs</a> <a id="1954" href="Ledger.Conway.Specification.Epoch.html#456" class="Bound">abs</a>
 <a id="1958" class="Keyword">open</a> <a id="1963" class="Keyword">import</a> <a id="1970" href="Ledger.Conway.Specification.Utxo.html" class="Module">Ledger.Conway.Specification.Utxo</a> <a id="2003" href="Ledger.Conway.Specification.Epoch.html#412" class="Bound">txs</a> <a id="2007" href="Ledger.Conway.Specification.Epoch.html#456" class="Bound">abs</a>
 
-<a id="2012" class="Keyword">open</a> <a id="2017" href="Ledger.Prelude.html#2483" class="Module">Filter</a> <a id="2024" class="Keyword">using</a> <a id="2030" class="Symbol">(</a><a id="2031" href="Ledger.Prelude.html#2498" class="Function">filter</a><a id="2037" class="Symbol">)</a>
+<a id="2012" class="Keyword">open</a> <a id="2017" href="Ledger.Prelude.html#2501" class="Module">Filter</a> <a id="2024" class="Keyword">using</a> <a id="2030" class="Symbol">(</a><a id="2031" href="Ledger.Prelude.html#2516" class="Function">filter</a><a id="2037" class="Symbol">)</a>
 <a id="2039" class="Keyword">open</a> <a id="2044" href="Agda.Builtin.FromNat.html#196" class="Module">Number</a> <a id="2051" href="Data.Rational.Literals.html#740" class="Function">number</a> <a id="2058" class="Keyword">renaming</a> <a id="2067" class="Symbol">(</a><a id="2068" href="Agda.Builtin.FromNat.html#281" class="Field">fromNat</a> <a id="2076" class="Symbol">to</a> <a id="2079" class="Field">fromℕ</a><a id="2084" class="Symbol">)</a>
 </pre>
 
@@ -11906,7 +11990,7 @@ after an epoch:</p>
 
       <a id="8311" href="Ledger.Conway.Specification.Epoch.html#8311" class="Function">ρ</a> <a id="8313" href="Ledger.Conway.Specification.Epoch.html#8313" class="Function">η</a> <a id="8315" href="Ledger.Conway.Specification.Epoch.html#8315" class="Function">τ</a> <a id="8317" class="Symbol">:</a> <a id="8319" href="Data.Rational.Base.html#1421" class="Record">ℚ</a>
       <a id="8327" href="Ledger.Conway.Specification.Epoch.html#8311" class="Function">ρ</a> <a id="8329" class="Symbol">=</a> <a id="8331" href="Ledger.Prelude.Numeric.UnitInterval.html#2089" class="Function">fromUnitInterval</a> <a id="8348" class="Symbol">(</a><a id="8349" href="Ledger.Conway.Specification.Epoch.html#7834" class="Function">prevPp</a> <a id="8356" class="Symbol">.</a><a id="8357" href="Ledger.Conway.Specification.PParams.html#5967" class="Field">PParams.monetaryExpansion</a><a id="8382" class="Symbol">)</a>
-      <a id="8390" href="Ledger.Conway.Specification.Epoch.html#8313" class="Function">η</a> <a id="8392" class="Symbol">=</a> <a id="8394" href="Ledger.Conway.Specification.Epoch.html#2079" class="Function">fromℕ</a> <a id="8400" href="Ledger.Conway.Specification.Epoch.html#8257" class="Function">blocksMade</a> <a id="8411" href="Ledger.Prelude.html#2111" class="Function Operator">÷₀</a> <a id="8414" class="Symbol">(</a><a id="8415" href="Ledger.Conway.Specification.Epoch.html#2079" class="Function">fromℕ</a> <a id="8421" href="Ledger.Conway.Specification.Epoch.html#7501" class="Bound">slotsPerEpoch</a> <a id="8435" href="Data.Rational.Base.html#6394" class="Function Operator">*</a> <a id="8437" href="Ledger.Core.Specification.Epoch.html#2581" class="Function">ActiveSlotCoeff</a><a id="8452" class="Symbol">)</a>
+      <a id="8390" href="Ledger.Conway.Specification.Epoch.html#8313" class="Function">η</a> <a id="8392" class="Symbol">=</a> <a id="8394" href="Ledger.Conway.Specification.Epoch.html#2079" class="Function">fromℕ</a> <a id="8400" href="Ledger.Conway.Specification.Epoch.html#8257" class="Function">blocksMade</a> <a id="8411" href="Ledger.Prelude.html#2129" class="Function Operator">÷₀</a> <a id="8414" class="Symbol">(</a><a id="8415" href="Ledger.Conway.Specification.Epoch.html#2079" class="Function">fromℕ</a> <a id="8421" href="Ledger.Conway.Specification.Epoch.html#7501" class="Bound">slotsPerEpoch</a> <a id="8435" href="Data.Rational.Base.html#6394" class="Function Operator">*</a> <a id="8437" href="Ledger.Core.Specification.Epoch.html#2581" class="Function">ActiveSlotCoeff</a><a id="8452" class="Symbol">)</a>
       <a id="8460" href="Ledger.Conway.Specification.Epoch.html#8315" class="Function">τ</a> <a id="8462" class="Symbol">=</a> <a id="8464" href="Ledger.Prelude.Numeric.UnitInterval.html#2089" class="Function">fromUnitInterval</a> <a id="8481" class="Symbol">(</a><a id="8482" href="Ledger.Conway.Specification.Epoch.html#7834" class="Function">prevPp</a> <a id="8489" class="Symbol">.</a><a id="8490" href="Ledger.Conway.Specification.PParams.html#6037" class="Field">PParams.treasuryCut</a><a id="8509" class="Symbol">)</a>
 
       <a id="8518" href="Ledger.Conway.Specification.Epoch.html#8518" class="Function">Δr₁</a> <a id="8522" href="Ledger.Conway.Specification.Epoch.html#8522" class="Function">rewardPot</a> <a id="8532" href="Ledger.Conway.Specification.Epoch.html#8532" class="Function">Δt₁</a> <a id="8536" href="Ledger.Conway.Specification.Epoch.html#8536" class="Function">R</a> <a id="8538" class="Symbol">:</a> <a id="8540" href="Agda.Builtin.Int.html#245" class="Datatype">ℤ</a>
@@ -11938,7 +12022,7 @@ after an epoch:</p>
             <a id="9311" class="Symbol">(</a><a id="9312" href="Ledger.Conway.Specification.Epoch.html#9193" class="Bound">t₁</a> <a id="9315" href="Data.Integer.Base.html#5064" class="Function Operator">ℤ.+</a> <a id="9319" class="Symbol">(</a><a id="9320" class="Number">0</a> <a id="9322" href="Data.Integer.Base.html#5245" class="Function Operator">ℤ.-</a> <a id="9326" href="Ledger.Conway.Specification.Epoch.html#9214" class="Bound">r₁</a> <a id="9329" href="Data.Integer.Base.html#5064" class="Function Operator">ℤ.+</a> <a id="9333" class="Symbol">((</a><a id="9335" href="Ledger.Conway.Specification.Epoch.html#9235" class="Bound">f</a> <a id="9337" href="Data.Integer.Base.html#5064" class="Function Operator">ℤ.+</a> <a id="9341" href="Ledger.Conway.Specification.Epoch.html#9214" class="Bound">r₁</a> <a id="9344" href="Data.Integer.Base.html#5245" class="Function Operator">ℤ.-</a> <a id="9348" href="Ledger.Conway.Specification.Epoch.html#9193" class="Bound">t₁</a><a id="9350" class="Symbol">)</a> <a id="9352" href="Data.Integer.Base.html#5245" class="Function Operator">ℤ.-</a> <a id="9356" href="Ledger.Conway.Specification.Epoch.html#9262" class="Bound">z</a><a id="9357" class="Symbol">))</a> <a id="9360" href="Data.Integer.Base.html#5064" class="Function Operator">ℤ.+</a> <a id="9364" class="Symbol">(</a><a id="9365" class="Number">0</a> <a id="9367" href="Data.Integer.Base.html#5245" class="Function Operator">ℤ.-</a> <a id="9371" href="Ledger.Conway.Specification.Epoch.html#9235" class="Bound">f</a><a id="9372" class="Symbol">)</a> <a id="9374" href="Data.Integer.Base.html#5064" class="Function Operator">ℤ.+</a> <a id="9378" href="Ledger.Conway.Specification.Epoch.html#9262" class="Bound">z</a><a id="9379" class="Symbol">)</a> <a id="9381" href="Agda.Builtin.Equality.html#150" class="Datatype Operator">≡</a> <a id="9383" class="Number">0</a>
       <a id="9391" href="Ledger.Conway.Specification.Epoch.html#9162" class="Function">flowConservation</a> <a id="9408" class="Symbol">=</a> <a id="9410" href="Ledger.Conway.Specification.Epoch.html#9016" class="Function">lemmaFlow</a> <a id="9420" href="Ledger.Conway.Specification.Epoch.html#8532" class="Function">Δt₁</a> <a id="9424" href="Ledger.Conway.Specification.Epoch.html#8518" class="Function">Δr₁</a> <a id="9428" class="Symbol">(</a><a id="9429" href="Ledger.Conway.Specification.Epoch.html#656" class="InductiveConstructor">pos</a> <a id="9433" href="Ledger.Conway.Specification.Epoch.html#8019" class="Function">feeSS</a><a id="9438" class="Symbol">)</a> <a id="9440" class="Symbol">(</a><a id="9441" href="Ledger.Conway.Specification.Epoch.html#656" class="InductiveConstructor">pos</a> <a id="9445" class="Symbol">(</a><a id="9446" href="abstract-set-theory.FiniteSetTheory.html#4373" class="Function">∑[</a> <a id="9449" href="Ledger.Conway.Specification.Epoch.html#9449" class="Bound">c</a> <a id="9451" href="abstract-set-theory.FiniteSetTheory.html#4373" class="Function">←</a> <a id="9453" href="Ledger.Conway.Specification.Epoch.html#8759" class="Function">rs</a> <a id="9456" href="abstract-set-theory.FiniteSetTheory.html#4373" class="Function">]</a> <a id="9458" href="Ledger.Conway.Specification.Epoch.html#9449" class="Bound">c</a><a id="9459" class="Symbol">))</a>
 
-      <a id="9469" href="Ledger.Conway.Specification.Epoch.html#9469" class="Function">÷₀-0≤⇒0≤</a> <a id="9478" class="Symbol">:</a> <a id="9480" class="Symbol">∀</a> <a id="9482" class="Symbol">(</a><a id="9483" href="Ledger.Conway.Specification.Epoch.html#9483" class="Bound">x</a> <a id="9485" href="Ledger.Conway.Specification.Epoch.html#9485" class="Bound">y</a> <a id="9487" class="Symbol">:</a> <a id="9489" href="Data.Rational.Base.html#1421" class="Record">ℚ</a><a id="9490" class="Symbol">)</a> <a id="9492" class="Symbol">→</a> <a id="9494" class="Number">0</a> <a id="9496" href="Class.HasOrder.Core.html#613" class="Field Operator">≤</a> <a id="9498" href="Ledger.Conway.Specification.Epoch.html#9483" class="Bound">x</a> <a id="9500" class="Symbol">→</a> <a id="9502" class="Number">0</a> <a id="9504" href="Class.HasOrder.Core.html#613" class="Field Operator">≤</a> <a id="9506" href="Ledger.Conway.Specification.Epoch.html#9485" class="Bound">y</a> <a id="9508" class="Symbol">→</a> <a id="9510" class="Number">0</a> <a id="9512" href="Class.HasOrder.Core.html#613" class="Field Operator">≤</a> <a id="9514" class="Symbol">(</a><a id="9515" href="Ledger.Conway.Specification.Epoch.html#9483" class="Bound">x</a> <a id="9517" href="Ledger.Prelude.html#2111" class="Function Operator">÷₀</a> <a id="9520" href="Ledger.Conway.Specification.Epoch.html#9485" class="Bound">y</a><a id="9521" class="Symbol">)</a>
+      <a id="9469" href="Ledger.Conway.Specification.Epoch.html#9469" class="Function">÷₀-0≤⇒0≤</a> <a id="9478" class="Symbol">:</a> <a id="9480" class="Symbol">∀</a> <a id="9482" class="Symbol">(</a><a id="9483" href="Ledger.Conway.Specification.Epoch.html#9483" class="Bound">x</a> <a id="9485" href="Ledger.Conway.Specification.Epoch.html#9485" class="Bound">y</a> <a id="9487" class="Symbol">:</a> <a id="9489" href="Data.Rational.Base.html#1421" class="Record">ℚ</a><a id="9490" class="Symbol">)</a> <a id="9492" class="Symbol">→</a> <a id="9494" class="Number">0</a> <a id="9496" href="Class.HasOrder.Core.html#613" class="Field Operator">≤</a> <a id="9498" href="Ledger.Conway.Specification.Epoch.html#9483" class="Bound">x</a> <a id="9500" class="Symbol">→</a> <a id="9502" class="Number">0</a> <a id="9504" href="Class.HasOrder.Core.html#613" class="Field Operator">≤</a> <a id="9506" href="Ledger.Conway.Specification.Epoch.html#9485" class="Bound">y</a> <a id="9508" class="Symbol">→</a> <a id="9510" class="Number">0</a> <a id="9512" href="Class.HasOrder.Core.html#613" class="Field Operator">≤</a> <a id="9514" class="Symbol">(</a><a id="9515" href="Ledger.Conway.Specification.Epoch.html#9483" class="Bound">x</a> <a id="9517" href="Ledger.Prelude.html#2129" class="Function Operator">÷₀</a> <a id="9520" href="Ledger.Conway.Specification.Epoch.html#9485" class="Bound">y</a><a id="9521" class="Symbol">)</a>
       <a id="9529" href="Ledger.Conway.Specification.Epoch.html#9469" class="Function">÷₀-0≤⇒0≤</a> <a id="9538" href="Ledger.Conway.Specification.Epoch.html#9538" class="Bound">x</a> <a id="9540" href="Ledger.Conway.Specification.Epoch.html#9540" class="Bound">y</a> <a id="9542" href="Ledger.Conway.Specification.Epoch.html#9542" class="Bound">0≤x</a> <a id="9546" href="Ledger.Conway.Specification.Epoch.html#9546" class="Bound">0≤y</a> <a id="9550" class="Keyword">with</a> <a id="9555" href="Ledger.Conway.Specification.Epoch.html#9540" class="Bound">y</a> <a id="9557" href="Data.Rational.Properties.html#4152" class="Function Operator">≟</a> <a id="9559" class="Number">0</a>
       <a id="9567" class="Symbol">...</a> <a id="9571" class="Symbol">|</a> <a id="9573" class="Symbol">(</a><a id="9574" href="Relation.Nullary.Decidable.Core.html#2099" class="InductiveConstructor">yes</a> <a id="9578" href="Ledger.Conway.Specification.Epoch.html#9578" class="Bound">y≡0</a><a id="9581" class="Symbol">)</a> <a id="9583" class="Symbol">=</a> <a id="9585" href="Data.Rational.Properties.html#27061" class="Function">nonNegative⁻¹</a> <a id="9599" class="Number">0</a>
       <a id="9607" class="Symbol">...</a> <a id="9611" class="Symbol">|</a> <a id="9613" class="Symbol">(</a><a id="9614" href="Relation.Nullary.Decidable.Core.html#2136" class="InductiveConstructor">no</a> <a id="9617" href="Ledger.Conway.Specification.Epoch.html#9617" class="Bound">y≢0</a><a id="9620" class="Symbol">)</a>  <a id="9623" class="Symbol">=</a> <a id="9625" href="stdlib.Data.Rational.Properties.html#2865" class="Function">÷-0≤⇒0≤</a> <a id="9633" class="Bound">x</a> <a id="9635" class="Bound">y</a> <a id="9637" class="Symbol">{{</a><a id="9639" href="Data.Rational.Base.html#4971" class="Function">≢-nonZero</a> <a id="9649" href="Ledger.Conway.Specification.Epoch.html#9617" class="Bound">y≢0</a><a id="9652" class="Symbol">}}</a> <a id="9655" class="Bound">0≤x</a> <a id="9659" class="Bound">0≤y</a>
@@ -12256,7 +12340,7 @@ proofs about properties of the <code class="AgdaDatatype">EPOCH</code> transitio
   <a id="20956" class="Keyword">open</a> <a id="20961" href="Ledger.Conway.Specification.Ratify.html#8099" class="Module">RatifyState</a> <a id="20973" href="Ledger.Conway.Specification.Epoch.html#20871" class="Bound">fut</a>
 </pre>
 <pre class="Agda">  <a id="GovernanceUpdate.tmpGovSt"></a><a id="20995" href="Ledger.Conway.Specification.Epoch.html#20995" class="Function">tmpGovSt</a> <a id="21004" class="Symbol">:</a> <a id="21006" href="Ledger.Conway.Specification.Gov.html#2067" class="Function">GovState</a>
-  <a id="21017" href="Ledger.Conway.Specification.Epoch.html#20995" class="Function">tmpGovSt</a> <a id="21026" class="Symbol">=</a> <a id="21028" href="Ledger.Prelude.html#2498" class="Function">filter</a> <a id="21035" class="Symbol">(λ</a> <a id="21038" href="Ledger.Conway.Specification.Epoch.html#21038" class="Bound">x</a> <a id="21040" class="Symbol">→</a> <a id="21042" href="Data.Product.Base.html#636" class="Field">proj₁</a> <a id="21048" href="Ledger.Conway.Specification.Epoch.html#21038" class="Bound">x</a> <a id="21050" href="Class.IsSet.html#462" class="Function Operator">∉</a> <a id="21052" href="abstract-set-theory.FiniteSetTheory.html#519" class="Function">mapˢ</a> <a id="21057" href="Data.Product.Base.html#636" class="Field">proj₁</a> <a id="21063" href="Ledger.Conway.Specification.Ratify.html#8162" class="Field">removed</a><a id="21070" class="Symbol">)</a> <a id="21072" href="Ledger.Conway.Specification.Ledger.html#1444" class="Function">govSt</a>
+  <a id="21017" href="Ledger.Conway.Specification.Epoch.html#20995" class="Function">tmpGovSt</a> <a id="21026" class="Symbol">=</a> <a id="21028" href="Ledger.Prelude.html#2516" class="Function">filter</a> <a id="21035" class="Symbol">(λ</a> <a id="21038" href="Ledger.Conway.Specification.Epoch.html#21038" class="Bound">x</a> <a id="21040" class="Symbol">→</a> <a id="21042" href="Data.Product.Base.html#636" class="Field">proj₁</a> <a id="21048" href="Ledger.Conway.Specification.Epoch.html#21038" class="Bound">x</a> <a id="21050" href="Class.IsSet.html#462" class="Function Operator">∉</a> <a id="21052" href="abstract-set-theory.FiniteSetTheory.html#519" class="Function">mapˢ</a> <a id="21057" href="Data.Product.Base.html#636" class="Field">proj₁</a> <a id="21063" href="Ledger.Conway.Specification.Ratify.html#8162" class="Field">removed</a><a id="21070" class="Symbol">)</a> <a id="21072" href="Ledger.Conway.Specification.Ledger.html#1444" class="Function">govSt</a>
 
   <a id="GovernanceUpdate.orphans"></a><a id="21081" href="Ledger.Conway.Specification.Epoch.html#21081" class="Function">orphans</a> <a id="21089" class="Symbol">:</a> <a id="21091" href="abstract-set-theory.FiniteSetTheory.html#488" class="Function Operator">ℙ</a> <a id="21093" class="Symbol">(</a><a id="21094" href="Ledger.Conway.Specification.Gov.Actions.html#6388" class="Function">GovActionID</a> <a id="21106" href="Data.Product.Base.html#1618" class="Function Operator">×</a> <a id="21108" href="Ledger.Conway.Specification.Gov.Actions.html#12534" class="Record">GovActionState</a><a id="21122" class="Symbol">)</a>
   <a id="21126" href="Ledger.Conway.Specification.Epoch.html#21081" class="Function">orphans</a>  <a id="21135" class="Symbol">=</a> <a id="21137" href="Axiom.Set.html#5903" class="Function">fromList</a> <a id="21146" class="Symbol">(</a><a id="21147" href="Ledger.Conway.Specification.Epoch.html#20173" class="Function">getOrphans</a> <a id="21158" href="Ledger.Conway.Specification.Ratify.html#8136" class="Field">es</a> <a id="21161" href="Ledger.Conway.Specification.Epoch.html#20995" class="Function">tmpGovSt</a><a id="21169" class="Symbol">)</a>
@@ -12272,7 +12356,7 @@ proofs about properties of the <code class="AgdaDatatype">EPOCH</code> transitio
         <a id="21431" class="Symbol">((</a><a id="21433" href="Ledger.Conway.Specification.Certs.html#1160" class="Field">DepositsOf</a> <a id="21444" href="Ledger.Conway.Specification.Ledger.html#1417" class="Function">utxoSt</a> <a id="21451" href="Axiom.Set.Map.html#13536" class="Function Operator">∣</a> <a id="21453" href="Class.HasSingleton.html#288" class="Field Operator">❴</a> <a id="21455" href="Ledger.Conway.Specification.Certs.html#982" class="InductiveConstructor">GovActionDeposit</a> <a id="21472" href="Ledger.Conway.Specification.Epoch.html#21368" class="Bound">gaid</a> <a id="21477" href="Class.HasSingleton.html#288" class="Field Operator">❵</a><a id="21478" class="Symbol">)</a> <a id="21480" href="Axiom.Set.Map.html#2293" class="Function Operator">ˢ</a><a id="21481" class="Symbol">)</a>
 
   <a id="GovernanceUpdate.govSt&#39;"></a><a id="21486" href="Ledger.Conway.Specification.Epoch.html#21486" class="Function">govSt&#39;</a> <a id="21493" class="Symbol">:</a> <a id="21495" href="Ledger.Conway.Specification.Gov.html#2067" class="Function">GovState</a>
-  <a id="21506" href="Ledger.Conway.Specification.Epoch.html#21486" class="Function">govSt&#39;</a> <a id="21513" class="Symbol">=</a> <a id="21515" href="Ledger.Prelude.html#2498" class="Function">filter</a> <a id="21522" class="Symbol">(λ</a> <a id="21525" href="Ledger.Conway.Specification.Epoch.html#21525" class="Bound">x</a> <a id="21527" class="Symbol">→</a> <a id="21529" href="Data.Product.Base.html#636" class="Field">proj₁</a> <a id="21535" href="Ledger.Conway.Specification.Epoch.html#21525" class="Bound">x</a> <a id="21537" href="Class.IsSet.html#462" class="Function Operator">∉</a> <a id="21539" href="abstract-set-theory.FiniteSetTheory.html#519" class="Function">mapˢ</a> <a id="21544" href="Data.Product.Base.html#636" class="Field">proj₁</a> <a id="21550" href="Ledger.Conway.Specification.Epoch.html#21174" class="Function">removed&#39;</a><a id="21558" class="Symbol">)</a> <a id="21560" href="Ledger.Conway.Specification.Ledger.html#1444" class="Function">govSt</a>
+  <a id="21506" href="Ledger.Conway.Specification.Epoch.html#21486" class="Function">govSt&#39;</a> <a id="21513" class="Symbol">=</a> <a id="21515" href="Ledger.Prelude.html#2516" class="Function">filter</a> <a id="21522" class="Symbol">(λ</a> <a id="21525" href="Ledger.Conway.Specification.Epoch.html#21525" class="Bound">x</a> <a id="21527" class="Symbol">→</a> <a id="21529" href="Data.Product.Base.html#636" class="Field">proj₁</a> <a id="21535" href="Ledger.Conway.Specification.Epoch.html#21525" class="Bound">x</a> <a id="21537" href="Class.IsSet.html#462" class="Function Operator">∉</a> <a id="21539" href="abstract-set-theory.FiniteSetTheory.html#519" class="Function">mapˢ</a> <a id="21544" href="Data.Product.Base.html#636" class="Field">proj₁</a> <a id="21550" href="Ledger.Conway.Specification.Epoch.html#21174" class="Function">removed&#39;</a><a id="21558" class="Symbol">)</a> <a id="21560" href="Ledger.Conway.Specification.Ledger.html#1444" class="Function">govSt</a>
 
   <a id="GovernanceUpdate.updates"></a><a id="21569" href="Ledger.Conway.Specification.Epoch.html#21569" class="Function">updates</a> <a id="21577" class="Symbol">:</a> <a id="21579" href="Ledger.Conway.Specification.Epoch.html#20638" class="Record">Governance-Update</a>
   <a id="21599" href="Ledger.Conway.Specification.Epoch.html#21569" class="Function">updates</a> <a id="21607" class="Symbol">=</a> <a id="21609" href="Ledger.Conway.Specification.Epoch.html#20683" class="InductiveConstructor">GovernanceUpdate</a> <a id="21626" href="Ledger.Conway.Specification.Epoch.html#21252" class="Function">removedGovActions</a> <a id="21644" href="Ledger.Conway.Specification.Epoch.html#21486" class="Function">govSt&#39;</a>
