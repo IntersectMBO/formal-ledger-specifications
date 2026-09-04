@@ -451,7 +451,7 @@ truth for one concern:
 
 A property's status is *derived*, never asserted.
 
-`build-tools/scripts/scan_properties.py` resolves each catalog entry's `module`
+`build-tools/scripts/property-tracking/scan_properties.py` resolves each catalog entry's `module`
 against the Agda on disk and classifies the entry as one of the following:
 
 +  `idea`: no module named (nothing in Agda yet);
@@ -473,8 +473,8 @@ Run the scanner from the default development shell (`nix develop` provides
 works):
 
 ```bash
-python3 build-tools/scripts/scan_properties.py          # regenerate the dashboard
-python3 build-tools/scripts/scan_properties.py --check  # what CI runs: fail on drift
+python3 build-tools/scripts/property-tracking/scan_properties.py          # regenerate the dashboard
+python3 build-tools/scripts/property-tracking/scan_properties.py --check  # what CI runs: fail on drift
 ```
 
 ### Conventions for property modules
@@ -504,7 +504,7 @@ python3 build-tools/scripts/scan_properties.py --check  # what CI runs: fail on 
 ### Syncing with GitHub issues
 
 Two companion scripts keep the catalog and the GitHub issues aligned.  Both are
-run locally by maintainers and are documented in `build-tools/scripts/README.md`;
+run locally by maintainers and are documented in `build-tools/scripts/property-tracking/README.md`;
 they need the [GitHub CLI](https://cli.github.com/) (`gh`), authenticated (the
 Nix shell does not provide `gh`).
 

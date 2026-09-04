@@ -15,7 +15,7 @@ on:
     paths:
       - 'build-tools/properties.yaml'
       - 'build-tools/static/mkdocs/docs/ledger-properties-dashboard.md'
-      - 'build-tools/scripts/scan_properties.py'
+      - 'build-tools/scripts/property-tracking/**'
       - 'src/**/Properties/**'
       - '.github/workflows/properties-check.yml'
   workflow_dispatch:
@@ -34,4 +34,4 @@ jobs:
       - name: Install dependencies
         run: pip install pyyaml
       - name: Reconcile catalog with Agda and check the dashboard is current
-        run: python3 build-tools/scripts/scan_properties.py --check
+        run: python3 build-tools/scripts/property-tracking/scan_properties.py --check

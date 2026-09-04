@@ -1,6 +1,6 @@
-<!-- File: build-tools/scripts/README.md -->
+<!-- File: build-tools/scripts/property-tracking/README.md -->
 
-# build-tools/scripts/README
+# build-tools/scripts/property-tracking/README
 
 ## Property-tracking scripts
 
@@ -10,9 +10,9 @@ three `scan_properties.py` / `gh_project_*.py` scripts.
 ### Workflow and conventions
 
 See the "Tracking Properties of the Ledger" section of
-[CONTRIBUTING.md](../../CONTRIBUTING.md).
+[CONTRIBUTING.md](../../../CONTRIBUTING.md).
 
-The catalog [`build-tools/properties.yaml`](../properties.yaml) declares every
+The catalog [`build-tools/properties.yaml`](../../properties.yaml) declares every
 property (identity, era, STS, Agda module, tracking issue). It is what we humans edit.
 It declares **no** status; **formal status is derived from the Agda**, and `scan_properties.py`
 regenerates the properties dashboard from Agda and the catalog; it fails if the
@@ -35,8 +35,8 @@ The correct Python dependencies are available in the default Nix devShell (`nix 
 ### `scan_properties.py` (no network; runs in CI)
 
 ```bash
-python3 build-tools/scripts/scan_properties.py          # regenerate the dashboard
-python3 build-tools/scripts/scan_properties.py --check  # CI: fail on drift or a stale dashboard
+python3 build-tools/scripts/property-tracking/scan_properties.py          # regenerate the dashboard
+python3 build-tools/scripts/property-tracking/scan_properties.py --check  # CI: fail on drift or a stale dashboard
 ```
 
 It resolves each catalog entry's `module` to its `.lagda.md` and classifies it as
@@ -69,9 +69,9 @@ numbers are written back immediately after each creation, so an interrupted run
 never loses them (a rerun would otherwise file duplicates).
 
 ```bash
-python3 build-tools/scripts/gh_project_populate.py --dry-run      # preview everything
-python3 build-tools/scripts/gh_project_populate.py                # apply
-python3 build-tools/scripts/gh_project_populate.py --era dijkstra # one era only
+python3 build-tools/scripts/property-tracking/gh_project_populate.py --dry-run      # preview everything
+python3 build-tools/scripts/property-tracking/gh_project_populate.py                # apply
+python3 build-tools/scripts/property-tracking/gh_project_populate.py --era dijkstra # one era only
 ```
 
 Useful flags: `--repo OWNER/NAME` (default: catalog `meta.repo`), `--delay SECS`
@@ -86,8 +86,8 @@ Pulls live issue state (open/closed, assignees, links) for every issue reference
 by the catalog into `build-tools/static/mkdocs/docs/ledger-properties-issues.md`.
 
 ```bash
-python3 build-tools/scripts/gh_project_render.py          # write the issues view
-python3 build-tools/scripts/gh_project_render.py --check  # verify up-to-date (local)
+python3 build-tools/scripts/property-tracking/gh_project_render.py          # write the issues view
+python3 build-tools/scripts/property-tracking/gh_project_render.py --check  # verify up-to-date (local)
 ```
 
 The script logs one line per issue as it fetches (✅ fetched / ❌ failed, with the

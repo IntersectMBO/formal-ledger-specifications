@@ -7,7 +7,7 @@
 # tracking issue are declared.
 #
 # It deliberately does NOT declare a `status:`.  Status is *derived* from the Agda
-# by `build-tools/scripts/scan_properties.py`, from the `module:` reference and
+# by `build-tools/scripts/property-tracking/scan_properties.py`, from the `module:` reference and
 # the source on disk:
 #   no module          -> idea     (identified; nothing in Agda yet)
 #   module file absent -> planned  (drafted on another branch/PR; not here yet)

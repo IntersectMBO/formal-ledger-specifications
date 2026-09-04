@@ -18,9 +18,9 @@
 # Auth/runtime: requires the GitHub CLI `gh`, authenticated with write access to
 # the target repo. Run it locally (CI cannot reach GitHub-write here).
 #
-#   python3 build-tools/scripts/gh_project_populate.py --dry-run     # preview
-#   python3 build-tools/scripts/gh_project_populate.py               # apply
-#   python3 build-tools/scripts/gh_project_populate.py --era dijkstra
+#   python3 build-tools/scripts/property-tracking/gh_project_populate.py --dry-run     # preview
+#   python3 build-tools/scripts/property-tracking/gh_project_populate.py               # apply
+#   python3 build-tools/scripts/property-tracking/gh_project_populate.py --era dijkstra
 #
 # Dependencies: Python 3.8+, PyYAML, gh.
 # -----------------------------------------------------------------------------
@@ -44,7 +44,7 @@ except ImportError:  # pragma: no cover
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from scan_properties import derive_status, display_path  # noqa: E402
 
-REPO_ROOT = Path(__file__).resolve().parents[2]
+REPO_ROOT = Path(__file__).resolve().parents[3]
 DEFAULT_CATALOG = REPO_ROOT / "build-tools" / "properties.yaml"
 
 
