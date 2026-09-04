@@ -103,6 +103,7 @@ instance
                      withdrawals               = WithdrawalsOf txTop
                      withdrawalsCredentials    = mapˢ stake (dom withdrawals)
                      accountBalanceIntervals   = BalanceIntervalsOf txTop
+                     startingAccountBalanceIntervals = StartingBalanceIntervalsOf txTop
                      directDeposits            = DirectDepositsOf txTop
                      directDepositsCredentials = mapˢ stake (dom directDeposits)
 
@@ -132,18 +133,22 @@ instance
             ∙ ∀[ (c , interval) ∈ accountBalanceIntervals ˢ ]
                 (InBalanceInterval (maybe id 0 (lookupᵐ? (RewardsOf s₀) c)) interval)
 
+            ∙ dom startingAccountBalanceIntervals ⊆ dom Γ.rewards₀
+            ∙ ∀[ (c , interval) ∈ startingAccountBalanceIntervals ˢ ]
+                (InBalanceInterval (maybe id 0 (lookupᵐ? Γ.rewards₀ c)) interval)
+
             ∙ ∀[ a ∈ dom directDeposits ] NetworkIdOf a ≡ NetworkId
           ¿ | Computational-CERTS.computeProof ⟦ Γ.epoch , Γ.pp , Γ.coldCredentials ⟧ s₁ (DCertsOf txTop)
         ... | no ¬p | _ = failure ""
         ... | yes _ | failure e = failure e
-        ... | yes (p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇) | success (s₂ , p)
+        ... | yes (p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉) | success (s₂ , p)
           with ¿
             ∙ directDepositsCredentials ⊆ dom (RewardsOf s₂) ¿
         ... | no ¬p = failure ""
-        ... | yes p₈ = success (-, (ENTITIES (p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p , p₇ , p₈)))
+        ... | yes p₁₀ = success (-, (ENTITIES (p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p , p₉ , p₁₀)))
     
         completeness : ∀ (s' : CertState) → Γ ⊢ s₀ ⇀⦇ txTop ,ENTITIES⦈ s' → map proj₁ computeProof ≡ success s'
-        completeness s' (ENTITIES (p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p , p₇ , p₈))
+        completeness s' (ENTITIES (p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p , p₉ , p₁₀))
           with ¿
             ∙ ∀[ a ∈ dom withdrawals ] NetworkIdOf a ≡ NetworkId
             ∙ withdrawalsCredentials ⊆ dom (RewardsOf s₀)
@@ -160,12 +165,16 @@ instance
             ∙ ∀[ (c , interval) ∈ accountBalanceIntervals ˢ ]
                 (InBalanceInterval (maybe id 0 (lookupᵐ? (RewardsOf s₀) c)) interval)
 
+            ∙ dom startingAccountBalanceIntervals ⊆ dom Γ.rewards₀
+            ∙ ∀[ (c , interval) ∈ startingAccountBalanceIntervals ˢ ]
+                (InBalanceInterval (maybe id 0 (lookupᵐ? Γ.rewards₀ c)) interval)
+
             ∙ ∀[ a ∈ dom directDeposits ] NetworkIdOf a ≡ NetworkId
           ¿ | Computational-CERTS.computeProof ⟦ Γ.epoch , Γ.pp , Γ.coldCredentials ⟧ s₁ (DCertsOf txTop) | Computational-CERTS.completeness _ _ _ _ p
-        ... | no ¬p | _ | p' = ⊥-elim (¬p (p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇))
+        ... | no ¬p | _ | p' = ⊥-elim (¬p (p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉))
         ... | yes _ | failure e | ()
-        ... | yes (p₁ , p₂ , p₃ , p₄ , p₅ , p₆) | success (s₂ , p) | refl
+        ... | yes _ | success (s₂ , p) | refl
           with ¿ directDepositsCredentials ⊆ dom (RewardsOf s₂) ¿
-        ... | no ¬p  = ⊥-elim (¬p p₈)
+        ... | no ¬p  = ⊥-elim (¬p p₁₀)
         ... | yes _ = refl
 ```
