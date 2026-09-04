@@ -4822,21 +4822,117 @@ du_addRefundCertDeposit_2006 v0 v1
       C_dereg_1312 v2 v3 -> coe addInt (coe v0) (coe v3)
       C_deregdrep_1320 v2 v3 -> coe addInt (coe v0) (coe v3)
       _ -> coe v0
+-- Ledger.Dijkstra.Specification.Certs.coinFromRewards
+d_coinFromRewards_2018 ::
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Base.T_GovStructure_10 ->
+  T_CertState_1420 -> Integer
+d_coinFromRewards_2018 v0 v1
+  = coe d_rewardsBalance_1958 (coe v0) (coe d_dState_1428 (coe v1))
+-- Ledger.Dijkstra.Specification.Certs.coinFromDeposits
+d_coinFromDeposits_2020 ::
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Base.T_GovStructure_10 ->
+  T_CertState_1420 -> Integer
+d_coinFromDeposits_2020 v0 v1
+  = coe
+      addInt
+      (coe
+         addInt
+         (coe
+            MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.du_indexedSum'7515'''_1446
+            (let v2
+                   = MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
+                       (coe
+                          MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_220
+                          (coe
+                             MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Base.d_cryptoStructure_648
+                             (coe v0))) in
+             coe
+               (let v3
+                      = MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_224
+                          (coe
+                             MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Base.d_cryptoStructure_648
+                             (coe v0)) in
+                coe
+                  (coe
+                     MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_292
+                     (coe v2) (coe v3))))
+            (coe
+               MAlonzo.Code.Class.DecEq.Core.C_constructor_32
+               (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796))
+            (coe
+               MAlonzo.Code.Class.CommutativeMonoid.Core.du_fromBundle_64
+               (coe
+                  MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3476))
+            (coe (\ v2 -> v2))
+            (coe d_deposits_1416 (coe d_gState_1432 (coe v1))))
+         (coe
+            MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.du_indexedSum'7515'''_1446
+            (let v2
+                   = MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
+                       (coe
+                          MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_220
+                          (coe
+                             MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Base.d_cryptoStructure_648
+                             (coe v0))) in
+             coe
+               (let v3
+                      = MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_224
+                          (coe
+                             MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Base.d_cryptoStructure_648
+                             (coe v0)) in
+                coe
+                  (coe
+                     MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_292
+                     (coe v2) (coe v3))))
+            (coe
+               MAlonzo.Code.Class.DecEq.Core.C_constructor_32
+               (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796))
+            (coe
+               MAlonzo.Code.Class.CommutativeMonoid.Core.du_fromBundle_64
+               (coe
+                  MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3476))
+            (coe (\ v2 -> v2))
+            (coe d_deposits_1380 (coe d_dState_1428 (coe v1)))))
+      (coe
+         MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.du_indexedSum'7515'''_1446
+         (coe
+            MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
+            (coe
+               MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_220
+               (coe
+                  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Base.d_cryptoStructure_648
+                  (coe v0))))
+         (coe
+            MAlonzo.Code.Class.DecEq.Core.C_constructor_32
+            (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796))
+         (coe
+            MAlonzo.Code.Class.CommutativeMonoid.Core.du_fromBundle_64
+            (coe
+               MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3476))
+         (coe (\ v2 -> v2))
+         (coe d_deposits_1400 (coe d_pState_1430 (coe v1))))
+-- Ledger.Dijkstra.Specification.Certs.PoolDepositsRegistered
+d_PoolDepositsRegistered_2024 ::
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Base.T_GovStructure_10 ->
+  T_CertState_1420 -> ()
+d_PoolDepositsRegistered_2024 = erased
 -- Ledger.Dijkstra.Specification.Certs.HasCoin-CertState
-d_HasCoin'45'CertState_2018 ::
+d_HasCoin'45'CertState_2028 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Base.T_GovStructure_10 ->
   MAlonzo.Code.Ledger.Prelude.HasCoin.T_HasCoin_10
-d_HasCoin'45'CertState_2018 v0
+d_HasCoin'45'CertState_2028 v0
   = coe
       MAlonzo.Code.Ledger.Prelude.HasCoin.C_constructor_20
       (coe
          (\ v1 ->
-            d_rewardsBalance_1958 (coe v0) (coe d_dState_1428 (coe v1))))
+            addInt
+              (coe d_coinFromDeposits_2020 (coe v0) (coe v1))
+              (coe d_coinFromRewards_2018 (coe v0) (coe v1))))
 -- Ledger.Dijkstra.Specification.Certs.DecEq-StakePoolParams
-d_DecEq'45'StakePoolParams_2020 ::
+d_DecEq'45'StakePoolParams_2032 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Base.T_GovStructure_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
-d_DecEq'45'StakePoolParams_2020 v0
+d_DecEq'45'StakePoolParams_2032 v0
   = coe
       MAlonzo.Code.Class.DecEq.Core.C_constructor_32
       (coe
@@ -5205,10 +5301,10 @@ d_DecEq'45'StakePoolParams_2020 v0
                           _ -> MAlonzo.RTE.mazUnreachableError)
               _ -> MAlonzo.RTE.mazUnreachableError))
 -- Ledger.Dijkstra.Specification.Certs.DecEq-DCert
-d_DecEq'45'DCert_2022 ::
+d_DecEq'45'DCert_2034 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Base.T_GovStructure_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
-d_DecEq'45'DCert_2022 v0
+d_DecEq'45'DCert_2034 v0
   = coe
       MAlonzo.Code.Class.DecEq.Core.C_constructor_32
       (coe
@@ -6325,32 +6421,32 @@ d_DecEq'45'DCert_2022 v0
                           _ -> MAlonzo.RTE.mazUnreachableError)
               _ -> MAlonzo.RTE.mazUnreachableError))
 -- Ledger.Dijkstra.Specification.Certs._⊢_⇀⦇_,DELEG⦈_
-d__'8866'_'8640''10631'_'44'DELEG'10632'__2024 a0 a1 a2 a3 a4 = ()
-data T__'8866'_'8640''10631'_'44'DELEG'10632'__2024
-  = C_DELEG'45'delegate_2026 MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 |
-    C_DELEG'45'dereg_2028 MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d__'8866'_'8640''10631'_'44'DELEG'10632'__2036 a0 a1 a2 a3 a4 = ()
+data T__'8866'_'8640''10631'_'44'DELEG'10632'__2036
+  = C_DELEG'45'delegate_2038 MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 |
+    C_DELEG'45'dereg_2040 MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 -- Ledger.Dijkstra.Specification.Certs._⊢_⇀⦇_,POOL⦈_
-d__'8866'_'8640''10631'_'44'POOL'10632'__2030 a0 a1 a2 a3 a4 = ()
-data T__'8866'_'8640''10631'_'44'POOL'10632'__2030
-  = C_POOL'45'reg_2032 MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 |
-    C_POOL'45'rereg_2034 MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 |
-    C_POOL'45'retirepool_2036 MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d__'8866'_'8640''10631'_'44'POOL'10632'__2042 a0 a1 a2 a3 a4 = ()
+data T__'8866'_'8640''10631'_'44'POOL'10632'__2042
+  = C_POOL'45'reg_2044 MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 |
+    C_POOL'45'rereg_2046 MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 |
+    C_POOL'45'retirepool_2048 MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 -- Ledger.Dijkstra.Specification.Certs._⊢_⇀⦇_,GOVCERT⦈_
-d__'8866'_'8640''10631'_'44'GOVCERT'10632'__2038 a0 a1 a2 a3 a4
+d__'8866'_'8640''10631'_'44'GOVCERT'10632'__2050 a0 a1 a2 a3 a4
   = ()
-data T__'8866'_'8640''10631'_'44'GOVCERT'10632'__2038
-  = C_GOVCERT'45'regdrep_2040 MAlonzo.Code.Data.Sum.Base.T__'8846'__30 |
-    C_GOVCERT'45'deregdrep_2042 MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 |
-    C_GOVCERT'45'ccreghot_2044 MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+data T__'8866'_'8640''10631'_'44'GOVCERT'10632'__2050
+  = C_GOVCERT'45'regdrep_2052 MAlonzo.Code.Data.Sum.Base.T__'8846'__30 |
+    C_GOVCERT'45'deregdrep_2054 MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 |
+    C_GOVCERT'45'ccreghot_2056 MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 -- Ledger.Dijkstra.Specification.Certs._⊢_⇀⦇_,CERT⦈_
-d__'8866'_'8640''10631'_'44'CERT'10632'__2046 a0 a1 a2 a3 a4 = ()
-data T__'8866'_'8640''10631'_'44'CERT'10632'__2046
-  = C_CERT'45'deleg_2048 T__'8866'_'8640''10631'_'44'DELEG'10632'__2024 |
-    C_CERT'45'pool_2050 T__'8866'_'8640''10631'_'44'POOL'10632'__2030 |
-    C_CERT'45'gov_2052 T__'8866'_'8640''10631'_'44'GOVCERT'10632'__2038
+d__'8866'_'8640''10631'_'44'CERT'10632'__2058 a0 a1 a2 a3 a4 = ()
+data T__'8866'_'8640''10631'_'44'CERT'10632'__2058
+  = C_CERT'45'deleg_2060 T__'8866'_'8640''10631'_'44'DELEG'10632'__2036 |
+    C_CERT'45'pool_2062 T__'8866'_'8640''10631'_'44'POOL'10632'__2042 |
+    C_CERT'45'gov_2064 T__'8866'_'8640''10631'_'44'GOVCERT'10632'__2050
 -- Ledger.Dijkstra.Specification.Certs._⊢_⇀⦇_,CERTS⦈_
-d__'8866'_'8640''10631'_'44'CERTS'10632'__2054 ::
+d__'8866'_'8640''10631'_'44'CERTS'10632'__2066 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Base.T_GovStructure_10 ->
   T_CertEnv_1348 ->
   T_CertState_1420 -> [T_DCert_1308] -> T_CertState_1420 -> ()
-d__'8866'_'8640''10631'_'44'CERTS'10632'__2054 = erased
+d__'8866'_'8640''10631'_'44'CERTS'10632'__2066 = erased
