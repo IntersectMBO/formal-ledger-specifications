@@ -378,11 +378,35 @@ module _ (pp : PParams) where
       addRefundCertDeposit acc _               = acc
 ```
 
+The two coin-bearing components of a `CertState`{.AgdaRecord} are the rewards
+(account) balances and the three deposit pots.  `coinFromRewards`{.AgdaFunction} and
+`coinFromDeposits`{.AgdaFunction} project their totals; `getCoin`{.AgdaFunction} on a
+`CertState`{.AgdaRecord} is their sum, so preservation-of-value statements can be
+phrased at the `CertState`{.AgdaRecord} level.
+
+```agda
+coinFromRewards : CertState → Coin
+coinFromRewards = rewardsBalance ∘ DStateOf
+
+coinFromDeposits : CertState → Coin
+coinFromDeposits cs =
+  getCoin (DepositsOf (DStateOf cs)) + getCoin (DepositsOf (PStateOf cs)) + getCoin (DepositsOf (GStateOf cs))
+```
+
+A `CertState`{.AgdaRecord} is *pool-deposit registered* when every entry of the pool
+deposit pot belongs to a registered pool.
+
+```agda
+PoolDepositsRegistered : CertState → Type
+PoolDepositsRegistered cs = dom (DepositsOf (PStateOf cs)) ⊆ dom (PoolsOf cs)
+```
+
 <!--
 ```agda
 instance
   HasCoin-CertState : HasCoin CertState
-  HasCoin-CertState .getCoin = rewardsBalance ∘ DStateOf
+  -- Total coin held in a CertState: the rewards balance plus the deposit pots.
+  HasCoin-CertState .getCoin = λ cs → coinFromRewards cs + coinFromDeposits cs
 
   unquoteDecl DecEq-StakePoolParams = derive-DecEq
     ((quote StakePoolParams , DecEq-StakePoolParams) ∷ [])

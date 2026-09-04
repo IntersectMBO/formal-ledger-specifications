@@ -22,7 +22,7 @@ open PParams
 ```
 -->
 
-# Auxiliary Types and Functions
+## Auxiliary Types and Functions
 
 ```agda
 record EntitiesEnv : Type where
@@ -89,7 +89,7 @@ applyWithdrawals : Withdrawals → Rewards → Rewards
 applyWithdrawals = applyToRewards _∸_
 ```
 
-# `ENTITIES`{.AgdaDatatype} Transition System
+## `ENTITIES`{.AgdaDatatype} Transition System
 
 In Dijkstra, the new `ENTITIES`{.AgdaDatatype} rule subsumes the
 pre-Dijkstra `CERTS`{.AgdaDatatype} rule. This rule in addition to
@@ -101,7 +101,7 @@ and `balanceIntervals`. Direct deposits represent value that flows
 from the transaction into account addresses. Balance intervals enable
 transactions to assert predicates about account balances.
 
-## Withdrawals 
+### Withdrawals
 
 The `ENTITIES`{.AgdaDatatype} rule applies withdrawals, via
 `applyWithdrawals`{.AgdaFunction} before certificate evaluation.  In
@@ -111,7 +111,7 @@ rule (via `isLegacyMode`{.AgdaFunction}, defined in the
 `Utxow`{.AgdaModule} module) and provided here through the
 `legacyMode`{.AgdaField} field of `EntitiesEnv`{.AgdaRecord}.
 
-## Direct Deposits
+### Direct Deposits
 
 The `ENTITIES`{.AgdaDatatype} rule applies direct deposits to the
 `CertState`{.AgdaRecord} after  `CERTS`{.AgdaDatatype}.
@@ -168,9 +168,7 @@ data _⊢_⇀⦇_,SUBENTITIES⦈_ : SubEntitiesEnv → CertState → SubLevelTx 
     ∙ directDepositsCredentials ⊆ dom rewards'
       ────────────────────────────────
       ⟦ e , pp , cc , rewards₀ ⟧ ⊢ ⟦ ⟦ voteDelegs , stakeDelegs , rewards , depositsᵈ ⟧ , pState , ⟦ dReps , ccHotKeys , depositsᵍ ⟧ ⟧ ⇀⦇ txSub ,SUBENTITIES⦈ ⟦ ⟦ voteDelegs' , stakeDelegs' , applyDirectDeposits directDeposits rewards' , depositsᵈ' ⟧ , pState' , gState' ⟧
-```
 
-```agda
 data _⊢_⇀⦇_,ENTITIES⦈_ : EntitiesEnv → CertState → TopLevelTx → CertState → Type where
 
   ENTITIES :
