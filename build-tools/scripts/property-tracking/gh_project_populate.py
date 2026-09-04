@@ -42,7 +42,7 @@ except ImportError:  # pragma: no cover
 
 # Reuse the single source of truth for status derivation (same directory).
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from scan_properties import derive_status, display_path  # noqa: E402
+from scan_properties import FAIL, NOTE, OK, derive_status, display_path  # noqa: E402
 
 REPO_ROOT = Path(__file__).resolve().parents[3]
 DEFAULT_CATALOG = Path(__file__).resolve().parent / "properties.yaml"
@@ -77,11 +77,18 @@ class GH:
     def api_json(self, *args):
         return json.loads(self._run(["api", *args]))
 
-    def mutate(self, args, capture=True):
+    def mutate(self, args, doing, capture=True):
+        """Run a mutating gh command, announcing it: 📝 while running, then ✅/❌."""
         if self.dry_run:
             print(f"DRY-RUN: gh {' '.join(args)}")
             return ""
-        out = self._run(args, capture=capture)
+        print(f"{NOTE} {doing} … ", end="", flush=True)
+        try:
+            out = self._run(args, capture=capture)
+        except Exception:
+            print(FAIL)
+            raise
+        print(OK)
         if self.delay:
             time.sleep(self.delay)
         return out
@@ -90,14 +97,15 @@ class GH:
 def ensure_label(gh: GH, name: str, color: str, desc: str):
     # idempotent: `gh label create --force` updates or creates.
     gh.mutate(["label", "create", name, "--repo", gh.repo,
-               "--color", color, "--description", desc, "--force"])
+               "--color", color, "--description", desc, "--force"],
+              doing=f"label {name}")
 
 
 def create_issue(gh: GH, title: str, body: str, labels: list[str]) -> int | None:
     args = ["issue", "create", "--repo", gh.repo, "--title", title, "--body", body]
     for lbl in labels:
         args += ["--label", lbl]
-    out = gh.mutate(args)
+    out = gh.mutate(args, doing=f"create issue: {title}")
     if gh.dry_run:
         return None
     m = re.search(r"/issues/(\d+)", out.strip())
@@ -112,7 +120,8 @@ def link_sub_issue(gh: GH, parent: int, child_number: int):
         child = gh.api_json(f"repos/{gh.repo}/issues/{child_number}")
         gh.mutate(["api", "--method", "POST",
                    f"repos/{gh.repo}/issues/{parent}/sub_issues",
-                   "-F", f"sub_issue_id={child['id']}"])
+                   "-F", f"sub_issue_id={child['id']}"],
+                  doing=f"link #{child_number} as sub-issue of #{parent}")
     except Exception as exc:  # noqa: BLE001
         print(f"  note: could not link #{child_number} under #{parent} "
               f"(sub-issue API): {exc}", file=sys.stderr)
@@ -132,17 +141,17 @@ def sync_status_label(gh: GH, num: int, desired: str) -> int:
         return 0
     stale = [lbl for lbl in labels if lbl.startswith("status:") and lbl != desired]
     if desired in labels and not stale:
+        print(f"{OK} #{num} already labeled {desired}")
         return 0
     cmd = ["issue", "edit", str(num), "--repo", gh.repo, "--add-label", desired]
     for lbl in stale:
         cmd += ["--remove-label", lbl]
+    doing = f"labels on #{num}: +{desired}" + (f" -{', '.join(stale)}" if stale else "")
     try:
-        gh.mutate(cmd)
+        gh.mutate(cmd, doing=doing)
     except Exception as exc:  # noqa: BLE001
         print(f"  note: could not edit labels of #{num}: {exc}", file=sys.stderr)
         return 0
-    print(f"synced status label on #{num}: +{desired}"
-          + (f" -{', '.join(stale)}" if stale else ""))
     return 1
 
 
@@ -327,11 +336,12 @@ def main() -> int:
 
     # 4) summary (write-back is persisted right after each creation above)
     if written:
-        print(f"updated {display_path(args.catalog)} "
+        print(f"{NOTE} updated {display_path(args.catalog)} "
               f"({created} issue number(s) written back)")
         print("next: re-run scan_properties.py to refresh the dashboard.")
     if synced:
-        print(f"reconciled status labels on {synced} issue(s)")
+        print(f"{OK} reconciled status labels on {synced} issue(s)")
+    print(f"{OK} done.")
     return 0
 
 

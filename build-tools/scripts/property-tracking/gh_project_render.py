@@ -38,7 +38,7 @@ except ImportError:  # pragma: no cover
 
 # Reuse the single source of truth for status derivation (same directory).
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from scan_properties import derive_status, display_path  # noqa: E402
+from scan_properties import FAIL, OK, SCAN, derive_status, display_path  # noqa: E402
 
 REPO_ROOT = Path(__file__).resolve().parents[3]
 DEFAULT_CATALOG = Path(__file__).resolve().parent / "properties.yaml"
@@ -95,6 +95,10 @@ def render_region(cat: dict, repo: str):
         for num in (p.get("issues") or []):
             by_era.setdefault(p["era"], []).append((num, p["id"], status))
 
+    total = sum(len(set(rows)) for rows in by_era.values())
+    print(f"{SCAN} fetching live state for {total} issue reference(s) from {repo} …",
+          file=sys.stderr)
+
     for era, rows in by_era.items():
         if not rows:
             continue
@@ -145,12 +149,13 @@ def main() -> int:
 
     if args.check:
         stale = (not args.out.exists()) or (args.out.read_text(encoding="utf-8") != rendered)
-        print("stale" if stale else "up-to-date", file=sys.stderr)
+        print(f"{FAIL} stale — regenerate and commit" if stale else f"{OK} up-to-date",
+              file=sys.stderr)
         return 1 if stale else 0
 
     args.out.write_text(rendered, encoding="utf-8")
     tally = f"{n_ok} ✅" + (f", {n_fail} ❌" if n_fail else "")
-    print(f"wrote {display_path(args.out)} ({n_ok + n_fail} issue(s): {tally})")
+    print(f"{OK} wrote {display_path(args.out)} ({n_ok + n_fail} issue(s): {tally})")
     return 0
 
 

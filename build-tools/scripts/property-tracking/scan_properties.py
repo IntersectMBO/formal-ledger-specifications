@@ -56,6 +56,9 @@ END = "<!-- END GENERATED: dashboard (scan_properties.py) -->"
 
 PENDING_MARKER = "coming soon"
 
+# Log icons, shared with the gh_project_* scripts (which import them from here).
+OK, FAIL, WARN_ICON, NOTE, SCAN = "✅", "❌", "⚠️", "📝", "🔍"
+
 # The four derived status values, in display order. There is no declared status.
 STATUS_ORDER = ["proved", "stated", "planned", "idea"]
 STATUS_BADGE = {
@@ -269,13 +272,21 @@ def main() -> int:
 
     warns = [x for x in problems if x[0] == "WARN"]
 
+    if not errors:
+        print(f"{SCAN} {len(results)} properties in {display_path(args.catalog)}, "
+              "statuses derived from the Agda:", file=sys.stderr)
+        for p in cat["properties"]:
+            print(f"  {STATUS_BADGE[results[p['id']]['status']]:<11} {p['id']}",
+                  file=sys.stderr)
+
     for level, pid, msg in problems:
-        print(f"{level}: {pid}: {msg}", file=sys.stderr)
+        print(f"{FAIL if level == 'ERROR' else WARN_ICON} {level}: {pid}: {msg}",
+              file=sys.stderr)
 
     if errors:
         # An invalid catalog cannot be meaningfully rendered or checked;
         # report cleanly (the CI gate needs exit 1, not a traceback).
-        print(f"\nFAILED: {len(errors)} error(s), {len(warns)} warning(s); "
+        print(f"\n{FAIL} FAILED: {len(errors)} error(s), {len(warns)} warning(s); "
               "fix the catalog first.", file=sys.stderr)
         return 1
 
@@ -286,16 +297,16 @@ def main() -> int:
         stale = (not args.dashboard.exists()) or (
             args.dashboard.read_text(encoding="utf-8") != rendered)
         if stale:
-            print(f"ERROR: {display_path(args.dashboard)} is out of date; "
+            print(f"{FAIL} ERROR: {display_path(args.dashboard)} is out of date; "
                   "run scan_properties.py and commit it", file=sys.stderr)
         ok = (not errors) and (not stale)
-        print(f"\n{'OK' if ok else 'FAILED'}: "
+        print(f"\n{OK + ' OK' if ok else FAIL + ' FAILED'}: "
               f"{len(errors) + (1 if stale else 0)} error(s), {len(warns)} warning(s), "
               f"dashboard {'stale' if stale else 'up-to-date'}.", file=sys.stderr)
         return 0 if ok else 1
 
     args.dashboard.write_text(rendered, encoding="utf-8")
-    print(f"\nwrote {display_path(args.dashboard)} "
+    print(f"\n{OK} wrote {display_path(args.dashboard)} "
           f"({len(errors)} error(s), {len(warns)} warning(s))", file=sys.stderr)
     return 1 if errors else 0
 
