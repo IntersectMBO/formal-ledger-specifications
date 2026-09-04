@@ -479,29 +479,50 @@ python3 build-tools/scripts/property-tracking/scan_properties.py --check  # what
 
 ### Conventions for property modules
 
-+  One focused module per property, in the STS's `Properties/` directory (e.g.
-   `Chain/Properties/EpochStep.lagda.md`); aggregator modules
-   (`X/Properties.lagda.md`) just re-export.
-+  While unproved, the module states the proposition and ends with
++  One focused module per property, in the `X/Properties/` subdirectory of the
+   relevant module `X`.  For example, `Chain/Properties/EpochStep.lagda.md` holds
+   a property concerning `Chain`.  An aggregator module, `X/Properties.lagda.md`,
+   lists (and imports) every property submodule in `X/Properties/`.
+
++  While unproved, the module states the proposition (as a type) and ends with
    `*Proof*. (coming soon)`.  When proved, the proof replaces that line.  The
-   `coming soon` string is the machine-readable pending signal; keep it.
+   `coming soon` string is the machine-readable pending signal which
+   **must be present in every module with an unproved property**.
+
 +  Headings carry a stable anchor: `## Claim: … {#clm:Foo}` or
    `## Theorem: … {#thm:Foo}`.
+
 +  The catalog records the dotted `module`, the `anchor`, the key `defs`, and
    the tracking `issues`; this is where the property↔issue link lives, in-repo
    and machine-checkable.
 
 ### Typical workflows
 
-+  **Add a property**.  Add a catalog entry (no status field; with no module it
-   derives as `idea`), write the module with the statement and `coming soon`
-   (it now derives as `stated`), run the scanner, and commit the catalog
-   together with the regenerated dashboard.
-+  **Record a proof**.  Replace `coming soon` with the proof (it now derives as
-   `proved`), run the scanner, commit the regenerated dashboard, and close the
-   tracking issue.
+**Note**: you never set the property status yourself.
 
-### Syncing with GitHub issues
+1.  **Add a property**.  Add a catalog entry to the `build-tools/properties.yaml`
+    file.  (Property status: `idea`.)
+
+2.  **Create a new Agda module** for the property and encode the property as a type.
+    **Important**: add `*Proof*. (coming soon)` after the property type definition.
+    (Property status: `stated`.)
+
+3.  **Run the scanner** and commit the catalog together with the regenerated dashboard.
+
+    ```bash
+    python3 build-tools/scripts/property-tracking/scan_properties.py          # regenerate the dashboard
+    git add build-tools/static/mkdocs/docs/ledger-properties-dashboard.md
+    git commit -m "added new property" && git push
+    ```
+
+4.  **Prove the property**.  Replace `coming soon` with a formal proof, an inhabitant
+    of the property type definition. (Property status: `proved`.)
+
+    Repeat step 3 (run the scanner and commit the regenerated dashboard).
+
+    Close the GitHub issue associated with the property.
+
+### Syncing with GitHub property issues
 
 Two companion scripts keep the catalog and the GitHub issues aligned.  Both are
 run locally by maintainers and are documented in `build-tools/scripts/property-tracking/README.md`;
@@ -510,14 +531,15 @@ Nix shell does not provide `gh`).
 
 +  `gh_project_populate.py` (catalog → GitHub) creates labels, the per-era
    umbrella issues, and one tracking issue per catalog entry that has none,
-   writing the new issue numbers back into the catalog; for already-tracked
-   issues it reconciles the derived `status:*` label.  Run it, with `--dry-run`
-   first, after adding catalog entries that need issues.
+   writing the new issue numbers back into the catalog; for already-tracked issues
+   it reconciles the derived `status:*`  label.  Run it, with `--dry-run` first,
+   after adding catalog entries that need issues.
+
 +  `gh_project_render.py` (GitHub → repo) regenerates the issues view
    (`build-tools/static/mkdocs/docs/ledger-properties-issues.md`) with live
-   open/closed/assignee state.  Run it to refresh that coordination view;
-   formal status never comes from issues, since closing an issue by hand does
-   not make a proof exist.
+   open/closed/assignee state.  Run it to refresh that coordination view; formal
+   status never comes from issues, since closing an issue by hand does not make a
+   proof exist.
 
 ---
 
