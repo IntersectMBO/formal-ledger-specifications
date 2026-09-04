@@ -7,8 +7,9 @@ Blocks), matching the CIP "Urgency signalling for Cardano transactions". The cha
 made relative to the `master` starting point are, per file:
 
 - **Transaction** (`Transaction.lagda.md`) — new tier primitives: `TierNo`,
-  `urgentTier`/`standardTier`, `TierCoeff`, `WaitTime`, `BlockType` (`EB`/`RB`) and the
-  `TxTier` record (`tierNo`, `tierCoeff`). `TxBody` gains `tier : TxTier` and
+  `urgentTier`/`standardTier`, `WaitTime`, `BlockType` (`EB`/`RB`) and the
+  `TxTier` record, which carries `tierNo` only — a transaction declares a tier
+  but no coefficient. `TxBody` gains `tier : TxTier` and
   `feeChangeAddr : Maybe RewardAddress`; `Tx` gains `actualTier : TierNo` (the tier
   the tx is actually placed in, ≤ `body.tier.tierNo`).
   **Fixed point:** tier coefficients are fractional, represented as naturals scaled by
@@ -83,7 +84,7 @@ made relative to the `master` starting point are, per file:
   credits). The fee of a valid (`Scripts-Yes`) tx is **checked on the claimed tier** but
   **charged/refunded on the actual tier**:
     * the admission gate (`tierFeeCheck`) uses the *claimed* coefficient
-      `tier.tierCoeff` — `minfeeAt tier.tierCoeff minfee ≤ txFee`;
+      the ACTUAL tier's quote — `minfeeAt actualCoeff minfee ≤ txFee`;
     * the fee pot always keeps exactly `minfee`;
     * with `actualCoeff = rawCoeff dp actualTier` (the coefficient in force for the tier
       the tx actually landed in — EB ⇒ standard, RB ⇒ urgent) and
@@ -94,15 +95,18 @@ made relative to the `master` starting point are, per file:
   So an urgent-claimed tx bumped into an EB is charged the *standard* fee only if it names a
   change address. The split always sums to `txFee`, so `produced` need only account the
   full `txFee` and no longer depends on `BlockType`. In the `Scripts-No` case (script
-  validation fails) the collateral is collected **in full** into the fee pot
-  (`fees + cbalance (utxo ∣ collateralInputs)`) and no tier split / refund is made —
-  `feeRewards` is carried through unchanged. New helpers `processTxTiers` (accumulate this
-  tx's usage into `currentClause`), `checkPolicyState` (the claimed coefficient is at
-  least the one in force for the claimed tier — an inequality, not an equality, so a tx
-  may post headroom against the quote moving, with the excess refunded) and
-  `tierFeeCheck` (`minfeeAt tier.tierCoeff minfee ≤ txFee` in both block types, plus: RB
+  validation fails) the collected collateral now settles the **same way** as `txFee` does
+  above — `minfee` to the pot, the actual-tier premium to the treasury, the remainder to
+  `feeChangeAddr` or the treasury — rather than being swept into the fee pot in full.
+  Sweeping it interacts badly with a maximum-fee `txFee`, since collateral is
+  `collateralPercentage * txFee` and a transaction posting headroom would forfeit
+  collateral proportional to a ceiling it was never charged. New helpers `processTxTiers` (accumulate this
+  tx's usage into `currentClause`) and `tierFeeCheck` (the block-type rule only: RB
   requires every tx to be urgent tier — `tier.tierNo ≡ urgentTier` and
-  `actualTier ≡ urgentTier`; EB places txs of any tier). The `UTXOS`/`UTXO` rules thread
+  `actualTier ≡ urgentTier`; EB places txs of any tier). `checkPolicyState` is gone
+  with the declared coefficient. The single fee constraint,
+  `minfeeAt actualCoeff minfee ≤ txFee`, is a `UTXO-inductive` premise, where
+  `actualCoeff` is in scope. The `UTXOS`/`UTXO` rules thread
   `policyState`/`feeRewards` and add the tier premises.
 
   Every coefficient→amount conversion goes through the single helper
@@ -121,11 +125,8 @@ made relative to the `master` starting point are, per file:
   Placement premises: a tx may land in its claimed tier or a *less urgent* one (an
   urgent tx can be bumped into an EB, where it is charged the cheaper standard fee and
   so gets more refunded), never a more urgent one. Encoded in `UTXO-inductive` as
-  `tier.tierNo ≤ actualTier` and `coeffR ≤ tier.tierCoeff` (with `urgent = 0 < standard = 1`,
-  `urgentCoeff ≥ standardCoeff`). This also keeps the actual-tier refund
-  `txFee − minfeeAt actualCoeff minfee` non-negative, since `actualCoeff ≤ tier.tierCoeff`,
-  `minfeeAt` is monotone in its coefficient, and the gate gives
-  `minfeeAt tier.tierCoeff minfee ≤ txFee`.
+  `tier.tierNo ≤ actualTier` (with `urgent = 0 < standard = 1`). The actual-tier refund
+  `txFee − minfeeAt actualCoeff minfee` is non-negative directly, by the fee premise.
 
 - **Ledger** (`Ledger.lagda.md`) — `LEnv` gains `blockType`, threaded into the
   `UTXOW` environment; after each tx the accumulated `feeRewards` are flushed into
@@ -202,10 +203,22 @@ private
 record PolicyClause : Type where
   constructor ⟦_,_,_,_,_,_⟧ᵖᶜ
   field
+    -- The three usage fields are sums, over this tier's transactions in this
+    -- block, of accounting functions the ledger already has -- not new
+    -- measures.  A one-byte disagreement here is a chain split at certificate
+    -- validation, so being exact matters:
+    --   size          Σ txsize.  Per-transaction, so block-body framing and any
+    --                 other whole-block serialisation overhead are excluded.
+    --   refScriptSize Σ refScriptsSize.  Reference SCRIPTS only, no datums,
+    --                 matching maxRefScriptSizePerBlock.  Set-deduplicated
+    --                 within a transaction, summed across transactions.
+    --   exUnits       Σ totExUnits.  Budgets DECLARED in redeemers, not units
+    --                 consumed -- the ledger charges declared, and so does this.
+    -- Attribution is by the transaction's actualTier, not the tier it claimed.
     coeff         : ℕ        -- fixed-point tier coefficient (scaled by tierScale)
-    size          : ℕ        -- tx-body bytes, this tier, this block
-    refScriptSize : ℕ        -- reference-script bytes, this tier, this block
-    exUnits       : ExUnits  -- ExUnits, this tier, this block
+    size          : ℕ        -- Σ txsize, this tier, this block
+    refScriptSize : ℕ        -- Σ refScriptsSize, this tier, this block
+    exUnits       : ExUnits  -- Σ totExUnits, this tier, this block
     capSize       : ℕ        -- byte capacity this sample is charged against
     capExUnits    : ExUnits  -- ExUnits capacity this sample is charged against
 
@@ -256,8 +269,14 @@ rawCoeff dp t with lookupᵐ? dp t
 -- Since every coefficient is ≥ tierScale (the floor, maintained by stepCoeff),
 -- minfeeAt c base ≥ base — which is what keeps the treasury share
 -- `minfeeAt c base ∸ base` in the UTXOS fee split from underflowing.
+-- Rounds UP: the ledger never collects less than the quote.  At the floor
+-- c = tierScale the division is exact, so minfeeAt tierScale base ≡ base and a
+-- standard lane at rest charges exactly the ordinary minimum fee.  Form the
+-- product first and divide once; dividing first or rounding at an intermediate
+-- step gives a different integer, and every node must agree on this to the
+-- lovelace.
 minfeeAt : ℕ → Coin → Coin
-minfeeAt c base = (base * c) ND./ tierScale
+minfeeAt c base = ((base * c) + tierScale ∸ 1) ND./ tierScale
 
 private
   -- Scalar multiple of an ExUnits value, built from the commutative monoid. The

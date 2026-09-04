@@ -480,35 +480,21 @@ that their difference is the identity function.
               }
       cc' = cc ∪ˡ ❴ t , cl ❵ᵐ
 
-  -- The tx's claimed coefficient must be at least the coefficient currently in
-  -- force for the tier it claims. NOT equality: a tx may post a higher
-  -- coefficient than the current quote as headroom against the quote moving
-  -- between construction and inclusion, and the excess is refunded by the UTXOS
-  -- fee split rather than charged.
-  checkPolicyState : TxTier → SDPolicy → Set
-  checkPolicyState tier ⟦ cc , dp , n ⟧ˢᵈᵖ =
-    rawCoeff dp (tier .TxTier.tierNo) ≤ tier .TxTier.tierCoeff
-
-  -- Block-type tier admissibility of a transaction. In both block types the tx must
-  -- pay at least its tier fee, `minfeeAt tier.tierCoeff minfee ≤ txFee` — the
-  -- coefficient the tx declares in its TxTier, pinned to be no lower than the
-  -- diversity policy's by `checkPolicyState`. The conversion goes through
-  -- `minfeeAt` because tierCoeff is fixed-point (scaled by tierScale) while the
-  -- fee is a Coin.
-  -- RB blocks additionally require every tx to be urgent tier: both the requested tier
-  -- (tier.tierNo) and the actual placement (actualTier) must equal urgentTier. EB blocks
-  -- place txs of any tier. (How the fee above `minfee` is distributed — tier premium
-  -- and overpayment to treasury / feeChangeAddr — is handled in the UTXOS rule.)
+  -- Block-type tier admissibility of a transaction. A transaction carries no
+  -- coefficient, so there is nothing to check against the diversity policy
+  -- here: the only fee constraint is that `txFee` covers the ACTUAL tier's
+  -- quote, `minfeeAt actualCoeff minfee ≤ txFee`, and that lives in the
+  -- UTXO-inductive premises where `actualCoeff` is in scope.
+  -- What remains block-type-specific: RB blocks require every tx to be urgent
+  -- tier — both the requested tier (tier.tierNo) and the actual placement
+  -- (actualTier) — while EB blocks place txs of any tier. (How the fee above
+  -- `minfee` is distributed — tier premium and overpayment to treasury /
+  -- feeChangeAddr — is handled in the UTXOS rule.)
   tierFeeCheck : BlockType → PParams → UTxO → Tx → Set
-  tierFeeCheck EB pp utxo tx =
-    let open Tx tx
-        base = minfee pp utxo tx
-    in minfeeAt (body .TxBody.tier .TxTier.tierCoeff) base ≤ body .TxBody.txFee
+  tierFeeCheck EB pp utxo tx = ⊤
   tierFeeCheck RB pp utxo tx =
     let open Tx tx
-        base = minfee pp utxo tx
-    in (minfeeAt (body .TxBody.tier .TxTier.tierCoeff) base ≤ body .TxBody.txFee)
-     × (body .TxBody.tier .TxTier.tierNo ≡ urgentTier)
+    in (body .TxBody.tier .TxTier.tierNo ≡ urgentTier)
      × (actualTier ≡ urgentTier)
 
 ```
@@ -550,8 +536,8 @@ data _⊢_⇀⦇_,UTXOS⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Typ
          ps'             = processTxTiers tier txsize (refScriptsSize utxo tx) (totExUnits tx) policyState
          base            = minfee pp utxo tx
          -- the fee is charged/refunded on the tier the tx ACTUALLY landed in
-         -- (actualTier: EB ⇒ standard, RB ⇒ urgent), while the admission gate (tierFeeCheck)
-         -- is on the CLAIMED tier (tier.tierCoeff). actualCoeff is the coefficient
+         -- (actualTier: EB ⇒ standard, RB ⇒ urgent); the tx itself declares no
+         -- coefficient. actualCoeff is the coefficient
          -- currently in force for that tier — the head of its window — and is
          -- ≥ tierScale, which stepCoeff maintains as a floor (see Tiers).
          actualCoeff     = rawCoeff diversityPolicy actualTier
@@ -582,11 +568,25 @@ data _⊢_⇀⦇_,UTXOS⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Typ
 ```agda
          p2Scripts       = collectP2ScriptsWithContext pp tx utxo
          ps'             = processTxTiers tier txsize (refScriptsSize utxo tx) (totExUnits tx) policyState
+         -- CHG: collateral settles the SAME WAY as txFee does in Scripts-Yes,
+         -- so the fee change credit goes to the same place.  Sweeping the whole
+         -- collateral into the fee pot (the pre-existing behaviour) interacts
+         -- badly with a maximum-fee txFee: collateral is
+         -- collateralPercentage * txFee, so posting headroom against quote
+         -- movement would forfeit collateral proportional to a ceiling the tx
+         -- was never charged.  This confines the phase-2 penalty to the fee.
+         collected       = cbalance (utxo ∣ collateralInputs)
+         base            = minfee pp utxo tx
+         actualCoeff     = rawCoeff diversityPolicy actualTier
+         actualFee       = minfeeAt actualCoeff base
+         refund          = collected ∸ actualFee
+         fr'             = M.maybe (λ addr → feeRewards ∪⁺ ❴ addr .RewardAddress.stake , refund ❵ᵐ) feeRewards feeChangeAddr
+         trsFromColl     = M.maybe (const (actualFee ∸ base)) (collected ∸ base) feeChangeAddr
       in
         ∙ evalP2Scripts p2Scripts ≡ isValid
         ∙ isValid ≡ false
           ────────────────────────────────
-          Γ ⊢ ⟦ utxo , fees , deposits , donations , policyState , feeRewards ⟧ᵘ  ⇀⦇ tx ,UTXOS⦈ ⟦ utxo ∣ collateralInputs ᶜ , fees + cbalance (utxo ∣ collateralInputs) , deposits , donations , ps' , feeRewards ⟧ᵘ
+          Γ ⊢ ⟦ utxo , fees , deposits , donations , policyState , feeRewards ⟧ᵘ  ⇀⦇ tx ,UTXOS⦈ ⟦ utxo ∣ collateralInputs ᶜ , fees + base , deposits , donations + trsFromColl , ps' , fr' ⟧ᵘ
 ```
 <!--
 ```agda
@@ -624,15 +624,17 @@ data _⊢_⇀⦇_,UTXO⦈_ where
     in
     ∙ txIns ≢ ∅                              ∙ txIns ∪ refInputs ⊆ dom utxo
     ∙ txIns ∩ refInputs ≡ ∅                  ∙ inInterval slot txVldt
-    -- per-tier minimum-fee gate (minfeeAt tier.tierCoeff minfee ≤ txFee) plus block-type rule:
-    --   RB blocks contain only urgent-tier txs; EB blocks place txs of any tier
+    -- block-type rule: RB blocks contain only urgent-tier txs; EB blocks place
+    -- txs of any tier
     ∙ tierFeeCheck (Γ .UTxOEnv.blockType) pp utxo tx
-    -- a tx may be placed in its claimed tier or a LESS URGENT one (never a more
-    -- urgent one than it paid the gate for): actualTier is no more urgent than
-    -- the claimed tier, so its coefficient is no larger.
-    -- (urgentTier = 0 < standardTier = 1, urgentCoeff ≥ standardCoeff.)
+    -- a tx may be placed in its claimed tier or a LESS URGENT one, never a more
+    -- urgent one (urgentTier = 0 < standardTier = 1)
     ∙ tier .TxTier.tierNo ≤ actualTier
-    ∙ coeffR ≤ tier .TxTier.tierCoeff
+    -- the ONLY fee constraint: txFee must cover the quote for the tier the tx
+    -- actually lands in.  A tx declares no coefficient, so there is nothing to
+    -- compare against the diversity policy; txFee alone bounds what it pays,
+    -- and the UTXOS rule refunds the excess over this amount.
+    ∙ minfeeAt coeffR (minfee pp utxo tx) ≤ txFee
     ∙ (txrdmrs ˢ ≢ ∅ → collateralCheck pp tx utxo)
     ∙ consumed pp s txb ≡ produced pp s tx   ∙ coin mint ≡ 0
     ∙ txsize ≤ maxTxSize pp
@@ -647,7 +649,6 @@ data _⊢_⇀⦇_,UTXO⦈_ where
     ∙ ∀[ a ∈ dom txWithdrawals ]    NetworkIdOf a  ≡ NetworkId
     ∙ txNetworkId  ~ just NetworkId
     ∙ currentTreasury  ~ just treasury
-    ∙ checkPolicyState tier policyState
     ∙ Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ s'
       ────────────────────────────────
       Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s'

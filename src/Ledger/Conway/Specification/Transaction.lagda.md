@@ -149,11 +149,12 @@ record TransactionStructure : Type₁ where
   standardTier = 1
 
   -- Number of decimal digits of precision in the fixed-point representation of
-  -- every tier coefficient. A stored TierCoeff `c` denotes the real coefficient
-  -- `c / tierScale`. NOT a protocol parameter: changing it would silently
-  -- reinterpret every coefficient already stored in the diversity policy, so it
-  -- is fixed here in the specification. See `minfeeAt` in Utxo.lagda.md for the
-  -- one place a coefficient is turned into a Coin.
+  -- every tier coefficient. A stored coefficient `c` denotes the real
+  -- coefficient `c / tierScale`. NOT a protocol parameter: changing it would
+  -- silently reinterpret every coefficient already stored in the diversity
+  -- policy, so it is fixed here in the specification. See `minfeeAt` in
+  -- Tiers.lagda.md for the one place a coefficient is turned into a Coin.
+  -- Coefficients live only in ledger state; a transaction never carries one.
   tierDec : ℕ
   tierDec = 6
 
@@ -165,17 +166,21 @@ record TransactionStructure : Type₁ where
   tierScale : ℕ
   tierScale = 1000000  -- 10 ^ tierDec
 
-  TierCoeff = ℕ  -- fixed-point, scaled by tierScale; always ≥ tierScale
-
   data BlockType : Type where
     EB RB : BlockType  -- Endorser Block / Ranking Block
 
+  -- The tier a transaction claims.  It carries the tier NUMBER only: no
+  -- coefficient.  A declared coefficient would be a second fee ceiling in a
+  -- different unit from `txFee`, redundant against it and able to go stale —
+  -- a transaction whose declared coefficient fell behind the quote would be
+  -- invalid even while its posted `txFee` still covered what was owed.  The
+  -- ledger charges its own quote for the tier the transaction lands in
+  -- (`actualTier`), bounded by `txFee`.
   record TxTier : Set where
-    constructor ⟦_,_⟧ᵗˢ
+    constructor ⟦_⟧ᵗˢ
     field 
-      tierNo : TierNo -- tier number TODO do we need it
+      tierNo : TierNo
       -- timeToWait : WaitTime -- blocks/slots to wait until tx is mature
-      tierCoeff : TierCoeff
 ```
 
 <!--

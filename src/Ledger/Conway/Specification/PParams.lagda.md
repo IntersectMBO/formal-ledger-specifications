@@ -13,7 +13,7 @@ This section defines the adjustable protocol parameters of the Cardano ledger.
 
 open import Data.Product.Properties
 open import Data.Nat.Properties using (m+1+n≢m)
-open import Data.Rational using (ℚ)
+open import Data.Rational as ℚ using (ℚ)
 open import Relation.Nullary.Decidable
 open import Data.List.Relation.Unary.Any using (Any; here; there)
 
@@ -23,7 +23,7 @@ open import Ledger.Prelude
 open import Ledger.Core.Specification.Crypto
 open import Ledger.Conway.Specification.Script.Base
 open import Ledger.Core.Specification.Epoch
-open import Ledger.Prelude.Numeric using (UnitInterval; ℕ⁺)
+open import Ledger.Prelude.Numeric using (UnitInterval; fromUnitInterval; ℕ⁺)
 
 module Ledger.Conway.Specification.PParams
   (cs : CryptoStructure )
@@ -337,15 +337,31 @@ positivePParams pp =  ( maxBlockSize ∷ maxTxSize ∷ maxHeaderSize
 -->
 
 ```agda
+-- Bounds the tier machinery needs beyond non-zero-ness.  Outside these the
+-- controller update is undefined rather than merely mis-calibrated, so they are
+-- ledger-enforced and an update proposal violating one is invalid:
+--   * the window transition sets p₀'s coefficient from p₁'s, the entry behind
+--     it, so a window of 1 has no such entry;
+--   * a target of zero makes the update's divisor C * tNum * D zero.
+-- UnitInterval already gives 0 ≤ target ≤ 1; what it does not give is strict
+-- positivity.
+tierParamsWellFormed : PParams → Type
+tierParamsWellFormed pp =
+    2 ≤ pp .PParams.urgentWindowSize
+  × 2 ≤ pp .PParams.standardWindowSize
+  × ℚ.0ℚ ℚ.< fromUnitInterval (pp .PParams.urgentTarget)
+  × ℚ.0ℚ ℚ.< fromUnitInterval (pp .PParams.standardTarget)
+
 paramsWellFormed : PParams → Type
 paramsWellFormed pp = 0 ∉ fromList (positivePParams pp)
+                    × tierParamsWellFormed pp
 ```
 
 <!--
 ```agda
 paramsWF-elim : (pp : PParams) → paramsWellFormed pp → (n : ℕ) → n ∈ˡ (positivePParams pp) → n > 0
 paramsWF-elim pp pwf (suc n) x = z<s
-paramsWF-elim pp pwf 0 0∈ = ⊥-elim (pwf (to ∈-fromList 0∈))
+paramsWF-elim pp (nz , _) 0 0∈ = ⊥-elim (nz (to ∈-fromList 0∈))
   where open Equivalence
 
 instance
