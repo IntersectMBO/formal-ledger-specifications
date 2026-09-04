@@ -149,7 +149,7 @@ properties:
     module: ""
     anchor: ""
     defs: []
-    issues: []
+    issues: [1312]
     notes: "CHAIN-level lift envisioned by #417; GOV and LEDGER levels are proved."
 
   - id: conway-newepoch-const-rewards
