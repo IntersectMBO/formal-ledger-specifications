@@ -399,9 +399,8 @@ applyRUpd rewardUpdate ⟦ ⟦ treasury , reserves ⟧ᵃ
 
 This section defines the functions
 `calculatePoolDelegatedStake`{.AgdaFunction},
-`calculateVDelegDelegatedStake`{.AgdaFunction}, and
-`mkStakeDistrs`{.AgdaFunction}, which calculates stake distributions
-for voting purposes.
+`calculateVDelegDelegatedStake`{.AgdaFunction} which calculate stake
+distributions for voting purposes.
 
 <!--
 ```agda
@@ -524,20 +523,6 @@ the deposits made to governance actions.
     only, the Haskell implementation and the formal specification
     count deposits on governance actions towards the stake of
     `SPOs`{.AgdaInductiveConstructor} as well.
-
-```agda
-mkStakeDistrs
-  : Snapshot
-  → Epoch
-  → UTxOState
-  → GovState
-  → GState
-  → DState
-  → StakeDistrs
-mkStakeDistrs ss currentEpoch utxoSt govSt gState dState =
-  ⟦ calculateVDelegDelegatedStake currentEpoch utxoSt govSt gState dState
-  , calculatePoolDelegatedStakeForVoting ss govSt ⟧
-```
 
 <!--
 ```agda
@@ -730,7 +715,7 @@ module Post-POOLREAPUpdate (es : EnactState)
 
 This section defines the `EPOCH`{.AgdaDatatype} transition rule.
 
-In Conway, the `EPOCH`{.AgdaDatatype} rule invokes `RATIFIES`{.AgdaDatatype},
+In Dijkstra the `EPOCH`{.AgdaDatatype} rule invokes `RATIFIES`{.AgdaDatatype},
 and carries out the following tasks:
 
 +  payout all the enacted treasury withdrawals;
@@ -743,9 +728,14 @@ and carries out the following tasks:
 +  remove all hot keys from the constitutional committee delegation map
    that do not belong to currently elected members;
 
-+  Apply the resulting enact state from the previous epoch boundary
-   `fut`{.AgdaBound} and store the resulting enact state
++  apply the resulting enact state from the previous epoch boundary
+   `fut`{.AgdaBound} and store the new enact state
    `fut’`{.AgdaBound}.
+
+In Dijkstra, the `EPOCH` rule invokes the `SNAP`{.AgdaDatatype} rule
+_after_ updating ledger state. This change affects the stake
+distribution used for leader election and distributing rewards, and
+for voting on governance actions.
 
 ```agda
 data _⊢_⇀⦇_,EPOCH⦈_ : ⊤ → EpochState → Epoch → EpochState → Type where
@@ -767,19 +757,25 @@ data _⊢_⇀⦇_,EPOCH⦈_ : ⊤ → EpochState → Epoch → EpochState → Ty
       govSt' : GovState
       govSt' = Governance-Update.govSt' govUpd
 
-      stakeDistrs : StakeDistrs
-      stakeDistrs = mkStakeDistrs (Snapshots.mark ss') e utxoSt'
-                                  govSt' (GStateOf ls) (DStateOf ls)
+      ls' : LedgerState
+      ls' = ⟦ utxoSt' , govSt' , ⟦ dState'' , pState'' , gState' ⟧ᶜˢ ⟧
 
       Γ : RatifyEnv
-      Γ = ⟦ stakeDistrs , e , DRepsOf ls , CCHotKeysOf ls , TreasuryOf acnt'' , PoolsOf ls , VoteDelegsOf ls ⟧
+      Γ = ⟦ calculateVDelegDelegatedStake e utxoSt' govSt' gState' dState''
+          , calculatePoolDelegatedStakeForVoting (Snapshots.mark ss') govSt'
+          , e
+          , DRepsOf ls'
+          , CCHotKeysOf ls'
+          , TreasuryOf acnt''
+          , PoolsOf ls'
+          , VoteDelegsOf ls' ⟧
 
     in
-        ls ⊢ ss ⇀⦇ tt ,SNAP⦈ ss'
       ∙ _  ⊢ ⟦ acnt , DStateOf ls , pState' ⟧ ⇀⦇ e ,POOLREAP⦈ ⟦ acnt' , dState' , pState'' ⟧
+      ∙ ls' ⊢ ss ⇀⦇ tt ,SNAP⦈ ss'
       ∙ Γ  ⊢ ⟦ es' , ∅ , false ⟧ ⇀⦇ govSt' ,RATIFIES⦈ fut'
       ──────────────────────────────────────────────
-      _ ⊢ ⟦ acnt , ss , ls , es₀ , fut ⟧ ⇀⦇ e ,EPOCH⦈ ⟦ acnt'' , ss' , ⟦ utxoSt' , govSt' , ⟦ dState'' , pState'' , gState' ⟧ᶜˢ ⟧ , es' , fut' ⟧
+      _ ⊢ ⟦ acnt , ss , ls , es₀ , fut ⟧ ⇀⦇ e ,EPOCH⦈ ⟦ acnt'' , ss' , ls' , es' , fut' ⟧
 ```
 
 ## The <span class="AgdaDatatype">NEWEPOCH</span> Transition System {#sec:the-newepoch-transition-system}

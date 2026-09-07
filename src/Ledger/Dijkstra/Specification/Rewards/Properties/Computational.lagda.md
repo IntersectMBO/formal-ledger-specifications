@@ -7,7 +7,6 @@ source_path: src/Ledger/Dijkstra/Specification/Rewards/Properties/Computational.
 
 This module proves that the `SNAP`{.AgdaDatatype} transition rule is computational.
 
-<!--
 ```agda
 {-# OPTIONS --safe #-}
 
@@ -25,21 +24,21 @@ open import Ledger.Dijkstra.Specification.Rewards txs abs
 
 open Computational ⦃...⦄
 
-module _ {lstate : LedgerState} {ss : Snapshots} where
-```
--->
+module _ {ss : Snapshots} where
 
-```agda
-  SNAP-total : ∃[ ss' ] lstate ⊢ ss ⇀⦇ tt ,SNAP⦈ ss'
-  SNAP-total = -, SNAP
+  module _ {lstate : LedgerState} where
 
-  SNAP-complete : ∀ ss' → lstate ⊢ ss ⇀⦇ tt ,SNAP⦈ ss' → proj₁ SNAP-total ≡ ss'
-  SNAP-complete ss' SNAP = refl
+    SNAP-total : ∃[ ss' ] lstate ⊢ ss ⇀⦇ tt ,SNAP⦈ ss'
+    SNAP-total = -, SNAP
 
-  SNAP-deterministic : ∀ {ss' ss''}
-                     → lstate ⊢ ss ⇀⦇ tt ,SNAP⦈ ss'
-                     → lstate ⊢ ss ⇀⦇ tt ,SNAP⦈ ss'' → ss' ≡ ss''
-  SNAP-deterministic SNAP SNAP = refl
+    SNAP-complete : ∀ ss' → lstate ⊢ ss ⇀⦇ tt ,SNAP⦈ ss' → proj₁ SNAP-total ≡ ss'
+    SNAP-complete ss' SNAP = refl
+
+  SNAP-deterministic : ∀ {ls ls' ss' ss''}
+                     → ls ≡ ls'
+                     → ls ⊢ ss ⇀⦇ tt ,SNAP⦈ ss'
+                     → ls' ⊢ ss ⇀⦇ tt ,SNAP⦈ ss'' → ss' ≡ ss''
+  SNAP-deterministic refl SNAP SNAP = refl
 
 instance
   Computational-SNAP : Computational _⊢_⇀⦇_,SNAP⦈_ ⊥
