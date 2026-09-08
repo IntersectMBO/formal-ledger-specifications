@@ -38,7 +38,7 @@ d_HSNativeScript_14 a0 = ()
 -- Ledger.Dijkstra.Foreign.Script._.HSP1ScriptStructure
 d_HSP1ScriptStructure_18 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.T_P1ScriptStructure_322
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.T_P1ScriptStructure_326
 d_HSP1ScriptStructure_18 v0
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Foreign.Script.Structure.d_HSP1ScriptStructure_356
@@ -46,7 +46,7 @@ d_HSP1ScriptStructure_18 v0
 -- Ledger.Dijkstra.Foreign.Script._.HSP2ScriptStructure
 d_HSP2ScriptStructure_20 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.T_PlutusStructure_360
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.T_PlutusStructure_364
 d_HSP2ScriptStructure_20 v0
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Foreign.Script.Structure.d_HSP2ScriptStructure_390
@@ -56,7 +56,7 @@ d_HSPlutusScript_22 a0 = ()
 -- Ledger.Dijkstra.Foreign.Script._.HSScriptStructure
 d_HSScriptStructure_26 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.T_ScriptStructure_520
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.T_ScriptStructure_524
 d_HSScriptStructure_26 v0
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Foreign.Script.Structure.d_HSScriptStructure_418
@@ -75,7 +75,7 @@ du_Hashable'45'HSNativeScript_28
 -- Ledger.Dijkstra.Foreign.Script._.HSNativeScript.nativeScript
 d_nativeScript_34 ::
   MAlonzo.Code.Ledger.Dijkstra.Foreign.Script.Structure.T_HSNativeScript_336 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Native.T_NativeScript_322
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Native.T_NativeScript_326
 d_nativeScript_34 v0
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Foreign.Script.Structure.d_nativeScript_344
