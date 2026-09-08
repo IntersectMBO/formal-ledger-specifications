@@ -705,14 +705,37 @@ module _  {A B : Type}
 
 -- Corestriction
 
--- Corestricting a map to a set `X` of values confines its range to `X`.
--- Indeed, `(m ∣^ X) ˢ` is `m ˢ` filtered by the predicate `(_∈ X) ∘ proj₂`, so every
--- pair surviving the filter carries a proof that its value belongs to `X`.
+-- Corestricting a map away from a set `X` of values: `(m ∣^ X ᶜ) ˢ` is `m ˢ` filtered
+-- by `(_∉ X) ∘ proj₂`, so every surviving pair is a pair of `m` whose value avoids `X`.
 -- The map `m` is an explicit argument because it cannot be recovered by unification:
--- `_∣^_` goes through `⊆-map`, which mentions `m` only as `m ˢ` (i.e., `proj₁ m`).
-cores-range-⊆ : ∀ {A B : Type} ⦃ _ : DecEq B ⦄ (m : A ⇀ B) {X : ℙ B} → range (m ∣^ X) ⊆ X
-cores-range-⊆ m b∈range with Equivalence.from ∈-map b∈range
-... | _ , refl , ab∈cores = proj₁ (Equivalence.from ∈-filter ab∈cores)
+-- `_∣^_ᶜ` goes through `⊆-map`, which mentions `m` only as `m ˢ` (i.e., `proj₁ m`).
+coex-∈⁻ : {A B : Type} ⦃ _ : DecEq B ⦄ (m : A ⇀ B) {X : ℙ B} {a : A} {b : B}
+  → (a , b) ∈ (m ∣^ X ᶜ) ˢ → b ∉ X × (a , b) ∈ (m ˢ)
+coex-∈⁻ m = from ∈-filter
+
+
+-- A left-biased union never drops a key of its right operand.  A key that `m` also
+-- binds is taken from `m`; a key that `m` does not bind survives the filter that
+-- `_∪ˡ_` applies to `m'`.  Either way the key stays in the domain.
+dom-∪ˡ-⊇ʳ : {A B : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ B) → dom m' ⊆ dom (m ∪ˡ m')
+dom-∪ˡ-⊇ʳ m m' {a} a∈dom' with a ∈? dom m
+... | yes a∈dom =
+  to dom∈  ( from dom∈ a∈dom .proj₁
+           , Properties.∈-∪⁺ (inj₁ (from dom∈ a∈dom .proj₂)))
+... | no a∉dom =
+  to dom∈  ( from dom∈ a∈dom' .proj₁
+           , Properties.∈-∪⁺ (inj₂ (to ∈-filter (a∉dom , from dom∈ a∈dom' .proj₂))))
+
+-- Two consequences, phrased so that the map whose keys are preserved is the explicit
+-- argument: it is the one a caller can name, whereas the overriding map generally is
+-- not (it sits under `proj₁`, so unification cannot recover it from the goal).
+dom-insert-⊇ : {A B : Type} ⦃ _ : DecEq A ⦄ (m : A ⇀ B) {k : A} {v : B}
+  → dom m ⊆ dom (insert m k v)
+dom-insert-⊇ m {k} {v} = dom-∪ˡ-⊇ʳ ❴ k , v ❵ m
+
+dom-mapValueRestricted-⊇ : {A B : Type} ⦃ _ : DecEq A ⦄ (m : A ⇀ B)
+  {f : B → B} {X : ℙ A} → dom m ⊆ dom (mapValueRestricted f m X)
+dom-mapValueRestricted-⊇ m {f} {X} = dom-∪ˡ-⊇ʳ (mapValues f (m ∣ X)) m
 
 
 -- Map lemmas: lookup after insert

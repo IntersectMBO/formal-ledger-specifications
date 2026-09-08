@@ -165,13 +165,19 @@ proposals in `tx`{.AgdaBound}.
 +  **Theorem** [Certs-VoteDelegsVDeleg][]. Vote delegations point at registered
    `DReps`{.AgdaFunction}.
 
-   Let `s`{.AgdaBound}, `s'`{.AgdaBound} be `CertStates`{.AgdaRecord} and
-   `certs`{.AgdaBound} a list of `DCerts`{.AgdaDatatype} such that `s`{.AgdaBound}
-   `⇀⦇`{.AgdaDatatype} `certs`{.AgdaBound} `,CERTS⦈`{.AgdaDatatype} `s'`{.AgdaBound}.
-   Then every value of the `voteDelegs`{.AgdaField} map of `s'`{.AgdaBound} either wraps
-   the `Credential`{.AgdaDatatype} of a `DRep` registered in `s'`{.AgdaBound}, or is
+   Say a `CertState`{.AgdaRecord} `s`{.AgdaBound} *delegates actively* when every value
+   of its `voteDelegs`{.AgdaField} map either wraps the `Credential`{.AgdaDatatype} of a
+   `DRep` registered in `s`{.AgdaBound}, or is
    `vDelegAbstain`{.AgdaInductiveConstructor}, or is
-   `vDelegNoConfidence`{.AgdaInductiveConstructor}.
+   `vDelegNoConfidence`{.AgdaInductiveConstructor}.  This is an invariant of the
+   `CERTS`{.AgdaDatatype} rule: if `s`{.AgdaBound} delegates actively and `s`{.AgdaBound}
+   `⇀⦇`{.AgdaDatatype} `certs`{.AgdaBound} `,CERTS⦈`{.AgdaDatatype} `s'`{.AgdaBound},
+   then `s'`{.AgdaBound} delegates actively.
+
+   Two rules keep it so.  `DELEG-delegate`{.AgdaInductiveConstructor} may install only a
+   delegation that is already active, and
+   `GOVCERT-deregdrep`{.AgdaInductiveConstructor}, the one rule that unregisters a
+   `DRep`, deletes every delegation to it in the same step.
 
 ---
 
