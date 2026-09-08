@@ -12,13 +12,13 @@
         <meta name="author" content="Formal Methods Ledger Team">
       
       
-        <link rel="canonical" href="https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Conway.Conformance.Utxo.Properties.html">
+        <link rel="canonical" href="https://intersectmbo.github.io/formal-ledger-specifications/ledger-properties-dashboard.html">
       
       
-        <link rel="prev" href="Ledger.Conway.Conformance.Utxo.html">
+        <link rel="prev" href="Ledger.Dijkstra.Specification.Utxow.Properties.Computational.html">
       
       
-        <link rel="next" href="Ledger.Conway.Conformance.Utxow.html">
+        <link rel="next" href="Definitions.html">
       
       
         
@@ -29,7 +29,7 @@
     
     
       
-        <title>Properties - Formal Ledger Specification</title>
+        <title>Properties Dashboard - Formal Ledger Specification</title>
       
     
     
@@ -85,6 +85,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#ledger-properties-dashboard" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -114,7 +119,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Properties
+              Properties Dashboard
             
           </span>
         </div>
@@ -322,8 +327,10 @@
   
   
   
+    
   
-    <li class="md-tabs__item">
+  
+    <li class="md-tabs__item md-tabs__item--active">
       <a href="ledger-properties-dashboard.html" class="md-tabs__link">
         
   
@@ -341,8 +348,6 @@
   
   
   
-    
-  
   
     
     
@@ -350,12 +355,10 @@
   
   
   
-    
-  
   
     
     
-      <li class="md-tabs__item md-tabs__item--active">
+      <li class="md-tabs__item">
         <a href="Definitions.html" class="md-tabs__link">
           
   
@@ -8430,10 +8433,37 @@
       
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="ledger-properties-dashboard.html" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Properties Dashboard
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="ledger-properties-dashboard.html" class="md-nav__link md-nav__link--active">
         
   
   
@@ -8449,6 +8479,59 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conway" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conway
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dijkstra" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dijkstra
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -8457,31 +8540,26 @@
       
   
   
-    
   
   
-  
     
     
     
     
-      
-        
-        
       
       
         
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
         
           
-          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
             
   
   
@@ -8499,7 +8577,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_7">
             <span class="md-nav__icon md-icon"></span>
             
@@ -8523,20 +8601,17 @@
       
       
         
-          
-          
-        
       
     
     
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_1" >
         
           
-          <label class="md-nav__link" for="__nav_7_1" id="__nav_7_1_label" tabindex="">
+          <label class="md-nav__link" for="__nav_7_1" id="__nav_7_1_label" tabindex="0">
             
   
   
@@ -8758,20 +8833,17 @@
       
       
         
-          
-          
-        
       
     
     
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_2" >
         
           
-          <label class="md-nav__link" for="__nav_7_2" id="__nav_7_2_label" tabindex="">
+          <label class="md-nav__link" for="__nav_7_2" id="__nav_7_2_label" tabindex="0">
             
   
   
@@ -9732,31 +9804,26 @@
                 
   
   
-    
   
   
-  
     
     
     
     
       
       
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_3" >
         
           
-          
-        
-      
-    
-    
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_3" checked>
-        
-          
-          <label class="md-nav__link" for="__nav_7_3" id="__nav_7_3_label" tabindex="">
+          <label class="md-nav__link" for="__nav_7_3" id="__nav_7_3_label" tabindex="0">
             
   
   
@@ -9774,7 +9841,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_7_3_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_7_3_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_7_3">
             <span class="md-nav__icon md-icon"></span>
             
@@ -10549,8 +10616,6 @@
                 
   
   
-    
-  
   
   
     
@@ -10563,11 +10628,11 @@
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_3_3" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_3_3" >
         
           
           <label class="md-nav__link" for="__nav_7_3_3" id="__nav_7_3_3_label" tabindex="0">
@@ -10588,7 +10653,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_7_3_3_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_7_3_3_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_7_3_3">
             <span class="md-nav__icon md-icon"></span>
             
@@ -10659,8 +10724,6 @@
                 
   
   
-    
-  
   
   
     
@@ -10673,11 +10736,11 @@
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_3_3_3" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_3_3_3" >
         
           
           <label class="md-nav__link" for="__nav_7_3_3_3" id="__nav_7_3_3_3_label" tabindex="0">
@@ -10698,7 +10761,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_7_3_3_3_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_7_3_3_3_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_7_3_3_3">
             <span class="md-nav__icon md-icon"></span>
             
@@ -11313,8 +11376,6 @@
                 
   
   
-    
-  
   
   
     
@@ -11327,11 +11388,11 @@
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_3_3_3_12" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_3_3_3_12" >
         
           
           <label class="md-nav__link" for="__nav_7_3_3_3_12" id="__nav_7_3_3_3_12_label" tabindex="0">
@@ -11352,7 +11413,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_7_3_3_3_12_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_7_3_3_3_12_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_7_3_3_3_12">
             <span class="md-nav__icon md-icon"></span>
             
@@ -11367,17 +11428,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-      
-      <a href="Ledger.Conway.Conformance.Utxo.Properties.html" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="Ledger.Conway.Conformance.Utxo.Properties.html" class="md-nav__link">
         
   
   
@@ -11393,7 +11447,6 @@
   
 
       </a>
-      
     </li>
   
 
@@ -11571,6 +11624,49 @@
   
   
   
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conway" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conway
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dijkstra" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dijkstra
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
   
 </nav>
                   </div>
@@ -11588,7 +11684,7 @@
 
 
 
-  <a href="https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/src/Ledger/Conway/Conformance/Utxo/Properties.lagda.md?plain=1"
+  <a href="https://github.com/IntersectMBO/formal-ledger-specifications/blob/main/docs/ledger-properties-dashboard.md?plain=1"
      class="md-content__button md-icon"
      title="View the source of this page"
      aria-label="View the source of this page">
@@ -11598,116 +11694,344 @@
   </a>
 
 
-  <h1>Properties</h1>
+<h1 id="ledger-properties-dashboard">Ledger properties dashboard<a class="headerlink" href="#ledger-properties-dashboard" title="Permanent link">&para;</a></h1>
+<p>This is the human-facing dashboard of ledger properties across eras. It is
+<strong>generated</strong> from the catalog (<code>build-tools/scripts/property-tracking/properties.yaml</code>) with each
+property's status <strong>derived from the Agda source</strong> by
+<code>build-tools/scripts/property-tracking/scan_properties.py</code>. Do not edit the generated region below
+by hand; edit the catalog and regenerate.</p>
+<p>See the "Tracking Properties of the Ledger" section of <code>CONTRIBUTING.md</code> for
+the conventions and workflow.</p>
+<p>Status legend: ✅ proved · 🟡 stated (proof pending) · 🟦 planned (drafted on
+another branch/PR) · ⚪ idea (not yet in Agda).</p>
+<!-- BEGIN GENERATED: dashboard (scan_properties.py) -->
 
-<pre class="Agda"><a id="107" class="Symbol">{-#</a> <a id="111" class="Keyword">OPTIONS</a> <a id="119" class="Pragma">--safe</a> <a id="126" class="Symbol">#-}</a>
+<p><em>Generated by <code>build-tools/scripts/property-tracking/scan_properties.py</code> from the catalog reconciled against the Agda — do not edit this region by hand.</em></p>
+<h3 id="summary">Summary<a class="headerlink" href="#summary" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Era</th>
+<th style="text-align: right;">proved</th>
+<th style="text-align: right;">stated</th>
+<th style="text-align: right;">planned</th>
+<th style="text-align: right;">idea</th>
+<th style="text-align: right;">total</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>conway</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">22</td>
+</tr>
+<tr>
+<td>dijkstra</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">15</td>
+</tr>
+</tbody>
+</table>
+<h3 id="conway">Conway<a class="headerlink" href="#conway" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Status</th>
+<th>Property</th>
+<th>STS</th>
+<th>Agda module</th>
+<th>Issue(s)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>✅ proved</td>
+<td>CERT and CERTS preserve value</td>
+<td>CERTS</td>
+<td><a href="Ledger.Conway.Specification.Certs.Properties.PoV.html"><code>Ledger.Conway.Specification.Certs.Properties.PoV</code></a></td>
+<td><a href="https://github.com/intersectmbo/formal-ledger-specifications/issues/1240">#1240</a></td>
+</tr>
+<tr>
+<td>✅ proved</td>
+<td>GA deposits are eventually refunded</td>
+<td>CHAIN</td>
+<td><a href="Ledger.Conway.Specification.Chain.Properties.EventuallyRefunded.html"><code>Ledger.Conway.Specification.Chain.Properties.EventuallyRefunded</code></a></td>
+<td><a href="https://github.com/intersectmbo/formal-ledger-specifications/issues/414">#414</a></td>
+</tr>
+<tr>
+<td>✅ proved</td>
+<td>govDepsMatch is a CHAIN invariant</td>
+<td>CHAIN</td>
+<td><a href="Ledger.Conway.Specification.Chain.Properties.GovDepsMatch.html"><code>Ledger.Conway.Specification.Chain.Properties.GovDepsMatch</code></a></td>
+<td><a href="https://github.com/intersectmbo/formal-ledger-specifications/issues/1235">#1235</a></td>
+</tr>
+<tr>
+<td>✅ proved</td>
+<td>EPOCH preserves the DReps equivalence (expired-DReps parametricity)</td>
+<td>EPOCH</td>
+<td><a href="Ledger.Conway.Specification.Epoch.Properties.ExpiredDReps.html"><code>Ledger.Conway.Specification.Epoch.Properties.ExpiredDReps</code></a></td>
+<td><a href="https://github.com/intersectmbo/formal-ledger-specifications/issues/1241">#1241</a></td>
+</tr>
+<tr>
+<td>✅ proved</td>
+<td>govDepsMatch is an EPOCH invariant</td>
+<td>EPOCH</td>
+<td><a href="Ledger.Conway.Specification.Epoch.Properties.GovDepsMatch.html"><code>Ledger.Conway.Specification.Epoch.Properties.GovDepsMatch</code></a></td>
+<td><a href="https://github.com/intersectmbo/formal-ledger-specifications/issues/1237">#1237</a></td>
+</tr>
+<tr>
+<td>✅ proved</td>
+<td>ChangePParams proposals have a non-empty update group</td>
+<td>GOV</td>
+<td><a href="Ledger.Conway.Specification.Gov.Properties.ChangePPGroup.html"><code>Ledger.Conway.Specification.Gov.Properties.ChangePPGroup</code></a></td>
+<td><a href="https://github.com/intersectmbo/formal-ledger-specifications/issues/1234">#1234</a></td>
+</tr>
+<tr>
+<td>✅ proved</td>
+<td>A voter's (last) vote in a block is applied to the GA</td>
+<td>GOV</td>
+<td><a href="Ledger.Conway.Specification.Gov.Properties.LastVoteApplied.html"><code>Ledger.Conway.Specification.Gov.Properties.LastVoteApplied</code></a></td>
+<td><a href="https://github.com/intersectmbo/formal-ledger-specifications/issues/417">#417</a></td>
+</tr>
+<tr>
+<td>✅ proved</td>
+<td>ChangePParams proposals of an accepted transaction have a non-empty update group</td>
+<td>LEDGER</td>
+<td><a href="Ledger.Conway.Specification.Ledger.Properties.ChangePPGroup.html"><code>Ledger.Conway.Specification.Ledger.Properties.ChangePPGroup</code></a></td>
+<td><a href="https://github.com/intersectmbo/formal-ledger-specifications/issues/1234">#1234</a></td>
+</tr>
+<tr>
+<td>✅ proved</td>
+<td>govDepsMatch is a LEDGER invariant</td>
+<td>LEDGER</td>
+<td><a href="Ledger.Conway.Specification.Ledger.Properties.GovDepsMatch.html"><code>Ledger.Conway.Specification.Ledger.Properties.GovDepsMatch</code></a></td>
+<td><a href="https://github.com/intersectmbo/formal-ledger-specifications/issues/1236">#1236</a></td>
+</tr>
+<tr>
+<td>✅ proved</td>
+<td>The last vote is applied at the LEDGER level</td>
+<td>LEDGER</td>
+<td><a href="Ledger.Conway.Specification.Ledger.Properties.LastVoteApplied.html"><code>Ledger.Conway.Specification.Ledger.Properties.LastVoteApplied</code></a></td>
+<td><a href="https://github.com/intersectmbo/formal-ledger-specifications/issues/417">#417</a></td>
+</tr>
+<tr>
+<td>✅ proved</td>
+<td>LEDGER preserves value</td>
+<td>LEDGER</td>
+<td><a href="Ledger.Conway.Specification.Ledger.Properties.PoV.html"><code>Ledger.Conway.Specification.Ledger.Properties.PoV</code></a></td>
+<td><a href="https://github.com/intersectmbo/formal-ledger-specifications/issues/1238">#1238</a></td>
+</tr>
+<tr>
+<td>✅ proved</td>
+<td>Rewards domain is unchanged by POOLREAP, EPOCH, and NEWEPOCH (rewards are constant at the epoch boundary)</td>
+<td>NEWEPOCH</td>
+<td><a href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html"><code>Ledger.Conway.Specification.Epoch.Properties.ConstRwds</code></a></td>
+<td><a href="https://github.com/intersectmbo/formal-ledger-specifications/issues/1229">#1229</a></td>
+</tr>
+<tr>
+<td>✅ proved</td>
+<td>k proposals grow the GA deposit pot by k * govActionDeposit</td>
+<td>UTXO</td>
+<td><a href="Ledger.Conway.Specification.Utxo.Properties.GenMinSpend.html"><code>Ledger.Conway.Specification.Utxo.Properties.GenMinSpend</code></a></td>
+<td><a href="https://github.com/intersectmbo/formal-ledger-specifications/issues/413">#413</a></td>
+</tr>
+<tr>
+<td>✅ proved</td>
+<td>Coin consumed is at least the sum of GA deposits of the proposals</td>
+<td>UTXO</td>
+<td><a href="Ledger.Conway.Specification.Utxo.Properties.MinSpend.html"><code>Ledger.Conway.Specification.Utxo.Properties.MinSpend</code></a></td>
+<td><a href="https://github.com/intersectmbo/formal-ledger-specifications/issues/1228">#1228</a></td>
+</tr>
+<tr>
+<td>✅ proved</td>
+<td>UTXO preserves value</td>
+<td>UTXO</td>
+<td><a href="Ledger.Conway.Specification.Utxo.Properties.PoV.html"><code>Ledger.Conway.Specification.Utxo.Properties.PoV</code></a></td>
+<td><a href="https://github.com/intersectmbo/formal-ledger-specifications/issues/1239">#1239</a></td>
+</tr>
+<tr>
+<td>🟡 stated</td>
+<td>voteDelegs range is contained in VDelegs built from its domain</td>
+<td>CERTS</td>
+<td><a href="Ledger.Conway.Specification.Certs.Properties.VoteDelegsVDeleg.html"><code>Ledger.Conway.Specification.Certs.Properties.VoteDelegsVDeleg</code></a></td>
+<td><a href="https://github.com/intersectmbo/formal-ledger-specifications/issues/1233">#1233</a></td>
+</tr>
+<tr>
+<td>🟡 stated</td>
+<td>dom rewards = CredentialDeposit^-1 (dom deposits) is a CHAIN invariant</td>
+<td>CHAIN</td>
+<td><a href="Ledger.Conway.Specification.Chain.Properties.CredDepsEqualDomRwds.html"><code>Ledger.Conway.Specification.Chain.Properties.CredDepsEqualDomRwds</code></a></td>
+<td><a href="https://github.com/intersectmbo/formal-ledger-specifications/issues/1230">#1230</a></td>
+</tr>
+<tr>
+<td>🟡 stated</td>
+<td>EnactState only changes at an epoch boundary (new enact state =&gt; new epoch)</td>
+<td>CHAIN</td>
+<td><a href="Ledger.Conway.Specification.Chain.Properties.EpochStep.html"><code>Ledger.Conway.Specification.Chain.Properties.EpochStep</code></a></td>
+<td><a href="https://github.com/intersectmbo/formal-ledger-specifications/issues/412">#412</a></td>
+</tr>
+<tr>
+<td>🟡 stated</td>
+<td>Well-formedness of PParams is a CHAIN invariant</td>
+<td>CHAIN</td>
+<td><a href="Ledger.Conway.Specification.Chain.Properties.PParamsWellFormed.html"><code>Ledger.Conway.Specification.Chain.Properties.PParamsWellFormed</code></a></td>
+<td><a href="https://github.com/intersectmbo/formal-ledger-specifications/issues/1231">#1231</a></td>
+</tr>
+<tr>
+<td>🟡 stated</td>
+<td>Active DReps are unchanged across an epoch when there are no proposals</td>
+<td>EPOCH</td>
+<td><a href="Ledger.Conway.Specification.Epoch.Properties.NoPropSameDReps.html"><code>Ledger.Conway.Specification.Epoch.Properties.NoPropSameDReps</code></a></td>
+<td><a href="https://github.com/intersectmbo/formal-ledger-specifications/issues/1232">#1232</a></td>
+</tr>
+<tr>
+<td>⚪ idea</td>
+<td>The last vote is applied at the CHAIN level</td>
+<td>CHAIN</td>
+<td>—</td>
+<td><a href="https://github.com/intersectmbo/formal-ledger-specifications/issues/1312">#1312</a></td>
+</tr>
+<tr>
+<td>⚪ idea</td>
+<td>Voting power of a stake credential does not decrease on self-funded proposal</td>
+<td>EPOCH</td>
+<td>—</td>
+<td><a href="https://github.com/intersectmbo/formal-ledger-specifications/issues/415">#415</a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="dijkstra">Dijkstra<a class="headerlink" href="#dijkstra" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Status</th>
+<th>Property</th>
+<th>STS</th>
+<th>Agda module</th>
+<th>Issue(s)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>⚪ idea</td>
+<td>[port] voteDelegs range is contained in VDelegs built from its domain</td>
+<td>CERTS</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>⚪ idea</td>
+<td>[port] dom rewards = CredentialDeposit^-1 (dom deposits) is a CHAIN invariant</td>
+<td>CHAIN</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>⚪ idea</td>
+<td>[port] EnactState only changes at an epoch boundary</td>
+<td>CHAIN</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>⚪ idea</td>
+<td>[port] GA deposits are eventually refunded</td>
+<td>CHAIN</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>⚪ idea</td>
+<td>[port] Well-formedness of PParams is a CHAIN invariant</td>
+<td>CHAIN</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>⚪ idea</td>
+<td>[port] EPOCH preserves the DReps equivalence</td>
+<td>EPOCH</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>⚪ idea</td>
+<td>[port] Active DReps are unchanged across an epoch with no proposals</td>
+<td>EPOCH</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>⚪ idea</td>
+<td>[port] Voting power does not decrease on a self-funded proposal</td>
+<td>EPOCH</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>⚪ idea</td>
+<td>[port] ChangePParams proposals have a non-empty update group</td>
+<td>GOV</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>⚪ idea</td>
+<td>[port] A voter's (last) vote in a block is applied to the GA</td>
+<td>GOV</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>⚪ idea</td>
+<td>[port] govDepsMatch is a CHAIN/LEDGER/EPOCH invariant</td>
+<td>CHAIN</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>⚪ idea</td>
+<td>[port] Rewards domain is unchanged by NEWEPOCH</td>
+<td>NEWEPOCH</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>⚪ idea</td>
+<td>[port] Preservation of value (LEDGER/UTXO/CERTS/CERT)</td>
+<td>LEDGER</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>⚪ idea</td>
+<td>[port] k proposals grow the GA deposit pot by k * govActionDeposit</td>
+<td>UTXO</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>⚪ idea</td>
+<td>[port] Coin consumed is at least the sum of GA deposits of the proposals</td>
+<td>UTXO</td>
+<td>—</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<!-- END GENERATED: dashboard (scan_properties.py) -->
 
-<a id="131" class="Keyword">open</a> <a id="136" class="Keyword">import</a> <a id="143" href="Ledger.Conway.Specification.Abstract.html" class="Module">Ledger.Conway.Specification.Abstract</a> <a id="180" class="Keyword">using</a> <a id="186" class="Symbol">(</a><a id="187" href="Ledger.Conway.Specification.Abstract.html#1523" class="Record">AbstractFunctions</a><a id="204" class="Symbol">)</a>
-<a id="206" class="Keyword">open</a> <a id="211" class="Keyword">import</a> <a id="218" href="Ledger.Conway.Specification.Transaction.html" class="Module">Ledger.Conway.Specification.Transaction</a> <a id="258" class="Keyword">using</a> <a id="264" class="Symbol">(</a><a id="265" href="Ledger.Conway.Specification.Transaction.html#2459" class="Record">TransactionStructure</a><a id="285" class="Symbol">)</a>
-
-<a id="288" class="Keyword">module</a> <a id="295" href="Ledger.Conway.Conformance.Utxo.Properties.html" class="Module">Ledger.Conway.Conformance.Utxo.Properties</a>
-  <a id="339" class="Symbol">(</a><a id="340" href="Ledger.Conway.Conformance.Utxo.Properties.html#340" class="Bound">txs</a> <a id="344" class="Symbol">:</a> <a id="346" class="Symbol">_)</a> <a id="349" class="Symbol">(</a><a id="350" class="Keyword">open</a> <a id="355" href="Ledger.Conway.Specification.Transaction.html#2459" class="Module">TransactionStructure</a> <a id="376" href="Ledger.Conway.Conformance.Utxo.Properties.html#340" class="Bound">txs</a><a id="379" class="Symbol">)</a>
-  <a id="383" class="Symbol">(</a><a id="384" href="Ledger.Conway.Conformance.Utxo.Properties.html#384" class="Bound">abs</a> <a id="388" class="Symbol">:</a> <a id="390" href="Ledger.Conway.Specification.Abstract.html#1523" class="Record">AbstractFunctions</a> <a id="408" href="Ledger.Conway.Conformance.Utxo.Properties.html#340" class="Bound">txs</a><a id="411" class="Symbol">)</a> <a id="413" class="Symbol">(</a><a id="414" class="Keyword">open</a> <a id="419" href="Ledger.Conway.Specification.Abstract.html#1523" class="Module">AbstractFunctions</a> <a id="437" href="Ledger.Conway.Conformance.Utxo.Properties.html#384" class="Bound">abs</a><a id="440" class="Symbol">)</a>
-  <a id="444" class="Keyword">where</a>
-
-<a id="451" class="Keyword">open</a> <a id="456" class="Keyword">import</a> <a id="463" href="Data.Nat.Properties.html" class="Module">Data.Nat.Properties</a> <a id="483" class="Keyword">hiding</a> <a id="490" class="Symbol">(</a><a id="491" href="Data.Nat.Properties.html#4093" class="Function Operator">_≟_</a><a id="494" class="Symbol">)</a>
-<a id="496" class="Keyword">open</a> <a id="501" class="Keyword">import</a> <a id="508" href="Data.String.Base.html" class="Module">Data.String.Base</a> <a id="525" class="Keyword">renaming</a> <a id="534" class="Symbol">(</a><a id="535" href="Data.String.Base.html#2425" class="Function Operator">_++_</a> <a id="540" class="Symbol">to</a> <a id="543" class="Function Operator">_+ˢ_</a><a id="547" class="Symbol">)</a> <a id="549" class="Keyword">using</a> <a id="555" class="Symbol">()</a>
-<a id="558" class="Keyword">open</a> <a id="563" class="Keyword">import</a> <a id="570" href="Interface.ComputationalRelation.html" class="Module">Interface.ComputationalRelation</a>
-<a id="602" class="Keyword">open</a> <a id="607" class="Keyword">import</a> <a id="614" href="Ledger.Prelude.html" class="Module">Ledger.Prelude</a> <a id="629" class="Keyword">hiding</a> <a id="636" class="Symbol">(</a><a id="637" href="Class.HasOrder.Core.html#1000" class="Function">≤-trans</a><a id="644" class="Symbol">;</a> <a id="646" href="Class.HasOrder.Core.html#1899" class="Field">≤-antisym</a><a id="655" class="Symbol">;</a> <a id="657" href="Axiom.Set.html#9909" class="Function">All</a><a id="660" class="Symbol">);</a> <a id="663" class="Keyword">open</a> <a id="668" href="abstract-set-theory.FiniteSetTheory.html#1870" class="Module">Properties</a>
-<a id="679" class="Keyword">open</a> <a id="684" class="Keyword">import</a> <a id="691" href="Ledger.Conway.Specification.Script.Validation.html" class="Module">Ledger.Conway.Specification.Script.Validation</a> <a id="737" href="Ledger.Conway.Conformance.Utxo.Properties.html#340" class="Bound">txs</a> <a id="741" href="Ledger.Conway.Conformance.Utxo.Properties.html#384" class="Bound">abs</a>
-<a id="745" class="Keyword">open</a> <a id="750" class="Keyword">import</a> <a id="757" href="Ledger.Conway.Conformance.Utxo.html" class="Module">Ledger.Conway.Conformance.Utxo</a> <a id="788" href="Ledger.Conway.Conformance.Utxo.Properties.html#340" class="Bound">txs</a> <a id="792" href="Ledger.Conway.Conformance.Utxo.Properties.html#384" class="Bound">abs</a>
-<a id="796" class="Keyword">open</a> <a id="801" class="Keyword">import</a> <a id="808" href="Ledger.Conway.Conformance.Certs.html" class="Module">Ledger.Conway.Conformance.Certs</a> <a id="840" href="Ledger.Conway.Specification.Transaction.html#3779" class="Function">govStructure</a>
-<a id="853" class="Keyword">open</a> <a id="858" class="Keyword">import</a> <a id="865" href="Prelude.html" class="Module">Prelude</a>
-<a id="873" class="Keyword">open</a> <a id="878" class="Keyword">import</a> <a id="885" href="stdlib-meta.Tactic.GenError.html" class="Module">stdlib-meta.Tactic.GenError</a>
-
-<a id="914" class="Keyword">private</a>
-  <a id="924" class="Keyword">module</a> <a id="L"></a><a id="931" href="Ledger.Conway.Conformance.Utxo.Properties.html#931" class="Module">L</a> <a id="933" class="Keyword">where</a>
-    <a id="943" class="Keyword">open</a> <a id="948" class="Keyword">import</a> <a id="955" href="Ledger.Conway.Specification.Utxo.html" class="Module">Ledger.Conway.Specification.Utxo</a> <a id="988" href="Ledger.Conway.Conformance.Utxo.Properties.html#340" class="Bound">txs</a> <a id="992" href="Ledger.Conway.Conformance.Utxo.Properties.html#384" class="Bound">abs</a> <a id="996" class="Keyword">public</a>
-
-<a id="1004" class="Keyword">open</a> <a id="1009" href="Function.Bundles.html#4750" class="Module">Equivalence</a>
-
-<a id="1022" class="Keyword">instance</a>
-  <a id="1033" href="Ledger.Conway.Conformance.Utxo.Properties.html#1033" class="Function">_</a> <a id="1035" class="Symbol">=</a> <a id="1037" href="Ledger.Conway.Specification.TokenAlgebra.Base.html#810" class="Field">TokenAlgebra.Value-CommutativeMonoid</a> <a id="1074" href="Ledger.Conway.Specification.Transaction.html#3493" class="Field">tokenAlgebra</a>
-  <a id="1089" href="Ledger.Conway.Conformance.Utxo.Properties.html#1089" class="Function">_</a> <a id="1091" class="Symbol">=</a> <a id="1093" href="Data.Nat.Properties.html#17566" class="Function">+-0-monoid</a>
-  <a id="1106" href="Ledger.Conway.Conformance.Utxo.Properties.html#1106" class="Function">_</a> <a id="1108" class="Symbol">=</a> <a id="1110" href="Interface.ComputationalRelation.html#11577" class="Function">Functor-ComputationResult</a>
-
-<a id="1137" class="Keyword">instance</a>
-  <a id="Computational-UTXOS"></a><a id="1148" href="Ledger.Conway.Conformance.Utxo.Properties.html#1148" class="Function">Computational-UTXOS</a> <a id="1168" class="Symbol">:</a> <a id="1170" href="Interface.ComputationalRelation.html#13270" class="Record">Computational</a> <a id="1184" href="Ledger.Conway.Conformance.Utxo.html#1253" class="Datatype Operator">_⊢_⇀⦇_,UTXOS⦈_</a> <a id="1199" href="Agda.Builtin.String.html#335" class="Postulate">String</a>
-  <a id="1208" href="Ledger.Conway.Conformance.Utxo.Properties.html#1148" class="Function">Computational-UTXOS</a> <a id="1228" class="Symbol">=</a> <a id="1230" class="Keyword">record</a> <a id="1237" class="Symbol">{</a><a id="1238" href="Ledger.Conway.Conformance.Utxo.Properties.html#1259" class="Module">go</a><a id="1240" class="Symbol">}</a> <a id="1242" class="Keyword">where</a>
-    <a id="1252" class="Keyword">module</a> <a id="1259" href="Ledger.Conway.Conformance.Utxo.Properties.html#1259" class="Module">go</a> <a id="1262" href="Ledger.Conway.Conformance.Utxo.Properties.html#1262" class="Bound">Γ</a> <a id="1264" href="Ledger.Conway.Conformance.Utxo.Properties.html#1264" class="Bound">s</a> <a id="1266" href="Ledger.Conway.Conformance.Utxo.Properties.html#1266" class="Bound">tx</a>
-      <a id="1275" class="Symbol">(</a><a id="1276" class="Keyword">let</a> <a id="1280" href="Ledger.Conway.Conformance.Utxo.Properties.html#1280" class="Bound">H-Yes</a> <a id="1286" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="1288" href="Class.Decidable.Core.html#262" class="InductiveConstructor Operator">⁇</a> <a id="1290" href="Ledger.Conway.Conformance.Utxo.Properties.html#1290" class="Bound">H-Yes?</a> <a id="1297" class="Symbol">=</a> <a id="1299" href="Ledger.Conway.Conformance.Utxo.html#2533" class="Function">Scripts-Yes-premises</a> <a id="1320" class="Symbol">{</a><a id="1321" href="Ledger.Conway.Conformance.Utxo.Properties.html#1262" class="Bound">Γ</a><a id="1322" class="Symbol">}</a> <a id="1324" class="Symbol">{</a><a id="1325" href="Ledger.Conway.Conformance.Utxo.Properties.html#1264" class="Bound">s</a><a id="1326" class="Symbol">}</a> <a id="1328" class="Symbol">{</a><a id="1329" href="Ledger.Conway.Conformance.Utxo.Properties.html#1266" class="Bound">tx</a><a id="1331" class="Symbol">})</a>
-      <a id="1340" class="Symbol">(</a><a id="1341" class="Keyword">let</a> <a id="1345" href="Ledger.Conway.Conformance.Utxo.Properties.html#1345" class="Bound">H-No</a>  <a id="1351" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="1353" href="Class.Decidable.Core.html#262" class="InductiveConstructor Operator">⁇</a> <a id="1355" href="Ledger.Conway.Conformance.Utxo.Properties.html#1355" class="Bound">H-No?</a>  <a id="1362" class="Symbol">=</a> <a id="1364" href="Ledger.Conway.Conformance.Utxo.html#2621" class="Function">Scripts-No-premises</a> <a id="1384" class="Symbol">{</a><a id="1385" href="Ledger.Conway.Conformance.Utxo.Properties.html#1262" class="Bound">Γ</a><a id="1386" class="Symbol">}</a> <a id="1388" class="Symbol">{</a><a id="1389" href="Ledger.Conway.Conformance.Utxo.Properties.html#1264" class="Bound">s</a><a id="1390" class="Symbol">}</a> <a id="1392" class="Symbol">{</a><a id="1393" href="Ledger.Conway.Conformance.Utxo.Properties.html#1266" class="Bound">tx</a><a id="1395" class="Symbol">})</a> <a id="1398" class="Keyword">where</a>
-      <a id="1410" class="Keyword">open</a> <a id="1415" href="Ledger.Conway.Specification.Transaction.html#6625" class="Module">Tx</a> <a id="1418" href="Ledger.Conway.Conformance.Utxo.Properties.html#1266" class="Bound">tx</a> <a id="1421" class="Keyword">renaming</a> <a id="1430" class="Symbol">(</a><a id="1431" href="Ledger.Conway.Specification.Transaction.html#6657" class="Field">body</a> <a id="1436" class="Symbol">to</a> <a id="1439" class="Field">txb</a><a id="1442" class="Symbol">);</a> <a id="1445" class="Keyword">open</a> <a id="1450" href="Ledger.Conway.Specification.Transaction.html#4780" class="Module">TxBody</a> <a id="1457" href="Ledger.Conway.Conformance.Utxo.Properties.html#1439" class="Field">txb</a>
-      <a id="1467" class="Keyword">open</a> <a id="1472" href="Ledger.Conway.Specification.Utxo.html#2857" class="Module">UTxOEnv</a> <a id="1480" href="Ledger.Conway.Conformance.Utxo.Properties.html#1262" class="Bound">Γ</a> <a id="1482" class="Keyword">renaming</a> <a id="1491" class="Symbol">(</a><a id="1492" href="Ledger.Conway.Specification.Utxo.html#2911" class="Field">pparams</a> <a id="1500" class="Symbol">to</a> <a id="1503" class="Field">pp</a><a id="1505" class="Symbol">)</a>
-      <a id="1513" class="Keyword">open</a> <a id="1518" href="Ledger.Conway.Specification.Utxo.html#2991" class="Module">UTxOState</a> <a id="1528" href="Ledger.Conway.Conformance.Utxo.Properties.html#1264" class="Bound">s</a>
-      <a id="1536" href="Ledger.Conway.Conformance.Utxo.Properties.html#1536" class="Function">sLst</a> <a id="1541" class="Symbol">=</a> <a id="1543" href="Ledger.Conway.Specification.Script.Validation.html#3443" class="Function">collectP2ScriptsWithContext</a> <a id="1571" href="Ledger.Conway.Conformance.Utxo.Properties.html#1503" class="Function">pp</a> <a id="1574" href="Ledger.Conway.Conformance.Utxo.Properties.html#1266" class="Bound">tx</a> <a id="1577" href="Ledger.Conway.Specification.Utxo.html#3084" class="Function">utxo</a>
-
-      <a id="1589" href="Ledger.Conway.Conformance.Utxo.Properties.html#1589" class="Function">computeProof</a> <a id="1602" class="Symbol">=</a>
-        <a id="1612" href="Function.Base.html#4061" class="Function Operator">case</a> <a id="1617" href="Ledger.Conway.Conformance.Utxo.Properties.html#1290" class="Bound">H-Yes?</a> <a id="1624" href="Data.Product.Base.html#1686" class="Function Operator">,′</a> <a id="1627" href="Ledger.Conway.Conformance.Utxo.Properties.html#1355" class="Bound">H-No?</a> <a id="1633" href="Function.Base.html#4061" class="Function Operator">of</a> <a id="1636" class="Symbol">λ</a> <a id="1638" class="Keyword">where</a>
-          <a id="1654" class="Symbol">(</a><a id="1655" href="Relation.Nullary.Decidable.Core.html#2099" class="InductiveConstructor">yes</a> <a id="1659" href="Ledger.Conway.Conformance.Utxo.Properties.html#1659" class="Bound">p</a> <a id="1661" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="1663" href="Relation.Nullary.Decidable.Core.html#2136" class="InductiveConstructor">no</a> <a id="1666" class="Symbol">_</a> <a id="1668" class="Symbol">)</a> <a id="1670" class="Symbol">→</a> <a id="1672" href="Interface.ComputationalRelation.html#10518" class="InductiveConstructor">success</a> <a id="1680" class="Symbol">(_</a> <a id="1683" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="1685" class="Symbol">(</a><a id="1686" href="Ledger.Conway.Conformance.Utxo.html#1322" class="InductiveConstructor">Scripts-Yes</a> <a id="1698" href="Ledger.Conway.Conformance.Utxo.Properties.html#1659" class="Bound">p</a><a id="1699" class="Symbol">))</a>
-          <a id="1712" class="Symbol">(</a><a id="1713" href="Relation.Nullary.Decidable.Core.html#2136" class="InductiveConstructor">no</a> <a id="1716" class="Symbol">_</a>  <a id="1719" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="1721" href="Relation.Nullary.Decidable.Core.html#2099" class="InductiveConstructor">yes</a> <a id="1725" href="Ledger.Conway.Conformance.Utxo.Properties.html#1725" class="Bound">p</a><a id="1726" class="Symbol">)</a> <a id="1728" class="Symbol">→</a> <a id="1730" href="Interface.ComputationalRelation.html#10518" class="InductiveConstructor">success</a> <a id="1738" class="Symbol">(_</a> <a id="1741" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="1743" class="Symbol">(</a><a id="1744" href="Ledger.Conway.Conformance.Utxo.html#1917" class="InductiveConstructor">Scripts-No</a> <a id="1755" href="Ledger.Conway.Conformance.Utxo.Properties.html#1725" class="Bound">p</a><a id="1756" class="Symbol">))</a>
-          <a id="1769" class="CatchallClause Symbol">(_</a><a id="1771" class="CatchallClause">     </a><a id="1776" href="Agda.Builtin.Sigma.html#235" class="CatchallClause InductiveConstructor Operator">,</a><a id="1777" class="CatchallClause"> </a><a id="1778" class="CatchallClause Symbol">_</a><a id="1779" class="CatchallClause">    </a><a id="1783" class="CatchallClause Symbol">)</a> <a id="1785" class="Symbol">→</a> <a id="1787" href="Interface.ComputationalRelation.html#10560" class="InductiveConstructor">failure</a> <a id="1795" class="String">&quot;isValid check failed&quot;</a>
-
-      <a id="1825" href="Ledger.Conway.Conformance.Utxo.Properties.html#1825" class="Function">completeness</a> <a id="1838" class="Symbol">:</a> <a id="1840" class="Symbol">∀</a> <a id="1842" href="Ledger.Conway.Conformance.Utxo.Properties.html#1842" class="Bound">s&#39;</a> <a id="1845" class="Symbol">→</a> <a id="1847" href="Ledger.Conway.Conformance.Utxo.Properties.html#1262" class="Bound">Γ</a> <a id="1849" href="Ledger.Conway.Conformance.Utxo.html#1253" class="Datatype Operator">⊢</a> <a id="1851" href="Ledger.Conway.Conformance.Utxo.Properties.html#1264" class="Bound">s</a> <a id="1853" href="Ledger.Conway.Conformance.Utxo.html#1253" class="Datatype Operator">⇀⦇</a> <a id="1856" href="Ledger.Conway.Conformance.Utxo.Properties.html#1266" class="Bound">tx</a> <a id="1859" href="Ledger.Conway.Conformance.Utxo.html#1253" class="Datatype Operator">,UTXOS⦈</a> <a id="1867" href="Ledger.Conway.Conformance.Utxo.Properties.html#1842" class="Bound">s&#39;</a> <a id="1870" class="Symbol">→</a> <a id="1872" href="Class.Functor.Core.html#272" class="Function">map</a> <a id="1876" href="Data.Product.Base.html#636" class="Field">proj₁</a> <a id="1882" href="Ledger.Conway.Conformance.Utxo.Properties.html#1589" class="Function">computeProof</a> <a id="1895" href="Agda.Builtin.Equality.html#150" class="Datatype Operator">≡</a> <a id="1897" href="Interface.ComputationalRelation.html#10518" class="InductiveConstructor">success</a> <a id="1905" href="Ledger.Conway.Conformance.Utxo.Properties.html#1842" class="Bound">s&#39;</a>
-      <a id="1914" href="Ledger.Conway.Conformance.Utxo.Properties.html#1825" class="Function">completeness</a> <a id="1927" class="Symbol">_</a> <a id="1929" class="Symbol">(</a><a id="1930" href="Ledger.Conway.Conformance.Utxo.html#1322" class="InductiveConstructor">Scripts-Yes</a> <a id="1942" href="Ledger.Conway.Conformance.Utxo.Properties.html#1942" class="Bound">p</a><a id="1943" class="Symbol">)</a> <a id="1945" class="Keyword">with</a> <a id="1950" href="Ledger.Conway.Conformance.Utxo.Properties.html#1355" class="Bound">H-No?</a> <a id="1956" class="Symbol">|</a> <a id="1958" href="Ledger.Conway.Conformance.Utxo.Properties.html#1290" class="Bound">H-Yes?</a>
-      <a id="1971" class="Symbol">...</a> <a id="1975" class="Symbol">|</a> <a id="1977" href="Relation.Nullary.Decidable.Core.html#2099" class="InductiveConstructor">yes</a> <a id="1981" class="Symbol">(_</a> <a id="1984" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="1986" href="Agda.Builtin.Equality.html#207" class="InductiveConstructor">refl</a><a id="1990" class="Symbol">)</a> <a id="1992" class="Symbol">|</a> <a id="1994" class="Symbol">_</a>     <a id="2000" class="Symbol">=</a> <a id="2002" href="Function.Base.html#4061" class="Function Operator">case</a> <a id="2007" href="Data.Product.Base.html#650" class="Field">proj₂</a> <a id="2013" class="Bound">p</a> <a id="2015" href="Function.Base.html#4061" class="Function Operator">of</a> <a id="2018" class="Symbol">λ</a> <a id="2020" class="Symbol">()</a>
-      <a id="2029" class="Symbol">...</a> <a id="2033" class="Symbol">|</a> <a id="2035" href="Relation.Nullary.Decidable.Core.html#2136" class="InductiveConstructor">no</a> <a id="2038" class="Symbol">_</a>           <a id="2050" class="Symbol">|</a> <a id="2052" href="Relation.Nullary.Decidable.Core.html#2099" class="InductiveConstructor">yes</a> <a id="2056" class="Symbol">_</a> <a id="2058" class="Symbol">=</a> <a id="2060" href="Agda.Builtin.Equality.html#207" class="InductiveConstructor">refl</a>
-      <a id="2071" class="Symbol">...</a> <a id="2075" class="Symbol">|</a> <a id="2077" href="Relation.Nullary.Decidable.Core.html#2136" class="InductiveConstructor">no</a> <a id="2080" class="Symbol">_</a>           <a id="2092" class="Symbol">|</a> <a id="2094" href="Relation.Nullary.Decidable.Core.html#2136" class="InductiveConstructor">no</a> <a id="2097" href="Ledger.Conway.Conformance.Utxo.Properties.html#2097" class="Bound">¬p</a> <a id="2100" class="Symbol">=</a> <a id="2102" href="Function.Base.html#4061" class="Function Operator">case</a> <a id="2107" href="Ledger.Conway.Conformance.Utxo.Properties.html#2097" class="Bound">¬p</a> <a id="2110" class="Bound">p</a> <a id="2112" href="Function.Base.html#4061" class="Function Operator">of</a> <a id="2115" class="Symbol">λ</a> <a id="2117" class="Symbol">()</a>
-      <a id="2126" href="Ledger.Conway.Conformance.Utxo.Properties.html#1825" class="Function">completeness</a> <a id="2139" class="Symbol">_</a> <a id="2141" class="Symbol">(</a><a id="2142" href="Ledger.Conway.Conformance.Utxo.html#1917" class="InductiveConstructor">Scripts-No</a> <a id="2153" href="Ledger.Conway.Conformance.Utxo.Properties.html#2153" class="Bound">p</a><a id="2154" class="Symbol">)</a> <a id="2156" class="Keyword">with</a> <a id="2161" href="Ledger.Conway.Conformance.Utxo.Properties.html#1290" class="Bound">H-Yes?</a> <a id="2168" class="Symbol">|</a> <a id="2170" href="Ledger.Conway.Conformance.Utxo.Properties.html#1355" class="Bound">H-No?</a>
-      <a id="2182" class="Symbol">...</a> <a id="2186" class="Symbol">|</a> <a id="2188" href="Relation.Nullary.Decidable.Core.html#2099" class="InductiveConstructor">yes</a> <a id="2192" class="Symbol">(_</a> <a id="2195" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="2197" href="Agda.Builtin.Equality.html#207" class="InductiveConstructor">refl</a><a id="2201" class="Symbol">)</a> <a id="2203" class="Symbol">|</a> <a id="2205" class="Symbol">_</a>     <a id="2211" class="Symbol">=</a> <a id="2213" href="Function.Base.html#4061" class="Function Operator">case</a> <a id="2218" href="Data.Product.Base.html#650" class="Field">proj₂</a> <a id="2224" class="Bound">p</a> <a id="2226" href="Function.Base.html#4061" class="Function Operator">of</a> <a id="2229" class="Symbol">λ</a> <a id="2231" class="Symbol">()</a>
-      <a id="2240" class="Symbol">...</a> <a id="2244" class="Symbol">|</a> <a id="2246" href="Relation.Nullary.Decidable.Core.html#2136" class="InductiveConstructor">no</a> <a id="2249" class="Symbol">_</a>           <a id="2261" class="Symbol">|</a> <a id="2263" href="Relation.Nullary.Decidable.Core.html#2099" class="InductiveConstructor">yes</a> <a id="2267" class="Symbol">_</a> <a id="2269" class="Symbol">=</a> <a id="2271" href="Agda.Builtin.Equality.html#207" class="InductiveConstructor">refl</a>
-      <a id="2282" class="Symbol">...</a> <a id="2286" class="Symbol">|</a> <a id="2288" href="Relation.Nullary.Decidable.Core.html#2136" class="InductiveConstructor">no</a> <a id="2291" class="Symbol">_</a>           <a id="2303" class="Symbol">|</a> <a id="2305" href="Relation.Nullary.Decidable.Core.html#2136" class="InductiveConstructor">no</a> <a id="2308" href="Ledger.Conway.Conformance.Utxo.Properties.html#2308" class="Bound">¬p</a> <a id="2311" class="Symbol">=</a> <a id="2313" href="Function.Base.html#4061" class="Function Operator">case</a> <a id="2318" href="Ledger.Conway.Conformance.Utxo.Properties.html#2308" class="Bound">¬p</a> <a id="2321" class="Bound">p</a> <a id="2323" href="Function.Base.html#4061" class="Function Operator">of</a> <a id="2326" class="Symbol">λ</a> <a id="2328" class="Symbol">()</a>
-
-<a id="2332" class="Keyword">instance</a>
-  <a id="Computational-UTXO"></a><a id="2343" href="Ledger.Conway.Conformance.Utxo.Properties.html#2343" class="Function">Computational-UTXO</a> <a id="2362" class="Symbol">:</a> <a id="2364" href="Interface.ComputationalRelation.html#13270" class="Record">Computational</a> <a id="2378" href="Ledger.Conway.Conformance.Utxo.html#2702" class="Datatype Operator">_⊢_⇀⦇_,UTXO⦈_</a> <a id="2392" href="Agda.Builtin.String.html#335" class="Postulate">String</a>
-  <a id="2401" href="Ledger.Conway.Conformance.Utxo.Properties.html#2343" class="Function">Computational-UTXO</a> <a id="2420" class="Symbol">=</a> <a id="2422" class="Keyword">record</a> <a id="2429" class="Symbol">{</a><a id="2430" href="Ledger.Conway.Conformance.Utxo.Properties.html#2457" class="Module">Go</a><a id="2432" class="Symbol">}</a>
-    <a id="2438" class="Keyword">where</a>
-      <a id="2450" class="Keyword">module</a> <a id="2457" href="Ledger.Conway.Conformance.Utxo.Properties.html#2457" class="Module">Go</a> <a id="2460" href="Ledger.Conway.Conformance.Utxo.Properties.html#2460" class="Bound">Γ</a> <a id="2462" href="Ledger.Conway.Conformance.Utxo.Properties.html#2462" class="Bound">s</a> <a id="2464" href="Ledger.Conway.Conformance.Utxo.Properties.html#2464" class="Bound">tx</a> <a id="2467" class="Symbol">(</a><a id="2468" class="Keyword">let</a> <a id="2472" href="Ledger.Conway.Conformance.Utxo.Properties.html#2472" class="Bound">H</a> <a id="2474" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="2476" href="Class.Decidable.Core.html#262" class="InductiveConstructor Operator">⁇</a> <a id="2478" href="Ledger.Conway.Conformance.Utxo.Properties.html#2478" class="Bound">H?</a> <a id="2481" class="Symbol">=</a> <a id="2483" href="Ledger.Conway.Conformance.Utxo.html#4280" class="Function">UTXO-premises</a> <a id="2497" class="Symbol">{</a><a id="2498" href="Ledger.Conway.Conformance.Utxo.Properties.html#2464" class="Bound">tx</a><a id="2500" class="Symbol">}{</a><a id="2502" href="Ledger.Conway.Conformance.Utxo.Properties.html#2460" class="Bound">Γ</a><a id="2503" class="Symbol">}{</a><a id="2505" href="Ledger.Conway.Conformance.Utxo.Properties.html#2462" class="Bound">s</a><a id="2506" class="Symbol">})</a> <a id="2509" class="Keyword">where</a>
-
-        <a id="2524" class="Keyword">open</a> <a id="2529" href="Interface.ComputationalRelation.html#13270" class="Module">Computational</a> <a id="2543" href="Ledger.Conway.Conformance.Utxo.Properties.html#1148" class="Function">Computational-UTXOS</a>
-          <a id="2573" class="Keyword">renaming</a> <a id="2582" class="Symbol">(</a><a id="2583" href="Interface.ComputationalRelation.html#13350" class="Field">computeProof</a> <a id="2596" class="Symbol">to</a> <a id="2599" class="Field">computeProof&#39;</a><a id="2612" class="Symbol">;</a> <a id="2614" href="Interface.ComputationalRelation.html#13567" class="Field">completeness</a> <a id="2627" class="Symbol">to</a> <a id="2630" class="Field">completeness&#39;</a><a id="2643" class="Symbol">)</a>
-
-        <a id="2654" href="Ledger.Conway.Conformance.Utxo.Properties.html#2654" class="Function">computeProofH</a> <a id="2668" class="Symbol">:</a> <a id="2670" href="Relation.Nullary.Decidable.Core.html#1966" class="Record">Dec</a> <a id="2674" href="Ledger.Conway.Conformance.Utxo.Properties.html#2472" class="Bound">H</a> <a id="2676" class="Symbol">→</a> <a id="2678" href="Interface.ComputationalRelation.html#10445" class="Datatype">ComputationResult</a> <a id="2696" href="Agda.Builtin.String.html#335" class="Postulate">String</a> <a id="2703" class="Symbol">(</a><a id="2704" href="Data.Product.Base.html#1371" class="Function">∃[</a> <a id="2707" href="Ledger.Conway.Conformance.Utxo.Properties.html#2707" class="Bound">s&#39;</a> <a id="2710" href="Data.Product.Base.html#1371" class="Function">]</a> <a id="2712" href="Ledger.Conway.Conformance.Utxo.Properties.html#2460" class="Bound">Γ</a> <a id="2714" href="Ledger.Conway.Conformance.Utxo.html#2702" class="Datatype Operator">⊢</a> <a id="2716" href="Ledger.Conway.Conformance.Utxo.Properties.html#2462" class="Bound">s</a> <a id="2718" href="Ledger.Conway.Conformance.Utxo.html#2702" class="Datatype Operator">⇀⦇</a> <a id="2721" href="Ledger.Conway.Conformance.Utxo.Properties.html#2464" class="Bound">tx</a> <a id="2724" href="Ledger.Conway.Conformance.Utxo.html#2702" class="Datatype Operator">,UTXO⦈</a> <a id="2731" href="Ledger.Conway.Conformance.Utxo.Properties.html#2707" class="Bound">s&#39;</a><a id="2733" class="Symbol">)</a>
-        <a id="2743" href="Ledger.Conway.Conformance.Utxo.Properties.html#2654" class="Function">computeProofH</a> <a id="2757" class="Symbol">(</a><a id="2758" href="Relation.Nullary.Decidable.Core.html#2099" class="InductiveConstructor">yes</a> <a id="2762" class="Symbol">(</a><a id="2763" href="Ledger.Conway.Conformance.Utxo.Properties.html#2763" class="Bound">x</a> <a id="2765" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="2767" href="Ledger.Conway.Conformance.Utxo.Properties.html#2767" class="Bound">y</a> <a id="2769" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="2771" href="Ledger.Conway.Conformance.Utxo.Properties.html#2771" class="Bound">e</a> <a id="2773" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="2775" href="Ledger.Conway.Conformance.Utxo.Properties.html#2775" class="Bound">k</a> <a id="2777" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="2779" href="Ledger.Conway.Conformance.Utxo.Properties.html#2779" class="Bound">l</a> <a id="2781" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="2783" href="Ledger.Conway.Conformance.Utxo.Properties.html#2783" class="Bound">m</a> <a id="2785" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="2787" href="Ledger.Conway.Conformance.Utxo.Properties.html#2787" class="Bound">c</a> <a id="2789" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="2791" href="Ledger.Conway.Conformance.Utxo.Properties.html#2791" class="Bound">d</a> <a id="2793" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="2795" href="Ledger.Conway.Conformance.Utxo.Properties.html#2795" class="Bound">v</a> <a id="2797" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="2799" href="Ledger.Conway.Conformance.Utxo.Properties.html#2799" class="Bound">j</a> <a id="2801" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="2803" href="Ledger.Conway.Conformance.Utxo.Properties.html#2803" class="Bound">n</a> <a id="2805" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="2807" href="Ledger.Conway.Conformance.Utxo.Properties.html#2807" class="Bound">o</a> <a id="2809" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="2811" href="Ledger.Conway.Conformance.Utxo.Properties.html#2811" class="Bound">p</a> <a id="2813" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="2815" href="Ledger.Conway.Conformance.Utxo.Properties.html#2815" class="Bound">q</a> <a id="2817" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="2819" href="Ledger.Conway.Conformance.Utxo.Properties.html#2819" class="Bound">r</a> <a id="2821" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="2823" href="Ledger.Conway.Conformance.Utxo.Properties.html#2823" class="Bound">t</a> <a id="2825" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="2827" href="Ledger.Conway.Conformance.Utxo.Properties.html#2827" class="Bound">u</a><a id="2828" class="Symbol">))</a> <a id="2831" class="Symbol">=</a>
-            <a id="2845" href="Class.Bifunctor.html#615" class="Function">map₂′</a> <a id="2851" class="Symbol">(</a><a id="2852" href="Ledger.Conway.Conformance.Utxo.html#4103" class="InductiveConstructor">UTXO-inductive⋯</a> <a id="2868" class="Symbol">_</a> <a id="2870" class="Symbol">_</a> <a id="2872" class="Symbol">_</a> <a id="2874" href="Ledger.Conway.Conformance.Utxo.Properties.html#2763" class="Bound">x</a> <a id="2876" href="Ledger.Conway.Conformance.Utxo.Properties.html#2767" class="Bound">y</a> <a id="2878" href="Ledger.Conway.Conformance.Utxo.Properties.html#2771" class="Bound">e</a> <a id="2880" href="Ledger.Conway.Conformance.Utxo.Properties.html#2775" class="Bound">k</a> <a id="2882" href="Ledger.Conway.Conformance.Utxo.Properties.html#2779" class="Bound">l</a> <a id="2884" href="Ledger.Conway.Conformance.Utxo.Properties.html#2783" class="Bound">m</a> <a id="2886" href="Ledger.Conway.Conformance.Utxo.Properties.html#2787" class="Bound">c</a> <a id="2888" href="Ledger.Conway.Conformance.Utxo.Properties.html#2791" class="Bound">d</a> <a id="2890" href="Ledger.Conway.Conformance.Utxo.Properties.html#2795" class="Bound">v</a> <a id="2892" href="Ledger.Conway.Conformance.Utxo.Properties.html#2799" class="Bound">j</a> <a id="2894" href="Ledger.Conway.Conformance.Utxo.Properties.html#2803" class="Bound">n</a> <a id="2896" href="Ledger.Conway.Conformance.Utxo.Properties.html#2807" class="Bound">o</a> <a id="2898" href="Ledger.Conway.Conformance.Utxo.Properties.html#2811" class="Bound">p</a> <a id="2900" href="Ledger.Conway.Conformance.Utxo.Properties.html#2815" class="Bound">q</a> <a id="2902" href="Ledger.Conway.Conformance.Utxo.Properties.html#2819" class="Bound">r</a> <a id="2904" href="Ledger.Conway.Conformance.Utxo.Properties.html#2823" class="Bound">t</a> <a id="2906" href="Ledger.Conway.Conformance.Utxo.Properties.html#2827" class="Bound">u</a><a id="2907" class="Symbol">)</a> <a id="2909" href="Class.Functor.Core.html#242" class="Field Operator">&lt;$&gt;</a> <a id="2913" href="Ledger.Conway.Conformance.Utxo.Properties.html#2599" class="Function">computeProof&#39;</a> <a id="2927" href="Ledger.Conway.Conformance.Utxo.Properties.html#2460" class="Bound">Γ</a> <a id="2929" href="Ledger.Conway.Conformance.Utxo.Properties.html#2462" class="Bound">s</a> <a id="2931" href="Ledger.Conway.Conformance.Utxo.Properties.html#2464" class="Bound">tx</a>
-        <a id="2942" href="Ledger.Conway.Conformance.Utxo.Properties.html#2654" class="Function">computeProofH</a> <a id="2956" class="Symbol">(</a><a id="2957" href="Relation.Nullary.Decidable.Core.html#2136" class="InductiveConstructor">no</a> <a id="2960" href="Ledger.Conway.Conformance.Utxo.Properties.html#2960" class="Bound">¬p</a><a id="2962" class="Symbol">)</a> <a id="2964" class="Symbol">=</a> <a id="2966" href="Interface.ComputationalRelation.html#10560" class="InductiveConstructor">failure</a> <a id="2974" href="Function.Base.html#1993" class="Function Operator">$</a> <a id="2976" href="stdlib-meta.Tactic.GenError.html#2066" class="Macro">genErrors</a> <a id="2986" href="Ledger.Conway.Conformance.Utxo.Properties.html#2960" class="Bound">¬p</a>
-
-        <a id="2998" href="Ledger.Conway.Conformance.Utxo.Properties.html#2998" class="Function">computeProof</a> <a id="3011" class="Symbol">:</a> <a id="3013" href="Interface.ComputationalRelation.html#10445" class="Datatype">ComputationResult</a> <a id="3031" href="Agda.Builtin.String.html#335" class="Postulate">String</a> <a id="3038" class="Symbol">(</a><a id="3039" href="Data.Product.Base.html#1371" class="Function">∃[</a> <a id="3042" href="Ledger.Conway.Conformance.Utxo.Properties.html#3042" class="Bound">s&#39;</a> <a id="3045" href="Data.Product.Base.html#1371" class="Function">]</a> <a id="3047" href="Ledger.Conway.Conformance.Utxo.Properties.html#2460" class="Bound">Γ</a> <a id="3049" href="Ledger.Conway.Conformance.Utxo.html#2702" class="Datatype Operator">⊢</a> <a id="3051" href="Ledger.Conway.Conformance.Utxo.Properties.html#2462" class="Bound">s</a> <a id="3053" href="Ledger.Conway.Conformance.Utxo.html#2702" class="Datatype Operator">⇀⦇</a> <a id="3056" href="Ledger.Conway.Conformance.Utxo.Properties.html#2464" class="Bound">tx</a> <a id="3059" href="Ledger.Conway.Conformance.Utxo.html#2702" class="Datatype Operator">,UTXO⦈</a> <a id="3066" href="Ledger.Conway.Conformance.Utxo.Properties.html#3042" class="Bound">s&#39;</a><a id="3068" class="Symbol">)</a>
-        <a id="3078" href="Ledger.Conway.Conformance.Utxo.Properties.html#2998" class="Function">computeProof</a> <a id="3091" class="Symbol">=</a> <a id="3093" href="Ledger.Conway.Conformance.Utxo.Properties.html#2654" class="Function">computeProofH</a> <a id="3107" href="Ledger.Conway.Conformance.Utxo.Properties.html#2478" class="Bound">H?</a>
-
-        <a id="3119" href="Ledger.Conway.Conformance.Utxo.Properties.html#3119" class="Function">completeness</a> <a id="3132" class="Symbol">:</a> <a id="3134" class="Symbol">∀</a> <a id="3136" href="Ledger.Conway.Conformance.Utxo.Properties.html#3136" class="Bound">s&#39;</a> <a id="3139" class="Symbol">→</a> <a id="3141" href="Ledger.Conway.Conformance.Utxo.Properties.html#2460" class="Bound">Γ</a> <a id="3143" href="Ledger.Conway.Conformance.Utxo.html#2702" class="Datatype Operator">⊢</a> <a id="3145" href="Ledger.Conway.Conformance.Utxo.Properties.html#2462" class="Bound">s</a> <a id="3147" href="Ledger.Conway.Conformance.Utxo.html#2702" class="Datatype Operator">⇀⦇</a> <a id="3150" href="Ledger.Conway.Conformance.Utxo.Properties.html#2464" class="Bound">tx</a> <a id="3153" href="Ledger.Conway.Conformance.Utxo.html#2702" class="Datatype Operator">,UTXO⦈</a> <a id="3160" href="Ledger.Conway.Conformance.Utxo.Properties.html#3136" class="Bound">s&#39;</a> <a id="3163" class="Symbol">→</a> <a id="3165" href="Class.Functor.Core.html#272" class="Function">map</a> <a id="3169" href="Data.Product.Base.html#636" class="Field">proj₁</a> <a id="3175" href="Ledger.Conway.Conformance.Utxo.Properties.html#2998" class="Function">computeProof</a> <a id="3188" href="Agda.Builtin.Equality.html#150" class="Datatype Operator">≡</a> <a id="3190" href="Interface.ComputationalRelation.html#10518" class="InductiveConstructor">success</a> <a id="3198" href="Ledger.Conway.Conformance.Utxo.Properties.html#3136" class="Bound">s&#39;</a>
-        <a id="3209" href="Ledger.Conway.Conformance.Utxo.Properties.html#3119" class="Function">completeness</a> <a id="3222" href="Ledger.Conway.Conformance.Utxo.Properties.html#3222" class="Bound">s&#39;</a> <a id="3225" class="Symbol">(</a><a id="3226" href="Ledger.Conway.Conformance.Utxo.html#4103" class="InductiveConstructor">UTXO-inductive⋯</a> <a id="3242" class="Symbol">_</a> <a id="3244" class="Symbol">_</a> <a id="3246" class="Symbol">_</a> <a id="3248" href="Ledger.Conway.Conformance.Utxo.Properties.html#3248" class="Bound">x</a> <a id="3250" href="Ledger.Conway.Conformance.Utxo.Properties.html#3250" class="Bound">y</a> <a id="3252" href="Ledger.Conway.Conformance.Utxo.Properties.html#3252" class="Bound">e</a> <a id="3254" href="Ledger.Conway.Conformance.Utxo.Properties.html#3254" class="Bound">k</a> <a id="3256" href="Ledger.Conway.Conformance.Utxo.Properties.html#3256" class="Bound">l</a> <a id="3258" href="Ledger.Conway.Conformance.Utxo.Properties.html#3258" class="Bound">m</a> <a id="3260" href="Ledger.Conway.Conformance.Utxo.Properties.html#3260" class="Bound">c</a> <a id="3262" href="Ledger.Conway.Conformance.Utxo.Properties.html#3262" class="Bound">d</a> <a id="3264" href="Ledger.Conway.Conformance.Utxo.Properties.html#3264" class="Bound">v</a> <a id="3266" href="Ledger.Conway.Conformance.Utxo.Properties.html#3266" class="Bound">j</a> <a id="3268" href="Ledger.Conway.Conformance.Utxo.Properties.html#3268" class="Bound">n</a> <a id="3270" href="Ledger.Conway.Conformance.Utxo.Properties.html#3270" class="Bound">o</a> <a id="3272" href="Ledger.Conway.Conformance.Utxo.Properties.html#3272" class="Bound">p</a> <a id="3274" href="Ledger.Conway.Conformance.Utxo.Properties.html#3274" class="Bound">q</a> <a id="3276" href="Ledger.Conway.Conformance.Utxo.Properties.html#3276" class="Bound">r</a> <a id="3278" href="Ledger.Conway.Conformance.Utxo.Properties.html#3278" class="Bound">t</a> <a id="3280" href="Ledger.Conway.Conformance.Utxo.Properties.html#3280" class="Bound">u</a> <a id="3282" href="Ledger.Conway.Conformance.Utxo.Properties.html#3282" class="Bound">h</a><a id="3283" class="Symbol">)</a> <a id="3285" class="Keyword">with</a> <a id="3290" href="Ledger.Conway.Conformance.Utxo.Properties.html#2478" class="Bound">H?</a>
-        <a id="3301" class="Symbol">...</a> <a id="3305" class="Symbol">|</a> <a id="3307" href="Relation.Nullary.Decidable.Core.html#2136" class="InductiveConstructor">no</a> <a id="3310" href="Ledger.Conway.Conformance.Utxo.Properties.html#3310" class="Bound">¬p</a> <a id="3313" class="Symbol">=</a> <a id="3315" href="Data.Empty.html#1069" class="Function">⊥-elim</a> <a id="3322" href="Function.Base.html#1993" class="Function Operator">$</a> <a id="3324" href="Ledger.Conway.Conformance.Utxo.Properties.html#3310" class="Bound">¬p</a> <a id="3327" class="Symbol">(</a><a id="3328" class="Bound">x</a> <a id="3330" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="3332" class="Bound">y</a> <a id="3334" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="3336" class="Bound">e</a> <a id="3338" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="3340" class="Bound">k</a> <a id="3342" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="3344" class="Bound">l</a> <a id="3346" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="3348" class="Bound">m</a> <a id="3350" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="3352" class="Bound">c</a> <a id="3354" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="3356" class="Bound">d</a> <a id="3358" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="3360" class="Bound">v</a> <a id="3362" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="3364" class="Bound">j</a> <a id="3366" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="3368" class="Bound">n</a> <a id="3370" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="3372" class="Bound">o</a> <a id="3374" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="3376" class="Bound">p</a> <a id="3378" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="3380" class="Bound">q</a> <a id="3382" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="3384" class="Bound">r</a> <a id="3386" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="3388" class="Bound">t</a> <a id="3390" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="3392" class="Bound">u</a> <a id="3394" class="Symbol">)</a>
-        <a id="3404" class="Symbol">...</a> <a id="3408" class="Symbol">|</a> <a id="3410" href="Relation.Nullary.Decidable.Core.html#2099" class="InductiveConstructor">yes</a> <a id="3414" class="Symbol">_</a> <a id="3416" class="Keyword">with</a> <a id="3421" href="Ledger.Conway.Conformance.Utxo.Properties.html#2599" class="Function">computeProof&#39;</a> <a id="3435" href="Ledger.Conway.Conformance.Utxo.Properties.html#2460" class="Bound">Γ</a> <a id="3437" href="Ledger.Conway.Conformance.Utxo.Properties.html#2462" class="Bound">s</a> <a id="3439" href="Ledger.Conway.Conformance.Utxo.Properties.html#2464" class="Bound">tx</a> <a id="3442" class="Symbol">|</a> <a id="3444" href="Ledger.Conway.Conformance.Utxo.Properties.html#2630" class="Function">completeness&#39;</a> <a id="3458" class="Symbol">_</a> <a id="3460" class="Symbol">_</a> <a id="3462" class="Symbol">_</a> <a id="3464" class="Symbol">_</a> <a id="3466" class="Bound">h</a>
-        <a id="3476" class="Symbol">...</a> <a id="3480" class="Symbol">|</a> <a id="3482" href="Interface.ComputationalRelation.html#10518" class="InductiveConstructor">success</a> <a id="3490" class="Symbol">_</a> <a id="3492" class="Symbol">|</a> <a id="3494" href="Agda.Builtin.Equality.html#207" class="InductiveConstructor">refl</a> <a id="3499" class="Symbol">=</a> <a id="3501" href="Agda.Builtin.Equality.html#207" class="InductiveConstructor">refl</a>
-
-<a id="3507" class="Keyword">open</a> <a id="3512" href="Interface.ComputationalRelation.html#13270" class="Module">Computational</a> <a id="3526" class="Symbol">⦃...⦄</a>
-
-<a id="3533" class="Keyword">private</a> <a id="3541" class="Keyword">variable</a>
-  <a id="3552" href="Ledger.Conway.Conformance.Utxo.Properties.html#3552" class="Generalizable">tx</a>                         <a id="3579" class="Symbol">:</a> <a id="3581" href="Ledger.Conway.Specification.Transaction.html#6625" class="Record">Tx</a>
-  <a id="3586" href="Ledger.Conway.Conformance.Utxo.Properties.html#3586" class="Generalizable">utxo</a> <a id="3591" href="Ledger.Conway.Conformance.Utxo.Properties.html#3591" class="Generalizable">utxo&#39;</a>                 <a id="3613" class="Symbol">:</a> <a id="3615" href="Ledger.Conway.Specification.Transaction.html#4449" class="Function">UTxO</a>
-  <a id="3622" href="Ledger.Conway.Conformance.Utxo.Properties.html#3622" class="Generalizable">Γ</a>                          <a id="3649" class="Symbol">:</a> <a id="3651" href="Ledger.Conway.Specification.Utxo.html#2857" class="Record">UTxOEnv</a>
-  <a id="3661" href="Ledger.Conway.Conformance.Utxo.Properties.html#3661" class="Generalizable">utxoState</a> <a id="3671" href="Ledger.Conway.Conformance.Utxo.Properties.html#3671" class="Generalizable">utxoState&#39;</a>       <a id="3688" class="Symbol">:</a> <a id="3690" href="Ledger.Conway.Specification.Utxo.html#2991" class="Record">UTxOState</a>
-  <a id="3702" href="Ledger.Conway.Conformance.Utxo.Properties.html#3702" class="Generalizable">fees</a> <a id="3707" href="Ledger.Conway.Conformance.Utxo.Properties.html#3707" class="Generalizable">fees&#39;</a>                 <a id="3729" class="Symbol">:</a> <a id="3731" href="Ledger.Prelude.Base.html#266" class="Function">Fees</a>
-  <a id="3738" href="Ledger.Conway.Conformance.Utxo.Properties.html#3738" class="Generalizable">donations</a> <a id="3748" href="Ledger.Conway.Conformance.Utxo.Properties.html#3748" class="Generalizable">donations&#39;</a>       <a id="3765" class="Symbol">:</a> <a id="3767" href="Ledger.Prelude.Base.html#256" class="Function">Donations</a>
-  <a id="3779" href="Ledger.Conway.Conformance.Utxo.Properties.html#3779" class="Generalizable">deposits</a> <a id="3788" href="Ledger.Conway.Conformance.Utxo.Properties.html#3788" class="Generalizable">deposits&#39;</a>         <a id="3806" class="Symbol">:</a> <a id="3808" href="Ledger.Conway.Specification.Certs.html#1034" class="Function">Deposits</a>
-
-<a id="UTXO-step"></a><a id="3818" href="Ledger.Conway.Conformance.Utxo.Properties.html#3818" class="Function">UTXO-step</a> <a id="3828" class="Symbol">:</a> <a id="3830" href="Ledger.Conway.Specification.Utxo.html#2857" class="Record">UTxOEnv</a> <a id="3838" class="Symbol">→</a> <a id="3840" href="Ledger.Conway.Specification.Utxo.html#2991" class="Record">UTxOState</a> <a id="3850" class="Symbol">→</a> <a id="3852" href="Ledger.Conway.Specification.Transaction.html#6625" class="Record">Tx</a> <a id="3855" class="Symbol">→</a> <a id="3857" href="Interface.ComputationalRelation.html#10445" class="Datatype">ComputationResult</a> <a id="3875" href="Agda.Builtin.String.html#335" class="Postulate">String</a> <a id="3882" href="Ledger.Conway.Specification.Utxo.html#2991" class="Record">UTxOState</a>
-<a id="3892" href="Ledger.Conway.Conformance.Utxo.Properties.html#3818" class="Function">UTXO-step</a> <a id="3902" class="Symbol">=</a> <a id="3904" href="Interface.ComputationalRelation.html#13447" class="Function">compute</a> <a id="3912" class="Symbol">⦃</a> <a id="3914" href="Ledger.Conway.Conformance.Utxo.Properties.html#2343" class="Function">Computational-UTXO</a> <a id="3933" class="Symbol">⦄</a>
-
-<a id="UTXO-step-computes-UTXO"></a><a id="3936" href="Ledger.Conway.Conformance.Utxo.Properties.html#3936" class="Function">UTXO-step-computes-UTXO</a>  <a id="3961" class="Symbol">:</a>  <a id="3964" href="Ledger.Conway.Conformance.Utxo.Properties.html#3818" class="Function">UTXO-step</a> <a id="3974" href="Ledger.Conway.Conformance.Utxo.Properties.html#3622" class="Generalizable">Γ</a> <a id="3976" href="Ledger.Conway.Conformance.Utxo.Properties.html#3661" class="Generalizable">utxoState</a> <a id="3986" href="Ledger.Conway.Conformance.Utxo.Properties.html#3552" class="Generalizable">tx</a> <a id="3989" href="Agda.Builtin.Equality.html#150" class="Datatype Operator">≡</a> <a id="3991" href="Interface.ComputationalRelation.html#10518" class="InductiveConstructor">success</a> <a id="3999" href="Ledger.Conway.Conformance.Utxo.Properties.html#3671" class="Generalizable">utxoState&#39;</a>
-                         <a id="4035" href="Function.Bundles.html#12398" class="Function Operator">⇔</a>  <a id="4038" href="Ledger.Conway.Conformance.Utxo.Properties.html#3622" class="Generalizable">Γ</a> <a id="4040" href="Ledger.Conway.Conformance.Utxo.html#2702" class="Datatype Operator">⊢</a> <a id="4042" href="Ledger.Conway.Conformance.Utxo.Properties.html#3661" class="Generalizable">utxoState</a> <a id="4052" href="Ledger.Conway.Conformance.Utxo.html#2702" class="Datatype Operator">⇀⦇</a> <a id="4055" href="Ledger.Conway.Conformance.Utxo.Properties.html#3552" class="Generalizable">tx</a> <a id="4058" href="Ledger.Conway.Conformance.Utxo.html#2702" class="Datatype Operator">,UTXO⦈</a> <a id="4065" href="Ledger.Conway.Conformance.Utxo.Properties.html#3671" class="Generalizable">utxoState&#39;</a>
-<a id="4076" href="Ledger.Conway.Conformance.Utxo.Properties.html#3936" class="Function">UTXO-step-computes-UTXO</a> <a id="4100" class="Symbol">=</a> <a id="4102" href="Interface.ComputationalRelation.html#13794" class="Function">≡-success⇔STS</a> <a id="4116" class="Symbol">⦃</a> <a id="4118" href="Ledger.Conway.Conformance.Utxo.Properties.html#2343" class="Function">Computational-UTXO</a> <a id="4137" class="Symbol">⦄</a>
-</pre>
 
 
 
 
 
-
-
-  
-  
 
 
 
@@ -11731,7 +12055,7 @@
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="Ledger.Conway.Conformance.Utxo.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: Utxo">
+          <a href="Ledger.Dijkstra.Specification.Utxow.Properties.Computational.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: Computational">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
@@ -11741,20 +12065,20 @@
                 Previous
               </span>
               <div class="md-ellipsis">
-                Utxo
+                Computational
               </div>
             </div>
           </a>
         
         
           
-          <a href="Ledger.Conway.Conformance.Utxow.html" class="md-footer__link md-footer__link--next" aria-label="Next: Utxow">
+          <a href="Definitions.html" class="md-footer__link md-footer__link--next" aria-label="Next: Definitions">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Utxow
+                Definitions
               </div>
             </div>
             <div class="md-footer__button md-icon">
