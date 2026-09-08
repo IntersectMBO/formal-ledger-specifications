@@ -445,16 +445,6 @@ properties:
     issues: []
     notes: "Port of the Conway govDepsMatch invariants."
 
-  - id: dijkstra-pov
-    title: "[port] Preservation of value (LEDGER/UTXO/CERTS/CERT)"
-    era: dijkstra
-    sts: LEDGER
-    module: ""
-    anchor: ""
-    defs: []
-    issues: []
-    notes: "Port of the Conway preservation-of-value theorems."
-
   - id: dijkstra-epoch-expired-dreps
     title: "[port] EPOCH preserves the DReps equivalence"
     era: dijkstra
@@ -464,3 +454,43 @@ properties:
     defs: []
     issues: []
     notes: "Port of conway-epoch-expired-dreps."
+
+  - id: dijkstra-certs-pov
+    title: "CERT and CERTS preserve value"
+    era: dijkstra
+    sts: CERTS
+    module: Ledger.Dijkstra.Specification.Certs.Properties.PoV
+    anchor: thm:CERTS-PoV
+    defs: [CERTS-pov]
+    issues: [1185]
+    notes: "Covers both thm:CERT-PoV and thm:CERTS-PoV."
+
+  - id: dijkstra-utxo-pov
+    title: "UTXO preserves value"
+    era: dijkstra
+    sts: UTXO
+    module: Ledger.Dijkstra.Specification.Utxo.Properties.PoV
+    anchor: sec:utxo-pov
+    defs: [UTXO-pov-invalid,UTXO-V-mechanical,UTXO-batch-balance-coin]
+    issues: [1186]
+    notes: ""
+
+  - id: dijkstra-utxow-pov
+    title: "UTXOW preserves value"
+    era: dijkstra
+    sts: UTXOW
+    module: Ledger.Dijkstra.Specification.Utxow.Properties.PoV
+    anchor: sec:utxow-pov
+    defs: [utxow-pov-invalid, UTXOW-V-mechanical, UTXOW-batch-balance-coin, subutxow-step-coin]
+    issues: [1186]
+    notes: ""
+
+  - id: dijkstra-ledger-pov
+    title: "LEDGER preserves value"
+    era: dijkstra
+    sts: LEDGER
+    module: Ledger.Dijkstra.Specification.Ledger.Properties.PoV
+    anchor: thm:LEDGER-PoV
+    defs: [LEDGER-pov]
+    issues: [1187]
+    notes: ""
