@@ -387,7 +387,7 @@ with the top-level one, into the trailing gov-deposit group expected by
         ∎
 ```
 
-## `subutxo-step-coin`: the per-step SUBUTXO coin equation
+## <span class="AgdaFunction">subutxo-step-coin</span>: the per-step <span class="AgdaDatatype">SUBUTXO</span> coin equation
 
 For a valid batch, a `SUBUTXO`{.AgdaDatatype} step moves the spend inputs out of the
 running UTxO and adds the sub-transaction's outputs and donation.  Stated against the
@@ -400,10 +400,8 @@ per step, so it is a hypothesis here.
 
 The `LEDGER`{.AgdaDatatype}-level consumer wants the spent balance resolved against
 the *pre-batch snapshot* `UTxOOf Γ` instead.  Converting between the two is a second,
-independent batch-threading fact — the premises put the spend inputs in *both*
-domains but say nothing about the values — and it is applied in
-`Utxow.Properties.PoV`{.AgdaModule}, where the batch-threading hypotheses are
-collected.
+independent batch-threading fact and it is applied in
+`Utxow.Properties.PoV`{.AgdaModule}.
 
 ```agda
 subutxo-step-coin :
@@ -417,30 +415,30 @@ subutxo-step-coin :
      ≡ getCoin s₁ + cbalance (UTxOOf s₀ ∣ SpendInputsOf stx)
 subutxo-step-coin {s₀ = ⟦ u , f , d ⟧ᵘ} {stx = stx} isV (SUBUTXO _) fresh
   rewrite isV = begin
-    cbalance u + f + d + cbalance (outs stx) + DonationsOf stx
-      ≡⟨ cong  (λ z → z + f + d + cbalance (outs stx) + DonationsOf stx)
+    cbalance u + f + d + co + DonationsOf stx
+      ≡⟨ cong  (λ z → z + f + d + co + DonationsOf stx)
                (split-balance u (SpendInputsOf stx)) ⟩
-    cbalance u|stxᶜ + cs + f + d + cbalance (outs stx) + DonationsOf stx
-      ≡⟨ shuffle (cbalance u|stxᶜ) cs f d (cbalance (outs stx)) (DonationsOf stx) ⟩
-    cbalance u|stxᶜ + cbalance (outs stx) + f + (d + DonationsOf stx) + cs
+    cbalance u|stxᶜ + cs + f + d + co + DonationsOf stx
+      ≡⟨ shuffle (cbalance u|stxᶜ) cs f d co (DonationsOf stx) ⟩
+    cbalance u|stxᶜ + co + f + (d + DonationsOf stx) + cs
       ≡˘⟨ cong  (λ z → z + f + (d + DonationsOf stx) + cs)
                 (balance-∪ u|stxᶜ (outs stx) (outs-disjoint stx {u} fresh)) ⟩
     cbalance (u|stxᶜ ∪ˡ outs stx) + f + (d + DonationsOf stx) + cs
       ∎
   where
-  cs : Coin
+  cs co : Coin
   cs = cbalance (u ∣ SpendInputsOf stx)
+  co = cbalance (outs stx)
   u|stxᶜ : TxIn ⇀ TxOut
   u|stxᶜ = (u ∣ SpendInputsOf stx ᶜ)
   shuffle : ∀ a c f d o w → a +ᴺ c +ᴺ f +ᴺ d +ᴺ o +ᴺ w ≡ a +ᴺ o +ᴺ f +ᴺ (d +ᴺ w) +ᴺ c
   shuffle = solve-∀
 ```
 
-## The `UTXO-PoV` module
+## The <span class="AgdaModule">UTXO-PoV</span> module
 
-The remaining lemmas are stated for a fixed top-level transaction `tx`,
-mirroring the parameterisation of the `LEDGER-PoV`{.AgdaModule} consumer, with
-the `noMintingSubTxs`{.AgdaFunction} fact as the only assumption.
+The remaining lemmas are stated for a fixed top-level transaction, with the
+`noMintingSubTxs`{.AgdaFunction} fact as the only assumption.
 
 ```agda
 module UTXO-PoV
@@ -450,7 +448,7 @@ module UTXO-PoV
   where
 ```
 
-### `UTXO-pov-invalid`: collateral collection preserves `getCoin`
+### <span class="AgdaFunction">UTXO-pov-invalid</span>: collateral collection preserves `getCoin`
 
 The invalid case does not use the batch balance equation: the rule moves the
 collateral balance from the UTxO to the fee pot and leaves donations unchanged,
@@ -464,9 +462,10 @@ so `getCoin`{.AgdaField} is preserved exactly, by
 
   UTXO-pov-invalid {s₀ = ⟦ u , f , d ⟧ᵘ} (UTXO _) invalid rewrite invalid =
     begin
-    cbalance u + f + d ≡⟨ cong (λ z → z + f + d) (split-balance u (CollateralInputsOf tx)) ⟩
-    csᶜ + cs + f + d   ≡⟨ shuffle csᶜ cs f d ⟩
-    csᶜ + (f + cs) + d ∎
+    cbalance u + f + d  ≡⟨ cong  (λ z → z + f + d)
+                                 (split-balance u (CollateralInputsOf tx)) ⟩
+    csᶜ + cs + f + d    ≡⟨ shuffle csᶜ cs f d ⟩
+    csᶜ + (f + cs) + d  ∎
     where
     cs csᶜ : Coin
     cs = cbalance (u ∣ CollateralInputsOf tx)
@@ -475,7 +474,7 @@ so `getCoin`{.AgdaField} is preserved exactly, by
     shuffle = solve-∀
 ```
 
-### `UTXO-V-mechanical`: the valid-case state change
+### <span class="AgdaFunction">UTXO-V-mechanical</span>: the valid-case state change
 
 For a valid transaction the rule spends `SpendInputsOf tx` from the running
 UTxO `u` and adds `outs tx`, the transaction fee, and the donation.  Given
@@ -494,23 +493,24 @@ batch-threading parameter.
     → TxIdOf tx ∉ mapˢ proj₁ (dom (UTxOOf s₀))
     →  getCoin s₀ + cbalance (outs tx) + TxFeesOf tx + DonationsOf tx
        ≡ getCoin s₁ + cbalance (UTxOOf s₀ ∣ SpendInputsOf tx)
-  UTXO-V-mechanical {s₀ = ⟦ u , f , d ⟧ᵘ} (UTXO _) valid fresh rewrite valid = begin
-    cbalance u + f + d + cbalance (outs tx) + TxFeesOf tx + DonationsOf tx
-      ≡⟨ cong (λ z → z + f + d + cbalance (outs tx) + TxFeesOf tx + DonationsOf tx)
+  UTXO-V-mechanical {s₀ = ⟦ u , f , d ⟧ᵘ} (UTXO _) valid fresh rewrite valid =
+    begin
+    cbalance u + f + d + co + TxFeesOf tx + DonationsOf tx
+      ≡⟨ cong (λ z → z + f + d + co + TxFeesOf tx + DonationsOf tx)
               (split-balance u (SpendInputsOf tx)) ⟩
-    cbalance (u ∣ SpendInputsOf tx ᶜ) + cbalance (u ∣ SpendInputsOf tx)
-      + f + d + cbalance (outs tx) + TxFeesOf tx + DonationsOf tx
-      ≡⟨ shuffle (cbalance (u ∣ SpendInputsOf tx ᶜ)) (cbalance (u ∣ SpendInputsOf tx))
-                 f d (cbalance (outs tx)) (TxFeesOf tx) (DonationsOf tx) ⟩
-    cbalance (u ∣ SpendInputsOf tx ᶜ) + cbalance (outs tx)
-      + (f + TxFeesOf tx) + (d + DonationsOf tx) + cbalance (u ∣ SpendInputsOf tx)
-      ≡˘⟨ cong (λ z → z + (f + TxFeesOf tx) + (d + DonationsOf tx)
-                      + cbalance (u ∣ SpendInputsOf tx))
-               (balance-∪ (u ∣ SpendInputsOf tx ᶜ) (outs tx) (outs-disjoint tx {u} fresh)) ⟩
-    cbalance ((u ∣ SpendInputsOf tx ᶜ) ∪ˡ outs tx)
-      + (f + TxFeesOf tx) + (d + DonationsOf tx) + cbalance (u ∣ SpendInputsOf tx)
+    csᶜ + cs + f + d + co + TxFeesOf tx + DonationsOf tx
+      ≡⟨ shuffle csᶜ cs f d co (TxFeesOf tx) (DonationsOf tx) ⟩
+    csᶜ + co + (f + TxFeesOf tx) + (d + DonationsOf tx) + cs
+      ≡˘⟨ cong  (λ z → z + (f + TxFeesOf tx) + (d + DonationsOf tx) + cs)
+          (balance-∪ (u ∣ SpendInputsOf tx ᶜ) (outs tx) (outs-disjoint tx {u} fresh)) ⟩
+    cbalance ((u ∣ SpendInputsOf tx ᶜ) ∪ˡ outs tx)  + (f + TxFeesOf tx)
+                                                    + (d + DonationsOf tx) + cs
       ∎
     where
+    cs csᶜ co : Coin
+    cs = cbalance (u ∣ SpendInputsOf tx )
+    csᶜ = cbalance (u ∣ SpendInputsOf tx ᶜ)
+    co = cbalance (outs tx)
     shuffle : ∀ a b f d o tf td
       → a +ᴺ b +ᴺ f +ᴺ d +ᴺ o +ᴺ tf +ᴺ td ≡ a +ᴺ o +ᴺ (f +ᴺ tf) +ᴺ (d +ᴺ td) +ᴺ b
     shuffle = solve-∀
@@ -549,7 +549,7 @@ alone.  Given the premises, the proof is pure substitution — apply
   UTXO-batch-balance-coin
     (UTXO (_ , _ , _ , _ , _ , _ , noMintTop , batchBal , _)) = begin
     cbalance (u ∣ SpendInputsOf tx) + getCoin (WithdrawalsOf tx)
-      + sum (map  (λ stx →  cbalance (u ∣ SpendInputsOf stx) + getCoin (WithdrawalsOf stx))
+      + sum (map  (λ stx → cbalance (u ∣ SpendInputsOf stx) + getCoin (WithdrawalsOf stx))
                   (SubTransactionsOf tx))
       + refundCertDeposits pp (allDCerts tx)
       ≡˘⟨ coin-consumedBatch pp tx u noMintTop noMintSubTx ⟩
