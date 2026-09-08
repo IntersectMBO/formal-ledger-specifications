@@ -440,7 +440,7 @@ nix develop --command agda src/Path/To/Module.lagda.md
 
 ### The two Agda libraries
 
-The repository declares two Agda libraries, and each has its own development shell, as
+The main specification and test suite declare two Agda libraries, and each has its own development shell, as
 follows:
 
 +  `formal-ledger`, declared by `formal-ledger.agda-lib` in the repository root, whose
