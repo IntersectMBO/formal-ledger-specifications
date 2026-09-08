@@ -12,13 +12,13 @@
         <meta name="author" content="Formal Methods Ledger Team">
       
       
-        <link rel="canonical" href="https://intersectmbo.github.io/formal-ledger-specifications/Ledger.PreConway.Conformance.NewPP.Properties.html">
+        <link rel="canonical" href="https://intersectmbo.github.io/formal-ledger-specifications/ledger-properties-dashboard.html">
       
       
-        <link rel="prev" href="Ledger.PreConway.Conformance.NewPP.html">
+        <link rel="prev" href="Ledger.Dijkstra.Specification.Utxow.Properties.PoV.html">
       
       
-        <link rel="next" href="Ledger.PreConway.Conformance.PPUp.html">
+        <link rel="next" href="Definitions.html">
       
       
         
@@ -29,7 +29,7 @@
     
     
       
-        <title>Properties - Formal Ledger Specification</title>
+        <title>Properties Dashboard - Formal Ledger Specification</title>
       
     
     
@@ -85,6 +85,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#ledger-properties-dashboard" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -114,7 +119,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Properties
+              Properties Dashboard
             
           </span>
         </div>
@@ -322,8 +327,10 @@
   
   
   
+    
   
-    <li class="md-tabs__item">
+  
+    <li class="md-tabs__item md-tabs__item--active">
       <a href="ledger-properties-dashboard.html" class="md-tabs__link">
         
   
@@ -341,8 +348,6 @@
   
   
   
-    
-  
   
     
     
@@ -350,12 +355,10 @@
   
   
   
-    
-  
   
     
     
-      <li class="md-tabs__item md-tabs__item--active">
+      <li class="md-tabs__item">
         <a href="Definitions.html" class="md-tabs__link">
           
   
@@ -8514,10 +8517,37 @@
       
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="ledger-properties-dashboard.html" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Properties Dashboard
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="ledger-properties-dashboard.html" class="md-nav__link md-nav__link--active">
         
   
   
@@ -8533,6 +8563,59 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conway" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conway
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dijkstra" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dijkstra
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -8541,31 +8624,26 @@
       
   
   
-    
   
   
-  
     
     
     
     
-      
-        
-        
       
       
         
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
         
           
-          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
             
   
   
@@ -8583,7 +8661,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_7">
             <span class="md-nav__icon md-icon"></span>
             
@@ -8607,20 +8685,17 @@
       
       
         
-          
-          
-        
       
     
     
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_1" >
         
           
-          <label class="md-nav__link" for="__nav_7_1" id="__nav_7_1_label" tabindex="">
+          <label class="md-nav__link" for="__nav_7_1" id="__nav_7_1_label" tabindex="0">
             
   
   
@@ -8842,20 +8917,17 @@
       
       
         
-          
-          
-        
       
     
     
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_2" >
         
           
-          <label class="md-nav__link" for="__nav_7_2" id="__nav_7_2_label" tabindex="">
+          <label class="md-nav__link" for="__nav_7_2" id="__nav_7_2_label" tabindex="0">
             
   
   
@@ -9816,31 +9888,26 @@
                 
   
   
-    
   
   
-  
     
     
     
     
       
       
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_3" >
         
           
-          
-        
-      
-    
-    
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_3" checked>
-        
-          
-          <label class="md-nav__link" for="__nav_7_3" id="__nav_7_3_label" tabindex="">
+          <label class="md-nav__link" for="__nav_7_3" id="__nav_7_3_label" tabindex="0">
             
   
   
@@ -9858,7 +9925,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_7_3_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_7_3_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_7_3">
             <span class="md-nav__icon md-icon"></span>
             
@@ -9961,8 +10028,6 @@
                 
   
   
-    
-  
   
   
     
@@ -9975,11 +10040,11 @@
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_3_2" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_3_2" >
         
           
           <label class="md-nav__link" for="__nav_7_3_2" id="__nav_7_3_2_label" tabindex="0">
@@ -10000,7 +10065,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_7_3_2_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_7_3_2_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_7_3_2">
             <span class="md-nav__icon md-icon"></span>
             
@@ -10043,8 +10108,6 @@
                 
   
   
-    
-  
   
   
     
@@ -10057,11 +10120,11 @@
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_3_2_2" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_3_2_2" >
         
           
           <label class="md-nav__link" for="__nav_7_3_2_2" id="__nav_7_3_2_2_label" tabindex="0">
@@ -10082,7 +10145,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_7_3_2_2_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_7_3_2_2_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_7_3_2_2">
             <span class="md-nav__icon md-icon"></span>
             
@@ -10097,8 +10160,6 @@
                 
   
   
-    
-  
   
   
     
@@ -10111,11 +10172,11 @@
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_3_2_2_1" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_3_2_2_1" >
         
           
           <label class="md-nav__link" for="__nav_7_3_2_2_1" id="__nav_7_3_2_2_1_label" tabindex="0">
@@ -10136,7 +10197,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_7_3_2_2_1_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_7_3_2_2_1_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_7_3_2_2_1">
             <span class="md-nav__icon md-icon"></span>
             
@@ -10179,8 +10240,6 @@
                 
   
   
-    
-  
   
   
     
@@ -10193,11 +10252,11 @@
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_3_2_2_1_2" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_3_2_2_1_2" >
         
           
           <label class="md-nav__link" for="__nav_7_3_2_2_1_2" id="__nav_7_3_2_2_1_2_label" tabindex="0">
@@ -10218,7 +10277,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="6" aria-labelledby="__nav_7_3_2_2_1_2_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="6" aria-labelledby="__nav_7_3_2_2_1_2_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_7_3_2_2_1_2">
             <span class="md-nav__icon md-icon"></span>
             
@@ -10233,17 +10292,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-      
-      <a href="Ledger.PreConway.Conformance.NewPP.Properties.html" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="Ledger.PreConway.Conformance.NewPP.Properties.html" class="md-nav__link">
         
   
   
@@ -10259,7 +10311,6 @@
   
 
       </a>
-      
     </li>
   
 
@@ -11657,6 +11708,49 @@
   
   
   
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conway" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conway
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dijkstra" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dijkstra
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
   
 </nav>
                   </div>
@@ -11674,7 +11768,7 @@
 
 
 
-  <a href="https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/src/Ledger/PreConway/Conformance/NewPP/Properties.lagda.md?plain=1"
+  <a href="https://github.com/IntersectMBO/formal-ledger-specifications/blob/main/docs/ledger-properties-dashboard.md?plain=1"
      class="md-content__button md-icon"
      title="View the source of this page"
      aria-label="View the source of this page">
@@ -11684,44 +11778,344 @@
   </a>
 
 
-  <h1>Properties</h1>
+<h1 id="ledger-properties-dashboard">Ledger properties dashboard<a class="headerlink" href="#ledger-properties-dashboard" title="Permanent link">&para;</a></h1>
+<p>This is the human-facing dashboard of ledger properties across eras. It is
+<strong>generated</strong> from the catalog (<code>build-tools/scripts/property-tracking/properties.yaml</code>) with each
+property's status <strong>derived from the Agda source</strong> by
+<code>build-tools/scripts/property-tracking/scan_properties.py</code>. Do not edit the generated region below
+by hand; edit the catalog and regenerate.</p>
+<p>See the "Tracking Properties of the Ledger" section of <code>CONTRIBUTING.md</code> for
+the conventions and workflow.</p>
+<p>Status legend: ✅ proved · 🟡 stated (proof pending) · 🟦 planned (drafted on
+another branch/PR) · ⚪ idea (not yet in Agda).</p>
+<!-- BEGIN GENERATED: dashboard (scan_properties.py) -->
 
-<pre class="Agda"><a id="111" class="Symbol">{-#</a> <a id="115" class="Keyword">OPTIONS</a> <a id="123" class="Pragma">--safe</a> <a id="130" class="Symbol">#-}</a>
+<p><em>Generated by <code>build-tools/scripts/property-tracking/scan_properties.py</code> from the catalog reconciled against the Agda — do not edit this region by hand.</em></p>
+<h3 id="summary">Summary<a class="headerlink" href="#summary" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Era</th>
+<th style="text-align: right;">proved</th>
+<th style="text-align: right;">stated</th>
+<th style="text-align: right;">planned</th>
+<th style="text-align: right;">idea</th>
+<th style="text-align: right;">total</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>conway</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">22</td>
+</tr>
+<tr>
+<td>dijkstra</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">15</td>
+</tr>
+</tbody>
+</table>
+<h3 id="conway">Conway<a class="headerlink" href="#conway" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Status</th>
+<th>Property</th>
+<th>STS</th>
+<th>Agda module</th>
+<th>Issue(s)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>✅ proved</td>
+<td>CERT and CERTS preserve value</td>
+<td>CERTS</td>
+<td><a href="Ledger.Conway.Specification.Certs.Properties.PoV.html"><code>Ledger.Conway.Specification.Certs.Properties.PoV</code></a></td>
+<td><a href="https://github.com/intersectmbo/formal-ledger-specifications/issues/1240">#1240</a></td>
+</tr>
+<tr>
+<td>✅ proved</td>
+<td>GA deposits are eventually refunded</td>
+<td>CHAIN</td>
+<td><a href="Ledger.Conway.Specification.Chain.Properties.EventuallyRefunded.html"><code>Ledger.Conway.Specification.Chain.Properties.EventuallyRefunded</code></a></td>
+<td><a href="https://github.com/intersectmbo/formal-ledger-specifications/issues/414">#414</a></td>
+</tr>
+<tr>
+<td>✅ proved</td>
+<td>govDepsMatch is a CHAIN invariant</td>
+<td>CHAIN</td>
+<td><a href="Ledger.Conway.Specification.Chain.Properties.GovDepsMatch.html"><code>Ledger.Conway.Specification.Chain.Properties.GovDepsMatch</code></a></td>
+<td><a href="https://github.com/intersectmbo/formal-ledger-specifications/issues/1235">#1235</a></td>
+</tr>
+<tr>
+<td>✅ proved</td>
+<td>EPOCH preserves the DReps equivalence (expired-DReps parametricity)</td>
+<td>EPOCH</td>
+<td><a href="Ledger.Conway.Specification.Epoch.Properties.ExpiredDReps.html"><code>Ledger.Conway.Specification.Epoch.Properties.ExpiredDReps</code></a></td>
+<td><a href="https://github.com/intersectmbo/formal-ledger-specifications/issues/1241">#1241</a></td>
+</tr>
+<tr>
+<td>✅ proved</td>
+<td>govDepsMatch is an EPOCH invariant</td>
+<td>EPOCH</td>
+<td><a href="Ledger.Conway.Specification.Epoch.Properties.GovDepsMatch.html"><code>Ledger.Conway.Specification.Epoch.Properties.GovDepsMatch</code></a></td>
+<td><a href="https://github.com/intersectmbo/formal-ledger-specifications/issues/1237">#1237</a></td>
+</tr>
+<tr>
+<td>✅ proved</td>
+<td>ChangePParams proposals have a non-empty update group</td>
+<td>GOV</td>
+<td><a href="Ledger.Conway.Specification.Gov.Properties.ChangePPGroup.html"><code>Ledger.Conway.Specification.Gov.Properties.ChangePPGroup</code></a></td>
+<td><a href="https://github.com/intersectmbo/formal-ledger-specifications/issues/1234">#1234</a></td>
+</tr>
+<tr>
+<td>✅ proved</td>
+<td>A voter's (last) vote in a block is applied to the GA</td>
+<td>GOV</td>
+<td><a href="Ledger.Conway.Specification.Gov.Properties.LastVoteApplied.html"><code>Ledger.Conway.Specification.Gov.Properties.LastVoteApplied</code></a></td>
+<td><a href="https://github.com/intersectmbo/formal-ledger-specifications/issues/417">#417</a></td>
+</tr>
+<tr>
+<td>✅ proved</td>
+<td>ChangePParams proposals of an accepted transaction have a non-empty update group</td>
+<td>LEDGER</td>
+<td><a href="Ledger.Conway.Specification.Ledger.Properties.ChangePPGroup.html"><code>Ledger.Conway.Specification.Ledger.Properties.ChangePPGroup</code></a></td>
+<td><a href="https://github.com/intersectmbo/formal-ledger-specifications/issues/1234">#1234</a></td>
+</tr>
+<tr>
+<td>✅ proved</td>
+<td>govDepsMatch is a LEDGER invariant</td>
+<td>LEDGER</td>
+<td><a href="Ledger.Conway.Specification.Ledger.Properties.GovDepsMatch.html"><code>Ledger.Conway.Specification.Ledger.Properties.GovDepsMatch</code></a></td>
+<td><a href="https://github.com/intersectmbo/formal-ledger-specifications/issues/1236">#1236</a></td>
+</tr>
+<tr>
+<td>✅ proved</td>
+<td>The last vote is applied at the LEDGER level</td>
+<td>LEDGER</td>
+<td><a href="Ledger.Conway.Specification.Ledger.Properties.LastVoteApplied.html"><code>Ledger.Conway.Specification.Ledger.Properties.LastVoteApplied</code></a></td>
+<td><a href="https://github.com/intersectmbo/formal-ledger-specifications/issues/417">#417</a></td>
+</tr>
+<tr>
+<td>✅ proved</td>
+<td>LEDGER preserves value</td>
+<td>LEDGER</td>
+<td><a href="Ledger.Conway.Specification.Ledger.Properties.PoV.html"><code>Ledger.Conway.Specification.Ledger.Properties.PoV</code></a></td>
+<td><a href="https://github.com/intersectmbo/formal-ledger-specifications/issues/1238">#1238</a></td>
+</tr>
+<tr>
+<td>✅ proved</td>
+<td>Rewards domain is unchanged by POOLREAP, EPOCH, and NEWEPOCH (rewards are constant at the epoch boundary)</td>
+<td>NEWEPOCH</td>
+<td><a href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html"><code>Ledger.Conway.Specification.Epoch.Properties.ConstRwds</code></a></td>
+<td><a href="https://github.com/intersectmbo/formal-ledger-specifications/issues/1229">#1229</a></td>
+</tr>
+<tr>
+<td>✅ proved</td>
+<td>k proposals grow the GA deposit pot by k * govActionDeposit</td>
+<td>UTXO</td>
+<td><a href="Ledger.Conway.Specification.Utxo.Properties.GenMinSpend.html"><code>Ledger.Conway.Specification.Utxo.Properties.GenMinSpend</code></a></td>
+<td><a href="https://github.com/intersectmbo/formal-ledger-specifications/issues/413">#413</a></td>
+</tr>
+<tr>
+<td>✅ proved</td>
+<td>Coin consumed is at least the sum of GA deposits of the proposals</td>
+<td>UTXO</td>
+<td><a href="Ledger.Conway.Specification.Utxo.Properties.MinSpend.html"><code>Ledger.Conway.Specification.Utxo.Properties.MinSpend</code></a></td>
+<td><a href="https://github.com/intersectmbo/formal-ledger-specifications/issues/1228">#1228</a></td>
+</tr>
+<tr>
+<td>✅ proved</td>
+<td>UTXO preserves value</td>
+<td>UTXO</td>
+<td><a href="Ledger.Conway.Specification.Utxo.Properties.PoV.html"><code>Ledger.Conway.Specification.Utxo.Properties.PoV</code></a></td>
+<td><a href="https://github.com/intersectmbo/formal-ledger-specifications/issues/1239">#1239</a></td>
+</tr>
+<tr>
+<td>🟡 stated</td>
+<td>voteDelegs range is contained in VDelegs built from its domain</td>
+<td>CERTS</td>
+<td><a href="Ledger.Conway.Specification.Certs.Properties.VoteDelegsVDeleg.html"><code>Ledger.Conway.Specification.Certs.Properties.VoteDelegsVDeleg</code></a></td>
+<td><a href="https://github.com/intersectmbo/formal-ledger-specifications/issues/1233">#1233</a></td>
+</tr>
+<tr>
+<td>🟡 stated</td>
+<td>dom rewards = CredentialDeposit^-1 (dom deposits) is a CHAIN invariant</td>
+<td>CHAIN</td>
+<td><a href="Ledger.Conway.Specification.Chain.Properties.CredDepsEqualDomRwds.html"><code>Ledger.Conway.Specification.Chain.Properties.CredDepsEqualDomRwds</code></a></td>
+<td><a href="https://github.com/intersectmbo/formal-ledger-specifications/issues/1230">#1230</a></td>
+</tr>
+<tr>
+<td>🟡 stated</td>
+<td>EnactState only changes at an epoch boundary (new enact state =&gt; new epoch)</td>
+<td>CHAIN</td>
+<td><a href="Ledger.Conway.Specification.Chain.Properties.EpochStep.html"><code>Ledger.Conway.Specification.Chain.Properties.EpochStep</code></a></td>
+<td><a href="https://github.com/intersectmbo/formal-ledger-specifications/issues/412">#412</a></td>
+</tr>
+<tr>
+<td>🟡 stated</td>
+<td>Well-formedness of PParams is a CHAIN invariant</td>
+<td>CHAIN</td>
+<td><a href="Ledger.Conway.Specification.Chain.Properties.PParamsWellFormed.html"><code>Ledger.Conway.Specification.Chain.Properties.PParamsWellFormed</code></a></td>
+<td><a href="https://github.com/intersectmbo/formal-ledger-specifications/issues/1231">#1231</a></td>
+</tr>
+<tr>
+<td>🟡 stated</td>
+<td>Active DReps are unchanged across an epoch when there are no proposals</td>
+<td>EPOCH</td>
+<td><a href="Ledger.Conway.Specification.Epoch.Properties.NoPropSameDReps.html"><code>Ledger.Conway.Specification.Epoch.Properties.NoPropSameDReps</code></a></td>
+<td><a href="https://github.com/intersectmbo/formal-ledger-specifications/issues/1232">#1232</a></td>
+</tr>
+<tr>
+<td>⚪ idea</td>
+<td>The last vote is applied at the CHAIN level</td>
+<td>CHAIN</td>
+<td>—</td>
+<td><a href="https://github.com/intersectmbo/formal-ledger-specifications/issues/1312">#1312</a></td>
+</tr>
+<tr>
+<td>⚪ idea</td>
+<td>Voting power of a stake credential does not decrease on self-funded proposal</td>
+<td>EPOCH</td>
+<td>—</td>
+<td><a href="https://github.com/intersectmbo/formal-ledger-specifications/issues/415">#415</a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="dijkstra">Dijkstra<a class="headerlink" href="#dijkstra" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Status</th>
+<th>Property</th>
+<th>STS</th>
+<th>Agda module</th>
+<th>Issue(s)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>⚪ idea</td>
+<td>[port] voteDelegs range is contained in VDelegs built from its domain</td>
+<td>CERTS</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>⚪ idea</td>
+<td>[port] dom rewards = CredentialDeposit^-1 (dom deposits) is a CHAIN invariant</td>
+<td>CHAIN</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>⚪ idea</td>
+<td>[port] EnactState only changes at an epoch boundary</td>
+<td>CHAIN</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>⚪ idea</td>
+<td>[port] GA deposits are eventually refunded</td>
+<td>CHAIN</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>⚪ idea</td>
+<td>[port] Well-formedness of PParams is a CHAIN invariant</td>
+<td>CHAIN</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>⚪ idea</td>
+<td>[port] EPOCH preserves the DReps equivalence</td>
+<td>EPOCH</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>⚪ idea</td>
+<td>[port] Active DReps are unchanged across an epoch with no proposals</td>
+<td>EPOCH</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>⚪ idea</td>
+<td>[port] Voting power does not decrease on a self-funded proposal</td>
+<td>EPOCH</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>⚪ idea</td>
+<td>[port] ChangePParams proposals have a non-empty update group</td>
+<td>GOV</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>⚪ idea</td>
+<td>[port] A voter's (last) vote in a block is applied to the GA</td>
+<td>GOV</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>⚪ idea</td>
+<td>[port] govDepsMatch is a CHAIN/LEDGER/EPOCH invariant</td>
+<td>CHAIN</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>⚪ idea</td>
+<td>[port] Rewards domain is unchanged by NEWEPOCH</td>
+<td>NEWEPOCH</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>⚪ idea</td>
+<td>[port] Preservation of value (LEDGER/UTXO/CERTS/CERT)</td>
+<td>LEDGER</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>⚪ idea</td>
+<td>[port] k proposals grow the GA deposit pot by k * govActionDeposit</td>
+<td>UTXO</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>⚪ idea</td>
+<td>[port] Coin consumed is at least the sum of GA deposits of the proposals</td>
+<td>UTXO</td>
+<td>—</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<!-- END GENERATED: dashboard (scan_properties.py) -->
 
-<a id="135" class="Keyword">open</a> <a id="140" class="Keyword">import</a> <a id="147" href="Relation.Nullary.Decidable.html" class="Module">Relation.Nullary.Decidable</a>
-
-<a id="175" class="Keyword">open</a> <a id="180" class="Keyword">import</a> <a id="187" href="Ledger.Prelude.html" class="Module">Ledger.Prelude</a>
-<a id="202" class="Keyword">open</a> <a id="207" class="Keyword">import</a> <a id="214" href="Ledger.Conway.Specification.Transaction.html" class="Module">Ledger.Conway.Specification.Transaction</a>
-
-<a id="255" class="Keyword">module</a> <a id="262" href="Ledger.PreConway.Conformance.NewPP.Properties.html" class="Module">Ledger.PreConway.Conformance.NewPP.Properties</a> <a id="308" class="Symbol">(</a><a id="309" href="Ledger.PreConway.Conformance.NewPP.Properties.html#309" class="Bound">txs</a> <a id="313" class="Symbol">:</a> <a id="315" class="Symbol">_)</a> <a id="318" class="Symbol">(</a><a id="319" class="Keyword">open</a> <a id="324" href="Ledger.Conway.Specification.Transaction.html#2459" class="Module">TransactionStructure</a> <a id="345" href="Ledger.PreConway.Conformance.NewPP.Properties.html#309" class="Bound">txs</a><a id="348" class="Symbol">)</a> <a id="350" class="Keyword">where</a>
-
-<a id="357" class="Keyword">open</a> <a id="362" class="Keyword">import</a> <a id="369" href="Ledger.PreConway.Conformance.PPUp.html" class="Module">Ledger.PreConway.Conformance.PPUp</a> <a id="403" href="Ledger.PreConway.Conformance.NewPP.Properties.html#309" class="Bound">txs</a>
-<a id="407" class="Keyword">open</a> <a id="412" class="Keyword">import</a> <a id="419" href="Ledger.PreConway.Conformance.NewPP.html" class="Module">Ledger.PreConway.Conformance.NewPP</a> <a id="454" href="Ledger.PreConway.Conformance.NewPP.Properties.html#309" class="Bound">txs</a>
-
-<a id="459" class="Keyword">instance</a>
-  <a id="Computational-NEWPP"></a><a id="470" href="Ledger.PreConway.Conformance.NewPP.Properties.html#470" class="Function">Computational-NEWPP</a> <a id="490" class="Symbol">:</a> <a id="492" href="Interface.ComputationalRelation.html#13270" class="Record">Computational</a> <a id="506" href="Ledger.PreConway.Conformance.NewPP.html#1291" class="Datatype Operator">_⊢_⇀⦇_,NEWPP⦈_</a> <a id="521" href="Agda.Builtin.String.html#335" class="Postulate">String</a>
-  <a id="530" href="Ledger.PreConway.Conformance.NewPP.Properties.html#470" class="Function">Computational-NEWPP</a> <a id="550" class="Symbol">=</a> <a id="552" class="Keyword">record</a> <a id="559" class="Symbol">{</a><a id="560" href="Ledger.PreConway.Conformance.NewPP.Properties.html#576" class="Module">M</a><a id="561" class="Symbol">}</a> <a id="563" class="Keyword">where</a> <a id="569" class="Keyword">module</a> <a id="576" href="Ledger.PreConway.Conformance.NewPP.Properties.html#576" class="Module">M</a> <a id="578" href="Ledger.PreConway.Conformance.NewPP.Properties.html#578" class="Bound">Γ</a> <a id="580" href="Ledger.PreConway.Conformance.NewPP.Properties.html#580" class="Bound">s</a> <a id="582" class="Symbol">(</a><a id="583" class="Keyword">open</a> <a id="588" href="Ledger.PreConway.Conformance.NewPP.html#492" class="Module">NewPParamState</a> <a id="603" href="Ledger.PreConway.Conformance.NewPP.Properties.html#580" class="Bound">s</a><a id="604" class="Symbol">)</a> <a id="606" class="Keyword">where</a>
-    <a id="616" href="Ledger.PreConway.Conformance.NewPP.Properties.html#616" class="Function">computeProof</a> <a id="629" class="Symbol">=</a> <a id="631" class="Symbol">λ</a> <a id="633" class="Keyword">where</a>
-      <a id="645" href="Agda.Builtin.Maybe.html#194" class="InductiveConstructor">nothing</a> <a id="653" class="Symbol">→</a> <a id="655" href="Interface.ComputationalRelation.html#10518" class="InductiveConstructor">success</a> <a id="663" class="Symbol">(_</a> <a id="666" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="668" href="Ledger.PreConway.Conformance.NewPP.html#1606" class="InductiveConstructor">NEWPP-Reject</a><a id="680" class="Symbol">)</a>
-      <a id="688" class="Symbol">(</a><a id="689" href="Agda.Builtin.Maybe.html#173" class="InductiveConstructor">just</a> <a id="694" href="Ledger.PreConway.Conformance.NewPP.Properties.html#694" class="Bound">upd</a><a id="697" class="Symbol">)</a> <a id="699" class="Symbol">→</a> <a id="701" class="Keyword">let</a> <a id="705" href="Ledger.PreConway.Conformance.NewPP.Properties.html#705" class="Bound">newpp</a> <a id="711" class="Symbol">=</a> <a id="713" href="Ledger.Conway.Specification.PParams.html#18551" class="Function">applyUpdate</a> <a id="725" href="Ledger.PreConway.Conformance.NewPP.html#532" class="Field">pparams</a> <a id="733" href="Ledger.PreConway.Conformance.NewPP.Properties.html#694" class="Bound">upd</a> <a id="737" class="Keyword">in</a>
-        <a id="748" href="Function.Base.html#4061" class="Function Operator">case</a> <a id="753" href="Class.Decidable.Core.html#470" class="Function Operator">¿</a> <a id="755" href="Ledger.PreConway.Conformance.PPUp.html#906" class="Function">viablePParams</a> <a id="769" href="Ledger.PreConway.Conformance.NewPP.Properties.html#705" class="Bound">newpp</a> <a id="775" href="Class.Decidable.Core.html#470" class="Function Operator">¿</a> <a id="777" href="Function.Base.html#4061" class="Function Operator">of</a> <a id="780" class="Symbol">λ</a> <a id="782" class="Keyword">where</a>
-          <a id="798" class="Symbol">(</a><a id="799" href="Relation.Nullary.Decidable.Core.html#2099" class="InductiveConstructor">yes</a> <a id="803" href="Ledger.PreConway.Conformance.NewPP.Properties.html#803" class="Bound">p</a><a id="804" class="Symbol">)</a> <a id="806" class="Symbol">→</a> <a id="808" href="Interface.ComputationalRelation.html#10518" class="InductiveConstructor">success</a> <a id="816" class="Symbol">(_</a> <a id="819" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="821" href="Ledger.PreConway.Conformance.NewPP.html#1393" class="InductiveConstructor">NEWPP-Accept</a> <a id="834" href="Ledger.PreConway.Conformance.NewPP.Properties.html#803" class="Bound">p</a><a id="835" class="Symbol">)</a>
-          <a id="847" class="Symbol">(</a><a id="848" href="Relation.Nullary.Decidable.Core.html#2136" class="InductiveConstructor">no</a> <a id="851" class="Symbol">_)</a>  <a id="855" class="Symbol">→</a> <a id="857" href="Interface.ComputationalRelation.html#10560" class="InductiveConstructor">failure</a> <a id="865" class="String">&quot;Failed in NEWPP&quot;</a>
-
-    <a id="888" href="Ledger.PreConway.Conformance.NewPP.Properties.html#888" class="Function">completeness</a> <a id="901" class="Symbol">:</a> <a id="903" class="Symbol">_</a>
-    <a id="909" href="Ledger.PreConway.Conformance.NewPP.Properties.html#888" class="Function">completeness</a> <a id="922" href="Ledger.PreConway.Conformance.NewPP.Properties.html#922" class="Bound">sig</a> <a id="926" href="Ledger.PreConway.Conformance.NewPP.Properties.html#926" class="Bound">s&#39;</a> <a id="929" href="Ledger.PreConway.Conformance.NewPP.Properties.html#929" class="Bound">h</a> <a id="931" class="Keyword">with</a> <a id="936" href="Ledger.PreConway.Conformance.NewPP.Properties.html#922" class="Bound">sig</a> <a id="940" class="Symbol">|</a> <a id="942" href="Ledger.PreConway.Conformance.NewPP.Properties.html#929" class="Bound">h</a>
-    <a id="948" class="Symbol">...</a> <a id="952" class="Symbol">|</a> <a id="954" href="Agda.Builtin.Maybe.html#194" class="InductiveConstructor">nothing</a>  <a id="963" class="Symbol">|</a> <a id="965" href="Ledger.PreConway.Conformance.NewPP.html#1606" class="InductiveConstructor">NEWPP-Reject</a>   <a id="980" class="Symbol">=</a> <a id="982" href="Agda.Builtin.Equality.html#207" class="InductiveConstructor">refl</a>
-    <a id="991" class="Symbol">...</a> <a id="995" class="Symbol">|</a> <a id="997" href="Agda.Builtin.Maybe.html#173" class="InductiveConstructor">just</a> <a id="1002" href="Ledger.PreConway.Conformance.NewPP.Properties.html#1002" class="Bound">upd</a> <a id="1006" class="Symbol">|</a> <a id="1008" href="Ledger.PreConway.Conformance.NewPP.html#1393" class="InductiveConstructor">NEWPP-Accept</a> <a id="1021" href="Ledger.PreConway.Conformance.NewPP.Properties.html#1021" class="Bound">p</a> <a id="1023" class="Symbol">=</a> <a id="1025" href="Agda.Builtin.Equality.html#207" class="InductiveConstructor">refl</a>
-</pre>
 
 
 
 
 
-
-
-  
-  
 
 
 
@@ -11745,7 +12139,7 @@
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="Ledger.PreConway.Conformance.NewPP.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: NewPP">
+          <a href="Ledger.Dijkstra.Specification.Utxow.Properties.PoV.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: PoV">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
@@ -11755,20 +12149,20 @@
                 Previous
               </span>
               <div class="md-ellipsis">
-                NewPP
+                PoV
               </div>
             </div>
           </a>
         
         
           
-          <a href="Ledger.PreConway.Conformance.PPUp.html" class="md-footer__link md-footer__link--next" aria-label="Next: PPUp">
+          <a href="Definitions.html" class="md-footer__link md-footer__link--next" aria-label="Next: Definitions">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                PPUp
+                Definitions
               </div>
             </div>
             <div class="md-footer__button md-icon">
