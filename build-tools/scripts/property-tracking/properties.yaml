@@ -455,6 +455,16 @@ properties:
     issues: []
     notes: "Port of conway-epoch-expired-dreps."
 
+  - id: dijkstra-gov-pov
+    title: "GOV preserve value"
+    era: dijkstra
+    sts: GOV
+    module: Ledger.Dijkstra.Specification.Gov.Properties.PoV
+    anchor: sec:gov-properties-pov
+    defs: [rmOrphanDRepVotes-coinFromGovDeposit, GOVS-coinFromGovDeposit]
+    issues: [1276]
+    notes: ""
+
   - id: dijkstra-certs-pov
     title: "CERT and CERTS preserve value"
     era: dijkstra
