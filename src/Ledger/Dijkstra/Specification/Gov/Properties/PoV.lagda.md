@@ -7,7 +7,7 @@ source_path: src/Ledger/Dijkstra/Specification/Gov/Properties/PoV.lagda.md
 
 This module proves the two governance-deposit accounting facts that the top-level
 preservation-of-value proof (`LEDGER-pov`{.AgdaFunction} in
-`Ledger.Properties.PoV`{.AgdaModule}) assumes as module parameters (#1276):
+`Ledger.Properties.PoV`{.AgdaModule}) assumes as module parameters:
 
 +  `rmOrphanDRepVotes-coinFromGovDeposit`{.AgdaFunction}:
    `rmOrphanDRepVotes`{.AgdaFunction} only rewrites the `gvDRep`{.AgdaField} votes of
@@ -21,12 +21,8 @@ preservation-of-value proof (`LEDGER-pov`{.AgdaFunction} in
    for the new action, and `GOV-Vote`{.AgdaInductiveConstructor} never changes a
    deposit.
 
-??? note "**Status: complete**"
-
-    Both facts typecheck under `--safe`, with no module parameters and no postulates.
-    Their statements match the corresponding `LEDGER-PoV`{.AgdaModule} module
-    parameters (modulo this module's own `proposalsOf`{.AgdaFunction} copy; see
-    below), so the rewiring (#1277) can instantiate them directly.
+Their statements match the corresponding `LEDGER-PoV`{.AgdaModule} module
+parameters (modulo this module's own `proposalsOf`{.AgdaFunction} copy; see below).
 
 <!--
 ```agda
@@ -61,11 +57,9 @@ The right injections of a list of sums, used (at `GovVote ⊎ GovProposal`) to e
 the proposals from a mixed `GOVS`{.AgdaDatatype} signal list.
 `Ledger.Properties.PoV`{.AgdaModule} defines an identical function for stating its
 `GOVS-coinFromGovDeposit`{.AgdaFunction} parameter, but importing it here would
-create an import cycle once #1277 rewires `Ledger.Properties.PoV`{.AgdaModule} to
+create an import cycle once `Ledger.Properties.PoV`{.AgdaModule} is rewired to
 import *this* module.  So we keep a local copy (clause-for-clause identical),
-together with the `proposalsOf-Proposals+Votes`{.AgdaFunction} extraction lemma; the
-rewiring should delete the copies in `Ledger.Properties.PoV`{.AgdaModule} and import
-these.
+together with the `proposalsOf-Proposals+Votes`{.AgdaFunction} extraction lemma.
 
 ```agda
 proposalsOf : ∀ {A B : Type} → List (A ⊎ B) → List B
@@ -96,13 +90,10 @@ proposalsOf-Proposals+Votes t = go (ListOfGovProposalsOf t) (ListOfGovVotesOf t)
 ## Arithmetic helpers
 
 The two pure `+`-rearrangements below are discharged by the reflective ring solver
-over the commutative semiring of naturals (`Data.Nat.Tactic.RingSolver`).  The
-solver recognises the ring's operations *syntactically*, so the
-`Ledger.Prelude`{.AgdaModule} overloaded `_+_` (a `HasAdd`{.AgdaRecord} method,
-which merely *reduces* to `Data.Nat._+_`) defeats it.  The solver-facing statements
-are therefore written with the raw natural-number addition, imported as `_+ᴺ_` —
-definitionally equal to `_+_` at `Coin`, so the lemmas discharge `_+_` goals
-unchanged.
+(`Data.Nat.Tactic.RingSolver`), with the solver-facing statements written over the
+raw natural-number addition `_+ᴺ_`; see `Ledger.Properties.PoV`{.AgdaModule} for
+the solver conventions and the reason the overloaded `_+_` cannot appear in
+solver-facing statements.
 
 ```agda
 swap-head : ∀ a b c → a +ᴺ (b +ᴺ c) ≡ b +ᴺ (a +ᴺ c)
