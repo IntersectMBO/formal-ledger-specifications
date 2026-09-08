@@ -703,6 +703,18 @@ module _  {A B : Type}
       lem-del-excluded m ¬p = filterᵐ-restrict m ⟨≈⟩ restrict-singleton-filterᵐ-false m ¬p
 
 
+-- Corestriction
+
+-- Corestricting a map to a set `X` of values confines its range to `X`.
+-- Indeed, `(m ∣^ X) ˢ` is `m ˢ` filtered by the predicate `(_∈ X) ∘ proj₂`, so every
+-- pair surviving the filter carries a proof that its value belongs to `X`.
+-- The map `m` is an explicit argument because it cannot be recovered by unification:
+-- `_∣^_` goes through `⊆-map`, which mentions `m` only as `m ˢ` (i.e., `proj₁ m`).
+cores-range-⊆ : ∀ {A B : Type} ⦃ _ : DecEq B ⦄ (m : A ⇀ B) {X : ℙ B} → range (m ∣^ X) ⊆ X
+cores-range-⊆ _ b∈range with Equivalence.from ∈-map b∈range
+... | _ , refl , ab∈cores = proj₁ (Equivalence.from ∈-filter ab∈cores)
+
+
 -- Map lemmas: lookup after insert
 
 -- Looking up a freshly inserted key returns the inserted value.
