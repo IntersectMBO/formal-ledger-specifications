@@ -280,33 +280,40 @@ d_indexedSumL'45'proj'8322''45'zero_138 ::
    MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12) ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
 d_indexedSumL'45'proj'8322''45'zero_138 = erased
+-- Ledger.Prelude.+-interleave
+d_'43''45'interleave_158 ::
+  Integer ->
+  Integer ->
+  Integer ->
+  Integer -> MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
+d_'43''45'interleave_158 = erased
 -- Ledger.Prelude._.getCoin-singleton
-d_getCoin'45'singleton_164 ::
+d_getCoin'45'singleton_192 ::
   () ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_getCoin'45'singleton_164 = erased
+d_getCoin'45'singleton_192 = erased
 -- Ledger.Prelude._.≡ᵉ-getCoin
-d_'8801''7497''45'getCoin_170 ::
+d_'8801''7497''45'getCoin_198 ::
   () ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_'8801''7497''45'getCoin_170 = erased
+d_'8801''7497''45'getCoin_198 = erased
 -- Ledger.Prelude._.getCoin-cong
-d_getCoin'45'cong_182 ::
+d_getCoin'45'cong_210 ::
   () ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_getCoin'45'cong_182 = erased
+d_getCoin'45'cong_210 = erased
 -- Ledger.Prelude._.indexedSumᵛ'-∪
-d_indexedSum'7515''''45''8746'_194 ::
+d_indexedSum'7515''''45''8746'_222 ::
   () ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
@@ -316,21 +323,21 @@ d_indexedSum'7515''''45''8746'_194 ::
    MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34 ->
    MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20) ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_indexedSum'7515''''45''8746'_194 = erased
+d_indexedSum'7515''''45''8746'_222 = erased
 -- Ledger.Prelude._.res-decomp
-d_res'45'decomp_390 ::
+d_res'45'decomp_418 ::
   () ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_res'45'decomp_390 ~v0 v1 v2 v3 = du_res'45'decomp_390 v1 v2 v3
-du_res'45'decomp_390 ::
+d_res'45'decomp_418 ~v0 v1 v2 v3 = du_res'45'decomp_418 v1 v2 v3
+du_res'45'decomp_418 ::
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-du_res'45'decomp_390 v0 v1 v2
+du_res'45'decomp_418 v0 v1 v2
   = coe
       MAlonzo.Code.Axiom.Set.Properties.du_'8746''45'cong_980
       (coe
@@ -497,16 +504,16 @@ du_res'45'decomp_390 v0 v1 v2
                    MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 (coe v5) (coe v4)
             _ -> MAlonzo.RTE.mazUnreachableError))
 -- Ledger.Prelude._.∪ˡsingleton∈dom
-d_'8746''737'singleton'8712'dom_420 ::
+d_'8746''737'singleton'8712'dom_448 ::
   () ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_'8746''737'singleton'8712'dom_420 = erased
+d_'8746''737'singleton'8712'dom_448 = erased
 -- Ledger.Prelude._.∪ˡsingleton∉dom
-d_'8746''737'singleton'8713'dom_438 ::
+d_'8746''737'singleton'8713'dom_466 ::
   () ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
@@ -514,28 +521,28 @@ d_'8746''737'singleton'8713'dom_438 ::
   (MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34 ->
    MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20) ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_'8746''737'singleton'8713'dom_438 = erased
+d_'8746''737'singleton'8713'dom_466 = erased
 -- Ledger.Prelude._.∪ˡsingleton0≡
-d_'8746''737'singleton0'8801'_464 ::
+d_'8746''737'singleton0'8801'_492 ::
   () ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   AgdaAny -> MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_'8746''737'singleton0'8801'_464 = erased
+d_'8746''737'singleton0'8801'_492 = erased
 -- Ledger.Prelude._.sumConstZero
-d_sumConstZero_488 ::
+d_sumConstZero_516 ::
   () ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   [AgdaAny] -> MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_sumConstZero_488 = erased
+d_sumConstZero_516 = erased
 -- Ledger.Prelude._._.fin
-d_fin_498 ::
+d_fin_526 ::
   () ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   [AgdaAny] -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_fin_498 ~v0 ~v1 v2 = du_fin_498 v2
-du_fin_498 :: [AgdaAny] -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-du_fin_498 v0
+d_fin_526 ~v0 ~v1 v2 = du_fin_526 v2
+du_fin_526 :: [AgdaAny] -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+du_fin_526 v0
   = coe
       MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.du_finiteness_1210
       (coe
@@ -549,59 +556,66 @@ du_fin_498 v0
               (coe (0 :: Integer)))
          v0)
 -- Ledger.Prelude._._.l
-d_l_502 ::
+d_l_530 ::
   () ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   [AgdaAny] -> [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
-d_l_502 ~v0 ~v1 v2 = du_l_502 v2
-du_l_502 :: [AgdaAny] -> [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
-du_l_502 v0
+d_l_530 ~v0 ~v1 v2 = du_l_530 v2
+du_l_530 :: [AgdaAny] -> [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
+du_l_530 v0
   = coe
-      MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe du_fin_498 (coe v0))
+      MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe du_fin_526 (coe v0))
 -- Ledger.Prelude._._.h
-d_h_508 ::
+d_h_536 ::
   () ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   [AgdaAny] ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Function.Bundles.T_Equivalence_1858
-d_h_508 ~v0 ~v1 v2 v3 = du_h_508 v2 v3
-du_h_508 ::
+d_h_536 ~v0 ~v1 v2 v3 = du_h_536 v2 v3
+du_h_536 ::
   [AgdaAny] ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Function.Bundles.T_Equivalence_1858
-du_h_508 v0 v1
+du_h_536 v0 v1
   = coe
-      MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30 (coe du_fin_498 (coe v0))
+      MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30 (coe du_fin_526 (coe v0))
       v1
 -- Ledger.Prelude._._.all-zero
-d_all'45'zero_512 ::
+d_all'45'zero_540 ::
   () ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   [AgdaAny] ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_all'45'zero_512 = erased
+d_all'45'zero_540 = erased
 -- Ledger.Prelude._._.all-zero-dedup
-d_all'45'zero'45'dedup_526 ::
+d_all'45'zero'45'dedup_554 ::
   () ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   [AgdaAny] ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_all'45'zero'45'dedup_526 = erased
+d_all'45'zero'45'dedup_554 = erased
 -- Ledger.Prelude.setToList-∈
-d_setToList'45''8712'_536 ::
+d_setToList'45''8712'_564 ::
   () ->
   AgdaAny ->
   [AgdaAny] ->
   MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34 ->
   MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34
-d_setToList'45''8712'_536 ~v0 ~v1 ~v2 v3
-  = du_setToList'45''8712'_536 v3
-du_setToList'45''8712'_536 ::
+d_setToList'45''8712'_564 ~v0 ~v1 ~v2 v3
+  = du_setToList'45''8712'_564 v3
+du_setToList'45''8712'_564 ::
   MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34 ->
   MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34
-du_setToList'45''8712'_536 v0 = coe v0
+du_setToList'45''8712'_564 v0 = coe v0
+-- Ledger.Prelude.sum-map-+
+d_sum'45'map'45''43'_576 ::
+  () ->
+  (AgdaAny -> Integer) ->
+  (AgdaAny -> Integer) ->
+  [AgdaAny] -> MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
+d_sum'45'map'45''43'_576 = erased
