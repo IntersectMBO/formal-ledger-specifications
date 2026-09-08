@@ -711,7 +711,7 @@ module _  {A B : Type}
 -- The map `m` is an explicit argument because it cannot be recovered by unification:
 -- `_∣^_` goes through `⊆-map`, which mentions `m` only as `m ˢ` (i.e., `proj₁ m`).
 cores-range-⊆ : ∀ {A B : Type} ⦃ _ : DecEq B ⦄ (m : A ⇀ B) {X : ℙ B} → range (m ∣^ X) ⊆ X
-cores-range-⊆ _ b∈range with Equivalence.from ∈-map b∈range
+cores-range-⊆ m b∈range with Equivalence.from ∈-map b∈range
 ... | _ , refl , ab∈cores = proj₁ (Equivalence.from ∈-filter ab∈cores)
 
 
