@@ -112,6 +112,10 @@ open import Ledger.Dijkstra.Specification.Utxo txs abs
 open import Ledger.Dijkstra.Specification.Utxow txs abs
 
 open import Ledger.Dijkstra.Specification.Entities.Properties.PoV txs
+open import Ledger.Dijkstra.Specification.Utxo.Properties.PoV txs abs
+  using (noMintingSubTxs)
+open import Ledger.Dijkstra.Specification.Utxow.Properties.PoV txs abs
+  using (module UTXOW-PoV; module SUBUTXOW-PoV)
 
 open import Interface.STS
 
@@ -120,9 +124,6 @@ open ≡-Reasoning
 
 instance
   _ = +-0-monoid
-
-noMintingSubTxs : TopLevelTx → Type
-noMintingSubTxs tx = ∀ stx → stx ∈ˡ SubTransactionsOf tx → coin (MintedValueOf stx) ≡ 0
 
 -- proposalsOf is useful for extracting proposals from a mixed `GOVS` (`GovVote ⊎
 -- GovProposal`) input list for the `GOVS-coinFromGovDeposit` gov-deposit accounting.
@@ -142,15 +143,14 @@ which are organized into the following groups:
 +  the set/map identities consumed by `ApplyToRewards-PoV`{.AgdaModule}
    (`∪ˡ-lookup-preserve`{.AgdaFunction}, `sum-map-proj₂≡getCoin`{.AgdaFunction},
    `setToList-Unique`{.AgdaFunction});
-+  UTxO facts: coin equations for the
-   `UTXOW`{.AgdaDatatype}/`SUBUTXOW`{.AgdaDatatype} steps and batch-wide
-   freshness/disjointness invariants
-   (`balance-∪`{.AgdaFunction}, `split-balance`{.AgdaFunction},
-   `noMintTx`{.AgdaFunction}, `noMintSubTx`{.AgdaFunction},
-   `outs-disjoint`{.AgdaFunction}, `subutxow-step-coin`{.AgdaFunction},
-   `utxo₁-tx-spend-eq`{.AgdaFunction}, `fresh-top-tx-id`{.AgdaFunction},
-   `utxow-pov-invalid`{.AgdaFunction}, `UTXOW-V-mechanical`{.AgdaFunction},
-   `UTXOW-batch-balance-coin`{.AgdaFunction});
++  UTxO-side inputs: the per-sub-transaction no-mint fact
+   (`noMintSubTx`{.AgdaFunction}, consumed by the imported
+   `UTXOW-PoV`{.AgdaModule}) and the batch-threading invariants
+   (`utxo₁-tx-spend-eq`{.AgdaFunction}, `fresh-top-tx-id`{.AgdaFunction},
+   `subtx-fresh-txid`{.AgdaFunction}, `subtx-spend-agree`{.AgdaFunction}),
+   which the outer `UTXO`{.AgdaDatatype} rule establishes only at batch level;
+   the `UTXOW`{.AgdaDatatype}/`SUBUTXOW`{.AgdaDatatype} coin equations
+   themselves are imported from `Utxow.Properties.PoV`{.AgdaModule};
 +  Cert facts: value accounting for a single `CERTS`{.AgdaDatatype} run
    (`CERTS-rewards-pov`{.AgdaFunction}, `CERTS-deposits-pov`{.AgdaFunction},
    `CERTS-deposits-registered`{.AgdaFunction}, `CERTS-new-thread`{.AgdaFunction},
@@ -180,25 +180,8 @@ module LEDGER-PoV
       → ∀[ a ∈ dom (m ˢ) ] NetworkIdOf a ≡ NetworkId
       → Unique (map (stake ∘ proj₁) (setToList (m ˢ))) )
 
-  -- UTXOW-PoV parameters
-  ( balance-∪ : {u u' : UTxO} → disjoint (dom u) (dom u')
-              → cbalance (u ∪ˡ u') ≡ cbalance u + cbalance u' )
-  ( split-balance : (u : UTxO) (keys : ℙ TxIn)
-                  → cbalance u ≡ cbalance (u ∣ keys ᶜ) + cbalance (u ∣ keys) )
-  ( noMintTx : coin (MintedValueOf tx) ≡ 0 )
+  -- Per-sub-transaction no-mint fact, consumed by the imported `UTXOW-PoV`.
   ( noMintSubTx : noMintingSubTxs tx )
-  ( outs-disjoint : {u : UTxO}
-                  → TxIdOf tx ∉ mapˢ proj₁ (dom u)
-                  → disjoint (dom (u ∣ SpendInputsOf tx ᶜ)) (dom (outs tx)) )
-
-  -- Per-step SUBUTXOW coin equation.  A local proof would require, in addition to
-  -- `balance-∪` and `split-balance`, a batch-wide "spend inputs preserved" invariant
-  -- and freshness of each sub-tx's TxId relative to the running UTxO.
-  ( subutxow-step-coin : {Γ : SubUTxOEnv} {s₀ s₁ : UTxOState} {stx : SubLevelTx}
-      → IsTopLevelValidFlagOf Γ ≡ true
-      → Γ ⊢ s₀ ⇀⦇ stx ,SUBUTXOW⦈ s₁
-      → getCoin s₀ + cbalance (outs stx) + DonationsOf stx
-        ≡ getCoin s₁ + cbalance (UTxOOf Γ ∣ SpendInputsOf stx) )
 
   -- Batch-wide invariants on the post-SUBLEDGERS UTxO state.  Both follow from
   -- batch-wide input disjointness and TxId freshness, which the outer UTXO rule
@@ -215,6 +198,19 @@ module LEDGER-PoV
       → SubLedgerEnv.isTopLevelValid subΓ ≡ true
       → subΓ ⊢ s ⇀⦇ SubTransactionsOf tx ,SUBLEDGERS⦈ ⟦ utxoSt₁ , govSt₁ , certState₁ ⟧ˡ
       → TxIdOf tx ∉ mapˢ proj₁ (dom (UTxOOf utxoSt₁)) )
+
+  -- Their per-SUBUTXOW analogues, consumed by the imported `SUBUTXOW-PoV`:
+  -- freshness of each sub-tx's TxId in the running UTxO, and agreement of the
+  -- running UTxO with the pre-batch snapshot on the sub-tx's spend inputs.
+  ( subtx-fresh-txid : {Γ : SubUTxOEnv} {s₀ s₁ : UTxOState} {stx : SubLevelTx}
+      → IsTopLevelValidFlagOf Γ ≡ true
+      → Γ ⊢ s₀ ⇀⦇ stx ,SUBUTXOW⦈ s₁
+      → TxIdOf stx ∉ mapˢ proj₁ (dom (UTxOOf s₀)) )
+  ( subtx-spend-agree : {Γ : SubUTxOEnv} {s₀ s₁ : UTxOState} {stx : SubLevelTx}
+      → IsTopLevelValidFlagOf Γ ≡ true
+      → Γ ⊢ s₀ ⇀⦇ stx ,SUBUTXOW⦈ s₁
+      →  cbalance (UTxOOf s₀ ∣ SpendInputsOf stx)
+         ≡ cbalance (UTxOOf Γ ∣ SpendInputsOf stx) )
 
   -- Value accounting for a single CERTS run (consumed via `ENTITIES-PoV`):
   -- rewards preservation; closed-form deposit accounting (which needs the
@@ -274,42 +270,14 @@ module LEDGER-PoV
       → Γ ⊢ govSt ⇀⦇ props ,GOVS⦈ govSt′
       → coinFromGovDeposit govSt′
         ≡ coinFromGovDeposit govSt + govProposalsDeposits (PParamsOf Γ) (proposalsOf props) )
-
-  -- Utxo/Utxow-PoV facts --
-
-  -- Invalid top-level tx: the UTXOW step preserves UTxO coin.
-  ( utxow-pov-invalid : {Γ' : UTxOEnv} {s₀ s₁ : UTxOState}
-      → Γ' ⊢ s₀ ⇀⦇ tx ,UTXOW⦈ s₁ → IsValidFlagOf tx ≡ false → getCoin s₀ ≡ getCoin s₁ )
-
-  -- Valid top-level tx, mechanical single-tx coin equation (spend inputs resolved
-  -- against running UTxO; TxId freshness lets `outs tx` split off cleanly).
-  ( UTXOW-V-mechanical : {Γ' : UTxOEnv} {s₀ s₁ : UTxOState}
-      → Γ' ⊢ s₀ ⇀⦇ tx ,UTXOW⦈ s₁
-      → IsValidFlagOf tx ≡ true
-      → TxIdOf tx ∉ mapˢ proj₁ (dom (UTxOOf s₀))
-      → getCoin s₀ + cbalance (outs tx) + TxFeesOf tx + DonationsOf tx
-        ≡ getCoin s₁ + cbalance (UTxOOf s₀ ∣ SpendInputsOf tx) )
-
-  -- Closed-form coin projection of the batch balance `consumedBatch ≡ producedBatch`
-  -- (the minted terms drop by `noMintTx`/`noMintSubTx`).  The cert deposit summands
-  -- are in the spec's *closed form* — `refundCertDeposits`/`newCertDeposits` over
-  -- `allDCerts tx`, with the pool set drawn from the environment's pre-batch
-  -- `pools₀` — keeping this a pure UTxO obligation.  The governance-deposit summands
-  -- sit on the produced side, matching `producedTx`.
-  ( UTXOW-batch-balance-coin : {Γ' : UTxOEnv} {s₀ s₁ : UTxOState}
-      → Γ' ⊢ s₀ ⇀⦇ tx ,UTXOW⦈ s₁
-      → cbalance (UTxOOf Γ' ∣ SpendInputsOf tx) + getCoin (WithdrawalsOf tx)
-          + sum (map (λ stx → cbalance (UTxOOf Γ' ∣ SpendInputsOf stx) + getCoin (WithdrawalsOf stx))
-                     (SubTransactionsOf tx))
-          + refundCertDeposits (PParamsOf Γ') (allDCerts tx)
-        ≡ cbalance (outs tx) + TxFeesOf tx + DonationsOf tx + getCoin (DirectDepositsOf tx)
-          + sum (map (λ stx → cbalance (outs stx) + DonationsOf stx + getCoin (DirectDepositsOf stx))
-                     (SubTransactionsOf tx))
-          + newCertDeposits (PParamsOf Γ') (dom (PoolsOf Γ')) (allDCerts tx)
-          + ( govProposalsDeposits (PParamsOf Γ') (ListOfGovProposalsOf tx)
-            + sum (map (λ stx → govProposalsDeposits (PParamsOf Γ') (ListOfGovProposalsOf stx))
-                       (SubTransactionsOf tx)) ) )
   where
+
+  -- The UTxO-side facts, previously module parameters, are now imported:
+  -- `utxow-pov-invalid`, `UTXOW-V-mechanical` and `UTXOW-batch-balance-coin`
+  -- from `UTXOW-PoV`, and `subutxow-step-coin` from `SUBUTXOW-PoV` (given the
+  -- two batch-threading hypotheses above).
+  open UTXOW-PoV tx noMintSubTx
+  open SUBUTXOW-PoV subtx-fresh-txid subtx-spend-agree
 
   open ENTITIES-PoV ∪ˡ-lookup-preserve sum-map-proj₂≡getCoin setToList-Unique
                     CERTS-rewards-pov CERTS-deposits-pov CERTS-deposits-registered
@@ -342,8 +310,8 @@ variables are implicit, since `solve-∀`{.AgdaMacro} only handles visible binde
 The cert deposits change is the integer delta of `coinFromDeposits`{.AgdaFunction}
 at the top and sub levels.  The `LEDGER-V`{.AgdaInductiveConstructor} chain tracks
 the deposit pots in this two-level `posPart`/`negPart` form; `bat'`{.AgdaFunction}
-obtains it from the closed-form `UTXOW-batch-balance-coin`{.AgdaFunction}
-parameter via the batch-wide deposit accounting (`bridgeEq`{.AgdaFunction},
+obtains it from the imported closed-form `UTXOW-batch-balance-coin`{.AgdaFunction}
+fact via the batch-wide deposit accounting (`bridgeEq`{.AgdaFunction},
 composed by `SUBLEDGERS-deposits`{.AgdaFunction}) and
 `posNeg-deposits`{.AgdaFunction}.
 
