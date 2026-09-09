@@ -64,9 +64,10 @@ module _ (tx : TopLevelTx) where
     hasConwayCerts : L.Any IsConwayCert (DCertsOf tx)     → UsesV3Features
 
   data UsesV4Features : Set where
-    hasScriptGuards      : ¬ (∀[ g ∈ GuardsOf tx ] IsKeyHashObj g) → UsesV4Features
-    hasDirectDeposits    : ¬ Is-∅ (dom (DirectDepositsOf tx))    → UsesV4Features
-    hasBalanceIntervals  : ¬ Is-∅ (dom (BalanceIntervalsOf tx))  → UsesV4Features
+    hasScriptGuards             : ¬ (∀[ g ∈ GuardsOf tx ] IsKeyHashObj g)      → UsesV4Features
+    hasDirectDeposits           : ¬ Is-∅ (dom (DirectDepositsOf tx))           → UsesV4Features
+    hasBalanceIntervals         : ¬ Is-∅ (dom (BalanceIntervalsOf tx))         → UsesV4Features
+    hasStartingBalanceIntervals : ¬ Is-∅ (dom (StartingBalanceIntervalsOf tx)) → UsesV4Features
 ```
 
 <!--
@@ -97,14 +98,18 @@ module _ {tx : TopLevelTx} where
     Dec-UsesV4Features : UsesV4Features tx ⁇
     Dec-UsesV4Features .dec
       with ¿ ¬ (∀[ g ∈ GuardsOf tx ] IsKeyHashObj g) ¿
-         | ¿ ¬ Is-∅ (dom (DirectDepositsOf tx)) ¿ | ¿ ¬ Is-∅ (dom (BalanceIntervalsOf tx)) ¿
-    ... | yes p | _ | _ = yes (hasScriptGuards p)
-    ... | _ | yes p | _ = yes (hasDirectDeposits p)
-    ... | _ | _ | yes p = yes (hasBalanceIntervals p)
-    ... | no p₂ | no p₃ | no p₄
+         | ¿ ¬ Is-∅ (dom (DirectDepositsOf tx)) ¿
+         | ¿ ¬ Is-∅ (dom (BalanceIntervalsOf tx)) ¿
+         | ¿ ¬ Is-∅ (dom (StartingBalanceIntervalsOf tx)) ¿
+    ... | yes p | _ | _ | _ = yes (hasScriptGuards p)
+    ... | _ | yes p | _ | _ = yes (hasDirectDeposits p)
+    ... | _ | _ | yes p | _ = yes (hasBalanceIntervals p)
+    ... | _ | _ | _ | yes p = yes (hasStartingBalanceIntervals p)
+    ... | no p₂ | no p₃ | no p₄ | no p₅
       = no λ { (hasScriptGuards x) → p₂ x
              ; (hasDirectDeposits x) → p₃ x
-             ; (hasBalanceIntervals x) → p₄ x }
+             ; (hasBalanceIntervals x) → p₄ x
+             ; (hasStartingBalanceIntervals x) → p₅ x }
 ```
 -->
 
