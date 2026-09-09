@@ -82,8 +82,8 @@ In terms of the lemmas below, the two main pieces are the following.
         (`coin-consumedBatch`{.AgdaFunction}, `coin-producedBatch`{.AgdaFunction}).
 
     The minted values drop out: the top-level term by premise 7 of the
-    `UTXO`{.AgdaDatatype} rule, the sub-level terms by the `noMintSubTx`{.AgdaBound}
-    module parameter.[^1]
+    `UTXO`{.AgdaDatatype} rule, the sub-level terms by the `noMintingSubTxs`{.AgdaFunction}
+    hypothesis.[^1]
 
 <!--
 ```agda
@@ -141,6 +141,14 @@ discharges it from the `SUBLEDGERS`{.AgdaDatatype} derivation.
 ```agda
 noMintingSubTxs : TopLevelTx → Type
 noMintingSubTxs tx = ∀ stx → stx ∈ˡ SubTransactionsOf tx → coin (MintedValueOf stx) ≡ 0
+```
+
+The premise itself, read off a `SUBUTXO`{.AgdaDatatype} step:
+
+```agda
+subutxo-noMint : {Γ : SubUTxOEnv} {s₀ s₁ : UTxOState} {stx : SubLevelTx}
+  → Γ ⊢ s₀ ⇀⦇ stx ,SUBUTXO⦈ s₁ → coin (MintedValueOf stx) ≡ 0
+subutxo-noMint (SUBUTXO (_ , _ , _ , _ , _ , noMint , _)) = noMint
 ```
 
 ## Coin projections of <span class="AgdaFunction">consumedBatch</span> and <span class="AgdaFunction">producedBatch</span>
@@ -409,13 +417,11 @@ subutxo-step-coin {s₀ = ⟦ u , f , d ⟧ᵘ} {stx = stx} isV (SUBUTXO _) fres
 
 ## The <span class="AgdaModule">UTXO-PoV</span> module
 
-The remaining lemmas are stated for a fixed top-level transaction, with the
-`noMintingSubTxs`{.AgdaFunction} fact as the only assumption.
+The remaining lemmas are stated for a fixed top-level transaction.
 
 ```agda
 module UTXO-PoV
   (tx : TopLevelTx)
-  (noMintSubTx : noMintingSubTxs tx)
   {Γ : UTxOEnv}
   where
 ```
@@ -498,11 +504,12 @@ step hypothesis serves only to extract premises 7 (top-level no-mint) and 8
 are sums computed from the environment's pre-batch snapshot and the transaction
 alone.  Given the premises, the proof is pure substitution — apply
 `cong coin` to premise 8 and rewrite each side with the Layer-3 equations
-(the sub-level no-mint facts come from the module parameter).
+(the sub-level no-mint facts are the `noMintingSubTxs`{.AgdaFunction} hypothesis).
 
 ```agda
   UTXO-batch-balance-coin : {s₀ s₁ : UTxOState}
     → Γ ⊢ s₀ ⇀⦇ tx ,UTXO⦈ s₁
+    → noMintingSubTxs tx
     →  cbalance (UTxOOf Γ ∣ SpendInputsOf tx) + getCoin (WithdrawalsOf tx)
        + sum (map  (λ stx →  cbalance (UTxOOf Γ ∣ SpendInputsOf stx)
                              + getCoin (WithdrawalsOf stx))
@@ -519,7 +526,7 @@ alone.  Given the premises, the proof is pure substitution — apply
                                                           (ListOfGovProposalsOf stx))
                            (SubTransactionsOf tx)) )
   UTXO-batch-balance-coin
-    (UTXO (_ , _ , _ , _ , _ , _ , noMintTop , batchBal , _)) = begin
+    (UTXO (_ , _ , _ , _ , _ , _ , noMintTop , batchBal , _)) noMintSubTx = begin
     cbalance (u ∣ SpendInputsOf tx) + getCoin (WithdrawalsOf tx)
       + sum (map  (λ stx → cbalance (u ∣ SpendInputsOf stx) + getCoin (WithdrawalsOf stx))
                   (SubTransactionsOf tx))
