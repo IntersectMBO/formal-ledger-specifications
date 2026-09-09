@@ -56,7 +56,7 @@ private variable
 ```
 -->
 
-## <span class="AlgebraFunction">∙-homo-Coin</span> and <span class="AlgebraFunction">coin-∑ˡ`</span>
+## <span class="AlgebraFunction">∙-homo-Coin</span> and <span class="AlgebraFunction">coin-∑ˡ</span>
 
 `coin`{.AgdaField} is a monoid homomorphism from `Value`{.AgdaField} (under `+ᵛ`/`ε`)
 to `ℕ`{.AgdaDatatype} (under `+`/`0`).
