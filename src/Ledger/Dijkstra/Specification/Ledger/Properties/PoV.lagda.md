@@ -113,6 +113,9 @@ open import Ledger.Dijkstra.Specification.Utxow txs abs
 
 open import Ledger.Dijkstra.Specification.Certs.Properties.PoV govStructure
 open import Ledger.Dijkstra.Specification.Entities.Properties.PoV txs
+open import Ledger.Dijkstra.Specification.Gov.Properties.PoV txs abs
+  using ( proposalsOf; proposalsOf-Proposals+Votes
+        ; rmOrphanDRepVotes-coinFromGovDeposit; GOVS-coinFromGovDeposit )
 open import Ledger.Dijkstra.Specification.Utxo.Properties.PoV txs abs
   using (noMintingSubTxs)
 open import Ledger.Dijkstra.Specification.Utxow.Properties.PoV txs abs
@@ -125,13 +128,6 @@ open ≡-Reasoning
 
 instance
   _ = +-0-monoid
-
--- proposalsOf is useful for extracting proposals from a mixed `GOVS` (`GovVote ⊎
--- GovProposal`) input list for the `GOVS-coinFromGovDeposit` gov-deposit accounting.
-proposalsOf : {A B : Type} → List (A ⊎ B) → List B
-proposalsOf []            = []
-proposalsOf (inj₁ _ ∷ xs) = proposalsOf xs
-proposalsOf (inj₂ p ∷ xs) = p ∷ proposalsOf xs
 
 ```
 -->
@@ -155,8 +151,8 @@ organized into the following groups:
    themselves are imported from `Utxow.Properties.PoV`{.AgdaModule};
 +  Cert facts: value accounting for a single `CERTS`{.AgdaDatatype} run,
    imported from `Certs.Properties.PoV`{.AgdaModule};
-+  Gov deposit facts (`rmOrphanDRepVotes-coinFromGovDeposit`{.AgdaFunction},
-   `GOVS-coinFromGovDeposit`{.AgdaFunction});
++  Gov deposit facts, imported from `Gov.Properties.PoV`{.AgdaModule} together
+   with `proposalsOf`{.AgdaFunction}, whose single home is that module;
 +  no-truncation withdrawal bounds (`ENTITIES-wdrls-bounded`{.AgdaFunction},
    `SUBENTITIES-wdrls-bounded`{.AgdaFunction}); see
    `Entities.Properties.PoV`{.AgdaModule} for why these are not consequences of
@@ -222,28 +218,15 @@ module LEDGER-PoV
       → Γe ⊢ cs ⇀⦇ stx ,SUBENTITIES⦈ cs'
       → ∀[ (addr , amt) ∈ (WithdrawalsOf stx) ˢ ]
           amt ≤ maybe id 0 (lookupᵐ? (RewardsOf cs) (stake addr)) )
-
-  -- Governance-deposit accounting.  `rmOrphanDRepVotes` only rewrites
-  -- `votes.gvDRep`, never `GovActionState.deposit`, so it leaves
-  -- `coinFromGovDeposit` unchanged.
-  ( rmOrphanDRepVotes-coinFromGovDeposit :
-      (cs : CertState) (g : GovState)
-      → coinFromGovDeposit (rmOrphanDRepVotes cs g) ≡ coinFromGovDeposit g )
-
-  -- Per-`GOVS`-step gov-deposit growth equals `govProposalsDeposits` of step's
-  -- proposals.  Used by `SUBLEDGERS-gov-coin` and `gov-acc`.
-  ( GOVS-coinFromGovDeposit :
-      ∀ {Γ : GovEnv} {govSt govSt′ : GovState} {props}
-      → Γ ⊢ govSt ⇀⦇ props ,GOVS⦈ govSt′
-      → coinFromGovDeposit govSt′
-        ≡ coinFromGovDeposit govSt + govProposalsDeposits (PParamsOf Γ) (proposalsOf props) )
   where
 
-  -- The UTxO-side and Certs-side facts, previously module parameters, are now
-  -- imported: `utxow-pov-invalid`, `UTXOW-V-mechanical` and
+  -- The UTxO-side, Certs-side and gov-side facts, previously module parameters,
+  -- are now imported: `utxow-pov-invalid`, `UTXOW-V-mechanical` and
   -- `UTXOW-batch-balance-coin` from `UTXOW-PoV`; `subutxow-step-coin` from
-  -- `SUBUTXOW-PoV` (given the two batch-threading hypotheses above); and the
-  -- `CERTS-*` facts with `refundCertDeposits-++` from `Certs.Properties.PoV`.
+  -- `SUBUTXOW-PoV` (given the two batch-threading hypotheses above); the
+  -- `CERTS-*` facts with `refundCertDeposits-++` from `Certs.Properties.PoV`;
+  -- and `rmOrphanDRepVotes-coinFromGovDeposit` with `GOVS-coinFromGovDeposit`
+  -- from `Gov.Properties.PoV`.
   open UTXOW-PoV tx noMintSubTx
   open SUBUTXOW-PoV subtx-fresh-txid subtx-spend-agree
 
@@ -554,24 +537,10 @@ transaction's certificates.
 Induct over `SUBLEDGERS`{.AgdaDatatype}, threading the per-`GOVS` gov-deposit growth: each
 `SUBLEDGER-V`{.AgdaInductiveConstructor} step grows `coinFromGovDeposit`{.AgdaFunction} by the
 `govProposalsDeposits`{.AgdaFunction} of the sub-transaction's proposals (via the
-`GOVS-coinFromGovDeposit`{.AgdaFunction} parameter applied to the step's `GOVS`
+`GOVS-coinFromGovDeposit`{.AgdaFunction} fact applied to the step's `GOVS`
 premise).  `SUBLEDGER-I`{.AgdaInductiveConstructor} is ruled out by the top-level validity flag.
 
 ```agda
-  -- `proposalsOf (GovProposals+Votes t)` recovers exactly the proposals of `t`.
-  proposalsOf-Proposals+Votes : ∀ {ℓ} (t : Tx ℓ)
-    → proposalsOf (GovProposals+Votes t) ≡ ListOfGovProposalsOf t
-  proposalsOf-Proposals+Votes t = go (ListOfGovProposalsOf t) (ListOfGovVotesOf t)
-    where
-    drop-votes : {A B : Type} (vs : List A) → proposalsOf {B = B} (map inj₁ vs) ≡ []
-    drop-votes [] = refl
-    drop-votes (_ ∷ vs) = drop-votes vs
-
-    go : {A B : Type} (ps : List B) (vs : List A)
-      → proposalsOf (map inj₂ ps ++ map inj₁ vs) ≡ ps
-    go [] vs = drop-votes vs
-    go (p ∷ ps) vs = cong (p ∷_) (go ps vs)
-
   open SubLedgerEnv
 
   SUBLEDGERS-gov-coin :
@@ -653,7 +622,7 @@ sub-level totals of direct deposits and withdrawals respectively, the goal
 where `G₀ = coinFromGovDeposit govState₀` and, since the final
 `LEDGER-V`{.AgdaInductiveConstructor} `GovState`{.AgdaRecord}
 is `rmOrphanDRepVotes certState₂ govState₂` and `rmOrphanDRepVotes` preserves
-`coinFromGovDeposit` (parameter `rmOrphanDRepVotes-coinFromGovDeposit`),
+`coinFromGovDeposit` (`rmOrphanDRepVotes-coinFromGovDeposit`),
 `G' = coinFromGovDeposit govState₂`.
 
 The body assembles the goal from two lemmas:
