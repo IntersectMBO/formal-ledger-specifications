@@ -10,8 +10,10 @@ This module proves the top-level preservation-of-value theorem for the Dijkstra
 
 +  `Γ` is a ledger environment,
 +  `tx` is a top-level transaction,
-+  `s` and `s'` are ledger states related by `LEDGER`{.AgdaDatatype}, and
-+  `s` satisfies `PoolDepositsRegistered`{.AgdaFunction} (see `Certs`{.AgdaModule}),
++  `s` and `s'` are ledger states related by `LEDGER`{.AgdaDatatype},
++  `s` satisfies `PoolDepositsRegistered`{.AgdaFunction} (see `Certs`{.AgdaModule}), and
++  the transaction ids of the batch are fresh for the UTxO of `s`
+   (`FreshTxIds`{.AgdaFunction}, see `Utxo.Properties.PoV`{.AgdaModule}),
 
 then `getCoin s ≡ getCoin s'`.
 
@@ -45,6 +47,13 @@ left-biased update silently keeps a stale entry for an unregistered pool; at a
 state with such an entry, a pool registration destroys the charged deposit and the
 theorem is false.  On-chain states satisfy the hypothesis by construction.
 
+The freshness hypothesis is necessary as well.  The rules add a transaction's
+outputs to the UTxO by left-biased union, so an output whose key is already
+present, because the transaction's id occurs in the UTxO or repeats another id of
+the batch, is dropped and its value destroyed; no premise of the rules excludes
+this.  On chain, ids are collision-resistant hashes of the transaction bodies.  The
+Conway theorem carries the same hypothesis for its single transaction.
+
 ## Proof Strategy
 
 The Dijkstra `LEDGER-pov`{.AgdaFunction} does not decompose into independent
@@ -65,9 +74,10 @@ reflexive-transitive closure, plus one arithmetic identity.
 
 +  `SUBLEDGERS-utxo-coin`{.AgdaFunction} inducts over the subtransaction list,
    applying the per-`SUBUTXOW`{.AgdaDatatype} coin equation
-   (`subutxow-step-coin`{.AgdaFunction}) at each step.
-+  `SUBLEDGERS-noMint`{.AgdaFunction} collects the sub-transactions' no-mint
-   premises for the batch balance.
+   (`subutxow-step-coin`{.AgdaFunction}) at each step, with the running-UTxO
+   invariant `BatchUTxO`{.AgdaRecord} carried alongside; `SUBLEDGERS-batch`{.AgdaFunction}
+   threads the same invariant to the state the top-level step starts from, and
+   `SUBLEDGERS-noMint`{.AgdaFunction} collects the sub-transactions' no-mint premises.
 +  `SUBLEDGERS-rewards-pov`{.AgdaFunction} composes per-sub-transaction
    `SUBENTITIES-pov`{.AgdaFunction} invocations (the rewards flow).
 +  `SUBLEDGERS-deposits`{.AgdaFunction} (with `SUBLEDGERS-registered`{.AgdaFunction})
@@ -120,9 +130,10 @@ open import Ledger.Dijkstra.Specification.Gov.Properties.PoV txs abs
   using ( proposalsOf; proposalsOf-Proposals+Votes
         ; rmOrphanDRepVotes-coinFromGovDeposit; GOVS-coinFromGovDeposit )
 open import Ledger.Dijkstra.Specification.Utxo.Properties.PoV txs abs
-  using (noMintingSubTxs)
+  using ( noMintingSubTxs; batchTxIds; FreshTxIds; FreshTxIds-tail
+        ; BatchUTxO; module BatchUTxO; BatchUTxO-init; BatchUTxO-fresh )
 open import Ledger.Dijkstra.Specification.Utxow.Properties.PoV txs abs
-  using (module UTXOW-PoV; module SUBUTXOW-PoV; subutxow-noMint)
+  using (module UTXOW-PoV; subutxow-noMint; subutxow-batch-step; subutxow-step-coin)
 
 open import Interface.STS
 
@@ -137,29 +148,34 @@ instance
 
 ## The <span class="AgdaModule">LEDGER-PoV</span> module
 
-The supporting facts about the auxiliary transition systems are either imported
-from the property modules that prove them or assumed as module parameters,
-organized into the following groups:
+The supporting facts about the auxiliary transition systems are imported from
+the property modules that prove them, except for two groups assumed as module
+parameters:
 
 +  the set/map identities consumed by `ApplyToRewards-PoV`{.AgdaModule}
    (`∪ˡ-lookup-preserve`{.AgdaFunction}, `sum-map-proj₂≡getCoin`{.AgdaFunction},
    `setToList-Unique`{.AgdaFunction});
-+  UTxO-side inputs: the batch-threading invariants
-   (`utxo₁-tx-spend-eq`{.AgdaFunction}, `fresh-top-tx-id`{.AgdaFunction},
-   `subtx-fresh-txid`{.AgdaFunction}, `subtx-spend-agree`{.AgdaFunction}),
-   which the outer `UTXO`{.AgdaDatatype} rule establishes only at batch level;
-   the `UTXOW`{.AgdaDatatype}/`SUBUTXOW`{.AgdaDatatype} coin equations
-   themselves are imported from `Utxow.Properties.PoV`{.AgdaModule}, and the
-   per-sub-transaction no-mint fact they need is collected from the
-   `SUBLEDGERS`{.AgdaDatatype} derivation (`SUBLEDGERS-noMint`{.AgdaFunction});
-+  Cert facts: value accounting for a single `CERTS`{.AgdaDatatype} run,
-   imported from `Certs.Properties.PoV`{.AgdaModule};
-+  Gov deposit facts, imported from `Gov.Properties.PoV`{.AgdaModule} together
-   with `proposalsOf`{.AgdaFunction}, whose single home is that module;
 +  no-truncation withdrawal bounds (`ENTITIES-wdrls-bounded`{.AgdaFunction},
    `SUBENTITIES-wdrls-bounded`{.AgdaFunction}); see
    `Entities.Properties.PoV`{.AgdaModule} for why these are not consequences of
    the rules' own premises.
+
+The imported facts are the following.
+
++  UTxO-side facts, from `Utxow.Properties.PoV`{.AgdaModule}: the
+   `UTXOW`{.AgdaDatatype}/`SUBUTXOW`{.AgdaDatatype} coin equations, the batch
+   balance, and the batch-threading facts (freshness of each transaction's id in
+   the running UTxO, and agreement of the running UTxO with the pre-batch snapshot
+   on the spend inputs).  The last hold only along the batch history, so they are
+   stated for the running-UTxO invariant `BatchUTxO`{.AgdaRecord} of
+   `Utxo.Properties.PoV`{.AgdaModule}, which this module threads through the
+   sub-transactions.  The invariant holds initially exactly when the batch's ids
+   are fresh for the initial UTxO, the `FreshTxIds`{.AgdaFunction} hypothesis of
+   `LEDGER-pov`{.AgdaFunction}.
++  Cert facts: value accounting for a single `CERTS`{.AgdaDatatype} run, from
+   `Certs.Properties.PoV`{.AgdaModule}.
++  Gov deposit facts, from `Gov.Properties.PoV`{.AgdaModule} together with
+   `proposalsOf`{.AgdaFunction}, whose single home is that module.
 
 ```agda
 module LEDGER-PoV
@@ -179,35 +195,6 @@ module LEDGER-PoV
       → ∀[ a ∈ dom (m ˢ) ] NetworkIdOf a ≡ NetworkId
       → Unique (map (stake ∘ proj₁) (setToList (m ˢ))) )
 
-  -- Batch-wide invariants on the post-SUBLEDGERS UTxO state.  Both follow from
-  -- batch-wide input disjointness and TxId freshness, which the outer UTXO rule
-  -- establishes at batch level, not per-step.
-  ( utxo₁-tx-spend-eq : {subΓ : SubLedgerEnv} {s : LedgerState}
-        {utxoSt₁ : UTxOState} {govSt₁ : GovState} {certState₁ : CertState}
-      → SubLedgerEnv.isTopLevelValid subΓ ≡ true
-      → SubLedgerEnv.utxo₀ subΓ ≡ UTxOOf (UTxOStateOf s)
-      → subΓ ⊢ s ⇀⦇ SubTransactionsOf tx ,SUBLEDGERS⦈ ⟦ utxoSt₁ , govSt₁ , certState₁ ⟧ˡ
-      → cbalance (UTxOOf utxoSt₁ ∣ SpendInputsOf tx)
-        ≡ cbalance (UTxOOf (UTxOStateOf s) ∣ SpendInputsOf tx) )
-  ( fresh-top-tx-id : {subΓ : SubLedgerEnv} {s : LedgerState}
-        {utxoSt₁ : UTxOState} {govSt₁ : GovState} {certState₁ : CertState}
-      → SubLedgerEnv.isTopLevelValid subΓ ≡ true
-      → subΓ ⊢ s ⇀⦇ SubTransactionsOf tx ,SUBLEDGERS⦈ ⟦ utxoSt₁ , govSt₁ , certState₁ ⟧ˡ
-      → TxIdOf tx ∉ mapˢ proj₁ (dom (UTxOOf utxoSt₁)) )
-
-  -- Their per-SUBUTXOW analogues, consumed by the imported `SUBUTXOW-PoV`:
-  -- freshness of each sub-tx's TxId in the running UTxO, and agreement of the
-  -- running UTxO with the pre-batch snapshot on the sub-tx's spend inputs.
-  ( subtx-fresh-txid : {Γ : SubUTxOEnv} {s₀ s₁ : UTxOState} {stx : SubLevelTx}
-      → IsTopLevelValidFlagOf Γ ≡ true
-      → Γ ⊢ s₀ ⇀⦇ stx ,SUBUTXOW⦈ s₁
-      → TxIdOf stx ∉ mapˢ proj₁ (dom (UTxOOf s₀)) )
-  ( subtx-spend-agree : {Γ : SubUTxOEnv} {s₀ s₁ : UTxOState} {stx : SubLevelTx}
-      → IsTopLevelValidFlagOf Γ ≡ true
-      → Γ ⊢ s₀ ⇀⦇ stx ,SUBUTXOW⦈ s₁
-      →  cbalance (UTxOOf s₀ ∣ SpendInputsOf stx)
-         ≡ cbalance (UTxOOf Γ ∣ SpendInputsOf stx) )
-
   -- No-truncation withdrawal bounds; see `Entities.Properties.PoV` for why these
   -- are hypotheses rather than consequences of the rules' own premises.
   ( ENTITIES-wdrls-bounded : {Γe : EntitiesEnv} {cs cs' : CertState}
@@ -220,15 +207,7 @@ module LEDGER-PoV
           amt ≤ maybe id 0 (lookupᵐ? (RewardsOf cs) (stake addr)) )
   where
 
-  -- The UTxO-side, Certs-side and gov-side facts, previously module parameters,
-  -- are now imported: `utxow-pov-invalid`, `UTXOW-V-mechanical` and
-  -- `UTXOW-batch-balance-coin` from `UTXOW-PoV`; `subutxow-step-coin` from
-  -- `SUBUTXOW-PoV` (given the two batch-threading hypotheses above); the
-  -- `CERTS-*` facts with `refundCertDeposits-++` from `Certs.Properties.PoV`;
-  -- and `rmOrphanDRepVotes-coinFromGovDeposit` with `GOVS-coinFromGovDeposit`
-  -- from `Gov.Properties.PoV`.
   open UTXOW-PoV tx
-  open SUBUTXOW-PoV subtx-fresh-txid subtx-spend-agree
 
   open ENTITIES-PoV ∪ˡ-lookup-preserve sum-map-proj₂≡getCoin setToList-Unique
                     CERTS-rewards-pov CERTS-deposits-pov CERTS-deposits-registered
@@ -343,33 +322,66 @@ collecting them along the derivation gives `noMintingSubTxs`{.AgdaFunction}.
   SUBLEDGERS-noMint (BS-ind _ rest) stx (there stx∈sigs) = SUBLEDGERS-noMint rest stx stx∈sigs
 ```
 
+## `SUBLEDGERS-batch`
+
+The running-UTxO invariant `BatchUTxO`{.AgdaRecord} threaded through the
+sub-transactions.  Its pending ids are those of the remaining sub-transactions
+followed by `ids`, the ids applied after them (at the top level, the top-level
+transaction's own), so each step's premises on the pending list are the head and
+tail of `FreshTxIds`{.AgdaFunction}.  Each valid step preserves the invariant by
+`subutxow-batch-step`{.AgdaFunction}; `SUBLEDGER-I`{.AgdaInductiveConstructor}
+is ruled out by the top-level validity flag.
+
+```agda
+  SUBLEDGERS-batch :
+    {Γ : SubLedgerEnv}
+    {s₀ s₁ : LedgerState}
+    {stxs : List SubLevelTx}
+    {ids : List TxId}
+    → SubLedgerEnv.isTopLevelValid Γ ≡ true
+    → Γ ⊢ s₀ ⇀⦇ stxs ,SUBLEDGERS⦈ s₁
+    → FreshTxIds (UTxOOf Γ) (map TxIdOf stxs ++ ids)
+    → BatchUTxO (UTxOOf Γ) (map TxIdOf stxs ++ ids) (UTxOOf s₀)
+    → BatchUTxO (UTxOOf Γ) ids (UTxOOf s₁)
+  SUBLEDGERS-batch _ (BS-base Id-nop) _ inv = inv
+  SUBLEDGERS-batch isV (BS-ind (SUBLEDGER-I (isI , _)) _) _ _ =
+    ⊥-elim (case trans (sym isV) isI of λ ())
+  SUBLEDGERS-batch isV (BS-ind (SUBLEDGER-V (isV' , utxowStep , _ , _)) rest) fresh inv =
+    SUBLEDGERS-batch isV rest (FreshTxIds-tail fresh) (subutxow-batch-step isV' utxowStep fresh inv)
+```
+
 ## `SUBLEDGERS-utxo-coin`
 
 Induct over the `SUBLEDGERS`{.AgdaDatatype} reflexive-transitive closure, applying
-the per-`SUBUTXOW`{.AgdaDatatype} coin equation at each step:
+the per-`SUBUTXOW`{.AgdaDatatype} coin equation at each step.  The batch invariant
+is carried alongside, as in `SUBLEDGERS-batch`{.AgdaFunction}, since each step's
+equation resolves the spent balance against the snapshot only under it:
 
 ```agda
   SUBLEDGERS-utxo-coin :
     {Γ : SubLedgerEnv}
     {s₀ s₁ : LedgerState}
     {stxs : List SubLevelTx}
+    {ids : List TxId}
     → SubLedgerEnv.isTopLevelValid Γ ≡ true
     → Γ ⊢ s₀ ⇀⦇ stxs ,SUBLEDGERS⦈ s₁
+    → FreshTxIds (UTxOOf Γ) (map TxIdOf stxs ++ ids)
+    → BatchUTxO (UTxOOf Γ) (map TxIdOf stxs ++ ids) (UTxOOf s₀)
     → getCoin (UTxOStateOf s₀)
       + sum (map (λ stx → cbalance (outs stx) + DonationsOf stx) stxs)
       ≡  getCoin (UTxOStateOf s₁)
          + sum (map (λ stx → cbalance (UTxOOf Γ ∣ SpendInputsOf stx)) stxs)
 
   -- Base case: empty list.  `Id-nop` unifies s₀ ≡ s₁ and both sums are 0.
-  SUBLEDGERS-utxo-coin _ (BS-base Id-nop) = refl
+  SUBLEDGERS-utxo-coin _ (BS-base Id-nop) _ _ = refl
 
   -- SUBLEDGER-I ruled out by isV : isTopLevelValid ≡ true.
-  SUBLEDGERS-utxo-coin isV (BS-ind (SUBLEDGER-I (isI , _)) _) =
+  SUBLEDGERS-utxo-coin isV (BS-ind (SUBLEDGER-I (isI , _)) _) _ _ =
     ⊥-elim (case trans (sym isV) isI of λ ())
 
   -- Inductive step: combine the per-step SUBUTXOW balance with the IH.
   SUBLEDGERS-utxo-coin {Γ} isV (BS-ind {s = s₀} {s' = s₁} {sigs} {s'' = sₙ}
-    (SUBLEDGER-V {stx = stx} (isV' , subutxowStep , _ , _)) rest) =
+    (SUBLEDGER-V {stx = stx} (isV' , subutxowStep , _ , _)) rest) fresh inv =
     begin
       U₀ + (p-stx + p-sum)    ≡˘⟨ +-assoc U₀ p-stx p-sum ⟩
       U₀ + p-stx + p-sum      ≡⟨ cong (_+ p-sum) step-P-C ⟩
@@ -390,15 +402,16 @@ the per-`SUBUTXOW`{.AgdaDatatype} coin equation at each step:
     p-sum = sum (map (λ stx → cbalance (outs stx) + DonationsOf stx) sigs)
     c-sum = sum (map (λ stx → cbalance (UTxOOf Γ ∣ SpendInputsOf stx)) sigs)
 
-    -- Single-step coin equation from the SUBUTXOW step assumption.
+    -- Single-step coin equation from the SUBUTXOW step, under the invariant.
     step-eq : U₀ + cbalance (outs stx) + DonationsOf stx ≡ U₁ + c-stx
-    step-eq = subutxow-step-coin isV' subutxowStep
+    step-eq = subutxow-step-coin isV' subutxowStep inv
 
     step-P-C : U₀ + p-stx ≡ U₁ + c-stx
     step-P-C = trans (sym (+-assoc U₀ (cbalance (outs stx)) (DonationsOf stx))) step-eq
 
     ih : U₁ + p-sum ≡ Uₙ + c-sum
-    ih = SUBLEDGERS-utxo-coin isV rest
+    ih = SUBLEDGERS-utxo-coin isV rest (FreshTxIds-tail fresh)
+                              (subutxow-batch-step isV' subutxowStep fresh inv)
 ```
 
 ## <span class="AgdaFunction">SUBLEDGERS-rewards-pov</span>
@@ -607,12 +620,14 @@ premise).  `SUBLEDGER-I`{.AgdaInductiveConstructor} is ruled out by the top-leve
 
 ## <span class="AgdaFunction">LEDGER-pov</span>
 
-The pool-deposit registration hypothesis concerns the initial state only; it is
-threaded through the batch by `SUBLEDGERS-registered`{.AgdaFunction} where needed.
+Both hypotheses concern the initial state only; the pool-deposit registration is
+threaded through the batch by `SUBLEDGERS-registered`{.AgdaFunction} where needed,
+and the freshness of the batch's ids by `SUBLEDGERS-batch`{.AgdaFunction}.
 
 ```agda
   LEDGER-pov : {Γ : LedgerEnv} {s s' : LedgerState}
     → PoolDepositsRegistered (CertStateOf s)
+    → FreshTxIds (UTxOOf s) (batchTxIds tx)
     → Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s' → getCoin s ≡ getCoin s'
 ```
 
@@ -623,7 +638,7 @@ are unchanged.  Only the `UTXOW` step affects `getCoin`, and it preserves it via
 `utxow-pov-invalid`.
 
 ```agda
-  LEDGER-pov {Γ} {s} _ (LEDGER-I (invalid , _ , utxoStep)) =
+  LEDGER-pov {Γ} {s} _ _ (LEDGER-I (invalid , _ , utxoStep)) =
     cong  ( λ u → u  + coinFromRewards (CertStateOf s) + coinFromDeposits (CertStateOf s)
                      + coinFromGovDeposit (GovStateOf s) )
           ( utxow-pov-invalid utxoStep invalid )
@@ -654,7 +669,7 @@ The body assembles the goal from two lemmas:
 +  `gov-acc`{.AgdaFunction}: `totGov+G₀ ≡ G'`, the gov-deposit accounting.
 
 ```agda
-  LEDGER-pov {Γ} {s} registered₀
+  LEDGER-pov {Γ} {s} registered₀ freshIds
     (LEDGER-V {utxoState₁ = us₁} {govState₁ = govSt₁} {certState₁ = cs₁}
               {certState₂ = cs₂} {govState₂ = govSt₂} {utxoState₂ = us₂}
               (valid , subStep , entitiesStep , govStep , utxoStep)) =
@@ -666,12 +681,16 @@ The body assembles the goal from two lemmas:
     where
 ```
 
-The sub-transactions' no-mint premises, collected from the
-`SUBLEDGERS`{.AgdaDatatype} derivation for the batch balance.
+The two facts collected from the `SUBLEDGERS`{.AgdaDatatype} derivation: the
+sub-transactions' no-mint premises, and the batch invariant at the state the
+top-level step starts from, whose only pending id is the top-level transaction's.
 
 ```agda
       noMintSubTx : noMintingSubTxs tx
       noMintSubTx = SUBLEDGERS-noMint subStep
+
+      batch₁ : BatchUTxO (UTxOOf s) [ TxIdOf tx ] (UTxOOf us₁)
+      batch₁ = SUBLEDGERS-batch valid subStep freshIds (BatchUTxO-init freshIds)
 ```
 
 A handful of arithmetic shuffles are required; these are pure
@@ -797,14 +816,14 @@ sides cancel.
       posneg = posNeg-deposits (CertStateOf s) cs₁ cs₂
 ```
 
-`UTXOW-V-mechanical`{.AgdaFunction} composed with the batch-wide "spend inputs
-preserved" invariant:
+`UTXOW-V-mechanical`{.AgdaFunction}, with the top-level id's freshness and the
+spent-balance agreement read off the batch invariant:
 
 ```agda
       mech : U₁ + cbalance (outs tx) + TxFeesOf tx + DonationsOf tx
            ≡ U₂ + cbalance (UTxOOf (UTxOStateOf s) ∣ SpendInputsOf tx)
-      mech = trans (UTXOW-V-mechanical utxoStep valid (fresh-top-tx-id valid subStep))
-                   (cong (U₂ +_) (utxo₁-tx-spend-eq valid refl subStep))
+      mech = trans  (UTXOW-V-mechanical utxoStep valid (BatchUTxO-fresh batch₁))
+                    (cong (U₂ +_) (UTXOW-spend-agree utxoStep (BatchUTxO.agrees batch₁)))
 
       Ctop Csub : Coin
       Ctop = cbalance (UTxOOf (UTxOStateOf s) ∣ SpendInputsOf tx)
@@ -988,7 +1007,7 @@ preserved" invariant:
           ≡⟨ arithmetic-2 U₀ allWdrls D₀ ⟩
         U₀ + Psub + allWdrls + (D₀ + posPart dct + posPart dcs) + Ctop
           ≡⟨ cong  (λ x → x + allWdrls + (D₀ + posPart dct + posPart dcs) + Ctop)
-                           (SUBLEDGERS-utxo-coin valid subStep) ⟩
+                           (SUBLEDGERS-utxo-coin valid subStep freshIds (BatchUTxO-init freshIds)) ⟩
         U₁ + Csub + allWdrls + (D₀ + posPart dct + posPart dcs) + Ctop
           ≡⟨ cong (λ x → (U₁ + Csub) + allWdrls + x + Ctop) posneg ⟩
         U₁ + Csub + allWdrls + (D₂ + negPart dct + negPart dcs) + Ctop

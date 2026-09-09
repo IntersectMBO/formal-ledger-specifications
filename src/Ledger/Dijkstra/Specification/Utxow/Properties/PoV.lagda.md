@@ -6,10 +6,10 @@ source_path: src/Ledger/Dijkstra/Specification/Utxow/Properties/PoV.lagda.md
 # UTXOW Properties: Preservation of Value {#sec:utxow-pov}
 
 This module provides the `UTXOW`{.AgdaDatatype}-level preservation-of-value
-facts consumed by `Ledger.Properties.PoV`{.AgdaModule}: it discharges the
-`utxow-pov-invalid`, `UTXOW-V-mechanical`, `UTXOW-batch-balance-coin` and
-`subutxow-step-coin` module parameters of the `LEDGER-PoV`{.AgdaModule}
-consumer, with statements matching those parameters verbatim.
+facts consumed by `Ledger.Properties.PoV`{.AgdaModule}: the coin equations of
+the top-level `UTXOW`{.AgdaDatatype} step and of a `SUBUTXOW`{.AgdaDatatype}
+step, the batch balance, and the batch-threading facts of
+`Utxo.Properties.PoV`{.AgdaModule} lifted to the witnessed rules.
 
 The `UTXOW`{.AgdaDatatype} rules perform witness checks (signatures, scripts,
 datums) and delegate the state change to the `UTXO`{.AgdaDatatype} rule: both
@@ -38,6 +38,7 @@ open import Ledger.Prelude
 open import Ledger.Dijkstra.Specification.Certs govStructure
 open import Ledger.Dijkstra.Specification.Utxo txs abs
 open import Ledger.Dijkstra.Specification.Utxow txs abs
+open import Ledger.Dijkstra.Specification.Utxo.Properties.Base txs abs using (_AgreesWith_)
 open import Ledger.Dijkstra.Specification.Utxo.Properties.PoV txs abs
 ```
 -->
@@ -105,6 +106,18 @@ split off cleanly):
     UTXO-V-mechanical (UTXOW⇒UTXO utxowStep) valid fresh
 ```
 
+### `UTXOW-spend-agree`
+
+The top-level spent balance is the same against the running UTxO and against the
+pre-batch snapshot, given that the two agree:
+
+```agda
+  UTXOW-spend-agree : Γ' ⊢ s₀ ⇀⦇ tx ,UTXOW⦈ s₁
+    → UTxOOf s₀ AgreesWith UTxOOf Γ'
+    → cbalance (UTxOOf s₀ ∣ SpendInputsOf tx) ≡ cbalance (UTxOOf Γ' ∣ SpendInputsOf tx)
+  UTXOW-spend-agree utxowStep = UTXO-spend-agree (UTXOW⇒UTXO utxowStep)
+```
+
 ### `UTXOW-batch-balance-coin`
 
 The coin projection of the spec's batch balance premise
@@ -134,57 +147,36 @@ derivation).
   UTXOW-batch-balance-coin utxowStep = UTXO-batch-balance-coin (UTXOW⇒UTXO utxowStep)
 ```
 
-## The `SUBUTXOW-PoV` module
+## The <span class="AgdaDatatype">SUBUTXOW</span> step
 
-The per-step `SUBUTXOW`{.AgdaDatatype} coin equation resolves the spent balance
-against the *pre-batch snapshot* `UTxOOf Γ`, so, as explained in
-`Utxo.Properties.PoV`{.AgdaModule}, it holds only given two batch-threading facts
-that the per-step premises do not provide:
-
-1.  freshness of the sub-transaction's TxId in the running UTxO, and
-2.  agreement of the running UTxO with the snapshot on the sub-transaction's spend
-    inputs.
-
-This module collects both as parameters, in the same batch-threading family as the
-`utxo₁-tx-spend-eq` and `fresh-top-tx-id` parameters of
-`Ledger.Properties.PoV`{.AgdaModule}.
-
-Both are stated for an arbitrary running state `s₀`, and in that generality they are
-*false*.  Indeed, nothing in the `SUBUTXO`{.AgdaDatatype} premises stops `UTxOOf s₀`
-from already holding a key with first component `TxIdOf stx`, or from assigning
-a spend input a different value than the snapshot does.  What makes them true is the
-batch history — the running UTxO is built from the snapshot by removing spent inputs
-and adding outputs of fresh TxIds — so whoever discharges them must first restate
-them relative to the enclosing batch (quantifying `s₀` over states reachable from
-`UTxOOf Γ` by the preceding sub-steps, or carrying the corresponding
-`SUBLEDGERS`{.AgdaDatatype}-level invariant).
+The per-step `SUBUTXOW`{.AgdaDatatype} facts, each delegating to its
+`SUBUTXO`{.AgdaDatatype} counterpart in `Utxo.Properties.PoV`{.AgdaModule}:
+preservation of the batch invariant `BatchUTxO`{.AgdaRecord}, and the coin
+equation with the spent balance resolved against the *pre-batch snapshot*
+`UTxOOf Γ`.  The latter needs two facts the per-step premises do not provide,
+freshness of the sub-transaction's id in the running UTxO and agreement of the
+running UTxO with the snapshot on its spend inputs; both are read off the
+invariant.
 
 ```agda
-module SUBUTXOW-PoV
+module _ {Γ : SubUTxOEnv} {s₀ s₁ : UTxOState} {stx : SubLevelTx} where
 
-  ( subtx-fresh-txid : {Γ : SubUTxOEnv} {s₀ s₁ : UTxOState} {stx : SubLevelTx}
-      → IsTopLevelValidFlagOf Γ ≡ true
-      → Γ ⊢ s₀ ⇀⦇ stx ,SUBUTXOW⦈ s₁
-      → TxIdOf stx ∉ mapˢ proj₁ (dom (UTxOOf s₀)) )
-
-  ( subtx-spend-agree : {Γ : SubUTxOEnv} {s₀ s₁ : UTxOState} {stx : SubLevelTx}
-      → IsTopLevelValidFlagOf Γ ≡ true
-      → Γ ⊢ s₀ ⇀⦇ stx ,SUBUTXOW⦈ s₁
-      →  cbalance (UTxOOf s₀ ∣ SpendInputsOf stx)
-         ≡ cbalance (UTxOOf Γ ∣ SpendInputsOf stx) )
-
-  where
-
-  subutxow-step-coin :
-    {Γ      : SubUTxOEnv}
-    {s₀ s₁  : UTxOState}
-    {stx    : SubLevelTx}
+  subutxow-batch-step : {ids : List TxId}
     → IsTopLevelValidFlagOf Γ ≡ true
     → Γ ⊢ s₀ ⇀⦇ stx ,SUBUTXOW⦈ s₁
+    → FreshTxIds (UTxOOf Γ) (TxIdOf stx ∷ ids)
+    → BatchUTxO (UTxOOf Γ) (TxIdOf stx ∷ ids) (UTxOOf s₀)
+    → BatchUTxO (UTxOOf Γ) ids (UTxOOf s₁)
+  subutxow-batch-step isV = subutxo-batch-step isV ∘ SUBUTXOW⇒SUBUTXO
+
+  subutxow-step-coin : {ids : List TxId}
+    → IsTopLevelValidFlagOf Γ ≡ true
+    → Γ ⊢ s₀ ⇀⦇ stx ,SUBUTXOW⦈ s₁
+    → BatchUTxO (UTxOOf Γ) (TxIdOf stx ∷ ids) (UTxOOf s₀)
     →  getCoin s₀ + cbalance (outs stx) + DonationsOf stx
        ≡ getCoin s₁ + cbalance (UTxOOf Γ ∣ SpendInputsOf stx)
-  subutxow-step-coin {s₁ = s₁} isV utxowStep =
-    trans  (subutxo-step-coin  isV (SUBUTXOW⇒SUBUTXO utxowStep)
-                               (subtx-fresh-txid isV utxowStep))
-           (cong (getCoin s₁ +_) (subtx-spend-agree isV utxowStep))
+  subutxow-step-coin isV utxowStep inv =
+    trans  (subutxo-step-coin isV utxoStep (BatchUTxO-fresh inv))
+           (cong (getCoin s₁ +_) (subutxo-spend-agree utxoStep (BatchUTxO.agrees inv)))
+    where utxoStep = SUBUTXOW⇒SUBUTXO utxowStep
 ```
