@@ -732,7 +732,7 @@ and carries out the following tasks:
    `fut`{.AgdaBound} and store the new enact state
    `fut’`{.AgdaBound}.
 
-In Dijkstra, the `EPOCH` rule invokes the `SNAP`{.AgdaDatatype} rule
+In Dijkstra, the `EPOCH`{.AgdaDatatype} rule invokes the `SNAP`{.AgdaDatatype} rule
 _after_ updating ledger state. This change affects the stake
 distribution used for leader election and distributing rewards, and
 for voting on governance actions.
