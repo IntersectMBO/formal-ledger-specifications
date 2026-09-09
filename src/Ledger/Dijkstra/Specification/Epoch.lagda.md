@@ -398,8 +398,8 @@ applyRUpd rewardUpdate ⟦ ⟦ treasury , reserves ⟧ᵃ
 ## Stake Distributions {#sec:stake-distributions}
 
 This section defines the functions
-`calculatePoolDelegatedStake`{.AgdaFunction},
-`calculateVDelegDelegatedStake`{.AgdaFunction} which calculate stake
+`calculatePoolDelegatedStake`{.AgdaFunction} and
+`calculateVDelegDelegatedStake`{.AgdaFunction}, which calculate stake
 distributions for voting purposes.
 
 <!--
@@ -732,10 +732,11 @@ and carries out the following tasks:
    `fut`{.AgdaBound} and store the new enact state
    `fut’`{.AgdaBound}.
 
-In Dijkstra, the `EPOCH`{.AgdaDatatype} rule invokes the `SNAP`{.AgdaDatatype} rule
-_after_ updating ledger state. This change affects the stake
-distribution used for leader election and distributing rewards, and
-for voting on governance actions.
+Unlike Conway, where the mark snapshot is taken before updating the
+ledger state, in Dijkstra the `EPOCH`{.AgdaDatatype} rule invokes the
+`SNAP`{.AgdaDatatype} rule _after_ updating the ledger state. This
+change affects the stake distribution used for leader election and
+distributing rewards, and for voting on governance actions.
 
 ```agda
 data _⊢_⇀⦇_,EPOCH⦈_ : ⊤ → EpochState → Epoch → EpochState → Type where
