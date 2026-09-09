@@ -90,20 +90,16 @@ threshold pp ccThreshold ga =
 canVote : PParams → GovAction → GovRole → Type
 canVote pp a r = Is-just (threshold pp nothing a r)
 
-record StakeDistrs : Type where
-  field
-    stakeDistrVDeleg  : VDeleg  ⇀ Coin
-    stakeDistrPools   : KeyHash ⇀ Coin
-
 record RatifyEnv : Type where
   field
-    stakeDistrs   : StakeDistrs
-    currentEpoch  : Epoch
-    dreps         : Credential ⇀ Epoch
-    ccHotKeys     : Credential ⇀ Maybe Credential
-    treasury      : Treasury
-    pools         : KeyHash ⇀ StakePoolParams
-    delegatees    : VoteDelegs
+    stakeDistrVDeleg : VDeleg  ⇀ Coin
+    stakeDistrPools  : KeyHash ⇀ Coin
+    currentEpoch     : Epoch
+    dreps            : Credential ⇀ Epoch
+    ccHotKeys        : Credential ⇀ Maybe Credential
+    treasury         : Treasury
+    pools            : KeyHash ⇀ StakePoolParams
+    delegatees       : VoteDelegs
 
 record RatifyState : Type where
   field
@@ -128,9 +124,8 @@ instance
   HasTreasury-RatifyEnv : HasTreasury RatifyEnv
   HasTreasury-RatifyEnv .TreasuryOf = RatifyEnv.treasury
 
-  unquoteDecl HasCast-StakeDistrs HasCast-RatifyEnv HasCast-RatifyState = derive-HasCast
-    (   (quote StakeDistrs , HasCast-StakeDistrs)
-    ∷   (quote RatifyEnv , HasCast-RatifyEnv)
+  unquoteDecl HasCast-RatifyEnv HasCast-RatifyState = derive-HasCast
+    ( (quote RatifyEnv , HasCast-RatifyEnv)
     ∷ [ (quote RatifyState , HasCast-RatifyState) ])
 ```
 -->
@@ -201,8 +196,7 @@ module AcceptedByDRep (Γ : RatifyEnv)
                       where
 
   open EnactState eSt using (cc)
-  open RatifyEnv Γ using (currentEpoch; stakeDistrs)
-  open StakeDistrs stakeDistrs
+  open RatifyEnv Γ using (currentEpoch; stakeDistrVDeleg)
   open GovActionState gaSt
   open GovVotes votes using (gvDRep)
 
@@ -277,7 +271,7 @@ module AcceptedBySPO (delegatees : VoteDelegs)
 
 acceptedBySPO : RatifyEnv → EnactState → GovActionState → Type
 acceptedBySPO Γ = AcceptedBySPO.accepted delegatees pools stakeDistrPools
-  where open RatifyEnv Γ; open StakeDistrs stakeDistrs
+  where open RatifyEnv Γ
 
 
 -- Ratification Functions --

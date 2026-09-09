@@ -23,10 +23,6 @@ open import Ledger.Dijkstra.Specification.Ratify.Properties.Computational it
 open Computational
 
 instance
-  HsTy-StakeDistrs = autoHsType StakeDistrs ⊣ withConstructor "MkStakeDistrs"
-                                              • fieldPrefix "sd"
-  Conv-StakeDistrs = autoConvert StakeDistrs
-
   HsTy-RatifyEnv = autoHsType RatifyEnv ⊣ withConstructor "MkRatifyEnv"
                                           • fieldPrefix "re"
   Conv-RatifyEnv = autoConvert RatifyEnv
