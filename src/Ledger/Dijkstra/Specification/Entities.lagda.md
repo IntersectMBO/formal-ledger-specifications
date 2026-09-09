@@ -99,7 +99,13 @@ withdrawals, direct deposits, and account balance intervals.
 CIP-159 introduces two new fields to transactions: `directDeposits`
 and `balanceIntervals`. Direct deposits represent value that flows
 from the transaction into account addresses. Balance intervals enable
-transactions to assert predicates about account balances.
+CIP-159 introduces three new transaction fields: `txDirectDeposits`{.AgdaField},
+`txBalanceIntervals`{.AgdaField} and, at the top level only,
+`txStartingBalanceIntervals`{.AgdaField}.  Direct deposits represent value that
+flows from the transaction into account addresses.  The two interval fields let
+a transaction assert bounds on account balances: `txBalanceIntervals`{.AgdaField}
+against the balances this rule sees, and `txStartingBalanceIntervals`{.AgdaField}
+against the balances at the start of the whole batch (`rewards₀`{.AgdaField}).
 
 ### Withdrawals
 
