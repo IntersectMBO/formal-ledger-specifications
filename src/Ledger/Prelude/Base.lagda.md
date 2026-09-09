@@ -18,6 +18,9 @@ open import Data.Nat
 Coin : Type
 Coin = ℕ
 
+Milliseconds : Type
+Milliseconds = ℕ
+
 Donations Fees Reserves Treasury : Type
 Donations         = Coin
 Fees              = Coin
