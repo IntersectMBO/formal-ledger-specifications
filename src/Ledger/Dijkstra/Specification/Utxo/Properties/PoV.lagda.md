@@ -10,26 +10,26 @@ value.  In the simplest terms: a `UTXO`{.AgdaDatatype} step moves coin between t
 three `UTxOState`{.AgdaRecord} pots (UTxO, fees, donations) and the world outside
 `UTxOState`{.AgdaRecord} (rewards withdrawals flow in; certificate and governance
 deposits flow out), and this module proves two kinds of facts about that
-movement:
+movement.
 
-1.  **the mechanical state change** — equations saying *exactly how much* a step
-    `Γ ⊢ s₀ ⇀⦇ tx ,UTXO⦈ s₁` moves: `getCoin s₀` and `getCoin s₁` differ by
-    exactly the spent balance on one side and outputs, fee, and donation on the
-    other (and an invalid transaction preserves `getCoin`{.AgdaField} exactly);
+1.  **The mechanical state change**: equations saying exactly how much coin value
+    moves due to a step `Γ ⊢ s₀ ⇀⦇ tx ,UTXO⦈ s₁`.  More precisely, `getCoin s₀`
+    and `getCoin s₁` differ by the spent balance on one side, and outputs, fee,
+    and donation on the other (and an invalid transaction leaves `getCoin` fixed).
 
-2.  **the batch coin balance** — the `coin`{.AgdaField} projection of the rule's
-    balance premise `consumedBatch ≡ producedBatch`{.AgdaFunction}: everything
-    the batch consumes equals everything it produces, summand by summand.
+2.  **The batch balance**: the `coin`{.AgdaField} projection of the `UTXO` rule's
+    balance premise `consumedBatch ≡ producedBatch`.  Everything the batch
+    consumes equals everything it produces.
 
-Neither fact alone is preservation of value, and their combination is *not*
-proved here: `Ledger.Properties.PoV`{.AgdaModule} performs it, together with the
+Neither fact alone is preservation of value, and their combination is not proved
+here; `Ledger.Properties.PoV`{.AgdaModule} performs it, together with the
 accounting for the non-UTxO pots.  The next section explains why the split falls
-exactly this way; the sections after it descend into the details.
+exactly this way; the sections that follow provide the details.
 
 ## Why the proof splits in two
 
-The two pieces speak about *different UTxOs*, and keeping this in mind makes
-every statement below readable.
+The two pieces speak about different UTxOs, and keeping this in mind makes every
+statement below more readable.
 
 +   The **mechanical** equations are about the *running* state: the spent balance
     they account for is `cbalance (UTxOOf s₀ ∣ SpendInputsOf tx)`, resolved
@@ -37,24 +37,23 @@ every statement below readable.
     level, `s₀` for the top-level step is the *post-`SUBLEDGERS`* state — the
     sub-transactions have already executed on it.
 
-+   The **batch balance** is about the *pre-batch snapshot*: the spec states the
-    balance premise (premise 8 of the `UTXO`{.AgdaDatatype} rule) against
-    `UTxOOf Γ`, the snapshot carried by the environment.  Its coin projection
-    therefore contains *no state variables at all* — neither `s₀` nor `s₁` occurs in
-    it; every summand is computed from the environment (`UTxOOf Γ`, `PParamsOf Γ`,
++   The **batch balance** is about the pre-batch snapshot: the spec states the
+    balance premise with respect to `UTxOOf Γ`, the pre-batch snapshot carried by
+    the environment.  Its coin projection therefore contains no state variables at
+    all; every summand is computed from the environment (`UTxOOf Γ`, `PParamsOf Γ`,
     the pre-batch pool set `PoolsOf Γ`) and the transaction alone.  Where a step
     derivation appears as a hypothesis (`UTXO-batch-balance-coin`{.AgdaFunction}), it
     is there only so that premises 7 and 8 can be extracted from it.
 
-Combining the two means equating the running-state spent balance of piece 1 with the
-snapshot spent balance of piece 2, and that requires knowing how the running UTxO
-relates to the snapshot after part of the batch has executed.
+Combining the two means equating the running-state spent balance of the first
+with the snapshot spent balance of the second, and that requires knowing how the
+running UTxO relates to the snapshot after part of the batch has executed.
 
 The `UTXO`{.AgdaDatatype} rule establishes this batch-wide (spend inputs are mutually
 disjoint across the batch, TxIds are fresh) but does not expose it per step.
 Consequently, unlike in Conway (where the balance premise is per-transaction and
-stated against the same UTxO the rule steps) the valid case has no standalone theorem
-at this level.
+stated against the same UTxO the rule steps), in Dijkstra the valid case has no
+standalone theorem at this level.
 
 Even *with* the batch-threading facts, the valid-case statement could not be a plain
 `getCoin s₀ ≡ getCoin s₁` (nor Conway's `getCoin s₀ + withdrawals ≡ getCoin s₁`),
@@ -63,39 +62,14 @@ deposits leave that for `CertState`{.AgdaRecord}, so a correction term for each 
 be needed.  Instead, the combined calculation happens in `LEDGER-pov`{.AgdaFunction},
 which holds the required batch-level facts as module parameters.
 
-## Key differences from Conway
+## Proof sketch
 
-1.  `UTxOState`{.AgdaRecord} has 3 fields (`utxo`, `fees`, `donations`) — deposits
-    live in `CertState`{.AgdaRecord}, not `UTxOState`{.AgdaRecord}.  So
-
-        getCoin utxoSt = cbalance utxo + fees + donations
-
-2.  **The balance equation is batch-wide** (`consumedBatch ≡ producedBatch`,
-    premise 8 of the `UTXO`{.AgdaDatatype} rule) rather than per-transaction:
-    withdrawals are consumed and outputs/donations/direct deposits are produced
-    by *every* transaction in the batch (top + each sub-tx).  Individual
-    `SUBUTXO`{.AgdaDatatype} steps carry no balance equation of their own.
-
-3.  **Cert deposits appear in closed form**: the consumed side carries
-    `refundCertDeposits`{.AgdaFunction} and the produced side
-    `newCertDeposits`{.AgdaFunction}, both computed from the batch certificate
-    list `allDCerts tx` — the latter against the *pre-batch* registered-pool
-    set `pools₀` carried by `UTxOEnv`{.AgdaRecord}.  No cert *state* appears, so
-    the whole equation is a pure UTxO fact.
-
-4.  **Governance-action deposits appear on the produced side**, one
-    `govProposalsDeposits`{.AgdaFunction} summand per transaction in the batch.
-
-## Proof map
-
-In terms of the lemmas below, the two pieces are:
+In terms of the lemmas below, the two main pieces are the following.
 
 +   **Mechanical state change** (`UTXO-pov-invalid`{.AgdaFunction},
     `UTXO-V-mechanical`{.AgdaFunction}, `subutxo-step-coin`{.AgdaFunction}):
     how `getCoin s₀` relates to `getCoin s₁` purely in terms of the state
-    transition, via the balance algebra of
-    `Utxo.Properties.Base`{.AgdaModule} (`split-balance`{.AgdaFunction},
-    `balance-∪`{.AgdaFunction}, `outs-disjoint`{.AgdaFunction}).
+    transition, via the balance algebra of `Utxo.Properties.Base`{.AgdaModule}.
 
 +   **Batch coin balance** (`UTXO-batch-balance-coin`{.AgdaFunction}).
     The coin projection of the batch balance premise, proved in three layers:
@@ -126,11 +100,11 @@ module Ledger.Dijkstra.Specification.Utxo.Properties.PoV
 open import Ledger.Prelude
 
 -- open import Data.List.Relation.Unary.Any using (here; there)
-open import Data.List.Properties using (map-cong; map-cong-local)
+open import Data.List.Properties        using (map-cong; map-cong-local)
 import Data.List.Relation.Unary.All as All
-open import Data.Nat.Base using () renaming (_+_ to infixl 6 _+ᴺ_)
-open import Data.Nat.Properties using (+-identityʳ)
-open import Data.Nat.Tactic.RingSolver using (solve-∀)
+open import Data.Nat.Base               using () renaming (_+_ to infixl 6 _+ᴺ_)
+open import Data.Nat.Properties         using (+-identityʳ)
+open import Data.Nat.Tactic.RingSolver  using (solve-∀)
 
 open import Ledger.Dijkstra.Specification.Certs govStructure
 open import Ledger.Dijkstra.Specification.Utxo txs abs
@@ -145,11 +119,9 @@ private variable
 
 ## Arithmetic helpers
 
-The pure `+`-rearrangement lemmas in this module are discharged by the
-reflective ring solver (`Data.Nat.Tactic.RingSolver`), with the solver-facing
-statements written over the raw natural-number addition `_+ᴺ_`; see
-`Ledger.Properties.PoV`{.AgdaModule} for the solver conventions and the reason
-the overloaded `_+_` cannot appear in solver-facing statements.
+The rearrangement lemmas in this module are discharged by the reflective ring
+solver (`Data.Nat.Tactic.RingSolver`), with the solver-facing statements written
+over the raw natural-number addition `_+ᴺ_`.
 
 ```agda
 private
@@ -159,25 +131,24 @@ private
 
 ## No minting in sub-transactions
 
-`coin (MintedValueOf stx) ≡ 0` for each sub-transaction `stx` is a premise of
-the `SUBUTXO`{.AgdaDatatype} rule, but the `UTXO`{.AgdaDatatype} rule (which
-carries the batch balance premise) does not quantify over the
-`SUBUTXO`{.AgdaDatatype} steps.  The batch-balance lemmas below therefore take
-the following per-transaction fact as a hypothesis; the
-`LEDGER`{.AgdaDatatype}-level consumer discharges it from the
-`SUBLEDGERS`{.AgdaDatatype} derivation.
+`coin (MintedValueOf stx) ≡ 0` for each sub-transaction `stx` is a premise of the
+`SUBUTXO`{.AgdaDatatype} rule, but the `UTXO`{.AgdaDatatype} rule (which carries
+the batch balance premise) does not quantify over the `SUBUTXO`{.AgdaDatatype}
+steps.  The batch-balance lemmas below therefore take the following
+per-transaction fact as a hypothesis; the `LEDGER`{.AgdaDatatype}-level consumer
+discharges it from the `SUBLEDGERS`{.AgdaDatatype} derivation.
 
 ```agda
 noMintingSubTxs : TopLevelTx → Type
 noMintingSubTxs tx = ∀ stx → stx ∈ˡ SubTransactionsOf tx → coin (MintedValueOf stx) ≡ 0
 ```
 
-## Coin projections of `consumedBatch` and `producedBatch`
+## Coin projections of <span class="AgdaFunction">consumedBatch</span> and <span class="AgdaFunction">producedBatch</span>
 
-The batch balance premise is an equation between `Value`{.AgdaField}s;
+The batch balance premise is an equation between `Values`{.AgdaField};
 `LEDGER-pov`{.AgdaFunction} consumes its `coin`{.AgdaField} projection, with each
-side expanded into its closed-form `Coin`{.AgdaFunction} summands.  The
-projection proceeds in three layers, mirroring the shape of
+side expanded into its closed-form `Coin`{.AgdaFunction} summands.  The projection
+proceeds in three layers, mirroring the shape of
 `consumedBatch`{.AgdaFunction}/`producedBatch`{.AgdaFunction}: single
 transactions, sums over sub-transactions, and the batch level.
 
@@ -195,19 +166,19 @@ module _ (pp : PParams) where
     → coin (consumedTx pp t u) ≡  cbalance (u ∣ SpendInputsOf t)
                                   + getCoin (WithdrawalsOf t)
 
-  coin-consumedTx t u noMint = begin
-    coin (balance (u ∣ SpendInputsOf t) + MintedValueOf t + inject wdrls)
-      ≡⟨ coin-inject-lemma ⟩
-    coin (balance (u ∣ SpendInputsOf t) + MintedValueOf t) + wdrls
-      ≡⟨ cong (_+ wdrls) (∙-homo-Coin _ _) ⟩
-    cbalance (u ∣ SpendInputsOf t) + coin (MintedValueOf t) + wdrls
-      ≡⟨ cong (λ z → cbalance (u ∣ SpendInputsOf t) + z + wdrls) noMint ⟩
-    cbalance (u ∣ SpendInputsOf t) + 0 + wdrls
-      ≡⟨ cong (_+ wdrls) (+-identityʳ _) ⟩
-    cbalance (u ∣ SpendInputsOf t) + wdrls
-      ∎
+  coin-consumedTx t u noMint =
+    begin
+    coin (bs + MintedValueOf t + inject wdrls)  ≡⟨ coin-inject-lemma ⟩
+    coin (bs + MintedValueOf t) + wdrls         ≡⟨ cong (_+ wdrls) (∙-homo-Coin _ _) ⟩
+    cbs + coin (MintedValueOf t) + wdrls        ≡⟨ cong (λ z → cbs + z + wdrls) noMint ⟩
+    cbs + 0 + wdrls                             ≡⟨ cong (_+ wdrls) (+-identityʳ _) ⟩
+    cbs + wdrls                                 ∎
     where
-    wdrls : Coin
+    bs : Value
+    bs = balance (u ∣ SpendInputsOf t)
+
+    cbs wdrls : Coin
+    cbs = cbalance (u ∣ SpendInputsOf t)
     wdrls = getCoin (WithdrawalsOf t)
 
   coin-producedTx : (t : Tx ℓ)
@@ -240,7 +211,8 @@ element's no-mint fact be looked up).
 ```agda
   coin-∑-consumedTx-sub : (tx : TopLevelTx) (u : UTxO) → noMintingSubTxs tx
     →  coin (∑ˡ[ stx ← SubTransactionsOf tx ] consumedTx pp stx u)
-       ≡ sum (map  (λ stx → cbalance (u ∣ SpendInputsOf stx) + getCoin (WithdrawalsOf stx))
+       ≡ sum (map  (λ stx →  cbalance (u ∣ SpendInputsOf stx)
+                             + getCoin (WithdrawalsOf stx))
                    (SubTransactionsOf tx))
 
   coin-∑-consumedTx-sub tx u noMintSub = begin
