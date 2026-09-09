@@ -3,46 +3,31 @@ source_branch: master
 source_path: src/Ledger/Dijkstra/Specification/Utxo/Properties/Base.lagda.md
 ---
 
-# UTxO Properties: Base Lemmas
+# UTxO Properties: basic lemmas
 
-This module collects the pure `UTxO`{.AgdaFunction} algebra used by the
-preservation-of-value proofs in `Utxo.Properties.PoV`{.AgdaModule} and
-`Utxow.Properties.PoV`{.AgdaModule}.  The lemmas proved are as follows:
+This module collects some algebraic properties used in the preservation-of-value
+proofs in `Utxo.Properties.PoV`{.AgdaModule} and
+`Utxow.Properties.PoV`{.AgdaModule}.  The lemmas proved are the following:
 
-+  `∙-homo-Coin`{.AgdaFunction}.
++  `∙-homo-Coin`{.AgdaFunction}.  `coin`{.AgdaField} distributes over
+   `Value`{.AgdaField} addition.
 
-   `coin`{.AgdaField} distributes over `Value`{.AgdaField} addition (the `_∙_` law of
-   the `coin`{.AgdaField} monoid homomorphism).
++  `coin-∑ˡ`{.AgdaFunction}.  `coin`{.AgdaField} distributes over a list-indexed
+   sum of `Value`{.AgdaField}s.
 
-+  `coin-∑ˡ`{.AgdaFunction}.
-
-   `coin`{.AgdaField} distributes over a list-indexed sum of `Value`{.AgdaField}s.
-
-+  `newTxid⇒disj`{.AgdaFunction} / `outs-disjoint`{.AgdaFunction}.
-
-   Freshness of `TxIdOf tx` in a UTxO implies the outputs of `tx` are disjoint from it.
++  `newTxid⇒disj`{.AgdaFunction} / `outs-disjoint`{.AgdaFunction}.  If the id of a
+   transaction `tx` does not occur in `utxo`, then neither do the outputs of `tx`.
 
 +  `balance-cong`{.AgdaFunction} / `balance-cong-coin`{.AgdaFunction}.
-
    `balance`{.AgdaFunction} is invariant under extensional equality of UTxOs.
+   That is, if two UTxOs are equal as sets, then their coin balances are equal as
+   well.
 
-+  `balance-∪`{.AgdaFunction}.
++  `balance-∪`{.AgdaFunction}. `cbalance`{.AgdaFunction} is additive on disjoint
+   unions.
 
-   `cbalance`{.AgdaFunction} is additive on disjoint unions.
-
-+  `split-balance`{.AgdaFunction}.
-
-   `cbalance`{.AgdaFunction} splits along a key-set restriction and its complement.
-
-The balance lemmas are ports of their Conway counterparts (in
-`Ledger.Conway.Specification.Utxo.Properties.Base`{.AgdaModule}).  The Dijkstra
-`balance`{.AgdaFunction} is again an indexed sum over a finite map of transaction
-outputs (`∑[ x ← mapValues txOutToValue utxo ] x`), so the Conway proofs via
-`indexedSumᵐ-cong`{.AgdaFunction} and `indexedSumᵐ-∪`{.AgdaFunction} carry over,
-with `txOutToValue`{.AgdaFunction} in place of Conway's hashed outputs.  The
-statements of `balance-∪`{.AgdaFunction}, `split-balance`{.AgdaFunction} and
-`outs-disjoint`{.AgdaFunction} match the corresponding module parameters of
-`Ledger.Properties.PoV`{.AgdaModule}, which they are intended to discharge.
++  `split-balance`{.AgdaFunction}.  `cbalance`{.AgdaFunction} splits along a
+   key-set restriction and its complement.
 
 <!--
 ```agda
@@ -71,19 +56,17 @@ private variable
 ```
 -->
 
-## `∙-homo-Coin`
+## <span class="AlgebraFunction">∙-homo-Coin</span> and <span class="AlgebraFunction">coin-∑ˡ`</span>
+
+`coin`{.AgdaField} is a monoid homomorphism from `Value`{.AgdaField} (under `+ᵛ`/`ε`)
+to `ℕ`{.AgdaDatatype} (under `+`/`0`).
 
 ```agda
 ∙-homo-Coin : (x y : Value) → coin (x + y) ≡ coin x + coin y
 ∙-homo-Coin = homo coinIsMonoidHomomorphism
 ```
 
-## `coin-∑ˡ`
-
-`coin`{.AgdaField} is a monoid homomorphism from `Value`{.AgdaField} (under `+ᵛ`/`ε`)
-to `ℕ`{.AgdaDatatype} (under `+`/`0`), so it distributes over a list-indexed sum.
-This is the "coin version" of the generic fact that a monoid homomorphism commutes
-with `foldr _∙_ ε`.
+Consequently, `coin`{.AgdaField} distributes over a list-indexed sum.
 
 ```agda
 coin-∑ˡ : (f : A → Value) (xs : List A) → coin (∑ˡ[ x ← xs ] f x) ≡ sum (map (coin ∘ f) xs)
@@ -96,9 +79,6 @@ coin-∑ˡ f (x ∷ xs) = trans  (∙-homo-Coin (f x) (∑ˡ[ z ← xs ] f z))
 
 If the id of a transaction `tx` does not occur in `utxo`, then the outputs of `tx`
 (whose keys all have first component `TxIdOf tx`) are disjoint from `utxo`.
-The specialisation `outs-disjoint`{.AgdaFunction} is the form used by the PoV proofs:
-the restriction `utxo ∣ SpendInputsOf tx ᶜ` only shrinks the domain, so disjointness
-with `outs tx` persists.
 
 ```agda
 module _
@@ -117,17 +97,21 @@ module _
 
     disj-utxo-txouts : disjoint (dom utxo) (dom (outs tx))
     disj-utxo-txouts h h' = id∉utxo $ to ∈-map (witness h h')
+```
 
+A weaker result, `outs-disjoint`{.AgdaFunction}, is the form used in the PoV
+proofs; it involves the restriction `utxo ∣ SpendInputsOf tx ᶜ`, which only
+shrinks the domain, so the disjointness with `outs tx` persists, *a fortiori*.
+
+```agda
   outs-disjoint : disjoint (dom (utxo ∣ SpendInputsOf tx ᶜ)) (dom (outs tx))
   outs-disjoint h h' = ∉-∅ $ proj₁ newTxid⇒disj $ to ∈-∩ (res-comp-domᵐ h , h')
 ```
 
 ## Balance arithmetic
 
-`balance`{.AgdaFunction} is the indexed sum of `txOutToValue`{.AgdaFunction} over the
-UTxO map, so it is invariant under extensional equality of the underlying maps
-(`balance-cong`{.AgdaFunction}), and (via `indexedSumᵐ-∪`{.AgdaFunction}) additive on
-unions with disjoint domains (`balance-∪`{.AgdaFunction}).
+`balance`{.AgdaFunction} is the indexed sum of `txOutToValue`{.AgdaFunction} over
+the UTxO map, so it is invariant under extensional equality of the underlying maps.
 
 ```agda
 module _ (utxo utxo' : UTxO) where
@@ -139,7 +123,12 @@ module _ (utxo utxo' : UTxO) where
 
   balance-cong-coin : utxo ˢ ≡ᵉ utxo' ˢ → cbalance utxo ≡ cbalance utxo'
   balance-cong-coin eq = ⟦⟧-cong coinIsMonoidHomomorphism (balance-cong eq)
+```
 
+`cbalance`{.AgdaFunction} (the "coin value" of `balance`{.AgdaFunction}) is
+additive over disjoint unions.
+
+```agda
   balance-∪ : disjoint (dom utxo) (dom utxo')
     → cbalance (utxo ∪ˡ utxo') ≡ cbalance utxo + cbalance utxo'
   balance-∪ h = begin
@@ -163,22 +152,25 @@ module _ (utxo utxo' : UTxO) where
             {(mapValues txOutToValue utxo') ᶠᵐ} (λ x x₁ → h (dom-mapʳ⊆ x) (dom-mapʳ⊆ x₁))
 ```
 
-**Splitting a UTxO along a key set**.  Restricting to a key set and to its complement
-partitions the map, so the two restricted balances add up to the whole.
+## Splitting a UTxO along a key set
+
+Restricting to a key set and to its complement partitions the map, so the two restricted balances add up to the whole.
 
 ```agda
 split-balance : (u : UTxO) (keys : ℙ TxIn)
   → cbalance u ≡ cbalance (u ∣ keys ᶜ) + cbalance (u ∣ keys)
-split-balance u keys = begin
-  cbalance u
-    ≡˘⟨  balance-cong-coin ((u ∣ keys ᶜ) ∪ˡ (u ∣ keys)) u
-         $  disjoint-∪ˡ-∪ (disjoint-sym res-ex-disjoint)
-            ≡ᵉ-∘ ∪-sym ≡ᵉ-∘ res-ex-∪ (_∈? keys) ⟩
-  cbalance ((u ∣ keys ᶜ) ∪ˡ (u ∣ keys))
-    ≡⟨ balance-∪ (u ∣ keys ᶜ) (u ∣ keys) $ flip res-ex-disjoint ⟩
-  cbalance (u ∣ keys ᶜ) + cbalance (u ∣ keys)
-    ∎
+split-balance u keys =
+  begin
+  cbalance u                                   ≡˘⟨ cbal-split-≡  ⟩
+  cbalance (u ∣ keys ᶜ ∪ˡ u ∣ keys)            ≡⟨  balance-∪ (u ∣ keys ᶜ) (u ∣ keys)
+                                                   $ flip res-ex-disjoint ⟩
+  cbalance (u ∣ keys ᶜ) + cbalance (u ∣ keys)  ∎
   where
   open ≡-Reasoning
   open IsEquivalence ≡ᵉ-isEquivalence renaming (trans to infixl 4 _≡ᵉ-∘_)
+
+  cbal-split-≡ : cbalance ((u ∣ keys ᶜ) ∪ˡ (u ∣ keys)) ≡ cbalance u
+  cbal-split-≡ =  balance-cong-coin ((u ∣ keys ᶜ) ∪ˡ (u ∣ keys)) u
+                  $ disjoint-∪ˡ-∪  (disjoint-sym res-ex-disjoint)
+                                   ≡ᵉ-∘ ∪-sym ≡ᵉ-∘ res-ex-∪ (_∈? keys)
 ```
