@@ -7,7 +7,7 @@ source_path: src/Ledger/Dijkstra/Specification/Gov/Properties/PoV.lagda.md
 
 This module proves the two governance-deposit accounting facts that the top-level
 preservation-of-value proof (`LEDGER-pov`{.AgdaFunction} in
-`Ledger.Properties.PoV`{.AgdaModule}) assumes as module parameters:
+`Ledger.Properties.PoV`{.AgdaModule}) consumes:
 
 +  `rmOrphanDRepVotes-coinFromGovDeposit`{.AgdaFunction}:
    `rmOrphanDRepVotes`{.AgdaFunction} only rewrites the `gvDRep`{.AgdaField} votes of
@@ -21,8 +21,8 @@ preservation-of-value proof (`LEDGER-pov`{.AgdaFunction} in
    for the new action, and `GOV-Vote`{.AgdaInductiveConstructor} never changes a
    deposit.
 
-Their statements match the corresponding `LEDGER-PoV`{.AgdaModule} module
-parameters (modulo this module's own `proposalsOf`{.AgdaFunction} copy; see below).
+`Ledger.Properties.PoV`{.AgdaModule} imports both facts, together with
+`proposalsOf`{.AgdaFunction} and its extraction lemma (see below).
 
 <!--
 ```agda
@@ -55,11 +55,9 @@ open import Interface.STS
 
 The right injections of a list of sums, used (at `GovVote ⊎ GovProposal`) to extract
 the proposals from a mixed `GOVS`{.AgdaDatatype} signal list.
-`Ledger.Properties.PoV`{.AgdaModule} defines an identical function for stating its
-`GOVS-coinFromGovDeposit`{.AgdaFunction} parameter, but importing it here would
-create an import cycle once `Ledger.Properties.PoV`{.AgdaModule} is rewired to
-import *this* module.  So we keep a local copy (clause-for-clause identical),
-together with the `proposalsOf-Proposals+Votes`{.AgdaFunction} extraction lemma.
+`Ledger.Properties.PoV`{.AgdaModule} imports this module, so
+`proposalsOf`{.AgdaFunction} lives here, together with the
+`proposalsOf-Proposals+Votes`{.AgdaFunction} extraction lemma.
 
 ```agda
 proposalsOf : ∀ {A B : Type} → List (A ⊎ B) → List B
@@ -241,8 +239,8 @@ GOVSᵢ-coinFromGovDeposit {Γ} {s = s} (BS-ind {sigs = sigs} (GOV-Propose _) re
   dep = PParams.govActionDeposit (PParamsOf Γ)
 ```
 
-Specializing to index `0` gives the statement in the shape of the
-`LEDGER-PoV`{.AgdaModule} module parameter:
+Specializing to index `0` gives the statement in the shape that
+`LEDGER-PoV`{.AgdaModule} consumes:
 
 ```agda
 GOVS-coinFromGovDeposit :
