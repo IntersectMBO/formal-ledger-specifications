@@ -7,6 +7,7 @@ source_path: src/Ledger/Dijkstra/Specification/Rewards/Properties/Computational.
 
 This module proves that the `SNAP`{.AgdaDatatype} transition rule is computational.
 
+<!--
 ```agda
 {-# OPTIONS --safe #-}
 
@@ -23,7 +24,10 @@ open import Ledger.Dijkstra.Specification.Ledger txs abs
 open import Ledger.Dijkstra.Specification.Rewards txs abs
 
 open Computational ⦃...⦄
+```
+-->
 
+```agda
 module _ {ss : Snapshots} where
 
   module _ {lstate : LedgerState} where
