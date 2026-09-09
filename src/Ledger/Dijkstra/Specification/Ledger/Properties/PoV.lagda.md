@@ -66,6 +66,8 @@ reflexive-transitive closure, plus one arithmetic identity.
 +  `SUBLEDGERS-utxo-coin`{.AgdaFunction} inducts over the subtransaction list,
    applying the per-`SUBUTXOW`{.AgdaDatatype} coin equation
    (`subutxow-step-coin`{.AgdaFunction}) at each step.
++  `SUBLEDGERS-noMint`{.AgdaFunction} collects the sub-transactions' no-mint
+   premises for the batch balance.
 +  `SUBLEDGERS-rewards-pov`{.AgdaFunction} composes per-sub-transaction
    `SUBENTITIES-pov`{.AgdaFunction} invocations (the rewards flow).
 +  `SUBLEDGERS-deposits`{.AgdaFunction} (with `SUBLEDGERS-registered`{.AgdaFunction})
@@ -99,6 +101,7 @@ open import Data.Nat.Tactic.RingSolver using (solve-∀; solve)
 open import Data.Integer using (ℤ; _⊖_)
 open import Data.Integer.Properties using ([1+m]⊖[1+n]≡m⊖n)
 open import Data.List.Properties using (++-assoc)
+open import Data.List.Relation.Unary.Any using (here; there)
 open import Data.List.Relation.Unary.Unique.Propositional using (Unique)
 
 open import Ledger.Prelude
@@ -119,7 +122,7 @@ open import Ledger.Dijkstra.Specification.Gov.Properties.PoV txs abs
 open import Ledger.Dijkstra.Specification.Utxo.Properties.PoV txs abs
   using (noMintingSubTxs)
 open import Ledger.Dijkstra.Specification.Utxow.Properties.PoV txs abs
-  using (module UTXOW-PoV; module SUBUTXOW-PoV)
+  using (module UTXOW-PoV; module SUBUTXOW-PoV; subutxow-noMint)
 
 open import Interface.STS
 
@@ -141,14 +144,14 @@ organized into the following groups:
 +  the set/map identities consumed by `ApplyToRewards-PoV`{.AgdaModule}
    (`∪ˡ-lookup-preserve`{.AgdaFunction}, `sum-map-proj₂≡getCoin`{.AgdaFunction},
    `setToList-Unique`{.AgdaFunction});
-+  UTxO-side inputs: the per-sub-transaction no-mint fact
-   (`noMintSubTx`{.AgdaFunction}, consumed by the imported
-   `UTXOW-PoV`{.AgdaModule}) and the batch-threading invariants
++  UTxO-side inputs: the batch-threading invariants
    (`utxo₁-tx-spend-eq`{.AgdaFunction}, `fresh-top-tx-id`{.AgdaFunction},
    `subtx-fresh-txid`{.AgdaFunction}, `subtx-spend-agree`{.AgdaFunction}),
    which the outer `UTXO`{.AgdaDatatype} rule establishes only at batch level;
    the `UTXOW`{.AgdaDatatype}/`SUBUTXOW`{.AgdaDatatype} coin equations
-   themselves are imported from `Utxow.Properties.PoV`{.AgdaModule};
+   themselves are imported from `Utxow.Properties.PoV`{.AgdaModule}, and the
+   per-sub-transaction no-mint fact they need is collected from the
+   `SUBLEDGERS`{.AgdaDatatype} derivation (`SUBLEDGERS-noMint`{.AgdaFunction});
 +  Cert facts: value accounting for a single `CERTS`{.AgdaDatatype} run,
    imported from `Certs.Properties.PoV`{.AgdaModule};
 +  Gov deposit facts, imported from `Gov.Properties.PoV`{.AgdaModule} together
@@ -175,9 +178,6 @@ module LEDGER-PoV
       (m : RewardAddress ⇀ Coin)
       → ∀[ a ∈ dom (m ˢ) ] NetworkIdOf a ≡ NetworkId
       → Unique (map (stake ∘ proj₁) (setToList (m ˢ))) )
-
-  -- Per-sub-transaction no-mint fact, consumed by the imported `UTXOW-PoV`.
-  ( noMintSubTx : noMintingSubTxs tx )
 
   -- Batch-wide invariants on the post-SUBLEDGERS UTxO state.  Both follow from
   -- batch-wide input disjointness and TxId freshness, which the outer UTXO rule
@@ -227,7 +227,7 @@ module LEDGER-PoV
   -- `CERTS-*` facts with `refundCertDeposits-++` from `Certs.Properties.PoV`;
   -- and `rmOrphanDRepVotes-coinFromGovDeposit` with `GOVS-coinFromGovDeposit`
   -- from `Gov.Properties.PoV`.
-  open UTXOW-PoV tx noMintSubTx
+  open UTXOW-PoV tx
   open SUBUTXOW-PoV subtx-fresh-txid subtx-spend-agree
 
   open ENTITIES-PoV ∪ˡ-lookup-preserve sum-map-proj₂≡getCoin setToList-Unique
@@ -320,6 +320,27 @@ same quantity (the sum of deposits across the batch), just rephrased to expose
     ns  = negPart (coin₁ ⊖ coin₀)
     pt  = posPart (coin₂ ⊖ coin₁)   -- DepositsChangeTopOf dc
     nt  = negPart (coin₂ ⊖ coin₁)
+```
+
+## `SUBLEDGERS-noMint`
+
+Every `SUBLEDGER`{.AgdaInductiveConstructor} step, valid or not, embeds a
+`SUBUTXOW`{.AgdaDatatype} step carrying the sub-transaction's no-mint premise;
+collecting them along the derivation gives `noMintingSubTxs`{.AgdaFunction}.
+
+```agda
+  SUBLEDGERS-noMint :
+    {Γ : SubLedgerEnv}
+    {s₀ s₁ : LedgerState}
+    {stxs : List SubLevelTx}
+    → Γ ⊢ s₀ ⇀⦇ stxs ,SUBLEDGERS⦈ s₁
+    → ∀ stx → stx ∈ˡ stxs → coin (MintedValueOf stx) ≡ 0
+  SUBLEDGERS-noMint (BS-base Id-nop) _ ()
+  SUBLEDGERS-noMint (BS-ind (SUBLEDGER-V (_ , utxowStep , _ , _)) _) _ (here refl) =
+    subutxow-noMint utxowStep
+  SUBLEDGERS-noMint (BS-ind (SUBLEDGER-I (_ , utxowStep)) _) _ (here refl) =
+    subutxow-noMint utxowStep
+  SUBLEDGERS-noMint (BS-ind _ rest) stx (there stx∈sigs) = SUBLEDGERS-noMint rest stx stx∈sigs
 ```
 
 ## `SUBLEDGERS-utxo-coin`
@@ -645,6 +666,14 @@ The body assembles the goal from two lemmas:
     where
 ```
 
+The sub-transactions' no-mint premises, collected from the
+`SUBLEDGERS`{.AgdaDatatype} derivation for the batch balance.
+
+```agda
+      noMintSubTx : noMintingSubTxs tx
+      noMintSubTx = SUBLEDGERS-noMint subStep
+```
+
 A handful of arithmetic shuffles are required; these are pure
 `+`-rearrangements discharged by the ring solver.
 
@@ -871,7 +900,7 @@ preserved" invariant:
         closedEq : Ctop + Wtop + CsubW + refundCertDeposits pp (allDCerts tx)
                  ≡ O + F + DN + DDtop + PsubDD
                    + newCertDeposits pp (dom (PoolsOf (CertStateOf s))) (allDCerts tx) + totGov
-        closedEq = UTXOW-batch-balance-coin utxoStep
+        closedEq = UTXOW-batch-balance-coin utxoStep noMintSubTx
 
         -- Batch-wide cert deposit accounting, in ℕ form: pre-batch deposits + new
         -- deposits ≡ post-batch deposits + refunds.  Composed from the per-step

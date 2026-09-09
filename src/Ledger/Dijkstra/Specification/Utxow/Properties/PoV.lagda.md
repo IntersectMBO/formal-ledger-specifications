@@ -55,23 +55,27 @@ SUBUTXOW⇒SUBUTXO : ∀ {Γ : SubUTxOEnv} {s s' : UTxOState} {stx : SubLevelTx}
 SUBUTXOW⇒SUBUTXO (SUBUTXOW-⋯ _ _ _ _ _ _ _ _ _ _ _ _ subUtxoStep) = subUtxoStep
 ```
 
+The sub-transaction's no-mint premise, through the extractor:
+
+```agda
+subutxow-noMint : {Γ : SubUTxOEnv} {s₀ s₁ : UTxOState} {stx : SubLevelTx}
+  → Γ ⊢ s₀ ⇀⦇ stx ,SUBUTXOW⦈ s₁ → coin (MintedValueOf stx) ≡ 0
+subutxow-noMint = subutxo-noMint ∘ SUBUTXOW⇒SUBUTXO
+```
+
 ## The `UTXOW-PoV` module
 
-Stated for a fixed top-level transaction `tx` and the per-sub-transaction
-no-mint fact, mirroring the parameterisation of the
-`LEDGER-PoV`{.AgdaModule} consumer (which holds both and can instantiate this
-module directly).  Each lemma delegates to `UTXO-PoV`{.AgdaModule} via
-`UTXOW⇒UTXO`{.AgdaFunction}.
+Stated for a fixed top-level transaction `tx`.  Each lemma delegates to
+`UTXO-PoV`{.AgdaModule} via `UTXOW⇒UTXO`{.AgdaFunction}.
 
 ```agda
 module UTXOW-PoV
   (tx : TopLevelTx)
-  (noMintSubTx : noMintingSubTxs tx)
   {Γ' : UTxOEnv}
   {s₀ s₁ : UTxOState}
   where
 
-  open UTXO-PoV tx noMintSubTx
+  open UTXO-PoV tx
 ```
 
 ### `utxow-pov-invalid`
@@ -109,10 +113,13 @@ The coin projection of the spec's batch balance premise
 `allDCerts tx` against the environment's pre-batch registered-pool set, and the
 batch's governance-action deposits collected in a trailing group.  The minted
 terms drop out (premise 7 of the `UTXO`{.AgdaDatatype} rule for the top level;
-the `noMintSubTx`{.AgdaBound} module parameter for the sub-transactions).
+the `noMintingSubTxs`{.AgdaFunction} hypothesis for the sub-transactions, which
+`Ledger.Properties.PoV`{.AgdaModule} collects from the `SUBLEDGERS`{.AgdaDatatype}
+derivation).
 
 ```agda
   UTXOW-batch-balance-coin : Γ' ⊢ s₀ ⇀⦇ tx ,UTXOW⦈ s₁
+    → noMintingSubTxs tx
     →  cbalance (UTxOOf Γ' ∣ SpendInputsOf tx) + getCoin (WithdrawalsOf tx)
        + sum (map  (λ stx → cbalance (UTxOOf Γ' ∣ SpendInputsOf stx) + getCoin (WithdrawalsOf stx))
                    (SubTransactionsOf tx))
