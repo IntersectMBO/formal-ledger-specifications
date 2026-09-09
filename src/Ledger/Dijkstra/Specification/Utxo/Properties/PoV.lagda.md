@@ -49,18 +49,19 @@ Combining the two means equating the running-state spent balance of the first
 with the snapshot spent balance of the second, and that requires knowing how the
 running UTxO relates to the snapshot after part of the batch has executed.
 
-The `UTXO`{.AgdaDatatype} rule establishes this batch-wide (spend inputs are mutually
-disjoint across the batch, TxIds are fresh) but does not expose it per step.
-Consequently, unlike in Conway (where the balance premise is per-transaction and
-stated against the same UTxO the rule steps), in Dijkstra the valid case has no
-standalone theorem at this level.
+No single rule exposes this relation: it is a property of the whole batch
+history, and it holds only when the batch's transaction ids are fresh, which the
+rules do not check (see *Batch threading* below).  Consequently, unlike in Conway
+(where the balance premise is per-transaction and stated against the same UTxO the
+rule steps), in Dijkstra the valid case has no standalone theorem at this level.
 
 Even *with* the batch-threading facts, the valid-case statement could not be a plain
 `getCoin s₀ ≡ getCoin s₁` (nor Conway's `getCoin s₀ + withdrawals ≡ getCoin s₁`),
 because `UTxOState`{.AgdaRecord} holds no deposit pot.  Cert, governance and direct
 deposits leave that for `CertState`{.AgdaRecord}, so a correction term for each would
 be needed.  Instead, the combined calculation happens in `LEDGER-pov`{.AgdaFunction},
-which holds the required batch-level facts as module parameters.
+which threads the batch invariant of the *Batch threading* section through the
+`SUBLEDGERS`{.AgdaDatatype} derivation.
 
 ## Proof sketch
 
@@ -85,6 +86,13 @@ In terms of the lemmas below, the two main pieces are the following.
     `UTXO`{.AgdaDatatype} rule, the sub-level terms by the `noMintingSubTxs`{.AgdaFunction}
     hypothesis.[^1]
 
++   **Batch threading** (`BatchUTxO`{.AgdaRecord}, `subutxo-batch-step`{.AgdaFunction},
+    `subutxo-spend-agree`{.AgdaFunction}, `UTXO-spend-agree`{.AgdaFunction}).
+    The invariant of the running UTxO that lets the two pieces be combined, with
+    its preservation by a `SUBUTXO`{.AgdaDatatype} step and the two facts it
+    yields at each step: freshness of the stepping transaction's id, and agreement
+    of the running and snapshot spent balances.
+
 <!--
 ```agda
 {-# OPTIONS --safe #-}
@@ -97,14 +105,16 @@ module Ledger.Dijkstra.Specification.Utxo.Properties.PoV
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
 
-open import Ledger.Prelude
+open import Ledger.Prelude; open Properties using (∪-⊆ˡ)
 
--- open import Data.List.Relation.Unary.Any using (here; there)
 open import Data.List.Properties        using (map-cong; map-cong-local)
 import Data.List.Relation.Unary.All as All
 open import Data.Nat.Base               using () renaming (_+_ to infixl 6 _+ᴺ_)
 open import Data.Nat.Properties         using (+-identityʳ)
 open import Data.Nat.Tactic.RingSolver  using (solve-∀)
+import Data.List.Relation.Unary.AllPairs as AllPairs
+open import Data.List.Relation.Unary.Any using (here; there)
+open import Data.List.Relation.Unary.Unique.Propositional using (Unique)
 
 open import Ledger.Dijkstra.Specification.Certs govStructure
 open import Ledger.Dijkstra.Specification.Utxo txs abs
@@ -374,13 +384,12 @@ running UTxO and adds the sub-transaction's outputs and donation.  Stated agains
 running UTxO, as it is here, that accounting needs exactly one fact the
 `SUBUTXO`{.AgdaDatatype} premises do not provide: *freshness*, that `TxIdOf stx` does
 not occur in the running UTxO, which is what lets `balance-∪`{.AgdaFunction} split
-`outs stx` off again.  Freshness follows from batch-wide TxId freshness, which the
-outer `UTXO`{.AgdaDatatype} rule establishes at the batch level but does not expose
-per step, so it is a hypothesis here.
+`outs stx` off again.  It is a hypothesis here; the batch invariant of the next
+section supplies it.
 
 The `LEDGER`{.AgdaDatatype}-level consumer wants the spent balance resolved against
-the *pre-batch snapshot* `UTxOOf Γ` instead.  Converting between the two is a second,
-independent batch-threading fact and it is applied in
+the *pre-batch snapshot* `UTxOOf Γ` instead.  The conversion is
+`subutxo-spend-agree`{.AgdaFunction} below, and the two are combined in
 `Utxow.Properties.PoV`{.AgdaModule}.
 
 ```agda
@@ -413,6 +422,113 @@ subutxo-step-coin {s₀ = ⟦ u , f , d ⟧ᵘ} {stx = stx} isV (SUBUTXO _) fres
   u|stxᶜ = (u ∣ SpendInputsOf stx ᶜ)
   shuffle : ∀ a c f d o w → a +ᴺ c +ᴺ f +ᴺ d +ᴺ o +ᴺ w ≡ a +ᴺ o +ᴺ f +ᴺ (d +ᴺ w) +ᴺ c
   shuffle = solve-∀
+```
+
+## Batch threading
+
+The per-step equation above resolves the spent balance against the *running* UTxO
+and assumes freshness of the transaction's id there, while
+`Ledger.Properties.PoV`{.AgdaModule} has both facts only for the *pre-batch
+snapshot*: the batch balance is stated against it, and freshness is a hypothesis
+about it.  What connects the two is the batch history: the running UTxO is built
+from the snapshot by removing spent inputs and adding outputs under fresh ids.
+This section packages that history as an invariant of the running UTxO, proves
+that a `SUBUTXO`{.AgdaDatatype} step preserves it, and derives the two per-step
+facts from it; `Ledger.Properties.PoV`{.AgdaModule} threads the invariant through
+the `SUBLEDGERS`{.AgdaDatatype} derivation.
+
+The ids of a batch, listed in the order in which their outputs enter the UTxO:
+
+```agda
+batchTxIds : TopLevelTx → List TxId
+batchTxIds tx = map TxIdOf (SubTransactionsOf tx) ++ [ TxIdOf tx ]
+```
+
+Transaction ids are *fresh* for a UTxO when they are pairwise distinct and none
+occurs in it.  Neither part follows from the rules, whose premises never relate a
+transaction's id to the UTxO or to the other ids of its batch, and both are
+needed: the left-biased union `∪ˡ` by which the rules add outputs silently drops
+an output whose key is already present, destroying its value.
+`Ledger.Properties.PoV`{.AgdaModule} therefore takes freshness of the batch's ids
+for the initial UTxO as a hypothesis, as the Conway preservation-of-value theorem
+does for its single transaction.
+
+```agda
+record FreshTxIds (utxo : UTxO) (ids : List TxId) : Type where
+  field
+    distinct : Unique ids
+    fresh    : ∀ {tid} → tid ∈ˡ ids → tid ∉ mapˢ proj₁ (dom utxo)
+
+FreshTxIds-tail : {utxo : UTxO} {tid : TxId} {ids : List TxId}
+  → FreshTxIds utxo (tid ∷ ids) → FreshTxIds utxo ids
+FreshTxIds-tail f = record { distinct = AllPairs.tail distinct ; fresh = fresh ∘ there }
+  where open FreshTxIds f
+```
+
+The invariant is stated relative to the snapshot `u₀` and the ids `ids` of the
+transactions still to be applied: the running UTxO `u` is a *batch UTxO* when no
+pending id occurs in it and it agrees with the snapshot on the snapshot's keys
+(`_AgreesWith_`{.AgdaFunction}, from `Utxo.Properties.Base`{.AgdaModule}).  The
+snapshot is a batch UTxO over itself whenever the pending ids are fresh for it.
+
+```agda
+record BatchUTxO (u₀ : UTxO) (ids : List TxId) (u : UTxO) : Type where
+  field
+    pending-fresh : ∀ {tid} → tid ∈ˡ ids → tid ∉ mapˢ proj₁ (dom u)
+    agrees        : u AgreesWith u₀
+
+BatchUTxO-init : {u₀ : UTxO} {ids : List TxId} → FreshTxIds u₀ ids → BatchUTxO u₀ ids u₀
+BatchUTxO-init {u₀} f = record { pending-fresh = FreshTxIds.fresh f ; agrees = agrees-refl u₀ }
+```
+
+At a step, the first pending id is the stepping transaction's, so the invariant
+gives its freshness in the running UTxO directly.  The step preserves the
+invariant by `agrees-step`{.AgdaFunction} and `fresh-step`{.AgdaFunction} of
+`Utxo.Properties.Base`{.AgdaModule}, which need the stepping id fresh in the
+snapshot and different from the ids that remain pending; both come from
+`FreshTxIds`{.AgdaFunction}.
+
+```agda
+module _ {u₀ : UTxO} {ids : List TxId} where
+
+  BatchUTxO-fresh : {tid : TxId} {u : UTxO}
+    → BatchUTxO u₀ (tid ∷ ids) u → tid ∉ mapˢ proj₁ (dom u)
+  BatchUTxO-fresh inv = BatchUTxO.pending-fresh inv (here refl)
+
+  BatchUTxO-step : (t : Tx ℓ) (u : UTxO) (S : ℙ TxIn)
+    → FreshTxIds u₀ (TxIdOf t ∷ ids)
+    → BatchUTxO u₀ (TxIdOf t ∷ ids) u
+    → BatchUTxO u₀ ids ((u ∣ S ᶜ) ∪ˡ outs t)
+  BatchUTxO-step t u S f inv = record
+    { pending-fresh = λ tid∈ids →
+        fresh-step t u S (pending-fresh (there tid∈ids))
+                         (λ eq → All.lookup (AllPairs.head distinct) tid∈ids (sym eq))
+    ; agrees = agrees-step t u S u₀ (fresh (here refl)) agrees }
+    where open BatchUTxO inv; open FreshTxIds f
+```
+
+For a `SUBUTXO`{.AgdaDatatype} step the key set spent is `SpendInputsOf stx`, and
+premises 2 and 3 of the rule place it in both the snapshot's and the running
+UTxO's domain, which is what agreement needs to equate the two spent balances.
+
+```agda
+module _ {Γ : SubUTxOEnv} {stx : SubLevelTx} where
+
+  subutxo-spend-agree : {s₀ s₁ : UTxOState}
+    → Γ ⊢ s₀ ⇀⦇ stx ,SUBUTXO⦈ s₁
+    → UTxOOf s₀ AgreesWith UTxOOf Γ
+    → cbalance (UTxOOf s₀ ∣ SpendInputsOf stx) ≡ cbalance (UTxOOf Γ ∣ SpendInputsOf stx)
+  subutxo-spend-agree {s₀} (SUBUTXO (_ , spend⊆snapshot , _ , spend⊆running , _)) agree =
+    agrees-cbalance (UTxOOf Γ) (UTxOOf s₀) agree spend⊆snapshot spend⊆running
+
+  subutxo-batch-step : {s₀ s₁ : UTxOState} {ids : List TxId}
+    → IsTopLevelValidFlagOf Γ ≡ true
+    → Γ ⊢ s₀ ⇀⦇ stx ,SUBUTXO⦈ s₁
+    → FreshTxIds (UTxOOf Γ) (TxIdOf stx ∷ ids)
+    → BatchUTxO (UTxOOf Γ) (TxIdOf stx ∷ ids) (UTxOOf s₀)
+    → BatchUTxO (UTxOOf Γ) ids (UTxOOf s₁)
+  subutxo-batch-step {s₀} isV (SUBUTXO _) fresh inv rewrite isV =
+    BatchUTxO-step stx (UTxOOf s₀) (SpendInputsOf stx) fresh inv
 ```
 
 ## The <span class="AgdaModule">UTXO-PoV</span> module
@@ -460,10 +576,9 @@ freshness of `TxIdOf tx` in `u` (so that `outs tx` splits off cleanly via
 `balance-∪`{.AgdaFunction}), `getCoin`{.AgdaField} changes by exactly the
 spent balance on one side and the outputs/fee/donation on the other.  Note
 that the spent balance is `cbalance (UTxOOf s₀ ∣ SpendInputsOf tx)` — the
-*running*-state resolution of piece 1; `LEDGER-pov`{.AgdaFunction} equates it
-with the snapshot resolution appearing in
-`UTXO-batch-balance-coin`{.AgdaFunction} via its `utxo₁-tx-spend-eq`
-batch-threading parameter.
+*running*-state resolution of piece 1; `UTXO-spend-agree`{.AgdaFunction} below
+equates it with the snapshot resolution appearing in
+`UTXO-batch-balance-coin`{.AgdaFunction}.
 
 ```agda
   UTXO-V-mechanical : {s₀ s₁ : UTxOState}
@@ -492,6 +607,20 @@ batch-threading parameter.
     shuffle : ∀ a b f d o tf td
       → a +ᴺ b +ᴺ f +ᴺ d +ᴺ o +ᴺ tf +ᴺ td ≡ a +ᴺ o +ᴺ (f +ᴺ tf) +ᴺ (d +ᴺ td) +ᴺ b
     shuffle = solve-∀
+```
+
+### <span class="AgdaFunction">UTXO-spend-agree</span>: the top-level spent balance against the snapshot
+
+The top-level analogue of `subutxo-spend-agree`{.AgdaFunction}: premises 2 and 3
+of the `UTXO`{.AgdaDatatype} rule place the spend inputs in both domains, so a
+running UTxO that agrees with the snapshot assigns them the same balance.
+
+```agda
+  UTXO-spend-agree : {s₀ s₁ : UTxOState}
+    → Γ ⊢ s₀ ⇀⦇ tx ,UTXO⦈ s₁ → UTxOOf s₀ AgreesWith UTxOOf Γ
+    → cbalance (UTxOOf s₀ ∣ SpendInputsOf tx) ≡ cbalance (UTxOOf Γ ∣ SpendInputsOf tx)
+  UTXO-spend-agree {s₀} (UTXO (_ , spend∪coll⊆snapshot , _ , spend⊆running , _)) agree =
+    agrees-cbalance (UTxOOf Γ) (UTxOOf s₀) agree (spend∪coll⊆snapshot ∘ ∪-⊆ˡ) spend⊆running
 ```
 
 ### `UTXO-batch-balance-coin`
