@@ -15,7 +15,7 @@
         <link rel="canonical" href="https://intersectmbo.github.io/formal-ledger-specifications/ledger-properties-dashboard.html">
       
       
-        <link rel="prev" href="Ledger.Dijkstra.Specification.Utxow.Properties.Computational.html">
+        <link rel="prev" href="Ledger.Dijkstra.Specification.Utxow.Properties.PoV.html">
       
       
         <link rel="next" href="Definitions.html">
@@ -8194,6 +8194,62 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Dijkstra.Specification.Utxo.Properties.Base.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Base
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Dijkstra.Specification.Utxo.Properties.PoV.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PoV
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -8385,6 +8441,34 @@
     
   
     Computational
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Dijkstra.Specification.Utxow.Properties.PoV.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PoV
   
 
     
@@ -11730,11 +11814,11 @@ another branch/PR) · ⚪ idea (not yet in Agda).</p>
 </tr>
 <tr>
 <td>dijkstra</td>
+<td style="text-align: right;">5</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">15</td>
-<td style="text-align: right;">15</td>
+<td style="text-align: right;">14</td>
+<td style="text-align: right;">19</td>
 </tr>
 </tbody>
 </table>
@@ -11919,6 +12003,41 @@ another branch/PR) · ⚪ idea (not yet in Agda).</p>
 </thead>
 <tbody>
 <tr>
+<td>✅ proved</td>
+<td>CERT and CERTS preserve value</td>
+<td>CERTS</td>
+<td><a href="Ledger.Dijkstra.Specification.Certs.Properties.PoV.html"><code>Ledger.Dijkstra.Specification.Certs.Properties.PoV</code></a></td>
+<td><a href="https://github.com/intersectmbo/formal-ledger-specifications/issues/1185">#1185</a></td>
+</tr>
+<tr>
+<td>✅ proved</td>
+<td>GOV preserve value</td>
+<td>GOV</td>
+<td><a href="Ledger.Dijkstra.Specification.Gov.Properties.PoV.html"><code>Ledger.Dijkstra.Specification.Gov.Properties.PoV</code></a></td>
+<td><a href="https://github.com/intersectmbo/formal-ledger-specifications/issues/1276">#1276</a></td>
+</tr>
+<tr>
+<td>✅ proved</td>
+<td>LEDGER preserves value</td>
+<td>LEDGER</td>
+<td><a href="Ledger.Dijkstra.Specification.Ledger.Properties.PoV.html"><code>Ledger.Dijkstra.Specification.Ledger.Properties.PoV</code></a></td>
+<td><a href="https://github.com/intersectmbo/formal-ledger-specifications/issues/1187">#1187</a></td>
+</tr>
+<tr>
+<td>✅ proved</td>
+<td>UTXO preserves value</td>
+<td>UTXO</td>
+<td><a href="Ledger.Dijkstra.Specification.Utxo.Properties.PoV.html"><code>Ledger.Dijkstra.Specification.Utxo.Properties.PoV</code></a></td>
+<td><a href="https://github.com/intersectmbo/formal-ledger-specifications/issues/1186">#1186</a></td>
+</tr>
+<tr>
+<td>✅ proved</td>
+<td>UTXOW preserves value</td>
+<td>UTXOW</td>
+<td><a href="Ledger.Dijkstra.Specification.Utxow.Properties.PoV.html"><code>Ledger.Dijkstra.Specification.Utxow.Properties.PoV</code></a></td>
+<td><a href="https://github.com/intersectmbo/formal-ledger-specifications/issues/1186">#1186</a></td>
+</tr>
+<tr>
 <td>⚪ idea</td>
 <td>[port] voteDelegs range is contained in VDelegs built from its domain</td>
 <td>CERTS</td>
@@ -12004,13 +12123,6 @@ another branch/PR) · ⚪ idea (not yet in Agda).</p>
 </tr>
 <tr>
 <td>⚪ idea</td>
-<td>[port] Preservation of value (LEDGER/UTXO/CERTS/CERT)</td>
-<td>LEDGER</td>
-<td>—</td>
-<td>—</td>
-</tr>
-<tr>
-<td>⚪ idea</td>
 <td>[port] k proposals grow the GA deposit pot by k * govActionDeposit</td>
 <td>UTXO</td>
 <td>—</td>
@@ -12055,7 +12167,7 @@ another branch/PR) · ⚪ idea (not yet in Agda).</p>
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="Ledger.Dijkstra.Specification.Utxow.Properties.Computational.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: Computational">
+          <a href="Ledger.Dijkstra.Specification.Utxow.Properties.PoV.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: PoV">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
@@ -12065,7 +12177,7 @@ another branch/PR) · ⚪ idea (not yet in Agda).</p>
                 Previous
               </span>
               <div class="md-ellipsis">
-                Computational
+                PoV
               </div>
             </div>
           </a>
