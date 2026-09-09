@@ -1,0 +1,26 @@
+<!DOCTYPE HTML>
+<html><head><meta charset="utf-8"><title>Ledger.Conway.Foreign.ExternalFunctions</title><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css"><link rel="stylesheet" href="Agda.css"><script src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/contrib/auto-render.min.js"></script><script src="AgdaKaTeX.js" defer=""></script></head><body><pre class="Agda"><a id="1" class="Keyword">module</a> <a id="8" href="Ledger.Conway.Foreign.ExternalFunctions.html" class="Module">Ledger.Conway.Foreign.ExternalFunctions</a> <a id="48" class="Keyword">where</a>
+
+<a id="55" class="Keyword">open</a> <a id="60" class="Keyword">import</a> <a id="67" href="Ledger.Prelude.html" class="Module">Ledger.Prelude</a>
+<a id="82" class="Keyword">open</a> <a id="87" class="Keyword">import</a> <a id="94" href="Tactic.Derive.HsType.html" class="Module">Tactic.Derive.HsType</a>
+
+<a id="116" class="Keyword">record</a> <a id="ExternalFunctions"></a><a id="123" href="Ledger.Conway.Foreign.ExternalFunctions.html#123" class="Record">ExternalFunctions</a> <a id="141" class="Symbol">:</a> <a id="143" href="Agda.Primitive.html#388" class="Primitive">Set</a> <a id="147" class="Keyword">where</a>
+  <a id="155" class="Keyword">field</a>
+    <a id="ExternalFunctions.extIsSigned"></a><a id="165" href="Ledger.Conway.Foreign.ExternalFunctions.html#165" class="Field">extIsSigned</a> <a id="177" class="Symbol">:</a> <a id="179" href="Agda.Builtin.Nat.html#203" class="Datatype">ℕ</a> <a id="181" class="Symbol">→</a> <a id="183" href="Agda.Builtin.Nat.html#203" class="Datatype">ℕ</a> <a id="185" class="Symbol">→</a> <a id="187" href="Agda.Builtin.Nat.html#203" class="Datatype">ℕ</a> <a id="189" class="Symbol">→</a> <a id="191" href="Agda.Builtin.Bool.html#173" class="Datatype">Bool</a>
+    <a id="ExternalFunctions.extValidPlutusScript"></a><a id="200" href="Ledger.Conway.Foreign.ExternalFunctions.html#200" class="Field">extValidPlutusScript</a> <a id="221" class="Symbol">:</a> <a id="223" href="Agda.Builtin.Bool.html#173" class="Datatype">Bool</a>
+<a id="228" class="Symbol">{-#</a> <a id="232" class="Keyword">FOREIGN</a> <a id="240" class="Pragma">GHC</a>
+  <a id="246" class="Pragma">data</a> <a id="251" class="Pragma">ExternalFunctions</a> <a id="269" class="Pragma">=</a> <a id="271" class="Pragma">MkExternalFunctions</a>
+    <a id="295" class="Pragma">{</a>
+      <a id="303" class="Pragma">extIsSigned</a> <a id="315" class="Pragma">::</a> <a id="318" class="Pragma">Integer</a> <a id="326" class="Pragma">-&gt;</a> <a id="329" class="Pragma">Integer</a> <a id="337" class="Pragma">-&gt;</a> <a id="340" class="Pragma">Integer</a> <a id="348" class="Pragma">-&gt;</a> <a id="351" class="Pragma">Bool</a>
+    <a id="360" class="Pragma">,</a> <a id="362" class="Pragma">extValidPlutusScript</a> <a id="383" class="Pragma">::</a> <a id="386" class="Pragma">Bool</a>
+    <a id="395" class="Pragma">}</a>
+<a id="397" class="Symbol">#-}</a>
+<a id="401" class="Symbol">{-#</a> <a id="405" class="Keyword">COMPILE</a> <a id="413" class="Keyword">GHC</a> <a id="417" href="Ledger.Conway.Foreign.ExternalFunctions.html#123" class="Record">ExternalFunctions</a> <a id="435" class="Pragma">=</a> <a id="437" class="Pragma">data</a> <a id="442" class="Pragma">ExternalFunctions</a> <a id="460" class="Pragma">(MkExternalFunctions)</a> <a id="482" class="Symbol">#-}</a>
+
+<a id="dummyExternalFunctions"></a><a id="487" href="Ledger.Conway.Foreign.ExternalFunctions.html#487" class="Function">dummyExternalFunctions</a> <a id="510" class="Symbol">:</a> <a id="512" href="Ledger.Conway.Foreign.ExternalFunctions.html#123" class="Record">ExternalFunctions</a>
+<a id="530" href="Ledger.Conway.Foreign.ExternalFunctions.html#487" class="Function">dummyExternalFunctions</a> <a id="553" class="Symbol">=</a>
+  <a id="557" class="Keyword">record</a> <a id="564" class="Symbol">{</a> <a id="566" href="Ledger.Conway.Foreign.ExternalFunctions.html#165" class="Field">extIsSigned</a> <a id="578" class="Symbol">=</a> <a id="580" class="Symbol">λ</a> <a id="582" href="Ledger.Conway.Foreign.ExternalFunctions.html#582" class="Bound">_</a> <a id="584" href="Ledger.Conway.Foreign.ExternalFunctions.html#584" class="Bound">_</a> <a id="586" href="Ledger.Conway.Foreign.ExternalFunctions.html#586" class="Bound">_</a> <a id="588" class="Symbol">→</a> <a id="590" href="Agda.Builtin.Bool.html#198" class="InductiveConstructor">true</a>
+         <a id="604" class="Symbol">;</a> <a id="606" href="Ledger.Conway.Foreign.ExternalFunctions.html#200" class="Field">extValidPlutusScript</a> <a id="627" class="Symbol">=</a> <a id="629" href="Agda.Builtin.Bool.html#198" class="InductiveConstructor">true</a>
+         <a id="643" class="Symbol">}</a>
+<a id="645" class="Symbol">{-#</a> <a id="649" class="Keyword">COMPILE</a> <a id="657" class="Keyword">GHC</a> <a id="661" href="Ledger.Conway.Foreign.ExternalFunctions.html#487" class="Function">dummyExternalFunctions</a> <a id="684" class="Pragma">as</a> <a id="687" class="Pragma">dummyExternalFunctions</a> <a id="710" class="Symbol">#-}</a>
+</pre></body></html>
