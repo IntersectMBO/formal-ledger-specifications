@@ -97,7 +97,7 @@ module _ {eps : EpochState} {e : Epoch} where
                        (cong PoolReapState.pState prs'≡prs'')
 
          ss'₁≡ss'₂ : ss'₁ ≡ ss'₂
-         ss'₁≡ss'₂ = SNAP-deterministic ls'₁≡ls'₂ p₂ p₂'
+         ss'₁≡ss'₂ = SNAP-deterministic-≡ ls'₁≡ls'₂ p₂ p₂'
 
          mkΓ : Snapshots → Post-POOLREAP-Update → LedgerState → RatifyEnv
          mkΓ ss'' pPR ls'' =

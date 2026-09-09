@@ -34,11 +34,11 @@ module _ {ss : Snapshots} where
     SNAP-complete : ∀ ss' → lstate ⊢ ss ⇀⦇ tt ,SNAP⦈ ss' → proj₁ SNAP-total ≡ ss'
     SNAP-complete ss' SNAP = refl
 
-  SNAP-deterministic : ∀ {ls ls' ss' ss''}
+  SNAP-deterministic-≡ : ∀ {ls ls' ss' ss''}
                      → ls ≡ ls'
                      → ls ⊢ ss ⇀⦇ tt ,SNAP⦈ ss'
                      → ls' ⊢ ss ⇀⦇ tt ,SNAP⦈ ss'' → ss' ≡ ss''
-  SNAP-deterministic refl SNAP SNAP = refl
+  SNAP-deterministic-≡ refl SNAP SNAP = refl
 
 instance
   Computational-SNAP : Computational _⊢_⇀⦇_,SNAP⦈_ ⊥
