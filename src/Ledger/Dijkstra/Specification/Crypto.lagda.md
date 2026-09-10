@@ -27,7 +27,7 @@ open import Ledger.Core.Specification.Crypto
 ```
 -->
 
-## Abstract Voting Cryptography Types
+## Abstract Cryptography Types
 
 We represent the cryptographic structures of the Leios voting scheme using
 abstract types to encode verification keys, signatures, and proofs of
@@ -40,12 +40,15 @@ record LeiosCryptoStructure (cs : CryptoStructure) : Type₁ where
   field
     BlsVKey BlsSig BlsPoP  : Type
     isValidPoP             : BlsVKey → BlsPoP → Type
+    isSignedBy             : BlsVKey → Ser → BlsSig → Type
     isSignedByAggregate    : List BlsVKey → Ser → BlsSig → Type
 ```
 
 +  `isValidPoP`{.AgdaField} checks a voting key's *proof of possession* (PoP), which
    every registration carries ([Key Registration and Rotation][cip-keyreg]) because
    aggregation is otherwise open to rogue-key attacks.[^2]
++  `isSignedBy`{.AgdaField} verifies a single vote, and consensus uses this to
+   filter votes before aggregation;
 +  `isSignedByAggregate`{.AgdaField} verifies a certificate's aggregate signature,
    in serialized form, against the keys of the seats that signed.
 
@@ -73,6 +76,7 @@ total order.
     ⦃ DecEq-BlsSig  ⦄            : DecEq BlsSig
     ⦃ DecEq-BlsPoP  ⦄            : DecEq BlsPoP
     ⦃ Dec-isValidPoP ⦄           : isValidPoP ⁇²
+    ⦃ Dec-isSignedBy ⦄           : isSignedBy ⁇³
     ⦃ Dec-isSignedByAggregate ⦄  : isSignedByAggregate ⁇³
     ⦃ Dec-<ᵏʰ ⦄                  : _<ᵏʰ_ ⁇²
 ```
@@ -85,8 +89,6 @@ total order.
 
 [^2]: A key crafted relative to someone else's key could make the aggregate appear
       as if it includes a voter who never signed.
-
-
 
 [CIP-164]: https://github.com/cardano-scaling/CIPs/blob/leios/CIP-0164/README.md
 [cip-cddl]: https://github.com/cardano-scaling/CIPs/blob/leios/CIP-0164/README.md#appendix-b-cddl
