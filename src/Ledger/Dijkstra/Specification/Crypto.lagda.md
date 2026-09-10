@@ -82,9 +82,10 @@ implementation's byte-wise comparison.
 
 Leios also names its objects by hash: `EBHash`{.AgdaField} identifies an
 endorser block, `TxRefHash`{.AgdaField} a referenced transaction (the hash of
-the complete transaction bytes per [CIP-164] Appendix B, not the body-only
-transaction id), and `RBHeaderHash`{.AgdaField} the announcing ranking-block
-header; the last is the message a committee vote signs.
+the complete transaction bytes per
+[cardano-foundation/CIPs#1250](https://github.com/cardano-foundation/CIPs/pull/1250),
+not the body-only transaction id), and `RBHeaderHash`{.AgdaField} the announcing
+ranking-block header; the last is the message a committee vote signs.
 `hashEBRefs`{.AgdaField} computes an endorser block's identifier from its
 reference list; all four stay abstract, and
 `Ledger.Dijkstra.Specification.Leios.Types`{.AgdaModule} records why the
