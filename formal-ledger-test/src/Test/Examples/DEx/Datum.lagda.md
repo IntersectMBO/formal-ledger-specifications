@@ -17,20 +17,20 @@ import Data.Vec.Relation.Binary.Pointwise.Inductive as Vec
 
 open import Data.Rational.Base
 
-data Label : Set where
- -- Holding : Label
-  Always : ℚ -> ℕ -> Label 
+data Datum : Set where
+ -- Holding : Datum
+  Always : ℚ -> ℕ -> Datum 
 instance
-  unquoteDecl DecEq-Label = derive-DecEq
-    ((quote Label , DecEq-Label) ∷ [])
+  unquoteDecl DecEq-Datum = derive-DecEq
+    ((quote Datum , DecEq-Datum) ∷ [])
 
-data Input : Set where
-  Update   : ℕ -> ℚ -> Input
-  Exchange : ℕ -> ℕ -> Input
-  Close    : Input
+data Redeemer : Set where
+  Update   : ℕ -> ℚ -> Redeemer
+  Exchange : ℕ -> ℕ -> Redeemer
+  Stop     : Redeemer
 instance
-  unquoteDecl DecEq-Input = derive-DecEq
-    ((quote Input , DecEq-Input) ∷ [])
+  unquoteDecl DecEq-Redeemer = derive-DecEq
+    ((quote Redeemer , DecEq-Redeemer) ∷ [])
 
-DExData = Label ⊎ Input
+DExData = Datum ⊎ Redeemer
 ```
