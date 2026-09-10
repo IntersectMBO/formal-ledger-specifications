@@ -260,6 +260,8 @@ nav:
       - Properties: Ledger.Dijkstra.Specification.Ledger.Properties.md
       - Properties/:
         - Computational: Ledger.Dijkstra.Specification.Ledger.Properties.Computational.md
+    - Leios/:
+      - Types: Ledger.Dijkstra.Specification.Leios.Types.md
     - PoolReap: Ledger.Dijkstra.Specification.PoolReap.md
     - PoolReap/:
       - Properties: Ledger.Dijkstra.Specification.PoolReap.Properties.md
