@@ -56,7 +56,7 @@ import Ledger.Dijkstra.Specification.Chain
 import Ledger.Dijkstra.Specification.Chain.Properties
 ```
 
-## Cryptographic Primitives
+## Abstract Cryptographic Primitives
 
 ```agda
 import Ledger.Dijkstra.Specification.Crypto
