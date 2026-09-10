@@ -8,4 +8,3 @@ depend:
 include:
   src
   src-lib-exts
-  formal-ledger-test
