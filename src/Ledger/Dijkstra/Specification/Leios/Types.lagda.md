@@ -1,5 +1,5 @@
 ---
-source_branch: leios-main
+source_branch: master
 source_path: src/Ledger/Dijkstra/Specification/Leios/Types.lagda.md
 ---
 
