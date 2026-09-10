@@ -23,7 +23,6 @@ import qualified MAlonzo.Code.Class.DecEq.Core
 import qualified MAlonzo.Code.Class.Decidable.Core
 import qualified MAlonzo.Code.Class.Show.Core
 import qualified MAlonzo.Code.Interface.TypeClasses.Hashable
-import qualified MAlonzo.Code.Relation.Binary.Structures
 
 -- Ledger.Core.Specification.Crypto.isHashableSet
 d_isHashableSet_10 a0 = ()
@@ -179,21 +178,10 @@ d_DecEq'45'Ser_136 v0
 -- Ledger.Core.Specification.Crypto.CryptoStructure
 d_CryptoStructure_140 = ()
 data T_CryptoStructure_140
-  = C_constructor_294 T_PKKScheme_60 T_isHashableSet_10
+  = C_constructor_242 T_PKKScheme_60 T_isHashableSet_10
                       MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
                       MAlonzo.Code.Class.Show.Core.T_Show_10
                       MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
-                      MAlonzo.Code.Relation.Binary.Structures.T_IsStrictTotalOrder_624
-                      (AgdaAny ->
-                       AgdaAny -> MAlonzo.Code.Class.Decidable.Core.T__'8263'_10)
-                      MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
-                      MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
-                      MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
-                      (AgdaAny ->
-                       AgdaAny -> MAlonzo.Code.Class.Decidable.Core.T__'8263'_10)
-                      ([AgdaAny] ->
-                       AgdaAny ->
-                       AgdaAny -> MAlonzo.Code.Class.Decidable.Core.T__'8263'_10)
 -- Ledger.Core.Specification.Crypto._.Dec-isSigned
 d_Dec'45'isSigned_146 ::
   T_PKKScheme_60 ->
@@ -289,204 +277,114 @@ du_T'45'Hashable_186 ::
   MAlonzo.Code.Interface.TypeClasses.Hashable.T_Hashable_10
 du_T'45'Hashable_186 v0 = coe d_T'45'Hashable_32 (coe v0)
 -- Ledger.Core.Specification.Crypto.CryptoStructure.pkk
-d_pkk_218 :: T_CryptoStructure_140 -> T_PKKScheme_60
-d_pkk_218 v0
+d_pkk_192 :: T_CryptoStructure_140 -> T_PKKScheme_60
+d_pkk_192 v0
   = case coe v0 of
-      C_constructor_294 v1 v2 v4 v5 v7 v9 v10 v16 v17 v18 v19 v20
-        -> coe v1
+      C_constructor_242 v1 v2 v4 v5 v7 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Core.Specification.Crypto.CryptoStructure._.Dec-isSigned
-d_Dec'45'isSigned_222 ::
+d_Dec'45'isSigned_196 ::
   T_CryptoStructure_140 ->
   AgdaAny ->
   AgdaAny ->
   AgdaAny -> MAlonzo.Code.Class.Decidable.Core.T__'8263'_10
-d_Dec'45'isSigned_222 v0
-  = coe d_Dec'45'isSigned_120 (coe d_pkk_218 (coe v0))
+d_Dec'45'isSigned_196 v0
+  = coe d_Dec'45'isSigned_120 (coe d_pkk_192 (coe v0))
 -- Ledger.Core.Specification.Crypto.CryptoStructure._.DecEq-Ser
-d_DecEq'45'Ser_224 ::
+d_DecEq'45'Ser_198 ::
   T_CryptoStructure_140 -> MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
-d_DecEq'45'Ser_224 v0
-  = coe d_DecEq'45'Ser_136 (coe d_pkk_218 (coe v0))
+d_DecEq'45'Ser_198 v0
+  = coe d_DecEq'45'Ser_136 (coe d_pkk_192 (coe v0))
 -- Ledger.Core.Specification.Crypto.CryptoStructure._.DecEq-Sig
-d_DecEq'45'Sig_226 ::
+d_DecEq'45'Sig_200 ::
   T_CryptoStructure_140 -> MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
-d_DecEq'45'Sig_226 v0
-  = coe d_DecEq'45'Sig_134 (coe d_pkk_218 (coe v0))
+d_DecEq'45'Sig_200 v0
+  = coe d_DecEq'45'Sig_134 (coe d_pkk_192 (coe v0))
 -- Ledger.Core.Specification.Crypto.CryptoStructure._.KeyPair
-d_KeyPair_228 :: T_CryptoStructure_140 -> ()
-d_KeyPair_228 = erased
+d_KeyPair_202 :: T_CryptoStructure_140 -> ()
+d_KeyPair_202 = erased
 -- Ledger.Core.Specification.Crypto.CryptoStructure._.SKey
-d_SKey_230 :: T_CryptoStructure_140 -> ()
-d_SKey_230 = erased
+d_SKey_204 :: T_CryptoStructure_140 -> ()
+d_SKey_204 = erased
 -- Ledger.Core.Specification.Crypto.CryptoStructure._.Ser
-d_Ser_232 :: T_CryptoStructure_140 -> ()
-d_Ser_232 = erased
+d_Ser_206 :: T_CryptoStructure_140 -> ()
+d_Ser_206 = erased
 -- Ledger.Core.Specification.Crypto.CryptoStructure._.Sig
-d_Sig_234 :: T_CryptoStructure_140 -> ()
-d_Sig_234 = erased
+d_Sig_208 :: T_CryptoStructure_140 -> ()
+d_Sig_208 = erased
 -- Ledger.Core.Specification.Crypto.CryptoStructure._.VKey
-d_VKey_236 :: T_CryptoStructure_140 -> ()
-d_VKey_236 = erased
+d_VKey_210 :: T_CryptoStructure_140 -> ()
+d_VKey_210 = erased
 -- Ledger.Core.Specification.Crypto.CryptoStructure._.isKeyPair
-d_isKeyPair_238 ::
+d_isKeyPair_212 ::
   T_CryptoStructure_140 -> AgdaAny -> AgdaAny -> ()
-d_isKeyPair_238 = erased
+d_isKeyPair_212 = erased
 -- Ledger.Core.Specification.Crypto.CryptoStructure._.isSigned
-d_isSigned_240 ::
+d_isSigned_214 ::
   T_CryptoStructure_140 -> AgdaAny -> AgdaAny -> AgdaAny -> ()
-d_isSigned_240 = erased
+d_isSigned_214 = erased
 -- Ledger.Core.Specification.Crypto.CryptoStructure._.isSigned-correct
-d_isSigned'45'correct_242 ::
+d_isSigned'45'correct_216 ::
   T_CryptoStructure_140 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   AgdaAny ->
   AgdaAny ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 -> AgdaAny
-d_isSigned'45'correct_242 v0
-  = coe d_isSigned'45'correct_132 (coe d_pkk_218 (coe v0))
+d_isSigned'45'correct_216 v0
+  = coe d_isSigned'45'correct_132 (coe d_pkk_192 (coe v0))
 -- Ledger.Core.Specification.Crypto.CryptoStructure._.sign
-d_sign_244 ::
+d_sign_218 ::
   T_CryptoStructure_140 -> AgdaAny -> AgdaAny -> AgdaAny
-d_sign_244 v0 = coe d_sign_112 (coe d_pkk_218 (coe v0))
+d_sign_218 v0 = coe d_sign_112 (coe d_pkk_192 (coe v0))
 -- Ledger.Core.Specification.Crypto.CryptoStructure.khs
-d_khs_246 :: T_CryptoStructure_140 -> T_isHashableSet_10
-d_khs_246 v0
+d_khs_220 :: T_CryptoStructure_140 -> T_isHashableSet_10
+d_khs_220 v0
   = case coe v0 of
-      C_constructor_294 v1 v2 v4 v5 v7 v9 v10 v16 v17 v18 v19 v20
-        -> coe v2
+      C_constructor_242 v1 v2 v4 v5 v7 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Core.Specification.Crypto.CryptoStructure.ScriptHash
-d_ScriptHash_248 :: T_CryptoStructure_140 -> ()
-d_ScriptHash_248 = erased
+d_ScriptHash_222 :: T_CryptoStructure_140 -> ()
+d_ScriptHash_222 = erased
 -- Ledger.Core.Specification.Crypto.CryptoStructure.DecEq-ScriptHash
-d_DecEq'45'ScriptHash_250 ::
+d_DecEq'45'ScriptHash_224 ::
   T_CryptoStructure_140 -> MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
-d_DecEq'45'ScriptHash_250 v0
+d_DecEq'45'ScriptHash_224 v0
   = case coe v0 of
-      C_constructor_294 v1 v2 v4 v5 v7 v9 v10 v16 v17 v18 v19 v20
-        -> coe v4
+      C_constructor_242 v1 v2 v4 v5 v7 -> coe v4
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Core.Specification.Crypto.CryptoStructure.Show-ScriptHash
-d_Show'45'ScriptHash_252 ::
+d_Show'45'ScriptHash_226 ::
   T_CryptoStructure_140 -> MAlonzo.Code.Class.Show.Core.T_Show_10
-d_Show'45'ScriptHash_252 v0
+d_Show'45'ScriptHash_226 v0
   = case coe v0 of
-      C_constructor_294 v1 v2 v4 v5 v7 v9 v10 v16 v17 v18 v19 v20
-        -> coe v5
+      C_constructor_242 v1 v2 v4 v5 v7 -> coe v5
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Core.Specification.Crypto.CryptoStructure._.DecEq-THash
-d_DecEq'45'THash_256 ::
+d_DecEq'45'THash_230 ::
   T_CryptoStructure_140 -> MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
-d_DecEq'45'THash_256 v0
-  = coe d_DecEq'45'THash_26 (coe d_khs_246 (coe v0))
+d_DecEq'45'THash_230 v0
+  = coe d_DecEq'45'THash_26 (coe d_khs_220 (coe v0))
 -- Ledger.Core.Specification.Crypto.CryptoStructure._.THash
-d_THash_258 :: T_CryptoStructure_140 -> ()
-d_THash_258 = erased
+d_THash_232 :: T_CryptoStructure_140 -> ()
+d_THash_232 = erased
 -- Ledger.Core.Specification.Crypto.CryptoStructure._.Show-THash
-d_Show'45'THash_260 ::
+d_Show'45'THash_234 ::
   T_CryptoStructure_140 -> MAlonzo.Code.Class.Show.Core.T_Show_10
-d_Show'45'THash_260 v0
-  = coe d_Show'45'THash_28 (coe d_khs_246 (coe v0))
+d_Show'45'THash_234 v0
+  = coe d_Show'45'THash_28 (coe d_khs_220 (coe v0))
 -- Ledger.Core.Specification.Crypto.CryptoStructure._.T-Hashable
-d_T'45'Hashable_262 ::
+d_T'45'Hashable_236 ::
   T_CryptoStructure_140 ->
   MAlonzo.Code.Interface.TypeClasses.Hashable.T_Hashable_10
-d_T'45'Hashable_262 v0
-  = coe d_T'45'Hashable_32 (coe d_khs_246 (coe v0))
+d_T'45'Hashable_236 v0
+  = coe d_T'45'Hashable_32 (coe d_khs_220 (coe v0))
 -- Ledger.Core.Specification.Crypto.CryptoStructure.VRF
-d_VRF_264 :: T_CryptoStructure_140 -> ()
-d_VRF_264 = erased
+d_VRF_238 :: T_CryptoStructure_140 -> ()
+d_VRF_238 = erased
 -- Ledger.Core.Specification.Crypto.CryptoStructure.DecEq-VRF
-d_DecEq'45'VRF_266 ::
+d_DecEq'45'VRF_240 ::
   T_CryptoStructure_140 -> MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
-d_DecEq'45'VRF_266 v0
+d_DecEq'45'VRF_240 v0
   = case coe v0 of
-      C_constructor_294 v1 v2 v4 v5 v7 v9 v10 v16 v17 v18 v19 v20
-        -> coe v7
-      _ -> MAlonzo.RTE.mazUnreachableError
--- Ledger.Core.Specification.Crypto.CryptoStructure._<ᵏʰ_
-d__'60''7503''688'__268 ::
-  T_CryptoStructure_140 -> AgdaAny -> AgdaAny -> ()
-d__'60''7503''688'__268 = erased
--- Ledger.Core.Specification.Crypto.CryptoStructure.<ᵏʰ-isSTO
-d_'60''7503''688''45'isSTO_270 ::
-  T_CryptoStructure_140 ->
-  MAlonzo.Code.Relation.Binary.Structures.T_IsStrictTotalOrder_624
-d_'60''7503''688''45'isSTO_270 v0
-  = case coe v0 of
-      C_constructor_294 v1 v2 v4 v5 v7 v9 v10 v16 v17 v18 v19 v20
-        -> coe v9
-      _ -> MAlonzo.RTE.mazUnreachableError
--- Ledger.Core.Specification.Crypto.CryptoStructure.Dec-<ᵏʰ
-d_Dec'45''60''7503''688'_272 ::
-  T_CryptoStructure_140 ->
-  AgdaAny ->
-  AgdaAny -> MAlonzo.Code.Class.Decidable.Core.T__'8263'_10
-d_Dec'45''60''7503''688'_272 v0
-  = case coe v0 of
-      C_constructor_294 v1 v2 v4 v5 v7 v9 v10 v16 v17 v18 v19 v20
-        -> coe v10
-      _ -> MAlonzo.RTE.mazUnreachableError
--- Ledger.Core.Specification.Crypto.CryptoStructure.BlsVKey
-d_BlsVKey_274 :: T_CryptoStructure_140 -> ()
-d_BlsVKey_274 = erased
--- Ledger.Core.Specification.Crypto.CryptoStructure.BlsSig
-d_BlsSig_276 :: T_CryptoStructure_140 -> ()
-d_BlsSig_276 = erased
--- Ledger.Core.Specification.Crypto.CryptoStructure.BlsPoP
-d_BlsPoP_278 :: T_CryptoStructure_140 -> ()
-d_BlsPoP_278 = erased
--- Ledger.Core.Specification.Crypto.CryptoStructure.isValidPoP
-d_isValidPoP_280 ::
-  T_CryptoStructure_140 -> AgdaAny -> AgdaAny -> ()
-d_isValidPoP_280 = erased
--- Ledger.Core.Specification.Crypto.CryptoStructure.isSignedByAggregate
-d_isSignedByAggregate_282 ::
-  T_CryptoStructure_140 -> [AgdaAny] -> AgdaAny -> AgdaAny -> ()
-d_isSignedByAggregate_282 = erased
--- Ledger.Core.Specification.Crypto.CryptoStructure.DecEq-BlsVKey
-d_DecEq'45'BlsVKey_284 ::
-  T_CryptoStructure_140 -> MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
-d_DecEq'45'BlsVKey_284 v0
-  = case coe v0 of
-      C_constructor_294 v1 v2 v4 v5 v7 v9 v10 v16 v17 v18 v19 v20
-        -> coe v16
-      _ -> MAlonzo.RTE.mazUnreachableError
--- Ledger.Core.Specification.Crypto.CryptoStructure.DecEq-BlsSig
-d_DecEq'45'BlsSig_286 ::
-  T_CryptoStructure_140 -> MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
-d_DecEq'45'BlsSig_286 v0
-  = case coe v0 of
-      C_constructor_294 v1 v2 v4 v5 v7 v9 v10 v16 v17 v18 v19 v20
-        -> coe v17
-      _ -> MAlonzo.RTE.mazUnreachableError
--- Ledger.Core.Specification.Crypto.CryptoStructure.DecEq-BlsPoP
-d_DecEq'45'BlsPoP_288 ::
-  T_CryptoStructure_140 -> MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
-d_DecEq'45'BlsPoP_288 v0
-  = case coe v0 of
-      C_constructor_294 v1 v2 v4 v5 v7 v9 v10 v16 v17 v18 v19 v20
-        -> coe v18
-      _ -> MAlonzo.RTE.mazUnreachableError
--- Ledger.Core.Specification.Crypto.CryptoStructure.Dec-isValidPoP
-d_Dec'45'isValidPoP_290 ::
-  T_CryptoStructure_140 ->
-  AgdaAny ->
-  AgdaAny -> MAlonzo.Code.Class.Decidable.Core.T__'8263'_10
-d_Dec'45'isValidPoP_290 v0
-  = case coe v0 of
-      C_constructor_294 v1 v2 v4 v5 v7 v9 v10 v16 v17 v18 v19 v20
-        -> coe v19
-      _ -> MAlonzo.RTE.mazUnreachableError
--- Ledger.Core.Specification.Crypto.CryptoStructure.Dec-isSignedByAggregate
-d_Dec'45'isSignedByAggregate_292 ::
-  T_CryptoStructure_140 ->
-  [AgdaAny] ->
-  AgdaAny ->
-  AgdaAny -> MAlonzo.Code.Class.Decidable.Core.T__'8263'_10
-d_Dec'45'isSignedByAggregate_292 v0
-  = case coe v0 of
-      C_constructor_294 v1 v2 v4 v5 v7 v9 v10 v16 v17 v18 v19 v20
-        -> coe v20
+      C_constructor_242 v1 v2 v4 v5 v7 -> coe v7
       _ -> MAlonzo.RTE.mazUnreachableError

@@ -21,9 +21,7 @@ import qualified MAlonzo.Code.Agda.Builtin.Bool
 import qualified MAlonzo.Code.Class.DecEq.Core
 import qualified MAlonzo.Code.Class.DecEq.Instances
 import qualified MAlonzo.Code.Class.Decidable.Core
-import qualified MAlonzo.Code.Class.Decidable.Instances
 import qualified MAlonzo.Code.Class.Show.Core
-import qualified MAlonzo.Code.Data.Nat.ListAction
 import qualified MAlonzo.Code.Data.Nat.Properties
 import qualified MAlonzo.Code.Data.Nat.Show
 import qualified MAlonzo.Code.Interface.TypeClasses.Hashable
@@ -65,7 +63,7 @@ d_HSCryptoStructure_34 ::
   MAlonzo.Code.Ledger.Core.Specification.Crypto.T_CryptoStructure_140
 d_HSCryptoStructure_34 v0
   = coe
-      MAlonzo.Code.Ledger.Core.Specification.Crypto.C_constructor_294
+      MAlonzo.Code.Ledger.Core.Specification.Crypto.C_constructor_242
       (d_HSPKKScheme_18 (coe v0))
       (coe
          MAlonzo.Code.Ledger.Core.Specification.Crypto.C_mkIsHashableSet_34
@@ -88,32 +86,4 @@ d_HSCryptoStructure_34 v0
       (coe
          MAlonzo.Code.Class.Show.Core.C_mkShow_18
          (coe MAlonzo.Code.Data.Nat.Show.d_show_56))
-      (coe
-         MAlonzo.Code.Class.DecEq.Core.C_constructor_32
-         (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796))
-      MAlonzo.Code.Data.Nat.Properties.d_'60''45'isStrictTotalOrder_3190
-      (\ v1 v2 ->
-         coe
-           MAlonzo.Code.Class.Decidable.Core.C_'8263'__30
-           (coe
-              MAlonzo.Code.Data.Nat.Properties.d__'8804''63'__2920
-              (coe addInt (coe (1 :: Integer)) (coe v1)) (coe v2)))
       MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22
-      MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22
-      MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22
-      (\ v1 v2 ->
-         coe
-           MAlonzo.Code.Class.Decidable.Instances.du_DecEq'8658'Dec_6
-           (coe MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'Bool_16)
-           (coe
-              MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_extIsSigned_14
-              v0 v1 v1 v2)
-           (coe MAlonzo.Code.Agda.Builtin.Bool.C_true_10))
-      (\ v1 v2 v3 ->
-         coe
-           MAlonzo.Code.Class.Decidable.Instances.du_DecEq'8658'Dec_6
-           (coe MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'Bool_16)
-           (coe
-              MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_extIsSigned_14
-              v0 (coe MAlonzo.Code.Data.Nat.ListAction.d_sum_6 v1) v2 v3)
-           (coe MAlonzo.Code.Agda.Builtin.Bool.C_true_10))
