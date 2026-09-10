@@ -93,7 +93,7 @@ record GlobalConstants : Type₁ where
          Quorum : ℕ
          NetworkId : Network
          -- Epochs a registered Leios voting key is honoured before it must be re-registered (CIP-0164).
-         BlsKeyMaxAgeᶜ : ℕ
+         -- BlsKeyMaxAgeᶜ : ℕ   -- (commented out for now, as it's still evolving)
 
   instance
     NonZero-ActiveSlotCoeff : ℚ.NonZero ActiveSlotCoeff
