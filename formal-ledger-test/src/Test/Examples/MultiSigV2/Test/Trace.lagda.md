@@ -61,7 +61,7 @@ data Tx' : Set where
     pay          : ℕ → ℕ → Tx'
     propose      : ℕ → ℕ → ℕ → ℕ → ℕ → Tx'
     cancel       : ℕ → ℕ → Tx'
-    cleanup      : ℕ → ℕ → Tx'
+    stop         : ℕ → ℕ → Tx'
 
 makeTx : UTxOState → PlutusScript → Tx' → Maybe Tx
 makeTx s script (openContract id w v tw) = just (openTx id w v tw script)
@@ -69,7 +69,7 @@ makeTx s script (addSig id w) = makeAddSigTx id s script w
 makeTx s script (pay id w) = makePayTx id s script w
 makeTx s script (propose id w v tw d) = makeProposeTx id s script w v tw d
 makeTx s script (cancel id w) = makeCancelTx id s script w
-makeTx s script (cleanup id w) = makeCleanupTx id s script w
+makeTx s script (stop id w) = makeStopTx id s script w
 
 evalTransanctions : UTxOEnv → ComputationResult String UTxOState → List Tx' → ComputationResult String UTxOState
 evalTransanctions env s [] = s
@@ -143,7 +143,7 @@ utxowTrace3 = openContract 6 5 800000000000 6
              ∷ addSig 8 5
              ∷ addSig 9 2    
              ∷ pay 10 5
-             ∷ cleanup 11 1
+             ∷ stop 11 1
              ∷ []
               
 opaque

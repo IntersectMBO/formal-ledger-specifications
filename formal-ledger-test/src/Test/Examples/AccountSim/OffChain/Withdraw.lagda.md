@@ -21,17 +21,17 @@ open import Test.Lib valContext
 
 open import Ledger.Conway.Specification.Utxo SVTransactionStructure SVAbstractFunctions
 
-open TransactionStructure SVTransactionStructure
+open TransactionStructure SVTransactionStructure renaming (Datum to SCDatum) hiding (Redeemer)
 open Implementation
 
 
-scriptTxOut : Label → TxOut → (w : ℕ) → (v : Value) → TxOut
+scriptTxOut : Datum → TxOut → (w : ℕ) → (v : Value) → TxOut
 scriptTxOut (Always l) (fst , txValue , snd) w v = (fst , txValue - v , (just (inj₁ (inj₁ (inj₁ (Always (insert' w (val - v) l)))))) , nothing)
   where
     val = getVal (Always l) w
 
 
-makeWithdrawTxOut : Label → (scriptIx : ℕ) → TxOut → (w : ℕ) → (v : Value) → List (ℕ × TxOut)
+makeWithdrawTxOut : Datum → (scriptIx : ℕ) → TxOut → (w : ℕ) → (v : Value) → List (ℕ × TxOut)
 makeWithdrawTxOut (Always l) ix txo w v =
             (ix , scriptTxOut (Always l) txo w v) ∷ []
 
@@ -61,7 +61,7 @@ makeWithdrawTx id state script@(sh , _) w v  =
                 txAD = nothing }
                 ))
             nothing
-            (getLabel scOut)})
+            (getDatum scOut)})
           nothing
           (getScriptUTxO sh (UTxOState.utxo state))
 ```

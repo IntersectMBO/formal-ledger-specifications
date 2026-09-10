@@ -5,7 +5,7 @@ source_path: src/Test/Examples/AccountSim/OffChain/Cleanup.lagda.md
 ```agda
 {-# OPTIONS --safe #-}
 
-module Test.Examples.AccountSim.OffChain.Cleanup where
+module Test.Examples.AccountSim.OffChain.Stop where
 
 open import Ledger.Prelude
 open import Ledger.Conway.Specification.Transaction
@@ -24,8 +24,8 @@ open import Ledger.Conway.Specification.Utxo SVTransactionStructure SVAbstractFu
 open TransactionStructure SVTransactionStructure
 open Implementation
 
-makeCleanupTx : (id : ℕ) → UTxOState → PlutusScript → (w : ℕ) → Maybe Tx
-makeCleanupTx id state script@(sh , _) w = 
+makeStopTx : (id : ℕ) → UTxOState → PlutusScript → (w : ℕ) → Maybe Tx
+makeStopTx id state script@(sh , _) w = 
   let
     wutxo = getWalletUTxO w (UTxOState.utxo state)
   in
@@ -42,7 +42,7 @@ makeCleanupTx id state script@(sh , _) w =
                                 scripts = Ledger.Prelude.fromList ((inj₂ script) ∷ []) ;
                                 txdats = ∅ ; 
                                 txrdmrs = fromListᵐ (((Spend , (proj₂ scIn)) ,
-                                                      inj₁ (inj₂ Cleanup) ,
+                                                      inj₁ (inj₂ Stop) ,
                                                       ((getTxId wutxo) , w)) ∷ []) } ;
                 txsize = 10 ;
                 isValid = true ;
