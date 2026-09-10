@@ -49,14 +49,14 @@ initState' = fromList' (createInitUtxoState 5 startValue)
 
 data Tx' : Set where
     start      : ℕ → Value → Q.ℚ → Tx'
-    close      : ℕ → Tx'
+    stop       : ℕ → Tx'
     updatetx   : ℕ → Value → Q.ℚ → Tx'
     exchange   : ℕ → Value → Tx'
 
 
 makeTx : UTxOState → PlutusScript → Tx' → (id : ℕ) → Maybe Tx
 makeTx s script (start w v r) id = just (startTx id w 999 v r script)
-makeTx s script (close w) id = makeCloseTx id s script w
+makeTx s script (stop w) id = makeStopTx id s script w
 makeTx s script (updatetx w v r) id = makeUpdateTx id s script w v r
 makeTx s script (exchange w v) id = makeExchangeTx id s script w v
 
@@ -104,7 +104,7 @@ rate3 = (Q.mkℚ (ℤ.pos (suc (suc (suc zero)))) (zero) (λ { (fst , snd) → p
 validTrace : List Tx'
 validTrace = start 5 (adaValueOf 80000000) rate
              ∷ updatetx 5 (adaValueOf 70000000) rate
-             ∷ close 5
+             ∷ stop 5
              ∷ []
 
 

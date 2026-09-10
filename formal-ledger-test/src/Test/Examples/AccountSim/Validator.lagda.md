@@ -17,7 +17,6 @@ open import Ledger.Prelude
 open import Test.Examples.AccountSim.Datum
 open import Test.Prelude AccountSimData
 open import Test.SymbolicData AccountSimData
-
 import Agda.Builtin.Nat as N
 
 PubKeyHash : Type
@@ -30,7 +29,7 @@ instance
 open import Test.LedgerImplementation SData SData
 open import Ledger.Conway.Specification.Transaction using (TransactionStructure)
 
-open TransactionStructure SVTransactionStructure
+open TransactionStructure SVTransactionStructure renaming (Datum to SCDatum) hiding (Redeemer)
 
 emptyValue : Value
 emptyValue = 0
@@ -58,14 +57,14 @@ instance ValueSub : HasSubtract Value Value
          ValueSub = record { _-_ = λ x y → subVal x y } --subVal
 
 
-getInlineOutputDatum : STxOut → List AccountSimData → Maybe Datum
+getInlineOutputDatum : STxOut → List AccountSimData → Maybe SCDatum
 getInlineOutputDatum (a , b , just (inj₁ (inj₁ x))) dats = just (inj₁ (inj₁ x))
 getInlineOutputDatum (a , b , just (inj₁ (inj₂ y))) dats = nothing
 getInlineOutputDatum (a , b , just (inj₂ y)) dats = nothing
 getInlineOutputDatum (a , b , nothing) dats = nothing
 
-newLabel : ScriptContext -> Maybe Label
-newLabel (record { realizedInputs = realizedInputs ; txouts = txouts ; fee = fee ; mint = mint ; txwdrls = txwdrls ; txvldt = txvldt ; vkey = vkey ; txdats = txdats ; txid = txid } , snd) with
+newDatum : ScriptContext -> Maybe Datum
+newDatum (record { realizedInputs = realizedInputs ; txouts = txouts ; fee = fee ; mint = mint ; txwdrls = txwdrls ; txvldt = txvldt ; vkey = vkey ; txdats = txdats ; txid = txid } , snd) with
   mapMaybe (λ x → getInlineOutputDatum x txdats) (map proj₂ txouts)
 ... | [] = nothing
 ... | inj₁ (inj₁ x) ∷ [] = just x
@@ -174,27 +173,27 @@ lookup' x ((x₁ , y) ∷ xs) = if x == x₁ then just y else lookup' x xs
 
 
 
-checkWithdraw : Maybe Value -> ℕ -> Value -> Label -> ScriptContext -> Bool
+checkWithdraw : Maybe Value -> ℕ -> Value -> Datum -> ScriptContext -> Bool
 checkWithdraw nothing _ _ _ _ = false
-checkWithdraw (just v) pkh val (Always lab) ctx = geq val emptyValue && geq v val && (newLabel ctx == just (Always (insert' pkh (v - val) lab))) 
+checkWithdraw (just v) pkh val (Always lab) ctx = geq val emptyValue && geq v val && (newDatum ctx == just (Always (insert' pkh (v - val) lab))) 
 
-checkDeposit : Maybe  Value -> ℕ -> Value ->  Label -> ScriptContext -> Bool
+checkDeposit : Maybe  Value -> ℕ -> Value ->  Datum -> ScriptContext -> Bool
 checkDeposit nothing _ _ _ _ = false
-checkDeposit (just v) pkh val (Always lab) ctx = geq val emptyValue && (newLabel ctx == just ( Always (insert' pkh (_+_ {{addValue}} v val) lab)))
+checkDeposit (just v) pkh val (Always lab) ctx = geq val emptyValue && (newDatum ctx == just ( Always (insert' pkh (_+_ {{addValue}} v val) lab)))
 
-checkTransfer : Maybe Value -> Maybe Value -> ℕ -> ℕ -> Value -> Label -> ScriptContext -> Bool
+checkTransfer : Maybe Value -> Maybe Value -> ℕ -> ℕ -> Value -> Datum -> ScriptContext -> Bool
 checkTransfer nothing _ _ _ _ _ _ = false
 checkTransfer (just vF) nothing _ _ _ _ _ = false
-checkTransfer (just vF) (just vT) from to val (Always lab) ctx = geq val emptyValue && geq vF val && (from ≠ to) && (newLabel ctx == just (Always (insert' from (vF - val) (insert' to (_+_ {{addValue}} vT val) lab))))
+checkTransfer (just vF) (just vT) from to val (Always lab) ctx = geq val emptyValue && geq vF val && (from ≠ to) && (newDatum ctx == just (Always (insert' from (vF - val) (insert' to (_+_ {{addValue}} vT val) lab))))
 
-agdaValidator : Label -> Input -> ScriptContext -> Bool
+agdaValidator : Datum -> Redeemer -> ScriptContext -> Bool
 agdaValidator (Always lab) inp ctx = case inp of λ where
 
     (Open pkh) -> continuing ctx && (checkSigned pkh ctx) && (not (checkMembership (lookup' pkh lab))) &&
-                  (newLabel ctx == just (Always (insert' pkh emptyValue lab))) && (newValue ctx == oldValue ctx)
+                  (newDatum ctx == just (Always (insert' pkh emptyValue lab))) && (newValue ctx == oldValue ctx)
 
     (Close pkh) -> continuing ctx && (checkSigned pkh ctx) && (checkEmpty (lookup' pkh lab)) &&
-                   (newLabel ctx == just (Always (delete' pkh lab))) && (newValue ctx == oldValue ctx)
+                   (newDatum ctx == just (Always (delete' pkh lab))) && (newValue ctx == oldValue ctx)
 
     (Withdraw pkh val) -> continuing ctx && (checkSigned pkh ctx) && (checkWithdraw (lookup' pkh lab) pkh val (Always lab) ctx) &&
                           ((maybeMap (_+_ {{addValue}} val) (newValue ctx)) == oldValue ctx )
@@ -206,7 +205,7 @@ agdaValidator (Always lab) inp ctx = case inp of λ where
                               checkTransfer (lookup' from lab) (lookup' to lab) from to val (Always lab) ctx &&
                               (newValue ctx == oldValue ctx) 
 
-    Cleanup -> not (continuing ctx) && (lab == [])
+    Stop -> not (continuing ctx) && (lab == [])
 
 
 accSimValidator : Maybe SData → Maybe SData → List SData → Bool

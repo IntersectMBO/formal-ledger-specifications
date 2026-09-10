@@ -18,7 +18,7 @@ open import Test.Prelude AccountSimData
 open import Test.SymbolicData AccountSimData
 open import Test.LedgerImplementation SData SData
 
-open TransactionStructure SVTransactionStructure
+open TransactionStructure SVTransactionStructure renaming (Datum to SCDatum) hiding (Redeemer)
 
 defaultTxBody : TxBody
 defaultTxBody = record
@@ -66,12 +66,12 @@ getWalletUTxO sh (utxo , prf) = filter (λ { (_ , addr , _) → matchWalletHash?
 
 
 
-getLabel : TxOut → Maybe Label
-getLabel (fst , fst₁ , just (inj₁ (inj₁ (inj₁ x))) , snd) = just x
-getLabel (fst , fst₁ , just (inj₁ (inj₁ (inj₂ y))) , snd) = nothing
-getLabel (fst , fst₁ , just (inj₁ (inj₂ y)) , snd) = nothing
-getLabel (fst , fst₁ , just (inj₂ y) , snd) = nothing
-getLabel (fst , fst₁ , nothing , snd) = nothing
+getDatum : TxOut → Maybe Datum
+getDatum (fst , fst₁ , just (inj₁ (inj₁ (inj₁ x))) , snd) = just x
+getDatum (fst , fst₁ , just (inj₁ (inj₁ (inj₂ y))) , snd) = nothing
+getDatum (fst , fst₁ , just (inj₁ (inj₂ y)) , snd) = nothing
+getDatum (fst , fst₁ , just (inj₂ y) , snd) = nothing
+getDatum (fst , fst₁ , nothing , snd) = nothing
 
 
 
@@ -92,7 +92,7 @@ makeFeePaymentTxOut ((txin , (fst , txValue , snd)) ∷ utxos) v = (proj₂ txin
 getTxId : List (TxIn × TxOut) → ℕ
 getTxId xs = maybe (λ x → proj₁ (proj₁ x)) 0 (head xs)
 
-getVal : Label -> ℕ -> Value
+getVal : Datum -> ℕ -> Value
 getVal (Always l) w with lookup' w l
 ...| nothing = emptyValue
 ...| just v = v

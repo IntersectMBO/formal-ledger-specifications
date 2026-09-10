@@ -5,7 +5,7 @@ source_path: src/Test/Examples/MultiSigV2/OffChain/Cleanup.lagda.md
 ```agda
 {-# OPTIONS --safe #-}
 
-module Test.Examples.MultiSigV2.OffChain.Cleanup where
+module Test.Examples.MultiSigV2.OffChain.Stop where
 
 open import Ledger.Prelude
 open import Ledger.Conway.Specification.Transaction
@@ -22,11 +22,11 @@ open import Test.Lib valContext
 open import Ledger.Conway.Specification.Script.Validation SVTransactionStructure SVAbstractFunctions
 open import Ledger.Conway.Specification.Utxo SVTransactionStructure SVAbstractFunctions
 
-open TransactionStructure SVTransactionStructure
+open TransactionStructure SVTransactionStructure renaming (Datum to SCDatum) hiding (Redeemer)
 open Implementation
 
-makeCleanupTx : (id : ℕ) → UTxOState → PlutusScript → (w : ℕ) → Maybe Tx
-makeCleanupTx id state script@(sh , _) w = 
+makeStopTx : (id : ℕ) → UTxOState → PlutusScript → (w : ℕ) → Maybe Tx
+makeStopTx id state script@(sh , _) w = 
   let
     wutxo = getWalletUTxO w (UTxOState.utxo state)
   in
@@ -43,7 +43,7 @@ makeCleanupTx id state script@(sh , _) w =
                                 scripts = Ledger.Prelude.fromList ((inj₂ script) ∷ []) ;
                                 txdats = ∅ ;
                                 txrdmrs = fromListᵐ (((Spend , (proj₂ scIn)) ,
-                                                      inj₁ (inj₂ Cleanup) , 
+                                                      inj₁ (inj₂ Stop) , 
                                                       ((getTxId wutxo) , w)) ∷ []) } ;
                 txsize = 10 ;
                 isValid = true ;
