@@ -32,7 +32,15 @@ record StakePoolParams : Type where
     pledge          : Coin
     rewardAccount   : RewardAddress
     vrf             : VRF
+```
 
+<!--
+```agda
+open StakePoolParams using (owners)
+```
+-->
+
+```agda
 CCHotKeys : Type
 CCHotKeys = Credential ⇀ Maybe Credential
 
@@ -76,6 +84,10 @@ cwitness (retirepool kh _)   = just $ KeyHashObj kh
 cwitness (regdrep c _ _)     = just c
 cwitness (deregdrep c _)     = just c
 cwitness (ccreghot c _)      = just c
+
+poolOwners : DCert → ℙ KeyHash
+poolOwners (regpool _ pps) = owners pps
+poolOwners _               = ∅
 
 IsPoolRegistered : Pools → KeyHash → Type
 IsPoolRegistered ps kh = kh ∈ dom ps

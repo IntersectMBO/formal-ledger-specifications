@@ -278,6 +278,7 @@ data _⊢_⇀⦇_,SUBUTXOW⦈_ : SubUTxOEnv → UTxOState → SubLevelTx → UTx
 
       vKeyHashesNeeded : ℙ KeyHash
       vKeyHashesNeeded = mapPartial isKeyHashObj credentialsNeeded
+                         ∪ concatMapˢ poolOwners (fromList txCerts)
 
       scriptHashesNeeded : ℙ ScriptHash
       scriptHashesNeeded = mapPartial isScriptObj credentialsNeeded
@@ -378,6 +379,7 @@ attempting both.
 
       vKeyHashesNeeded : ℙ KeyHash
       vKeyHashesNeeded = mapPartial isKeyHashObj credentialsNeeded
+                         ∪ concatMapˢ poolOwners (fromList txCerts)
 
       scriptHashesNeeded : ℙ ScriptHash
       scriptHashesNeeded = mapPartial isScriptObj credentialsNeeded
@@ -474,6 +476,7 @@ attempting both.
 
       vKeyHashesNeeded : ℙ KeyHash
       vKeyHashesNeeded = mapPartial isKeyHashObj credentialsNeeded
+                         ∪ concatMapˢ poolOwners (fromList txCerts)
 
       scriptHashesNeeded : ℙ ScriptHash
       scriptHashesNeeded = mapPartial isScriptObj credentialsNeeded
