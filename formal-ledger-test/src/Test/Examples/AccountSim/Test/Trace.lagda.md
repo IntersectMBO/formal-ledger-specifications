@@ -54,7 +54,7 @@ data Tx' : Set where
     withdraw   : ℕ → Value → Tx'
     deposit    : ℕ → Value → Tx'
     transfer   : ℕ → ℕ → Value → Tx'
-    cleanup    : ℕ → Tx'
+    stop       : ℕ → Tx'
 
 
 makeTx : UTxOState → PlutusScript → Tx' → (id : ℕ) → Maybe Tx
@@ -64,7 +64,7 @@ makeTx s script (close w) id = makeCloseTx id s script w
 makeTx s script (withdraw w v) id = makeWithdrawTx id s script w v
 makeTx s script (deposit w v) id = makeDepositTx id s script w v
 makeTx s script (transfer from to v) id = makeTransferTx id s script from to v
-makeTx s script (cleanup w) id = makeCleanupTx id s script w
+makeTx s script (stop w) id = makeStopTx id s script w
 
 
 evalTransanctions : UTxOEnv → ComputationResult String UTxOState → List Tx' → ℕ → ComputationResult String UTxOState
@@ -126,7 +126,7 @@ validTrace3 : List Tx'
 validTrace3 = start 5 (adaValueOf 8000000000)
               ∷ openn 2
               ∷ close 2
-              ∷ cleanup 5
+              ∷ stop 5
               ∷ []
 
 

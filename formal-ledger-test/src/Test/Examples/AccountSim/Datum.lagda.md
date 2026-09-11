@@ -15,22 +15,22 @@ open import Data.Vec as Vec
 import stdlib.Data.Vec.Instances as Vec
 import Data.Vec.Relation.Binary.Pointwise.Inductive as Vec
 
-data Label : Set where
-  Always : List (ℕ × ℕ) -> Label
+data Datum : Set where
+  Always : List (ℕ × ℕ) -> Datum
 instance
-  unquoteDecl DecEq-Label = derive-DecEq
-    ((quote Label , DecEq-Label) ∷ [])
+  unquoteDecl DecEq-Datum = derive-DecEq
+    ((quote Datum , DecEq-Datum) ∷ [])
 
-data Input : Set where
-  Open     : ℕ -> Input
-  Close    : ℕ -> Input
-  Withdraw : ℕ -> ℕ -> Input
-  Deposit  : ℕ -> ℕ -> Input
-  Transfer : ℕ -> ℕ -> ℕ -> Input
-  Cleanup  : Input
+data Redeemer : Set where
+  Open     : ℕ -> Redeemer
+  Close    : ℕ -> Redeemer
+  Withdraw : ℕ -> ℕ -> Redeemer
+  Deposit  : ℕ -> ℕ -> Redeemer
+  Transfer : ℕ -> ℕ -> ℕ -> Redeemer
+  Stop     : Redeemer
 instance
-  unquoteDecl DecEq-Input = derive-DecEq
-    ((quote Input , DecEq-Input) ∷ [])
+  unquoteDecl DecEq-Redeemer = derive-DecEq
+    ((quote Redeemer , DecEq-Redeemer) ∷ [])
 
-AccountSimData = Label ⊎ Input
+AccountSimData = Datum ⊎ Redeemer
 ```

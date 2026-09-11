@@ -38,7 +38,7 @@ instance
 
 open import Test.LedgerImplementation SData SData
 open import Ledger.Conway.Specification.Transaction using (TransactionStructure)
-open TransactionStructure SVTransactionStructure
+open TransactionStructure SVTransactionStructure renaming (Datum to SCDatum) hiding (Redeemer)
 open import Test.AbstractImplementation valContext
 open import Test.Lib valContext
 open import Ledger.Conway.Specification.Script.Validation SVTransactionStructure SVAbstractFunctions
@@ -83,14 +83,14 @@ instance ValueSub : HasSubtract Value Value
          ValueSub = record { _-_ = λ x y → subVal x y } 
 
 
-getInlineOutputDatum : STxOut → List MultiSigData → Maybe Datum
+getInlineOutputDatum : STxOut → List MultiSigData → Maybe SCDatum
 getInlineOutputDatum (a , b , just (inj₁ (inj₁ x))) dats = just (inj₁ (inj₁ x))
 getInlineOutputDatum (a , b , just (inj₁ (inj₂ y))) dats = nothing
 getInlineOutputDatum (a , b , just (inj₂ y)) dats = nothing
 getInlineOutputDatum (a , b , nothing) dats = nothing
 
-newLabel : ScriptContext -> Maybe Label
-newLabel (record { realizedInputs = realizedInputs ; txouts = txouts ; fee = fee ; mint = mint ; txwdrls = txwdrls ; txvldt = txvldt ; vkey = vkey ; txdats = txdats ; txid = txid } , snd) with
+newDatum : ScriptContext -> Maybe Datum
+newDatum (record { realizedInputs = realizedInputs ; txouts = txouts ; fee = fee ; mint = mint ; txwdrls = txwdrls ; txvldt = txvldt ; vkey = vkey ; txdats = txdats ; txid = txid } , snd) with
   mapMaybe (λ x → getInlineOutputDatum x txdats) (map proj₂ txouts)
 ... | [] = nothing
 ... | inj₁ (inj₁ x) ∷ [] = just x
@@ -187,26 +187,26 @@ notTooLate par deadline (txinfo , _) = maybe (λ now →  ⌊ (_+_ {{addNat}} no
 
 
 
-agdaValidator : Params -> Label -> Input -> ScriptContext -> Bool
+agdaValidator : Params -> Datum -> Redeemer -> ScriptContext -> Bool
 agdaValidator param lab red ctx = case (lab , red) of λ where
     (Holding , (Propose v pkh d)) ->  
       (newValue ctx == oldValue ctx) && geq (fromMaybe 0 (oldValue ctx)) v &&
       geq v minValue && notTooLate param d ctx && continuing ctx &&
-      (case (newLabel ctx) of λ where
+      (case (newDatum ctx) of λ where
         (just (Collecting v' pkh' d' sigs')) -> (v == v') && (pkh == pkh') && (d == d') && (sigs' == [])
         _ -> false )
     ((Collecting v pkh d sigs) , (Add sig)) ->
       (newValue ctx == oldValue ctx) && checkSigned sig ctx && query sig (authSigs param) &&
-      continuing ctx && (case (newLabel ctx) of λ where
+      continuing ctx && (case (newDatum ctx) of λ where
         (just (Collecting v' pkh' d' sigs')) -> (v == v') && (pkh == pkh') && (d == d') && (sigs' == insert' sig sigs)
         _ -> false)
     ((Collecting v pkh d sigs) , Pay) ->
-      geq (length sigs) (minNumSignatures param) && continuing ctx && (case (newLabel ctx) of λ where
+      geq (length sigs) (minNumSignatures param) && continuing ctx && (case (newDatum ctx) of λ where
         (just Holding) -> (checkPayment pkh v ctx) && (oldValue ctx == (maybeMap (_+_ {{addValue}} v) (newValue ctx)))
         _ -> false)
     ((Collecting v pkh d sigs) , Cancel) ->
       (newValue ctx == oldValue ctx) && continuing ctx &&
-      (case (newLabel ctx) of λ where
+      (case (newDatum ctx) of λ where
         (just Holding) -> expired d ctx 
         _ -> false) 
     (Holding , Cleanup) -> gt minValue (fromMaybe 0 (oldValue ctx)) && not (continuing ctx)
