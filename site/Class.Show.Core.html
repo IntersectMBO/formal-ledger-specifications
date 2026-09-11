@@ -1,0 +1,16 @@
+<!DOCTYPE HTML>
+<html><head><meta charset="utf-8"><title>Class.Show.Core</title><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css"><link rel="stylesheet" href="Agda.css"><script src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/contrib/auto-render.min.js"></script><script src="AgdaKaTeX.js" defer=""></script></head><body><pre class="Agda"><a id="1" class="Symbol">{-#</a> <a id="5" class="Keyword">OPTIONS</a> <a id="13" class="Pragma">--cubical-compatible</a> <a id="34" class="Symbol">#-}</a>
+<a id="38" class="Keyword">module</a> <a id="45" href="Class.Show.Core.html" class="Module">Class.Show.Core</a> <a id="61" class="Keyword">where</a>
+
+<a id="68" class="Keyword">open</a> <a id="73" class="Keyword">import</a> <a id="80" href="Class.Prelude.html" class="Module">Class.Prelude</a>
+<a id="94" class="Keyword">open</a> <a id="99" class="Keyword">import</a> <a id="106" href="Class.Core.html" class="Module">Class.Core</a>
+
+<a id="118" class="Keyword">record</a> <a id="Show"></a><a id="125" href="Class.Show.Core.html#125" class="Record">Show</a> <a id="130" class="Symbol">(</a><a id="131" href="Class.Show.Core.html#131" class="Bound">A</a> <a id="133" class="Symbol">:</a> <a id="135" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="140" href="Class.Prelude.html#3054" class="Generalizable">ℓ</a><a id="141" class="Symbol">)</a> <a id="143" class="Symbol">:</a> <a id="145" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="150" href="Class.Show.Core.html#140" class="Bound">ℓ</a> <a id="152" class="Keyword">where</a>
+  <a id="160" class="Keyword">constructor</a> <a id="mkShow"></a><a id="172" href="Class.Show.Core.html#172" class="InductiveConstructor">mkShow</a>
+  <a id="181" class="Keyword">field</a> <a id="Show.show"></a><a id="187" href="Class.Show.Core.html#187" class="Field">show</a> <a id="192" class="Symbol">:</a> <a id="194" href="Class.Show.Core.html#131" class="Bound">A</a> <a id="196" class="Symbol">→</a> <a id="198" href="Agda.Builtin.String.html#335" class="Postulate">String</a>
+<a id="205" class="Keyword">open</a> <a id="210" href="Class.Show.Core.html#125" class="Module">Show</a> <a id="215" class="Symbol">⦃...⦄</a> <a id="221" class="Keyword">public</a>
+
+<a id="Show¹"></a><a id="229" href="Class.Show.Core.html#229" class="Function">Show¹</a> <a id="235" class="Symbol">=</a> <a id="237" href="Class.Show.Core.html#125" class="Record">Show</a> <a id="242" href="Class.Core.html#244" class="Function Operator">¹</a>
+<a id="Show²"></a><a id="244" href="Class.Show.Core.html#244" class="Function">Show²</a> <a id="250" class="Symbol">=</a> <a id="252" href="Class.Show.Core.html#125" class="Record">Show</a> <a id="257" href="Class.Core.html#299" class="Function Operator">²</a>
+<a id="Show³"></a><a id="259" href="Class.Show.Core.html#259" class="Function">Show³</a> <a id="265" class="Symbol">=</a> <a id="267" href="Class.Show.Core.html#125" class="Record">Show</a> <a id="272" href="Class.Core.html#364" class="Function Operator">³</a>
+</pre></body></html>
