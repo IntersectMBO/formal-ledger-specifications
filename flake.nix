@@ -126,6 +126,13 @@
                   ];
                 });
 
+            # The test library is a separate Agda package that depends on
+            # `formal-ledger`, which the default shell does not register.  This
+            # shell does, so modules under `formal-ledger-test` type-check.
+            formal-ledger-test = mkShell {
+              inputsFrom = [ pkgs'.formal-ledger-test ];
+            };
+
             fls-shake-agdaWithPackages = self'.devShells.fls-shake.overrideAttrs (_: {
               packages = [ fls-shake-agdaWithPackages ];
             });
