@@ -40,7 +40,7 @@ import MAlonzo.Code.Ledger.Dijkstra.Foreign.Ledger            as X
 import MAlonzo.Code.Ledger.Dijkstra.Foreign.NewEpoch          as X
   (NewEpochState(..), newEpochStep)
 import MAlonzo.Code.Ledger.Dijkstra.Foreign.Ratify            as X
-  (StakeDistrs(..), RatifyEnv(..), RatifyState(..), ratifyStep)
+  (RatifyEnv(..), RatifyState(..), ratifyStep)
 import MAlonzo.Code.Ledger.Dijkstra.Foreign.Rewards           as X
   (RewardUpdate(..), Snapshot(..), Snapshots(..))
 import MAlonzo.Code.Ledger.Dijkstra.Foreign.Utxo              as X
