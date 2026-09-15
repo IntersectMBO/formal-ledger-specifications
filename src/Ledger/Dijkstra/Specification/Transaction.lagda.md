@@ -23,6 +23,7 @@ import Data.Maybe.Base as M
 open import Ledger.Prelude renaming (filterᵐ to filter)
 
 open import Ledger.Core.Specification.Crypto
+open import Ledger.Dijkstra.Specification.Crypto
 open import Ledger.Core.Specification.Epoch
 open import Ledger.Dijkstra.Specification.Gov.Base
 
@@ -106,6 +107,7 @@ record TransactionStructure : Type₁ where
     adHashingScheme        : isHashableSet AuxiliaryData
     globalConstants        : GlobalConstants
     cryptoStructure        : CryptoStructure
+    leiosCrypto            : LeiosCrypto cryptoStructure
     epochStructure         : EpochStructure
 ```
 <!--
@@ -158,6 +160,7 @@ record TransactionStructure : Type₁ where
     -- TODO: figure out what to do with the hash
     { TxId = TxId; DocHash = ADHash
     ; cryptoStructure = cryptoStructure
+    ; leiosCrypto = leiosCrypto
     ; epochStructure = epochStructure
     ; scriptStructure = scriptStructure
     ; govParams = govParams

@@ -232,6 +232,7 @@ nav:
       - Properties: Ledger.Dijkstra.Specification.Chain.Properties.md
       - Properties/:
         - Computational: Ledger.Dijkstra.Specification.Chain.Properties.Computational.md
+    - Crypto: Ledger.Dijkstra.Specification.Crypto.md
     - Enact: Ledger.Dijkstra.Specification.Enact.md
     - Enact/:
       - Properties: Ledger.Dijkstra.Specification.Enact.Properties.md
