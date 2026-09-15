@@ -47,7 +47,6 @@ module Implementation where
   MaxLovelaceSupplyᶜ = 1000000000000000000
   Quorum           = 1
   NetworkId        = 0
-  BlsKeyMaxAgeᶜ    = 20
 
   SKey = ℕ
   VKey = ℕ
