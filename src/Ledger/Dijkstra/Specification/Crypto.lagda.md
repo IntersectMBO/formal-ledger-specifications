@@ -71,19 +71,24 @@ total order.
 
 ## Leios Hashes
 
-Leios also names its objects by hash: `EBHash`{.AgdaField} identifies an
-endorser block, `TxRefHash`{.AgdaField} a referenced transaction (the hash of
-the complete transaction bytes per [Appendix B][cip-cddl], not the body-only
-transaction id), and `RBHeaderHash`{.AgdaField} the announcing ranking-block
-header; the last is the message a committee vote signs.
-`hashEBRefs`{.AgdaField} computes an endorser block's identifier from its
-reference list; all four stay abstract, and
-`Ledger.Dijkstra.Specification.Leios.Types`{.AgdaModule} records why the
+Leios names its objects by hash.
+
++  `EBHash`{.AgdaField} identifies an endorser block;
++  `TxRefHash`{.AgdaField} identifies a referenced transaction, which is the hash
+   of the transaction bytes, not of the transaction id ([Appendix B][cip-cddl]);
++  `RBHeaderHash`{.AgdaField} denotes the announcing ranking-block header, which
+   is the message a committee vote signs;
++  `hashEBRefs`{.AgdaField} encodes an endorser block's identifier from its
+   reference list.
+
+All four hashes are abstract, and
+`Ledger.Dijkstra.Specification.Leios.Types`{.AgdaModule} explains why the
 identifier's byte-exact preimage is deliberately unpinned.
 
 ```agda
-  field EBHash TxRefHash RBHeaderHash : Type
-        hashEBRefs : List (TxRefHash × ℕ) → EBHash
+  field
+    EBHash TxRefHash RBHeaderHash  : Type
+    hashEBRefs                     : List (TxRefHash × ℕ) → EBHash
 ```
 
 <!--
