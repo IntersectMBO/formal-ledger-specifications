@@ -42,9 +42,9 @@ The note draws on the following sources:
 ## Module placement
 
 Leios lands in the Dijkstra era as additive Leios modules plus edits to
-existing modules and their derived layers; no separate era.  The one
-`Ledger.Core` change is deliberate: the BLS voting primitives join the core
-`CryptoStructure`, where Peras can share them.
+existing modules and their derived layers; no separate era, and no `Ledger.Core`
+change: the BLS voting primitives extend the core `CryptoStructure` from a
+Dijkstra-local record, where Peras, also a Dijkstra extension, can share them.
 
 [CIP-164] requires a new ledger era for the block-format change
 ([Versioning][cip-versioning]), and the implementation prototypes Leios in
@@ -52,24 +52,29 @@ Dijkstra ([#5626][cl-5626] targets `eras/dijkstra`), so the Dijkstra specificati
 is where the rules belong; keeping the new material in its own subtree keeps
 merges from `master` cheap.
 
-The abstract voting crypto lives in `Ledger.Core.Specification.Crypto`: the
-`CryptoStructure` gains the BLS carriers and verification predicates (keys,
-signatures, proofs of possession, aggregate verification over the
-serialization type) and a strict total order on key hashes, the committee
-tie-break.  `CryptoStructure` is ambient in every rule module, `Certs`
-included, so the proof-of-possession premise is statable with no module
-signature changing, and the core placement lets Peras share the
-aggregate-signature abstraction instead of migrating it later.  (Settled
-2026-08-31 with Sebastian Nagel; an earlier draft threaded a Dijkstra-local
-`LeiosAbstract` record through `GovStructure`, which also reached `Certs` but
-overloaded a governance-named structure with voting crypto.)
+The abstract voting crypto lives in `Ledger.Dijkstra.Specification.Crypto` as
+`LeiosCrypto`, a record parameterized by the core `CryptoStructure` that adds
+the BLS carriers and verification predicates (keys, signatures, proofs of
+possession, single and aggregate verification over the serialization type), a
+strict total order on key hashes, the committee tie-break, and the Leios hash
+carriers.  `GovStructure` carries one beside its core crypto structure and
+opens it public, so the names are ambient in every rule module, `Certs`
+included, and the proof-of-possession premise is statable with no module
+signature changing; the core record stays as it is, so Conway learns nothing
+about BLS.  (Settled 2026-08-31 with Sebastian Nagel as fields on the core
+`CryptoStructure`, so that Peras could share them; revised 2026-09-15 to the
+extension record, because the core structure is shared with Conway, which has
+no BLS, and Peras is a Dijkstra extension too.  An earlier draft threaded a
+Dijkstra-local `LeiosAbstract` record through `GovStructure`; the extension
+record is that shape with the crypto in its own module.)
 
 The new modules, and the edits to existing modules, are as follows:
 
 ```text
-src/Ledger/Core/Specification/
-└── Crypto.lagda.md         -- edit: BLS primitives; key-hash order (the tie-break)
 src/Ledger/Dijkstra/Specification/
+├── Crypto.lagda.md         -- LeiosCrypto: BLS primitives; key-hash order (the
+│                           --   tie-break); the EB, tx-reference, and header hashes
+├── Gov/Base.lagda.md       -- edit: GovStructure carries a LeiosCrypto
 ├── Leios.lagda.md          -- seats, committee selection, quorum arithmetic;
 │                           --   certificate, vote, and EB validity
 ├── Leios/Types.lagda.md    -- EndorserBlock, Announcement, Vote
@@ -241,10 +246,11 @@ The LLF adds the following defaults, each grounded in the design document:
    The implementation materializes the committee in the ledger state at the
    boundary rather than recomputing it per use
    ([REQ-LedgerStateVotingCommittee][dd-certver]); the LLF's rules consume the
-   committee only through the announcement pin (see **The pin** below).  Whether
-   the LLF also stores the committee in the epoch state is a representation
-   choice; if it does, the epoch module joins the touched modules of the [Module
-   placement](#module-placement) section above.
+   committee only through the announcement pin (see **The pin** below).  The LLF
+   stores it the same way: the committee is a field of the new-epoch state,
+   selected at the boundary from the stake distribution the state already
+   holds, which is why the epoch module is among the touched modules of the
+   [Module placement](#module-placement) section above.
 
 +  **Order and indices**.  A *seat* is a position in the committee's canonical
    order, carrying its pool, its weight, and (optionally) its voting key.  The
@@ -494,8 +500,8 @@ The design isolates the question by construction: `ValidCert` never mentions
 `Vote`, so dropping `Vote` and `ValidVote` costs exactly one record and one
 relation, and nothing else moves.  The fallback is correspondingly principled:
 the `validateVote` interface row becomes "consensus-side composition of
-ledger-provided pieces, namely committee seat lookup plus `isSignedVote`,
-which the core crypto structure exports regardless".
+ledger-provided pieces, namely committee seat lookup plus `isSignedBy`,
+which the Leios crypto record exports regardless".
 
 The fallback has an owner, though, and it is not this note.  Whether the
 ledger owns vote validation and serialization is fixed, today, in the
@@ -516,9 +522,10 @@ never reach the chain.
 One concession first, because it clarifies the question: the rule edits land
 in `BlockBody`, `Chain`, `Certs`, and `PParams` regardless; premises live
 where rules live.  The question is only where the shared type definitions go.
-One placement is settled elsewhere: the abstract crypto lives in the core
-`CryptoStructure` (see [Module placement](#module-placement)), which every
-rule module already sees, so reachability constrains nothing here.
+One placement is settled elsewhere: the abstract crypto lives in the
+`LeiosCrypto` record that `GovStructure` carries beside the core
+`CryptoStructure` (see [Module placement](#module-placement)), so every rule
+module already sees it and reachability constrains nothing here.
 
 For the rest, every Leios type has more than one consumer, as follows:
 
