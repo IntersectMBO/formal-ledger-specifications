@@ -584,6 +584,7 @@ library
       MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.Properties.Computational
       MAlonzo.Code.Ledger.Dijkstra.Specification.Chain
       MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.Properties.Computational
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Crypto
       MAlonzo.Code.Ledger.Dijkstra.Specification.Enact
       MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.Properties.Computational
       MAlonzo.Code.Ledger.Dijkstra.Specification.Entities

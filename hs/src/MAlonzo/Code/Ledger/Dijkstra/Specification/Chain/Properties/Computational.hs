@@ -47,23 +47,23 @@ import qualified MAlonzo.Code.Relation.Nullary.Reflects
 import qualified MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base
 
 -- _.HasCast-HashProtected
-d_HasCast'45'HashProtected_322 ::
+d_HasCast'45'HashProtected_320 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
   () ->
   MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.T_HasCast_16
-d_HasCast'45'HashProtected_322 ~v0
-  = du_HasCast'45'HashProtected_322
-du_HasCast'45'HashProtected_322 ::
+d_HasCast'45'HashProtected_320 ~v0
+  = du_HasCast'45'HashProtected_320
+du_HasCast'45'HashProtected_320 ::
   () ->
   MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.T_HasCast_16
-du_HasCast'45'HashProtected_322 v0
+du_HasCast'45'HashProtected_320 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_HasCast'45'HashProtected_1260
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_HasCast'45'HashProtected_1290
 -- _.TopLevelTx
-d_TopLevelTx_908 ::
+d_TopLevelTx_906 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
   ()
-d_TopLevelTx_908 = erased
+d_TopLevelTx_906 = erased
 -- Ledger.Dijkstra.Specification.Chain.Properties.Computational._.Computational-BBODY
 d_Computational'45'BBODY_2618 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
@@ -198,8 +198,8 @@ du_maxRefScriptSizePerBlock_3214 v0
       (coe
          MAlonzo.Code.Ledger.Prelude.du_'8739'_'8739'_70
          (coe
-            MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_HasCast'45'HashProtected_1260)
-         (MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_pparams_1258
+            MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_HasCast'45'HashProtected_1290)
+         (MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_pparams_1288
             (coe
                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_es_4054
                (coe
@@ -233,8 +233,8 @@ d_refScriptSize'8804''63'Bound_3218 v0 v1 v2 v3
          (coe
             MAlonzo.Code.Ledger.Prelude.du_'8739'_'8739'_70
             (coe
-               MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_HasCast'45'HashProtected_1260)
-            (MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_pparams_1258
+               MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_HasCast'45'HashProtected_1290)
+            (MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_pparams_1288
                (coe
                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_es_4054
                   (coe
@@ -277,7 +277,7 @@ d_Computational'45'CHAIN_3220 v0 v1
                                (coe v0)
                                (coe
                                   MAlonzo.Code.Ledger.Core.Specification.Epoch.d_epoch_90
-                                  (MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_epochStructure_1372
+                                  (MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_epochStructure_1374
                                      (coe v0))
                                   (MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_slot_2966
                                      (coe

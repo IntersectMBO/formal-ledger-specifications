@@ -34,15 +34,15 @@ import qualified MAlonzo.Code.Relation.Nullary.Decidable.Core
 import qualified MAlonzo.Code.Relation.Nullary.Reflects
 
 -- _.SubLevelTx
-d_SubLevelTx_888 ::
+d_SubLevelTx_886 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
   ()
-d_SubLevelTx_888 = erased
+d_SubLevelTx_886 = erased
 -- _.TopLevelTx
-d_TopLevelTx_908 ::
+d_TopLevelTx_906 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
   ()
-d_TopLevelTx_908 = erased
+d_TopLevelTx_906 = erased
 -- Ledger.Dijkstra.Specification.Utxow.Properties.Computational._._⊢_⇀⦇_,SUBUTXOW⦈_
 d__'8866'_'8640''10631'_'44'SUBUTXOW'10632'__2642 a0 a1 a2 a3 a4 a5
   = ()

@@ -47,10 +47,10 @@ import qualified MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base
 import qualified MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Derive
 
 -- _.Epoch
-d_Epoch_224 ::
+d_Epoch_222 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
   ()
-d_Epoch_224 = erased
+d_Epoch_222 = erased
 -- Ledger.Dijkstra.Specification.PoolReap.Properties.Computational._._⊢_⇀⦇_,POOLREAP⦈_
 d__'8866'_'8640''10631'_'44'POOLREAP'10632'__2598 a0 a1 a2 a3 a4
   = ()
@@ -67,7 +67,7 @@ d_acnt_2616 v0
 -- Ledger.Dijkstra.Specification.PoolReap.Properties.Computational._.PoolReapState.dState
 d_dState_2618 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.PoolReap.T_PoolReapState_3060 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DState_1366
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DState_1396
 d_dState_2618 v0
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Specification.PoolReap.d_dState_3070
@@ -75,7 +75,7 @@ d_dState_2618 v0
 -- Ledger.Dijkstra.Specification.PoolReap.Properties.Computational._.PoolReapState.pState
 d_pState_2620 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.PoolReap.T_PoolReapState_3060 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_PState_1386
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_PState_1416
 d_pState_2620 v0
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Specification.PoolReap.d_pState_3072
@@ -329,7 +329,7 @@ d_POOLREAP'45'total_2652 v0 v1 v2
                                                MAlonzo.Code.Ledger.Core.Specification.Address.d_CredentialOf_38
                                                (coe
                                                   MAlonzo.Code.Ledger.Core.Specification.Address.du_HasCredential'45'RewardAddress_236)
-                                               (MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_rewardAccount_1292
+                                               (MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_rewardAccount_1322
                                                   (coe v4))))
                                        (let v4
                                               = MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
@@ -350,14 +350,14 @@ d_POOLREAP'45'total_2652 v0 v1 v2
                                                 MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8
                                                 erased v4)
                                              (coe
-                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_pools_1396
+                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_pools_1426
                                                 (coe
                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.PoolReap.d_pState_3072
                                                    (coe v2)))
                                              (let v5
                                                     = MAlonzo.Code.Ledger.Core.Specification.Epoch.d_DecEq'45'Epoch_80
                                                         (coe
-                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_epochStructure_1372
+                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_epochStructure_1374
                                                            (coe v0)) in
                                               coe
                                                 (coe
@@ -371,13 +371,13 @@ d_POOLREAP'45'total_2652 v0 v1 v2
                                                       MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8
                                                       erased v5)
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_retiring_1400
+                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_retiring_1430
                                                       (coe
                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.PoolReap.d_pState_3072
                                                          (coe v2)))
                                                    (coe v1)))))))
                                  (coe
-                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_deposits_1402
+                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_deposits_1432
                                     (coe
                                        MAlonzo.Code.Ledger.Dijkstra.Specification.PoolReap.d_pState_3072
                                        (coe v2))))
@@ -389,7 +389,7 @@ d_POOLREAP'45'total_2652 v0 v1 v2
                                        MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                                  (coe MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_594)
                                  (coe
-                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_rewards_1380
+                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_rewards_1410
                                     (coe
                                        MAlonzo.Code.Ledger.Dijkstra.Specification.PoolReap.d_dState_3070
                                        (coe v2)))))))
@@ -408,11 +408,11 @@ d_POOLREAP'45'total_2652 v0 v1 v2
                (coe
                   MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_52
                   (coe
-                     MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.du_HasCast'45'DState_1860)
+                     MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.du_HasCast'45'DState_1890)
                   (coe
                      MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                      (coe
-                        MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_voteDelegs_1376
+                        MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_voteDelegs_1406
                         (coe
                            MAlonzo.Code.Ledger.Dijkstra.Specification.PoolReap.d_dState_3070
                            (coe v2)))
@@ -437,14 +437,14 @@ d_POOLREAP'45'total_2652 v0 v1 v2
                                  MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8
                                  erased v3)
                               (coe
-                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_stakeDelegs_1378
+                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_stakeDelegs_1408
                                  (coe
                                     MAlonzo.Code.Ledger.Dijkstra.Specification.PoolReap.d_dState_3070
                                     (coe v2)))
                               (let v4
                                      = MAlonzo.Code.Ledger.Core.Specification.Epoch.d_DecEq'45'Epoch_80
                                          (coe
-                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_epochStructure_1372
+                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_epochStructure_1374
                                             (coe v0)) in
                                coe
                                  (coe
@@ -458,7 +458,7 @@ d_POOLREAP'45'total_2652 v0 v1 v2
                                        MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8
                                        erased v4)
                                     (coe
-                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_retiring_1400
+                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_retiring_1430
                                        (coe
                                           MAlonzo.Code.Ledger.Dijkstra.Specification.PoolReap.d_pState_3072
                                           (coe v2)))
@@ -483,7 +483,7 @@ d_POOLREAP'45'total_2652 v0 v1 v2
                                     (coe
                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1370
                                        (coe v0))))
-                              (MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_rewards_1380
+                              (MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_rewards_1410
                                  (coe
                                     MAlonzo.Code.Ledger.Dijkstra.Specification.PoolReap.d_dState_3070
                                     (coe v2)))
@@ -553,7 +553,7 @@ d_POOLREAP'45'total_2652 v0 v1 v2
                                                      MAlonzo.Code.Ledger.Core.Specification.Address.d_CredentialOf_38
                                                      (coe
                                                         MAlonzo.Code.Ledger.Core.Specification.Address.du_HasCredential'45'RewardAddress_236)
-                                                     (MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_rewardAccount_1292
+                                                     (MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_rewardAccount_1322
                                                         (coe v4))))
                                              (let v4
                                                     = MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
@@ -574,14 +574,14 @@ d_POOLREAP'45'total_2652 v0 v1 v2
                                                       MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8
                                                       erased v4)
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_pools_1396
+                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_pools_1426
                                                       (coe
                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.PoolReap.d_pState_3072
                                                          (coe v2)))
                                                    (let v5
                                                           = MAlonzo.Code.Ledger.Core.Specification.Epoch.d_DecEq'45'Epoch_80
                                                               (coe
-                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_epochStructure_1372
+                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_epochStructure_1374
                                                                  (coe v0)) in
                                                     coe
                                                       (coe
@@ -595,13 +595,13 @@ d_POOLREAP'45'total_2652 v0 v1 v2
                                                             MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8
                                                             erased v5)
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_retiring_1400
+                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_retiring_1430
                                                             (coe
                                                                MAlonzo.Code.Ledger.Dijkstra.Specification.PoolReap.d_pState_3072
                                                                (coe v2)))
                                                          (coe v1)))))))
                                        (coe
-                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_deposits_1402
+                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_deposits_1432
                                           (coe
                                              MAlonzo.Code.Ledger.Dijkstra.Specification.PoolReap.d_pState_3072
                                              (coe v2))))
@@ -613,19 +613,19 @@ d_POOLREAP'45'total_2652 v0 v1 v2
                                              MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                                        (coe MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_594)
                                        (coe
-                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_rewards_1380
+                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_rewards_1410
                                           (coe
                                              MAlonzo.Code.Ledger.Dijkstra.Specification.PoolReap.d_dState_3070
                                              (coe v2)))))))
                            (coe
-                              MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_deposits_1382
+                              MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_deposits_1412
                               (coe
                                  MAlonzo.Code.Ledger.Dijkstra.Specification.PoolReap.d_dState_3070
                                  (coe v2)))))))
                (coe
                   MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_52
                   (coe
-                     MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.du_HasCast'45'PState_1862)
+                     MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.du_HasCast'45'PState_1892)
                   (coe
                      MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                      (let v3
@@ -647,14 +647,14 @@ d_POOLREAP'45'total_2652 v0 v1 v2
                               MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8
                               erased v3)
                            (coe
-                              MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_pools_1396
+                              MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_pools_1426
                               (coe
                                  MAlonzo.Code.Ledger.Dijkstra.Specification.PoolReap.d_pState_3072
                                  (coe v2)))
                            (let v4
                                   = MAlonzo.Code.Ledger.Core.Specification.Epoch.d_DecEq'45'Epoch_80
                                       (coe
-                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_epochStructure_1372
+                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_epochStructure_1374
                                          (coe v0)) in
                             coe
                               (coe
@@ -668,7 +668,7 @@ d_POOLREAP'45'total_2652 v0 v1 v2
                                     MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8
                                     erased v4)
                                  (coe
-                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_retiring_1400
+                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_retiring_1430
                                     (coe
                                        MAlonzo.Code.Ledger.Dijkstra.Specification.PoolReap.d_pState_3072
                                        (coe v2)))
@@ -694,14 +694,14 @@ d_POOLREAP'45'total_2652 v0 v1 v2
                                  MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8
                                  erased v3)
                               (coe
-                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_fPools_1398
+                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_fPools_1428
                                  (coe
                                     MAlonzo.Code.Ledger.Dijkstra.Specification.PoolReap.d_pState_3072
                                     (coe v2)))
                               (let v4
                                      = MAlonzo.Code.Ledger.Core.Specification.Epoch.d_DecEq'45'Epoch_80
                                          (coe
-                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_epochStructure_1372
+                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_epochStructure_1374
                                             (coe v0)) in
                                coe
                                  (coe
@@ -715,7 +715,7 @@ d_POOLREAP'45'total_2652 v0 v1 v2
                                        MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8
                                        erased v4)
                                     (coe
-                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_retiring_1400
+                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_retiring_1430
                                        (coe
                                           MAlonzo.Code.Ledger.Dijkstra.Specification.PoolReap.d_pState_3072
                                           (coe v2)))
@@ -741,14 +741,14 @@ d_POOLREAP'45'total_2652 v0 v1 v2
                                     MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8
                                     erased v3)
                                  (coe
-                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_retiring_1400
+                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_retiring_1430
                                     (coe
                                        MAlonzo.Code.Ledger.Dijkstra.Specification.PoolReap.d_pState_3072
                                        (coe v2)))
                                  (let v4
                                         = MAlonzo.Code.Ledger.Core.Specification.Epoch.d_DecEq'45'Epoch_80
                                             (coe
-                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_epochStructure_1372
+                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_epochStructure_1374
                                                (coe v0)) in
                                   coe
                                     (coe
@@ -762,7 +762,7 @@ d_POOLREAP'45'total_2652 v0 v1 v2
                                           MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8
                                           erased v4)
                                        (coe
-                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_retiring_1400
+                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_retiring_1430
                                           (coe
                                              MAlonzo.Code.Ledger.Dijkstra.Specification.PoolReap.d_pState_3072
                                              (coe v2)))
@@ -786,14 +786,14 @@ d_POOLREAP'45'total_2652 v0 v1 v2
                                     MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8
                                     erased v3)
                                  (coe
-                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_deposits_1402
+                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_deposits_1432
                                     (coe
                                        MAlonzo.Code.Ledger.Dijkstra.Specification.PoolReap.d_pState_3072
                                        (coe v2)))
                                  (let v4
                                         = MAlonzo.Code.Ledger.Core.Specification.Epoch.d_DecEq'45'Epoch_80
                                             (coe
-                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_epochStructure_1372
+                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_epochStructure_1374
                                                (coe v0)) in
                                   coe
                                     (coe
@@ -807,7 +807,7 @@ d_POOLREAP'45'total_2652 v0 v1 v2
                                           MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8
                                           erased v4)
                                        (coe
-                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_retiring_1400
+                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_retiring_1430
                                           (coe
                                              MAlonzo.Code.Ledger.Dijkstra.Specification.PoolReap.d_pState_3072
                                              (coe v2)))

@@ -35,7 +35,7 @@ d_LedgerState_2682 a0 a1 = ()
 -- Ledger.Dijkstra.Specification.Rewards.Properties.Computational._.LedgerState.certState
 d_certState_2734 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.T_LedgerState_3810 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_CertState_1422
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_CertState_1452
 d_certState_2734 v0
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_certState_3822
@@ -144,12 +144,12 @@ du_SNAP'45'total_2894 v0 v1 v2
                      MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasUTxO'45'LedgerState_3848)
                   v1)
                (coe
-                  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_DStateOf_1698
+                  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_DStateOf_1728
                   (coe
                      MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasDState'45'LedgerState_3858)
                   v1)
                (coe
-                  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_PStateOf_1718
+                  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_PStateOf_1748
                   (coe
                      MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasPState'45'LedgerState_3860)
                   v1))

@@ -39,7 +39,7 @@ d_HSGlobalConstants_8 ::
   MAlonzo.Code.Ledger.Core.Specification.Epoch.T_GlobalConstants_292
 d_HSGlobalConstants_8
   = coe
-      MAlonzo.Code.Ledger.Core.Specification.Epoch.C_constructor_380
+      MAlonzo.Code.Ledger.Core.Specification.Epoch.C_constructor_376
       (coe
          MAlonzo.Code.Class.DecEq.Core.C_constructor_32
          (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796))
@@ -57,13 +57,13 @@ d_HSGlobalConstants_8
          MAlonzo.Code.Data.Integer.Base.C_constructor_142
          (coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8))
       (10 :: Integer) (10 :: Integer) (1 :: Integer) (1 :: Integer)
-      (0 :: Integer) (20 :: Integer)
+      (0 :: Integer)
 -- Ledger.Core.Foreign.Epoch.HSEpochStructure
 d_HSEpochStructure_10 ::
   MAlonzo.Code.Ledger.Core.Specification.Epoch.T_EpochStructure_22
 d_HSEpochStructure_10
   = coe
-      MAlonzo.Code.Ledger.Core.Specification.Epoch.d_ℕEpochStructure_360
+      MAlonzo.Code.Ledger.Core.Specification.Epoch.d_ℕEpochStructure_356
       (coe d_HSGlobalConstants_8)
 -- Ledger.Core.Foreign.Epoch._._+ᵉ_
 d__'43''7497'__14 :: Integer -> Integer -> Integer

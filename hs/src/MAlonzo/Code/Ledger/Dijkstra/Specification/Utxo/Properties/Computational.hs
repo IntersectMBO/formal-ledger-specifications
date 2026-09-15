@@ -43,15 +43,15 @@ import qualified MAlonzo.Code.Relation.Nullary.Reflects
 import qualified MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory
 
 -- _.SubLevelTx
-d_SubLevelTx_888 ::
+d_SubLevelTx_886 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
   ()
-d_SubLevelTx_888 = erased
+d_SubLevelTx_886 = erased
 -- _.TopLevelTx
-d_TopLevelTx_908 ::
+d_TopLevelTx_906 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
   ()
-d_TopLevelTx_908 = erased
+d_TopLevelTx_906 = erased
 -- Ledger.Dijkstra.Specification.Utxo.Properties.Computational._._⊢_⇀⦇_,SUBUTXO⦈_
 d__'8866'_'8640''10631'_'44'SUBUTXO'10632'__2614 a0 a1 a2 a3 a4 a5
   = ()
@@ -311,10 +311,10 @@ du_computeProof'45'aux_2912 v0 v1 v2 v3 v4
                                                                                                                                    erased
                                                                                                                                    ()
                                                                                                                                    erased
-                                                                                                                                   (MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_DecEq'45'TxId_1376
+                                                                                                                                   (MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_DecEq'45'TxId_1378
                                                                                                                                       (coe
                                                                                                                                          v0))
-                                                                                                                                   (MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_DecEq'45'Ix_1374
+                                                                                                                                   (MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_DecEq'45'Ix_1376
                                                                                                                                       (coe
                                                                                                                                          v0)) in
                                                                                                                          coe
@@ -336,10 +336,10 @@ du_computeProof'45'aux_2912 v0 v1 v2 v3 v4
                                                                                                                                          erased
                                                                                                                                          ()
                                                                                                                                          erased
-                                                                                                                                         (MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_DecEq'45'TxId_1376
+                                                                                                                                         (MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_DecEq'45'TxId_1378
                                                                                                                                             (coe
                                                                                                                                                v0))
-                                                                                                                                         (MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_DecEq'45'Ix_1374
+                                                                                                                                         (MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_DecEq'45'Ix_1376
                                                                                                                                             (coe
                                                                                                                                                v0)) in
                                                                                                                                coe
@@ -659,10 +659,10 @@ du_computeProof'45'aux_3052 v0 v1 v2 v3 v4
                                                                                                                                                                                         erased
                                                                                                                                                                                         ()
                                                                                                                                                                                         erased
-                                                                                                                                                                                        (MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_DecEq'45'TxId_1376
+                                                                                                                                                                                        (MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_DecEq'45'TxId_1378
                                                                                                                                                                                            (coe
                                                                                                                                                                                               v0))
-                                                                                                                                                                                        (MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_DecEq'45'Ix_1374
+                                                                                                                                                                                        (MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_DecEq'45'Ix_1376
                                                                                                                                                                                            (coe
                                                                                                                                                                                               v0)) in
                                                                                                                                                                               coe
@@ -684,10 +684,10 @@ du_computeProof'45'aux_3052 v0 v1 v2 v3 v4
                                                                                                                                                                                               erased
                                                                                                                                                                                               ()
                                                                                                                                                                                               erased
-                                                                                                                                                                                              (MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_DecEq'45'TxId_1376
+                                                                                                                                                                                              (MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_DecEq'45'TxId_1378
                                                                                                                                                                                                  (coe
                                                                                                                                                                                                     v0))
-                                                                                                                                                                                              (MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_DecEq'45'Ix_1374
+                                                                                                                                                                                              (MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_DecEq'45'Ix_1376
                                                                                                                                                                                                  (coe
                                                                                                                                                                                                     v0)) in
                                                                                                                                                                                     coe
@@ -754,10 +754,10 @@ du_computeProof'45'aux_3052 v0 v1 v2 v3 v4
                                                                                                                                                                                         erased
                                                                                                                                                                                         ()
                                                                                                                                                                                         erased
-                                                                                                                                                                                        (MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_DecEq'45'TxId_1376
+                                                                                                                                                                                        (MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_DecEq'45'TxId_1378
                                                                                                                                                                                            (coe
                                                                                                                                                                                               v0))
-                                                                                                                                                                                        (MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_DecEq'45'Ix_1374
+                                                                                                                                                                                        (MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_DecEq'45'Ix_1376
                                                                                                                                                                                            (coe
                                                                                                                                                                                               v0)) in
                                                                                                                                                                               coe
@@ -796,10 +796,10 @@ du_computeProof'45'aux_3052 v0 v1 v2 v3 v4
                                                                                                                                                                                                  erased
                                                                                                                                                                                                  ()
                                                                                                                                                                                                  erased
-                                                                                                                                                                                                 (MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_DecEq'45'TxId_1376
+                                                                                                                                                                                                 (MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_DecEq'45'TxId_1378
                                                                                                                                                                                                     (coe
                                                                                                                                                                                                        v0))
-                                                                                                                                                                                                 (MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_DecEq'45'Ix_1374
+                                                                                                                                                                                                 (MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_DecEq'45'Ix_1376
                                                                                                                                                                                                     (coe
                                                                                                                                                                                                        v0)) in
                                                                                                                                                                                        coe

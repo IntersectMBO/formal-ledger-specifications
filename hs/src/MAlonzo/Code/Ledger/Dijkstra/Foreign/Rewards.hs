@@ -86,7 +86,7 @@ d_HasFees'45'Snapshots_18
       MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.du_HasFees'45'Snapshots_3892
 -- Ledger.Dijkstra.Foreign.Rewards._.HasPools-Snapshot
 d_HasPools'45'Snapshot_20 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasPools_1570
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasPools_1600
 d_HasPools'45'Snapshot_20
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.du_HasPools'45'Snapshot_3814
@@ -94,13 +94,13 @@ d_HasPools'45'Snapshot_20
 d_HasSnapshots_22 a0 a1 = ()
 -- Ledger.Dijkstra.Foreign.Rewards._.HasStake-Snapshot
 d_HasStake'45'Snapshot_26 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasStake_1650
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasStake_1680
 d_HasStake'45'Snapshot_26
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.du_HasStake'45'Snapshot_3810
 -- Ledger.Dijkstra.Foreign.Rewards._.HasStakeDelegs-Snapshot
 d_HasStakeDelegs'45'Snapshot_28 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasStakeDelegs_1670
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasStakeDelegs_1700
 d_HasStakeDelegs'45'Snapshot_28
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.du_HasStakeDelegs'45'Snapshot_3812
@@ -169,7 +169,7 @@ d_poolStake_56
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.du_poolStake_3632
       (coe
-         MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_648
+         MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_670
          (coe
             MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20))
 -- Ledger.Dijkstra.Foreign.Rewards._.reward
@@ -185,13 +185,13 @@ d_reward_58
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.du_reward_3688
       (coe
-         MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_648
+         MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_670
          (coe
             MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20))
 -- Ledger.Dijkstra.Foreign.Rewards._.rewardMember
 d_rewardMember_60 ::
   Integer ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_StakePoolParams_1270 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_StakePoolParams_1300 ->
   MAlonzo.Code.Data.Refinement.Base.T_Refinement_28 ->
   MAlonzo.Code.Data.Refinement.Base.T_Refinement_28 -> Integer
 d_rewardMember_60
@@ -203,7 +203,7 @@ d_rewardOnePool_62 ::
   Integer ->
   Integer ->
   Integer ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_StakePoolParams_1270 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_StakePoolParams_1300 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Data.Refinement.Base.T_Refinement_28 ->
   MAlonzo.Code.Data.Refinement.Base.T_Refinement_28 ->
@@ -212,13 +212,13 @@ d_rewardOnePool_62
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.du_rewardOnePool_3582
       (coe
-         MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_648
+         MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_670
          (coe
             MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20))
 -- Ledger.Dijkstra.Foreign.Rewards._.rewardOwners
 d_rewardOwners_64 ::
   Integer ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_StakePoolParams_1270 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_StakePoolParams_1300 ->
   MAlonzo.Code.Data.Refinement.Base.T_Refinement_28 ->
   MAlonzo.Code.Data.Refinement.Base.T_Refinement_28 -> Integer
 d_rewardOwners_64
@@ -227,14 +227,14 @@ d_rewardOwners_64
 -- Ledger.Dijkstra.Foreign.Rewards._.stakeDistr
 d_stakeDistr_66 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DState_1366 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_PState_1386 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DState_1396 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_PState_1416 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T_Snapshot_3794
 d_stakeDistr_66
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.du_stakeDistr_3822
       (coe
-         MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_648
+         MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_670
          (coe
             MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20))
 -- Ledger.Dijkstra.Foreign.Rewards._.uncurryᵐ
@@ -437,7 +437,7 @@ d_Conv'45'Snapshot_114
                                = MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20 in
                          coe
                            (let v5
-                                  = MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_648
+                                  = MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_670
                                       (coe v4) in
                             coe
                               (coe
@@ -486,7 +486,7 @@ d_Conv'45'Snapshot_114
                                = MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20 in
                          coe
                            (let v5
-                                  = MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_648
+                                  = MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_670
                                       (coe v4) in
                             coe
                               (coe
@@ -794,7 +794,7 @@ d_Conv'45'Snapshots_118
                                                     = MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20 in
                                               coe
                                                 (let v10
-                                                       = MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_648
+                                                       = MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_670
                                                            (coe v9) in
                                                  coe
                                                    (coe
@@ -845,7 +845,7 @@ d_Conv'45'Snapshots_118
                                                     = MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20 in
                                               coe
                                                 (let v10
-                                                       = MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_648
+                                                       = MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_670
                                                            (coe v9) in
                                                  coe
                                                    (coe
@@ -989,7 +989,7 @@ d_Conv'45'Snapshots_118
                                                     = MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20 in
                                               coe
                                                 (let v10
-                                                       = MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_648
+                                                       = MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_670
                                                            (coe v9) in
                                                  coe
                                                    (coe
@@ -1040,7 +1040,7 @@ d_Conv'45'Snapshots_118
                                                     = MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20 in
                                               coe
                                                 (let v10
-                                                       = MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_648
+                                                       = MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_670
                                                            (coe v9) in
                                                  coe
                                                    (coe
@@ -1184,7 +1184,7 @@ d_Conv'45'Snapshots_118
                                                     = MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20 in
                                               coe
                                                 (let v10
-                                                       = MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_648
+                                                       = MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_670
                                                            (coe v9) in
                                                  coe
                                                    (coe
@@ -1235,7 +1235,7 @@ d_Conv'45'Snapshots_118
                                                     = MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20 in
                                               coe
                                                 (let v10
-                                                       = MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_648
+                                                       = MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_670
                                                            (coe v9) in
                                                  coe
                                                    (coe
@@ -1471,7 +1471,7 @@ d_Conv'45'HsRewardUpdate_200
                                = MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_20 in
                          coe
                            (let v6
-                                  = MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_648
+                                  = MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_670
                                       (coe v5) in
                             coe
                               (coe

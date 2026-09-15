@@ -33,69 +33,69 @@ import qualified MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards
 import qualified MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction
 
 -- _.MaxLovelaceSupplyᶜ
-d_MaxLovelaceSupply'7580'_684 ::
+d_MaxLovelaceSupply'7580'_682 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
   Integer
-d_MaxLovelaceSupply'7580'_684 v0
+d_MaxLovelaceSupply'7580'_682 v0
   = coe
-      MAlonzo.Code.Ledger.Core.Specification.Epoch.d_MaxLovelaceSupply'7580'_338
+      MAlonzo.Code.Ledger.Core.Specification.Epoch.d_MaxLovelaceSupply'7580'_336
       (coe
          MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_globalConstants_1368
          (coe v0))
 -- _.RandomnessStabilisationWindow
-d_RandomnessStabilisationWindow_768 ::
+d_RandomnessStabilisationWindow_766 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
   AgdaAny
-d_RandomnessStabilisationWindow_768 v0
+d_RandomnessStabilisationWindow_766 v0
   = coe
       MAlonzo.Code.Ledger.Core.Specification.Epoch.d_RandomnessStabilisationWindow_94
       (coe
-         MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_epochStructure_1372
+         MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_epochStructure_1374
          (coe v0))
 -- _.Slot
-d_Slot_872 ::
+d_Slot_870 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
   ()
-d_Slot_872 = erased
+d_Slot_870 = erased
 -- _.SlotsPerEpochᶜ
-d_SlotsPerEpoch'7580'_874 ::
+d_SlotsPerEpoch'7580'_872 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
   Integer
-d_SlotsPerEpoch'7580'_874 v0
+d_SlotsPerEpoch'7580'_872 v0
   = coe
-      MAlonzo.Code.Ledger.Core.Specification.Epoch.d_SlotsPerEpoch'7580'_326
+      MAlonzo.Code.Ledger.Core.Specification.Epoch.d_SlotsPerEpoch'7580'_324
       (coe
          MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_globalConstants_1368
          (coe v0))
 -- _.addSlot
-d_addSlot_992 ::
+d_addSlot_990 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
   MAlonzo.Code.Class.HasAdd.Core.T_HasAdd_10
-d_addSlot_992 v0
+d_addSlot_990 v0
   = coe
       MAlonzo.Code.Ledger.Core.Specification.Epoch.d_addSlot_278
       (coe
-         MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_epochStructure_1372
+         MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_epochStructure_1374
          (coe v0))
 -- _.epoch
-d_epoch_1028 ::
+d_epoch_1026 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
   AgdaAny -> AgdaAny
-d_epoch_1028 v0
+d_epoch_1026 v0
   = coe
       MAlonzo.Code.Ledger.Core.Specification.Epoch.d_epoch_90
       (coe
-         MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_epochStructure_1372
+         MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_epochStructure_1374
          (coe v0))
 -- _.firstSlot
-d_firstSlot_1048 ::
+d_firstSlot_1046 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
   AgdaAny -> AgdaAny
-d_firstSlot_1048 v0
+d_firstSlot_1046 v0
   = coe
       MAlonzo.Code.Ledger.Core.Specification.Epoch.d_firstSlot_92
       (coe
-         MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_epochStructure_1372
+         MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_epochStructure_1374
          (coe v0))
 -- Ledger.Dijkstra.Specification.RewardUpdate._._⊢_⇀⦇_,NEWEPOCH⦈_
 d__'8866'_'8640''10631'_'44'NEWEPOCH'10632'__2612 a0 a1 a2 a3 a4 a5
@@ -136,14 +136,14 @@ d_acnt_2748 v0
 -- Ledger.Dijkstra.Specification.RewardUpdate._.EpochState.es
 d_es_2750 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.T_EpochState_4036 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.T_EnactState_1240
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.T_EnactState_1270
 d_es_2750 v0
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_es_4054 (coe v0)
 -- Ledger.Dijkstra.Specification.RewardUpdate._.EpochState.fut
 d_fut_2752 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.T_EpochState_4036 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.T_RatifyState_2014
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.T_RatifyState_2044
 d_fut_2752 v0
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4056
