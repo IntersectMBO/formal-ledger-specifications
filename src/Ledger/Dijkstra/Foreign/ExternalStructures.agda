@@ -75,6 +75,10 @@ HSLeiosCrypto = record
   ; isSignedByAggregate = λ vks m σ → extIsSigned (sum vks) m σ ≡ true
   ; _<ᵏʰ_     = _<_
   ; <ᵏʰ-isSTO = <-isStrictTotalOrder
+  ; EBHash       = ℕ
+  ; TxRefHash    = ℕ
+  ; RBHeaderHash = ℕ
+  ; hashEBRefs   = λ refs → sum (map proj₁ refs)
   }
 
 instance
