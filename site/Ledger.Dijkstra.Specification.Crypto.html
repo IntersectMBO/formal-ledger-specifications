@@ -11496,36 +11496,48 @@ signatures and proofs of possession (<a href="https://github.com/cardano-scaling
         <a id="LeiosCrypto.isSignedBy"></a><a id="1349" href="Ledger.Dijkstra.Specification.Crypto.html#1349" class="Field">isSignedBy</a>          <a id="1369" class="Symbol">:</a> <a id="1371" href="Ledger.Dijkstra.Specification.Crypto.html#1258" class="Field">BlsVKey</a> <a id="1379" class="Symbol">→</a> <a id="1381" href="Ledger.Core.Specification.Crypto.html#1068" class="Function">Ser</a> <a id="1385" class="Symbol">→</a> <a id="1387" href="Ledger.Dijkstra.Specification.Crypto.html#1266" class="Field">BlsSig</a> <a id="1394" class="Symbol">→</a> <a id="1396" href="Agda.Primitive.html#388" class="Primitive">Type</a>
         <a id="LeiosCrypto.isSignedByAggregate"></a><a id="1409" href="Ledger.Dijkstra.Specification.Crypto.html#1409" class="Field">isSignedByAggregate</a> <a id="1429" class="Symbol">:</a> <a id="1431" href="Agda.Builtin.List.html#147" class="Datatype">List</a> <a id="1436" href="Ledger.Dijkstra.Specification.Crypto.html#1258" class="Field">BlsVKey</a> <a id="1444" class="Symbol">→</a> <a id="1446" href="Ledger.Core.Specification.Crypto.html#1068" class="Function">Ser</a> <a id="1450" class="Symbol">→</a> <a id="1452" href="Ledger.Dijkstra.Specification.Crypto.html#1266" class="Field">BlsSig</a> <a id="1459" class="Symbol">→</a> <a id="1461" href="Agda.Primitive.html#388" class="Primitive">Type</a>
 </pre>
-<p><code class="AgdaField">isValidPoP</code> checks a voting key's <em>proof of possession</em>, which
-every registration carries (<a href="https://github.com/cardano-scaling/CIPs/blob/leios/CIP-0164/README.md#key-registration">Key Registration and Rotation</a>)
-because aggregation is otherwise open to rogue-key attacks: a key crafted
-relative to others' keys makes an aggregate appear to include voters who never
-signed.  <code class="AgdaField">isSignedBy</code> verifies a single vote, the meaning by which
-consensus filters votes before aggregation; <code class="AgdaField">isSignedByAggregate</code>
-verifies a certificate's aggregate signature over a message against the keys
-of the seats that signed, and it does not subsume the singleton case, since
-the specification fixes no relation between the two predicates.  The keys
-form a list rather than a set: aggregation is insensitive to their order but
-not to their multiplicity, since two seats holding the same key both
-contribute to the aggregate.  Only verification enters the rules: the ledger
-never creates votes or certificates, so the scheme has no signing side and no
-correctness law relating one.</p>
+<p>Note that the ledger only verifies votes and certificates; it never creates them.</p>
+<ul>
+<li><code class="AgdaField">isValidPoP</code> checks a voting key's <em>proof of possession</em> (PoP), which
+   every registration carries (<a href="https://github.com/cardano-scaling/CIPs/blob/leios/CIP-0164/README.md#key-registration">Key Registration and Rotation</a>) because
+   aggregation is otherwise open to rogue-key attacks.<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup></li>
+<li><code class="AgdaField">isSignedBy</code> verifies a single vote, and consensus uses this to
+   filter votes before aggregation;</li>
+<li><code class="AgdaField">isSignedByAggregate</code> verifies a certificate's aggregate signature
+   over a message against the keys of the seats that signed; it does not subsume
+   the singleton case, since the specification fixes no relation between the two
+   predicates.</li>
+</ul>
+<p>Aggregation of keys does not depend on their order.  Nonetheless, we keep the keys
+in a list rather than a set because their multiplicity <em>does</em> matter; indeed, two
+seats holding the same key both contribute to the aggregate.</p>
 <h2 id="the-committee-order">The Committee Order<a class="headerlink" href="#the-committee-order" title="Permanent link">&para;</a></h2>
 <p>The committee consists of the pools with the most active stake, ordered by active
 stake in descending order, with ties broken by pool ID in ascending order
 (<a href="https://github.com/cardano-scaling/CIPs/blob/leios/CIP-0164/README.md#committee-structure">Committee Structure</a>).  Thus, the key-hash type carries a strict
 total order.</p>
-<pre class="Agda">  <a id="2775" class="Keyword">field</a> <a id="LeiosCrypto._&lt;ᵏʰ_"></a><a id="2781" href="Ledger.Dijkstra.Specification.Crypto.html#2781" class="Field Operator">_&lt;ᵏʰ_</a>     <a id="2791" class="Symbol">:</a> <a id="2793" href="Ledger.Core.Specification.Crypto.html#1865" class="Function">KeyHash</a> <a id="2801" class="Symbol">→</a> <a id="2803" href="Ledger.Core.Specification.Crypto.html#1865" class="Function">KeyHash</a> <a id="2811" class="Symbol">→</a> <a id="2813" href="Agda.Primitive.html#388" class="Primitive">Type</a>
-        <a id="LeiosCrypto.&lt;ᵏʰ-isSTO"></a><a id="2826" href="Ledger.Dijkstra.Specification.Crypto.html#2826" class="Field">&lt;ᵏʰ-isSTO</a> <a id="2836" class="Symbol">:</a> <a id="2838" href="Relation.Binary.Structures.html#7073" class="Record">IsStrictTotalOrder</a> <a id="2857" href="Agda.Builtin.Equality.html#150" class="Datatype Operator">_≡_</a> <a id="2861" href="Ledger.Dijkstra.Specification.Crypto.html#2781" class="Field Operator">_&lt;ᵏʰ_</a>
+<pre class="Agda">  <a id="2670" class="Keyword">field</a> <a id="LeiosCrypto._&lt;ᵏʰ_"></a><a id="2676" href="Ledger.Dijkstra.Specification.Crypto.html#2676" class="Field Operator">_&lt;ᵏʰ_</a>     <a id="2686" class="Symbol">:</a> <a id="2688" href="Ledger.Core.Specification.Crypto.html#1865" class="Function">KeyHash</a> <a id="2696" class="Symbol">→</a> <a id="2698" href="Ledger.Core.Specification.Crypto.html#1865" class="Function">KeyHash</a> <a id="2706" class="Symbol">→</a> <a id="2708" href="Agda.Primitive.html#388" class="Primitive">Type</a>
+        <a id="LeiosCrypto.&lt;ᵏʰ-isSTO"></a><a id="2721" href="Ledger.Dijkstra.Specification.Crypto.html#2721" class="Field">&lt;ᵏʰ-isSTO</a> <a id="2731" class="Symbol">:</a> <a id="2733" href="Relation.Binary.Structures.html#7073" class="Record">IsStrictTotalOrder</a> <a id="2752" href="Agda.Builtin.Equality.html#150" class="Datatype Operator">_≡_</a> <a id="2756" href="Ledger.Dijkstra.Specification.Crypto.html#2676" class="Field Operator">_&lt;ᵏʰ_</a>
 </pre>
-<pre class="Agda hidden-source">  <a id="2887" class="Keyword">field</a> <a id="2893" class="Symbol">⦃</a> <a id="LeiosCrypto.DecEq-BlsVKey"></a><a id="2895" href="Ledger.Dijkstra.Specification.Crypto.html#2895" class="Field">DecEq-BlsVKey</a> <a id="2909" class="Symbol">⦄</a>           <a id="2921" class="Symbol">:</a> <a id="2923" href="Class.DecEq.Core.html#126" class="Record">DecEq</a> <a id="2929" href="Ledger.Dijkstra.Specification.Crypto.html#1258" class="Field">BlsVKey</a>
-        <a id="2945" class="Symbol">⦃</a> <a id="LeiosCrypto.DecEq-BlsSig"></a><a id="2947" href="Ledger.Dijkstra.Specification.Crypto.html#2947" class="Field">DecEq-BlsSig</a>  <a id="2961" class="Symbol">⦄</a>           <a id="2973" class="Symbol">:</a> <a id="2975" href="Class.DecEq.Core.html#126" class="Record">DecEq</a> <a id="2981" href="Ledger.Dijkstra.Specification.Crypto.html#1266" class="Field">BlsSig</a>
-        <a id="2996" class="Symbol">⦃</a> <a id="LeiosCrypto.DecEq-BlsPoP"></a><a id="2998" href="Ledger.Dijkstra.Specification.Crypto.html#2998" class="Field">DecEq-BlsPoP</a>  <a id="3012" class="Symbol">⦄</a>           <a id="3024" class="Symbol">:</a> <a id="3026" href="Class.DecEq.Core.html#126" class="Record">DecEq</a> <a id="3032" href="Ledger.Dijkstra.Specification.Crypto.html#1273" class="Field">BlsPoP</a>
-        <a id="3047" class="Symbol">⦃</a> <a id="LeiosCrypto.Dec-isValidPoP"></a><a id="3049" href="Ledger.Dijkstra.Specification.Crypto.html#3049" class="Field">Dec-isValidPoP</a> <a id="3064" class="Symbol">⦄</a>          <a id="3075" class="Symbol">:</a> <a id="3077" href="Ledger.Dijkstra.Specification.Crypto.html#1295" class="Field">isValidPoP</a> <a id="3088" href="Class.Decidable.Core.html#590" class="Function Operator">⁇²</a>
-        <a id="3099" class="Symbol">⦃</a> <a id="LeiosCrypto.Dec-isSignedBy"></a><a id="3101" href="Ledger.Dijkstra.Specification.Crypto.html#3101" class="Field">Dec-isSignedBy</a> <a id="3116" class="Symbol">⦄</a>          <a id="3127" class="Symbol">:</a> <a id="3129" href="Ledger.Dijkstra.Specification.Crypto.html#1349" class="Field">isSignedBy</a> <a id="3140" href="Class.Decidable.Core.html#601" class="Function Operator">⁇³</a>
-        <a id="3151" class="Symbol">⦃</a> <a id="LeiosCrypto.Dec-isSignedByAggregate"></a><a id="3153" href="Ledger.Dijkstra.Specification.Crypto.html#3153" class="Field">Dec-isSignedByAggregate</a> <a id="3177" class="Symbol">⦄</a> <a id="3179" class="Symbol">:</a> <a id="3181" href="Ledger.Dijkstra.Specification.Crypto.html#1409" class="Field">isSignedByAggregate</a> <a id="3201" href="Class.Decidable.Core.html#601" class="Function Operator">⁇³</a>
-        <a id="3212" class="Symbol">⦃</a> <a id="LeiosCrypto.Dec-&lt;ᵏʰ"></a><a id="3214" href="Ledger.Dijkstra.Specification.Crypto.html#3214" class="Field">Dec-&lt;ᵏʰ</a> <a id="3222" class="Symbol">⦄</a>                 <a id="3240" class="Symbol">:</a> <a id="3242" href="Ledger.Dijkstra.Specification.Crypto.html#2781" class="Field Operator">_&lt;ᵏʰ_</a> <a id="3248" href="Class.Decidable.Core.html#590" class="Function Operator">⁇²</a>
+<pre class="Agda hidden-source">  <a id="2782" class="Keyword">field</a> <a id="2788" class="Symbol">⦃</a> <a id="LeiosCrypto.DecEq-BlsVKey"></a><a id="2790" href="Ledger.Dijkstra.Specification.Crypto.html#2790" class="Field">DecEq-BlsVKey</a> <a id="2804" class="Symbol">⦄</a>           <a id="2816" class="Symbol">:</a> <a id="2818" href="Class.DecEq.Core.html#126" class="Record">DecEq</a> <a id="2824" href="Ledger.Dijkstra.Specification.Crypto.html#1258" class="Field">BlsVKey</a>
+        <a id="2840" class="Symbol">⦃</a> <a id="LeiosCrypto.DecEq-BlsSig"></a><a id="2842" href="Ledger.Dijkstra.Specification.Crypto.html#2842" class="Field">DecEq-BlsSig</a>  <a id="2856" class="Symbol">⦄</a>           <a id="2868" class="Symbol">:</a> <a id="2870" href="Class.DecEq.Core.html#126" class="Record">DecEq</a> <a id="2876" href="Ledger.Dijkstra.Specification.Crypto.html#1266" class="Field">BlsSig</a>
+        <a id="2891" class="Symbol">⦃</a> <a id="LeiosCrypto.DecEq-BlsPoP"></a><a id="2893" href="Ledger.Dijkstra.Specification.Crypto.html#2893" class="Field">DecEq-BlsPoP</a>  <a id="2907" class="Symbol">⦄</a>           <a id="2919" class="Symbol">:</a> <a id="2921" href="Class.DecEq.Core.html#126" class="Record">DecEq</a> <a id="2927" href="Ledger.Dijkstra.Specification.Crypto.html#1273" class="Field">BlsPoP</a>
+        <a id="2942" class="Symbol">⦃</a> <a id="LeiosCrypto.Dec-isValidPoP"></a><a id="2944" href="Ledger.Dijkstra.Specification.Crypto.html#2944" class="Field">Dec-isValidPoP</a> <a id="2959" class="Symbol">⦄</a>          <a id="2970" class="Symbol">:</a> <a id="2972" href="Ledger.Dijkstra.Specification.Crypto.html#1295" class="Field">isValidPoP</a> <a id="2983" href="Class.Decidable.Core.html#590" class="Function Operator">⁇²</a>
+        <a id="2994" class="Symbol">⦃</a> <a id="LeiosCrypto.Dec-isSignedBy"></a><a id="2996" href="Ledger.Dijkstra.Specification.Crypto.html#2996" class="Field">Dec-isSignedBy</a> <a id="3011" class="Symbol">⦄</a>          <a id="3022" class="Symbol">:</a> <a id="3024" href="Ledger.Dijkstra.Specification.Crypto.html#1349" class="Field">isSignedBy</a> <a id="3035" href="Class.Decidable.Core.html#601" class="Function Operator">⁇³</a>
+        <a id="3046" class="Symbol">⦃</a> <a id="LeiosCrypto.Dec-isSignedByAggregate"></a><a id="3048" href="Ledger.Dijkstra.Specification.Crypto.html#3048" class="Field">Dec-isSignedByAggregate</a> <a id="3072" class="Symbol">⦄</a> <a id="3074" class="Symbol">:</a> <a id="3076" href="Ledger.Dijkstra.Specification.Crypto.html#1409" class="Field">isSignedByAggregate</a> <a id="3096" href="Class.Decidable.Core.html#601" class="Function Operator">⁇³</a>
+        <a id="3107" class="Symbol">⦃</a> <a id="LeiosCrypto.Dec-&lt;ᵏʰ"></a><a id="3109" href="Ledger.Dijkstra.Specification.Crypto.html#3109" class="Field">Dec-&lt;ᵏʰ</a> <a id="3117" class="Symbol">⦄</a>                 <a id="3135" class="Symbol">:</a> <a id="3137" href="Ledger.Dijkstra.Specification.Crypto.html#2676" class="Field Operator">_&lt;ᵏʰ_</a> <a id="3143" href="Class.Decidable.Core.html#590" class="Function Operator">⁇²</a>
 </pre>
+
+<hr />
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:1">
+<p>A key crafted relative to someone else's key could make the aggregate appear
+  as if it includes a voter who never signed.&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
 
 
 
