@@ -4,6 +4,7 @@
 
 ### WIP
 
+- Define `ValidEB`, endorser-block validity for a ledger state: a nonempty closure whose duplicate-free references match its transactions' hashes and declared sizes, within the per-EB bounds, and forming a valid `LEDGERS` extension; `AbstractFunctions` gains `txRefHash` and `ebSize` (CIP-164).
 - Add the nine Leios protocol parameters to `PParams`, in the network and security groups, with their `PParamsUpdate` companions (CIP-164 Table 3; cardano-ledger #5965).  The committee is governed by size (`leiosCommitteeSize`), and zero-valued Leios parameters stay well-formed as the protocol's disabled state.
 - Add `LeiosCryptoStructure`, a Dijkstra-local extension of `CryptoStructure` carried by `GovStructure`, with the abstract BLS voting primitives, the committee's key-hash order, and the Leios hash carriers; add the Leios primitive types `EndorserBlock` and `Announcement` (CIP-164).
 - Move cert-deposit helpers from `Utxo` to `Certs`.
