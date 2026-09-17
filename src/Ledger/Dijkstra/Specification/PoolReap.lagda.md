@@ -62,7 +62,7 @@ data _⊢_⇀⦇_,POOLREAP⦈_ : ⊤ → PoolReapState → Epoch → PoolReapSta
         retired = retiring ⁻¹ e
 
         rewardAccounts : KeyHash ⇀ Credential
-        rewardAccounts = mapValues (CredentialOf ∘ rewardAccount) (pools ∣ retired)
+        rewardAccounts = mapValues (CredentialOf ∘ rewardAccount ∘ params) (pools ∣ retired)
 
         rewardAccounts' : Credential ⇀ Coin
         rewardAccounts' = aggregateBy (rewardAccounts ˢ) depositsᵖ

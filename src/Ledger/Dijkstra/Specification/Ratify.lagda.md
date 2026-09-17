@@ -98,7 +98,7 @@ record RatifyEnv : Type where
     dreps            : Credential ⇀ Epoch
     ccHotKeys        : Credential ⇀ Maybe Credential
     treasury         : Treasury
-    pools            : KeyHash ⇀ StakePoolState
+    pools            : Pools
     delegatees       : VoteDelegs
 
 record RatifyState : Type where

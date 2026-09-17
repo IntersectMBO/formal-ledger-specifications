@@ -50,6 +50,8 @@ open import Ledger.Dijkstra.Specification.Utxo txs abs
 open Filter using (filter)
 open Number number renaming (fromNat to fromℕ)
 open GovActionState using (returnAddr; deposit)
+open StakePoolParams renaming (bls to bls')
+open StakePoolState
 ```
 -->
 
@@ -589,6 +591,15 @@ getOrphans es govSt = proj₁ $ iterate step ([] , govSt) (length govSt)
 toRewardAddress : Credential → RewardAddress
 toRewardAddress x = record { net = NetworkId ; stake = x }
 
+applyFPools : Epoch → Pools → FPools → Pools
+applyFPools e pools fPools =
+  mapWithKey (λ kh spp → if ((_,_) <$> (lookupᵐ? pools kh >>= bls) <*> (proj₁ <$> spp .bls'))
+                            then (λ {((oldBls , oldEpoch) , newBls)} →
+                                    if oldBls == newBls
+                                       then mkStakePoolState oldEpoch spp
+                                       else mkStakePoolState e spp )
+                            else mkStakePoolState e spp) fPools ∪ˡ pools
+
 record Governance-Update : Type where
   constructor GovernanceUpdate
   field
@@ -651,7 +662,7 @@ module Pre-POOLREAPUpdate (e  : Epoch)
   utxoSt' = ⟦ UTxOOf utxoSt , FeesOf utxoSt , 0 ⟧
 
   pState' : PState
-  pState' = ⟦ mapValues (mkStakePoolState e) fPools ∪ˡ pools , ∅ , retiring , deposits ⟧
+  pState' = ⟦ applyFPools e pools fPools , ∅ , retiring , deposits ⟧
 
   gState' : GState
   gState' =
