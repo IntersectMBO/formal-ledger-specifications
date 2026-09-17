@@ -148,7 +148,7 @@ record ValidLeiosCert
   field
     signersKeyed    : cert .signers ⊆ dom (keyedSeats cmt)
     validSignature  : isSignedByAggregate
-                        (map proj₂ (setToList ((keyedSeats cmt ∣ cert .signers) ˢ)))
+                        (range (keyedSeats cmt ∣ cert .signers))
                         msg (cert .sig)
     quorum          : fromUnitInterval τ ℚ.* fromℚℕ tot ℚ.≤ fromℚℕ (signedStake cmt (cert .signers))
 ```
