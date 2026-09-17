@@ -5,31 +5,32 @@
 Where the Leios Ledger Formalization stands on `leios-main`, what is in review, in
 what order it lands, and what remains.  The [design note](design-note.md) records
 the decisions; this file records the state, and is updated as PRs merge.  Last
-updated 2026-09-17.
+updated 2026-09-17, after the parameters merged.
 
 ## Merged
 
-Nothing Leios-specific yet.  `leios-main` was fast-forwarded to `master` on
-2026-09-16, so it carries no divergence of its own.
++  [#1317] Leios protocol parameters (Sebastian), squash-merged 2026-09-17: the nine
+   fields of CIP-164's Table 3 with their update companions; zero values are the
+   disabled state.  Follow-up: the quorum threshold's lower bound, `τ ≡ 0` or
+   `½ < τ`, as a conditional well-formedness premise.
+
+`leios-main` was fast-forwarded to `master` on 2026-09-16 before that merge.
 
 ## In review, in merge order
 
-1.  [#1317] Leios protocol parameters (Sebastian).  The nine fields of CIP-164's
-    Table 3 with their update companions; zero values are the disabled state.
-    Approved; squash-merge when CI is green.  Follow-up: the quorum threshold's
-    lower bound, `τ ≡ 0` or `½ < τ`, as a conditional well-formedness premise.
-2.  [#1304] The Leios crypto structure and the primitive types (William).
+1.  [#1304] The Leios crypto structure and the primitive types (William).
     `LeiosCryptoStructure`, a Dijkstra-local extension of the core crypto
     structure carried by `GovStructure` (BLS carriers and predicates, the
     key-hash order for committee ties, the hash carriers), and `Leios.Types`
     (`EndorserBlock`, `hashEB`, `Announcement`, `Vote`).  Closes #1298 and #1301.
     Awaiting re-review.
-3.  [#1297] This directory: the design note and this roadmap.  Squash-merge once
+2.  [#1297] This directory: the design note and this roadmap.  Squash-merge once
     #1304's placement decision is final, which it now is.
-4.  [#1300] The voting committee and certificate validity (Sebastian).  The pool
+3.  [#1300] The voting committee and certificate validity (Sebastian).  The pool
     state carries the voting key; the committee is materialized at the epoch
     boundary; `LeiosCert` and `ValidLeiosCert`; the key age derived from the KES
-    constants.  Retarget onto #1304's branch once #1317 has merged.
+    constants.  Its branch builds on #1304's; GitHub refuses to move its base off
+    `leios-main`, so its diff overlaps #1304's until that merges.
 
 Parked branches, no PR: `leios-bls-key-registration` holds the dedicated-certificate
 registration (one commit on #1300's branch) until the registration mechanism is
@@ -78,8 +79,9 @@ preimage of the EB identifier; the voting-state interface; feature gating.
 ## Next
 
 +  Land the queue above in order, then retarget and rebase #1300.
-+  Then `ValidEB` and the block structure as one PR on #1300, and the `½ < τ`
-   follow-up.
++  `ValidEB` is being drafted on #1304's branch (it needs the types and the
+   parameters, not the committee); the block structure follows on #1300; then the
+   `½ < τ` follow-up.
 +  Keep the header question moving with consensus: the ledger's header classes and
    `cardano-protocol` package already carry the Leios fields, and the consensus
    spec's chain-head rules pin the announcement the way `CHAIN` will.
