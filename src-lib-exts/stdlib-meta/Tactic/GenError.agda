@@ -20,7 +20,7 @@ open import Class.Show
 open import Relation.Nullary using (¬_)
 open import Relation.Nullary.Decidable.Core using (_because_)
 
-open import Reflection.AST.DeBruijn using (weaken)
+open import Reflection.AST.DeBruijn using (weaken; strengthen)
 open import Reflection.Tactic
 open import Reflection.Utils
 open import Reflection.Utils.TCI
@@ -64,9 +64,38 @@ truePat falsePat : SinglePattern
 truePat  = ([ ("" , vArg unknown) ] , vArg ((quote _because_) ◇⟦ (quote true  ◇) ∣ (` 0) ⟧))
 falsePat = ([ ("" , vArg unknown) ] , vArg ((quote _because_) ◇⟦ (quote false ◇) ∣ (` 0) ⟧))
 
-buildLevel : ℕ → ℕ → Term → Term → ITactic
-buildLevel (suc fuel) depth gTy X@(def (quote _×_) as) with vArgsOf as
-... | A ∷ B ∷ [] = do
+-- A × B, or its unfolding Σ A (λ _ → B) after `reduce`, as the pair of components
+productView : Term → Maybe (Term × Term)
+productView (def (quote _×_) as) with vArgsOf as
+... | A ∷ B ∷ [] = just (A , B)
+... | _          = nothing
+productView (def (quote Σ) as) with vArgsOf as
+... | A ∷ lam _ (abs _ B′) ∷ [] with strengthen B′
+...   | just B  = just (A , B)
+...   | nothing = nothing
+productView (def (quote Σ) as) | _ = nothing
+productView _ = nothing
+
+-- undo `weaken n`; fails only if the term mentions the n innermost variables,
+-- which a reduct of a weakened term cannot
+strengthenBy : ℕ → Term → Maybe Term
+strengthenBy zero    t = just t
+strengthenBy (suc n) t with strengthen t
+... | just t′ = strengthenBy n t′
+... | nothing = nothing
+
+orElse : Term → Maybe Term → Term
+orElse d (just t) = t
+orElse d nothing  = d
+
+buildLevel buildLevel′ : ℕ → ℕ → Term → Term → ITactic
+-- X is kept in the original context: reduce it in the current one and bring it back
+buildLevel fuel depth gTy X = do
+  X′ ← reduce (weaken depth X)
+  buildLevel′ fuel depth gTy (orElse X (strengthenBy depth X′))
+
+buildLevel′ (suc fuel) depth gTy X with productView X
+... | just (A , B) = do
   s ← liftTC (R.formatErrorParts (R.strErr "¬ " ∷ R.termErr (weaken depth A) ∷ []))
   m1 ← newMeta unknown
   m2 ← extendContext ("" , vArg m1) $ newMeta (weaken (suc depth) gTy)
@@ -75,16 +104,16 @@ buildLevel (suc fuel) depth gTy X@(def (quote _×_) as) with vArgsOf as
       ∷ (falsePat , inj₂ (just (lit (Literal.string s))))
       ∷ []))
   extendContext ("" , vArg m1) $ runWithHole m2 (buildLevel fuel (suc depth) gTy B)
-... | _ = do
+... | nothing = do
   s ← liftTC (R.formatErrorParts (R.strErr "¬ " ∷ R.termErr (weaken depth X) ∷ []))
   unifyWithGoal (lit (Literal.string s))
-buildLevel _ depth gTy X = do
+buildLevel′ _ depth gTy X = do
   s ← liftTC (R.formatErrorParts (R.strErr "¬ " ∷ R.termErr (weaken depth X) ∷ []))
   unifyWithGoal (lit (Literal.string s))
 
 genErrors' : Term → ITactic
 genErrors' t = inDebugPath "genErrors" do
-  ty ← inferType t
+  ty ← reduce =<< inferType t
   just q ← return (unwrapNeg ty)
     where nothing → error1 "genErrors: argument is not of the form ¬ (P × Q × ...)"
   gTy ← goalTy
@@ -131,3 +160,27 @@ private
 
     _ : test₅ {A = ⊥} {⊤} (λ p → proj₁ p) ≡ "¬ A"
     _ = refl
+
+    -- the conjunction behind a definition: matching the inferred type unreduced
+    -- would report "¬ H₆" instead of the failing conjunct
+    H₆ : Set
+    H₆ = ⊤ × ⊥ × ⊤
+
+    test₆ : ¬ H₆ → String
+    test₆ x = genErrors x
+
+    _ : test₆ (λ where (_ , () , _)) ≡ "¬ ⊥"
+    _ = refl
+
+    -- the call-site shape: a premises pair unpacked by a let pattern, so the
+    -- inferred type is a projection
+    premises₇ : Σ Set _⁇
+    premises₇ = (⊤ × ⊥ × ⊤) , it
+
+    module _ (let H , ⁇ H? = premises₇) where
+      test₇ : Dec H → String
+      test₇ (no ¬p) = genErrors ¬p
+      test₇ (yes _) = "yes"
+
+      _ : test₇ H? ≡ "¬ ⊥"
+      _ = refl
