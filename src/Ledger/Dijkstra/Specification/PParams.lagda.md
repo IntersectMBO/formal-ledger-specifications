@@ -182,13 +182,13 @@ ranking block keeps its existing bound `maxBlockSize`{.AgdaField}, so Leios
 adds no field for it.  Zero-valued Leios parameters are meaningful: they are the protocol's
 disabled state during rollout.
 
-The field names are this specification's; the cardano-ledger proposal
-[#5965][cl-5965], which maps the same parameters onto the Haskell `PParams`,
-uses CIP-164's wording throughout.  Its periods are `Milliseconds` lenses
-`leiosHeaderPeriodLength`, `leiosVotingPeriodLength` and
-`leiosDiffusionPeriodLength`; its EB bounds are `maxEndorserBlockSize` and
-`maxEndorserBlockTxsSize`, which are `leiosMaxEBSize`{.AgdaField} and
-`leiosMaxEBTxsSize`{.AgdaField} here.  Its `OrdExUnits` lens
+The field names are this specification's; the cardano-ledger implementation
+([#6002][cl-6002]), which carries the same parameters in the Haskell `PParams`
+of the Dijkstra era, names them after CIP-164's roles.  Its periods are
+`Milliseconds` lenses `leiosAnnouncementPeriodLength`, `leiosVotePeriodLength`
+and `leiosDiffusionPeriodLength`; its EB bounds are
+`maxEndorserBlockReferencesSize` and `maxEndorserBlockTxsSize`, which are
+`leiosMaxEBSize`{.AgdaField} and `leiosMaxEBTxsSize`{.AgdaField} here.  Its `OrdExUnits` lens
 `maxEndorserBlockExUnits` is `leiosMaxEBExUnits`{.AgdaField}, one field for
 [CIP-164][cip-164]'s separate per-EB steps and memory budgets, and
 `maxRefScriptSizePerEndorserBlock` is `leiosMaxRefScriptSizePerEB`{.AgdaField}.
@@ -532,4 +532,4 @@ Hoskinson and Samuel Leathers. *A First Step Towards On-Chain
 Decentralized Governance*. 2023.
 
 [cip-164]: https://github.com/cardano-scaling/CIPs/blob/leios/CIP-0164/README.md#protocol-parameters "CIP-164 | Protocol parameters"
-[cl-5965]: https://github.com/IntersectMBO/cardano-ledger/issues/5965 "cardano-ledger | Add Leios related protocol parameters"
+[cl-6002]: https://github.com/IntersectMBO/cardano-ledger/pull/6002 "cardano-ledger | Add Leios protocol parameters to DijkstraEra"

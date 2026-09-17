@@ -396,7 +396,7 @@ certificate whose closure has not yet arrived is a block that consensus cannot y
 hand to the ledger, not a new failure mode.
 
 One boundary in this section deserves an explicit warning.  The EB identifier is
-the hash of the reference structure itself, which the LLF abstracts as
+the hash of the reference structure itself, which the ledger spec abstracts as
 `hashEBRefs` without pinning the byte-exact preimage.  Cardano has been here
 before (the block-body hash's segmented preimage exists only in implementation
 internals), so pinning that preimage is a named conformance prerequisite, not an
@@ -413,9 +413,9 @@ to the voters' checks, not to block validity.
 
 The interface proposed by Nicolas Frisby in the implementation design discussion
 shapes the consensus↔ledger boundary as eight functions.  The following table maps
-each to its LLF counterpart, or records what stays outside the LLF and why.
+each to its ledger counterpart, or records what stays outside the ledger spec and why.
 
-| Proposed function             | LLF counterpart |
+| Proposed function             | Ledger counterpart |
 | ----------------------------- | -------------------- |
 | `applyCertifiedEb`            | The certificate branch of the block and chain rules: `ValidCert` plus the closure applied via `LEDGERS` from the announcing state, per the ordering above. |
 | `validateCertificate`         | `ValidCert` (`Leios`): signers are keyed seats of the pinned committee, the aggregate signature verifies over the announcing header's hash, and the signers' stake meets τ times the total active stake.  The contextual half — agreement with the pending announcement, the timing window — sits as block/chain premises. |
@@ -446,76 +446,101 @@ The consensus repository's own Agda specification is adding the header half of
 Linear Leios ([consensus PR #2278][oc-2278]): the header carries `announcedEB`
 (hash and size) and a `certifiedEB` bit, the chain-head state remembers the last
 block's announcement, and a `certChecks` premise enforces the certification delay
-at header validation.  That specification does not depend on this one.  Its
-`Ledger/*` modules are hand-adapted copies (the crypto and epoch structures, a
-trimmed `PParams`, the prelude), so nothing merged here reaches it until someone
-carries it over.  The following records, as of 2026-09-17, where the two agree,
-where they must not drift, and what each side adjusts.  The guiding rule: one
-definition per shared quantity, in the LLF, re-typeset by the consensus
-specification the way it re-typesets the other ledger modules.
+at header validation.  That specification does not depend on this one.
 
-| Consensus specification | LLF | Agreement |
-| --- | --- | --- |
-| `Lhdrᶜ`, `Lvoteᶜ`, `Ldiffᶜ`: genesis constants, in slots | `leiosHeaderPeriod`, `leiosVotingPeriod`, `leiosDiffusionPeriod`: `PParams` fields, in `Milliseconds` | Disagree; item 1 |
-| `certificationDelay = 3·Lhdr + Lvote + Ldiff` | `⌈(3·L_hdr + L_vote + L_diff) / slotLength⌉`, to be defined once; item 2 | Same boundary: `s_A + delay ≤ s_B` |
-| `HashEB`; `AnnouncedEB` with `hash` and `size` | `EBHash`; `Announcement = EBHash × ℕ` | Same content, each repository's names; item 3 |
-| `LastAppliedBlock` with `sℓ`, `h`, `aeb` | `CHAIN`'s pending announcement: the announcing slot, header hash, and announcement | Same semantics: every block replaces it |
-| `HashHeader`, the `h` above | `RBHeaderHash`, the message the votes and the certificate sign | Same object |
-| `certifiedEB` gates `certChecks` | The block rule requires the bit to agree with the body; item 4 | Sound together |
+The consensus repository's `Ledger/*` modules are hand-adapted copies (the crypto
+and epoch structures, a trimmed `PParams`, the prelude), so nothing merged here
+reaches it until someone carries it over.
 
-1.  **The periods are protocol parameters in milliseconds, not genesis constants
-    in slots.**  The CIP lists `L_hdr`, `L_vote`, and `L_diff` among the protocol
+The following records, as of 2026-09-17, where the two specs agree, where they
+must not drift, and what each side should adjust to reconcile the two.  The
+guiding rule: one definition per shared quantity, in the ledger spec, re-typeset
+by the consensus spec the way it re-typesets the other ledger modules.
+
+| Consensus spec                                           | Ledger spec                                                                                           | Agreement                                     |
+| -------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- | --------------------------------------------- |
+| `Lhdrᶜ`, `Lvoteᶜ`, `Ldiffᶜ`: genesis constants, in slots | `leiosHeaderPeriod`, `leiosVotingPeriod`, `leiosDiffusionPeriod`: `PParams` fields, in `Milliseconds` | Disagree; item 1                              |
+| `certificationDelay = 3·Lhdr + Lvote + Ldiff`            | `⌈(3·L_hdr + L_vote + L_diff) / slotLength⌉`, to be defined once; item 2                              | Same boundary: `s_A + delay ≤ s_B`            |
+| `HashEB`; `AnnouncedEB` with `hash` and `size`           | `EBHash`; `Announcement = EBHash × ℕ`                                                                 | Same content, each repository's names; item 3 |
+| `LastAppliedBlock` with `sℓ`, `h`, `aeb`                 | `CHAIN`'s pending announcement: the announcing slot, header hash, and announcement                    | Same semantics: every block replaces it       |
+| `HashHeader`, the `h` above                              | `RBHeaderHash`, the message the votes and the certificate sign                                        | Same object                                   |
+| `certifiedEB` gates `certChecks`                         | The block rule requires the bit to agree with the body; item 4                                        | Sound together                                |
+
+1.  **The periods are protocol parameters in milliseconds** (not genesis constants in slots).
+
+    The CIP lists `L_hdr`, `L_vote`, and `L_diff` among the protocol
     parameters as wall-clock durations ([Protocol parameters][cip-params]); the
     implementation carries them as `Milliseconds` parameters of the Dijkstra era
-    ([cardano-ledger #6002][cl-6002]); the LLF does the same.  Constants in slots
+    ([cardano-ledger #6002][cl-6002]); the ledger spec does the same.  Constants in slots
     can neither be changed by governance nor survive a change of `slotLength`.
-    Adjustment, consensus side: three `Milliseconds` fields on its `PParams`, read
+
+    **Adjustment: ledger**. None.
+
+    **Adjustment: consensus**.  Three `Milliseconds` fields on its `PParams`, read
     through `getPParams` exactly as `maxHeaderSize` already is; the constants go.
-    Adjustment, LLF side: none.
-2.  **The slot conversion needs the genesis `slotLength`, which neither
-    specification has.**  The CIP converts the summed durations to slots with the
-    genesis `slotLength`, rounded up ([Step 5][cip-step5]).  Adjustment, LLF side:
-    `SlotLengthᶜ : Milliseconds`, nonzero, joins the core `GlobalConstants` (the
-    committee work already adds the KES constants there, which the consensus copy
-    carries too, so the two records converge), and `certificationDelay : PParams →
-    ℕ` is defined once, in slots, with the ceiling.  Adjustment, consensus side:
-    its `GlobalConstants` copy takes the constant, and `certChecks` calls the
-    copied `certificationDelay` instead of summing.  The inequality already agrees:
-    the consensus premise `sℓ + certificationDelay ≤ s` is the CIP's "at least
-    ⌈…⌉ slots after".
-3.  **No renaming.**  `HashEB` follows that specification's `HashHeader` and
+
+
+2.  **The slot conversion needs the genesis `slotLength`**, which neither
+    specification has.
+
+    The CIP converts the summed durations to slots with the
+    genesis `slotLength`, rounded up ([Step 5][cip-step5]).
+
+    **Adjustment: ledger**.  `SlotLengthᶜ : Milliseconds`, nonzero, joins the core
+    `GlobalConstants` (the committee work already adds the KES constants there,
+    which the consensus copy carries too, so the two records converge), and
+    `certificationDelay : PParams →  ℕ` is defined once, in slots, with the
+    ceiling.
+
+    **Adjustment: consensus**.  The `GlobalConstants` copy takes the constant, and
+    `certChecks` calls the copied `certificationDelay` instead of summing.  The
+    inequality already agrees: the consensus premise `sℓ + certificationDelay ≤ s`
+    is the CIP's "at least ⌈…⌉ slots after."
+
+
+3.  **No renaming**.  `HashEB` follows that specification's `HashHeader` and
     `HashBBody`; `EBHash` follows this one's `ScriptHash` and `KeyHash`.  A record
     and a pair carry the same two fields.  The table above is the correspondence;
     review time spent on names buys nothing.
-4.  **The `certifiedEB` bit is checked against the body by the ledger.**  The CIP:
-    "When an RB header sets `certified_eb` to true, the corresponding body must
-    include a matching `eb_certificate`" ([Inclusion Rules][cip-inclusion]).  The
-    consensus specification gates its delay check on the bit, which is sound only
-    if the bit is honest, and only the body's validator can see that.  So the
-    LLF's block rule takes the header bit as an input and requires it to equal the
-    presence of the certificate in the body; this sharpens the statement above that
-    the bit is "derived in the spec from the presence of the body's certificate".
-    With it the two delay checks agree by construction: the header check rejects
-    early what the block rule would reject, and the block rule stays authoritative.
-    Adjustment, consensus side: none.
-5.  **The committee reaches the consensus specification through the ledger
-    interface, not by copying.**  Its `ChainHeadEnv` is the ledger's
-    `NewEpochState`, which the committee work extends with the materialized
-    committee.  When that specification needs seat membership
-    (`doesEpochCommitteeIncludeMe` above), the step is one more `LedgerInterface`
-    field, a committee getter, not a copy of the committee module.  Nothing to do
-    until then.
+
+4.  **The `certifiedEB` bit is checked against the body by ledger**.
+
+    The CIP: "When an RB header sets `certified_eb` to true, the corresponding
+    body must include a matching `eb_certificate`" ([Inclusion Rules][cip-inclusion]).
+
+    The consensus specification gates its delay check on the bit, which is sound
+    only if the bit is honest, and only the body's validator can see that.  So the
+    ledger spec's block rule takes the header bit as an input and requires it to
+    equal the presence of the certificate in the body; this sharpens the statement
+    above that the bit is "derived in the spec from the presence of the body's
+    certificate."  With it the two delay checks agree by construction: the header
+    check rejects early what the block rule would reject, and the block rule stays
+    authoritative.
+
+    **Adjustment: consensus**.  None.
+
+5.  **The committee reaches the consensus specification through the ledger interface**, not by copying.
+
+    The consensus's `ChainHeadEnv` is the ledger's `NewEpochState`, which the
+    committee work extends with the materialized committee.  When that
+    specification needs seat membership (`doesEpochCommitteeIncludeMe` above), the
+    step is one more `LedgerInterface` field, a committee getter, not a copy of
+    the committee module.  (Nothing to do until then.)
 
 ## Out of scope: rewards and incentives
 
-The LLF models no change to the reward calculation, and neither does the
-protocol: "Leios does not require any changes to incentives in Cardano"
+The ledger spec does not model change to the reward calculation, and neither does
+the protocol: "Leios does not require any changes to incentives in Cardano"
 ([Incentives][cip-incentives]); the CIP cites the existing ledger-specification
-rewards module as "the current and unchanged specification of rewards".
-Blocks-made accounting is likewise untouched (a certificate-bearing block counts
-like any other).  Should a Leios incentive mechanism ever become normative
-(rewards for voting or EB production, tiered fees), it enters through the full
-roadmap, not the LLF.
+rewards module as "the current and unchanged specification of rewards."
+
+Blocks-made accounting is likewise untouched (a certificate-bearing block is
+counted just like any other block).  Should a Leios incentive mechanism ever
+become normative (rewards for voting or EB production, tiered fees), it enters
+through the full roadmap, not this LLF project.
+
+---
+
 
 ## Addendum: two design questions raised in review
 
