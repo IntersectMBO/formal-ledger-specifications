@@ -29,8 +29,7 @@ updated 2026-09-17, after the parameters and the design note merged.
 2.  [#1300] The voting committee and certificate validity (Sebastian).  The pool
     state carries the voting key; the committee is materialized at the epoch
     boundary; `LeiosCert` and `ValidLeiosCert`; the key age derived from the KES
-    constants.  Its branch builds on #1304's; GitHub refuses to move its base off
-    `leios-main`, so its diff overlaps #1304's until that merges.
+    constants.  Stacked on #1304.
 
 Parked branches, no PR: `leios-bls-key-registration` holds the dedicated-certificate
 registration (one commit on #1300's branch) until the registration mechanism is
@@ -78,7 +77,8 @@ preimage of the EB identifier; the voting-state interface; feature gating.
 
 ## Next
 
-+  Land the queue above in order, then retarget and rebase #1300.
++  Land the queue above in order; #1300 rebases onto `leios-main` once #1304
+   merges.
 +  `ValidEB` is being drafted on #1304's branch (it needs the types and the
    parameters, not the committee); the block structure follows on #1300; then the
    `½ < τ` follow-up.
