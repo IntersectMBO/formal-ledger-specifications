@@ -554,11 +554,11 @@ du_HasDeposits'45'LState_2054
 d_HasDonations'45'LState_2056 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_2510 ->
-  MAlonzo.Code.Ledger.Prelude.Base.T_HasDonations_20
+  MAlonzo.Code.Ledger.Prelude.Base.T_HasDonations_22
 d_HasDonations'45'LState_2056 ~v0 ~v1
   = du_HasDonations'45'LState_2056
 du_HasDonations'45'LState_2056 ::
-  MAlonzo.Code.Ledger.Prelude.Base.T_HasDonations_20
+  MAlonzo.Code.Ledger.Prelude.Base.T_HasDonations_22
 du_HasDonations'45'LState_2056
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Ledger.du_HasDonations'45'LState_3020
@@ -566,10 +566,10 @@ du_HasDonations'45'LState_2056
 d_HasFees'45'LState_2058 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_2510 ->
-  MAlonzo.Code.Ledger.Prelude.Base.T_HasFees_40
+  MAlonzo.Code.Ledger.Prelude.Base.T_HasFees_42
 d_HasFees'45'LState_2058 ~v0 ~v1 = du_HasFees'45'LState_2058
 du_HasFees'45'LState_2058 ::
-  MAlonzo.Code.Ledger.Prelude.Base.T_HasFees_40
+  MAlonzo.Code.Ledger.Prelude.Base.T_HasFees_42
 du_HasFees'45'LState_2058
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Ledger.du_HasFees'45'LState_3022
@@ -904,11 +904,11 @@ du_HasDeposits'45'UTxOState_2150
 d_HasDonations'45'UTxOState_2152 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_2510 ->
-  MAlonzo.Code.Ledger.Prelude.Base.T_HasDonations_20
+  MAlonzo.Code.Ledger.Prelude.Base.T_HasDonations_22
 d_HasDonations'45'UTxOState_2152 ~v0 ~v1
   = du_HasDonations'45'UTxOState_2152
 du_HasDonations'45'UTxOState_2152 ::
-  MAlonzo.Code.Ledger.Prelude.Base.T_HasDonations_20
+  MAlonzo.Code.Ledger.Prelude.Base.T_HasDonations_22
 du_HasDonations'45'UTxOState_2152
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Utxo.du_HasDonations'45'UTxOState_2552
@@ -916,10 +916,10 @@ du_HasDonations'45'UTxOState_2152
 d_HasFee'45'UTxOState_2154 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_2510 ->
-  MAlonzo.Code.Ledger.Prelude.Base.T_HasFees_40
+  MAlonzo.Code.Ledger.Prelude.Base.T_HasFees_42
 d_HasFee'45'UTxOState_2154 ~v0 ~v1 = du_HasFee'45'UTxOState_2154
 du_HasFee'45'UTxOState_2154 ::
-  MAlonzo.Code.Ledger.Prelude.Base.T_HasFees_40
+  MAlonzo.Code.Ledger.Prelude.Base.T_HasFees_42
 du_HasFee'45'UTxOState_2154
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Utxo.du_HasFee'45'UTxOState_2548

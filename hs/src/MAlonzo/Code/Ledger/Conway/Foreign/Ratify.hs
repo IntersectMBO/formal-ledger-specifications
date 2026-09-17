@@ -249,7 +249,7 @@ d_HasEnactState'45'RatifyState_108
 d_HasRatifyState_110 a0 a1 = ()
 -- Ledger.Conway.Foreign.Ratify._.HasTreasury-RatifyEnv
 d_HasTreasury'45'RatifyEnv_114 ::
-  MAlonzo.Code.Ledger.Prelude.Base.T_HasTreasury_80
+  MAlonzo.Code.Ledger.Prelude.Base.T_HasTreasury_82
 d_HasTreasury'45'RatifyEnv_114
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Ratify.du_HasTreasury'45'RatifyEnv_1936
@@ -996,7 +996,7 @@ d_HasEnactState'45'RatifyState_284
 d_HasRatifyState_286 a0 a1 = ()
 -- Ledger.Conway.Foreign.Ratify.Ratify.HasTreasury-RatifyEnv
 d_HasTreasury'45'RatifyEnv_290 ::
-  MAlonzo.Code.Ledger.Prelude.Base.T_HasTreasury_80
+  MAlonzo.Code.Ledger.Prelude.Base.T_HasTreasury_82
 d_HasTreasury'45'RatifyEnv_290
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Ratify.du_HasTreasury'45'RatifyEnv_1936

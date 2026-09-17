@@ -583,10 +583,10 @@ du_HasDState'45'LState_2446
 d_HasFees'45'LState_2452 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_2510 ->
-  MAlonzo.Code.Ledger.Prelude.Base.T_HasFees_40
+  MAlonzo.Code.Ledger.Prelude.Base.T_HasFees_42
 d_HasFees'45'LState_2452 ~v0 ~v1 = du_HasFees'45'LState_2452
 du_HasFees'45'LState_2452 ::
-  MAlonzo.Code.Ledger.Prelude.Base.T_HasFees_40
+  MAlonzo.Code.Ledger.Prelude.Base.T_HasFees_42
 du_HasFees'45'LState_2452
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Ledger.du_HasFees'45'LState_3022
@@ -3004,13 +3004,13 @@ d_SnapshotsOf_3142 v0 = coe d_SnapshotsOf_3136 (coe v0)
 d_HasFees'45'Snapshots_3144 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_2510 ->
-  MAlonzo.Code.Ledger.Prelude.Base.T_HasFees_40
+  MAlonzo.Code.Ledger.Prelude.Base.T_HasFees_42
 d_HasFees'45'Snapshots_3144 ~v0 ~v1 = du_HasFees'45'Snapshots_3144
 du_HasFees'45'Snapshots_3144 ::
-  MAlonzo.Code.Ledger.Prelude.Base.T_HasFees_40
+  MAlonzo.Code.Ledger.Prelude.Base.T_HasFees_42
 du_HasFees'45'Snapshots_3144
   = coe
-      MAlonzo.Code.Ledger.Prelude.Base.C_constructor_50
+      MAlonzo.Code.Ledger.Prelude.Base.C_constructor_52
       (coe (\ v0 -> d_feeSS_3120 (coe v0)))
 -- Ledger.Conway.Specification.Rewards.HasCast-Snapshots
 d_HasCast'45'Snapshots_3146 ::
@@ -3165,7 +3165,7 @@ du_HasCast'45'Snapshots_3146
                                     MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                     (coe
                                        (MAlonzo.RTE.QName
-                                          (10 :: Integer) (14798748958053396954 :: Integer)
+                                          (12 :: Integer) (14798748958053396954 :: Integer)
                                           "Ledger.Prelude.Base.Fees"
                                           (MAlonzo.RTE.Fixity
                                              MAlonzo.RTE.NonAssoc MAlonzo.RTE.Unrelated)))

@@ -168,10 +168,10 @@ d_HasPParams_336 a0 a1 a2 = ()
 -- _.HasTreasury-Acnt
 d_HasTreasury'45'Acnt_352 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
-  MAlonzo.Code.Ledger.Prelude.Base.T_HasTreasury_80
+  MAlonzo.Code.Ledger.Prelude.Base.T_HasTreasury_82
 d_HasTreasury'45'Acnt_352 ~v0 = du_HasTreasury'45'Acnt_352
 du_HasTreasury'45'Acnt_352 ::
-  MAlonzo.Code.Ledger.Prelude.Base.T_HasTreasury_80
+  MAlonzo.Code.Ledger.Prelude.Base.T_HasTreasury_82
 du_HasTreasury'45'Acnt_352
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.PParams.du_HasTreasury'45'Acnt_200
@@ -1696,14 +1696,14 @@ du_HasRewards'45'EpochState_3342
 d_HasTreasury'45'EpochState_3344 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_2510 ->
-  MAlonzo.Code.Ledger.Prelude.Base.T_HasTreasury_80
+  MAlonzo.Code.Ledger.Prelude.Base.T_HasTreasury_82
 d_HasTreasury'45'EpochState_3344 ~v0 ~v1
   = du_HasTreasury'45'EpochState_3344
 du_HasTreasury'45'EpochState_3344 ::
-  MAlonzo.Code.Ledger.Prelude.Base.T_HasTreasury_80
+  MAlonzo.Code.Ledger.Prelude.Base.T_HasTreasury_82
 du_HasTreasury'45'EpochState_3344
   = coe
-      MAlonzo.Code.Ledger.Prelude.Base.C_constructor_90
+      MAlonzo.Code.Ledger.Prelude.Base.C_constructor_92
       (coe
          (\ v0 ->
             MAlonzo.Code.Ledger.Conway.Specification.PParams.d_treasury_194
@@ -1712,14 +1712,14 @@ du_HasTreasury'45'EpochState_3344
 d_HasReserves'45'EpochState_3346 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_2510 ->
-  MAlonzo.Code.Ledger.Prelude.Base.T_HasReserves_60
+  MAlonzo.Code.Ledger.Prelude.Base.T_HasReserves_62
 d_HasReserves'45'EpochState_3346 ~v0 ~v1
   = du_HasReserves'45'EpochState_3346
 du_HasReserves'45'EpochState_3346 ::
-  MAlonzo.Code.Ledger.Prelude.Base.T_HasReserves_60
+  MAlonzo.Code.Ledger.Prelude.Base.T_HasReserves_62
 du_HasReserves'45'EpochState_3346
   = coe
-      MAlonzo.Code.Ledger.Prelude.Base.C_constructor_70
+      MAlonzo.Code.Ledger.Prelude.Base.C_constructor_72
       (coe
          (\ v0 ->
             MAlonzo.Code.Ledger.Conway.Specification.PParams.d_reserves_196
@@ -1927,14 +1927,14 @@ du_HasEnactState'45'NewEpochState_3430
 d_Hastreasury'45'NewEpochState_3432 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_2510 ->
-  MAlonzo.Code.Ledger.Prelude.Base.T_HasTreasury_80
+  MAlonzo.Code.Ledger.Prelude.Base.T_HasTreasury_82
 d_Hastreasury'45'NewEpochState_3432 ~v0 ~v1
   = du_Hastreasury'45'NewEpochState_3432
 du_Hastreasury'45'NewEpochState_3432 ::
-  MAlonzo.Code.Ledger.Prelude.Base.T_HasTreasury_80
+  MAlonzo.Code.Ledger.Prelude.Base.T_HasTreasury_82
 du_Hastreasury'45'NewEpochState_3432
   = coe
-      MAlonzo.Code.Ledger.Prelude.Base.C_constructor_90
+      MAlonzo.Code.Ledger.Prelude.Base.C_constructor_92
       (coe
          (\ v0 ->
             MAlonzo.Code.Ledger.Conway.Specification.PParams.d_treasury_194
@@ -3983,7 +3983,7 @@ du_applyRUpd_3590 v0 v1 v2
                                                                                              MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                                              (coe
                                                                                                 (MAlonzo.RTE.QName
-                                                                                                   (10 ::
+                                                                                                   (12 ::
                                                                                                       Integer)
                                                                                                    (14798748958053396954 ::
                                                                                                       Integer)
@@ -4087,7 +4087,7 @@ du_applyRUpd_3590 v0 v1 v2
                                                                                                    MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                                                    (coe
                                                                                                       (MAlonzo.RTE.QName
-                                                                                                         (8 ::
+                                                                                                         (10 ::
                                                                                                             Integer)
                                                                                                          (14798748958053396954 ::
                                                                                                             Integer)
@@ -6057,7 +6057,7 @@ du_utxoSt''_3940 v0 v1 v2
                                  MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                  (coe
                                     (MAlonzo.RTE.QName
-                                       (10 :: Integer) (14798748958053396954 :: Integer)
+                                       (12 :: Integer) (14798748958053396954 :: Integer)
                                        "Ledger.Prelude.Base.Fees"
                                        (MAlonzo.RTE.Fixity
                                           MAlonzo.RTE.NonAssoc MAlonzo.RTE.Unrelated)))
@@ -6131,7 +6131,7 @@ du_utxoSt''_3940 v0 v1 v2
                                        MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                        (coe
                                           (MAlonzo.RTE.QName
-                                             (8 :: Integer) (14798748958053396954 :: Integer)
+                                             (10 :: Integer) (14798748958053396954 :: Integer)
                                              "Ledger.Prelude.Base.Donations"
                                              (MAlonzo.RTE.Fixity
                                                 MAlonzo.RTE.NonAssoc MAlonzo.RTE.Unrelated)))
@@ -7854,7 +7854,7 @@ du_acnt''''_3998 v0 v1 v2 v3 v4 v5
             (coe
                addInt (coe du_unclaimed_3992 (coe v0) (coe v1) (coe v3) (coe v5))
                (coe
-                  MAlonzo.Code.Ledger.Prelude.Base.d_DonationsOf_28
+                  MAlonzo.Code.Ledger.Prelude.Base.d_DonationsOf_30
                   (coe
                      MAlonzo.Code.Ledger.Conway.Specification.Utxo.du_HasDonations'45'UTxOState_2552)
                   (MAlonzo.Code.Ledger.Conway.Specification.Ledger.d_utxoSt_2972

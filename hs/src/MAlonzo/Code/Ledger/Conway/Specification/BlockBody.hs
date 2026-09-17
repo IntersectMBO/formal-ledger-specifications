@@ -58,10 +58,10 @@ du_HasCast'45'HashProtected'45'MaybeScriptHash_260
 -- _.HasTreasury-Acnt
 d_HasTreasury'45'Acnt_352 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
-  MAlonzo.Code.Ledger.Prelude.Base.T_HasTreasury_80
+  MAlonzo.Code.Ledger.Prelude.Base.T_HasTreasury_82
 d_HasTreasury'45'Acnt_352 ~v0 = du_HasTreasury'45'Acnt_352
 du_HasTreasury'45'Acnt_352 ::
-  MAlonzo.Code.Ledger.Prelude.Base.T_HasTreasury_80
+  MAlonzo.Code.Ledger.Prelude.Base.T_HasTreasury_82
 du_HasTreasury'45'Acnt_352
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.PParams.du_HasTreasury'45'Acnt_200

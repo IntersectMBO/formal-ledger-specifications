@@ -880,11 +880,11 @@ du_HasDeposits'45'UTxOState_2280
 d_HasDonations'45'UTxOState_2282 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_2510 ->
-  MAlonzo.Code.Ledger.Prelude.Base.T_HasDonations_20
+  MAlonzo.Code.Ledger.Prelude.Base.T_HasDonations_22
 d_HasDonations'45'UTxOState_2282 ~v0 ~v1
   = du_HasDonations'45'UTxOState_2282
 du_HasDonations'45'UTxOState_2282 ::
-  MAlonzo.Code.Ledger.Prelude.Base.T_HasDonations_20
+  MAlonzo.Code.Ledger.Prelude.Base.T_HasDonations_22
 du_HasDonations'45'UTxOState_2282
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Utxo.du_HasDonations'45'UTxOState_2552
@@ -892,10 +892,10 @@ du_HasDonations'45'UTxOState_2282
 d_HasFee'45'UTxOState_2284 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_2510 ->
-  MAlonzo.Code.Ledger.Prelude.Base.T_HasFees_40
+  MAlonzo.Code.Ledger.Prelude.Base.T_HasFees_42
 d_HasFee'45'UTxOState_2284 ~v0 ~v1 = du_HasFee'45'UTxOState_2284
 du_HasFee'45'UTxOState_2284 ::
-  MAlonzo.Code.Ledger.Prelude.Base.T_HasFees_40
+  MAlonzo.Code.Ledger.Prelude.Base.T_HasFees_42
 du_HasFee'45'UTxOState_2284
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Utxo.du_HasFee'45'UTxOState_2548
@@ -1512,18 +1512,18 @@ du_HasVoteDelegs'45'LState_3018
 d_HasDonations'45'LState_3020 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_2510 ->
-  MAlonzo.Code.Ledger.Prelude.Base.T_HasDonations_20
+  MAlonzo.Code.Ledger.Prelude.Base.T_HasDonations_22
 d_HasDonations'45'LState_3020 ~v0 ~v1
   = du_HasDonations'45'LState_3020
 du_HasDonations'45'LState_3020 ::
-  MAlonzo.Code.Ledger.Prelude.Base.T_HasDonations_20
+  MAlonzo.Code.Ledger.Prelude.Base.T_HasDonations_22
 du_HasDonations'45'LState_3020
   = coe
-      MAlonzo.Code.Ledger.Prelude.Base.C_constructor_30
+      MAlonzo.Code.Ledger.Prelude.Base.C_constructor_32
       (coe
          (\ v0 ->
             coe
-              MAlonzo.Code.Ledger.Prelude.Base.d_DonationsOf_28
+              MAlonzo.Code.Ledger.Prelude.Base.d_DonationsOf_30
               (coe
                  MAlonzo.Code.Ledger.Conway.Specification.Utxo.du_HasDonations'45'UTxOState_2552)
               (d_utxoSt_2972 (coe v0))))
@@ -1531,17 +1531,17 @@ du_HasDonations'45'LState_3020
 d_HasFees'45'LState_3022 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_2510 ->
-  MAlonzo.Code.Ledger.Prelude.Base.T_HasFees_40
+  MAlonzo.Code.Ledger.Prelude.Base.T_HasFees_42
 d_HasFees'45'LState_3022 ~v0 ~v1 = du_HasFees'45'LState_3022
 du_HasFees'45'LState_3022 ::
-  MAlonzo.Code.Ledger.Prelude.Base.T_HasFees_40
+  MAlonzo.Code.Ledger.Prelude.Base.T_HasFees_42
 du_HasFees'45'LState_3022
   = coe
-      MAlonzo.Code.Ledger.Prelude.Base.C_constructor_50
+      MAlonzo.Code.Ledger.Prelude.Base.C_constructor_52
       (coe
          (\ v0 ->
             coe
-              MAlonzo.Code.Ledger.Prelude.Base.d_FeesOf_48
+              MAlonzo.Code.Ledger.Prelude.Base.d_FeesOf_50
               (coe
                  MAlonzo.Code.Ledger.Conway.Specification.Utxo.du_HasFee'45'UTxOState_2548)
               (d_utxoSt_2972 (coe v0))))
@@ -1818,7 +1818,7 @@ du_HasCast'45'LEnv_3028
                                        MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                        (coe
                                           (MAlonzo.RTE.QName
-                                             (14 :: Integer) (14798748958053396954 :: Integer)
+                                             (16 :: Integer) (14798748958053396954 :: Integer)
                                              "Ledger.Prelude.Base.Treasury"
                                              (MAlonzo.RTE.Fixity
                                                 MAlonzo.RTE.NonAssoc MAlonzo.RTE.Unrelated)))

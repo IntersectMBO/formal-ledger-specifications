@@ -1513,19 +1513,19 @@ d_HasDState'45'CertState_418
 d_HasDeposits_420 a0 a1 = ()
 -- Ledger.Conway.Foreign.HSStructures._.HasDonations-Tx
 d_HasDonations'45'Tx_424 ::
-  MAlonzo.Code.Ledger.Prelude.Base.T_HasDonations_20
+  MAlonzo.Code.Ledger.Prelude.Base.T_HasDonations_22
 d_HasDonations'45'Tx_424
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Transaction.du_HasDonations'45'Tx_3674
 -- Ledger.Conway.Foreign.HSStructures._.HasDonations-TxBody
 d_HasDonations'45'TxBody_426 ::
-  MAlonzo.Code.Ledger.Prelude.Base.T_HasDonations_20
+  MAlonzo.Code.Ledger.Prelude.Base.T_HasDonations_22
 d_HasDonations'45'TxBody_426
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Transaction.du_HasDonations'45'TxBody_3610
 -- Ledger.Conway.Foreign.HSStructures._.HasFees-Tx
 d_HasFees'45'Tx_428 ::
-  MAlonzo.Code.Ledger.Prelude.Base.T_HasFees_40
+  MAlonzo.Code.Ledger.Prelude.Base.T_HasFees_42
 d_HasFees'45'Tx_428
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Transaction.du_HasFees'45'Tx_3660
@@ -1657,7 +1657,7 @@ d_HasPools'45'PState_510
       MAlonzo.Code.Ledger.Conway.Specification.Certs.du_HasPools'45'PState_1582
 -- Ledger.Conway.Foreign.HSStructures._.HasReserves-Acnt
 d_HasReserves'45'Acnt_512 ::
-  MAlonzo.Code.Ledger.Prelude.Base.T_HasReserves_60
+  MAlonzo.Code.Ledger.Prelude.Base.T_HasReserves_62
 d_HasReserves'45'Acnt_512
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.PParams.du_HasReserves'45'Acnt_202
@@ -1703,7 +1703,7 @@ d_HasStakeDelegs'45'DState_542
       MAlonzo.Code.Ledger.Conway.Specification.Certs.du_HasStakeDelegs'45'DState_1578
 -- Ledger.Conway.Foreign.HSStructures._.HasTreasury-Acnt
 d_HasTreasury'45'Acnt_544 ::
-  MAlonzo.Code.Ledger.Prelude.Base.T_HasTreasury_80
+  MAlonzo.Code.Ledger.Prelude.Base.T_HasTreasury_82
 d_HasTreasury'45'Acnt_544
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.PParams.du_HasTreasury'45'Acnt_200
@@ -8973,21 +8973,21 @@ d_HasDReps_2894 a0 a1 a2 = ()
 -- Ledger.Conway.Foreign.HSStructures._.TransactionStructure.HasDonations-Tx
 d_HasDonations'45'Tx_2898 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
-  MAlonzo.Code.Ledger.Prelude.Base.T_HasDonations_20
+  MAlonzo.Code.Ledger.Prelude.Base.T_HasDonations_22
 d_HasDonations'45'Tx_2898 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Transaction.du_HasDonations'45'Tx_3674
 -- Ledger.Conway.Foreign.HSStructures._.TransactionStructure.HasDonations-TxBody
 d_HasDonations'45'TxBody_2900 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
-  MAlonzo.Code.Ledger.Prelude.Base.T_HasDonations_20
+  MAlonzo.Code.Ledger.Prelude.Base.T_HasDonations_22
 d_HasDonations'45'TxBody_2900 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Transaction.du_HasDonations'45'TxBody_3610
 -- Ledger.Conway.Foreign.HSStructures._.TransactionStructure.HasFees-Tx
 d_HasFees'45'Tx_2902 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
-  MAlonzo.Code.Ledger.Prelude.Base.T_HasFees_40
+  MAlonzo.Code.Ledger.Prelude.Base.T_HasFees_42
 d_HasFees'45'Tx_2902 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Transaction.du_HasFees'45'Tx_3660
@@ -9135,10 +9135,10 @@ du_HasPolicy'45'GovProposal_2962
 -- Ledger.Conway.Foreign.HSStructures._.TransactionStructure.HasReserves-Acnt
 d_HasReserves'45'Acnt_2964 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
-  MAlonzo.Code.Ledger.Prelude.Base.T_HasReserves_60
+  MAlonzo.Code.Ledger.Prelude.Base.T_HasReserves_62
 d_HasReserves'45'Acnt_2964 ~v0 = du_HasReserves'45'Acnt_2964
 du_HasReserves'45'Acnt_2964 ::
-  MAlonzo.Code.Ledger.Prelude.Base.T_HasReserves_60
+  MAlonzo.Code.Ledger.Prelude.Base.T_HasReserves_62
 du_HasReserves'45'Acnt_2964
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.PParams.du_HasReserves'45'Acnt_202
@@ -9147,10 +9147,10 @@ d_HasRewardAddress_2966 a0 a1 a2 = ()
 -- Ledger.Conway.Foreign.HSStructures._.TransactionStructure.HasTreasury-Acnt
 d_HasTreasury'45'Acnt_2970 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
-  MAlonzo.Code.Ledger.Prelude.Base.T_HasTreasury_80
+  MAlonzo.Code.Ledger.Prelude.Base.T_HasTreasury_82
 d_HasTreasury'45'Acnt_2970 ~v0 = du_HasTreasury'45'Acnt_2970
 du_HasTreasury'45'Acnt_2970 ::
-  MAlonzo.Code.Ledger.Prelude.Base.T_HasTreasury_80
+  MAlonzo.Code.Ledger.Prelude.Base.T_HasTreasury_82
 du_HasTreasury'45'Acnt_2970
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.PParams.du_HasTreasury'45'Acnt_200

@@ -947,20 +947,20 @@ d_HasPParams_874 a0 a1 a2 = ()
 -- Ledger.Conway.Specification.Gov.Base.GovStructure._.HasReserves-Acnt
 d_HasReserves'45'Acnt_878 ::
   T_GovStructure_10 ->
-  MAlonzo.Code.Ledger.Prelude.Base.T_HasReserves_60
+  MAlonzo.Code.Ledger.Prelude.Base.T_HasReserves_62
 d_HasReserves'45'Acnt_878 ~v0 = du_HasReserves'45'Acnt_878
 du_HasReserves'45'Acnt_878 ::
-  MAlonzo.Code.Ledger.Prelude.Base.T_HasReserves_60
+  MAlonzo.Code.Ledger.Prelude.Base.T_HasReserves_62
 du_HasReserves'45'Acnt_878
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.PParams.du_HasReserves'45'Acnt_202
 -- Ledger.Conway.Specification.Gov.Base.GovStructure._.HasTreasury-Acnt
 d_HasTreasury'45'Acnt_880 ::
   T_GovStructure_10 ->
-  MAlonzo.Code.Ledger.Prelude.Base.T_HasTreasury_80
+  MAlonzo.Code.Ledger.Prelude.Base.T_HasTreasury_82
 d_HasTreasury'45'Acnt_880 ~v0 = du_HasTreasury'45'Acnt_880
 du_HasTreasury'45'Acnt_880 ::
-  MAlonzo.Code.Ledger.Prelude.Base.T_HasTreasury_80
+  MAlonzo.Code.Ledger.Prelude.Base.T_HasTreasury_82
 du_HasTreasury'45'Acnt_880
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.PParams.du_HasTreasury'45'Acnt_200

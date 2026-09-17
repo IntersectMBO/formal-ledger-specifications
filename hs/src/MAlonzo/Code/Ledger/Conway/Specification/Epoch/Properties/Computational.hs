@@ -74,10 +74,10 @@ d_Epoch_190 = erased
 -- _.HasTreasury-Acnt
 d_HasTreasury'45'Acnt_356 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
-  MAlonzo.Code.Ledger.Prelude.Base.T_HasTreasury_80
+  MAlonzo.Code.Ledger.Prelude.Base.T_HasTreasury_82
 d_HasTreasury'45'Acnt_356 ~v0 = du_HasTreasury'45'Acnt_356
 du_HasTreasury'45'Acnt_356 ::
-  MAlonzo.Code.Ledger.Prelude.Base.T_HasTreasury_80
+  MAlonzo.Code.Ledger.Prelude.Base.T_HasTreasury_82
 du_HasTreasury'45'Acnt_356
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.PParams.du_HasTreasury'45'Acnt_200
@@ -4591,7 +4591,7 @@ du_EPOCH'45'total_3272 v0 v1 v2
                                           (coe
                                              MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                              (coe
-                                                MAlonzo.Code.Ledger.Prelude.Base.d_TreasuryOf_88
+                                                MAlonzo.Code.Ledger.Prelude.Base.d_TreasuryOf_90
                                                 (coe
                                                    MAlonzo.Code.Ledger.Conway.Specification.PParams.du_HasTreasury'45'Acnt_200)
                                                 (MAlonzo.Code.Ledger.Conway.Specification.Epoch.d_acnt''''_3956
@@ -7956,7 +7956,7 @@ du_EPOCH'45'total_3272 v0 v1 v2
                                     (coe
                                        MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                        (coe
-                                          MAlonzo.Code.Ledger.Prelude.Base.d_TreasuryOf_88
+                                          MAlonzo.Code.Ledger.Prelude.Base.d_TreasuryOf_90
                                           (coe
                                              MAlonzo.Code.Ledger.Conway.Specification.PParams.du_HasTreasury'45'Acnt_200)
                                           (MAlonzo.Code.Ledger.Conway.Specification.Epoch.d_acnt''''_3956

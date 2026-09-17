@@ -711,7 +711,7 @@ du_HasCast'45'EnactEnv_1230
                               MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                               (coe
                                  (MAlonzo.RTE.QName
-                                    (14 :: Integer) (14798748958053396954 :: Integer)
+                                    (16 :: Integer) (14798748958053396954 :: Integer)
                                     "Ledger.Prelude.Base.Treasury"
                                     (MAlonzo.RTE.Fixity
                                        MAlonzo.RTE.NonAssoc MAlonzo.RTE.Unrelated)))

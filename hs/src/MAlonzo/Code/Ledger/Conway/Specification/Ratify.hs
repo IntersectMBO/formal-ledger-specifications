@@ -1170,14 +1170,14 @@ du_HasDReps'45'RatifyEnv_1934
 -- Ledger.Conway.Specification.Ratify.HasTreasury-RatifyEnv
 d_HasTreasury'45'RatifyEnv_1936 ::
   MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.T_GovStructure_10 ->
-  MAlonzo.Code.Ledger.Prelude.Base.T_HasTreasury_80
+  MAlonzo.Code.Ledger.Prelude.Base.T_HasTreasury_82
 d_HasTreasury'45'RatifyEnv_1936 ~v0
   = du_HasTreasury'45'RatifyEnv_1936
 du_HasTreasury'45'RatifyEnv_1936 ::
-  MAlonzo.Code.Ledger.Prelude.Base.T_HasTreasury_80
+  MAlonzo.Code.Ledger.Prelude.Base.T_HasTreasury_82
 du_HasTreasury'45'RatifyEnv_1936
   = coe
-      MAlonzo.Code.Ledger.Prelude.Base.C_constructor_90
+      MAlonzo.Code.Ledger.Prelude.Base.C_constructor_92
       (coe (\ v0 -> d_treasury_1888 (coe v0)))
 -- Ledger.Conway.Specification.Ratify.HasCast-StakeDistrs
 d_HasCast'45'StakeDistrs_1938 ::
@@ -2484,7 +2484,7 @@ du_HasCast'45'RatifyEnv_1940
                                        MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                        (coe
                                           (MAlonzo.RTE.QName
-                                             (14 :: Integer) (14798748958053396954 :: Integer)
+                                             (16 :: Integer) (14798748958053396954 :: Integer)
                                              "Ledger.Prelude.Base.Treasury"
                                              (MAlonzo.RTE.Fixity
                                                 MAlonzo.RTE.NonAssoc MAlonzo.RTE.Unrelated)))

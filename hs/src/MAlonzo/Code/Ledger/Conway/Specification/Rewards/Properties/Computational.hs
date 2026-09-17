@@ -163,7 +163,7 @@ du_SNAP'45'total_2268 v0 v1 v2
                      MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_set_3116
                      (coe v2))
                   (coe
-                     MAlonzo.Code.Ledger.Prelude.Base.d_FeesOf_48
+                     MAlonzo.Code.Ledger.Prelude.Base.d_FeesOf_50
                      (coe
                         MAlonzo.Code.Ledger.Conway.Specification.Ledger.du_HasFees'45'LState_3022)
                      v1)))))

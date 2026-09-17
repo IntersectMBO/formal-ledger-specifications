@@ -1073,13 +1073,13 @@ du_HasUTxO'45'UTxOState_2546
 d_HasFee'45'UTxOState_2548 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_2510 ->
-  MAlonzo.Code.Ledger.Prelude.Base.T_HasFees_40
+  MAlonzo.Code.Ledger.Prelude.Base.T_HasFees_42
 d_HasFee'45'UTxOState_2548 ~v0 ~v1 = du_HasFee'45'UTxOState_2548
 du_HasFee'45'UTxOState_2548 ::
-  MAlonzo.Code.Ledger.Prelude.Base.T_HasFees_40
+  MAlonzo.Code.Ledger.Prelude.Base.T_HasFees_42
 du_HasFee'45'UTxOState_2548
   = coe
-      MAlonzo.Code.Ledger.Prelude.Base.C_constructor_50
+      MAlonzo.Code.Ledger.Prelude.Base.C_constructor_52
       (coe (\ v0 -> d_fees_2516 (coe v0)))
 -- Ledger.Conway.Specification.Utxo.HasDeposits-UTxOState
 d_HasDeposits'45'UTxOState_2550 ::
@@ -1098,14 +1098,14 @@ du_HasDeposits'45'UTxOState_2550
 d_HasDonations'45'UTxOState_2552 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_2510 ->
-  MAlonzo.Code.Ledger.Prelude.Base.T_HasDonations_20
+  MAlonzo.Code.Ledger.Prelude.Base.T_HasDonations_22
 d_HasDonations'45'UTxOState_2552 ~v0 ~v1
   = du_HasDonations'45'UTxOState_2552
 du_HasDonations'45'UTxOState_2552 ::
-  MAlonzo.Code.Ledger.Prelude.Base.T_HasDonations_20
+  MAlonzo.Code.Ledger.Prelude.Base.T_HasDonations_22
 du_HasDonations'45'UTxOState_2552
   = coe
-      MAlonzo.Code.Ledger.Prelude.Base.C_constructor_30
+      MAlonzo.Code.Ledger.Prelude.Base.C_constructor_32
       (coe (\ v0 -> d_donations_2520 (coe v0)))
 -- Ledger.Conway.Specification.Utxo.HasCast-UTxOEnv
 d_HasCast'45'UTxOEnv_2554 ::
@@ -1221,7 +1221,7 @@ du_HasCast'45'UTxOEnv_2554
                                  MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                  (coe
                                     (MAlonzo.RTE.QName
-                                       (14 :: Integer) (14798748958053396954 :: Integer)
+                                       (16 :: Integer) (14798748958053396954 :: Integer)
                                        "Ledger.Prelude.Base.Treasury"
                                        (MAlonzo.RTE.Fixity
                                           MAlonzo.RTE.NonAssoc MAlonzo.RTE.Unrelated)))
@@ -1307,7 +1307,7 @@ du_HasCast'45'UTxOState_2556
                               MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                               (coe
                                  (MAlonzo.RTE.QName
-                                    (10 :: Integer) (14798748958053396954 :: Integer)
+                                    (12 :: Integer) (14798748958053396954 :: Integer)
                                     "Ledger.Prelude.Base.Fees"
                                     (MAlonzo.RTE.Fixity
                                        MAlonzo.RTE.NonAssoc MAlonzo.RTE.Unrelated)))
@@ -1380,7 +1380,7 @@ du_HasCast'45'UTxOState_2556
                                     MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                     (coe
                                        (MAlonzo.RTE.QName
-                                          (8 :: Integer) (14798748958053396954 :: Integer)
+                                          (10 :: Integer) (14798748958053396954 :: Integer)
                                           "Ledger.Prelude.Base.Donations"
                                           (MAlonzo.RTE.Fixity
                                              MAlonzo.RTE.NonAssoc MAlonzo.RTE.Unrelated)))
