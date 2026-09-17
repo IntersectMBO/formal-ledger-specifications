@@ -333,7 +333,7 @@ d_HasRatifyState'45'EpochState_126
       MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_HasRatifyState'45'EpochState_3350
 -- Ledger.Conway.Foreign.Epoch.EpochSpec._.HasReserves-EpochState
 d_HasReserves'45'EpochState_128 ::
-  MAlonzo.Code.Ledger.Prelude.Base.T_HasReserves_60
+  MAlonzo.Code.Ledger.Prelude.Base.T_HasReserves_62
 d_HasReserves'45'EpochState_128
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_HasReserves'45'EpochState_3346
@@ -363,13 +363,13 @@ d_HasSnapshots'45'EpochState_136
       MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_HasSnapshots'45'EpochState_3330
 -- Ledger.Conway.Foreign.Epoch.EpochSpec._.HasTreasury-EpochState
 d_HasTreasury'45'EpochState_138 ::
-  MAlonzo.Code.Ledger.Prelude.Base.T_HasTreasury_80
+  MAlonzo.Code.Ledger.Prelude.Base.T_HasTreasury_82
 d_HasTreasury'45'EpochState_138
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_HasTreasury'45'EpochState_3344
 -- Ledger.Conway.Foreign.Epoch.EpochSpec._.Hastreasury-NewEpochState
 d_Hastreasury'45'NewEpochState_140 ::
-  MAlonzo.Code.Ledger.Prelude.Base.T_HasTreasury_80
+  MAlonzo.Code.Ledger.Prelude.Base.T_HasTreasury_82
 d_Hastreasury'45'NewEpochState_140
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_Hastreasury'45'NewEpochState_3432

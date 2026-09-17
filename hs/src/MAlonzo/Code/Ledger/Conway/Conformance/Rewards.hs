@@ -95,10 +95,10 @@ du_HasCast'45'Snapshots_2596
 d_HasFees'45'Snapshots_2598 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_2510 ->
-  MAlonzo.Code.Ledger.Prelude.Base.T_HasFees_40
+  MAlonzo.Code.Ledger.Prelude.Base.T_HasFees_42
 d_HasFees'45'Snapshots_2598 ~v0 ~v1 = du_HasFees'45'Snapshots_2598
 du_HasFees'45'Snapshots_2598 ::
-  MAlonzo.Code.Ledger.Prelude.Base.T_HasFees_40
+  MAlonzo.Code.Ledger.Prelude.Base.T_HasFees_42
 du_HasFees'45'Snapshots_2598
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Rewards.du_HasFees'45'Snapshots_3144

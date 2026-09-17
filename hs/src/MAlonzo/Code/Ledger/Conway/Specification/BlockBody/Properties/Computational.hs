@@ -229,7 +229,7 @@ d_BBODY'45'computeProof_2410 v0 v1 v2 v3 v4
                                                           MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                           (coe v2))
                                                        (coe
-                                                          MAlonzo.Code.Ledger.Prelude.Base.d_TreasuryOf_88
+                                                          MAlonzo.Code.Ledger.Prelude.Base.d_TreasuryOf_90
                                                           (coe
                                                              MAlonzo.Code.Ledger.Conway.Specification.PParams.du_HasTreasury'45'Acnt_200)
                                                           (MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30

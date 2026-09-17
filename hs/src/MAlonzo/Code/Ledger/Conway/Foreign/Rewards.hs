@@ -101,7 +101,7 @@ d_HasCast'45'Snapshots_16
       MAlonzo.Code.Ledger.Conway.Specification.Rewards.du_HasCast'45'Snapshots_3146
 -- Ledger.Conway.Foreign.Rewards._.HasFees-Snapshots
 d_HasFees'45'Snapshots_18 ::
-  MAlonzo.Code.Ledger.Prelude.Base.T_HasFees_40
+  MAlonzo.Code.Ledger.Prelude.Base.T_HasFees_42
 d_HasFees'45'Snapshots_18
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Rewards.du_HasFees'45'Snapshots_3144

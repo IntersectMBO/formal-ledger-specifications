@@ -75,7 +75,7 @@ du_minFeeRefScriptCoinsPerByte_34 ::
   MAlonzo.Code.Data.Rational.Base.T_ℚ_6
 du_minFeeRefScriptCoinsPerByte_34 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_minFeeRefScriptCoinsPerByte_420
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_minFeeRefScriptCoinsPerByte_456
       (coe v0)
 -- Ledger.Dijkstra.Specification.Fees._.refScriptCostMultiplier
 d_refScriptCostMultiplier_36 ::
@@ -93,7 +93,7 @@ du_refScriptCostMultiplier_36 ::
   MAlonzo.Code.Data.Rational.Base.T_ℚ_6
 du_refScriptCostMultiplier_36 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_refScriptCostMultiplier_428
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_refScriptCostMultiplier_464
       (coe v0)
 -- Ledger.Dijkstra.Specification.Fees._.refScriptCostStride
 d_refScriptCostStride_38 ::
@@ -111,7 +111,7 @@ du_refScriptCostStride_38 ::
   MAlonzo.Code.Data.Refinement.Base.T_Refinement_28
 du_refScriptCostStride_38 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_refScriptCostStride_426
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_refScriptCostStride_462
       (coe v0)
 -- Ledger.Dijkstra.Specification.Fees._.scriptsCostAux
 d_scriptsCostAux_42 ::
