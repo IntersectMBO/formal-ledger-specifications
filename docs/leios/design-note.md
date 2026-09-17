@@ -53,7 +53,7 @@ is where the rules belong; keeping the new material in its own subtree keeps
 merges from `master` cheap.
 
 The abstract voting crypto lives in `Ledger.Dijkstra.Specification.Crypto` as
-`LeiosCrypto`, a record parameterized by the core `CryptoStructure` that adds
+`LeiosCryptoStructure`, a record parameterized by the core `CryptoStructure` that adds
 the BLS carriers and verification predicates (keys, signatures, proofs of
 possession, single and aggregate verification over the serialization type), a
 strict total order on key hashes, the committee tie-break, and the Leios hash
@@ -72,9 +72,9 @@ The new modules, and the edits to existing modules, are as follows:
 
 ```text
 src/Ledger/Dijkstra/Specification/
-├── Crypto.lagda.md         -- LeiosCrypto: BLS primitives; key-hash order (the
+├── Crypto.lagda.md         -- LeiosCryptoStructure: BLS primitives; key-hash order (the
 │                           --   tie-break); the EB, tx-reference, and header hashes
-├── Gov/Base.lagda.md       -- edit: GovStructure carries a LeiosCrypto
+├── Gov/Base.lagda.md       -- edit: GovStructure carries a LeiosCryptoStructure
 ├── Leios.lagda.md          -- seats, committee selection, quorum arithmetic;
 │                           --   certificate, vote, and EB validity
 ├── Leios/Types.lagda.md    -- EndorserBlock, Announcement, Vote
@@ -523,7 +523,7 @@ One concession first, because it clarifies the question: the rule edits land
 in `BlockBody`, `Chain`, `Certs`, and `PParams` regardless; premises live
 where rules live.  The question is only where the shared type definitions go.
 One placement is settled elsewhere: the abstract crypto lives in the
-`LeiosCrypto` record that `GovStructure` carries beside the core
+`LeiosCryptoStructure` record that `GovStructure` carries beside the core
 `CryptoStructure` (see [Module placement](#module-placement)), so every rule
 module already sees it and reachability constrains nothing here.
 
