@@ -460,8 +460,8 @@ properties:
     era: dijkstra
     sts: CERTS
     module: Ledger.Dijkstra.Specification.Certs.Properties.PoV
-    anchor: thm:CERTS-PoV
-    defs: [CERTS-pov]
+    anchor: sec:certs-pov
+    defs: [CERTS-rewards-pov, CERTS-deposits-pov]
     issues: [1185]
     notes: "Covers both thm:CERT-PoV and thm:CERTS-PoV."
 
