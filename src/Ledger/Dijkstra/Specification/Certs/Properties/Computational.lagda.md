@@ -72,6 +72,11 @@ instance
          ∙ Γ .pp .minPoolCost ≤ poolParams .cost ¿
   ... | yes q = success (-, (POOL-reg (¬p , q)))
   ... | no ¬q = failure (genErrors ¬q)
+  Computational-POOL .computeProof Γ stᵖ (regblskey c vk pop)
+    with ¿ IsPoolRegistered (PoolsOf stᵖ) c
+         ∙ isValidPoP vk pop ¿
+  ... | yes p = success (-, POOL-regblskey p)
+  ... | no ¬p = failure (genErrors ¬p)
   Computational-POOL .computeProof Γ stᵖ (retirepool c e')
     with ¿ IsPoolRegistered (PoolsOf stᵖ) c
          ∙ Γ .epoch < e'
@@ -97,6 +102,11 @@ instance
          ∙ Γ .pp .minPoolCost ≤ poolParams .cost ¿
   ... | yes _ = refl
   ... | no ¬s = ⊥-elim (¬s q)
+  Computational-POOL .completeness Γ stᵖ (regblskey c vk pop) _ (POOL-regblskey p)
+    with ¿ IsPoolRegistered (PoolsOf stᵖ) c
+         ∙ isValidPoP vk pop ¿
+  ... | yes _ = refl
+  ... | no ¬p = ⊥-elim (¬p p)
   Computational-POOL .completeness Γ stᵖ (retirepool c e) _ (POOL-retirepool p)
     with ¿ IsPoolRegistered (PoolsOf stᵖ) c
          ∙ Γ .epoch < e
@@ -157,6 +167,10 @@ instance
   ... | success _ | refl = refl
   Computational-CERT .completeness ce cs
     dCert@(retirepool c e) cs' (CERT-pool h)
+    with computeProof ⟦ EpochOf ce , PParamsOf ce ⟧ (PStateOf cs) dCert | completeness _ _ _ _ h
+  ... | success _ | refl = refl
+  Computational-CERT .completeness ce cs
+    dCert@(regblskey c vk pop) cs' (CERT-pool h)
     with computeProof ⟦ EpochOf ce , PParamsOf ce ⟧ (PStateOf cs) dCert | completeness _ _ _ _ h
   ... | success _ | refl = refl
   Computational-CERT .completeness Γ cs

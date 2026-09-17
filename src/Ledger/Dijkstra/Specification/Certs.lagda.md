@@ -42,9 +42,9 @@ open StakePoolParams using (owners)
 
 The pool state extends the registered parameters with the pool's Leios voting
 key (CIP-0164): a BLS key together with the epoch it was registered in, from
-which its expiry is computed.  The key lives next to the registration
-parameters rather than inside them, so a parameter re-registration never
-clobbers it; how a key is registered is the registration rule's business.
+which its expiry is computed.  The key is registered through a dedicated
+certificate rather than `regpool`{.AgdaInductiveConstructor}, so it lives next
+to — not inside — the registration parameters.
 
 ```agda
 record BlsKeyState : Type where
@@ -97,6 +97,7 @@ data DCert : Type where
   dereg       : Credential → Coin → DCert
   regpool     : KeyHash → StakePoolParams → DCert
   retirepool  : KeyHash → Epoch → DCert
+  regblskey   : KeyHash → BlsVKey → BlsPoP → DCert
   regdrep     : Credential → Coin → Anchor → DCert
   deregdrep   : Credential → Coin → DCert
   ccreghot    : Credential → Maybe Credential → DCert
@@ -106,6 +107,7 @@ cwitness (delegate c _ _ _)  = just c
 cwitness (dereg c _)         = just c
 cwitness (regpool kh _)      = just $ KeyHashObj kh
 cwitness (retirepool kh _)   = just $ KeyHashObj kh
+cwitness (regblskey kh _ _)  = just $ KeyHashObj kh
 cwitness (regdrep c _ _)     = just c
 cwitness (deregdrep c _)     = just c
 cwitness (ccreghot c _)      = just c
@@ -192,6 +194,7 @@ IsConwayCert? {x} .dec with x
 ... | dereg _ _ = no (λ ())
 ... | regpool _ _ = no (λ ())
 ... | retirepool _ _ = no (λ ())
+... | regblskey _ _ _ = no (λ ())
 
 record HasDeposits (A : Type) {K : Type} : Type where
   field DepositsOf : A → K ⇀ Coin
@@ -371,6 +374,8 @@ private variable
   kh          : KeyHash
   mkh         : Maybe KeyHash
   poolParams  : StakePoolParams
+  vk          : BlsVKey
+  pop         : BlsPoP
   pp          : PParams
   mvd         : Maybe VDeleg
 
@@ -485,8 +490,8 @@ data _⊢_⇀⦇_,DELEG⦈_ : DelegEnv → DState → DCert → DState → Type 
 
 ## `POOL`{.AgdaDatatype} Transition System
 
-Helpers to read the Leios voting key of a pool and to apply pending future
-re-registrations at the epoch boundary: `applyFPools`{.AgdaFunction}
+Helpers to read and update the Leios voting key of a pool, and to apply pending
+future re-registrations at the epoch boundary: `applyFPools`{.AgdaFunction}
 updates only the parameters of already registered pools, so registered voting
 keys survive parameter re-registration.
 
@@ -496,6 +501,9 @@ poolVrfs ps = mapˢ (vrf ∘ params) (range ps)
 
 poolBlsKey : Pools → KeyHash → Maybe BlsKeyState
 poolBlsKey ps kh = lookupᵐ? ps kh >>= blsKey
+
+installBlsKey : KeyHash → BlsKeyState → Pools → Pools
+installBlsKey kh k = mapWithKey λ kh' s → if kh' ≡ kh then record s { blsKey = just k } else s
 
 applyFPools : FPools → Pools → Pools
 applyFPools fps = mapWithKey λ kh s → case lookupᵐ? fps kh of λ where
@@ -537,6 +545,21 @@ data _⊢_⇀⦇_,POOL⦈_ : PoolEnv → PState → DCert → PState → Type wh
                    pools
                  , ❴ kh , poolParams ❵ ∪ˡ fPools
                  , retiring ∣ ❴ kh ❵ ᶜ
+                 , deposits
+                 ⟧
+
+  POOL-regblskey :
+    ∙ IsPoolRegistered pools kh
+    ∙ isValidPoP vk pop
+    ────────────────────────────────
+    ⟦ e , pp ⟧ ⊢ ⟦ pools
+                 , fPools
+                 , retiring
+                 , deposits
+                 ⟧ ⇀⦇ regblskey kh vk pop ,POOL⦈ ⟦
+                   installBlsKey kh ⟦ vk , e ⟧ pools
+                 , fPools
+                 , retiring
                  , deposits
                  ⟧
 
