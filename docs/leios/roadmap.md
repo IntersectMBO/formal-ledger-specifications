@@ -5,7 +5,7 @@
 Where the Leios Ledger Formalization stands on `leios-main`, what is in review, in
 what order it lands, and what remains.  The [design note](design-note.md) records
 the decisions; this file records the state, and is updated as PRs merge.  Last
-updated 2026-09-17, after the parameters merged.
+updated 2026-09-17, after the parameters and the design note merged.
 
 ## Merged
 
@@ -14,7 +14,9 @@ updated 2026-09-17, after the parameters merged.
    disabled state.  Follow-up: the quorum threshold's lower bound, `τ ≡ 0` or
    `½ < τ`, as a conditional well-formedness premise.
 
-`leios-main` was fast-forwarded to `master` on 2026-09-16 before that merge.
++  [#1297] The design note and this roadmap, squash-merged 2026-09-17.
+
+`leios-main` was fast-forwarded to `master` on 2026-09-16 before these merges.
 
 ## In review, in merge order
 
@@ -24,9 +26,7 @@ updated 2026-09-17, after the parameters merged.
     key-hash order for committee ties, the hash carriers), and `Leios.Types`
     (`EndorserBlock`, `hashEB`, `Announcement`, `Vote`).  Closes #1298 and #1301.
     Awaiting re-review.
-2.  [#1297] This directory: the design note and this roadmap.  Squash-merge once
-    #1304's placement decision is final, which it now is.
-3.  [#1300] The voting committee and certificate validity (Sebastian).  The pool
+2.  [#1300] The voting committee and certificate validity (Sebastian).  The pool
     state carries the voting key; the committee is materialized at the epoch
     boundary; `LeiosCert` and `ValidLeiosCert`; the key age derived from the KES
     constants.  Its branch builds on #1304's; GitHub refuses to move its base off
