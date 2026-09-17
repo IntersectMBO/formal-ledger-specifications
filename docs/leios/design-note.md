@@ -8,7 +8,7 @@ specification.  This note is the LLF plan: it records the design decisions our A
 work builds on, so that the code encodes settled decisions instead of debating open
 questions.  Each subsection states one decision, cites the source that fixes it, and
 gives the rationale; where every source is silent, the note picks a default and says
-so.
+so.  The [roadmap](roadmap.md) beside this note records where the work stands.
 
 Comments from the consensus and ledger implementers are welcome on all of it; work
 proceeds on these decisions, and corrections are folded in as they arrive.
