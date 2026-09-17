@@ -24,8 +24,8 @@ record GovStructure : Type₁ where
   field cryptoStructure : CryptoStructure
   open CryptoStructure cryptoStructure public
 
-  field leiosCrypto : LeiosCrypto cryptoStructure
-  open LeiosCrypto leiosCrypto public
+  field leiosCryptoStructure : LeiosCryptoStructure cryptoStructure
+  open LeiosCryptoStructure leiosCryptoStructure public
 
   field epochStructure : EpochStructure
   open EpochStructure epochStructure public
