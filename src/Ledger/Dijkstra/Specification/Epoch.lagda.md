@@ -811,7 +811,7 @@ data _⊢_⇀⦇_,NEWEPOCH⦈_ : ⊤ → NewEpochState → Epoch → NewEpochSta
       eps' = applyRUpd ru eps
       ss   = EpochState.ss eps''
       pd'  = calculatePoolDelegatedStake (Snapshots.set ss)
-      cmt' = selectCommittee (PParams.leiosCommitteeSize (PParamsOf eps'')) e pd' (PoolsOf (Snapshots.set ss))
+      cmt' = selectCommittee (PParamsOf eps'') e pd' (PoolsOf (Snapshots.set ss))
     in
       ∙ e ≡ lastEpoch + 1
       ∙ _ ⊢ eps' ⇀⦇ e ,EPOCH⦈ eps''
@@ -827,7 +827,7 @@ data _⊢_⇀⦇_,NEWEPOCH⦈_ : ⊤ → NewEpochState → Epoch → NewEpochSta
     let
       ss   = EpochState.ss eps'
       pd'  = calculatePoolDelegatedStake (Snapshots.set ss)
-      cmt' = selectCommittee (PParams.leiosCommitteeSize (PParamsOf eps')) e pd' (PoolsOf (Snapshots.set ss))
+      cmt' = selectCommittee (PParamsOf eps') e pd' (PoolsOf (Snapshots.set ss))
     in
       ∙ e ≡ lastEpoch + 1
       ∙ _ ⊢ eps ⇀⦇ e ,EPOCH⦈ eps'
