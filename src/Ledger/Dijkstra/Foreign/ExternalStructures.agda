@@ -65,8 +65,8 @@ HsGovParams = record
 open import Ledger.Conway.Specification.TokenAlgebra.Coin Crypto.ScriptHash
    using (Coin-TokenAlgebra)
 
-HSLeiosCrypto : LeiosCrypto HSCryptoStructure
-HSLeiosCrypto = record
+HSLeiosCryptoStructure : LeiosCryptoStructure HSCryptoStructure
+HSLeiosCryptoStructure = record
   { BlsVKey = ℕ
   ; BlsSig  = ℕ
   ; BlsPoP  = ℕ
@@ -90,7 +90,7 @@ instance
     ; epochStructure  = it
     ; globalConstants = it
     ; cryptoStructure = it
-    ; leiosCrypto     = HSLeiosCrypto
+    ; leiosCryptoStructure = HSLeiosCryptoStructure
     ; govParams       = HsGovParams
     ; txidBytes       = id
     ; scriptStructure = it

@@ -17,7 +17,7 @@ wire-format counterpart in the CDDL of CIP-164's Appendix B.[^1]
 
 A type for the fourth, `LeiosCert`{.AgdaRecord}, is defined beside the committee
 whose quorum it certifies.  The hash and signature carriers are fields of the
-era's `LeiosCrypto`{.AgdaRecord} record, which the module takes as a
+era's `LeiosCryptoStructure`{.AgdaRecord} record, which the module takes as a
 parameter.
 
 We represent wire-level integer widths (the `uint16` of a reference
@@ -29,10 +29,10 @@ size, the `uint32` of an announcement size) as `ℕ`.
 
 open import Ledger.Prelude
 open import Ledger.Core.Specification.Crypto using (CryptoStructure)
-open import Ledger.Dijkstra.Specification.Crypto using (LeiosCrypto)
+open import Ledger.Dijkstra.Specification.Crypto using (LeiosCryptoStructure)
 
 module Ledger.Dijkstra.Specification.Leios.Types
-  (cs : CryptoStructure) (lc : LeiosCrypto cs) (open LeiosCrypto lc)
+  (cs : CryptoStructure) (lc : LeiosCryptoStructure cs) (open LeiosCryptoStructure lc)
   where
 ```
 -->
