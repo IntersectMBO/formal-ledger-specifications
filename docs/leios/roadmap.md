@@ -62,10 +62,16 @@ half of key registration.  Open: the registration mechanism itself, on hold.
    against the body.  Not started.
 +  Consensus-spec alignment: the consensus repository's own Agda spec is adding
    the header half ([consensus PR #2278]); the note's [alignment subsection] fixes
-   the division and the adjustments on each side.  LLF side: `SlotLengthᶜ` in the
-   core constants and `certificationDelay` defined once.  Consensus side: the
-   three periods as `Milliseconds` parameters and the copied delay function.  Not
-   started.
+   the division and the adjustments on each side.  Ledger side: `SlotLengthᶜ` in
+   the core constants and the milliseconds-to-slots conversion defined once.
+   Consensus side: the three periods as `Milliseconds` parameters and the copied
+   conversion.  Not started.
++  Common library ([#919]): move the shared units (the epoch structure with
+   `SlotLengthᶜ`, the crypto structures with their hash carriers, `Milliseconds`
+   with its slot conversion) to `agda-cardano-common` and make both specs depend
+   on it; the note's alignment table is the checklist.  After the release
+   candidate; the consensus spec's move to `agda-sets` ([ouroboros-consensus
+   #1677]) and the library's flake ([agda-cardano-common #2]) come first.
 +  `BBODY`: the certificate branch and certified application from the announcing
    state.  Not started.
 +  `CHAIN`: the pending-announcement pin, the timing window, the epoch pin, and the
@@ -88,7 +94,7 @@ preimage of the EB identifier; the voting-state interface; feature gating.
    parameters, not the committee); the block structure follows on #1300; then the
    `½ < τ` follow-up.
 +  Consensus alignment: hand the note's adjustments to the consensus team; the
-   LLF's two items (`SlotLengthᶜ` with `certificationDelay`, the certified-bit
+   ledger's two items (`SlotLengthᶜ` with the slot conversion, the certified-bit
    premise) ride with the block structure.
 
 [#1297]: https://github.com/IntersectMBO/formal-ledger-specifications/pull/1297
@@ -98,3 +104,6 @@ preimage of the EB identifier; the voting-state interface; feature gating.
 [cardano-scaling/CIPs #38]: https://github.com/cardano-scaling/CIPs/pull/38
 [consensus PR #2278]: https://github.com/IntersectMBO/ouroboros-consensus/pull/2278
 [alignment subsection]: design-note.md#alignment-with-the-consensus-specification
+[#919]: https://github.com/IntersectMBO/formal-ledger-specifications/issues/919
+[ouroboros-consensus #1677]: https://github.com/IntersectMBO/ouroboros-consensus/issues/1677
+[agda-cardano-common #2]: https://github.com/input-output-hk/agda-cardano-common/pull/2

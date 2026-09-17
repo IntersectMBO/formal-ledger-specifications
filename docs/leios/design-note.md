@@ -453,9 +453,21 @@ and epoch structures, a trimmed `PParams`, the prelude), so nothing merged here
 reaches it until someone carries it over.
 
 The following records, as of 2026-09-17, where the two specs agree, where they
-must not drift, and what each side should adjust to reconcile the two.  The
-guiding rule: one definition per shared quantity, in the ledger spec, re-typeset
-by the consensus spec the way it re-typesets the other ledger modules.
+must not drift, and what each side should adjust to reconcile the two.
+
+The guiding rule is one definition per shared quantity.  Its target home is the
+common library `agda-cardano-common` ([#919][fls-919], [repository][cardano-common]),
+which both specs will import.  Today that library holds a prelude and the Foreign
+deriving code, no spec depends on it, and the consensus spec's move to `agda-sets`
+([ouroboros-consensus #1677][oc-1677]) has not happened, so the move is work for
+after the release candidate.  In the interim the definition lives in the ledger
+spec and the consensus spec copies it, as it copies the other ledger modules.  The
+table below is therefore two things: the correspondence to keep by hand until then,
+and the list of what moves to the common library, as whole units (the epoch
+structure with `SlotLengthᶜ`, the crypto structures with their hash carriers,
+`Milliseconds` with its slot conversion).  Era-specific parameter records and rules
+never move.  The ledger spec's part now is to place each shared definition in the
+unit it will move with, which costs nothing.
 
 | Consensus spec                                           | Ledger spec                                                                                           | Agreement                                     |
 | -------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- | --------------------------------------------- |
@@ -488,14 +500,17 @@ by the consensus spec the way it re-typesets the other ledger modules.
 
     **Adjustment: ledger**.  `SlotLengthᶜ : Milliseconds`, nonzero, joins the core
     `GlobalConstants` (the committee work already adds the KES constants there,
-    which the consensus copy carries too, so the two records converge), and
-    `certificationDelay : PParams →  ℕ` is defined once, in slots, with the
-    ceiling.
+    which the consensus copy carries too, so the two records converge), and the
+    conversion of a `Milliseconds` duration to slots, `⌈d / SlotLengthᶜ⌉`, is
+    defined once, next to `Milliseconds`; `certificationDelay pp` applies it to the
+    sum of the three parameters.  The conversion is the shared unit and moves to
+    the common library with `Milliseconds`; the function over `PParams` is
+    era-specific and stays in the ledger spec.
 
     **Adjustment: consensus**.  The `GlobalConstants` copy takes the constant, and
-    `certChecks` calls the copied `certificationDelay` instead of summing.  The
-    inequality already agrees: the consensus premise `sℓ + certificationDelay ≤ s`
-    is the CIP's "at least ⌈…⌉ slots after."
+    `certChecks` applies the copied conversion to its own parameters instead of
+    summing slots.  The inequality already agrees: the consensus premise `sℓ +
+    certificationDelay ≤ s` is the CIP's "at least ⌈…⌉ slots after."
 
 
 3.  **No renaming**.  `HashEB` follows that specification's `HashHeader` and
@@ -694,6 +709,9 @@ subtree argued for above, Leios-named as it argues, and inlined nowhere.
 [cl-5965]: https://github.com/IntersectMBO/cardano-ledger/issues/5965
 [cl-6002]: https://github.com/IntersectMBO/cardano-ledger/pull/6002
 [oc-2278]: https://github.com/IntersectMBO/ouroboros-consensus/pull/2278
+[oc-1677]: https://github.com/IntersectMBO/ouroboros-consensus/issues/1677
+[fls-919]: https://github.com/IntersectMBO/formal-ledger-specifications/issues/919
+[cardano-common]: https://github.com/input-output-hk/agda-cardano-common
 [leios-formal-spec]: https://github.com/input-output-hk/ouroboros-leios-formal-spec
 [ol-1046]: https://github.com/input-output-hk/ouroboros-leios/issues/1046
 [cip-incentives]: https://github.com/cardano-scaling/CIPs/blob/leios/CIP-0164/README.md#incentives
