@@ -107,7 +107,7 @@ record TransactionStructure : Type₁ where
     adHashingScheme        : isHashableSet AuxiliaryData
     globalConstants        : GlobalConstants
     cryptoStructure        : CryptoStructure
-    leiosCrypto            : LeiosCrypto cryptoStructure
+    leiosCryptoStructure   : LeiosCryptoStructure cryptoStructure
     epochStructure         : EpochStructure
 ```
 <!--
@@ -160,7 +160,7 @@ record TransactionStructure : Type₁ where
     -- TODO: figure out what to do with the hash
     { TxId = TxId; DocHash = ADHash
     ; cryptoStructure = cryptoStructure
-    ; leiosCrypto = leiosCrypto
+    ; leiosCryptoStructure = leiosCryptoStructure
     ; epochStructure = epochStructure
     ; scriptStructure = scriptStructure
     ; govParams = govParams
