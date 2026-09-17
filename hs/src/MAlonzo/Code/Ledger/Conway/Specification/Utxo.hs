@@ -2582,7 +2582,7 @@ du_Dec'45'inInterval_3106 v0 v1 v2
                               (let v8
                                      = MAlonzo.Code.Class.Decidable.Core.d_dec_16
                                          (coe
-                                            MAlonzo.Code.Class.HasOrder.Core.d_dec'45''8804'_272
+                                            MAlonzo.Code.Class.HasOrder.Core.d_dec'45''60'_274
                                             (MAlonzo.Code.Ledger.Core.Specification.Epoch.d_DecPo'45'Slot_86
                                                (coe
                                                   MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_epochStructure_1786
@@ -2666,7 +2666,7 @@ du_Dec'45'inInterval_3106 v0 v1 v2
                          -> let v6
                                   = MAlonzo.Code.Class.Decidable.Core.d_dec_16
                                       (coe
-                                         MAlonzo.Code.Class.HasOrder.Core.d_dec'45''8804'_272
+                                         MAlonzo.Code.Class.HasOrder.Core.d_dec'45''60'_274
                                          (MAlonzo.Code.Ledger.Core.Specification.Epoch.d_DecPo'45'Slot_86
                                             (coe
                                                MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_epochStructure_1786
