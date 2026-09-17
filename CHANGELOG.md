@@ -5,6 +5,7 @@
 ### WIP
 
 - Add the nine Leios protocol parameters to `PParams`, in the network and security groups, with their `PParamsUpdate` companions (CIP-164 Table 3; cardano-ledger #5965).  The committee is governed by size (`leiosCommitteeSize`), and zero-valued Leios parameters stay well-formed as the protocol's disabled state.
+- Add `LeiosCryptoStructure`, a Dijkstra-local extension of `CryptoStructure` carried by `GovStructure`, with the abstract BLS voting primitives, the committee's key-hash order, and the Leios hash carriers; add the Leios primitive types `EndorserBlock`, `Announcement`, and `Vote` (CIP-164).
 - Move cert-deposit helpers from `Utxo` to `Certs`.
 - Fix `updateCertDeposits`: use `foldl` (CERTS is head-first).
 - Add `HasCoin-UTxOState` and `HasCoin-LedgerState` instances; the latter sums UTxO total, rewards balance, and all three deposit fields.

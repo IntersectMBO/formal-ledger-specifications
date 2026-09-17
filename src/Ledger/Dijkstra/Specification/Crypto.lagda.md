@@ -40,21 +40,27 @@ record LeiosCryptoStructure (cs : CryptoStructure) : Type₁ where
   field
     BlsVKey BlsSig BlsPoP  : Type
     isValidPoP             : BlsVKey → BlsPoP → Type
-    isSignedBy             : BlsVKey → Ser → BlsSig → Type
-    isSignedByAggregate    : List BlsVKey → Ser → BlsSig → Type
+    isSignedByAggregate    : ℙ BlsVKey → Ser → BlsSig → Type
+
+  isSignedBy : BlsVKey → Ser → BlsSig → Type
+  isSignedBy vk = isSignedByAggregate ❴ vk ❵
 ```
 
 +  `isValidPoP`{.AgdaField} checks a voting key's *proof of possession* (PoP), which
    every registration carries ([Key Registration and Rotation][cip-keyreg]) because
    aggregation is otherwise open to rogue-key attacks.[^2]
-+  `isSignedBy`{.AgdaField} verifies a single vote, and consensus uses this to
-   filter votes before aggregation;
-+  `isSignedByAggregate`{.AgdaField} verifies a certificate's aggregate signature,
-   in serialized form, against the keys of the seats that signed.
++  `isSignedByAggregate`{.AgdaField} verifies a certificate's aggregate signature
+   over a message, given in serialized form, against the keys of the seats that
+   signed.
++  `isSignedBy`{.AgdaFunction} verifies a single vote, the check by which consensus
+   filters votes before aggregation.  It is not a further primitive: for BLS an
+   aggregate over one key verifies exactly when the single signature does, so it
+   is the singleton case of `isSignedByAggregate`{.AgdaField} by definition.
 
-Aggregation of keys does not depend on their order.  Nonetheless, we keep the keys
-in a list rather than a set because their multiplicity *does* matter; indeed, two
-seats holding the same key both contribute to the aggregate.
+The keys form a set rather than a list.  A voting key can be registered by at most
+one pool, as a VRF key can, a premise of the registration rule; so no two seats
+share a key, and an aggregate signature is determined by which keys signed, not by
+how often or in what order.
 
 ## The Committee Order
 
@@ -98,12 +104,15 @@ identifier's byte-exact preimage is deliberately unpinned.
     ⦃ DecEq-BlsSig  ⦄            : DecEq BlsSig
     ⦃ DecEq-BlsPoP  ⦄            : DecEq BlsPoP
     ⦃ Dec-isValidPoP ⦄           : isValidPoP ⁇²
-    ⦃ Dec-isSignedBy ⦄           : isSignedBy ⁇³
     ⦃ Dec-isSignedByAggregate ⦄  : isSignedByAggregate ⁇³
     ⦃ Dec-<ᵏʰ ⦄                  : _<ᵏʰ_ ⁇²
     ⦃ DecEq-EBHash ⦄             : DecEq EBHash
     ⦃ DecEq-TxRefHash ⦄          : DecEq TxRefHash
     ⦃ DecEq-RBHeaderHash ⦄       : DecEq RBHeaderHash
+
+  instance
+    Dec-isSignedBy : isSignedBy ⁇³
+    Dec-isSignedBy = Dec-isSignedByAggregate
 ```
 -->
 
