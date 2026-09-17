@@ -24,6 +24,12 @@ instance
   HsTy-StakePoolParams = autoHsType StakePoolParams
   Conv-StakePoolParams = autoConvert StakePoolParams
 
+  HsTy-BlsKeyState = autoHsType BlsKeyState
+  Conv-BlsKeyState = autoConvert BlsKeyState
+
+  HsTy-StakePoolState = autoHsType StakePoolState
+  Conv-StakePoolState = autoConvert StakePoolState
+
   HsTy-DCert = autoHsType DCert
   Conv-DCert = autoConvert DCert
 

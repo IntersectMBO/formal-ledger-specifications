@@ -156,7 +156,7 @@ uncurryᵐ {A} {B} {C} abc = mapFromPartialFun lookup' domain'
     domain' : ℙ (A × B)
     domain' = joinˢ (range (mapWithKey (λ a bc → range (mapWithKey (λ b _ → (a , b)) bc)) abc))
 
-reward :  PParams → BlocksMade → Coin → Pools → Stake → StakeDelegs → Coin → Stake
+reward :  PParams → BlocksMade → Coin → (KeyHash ⇀ StakePoolParams) → Stake → StakeDelegs → Coin → Stake
 reward pp blocks rewardPot pools stake delegs total = rewards
   where
     active      = ∑[ c ← stake ] c
