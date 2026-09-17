@@ -31,7 +31,7 @@ open import Ledger.Core.Specification.Crypto
 
 We represent the cryptographic structures of the Leios voting scheme using
 abstract types to encode verification keys, signatures, and proofs of
-possession.[^1]
+possession.
 
 ```agda
 record LeiosCryptoStructure (cs : CryptoStructure) : Type₁ where
@@ -48,7 +48,7 @@ record LeiosCryptoStructure (cs : CryptoStructure) : Type₁ where
 
 +  `isValidPoP`{.AgdaField} checks a voting key's *proof of possession* (PoP), which
    every registration carries ([Key Registration and Rotation][cip-keyreg]) because
-   aggregation is otherwise open to rogue-key attacks.[^2]
+   aggregation is otherwise open to rogue-key attacks.[^1]
 +  `isSignedByAggregate`{.AgdaField} verifies a certificate's aggregate signature
    over a message, given in serialized form, against the keys of the seats that
    signed.
@@ -80,8 +80,8 @@ total order.
 Leios names its objects by hash.
 
 +  `EBHash`{.AgdaField} identifies an endorser block;
-+  `TxRefHash`{.AgdaField} identifies a referenced transaction, which is the hash
-   of the transaction bytes, not of the transaction id ([Appendix B][cip-cddl]);
++  `TxRefHash`{.AgdaField} identifies a referenced transaction by the hash of its
+   complete bytes, not by its transaction id;
 +  `RBHeaderHash`{.AgdaField} denotes the announcing ranking-block header, which
    is the message a committee vote signs;
 +  `hashEBRefs`{.AgdaField} encodes an endorser block's identifier from its
@@ -118,13 +118,9 @@ identifier's byte-exact preimage is deliberately unpinned.
 
 ---
 
-[^1]: [Appendix B][cip-cddl] of [CIP-164][] describes the cryptographic objects
-      that these types model.
-
-[^2]: A key crafted relative to someone else's key could make the aggregate appear
+[^1]: A key crafted relative to someone else's key could make the aggregate appear
       as if it includes a voter who never signed.
 
 [CIP-164]: https://github.com/cardano-scaling/CIPs/blob/leios/CIP-0164/README.md
-[cip-cddl]: https://github.com/cardano-scaling/CIPs/blob/leios/CIP-0164/README.md#appendix-b-cddl
 [cip-committee]: https://github.com/cardano-scaling/CIPs/blob/leios/CIP-0164/README.md#committee-structure
 [cip-keyreg]: https://github.com/cardano-scaling/CIPs/blob/leios/CIP-0164/README.md#key-registration
