@@ -270,6 +270,7 @@ nav:
         - PoV: Ledger.Dijkstra.Specification.Ledger.Properties.PoV.md
     - Leios/:
       - Types: Ledger.Dijkstra.Specification.Leios.Types.md
+      - Validity: Ledger.Dijkstra.Specification.Leios.Validity.md
     - PoolReap: Ledger.Dijkstra.Specification.PoolReap.md
     - PoolReap/:
       - Properties: Ledger.Dijkstra.Specification.PoolReap.Properties.md
