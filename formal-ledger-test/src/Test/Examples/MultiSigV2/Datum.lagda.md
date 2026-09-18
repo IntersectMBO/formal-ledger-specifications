@@ -11,22 +11,22 @@ module Test.Examples.MultiSigV2.Datum where
 
 open import Tactic.Derive.DecEq
 
-data Label : Set where
-  Holding : Label
-  Collecting : ℕ -> ℕ -> ℕ -> List ℕ -> Label
+data Datum : Set where
+  Holding : Datum
+  Collecting : ℕ -> ℕ -> ℕ -> List ℕ -> Datum
 instance
-  unquoteDecl DecEq-Label = derive-DecEq
-    ((quote Label , DecEq-Label) ∷ [])
+  unquoteDecl DecEq-Datum = derive-DecEq
+    ((quote Datum , DecEq-Datum) ∷ [])
 
-data Input : Set where
-  Propose : ℕ -> ℕ -> ℕ -> Input
-  Add     : ℕ -> Input
-  Pay     : Input
-  Cancel  : Input
-  Cleanup : Input
+data Redeemer : Set where
+  Propose : ℕ -> ℕ -> ℕ -> Redeemer
+  Add     : ℕ -> Redeemer
+  Pay     : Redeemer
+  Cancel  : Redeemer
+  Stop    : Redeemer
 instance
-  unquoteDecl DecEq-Input = derive-DecEq
-    ((quote Input , DecEq-Input) ∷ [])
+  unquoteDecl DecEq-Redeemer = derive-DecEq
+    ((quote Redeemer , DecEq-Redeemer) ∷ [])
 
-MultiSigData = Label ⊎ Input
+MultiSigData = Datum ⊎ Redeemer
 ```

@@ -33,7 +33,7 @@ instance
 
 open import Test.LedgerImplementation SData SData
 
-open TransactionStructure SVTransactionStructure
+open TransactionStructure SVTransactionStructure renaming (Datum to SCDatum) hiding (Redeemer)
 
 emptyValue : Value
 emptyValue = 0
@@ -71,14 +71,14 @@ record Params : Set where
     buyC : ℕ
 
 
-getInlineOutputDatum : STxOut → List DExData → Maybe Datum
+getInlineOutputDatum : STxOut → List DExData → Maybe SCDatum
 getInlineOutputDatum (a , b , just (inj₁ (inj₁ x))) dats = just (inj₁ (inj₁ x))
 getInlineOutputDatum (a , b , just (inj₁ (inj₂ y))) dats = nothing
 getInlineOutputDatum (a , b , just (inj₂ y)) dats = nothing
 getInlineOutputDatum (a , b , nothing) dats = nothing
 
-newLabel : ScriptContext -> Maybe Label
-newLabel (record { realizedInputs = realizedInputs ; txouts = txouts ; fee = fee ; mint = mint ; txwdrls = txwdrls ; txvldt = txvldt ; vkey = vkey ; txdats = txdats ; txid = txid } , snd) with
+newDatum : ScriptContext -> Maybe Datum
+newDatum (record { realizedInputs = realizedInputs ; txouts = txouts ; fee = fee ; mint = mint ; txwdrls = txwdrls ; txvldt = txvldt ; vkey = vkey ; txdats = txdats ; txid = txid } , snd) with
   mapMaybe (λ x → getInlineOutputDatum x txdats) (map proj₂ txouts)
 ... | [] = nothing
 ... | inj₁ (inj₁ x) ∷ [] = just x
@@ -168,16 +168,16 @@ checkOwnerPayment pkh v (Q.mkℚ (ℤ.pos n) denominator-1 isCoprime) ctx =
   ⌊ totalOuts ctx pkh ≥? (_+_ {{addValue}} (totalIns ctx pkh) ((v * n) / (N.suc denominator-1)))  ⌋
 checkOwnerPayment pkh v (Q.mkℚ (ℤ.negsuc n) denominator-1 isCoprime) ctx = false
 
-agdaValidator : Params -> Label -> Input -> ScriptContext -> Bool
+agdaValidator : Params -> Datum -> Redeemer -> ScriptContext -> Bool
 agdaValidator par (Always q o) inp ctx = (case inp of λ where
   (Update v r) -> checkSigned o ctx && checkRational r &&
                   checkMinValue v && (newValue ctx == just v) &&
-                  (newLabel ctx == just (Always r o)) && continuing ctx
+                  (newDatum ctx == just (Always r o)) && continuing ctx
   (Exchange pkh amt) -> ((oldValue ctx) == (maybeMap (_+_ {{addValue}} amt) (newValue ctx))) &&
-                        (newLabel ctx == just (Always q o)) &&
+                        (newDatum ctx == just (Always q o)) &&
                         checkOwnerPayment o amt q ctx && checkBuyerPayment pkh amt q ctx &&
                         checkMinValue amt && continuing ctx 
-  Close -> checkSigned o ctx && not (continuing ctx) ) 
+  Stop -> checkSigned o ctx && not (continuing ctx) ) 
 
 
 dexValidator : Params → Maybe SData → Maybe SData → List SData → Bool
