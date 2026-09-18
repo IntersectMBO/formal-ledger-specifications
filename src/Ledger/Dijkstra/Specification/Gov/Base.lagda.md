@@ -11,6 +11,7 @@ module Ledger.Dijkstra.Specification.Gov.Base where
 open import Prelude using (Type; it)
 open import Class.DecEq
 open import Ledger.Core.Specification.Crypto
+open import Ledger.Dijkstra.Specification.Crypto
 open import Ledger.Core.Specification.Epoch
 open import Ledger.Dijkstra.Specification.Script.Base
 import Ledger.Dijkstra.Specification.PParams
@@ -22,6 +23,9 @@ record GovStructure : Type₁ where
 
   field cryptoStructure : CryptoStructure
   open CryptoStructure cryptoStructure public
+
+  field leiosCryptoStructure : LeiosCryptoStructure cryptoStructure
+  open LeiosCryptoStructure leiosCryptoStructure public
 
   field epochStructure : EpochStructure
   open EpochStructure epochStructure public
