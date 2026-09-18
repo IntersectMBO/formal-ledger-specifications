@@ -29,8 +29,7 @@ updated 2026-09-17, after the parameters and the design note merged.
 2.  [#1300] The voting committee and certificate validity (Sebastian).  The pool
     state carries the voting key; the committee is materialized at the epoch
     boundary; `LeiosCert` and `ValidLeiosCert`; the key age derived from the KES
-    constants.  Its branch builds on #1304's; GitHub refuses to move its base off
-    `leios-main`, so its diff overlaps #1304's until that merges.
+    constants.  Stacked on #1304.
 
 Parked branches, no PR: `leios-bls-key-registration` holds the dedicated-certificate
 registration (one commit on #1300's branch) until the registration mechanism is
@@ -59,9 +58,20 @@ half of key registration.  Open: the registration mechanism itself, on hold.
 **Integration.**
 
 +  Block structure: the announcement on the header body, the certificate with the
-   certified EB and its closure on the block.  Not started; the consensus
-   repository's own Agda spec is adding the header half ([consensus PR #2278]),
-   so the two must agree.
+   certified EB and its closure on the block, the header's certified bit checked
+   against the body.  Not started.
++  Consensus-spec alignment: the consensus repository's own Agda spec is adding
+   the header half ([consensus PR #2278]); the note's [alignment subsection] fixes
+   the division and the adjustments on each side.  Ledger side: `SlotLengthᶜ` in
+   the core constants and the milliseconds-to-slots conversion defined once.
+   Consensus side: the three periods as `Milliseconds` parameters and the copied
+   conversion.  Not started.
++  Common library ([#919]): move the shared units (the epoch structure with
+   `SlotLengthᶜ`, the crypto structures with their hash carriers, `Milliseconds`
+   with its slot conversion) to `agda-cardano-common` and make both specs depend
+   on it; the note's alignment table is the checklist.  After the release
+   candidate; the consensus spec's move to `agda-sets` ([ouroboros-consensus
+   #1677]) and the library's flake ([agda-cardano-common #2]) come first.
 +  `BBODY`: the certificate branch and certified application from the announcing
    state.  Not started.
 +  `CHAIN`: the pending-announcement pin, the timing window, the epoch pin, and the
@@ -78,13 +88,14 @@ preimage of the EB identifier; the voting-state interface; feature gating.
 
 ## Next
 
-+  Land the queue above in order, then retarget and rebase #1300.
++  Land the queue above in order; #1300 rebases onto `leios-main` once #1304
+   merges.
 +  `ValidEB` is being drafted on #1304's branch (it needs the types and the
    parameters, not the committee); the block structure follows on #1300; then the
    `½ < τ` follow-up.
-+  Keep the header question moving with consensus: the ledger's header classes and
-   `cardano-protocol` package already carry the Leios fields, and the consensus
-   spec's chain-head rules pin the announcement the way `CHAIN` will.
++  Consensus alignment: hand the note's adjustments to the consensus team; the
+   ledger's two items (`SlotLengthᶜ` with the slot conversion, the certified-bit
+   premise) ride with the block structure.
 
 [#1297]: https://github.com/IntersectMBO/formal-ledger-specifications/pull/1297
 [#1300]: https://github.com/IntersectMBO/formal-ledger-specifications/pull/1300
@@ -92,3 +103,7 @@ preimage of the EB identifier; the voting-state interface; feature gating.
 [#1317]: https://github.com/IntersectMBO/formal-ledger-specifications/pull/1317
 [cardano-scaling/CIPs #38]: https://github.com/cardano-scaling/CIPs/pull/38
 [consensus PR #2278]: https://github.com/IntersectMBO/ouroboros-consensus/pull/2278
+[alignment subsection]: design-note.md#alignment-with-the-consensus-specification
+[#919]: https://github.com/IntersectMBO/formal-ledger-specifications/issues/919
+[ouroboros-consensus #1677]: https://github.com/IntersectMBO/ouroboros-consensus/issues/1677
+[agda-cardano-common #2]: https://github.com/input-output-hk/agda-cardano-common/pull/2
