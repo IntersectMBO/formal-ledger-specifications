@@ -59,6 +59,7 @@ record PlutusStructure : Type₁ where
         ⦃ DecEq-Language           ⦄ : DecEq Language
         ⦃ Show-Language            ⦄ : Show Language
 
+  infix 4 _≥ᵉ_
   field  _≥ᵉ_              : ExUnits → ExUnits → Type
          ⦃ ≥ᵉ-Dec ⦄        : _≥ᵉ_ ⁇²
          ⦃ DecEq-ExUnits ⦄ : DecEq ExUnits
