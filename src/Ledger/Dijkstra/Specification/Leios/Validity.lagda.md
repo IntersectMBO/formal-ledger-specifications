@@ -1,5 +1,5 @@
 ---
-source_branch: master
+source_branch: leios-main
 source_path: src/Ledger/Dijkstra/Specification/Leios/Validity.lagda.md
 ---
 
@@ -62,10 +62,12 @@ record WithinEBBounds (pp : PParams) (ls : LedgerState)
     refScriptsOK  : (∑ˡ[ tx ← closure ] refScriptsSize tx (UTxOOf ls)) ≤ PParams.leiosMaxRefScriptSizePerEB pp
 ```
 
-The four bounds are the endorser-block analogues of a block's: the block's own
-size, the total size of the transactions it lists, their script execution
-budget, and the reference scripts they load from the UTxO.  The last needs the
-ledger state, since reference scripts live in outputs.
+The four fields cover the five bounds of CIP-164's Table 3, the endorser-block
+analogues of a block's: the block's own size (`S_EB`), the total size of the
+transactions it lists (`S_EB-tx`), their Plutus steps and memory (the two budget
+rows, one `ExUnits` field), and the reference scripts they load from the UTxO
+(`S_EB-ref`).  The last needs the ledger state, since reference scripts live in
+outputs.
 
 *Validity*
 ```agda
