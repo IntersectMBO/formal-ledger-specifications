@@ -705,10 +705,6 @@ prefer not to use Nix.
       flake.lock
     ```
 
-    The `abstract-set-theory`, `iog-prelude`, `standard-library-classes`, and
-    `standard-library-meta` lines are the four libraries you need to clone.  The
-    standard library itself comes from the pinned `nixpkgs` rather than from a flake
-    input of its own; it is version 2.3 as of this writing.
 
 3.  **Clone the required Agda libraries**, checking out the revisions printed above.
 
@@ -873,21 +869,13 @@ available, on your system. For example,
 sudo update-alternatives --install /usr/bin/agda agda ~/.cabal/bin/agda-2.8.0 10
 ```
 
-The separate `agda-mode` executable is deprecated as of Agda 2.8.0, and
-`~/ledger-agda/bin` contains only `agda`, so there is nothing to register alongside it;
-use `agda --emacs-mode` instead, as described in step 1 of the [Emacs](#emacs)
-instructions above.  If you also manage an Agda older than 2.8.0, register its
-`agda-mode` as well, so that you can select the pair together.
-
 ```bash
-sudo update-alternatives --install /usr/bin/agda-mode agda-mode ~/.cabal/bin/agda-mode-2.7.0.1 10
 ```
 
 Then choose which Agda version you want to use.
 
 ```bash
 sudo update-alternatives --config agda
-sudo update-alternatives --config agda-mode   # only if you registered an older agda-mode
 ```
 
 ---
