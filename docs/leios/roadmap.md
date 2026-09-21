@@ -5,8 +5,9 @@
 Where the Leios Ledger Formalization stands on `leios-main`, what is in review, in
 what order it lands, and what remains.  The [design note](design-note.md) records
 the decisions; this file records the state, and is updated as PRs merge.  Last
-updated 2026-09-22, after Carlos approved [#1304] and Andre's review comments on it
-were addressed.
+updated 2026-09-22, after the consensus-alignment subsection merged, `leios-main`
+was merged with `master`, and Carlos approved [#1304] with Andre's review comments
+addressed.
 
 ## Merged
 
@@ -17,7 +18,11 @@ were addressed.
 
 +  [#1297] The design note and this roadmap, squash-merged 2026-09-17.
 
-`leios-main` was fast-forwarded to `master` on 2026-09-16 before these merges.
++  [#1329] The note's alignment with the consensus specification, squash-merged
+   2026-09-18.
+
+`leios-main` was fast-forwarded to `master` on 2026-09-16 before these merges and
+merged with `master` again on 2026-09-21.
 
 ## In review, in merge order
 
@@ -33,11 +38,17 @@ were addressed.
     state carries the voting key; the committee is materialized at the epoch
     boundary; `LeiosCert` and `ValidLeiosCert`; the key age derived from the KES
     constants.  Stacked on #1304.
+3.  [#1330] Endorser-block validity (William): `ValidEB` in `Leios.Validity`,
+    reference and closure agreement, the five Table 3 bounds, and the
+    valid-extension conjunct through `LEDGERS`.  Stacked on #1304; independent of
+    #1300.
 
-Parked branches, no PR: `leios-bls-key-registration` holds the dedicated-certificate
-registration (one commit on #1300's branch) until the registration mechanism is
-decided ([cardano-scaling/CIPs #38], cardano-ledger 6048); `leios-bls-committee-pre-split`
-is a backup of #1300's head before the split, to delete once #1300 merges.
+The registration mechanism was decided on 2026-09-21: no new certificate type; the
+voting key and its proof of possession travel as an optional field of the
+pool-registration certificate, as the CIP specifies ([Key Registration and
+Rotation]).  The branch `leios-bls-key-registration` (dedicated certificate) is
+therefore obsolete, to be deleted; `leios-bls-committee-pre-split` is a backup of
+#1300's head before the split, to delete once #1300 merges.
 
 ## What remains
 
@@ -45,7 +56,9 @@ The milestones are those of the six-week plan; items are done when merged.
 
 **Foundations.**  All five items are in the PRs above: the design note, the
 abstract voting crypto, the primitive types, the parameters, and the pool-state
-half of key registration.  Open: the registration mechanism itself, on hold.
+half of key registration.  Open: the registration premise on `POOL` (the
+optional key with its proof of possession in the pool-registration certificate),
+next after #1300.
 
 **Validity.**
 
@@ -56,8 +69,7 @@ half of key registration.  Open: the registration mechanism itself, on hold.
 +  Vote validity: out of scope, decided 2026-09-22 in the review of [#1304]: vote
    validation is node behavior, and a specification of the consensus↔ledger
    interface, if one is written, is where it belongs (the note's addendum).
-+  `ValidEB`: not started.  Reference and closure agreement, the per-EB bounds, and
-   the valid-extension conjunct through `LEDGERS`.
++  `ValidEB`: in #1330.
 
 **Integration.**
 
@@ -76,6 +88,7 @@ half of key registration.  Open: the registration mechanism itself, on hold.
    on it; the note's alignment table is the checklist.  After the release
    candidate; the consensus spec's move to `agda-sets` ([ouroboros-consensus
    #1677]) and the library's flake ([agda-cardano-common #2]) come first.
+   Decision 2026-09-21: copies by hand until after the first release.
 +  `BBODY`: the certificate branch and certified application from the announcing
    state.  Not started.
 +  `CHAIN`: the pending-announcement pin, the timing window, the epoch pin, and the
@@ -92,11 +105,10 @@ preimage of the EB identifier; the voting-state interface; feature gating.
 
 ## Next
 
-+  Land the queue above in order; #1300 rebases onto `leios-main` once #1304
-   merges.
-+  `ValidEB` is being drafted on #1304's branch (it needs the types and the
-   parameters, not the committee); the block structure follows on #1300; then the
-   `½ < τ` follow-up.
++  Land the queue above in order; #1300 and #1330 rebase onto `leios-main` once
+   #1304 squash-merges.
++  After #1300: the registration premise on `POOL`, then the block structure; the
+   `½ < τ` follow-up alongside.
 +  Consensus alignment: hand the note's adjustments to the consensus team; the
    ledger's two items (`SlotLengthᶜ` with the slot conversion, the certified-bit
    premise) ride with the block structure.
@@ -105,6 +117,9 @@ preimage of the EB identifier; the voting-state interface; feature gating.
 [#1300]: https://github.com/IntersectMBO/formal-ledger-specifications/pull/1300
 [#1304]: https://github.com/IntersectMBO/formal-ledger-specifications/pull/1304
 [#1317]: https://github.com/IntersectMBO/formal-ledger-specifications/pull/1317
+[#1329]: https://github.com/IntersectMBO/formal-ledger-specifications/pull/1329
+[#1330]: https://github.com/IntersectMBO/formal-ledger-specifications/pull/1330
+[Key Registration and Rotation]: https://github.com/cardano-foundation/CIPs/blob/master/CIP-0164/README.md#key-registration
 [cardano-scaling/CIPs #38]: https://github.com/cardano-scaling/CIPs/pull/38
 [consensus PR #2278]: https://github.com/IntersectMBO/ouroboros-consensus/pull/2278
 [alignment subsection]: design-note.md#alignment-with-the-consensus-specification
