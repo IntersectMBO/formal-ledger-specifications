@@ -689,24 +689,834 @@ d_Computational'45'DELEG_1648 v0
                                                                               (case coe v18 of
                                                                                  MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v19 v20
                                                                                    -> if coe v19
-                                                                                        then coe
-                                                                                               ("\172 (Class.IsSet.IsSet-Set (.Axiom.Set.Theory\7496.th List-Model\7496)\n   Class.IsSet.IsSet.\8712 mc)\n  ((.Axiom.Set.Theory\7496.th List-Model\7496 Axiom.Set.Theory.\8746\n    Axiom.Set.Theory.map (.Axiom.Set.Theory\7496.th List-Model\7496) just\n    (Class.IsSet.dom (.Axiom.Set.Theory\7496.th List-Model\7496)\n     (.Ledger.Conway.Specification.Certs.DelegEnv.pools de)))\n   (Class.HasSingleton.HasSingleton.\10100\n    Class.HasSingleton.HasSingletonSet-Set\n    (.Axiom.Set.Theory\7496.th List-Model\7496)\n    \10101\n    nothing))"
-                                                                                                ::
-                                                                                                Data.Text.Text)
+                                                                                        then let v21
+                                                                                                   = coe
+                                                                                                       MAlonzo.Code.QstdlibZ45Zmeta.Tactic.GenError.du_decideOne_8
+                                                                                                       (coe
+                                                                                                          MAlonzo.Code.Axiom.Set.du_Dec'45''8712'_1720
+                                                                                                          (coe
+                                                                                                             MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8)
+                                                                                                          (coe
+                                                                                                             MAlonzo.Code.Class.DecEq.Instances.du_DecEq'45'Maybe_142
+                                                                                                             (coe
+                                                                                                                MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
+                                                                                                                (coe
+                                                                                                                   MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_220
+                                                                                                                   (coe
+                                                                                                                      MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.d_cryptoStructure_616
+                                                                                                                      (coe
+                                                                                                                         v0)))))
+                                                                                                          (coe
+                                                                                                             v7)
+                                                                                                          (coe
+                                                                                                             MAlonzo.Code.Axiom.Set.du__'8746'__708
+                                                                                                             (coe
+                                                                                                                MAlonzo.Code.Axiom.Set.d_th_1516
+                                                                                                                (coe
+                                                                                                                   MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                                                             (coe
+                                                                                                                MAlonzo.Code.Axiom.Set.du_map_426
+                                                                                                                (MAlonzo.Code.Axiom.Set.d_th_1516
+                                                                                                                   (coe
+                                                                                                                      MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                                                                (coe
+                                                                                                                   MAlonzo.Code.Agda.Builtin.Maybe.C_just_16)
+                                                                                                                (coe
+                                                                                                                   MAlonzo.Code.Class.IsSet.du_dom_586
+                                                                                                                   (coe
+                                                                                                                      MAlonzo.Code.Axiom.Set.d_th_1516
+                                                                                                                      (coe
+                                                                                                                         MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                                                                   (coe
+                                                                                                                      MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_594)
+                                                                                                                   (coe
+                                                                                                                      MAlonzo.Code.Ledger.Conway.Specification.Certs.d_pools_1486
+                                                                                                                      (coe
+                                                                                                                         v1))))
+                                                                                                             (coe
+                                                                                                                MAlonzo.Code.Axiom.Set.du_'10100'_'10101'_480
+                                                                                                                (MAlonzo.Code.Axiom.Set.d_th_1516
+                                                                                                                   (coe
+                                                                                                                      MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                                                                erased
+                                                                                                                (coe
+                                                                                                                   MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18)))) in
+                                                                                             coe
+                                                                                               (case coe
+                                                                                                       v21 of
+                                                                                                  MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v22 v23
+                                                                                                    -> if coe
+                                                                                                            v22
+                                                                                                         then coe
+                                                                                                                (""
+                                                                                                                 ::
+                                                                                                                 Data.Text.Text)
+                                                                                                         else coe
+                                                                                                                ("\172 (Class.IsSet.IsSet-Set (.Axiom.Set.Theory\7496.th List-Model\7496)\n   Class.IsSet.IsSet.\8712 mc)\n  ((.Axiom.Set.Theory\7496.th List-Model\7496 Axiom.Set.Theory.\8746\n    Axiom.Set.Theory.map (.Axiom.Set.Theory\7496.th List-Model\7496) just\n    (Class.IsSet.dom (.Axiom.Set.Theory\7496.th List-Model\7496)\n     (.Ledger.Conway.Specification.Certs.DelegEnv.pools de)))\n   (Class.HasSingleton.HasSingleton.\10100\n    Class.HasSingleton.HasSingletonSet-Set\n    (.Axiom.Set.Theory\7496.th List-Model\7496)\n    \10101\n    nothing))"
+                                                                                                                 ::
+                                                                                                                 Data.Text.Text)
+                                                                                                  _ -> MAlonzo.RTE.mazUnreachableError)
                                                                                         else coe
-                                                                                               ("\172 (Class.IsSet.IsSet-Set (.Axiom.Set.Theory\7496.th List-Model\7496)\n   Class.IsSet.IsSet.\8712 mv)\n  ((.Axiom.Set.Theory\7496.th List-Model\7496 Axiom.Set.Theory.\8746\n    Axiom.Set.Theory.map (.Axiom.Set.Theory\7496.th List-Model\7496)\n    (\955 x \8594 just (vDelegCredential x))\n    (.Ledger.Conway.Specification.Certs.DelegEnv.delegatees de))\n   (Axiom.Set.Theory.fromList (.Axiom.Set.Theory\7496.th List-Model\7496)\n    (nothing \8759 just vDelegAbstain \8759 just vDelegNoConfidence \8759 [])))"
-                                                                                                ::
-                                                                                                Data.Text.Text)
+                                                                                               MAlonzo.Code.QstdlibZ45Zmeta.Tactic.GenError.d_joinMsgs_20
+                                                                                               (coe
+                                                                                                  ("\172 (Class.IsSet.IsSet-Set (.Axiom.Set.Theory\7496.th List-Model\7496)\n   Class.IsSet.IsSet.\8712 mv)\n  ((.Axiom.Set.Theory\7496.th List-Model\7496 Axiom.Set.Theory.\8746\n    Axiom.Set.Theory.map (.Axiom.Set.Theory\7496.th List-Model\7496)\n    (\955 x \8594 just (vDelegCredential x))\n    (.Ledger.Conway.Specification.Certs.DelegEnv.delegatees de))\n   (Axiom.Set.Theory.fromList (.Axiom.Set.Theory\7496.th List-Model\7496)\n    (nothing \8759 just vDelegAbstain \8759 just vDelegNoConfidence \8759 [])))"
+                                                                                                   ::
+                                                                                                   Data.Text.Text))
+                                                                                               (let v21
+                                                                                                      = coe
+                                                                                                          MAlonzo.Code.QstdlibZ45Zmeta.Tactic.GenError.du_decideOne_8
+                                                                                                          (coe
+                                                                                                             MAlonzo.Code.Axiom.Set.du_Dec'45''8712'_1720
+                                                                                                             (coe
+                                                                                                                MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8)
+                                                                                                             (coe
+                                                                                                                MAlonzo.Code.Class.DecEq.Instances.du_DecEq'45'Maybe_142
+                                                                                                                (coe
+                                                                                                                   MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
+                                                                                                                   (coe
+                                                                                                                      MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_220
+                                                                                                                      (coe
+                                                                                                                         MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.d_cryptoStructure_616
+                                                                                                                         (coe
+                                                                                                                            v0)))))
+                                                                                                             (coe
+                                                                                                                v7)
+                                                                                                             (coe
+                                                                                                                MAlonzo.Code.Axiom.Set.du__'8746'__708
+                                                                                                                (coe
+                                                                                                                   MAlonzo.Code.Axiom.Set.d_th_1516
+                                                                                                                   (coe
+                                                                                                                      MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                                                                (coe
+                                                                                                                   MAlonzo.Code.Axiom.Set.du_map_426
+                                                                                                                   (MAlonzo.Code.Axiom.Set.d_th_1516
+                                                                                                                      (coe
+                                                                                                                         MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                                                                   (coe
+                                                                                                                      MAlonzo.Code.Agda.Builtin.Maybe.C_just_16)
+                                                                                                                   (coe
+                                                                                                                      MAlonzo.Code.Class.IsSet.du_dom_586
+                                                                                                                      (coe
+                                                                                                                         MAlonzo.Code.Axiom.Set.d_th_1516
+                                                                                                                         (coe
+                                                                                                                            MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                                                                      (coe
+                                                                                                                         MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_594)
+                                                                                                                      (coe
+                                                                                                                         MAlonzo.Code.Ledger.Conway.Specification.Certs.d_pools_1486
+                                                                                                                         (coe
+                                                                                                                            v1))))
+                                                                                                                (coe
+                                                                                                                   MAlonzo.Code.Axiom.Set.du_'10100'_'10101'_480
+                                                                                                                   (MAlonzo.Code.Axiom.Set.d_th_1516
+                                                                                                                      (coe
+                                                                                                                         MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                                                                   erased
+                                                                                                                   (coe
+                                                                                                                      MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18)))) in
+                                                                                                coe
+                                                                                                  (case coe
+                                                                                                          v21 of
+                                                                                                     MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v22 v23
+                                                                                                       -> if coe
+                                                                                                               v22
+                                                                                                            then coe
+                                                                                                                   (""
+                                                                                                                    ::
+                                                                                                                    Data.Text.Text)
+                                                                                                            else coe
+                                                                                                                   ("\172 (Class.IsSet.IsSet-Set (.Axiom.Set.Theory\7496.th List-Model\7496)\n   Class.IsSet.IsSet.\8712 mc)\n  ((.Axiom.Set.Theory\7496.th List-Model\7496 Axiom.Set.Theory.\8746\n    Axiom.Set.Theory.map (.Axiom.Set.Theory\7496.th List-Model\7496) just\n    (Class.IsSet.dom (.Axiom.Set.Theory\7496.th List-Model\7496)\n     (.Ledger.Conway.Specification.Certs.DelegEnv.pools de)))\n   (Class.HasSingleton.HasSingleton.\10100\n    Class.HasSingleton.HasSingletonSet-Set\n    (.Axiom.Set.Theory\7496.th List-Model\7496)\n    \10101\n    nothing))"
+                                                                                                                    ::
+                                                                                                                    Data.Text.Text)
+                                                                                                     _ -> MAlonzo.RTE.mazUnreachableError))
                                                                                  _ -> MAlonzo.RTE.mazUnreachableError)
                                                                        else coe
-                                                                              ("\172 (z\n   : (Class.IsSet.IsSet-Set (.Axiom.Set.Theory\7496.th List-Model\7496)\n      Class.IsSet.IsSet.\8712 c)\n     (Class.IsSet.dom (.Axiom.Set.Theory\7496.th List-Model\7496)\n      (.Ledger.Conway.Conformance.Certs.DState.rewards ds))) \8594\n  d \8801 0"
-                                                                               ::
-                                                                               Data.Text.Text)
+                                                                              MAlonzo.Code.QstdlibZ45Zmeta.Tactic.GenError.d_joinMsgs_20
+                                                                              (coe
+                                                                                 ("\172 (z\n   : (Class.IsSet.IsSet-Set (.Axiom.Set.Theory\7496.th List-Model\7496)\n      Class.IsSet.IsSet.\8712 c)\n     (Class.IsSet.dom (.Axiom.Set.Theory\7496.th List-Model\7496)\n      (.Ledger.Conway.Conformance.Certs.DState.rewards ds))) \8594\n  d \8801 0"
+                                                                                  ::
+                                                                                  Data.Text.Text))
+                                                                              (let v18
+                                                                                     = coe
+                                                                                         MAlonzo.Code.QstdlibZ45Zmeta.Tactic.GenError.du_decideOne_8
+                                                                                         (coe
+                                                                                            MAlonzo.Code.Axiom.Set.du_Dec'45''8712'_1720
+                                                                                            (coe
+                                                                                               MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8)
+                                                                                            (coe
+                                                                                               MAlonzo.Code.Class.DecEq.Instances.du_DecEq'45'Maybe_142
+                                                                                               (coe
+                                                                                                  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_DecEq'45'VDeleg_1230
+                                                                                                  (coe
+                                                                                                     v0)))
+                                                                                            (coe v6)
+                                                                                            (coe
+                                                                                               MAlonzo.Code.Axiom.Set.du__'8746'__708
+                                                                                               (coe
+                                                                                                  MAlonzo.Code.Axiom.Set.d_th_1516
+                                                                                                  (coe
+                                                                                                     MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                                               (coe
+                                                                                                  MAlonzo.Code.Axiom.Set.du_map_426
+                                                                                                  (MAlonzo.Code.Axiom.Set.d_th_1516
+                                                                                                     (coe
+                                                                                                        MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                                                  (\ v18 ->
+                                                                                                     coe
+                                                                                                       MAlonzo.Code.Agda.Builtin.Maybe.C_just_16
+                                                                                                       (coe
+                                                                                                          MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.C_vDelegCredential_1058
+                                                                                                          (coe
+                                                                                                             v18)))
+                                                                                                  (MAlonzo.Code.Ledger.Conway.Specification.Certs.d_delegatees_1488
+                                                                                                     (coe
+                                                                                                        v1)))
+                                                                                               (coe
+                                                                                                  MAlonzo.Code.Axiom.Set.du_fromList_456
+                                                                                                  (coe
+                                                                                                     MAlonzo.Code.Axiom.Set.d_th_1516
+                                                                                                     (coe
+                                                                                                        MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                                                  (coe
+                                                                                                     MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
+                                                                                                     (coe
+                                                                                                        MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18)
+                                                                                                     (coe
+                                                                                                        MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
+                                                                                                        (coe
+                                                                                                           MAlonzo.Code.Agda.Builtin.Maybe.C_just_16
+                                                                                                           (coe
+                                                                                                              MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.C_vDelegAbstain_1060))
+                                                                                                        (coe
+                                                                                                           MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
+                                                                                                           (coe
+                                                                                                              MAlonzo.Code.Agda.Builtin.Maybe.C_just_16
+                                                                                                              (coe
+                                                                                                                 MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.C_vDelegNoConfidence_1062))
+                                                                                                           (coe
+                                                                                                              MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))))) in
+                                                                               coe
+                                                                                 (case coe v18 of
+                                                                                    MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v19 v20
+                                                                                      -> if coe v19
+                                                                                           then let v21
+                                                                                                      = coe
+                                                                                                          MAlonzo.Code.QstdlibZ45Zmeta.Tactic.GenError.du_decideOne_8
+                                                                                                          (coe
+                                                                                                             MAlonzo.Code.Axiom.Set.du_Dec'45''8712'_1720
+                                                                                                             (coe
+                                                                                                                MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8)
+                                                                                                             (coe
+                                                                                                                MAlonzo.Code.Class.DecEq.Instances.du_DecEq'45'Maybe_142
+                                                                                                                (coe
+                                                                                                                   MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
+                                                                                                                   (coe
+                                                                                                                      MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_220
+                                                                                                                      (coe
+                                                                                                                         MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.d_cryptoStructure_616
+                                                                                                                         (coe
+                                                                                                                            v0)))))
+                                                                                                             (coe
+                                                                                                                v7)
+                                                                                                             (coe
+                                                                                                                MAlonzo.Code.Axiom.Set.du__'8746'__708
+                                                                                                                (coe
+                                                                                                                   MAlonzo.Code.Axiom.Set.d_th_1516
+                                                                                                                   (coe
+                                                                                                                      MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                                                                (coe
+                                                                                                                   MAlonzo.Code.Axiom.Set.du_map_426
+                                                                                                                   (MAlonzo.Code.Axiom.Set.d_th_1516
+                                                                                                                      (coe
+                                                                                                                         MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                                                                   (coe
+                                                                                                                      MAlonzo.Code.Agda.Builtin.Maybe.C_just_16)
+                                                                                                                   (coe
+                                                                                                                      MAlonzo.Code.Class.IsSet.du_dom_586
+                                                                                                                      (coe
+                                                                                                                         MAlonzo.Code.Axiom.Set.d_th_1516
+                                                                                                                         (coe
+                                                                                                                            MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                                                                      (coe
+                                                                                                                         MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_594)
+                                                                                                                      (coe
+                                                                                                                         MAlonzo.Code.Ledger.Conway.Specification.Certs.d_pools_1486
+                                                                                                                         (coe
+                                                                                                                            v1))))
+                                                                                                                (coe
+                                                                                                                   MAlonzo.Code.Axiom.Set.du_'10100'_'10101'_480
+                                                                                                                   (MAlonzo.Code.Axiom.Set.d_th_1516
+                                                                                                                      (coe
+                                                                                                                         MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                                                                   erased
+                                                                                                                   (coe
+                                                                                                                      MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18)))) in
+                                                                                                coe
+                                                                                                  (case coe
+                                                                                                          v21 of
+                                                                                                     MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v22 v23
+                                                                                                       -> if coe
+                                                                                                               v22
+                                                                                                            then coe
+                                                                                                                   (""
+                                                                                                                    ::
+                                                                                                                    Data.Text.Text)
+                                                                                                            else coe
+                                                                                                                   ("\172 (Class.IsSet.IsSet-Set (.Axiom.Set.Theory\7496.th List-Model\7496)\n   Class.IsSet.IsSet.\8712 mc)\n  ((.Axiom.Set.Theory\7496.th List-Model\7496 Axiom.Set.Theory.\8746\n    Axiom.Set.Theory.map (.Axiom.Set.Theory\7496.th List-Model\7496) just\n    (Class.IsSet.dom (.Axiom.Set.Theory\7496.th List-Model\7496)\n     (.Ledger.Conway.Specification.Certs.DelegEnv.pools de)))\n   (Class.HasSingleton.HasSingleton.\10100\n    Class.HasSingleton.HasSingletonSet-Set\n    (.Axiom.Set.Theory\7496.th List-Model\7496)\n    \10101\n    nothing))"
+                                                                                                                    ::
+                                                                                                                    Data.Text.Text)
+                                                                                                     _ -> MAlonzo.RTE.mazUnreachableError)
+                                                                                           else coe
+                                                                                                  MAlonzo.Code.QstdlibZ45Zmeta.Tactic.GenError.d_joinMsgs_20
+                                                                                                  (coe
+                                                                                                     ("\172 (Class.IsSet.IsSet-Set (.Axiom.Set.Theory\7496.th List-Model\7496)\n   Class.IsSet.IsSet.\8712 mv)\n  ((.Axiom.Set.Theory\7496.th List-Model\7496 Axiom.Set.Theory.\8746\n    Axiom.Set.Theory.map (.Axiom.Set.Theory\7496.th List-Model\7496)\n    (\955 x \8594 just (vDelegCredential x))\n    (.Ledger.Conway.Specification.Certs.DelegEnv.delegatees de))\n   (Axiom.Set.Theory.fromList (.Axiom.Set.Theory\7496.th List-Model\7496)\n    (nothing \8759 just vDelegAbstain \8759 just vDelegNoConfidence \8759 [])))"
+                                                                                                      ::
+                                                                                                      Data.Text.Text))
+                                                                                                  (let v21
+                                                                                                         = coe
+                                                                                                             MAlonzo.Code.QstdlibZ45Zmeta.Tactic.GenError.du_decideOne_8
+                                                                                                             (coe
+                                                                                                                MAlonzo.Code.Axiom.Set.du_Dec'45''8712'_1720
+                                                                                                                (coe
+                                                                                                                   MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8)
+                                                                                                                (coe
+                                                                                                                   MAlonzo.Code.Class.DecEq.Instances.du_DecEq'45'Maybe_142
+                                                                                                                   (coe
+                                                                                                                      MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
+                                                                                                                      (coe
+                                                                                                                         MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_220
+                                                                                                                         (coe
+                                                                                                                            MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.d_cryptoStructure_616
+                                                                                                                            (coe
+                                                                                                                               v0)))))
+                                                                                                                (coe
+                                                                                                                   v7)
+                                                                                                                (coe
+                                                                                                                   MAlonzo.Code.Axiom.Set.du__'8746'__708
+                                                                                                                   (coe
+                                                                                                                      MAlonzo.Code.Axiom.Set.d_th_1516
+                                                                                                                      (coe
+                                                                                                                         MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                                                                   (coe
+                                                                                                                      MAlonzo.Code.Axiom.Set.du_map_426
+                                                                                                                      (MAlonzo.Code.Axiom.Set.d_th_1516
+                                                                                                                         (coe
+                                                                                                                            MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                                                                      (coe
+                                                                                                                         MAlonzo.Code.Agda.Builtin.Maybe.C_just_16)
+                                                                                                                      (coe
+                                                                                                                         MAlonzo.Code.Class.IsSet.du_dom_586
+                                                                                                                         (coe
+                                                                                                                            MAlonzo.Code.Axiom.Set.d_th_1516
+                                                                                                                            (coe
+                                                                                                                               MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                                                                         (coe
+                                                                                                                            MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_594)
+                                                                                                                         (coe
+                                                                                                                            MAlonzo.Code.Ledger.Conway.Specification.Certs.d_pools_1486
+                                                                                                                            (coe
+                                                                                                                               v1))))
+                                                                                                                   (coe
+                                                                                                                      MAlonzo.Code.Axiom.Set.du_'10100'_'10101'_480
+                                                                                                                      (MAlonzo.Code.Axiom.Set.d_th_1516
+                                                                                                                         (coe
+                                                                                                                            MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                                                                      erased
+                                                                                                                      (coe
+                                                                                                                         MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18)))) in
+                                                                                                   coe
+                                                                                                     (case coe
+                                                                                                             v21 of
+                                                                                                        MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v22 v23
+                                                                                                          -> if coe
+                                                                                                                  v22
+                                                                                                               then coe
+                                                                                                                      (""
+                                                                                                                       ::
+                                                                                                                       Data.Text.Text)
+                                                                                                               else coe
+                                                                                                                      ("\172 (Class.IsSet.IsSet-Set (.Axiom.Set.Theory\7496.th List-Model\7496)\n   Class.IsSet.IsSet.\8712 mc)\n  ((.Axiom.Set.Theory\7496.th List-Model\7496 Axiom.Set.Theory.\8746\n    Axiom.Set.Theory.map (.Axiom.Set.Theory\7496.th List-Model\7496) just\n    (Class.IsSet.dom (.Axiom.Set.Theory\7496.th List-Model\7496)\n     (.Ledger.Conway.Specification.Certs.DelegEnv.pools de)))\n   (Class.HasSingleton.HasSingleton.\10100\n    Class.HasSingleton.HasSingletonSet-Set\n    (.Axiom.Set.Theory\7496.th List-Model\7496)\n    \10101\n    nothing))"
+                                                                                                                       ::
+                                                                                                                       Data.Text.Text)
+                                                                                                        _ -> MAlonzo.RTE.mazUnreachableError))
+                                                                                    _ -> MAlonzo.RTE.mazUnreachableError))
                                                                 _ -> MAlonzo.RTE.mazUnreachableError)
                                                       else coe
-                                                             ("\172 (z\n   : (Class.IsSet.IsSet-Set (.Axiom.Set.Theory\7496.th List-Model\7496)\n      Class.IsSet.IsSet.\8713 c)\n     (Class.IsSet.dom (.Axiom.Set.Theory\7496.th List-Model\7496)\n      (.Ledger.Conway.Conformance.Certs.DState.rewards ds))) \8594\n  d \8801\n  .Ledger.Conway.Specification.PParams.PParams.keyDeposit\n  (.Ledger.Conway.Specification.Certs.DelegEnv.pparams de)"
-                                                              ::
-                                                              Data.Text.Text)
+                                                             MAlonzo.Code.QstdlibZ45Zmeta.Tactic.GenError.d_joinMsgs_20
+                                                             (coe
+                                                                ("\172 (z\n   : (Class.IsSet.IsSet-Set (.Axiom.Set.Theory\7496.th List-Model\7496)\n      Class.IsSet.IsSet.\8713 c)\n     (Class.IsSet.dom (.Axiom.Set.Theory\7496.th List-Model\7496)\n      (.Ledger.Conway.Conformance.Certs.DState.rewards ds))) \8594\n  d \8801\n  .Ledger.Conway.Specification.PParams.PParams.keyDeposit\n  (.Ledger.Conway.Specification.Certs.DelegEnv.pparams de)"
+                                                                 ::
+                                                                 Data.Text.Text))
+                                                             (let v15
+                                                                    = coe
+                                                                        MAlonzo.Code.QstdlibZ45Zmeta.Tactic.GenError.du_decideOne_8
+                                                                        (coe
+                                                                           MAlonzo.Code.Class.Decidable.Instances.du_Dec'45''8594'_12
+                                                                           (coe
+                                                                              MAlonzo.Code.Axiom.Set.du_Dec'45''8712'_1720
+                                                                              (coe
+                                                                                 MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8)
+                                                                              (let v15
+                                                                                     = MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
+                                                                                         (coe
+                                                                                            MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_220
+                                                                                            (coe
+                                                                                               MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.d_cryptoStructure_616
+                                                                                               (coe
+                                                                                                  v0))) in
+                                                                               coe
+                                                                                 (let v16
+                                                                                        = MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_224
+                                                                                            (coe
+                                                                                               MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.d_cryptoStructure_616
+                                                                                               (coe
+                                                                                                  v0)) in
+                                                                                  coe
+                                                                                    (coe
+                                                                                       MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_292
+                                                                                       (coe v15)
+                                                                                       (coe v16))))
+                                                                              (coe v5)
+                                                                              (coe
+                                                                                 MAlonzo.Code.Class.IsSet.du_dom_586
+                                                                                 (coe
+                                                                                    MAlonzo.Code.Axiom.Set.d_th_1516
+                                                                                    (coe
+                                                                                       MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                                 (coe
+                                                                                    MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_594)
+                                                                                 (coe
+                                                                                    MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_rewards_1590
+                                                                                    (coe v2))))
+                                                                           (coe
+                                                                              MAlonzo.Code.Class.Decidable.Instances.du_DecEq'8658'Dec_6
+                                                                              (coe
+                                                                                 MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
+                                                                              (coe v8)
+                                                                              (coe
+                                                                                 (0 ::
+                                                                                    Integer)))) in
+                                                              coe
+                                                                (case coe v15 of
+                                                                   MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v16 v17
+                                                                     -> if coe v16
+                                                                          then let v18
+                                                                                     = coe
+                                                                                         MAlonzo.Code.QstdlibZ45Zmeta.Tactic.GenError.du_decideOne_8
+                                                                                         (coe
+                                                                                            MAlonzo.Code.Axiom.Set.du_Dec'45''8712'_1720
+                                                                                            (coe
+                                                                                               MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8)
+                                                                                            (coe
+                                                                                               MAlonzo.Code.Class.DecEq.Instances.du_DecEq'45'Maybe_142
+                                                                                               (coe
+                                                                                                  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_DecEq'45'VDeleg_1230
+                                                                                                  (coe
+                                                                                                     v0)))
+                                                                                            (coe v6)
+                                                                                            (coe
+                                                                                               MAlonzo.Code.Axiom.Set.du__'8746'__708
+                                                                                               (coe
+                                                                                                  MAlonzo.Code.Axiom.Set.d_th_1516
+                                                                                                  (coe
+                                                                                                     MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                                               (coe
+                                                                                                  MAlonzo.Code.Axiom.Set.du_map_426
+                                                                                                  (MAlonzo.Code.Axiom.Set.d_th_1516
+                                                                                                     (coe
+                                                                                                        MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                                                  (\ v18 ->
+                                                                                                     coe
+                                                                                                       MAlonzo.Code.Agda.Builtin.Maybe.C_just_16
+                                                                                                       (coe
+                                                                                                          MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.C_vDelegCredential_1058
+                                                                                                          (coe
+                                                                                                             v18)))
+                                                                                                  (MAlonzo.Code.Ledger.Conway.Specification.Certs.d_delegatees_1488
+                                                                                                     (coe
+                                                                                                        v1)))
+                                                                                               (coe
+                                                                                                  MAlonzo.Code.Axiom.Set.du_fromList_456
+                                                                                                  (coe
+                                                                                                     MAlonzo.Code.Axiom.Set.d_th_1516
+                                                                                                     (coe
+                                                                                                        MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                                                  (coe
+                                                                                                     MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
+                                                                                                     (coe
+                                                                                                        MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18)
+                                                                                                     (coe
+                                                                                                        MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
+                                                                                                        (coe
+                                                                                                           MAlonzo.Code.Agda.Builtin.Maybe.C_just_16
+                                                                                                           (coe
+                                                                                                              MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.C_vDelegAbstain_1060))
+                                                                                                        (coe
+                                                                                                           MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
+                                                                                                           (coe
+                                                                                                              MAlonzo.Code.Agda.Builtin.Maybe.C_just_16
+                                                                                                              (coe
+                                                                                                                 MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.C_vDelegNoConfidence_1062))
+                                                                                                           (coe
+                                                                                                              MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))))) in
+                                                                               coe
+                                                                                 (case coe v18 of
+                                                                                    MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v19 v20
+                                                                                      -> if coe v19
+                                                                                           then let v21
+                                                                                                      = coe
+                                                                                                          MAlonzo.Code.QstdlibZ45Zmeta.Tactic.GenError.du_decideOne_8
+                                                                                                          (coe
+                                                                                                             MAlonzo.Code.Axiom.Set.du_Dec'45''8712'_1720
+                                                                                                             (coe
+                                                                                                                MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8)
+                                                                                                             (coe
+                                                                                                                MAlonzo.Code.Class.DecEq.Instances.du_DecEq'45'Maybe_142
+                                                                                                                (coe
+                                                                                                                   MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
+                                                                                                                   (coe
+                                                                                                                      MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_220
+                                                                                                                      (coe
+                                                                                                                         MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.d_cryptoStructure_616
+                                                                                                                         (coe
+                                                                                                                            v0)))))
+                                                                                                             (coe
+                                                                                                                v7)
+                                                                                                             (coe
+                                                                                                                MAlonzo.Code.Axiom.Set.du__'8746'__708
+                                                                                                                (coe
+                                                                                                                   MAlonzo.Code.Axiom.Set.d_th_1516
+                                                                                                                   (coe
+                                                                                                                      MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                                                                (coe
+                                                                                                                   MAlonzo.Code.Axiom.Set.du_map_426
+                                                                                                                   (MAlonzo.Code.Axiom.Set.d_th_1516
+                                                                                                                      (coe
+                                                                                                                         MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                                                                   (coe
+                                                                                                                      MAlonzo.Code.Agda.Builtin.Maybe.C_just_16)
+                                                                                                                   (coe
+                                                                                                                      MAlonzo.Code.Class.IsSet.du_dom_586
+                                                                                                                      (coe
+                                                                                                                         MAlonzo.Code.Axiom.Set.d_th_1516
+                                                                                                                         (coe
+                                                                                                                            MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                                                                      (coe
+                                                                                                                         MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_594)
+                                                                                                                      (coe
+                                                                                                                         MAlonzo.Code.Ledger.Conway.Specification.Certs.d_pools_1486
+                                                                                                                         (coe
+                                                                                                                            v1))))
+                                                                                                                (coe
+                                                                                                                   MAlonzo.Code.Axiom.Set.du_'10100'_'10101'_480
+                                                                                                                   (MAlonzo.Code.Axiom.Set.d_th_1516
+                                                                                                                      (coe
+                                                                                                                         MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                                                                   erased
+                                                                                                                   (coe
+                                                                                                                      MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18)))) in
+                                                                                                coe
+                                                                                                  (case coe
+                                                                                                          v21 of
+                                                                                                     MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v22 v23
+                                                                                                       -> if coe
+                                                                                                               v22
+                                                                                                            then coe
+                                                                                                                   (""
+                                                                                                                    ::
+                                                                                                                    Data.Text.Text)
+                                                                                                            else coe
+                                                                                                                   ("\172 (Class.IsSet.IsSet-Set (.Axiom.Set.Theory\7496.th List-Model\7496)\n   Class.IsSet.IsSet.\8712 mc)\n  ((.Axiom.Set.Theory\7496.th List-Model\7496 Axiom.Set.Theory.\8746\n    Axiom.Set.Theory.map (.Axiom.Set.Theory\7496.th List-Model\7496) just\n    (Class.IsSet.dom (.Axiom.Set.Theory\7496.th List-Model\7496)\n     (.Ledger.Conway.Specification.Certs.DelegEnv.pools de)))\n   (Class.HasSingleton.HasSingleton.\10100\n    Class.HasSingleton.HasSingletonSet-Set\n    (.Axiom.Set.Theory\7496.th List-Model\7496)\n    \10101\n    nothing))"
+                                                                                                                    ::
+                                                                                                                    Data.Text.Text)
+                                                                                                     _ -> MAlonzo.RTE.mazUnreachableError)
+                                                                                           else coe
+                                                                                                  MAlonzo.Code.QstdlibZ45Zmeta.Tactic.GenError.d_joinMsgs_20
+                                                                                                  (coe
+                                                                                                     ("\172 (Class.IsSet.IsSet-Set (.Axiom.Set.Theory\7496.th List-Model\7496)\n   Class.IsSet.IsSet.\8712 mv)\n  ((.Axiom.Set.Theory\7496.th List-Model\7496 Axiom.Set.Theory.\8746\n    Axiom.Set.Theory.map (.Axiom.Set.Theory\7496.th List-Model\7496)\n    (\955 x \8594 just (vDelegCredential x))\n    (.Ledger.Conway.Specification.Certs.DelegEnv.delegatees de))\n   (Axiom.Set.Theory.fromList (.Axiom.Set.Theory\7496.th List-Model\7496)\n    (nothing \8759 just vDelegAbstain \8759 just vDelegNoConfidence \8759 [])))"
+                                                                                                      ::
+                                                                                                      Data.Text.Text))
+                                                                                                  (let v21
+                                                                                                         = coe
+                                                                                                             MAlonzo.Code.QstdlibZ45Zmeta.Tactic.GenError.du_decideOne_8
+                                                                                                             (coe
+                                                                                                                MAlonzo.Code.Axiom.Set.du_Dec'45''8712'_1720
+                                                                                                                (coe
+                                                                                                                   MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8)
+                                                                                                                (coe
+                                                                                                                   MAlonzo.Code.Class.DecEq.Instances.du_DecEq'45'Maybe_142
+                                                                                                                   (coe
+                                                                                                                      MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
+                                                                                                                      (coe
+                                                                                                                         MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_220
+                                                                                                                         (coe
+                                                                                                                            MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.d_cryptoStructure_616
+                                                                                                                            (coe
+                                                                                                                               v0)))))
+                                                                                                                (coe
+                                                                                                                   v7)
+                                                                                                                (coe
+                                                                                                                   MAlonzo.Code.Axiom.Set.du__'8746'__708
+                                                                                                                   (coe
+                                                                                                                      MAlonzo.Code.Axiom.Set.d_th_1516
+                                                                                                                      (coe
+                                                                                                                         MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                                                                   (coe
+                                                                                                                      MAlonzo.Code.Axiom.Set.du_map_426
+                                                                                                                      (MAlonzo.Code.Axiom.Set.d_th_1516
+                                                                                                                         (coe
+                                                                                                                            MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                                                                      (coe
+                                                                                                                         MAlonzo.Code.Agda.Builtin.Maybe.C_just_16)
+                                                                                                                      (coe
+                                                                                                                         MAlonzo.Code.Class.IsSet.du_dom_586
+                                                                                                                         (coe
+                                                                                                                            MAlonzo.Code.Axiom.Set.d_th_1516
+                                                                                                                            (coe
+                                                                                                                               MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                                                                         (coe
+                                                                                                                            MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_594)
+                                                                                                                         (coe
+                                                                                                                            MAlonzo.Code.Ledger.Conway.Specification.Certs.d_pools_1486
+                                                                                                                            (coe
+                                                                                                                               v1))))
+                                                                                                                   (coe
+                                                                                                                      MAlonzo.Code.Axiom.Set.du_'10100'_'10101'_480
+                                                                                                                      (MAlonzo.Code.Axiom.Set.d_th_1516
+                                                                                                                         (coe
+                                                                                                                            MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                                                                      erased
+                                                                                                                      (coe
+                                                                                                                         MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18)))) in
+                                                                                                   coe
+                                                                                                     (case coe
+                                                                                                             v21 of
+                                                                                                        MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v22 v23
+                                                                                                          -> if coe
+                                                                                                                  v22
+                                                                                                               then coe
+                                                                                                                      (""
+                                                                                                                       ::
+                                                                                                                       Data.Text.Text)
+                                                                                                               else coe
+                                                                                                                      ("\172 (Class.IsSet.IsSet-Set (.Axiom.Set.Theory\7496.th List-Model\7496)\n   Class.IsSet.IsSet.\8712 mc)\n  ((.Axiom.Set.Theory\7496.th List-Model\7496 Axiom.Set.Theory.\8746\n    Axiom.Set.Theory.map (.Axiom.Set.Theory\7496.th List-Model\7496) just\n    (Class.IsSet.dom (.Axiom.Set.Theory\7496.th List-Model\7496)\n     (.Ledger.Conway.Specification.Certs.DelegEnv.pools de)))\n   (Class.HasSingleton.HasSingleton.\10100\n    Class.HasSingleton.HasSingletonSet-Set\n    (.Axiom.Set.Theory\7496.th List-Model\7496)\n    \10101\n    nothing))"
+                                                                                                                       ::
+                                                                                                                       Data.Text.Text)
+                                                                                                        _ -> MAlonzo.RTE.mazUnreachableError))
+                                                                                    _ -> MAlonzo.RTE.mazUnreachableError)
+                                                                          else coe
+                                                                                 MAlonzo.Code.QstdlibZ45Zmeta.Tactic.GenError.d_joinMsgs_20
+                                                                                 (coe
+                                                                                    ("\172 (z\n   : (Class.IsSet.IsSet-Set (.Axiom.Set.Theory\7496.th List-Model\7496)\n      Class.IsSet.IsSet.\8712 c)\n     (Class.IsSet.dom (.Axiom.Set.Theory\7496.th List-Model\7496)\n      (.Ledger.Conway.Conformance.Certs.DState.rewards ds))) \8594\n  d \8801 0"
+                                                                                     ::
+                                                                                     Data.Text.Text))
+                                                                                 (let v18
+                                                                                        = coe
+                                                                                            MAlonzo.Code.QstdlibZ45Zmeta.Tactic.GenError.du_decideOne_8
+                                                                                            (coe
+                                                                                               MAlonzo.Code.Axiom.Set.du_Dec'45''8712'_1720
+                                                                                               (coe
+                                                                                                  MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8)
+                                                                                               (coe
+                                                                                                  MAlonzo.Code.Class.DecEq.Instances.du_DecEq'45'Maybe_142
+                                                                                                  (coe
+                                                                                                     MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_DecEq'45'VDeleg_1230
+                                                                                                     (coe
+                                                                                                        v0)))
+                                                                                               (coe
+                                                                                                  v6)
+                                                                                               (coe
+                                                                                                  MAlonzo.Code.Axiom.Set.du__'8746'__708
+                                                                                                  (coe
+                                                                                                     MAlonzo.Code.Axiom.Set.d_th_1516
+                                                                                                     (coe
+                                                                                                        MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                                                  (coe
+                                                                                                     MAlonzo.Code.Axiom.Set.du_map_426
+                                                                                                     (MAlonzo.Code.Axiom.Set.d_th_1516
+                                                                                                        (coe
+                                                                                                           MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                                                     (\ v18 ->
+                                                                                                        coe
+                                                                                                          MAlonzo.Code.Agda.Builtin.Maybe.C_just_16
+                                                                                                          (coe
+                                                                                                             MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.C_vDelegCredential_1058
+                                                                                                             (coe
+                                                                                                                v18)))
+                                                                                                     (MAlonzo.Code.Ledger.Conway.Specification.Certs.d_delegatees_1488
+                                                                                                        (coe
+                                                                                                           v1)))
+                                                                                                  (coe
+                                                                                                     MAlonzo.Code.Axiom.Set.du_fromList_456
+                                                                                                     (coe
+                                                                                                        MAlonzo.Code.Axiom.Set.d_th_1516
+                                                                                                        (coe
+                                                                                                           MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                                                     (coe
+                                                                                                        MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
+                                                                                                        (coe
+                                                                                                           MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18)
+                                                                                                        (coe
+                                                                                                           MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
+                                                                                                           (coe
+                                                                                                              MAlonzo.Code.Agda.Builtin.Maybe.C_just_16
+                                                                                                              (coe
+                                                                                                                 MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.C_vDelegAbstain_1060))
+                                                                                                           (coe
+                                                                                                              MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
+                                                                                                              (coe
+                                                                                                                 MAlonzo.Code.Agda.Builtin.Maybe.C_just_16
+                                                                                                                 (coe
+                                                                                                                    MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.C_vDelegNoConfidence_1062))
+                                                                                                              (coe
+                                                                                                                 MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))))) in
+                                                                                  coe
+                                                                                    (case coe v18 of
+                                                                                       MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v19 v20
+                                                                                         -> if coe
+                                                                                                 v19
+                                                                                              then let v21
+                                                                                                         = coe
+                                                                                                             MAlonzo.Code.QstdlibZ45Zmeta.Tactic.GenError.du_decideOne_8
+                                                                                                             (coe
+                                                                                                                MAlonzo.Code.Axiom.Set.du_Dec'45''8712'_1720
+                                                                                                                (coe
+                                                                                                                   MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8)
+                                                                                                                (coe
+                                                                                                                   MAlonzo.Code.Class.DecEq.Instances.du_DecEq'45'Maybe_142
+                                                                                                                   (coe
+                                                                                                                      MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
+                                                                                                                      (coe
+                                                                                                                         MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_220
+                                                                                                                         (coe
+                                                                                                                            MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.d_cryptoStructure_616
+                                                                                                                            (coe
+                                                                                                                               v0)))))
+                                                                                                                (coe
+                                                                                                                   v7)
+                                                                                                                (coe
+                                                                                                                   MAlonzo.Code.Axiom.Set.du__'8746'__708
+                                                                                                                   (coe
+                                                                                                                      MAlonzo.Code.Axiom.Set.d_th_1516
+                                                                                                                      (coe
+                                                                                                                         MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                                                                   (coe
+                                                                                                                      MAlonzo.Code.Axiom.Set.du_map_426
+                                                                                                                      (MAlonzo.Code.Axiom.Set.d_th_1516
+                                                                                                                         (coe
+                                                                                                                            MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                                                                      (coe
+                                                                                                                         MAlonzo.Code.Agda.Builtin.Maybe.C_just_16)
+                                                                                                                      (coe
+                                                                                                                         MAlonzo.Code.Class.IsSet.du_dom_586
+                                                                                                                         (coe
+                                                                                                                            MAlonzo.Code.Axiom.Set.d_th_1516
+                                                                                                                            (coe
+                                                                                                                               MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                                                                         (coe
+                                                                                                                            MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_594)
+                                                                                                                         (coe
+                                                                                                                            MAlonzo.Code.Ledger.Conway.Specification.Certs.d_pools_1486
+                                                                                                                            (coe
+                                                                                                                               v1))))
+                                                                                                                   (coe
+                                                                                                                      MAlonzo.Code.Axiom.Set.du_'10100'_'10101'_480
+                                                                                                                      (MAlonzo.Code.Axiom.Set.d_th_1516
+                                                                                                                         (coe
+                                                                                                                            MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                                                                      erased
+                                                                                                                      (coe
+                                                                                                                         MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18)))) in
+                                                                                                   coe
+                                                                                                     (case coe
+                                                                                                             v21 of
+                                                                                                        MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v22 v23
+                                                                                                          -> if coe
+                                                                                                                  v22
+                                                                                                               then coe
+                                                                                                                      (""
+                                                                                                                       ::
+                                                                                                                       Data.Text.Text)
+                                                                                                               else coe
+                                                                                                                      ("\172 (Class.IsSet.IsSet-Set (.Axiom.Set.Theory\7496.th List-Model\7496)\n   Class.IsSet.IsSet.\8712 mc)\n  ((.Axiom.Set.Theory\7496.th List-Model\7496 Axiom.Set.Theory.\8746\n    Axiom.Set.Theory.map (.Axiom.Set.Theory\7496.th List-Model\7496) just\n    (Class.IsSet.dom (.Axiom.Set.Theory\7496.th List-Model\7496)\n     (.Ledger.Conway.Specification.Certs.DelegEnv.pools de)))\n   (Class.HasSingleton.HasSingleton.\10100\n    Class.HasSingleton.HasSingletonSet-Set\n    (.Axiom.Set.Theory\7496.th List-Model\7496)\n    \10101\n    nothing))"
+                                                                                                                       ::
+                                                                                                                       Data.Text.Text)
+                                                                                                        _ -> MAlonzo.RTE.mazUnreachableError)
+                                                                                              else coe
+                                                                                                     MAlonzo.Code.QstdlibZ45Zmeta.Tactic.GenError.d_joinMsgs_20
+                                                                                                     (coe
+                                                                                                        ("\172 (Class.IsSet.IsSet-Set (.Axiom.Set.Theory\7496.th List-Model\7496)\n   Class.IsSet.IsSet.\8712 mv)\n  ((.Axiom.Set.Theory\7496.th List-Model\7496 Axiom.Set.Theory.\8746\n    Axiom.Set.Theory.map (.Axiom.Set.Theory\7496.th List-Model\7496)\n    (\955 x \8594 just (vDelegCredential x))\n    (.Ledger.Conway.Specification.Certs.DelegEnv.delegatees de))\n   (Axiom.Set.Theory.fromList (.Axiom.Set.Theory\7496.th List-Model\7496)\n    (nothing \8759 just vDelegAbstain \8759 just vDelegNoConfidence \8759 [])))"
+                                                                                                         ::
+                                                                                                         Data.Text.Text))
+                                                                                                     (let v21
+                                                                                                            = coe
+                                                                                                                MAlonzo.Code.QstdlibZ45Zmeta.Tactic.GenError.du_decideOne_8
+                                                                                                                (coe
+                                                                                                                   MAlonzo.Code.Axiom.Set.du_Dec'45''8712'_1720
+                                                                                                                   (coe
+                                                                                                                      MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8)
+                                                                                                                   (coe
+                                                                                                                      MAlonzo.Code.Class.DecEq.Instances.du_DecEq'45'Maybe_142
+                                                                                                                      (coe
+                                                                                                                         MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
+                                                                                                                         (coe
+                                                                                                                            MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_220
+                                                                                                                            (coe
+                                                                                                                               MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.d_cryptoStructure_616
+                                                                                                                               (coe
+                                                                                                                                  v0)))))
+                                                                                                                   (coe
+                                                                                                                      v7)
+                                                                                                                   (coe
+                                                                                                                      MAlonzo.Code.Axiom.Set.du__'8746'__708
+                                                                                                                      (coe
+                                                                                                                         MAlonzo.Code.Axiom.Set.d_th_1516
+                                                                                                                         (coe
+                                                                                                                            MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                                                                      (coe
+                                                                                                                         MAlonzo.Code.Axiom.Set.du_map_426
+                                                                                                                         (MAlonzo.Code.Axiom.Set.d_th_1516
+                                                                                                                            (coe
+                                                                                                                               MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                                                                         (coe
+                                                                                                                            MAlonzo.Code.Agda.Builtin.Maybe.C_just_16)
+                                                                                                                         (coe
+                                                                                                                            MAlonzo.Code.Class.IsSet.du_dom_586
+                                                                                                                            (coe
+                                                                                                                               MAlonzo.Code.Axiom.Set.d_th_1516
+                                                                                                                               (coe
+                                                                                                                                  MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                                                                            (coe
+                                                                                                                               MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_594)
+                                                                                                                            (coe
+                                                                                                                               MAlonzo.Code.Ledger.Conway.Specification.Certs.d_pools_1486
+                                                                                                                               (coe
+                                                                                                                                  v1))))
+                                                                                                                      (coe
+                                                                                                                         MAlonzo.Code.Axiom.Set.du_'10100'_'10101'_480
+                                                                                                                         (MAlonzo.Code.Axiom.Set.d_th_1516
+                                                                                                                            (coe
+                                                                                                                               MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                                                                         erased
+                                                                                                                         (coe
+                                                                                                                            MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18)))) in
+                                                                                                      coe
+                                                                                                        (case coe
+                                                                                                                v21 of
+                                                                                                           MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v22 v23
+                                                                                                             -> if coe
+                                                                                                                     v22
+                                                                                                                  then coe
+                                                                                                                         (""
+                                                                                                                          ::
+                                                                                                                          Data.Text.Text)
+                                                                                                                  else coe
+                                                                                                                         ("\172 (Class.IsSet.IsSet-Set (.Axiom.Set.Theory\7496.th List-Model\7496)\n   Class.IsSet.IsSet.\8712 mc)\n  ((.Axiom.Set.Theory\7496.th List-Model\7496 Axiom.Set.Theory.\8746\n    Axiom.Set.Theory.map (.Axiom.Set.Theory\7496.th List-Model\7496) just\n    (Class.IsSet.dom (.Axiom.Set.Theory\7496.th List-Model\7496)\n     (.Ledger.Conway.Specification.Certs.DelegEnv.pools de)))\n   (Class.HasSingleton.HasSingleton.\10100\n    Class.HasSingleton.HasSingletonSet-Set\n    (.Axiom.Set.Theory\7496.th List-Model\7496)\n    \10101\n    nothing))"
+                                                                                                                          ::
+                                                                                                                          Data.Text.Text)
+                                                                                                           _ -> MAlonzo.RTE.mazUnreachableError))
+                                                                                       _ -> MAlonzo.RTE.mazUnreachableError))
+                                                                   _ -> MAlonzo.RTE.mazUnreachableError))
                                                _ -> MAlonzo.RTE.mazUnreachableError)))
                         _ -> MAlonzo.RTE.mazUnreachableError)
               MAlonzo.Code.Ledger.Conway.Specification.Certs.C_dereg_1356 v5 v6
@@ -1117,19 +1927,231 @@ d_Computational'45'DELEG_1648 v0
                                                                                                       MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v22 v23
                                                                                                         -> if coe
                                                                                                                 v22
-                                                                                                             then coe
-                                                                                                                    ("\172 md \8801 nothing \8846 md \8801 just d"
-                                                                                                                     ::
-                                                                                                                     Data.Text.Text)
+                                                                                                             then let v24
+                                                                                                                        = coe
+                                                                                                                            MAlonzo.Code.QstdlibZ45Zmeta.Tactic.GenError.du_decideOne_8
+                                                                                                                            (coe
+                                                                                                                               MAlonzo.Code.Class.Decidable.Instances.du_Dec'45''8846'_16
+                                                                                                                               (coe
+                                                                                                                                  MAlonzo.Code.Class.Decidable.Instances.du_DecEq'8658'Dec_6
+                                                                                                                                  (coe
+                                                                                                                                     MAlonzo.Code.Class.DecEq.Instances.du_DecEq'45'Maybe_142
+                                                                                                                                     (coe
+                                                                                                                                        MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22))
+                                                                                                                                  (coe
+                                                                                                                                     v6)
+                                                                                                                                  (coe
+                                                                                                                                     MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18))
+                                                                                                                               (coe
+                                                                                                                                  MAlonzo.Code.Class.Decidable.Instances.du_DecEq'8658'Dec_6
+                                                                                                                                  (coe
+                                                                                                                                     MAlonzo.Code.Class.DecEq.Instances.du_DecEq'45'Maybe_142
+                                                                                                                                     (coe
+                                                                                                                                        MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22))
+                                                                                                                                  (coe
+                                                                                                                                     v6)
+                                                                                                                                  (coe
+                                                                                                                                     MAlonzo.Code.Agda.Builtin.Maybe.C_just_16
+                                                                                                                                     (coe
+                                                                                                                                        v14)))) in
+                                                                                                                  coe
+                                                                                                                    (case coe
+                                                                                                                            v24 of
+                                                                                                                       MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v25 v26
+                                                                                                                         -> if coe
+                                                                                                                                 v25
+                                                                                                                              then coe
+                                                                                                                                     (""
+                                                                                                                                      ::
+                                                                                                                                      Data.Text.Text)
+                                                                                                                              else coe
+                                                                                                                                     ("\172 md \8801 nothing \8846 md \8801 just d"
+                                                                                                                                      ::
+                                                                                                                                      Data.Text.Text)
+                                                                                                                       _ -> MAlonzo.RTE.mazUnreachableError)
                                                                                                              else coe
-                                                                                                                    ("\172 (Class.IsSet.IsSet-Map (.Axiom.Set.Theory\7496.th List-Model\7496)\n   Class.IsSet.IsSet.\8712 (CredentialDeposit c , d))\n  (.Ledger.Conway.Conformance.Certs.DState.deposits ds)"
-                                                                                                                     ::
-                                                                                                                     Data.Text.Text)
+                                                                                                                    MAlonzo.Code.QstdlibZ45Zmeta.Tactic.GenError.d_joinMsgs_20
+                                                                                                                    (coe
+                                                                                                                       ("\172 (Class.IsSet.IsSet-Map (.Axiom.Set.Theory\7496.th List-Model\7496)\n   Class.IsSet.IsSet.\8712 (CredentialDeposit c , d))\n  (.Ledger.Conway.Conformance.Certs.DState.deposits ds)"
+                                                                                                                        ::
+                                                                                                                        Data.Text.Text))
+                                                                                                                    (let v24
+                                                                                                                           = coe
+                                                                                                                               MAlonzo.Code.QstdlibZ45Zmeta.Tactic.GenError.du_decideOne_8
+                                                                                                                               (coe
+                                                                                                                                  MAlonzo.Code.Class.Decidable.Instances.du_Dec'45''8846'_16
+                                                                                                                                  (coe
+                                                                                                                                     MAlonzo.Code.Class.Decidable.Instances.du_DecEq'8658'Dec_6
+                                                                                                                                     (coe
+                                                                                                                                        MAlonzo.Code.Class.DecEq.Instances.du_DecEq'45'Maybe_142
+                                                                                                                                        (coe
+                                                                                                                                           MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22))
+                                                                                                                                     (coe
+                                                                                                                                        v6)
+                                                                                                                                     (coe
+                                                                                                                                        MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18))
+                                                                                                                                  (coe
+                                                                                                                                     MAlonzo.Code.Class.Decidable.Instances.du_DecEq'8658'Dec_6
+                                                                                                                                     (coe
+                                                                                                                                        MAlonzo.Code.Class.DecEq.Instances.du_DecEq'45'Maybe_142
+                                                                                                                                        (coe
+                                                                                                                                           MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22))
+                                                                                                                                     (coe
+                                                                                                                                        v6)
+                                                                                                                                     (coe
+                                                                                                                                        MAlonzo.Code.Agda.Builtin.Maybe.C_just_16
+                                                                                                                                        (coe
+                                                                                                                                           v14)))) in
+                                                                                                                     coe
+                                                                                                                       (case coe
+                                                                                                                               v24 of
+                                                                                                                          MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v25 v26
+                                                                                                                            -> if coe
+                                                                                                                                    v25
+                                                                                                                                 then coe
+                                                                                                                                        (""
+                                                                                                                                         ::
+                                                                                                                                         Data.Text.Text)
+                                                                                                                                 else coe
+                                                                                                                                        ("\172 md \8801 nothing \8846 md \8801 just d"
+                                                                                                                                         ::
+                                                                                                                                         Data.Text.Text)
+                                                                                                                          _ -> MAlonzo.RTE.mazUnreachableError))
                                                                                                       _ -> MAlonzo.RTE.mazUnreachableError)
                                                                                             else coe
-                                                                                                   ("\172 (Class.IsSet.IsSet-Map (.Axiom.Set.Theory\7496.th List-Model\7496)\n   Class.IsSet.IsSet.\8712 (c , 0))\n  (.Ledger.Conway.Conformance.Certs.DState.rewards ds)"
-                                                                                                    ::
-                                                                                                    Data.Text.Text)
+                                                                                                   MAlonzo.Code.QstdlibZ45Zmeta.Tactic.GenError.d_joinMsgs_20
+                                                                                                   (coe
+                                                                                                      ("\172 (Class.IsSet.IsSet-Map (.Axiom.Set.Theory\7496.th List-Model\7496)\n   Class.IsSet.IsSet.\8712 (c , 0))\n  (.Ledger.Conway.Conformance.Certs.DState.rewards ds)"
+                                                                                                       ::
+                                                                                                       Data.Text.Text))
+                                                                                                   (let v21
+                                                                                                          = coe
+                                                                                                              MAlonzo.Code.QstdlibZ45Zmeta.Tactic.GenError.du_decideOne_8
+                                                                                                              (coe
+                                                                                                                 MAlonzo.Code.Axiom.Set.du_Dec'45''8712'_1720
+                                                                                                                 (coe
+                                                                                                                    MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8)
+                                                                                                                 (coe
+                                                                                                                    MAlonzo.Code.Prelude.d_DecEq'45''215''8242'_4
+                                                                                                                    ()
+                                                                                                                    erased
+                                                                                                                    ()
+                                                                                                                    erased
+                                                                                                                    (MAlonzo.Code.Ledger.Conway.Specification.Certs.d_DecEq'45'DepositPurpose_1216
+                                                                                                                       (coe
+                                                                                                                          v0))
+                                                                                                                    MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
+                                                                                                                 (coe
+                                                                                                                    MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
+                                                                                                                    (coe
+                                                                                                                       MAlonzo.Code.Ledger.Conway.Specification.Certs.C_CredentialDeposit_1186
+                                                                                                                       (coe
+                                                                                                                          v5))
+                                                                                                                    (coe
+                                                                                                                       v14))
+                                                                                                                 (coe
+                                                                                                                    MAlonzo.Code.Axiom.Set.Map.du__'738'_570
+                                                                                                                    (coe
+                                                                                                                       MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_deposits_1592
+                                                                                                                       (coe
+                                                                                                                          v2)))) in
+                                                                                                    coe
+                                                                                                      (case coe
+                                                                                                              v21 of
+                                                                                                         MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v22 v23
+                                                                                                           -> if coe
+                                                                                                                   v22
+                                                                                                                then let v24
+                                                                                                                           = coe
+                                                                                                                               MAlonzo.Code.QstdlibZ45Zmeta.Tactic.GenError.du_decideOne_8
+                                                                                                                               (coe
+                                                                                                                                  MAlonzo.Code.Class.Decidable.Instances.du_Dec'45''8846'_16
+                                                                                                                                  (coe
+                                                                                                                                     MAlonzo.Code.Class.Decidable.Instances.du_DecEq'8658'Dec_6
+                                                                                                                                     (coe
+                                                                                                                                        MAlonzo.Code.Class.DecEq.Instances.du_DecEq'45'Maybe_142
+                                                                                                                                        (coe
+                                                                                                                                           MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22))
+                                                                                                                                     (coe
+                                                                                                                                        v6)
+                                                                                                                                     (coe
+                                                                                                                                        MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18))
+                                                                                                                                  (coe
+                                                                                                                                     MAlonzo.Code.Class.Decidable.Instances.du_DecEq'8658'Dec_6
+                                                                                                                                     (coe
+                                                                                                                                        MAlonzo.Code.Class.DecEq.Instances.du_DecEq'45'Maybe_142
+                                                                                                                                        (coe
+                                                                                                                                           MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22))
+                                                                                                                                     (coe
+                                                                                                                                        v6)
+                                                                                                                                     (coe
+                                                                                                                                        MAlonzo.Code.Agda.Builtin.Maybe.C_just_16
+                                                                                                                                        (coe
+                                                                                                                                           v14)))) in
+                                                                                                                     coe
+                                                                                                                       (case coe
+                                                                                                                               v24 of
+                                                                                                                          MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v25 v26
+                                                                                                                            -> if coe
+                                                                                                                                    v25
+                                                                                                                                 then coe
+                                                                                                                                        (""
+                                                                                                                                         ::
+                                                                                                                                         Data.Text.Text)
+                                                                                                                                 else coe
+                                                                                                                                        ("\172 md \8801 nothing \8846 md \8801 just d"
+                                                                                                                                         ::
+                                                                                                                                         Data.Text.Text)
+                                                                                                                          _ -> MAlonzo.RTE.mazUnreachableError)
+                                                                                                                else coe
+                                                                                                                       MAlonzo.Code.QstdlibZ45Zmeta.Tactic.GenError.d_joinMsgs_20
+                                                                                                                       (coe
+                                                                                                                          ("\172 (Class.IsSet.IsSet-Map (.Axiom.Set.Theory\7496.th List-Model\7496)\n   Class.IsSet.IsSet.\8712 (CredentialDeposit c , d))\n  (.Ledger.Conway.Conformance.Certs.DState.deposits ds)"
+                                                                                                                           ::
+                                                                                                                           Data.Text.Text))
+                                                                                                                       (let v24
+                                                                                                                              = coe
+                                                                                                                                  MAlonzo.Code.QstdlibZ45Zmeta.Tactic.GenError.du_decideOne_8
+                                                                                                                                  (coe
+                                                                                                                                     MAlonzo.Code.Class.Decidable.Instances.du_Dec'45''8846'_16
+                                                                                                                                     (coe
+                                                                                                                                        MAlonzo.Code.Class.Decidable.Instances.du_DecEq'8658'Dec_6
+                                                                                                                                        (coe
+                                                                                                                                           MAlonzo.Code.Class.DecEq.Instances.du_DecEq'45'Maybe_142
+                                                                                                                                           (coe
+                                                                                                                                              MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22))
+                                                                                                                                        (coe
+                                                                                                                                           v6)
+                                                                                                                                        (coe
+                                                                                                                                           MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18))
+                                                                                                                                     (coe
+                                                                                                                                        MAlonzo.Code.Class.Decidable.Instances.du_DecEq'8658'Dec_6
+                                                                                                                                        (coe
+                                                                                                                                           MAlonzo.Code.Class.DecEq.Instances.du_DecEq'45'Maybe_142
+                                                                                                                                           (coe
+                                                                                                                                              MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22))
+                                                                                                                                        (coe
+                                                                                                                                           v6)
+                                                                                                                                        (coe
+                                                                                                                                           MAlonzo.Code.Agda.Builtin.Maybe.C_just_16
+                                                                                                                                           (coe
+                                                                                                                                              v14)))) in
+                                                                                                                        coe
+                                                                                                                          (case coe
+                                                                                                                                  v24 of
+                                                                                                                             MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v25 v26
+                                                                                                                               -> if coe
+                                                                                                                                       v25
+                                                                                                                                    then coe
+                                                                                                                                           (""
+                                                                                                                                            ::
+                                                                                                                                            Data.Text.Text)
+                                                                                                                                    else coe
+                                                                                                                                           ("\172 md \8801 nothing \8846 md \8801 just d"
+                                                                                                                                            ::
+                                                                                                                                            Data.Text.Text)
+                                                                                                                             _ -> MAlonzo.RTE.mazUnreachableError))
+                                                                                                         _ -> MAlonzo.RTE.mazUnreachableError))
                                                                                      _ -> MAlonzo.RTE.mazUnreachableError)))
                                                               _ -> MAlonzo.RTE.mazUnreachableError)
                                                     _ -> MAlonzo.RTE.mazUnreachableError
@@ -1340,14 +2362,80 @@ d_Computational'45'DELEG_1648 v0
                                             (case coe v10 of
                                                MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v11 v12
                                                  -> if coe v11
-                                                      then coe
-                                                             ("\172 d \8801\n  .Ledger.Conway.Specification.PParams.PParams.keyDeposit\n  (.Ledger.Conway.Specification.Certs.DelegEnv.pparams de)\n  \8846 d \8801 0"
-                                                              ::
-                                                              Data.Text.Text)
+                                                      then let v13
+                                                                 = coe
+                                                                     MAlonzo.Code.QstdlibZ45Zmeta.Tactic.GenError.du_decideOne_8
+                                                                     (coe
+                                                                        MAlonzo.Code.Class.Decidable.Instances.du_Dec'45''8846'_16
+                                                                        (coe
+                                                                           MAlonzo.Code.Class.Decidable.Instances.du_DecEq'8658'Dec_6
+                                                                           (coe
+                                                                              MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
+                                                                           (coe v6)
+                                                                           (coe
+                                                                              MAlonzo.Code.Ledger.Conway.Specification.PParams.d_keyDeposit_378
+                                                                              (coe
+                                                                                 MAlonzo.Code.Ledger.Conway.Specification.Certs.d_pparams_1484
+                                                                                 (coe v1))))
+                                                                        (coe
+                                                                           MAlonzo.Code.Class.Decidable.Instances.du_DecEq'8658'Dec_6
+                                                                           (coe
+                                                                              MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
+                                                                           (coe v6)
+                                                                           (coe (0 :: Integer)))) in
+                                                           coe
+                                                             (case coe v13 of
+                                                                MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v14 v15
+                                                                  -> if coe v14
+                                                                       then coe
+                                                                              ("" :: Data.Text.Text)
+                                                                       else coe
+                                                                              ("\172 d \8801\n  .Ledger.Conway.Specification.PParams.PParams.keyDeposit\n  (.Ledger.Conway.Specification.Certs.DelegEnv.pparams de)\n  \8846 d \8801 0"
+                                                                               ::
+                                                                               Data.Text.Text)
+                                                                _ -> MAlonzo.RTE.mazUnreachableError)
                                                       else coe
-                                                             ("\172 (Class.IsSet.IsSet-Set (.Axiom.Set.Theory\7496.th List-Model\7496)\n   Class.IsSet.IsSet.\8713 c)\n  (Class.IsSet.dom (.Axiom.Set.Theory\7496.th List-Model\7496)\n   (.Ledger.Conway.Conformance.Certs.DState.rewards ds))"
-                                                              ::
-                                                              Data.Text.Text)
+                                                             MAlonzo.Code.QstdlibZ45Zmeta.Tactic.GenError.d_joinMsgs_20
+                                                             (coe
+                                                                ("\172 (Class.IsSet.IsSet-Set (.Axiom.Set.Theory\7496.th List-Model\7496)\n   Class.IsSet.IsSet.\8713 c)\n  (Class.IsSet.dom (.Axiom.Set.Theory\7496.th List-Model\7496)\n   (.Ledger.Conway.Conformance.Certs.DState.rewards ds))"
+                                                                 ::
+                                                                 Data.Text.Text))
+                                                             (let v13
+                                                                    = coe
+                                                                        MAlonzo.Code.QstdlibZ45Zmeta.Tactic.GenError.du_decideOne_8
+                                                                        (coe
+                                                                           MAlonzo.Code.Class.Decidable.Instances.du_Dec'45''8846'_16
+                                                                           (coe
+                                                                              MAlonzo.Code.Class.Decidable.Instances.du_DecEq'8658'Dec_6
+                                                                              (coe
+                                                                                 MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
+                                                                              (coe v6)
+                                                                              (coe
+                                                                                 MAlonzo.Code.Ledger.Conway.Specification.PParams.d_keyDeposit_378
+                                                                                 (coe
+                                                                                    MAlonzo.Code.Ledger.Conway.Specification.Certs.d_pparams_1484
+                                                                                    (coe v1))))
+                                                                           (coe
+                                                                              MAlonzo.Code.Class.Decidable.Instances.du_DecEq'8658'Dec_6
+                                                                              (coe
+                                                                                 MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
+                                                                              (coe v6)
+                                                                              (coe
+                                                                                 (0 ::
+                                                                                    Integer)))) in
+                                                              coe
+                                                                (case coe v13 of
+                                                                   MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v14 v15
+                                                                     -> if coe v14
+                                                                          then coe
+                                                                                 (""
+                                                                                  ::
+                                                                                  Data.Text.Text)
+                                                                          else coe
+                                                                                 ("\172 d \8801\n  .Ledger.Conway.Specification.PParams.PParams.keyDeposit\n  (.Ledger.Conway.Specification.Certs.DelegEnv.pparams de)\n  \8846 d \8801 0"
+                                                                                  ::
+                                                                                  Data.Text.Text)
+                                                                   _ -> MAlonzo.RTE.mazUnreachableError))
                                                _ -> MAlonzo.RTE.mazUnreachableError)))
                         _ -> MAlonzo.RTE.mazUnreachableError)
               _ -> coe v4))
@@ -1853,14 +2941,88 @@ d_Computational'45'GOVCERT_1850 v0
                                             (case coe v10 of
                                                MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v11 v12
                                                  -> if coe v11
-                                                      then coe
-                                                             ("\172 (Class.IsSet.IsSet-Map (.Axiom.Set.Theory\7496.th List-Model\7496)\n   Class.IsSet.IsSet.\8712 (DRepDeposit c , d))\n  (.Ledger.Conway.Conformance.Certs.GState.deposits\n   (.Ledger.Conway.Conformance.Certs.CertState.gState cs))"
-                                                              ::
-                                                              Data.Text.Text)
+                                                      then let v13
+                                                                 = coe
+                                                                     MAlonzo.Code.QstdlibZ45Zmeta.Tactic.GenError.du_decideOne_8
+                                                                     (coe
+                                                                        MAlonzo.Code.Axiom.Set.du_Dec'45''8712'_1720
+                                                                        (coe
+                                                                           MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8)
+                                                                        (coe
+                                                                           MAlonzo.Code.Prelude.d_DecEq'45''215''8242'_4
+                                                                           () erased () erased
+                                                                           (MAlonzo.Code.Ledger.Conway.Specification.Certs.d_DecEq'45'DepositPurpose_1216
+                                                                              (coe v0))
+                                                                           MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
+                                                                        (coe
+                                                                           MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
+                                                                           (coe
+                                                                              MAlonzo.Code.Ledger.Conway.Specification.Certs.C_DRepDeposit_1190
+                                                                              (coe v5))
+                                                                           (coe v6))
+                                                                        (coe
+                                                                           MAlonzo.Code.Axiom.Set.Map.du__'738'_570
+                                                                           (coe
+                                                                              MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_deposits_1608
+                                                                              (coe
+                                                                                 MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_gState_1624
+                                                                                 (coe v2))))) in
+                                                           coe
+                                                             (case coe v13 of
+                                                                MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v14 v15
+                                                                  -> if coe v14
+                                                                       then coe
+                                                                              ("" :: Data.Text.Text)
+                                                                       else coe
+                                                                              ("\172 (Class.IsSet.IsSet-Map (.Axiom.Set.Theory\7496.th List-Model\7496)\n   Class.IsSet.IsSet.\8712 (DRepDeposit c , d))\n  (.Ledger.Conway.Conformance.Certs.GState.deposits\n   (.Ledger.Conway.Conformance.Certs.CertState.gState cs))"
+                                                                               ::
+                                                                               Data.Text.Text)
+                                                                _ -> MAlonzo.RTE.mazUnreachableError)
                                                       else coe
-                                                             ("\172 (Class.IsSet.IsSet-Set (.Axiom.Set.Theory\7496.th List-Model\7496)\n   Class.IsSet.IsSet.\8712 c)\n  (Class.IsSet.dom (.Axiom.Set.Theory\7496.th List-Model\7496)\n   (.Ledger.Conway.Conformance.Certs.GState.dreps\n    (.Ledger.Conway.Conformance.Certs.CertState.gState cs)))"
-                                                              ::
-                                                              Data.Text.Text)
+                                                             MAlonzo.Code.QstdlibZ45Zmeta.Tactic.GenError.d_joinMsgs_20
+                                                             (coe
+                                                                ("\172 (Class.IsSet.IsSet-Set (.Axiom.Set.Theory\7496.th List-Model\7496)\n   Class.IsSet.IsSet.\8712 c)\n  (Class.IsSet.dom (.Axiom.Set.Theory\7496.th List-Model\7496)\n   (.Ledger.Conway.Conformance.Certs.GState.dreps\n    (.Ledger.Conway.Conformance.Certs.CertState.gState cs)))"
+                                                                 ::
+                                                                 Data.Text.Text))
+                                                             (let v13
+                                                                    = coe
+                                                                        MAlonzo.Code.QstdlibZ45Zmeta.Tactic.GenError.du_decideOne_8
+                                                                        (coe
+                                                                           MAlonzo.Code.Axiom.Set.du_Dec'45''8712'_1720
+                                                                           (coe
+                                                                              MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8)
+                                                                           (coe
+                                                                              MAlonzo.Code.Prelude.d_DecEq'45''215''8242'_4
+                                                                              () erased () erased
+                                                                              (MAlonzo.Code.Ledger.Conway.Specification.Certs.d_DecEq'45'DepositPurpose_1216
+                                                                                 (coe v0))
+                                                                              MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
+                                                                           (coe
+                                                                              MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
+                                                                              (coe
+                                                                                 MAlonzo.Code.Ledger.Conway.Specification.Certs.C_DRepDeposit_1190
+                                                                                 (coe v5))
+                                                                              (coe v6))
+                                                                           (coe
+                                                                              MAlonzo.Code.Axiom.Set.Map.du__'738'_570
+                                                                              (coe
+                                                                                 MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_deposits_1608
+                                                                                 (coe
+                                                                                    MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_gState_1624
+                                                                                    (coe v2))))) in
+                                                              coe
+                                                                (case coe v13 of
+                                                                   MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v14 v15
+                                                                     -> if coe v14
+                                                                          then coe
+                                                                                 (""
+                                                                                  ::
+                                                                                  Data.Text.Text)
+                                                                          else coe
+                                                                                 ("\172 (Class.IsSet.IsSet-Map (.Axiom.Set.Theory\7496.th List-Model\7496)\n   Class.IsSet.IsSet.\8712 (DRepDeposit c , d))\n  (.Ledger.Conway.Conformance.Certs.GState.deposits\n   (.Ledger.Conway.Conformance.Certs.CertState.gState cs))"
+                                                                                  ::
+                                                                                  Data.Text.Text)
+                                                                   _ -> MAlonzo.RTE.mazUnreachableError))
                                                _ -> MAlonzo.RTE.mazUnreachableError)))
                         _ -> MAlonzo.RTE.mazUnreachableError)
               MAlonzo.Code.Ledger.Conway.Specification.Certs.C_ccreghot_1366 v5 v6
@@ -2126,14 +3288,98 @@ d_Computational'45'GOVCERT_1850 v0
                                             (case coe v10 of
                                                MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v11 v12
                                                  -> if coe v11
-                                                      then coe
-                                                             ("\172 (Class.IsSet.IsSet-Set (.Axiom.Set.Theory\7496.th List-Model\7496)\n   Class.IsSet.IsSet.\8712 c)\n  (.Ledger.Conway.Specification.Certs.CertEnv.coldCreds ce)"
-                                                              ::
-                                                              Data.Text.Text)
+                                                      then let v13
+                                                                 = coe
+                                                                     MAlonzo.Code.QstdlibZ45Zmeta.Tactic.GenError.du_decideOne_8
+                                                                     (coe
+                                                                        MAlonzo.Code.Axiom.Set.du_Dec'45''8712'_1720
+                                                                        (coe
+                                                                           MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8)
+                                                                        (let v13
+                                                                               = MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
+                                                                                   (coe
+                                                                                      MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_220
+                                                                                      (coe
+                                                                                         MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.d_cryptoStructure_616
+                                                                                         (coe
+                                                                                            v0))) in
+                                                                         coe
+                                                                           (let v14
+                                                                                  = MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_224
+                                                                                      (coe
+                                                                                         MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.d_cryptoStructure_616
+                                                                                         (coe
+                                                                                            v0)) in
+                                                                            coe
+                                                                              (coe
+                                                                                 MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_292
+                                                                                 (coe v13)
+                                                                                 (coe v14))))
+                                                                        (coe v5)
+                                                                        (coe
+                                                                           MAlonzo.Code.Ledger.Conway.Specification.Certs.d_coldCreds_1412
+                                                                           (coe v1))) in
+                                                           coe
+                                                             (case coe v13 of
+                                                                MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v14 v15
+                                                                  -> if coe v14
+                                                                       then coe
+                                                                              ("" :: Data.Text.Text)
+                                                                       else coe
+                                                                              ("\172 (Class.IsSet.IsSet-Set (.Axiom.Set.Theory\7496.th List-Model\7496)\n   Class.IsSet.IsSet.\8712 c)\n  (.Ledger.Conway.Specification.Certs.CertEnv.coldCreds ce)"
+                                                                               ::
+                                                                               Data.Text.Text)
+                                                                _ -> MAlonzo.RTE.mazUnreachableError)
                                                       else coe
-                                                             ("\172 (Class.IsSet.IsSet-Set (.Axiom.Set.Theory\7496.th List-Model\7496)\n   Class.IsSet.IsSet.\8713 (c , nothing))\n  ((.Axiom.Set.Theory\7496.th List-Model\7496 Axiom.Set.Map.\738)\n   (.Ledger.Conway.Conformance.Certs.GState.ccHotKeys\n    (.Ledger.Conway.Conformance.Certs.CertState.gState cs)))"
-                                                              ::
-                                                              Data.Text.Text)
+                                                             MAlonzo.Code.QstdlibZ45Zmeta.Tactic.GenError.d_joinMsgs_20
+                                                             (coe
+                                                                ("\172 (Class.IsSet.IsSet-Set (.Axiom.Set.Theory\7496.th List-Model\7496)\n   Class.IsSet.IsSet.\8713 (c , nothing))\n  ((.Axiom.Set.Theory\7496.th List-Model\7496 Axiom.Set.Map.\738)\n   (.Ledger.Conway.Conformance.Certs.GState.ccHotKeys\n    (.Ledger.Conway.Conformance.Certs.CertState.gState cs)))"
+                                                                 ::
+                                                                 Data.Text.Text))
+                                                             (let v13
+                                                                    = coe
+                                                                        MAlonzo.Code.QstdlibZ45Zmeta.Tactic.GenError.du_decideOne_8
+                                                                        (coe
+                                                                           MAlonzo.Code.Axiom.Set.du_Dec'45''8712'_1720
+                                                                           (coe
+                                                                              MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8)
+                                                                           (let v13
+                                                                                  = MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
+                                                                                      (coe
+                                                                                         MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_220
+                                                                                         (coe
+                                                                                            MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.d_cryptoStructure_616
+                                                                                            (coe
+                                                                                               v0))) in
+                                                                            coe
+                                                                              (let v14
+                                                                                     = MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_224
+                                                                                         (coe
+                                                                                            MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.d_cryptoStructure_616
+                                                                                            (coe
+                                                                                               v0)) in
+                                                                               coe
+                                                                                 (coe
+                                                                                    MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_292
+                                                                                    (coe v13)
+                                                                                    (coe v14))))
+                                                                           (coe v5)
+                                                                           (coe
+                                                                              MAlonzo.Code.Ledger.Conway.Specification.Certs.d_coldCreds_1412
+                                                                              (coe v1))) in
+                                                              coe
+                                                                (case coe v13 of
+                                                                   MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v14 v15
+                                                                     -> if coe v14
+                                                                          then coe
+                                                                                 (""
+                                                                                  ::
+                                                                                  Data.Text.Text)
+                                                                          else coe
+                                                                                 ("\172 (Class.IsSet.IsSet-Set (.Axiom.Set.Theory\7496.th List-Model\7496)\n   Class.IsSet.IsSet.\8712 c)\n  (.Ledger.Conway.Specification.Certs.CertEnv.coldCreds ce)"
+                                                                                  ::
+                                                                                  Data.Text.Text)
+                                                                   _ -> MAlonzo.RTE.mazUnreachableError))
                                                _ -> MAlonzo.RTE.mazUnreachableError)))
                         _ -> MAlonzo.RTE.mazUnreachableError)
               _ -> coe v4))
@@ -3216,24 +4462,846 @@ d_Computational'45'CERT_2114 v0
                                                                                                    MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v22 v23
                                                                                                      -> if coe
                                                                                                              v22
-                                                                                                          then coe
-                                                                                                                 ("\172 (Class.IsSet.IsSet-Set (.Axiom.Set.Theory\7496.th List-Model\7496)\n   Class.IsSet.IsSet.\8712 mc)\n  ((.Axiom.Set.Theory\7496.th List-Model\7496 Axiom.Set.Theory.\8746\n    Axiom.Set.Theory.map (.Axiom.Set.Theory\7496.th List-Model\7496) just\n    (Class.IsSet.dom (.Axiom.Set.Theory\7496.th List-Model\7496)\n     (.Ledger.Conway.Specification.Certs.DelegEnv.pools de)))\n   (Class.HasSingleton.HasSingleton.\10100\n    Class.HasSingleton.HasSingletonSet-Set\n    (.Axiom.Set.Theory\7496.th List-Model\7496)\n    \10101\n    nothing))"
-                                                                                                                  ::
-                                                                                                                  Data.Text.Text)
+                                                                                                          then let v24
+                                                                                                                     = coe
+                                                                                                                         MAlonzo.Code.QstdlibZ45Zmeta.Tactic.GenError.du_decideOne_8
+                                                                                                                         (coe
+                                                                                                                            MAlonzo.Code.Axiom.Set.du_Dec'45''8712'_1720
+                                                                                                                            (coe
+                                                                                                                               MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8)
+                                                                                                                            (coe
+                                                                                                                               MAlonzo.Code.Class.DecEq.Instances.du_DecEq'45'Maybe_142
+                                                                                                                               (coe
+                                                                                                                                  MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
+                                                                                                                                  (coe
+                                                                                                                                     MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_220
+                                                                                                                                     (coe
+                                                                                                                                        MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.d_cryptoStructure_616
+                                                                                                                                        (coe
+                                                                                                                                           v0)))))
+                                                                                                                            (coe
+                                                                                                                               v10)
+                                                                                                                            (coe
+                                                                                                                               MAlonzo.Code.Axiom.Set.du__'8746'__708
+                                                                                                                               (coe
+                                                                                                                                  MAlonzo.Code.Axiom.Set.d_th_1516
+                                                                                                                                  (coe
+                                                                                                                                     MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                                                                               (coe
+                                                                                                                                  MAlonzo.Code.Axiom.Set.du_map_426
+                                                                                                                                  (MAlonzo.Code.Axiom.Set.d_th_1516
+                                                                                                                                     (coe
+                                                                                                                                        MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                                                                                  (coe
+                                                                                                                                     MAlonzo.Code.Agda.Builtin.Maybe.C_just_16)
+                                                                                                                                  (coe
+                                                                                                                                     MAlonzo.Code.Class.IsSet.du_dom_586
+                                                                                                                                     (coe
+                                                                                                                                        MAlonzo.Code.Axiom.Set.d_th_1516
+                                                                                                                                        (coe
+                                                                                                                                           MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                                                                                     (coe
+                                                                                                                                        MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_594)
+                                                                                                                                     (coe
+                                                                                                                                        MAlonzo.Code.Ledger.Conway.Specification.Certs.d_pools_1486
+                                                                                                                                        (coe
+                                                                                                                                           v6))))
+                                                                                                                               (coe
+                                                                                                                                  MAlonzo.Code.Axiom.Set.du_'10100'_'10101'_480
+                                                                                                                                  (MAlonzo.Code.Axiom.Set.d_th_1516
+                                                                                                                                     (coe
+                                                                                                                                        MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                                                                                  erased
+                                                                                                                                  (coe
+                                                                                                                                     MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18)))) in
+                                                                                                               coe
+                                                                                                                 (case coe
+                                                                                                                         v24 of
+                                                                                                                    MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v25 v26
+                                                                                                                      -> if coe
+                                                                                                                              v25
+                                                                                                                           then coe
+                                                                                                                                  (""
+                                                                                                                                   ::
+                                                                                                                                   Data.Text.Text)
+                                                                                                                           else coe
+                                                                                                                                  ("\172 (Class.IsSet.IsSet-Set (.Axiom.Set.Theory\7496.th List-Model\7496)\n   Class.IsSet.IsSet.\8712 mc)\n  ((.Axiom.Set.Theory\7496.th List-Model\7496 Axiom.Set.Theory.\8746\n    Axiom.Set.Theory.map (.Axiom.Set.Theory\7496.th List-Model\7496) just\n    (Class.IsSet.dom (.Axiom.Set.Theory\7496.th List-Model\7496)\n     (.Ledger.Conway.Specification.Certs.DelegEnv.pools de)))\n   (Class.HasSingleton.HasSingleton.\10100\n    Class.HasSingleton.HasSingletonSet-Set\n    (.Axiom.Set.Theory\7496.th List-Model\7496)\n    \10101\n    nothing))"
+                                                                                                                                   ::
+                                                                                                                                   Data.Text.Text)
+                                                                                                                    _ -> MAlonzo.RTE.mazUnreachableError)
                                                                                                           else coe
-                                                                                                                 ("\172 (Class.IsSet.IsSet-Set (.Axiom.Set.Theory\7496.th List-Model\7496)\n   Class.IsSet.IsSet.\8712 mv)\n  ((.Axiom.Set.Theory\7496.th List-Model\7496 Axiom.Set.Theory.\8746\n    Axiom.Set.Theory.map (.Axiom.Set.Theory\7496.th List-Model\7496)\n    (\955 x \8594 just (vDelegCredential x))\n    (.Ledger.Conway.Specification.Certs.DelegEnv.delegatees de))\n   (Axiom.Set.Theory.fromList (.Axiom.Set.Theory\7496.th List-Model\7496)\n    (nothing \8759 just vDelegAbstain \8759 just vDelegNoConfidence \8759 [])))"
-                                                                                                                  ::
-                                                                                                                  Data.Text.Text)
+                                                                                                                 MAlonzo.Code.QstdlibZ45Zmeta.Tactic.GenError.d_joinMsgs_20
+                                                                                                                 (coe
+                                                                                                                    ("\172 (Class.IsSet.IsSet-Set (.Axiom.Set.Theory\7496.th List-Model\7496)\n   Class.IsSet.IsSet.\8712 mv)\n  ((.Axiom.Set.Theory\7496.th List-Model\7496 Axiom.Set.Theory.\8746\n    Axiom.Set.Theory.map (.Axiom.Set.Theory\7496.th List-Model\7496)\n    (\955 x \8594 just (vDelegCredential x))\n    (.Ledger.Conway.Specification.Certs.DelegEnv.delegatees de))\n   (Axiom.Set.Theory.fromList (.Axiom.Set.Theory\7496.th List-Model\7496)\n    (nothing \8759 just vDelegAbstain \8759 just vDelegNoConfidence \8759 [])))"
+                                                                                                                     ::
+                                                                                                                     Data.Text.Text))
+                                                                                                                 (let v24
+                                                                                                                        = coe
+                                                                                                                            MAlonzo.Code.QstdlibZ45Zmeta.Tactic.GenError.du_decideOne_8
+                                                                                                                            (coe
+                                                                                                                               MAlonzo.Code.Axiom.Set.du_Dec'45''8712'_1720
+                                                                                                                               (coe
+                                                                                                                                  MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8)
+                                                                                                                               (coe
+                                                                                                                                  MAlonzo.Code.Class.DecEq.Instances.du_DecEq'45'Maybe_142
+                                                                                                                                  (coe
+                                                                                                                                     MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
+                                                                                                                                     (coe
+                                                                                                                                        MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_220
+                                                                                                                                        (coe
+                                                                                                                                           MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.d_cryptoStructure_616
+                                                                                                                                           (coe
+                                                                                                                                              v0)))))
+                                                                                                                               (coe
+                                                                                                                                  v10)
+                                                                                                                               (coe
+                                                                                                                                  MAlonzo.Code.Axiom.Set.du__'8746'__708
+                                                                                                                                  (coe
+                                                                                                                                     MAlonzo.Code.Axiom.Set.d_th_1516
+                                                                                                                                     (coe
+                                                                                                                                        MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                                                                                  (coe
+                                                                                                                                     MAlonzo.Code.Axiom.Set.du_map_426
+                                                                                                                                     (MAlonzo.Code.Axiom.Set.d_th_1516
+                                                                                                                                        (coe
+                                                                                                                                           MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                                                                                     (coe
+                                                                                                                                        MAlonzo.Code.Agda.Builtin.Maybe.C_just_16)
+                                                                                                                                     (coe
+                                                                                                                                        MAlonzo.Code.Class.IsSet.du_dom_586
+                                                                                                                                        (coe
+                                                                                                                                           MAlonzo.Code.Axiom.Set.d_th_1516
+                                                                                                                                           (coe
+                                                                                                                                              MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                                                                                        (coe
+                                                                                                                                           MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_594)
+                                                                                                                                        (coe
+                                                                                                                                           MAlonzo.Code.Ledger.Conway.Specification.Certs.d_pools_1486
+                                                                                                                                           (coe
+                                                                                                                                              v6))))
+                                                                                                                                  (coe
+                                                                                                                                     MAlonzo.Code.Axiom.Set.du_'10100'_'10101'_480
+                                                                                                                                     (MAlonzo.Code.Axiom.Set.d_th_1516
+                                                                                                                                        (coe
+                                                                                                                                           MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                                                                                     erased
+                                                                                                                                     (coe
+                                                                                                                                        MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18)))) in
+                                                                                                                  coe
+                                                                                                                    (case coe
+                                                                                                                            v24 of
+                                                                                                                       MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v25 v26
+                                                                                                                         -> if coe
+                                                                                                                                 v25
+                                                                                                                              then coe
+                                                                                                                                     (""
+                                                                                                                                      ::
+                                                                                                                                      Data.Text.Text)
+                                                                                                                              else coe
+                                                                                                                                     ("\172 (Class.IsSet.IsSet-Set (.Axiom.Set.Theory\7496.th List-Model\7496)\n   Class.IsSet.IsSet.\8712 mc)\n  ((.Axiom.Set.Theory\7496.th List-Model\7496 Axiom.Set.Theory.\8746\n    Axiom.Set.Theory.map (.Axiom.Set.Theory\7496.th List-Model\7496) just\n    (Class.IsSet.dom (.Axiom.Set.Theory\7496.th List-Model\7496)\n     (.Ledger.Conway.Specification.Certs.DelegEnv.pools de)))\n   (Class.HasSingleton.HasSingleton.\10100\n    Class.HasSingleton.HasSingletonSet-Set\n    (.Axiom.Set.Theory\7496.th List-Model\7496)\n    \10101\n    nothing))"
+                                                                                                                                      ::
+                                                                                                                                      Data.Text.Text)
+                                                                                                                       _ -> MAlonzo.RTE.mazUnreachableError))
                                                                                                    _ -> MAlonzo.RTE.mazUnreachableError)
                                                                                          else coe
-                                                                                                ("\172 (z\n   : (Class.IsSet.IsSet-Set (.Axiom.Set.Theory\7496.th List-Model\7496)\n      Class.IsSet.IsSet.\8712 c)\n     (Class.IsSet.dom (.Axiom.Set.Theory\7496.th List-Model\7496)\n      (.Ledger.Conway.Conformance.Certs.DState.rewards ds))) \8594\n  d \8801 0"
-                                                                                                 ::
-                                                                                                 Data.Text.Text)
+                                                                                                MAlonzo.Code.QstdlibZ45Zmeta.Tactic.GenError.d_joinMsgs_20
+                                                                                                (coe
+                                                                                                   ("\172 (z\n   : (Class.IsSet.IsSet-Set (.Axiom.Set.Theory\7496.th List-Model\7496)\n      Class.IsSet.IsSet.\8712 c)\n     (Class.IsSet.dom (.Axiom.Set.Theory\7496.th List-Model\7496)\n      (.Ledger.Conway.Conformance.Certs.DState.rewards ds))) \8594\n  d \8801 0"
+                                                                                                    ::
+                                                                                                    Data.Text.Text))
+                                                                                                (let v21
+                                                                                                       = coe
+                                                                                                           MAlonzo.Code.QstdlibZ45Zmeta.Tactic.GenError.du_decideOne_8
+                                                                                                           (coe
+                                                                                                              MAlonzo.Code.Axiom.Set.du_Dec'45''8712'_1720
+                                                                                                              (coe
+                                                                                                                 MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8)
+                                                                                                              (coe
+                                                                                                                 MAlonzo.Code.Class.DecEq.Instances.du_DecEq'45'Maybe_142
+                                                                                                                 (coe
+                                                                                                                    MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_DecEq'45'VDeleg_1230
+                                                                                                                    (coe
+                                                                                                                       v0)))
+                                                                                                              (coe
+                                                                                                                 v9)
+                                                                                                              (coe
+                                                                                                                 MAlonzo.Code.Axiom.Set.du__'8746'__708
+                                                                                                                 (coe
+                                                                                                                    MAlonzo.Code.Axiom.Set.d_th_1516
+                                                                                                                    (coe
+                                                                                                                       MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                                                                 (coe
+                                                                                                                    MAlonzo.Code.Axiom.Set.du_map_426
+                                                                                                                    (MAlonzo.Code.Axiom.Set.d_th_1516
+                                                                                                                       (coe
+                                                                                                                          MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                                                                    (\ v21 ->
+                                                                                                                       coe
+                                                                                                                         MAlonzo.Code.Agda.Builtin.Maybe.C_just_16
+                                                                                                                         (coe
+                                                                                                                            MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.C_vDelegCredential_1058
+                                                                                                                            (coe
+                                                                                                                               v21)))
+                                                                                                                    (MAlonzo.Code.Ledger.Conway.Specification.Certs.d_delegatees_1488
+                                                                                                                       (coe
+                                                                                                                          v6)))
+                                                                                                                 (coe
+                                                                                                                    MAlonzo.Code.Axiom.Set.du_fromList_456
+                                                                                                                    (coe
+                                                                                                                       MAlonzo.Code.Axiom.Set.d_th_1516
+                                                                                                                       (coe
+                                                                                                                          MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                                                                    (coe
+                                                                                                                       MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
+                                                                                                                       (coe
+                                                                                                                          MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18)
+                                                                                                                       (coe
+                                                                                                                          MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
+                                                                                                                          (coe
+                                                                                                                             MAlonzo.Code.Agda.Builtin.Maybe.C_just_16
+                                                                                                                             (coe
+                                                                                                                                MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.C_vDelegAbstain_1060))
+                                                                                                                          (coe
+                                                                                                                             MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
+                                                                                                                             (coe
+                                                                                                                                MAlonzo.Code.Agda.Builtin.Maybe.C_just_16
+                                                                                                                                (coe
+                                                                                                                                   MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.C_vDelegNoConfidence_1062))
+                                                                                                                             (coe
+                                                                                                                                MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))))) in
+                                                                                                 coe
+                                                                                                   (case coe
+                                                                                                           v21 of
+                                                                                                      MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v22 v23
+                                                                                                        -> if coe
+                                                                                                                v22
+                                                                                                             then let v24
+                                                                                                                        = coe
+                                                                                                                            MAlonzo.Code.QstdlibZ45Zmeta.Tactic.GenError.du_decideOne_8
+                                                                                                                            (coe
+                                                                                                                               MAlonzo.Code.Axiom.Set.du_Dec'45''8712'_1720
+                                                                                                                               (coe
+                                                                                                                                  MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8)
+                                                                                                                               (coe
+                                                                                                                                  MAlonzo.Code.Class.DecEq.Instances.du_DecEq'45'Maybe_142
+                                                                                                                                  (coe
+                                                                                                                                     MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
+                                                                                                                                     (coe
+                                                                                                                                        MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_220
+                                                                                                                                        (coe
+                                                                                                                                           MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.d_cryptoStructure_616
+                                                                                                                                           (coe
+                                                                                                                                              v0)))))
+                                                                                                                               (coe
+                                                                                                                                  v10)
+                                                                                                                               (coe
+                                                                                                                                  MAlonzo.Code.Axiom.Set.du__'8746'__708
+                                                                                                                                  (coe
+                                                                                                                                     MAlonzo.Code.Axiom.Set.d_th_1516
+                                                                                                                                     (coe
+                                                                                                                                        MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                                                                                  (coe
+                                                                                                                                     MAlonzo.Code.Axiom.Set.du_map_426
+                                                                                                                                     (MAlonzo.Code.Axiom.Set.d_th_1516
+                                                                                                                                        (coe
+                                                                                                                                           MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                                                                                     (coe
+                                                                                                                                        MAlonzo.Code.Agda.Builtin.Maybe.C_just_16)
+                                                                                                                                     (coe
+                                                                                                                                        MAlonzo.Code.Class.IsSet.du_dom_586
+                                                                                                                                        (coe
+                                                                                                                                           MAlonzo.Code.Axiom.Set.d_th_1516
+                                                                                                                                           (coe
+                                                                                                                                              MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                                                                                        (coe
+                                                                                                                                           MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_594)
+                                                                                                                                        (coe
+                                                                                                                                           MAlonzo.Code.Ledger.Conway.Specification.Certs.d_pools_1486
+                                                                                                                                           (coe
+                                                                                                                                              v6))))
+                                                                                                                                  (coe
+                                                                                                                                     MAlonzo.Code.Axiom.Set.du_'10100'_'10101'_480
+                                                                                                                                     (MAlonzo.Code.Axiom.Set.d_th_1516
+                                                                                                                                        (coe
+                                                                                                                                           MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                                                                                     erased
+                                                                                                                                     (coe
+                                                                                                                                        MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18)))) in
+                                                                                                                  coe
+                                                                                                                    (case coe
+                                                                                                                            v24 of
+                                                                                                                       MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v25 v26
+                                                                                                                         -> if coe
+                                                                                                                                 v25
+                                                                                                                              then coe
+                                                                                                                                     (""
+                                                                                                                                      ::
+                                                                                                                                      Data.Text.Text)
+                                                                                                                              else coe
+                                                                                                                                     ("\172 (Class.IsSet.IsSet-Set (.Axiom.Set.Theory\7496.th List-Model\7496)\n   Class.IsSet.IsSet.\8712 mc)\n  ((.Axiom.Set.Theory\7496.th List-Model\7496 Axiom.Set.Theory.\8746\n    Axiom.Set.Theory.map (.Axiom.Set.Theory\7496.th List-Model\7496) just\n    (Class.IsSet.dom (.Axiom.Set.Theory\7496.th List-Model\7496)\n     (.Ledger.Conway.Specification.Certs.DelegEnv.pools de)))\n   (Class.HasSingleton.HasSingleton.\10100\n    Class.HasSingleton.HasSingletonSet-Set\n    (.Axiom.Set.Theory\7496.th List-Model\7496)\n    \10101\n    nothing))"
+                                                                                                                                      ::
+                                                                                                                                      Data.Text.Text)
+                                                                                                                       _ -> MAlonzo.RTE.mazUnreachableError)
+                                                                                                             else coe
+                                                                                                                    MAlonzo.Code.QstdlibZ45Zmeta.Tactic.GenError.d_joinMsgs_20
+                                                                                                                    (coe
+                                                                                                                       ("\172 (Class.IsSet.IsSet-Set (.Axiom.Set.Theory\7496.th List-Model\7496)\n   Class.IsSet.IsSet.\8712 mv)\n  ((.Axiom.Set.Theory\7496.th List-Model\7496 Axiom.Set.Theory.\8746\n    Axiom.Set.Theory.map (.Axiom.Set.Theory\7496.th List-Model\7496)\n    (\955 x \8594 just (vDelegCredential x))\n    (.Ledger.Conway.Specification.Certs.DelegEnv.delegatees de))\n   (Axiom.Set.Theory.fromList (.Axiom.Set.Theory\7496.th List-Model\7496)\n    (nothing \8759 just vDelegAbstain \8759 just vDelegNoConfidence \8759 [])))"
+                                                                                                                        ::
+                                                                                                                        Data.Text.Text))
+                                                                                                                    (let v24
+                                                                                                                           = coe
+                                                                                                                               MAlonzo.Code.QstdlibZ45Zmeta.Tactic.GenError.du_decideOne_8
+                                                                                                                               (coe
+                                                                                                                                  MAlonzo.Code.Axiom.Set.du_Dec'45''8712'_1720
+                                                                                                                                  (coe
+                                                                                                                                     MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8)
+                                                                                                                                  (coe
+                                                                                                                                     MAlonzo.Code.Class.DecEq.Instances.du_DecEq'45'Maybe_142
+                                                                                                                                     (coe
+                                                                                                                                        MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
+                                                                                                                                        (coe
+                                                                                                                                           MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_220
+                                                                                                                                           (coe
+                                                                                                                                              MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.d_cryptoStructure_616
+                                                                                                                                              (coe
+                                                                                                                                                 v0)))))
+                                                                                                                                  (coe
+                                                                                                                                     v10)
+                                                                                                                                  (coe
+                                                                                                                                     MAlonzo.Code.Axiom.Set.du__'8746'__708
+                                                                                                                                     (coe
+                                                                                                                                        MAlonzo.Code.Axiom.Set.d_th_1516
+                                                                                                                                        (coe
+                                                                                                                                           MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                                                                                     (coe
+                                                                                                                                        MAlonzo.Code.Axiom.Set.du_map_426
+                                                                                                                                        (MAlonzo.Code.Axiom.Set.d_th_1516
+                                                                                                                                           (coe
+                                                                                                                                              MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                                                                                        (coe
+                                                                                                                                           MAlonzo.Code.Agda.Builtin.Maybe.C_just_16)
+                                                                                                                                        (coe
+                                                                                                                                           MAlonzo.Code.Class.IsSet.du_dom_586
+                                                                                                                                           (coe
+                                                                                                                                              MAlonzo.Code.Axiom.Set.d_th_1516
+                                                                                                                                              (coe
+                                                                                                                                                 MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                                                                                           (coe
+                                                                                                                                              MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_594)
+                                                                                                                                           (coe
+                                                                                                                                              MAlonzo.Code.Ledger.Conway.Specification.Certs.d_pools_1486
+                                                                                                                                              (coe
+                                                                                                                                                 v6))))
+                                                                                                                                     (coe
+                                                                                                                                        MAlonzo.Code.Axiom.Set.du_'10100'_'10101'_480
+                                                                                                                                        (MAlonzo.Code.Axiom.Set.d_th_1516
+                                                                                                                                           (coe
+                                                                                                                                              MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                                                                                        erased
+                                                                                                                                        (coe
+                                                                                                                                           MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18)))) in
+                                                                                                                     coe
+                                                                                                                       (case coe
+                                                                                                                               v24 of
+                                                                                                                          MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v25 v26
+                                                                                                                            -> if coe
+                                                                                                                                    v25
+                                                                                                                                 then coe
+                                                                                                                                        (""
+                                                                                                                                         ::
+                                                                                                                                         Data.Text.Text)
+                                                                                                                                 else coe
+                                                                                                                                        ("\172 (Class.IsSet.IsSet-Set (.Axiom.Set.Theory\7496.th List-Model\7496)\n   Class.IsSet.IsSet.\8712 mc)\n  ((.Axiom.Set.Theory\7496.th List-Model\7496 Axiom.Set.Theory.\8746\n    Axiom.Set.Theory.map (.Axiom.Set.Theory\7496.th List-Model\7496) just\n    (Class.IsSet.dom (.Axiom.Set.Theory\7496.th List-Model\7496)\n     (.Ledger.Conway.Specification.Certs.DelegEnv.pools de)))\n   (Class.HasSingleton.HasSingleton.\10100\n    Class.HasSingleton.HasSingletonSet-Set\n    (.Axiom.Set.Theory\7496.th List-Model\7496)\n    \10101\n    nothing))"
+                                                                                                                                         ::
+                                                                                                                                         Data.Text.Text)
+                                                                                                                          _ -> MAlonzo.RTE.mazUnreachableError))
+                                                                                                      _ -> MAlonzo.RTE.mazUnreachableError))
                                                                                   _ -> MAlonzo.RTE.mazUnreachableError)
                                                                         else coe
-                                                                               ("\172 (z\n   : (Class.IsSet.IsSet-Set (.Axiom.Set.Theory\7496.th List-Model\7496)\n      Class.IsSet.IsSet.\8713 c)\n     (Class.IsSet.dom (.Axiom.Set.Theory\7496.th List-Model\7496)\n      (.Ledger.Conway.Conformance.Certs.DState.rewards ds))) \8594\n  d \8801\n  .Ledger.Conway.Specification.PParams.PParams.keyDeposit\n  (.Ledger.Conway.Specification.Certs.DelegEnv.pparams de)"
-                                                                                ::
-                                                                                Data.Text.Text)
+                                                                               MAlonzo.Code.QstdlibZ45Zmeta.Tactic.GenError.d_joinMsgs_20
+                                                                               (coe
+                                                                                  ("\172 (z\n   : (Class.IsSet.IsSet-Set (.Axiom.Set.Theory\7496.th List-Model\7496)\n      Class.IsSet.IsSet.\8713 c)\n     (Class.IsSet.dom (.Axiom.Set.Theory\7496.th List-Model\7496)\n      (.Ledger.Conway.Conformance.Certs.DState.rewards ds))) \8594\n  d \8801\n  .Ledger.Conway.Specification.PParams.PParams.keyDeposit\n  (.Ledger.Conway.Specification.Certs.DelegEnv.pparams de)"
+                                                                                   ::
+                                                                                   Data.Text.Text))
+                                                                               (let v18
+                                                                                      = coe
+                                                                                          MAlonzo.Code.QstdlibZ45Zmeta.Tactic.GenError.du_decideOne_8
+                                                                                          (coe
+                                                                                             MAlonzo.Code.Class.Decidable.Instances.du_Dec'45''8594'_12
+                                                                                             (coe
+                                                                                                MAlonzo.Code.Axiom.Set.du_Dec'45''8712'_1720
+                                                                                                (coe
+                                                                                                   MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8)
+                                                                                                (let v18
+                                                                                                       = MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
+                                                                                                           (coe
+                                                                                                              MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_220
+                                                                                                              (coe
+                                                                                                                 MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.d_cryptoStructure_616
+                                                                                                                 (coe
+                                                                                                                    v0))) in
+                                                                                                 coe
+                                                                                                   (let v19
+                                                                                                          = MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_224
+                                                                                                              (coe
+                                                                                                                 MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.d_cryptoStructure_616
+                                                                                                                 (coe
+                                                                                                                    v0)) in
+                                                                                                    coe
+                                                                                                      (coe
+                                                                                                         MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_292
+                                                                                                         (coe
+                                                                                                            v18)
+                                                                                                         (coe
+                                                                                                            v19))))
+                                                                                                (coe
+                                                                                                   v8)
+                                                                                                (coe
+                                                                                                   MAlonzo.Code.Class.IsSet.du_dom_586
+                                                                                                   (coe
+                                                                                                      MAlonzo.Code.Axiom.Set.d_th_1516
+                                                                                                      (coe
+                                                                                                         MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                                                   (coe
+                                                                                                      MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_594)
+                                                                                                   (coe
+                                                                                                      MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_rewards_1590
+                                                                                                      (coe
+                                                                                                         v7))))
+                                                                                             (coe
+                                                                                                MAlonzo.Code.Class.Decidable.Instances.du_DecEq'8658'Dec_6
+                                                                                                (coe
+                                                                                                   MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
+                                                                                                (coe
+                                                                                                   v11)
+                                                                                                (coe
+                                                                                                   (0 ::
+                                                                                                      Integer)))) in
+                                                                                coe
+                                                                                  (case coe v18 of
+                                                                                     MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v19 v20
+                                                                                       -> if coe v19
+                                                                                            then let v21
+                                                                                                       = coe
+                                                                                                           MAlonzo.Code.QstdlibZ45Zmeta.Tactic.GenError.du_decideOne_8
+                                                                                                           (coe
+                                                                                                              MAlonzo.Code.Axiom.Set.du_Dec'45''8712'_1720
+                                                                                                              (coe
+                                                                                                                 MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8)
+                                                                                                              (coe
+                                                                                                                 MAlonzo.Code.Class.DecEq.Instances.du_DecEq'45'Maybe_142
+                                                                                                                 (coe
+                                                                                                                    MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_DecEq'45'VDeleg_1230
+                                                                                                                    (coe
+                                                                                                                       v0)))
+                                                                                                              (coe
+                                                                                                                 v9)
+                                                                                                              (coe
+                                                                                                                 MAlonzo.Code.Axiom.Set.du__'8746'__708
+                                                                                                                 (coe
+                                                                                                                    MAlonzo.Code.Axiom.Set.d_th_1516
+                                                                                                                    (coe
+                                                                                                                       MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                                                                 (coe
+                                                                                                                    MAlonzo.Code.Axiom.Set.du_map_426
+                                                                                                                    (MAlonzo.Code.Axiom.Set.d_th_1516
+                                                                                                                       (coe
+                                                                                                                          MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                                                                    (\ v21 ->
+                                                                                                                       coe
+                                                                                                                         MAlonzo.Code.Agda.Builtin.Maybe.C_just_16
+                                                                                                                         (coe
+                                                                                                                            MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.C_vDelegCredential_1058
+                                                                                                                            (coe
+                                                                                                                               v21)))
+                                                                                                                    (MAlonzo.Code.Ledger.Conway.Specification.Certs.d_delegatees_1488
+                                                                                                                       (coe
+                                                                                                                          v6)))
+                                                                                                                 (coe
+                                                                                                                    MAlonzo.Code.Axiom.Set.du_fromList_456
+                                                                                                                    (coe
+                                                                                                                       MAlonzo.Code.Axiom.Set.d_th_1516
+                                                                                                                       (coe
+                                                                                                                          MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                                                                    (coe
+                                                                                                                       MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
+                                                                                                                       (coe
+                                                                                                                          MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18)
+                                                                                                                       (coe
+                                                                                                                          MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
+                                                                                                                          (coe
+                                                                                                                             MAlonzo.Code.Agda.Builtin.Maybe.C_just_16
+                                                                                                                             (coe
+                                                                                                                                MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.C_vDelegAbstain_1060))
+                                                                                                                          (coe
+                                                                                                                             MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
+                                                                                                                             (coe
+                                                                                                                                MAlonzo.Code.Agda.Builtin.Maybe.C_just_16
+                                                                                                                                (coe
+                                                                                                                                   MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.C_vDelegNoConfidence_1062))
+                                                                                                                             (coe
+                                                                                                                                MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))))) in
+                                                                                                 coe
+                                                                                                   (case coe
+                                                                                                           v21 of
+                                                                                                      MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v22 v23
+                                                                                                        -> if coe
+                                                                                                                v22
+                                                                                                             then let v24
+                                                                                                                        = coe
+                                                                                                                            MAlonzo.Code.QstdlibZ45Zmeta.Tactic.GenError.du_decideOne_8
+                                                                                                                            (coe
+                                                                                                                               MAlonzo.Code.Axiom.Set.du_Dec'45''8712'_1720
+                                                                                                                               (coe
+                                                                                                                                  MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8)
+                                                                                                                               (coe
+                                                                                                                                  MAlonzo.Code.Class.DecEq.Instances.du_DecEq'45'Maybe_142
+                                                                                                                                  (coe
+                                                                                                                                     MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
+                                                                                                                                     (coe
+                                                                                                                                        MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_220
+                                                                                                                                        (coe
+                                                                                                                                           MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.d_cryptoStructure_616
+                                                                                                                                           (coe
+                                                                                                                                              v0)))))
+                                                                                                                               (coe
+                                                                                                                                  v10)
+                                                                                                                               (coe
+                                                                                                                                  MAlonzo.Code.Axiom.Set.du__'8746'__708
+                                                                                                                                  (coe
+                                                                                                                                     MAlonzo.Code.Axiom.Set.d_th_1516
+                                                                                                                                     (coe
+                                                                                                                                        MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                                                                                  (coe
+                                                                                                                                     MAlonzo.Code.Axiom.Set.du_map_426
+                                                                                                                                     (MAlonzo.Code.Axiom.Set.d_th_1516
+                                                                                                                                        (coe
+                                                                                                                                           MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                                                                                     (coe
+                                                                                                                                        MAlonzo.Code.Agda.Builtin.Maybe.C_just_16)
+                                                                                                                                     (coe
+                                                                                                                                        MAlonzo.Code.Class.IsSet.du_dom_586
+                                                                                                                                        (coe
+                                                                                                                                           MAlonzo.Code.Axiom.Set.d_th_1516
+                                                                                                                                           (coe
+                                                                                                                                              MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                                                                                        (coe
+                                                                                                                                           MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_594)
+                                                                                                                                        (coe
+                                                                                                                                           MAlonzo.Code.Ledger.Conway.Specification.Certs.d_pools_1486
+                                                                                                                                           (coe
+                                                                                                                                              v6))))
+                                                                                                                                  (coe
+                                                                                                                                     MAlonzo.Code.Axiom.Set.du_'10100'_'10101'_480
+                                                                                                                                     (MAlonzo.Code.Axiom.Set.d_th_1516
+                                                                                                                                        (coe
+                                                                                                                                           MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                                                                                     erased
+                                                                                                                                     (coe
+                                                                                                                                        MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18)))) in
+                                                                                                                  coe
+                                                                                                                    (case coe
+                                                                                                                            v24 of
+                                                                                                                       MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v25 v26
+                                                                                                                         -> if coe
+                                                                                                                                 v25
+                                                                                                                              then coe
+                                                                                                                                     (""
+                                                                                                                                      ::
+                                                                                                                                      Data.Text.Text)
+                                                                                                                              else coe
+                                                                                                                                     ("\172 (Class.IsSet.IsSet-Set (.Axiom.Set.Theory\7496.th List-Model\7496)\n   Class.IsSet.IsSet.\8712 mc)\n  ((.Axiom.Set.Theory\7496.th List-Model\7496 Axiom.Set.Theory.\8746\n    Axiom.Set.Theory.map (.Axiom.Set.Theory\7496.th List-Model\7496) just\n    (Class.IsSet.dom (.Axiom.Set.Theory\7496.th List-Model\7496)\n     (.Ledger.Conway.Specification.Certs.DelegEnv.pools de)))\n   (Class.HasSingleton.HasSingleton.\10100\n    Class.HasSingleton.HasSingletonSet-Set\n    (.Axiom.Set.Theory\7496.th List-Model\7496)\n    \10101\n    nothing))"
+                                                                                                                                      ::
+                                                                                                                                      Data.Text.Text)
+                                                                                                                       _ -> MAlonzo.RTE.mazUnreachableError)
+                                                                                                             else coe
+                                                                                                                    MAlonzo.Code.QstdlibZ45Zmeta.Tactic.GenError.d_joinMsgs_20
+                                                                                                                    (coe
+                                                                                                                       ("\172 (Class.IsSet.IsSet-Set (.Axiom.Set.Theory\7496.th List-Model\7496)\n   Class.IsSet.IsSet.\8712 mv)\n  ((.Axiom.Set.Theory\7496.th List-Model\7496 Axiom.Set.Theory.\8746\n    Axiom.Set.Theory.map (.Axiom.Set.Theory\7496.th List-Model\7496)\n    (\955 x \8594 just (vDelegCredential x))\n    (.Ledger.Conway.Specification.Certs.DelegEnv.delegatees de))\n   (Axiom.Set.Theory.fromList (.Axiom.Set.Theory\7496.th List-Model\7496)\n    (nothing \8759 just vDelegAbstain \8759 just vDelegNoConfidence \8759 [])))"
+                                                                                                                        ::
+                                                                                                                        Data.Text.Text))
+                                                                                                                    (let v24
+                                                                                                                           = coe
+                                                                                                                               MAlonzo.Code.QstdlibZ45Zmeta.Tactic.GenError.du_decideOne_8
+                                                                                                                               (coe
+                                                                                                                                  MAlonzo.Code.Axiom.Set.du_Dec'45''8712'_1720
+                                                                                                                                  (coe
+                                                                                                                                     MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8)
+                                                                                                                                  (coe
+                                                                                                                                     MAlonzo.Code.Class.DecEq.Instances.du_DecEq'45'Maybe_142
+                                                                                                                                     (coe
+                                                                                                                                        MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
+                                                                                                                                        (coe
+                                                                                                                                           MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_220
+                                                                                                                                           (coe
+                                                                                                                                              MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.d_cryptoStructure_616
+                                                                                                                                              (coe
+                                                                                                                                                 v0)))))
+                                                                                                                                  (coe
+                                                                                                                                     v10)
+                                                                                                                                  (coe
+                                                                                                                                     MAlonzo.Code.Axiom.Set.du__'8746'__708
+                                                                                                                                     (coe
+                                                                                                                                        MAlonzo.Code.Axiom.Set.d_th_1516
+                                                                                                                                        (coe
+                                                                                                                                           MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                                                                                     (coe
+                                                                                                                                        MAlonzo.Code.Axiom.Set.du_map_426
+                                                                                                                                        (MAlonzo.Code.Axiom.Set.d_th_1516
+                                                                                                                                           (coe
+                                                                                                                                              MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                                                                                        (coe
+                                                                                                                                           MAlonzo.Code.Agda.Builtin.Maybe.C_just_16)
+                                                                                                                                        (coe
+                                                                                                                                           MAlonzo.Code.Class.IsSet.du_dom_586
+                                                                                                                                           (coe
+                                                                                                                                              MAlonzo.Code.Axiom.Set.d_th_1516
+                                                                                                                                              (coe
+                                                                                                                                                 MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                                                                                           (coe
+                                                                                                                                              MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_594)
+                                                                                                                                           (coe
+                                                                                                                                              MAlonzo.Code.Ledger.Conway.Specification.Certs.d_pools_1486
+                                                                                                                                              (coe
+                                                                                                                                                 v6))))
+                                                                                                                                     (coe
+                                                                                                                                        MAlonzo.Code.Axiom.Set.du_'10100'_'10101'_480
+                                                                                                                                        (MAlonzo.Code.Axiom.Set.d_th_1516
+                                                                                                                                           (coe
+                                                                                                                                              MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                                                                                        erased
+                                                                                                                                        (coe
+                                                                                                                                           MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18)))) in
+                                                                                                                     coe
+                                                                                                                       (case coe
+                                                                                                                               v24 of
+                                                                                                                          MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v25 v26
+                                                                                                                            -> if coe
+                                                                                                                                    v25
+                                                                                                                                 then coe
+                                                                                                                                        (""
+                                                                                                                                         ::
+                                                                                                                                         Data.Text.Text)
+                                                                                                                                 else coe
+                                                                                                                                        ("\172 (Class.IsSet.IsSet-Set (.Axiom.Set.Theory\7496.th List-Model\7496)\n   Class.IsSet.IsSet.\8712 mc)\n  ((.Axiom.Set.Theory\7496.th List-Model\7496 Axiom.Set.Theory.\8746\n    Axiom.Set.Theory.map (.Axiom.Set.Theory\7496.th List-Model\7496) just\n    (Class.IsSet.dom (.Axiom.Set.Theory\7496.th List-Model\7496)\n     (.Ledger.Conway.Specification.Certs.DelegEnv.pools de)))\n   (Class.HasSingleton.HasSingleton.\10100\n    Class.HasSingleton.HasSingletonSet-Set\n    (.Axiom.Set.Theory\7496.th List-Model\7496)\n    \10101\n    nothing))"
+                                                                                                                                         ::
+                                                                                                                                         Data.Text.Text)
+                                                                                                                          _ -> MAlonzo.RTE.mazUnreachableError))
+                                                                                                      _ -> MAlonzo.RTE.mazUnreachableError)
+                                                                                            else coe
+                                                                                                   MAlonzo.Code.QstdlibZ45Zmeta.Tactic.GenError.d_joinMsgs_20
+                                                                                                   (coe
+                                                                                                      ("\172 (z\n   : (Class.IsSet.IsSet-Set (.Axiom.Set.Theory\7496.th List-Model\7496)\n      Class.IsSet.IsSet.\8712 c)\n     (Class.IsSet.dom (.Axiom.Set.Theory\7496.th List-Model\7496)\n      (.Ledger.Conway.Conformance.Certs.DState.rewards ds))) \8594\n  d \8801 0"
+                                                                                                       ::
+                                                                                                       Data.Text.Text))
+                                                                                                   (let v21
+                                                                                                          = coe
+                                                                                                              MAlonzo.Code.QstdlibZ45Zmeta.Tactic.GenError.du_decideOne_8
+                                                                                                              (coe
+                                                                                                                 MAlonzo.Code.Axiom.Set.du_Dec'45''8712'_1720
+                                                                                                                 (coe
+                                                                                                                    MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8)
+                                                                                                                 (coe
+                                                                                                                    MAlonzo.Code.Class.DecEq.Instances.du_DecEq'45'Maybe_142
+                                                                                                                    (coe
+                                                                                                                       MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_DecEq'45'VDeleg_1230
+                                                                                                                       (coe
+                                                                                                                          v0)))
+                                                                                                                 (coe
+                                                                                                                    v9)
+                                                                                                                 (coe
+                                                                                                                    MAlonzo.Code.Axiom.Set.du__'8746'__708
+                                                                                                                    (coe
+                                                                                                                       MAlonzo.Code.Axiom.Set.d_th_1516
+                                                                                                                       (coe
+                                                                                                                          MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                                                                    (coe
+                                                                                                                       MAlonzo.Code.Axiom.Set.du_map_426
+                                                                                                                       (MAlonzo.Code.Axiom.Set.d_th_1516
+                                                                                                                          (coe
+                                                                                                                             MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                                                                       (\ v21 ->
+                                                                                                                          coe
+                                                                                                                            MAlonzo.Code.Agda.Builtin.Maybe.C_just_16
+                                                                                                                            (coe
+                                                                                                                               MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.C_vDelegCredential_1058
+                                                                                                                               (coe
+                                                                                                                                  v21)))
+                                                                                                                       (MAlonzo.Code.Ledger.Conway.Specification.Certs.d_delegatees_1488
+                                                                                                                          (coe
+                                                                                                                             v6)))
+                                                                                                                    (coe
+                                                                                                                       MAlonzo.Code.Axiom.Set.du_fromList_456
+                                                                                                                       (coe
+                                                                                                                          MAlonzo.Code.Axiom.Set.d_th_1516
+                                                                                                                          (coe
+                                                                                                                             MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                                                                       (coe
+                                                                                                                          MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
+                                                                                                                          (coe
+                                                                                                                             MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18)
+                                                                                                                          (coe
+                                                                                                                             MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
+                                                                                                                             (coe
+                                                                                                                                MAlonzo.Code.Agda.Builtin.Maybe.C_just_16
+                                                                                                                                (coe
+                                                                                                                                   MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.C_vDelegAbstain_1060))
+                                                                                                                             (coe
+                                                                                                                                MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
+                                                                                                                                (coe
+                                                                                                                                   MAlonzo.Code.Agda.Builtin.Maybe.C_just_16
+                                                                                                                                   (coe
+                                                                                                                                      MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.C_vDelegNoConfidence_1062))
+                                                                                                                                (coe
+                                                                                                                                   MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))))) in
+                                                                                                    coe
+                                                                                                      (case coe
+                                                                                                              v21 of
+                                                                                                         MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v22 v23
+                                                                                                           -> if coe
+                                                                                                                   v22
+                                                                                                                then let v24
+                                                                                                                           = coe
+                                                                                                                               MAlonzo.Code.QstdlibZ45Zmeta.Tactic.GenError.du_decideOne_8
+                                                                                                                               (coe
+                                                                                                                                  MAlonzo.Code.Axiom.Set.du_Dec'45''8712'_1720
+                                                                                                                                  (coe
+                                                                                                                                     MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8)
+                                                                                                                                  (coe
+                                                                                                                                     MAlonzo.Code.Class.DecEq.Instances.du_DecEq'45'Maybe_142
+                                                                                                                                     (coe
+                                                                                                                                        MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
+                                                                                                                                        (coe
+                                                                                                                                           MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_220
+                                                                                                                                           (coe
+                                                                                                                                              MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.d_cryptoStructure_616
+                                                                                                                                              (coe
+                                                                                                                                                 v0)))))
+                                                                                                                                  (coe
+                                                                                                                                     v10)
+                                                                                                                                  (coe
+                                                                                                                                     MAlonzo.Code.Axiom.Set.du__'8746'__708
+                                                                                                                                     (coe
+                                                                                                                                        MAlonzo.Code.Axiom.Set.d_th_1516
+                                                                                                                                        (coe
+                                                                                                                                           MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                                                                                     (coe
+                                                                                                                                        MAlonzo.Code.Axiom.Set.du_map_426
+                                                                                                                                        (MAlonzo.Code.Axiom.Set.d_th_1516
+                                                                                                                                           (coe
+                                                                                                                                              MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                                                                                        (coe
+                                                                                                                                           MAlonzo.Code.Agda.Builtin.Maybe.C_just_16)
+                                                                                                                                        (coe
+                                                                                                                                           MAlonzo.Code.Class.IsSet.du_dom_586
+                                                                                                                                           (coe
+                                                                                                                                              MAlonzo.Code.Axiom.Set.d_th_1516
+                                                                                                                                              (coe
+                                                                                                                                                 MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                                                                                           (coe
+                                                                                                                                              MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_594)
+                                                                                                                                           (coe
+                                                                                                                                              MAlonzo.Code.Ledger.Conway.Specification.Certs.d_pools_1486
+                                                                                                                                              (coe
+                                                                                                                                                 v6))))
+                                                                                                                                     (coe
+                                                                                                                                        MAlonzo.Code.Axiom.Set.du_'10100'_'10101'_480
+                                                                                                                                        (MAlonzo.Code.Axiom.Set.d_th_1516
+                                                                                                                                           (coe
+                                                                                                                                              MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                                                                                        erased
+                                                                                                                                        (coe
+                                                                                                                                           MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18)))) in
+                                                                                                                     coe
+                                                                                                                       (case coe
+                                                                                                                               v24 of
+                                                                                                                          MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v25 v26
+                                                                                                                            -> if coe
+                                                                                                                                    v25
+                                                                                                                                 then coe
+                                                                                                                                        (""
+                                                                                                                                         ::
+                                                                                                                                         Data.Text.Text)
+                                                                                                                                 else coe
+                                                                                                                                        ("\172 (Class.IsSet.IsSet-Set (.Axiom.Set.Theory\7496.th List-Model\7496)\n   Class.IsSet.IsSet.\8712 mc)\n  ((.Axiom.Set.Theory\7496.th List-Model\7496 Axiom.Set.Theory.\8746\n    Axiom.Set.Theory.map (.Axiom.Set.Theory\7496.th List-Model\7496) just\n    (Class.IsSet.dom (.Axiom.Set.Theory\7496.th List-Model\7496)\n     (.Ledger.Conway.Specification.Certs.DelegEnv.pools de)))\n   (Class.HasSingleton.HasSingleton.\10100\n    Class.HasSingleton.HasSingletonSet-Set\n    (.Axiom.Set.Theory\7496.th List-Model\7496)\n    \10101\n    nothing))"
+                                                                                                                                         ::
+                                                                                                                                         Data.Text.Text)
+                                                                                                                          _ -> MAlonzo.RTE.mazUnreachableError)
+                                                                                                                else coe
+                                                                                                                       MAlonzo.Code.QstdlibZ45Zmeta.Tactic.GenError.d_joinMsgs_20
+                                                                                                                       (coe
+                                                                                                                          ("\172 (Class.IsSet.IsSet-Set (.Axiom.Set.Theory\7496.th List-Model\7496)\n   Class.IsSet.IsSet.\8712 mv)\n  ((.Axiom.Set.Theory\7496.th List-Model\7496 Axiom.Set.Theory.\8746\n    Axiom.Set.Theory.map (.Axiom.Set.Theory\7496.th List-Model\7496)\n    (\955 x \8594 just (vDelegCredential x))\n    (.Ledger.Conway.Specification.Certs.DelegEnv.delegatees de))\n   (Axiom.Set.Theory.fromList (.Axiom.Set.Theory\7496.th List-Model\7496)\n    (nothing \8759 just vDelegAbstain \8759 just vDelegNoConfidence \8759 [])))"
+                                                                                                                           ::
+                                                                                                                           Data.Text.Text))
+                                                                                                                       (let v24
+                                                                                                                              = coe
+                                                                                                                                  MAlonzo.Code.QstdlibZ45Zmeta.Tactic.GenError.du_decideOne_8
+                                                                                                                                  (coe
+                                                                                                                                     MAlonzo.Code.Axiom.Set.du_Dec'45''8712'_1720
+                                                                                                                                     (coe
+                                                                                                                                        MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8)
+                                                                                                                                     (coe
+                                                                                                                                        MAlonzo.Code.Class.DecEq.Instances.du_DecEq'45'Maybe_142
+                                                                                                                                        (coe
+                                                                                                                                           MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
+                                                                                                                                           (coe
+                                                                                                                                              MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_220
+                                                                                                                                              (coe
+                                                                                                                                                 MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.d_cryptoStructure_616
+                                                                                                                                                 (coe
+                                                                                                                                                    v0)))))
+                                                                                                                                     (coe
+                                                                                                                                        v10)
+                                                                                                                                     (coe
+                                                                                                                                        MAlonzo.Code.Axiom.Set.du__'8746'__708
+                                                                                                                                        (coe
+                                                                                                                                           MAlonzo.Code.Axiom.Set.d_th_1516
+                                                                                                                                           (coe
+                                                                                                                                              MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                                                                                        (coe
+                                                                                                                                           MAlonzo.Code.Axiom.Set.du_map_426
+                                                                                                                                           (MAlonzo.Code.Axiom.Set.d_th_1516
+                                                                                                                                              (coe
+                                                                                                                                                 MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                                                                                           (coe
+                                                                                                                                              MAlonzo.Code.Agda.Builtin.Maybe.C_just_16)
+                                                                                                                                           (coe
+                                                                                                                                              MAlonzo.Code.Class.IsSet.du_dom_586
+                                                                                                                                              (coe
+                                                                                                                                                 MAlonzo.Code.Axiom.Set.d_th_1516
+                                                                                                                                                 (coe
+                                                                                                                                                    MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                                                                                              (coe
+                                                                                                                                                 MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_594)
+                                                                                                                                              (coe
+                                                                                                                                                 MAlonzo.Code.Ledger.Conway.Specification.Certs.d_pools_1486
+                                                                                                                                                 (coe
+                                                                                                                                                    v6))))
+                                                                                                                                        (coe
+                                                                                                                                           MAlonzo.Code.Axiom.Set.du_'10100'_'10101'_480
+                                                                                                                                           (MAlonzo.Code.Axiom.Set.d_th_1516
+                                                                                                                                              (coe
+                                                                                                                                                 MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                                                                                           erased
+                                                                                                                                           (coe
+                                                                                                                                              MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18)))) in
+                                                                                                                        coe
+                                                                                                                          (case coe
+                                                                                                                                  v24 of
+                                                                                                                             MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v25 v26
+                                                                                                                               -> if coe
+                                                                                                                                       v25
+                                                                                                                                    then coe
+                                                                                                                                           (""
+                                                                                                                                            ::
+                                                                                                                                            Data.Text.Text)
+                                                                                                                                    else coe
+                                                                                                                                           ("\172 (Class.IsSet.IsSet-Set (.Axiom.Set.Theory\7496.th List-Model\7496)\n   Class.IsSet.IsSet.\8712 mc)\n  ((.Axiom.Set.Theory\7496.th List-Model\7496 Axiom.Set.Theory.\8746\n    Axiom.Set.Theory.map (.Axiom.Set.Theory\7496.th List-Model\7496) just\n    (Class.IsSet.dom (.Axiom.Set.Theory\7496.th List-Model\7496)\n     (.Ledger.Conway.Specification.Certs.DelegEnv.pools de)))\n   (Class.HasSingleton.HasSingleton.\10100\n    Class.HasSingleton.HasSingletonSet-Set\n    (.Axiom.Set.Theory\7496.th List-Model\7496)\n    \10101\n    nothing))"
+                                                                                                                                            ::
+                                                                                                                                            Data.Text.Text)
+                                                                                                                             _ -> MAlonzo.RTE.mazUnreachableError))
+                                                                                                         _ -> MAlonzo.RTE.mazUnreachableError))
+                                                                                     _ -> MAlonzo.RTE.mazUnreachableError))
                                                                  _ -> MAlonzo.RTE.mazUnreachableError))) in
                                               coe
                                                 (case coe v15 of
@@ -3789,19 +5857,231 @@ d_Computational'45'CERT_2114 v0
                                                                                                                         MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v25 v26
                                                                                                                           -> if coe
                                                                                                                                   v25
-                                                                                                                               then coe
-                                                                                                                                      ("\172 md \8801 nothing \8846 md \8801 just d"
-                                                                                                                                       ::
-                                                                                                                                       Data.Text.Text)
+                                                                                                                               then let v27
+                                                                                                                                          = coe
+                                                                                                                                              MAlonzo.Code.QstdlibZ45Zmeta.Tactic.GenError.du_decideOne_8
+                                                                                                                                              (coe
+                                                                                                                                                 MAlonzo.Code.Class.Decidable.Instances.du_Dec'45''8846'_16
+                                                                                                                                                 (coe
+                                                                                                                                                    MAlonzo.Code.Class.Decidable.Instances.du_DecEq'8658'Dec_6
+                                                                                                                                                    (coe
+                                                                                                                                                       MAlonzo.Code.Class.DecEq.Instances.du_DecEq'45'Maybe_142
+                                                                                                                                                       (coe
+                                                                                                                                                          MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22))
+                                                                                                                                                    (coe
+                                                                                                                                                       v9)
+                                                                                                                                                    (coe
+                                                                                                                                                       MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18))
+                                                                                                                                                 (coe
+                                                                                                                                                    MAlonzo.Code.Class.Decidable.Instances.du_DecEq'8658'Dec_6
+                                                                                                                                                    (coe
+                                                                                                                                                       MAlonzo.Code.Class.DecEq.Instances.du_DecEq'45'Maybe_142
+                                                                                                                                                       (coe
+                                                                                                                                                          MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22))
+                                                                                                                                                    (coe
+                                                                                                                                                       v9)
+                                                                                                                                                    (coe
+                                                                                                                                                       MAlonzo.Code.Agda.Builtin.Maybe.C_just_16
+                                                                                                                                                       (coe
+                                                                                                                                                          v17)))) in
+                                                                                                                                    coe
+                                                                                                                                      (case coe
+                                                                                                                                              v27 of
+                                                                                                                                         MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v28 v29
+                                                                                                                                           -> if coe
+                                                                                                                                                   v28
+                                                                                                                                                then coe
+                                                                                                                                                       (""
+                                                                                                                                                        ::
+                                                                                                                                                        Data.Text.Text)
+                                                                                                                                                else coe
+                                                                                                                                                       ("\172 md \8801 nothing \8846 md \8801 just d"
+                                                                                                                                                        ::
+                                                                                                                                                        Data.Text.Text)
+                                                                                                                                         _ -> MAlonzo.RTE.mazUnreachableError)
                                                                                                                                else coe
-                                                                                                                                      ("\172 (Class.IsSet.IsSet-Map (.Axiom.Set.Theory\7496.th List-Model\7496)\n   Class.IsSet.IsSet.\8712 (CredentialDeposit c , d))\n  (.Ledger.Conway.Conformance.Certs.DState.deposits ds)"
-                                                                                                                                       ::
-                                                                                                                                       Data.Text.Text)
+                                                                                                                                      MAlonzo.Code.QstdlibZ45Zmeta.Tactic.GenError.d_joinMsgs_20
+                                                                                                                                      (coe
+                                                                                                                                         ("\172 (Class.IsSet.IsSet-Map (.Axiom.Set.Theory\7496.th List-Model\7496)\n   Class.IsSet.IsSet.\8712 (CredentialDeposit c , d))\n  (.Ledger.Conway.Conformance.Certs.DState.deposits ds)"
+                                                                                                                                          ::
+                                                                                                                                          Data.Text.Text))
+                                                                                                                                      (let v27
+                                                                                                                                             = coe
+                                                                                                                                                 MAlonzo.Code.QstdlibZ45Zmeta.Tactic.GenError.du_decideOne_8
+                                                                                                                                                 (coe
+                                                                                                                                                    MAlonzo.Code.Class.Decidable.Instances.du_Dec'45''8846'_16
+                                                                                                                                                    (coe
+                                                                                                                                                       MAlonzo.Code.Class.Decidable.Instances.du_DecEq'8658'Dec_6
+                                                                                                                                                       (coe
+                                                                                                                                                          MAlonzo.Code.Class.DecEq.Instances.du_DecEq'45'Maybe_142
+                                                                                                                                                          (coe
+                                                                                                                                                             MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22))
+                                                                                                                                                       (coe
+                                                                                                                                                          v9)
+                                                                                                                                                       (coe
+                                                                                                                                                          MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18))
+                                                                                                                                                    (coe
+                                                                                                                                                       MAlonzo.Code.Class.Decidable.Instances.du_DecEq'8658'Dec_6
+                                                                                                                                                       (coe
+                                                                                                                                                          MAlonzo.Code.Class.DecEq.Instances.du_DecEq'45'Maybe_142
+                                                                                                                                                          (coe
+                                                                                                                                                             MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22))
+                                                                                                                                                       (coe
+                                                                                                                                                          v9)
+                                                                                                                                                       (coe
+                                                                                                                                                          MAlonzo.Code.Agda.Builtin.Maybe.C_just_16
+                                                                                                                                                          (coe
+                                                                                                                                                             v17)))) in
+                                                                                                                                       coe
+                                                                                                                                         (case coe
+                                                                                                                                                 v27 of
+                                                                                                                                            MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v28 v29
+                                                                                                                                              -> if coe
+                                                                                                                                                      v28
+                                                                                                                                                   then coe
+                                                                                                                                                          (""
+                                                                                                                                                           ::
+                                                                                                                                                           Data.Text.Text)
+                                                                                                                                                   else coe
+                                                                                                                                                          ("\172 md \8801 nothing \8846 md \8801 just d"
+                                                                                                                                                           ::
+                                                                                                                                                           Data.Text.Text)
+                                                                                                                                            _ -> MAlonzo.RTE.mazUnreachableError))
                                                                                                                         _ -> MAlonzo.RTE.mazUnreachableError)
                                                                                                               else coe
-                                                                                                                     ("\172 (Class.IsSet.IsSet-Map (.Axiom.Set.Theory\7496.th List-Model\7496)\n   Class.IsSet.IsSet.\8712 (c , 0))\n  (.Ledger.Conway.Conformance.Certs.DState.rewards ds)"
-                                                                                                                      ::
-                                                                                                                      Data.Text.Text)
+                                                                                                                     MAlonzo.Code.QstdlibZ45Zmeta.Tactic.GenError.d_joinMsgs_20
+                                                                                                                     (coe
+                                                                                                                        ("\172 (Class.IsSet.IsSet-Map (.Axiom.Set.Theory\7496.th List-Model\7496)\n   Class.IsSet.IsSet.\8712 (c , 0))\n  (.Ledger.Conway.Conformance.Certs.DState.rewards ds)"
+                                                                                                                         ::
+                                                                                                                         Data.Text.Text))
+                                                                                                                     (let v24
+                                                                                                                            = coe
+                                                                                                                                MAlonzo.Code.QstdlibZ45Zmeta.Tactic.GenError.du_decideOne_8
+                                                                                                                                (coe
+                                                                                                                                   MAlonzo.Code.Axiom.Set.du_Dec'45''8712'_1720
+                                                                                                                                   (coe
+                                                                                                                                      MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8)
+                                                                                                                                   (coe
+                                                                                                                                      MAlonzo.Code.Prelude.d_DecEq'45''215''8242'_4
+                                                                                                                                      ()
+                                                                                                                                      erased
+                                                                                                                                      ()
+                                                                                                                                      erased
+                                                                                                                                      (MAlonzo.Code.Ledger.Conway.Specification.Certs.d_DecEq'45'DepositPurpose_1216
+                                                                                                                                         (coe
+                                                                                                                                            v0))
+                                                                                                                                      MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
+                                                                                                                                   (coe
+                                                                                                                                      MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
+                                                                                                                                      (coe
+                                                                                                                                         MAlonzo.Code.Ledger.Conway.Specification.Certs.C_CredentialDeposit_1186
+                                                                                                                                         (coe
+                                                                                                                                            v8))
+                                                                                                                                      (coe
+                                                                                                                                         v17))
+                                                                                                                                   (coe
+                                                                                                                                      MAlonzo.Code.Axiom.Set.Map.du__'738'_570
+                                                                                                                                      (coe
+                                                                                                                                         MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_deposits_1592
+                                                                                                                                         (coe
+                                                                                                                                            v7)))) in
+                                                                                                                      coe
+                                                                                                                        (case coe
+                                                                                                                                v24 of
+                                                                                                                           MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v25 v26
+                                                                                                                             -> if coe
+                                                                                                                                     v25
+                                                                                                                                  then let v27
+                                                                                                                                             = coe
+                                                                                                                                                 MAlonzo.Code.QstdlibZ45Zmeta.Tactic.GenError.du_decideOne_8
+                                                                                                                                                 (coe
+                                                                                                                                                    MAlonzo.Code.Class.Decidable.Instances.du_Dec'45''8846'_16
+                                                                                                                                                    (coe
+                                                                                                                                                       MAlonzo.Code.Class.Decidable.Instances.du_DecEq'8658'Dec_6
+                                                                                                                                                       (coe
+                                                                                                                                                          MAlonzo.Code.Class.DecEq.Instances.du_DecEq'45'Maybe_142
+                                                                                                                                                          (coe
+                                                                                                                                                             MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22))
+                                                                                                                                                       (coe
+                                                                                                                                                          v9)
+                                                                                                                                                       (coe
+                                                                                                                                                          MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18))
+                                                                                                                                                    (coe
+                                                                                                                                                       MAlonzo.Code.Class.Decidable.Instances.du_DecEq'8658'Dec_6
+                                                                                                                                                       (coe
+                                                                                                                                                          MAlonzo.Code.Class.DecEq.Instances.du_DecEq'45'Maybe_142
+                                                                                                                                                          (coe
+                                                                                                                                                             MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22))
+                                                                                                                                                       (coe
+                                                                                                                                                          v9)
+                                                                                                                                                       (coe
+                                                                                                                                                          MAlonzo.Code.Agda.Builtin.Maybe.C_just_16
+                                                                                                                                                          (coe
+                                                                                                                                                             v17)))) in
+                                                                                                                                       coe
+                                                                                                                                         (case coe
+                                                                                                                                                 v27 of
+                                                                                                                                            MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v28 v29
+                                                                                                                                              -> if coe
+                                                                                                                                                      v28
+                                                                                                                                                   then coe
+                                                                                                                                                          (""
+                                                                                                                                                           ::
+                                                                                                                                                           Data.Text.Text)
+                                                                                                                                                   else coe
+                                                                                                                                                          ("\172 md \8801 nothing \8846 md \8801 just d"
+                                                                                                                                                           ::
+                                                                                                                                                           Data.Text.Text)
+                                                                                                                                            _ -> MAlonzo.RTE.mazUnreachableError)
+                                                                                                                                  else coe
+                                                                                                                                         MAlonzo.Code.QstdlibZ45Zmeta.Tactic.GenError.d_joinMsgs_20
+                                                                                                                                         (coe
+                                                                                                                                            ("\172 (Class.IsSet.IsSet-Map (.Axiom.Set.Theory\7496.th List-Model\7496)\n   Class.IsSet.IsSet.\8712 (CredentialDeposit c , d))\n  (.Ledger.Conway.Conformance.Certs.DState.deposits ds)"
+                                                                                                                                             ::
+                                                                                                                                             Data.Text.Text))
+                                                                                                                                         (let v27
+                                                                                                                                                = coe
+                                                                                                                                                    MAlonzo.Code.QstdlibZ45Zmeta.Tactic.GenError.du_decideOne_8
+                                                                                                                                                    (coe
+                                                                                                                                                       MAlonzo.Code.Class.Decidable.Instances.du_Dec'45''8846'_16
+                                                                                                                                                       (coe
+                                                                                                                                                          MAlonzo.Code.Class.Decidable.Instances.du_DecEq'8658'Dec_6
+                                                                                                                                                          (coe
+                                                                                                                                                             MAlonzo.Code.Class.DecEq.Instances.du_DecEq'45'Maybe_142
+                                                                                                                                                             (coe
+                                                                                                                                                                MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22))
+                                                                                                                                                          (coe
+                                                                                                                                                             v9)
+                                                                                                                                                          (coe
+                                                                                                                                                             MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18))
+                                                                                                                                                       (coe
+                                                                                                                                                          MAlonzo.Code.Class.Decidable.Instances.du_DecEq'8658'Dec_6
+                                                                                                                                                          (coe
+                                                                                                                                                             MAlonzo.Code.Class.DecEq.Instances.du_DecEq'45'Maybe_142
+                                                                                                                                                             (coe
+                                                                                                                                                                MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22))
+                                                                                                                                                          (coe
+                                                                                                                                                             v9)
+                                                                                                                                                          (coe
+                                                                                                                                                             MAlonzo.Code.Agda.Builtin.Maybe.C_just_16
+                                                                                                                                                             (coe
+                                                                                                                                                                v17)))) in
+                                                                                                                                          coe
+                                                                                                                                            (case coe
+                                                                                                                                                    v27 of
+                                                                                                                                               MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v28 v29
+                                                                                                                                                 -> if coe
+                                                                                                                                                         v28
+                                                                                                                                                      then coe
+                                                                                                                                                             (""
+                                                                                                                                                              ::
+                                                                                                                                                              Data.Text.Text)
+                                                                                                                                                      else coe
+                                                                                                                                                             ("\172 md \8801 nothing \8846 md \8801 just d"
+                                                                                                                                                              ::
+                                                                                                                                                              Data.Text.Text)
+                                                                                                                                               _ -> MAlonzo.RTE.mazUnreachableError))
+                                                                                                                           _ -> MAlonzo.RTE.mazUnreachableError))
                                                                                                        _ -> MAlonzo.RTE.mazUnreachableError))) in
                                                                                     coe
                                                                                       (case coe
@@ -4269,14 +6549,90 @@ d_Computational'45'CERT_2114 v0
                                                               (case coe v13 of
                                                                  MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v14 v15
                                                                    -> if coe v14
-                                                                        then coe
-                                                                               ("\172 d \8801\n  .Ledger.Conway.Specification.PParams.PParams.keyDeposit\n  (.Ledger.Conway.Specification.Certs.DelegEnv.pparams de)\n  \8846 d \8801 0"
-                                                                                ::
-                                                                                Data.Text.Text)
+                                                                        then let v16
+                                                                                   = coe
+                                                                                       MAlonzo.Code.QstdlibZ45Zmeta.Tactic.GenError.du_decideOne_8
+                                                                                       (coe
+                                                                                          MAlonzo.Code.Class.Decidable.Instances.du_Dec'45''8846'_16
+                                                                                          (coe
+                                                                                             MAlonzo.Code.Class.Decidable.Instances.du_DecEq'8658'Dec_6
+                                                                                             (coe
+                                                                                                MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
+                                                                                             (coe
+                                                                                                v9)
+                                                                                             (coe
+                                                                                                MAlonzo.Code.Ledger.Conway.Specification.PParams.d_keyDeposit_378
+                                                                                                (coe
+                                                                                                   MAlonzo.Code.Ledger.Conway.Specification.Certs.d_pparams_1484
+                                                                                                   (coe
+                                                                                                      v6))))
+                                                                                          (coe
+                                                                                             MAlonzo.Code.Class.Decidable.Instances.du_DecEq'8658'Dec_6
+                                                                                             (coe
+                                                                                                MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
+                                                                                             (coe
+                                                                                                v9)
+                                                                                             (coe
+                                                                                                (0 ::
+                                                                                                   Integer)))) in
+                                                                             coe
+                                                                               (case coe v16 of
+                                                                                  MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v17 v18
+                                                                                    -> if coe v17
+                                                                                         then coe
+                                                                                                (""
+                                                                                                 ::
+                                                                                                 Data.Text.Text)
+                                                                                         else coe
+                                                                                                ("\172 d \8801\n  .Ledger.Conway.Specification.PParams.PParams.keyDeposit\n  (.Ledger.Conway.Specification.Certs.DelegEnv.pparams de)\n  \8846 d \8801 0"
+                                                                                                 ::
+                                                                                                 Data.Text.Text)
+                                                                                  _ -> MAlonzo.RTE.mazUnreachableError)
                                                                         else coe
-                                                                               ("\172 (Class.IsSet.IsSet-Set (.Axiom.Set.Theory\7496.th List-Model\7496)\n   Class.IsSet.IsSet.\8713 c)\n  (Class.IsSet.dom (.Axiom.Set.Theory\7496.th List-Model\7496)\n   (.Ledger.Conway.Conformance.Certs.DState.rewards ds))"
-                                                                                ::
-                                                                                Data.Text.Text)
+                                                                               MAlonzo.Code.QstdlibZ45Zmeta.Tactic.GenError.d_joinMsgs_20
+                                                                               (coe
+                                                                                  ("\172 (Class.IsSet.IsSet-Set (.Axiom.Set.Theory\7496.th List-Model\7496)\n   Class.IsSet.IsSet.\8713 c)\n  (Class.IsSet.dom (.Axiom.Set.Theory\7496.th List-Model\7496)\n   (.Ledger.Conway.Conformance.Certs.DState.rewards ds))"
+                                                                                   ::
+                                                                                   Data.Text.Text))
+                                                                               (let v16
+                                                                                      = coe
+                                                                                          MAlonzo.Code.QstdlibZ45Zmeta.Tactic.GenError.du_decideOne_8
+                                                                                          (coe
+                                                                                             MAlonzo.Code.Class.Decidable.Instances.du_Dec'45''8846'_16
+                                                                                             (coe
+                                                                                                MAlonzo.Code.Class.Decidable.Instances.du_DecEq'8658'Dec_6
+                                                                                                (coe
+                                                                                                   MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
+                                                                                                (coe
+                                                                                                   v9)
+                                                                                                (coe
+                                                                                                   MAlonzo.Code.Ledger.Conway.Specification.PParams.d_keyDeposit_378
+                                                                                                   (coe
+                                                                                                      MAlonzo.Code.Ledger.Conway.Specification.Certs.d_pparams_1484
+                                                                                                      (coe
+                                                                                                         v6))))
+                                                                                             (coe
+                                                                                                MAlonzo.Code.Class.Decidable.Instances.du_DecEq'8658'Dec_6
+                                                                                                (coe
+                                                                                                   MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
+                                                                                                (coe
+                                                                                                   v9)
+                                                                                                (coe
+                                                                                                   (0 ::
+                                                                                                      Integer)))) in
+                                                                                coe
+                                                                                  (case coe v16 of
+                                                                                     MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v17 v18
+                                                                                       -> if coe v17
+                                                                                            then coe
+                                                                                                   (""
+                                                                                                    ::
+                                                                                                    Data.Text.Text)
+                                                                                            else coe
+                                                                                                   ("\172 d \8801\n  .Ledger.Conway.Specification.PParams.PParams.keyDeposit\n  (.Ledger.Conway.Specification.Certs.DelegEnv.pparams de)\n  \8846 d \8801 0"
+                                                                                                    ::
+                                                                                                    Data.Text.Text)
+                                                                                     _ -> MAlonzo.RTE.mazUnreachableError))
                                                                  _ -> MAlonzo.RTE.mazUnreachableError))) in
                                               coe
                                                 (case coe v13 of
@@ -4936,14 +7292,158 @@ d_Computational'45'PRE'45'CERT_2422 v0
                                   (case coe v7 of
                                      MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v8 v9
                                        -> if coe v8
-                                            then coe
-                                                   ("\172 (HasSubset-Set HasSubset.\8838\n   Axiom.Set.Theory.map (.Axiom.Set.Theory\7496.th List-Model\7496)\n   (Bifunctor.map\8321 Bifunctor-\215\n    (\955 r \8594 .Ledger.Core.Specification.Address.RewardAddress.stake r))\n   ((.Axiom.Set.Theory\7496.th List-Model\7496 Axiom.Set.Map.\738)\n    (.Ledger.Conway.Specification.Certs.CertEnv.wdrls ce)))\n  ((.Axiom.Set.Theory\7496.th List-Model\7496 Axiom.Set.Map.\738)\n   (.Ledger.Conway.Conformance.Certs.DState.rewards\n    (.Ledger.Conway.Conformance.Certs.CertState.dState cs)))"
-                                                    ::
-                                                    Data.Text.Text)
+                                            then let v10
+                                                       = coe
+                                                           MAlonzo.Code.QstdlibZ45Zmeta.Tactic.GenError.du_decideOne_8
+                                                           (coe
+                                                              MAlonzo.Code.Axiom.Set.du_Dec'45'All'738'_1682
+                                                              (coe
+                                                                 MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8)
+                                                              (coe
+                                                                 (\ v10 ->
+                                                                    coe
+                                                                      MAlonzo.Code.Axiom.Set.du_Dec'45''8712'_1720
+                                                                      (coe
+                                                                         MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8)
+                                                                      (coe
+                                                                         MAlonzo.Code.Prelude.d_DecEq'45''215''8242'_4
+                                                                         () erased () erased
+                                                                         (let v11
+                                                                                = MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
+                                                                                    (coe
+                                                                                       MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_220
+                                                                                       (coe
+                                                                                          MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.d_cryptoStructure_616
+                                                                                          (coe
+                                                                                             v0))) in
+                                                                          coe
+                                                                            (let v12
+                                                                                   = MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_224
+                                                                                       (coe
+                                                                                          MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.d_cryptoStructure_616
+                                                                                          (coe
+                                                                                             v0)) in
+                                                                             coe
+                                                                               (coe
+                                                                                  MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_292
+                                                                                  (coe v11)
+                                                                                  (coe v12))))
+                                                                         MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
+                                                                      (coe v10)
+                                                                      (coe
+                                                                         MAlonzo.Code.Axiom.Set.Map.du__'738'_570
+                                                                         (coe
+                                                                            MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_rewards_1590
+                                                                            (coe
+                                                                               MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dState_1620
+                                                                               (coe v2))))))
+                                                              (coe
+                                                                 MAlonzo.Code.Axiom.Set.du_map_426
+                                                                 (MAlonzo.Code.Axiom.Set.d_th_1516
+                                                                    (coe
+                                                                       MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                 (coe
+                                                                    MAlonzo.Code.Class.Bifunctor.du_map'8321'_112
+                                                                    (coe
+                                                                       MAlonzo.Code.Class.Bifunctor.du_Bifunctor'45''215'_156)
+                                                                    (coe
+                                                                       (\ v10 ->
+                                                                          MAlonzo.Code.Ledger.Core.Specification.Address.d_stake_124
+                                                                            (coe v10))))
+                                                                 (coe
+                                                                    MAlonzo.Code.Axiom.Set.Map.du__'738'_570
+                                                                    (coe
+                                                                       MAlonzo.Code.Ledger.Conway.Specification.Certs.d_wdrls_1410
+                                                                       (coe v1))))) in
+                                                 coe
+                                                   (case coe v10 of
+                                                      MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v11 v12
+                                                        -> if coe v11
+                                                             then coe ("" :: Data.Text.Text)
+                                                             else coe
+                                                                    ("\172 (HasSubset-Set HasSubset.\8838\n   Axiom.Set.Theory.map (.Axiom.Set.Theory\7496.th List-Model\7496)\n   (Bifunctor.map\8321 Bifunctor-\215\n    (\955 r \8594 .Ledger.Core.Specification.Address.RewardAddress.stake r))\n   ((.Axiom.Set.Theory\7496.th List-Model\7496 Axiom.Set.Map.\738)\n    (.Ledger.Conway.Specification.Certs.CertEnv.wdrls ce)))\n  ((.Axiom.Set.Theory\7496.th List-Model\7496 Axiom.Set.Map.\738)\n   (.Ledger.Conway.Conformance.Certs.DState.rewards\n    (.Ledger.Conway.Conformance.Certs.CertState.dState cs)))"
+                                                                     ::
+                                                                     Data.Text.Text)
+                                                      _ -> MAlonzo.RTE.mazUnreachableError)
                                             else coe
-                                                   ("\172 (HasSubset-Set HasSubset.\8838\n   filter\738\n   (Ledger.Core.Specification.Address.isKeyHash\n    (.Ledger.Core.Specification.Epoch.GlobalConstants.Network\n     (.GovStructure.globalConstants gs))\n    (.Ledger.Core.Specification.Crypto.isHashableSet.THash\n     (.Ledger.Core.Specification.Crypto.CryptoStructure.khs\n      (.GovStructure.cryptoStructure gs)))\n    (.Ledger.Core.Specification.Crypto.CryptoStructure.ScriptHash\n     (.GovStructure.cryptoStructure gs)))\n   (Axiom.Set.Theory.map (.Axiom.Set.Theory\7496.th List-Model\7496)\n    (\955 r \8594 .Ledger.Core.Specification.Address.RewardAddress.stake r)\n    (Class.IsSet.dom (.Axiom.Set.Theory\7496.th List-Model\7496)\n     (.Ledger.Conway.Specification.Certs.CertEnv.wdrls ce))))\n  (Class.IsSet.dom (.Axiom.Set.Theory\7496.th List-Model\7496)\n   (.Ledger.Conway.Conformance.Certs.DState.voteDelegs\n    (.Ledger.Conway.Conformance.Certs.CertState.dState cs)))"
-                                                    ::
-                                                    Data.Text.Text)
+                                                   MAlonzo.Code.QstdlibZ45Zmeta.Tactic.GenError.d_joinMsgs_20
+                                                   (coe
+                                                      ("\172 (HasSubset-Set HasSubset.\8838\n   filter\738\n   (Ledger.Core.Specification.Address.isKeyHash\n    (.Ledger.Core.Specification.Epoch.GlobalConstants.Network\n     (.GovStructure.globalConstants gs))\n    (.Ledger.Core.Specification.Crypto.isHashableSet.THash\n     (.Ledger.Core.Specification.Crypto.CryptoStructure.khs\n      (.GovStructure.cryptoStructure gs)))\n    (.Ledger.Core.Specification.Crypto.CryptoStructure.ScriptHash\n     (.GovStructure.cryptoStructure gs)))\n   (Axiom.Set.Theory.map (.Axiom.Set.Theory\7496.th List-Model\7496)\n    (\955 r \8594 .Ledger.Core.Specification.Address.RewardAddress.stake r)\n    (Class.IsSet.dom (.Axiom.Set.Theory\7496.th List-Model\7496)\n     (.Ledger.Conway.Specification.Certs.CertEnv.wdrls ce))))\n  (Class.IsSet.dom (.Axiom.Set.Theory\7496.th List-Model\7496)\n   (.Ledger.Conway.Conformance.Certs.DState.voteDelegs\n    (.Ledger.Conway.Conformance.Certs.CertState.dState cs)))"
+                                                       ::
+                                                       Data.Text.Text))
+                                                   (let v10
+                                                          = coe
+                                                              MAlonzo.Code.QstdlibZ45Zmeta.Tactic.GenError.du_decideOne_8
+                                                              (coe
+                                                                 MAlonzo.Code.Axiom.Set.du_Dec'45'All'738'_1682
+                                                                 (coe
+                                                                    MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8)
+                                                                 (coe
+                                                                    (\ v10 ->
+                                                                       coe
+                                                                         MAlonzo.Code.Axiom.Set.du_Dec'45''8712'_1720
+                                                                         (coe
+                                                                            MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8)
+                                                                         (coe
+                                                                            MAlonzo.Code.Prelude.d_DecEq'45''215''8242'_4
+                                                                            () erased () erased
+                                                                            (let v11
+                                                                                   = MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
+                                                                                       (coe
+                                                                                          MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_220
+                                                                                          (coe
+                                                                                             MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.d_cryptoStructure_616
+                                                                                             (coe
+                                                                                                v0))) in
+                                                                             coe
+                                                                               (let v12
+                                                                                      = MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_224
+                                                                                          (coe
+                                                                                             MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.d_cryptoStructure_616
+                                                                                             (coe
+                                                                                                v0)) in
+                                                                                coe
+                                                                                  (coe
+                                                                                     MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_292
+                                                                                     (coe v11)
+                                                                                     (coe v12))))
+                                                                            MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
+                                                                         (coe v10)
+                                                                         (coe
+                                                                            MAlonzo.Code.Axiom.Set.Map.du__'738'_570
+                                                                            (coe
+                                                                               MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_rewards_1590
+                                                                               (coe
+                                                                                  MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dState_1620
+                                                                                  (coe v2))))))
+                                                                 (coe
+                                                                    MAlonzo.Code.Axiom.Set.du_map_426
+                                                                    (MAlonzo.Code.Axiom.Set.d_th_1516
+                                                                       (coe
+                                                                          MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                    (coe
+                                                                       MAlonzo.Code.Class.Bifunctor.du_map'8321'_112
+                                                                       (coe
+                                                                          MAlonzo.Code.Class.Bifunctor.du_Bifunctor'45''215'_156)
+                                                                       (coe
+                                                                          (\ v10 ->
+                                                                             MAlonzo.Code.Ledger.Core.Specification.Address.d_stake_124
+                                                                               (coe v10))))
+                                                                    (coe
+                                                                       MAlonzo.Code.Axiom.Set.Map.du__'738'_570
+                                                                       (coe
+                                                                          MAlonzo.Code.Ledger.Conway.Specification.Certs.d_wdrls_1410
+                                                                          (coe v1))))) in
+                                                    coe
+                                                      (case coe v10 of
+                                                         MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v11 v12
+                                                           -> if coe v11
+                                                                then coe ("" :: Data.Text.Text)
+                                                                else coe
+                                                                       ("\172 (HasSubset-Set HasSubset.\8838\n   Axiom.Set.Theory.map (.Axiom.Set.Theory\7496.th List-Model\7496)\n   (Bifunctor.map\8321 Bifunctor-\215\n    (\955 r \8594 .Ledger.Core.Specification.Address.RewardAddress.stake r))\n   ((.Axiom.Set.Theory\7496.th List-Model\7496 Axiom.Set.Map.\738)\n    (.Ledger.Conway.Specification.Certs.CertEnv.wdrls ce)))\n  ((.Axiom.Set.Theory\7496.th List-Model\7496 Axiom.Set.Map.\738)\n   (.Ledger.Conway.Conformance.Certs.DState.rewards\n    (.Ledger.Conway.Conformance.Certs.CertState.dState cs)))"
+                                                                        ::
+                                                                        Data.Text.Text)
+                                                         _ -> MAlonzo.RTE.mazUnreachableError))
                                      _ -> MAlonzo.RTE.mazUnreachableError)))
               _ -> MAlonzo.RTE.mazUnreachableError))
 -- Ledger.Conway.Conformance.Certs.Properties.Computational-CERTS
