@@ -136,14 +136,14 @@ d_acnt_2798 v0
 -- Ledger.Dijkstra.Specification.RewardUpdate._.EpochState.es
 d_es_2800 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.T_EpochState_4088 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.T_EnactState_1322
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.T_EnactState_1318
 d_es_2800 v0
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_es_4106 (coe v0)
 -- Ledger.Dijkstra.Specification.RewardUpdate._.EpochState.fut
 d_fut_2802 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.T_EpochState_4088 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.T_RatifyState_2114
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.T_RatifyState_2110
 d_fut_2802 v0
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4108

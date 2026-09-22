@@ -33,57 +33,57 @@ import qualified MAlonzo.Code.Relation.Nullary.Reflects
 -- _.Credential
 d_Credential_56 a0 a1 a2 a3 = ()
 -- _.RewardAddress
-d_RewardAddress_322 a0 a1 a2 a3 = ()
+d_RewardAddress_320 a0 a1 a2 a3 = ()
 -- _.RewardAddress.net
-d_net_926 ::
+d_net_922 ::
   MAlonzo.Code.Ledger.Core.Specification.Address.T_RewardAddress_116 ->
   AgdaAny
-d_net_926 v0
+d_net_922 v0
   = coe
       MAlonzo.Code.Ledger.Core.Specification.Address.d_net_122 (coe v0)
 -- _.RewardAddress.stake
-d_stake_928 ::
+d_stake_924 ::
   MAlonzo.Code.Ledger.Core.Specification.Address.T_RewardAddress_116 ->
   MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20
-d_stake_928 v0
+d_stake_924 v0
   = coe
       MAlonzo.Code.Ledger.Core.Specification.Address.d_stake_124 (coe v0)
 -- Ledger.Dijkstra.Specification.Account.DirectDeposits
-d_DirectDeposits_938 ::
+d_DirectDeposits_934 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Base.T_GovStructure_10 ->
   ()
-d_DirectDeposits_938 = erased
+d_DirectDeposits_934 = erased
 -- Ledger.Dijkstra.Specification.Account.BalanceInterval
-d_BalanceInterval_940 a0 = ()
-data T_BalanceInterval_940
-  = C_'10214'_'44'_'10630'_942 Integer Integer |
-    C_'10214'_'44''8734''10630'_944 Integer |
-    C_'10214'0'44'_'10630'_946 Integer | C_Exact_948 Integer
+d_BalanceInterval_936 a0 = ()
+data T_BalanceInterval_936
+  = C_'10214'_'44'_'10630'_938 Integer Integer |
+    C_'10214'_'44''8734''10630'_940 Integer |
+    C_'10214'0'44'_'10630'_942 Integer | C_Exact_944 Integer
 -- Ledger.Dijkstra.Specification.Account.InBalanceInterval
-d_InBalanceInterval_952 a0 a1 a2 = ()
-data T_InBalanceInterval_952
-  = C_bounded_960 MAlonzo.Code.Data.Nat.Base.T__'8804'__22
+d_InBalanceInterval_948 a0 a1 a2 = ()
+data T_InBalanceInterval_948
+  = C_bounded_956 MAlonzo.Code.Data.Nat.Base.T__'8804'__22
                   MAlonzo.Code.Data.Nat.Base.T__'8804'__22 |
-    C_lowerBounded_964 MAlonzo.Code.Data.Nat.Base.T__'8804'__22 |
-    C_upperBounded_968 MAlonzo.Code.Data.Nat.Base.T__'8804'__22 |
-    C_exact_972
+    C_lowerBounded_960 MAlonzo.Code.Data.Nat.Base.T__'8804'__22 |
+    C_upperBounded_964 MAlonzo.Code.Data.Nat.Base.T__'8804'__22 |
+    C_exact_968
 -- Ledger.Dijkstra.Specification.Account.Dec-InBalanceInterval
-d_Dec'45'InBalanceInterval_974 ::
+d_Dec'45'InBalanceInterval_970 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Base.T_GovStructure_10 ->
   Integer ->
-  T_BalanceInterval_940 ->
+  T_BalanceInterval_936 ->
   MAlonzo.Code.Class.Decidable.Core.T__'8263'_10
-d_Dec'45'InBalanceInterval_974 ~v0 v1 v2
-  = du_Dec'45'InBalanceInterval_974 v1 v2
-du_Dec'45'InBalanceInterval_974 ::
+d_Dec'45'InBalanceInterval_970 ~v0 v1 v2
+  = du_Dec'45'InBalanceInterval_970 v1 v2
+du_Dec'45'InBalanceInterval_970 ::
   Integer ->
-  T_BalanceInterval_940 ->
+  T_BalanceInterval_936 ->
   MAlonzo.Code.Class.Decidable.Core.T__'8263'_10
-du_Dec'45'InBalanceInterval_974 v0 v1
+du_Dec'45'InBalanceInterval_970 v0 v1
   = coe
       MAlonzo.Code.Class.Decidable.Core.C_'8263'__30
       (case coe v1 of
-         C_'10214'_'44'_'10630'_942 v2 v3
+         C_'10214'_'44'_'10630'_938 v2 v3
            -> let v4
                     = coe
                         MAlonzo.Code.Relation.Nullary.Decidable.Core.du_map'8242'_178
@@ -129,7 +129,7 @@ du_Dec'45'InBalanceInterval_974 v0 v1
                                                                 (coe v9)
                                                                 (coe
                                                                    MAlonzo.Code.Relation.Nullary.Reflects.C_of'696'_22
-                                                                   (coe C_bounded_960 v8 v11))
+                                                                   (coe C_bounded_956 v8 v11))
                                                          _ -> MAlonzo.RTE.mazUnreachableError
                                                   else coe
                                                          seq (coe v10)
@@ -147,7 +147,7 @@ du_Dec'45'InBalanceInterval_974 v0 v1
                                        (coe v6)
                                        (coe MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26))
                       _ -> MAlonzo.RTE.mazUnreachableError))
-         C_'10214'_'44''8734''10630'_944 v2
+         C_'10214'_'44''8734''10630'_940 v2
            -> let v3
                     = coe
                         MAlonzo.Code.Relation.Nullary.Decidable.Core.du_map'8242'_178
@@ -173,7 +173,7 @@ du_Dec'45'InBalanceInterval_974 v0 v1
                                         (coe v4)
                                         (coe
                                            MAlonzo.Code.Relation.Nullary.Reflects.C_of'696'_22
-                                           (coe C_lowerBounded_964 v6))
+                                           (coe C_lowerBounded_960 v6))
                                  _ -> MAlonzo.RTE.mazUnreachableError
                           else coe
                                  seq (coe v5)
@@ -182,7 +182,7 @@ du_Dec'45'InBalanceInterval_974 v0 v1
                                     (coe v4)
                                     (coe MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26))
                    _ -> MAlonzo.RTE.mazUnreachableError)
-         C_'10214'0'44'_'10630'_946 v2
+         C_'10214'0'44'_'10630'_942 v2
            -> let v3
                     = coe
                         MAlonzo.Code.Relation.Nullary.Decidable.Core.du_map'8242'_178
@@ -208,7 +208,7 @@ du_Dec'45'InBalanceInterval_974 v0 v1
                                         (coe v4)
                                         (coe
                                            MAlonzo.Code.Relation.Nullary.Reflects.C_of'696'_22
-                                           (coe C_upperBounded_968 v6))
+                                           (coe C_upperBounded_964 v6))
                                  _ -> MAlonzo.RTE.mazUnreachableError
                           else coe
                                  seq (coe v5)
@@ -217,7 +217,7 @@ du_Dec'45'InBalanceInterval_974 v0 v1
                                     (coe v4)
                                     (coe MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26))
                    _ -> MAlonzo.RTE.mazUnreachableError)
-         C_Exact_948 v2
+         C_Exact_944 v2
            -> let v3
                     = MAlonzo.Code.Class.Decidable.Core.d_dec_16
                         (coe
@@ -235,7 +235,7 @@ du_Dec'45'InBalanceInterval_974 v0 v1
                                     (coe v4)
                                     (coe
                                        MAlonzo.Code.Relation.Nullary.Reflects.C_of'696'_22
-                                       (coe C_exact_972)))
+                                       (coe C_exact_968)))
                           else coe
                                  seq (coe v5)
                                  (coe
@@ -245,24 +245,24 @@ du_Dec'45'InBalanceInterval_974 v0 v1
                    _ -> MAlonzo.RTE.mazUnreachableError)
          _ -> MAlonzo.RTE.mazUnreachableError)
 -- Ledger.Dijkstra.Specification.Account.DecEq-BalanceInterval
-d_DecEq'45'BalanceInterval_1098 ::
+d_DecEq'45'BalanceInterval_1094 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Base.T_GovStructure_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
-d_DecEq'45'BalanceInterval_1098 ~v0
-  = du_DecEq'45'BalanceInterval_1098
-du_DecEq'45'BalanceInterval_1098 ::
+d_DecEq'45'BalanceInterval_1094 ~v0
+  = du_DecEq'45'BalanceInterval_1094
+du_DecEq'45'BalanceInterval_1094 ::
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
-du_DecEq'45'BalanceInterval_1098
+du_DecEq'45'BalanceInterval_1094
   = coe
       MAlonzo.Code.Class.DecEq.Core.C_constructor_32
       (coe
          (\ v0 ->
             case coe v0 of
-              C_'10214'_'44'_'10630'_942 v1 v2
+              C_'10214'_'44'_'10630'_938 v1 v2
                 -> coe
                      (\ v3 ->
                         case coe v3 of
-                          C_'10214'_'44'_'10630'_942 v4 v5
+                          C_'10214'_'44'_'10630'_938 v4 v5
                             -> let v6
                                      = MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796
                                          (coe v1) (coe v4) in
@@ -295,32 +295,32 @@ du_DecEq'45'BalanceInterval_1098
                                                   (coe
                                                      MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
                                     _ -> MAlonzo.RTE.mazUnreachableError)
-                          C_'10214'_'44''8734''10630'_944 v4
+                          C_'10214'_'44''8734''10630'_940 v4
                             -> coe
                                  MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
                                  (coe MAlonzo.Code.Agda.Builtin.Bool.C_false_8)
                                  (coe MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
-                          C_'10214'0'44'_'10630'_946 v4
+                          C_'10214'0'44'_'10630'_942 v4
                             -> coe
                                  MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
                                  (coe MAlonzo.Code.Agda.Builtin.Bool.C_false_8)
                                  (coe MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
-                          C_Exact_948 v4
+                          C_Exact_944 v4
                             -> coe
                                  MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
                                  (coe MAlonzo.Code.Agda.Builtin.Bool.C_false_8)
                                  (coe MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
                           _ -> MAlonzo.RTE.mazUnreachableError)
-              C_'10214'_'44''8734''10630'_944 v1
+              C_'10214'_'44''8734''10630'_940 v1
                 -> coe
                      (\ v2 ->
                         case coe v2 of
-                          C_'10214'_'44'_'10630'_942 v3 v4
+                          C_'10214'_'44'_'10630'_938 v3 v4
                             -> coe
                                  MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
                                  (coe MAlonzo.Code.Agda.Builtin.Bool.C_false_8)
                                  (coe MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
-                          C_'10214'_'44''8734''10630'_944 v3
+                          C_'10214'_'44''8734''10630'_940 v3
                             -> let v4
                                      = MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796
                                          (coe v1) (coe v3) in
@@ -340,32 +340,32 @@ du_DecEq'45'BalanceInterval_1098
                                                   (coe
                                                      MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
                                     _ -> MAlonzo.RTE.mazUnreachableError)
-                          C_'10214'0'44'_'10630'_946 v3
+                          C_'10214'0'44'_'10630'_942 v3
                             -> coe
                                  MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
                                  (coe MAlonzo.Code.Agda.Builtin.Bool.C_false_8)
                                  (coe MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
-                          C_Exact_948 v3
+                          C_Exact_944 v3
                             -> coe
                                  MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
                                  (coe MAlonzo.Code.Agda.Builtin.Bool.C_false_8)
                                  (coe MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
                           _ -> MAlonzo.RTE.mazUnreachableError)
-              C_'10214'0'44'_'10630'_946 v1
+              C_'10214'0'44'_'10630'_942 v1
                 -> coe
                      (\ v2 ->
                         case coe v2 of
-                          C_'10214'_'44'_'10630'_942 v3 v4
+                          C_'10214'_'44'_'10630'_938 v3 v4
                             -> coe
                                  MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
                                  (coe MAlonzo.Code.Agda.Builtin.Bool.C_false_8)
                                  (coe MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
-                          C_'10214'_'44''8734''10630'_944 v3
+                          C_'10214'_'44''8734''10630'_940 v3
                             -> coe
                                  MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
                                  (coe MAlonzo.Code.Agda.Builtin.Bool.C_false_8)
                                  (coe MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
-                          C_'10214'0'44'_'10630'_946 v3
+                          C_'10214'0'44'_'10630'_942 v3
                             -> let v4
                                      = MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796
                                          (coe v1) (coe v3) in
@@ -385,32 +385,32 @@ du_DecEq'45'BalanceInterval_1098
                                                   (coe
                                                      MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
                                     _ -> MAlonzo.RTE.mazUnreachableError)
-                          C_Exact_948 v3
+                          C_Exact_944 v3
                             -> coe
                                  MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
                                  (coe MAlonzo.Code.Agda.Builtin.Bool.C_false_8)
                                  (coe MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
                           _ -> MAlonzo.RTE.mazUnreachableError)
-              C_Exact_948 v1
+              C_Exact_944 v1
                 -> coe
                      (\ v2 ->
                         case coe v2 of
-                          C_'10214'_'44'_'10630'_942 v3 v4
+                          C_'10214'_'44'_'10630'_938 v3 v4
                             -> coe
                                  MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
                                  (coe MAlonzo.Code.Agda.Builtin.Bool.C_false_8)
                                  (coe MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
-                          C_'10214'_'44''8734''10630'_944 v3
+                          C_'10214'_'44''8734''10630'_940 v3
                             -> coe
                                  MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
                                  (coe MAlonzo.Code.Agda.Builtin.Bool.C_false_8)
                                  (coe MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
-                          C_'10214'0'44'_'10630'_946 v3
+                          C_'10214'0'44'_'10630'_942 v3
                             -> coe
                                  MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
                                  (coe MAlonzo.Code.Agda.Builtin.Bool.C_false_8)
                                  (coe MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
-                          C_Exact_948 v3
+                          C_Exact_944 v3
                             -> let v4
                                      = MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796
                                          (coe v1) (coe v3) in
@@ -433,7 +433,7 @@ du_DecEq'45'BalanceInterval_1098
                           _ -> MAlonzo.RTE.mazUnreachableError)
               _ -> MAlonzo.RTE.mazUnreachableError))
 -- Ledger.Dijkstra.Specification.Account.AccountBalanceIntervals
-d_AccountBalanceIntervals_1100 ::
+d_AccountBalanceIntervals_1096 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Base.T_GovStructure_10 ->
   ()
-d_AccountBalanceIntervals_1100 = erased
+d_AccountBalanceIntervals_1096 = erased

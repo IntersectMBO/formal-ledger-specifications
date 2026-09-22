@@ -1561,7 +1561,7 @@ d_HSLeiosCryptoStructure_688 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Crypto.T_LeiosCryptoStructure_10
 d_HSLeiosCryptoStructure_688 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Crypto.C_constructor_204
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Crypto.C_constructor_192
       MAlonzo.Code.Data.Nat.Properties.d_'60''45'isStrictTotalOrder_3190
       (\ v1 ->
          coe
@@ -1590,12 +1590,6 @@ d_HSLeiosCryptoStructure_688 v0
               MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_extIsSigned_14
               v0 (coe MAlonzo.Code.Data.Nat.ListAction.d_sum_6 v1) v2 v3)
            (coe MAlonzo.Code.Agda.Builtin.Bool.C_true_10))
-      (\ v1 v2 ->
-         coe
-           MAlonzo.Code.Class.Decidable.Core.C_'8263'__30
-           (coe
-              MAlonzo.Code.Data.Nat.Properties.d__'8804''63'__2920
-              (coe addInt (coe (1 :: Integer)) (coe v1)) (coe v2)))
       MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22
       MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22
       MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22
@@ -1693,41 +1687,41 @@ d_'43''7497''8801''43''7497'''_720 = erased
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.==-GovAction
 d_'61''61''45'GovAction_722 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovAction_968 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovAction_968 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovAction_964 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovAction_964 ->
   Bool
 d_'61''61''45'GovAction_722 v0
   = let v1 = d_HSTransactionStructure_702 (coe v0) in
     coe
       (coe
-         MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_'61''61''45'GovAction_1518
+         MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_'61''61''45'GovAction_1514
          (coe
             MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_govStructure_2860
             (coe v1)))
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.==-GovActionData
 d_'61''61''45'GovActionData_724 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovActionType_950 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovActionType_946 ->
   AgdaAny -> AgdaAny -> Bool
 d_'61''61''45'GovActionData_724 v0
   = let v1 = d_HSTransactionStructure_702 (coe v0) in
     coe
       (coe
-         MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_'61''61''45'GovActionData_1500
+         MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_'61''61''45'GovActionData_1496
          (coe
             MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_govStructure_2860
             (coe v1)))
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.==-GovProposal
 d_'61''61''45'GovProposal_726 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovProposal_1068 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovProposal_1068 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovProposal_1064 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovProposal_1064 ->
   Bool
 d_'61''61''45'GovProposal_726 v0
   = let v1 = d_HSTransactionStructure_702 (coe v0) in
     coe
       (coe
-         MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_'61''61''45'GovProposal_1552
+         MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_'61''61''45'GovProposal_1548
          (coe
             MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_govStructure_2860
             (coe v1)))
@@ -1744,7 +1738,7 @@ du_'61''61''45'Set_728 ::
   [AgdaAny] -> [AgdaAny] -> Bool
 du_'61''61''45'Set_728 v0 v1 v2 v3
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_'61''61''45'Set_1488
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_'61''61''45'Set_1484
       v1 v2 v3
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.THash
 d_THash_730 ::
@@ -1788,12 +1782,12 @@ d_Addr_742 = erased
 d_Anchor_746 a0 = ()
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.AnchorOf
 d_AnchorOf_750 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasAnchor_1298 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasAnchor_1294 ->
   AgdaAny ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_Anchor_1002
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_Anchor_998
 d_AnchorOf_750 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_AnchorOf_1306
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_AnchorOf_1302
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.AnyLevelTx
 d_AnyLevelTx_752 ::
@@ -1871,7 +1865,7 @@ d_CurrentTreasuryOf_784 v0
 d_DCertsOf_786 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_HasDCerts_4246 ->
   AgdaAny ->
-  [MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DCert_1392]
+  [MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DCert_1388]
 d_DCertsOf_786 v0
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_DCertsOf_4254
@@ -1883,11 +1877,11 @@ d_DReps_790 ::
 d_DReps_790 = erased
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.DRepsOf
 d_DRepsOf_792 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasDReps_1278 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasDReps_1274 ->
   AgdaAny -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_DRepsOf_792 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_DRepsOf_1286
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_DRepsOf_1282
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.T
 d_T_794 ::
@@ -1958,17 +1952,17 @@ d_Dec'45'EvalNativeScript_804 v0
 d_Dec'45'InBalanceInterval_806 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
   Integer ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Account.T_BalanceInterval_940 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Account.T_BalanceInterval_936 ->
   MAlonzo.Code.Class.Decidable.Core.T__'8263'_10
 d_Dec'45'InBalanceInterval_806 ~v0
   = du_Dec'45'InBalanceInterval_806
 du_Dec'45'InBalanceInterval_806 ::
   Integer ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Account.T_BalanceInterval_940 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Account.T_BalanceInterval_936 ->
   MAlonzo.Code.Class.Decidable.Core.T__'8263'_10
 du_Dec'45'InBalanceInterval_806
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Account.du_Dec'45'InBalanceInterval_974
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Account.du_Dec'45'InBalanceInterval_970
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.Dec-isScript
 d_Dec'45'isScript_808 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
@@ -2081,7 +2075,7 @@ d_DecEq'45'Anchor_822 v0
   = let v1 = d_HSTransactionStructure_702 (coe v0) in
     coe
       (coe
-         MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_DecEq'45'Anchor_1482
+         MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_DecEq'45'Anchor_1478
          (coe
             MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_govStructure_2860
             (coe v1)))
@@ -2095,7 +2089,7 @@ du_DecEq'45'BalanceInterval_824 ::
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 du_DecEq'45'BalanceInterval_824
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Account.du_DecEq'45'BalanceInterval_1098
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Account.du_DecEq'45'BalanceInterval_1094
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.DecEq-BaseAddr
 d_DecEq'45'BaseAddr_826 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
@@ -2228,7 +2222,7 @@ du_DecEq'45'GovActionType_840 ::
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 du_DecEq'45'GovActionType_840
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_DecEq'45'GovActionType_1372
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_DecEq'45'GovActionType_1368
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.DecEq-GovRole
 d_DecEq'45'GovRole_842 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
@@ -2237,7 +2231,7 @@ d_DecEq'45'GovRole_842 ~v0 = du_DecEq'45'GovRole_842
 du_DecEq'45'GovRole_842 :: MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 du_DecEq'45'GovRole_842
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_DecEq'45'GovRole_1374
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_DecEq'45'GovRole_1370
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.DecEq-GovVoter
 d_DecEq'45'GovVoter_844 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
@@ -2246,7 +2240,7 @@ d_DecEq'45'GovVoter_844 v0
   = let v1 = d_HSTransactionStructure_702 (coe v0) in
     coe
       (coe
-         MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_DecEq'45'GovVoter_1380
+         MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_DecEq'45'GovVoter_1376
          (coe
             MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_govStructure_2860
             (coe v1)))
@@ -2325,13 +2319,13 @@ d_DecEq'45'NativeScript_854 v0
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.DecEq-NeedsHash
 d_DecEq'45'NeedsHash_856 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovActionType_950 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovActionType_946 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 d_DecEq'45'NeedsHash_856 v0
   = let v1 = d_HSTransactionStructure_702 (coe v0) in
     coe
       (coe
-         MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_DecEq'45'NeedsHash_1550
+         MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_DecEq'45'NeedsHash_1546
          (coe
             MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_govStructure_2860
             (coe v1)))
@@ -2583,7 +2577,7 @@ d_DecEq'45'VDeleg_892 v0
   = let v1 = d_HSTransactionStructure_702 (coe v0) in
     coe
       (coe
-         MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_DecEq'45'VDeleg_1378
+         MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_DecEq'45'VDeleg_1374
          (coe
             MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_govStructure_2860
             (coe v1)))
@@ -2619,7 +2613,7 @@ d_DecEq'45'Vote_898 ~v0 = du_DecEq'45'Vote_898
 du_DecEq'45'Vote_898 :: MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 du_DecEq'45'Vote_898
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_DecEq'45'Vote_1376
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_DecEq'45'Vote_1372
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.DecPo-Slot
 d_DecPo'45'Slot_900 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
@@ -2634,11 +2628,11 @@ d_DecPo'45'Slot_900 v0
             (coe v1)))
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.DepositOf
 d_DepositOf_902 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasDeposit_1318 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasDeposit_1314 ->
   AgdaAny -> Integer
 d_DepositOf_902 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_DepositOf_1326
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_DepositOf_1322
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.DirectDeposits
 d_DirectDeposits_904 ::
@@ -2694,7 +2688,7 @@ d_GovAction_926 a0 = ()
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovActionData
 d_GovActionData_930 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovActionType_950 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovActionType_946 ->
   ()
 d_GovActionData_930 = erased
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovActionID
@@ -2704,12 +2698,12 @@ d_GovActionID_932 ::
 d_GovActionID_932 = erased
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovActionOf
 d_GovActionOf_934 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasGovAction_1180 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasGovAction_1176 ->
   AgdaAny ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovAction_968
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovAction_964
 d_GovActionOf_934 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_GovActionOf_1186
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_GovActionOf_1182
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovActionState
 d_GovActionState_936 a0 = ()
@@ -2717,12 +2711,12 @@ d_GovActionState_936 a0 = ()
 d_GovActionType_940 a0 = ()
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovActionTypeOf
 d_GovActionTypeOf_942 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasGovActionType_1144 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasGovActionType_1140 ->
   AgdaAny ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovActionType_950
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovActionType_946
 d_GovActionTypeOf_942 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_GovActionTypeOf_1150
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_GovActionTypeOf_1146
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovParams
 d_GovParams_944 a0 = ()
@@ -2732,7 +2726,7 @@ d_GovProposal_948 a0 = ()
 d_GovProposalsOf_952 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_HasGovProposals_4266 ->
   AgdaAny ->
-  [MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovProposal_1068]
+  [MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovProposal_1064]
 d_GovProposalsOf_952 v0
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_GovProposalsOf_4274
@@ -2742,7 +2736,7 @@ d_GovRole_954 a0 = ()
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovRoleCredential
 d_GovRoleCredential_956 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovRole_940 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovRole_936 ->
   ()
 d_GovRoleCredential_956 = erased
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovVote
@@ -2751,23 +2745,23 @@ d_GovVote_958 a0 = ()
 d_GovVoter_962 a0 = ()
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovVoterOf
 d_GovVoterOf_966 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasGovVoter_1198 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasGovVoter_1194 ->
   AgdaAny ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovVoter_990
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovVoter_986
 d_GovVoterOf_966 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_GovVoterOf_1206
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_GovVoterOf_1202
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovVotes
 d_GovVotes_968 a0 = ()
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovVotesOf
 d_GovVotesOf_972 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasGovVotes_1218 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasGovVotes_1214 ->
   AgdaAny ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovVotes_1034
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovVotes_1030
 d_GovVotesOf_972 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_GovVotesOf_1226
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_GovVotesOf_1222
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GuardsOf
 d_GuardsOf_976 ::
@@ -2785,14 +2779,14 @@ d_HasAnchor_982 a0 a1 a2 = ()
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.HasAnchor-GovProposal
 d_HasAnchor'45'GovProposal_986 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasAnchor_1298
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasAnchor_1294
 d_HasAnchor'45'GovProposal_986 ~v0
   = du_HasAnchor'45'GovProposal_986
 du_HasAnchor'45'GovProposal_986 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasAnchor_1298
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasAnchor_1294
 du_HasAnchor'45'GovProposal_986
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_HasAnchor'45'GovProposal_1352
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_HasAnchor'45'GovProposal_1348
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.HasAttrSize
 d_HasAttrSize_988 a0 a1 a2 = ()
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.HasAttrSize-BootstrapAddr
@@ -2856,7 +2850,7 @@ du_HasCast'45'GovAction'45'Sigma_1008 ::
   MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.T_HasCast_16
 du_HasCast'45'GovAction'45'Sigma_1008
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_HasCast'45'GovAction'45'Sigma_1336
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_HasCast'45'GovAction'45'Sigma_1332
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.HasCast-GovVote
 d_HasCast'45'GovVote_1010 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
@@ -2866,7 +2860,7 @@ du_HasCast'45'GovVote_1010 ::
   MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.T_HasCast_16
 du_HasCast'45'GovVote_1010
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_HasCast'45'GovVote_1478
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_HasCast'45'GovVote_1474
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.HasCast-HashProtected
 d_HasCast'45'HashProtected_1012 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
@@ -2879,7 +2873,7 @@ du_HasCast'45'HashProtected_1012 ::
   MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.T_HasCast_16
 du_HasCast'45'HashProtected_1012 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_HasCast'45'HashProtected_1342
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_HasCast'45'HashProtected_1338
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.HasCast-HashProtected-MaybeScriptHash
 d_HasCast'45'HashProtected'45'MaybeScriptHash_1014 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
@@ -2890,7 +2884,7 @@ du_HasCast'45'HashProtected'45'MaybeScriptHash_1014 ::
   MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.T_HasCast_16
 du_HasCast'45'HashProtected'45'MaybeScriptHash_1014
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_HasCast'45'HashProtected'45'MaybeScriptHash_1344
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_HasCast'45'HashProtected'45'MaybeScriptHash_1340
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.HasCoin-TxOut
 d_HasCoin'45'TxOut_1016 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
@@ -3010,14 +3004,14 @@ d_HasDeposit_1058 a0 a1 a2 = ()
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.HasDeposit-GovProposal
 d_HasDeposit'45'GovProposal_1062 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasDeposit_1318
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasDeposit_1314
 d_HasDeposit'45'GovProposal_1062 ~v0
   = du_HasDeposit'45'GovProposal_1062
 du_HasDeposit'45'GovProposal_1062 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasDeposit_1318
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasDeposit_1314
 du_HasDeposit'45'GovProposal_1062
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_HasDeposit'45'GovProposal_1354
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_HasDeposit'45'GovProposal_1350
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.HasDirectDeposits
 d_HasDirectDeposits_1064 a0 a1 a2 = ()
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.HasDirectDeposits-Tx
@@ -3101,60 +3095,60 @@ d_HasGovAction_1084 a0 a1 = ()
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.HasGovAction-GovActionState
 d_HasGovAction'45'GovActionState_1088 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasGovAction_1180
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasGovAction_1176
 d_HasGovAction'45'GovActionState_1088 ~v0
   = du_HasGovAction'45'GovActionState_1088
 du_HasGovAction'45'GovActionState_1088 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasGovAction_1180
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasGovAction_1176
 du_HasGovAction'45'GovActionState_1088
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_HasGovAction'45'GovActionState_1358
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_HasGovAction'45'GovActionState_1354
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.HasGovAction-GovProposal
 d_HasGovAction'45'GovProposal_1090 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasGovAction_1180
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasGovAction_1176
 d_HasGovAction'45'GovProposal_1090 ~v0
   = du_HasGovAction'45'GovProposal_1090
 du_HasGovAction'45'GovProposal_1090 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasGovAction_1180
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasGovAction_1176
 du_HasGovAction'45'GovProposal_1090
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_HasGovAction'45'GovProposal_1356
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_HasGovAction'45'GovProposal_1352
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.HasGovActionType
 d_HasGovActionType_1092 a0 a1 = ()
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.HasGovActionType-GovAction
 d_HasGovActionType'45'GovAction_1096 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasGovActionType_1144
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasGovActionType_1140
 d_HasGovActionType'45'GovAction_1096 ~v0
   = du_HasGovActionType'45'GovAction_1096
 du_HasGovActionType'45'GovAction_1096 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasGovActionType_1144
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasGovActionType_1140
 du_HasGovActionType'45'GovAction_1096
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_HasGovActionType'45'GovAction_1334
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_HasGovActionType'45'GovAction_1330
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.HasGovActionType-GovActionState
 d_HasGovActionType'45'GovActionState_1098 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasGovActionType_1144
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasGovActionType_1140
 d_HasGovActionType'45'GovActionState_1098 ~v0
   = du_HasGovActionType'45'GovActionState_1098
 du_HasGovActionType'45'GovActionState_1098 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasGovActionType_1144
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasGovActionType_1140
 du_HasGovActionType'45'GovActionState_1098
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_HasGovActionType'45'GovActionState_1362
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_HasGovActionType'45'GovActionState_1358
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.HasGovActionType-GovProposal
 d_HasGovActionType'45'GovProposal_1100 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasGovActionType_1144
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasGovActionType_1140
 d_HasGovActionType'45'GovProposal_1100 ~v0
   = du_HasGovActionType'45'GovProposal_1100
 du_HasGovActionType'45'GovProposal_1100 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasGovActionType_1144
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasGovActionType_1140
 du_HasGovActionType'45'GovProposal_1100
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_HasGovActionType'45'GovProposal_1360
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_HasGovActionType'45'GovProposal_1356
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.HasGovProposals
 d_HasGovProposals_1102 a0 a1 a2 = ()
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.HasGovVoter
@@ -3162,26 +3156,26 @@ d_HasGovVoter_1106 a0 a1 a2 = ()
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.HasGovVoter-GovVote
 d_HasGovVoter'45'GovVote_1110 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasGovVoter_1198
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasGovVoter_1194
 d_HasGovVoter'45'GovVote_1110 ~v0 = du_HasGovVoter'45'GovVote_1110
 du_HasGovVoter'45'GovVote_1110 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasGovVoter_1198
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasGovVoter_1194
 du_HasGovVoter'45'GovVote_1110
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_HasGovVoter'45'GovVote_1346
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_HasGovVoter'45'GovVote_1342
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.HasGovVotes
 d_HasGovVotes_1112 a0 a1 a2 = ()
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.HasGovVotes-GovActionState
 d_HasGovVotes'45'GovActionState_1116 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasGovVotes_1218
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasGovVotes_1214
 d_HasGovVotes'45'GovActionState_1116 ~v0
   = du_HasGovVotes'45'GovActionState_1116
 du_HasGovVotes'45'GovActionState_1116 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasGovVotes_1218
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasGovVotes_1214
 du_HasGovVotes'45'GovActionState_1116
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_HasGovVotes'45'GovActionState_1364
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_HasGovVotes'45'GovActionState_1360
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.HasGuards
 d_HasGuards_1118 a0 a1 a2 = ()
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.HasGuards-Tx
@@ -3373,14 +3367,14 @@ d_HasPolicy_1178 a0 a1 a2 = ()
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.HasPolicy-GovProposal
 d_HasPolicy'45'GovProposal_1182 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasPolicy_1258
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasPolicy_1254
 d_HasPolicy'45'GovProposal_1182 ~v0
   = du_HasPolicy'45'GovProposal_1182
 du_HasPolicy'45'GovProposal_1182 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasPolicy_1258
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasPolicy_1254
 du_HasPolicy'45'GovProposal_1182
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_HasPolicy'45'GovProposal_1350
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_HasPolicy'45'GovProposal_1346
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.HasRedeemers
 d_HasRedeemers_1184 a0 a1 a2 = ()
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.HasRedeemers-Tx
@@ -3484,7 +3478,7 @@ du_HasRewardAddress'45'GovActionState_1214 ::
   MAlonzo.Code.Ledger.Core.Specification.Address.T_HasRewardAddress_134
 du_HasRewardAddress'45'GovActionState_1214
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_HasRewardAddress'45'GovActionState_1366
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_HasRewardAddress'45'GovActionState_1362
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.HasRewardAddress-GovProposal
 d_HasRewardAddress'45'GovProposal_1216 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
@@ -3495,7 +3489,7 @@ du_HasRewardAddress'45'GovProposal_1216 ::
   MAlonzo.Code.Ledger.Core.Specification.Address.T_HasRewardAddress_134
 du_HasRewardAddress'45'GovProposal_1216
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_HasRewardAddress'45'GovProposal_1368
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_HasRewardAddress'45'GovProposal_1364
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.HasScripts
 d_HasScripts_1218 a0 a1 a2 = ()
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.HasScripts-Tx
@@ -3764,13 +3758,13 @@ d_HasVote_1310 a0 a1 a2 = ()
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.HasVote-GovVote
 d_HasVote'45'GovVote_1314 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasVote_1238
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasVote_1234
 d_HasVote'45'GovVote_1314 ~v0 = du_HasVote'45'GovVote_1314
 du_HasVote'45'GovVote_1314 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasVote_1238
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasVote_1234
 du_HasVote'45'GovVote_1314
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_HasVote'45'GovVote_1348
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_HasVote'45'GovVote_1344
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.HasVoteDelegs
 d_HasVoteDelegs_1316 a0 a1 a2 = ()
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.HasWithdrawals
@@ -3928,7 +3922,7 @@ d_LanguageCostModels_1378 a0 = ()
 d_ListOfGovProposalsOf_1382 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_HasListOfGovProposals_4306 ->
   AgdaAny ->
-  [MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovProposal_1068]
+  [MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovProposal_1064]
 d_ListOfGovProposalsOf_1382 v0
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_ListOfGovProposalsOf_4314
@@ -3937,7 +3931,7 @@ d_ListOfGovProposalsOf_1382 v0
 d_ListOfGovVotesOf_1384 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_HasListOfGovVotes_4326 ->
   AgdaAny ->
-  [MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovVote_1014]
+  [MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovVote_1010]
 d_ListOfGovVotesOf_1384 v0
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_ListOfGovVotesOf_4334
@@ -3980,7 +3974,7 @@ d_NativeScript_1394 a0 = ()
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.NeedsHash
 d_NeedsHash_1396 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovActionType_950 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovActionType_946 ->
   ()
 d_NeedsHash_1396 = erased
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.Network
@@ -4157,11 +4151,11 @@ d_Policy_1454 ::
 d_Policy_1454 = erased
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.PolicyOf
 d_PolicyOf_1456 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasPolicy_1258 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasPolicy_1254 ->
   AgdaAny -> Maybe Integer
 d_PolicyOf_1456 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_PolicyOf_1266
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_PolicyOf_1262
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.PoolThresholds
 d_PoolThresholds_1458 a0 = ()
@@ -4406,7 +4400,7 @@ d_Show'45'GovRole_1544 ~v0 = du_Show'45'GovRole_1544
 du_Show'45'GovRole_1544 :: MAlonzo.Code.Class.Show.Core.T_Show_10
 du_Show'45'GovRole_1544
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_Show'45'GovRole_1370
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_Show'45'GovRole_1366
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.Show-Language
 d_Show'45'Language_1546 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
@@ -4567,7 +4561,7 @@ d_Show'45'VDeleg_1568 v0
   = let v1 = d_HSTransactionStructure_702 (coe v0) in
     coe
       (coe
-         MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_Show'45'VDeleg_1480
+         MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_Show'45'VDeleg_1476
          (coe
             MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_govStructure_2860
             (coe v1)))
@@ -4884,20 +4878,20 @@ d_VoteDelegs_1678 ::
 d_VoteDelegs_1678 = erased
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.VoteDelegsOf
 d_VoteDelegsOf_1680 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasVoteDelegs_1162 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasVoteDelegs_1158 ->
   AgdaAny -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_VoteDelegsOf_1680 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_VoteDelegsOf_1170
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_VoteDelegsOf_1166
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.VoteOf
 d_VoteOf_1682 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasVote_1238 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasVote_1234 ->
   AgdaAny ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_Vote_982
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_Vote_978
 d_VoteOf_1682 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_VoteOf_1246
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_VoteOf_1242
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.Withdrawals
 d_Withdrawals_1684 ::
@@ -4916,14 +4910,14 @@ d_WithdrawalsOf_1686 v0
 d_activeDRepsOf_1688 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
   () ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasDReps_1278 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasDReps_1274 ->
   AgdaAny -> Integer -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_activeDRepsOf_1688 v0
   = let v1 = d_HSTransactionStructure_702 (coe v0) in
     coe
       (\ v2 v3 v4 v5 ->
          coe
-           MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_activeDRepsOf_1658
+           MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_activeDRepsOf_1654
            (coe
               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_govStructure_2860
               (coe v1))
@@ -4983,11 +4977,11 @@ d_addValue_1698 v0
 d_allDCerts_1700 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3790 ->
-  [MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DCert_1392]
+  [MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DCert_1388]
 d_allDCerts_1700 ~v0 = du_allDCerts_1700
 du_allDCerts_1700 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3790 ->
-  [MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DCert_1392]
+  [MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DCert_1388]
 du_allDCerts_1700
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.du_allDCerts_4768
@@ -5195,19 +5189,19 @@ d_fromPlutusLanguage_1754 v0
                (coe v1))))
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.gaData
 d_gaData_1756 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovAction_968 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovAction_964 ->
   AgdaAny
 d_gaData_1756 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_gaData_976
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_gaData_972
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.gaType
 d_gaType_1758 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovAction_968 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovActionType_950
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovAction_964 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovActionType_946
 d_gaType_1758 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_gaType_974
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_gaType_970
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.getAllScripts
 d_getAllScripts_1760 ::
@@ -5284,15 +5278,15 @@ d_govStructure_1772 v0
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.govVoterCredential
 d_govVoterCredential_1774 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovVoter_990 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovVoter_986 ->
   MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20
 d_govVoterCredential_1774 ~v0 = du_govVoterCredential_1774
 du_govVoterCredential_1774 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovVoter_990 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovVoter_986 ->
   MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20
 du_govVoterCredential_1774
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_govVoterCredential_1128
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_govVoterCredential_1124
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.hashRespectsUnion
 d_hashRespectsUnion_1776 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
@@ -5339,17 +5333,17 @@ du_isBootstrapAddr_1780
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.isGovVoterDRep
 d_isGovVoterDRep_1782 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovVoter_990 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovVoter_986 ->
   Maybe
     MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20
 d_isGovVoterDRep_1782 ~v0 = du_isGovVoterDRep_1782
 du_isGovVoterDRep_1782 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovVoter_990 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovVoter_986 ->
   Maybe
     MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20
 du_isGovVoterDRep_1782
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_isGovVoterDRep_1124
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_isGovVoterDRep_1120
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.isKeyHash
 d_isKeyHash_1784 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
@@ -5684,15 +5678,15 @@ d_preoEpoch_1856 v0
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.proposedCC
 d_proposedCC_1858 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovAction_968 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovAction_964 ->
   [MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20]
 d_proposedCC_1858 ~v0 = du_proposedCC_1858
 du_proposedCC_1858 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovAction_968 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovAction_964 ->
   [MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20]
 du_proposedCC_1858
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_proposedCC_1136
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_proposedCC_1132
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.ps
 d_ps_1860 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
@@ -6141,19 +6135,19 @@ d_treasury_1956 v0
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.Anchor.hash
 d_hash_1960 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_Anchor_1002 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_Anchor_998 ->
   Integer
 d_hash_1960 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_hash_1010
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_hash_1006
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.Anchor.url
 d_url_1962 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_Anchor_1002 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_Anchor_998 ->
   MAlonzo.Code.Agda.Builtin.String.T_String_6
 d_url_1962 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_url_1008
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_url_1004
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.BaseAddr.net
 d_net_1976 ::
@@ -6281,67 +6275,67 @@ d_P6_2016 v0
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovAction.gaData
 d_gaData_2036 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovAction_968 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovAction_964 ->
   AgdaAny
 d_gaData_2036 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_gaData_976
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_gaData_972
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovAction.gaType
 d_gaType_2038 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovAction_968 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovActionType_950
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovAction_964 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovActionType_946
 d_gaType_2038 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_gaType_974
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_gaType_970
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovActionState.action
 d_action_2042 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovActionState_1096 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovAction_968
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovActionState_1092 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovAction_964
 d_action_2042 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_action_1116
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_action_1112
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovActionState.deposit
 d_deposit_2044 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovActionState_1096 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovActionState_1092 ->
   Integer
 d_deposit_2044 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_deposit_1120
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_deposit_1116
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovActionState.expiresIn
 d_expiresIn_2046 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovActionState_1096 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovActionState_1092 ->
   Integer
 d_expiresIn_2046 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_expiresIn_1114
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_expiresIn_1110
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovActionState.prevAction
 d_prevAction_2048 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovActionState_1096 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovActionState_1092 ->
   AgdaAny
 d_prevAction_2048 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_prevAction_1118
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_prevAction_1114
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovActionState.returnAddr
 d_returnAddr_2050 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovActionState_1096 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovActionState_1092 ->
   MAlonzo.Code.Ledger.Core.Specification.Address.T_RewardAddress_116
 d_returnAddr_2050 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_returnAddr_1112
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_returnAddr_1108
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovActionState.votes
 d_votes_2052 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovActionState_1096 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovVotes_1034
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovActionState_1092 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovVotes_1030
 d_votes_2052 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_votes_1110
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_votes_1106
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovParams.DecEq-UpdT
 d_DecEq'45'UpdT_2072 ::
@@ -6405,163 +6399,163 @@ d_updateGroups_2084 v0
          (coe v0))
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovProposal.action
 d_action_2088 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovProposal_1068 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovAction_968
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovProposal_1064 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovAction_964
 d_action_2088 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_action_1082
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_action_1078
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovProposal.anchor
 d_anchor_2090 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovProposal_1068 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_Anchor_1002
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovProposal_1064 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_Anchor_998
 d_anchor_2090 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_anchor_1092
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_anchor_1088
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovProposal.deposit
 d_deposit_2092 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovProposal_1068 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovProposal_1064 ->
   Integer
 d_deposit_2092 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_deposit_1088
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_deposit_1084
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovProposal.policy
 d_policy_2094 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovProposal_1068 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovProposal_1064 ->
   Maybe Integer
 d_policy_2094 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_policy_1086
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_policy_1082
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovProposal.prevAction
 d_prevAction_2096 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovProposal_1068 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovProposal_1064 ->
   AgdaAny
 d_prevAction_2096 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_prevAction_1084
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_prevAction_1080
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovProposal.returnAddr
 d_returnAddr_2098 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovProposal_1068 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovProposal_1064 ->
   MAlonzo.Code.Ledger.Core.Specification.Address.T_RewardAddress_116
 d_returnAddr_2098 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_returnAddr_1090
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_returnAddr_1086
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovVote.anchor
 d_anchor_2110 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovVote_1014 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovVote_1010 ->
   Maybe
-    MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_Anchor_1002
+    MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_Anchor_998
 d_anchor_2110 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_anchor_1030
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_anchor_1026
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovVote.gid
 d_gid_2112 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovVote_1014 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovVote_1010 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_gid_2112 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_gid_1024
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_gid_1020
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovVote.vote
 d_vote_2114 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovVote_1014 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_Vote_982
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovVote_1010 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_Vote_978
 d_vote_2114 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_vote_1028
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_vote_1024
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovVote.voter
 d_voter_2116 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovVote_1014 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovVoter_990
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovVote_1010 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovVoter_986
 d_voter_2116 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_voter_1026
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_voter_1022
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovVoter.gvCredential
 d_gvCredential_2120 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovVoter_990 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovVoter_986 ->
   AgdaAny
 d_gvCredential_2120 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_gvCredential_998
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_gvCredential_994
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovVoter.gvRole
 d_gvRole_2122 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovVoter_990 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovRole_940
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovVoter_986 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovRole_936
 d_gvRole_2122 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_gvRole_996
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_gvRole_992
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovVotes.gvCC
 d_gvCC_2126 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovVotes_1034 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovVotes_1030 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_gvCC_2126 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_gvCC_1042
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_gvCC_1038
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovVotes.gvDRep
 d_gvDRep_2128 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovVotes_1034 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovVotes_1030 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_gvDRep_2128 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_gvDRep_1044
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_gvDRep_1040
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovVotes.gvSPO
 d_gvSPO_2130 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovVotes_1034 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovVotes_1030 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_gvSPO_2130 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_gvSPO_1046
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_gvSPO_1042
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovernanceActions.==-GovAction
 d_'61''61''45'GovAction_2134 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovAction_968 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovAction_968 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovAction_964 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovAction_964 ->
   Bool
 d_'61''61''45'GovAction_2134 v0
   = let v1 = d_HSTransactionStructure_702 (coe v0) in
     coe
       (coe
-         MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_'61''61''45'GovAction_1518
+         MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_'61''61''45'GovAction_1514
          (coe
             MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_govStructure_2860
             (coe v1)))
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovernanceActions.==-GovActionData
 d_'61''61''45'GovActionData_2136 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovActionType_950 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovActionType_946 ->
   AgdaAny -> AgdaAny -> Bool
 d_'61''61''45'GovActionData_2136 v0
   = let v1 = d_HSTransactionStructure_702 (coe v0) in
     coe
       (coe
-         MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_'61''61''45'GovActionData_1500
+         MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_'61''61''45'GovActionData_1496
          (coe
             MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_govStructure_2860
             (coe v1)))
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovernanceActions.==-GovProposal
 d_'61''61''45'GovProposal_2138 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovProposal_1068 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovProposal_1068 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovProposal_1064 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovProposal_1064 ->
   Bool
 d_'61''61''45'GovProposal_2138 v0
   = let v1 = d_HSTransactionStructure_702 (coe v0) in
     coe
       (coe
-         MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_'61''61''45'GovProposal_1552
+         MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_'61''61''45'GovProposal_1548
          (coe
             MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_govStructure_2860
             (coe v1)))
@@ -6578,18 +6572,18 @@ du_'61''61''45'Set_2140 ::
   [AgdaAny] -> [AgdaAny] -> Bool
 du_'61''61''45'Set_2140 v0 v1 v2 v3
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_'61''61''45'Set_1488
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_'61''61''45'Set_1484
       v1 v2 v3
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovernanceActions.Anchor
 d_Anchor_2142 a0 = ()
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovernanceActions.AnchorOf
 d_AnchorOf_2146 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasAnchor_1298 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasAnchor_1294 ->
   AgdaAny ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_Anchor_1002
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_Anchor_998
 d_AnchorOf_2146 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_AnchorOf_1306
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_AnchorOf_1302
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovernanceActions.DReps
 d_DReps_2154 ::
@@ -6598,11 +6592,11 @@ d_DReps_2154 ::
 d_DReps_2154 = erased
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovernanceActions.DRepsOf
 d_DRepsOf_2156 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasDReps_1278 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasDReps_1274 ->
   AgdaAny -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_DRepsOf_2156 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_DRepsOf_1286
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_DRepsOf_1282
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovernanceActions.DecEq-Anchor
 d_DecEq'45'Anchor_2158 ::
@@ -6612,7 +6606,7 @@ d_DecEq'45'Anchor_2158 v0
   = let v1 = d_HSTransactionStructure_702 (coe v0) in
     coe
       (coe
-         MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_DecEq'45'Anchor_1482
+         MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_DecEq'45'Anchor_1478
          (coe
             MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_govStructure_2860
             (coe v1)))
@@ -6625,7 +6619,7 @@ du_DecEq'45'GovActionType_2160 ::
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 du_DecEq'45'GovActionType_2160
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_DecEq'45'GovActionType_1372
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_DecEq'45'GovActionType_1368
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovernanceActions.DecEq-GovRole
 d_DecEq'45'GovRole_2162 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
@@ -6635,7 +6629,7 @@ du_DecEq'45'GovRole_2162 ::
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 du_DecEq'45'GovRole_2162
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_DecEq'45'GovRole_1374
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_DecEq'45'GovRole_1370
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovernanceActions.DecEq-GovVoter
 d_DecEq'45'GovVoter_2164 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
@@ -6644,20 +6638,20 @@ d_DecEq'45'GovVoter_2164 v0
   = let v1 = d_HSTransactionStructure_702 (coe v0) in
     coe
       (coe
-         MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_DecEq'45'GovVoter_1380
+         MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_DecEq'45'GovVoter_1376
          (coe
             MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_govStructure_2860
             (coe v1)))
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovernanceActions.DecEq-NeedsHash
 d_DecEq'45'NeedsHash_2166 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovActionType_950 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovActionType_946 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 d_DecEq'45'NeedsHash_2166 v0
   = let v1 = d_HSTransactionStructure_702 (coe v0) in
     coe
       (coe
-         MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_DecEq'45'NeedsHash_1550
+         MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_DecEq'45'NeedsHash_1546
          (coe
             MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_govStructure_2860
             (coe v1)))
@@ -6669,7 +6663,7 @@ d_DecEq'45'VDeleg_2168 v0
   = let v1 = d_HSTransactionStructure_702 (coe v0) in
     coe
       (coe
-         MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_DecEq'45'VDeleg_1378
+         MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_DecEq'45'VDeleg_1374
          (coe
             MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_govStructure_2860
             (coe v1)))
@@ -6681,21 +6675,21 @@ d_DecEq'45'Vote_2170 ~v0 = du_DecEq'45'Vote_2170
 du_DecEq'45'Vote_2170 :: MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 du_DecEq'45'Vote_2170
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_DecEq'45'Vote_1376
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_DecEq'45'Vote_1372
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovernanceActions.DepositOf
 d_DepositOf_2172 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasDeposit_1318 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasDeposit_1314 ->
   AgdaAny -> Integer
 d_DepositOf_2172 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_DepositOf_1326
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_DepositOf_1322
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovernanceActions.GovAction
 d_GovAction_2174 a0 = ()
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovernanceActions.GovActionData
 d_GovActionData_2178 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovActionType_950 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovActionType_946 ->
   ()
 d_GovActionData_2178 = erased
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovernanceActions.GovActionID
@@ -6705,12 +6699,12 @@ d_GovActionID_2180 ::
 d_GovActionID_2180 = erased
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovernanceActions.GovActionOf
 d_GovActionOf_2182 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasGovAction_1180 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasGovAction_1176 ->
   AgdaAny ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovAction_968
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovAction_964
 d_GovActionOf_2182 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_GovActionOf_1186
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_GovActionOf_1182
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovernanceActions.GovActionState
 d_GovActionState_2184 a0 = ()
@@ -6718,12 +6712,12 @@ d_GovActionState_2184 a0 = ()
 d_GovActionType_2188 a0 = ()
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovernanceActions.GovActionTypeOf
 d_GovActionTypeOf_2190 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasGovActionType_1144 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasGovActionType_1140 ->
   AgdaAny ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovActionType_950
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovActionType_946
 d_GovActionTypeOf_2190 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_GovActionTypeOf_1150
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_GovActionTypeOf_1146
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovernanceActions.GovProposal
 d_GovProposal_2192 a0 = ()
@@ -6732,7 +6726,7 @@ d_GovRole_2196 a0 = ()
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovernanceActions.GovRoleCredential
 d_GovRoleCredential_2198 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovRole_940 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovRole_936 ->
   ()
 d_GovRoleCredential_2198 = erased
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovernanceActions.GovVote
@@ -6741,37 +6735,37 @@ d_GovVote_2200 a0 = ()
 d_GovVoter_2204 a0 = ()
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovernanceActions.GovVoterOf
 d_GovVoterOf_2208 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasGovVoter_1198 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasGovVoter_1194 ->
   AgdaAny ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovVoter_990
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovVoter_986
 d_GovVoterOf_2208 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_GovVoterOf_1206
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_GovVoterOf_1202
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovernanceActions.GovVotes
 d_GovVotes_2210 a0 = ()
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovernanceActions.GovVotesOf
 d_GovVotesOf_2214 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasGovVotes_1218 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasGovVotes_1214 ->
   AgdaAny ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovVotes_1034
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovVotes_1030
 d_GovVotesOf_2214 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_GovVotesOf_1226
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_GovVotesOf_1222
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovernanceActions.HasAnchor
 d_HasAnchor_2216 a0 a1 a2 = ()
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovernanceActions.HasAnchor-GovProposal
 d_HasAnchor'45'GovProposal_2220 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasAnchor_1298
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasAnchor_1294
 d_HasAnchor'45'GovProposal_2220 ~v0
   = du_HasAnchor'45'GovProposal_2220
 du_HasAnchor'45'GovProposal_2220 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasAnchor_1298
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasAnchor_1294
 du_HasAnchor'45'GovProposal_2220
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_HasAnchor'45'GovProposal_1352
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_HasAnchor'45'GovProposal_1348
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovernanceActions.HasCast-GovAction-Sigma
 d_HasCast'45'GovAction'45'Sigma_2222 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
@@ -6782,7 +6776,7 @@ du_HasCast'45'GovAction'45'Sigma_2222 ::
   MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.T_HasCast_16
 du_HasCast'45'GovAction'45'Sigma_2222
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_HasCast'45'GovAction'45'Sigma_1336
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_HasCast'45'GovAction'45'Sigma_1332
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovernanceActions.HasCast-GovVote
 d_HasCast'45'GovVote_2224 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
@@ -6792,7 +6786,7 @@ du_HasCast'45'GovVote_2224 ::
   MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.T_HasCast_16
 du_HasCast'45'GovVote_2224
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_HasCast'45'GovVote_1478
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_HasCast'45'GovVote_1474
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovernanceActions.HasCast-HashProtected
 d_HasCast'45'HashProtected_2226 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
@@ -6805,7 +6799,7 @@ du_HasCast'45'HashProtected_2226 ::
   MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.T_HasCast_16
 du_HasCast'45'HashProtected_2226 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_HasCast'45'HashProtected_1342
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_HasCast'45'HashProtected_1338
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovernanceActions.HasCast-HashProtected-MaybeScriptHash
 d_HasCast'45'HashProtected'45'MaybeScriptHash_2228 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
@@ -6816,7 +6810,7 @@ du_HasCast'45'HashProtected'45'MaybeScriptHash_2228 ::
   MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.T_HasCast_16
 du_HasCast'45'HashProtected'45'MaybeScriptHash_2228
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_HasCast'45'HashProtected'45'MaybeScriptHash_1344
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_HasCast'45'HashProtected'45'MaybeScriptHash_1340
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovernanceActions.HasDReps
 d_HasDReps_2230 a0 a1 a2 = ()
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovernanceActions.HasDeposit
@@ -6824,111 +6818,111 @@ d_HasDeposit_2234 a0 a1 a2 = ()
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovernanceActions.HasDeposit-GovProposal
 d_HasDeposit'45'GovProposal_2238 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasDeposit_1318
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasDeposit_1314
 d_HasDeposit'45'GovProposal_2238 ~v0
   = du_HasDeposit'45'GovProposal_2238
 du_HasDeposit'45'GovProposal_2238 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasDeposit_1318
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasDeposit_1314
 du_HasDeposit'45'GovProposal_2238
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_HasDeposit'45'GovProposal_1354
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_HasDeposit'45'GovProposal_1350
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovernanceActions.HasGovAction
 d_HasGovAction_2240 a0 a1 = ()
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovernanceActions.HasGovAction-GovActionState
 d_HasGovAction'45'GovActionState_2244 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasGovAction_1180
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasGovAction_1176
 d_HasGovAction'45'GovActionState_2244 ~v0
   = du_HasGovAction'45'GovActionState_2244
 du_HasGovAction'45'GovActionState_2244 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasGovAction_1180
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasGovAction_1176
 du_HasGovAction'45'GovActionState_2244
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_HasGovAction'45'GovActionState_1358
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_HasGovAction'45'GovActionState_1354
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovernanceActions.HasGovAction-GovProposal
 d_HasGovAction'45'GovProposal_2246 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasGovAction_1180
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasGovAction_1176
 d_HasGovAction'45'GovProposal_2246 ~v0
   = du_HasGovAction'45'GovProposal_2246
 du_HasGovAction'45'GovProposal_2246 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasGovAction_1180
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasGovAction_1176
 du_HasGovAction'45'GovProposal_2246
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_HasGovAction'45'GovProposal_1356
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_HasGovAction'45'GovProposal_1352
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovernanceActions.HasGovActionType
 d_HasGovActionType_2248 a0 a1 = ()
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovernanceActions.HasGovActionType-GovAction
 d_HasGovActionType'45'GovAction_2252 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasGovActionType_1144
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasGovActionType_1140
 d_HasGovActionType'45'GovAction_2252 ~v0
   = du_HasGovActionType'45'GovAction_2252
 du_HasGovActionType'45'GovAction_2252 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasGovActionType_1144
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasGovActionType_1140
 du_HasGovActionType'45'GovAction_2252
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_HasGovActionType'45'GovAction_1334
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_HasGovActionType'45'GovAction_1330
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovernanceActions.HasGovActionType-GovActionState
 d_HasGovActionType'45'GovActionState_2254 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasGovActionType_1144
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasGovActionType_1140
 d_HasGovActionType'45'GovActionState_2254 ~v0
   = du_HasGovActionType'45'GovActionState_2254
 du_HasGovActionType'45'GovActionState_2254 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasGovActionType_1144
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasGovActionType_1140
 du_HasGovActionType'45'GovActionState_2254
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_HasGovActionType'45'GovActionState_1362
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_HasGovActionType'45'GovActionState_1358
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovernanceActions.HasGovActionType-GovProposal
 d_HasGovActionType'45'GovProposal_2256 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasGovActionType_1144
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasGovActionType_1140
 d_HasGovActionType'45'GovProposal_2256 ~v0
   = du_HasGovActionType'45'GovProposal_2256
 du_HasGovActionType'45'GovProposal_2256 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasGovActionType_1144
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasGovActionType_1140
 du_HasGovActionType'45'GovProposal_2256
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_HasGovActionType'45'GovProposal_1360
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_HasGovActionType'45'GovProposal_1356
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovernanceActions.HasGovVoter
 d_HasGovVoter_2258 a0 a1 a2 = ()
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovernanceActions.HasGovVoter-GovVote
 d_HasGovVoter'45'GovVote_2262 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasGovVoter_1198
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasGovVoter_1194
 d_HasGovVoter'45'GovVote_2262 ~v0 = du_HasGovVoter'45'GovVote_2262
 du_HasGovVoter'45'GovVote_2262 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasGovVoter_1198
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasGovVoter_1194
 du_HasGovVoter'45'GovVote_2262
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_HasGovVoter'45'GovVote_1346
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_HasGovVoter'45'GovVote_1342
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovernanceActions.HasGovVotes
 d_HasGovVotes_2264 a0 a1 a2 = ()
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovernanceActions.HasGovVotes-GovActionState
 d_HasGovVotes'45'GovActionState_2268 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasGovVotes_1218
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasGovVotes_1214
 d_HasGovVotes'45'GovActionState_2268 ~v0
   = du_HasGovVotes'45'GovActionState_2268
 du_HasGovVotes'45'GovActionState_2268 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasGovVotes_1218
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasGovVotes_1214
 du_HasGovVotes'45'GovActionState_2268
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_HasGovVotes'45'GovActionState_1364
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_HasGovVotes'45'GovActionState_1360
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovernanceActions.HasPolicy
 d_HasPolicy_2270 a0 a1 a2 = ()
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovernanceActions.HasPolicy-GovProposal
 d_HasPolicy'45'GovProposal_2274 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasPolicy_1258
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasPolicy_1254
 d_HasPolicy'45'GovProposal_2274 ~v0
   = du_HasPolicy'45'GovProposal_2274
 du_HasPolicy'45'GovProposal_2274 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasPolicy_1258
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasPolicy_1254
 du_HasPolicy'45'GovProposal_2274
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_HasPolicy'45'GovProposal_1350
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_HasPolicy'45'GovProposal_1346
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovernanceActions.HasRewardAddress-GovActionState
 d_HasRewardAddress'45'GovActionState_2276 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
@@ -6939,7 +6933,7 @@ du_HasRewardAddress'45'GovActionState_2276 ::
   MAlonzo.Code.Ledger.Core.Specification.Address.T_HasRewardAddress_134
 du_HasRewardAddress'45'GovActionState_2276
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_HasRewardAddress'45'GovActionState_1366
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_HasRewardAddress'45'GovActionState_1362
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovernanceActions.HasRewardAddress-GovProposal
 d_HasRewardAddress'45'GovProposal_2278 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
@@ -6950,19 +6944,19 @@ du_HasRewardAddress'45'GovProposal_2278 ::
   MAlonzo.Code.Ledger.Core.Specification.Address.T_HasRewardAddress_134
 du_HasRewardAddress'45'GovProposal_2278
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_HasRewardAddress'45'GovProposal_1368
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_HasRewardAddress'45'GovProposal_1364
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovernanceActions.HasVote
 d_HasVote_2280 a0 a1 a2 = ()
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovernanceActions.HasVote-GovVote
 d_HasVote'45'GovVote_2284 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasVote_1238
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasVote_1234
 d_HasVote'45'GovVote_2284 ~v0 = du_HasVote'45'GovVote_2284
 du_HasVote'45'GovVote_2284 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasVote_1238
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasVote_1234
 du_HasVote'45'GovVote_2284
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_HasVote'45'GovVote_1348
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_HasVote'45'GovVote_1344
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovernanceActions.HasVoteDelegs
 d_HasVoteDelegs_2286 a0 a1 a2 = ()
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovernanceActions.HashProtected
@@ -6973,7 +6967,7 @@ d_HashProtected_2290 = erased
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovernanceActions.NeedsHash
 d_NeedsHash_2294 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovActionType_950 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovActionType_946 ->
   ()
 d_NeedsHash_2294 = erased
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovernanceActions.Policy
@@ -6983,11 +6977,11 @@ d_Policy_2300 ::
 d_Policy_2300 = erased
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovernanceActions.PolicyOf
 d_PolicyOf_2302 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasPolicy_1258 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasPolicy_1254 ->
   AgdaAny -> Maybe Integer
 d_PolicyOf_2302 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_PolicyOf_1266
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_PolicyOf_1262
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovernanceActions.Show-GovRole
 d_Show'45'GovRole_2306 ::
@@ -6997,7 +6991,7 @@ d_Show'45'GovRole_2306 ~v0 = du_Show'45'GovRole_2306
 du_Show'45'GovRole_2306 :: MAlonzo.Code.Class.Show.Core.T_Show_10
 du_Show'45'GovRole_2306
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_Show'45'GovRole_1370
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_Show'45'GovRole_1366
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovernanceActions.Show-VDeleg
 d_Show'45'VDeleg_2308 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
@@ -7006,7 +7000,7 @@ d_Show'45'VDeleg_2308 v0
   = let v1 = d_HSTransactionStructure_702 (coe v0) in
     coe
       (coe
-         MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_Show'45'VDeleg_1480
+         MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_Show'45'VDeleg_1476
          (coe
             MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_govStructure_2860
             (coe v1)))
@@ -7021,33 +7015,33 @@ d_VoteDelegs_2320 ::
 d_VoteDelegs_2320 = erased
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovernanceActions.VoteDelegsOf
 d_VoteDelegsOf_2322 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasVoteDelegs_1162 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasVoteDelegs_1158 ->
   AgdaAny -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_VoteDelegsOf_2322 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_VoteDelegsOf_1170
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_VoteDelegsOf_1166
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovernanceActions.VoteOf
 d_VoteOf_2324 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasVote_1238 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasVote_1234 ->
   AgdaAny ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_Vote_982
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_Vote_978
 d_VoteOf_2324 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_VoteOf_1246
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_VoteOf_1242
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovernanceActions.activeDRepsOf
 d_activeDRepsOf_2328 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
   () ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasDReps_1278 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasDReps_1274 ->
   AgdaAny -> Integer -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_activeDRepsOf_2328 v0
   = let v1 = d_HSTransactionStructure_702 (coe v0) in
     coe
       (\ v2 v3 v4 v5 ->
          coe
-           MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_activeDRepsOf_1658
+           MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_activeDRepsOf_1654
            (coe
               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_govStructure_2860
               (coe v1))
@@ -7059,143 +7053,143 @@ d_activeInEpoch_2330 ::
 d_activeInEpoch_2330 = erased
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovernanceActions.gaData
 d_gaData_2332 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovAction_968 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovAction_964 ->
   AgdaAny
 d_gaData_2332 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_gaData_976
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_gaData_972
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovernanceActions.gaType
 d_gaType_2334 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovAction_968 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovActionType_950
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovAction_964 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovActionType_946
 d_gaType_2334 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_gaType_974
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_gaType_970
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovernanceActions.govVoterCredential
 d_govVoterCredential_2336 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovVoter_990 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovVoter_986 ->
   MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20
 d_govVoterCredential_2336 ~v0 = du_govVoterCredential_2336
 du_govVoterCredential_2336 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovVoter_990 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovVoter_986 ->
   MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20
 du_govVoterCredential_2336
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_govVoterCredential_1128
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_govVoterCredential_1124
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovernanceActions.isGovVoterDRep
 d_isGovVoterDRep_2338 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovVoter_990 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovVoter_986 ->
   Maybe
     MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20
 d_isGovVoterDRep_2338 ~v0 = du_isGovVoterDRep_2338
 du_isGovVoterDRep_2338 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovVoter_990 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovVoter_986 ->
   Maybe
     MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20
 du_isGovVoterDRep_2338
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_isGovVoterDRep_1124
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_isGovVoterDRep_1120
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovernanceActions.proposedCC
 d_proposedCC_2342 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovAction_968 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovAction_964 ->
   [MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20]
 d_proposedCC_2342 ~v0 = du_proposedCC_2342
 du_proposedCC_2342 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovAction_968 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovAction_964 ->
   [MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20]
 du_proposedCC_2342
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_proposedCC_1136
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_proposedCC_1132
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovernanceActions.HasAnchor.AnchorOf
 d_AnchorOf_2358 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasAnchor_1298 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasAnchor_1294 ->
   AgdaAny ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_Anchor_1002
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_Anchor_998
 d_AnchorOf_2358 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_AnchorOf_1306
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_AnchorOf_1302
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovernanceActions.HasDReps.DRepsOf
 d_DRepsOf_2362 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasDReps_1278 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasDReps_1274 ->
   AgdaAny -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_DRepsOf_2362 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_DRepsOf_1286
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_DRepsOf_1282
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovernanceActions.HasDeposit.DepositOf
 d_DepositOf_2366 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasDeposit_1318 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasDeposit_1314 ->
   AgdaAny -> Integer
 d_DepositOf_2366 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_DepositOf_1326
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_DepositOf_1322
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovernanceActions.HasGovAction.GovActionOf
 d_GovActionOf_2370 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasGovAction_1180 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasGovAction_1176 ->
   AgdaAny ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovAction_968
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovAction_964
 d_GovActionOf_2370 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_GovActionOf_1186
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_GovActionOf_1182
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovernanceActions.HasGovActionType.GovActionTypeOf
 d_GovActionTypeOf_2374 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasGovActionType_1144 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasGovActionType_1140 ->
   AgdaAny ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovActionType_950
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovActionType_946
 d_GovActionTypeOf_2374 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_GovActionTypeOf_1150
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_GovActionTypeOf_1146
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovernanceActions.HasGovVoter.GovVoterOf
 d_GovVoterOf_2378 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasGovVoter_1198 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasGovVoter_1194 ->
   AgdaAny ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovVoter_990
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovVoter_986
 d_GovVoterOf_2378 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_GovVoterOf_1206
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_GovVoterOf_1202
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovernanceActions.HasGovVotes.GovVotesOf
 d_GovVotesOf_2382 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasGovVotes_1218 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasGovVotes_1214 ->
   AgdaAny ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovVotes_1034
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovVotes_1030
 d_GovVotesOf_2382 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_GovVotesOf_1226
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_GovVotesOf_1222
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovernanceActions.HasPolicy.PolicyOf
 d_PolicyOf_2386 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasPolicy_1258 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasPolicy_1254 ->
   AgdaAny -> Maybe Integer
 d_PolicyOf_2386 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_PolicyOf_1266
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_PolicyOf_1262
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovernanceActions.HasVote.VoteOf
 d_VoteOf_2390 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasVote_1238 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasVote_1234 ->
   AgdaAny ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_Vote_982
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_Vote_978
 d_VoteOf_2390 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_VoteOf_1246
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_VoteOf_1242
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovernanceActions.HasVoteDelegs.VoteDelegsOf
 d_VoteDelegsOf_2394 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasVoteDelegs_1162 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasVoteDelegs_1158 ->
   AgdaAny -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_VoteDelegsOf_2394 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_VoteDelegsOf_1170
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_VoteDelegsOf_1166
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.HasAccount.AccountOf
 d_AccountOf_2414 ::
@@ -7259,7 +7253,7 @@ d_CurrentTreasuryOf_2438 v0
 d_DCertsOf_2442 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_HasDCerts_4246 ->
   AgdaAny ->
-  [MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DCert_1392]
+  [MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DCert_1388]
 d_DCertsOf_2442 v0
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_DCertsOf_4254
@@ -7292,7 +7286,7 @@ d_FeesOf'63'_2454 v0
 d_GovProposalsOf_2458 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_HasGovProposals_4266 ->
   AgdaAny ->
-  [MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovProposal_1068]
+  [MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovProposal_1064]
 d_GovProposalsOf_2458 v0
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_GovProposalsOf_4274
@@ -7318,7 +7312,7 @@ d_IsValidFlagOf_2466 v0
 d_ListOfGovProposalsOf_2470 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_HasListOfGovProposals_4306 ->
   AgdaAny ->
-  [MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovProposal_1068]
+  [MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovProposal_1064]
 d_ListOfGovProposalsOf_2470 v0
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_ListOfGovProposalsOf_4314
@@ -7327,7 +7321,7 @@ d_ListOfGovProposalsOf_2470 v0
 d_ListOfGovVotesOf_2474 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_HasListOfGovVotes_4326 ->
   AgdaAny ->
-  [MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovVote_1014]
+  [MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovVote_1010]
 d_ListOfGovVotesOf_2474 v0
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_ListOfGovVotesOf_4334
@@ -10350,7 +10344,7 @@ d_txBalanceIntervals_3286 v0
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.TxBody.txCerts
 d_txCerts_3288 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TxBody_3794 ->
-  [MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DCert_1392]
+  [MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DCert_1388]
 d_txCerts_3288 v0
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txCerts_3880
@@ -10382,7 +10376,7 @@ d_txFee_3294 v0
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.TxBody.txGovProposals
 d_txGovProposals_3296 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TxBody_3794 ->
-  [MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovProposal_1068]
+  [MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovProposal_1064]
 d_txGovProposals_3296 v0
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txGovProposals_3894
@@ -10390,7 +10384,7 @@ d_txGovProposals_3296 v0
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.TxBody.txGovVotes
 d_txGovVotes_3298 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TxBody_3794 ->
-  [MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovVote_1014]
+  [MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovVote_1010]
 d_txGovVotes_3298 v0
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txGovVotes_3892
@@ -10522,10 +10516,10 @@ d_vKeySigs_3330 v0
 -- Ledger.Dijkstra.Foreign.ExternalStructures._._⊢_⇀⦇_,CERTS⦈_
 d__'8866'_'8640''10631'_'44'CERTS'10632'__3342 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_CertEnv_1436 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_CertState_1508 ->
-  [MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DCert_1392] ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_CertState_1508 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_CertEnv_1432 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_CertState_1504 ->
+  [MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DCert_1388] ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_CertState_1504 ->
   ()
 d__'8866'_'8640''10631'_'44'CERTS'10632'__3342 = erased
 -- Ledger.Dijkstra.Foreign.ExternalStructures._._⊢_⇀⦇_,CERT⦈_
@@ -10544,11 +10538,11 @@ d_CCHotKeys_3352 ::
 d_CCHotKeys_3352 = erased
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.CCHotKeysOf
 d_CCHotKeysOf_3354 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasCCHotKeys_1616 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasCCHotKeys_1612 ->
   AgdaAny -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_CCHotKeysOf_3354 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_CCHotKeysOf_1624
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_CCHotKeysOf_1620
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.CertEnv
 d_CertEnv_3362 a0 = ()
@@ -10556,21 +10550,21 @@ d_CertEnv_3362 a0 = ()
 d_CertState_3366 a0 = ()
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.CertStateOf
 d_CertStateOf_3370 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasCertState_1836 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasCertState_1832 ->
   AgdaAny ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_CertState_1508
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_CertState_1504
 d_CertStateOf_3370 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_CertStateOf_1844
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_CertStateOf_1840
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.ColdCredentialsOf
 d_ColdCredentialsOf_3372 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasColdCredentials_1636 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasColdCredentials_1632 ->
   AgdaAny ->
   [MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20]
 d_ColdCredentialsOf_3372 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_ColdCredentialsOf_1644
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_ColdCredentialsOf_1640
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.DCert
 d_DCert_3374 a0 = ()
@@ -10578,12 +10572,12 @@ d_DCert_3374 a0 = ()
 d_DState_3380 a0 = ()
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.DStateOf
 d_DStateOf_3384 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasDState_1776 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasDState_1772 ->
   AgdaAny ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DState_1452
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DState_1448
 d_DStateOf_3384 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_DStateOf_1784
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_DStateOf_1780
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.DecEq-DCert
 d_DecEq'45'DCert_3386 ::
@@ -10591,7 +10585,7 @@ d_DecEq'45'DCert_3386 ::
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 d_DecEq'45'DCert_3386 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_DecEq'45'DCert_2122
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_DecEq'45'DCert_2118
       (coe
          MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_govStructure_2860
          (coe d_HSTransactionStructure_702 (coe v0)))
@@ -10601,7 +10595,7 @@ d_DecEq'45'StakePoolParams_3388 ::
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 d_DecEq'45'StakePoolParams_3388 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_DecEq'45'StakePoolParams_2120
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_DecEq'45'StakePoolParams_2116
       (coe
          MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_govStructure_2860
          (coe d_HSTransactionStructure_702 (coe v0)))
@@ -10609,38 +10603,38 @@ d_DecEq'45'StakePoolParams_3388 v0
 d_DelegEnv_3390 a0 = ()
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.DepositsOf
 d_DepositsOf_3394 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasDeposits_1596 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasDeposits_1592 ->
   AgdaAny -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_DepositsOf_3394 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_DepositsOf_1604
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_DepositsOf_1600
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.EpochOf
 d_EpochOf_3396 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasEpoch_1856 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasEpoch_1852 ->
   AgdaAny -> Integer
 d_EpochOf_3396 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_EpochOf_1864
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_EpochOf_1860
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.FuturePoolsOf
 d_FuturePoolsOf_3398 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasFuturePools_1676 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasFuturePools_1672 ->
   AgdaAny -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_FuturePoolsOf_3398 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_FuturePoolsOf_1684
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_FuturePoolsOf_1680
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GState
 d_GState_3406 a0 = ()
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GStateOf
 d_GStateOf_3410 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasGState_1816 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasGState_1812 ->
   AgdaAny ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_GState_1492
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_GState_1488
 d_GStateOf_3410 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_GStateOf_1824
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_GStateOf_1820
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovCertEnv
 d_GovCertEnv_3412 a0 = ()
@@ -10649,24 +10643,24 @@ d_HasCCHotKeys_3416 a0 a1 a2 = ()
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.HasCCHotKeys-CertState
 d_HasCCHotKeys'45'CertState_3420 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasCCHotKeys_1616
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasCCHotKeys_1612
 d_HasCCHotKeys'45'CertState_3420 ~v0
   = du_HasCCHotKeys'45'CertState_3420
 du_HasCCHotKeys'45'CertState_3420 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasCCHotKeys_1616
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasCCHotKeys_1612
 du_HasCCHotKeys'45'CertState_3420
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.du_HasCCHotKeys'45'CertState_1932
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.du_HasCCHotKeys'45'CertState_1928
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.HasCCHotKeys-GState
 d_HasCCHotKeys'45'GState_3422 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasCCHotKeys_1616
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasCCHotKeys_1612
 d_HasCCHotKeys'45'GState_3422 ~v0 = du_HasCCHotKeys'45'GState_3422
 du_HasCCHotKeys'45'GState_3422 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasCCHotKeys_1616
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasCCHotKeys_1612
 du_HasCCHotKeys'45'GState_3422
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.du_HasCCHotKeys'45'GState_1918
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.du_HasCCHotKeys'45'GState_1914
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.HasCast-CertEnv
 d_HasCast'45'CertEnv_3424 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
@@ -10676,7 +10670,7 @@ du_HasCast'45'CertEnv_3424 ::
   MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.T_HasCast_16
 du_HasCast'45'CertEnv_3424
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.du_HasCast'45'CertEnv_1944
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.du_HasCast'45'CertEnv_1940
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.HasCast-CertState
 d_HasCast'45'CertState_3426 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
@@ -10686,7 +10680,7 @@ du_HasCast'45'CertState_3426 ::
   MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.T_HasCast_16
 du_HasCast'45'CertState_3426
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.du_HasCast'45'CertState_1952
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.du_HasCast'45'CertState_1948
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.HasCast-DState
 d_HasCast'45'DState_3428 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
@@ -10696,7 +10690,7 @@ du_HasCast'45'DState_3428 ::
   MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.T_HasCast_16
 du_HasCast'45'DState_3428
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.du_HasCast'45'DState_1946
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.du_HasCast'45'DState_1942
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.HasCast-DelegEnv
 d_HasCast'45'DelegEnv_3430 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
@@ -10706,7 +10700,7 @@ du_HasCast'45'DelegEnv_3430 ::
   MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.T_HasCast_16
 du_HasCast'45'DelegEnv_3430
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.du_HasCast'45'DelegEnv_1954
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.du_HasCast'45'DelegEnv_1950
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.HasCast-GState
 d_HasCast'45'GState_3432 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
@@ -10716,7 +10710,7 @@ du_HasCast'45'GState_3432 ::
   MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.T_HasCast_16
 du_HasCast'45'GState_3432
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.du_HasCast'45'GState_1950
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.du_HasCast'45'GState_1946
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.HasCast-GovCertEnv
 d_HasCast'45'GovCertEnv_3434 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
@@ -10726,7 +10720,7 @@ du_HasCast'45'GovCertEnv_3434 ::
   MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.T_HasCast_16
 du_HasCast'45'GovCertEnv_3434
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.du_HasCast'45'GovCertEnv_1958
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.du_HasCast'45'GovCertEnv_1954
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.HasCast-PState
 d_HasCast'45'PState_3436 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
@@ -10736,7 +10730,7 @@ du_HasCast'45'PState_3436 ::
   MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.T_HasCast_16
 du_HasCast'45'PState_3436
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.du_HasCast'45'PState_1948
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.du_HasCast'45'PState_1944
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.HasCast-PoolEnv
 d_HasCast'45'PoolEnv_3438 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
@@ -10746,7 +10740,7 @@ du_HasCast'45'PoolEnv_3438 ::
   MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.T_HasCast_16
 du_HasCast'45'PoolEnv_3438
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.du_HasCast'45'PoolEnv_1956
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.du_HasCast'45'PoolEnv_1952
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.HasCertState
 d_HasCertState_3440 a0 a1 a2 = ()
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.HasCoin-CertState
@@ -10755,7 +10749,7 @@ d_HasCoin'45'CertState_3444 ::
   MAlonzo.Code.Ledger.Prelude.HasCoin.T_HasCoin_10
 d_HasCoin'45'CertState_3444 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_HasCoin'45'CertState_2116
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_HasCoin'45'CertState_2112
       (coe
          MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_govStructure_2860
          (coe d_HSTransactionStructure_702 (coe v0)))
@@ -10764,136 +10758,136 @@ d_HasColdCredentials_3446 a0 a1 a2 = ()
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.HasColdCredentials-CertEnv
 d_HasColdCredentials'45'CertEnv_3450 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasColdCredentials_1636
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasColdCredentials_1632
 d_HasColdCredentials'45'CertEnv_3450 ~v0
   = du_HasColdCredentials'45'CertEnv_3450
 du_HasColdCredentials'45'CertEnv_3450 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasColdCredentials_1636
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasColdCredentials_1632
 du_HasColdCredentials'45'CertEnv_3450
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.du_HasColdCredentials'45'CertEnv_1898
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.du_HasColdCredentials'45'CertEnv_1894
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.HasColdCredentials-GovCertEnv
 d_HasColdCredentials'45'GovCertEnv_3452 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasColdCredentials_1636
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasColdCredentials_1632
 d_HasColdCredentials'45'GovCertEnv_3452 ~v0
   = du_HasColdCredentials'45'GovCertEnv_3452
 du_HasColdCredentials'45'GovCertEnv_3452 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasColdCredentials_1636
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasColdCredentials_1632
 du_HasColdCredentials'45'GovCertEnv_3452
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.du_HasColdCredentials'45'GovCertEnv_1896
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.du_HasColdCredentials'45'GovCertEnv_1892
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.HasDReps-CertState
 d_HasDReps'45'CertState_3454 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasDReps_1278
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasDReps_1274
 d_HasDReps'45'CertState_3454 ~v0 = du_HasDReps'45'CertState_3454
 du_HasDReps'45'CertState_3454 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasDReps_1278
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasDReps_1274
 du_HasDReps'45'CertState_3454
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.du_HasDReps'45'CertState_1930
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.du_HasDReps'45'CertState_1926
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.HasDReps-GState
 d_HasDReps'45'GState_3456 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasDReps_1278
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasDReps_1274
 d_HasDReps'45'GState_3456 ~v0 = du_HasDReps'45'GState_3456
 du_HasDReps'45'GState_3456 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasDReps_1278
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasDReps_1274
 du_HasDReps'45'GState_3456
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.du_HasDReps'45'GState_1916
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.du_HasDReps'45'GState_1912
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.HasDState
 d_HasDState_3458 a0 a1 a2 = ()
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.HasDState-CertState
 d_HasDState'45'CertState_3462 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasDState_1776
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasDState_1772
 d_HasDState'45'CertState_3462 ~v0 = du_HasDState'45'CertState_3462
 du_HasDState'45'CertState_3462 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasDState_1776
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasDState_1772
 du_HasDState'45'CertState_3462
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.du_HasDState'45'CertState_1922
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.du_HasDState'45'CertState_1918
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.HasDeposits
 d_HasDeposits_3464 a0 a1 a2 = ()
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.HasDeposits-DState
 d_HasDeposits'45'DState_3468 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasDeposits_1596
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasDeposits_1592
 d_HasDeposits'45'DState_3468 ~v0 = du_HasDeposits'45'DState_3468
 du_HasDeposits'45'DState_3468 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasDeposits_1596
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasDeposits_1592
 du_HasDeposits'45'DState_3468
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.du_HasDeposits'45'DState_1906
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.du_HasDeposits'45'DState_1902
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.HasDeposits-GState
 d_HasDeposits'45'GState_3470 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasDeposits_1596
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasDeposits_1592
 d_HasDeposits'45'GState_3470 ~v0 = du_HasDeposits'45'GState_3470
 du_HasDeposits'45'GState_3470 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasDeposits_1596
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasDeposits_1592
 du_HasDeposits'45'GState_3470
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.du_HasDeposits'45'GState_1920
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.du_HasDeposits'45'GState_1916
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.HasDeposits-PState
 d_HasDeposits'45'PState_3472 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasDeposits_1596
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasDeposits_1592
 d_HasDeposits'45'PState_3472 ~v0 = du_HasDeposits'45'PState_3472
 du_HasDeposits'45'PState_3472 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasDeposits_1596
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasDeposits_1592
 du_HasDeposits'45'PState_3472
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.du_HasDeposits'45'PState_1912
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.du_HasDeposits'45'PState_1908
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.HasEpoch
 d_HasEpoch_3474 a0 a1 a2 = ()
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.HasEpoch-CertEnv
 d_HasEpoch'45'CertEnv_3478 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasEpoch_1856
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasEpoch_1852
 d_HasEpoch'45'CertEnv_3478 ~v0 = du_HasEpoch'45'CertEnv_3478
 du_HasEpoch'45'CertEnv_3478 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasEpoch_1856
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasEpoch_1852
 du_HasEpoch'45'CertEnv_3478
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.du_HasEpoch'45'CertEnv_1942
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.du_HasEpoch'45'CertEnv_1938
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.HasEpoch-GovCertEnv
 d_HasEpoch'45'GovCertEnv_3480 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasEpoch_1856
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasEpoch_1852
 d_HasEpoch'45'GovCertEnv_3480 ~v0 = du_HasEpoch'45'GovCertEnv_3480
 du_HasEpoch'45'GovCertEnv_3480 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasEpoch_1856
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasEpoch_1852
 du_HasEpoch'45'GovCertEnv_3480
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.du_HasEpoch'45'GovCertEnv_1940
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.du_HasEpoch'45'GovCertEnv_1936
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.HasFuturePools
 d_HasFuturePools_3482 a0 a1 a2 = ()
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.HasFuturePools-PState
 d_HasFuturePools'45'PState_3486 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasFuturePools_1676
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasFuturePools_1672
 d_HasFuturePools'45'PState_3486 ~v0
   = du_HasFuturePools'45'PState_3486
 du_HasFuturePools'45'PState_3486 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasFuturePools_1676
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasFuturePools_1672
 du_HasFuturePools'45'PState_3486
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.du_HasFuturePools'45'PState_1910
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.du_HasFuturePools'45'PState_1906
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.HasGState
 d_HasGState_3488 a0 a1 a2 = ()
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.HasGState-CertState
 d_HasGState'45'CertState_3492 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasGState_1816
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasGState_1812
 d_HasGState'45'CertState_3492 ~v0 = du_HasGState'45'CertState_3492
 du_HasGState'45'CertState_3492 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasGState_1816
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasGState_1812
 du_HasGState'45'CertState_3492
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.du_HasGState'45'CertState_1926
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.du_HasGState'45'CertState_1922
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.HasPParams-CertEnv
 d_HasPParams'45'CertEnv_3494 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
@@ -10903,7 +10897,7 @@ du_HasPParams'45'CertEnv_3494 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasPParams_632
 du_HasPParams'45'CertEnv_3494
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.du_HasPParams'45'CertEnv_1892
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.du_HasPParams'45'CertEnv_1888
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.HasPParams-GovCertEnv
 d_HasPParams'45'GovCertEnv_3496 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
@@ -10914,76 +10908,76 @@ du_HasPParams'45'GovCertEnv_3496 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasPParams_632
 du_HasPParams'45'GovCertEnv_3496
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.du_HasPParams'45'GovCertEnv_1894
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.du_HasPParams'45'GovCertEnv_1890
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.HasPState
 d_HasPState_3498 a0 a1 a2 = ()
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.HasPState-CertState
 d_HasPState'45'CertState_3502 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasPState_1796
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasPState_1792
 d_HasPState'45'CertState_3502 ~v0 = du_HasPState'45'CertState_3502
 du_HasPState'45'CertState_3502 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasPState_1796
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasPState_1792
 du_HasPState'45'CertState_3502
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.du_HasPState'45'CertState_1924
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.du_HasPState'45'CertState_1920
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.HasPools
 d_HasPools_3504 a0 a1 a2 = ()
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.HasPools-CertState
 d_HasPools'45'CertState_3508 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasPools_1656
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasPools_1652
 d_HasPools'45'CertState_3508 ~v0 = du_HasPools'45'CertState_3508
 du_HasPools'45'CertState_3508 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasPools_1656
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasPools_1652
 du_HasPools'45'CertState_3508
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.du_HasPools'45'CertState_1934
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.du_HasPools'45'CertState_1930
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.HasPools-PState
 d_HasPools'45'PState_3510 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasPools_1656
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasPools_1652
 d_HasPools'45'PState_3510 ~v0 = du_HasPools'45'PState_3510
 du_HasPools'45'PState_3510 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasPools_1656
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasPools_1652
 du_HasPools'45'PState_3510
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.du_HasPools'45'PState_1908
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.du_HasPools'45'PState_1904
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.HasRetiring
 d_HasRetiring_3512 a0 a1 a2 = ()
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.HasRetiring-PState
 d_HasRetiring'45'PState_3516 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasRetiring_1696
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasRetiring_1692
 d_HasRetiring'45'PState_3516 ~v0 = du_HasRetiring'45'PState_3516
 du_HasRetiring'45'PState_3516 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasRetiring_1696
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasRetiring_1692
 du_HasRetiring'45'PState_3516
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.du_HasRetiring'45'PState_1914
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.du_HasRetiring'45'PState_1910
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.HasRewards
 d_HasRewards_3518 a0 a1 a2 = ()
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.HasRewards-CertState
 d_HasRewards'45'CertState_3522 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasRewards_1716
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasRewards_1712
 d_HasRewards'45'CertState_3522 ~v0
   = du_HasRewards'45'CertState_3522
 du_HasRewards'45'CertState_3522 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasRewards_1716
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasRewards_1712
 du_HasRewards'45'CertState_3522
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.du_HasRewards'45'CertState_1928
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.du_HasRewards'45'CertState_1924
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.HasRewards-DState
 d_HasRewards'45'DState_3524 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasRewards_1716
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasRewards_1712
 d_HasRewards'45'DState_3524 ~v0 = du_HasRewards'45'DState_3524
 du_HasRewards'45'DState_3524 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasRewards_1716
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasRewards_1712
 du_HasRewards'45'DState_3524
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.du_HasRewards'45'DState_1904
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.du_HasRewards'45'DState_1900
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.HasStake
 d_HasStake_3526 a0 a1 a2 = ()
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.HasStakeDelegs
@@ -10991,66 +10985,66 @@ d_HasStakeDelegs_3530 a0 a1 a2 = ()
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.HasStakeDelegs-CertState
 d_HasStakeDelegs'45'CertState_3534 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasStakeDelegs_1756
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasStakeDelegs_1752
 d_HasStakeDelegs'45'CertState_3534 ~v0
   = du_HasStakeDelegs'45'CertState_3534
 du_HasStakeDelegs'45'CertState_3534 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasStakeDelegs_1756
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasStakeDelegs_1752
 du_HasStakeDelegs'45'CertState_3534
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.du_HasStakeDelegs'45'CertState_1938
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.du_HasStakeDelegs'45'CertState_1934
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.HasStakeDelegs-DState
 d_HasStakeDelegs'45'DState_3536 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasStakeDelegs_1756
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasStakeDelegs_1752
 d_HasStakeDelegs'45'DState_3536 ~v0
   = du_HasStakeDelegs'45'DState_3536
 du_HasStakeDelegs'45'DState_3536 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasStakeDelegs_1756
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasStakeDelegs_1752
 du_HasStakeDelegs'45'DState_3536
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.du_HasStakeDelegs'45'DState_1902
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.du_HasStakeDelegs'45'DState_1898
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.HasVoteDelegs-CertState
 d_HasVoteDelegs'45'CertState_3538 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasVoteDelegs_1162
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasVoteDelegs_1158
 d_HasVoteDelegs'45'CertState_3538 ~v0
   = du_HasVoteDelegs'45'CertState_3538
 du_HasVoteDelegs'45'CertState_3538 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasVoteDelegs_1162
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasVoteDelegs_1158
 du_HasVoteDelegs'45'CertState_3538
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.du_HasVoteDelegs'45'CertState_1936
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.du_HasVoteDelegs'45'CertState_1932
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.HasVoteDelegs-DState
 d_HasVoteDelegs'45'DState_3540 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasVoteDelegs_1162
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasVoteDelegs_1158
 d_HasVoteDelegs'45'DState_3540 ~v0
   = du_HasVoteDelegs'45'DState_3540
 du_HasVoteDelegs'45'DState_3540 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasVoteDelegs_1162
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_HasVoteDelegs_1158
 du_HasVoteDelegs'45'DState_3540
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.du_HasVoteDelegs'45'DState_1900
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.du_HasVoteDelegs'45'DState_1896
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.HasVotes
 d_HasVotes_3542 a0 a1 a2 = ()
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.IsConwayCert
 d_IsConwayCert_3546 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DCert_1392 -> ()
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DCert_1388 -> ()
 d_IsConwayCert_3546 = erased
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.IsConwayCert?
 d_IsConwayCert'63'_3548 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DCert_1392 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DCert_1388 ->
   MAlonzo.Code.Class.Decidable.Core.T__'8263'_10
 d_IsConwayCert'63'_3548 ~v0 = du_IsConwayCert'63'_3548
 du_IsConwayCert'63'_3548 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DCert_1392 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DCert_1388 ->
   MAlonzo.Code.Class.Decidable.Core.T__'8263'_10
 du_IsConwayCert'63'_3548
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.du_IsConwayCert'63'_1568
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.du_IsConwayCert'63'_1564
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.IsPoolRegistered
 d_IsPoolRegistered_3550 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
@@ -11060,17 +11054,17 @@ d_IsPoolRegistered_3550 = erased
 d_PState_3558 a0 = ()
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.PStateOf
 d_PStateOf_3562 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasPState_1796 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasPState_1792 ->
   AgdaAny ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_PState_1472
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_PState_1468
 d_PStateOf_3562 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_PStateOf_1804
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_PStateOf_1800
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.PoolDepositsRegistered
 d_PoolDepositsRegistered_3564 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_CertState_1508 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_CertState_1504 ->
   ()
 d_PoolDepositsRegistered_3564 = erased
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.PoolEnv
@@ -11082,11 +11076,11 @@ d_Pools_3570 ::
 d_Pools_3570 = erased
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.PoolsOf
 d_PoolsOf_3572 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasPools_1656 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasPools_1652 ->
   AgdaAny -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_PoolsOf_3572 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_PoolsOf_1664
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_PoolsOf_1660
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.Retiring
 d_Retiring_3574 ::
@@ -11095,11 +11089,11 @@ d_Retiring_3574 ::
 d_Retiring_3574 = erased
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.RetiringOf
 d_RetiringOf_3576 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasRetiring_1696 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasRetiring_1692 ->
   AgdaAny -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_RetiringOf_3576 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_RetiringOf_1704
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_RetiringOf_1700
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.Rewards
 d_Rewards_3578 ::
@@ -11108,11 +11102,11 @@ d_Rewards_3578 ::
 d_Rewards_3578 = erased
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.RewardsOf
 d_RewardsOf_3580 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasRewards_1716 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasRewards_1712 ->
   AgdaAny -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_RewardsOf_3580 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_RewardsOf_1724
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_RewardsOf_1720
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.Stake
 d_Stake_3582 ::
@@ -11126,487 +11120,487 @@ d_StakeDelegs_3584 ::
 d_StakeDelegs_3584 = erased
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.StakeDelegsOf
 d_StakeDelegsOf_3586 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasStakeDelegs_1756 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasStakeDelegs_1752 ->
   AgdaAny -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_StakeDelegsOf_3586 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_StakeDelegsOf_1764
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_StakeDelegsOf_1760
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.StakeOf
 d_StakeOf_3588 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasStake_1736 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasStake_1732 ->
   AgdaAny -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_StakeOf_3588 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_StakeOf_1744
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_StakeOf_1740
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.StakePoolParams
 d_StakePoolParams_3590 a0 = ()
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.VotesOf
 d_VotesOf_3594 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasVotes_1876 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasVotes_1872 ->
   AgdaAny ->
-  [MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovVote_1014]
+  [MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovVote_1010]
 d_VotesOf_3594 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_VotesOf_1884
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_VotesOf_1880
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.coinFromDeposits
 d_coinFromDeposits_3598 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_CertState_1508 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_CertState_1504 ->
   Integer
 d_coinFromDeposits_3598 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_coinFromDeposits_2108
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_coinFromDeposits_2104
       (coe
          MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_govStructure_2860
          (coe d_HSTransactionStructure_702 (coe v0)))
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.coinFromRewards
 d_coinFromRewards_3600 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_CertState_1508 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_CertState_1504 ->
   Integer
 d_coinFromRewards_3600 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_coinFromRewards_2106
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_coinFromRewards_2102
       (coe
          MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_govStructure_2860
          (coe d_HSTransactionStructure_702 (coe v0)))
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.cwitness
 d_cwitness_3602 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DCert_1392 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DCert_1388 ->
   Maybe
     MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20
 d_cwitness_3602 ~v0 = du_cwitness_3602
 du_cwitness_3602 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DCert_1392 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DCert_1388 ->
   Maybe
     MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20
 du_cwitness_3602
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.du_cwitness_1408
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.du_cwitness_1404
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.newCertDeposits
 d_newCertDeposits_3610 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParams_312 ->
   [Integer] ->
-  [MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DCert_1392] ->
+  [MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DCert_1388] ->
   Integer
 d_newCertDeposits_3610 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_newCertDeposits_2058
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_newCertDeposits_2054
       (coe
          MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_govStructure_2860
          (coe d_HSTransactionStructure_702 (coe v0)))
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.poolOwners
 d_poolOwners_3612 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DCert_1392 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DCert_1388 ->
   [Integer]
 d_poolOwners_3612 ~v0 = du_poolOwners_3612
 du_poolOwners_3612 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DCert_1392 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DCert_1388 ->
   [Integer]
 du_poolOwners_3612
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.du_poolOwners_1424
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.du_poolOwners_1420
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.refundCertDeposits
 d_refundCertDeposits_3614 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParams_312 ->
-  [MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DCert_1392] ->
+  [MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DCert_1388] ->
   Integer
 d_refundCertDeposits_3614 ~v0 = du_refundCertDeposits_3614
 du_refundCertDeposits_3614 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParams_312 ->
-  [MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DCert_1392] ->
+  [MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DCert_1388] ->
   Integer
 du_refundCertDeposits_3614 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.du_refundCertDeposits_2088
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.du_refundCertDeposits_2084
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.rewardsBalance
 d_rewardsBalance_3622 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DState_1452 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DState_1448 ->
   Integer
 d_rewardsBalance_3622 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_rewardsBalance_2046
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_rewardsBalance_2042
       (coe
          MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_govStructure_2860
          (coe d_HSTransactionStructure_702 (coe v0)))
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.CertEnv.coldCredentials
 d_coldCredentials_3662 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_CertEnv_1436 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_CertEnv_1432 ->
   [MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20]
 d_coldCredentials_3662 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_coldCredentials_1448
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_coldCredentials_1444
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.CertEnv.epoch
 d_epoch_3664 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_CertEnv_1436 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_CertEnv_1432 ->
   Integer
 d_epoch_3664 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_epoch_1444
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_epoch_1440
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.CertEnv.pp
 d_pp_3666 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_CertEnv_1436 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_CertEnv_1432 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParams_312
 d_pp_3666 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_pp_1446 (coe v0)
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_pp_1442 (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.CertState.dState
 d_dState_3670 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_CertState_1508 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DState_1452
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_CertState_1504 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DState_1448
 d_dState_3670 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_dState_1516
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_dState_1512
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.CertState.gState
 d_gState_3672 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_CertState_1508 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_GState_1492
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_CertState_1504 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_GState_1488
 d_gState_3672 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_gState_1520
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_gState_1516
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.CertState.pState
 d_pState_3674 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_CertState_1508 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_PState_1472
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_CertState_1504 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_PState_1468
 d_pState_3674 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_pState_1518
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_pState_1514
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.DState.deposits
 d_deposits_3694 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DState_1452 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DState_1448 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_deposits_3694 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_deposits_1468
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_deposits_1464
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.DState.rewards
 d_rewards_3696 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DState_1452 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DState_1448 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_rewards_3696 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_rewards_1466
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_rewards_1462
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.DState.stakeDelegs
 d_stakeDelegs_3698 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DState_1452 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DState_1448 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_stakeDelegs_3698 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_stakeDelegs_1464
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_stakeDelegs_1460
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.DState.voteDelegs
 d_voteDelegs_3700 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DState_1452 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DState_1448 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_voteDelegs_3700 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_voteDelegs_1462
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_voteDelegs_1458
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.DelegEnv.delegatees
 d_delegatees_3704 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DelegEnv_1524 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DelegEnv_1520 ->
   [MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20]
 d_delegatees_3704 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_delegatees_1536
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_delegatees_1532
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.DelegEnv.pools
 d_pools_3706 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DelegEnv_1524 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DelegEnv_1520 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_pools_3706 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_pools_1534
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_pools_1530
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.DelegEnv.pparams
 d_pparams_3708 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DelegEnv_1524 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DelegEnv_1520 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParams_312
 d_pparams_3708 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_pparams_1532
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_pparams_1528
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GState.ccHotKeys
 d_ccHotKeys_3712 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_GState_1492 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_GState_1488 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_ccHotKeys_3712 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_ccHotKeys_1502
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_ccHotKeys_1498
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GState.deposits
 d_deposits_3714 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_GState_1492 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_GState_1488 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_deposits_3714 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_deposits_1504
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_deposits_1500
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GState.dreps
 d_dreps_3716 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_GState_1492 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_GState_1488 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_dreps_3716 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_dreps_1500
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_dreps_1496
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovCertEnv.coldCredentials
 d_coldCredentials_3720 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_GovCertEnv_1552 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_GovCertEnv_1548 ->
   [MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20]
 d_coldCredentials_3720 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_coldCredentials_1564
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_coldCredentials_1560
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovCertEnv.epoch
 d_epoch_3722 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_GovCertEnv_1552 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_GovCertEnv_1548 ->
   Integer
 d_epoch_3722 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_epoch_1560
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_epoch_1556
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.GovCertEnv.pp
 d_pp_3724 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_GovCertEnv_1552 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_GovCertEnv_1548 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParams_312
 d_pp_3724 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_pp_1562 (coe v0)
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_pp_1558 (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.HasCCHotKeys.CCHotKeysOf
 d_CCHotKeysOf_3728 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasCCHotKeys_1616 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasCCHotKeys_1612 ->
   AgdaAny -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_CCHotKeysOf_3728 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_CCHotKeysOf_1624
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_CCHotKeysOf_1620
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.HasCertState.CertStateOf
 d_CertStateOf_3732 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasCertState_1836 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasCertState_1832 ->
   AgdaAny ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_CertState_1508
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_CertState_1504
 d_CertStateOf_3732 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_CertStateOf_1844
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_CertStateOf_1840
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.HasColdCredentials.ColdCredentialsOf
 d_ColdCredentialsOf_3736 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasColdCredentials_1636 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasColdCredentials_1632 ->
   AgdaAny ->
   [MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20]
 d_ColdCredentialsOf_3736 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_ColdCredentialsOf_1644
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_ColdCredentialsOf_1640
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.HasDState.DStateOf
 d_DStateOf_3740 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasDState_1776 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasDState_1772 ->
   AgdaAny ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DState_1452
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DState_1448
 d_DStateOf_3740 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_DStateOf_1784
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_DStateOf_1780
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.HasDeposits.DepositsOf
 d_DepositsOf_3744 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasDeposits_1596 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasDeposits_1592 ->
   AgdaAny -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_DepositsOf_3744 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_DepositsOf_1604
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_DepositsOf_1600
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.HasEpoch.EpochOf
 d_EpochOf_3748 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasEpoch_1856 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasEpoch_1852 ->
   AgdaAny -> Integer
 d_EpochOf_3748 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_EpochOf_1864
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_EpochOf_1860
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.HasFuturePools.FuturePoolsOf
 d_FuturePoolsOf_3752 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasFuturePools_1676 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasFuturePools_1672 ->
   AgdaAny -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_FuturePoolsOf_3752 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_FuturePoolsOf_1684
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_FuturePoolsOf_1680
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.HasGState.GStateOf
 d_GStateOf_3756 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasGState_1816 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasGState_1812 ->
   AgdaAny ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_GState_1492
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_GState_1488
 d_GStateOf_3756 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_GStateOf_1824
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_GStateOf_1820
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.HasPState.PStateOf
 d_PStateOf_3760 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasPState_1796 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasPState_1792 ->
   AgdaAny ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_PState_1472
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_PState_1468
 d_PStateOf_3760 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_PStateOf_1804
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_PStateOf_1800
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.HasPools.PoolsOf
 d_PoolsOf_3764 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasPools_1656 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasPools_1652 ->
   AgdaAny -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_PoolsOf_3764 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_PoolsOf_1664
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_PoolsOf_1660
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.HasRetiring.RetiringOf
 d_RetiringOf_3768 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasRetiring_1696 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasRetiring_1692 ->
   AgdaAny -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_RetiringOf_3768 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_RetiringOf_1704
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_RetiringOf_1700
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.HasRewards.RewardsOf
 d_RewardsOf_3772 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasRewards_1716 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasRewards_1712 ->
   AgdaAny -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_RewardsOf_3772 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_RewardsOf_1724
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_RewardsOf_1720
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.HasStake.StakeOf
 d_StakeOf_3776 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasStake_1736 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasStake_1732 ->
   AgdaAny -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_StakeOf_3776 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_StakeOf_1744
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_StakeOf_1740
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.HasStakeDelegs.StakeDelegsOf
 d_StakeDelegsOf_3780 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasStakeDelegs_1756 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasStakeDelegs_1752 ->
   AgdaAny -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_StakeDelegsOf_3780 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_StakeDelegsOf_1764
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_StakeDelegsOf_1760
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.HasVotes.VotesOf
 d_VotesOf_3784 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasVotes_1876 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasVotes_1872 ->
   AgdaAny ->
-  [MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovVote_1014]
+  [MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovVote_1010]
 d_VotesOf_3784 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_VotesOf_1884
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_VotesOf_1880
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.PState.deposits
 d_deposits_3788 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_PState_1472 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_PState_1468 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_deposits_3788 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_deposits_1488
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_deposits_1484
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.PState.fPools
 d_fPools_3790 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_PState_1472 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_PState_1468 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_fPools_3790 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_fPools_1484
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_fPools_1480
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.PState.pools
 d_pools_3792 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_PState_1472 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_PState_1468 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_pools_3792 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_pools_1482
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_pools_1478
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.PState.retiring
 d_retiring_3794 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_PState_1472 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_PState_1468 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_retiring_3794 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_retiring_1486
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_retiring_1482
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.PoolEnv.epoch
 d_epoch_3798 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_PoolEnv_1540 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_PoolEnv_1536 ->
   Integer
 d_epoch_3798 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_epoch_1546
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_epoch_1542
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.PoolEnv.pp
 d_pp_3800 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_PoolEnv_1540 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_PoolEnv_1536 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParams_312
 d_pp_3800 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_pp_1548 (coe v0)
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_pp_1544 (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.StakePoolParams.cost
 d_cost_3804 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_StakePoolParams_1352 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_StakePoolParams_1348 ->
   Integer
 d_cost_3804 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_cost_1368
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_cost_1364
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.StakePoolParams.margin
 d_margin_3806 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_StakePoolParams_1352 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_StakePoolParams_1348 ->
   MAlonzo.Code.Data.Refinement.Base.T_Refinement_28
 d_margin_3806 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_margin_1370
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_margin_1366
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.StakePoolParams.owners
 d_owners_3808 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_StakePoolParams_1352 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_StakePoolParams_1348 ->
   [Integer]
 d_owners_3808 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_owners_1366
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_owners_1362
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.StakePoolParams.pledge
 d_pledge_3810 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_StakePoolParams_1352 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_StakePoolParams_1348 ->
   Integer
 d_pledge_3810 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_pledge_1372
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_pledge_1368
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.StakePoolParams.rewardAccount
 d_rewardAccount_3812 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_StakePoolParams_1352 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_StakePoolParams_1348 ->
   MAlonzo.Code.Ledger.Core.Specification.Address.T_RewardAddress_116
 d_rewardAccount_3812 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_rewardAccount_1374
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_rewardAccount_1370
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.StakePoolParams.vrf
 d_vrf_3814 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_StakePoolParams_1352 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_StakePoolParams_1348 ->
   Integer
 d_vrf_3814 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_vrf_1376
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_vrf_1372
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.AbstractFunctions
 d_AbstractFunctions_3818 a0 = ()
@@ -11685,7 +11679,7 @@ d_HSAbstractFunctions_3856 v0
                        coe
                          MAlonzo.Code.Class.DecEq.Core.du__'61''61'__18 (coe ())
                          (coe
-                            MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_DecEq'45'DCert_2122
+                            MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_DecEq'45'DCert_2118
                             (coe
                                MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_govStructure_2860
                                (coe d_HSTransactionStructure_702 (coe v0))))
@@ -11752,7 +11746,7 @@ d_HSAbstractFunctions_3856 v0
                  (coe MAlonzo.Code.Data.Fin.Base.du_toℕ_18)
                  (coe
                     MAlonzo.Code.Data.List.Base.du_findIndex'7495'_928
-                    (MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_'61''61''45'GovProposal_1552
+                    (MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_'61''61''45'GovProposal_1548
                        (coe
                           MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_govStructure_2860
                           (coe d_HSTransactionStructure_702 (coe v0)))
