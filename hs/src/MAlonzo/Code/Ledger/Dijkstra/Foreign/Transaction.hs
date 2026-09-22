@@ -498,11 +498,11 @@ data T_TxBodySub_28
   = C_constructor_106 [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
                       [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
                       MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 Integer
-                      [MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DCert_1422]
+                      [MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DCert_1424]
                       MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
                       MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 (Maybe Integer) Integer
-                      [MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovVote_1018]
-                      [MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovProposal_1072]
+                      [MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovVote_1020]
+                      [MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovProposal_1074]
                       (Maybe Integer) (Maybe Integer) Integer (Maybe Integer)
                       [MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20]
                       [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
@@ -542,7 +542,7 @@ d_txId_74 v0
 -- Ledger.Dijkstra.Foreign.Transaction.TxBodySub.txCerts
 d_txCerts_76 ::
   T_TxBodySub_28 ->
-  [MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DCert_1422]
+  [MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DCert_1424]
 d_txCerts_76 v0
   = case coe v0 of
       C_constructor_106 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12 v13 v14 v15 v16 v17 v18 v19
@@ -581,7 +581,7 @@ d_txDonation_84 v0
 -- Ledger.Dijkstra.Foreign.Transaction.TxBodySub.txGovVotes
 d_txGovVotes_86 ::
   T_TxBodySub_28 ->
-  [MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovVote_1018]
+  [MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovVote_1020]
 d_txGovVotes_86 v0
   = case coe v0 of
       C_constructor_106 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12 v13 v14 v15 v16 v17 v18 v19
@@ -590,7 +590,7 @@ d_txGovVotes_86 v0
 -- Ledger.Dijkstra.Foreign.Transaction.TxBodySub.txGovProposals
 d_txGovProposals_88 ::
   T_TxBodySub_28 ->
-  [MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovProposal_1072]
+  [MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovProposal_1074]
 d_txGovProposals_88 v0
   = case coe v0 of
       C_constructor_106 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12 v13 v14 v15 v16 v17 v18 v19
@@ -811,7 +811,7 @@ d_txBalanceIntervals_182 v0 = coe d_txBalanceIntervals_104 (coe v0)
 -- Ledger.Dijkstra.Foreign.Transaction._.txCerts
 d_txCerts_184 ::
   T_TxBodySub_28 ->
-  [MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DCert_1422]
+  [MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DCert_1424]
 d_txCerts_184 v0 = coe d_txCerts_76 (coe v0)
 -- Ledger.Dijkstra.Foreign.Transaction._.txDirectDeposits
 d_txDirectDeposits_186 ::
@@ -823,12 +823,12 @@ d_txDonation_188 v0 = coe d_txDonation_84 (coe v0)
 -- Ledger.Dijkstra.Foreign.Transaction._.txGovProposals
 d_txGovProposals_190 ::
   T_TxBodySub_28 ->
-  [MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovProposal_1072]
+  [MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovProposal_1074]
 d_txGovProposals_190 v0 = coe d_txGovProposals_88 (coe v0)
 -- Ledger.Dijkstra.Foreign.Transaction._.txGovVotes
 d_txGovVotes_192 ::
   T_TxBodySub_28 ->
-  [MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovVote_1018]
+  [MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovVote_1020]
 d_txGovVotes_192 v0 = coe d_txGovVotes_86 (coe v0)
 -- Ledger.Dijkstra.Foreign.Transaction._.txGuards
 d_txGuards_194 ::
@@ -2812,11 +2812,11 @@ data T_TxBodyTop_276
                       [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
                       [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
                       MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 Integer
-                      [MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DCert_1422]
+                      [MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DCert_1424]
                       Integer MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
                       MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 (Maybe Integer) Integer
-                      [MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovVote_1018]
-                      [MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovProposal_1072]
+                      [MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovVote_1020]
+                      [MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovProposal_1074]
                       (Maybe Integer) (Maybe Integer) Integer (Maybe Integer)
                       [MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3838]
                       [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
@@ -2866,7 +2866,7 @@ d_txId_332 v0
 -- Ledger.Dijkstra.Foreign.Transaction.TxBodyTop.txCerts
 d_txCerts_334 ::
   T_TxBodyTop_276 ->
-  [MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DCert_1422]
+  [MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DCert_1424]
 d_txCerts_334 v0
   = case coe v0 of
       C_constructor_370 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12 v13 v14 v15 v16 v17 v18 v19 v20 v21 v22 v23
@@ -2912,7 +2912,7 @@ d_txDonation_344 v0
 -- Ledger.Dijkstra.Foreign.Transaction.TxBodyTop.txGovVotes
 d_txGovVotes_346 ::
   T_TxBodyTop_276 ->
-  [MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovVote_1018]
+  [MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovVote_1020]
 d_txGovVotes_346 v0
   = case coe v0 of
       C_constructor_370 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12 v13 v14 v15 v16 v17 v18 v19 v20 v21 v22 v23
@@ -2921,7 +2921,7 @@ d_txGovVotes_346 v0
 -- Ledger.Dijkstra.Foreign.Transaction.TxBodyTop.txGovProposals
 d_txGovProposals_348 ::
   T_TxBodyTop_276 ->
-  [MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovProposal_1072]
+  [MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovProposal_1074]
 d_txGovProposals_348 v0
   = case coe v0 of
       C_constructor_370 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12 v13 v14 v15 v16 v17 v18 v19 v20 v21 v22 v23
@@ -3132,7 +3132,7 @@ d_txBalanceIntervals_448 v0 = coe d_txBalanceIntervals_366 (coe v0)
 -- Ledger.Dijkstra.Foreign.Transaction._.txCerts
 d_txCerts_450 ::
   T_TxBodyTop_276 ->
-  [MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DCert_1422]
+  [MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DCert_1424]
 d_txCerts_450 v0 = coe d_txCerts_334 (coe v0)
 -- Ledger.Dijkstra.Foreign.Transaction._.txDirectDeposits
 d_txDirectDeposits_452 ::
@@ -3147,12 +3147,12 @@ d_txFee_456 v0 = coe d_txFee_336 (coe v0)
 -- Ledger.Dijkstra.Foreign.Transaction._.txGovProposals
 d_txGovProposals_458 ::
   T_TxBodyTop_276 ->
-  [MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovProposal_1072]
+  [MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovProposal_1074]
 d_txGovProposals_458 v0 = coe d_txGovProposals_348 (coe v0)
 -- Ledger.Dijkstra.Foreign.Transaction._.txGovVotes
 d_txGovVotes_460 ::
   T_TxBodyTop_276 ->
-  [MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovVote_1018]
+  [MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovVote_1020]
 d_txGovVotes_460 v0 = coe d_txGovVotes_346 (coe v0)
 -- Ledger.Dijkstra.Foreign.Transaction._.txGuards
 d_txGuards_462 ::

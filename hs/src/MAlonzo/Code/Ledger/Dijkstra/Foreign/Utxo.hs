@@ -182,7 +182,7 @@ d_HasPParams'45'UTxOEnv_52
       MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.du_HasPParams'45'UTxOEnv_3420
 -- Ledger.Dijkstra.Foreign.Utxo._.HasPools-UTxOEnv
 d_HasPools'45'UTxOEnv_54 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasPools_1686
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasPools_1688
 d_HasPools'45'UTxOEnv_54
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.du_HasPools'45'UTxOEnv_3448
@@ -448,7 +448,7 @@ d_consumedTx_138 v0 v1 v2 v3
 -- Ledger.Dijkstra.Foreign.Utxo._.govProposalsDeposits
 d_govProposalsDeposits_140 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParams_312 ->
-  [MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovProposal_1072] ->
+  [MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovProposal_1074] ->
   Integer
 d_govProposalsDeposits_140
   = coe
