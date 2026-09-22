@@ -92,8 +92,6 @@ record GlobalConstants : Type₁ where
          MaxLovelaceSupplyᶜ : Coin
          Quorum : ℕ
          NetworkId : Network
-         -- Epochs a registered Leios voting key is honoured before it must be re-registered (CIP-0164).
-         BlsKeyMaxAgeᶜ : ℕ
 
   instance
     NonZero-ActiveSlotCoeff : ℚ.NonZero ActiveSlotCoeff
