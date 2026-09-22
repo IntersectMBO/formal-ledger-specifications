@@ -55,8 +55,8 @@ merges from `master` cheap.
 The abstract voting crypto lives in `Ledger.Dijkstra.Specification.Crypto` as
 `LeiosCryptoStructure`, a record parameterized by the core `CryptoStructure` that adds
 the BLS carriers and verification predicates (keys, signatures, proofs of
-possession, single and aggregate verification over the serialization type), a
-strict total order on key hashes, the committee tie-break, and the Leios hash
+possession, aggregate verification over the serialization type), the strict total
+order on key hashes that supplies the committee tie-break, and the Leios hash
 carriers.  `GovStructure` carries one beside its core crypto structure and
 opens it public, so the names are ambient in every rule module, `Certs`
 included, and the proof-of-possession premise is statable with no module
@@ -76,8 +76,8 @@ src/Ledger/Dijkstra/Specification/
 │                           --   tie-break); the EB, tx-reference, and header hashes
 ├── Gov/Base.lagda.md       -- edit: GovStructure carries a LeiosCryptoStructure
 ├── Leios.lagda.md          -- seats, committee selection, quorum arithmetic;
-│                           --   certificate, vote, and EB validity
-├── Leios/Types.lagda.md    -- EndorserBlock, Announcement, Vote
+│                           --   certificate and EB validity
+├── Leios/Types.lagda.md    -- EndorserBlock, Announcement
 ├── PParams.lagda.md        -- edit: the Leios parameter block
 ├── Certs.lagda.md          -- edit: voting-key registration (mechanism per the
 │                           --   Keys bullet of the committee section)
@@ -186,7 +186,7 @@ same reason: the binding "ensures voters validated the EB against the same ledge
 state it extends when certified on chain", and it also disambiguates among
 multiple headers announcing the same EB ([Vote Structure][cip-vote]).
 *The LLF assumes this corollary as a working default, pending confirmation from
-the implementers.*
+the implementers*.
 
 This ordering also answers the following open question of the design document:
 "How much of the work lives in `BBODY` itself versus a dedicated EB-body rule, and
@@ -255,7 +255,10 @@ The LLF adds the following defaults, each grounded in the design document:
 +  **Order and indices**.  A *seat* is a position in the committee's canonical
    order, carrying its pool, its weight, and (optionally) its voting key.  The
    descending-stake order fixes the seat indices that votes (`voter_id`) and
-   certificate bitfields address.
+   certificate bitfields address.  That order depends on the epoch's stake
+   distribution and is defined in the committee module from it; the crypto record
+   supplies only the tie-break, as a strict total order on the abstract key-hash
+   type.
 
    The CIP now pins the tie-break itself, byte-wise ascending on the pool's key
    hash, together with the fewer-than-`N_c` case ([Epoch Boundary][cip-epoch]);
@@ -419,7 +422,7 @@ each to its ledger counterpart, or records what stays outside the ledger spec an
 | ----------------------------- | -------------------- |
 | `applyCertifiedEb`            | The certificate branch of the block and chain rules: `ValidCert` plus the closure applied via `LEDGERS` from the announcing state, per the ordering above. |
 | `validateCertificate`         | `ValidCert` (`Leios`): signers are keyed seats of the pinned committee, the aggregate signature verifies over the announcing header's hash, and the signers' stake meets τ times the total active stake.  The contextual half — agreement with the pending announcement, the timing window — sits as block/chain premises. |
-| `validateVote`                | `ValidVote` (`Leios`): the voter index denotes a keyed committee seat whose key verifies the signature over the announcing header's hash.  Votes never appear on-chain individually; this is the meaning consensus uses to filter votes before aggregation. |
+| `validateVote`                | Outside the ledger spec (decided 2026-09-22; see the [addendum](#why-a-vote-type-at-all)).  Votes never appear on chain; consensus composes the check from ledger-provided pieces, a seat lookup in the committee and aggregate verification under that seat's key alone. |
 | `doesEpochCommitteeIncludeMe` | Decidable membership on `Committee` (`Leios`), a seat lookup by pool.  The "me" binding is consensus-local; the ledger side is the seat lookup, which the implementation serves from its materialized committee ([REQ-LedgerStateVotingCommittee][dd-certver]). |
 | `initializeVotingLedgerState` | Follow-up (the voting-state interface).  Meaning fixed now: the announcing block's post-`BBODY` state paired with fresh EB accumulators, one per cumulative `ValidEB` bound: referenced-transaction bytes, `ExUnits`, and reference-script bytes. |
 | `applyTxForVoting`            | Follow-up.  Meaning fixed now: one LEDGER step plus accumulator updates and bound checks; folding it over the closure from the initialized state succeeds exactly when `ValidEB`'s extension-and-bounds conjuncts hold. |
@@ -475,7 +478,7 @@ unit it will move with, which costs nothing.
 | `certificationDelay = 3·Lhdr + Lvote + Ldiff`            | `⌈(3·L_hdr + L_vote + L_diff) / slotLength⌉`, to be defined once; item 2                              | Same boundary: `s_A + delay ≤ s_B`            |
 | `HashEB`; `AnnouncedEB` with `hash` and `size`           | `EBHash`; `Announcement = EBHash × ℕ`                                                                 | Same content, each repository's names; item 3 |
 | `LastAppliedBlock` with `sℓ`, `h`, `aeb`                 | `CHAIN`'s pending announcement: the announcing slot, header hash, and announcement                    | Same semantics: every block replaces it       |
-| `HashHeader`, the `h` above                              | `RBHeaderHash`, the message the votes and the certificate sign                                        | Same object                                   |
+| `HashHeader`, the `h` above                              | `RBHeaderHash`, the message the certificate is verified against                                       | Same object                                   |
 | `certifiedEB` gates `certChecks`                         | The block rule requires the bit to agree with the body; item 4                                        | Sound together                                |
 
 1.  **The periods are protocol parameters in milliseconds** (not genesis constants in slots).
@@ -561,67 +564,69 @@ through the full roadmap, not this LLF project.
 
 ### Why a `Vote` type at all?
 
-No ledger transition rule consumes a `Vote`.  Votes never reach the chain, and
+*Decided 2026-09-22: there is none*.  The first draft of `Leios/Types` defined a
+`Vote` record, and the plan included a rule-free `ValidVote`; the review of
+[#1304][fls-1304] removed both.  This section keeps the case that was made for the
+type and records why it fails for a ledger specification.
+
+No ledger transition rule consumes a `Vote`.[^1]  Votes never reach the chain, and
 CIP-164 draws the line accordingly: certificate validation is block validity,
-while the vote-casting conditions are node behavior.  If "consumed by a rule"
-were the only criterion for a type's existence, `Vote` would fail it.
+while the vote-casting conditions are node behavior.  The draft kept the type
+anyway, for three consumers outside the rules, as follows:
 
-But rules are not a specification's only consumers, and creation is no
-criterion at all: the ledger creates neither votes nor certificates, yet
-nobody disputes `Certificate`.  Three consumers need the vote's fields.
+1.  **The certificate's meaning**.  A certificate is a compressed set of votes:
+    its aggregate signature is over the message each vote signs, the hash of the
+    announcing RB's header, under the keys of the seats named in the bitfield, and
+    the CIP's reason for that message is an argument about votes ("binding the
+    vote to `announcing_rb_hash` ensures voters validated the EB against the same
+    ledger state it extends").
 
-1.  **The certificate's meaning**.  A certificate is a compressed set of
-    votes: `cSig` is an aggregate signature over precisely the message each
-    vote signs, the hash of the announcing RB's header, under the keys of the
-    seats named in the bitfield (a bitfield index is a `voter_id` in another
-    encoding).  The CIP's reason for the message choice is an argument about
-    votes ("binding the vote to `announcing_rb_hash` ensures voters validated
-    the EB against the same ledger state it extends").  Without a `Vote` type,
-    the aggregate check verifies an unexplained hash; with one, the
-    certificate is a definition instead of an incantation.  The price is one
-    three-field record.
+2.  **The implementation's own requirements**.  The consensus↔ledger interface
+    proposed by Nicolas Frisby (2026-08; the interface section above gives it
+    durable form) includes `validateVote`, with the stated reason "To
+    receive/relay votes, we also need to validate them.  They're never in a
+    block, but we get at least the epoch's committee member's public key from the
+    ledger state"; and the design document's requirement register includes
+    [`REQ-LedgerSerializationVote`][dd-serialization], which makes the ledger own
+    the vote's wire format.
 
-2.  **The implementation's own requirements**.  The consensus↔ledger
-    interface proposed by Nicolas Frisby in the implementation team's design
-    discussion (2026-08; not yet recorded in a public artifact; the interface
-    section above gives it durable form) includes `validateVote`, with its
-    stated reason: "To receive/relay votes, we also need to validate them.
-    They're never in a block, but we get at least the epoch's committee
-    member's public key from the ledger state."  And the design document's
-    requirement register includes
-    [`REQ-LedgerSerializationVote`][dd-serialization] ("The vote structure
-    must be deterministically de-/serializable from/to bytes using CBOR
-    encoding"): the ledger owns the vote wire format, alongside RB and EB.  A
-    ledger spec without a vote type can give neither requirement a formal
-    counterpart.
+3.  **Vocabulary for the metatheory**.  Quorum safety, the statement that a valid
+    certificate implies some honest committee member attested `ValidEB`, reads as
+    a statement about votes: honest voters vote only for valid EBs, a quorum of
+    stake signed, hence an honest vote exists.
 
-3.  **Vocabulary for the metatheory**.  Quorum safety, the statement that a
-    valid certificate implies some honest committee member attested `ValidEB`,
-    is the justification for certified application skipping re-validation, and
-    it is a statement about votes: honest voters vote only for valid EBs; a
-    quorum of stake signed; hence an honest vote exists.  The proof is
-    deferred; the statement needs votes as objects.
+Andre Knispel's review of [#1304][fls-1304] rejected each argument.  The
+certificate is a bitfield and one aggregate signature; its message is the
+announcing header's hash, stated directly, and no vote appears in it.  The
+interface and the serialization requirement are not ledger rules, and rules are
+what the specification is answerable for: conformance testing compares the rules'
+step functions with the implementation's and never compares CBOR or cryptography,
+so the serialization requirement had no counterpart here for any type, and the
+ledger content a vote check consults (the committee) stays specified and testable
+through `NEWEPOCH`.
 
-The design isolates the question by construction: `ValidCert` never mentions
-`Vote`, so dropping `Vote` and `ValidVote` costs exactly one record and one
-relation, and nothing else moves.  The fallback is correspondingly principled:
-the `validateVote` interface row becomes "consensus-side composition of
-ledger-provided pieces, namely committee seat lookup plus `isSignedBy`,
-which the Leios crypto record exports regardless".
+No ledger-side `validateVote` exists today: the prototype keeps the vote type and
+its CBOR golden in the consensus repository ([`LeiosVote`][oc-vote-golden]),
+whatever component the requirement register names.  A specification of the
+consensus↔ledger interface, if one is written, is where vote validation belongs.
+Quorum safety is a statement about keyed seats whose keys signed and needs no vote
+as an object.
 
-The fallback has an owner, though, and it is not this note.  Whether the
-ledger owns vote validation and serialization is fixed, today, in the
-implementation team's own artifacts: `validateVote` in the proposed interface
-and `REQ-LedgerSerializationVote` in the design document.  If the answer is to
-become "no", those artifacts must change first; a ledger spec that silently
-drops `Vote` while they stand manufactures a spec–implementation divergence.
+**Decision**.  No `Vote` type and no `ValidVote`.  Single-vote verification
+(`isSignedBy`, the singleton case of the aggregate verifier) goes out with them,
+since vote validation was its only purpose, and the `validateVote` row of the
+interface table becomes consensus-side composition of ledger-provided pieces: a
+seat lookup in the committee and aggregate verification under that seat's key
+alone.
 
-**Recommendation**.  Keep `Vote`/`ValidVote` as definitions serving the
-interface and the metatheory, consumed by no rule; this is the framing the
-note already uses for the protocol spec's declared-but-uncalled `V-chkCerts`.
-Settled 2026-08-31 with Sebastian Nagel: the definitions stay, and they stay
-rule-free, since a transition rule would have no transition to gate; votes
-never reach the chain.
+Should a ledger-side `validateVote` appear, a rule-free `ValidVote` is one record
+and one relation on top of what is already here: the committee, the aggregate
+verifier, and the header-hash serialization.  The 2026-08-31 agreement with
+Sebastian Nagel settled only that votes stay rule-free, which this decision keeps.
+
+If the ledger boundary drawn in
+[`REQ-LedgerSerializationVote`][leios-design-serialization] is not what the design
+team intends, that document is the thing to revise.[^2]
 
 ### Why a Leios subtree instead of folding into existing modules?
 
@@ -672,13 +677,22 @@ practical arguments:
    house style.  The protocol has also pivoted once (Full → Linear); if it
    moves again, a subtree contains the blast radius.
 
-*Postscript, 2026-08-31.*  As built, the shape is two Leios-named modules
+*Postscript, 2026-08-31*.  As built, the shape is two Leios-named modules
 (`Leios` for the committee and the validity relations, `Leios/Types` for the
 primitive types) with the crypto in the core structure: flatter than the
 subtree argued for above, Leios-named as it argues, and inlined nowhere.
 
 ---
 
+[^1]: This alone is not justification for omitting a type; we have plenty of type
+      definitions that are never consumed by a rule.
+
+[^2]: At the time of this writing (2026-09-22) there is
+      a note in [that document][leios-design-serialization] which reads, "FIXME:
+      out of these, only the RB / block body is currently in the realm of ledger."
+
+
+[leios-design-serialization]: https://github.com/input-output-hk/ouroboros-leios/blob/main/docs/leios-design/README.md#serialization
 [CIP-164]: https://github.com/cardano-scaling/CIPs/blob/leios/CIP-0164/README.md
 [cip-step3]: https://github.com/cardano-scaling/CIPs/blob/leios/CIP-0164/README.md#step-3-committee-validation
 [cip-step5]: https://github.com/cardano-scaling/CIPs/blob/leios/CIP-0164/README.md#step-5-chain-inclusion
@@ -711,6 +725,8 @@ subtree argued for above, Leios-named as it argues, and inlined nowhere.
 [oc-2278]: https://github.com/IntersectMBO/ouroboros-consensus/pull/2278
 [oc-1677]: https://github.com/IntersectMBO/ouroboros-consensus/issues/1677
 [fls-919]: https://github.com/IntersectMBO/formal-ledger-specifications/issues/919
+[fls-1304]: https://github.com/IntersectMBO/formal-ledger-specifications/pull/1304
+[oc-vote-golden]: https://github.com/IntersectMBO/ouroboros-consensus/blob/leios-prototype/ouroboros-consensus-cardano/golden/cardano/leios/LeiosVote
 [cardano-common]: https://github.com/input-output-hk/agda-cardano-common
 [leios-formal-spec]: https://github.com/input-output-hk/ouroboros-leios-formal-spec
 [ol-1046]: https://github.com/input-output-hk/ouroboros-leios/issues/1046

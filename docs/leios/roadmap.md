@@ -5,7 +5,8 @@
 Where the Leios Ledger Formalization stands on `leios-main`, what is in review, in
 what order it lands, and what remains.  The [design note](design-note.md) records
 the decisions; this file records the state, and is updated as PRs merge.  Last
-updated 2026-09-17, after the parameters and the design note merged.
+updated 2026-09-22, after Carlos approved [#1304] and Andre's review comments on it
+were addressed.
 
 ## Merged
 
@@ -23,9 +24,11 @@ updated 2026-09-17, after the parameters and the design note merged.
 1.  [#1304] The Leios crypto structure and the primitive types (William).
     `LeiosCryptoStructure`, a Dijkstra-local extension of the core crypto
     structure carried by `GovStructure` (BLS carriers and predicates, the
-    key-hash order for committee ties, the hash carriers), and `Leios.Types`
-    (`EndorserBlock`, `hashEB`, `Announcement`, `Vote`).  Closes #1298 and #1301.
-    Awaiting re-review.
+    key-hash order that supplies the committee tie-break, the hash carriers), and
+    `Leios.Types` (`EndorserBlock`, `hashEB`, `Announcement`).  Closes #1298 and
+    #1301.  Approved by Carlos on 2026-09-22; Andre's comments of the same day
+    are addressed: no vote type, the order stated as the tie-break, its
+    decidability derived.
 2.  [#1300] The voting committee and certificate validity (Sebastian).  The pool
     state carries the voting key; the committee is materialized at the epoch
     boundary; `LeiosCert` and `ValidLeiosCert`; the key age derived from the KES
@@ -50,8 +53,9 @@ half of key registration.  Open: the registration mechanism itself, on hold.
    the `certifiable` predicate, the order lemma, and the worked examples.
 +  Certificate validity: in #1300 (`ValidLeiosCert`); decidability and the mapping
    of the CIP's five checks to conjuncts remain.
-+  Vote validity: not started.  A rule-free definition, `ValidVote`, per the note's
-   addendum.
++  Vote validity: out of scope, decided 2026-09-22 in the review of [#1304]: vote
+   validation is node behavior, and a specification of the consensus↔ledger
+   interface, if one is written, is where it belongs (the note's addendum).
 +  `ValidEB`: not started.  Reference and closure agreement, the per-EB bounds, and
    the valid-extension conjunct through `LEDGERS`.
 
