@@ -236,6 +236,7 @@ nav:
       - Properties: Ledger.Dijkstra.Specification.Chain.Properties.md
       - Properties/:
         - Computational: Ledger.Dijkstra.Specification.Chain.Properties.Computational.md
+    - Crypto: Ledger.Dijkstra.Specification.Crypto.md
     - Enact: Ledger.Dijkstra.Specification.Enact.md
     - Enact/:
       - Properties: Ledger.Dijkstra.Specification.Enact.Properties.md
@@ -267,6 +268,8 @@ nav:
       - Properties/:
         - Computational: Ledger.Dijkstra.Specification.Ledger.Properties.Computational.md
         - PoV: Ledger.Dijkstra.Specification.Ledger.Properties.PoV.md
+    - Leios/:
+      - Types: Ledger.Dijkstra.Specification.Leios.Types.md
     - PoolReap: Ledger.Dijkstra.Specification.PoolReap.md
     - PoolReap/:
       - Properties: Ledger.Dijkstra.Specification.PoolReap.Properties.md
