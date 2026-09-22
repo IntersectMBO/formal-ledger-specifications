@@ -801,21 +801,21 @@ d_txWitnesses_2572 v0
 d_IsConwayCert_2866 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3204 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DCert_1390 -> ()
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DCert_1392 -> ()
 d_IsConwayCert_2866 = erased
 -- Ledger.Dijkstra.Specification.Utxow._.poolOwners
 d_poolOwners_2932 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3204 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DCert_1390 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DCert_1392 ->
   [AgdaAny]
 d_poolOwners_2932 ~v0 ~v1 = du_poolOwners_2932
 du_poolOwners_2932 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DCert_1390 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DCert_1392 ->
   [AgdaAny]
 du_poolOwners_2932
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.du_poolOwners_1422
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.du_poolOwners_1424
 -- Ledger.Dijkstra.Specification.Utxow._._⊢_⇀⦇_,SUBUTXO⦈_
 d__'8866'_'8640''10631'_'44'SUBUTXO'10632'__3138 a0 a1 a2 a3 a4 a5
   = ()
@@ -1235,7 +1235,7 @@ du_Dec'45'UsesV3Features_3560 v0
                              (coe
                                 MAlonzo.Code.Class.Decidable.Core.du_dec'185'_72
                                 (coe
-                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.du_IsConwayCert'63'_1566))
+                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.du_IsConwayCert'63'_1568))
                              (coe
                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txCerts_3880
                                 (coe
@@ -3378,11 +3378,11 @@ d_txCerts_3804 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3204 ->
   T_GeneralizeTel_87383 ->
-  [MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DCert_1390]
+  [MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DCert_1392]
 d_txCerts_3804 ~v0 ~v1 v2 = du_txCerts_3804 v2
 du_txCerts_3804 ::
   T_GeneralizeTel_87383 ->
-  [MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DCert_1390]
+  [MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DCert_1392]
 du_txCerts_3804 v0
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txCerts_3880
@@ -3577,11 +3577,11 @@ d_txCerts_3940 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3204 ->
   T_GeneralizeTel_105845 ->
-  [MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DCert_1390]
+  [MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DCert_1392]
 d_txCerts_3940 ~v0 ~v1 v2 = du_txCerts_3940 v2
 du_txCerts_3940 ::
   T_GeneralizeTel_105845 ->
-  [MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DCert_1390]
+  [MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DCert_1392]
 du_txCerts_3940 v0
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txCerts_3880
@@ -3757,11 +3757,11 @@ d_txCerts_4082 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3204 ->
   T_GeneralizeTel_125049 ->
-  [MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DCert_1390]
+  [MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DCert_1392]
 d_txCerts_4082 ~v0 ~v1 v2 = du_txCerts_4082 v2
 du_txCerts_4082 ::
   T_GeneralizeTel_125049 ->
-  [MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DCert_1390]
+  [MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DCert_1392]
 du_txCerts_4082 v0
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txCerts_3880
@@ -4175,7 +4175,7 @@ d_UTXOW'45'normal'45'premises_4196 v0 v1 v2 v3
                                        (coe
                                           MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                                     (coe
-                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.du_poolOwners_1422)
+                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.du_poolOwners_1424)
                                     (coe
                                        MAlonzo.Code.Axiom.Set.du_fromList_456
                                        (coe
@@ -5647,7 +5647,7 @@ d_UTXOW'45'legacy'45'premises_4198 v0 v1 v2 v3
                                        (coe
                                           MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                                     (coe
-                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.du_poolOwners_1422)
+                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.du_poolOwners_1424)
                                     (coe
                                        MAlonzo.Code.Axiom.Set.du_fromList_456
                                        (coe
@@ -7267,7 +7267,7 @@ d_SUBUTXOW'45'premises_4200 v0 v1 v2 v3
                                  (coe
                                     MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                               (coe
-                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.du_poolOwners_1422)
+                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.du_poolOwners_1424)
                               (coe
                                  MAlonzo.Code.Axiom.Set.du_fromList_456
                                  (coe

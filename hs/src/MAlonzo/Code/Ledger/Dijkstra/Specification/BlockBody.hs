@@ -86,41 +86,41 @@ d_treasury_1260 v0
 d_EnactState_2682 a0 a1 = ()
 -- Ledger.Dijkstra.Specification.BlockBody._.EnactState.cc
 d_cc_2732 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.T_EnactState_1320 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.T_EnactState_1322 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_cc_2732 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_cc_1332 (coe v0)
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_cc_1334 (coe v0)
 -- Ledger.Dijkstra.Specification.BlockBody._.EnactState.constitution
 d_constitution_2734 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.T_EnactState_1320 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.T_EnactState_1322 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_constitution_2734 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_constitution_1334
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_constitution_1336
       (coe v0)
 -- Ledger.Dijkstra.Specification.BlockBody._.EnactState.pparams
 d_pparams_2736 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.T_EnactState_1320 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.T_EnactState_1322 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_pparams_2736 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_pparams_1338
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_pparams_1340
       (coe v0)
 -- Ledger.Dijkstra.Specification.BlockBody._.EnactState.pv
 d_pv_2738 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.T_EnactState_1320 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.T_EnactState_1322 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_pv_2738 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_pv_1336 (coe v0)
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_pv_1338 (coe v0)
 -- Ledger.Dijkstra.Specification.BlockBody._.EnactState.withdrawals
 d_withdrawals_2740 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.T_EnactState_1320 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.T_EnactState_1322 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_withdrawals_2740 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_withdrawals_1340
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_withdrawals_1342
       (coe v0)
 -- Ledger.Dijkstra.Specification.BlockBody._._⊢_⇀⦇_,LEDGERS⦈_
 d__'8866'_'8640''10631'_'44'LEDGERS'10632'__2748 ::
@@ -137,7 +137,7 @@ d_LedgerState_2816 a0 a1 = ()
 -- Ledger.Dijkstra.Specification.BlockBody._.LedgerState.certState
 d_certState_2870 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.T_LedgerState_3874 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_CertState_1506
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_CertState_1508
 d_certState_2870 v0
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_certState_3886

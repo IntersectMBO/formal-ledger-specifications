@@ -58,7 +58,7 @@ du_HasCast'45'HashProtected_320 ::
   MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.T_HasCast_16
 du_HasCast'45'HashProtected_320 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_HasCast'45'HashProtected_1340
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_HasCast'45'HashProtected_1342
 -- _.TopLevelTx
 d_TopLevelTx_916 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
@@ -198,8 +198,8 @@ du_maxRefScriptSizePerBlock_3266 v0
       (coe
          MAlonzo.Code.Ledger.Prelude.du_'8739'_'8739'_70
          (coe
-            MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_HasCast'45'HashProtected_1340)
-         (MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_pparams_1338
+            MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_HasCast'45'HashProtected_1342)
+         (MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_pparams_1340
             (coe
                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_es_4106
                (coe
@@ -233,8 +233,8 @@ d_refScriptSize'8804''63'Bound_3270 v0 v1 v2 v3
          (coe
             MAlonzo.Code.Ledger.Prelude.du_'8739'_'8739'_70
             (coe
-               MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_HasCast'45'HashProtected_1340)
-            (MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_pparams_1338
+               MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.du_HasCast'45'HashProtected_1342)
+            (MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_pparams_1340
                (coe
                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_es_4106
                   (coe

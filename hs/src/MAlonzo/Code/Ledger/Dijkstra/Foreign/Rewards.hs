@@ -86,7 +86,7 @@ d_HasFees'45'Snapshots_18
       MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.du_HasFees'45'Snapshots_3954
 -- Ledger.Dijkstra.Foreign.Rewards._.HasPools-Snapshot
 d_HasPools'45'Snapshot_20 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasPools_1654
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasPools_1656
 d_HasPools'45'Snapshot_20
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.du_HasPools'45'Snapshot_3876
@@ -94,13 +94,13 @@ d_HasPools'45'Snapshot_20
 d_HasSnapshots_22 a0 a1 = ()
 -- Ledger.Dijkstra.Foreign.Rewards._.HasStake-Snapshot
 d_HasStake'45'Snapshot_26 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasStake_1734
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasStake_1736
 d_HasStake'45'Snapshot_26
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.du_HasStake'45'Snapshot_3872
 -- Ledger.Dijkstra.Foreign.Rewards._.HasStakeDelegs-Snapshot
 d_HasStakeDelegs'45'Snapshot_28 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasStakeDelegs_1754
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasStakeDelegs_1756
 d_HasStakeDelegs'45'Snapshot_28
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.du_HasStakeDelegs'45'Snapshot_3874
@@ -191,7 +191,7 @@ d_reward_58
 -- Ledger.Dijkstra.Foreign.Rewards._.rewardMember
 d_rewardMember_60 ::
   Integer ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_StakePoolParams_1350 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_StakePoolParams_1352 ->
   MAlonzo.Code.Data.Refinement.Base.T_Refinement_28 ->
   MAlonzo.Code.Data.Refinement.Base.T_Refinement_28 -> Integer
 d_rewardMember_60
@@ -203,7 +203,7 @@ d_rewardOnePool_62 ::
   Integer ->
   Integer ->
   Integer ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_StakePoolParams_1350 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_StakePoolParams_1352 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Data.Refinement.Base.T_Refinement_28 ->
   MAlonzo.Code.Data.Refinement.Base.T_Refinement_28 ->
@@ -218,7 +218,7 @@ d_rewardOnePool_62
 -- Ledger.Dijkstra.Foreign.Rewards._.rewardOwners
 d_rewardOwners_64 ::
   Integer ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_StakePoolParams_1350 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_StakePoolParams_1352 ->
   MAlonzo.Code.Data.Refinement.Base.T_Refinement_28 ->
   MAlonzo.Code.Data.Refinement.Base.T_Refinement_28 -> Integer
 d_rewardOwners_64
@@ -227,8 +227,8 @@ d_rewardOwners_64
 -- Ledger.Dijkstra.Foreign.Rewards._.stakeDistr
 d_stakeDistr_66 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DState_1450 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_PState_1470 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DState_1452 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_PState_1472 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T_Snapshot_3856
 d_stakeDistr_66
   = coe
