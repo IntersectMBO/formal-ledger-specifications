@@ -109,6 +109,7 @@ import Ledger.Dijkstra.Specification.Ledger.Properties
 
 ```agda
 import Ledger.Dijkstra.Specification.Leios.Types
+import Ledger.Dijkstra.Specification.Leios.Validity
 ```
 
 ## Pool Reaping Transition

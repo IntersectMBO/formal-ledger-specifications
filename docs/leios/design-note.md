@@ -312,13 +312,14 @@ The LLF adds the following defaults, each grounded in the design document:
 
    Rotation is re-registration ([REQ-RotateBLSKeys][dd-keys]), on a cadence
    comparable to KES rotation, with activation at an epoch boundary aligned to
-   VRF-key rotation ([Key Registration and Rotation][cip-keyreg]).  A competing
-   design is in active discussion: a dedicated registration certificate with a
-   ledger-enforced key expiry, its TTL a genesis constant
-   ([cardano-scaling/CIPs #38][cs-38]; [ouroboros-leios #1024][ol-1024]), moving
-   the key from the registration parameters into its own certificate and
-   pool-state field.  The LLF's default follows the CIP text and switches if the
-   amendment lands.
+   VRF-key rotation ([Key Registration and Rotation][cip-keyreg]).  The competing
+   design, a dedicated registration certificate with a ledger-enforced key expiry
+   ([cardano-scaling/CIPs #38][cs-38]; [ouroboros-leios #1024][ol-1024]), was
+   declined on 2026-09-21: there is no new certificate type.  The key and its
+   proof travel as an optional field of the pool-registration certificate, so the
+   LLF's registration premise attaches to `POOL` (a present key carries a valid
+   proof of possession), and the key becomes active at an epoch boundary, as the
+   CIP prescribes.
 
 +  **The pin**.  A certificate is validated against the committee of the epoch in
    which the announcing RB was produced; the CIP sizes the signer bitfield by
@@ -470,7 +471,9 @@ and the list of what moves to the common library, as whole units (the epoch
 structure with `SlotLengthᶜ`, the crypto structures with their hash carriers,
 `Milliseconds` with its slot conversion).  Era-specific parameter records and rules
 never move.  The ledger spec's part now is to place each shared definition in the
-unit it will move with, which costs nothing.
+unit it will move with, which costs nothing.  Decision, 2026-09-21: for the first
+release the two specifications copy shared definitions by hand and keep them
+aligned by the table below; the library move follows the release.
 
 | Consensus spec                                           | Ledger spec                                                                                           | Agreement                                     |
 | -------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- | --------------------------------------------- |
@@ -693,22 +696,22 @@ subtree argued for above, Leios-named as it argues, and inlined nowhere.
 
 
 [leios-design-serialization]: https://github.com/input-output-hk/ouroboros-leios/blob/main/docs/leios-design/README.md#serialization
-[CIP-164]: https://github.com/cardano-scaling/CIPs/blob/leios/CIP-0164/README.md
-[cip-step3]: https://github.com/cardano-scaling/CIPs/blob/leios/CIP-0164/README.md#step-3-committee-validation
-[cip-step5]: https://github.com/cardano-scaling/CIPs/blob/leios/CIP-0164/README.md#step-5-chain-inclusion
-[cip-params]: https://github.com/cardano-scaling/CIPs/blob/leios/CIP-0164/README.md#protocol-parameters
-[cip-ledger]: https://github.com/cardano-scaling/CIPs/blob/leios/CIP-0164/README.md#ledger-management
-[cip-chainsel]: https://github.com/cardano-scaling/CIPs/blob/leios/CIP-0164/README.md#chain-selection
-[cip-epoch]: https://github.com/cardano-scaling/CIPs/blob/leios/CIP-0164/README.md#epoch-boundary
-[cip-certval]: https://github.com/cardano-scaling/CIPs/blob/leios/CIP-0164/README.md#certificate-validation
-[cip-committee]: https://github.com/cardano-scaling/CIPs/blob/leios/CIP-0164/README.md#committee-structure
-[cip-vote]: https://github.com/cardano-scaling/CIPs/blob/leios/CIP-0164/README.md#vote-structure
-[cip-inclusion]: https://github.com/cardano-scaling/CIPs/blob/leios/CIP-0164/README.md#rb-inclusion-rules
-[cip-cddl]: https://github.com/cardano-scaling/CIPs/blob/leios/CIP-0164/README.md#appendix-b-cddl
-[cip-design]: https://github.com/cardano-scaling/CIPs/blob/leios/CIP-0164/README.md#design-decisions
-[cip-versioning]: https://github.com/cardano-scaling/CIPs/blob/leios/CIP-0164/README.md#versioning
-[cip-keyreg]: https://github.com/cardano-scaling/CIPs/blob/leios/CIP-0164/README.md#key-registration
-[cip-quorum]: https://github.com/cardano-scaling/CIPs/blob/leios/CIP-0164/README.md#choosing-quorum-threshold
+[CIP-164]: https://github.com/cardano-foundation/CIPs/blob/master/CIP-0164/README.md
+[cip-step3]: https://github.com/cardano-foundation/CIPs/blob/master/CIP-0164/README.md#step-3-committee-validation
+[cip-step5]: https://github.com/cardano-foundation/CIPs/blob/master/CIP-0164/README.md#step-5-chain-inclusion
+[cip-params]: https://github.com/cardano-foundation/CIPs/blob/master/CIP-0164/README.md#protocol-parameters
+[cip-ledger]: https://github.com/cardano-foundation/CIPs/blob/master/CIP-0164/README.md#ledger-management
+[cip-chainsel]: https://github.com/cardano-foundation/CIPs/blob/master/CIP-0164/README.md#chain-selection
+[cip-epoch]: https://github.com/cardano-foundation/CIPs/blob/master/CIP-0164/README.md#epoch-boundary
+[cip-certval]: https://github.com/cardano-foundation/CIPs/blob/master/CIP-0164/README.md#certificate-validation
+[cip-committee]: https://github.com/cardano-foundation/CIPs/blob/master/CIP-0164/README.md#committee-structure
+[cip-vote]: https://github.com/cardano-foundation/CIPs/blob/master/CIP-0164/README.md#vote-structure
+[cip-inclusion]: https://github.com/cardano-foundation/CIPs/blob/master/CIP-0164/README.md#rb-inclusion-rules
+[cip-cddl]: https://github.com/cardano-foundation/CIPs/blob/master/CIP-0164/README.md#appendix-b-cddl
+[cip-design]: https://github.com/cardano-foundation/CIPs/blob/master/CIP-0164/README.md#design-decisions
+[cip-versioning]: https://github.com/cardano-foundation/CIPs/blob/master/CIP-0164/README.md#versioning
+[cip-keyreg]: https://github.com/cardano-foundation/CIPs/blob/master/CIP-0164/README.md#key-registration
+[cip-quorum]: https://github.com/cardano-foundation/CIPs/blob/master/CIP-0164/README.md#choosing-quorum-threshold
 [cip-1250]: https://github.com/cardano-foundation/CIPs/pull/1250
 [cs-38]: https://github.com/cardano-scaling/CIPs/pull/38
 [ol-1024]: https://github.com/input-output-hk/ouroboros-leios/issues/1024
@@ -730,4 +733,4 @@ subtree argued for above, Leios-named as it argues, and inlined nowhere.
 [cardano-common]: https://github.com/input-output-hk/agda-cardano-common
 [leios-formal-spec]: https://github.com/input-output-hk/ouroboros-leios-formal-spec
 [ol-1046]: https://github.com/input-output-hk/ouroboros-leios/issues/1046
-[cip-incentives]: https://github.com/cardano-scaling/CIPs/blob/leios/CIP-0164/README.md#incentives
+[cip-incentives]: https://github.com/cardano-foundation/CIPs/blob/master/CIP-0164/README.md#incentives
