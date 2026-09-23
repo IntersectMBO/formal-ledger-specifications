@@ -16,7 +16,7 @@ open import Ledger.Dijkstra.Specification.Gov.Actions govStructure hiding (yes; 
 open import Ledger.Dijkstra.Specification.Certs govStructure
 
 open import stdlib-meta.Tactic.GenError using (genErrors)
-import Data.Maybe.Relation.Unary.Any as M
+import Data.String as S
 
 open GovStructure govStructure
 open RewardAddress
@@ -25,6 +25,10 @@ open Computational ⦃...⦄
 open StakePoolParams
 open PoolEnv
 open PParams
+
+private
+  instance
+    _ = IsBLSUnique?
 
 instance
   Computational-DELEG : Computational _⊢_⇀⦇_,DELEG⦈_ String
@@ -61,17 +65,25 @@ instance
   Computational-POOL .computeProof _ stᵖ (regpool c poolParams)
     with ¿ IsPoolRegistered (PoolsOf stᵖ) c ¿
   Computational-POOL .computeProof Γ stᵖ (regpool c poolParams) | yes p
-    with ¿ ¬ (poolParams .vrf ∈ mapˢ vrf (range (PoolsOf stᵖ ∣ ❴ c ❵ ᶜ) ∪ range (FuturePoolsOf stᵖ ∣ ❴ c ❵ ᶜ)))
+    with ¿ IsVRFUnique (poolParams .vrf) (PoolsOf stᵖ ∣ ❴ c ❵ ᶜ) (FuturePoolsOf stᵖ ∣ ❴ c ❵ ᶜ)
+         ∙ IsBLSUnique (proj₁ <$> poolParams .bls) (PoolsOf stᵖ ∣ ❴ c ❵ ᶜ) (FuturePoolsOf stᵖ ∣ ❴ c ❵ ᶜ)
          ∙ NetworkIdOf (poolParams .rewardAccount) ≡ NetworkId
          ∙ Γ .pp .minPoolCost ≤ poolParams .cost ¿
-  ... | yes q = success (-, POOL-rereg (p , q))
-  ... | no ¬q = failure (genErrors ¬q)
+         | dec ⦃ IsValidBLSPoP? {poolParams .bls} ⦄
+  ... | yes (q₁ , q₂ , q₃ , q₄) | yes r = success (-, POOL-rereg (p , q₁ , q₂ , r , q₃ , q₄))
+  ... | yes (q₁ , q₂ , q₃ , q₄) | no ¬r = failure (genErrors ¬r)
+  ... | no ¬q | no ¬r = failure (genErrors ¬q S.++ genErrors ¬r)
+  ... | no ¬q | yes _ = failure (genErrors ¬q)
   Computational-POOL .computeProof Γ stᵖ (regpool c poolParams) | no ¬p
-    with ¿ ¬ (poolParams .vrf ∈ mapˢ vrf (range (PoolsOf stᵖ) ∪ range (FuturePoolsOf stᵖ)))
+    with ¿ IsVRFUnique (poolParams .vrf) (PoolsOf stᵖ) (FuturePoolsOf stᵖ)
+         ∙ IsBLSUnique (proj₁ <$> poolParams .bls) (PoolsOf stᵖ) (FuturePoolsOf stᵖ)
          ∙ NetworkIdOf (poolParams .rewardAccount) ≡ NetworkId
          ∙ Γ .pp .minPoolCost ≤ poolParams .cost ¿
-  ... | yes q = success (-, (POOL-reg (¬p , q)))
-  ... | no ¬q = failure (genErrors ¬q)
+         | dec ⦃ IsValidBLSPoP? {poolParams .bls} ⦄
+  ... | yes (q₁ , q₂ , q₃ , q₄) | yes r = success (-, POOL-reg (¬p , q₁ , q₂ , r , q₃ , q₄))
+  ... | yes (q₁ , q₂ , q₃ , q₄) | no ¬r = failure (genErrors ¬r)
+  ... | no ¬q | no ¬r = failure (genErrors ¬q S.++ genErrors ¬r)
+  ... | no ¬q | yes _ = failure (genErrors ¬q)
   Computational-POOL .computeProof Γ stᵖ (retirepool c e')
     with ¿ IsPoolRegistered (PoolsOf stᵖ) c
          ∙ Γ .epoch < e'
@@ -79,24 +91,32 @@ instance
   ... | yes p = success (-, POOL-retirepool p)
   ... | no ¬q = failure (genErrors ¬q)
   Computational-POOL .computeProof _ stᵖ _ = failure "Unexpected certificate in POOL"
-  Computational-POOL .completeness Γ stᵖ (regpool c poolParams) _ (POOL-reg (p , q))
+  Computational-POOL .completeness Γ stᵖ (regpool c poolParams) _ (POOL-reg (p , q₁ , q₂ , r , q₃ , q₄))
     with ¿ IsPoolRegistered (PoolsOf stᵖ) c ¿
   ... | yes r = ⊥-elim (p r)
-  ... | no ¬r
-    with ¿ ¬ (poolParams .vrf ∈ mapˢ vrf (range (PoolsOf stᵖ) ∪ range (FuturePoolsOf stᵖ)))
+  ... | no ¬q
+    with ¿ IsVRFUnique (poolParams .vrf) (PoolsOf stᵖ) (FuturePoolsOf stᵖ)
+         ∙ IsBLSUnique (proj₁ <$> (poolParams .bls)) (PoolsOf stᵖ) (FuturePoolsOf stᵖ)
          ∙ NetworkIdOf (poolParams .rewardAccount) ≡ NetworkId
          ∙ Γ .pp .minPoolCost ≤ poolParams .cost ¿
-  ... | yes _ = refl
-  ... | no ¬s = ⊥-elim (¬s q)
-  Computational-POOL .completeness Γ stᵖ (regpool c poolParams) _ (POOL-rereg (p , q))
+         | dec ⦃ IsValidBLSPoP? {poolParams .bls} ⦄
+  ... | yes _ | yes _ = refl
+  ... | yes _ | no ¬r = ⊥-elim (¬r r)
+  ... | no ¬s | yes _ = ⊥-elim (¬s (q₁ , q₂ , q₃ , q₄))
+  ... | no ¬s | no _  = ⊥-elim (¬s (q₁ , q₂ , q₃ , q₄))
+  Computational-POOL .completeness Γ stᵖ (regpool c poolParams) _ (POOL-rereg (p , q₁ , q₂ , r , q₃ , q₄))
     with ¿ IsPoolRegistered (PoolsOf stᵖ) c ¿
   ... | no ¬r = ⊥-elim (¬r p)
-  ... | yes r
-    with ¿ ¬ (poolParams .vrf ∈ mapˢ vrf (range (PoolsOf stᵖ ∣ ❴ c ❵ ᶜ) ∪ range (FuturePoolsOf stᵖ ∣ ❴ c ❵ ᶜ)))
+  ... | yes _
+    with ¿ IsVRFUnique (poolParams .vrf) (PoolsOf stᵖ ∣ ❴ c ❵ ᶜ) (FuturePoolsOf stᵖ ∣ ❴ c ❵ ᶜ)
+         ∙ IsBLSUnique (proj₁ <$> poolParams .bls) (PoolsOf stᵖ ∣ ❴ c ❵ ᶜ) (FuturePoolsOf stᵖ ∣ ❴ c ❵ ᶜ)
          ∙ NetworkIdOf (poolParams .rewardAccount) ≡ NetworkId
          ∙ Γ .pp .minPoolCost ≤ poolParams .cost ¿
-  ... | yes _ = refl
-  ... | no ¬s = ⊥-elim (¬s q)
+         | dec ⦃ IsValidBLSPoP? {poolParams .bls} ⦄
+  ... | yes _ | yes _ = refl
+  ... | yes _ | no ¬r = ⊥-elim (¬r r)
+  ... | no ¬s | yes _ = ⊥-elim (¬s (q₁ , q₂ , q₃ , q₄))
+  ... | no ¬s | no _  = ⊥-elim (¬s (q₁ , q₂ , q₃ , q₄))
   Computational-POOL .completeness Γ stᵖ (retirepool c e) _ (POOL-retirepool p)
     with ¿ IsPoolRegistered (PoolsOf stᵖ) c
          ∙ Γ .epoch < e

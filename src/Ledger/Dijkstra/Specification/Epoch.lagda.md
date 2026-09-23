@@ -50,6 +50,8 @@ open import Ledger.Dijkstra.Specification.Utxo txs abs
 open Filter using (filter)
 open Number number renaming (fromNat to fromℕ)
 open GovActionState using (returnAddr; deposit)
+open StakePoolParams renaming (bls to bls')
+open StakePoolState
 ```
 -->
 
@@ -589,6 +591,15 @@ getOrphans es govSt = proj₁ $ iterate step ([] , govSt) (length govSt)
 toRewardAddress : Credential → RewardAddress
 toRewardAddress x = record { net = NetworkId ; stake = x }
 
+applyFPools : Epoch → Pools → FPools → Pools
+applyFPools e pools fPools =
+  mapWithKey (λ kh spp → if ((_,_) <$> (lookupᵐ? pools kh >>= bls) <*> (proj₁ <$> spp .bls'))
+                            then (λ {((oldBls , oldEpoch) , newBls)} →
+                                    if oldBls == newBls
+                                       then mkStakePoolState oldEpoch spp
+                                       else mkStakePoolState e spp )
+                            else mkStakePoolState e spp) fPools ∪ˡ pools
+
 record Governance-Update : Type where
   constructor GovernanceUpdate
   field
@@ -632,7 +643,8 @@ record Pre-POOLREAP-Update : Type where
     gState' : GState
     utxoSt' : UTxOState
 
-module Pre-POOLREAPUpdate (ls : LedgerState)
+module Pre-POOLREAPUpdate (e  : Epoch)
+                          (ls : LedgerState)
                           (es : EnactState)
                           (govUpdate : Governance-Update)
                           where
@@ -650,7 +662,7 @@ module Pre-POOLREAPUpdate (ls : LedgerState)
   utxoSt' = ⟦ UTxOOf utxoSt , FeesOf utxoSt , 0 ⟧
 
   pState' : PState
-  pState' = ⟦ fPools ∪ˡ pools , ∅ , retiring , deposits ⟧
+  pState' = ⟦ applyFPools e pools fPools , ∅ , retiring , deposits ⟧
 
   gState' : GState
   gState' =
@@ -749,7 +761,7 @@ data _⊢_⇀⦇_,EPOCH⦈_ : ⊤ → EpochState → Epoch → EpochState → Ty
       govUpd : Governance-Update
       govUpd = GovernanceUpdate.updates ls fut
 
-      Pre-POOLREAPUpdate pState' gState' utxoSt' = Pre-POOLREAPUpdate.updates ls es govUpd
+      Pre-POOLREAPUpdate pState' gState' utxoSt' = Pre-POOLREAPUpdate.updates e ls es govUpd
       Post-POOLREAPUpdate dState'' acnt'' = Post-POOLREAPUpdate.updates es ls dState' acnt' govUpd
 
       es' : EnactState
