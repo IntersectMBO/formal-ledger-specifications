@@ -6,11 +6,13 @@ open import Tactic.Derive.HsType
 record ExternalFunctions : Set where
   field
     extIsSigned : ℕ → ℕ → ℕ → Bool
+    extIsValidPoP : ℕ → ℕ → Bool
     extValidPlutusScript : Bool
 {-# FOREIGN GHC
   data ExternalFunctions = MkExternalFunctions
     {
       extIsSigned :: Integer -> Integer -> Integer -> Bool
+    , extIsValidPoP :: Integer -> Integer -> Bool
     , extValidPlutusScript :: Bool
     }
 #-}
@@ -19,6 +21,7 @@ record ExternalFunctions : Set where
 dummyExternalFunctions : ExternalFunctions
 dummyExternalFunctions =
   record { extIsSigned = λ _ _ _ → true
+         ; extIsValidPoP = λ _ _ → true
          ; extValidPlutusScript = true
          }
 {-# COMPILE GHC dummyExternalFunctions as dummyExternalFunctions #-}
