@@ -632,7 +632,8 @@ record Pre-POOLREAP-Update : Type where
     gState' : GState
     utxoSt' : UTxOState
 
-module Pre-POOLREAPUpdate (ls : LedgerState)
+module Pre-POOLREAPUpdate (e  : Epoch)
+                          (ls : LedgerState)
                           (es : EnactState)
                           (govUpdate : Governance-Update)
                           where
@@ -650,7 +651,7 @@ module Pre-POOLREAPUpdate (ls : LedgerState)
   utxoSt' = ⟦ UTxOOf utxoSt , FeesOf utxoSt , 0 ⟧
 
   pState' : PState
-  pState' = ⟦ fPools ∪ˡ pools , ∅ , retiring , deposits ⟧
+  pState' = ⟦ mapValues (mkStakePoolState e) fPools ∪ˡ pools , ∅ , retiring , deposits ⟧
 
   gState' : GState
   gState' =
@@ -749,7 +750,7 @@ data _⊢_⇀⦇_,EPOCH⦈_ : ⊤ → EpochState → Epoch → EpochState → Ty
       govUpd : Governance-Update
       govUpd = GovernanceUpdate.updates ls fut
 
-      Pre-POOLREAPUpdate pState' gState' utxoSt' = Pre-POOLREAPUpdate.updates ls es govUpd
+      Pre-POOLREAPUpdate pState' gState' utxoSt' = Pre-POOLREAPUpdate.updates e ls es govUpd
       Post-POOLREAPUpdate dState'' acnt'' = Post-POOLREAPUpdate.updates es ls dState' acnt' govUpd
 
       es' : EnactState
