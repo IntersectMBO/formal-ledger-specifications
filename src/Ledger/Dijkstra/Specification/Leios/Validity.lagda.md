@@ -71,8 +71,11 @@ module _ {Γ : LedgerEnv} {ls : LedgerState} where
       refScriptsOK  : ∑ˡ[ tx ← closure ] refScriptsSize tx (UTxOOf ls) ≤ leiosMaxRefScriptSizePerEB
 ```
 
-The four fields of `WithinEBBounds`{.AgdaRecord} cover the five bounds of
-CIP-164's Table 3.
+The four fields of `WithinEBBounds`{.AgdaRecord} cover the five endorser-block
+bounds of CIP-164's Table 3: the size of the EB itself, the total size of the
+referenced transactions, the total size of their reference scripts, and the
+Plutus step and memory limits, the last two bundled into the single
+`ExUnits`{.AgdaField} value `leiosMaxEBExUnits`{.AgdaField}.
 
 ### Validity
 
@@ -93,8 +96,13 @@ here, namely,
    relation the block rules use;
 +  the block is nonempty.
 
-Others are checked at the protocol level.  For example, non-duplication of
-reference hashes is a validity condition we assume the protocol enforces.
+The other four (header arrival within the header diffusion period, equivocation
+detection, the validation deadline, chain position) are node-local checks, so
+they stay at the protocol level.  Duplicate-freedom of the references is not a
+vote condition but an invariant of the EB structure itself: the CIP's reference
+list is an insertion-ordered map that admits no duplicate keys.  The list type
+here does not encode that invariant, so `ValidEB`{.AgdaRecord} states it as
+`uniqueRefs`{.AgdaField}.
 
 <!--
 ```agda
