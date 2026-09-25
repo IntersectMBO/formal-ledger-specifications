@@ -42,6 +42,7 @@ open import Ledger.Dijkstra.Specification.Certs govStructure
 open import Ledger.Dijkstra.Specification.Enact govStructure
 open import Ledger.Dijkstra.Specification.Gov govStructure
 open import Ledger.Dijkstra.Specification.Ledger txs abs
+open import Ledger.Dijkstra.Specification.Leios govStructure
 open import Ledger.Dijkstra.Specification.PoolReap txs
 open import Ledger.Dijkstra.Specification.Ratify govStructure
 open import Ledger.Dijkstra.Specification.Rewards txs abs
@@ -50,6 +51,8 @@ open import Ledger.Dijkstra.Specification.Utxo txs abs
 open Filter using (filter)
 open Number number renaming (fromNat to fromℕ)
 open GovActionState using (returnAddr; deposit)
+open StakePoolParams renaming (bls to bls')
+open StakePoolState
 ```
 -->
 
@@ -126,13 +129,18 @@ instance
 ```agda
 record NewEpochState : Type where
   field
-    lastEpoch   : Epoch
-    bprev       : BlocksMade
-    bcur        : BlocksMade
-    epochState  : EpochState
-    ru          : Maybe RewardUpdate
-    pd          : PoolDelegatedStake
+    lastEpoch       : Epoch
+    bprev           : BlocksMade
+    bcur            : BlocksMade
+    epochState      : EpochState
+    ru              : Maybe RewardUpdate
+    pd              : PoolDelegatedStake
+    leiosCommittee  : LeiosCommittee
 ```
+
+The `leiosCommittee`{.AgdaField} is the materialized Leios voting committee of
+the current epoch, selected from the same stake distribution as
+`pd`{.AgdaField} (CIP-0164).
 
 ??? info "Differences with the Shelley Specification"
 
@@ -544,6 +552,7 @@ private variable
   ru : RewardUpdate
   mru : Maybe RewardUpdate
   pd : PoolDelegatedStake
+  cmt : LeiosCommittee
 ```
 -->
 
@@ -589,6 +598,15 @@ getOrphans es govSt = proj₁ $ iterate step ([] , govSt) (length govSt)
 toRewardAddress : Credential → RewardAddress
 toRewardAddress x = record { net = NetworkId ; stake = x }
 
+applyFPools : Epoch → Pools → FPools → Pools
+applyFPools e pools fPools =
+  mapWithKey (λ kh spp → if ((_,_) <$> (lookupᵐ? pools kh >>= bls) <*> (proj₁ <$> spp .bls'))
+                            then (λ {((oldBls , oldEpoch) , newBls)} →
+                                    if oldBls == newBls
+                                       then mkStakePoolState oldEpoch spp
+                                       else mkStakePoolState e spp )
+                            else mkStakePoolState e spp) fPools ∪ˡ pools
+
 record Governance-Update : Type where
   constructor GovernanceUpdate
   field
@@ -632,7 +650,8 @@ record Pre-POOLREAP-Update : Type where
     gState' : GState
     utxoSt' : UTxOState
 
-module Pre-POOLREAPUpdate (ls : LedgerState)
+module Pre-POOLREAPUpdate (e  : Epoch)
+                          (ls : LedgerState)
                           (es : EnactState)
                           (govUpdate : Governance-Update)
                           where
@@ -650,7 +669,7 @@ module Pre-POOLREAPUpdate (ls : LedgerState)
   utxoSt' = ⟦ UTxOOf utxoSt , FeesOf utxoSt , 0 ⟧
 
   pState' : PState
-  pState' = ⟦ fPools ∪ˡ pools , ∅ , retiring , deposits ⟧
+  pState' = ⟦ applyFPools e pools fPools , ∅ , retiring , deposits ⟧
 
   gState' : GState
   gState' =
@@ -749,7 +768,7 @@ data _⊢_⇀⦇_,EPOCH⦈_ : ⊤ → EpochState → Epoch → EpochState → Ty
       govUpd : Governance-Update
       govUpd = GovernanceUpdate.updates ls fut
 
-      Pre-POOLREAPUpdate pState' gState' utxoSt' = Pre-POOLREAPUpdate.updates ls es govUpd
+      Pre-POOLREAPUpdate pState' gState' utxoSt' = Pre-POOLREAPUpdate.updates e ls es govUpd
       Post-POOLREAPUpdate dState'' acnt'' = Post-POOLREAPUpdate.updates es ls dState' acnt' govUpd
 
       es' : EnactState
@@ -792,26 +811,28 @@ data _⊢_⇀⦇_,NEWEPOCH⦈_ : ⊤ → NewEpochState → Epoch → NewEpochSta
       eps' = applyRUpd ru eps
       ss   = EpochState.ss eps''
       pd'  = calculatePoolDelegatedStake (Snapshots.set ss)
+      cmt' = selectCommittee (PParamsOf eps'') e pd' (PoolsOf (Snapshots.set ss))
     in
       ∙ e ≡ lastEpoch + 1
       ∙ _ ⊢ eps' ⇀⦇ e ,EPOCH⦈ eps''
       ──────────────────────────────────────────────
-      _ ⊢ ⟦ lastEpoch , bprev , bcur , eps , just ru , pd ⟧ ⇀⦇ e ,NEWEPOCH⦈ ⟦ e , bcur , ∅ᵐ  , eps'' , nothing , pd' ⟧
+      _ ⊢ ⟦ lastEpoch , bprev , bcur , eps , just ru , pd , cmt ⟧ ⇀⦇ e ,NEWEPOCH⦈ ⟦ e , bcur , ∅ᵐ  , eps'' , nothing , pd' , cmt' ⟧
 
   NEWEPOCH-Not-New : ∀ {bprev bcur : BlocksMade} →
     ∙ e ≢ lastEpoch + 1
       ──────────────────────────────────────────────
-      _ ⊢ ⟦ lastEpoch , bprev , bcur , eps , mru , pd ⟧ ⇀⦇ e ,NEWEPOCH⦈ ⟦ lastEpoch , bprev , bcur , eps , mru , pd ⟧
+      _ ⊢ ⟦ lastEpoch , bprev , bcur , eps , mru , pd , cmt ⟧ ⇀⦇ e ,NEWEPOCH⦈ ⟦ lastEpoch , bprev , bcur , eps , mru , pd , cmt ⟧
 
   NEWEPOCH-No-Reward-Update : ∀ {bprev bcur : BlocksMade} →
     let
-      ss  = EpochState.ss eps'
-      pd' = calculatePoolDelegatedStake (Snapshots.set ss)
+      ss   = EpochState.ss eps'
+      pd'  = calculatePoolDelegatedStake (Snapshots.set ss)
+      cmt' = selectCommittee (PParamsOf eps') e pd' (PoolsOf (Snapshots.set ss))
     in
       ∙ e ≡ lastEpoch + 1
       ∙ _ ⊢ eps ⇀⦇ e ,EPOCH⦈ eps'
       ──────────────────────────────────────────────
-      _ ⊢ ⟦ lastEpoch , bprev , bcur , eps , nothing , pd ⟧ ⇀⦇ e ,NEWEPOCH⦈ ⟦ e , bcur , ∅ᵐ , eps' , nothing , pd' ⟧
+      _ ⊢ ⟦ lastEpoch , bprev , bcur , eps , nothing , pd , cmt ⟧ ⇀⦇ e ,NEWEPOCH⦈ ⟦ e , bcur , ∅ᵐ , eps' , nothing , pd' , cmt' ⟧
 ```
 
 # References {#references .unnumbered}

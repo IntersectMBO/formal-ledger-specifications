@@ -32,20 +32,47 @@ record StakePoolParams : Type where
     pledge          : Coin
     rewardAccount   : RewardAddress
     vrf             : VRF
+    bls             : Maybe (BlsVKey × BlsPoP)
 ```
 
-<!--
-```agda
-open StakePoolParams using (owners)
-```
--->
+The stake pool state extends the stake pool registration parameters
+with the epoch when the BLS key is first registered. This epoch is
+used to compute its expiration epoch.
 
 ```agda
+record StakePoolState : Type where
+  field
+    owners          : ℙ KeyHash
+    cost            : Coin
+    margin          : UnitInterval
+    pledge          : Coin
+    rewardAccount   : RewardAddress
+    vrf             : VRF
+    bls             : Maybe (BlsVKey × Epoch)
+```
+
+```agda
+mkStakePoolState : Epoch → StakePoolParams → StakePoolState
+mkStakePoolState e spp =
+  record
+    { owners = owners
+    ; cost = cost
+    ; margin = margin
+    ; pledge = pledge
+    ; rewardAccount = rewardAccount
+    ; vrf = vrf
+    ; bls = ((_, e) ∘ proj₁) <$> bls
+    }
+    where open StakePoolParams spp
+
 CCHotKeys : Type
 CCHotKeys = Credential ⇀ Maybe Credential
 
 Pools : Type
-Pools = KeyHash ⇀ StakePoolParams
+Pools = KeyHash ⇀ StakePoolState
+
+FPools : Type
+FPools = KeyHash ⇀ StakePoolParams
 
 Retiring : Type
 Retiring = KeyHash ⇀ Epoch
@@ -86,7 +113,7 @@ cwitness (deregdrep c _)     = just c
 cwitness (ccreghot c _)      = just c
 
 poolOwners : DCert → ℙ KeyHash
-poolOwners (regpool _ pps) = owners pps
+poolOwners (regpool _ pps) = StakePoolParams.owners pps
 poolOwners _               = ∅
 
 IsPoolRegistered : Pools → KeyHash → Type
@@ -116,7 +143,7 @@ record DState : Type where
 record PState : Type where
   field
     pools     : Pools
-    fPools    : Pools
+    fPools    : FPools
     retiring  : KeyHash ⇀ Epoch
     deposits  : KeyHash ⇀ Coin
 
@@ -155,6 +182,7 @@ record GovCertEnv : Type where
 <!--
 ```agda
 open StakePoolParams
+open StakePoolState
 
 IsConwayCert? : IsConwayCert ⁇¹
 IsConwayCert? {x} .dec with x
@@ -184,7 +212,7 @@ record HasPools {a} (A : Type a) : Type a where
 open HasPools ⦃...⦄ public
 
 record HasFuturePools {a} (A : Type a) : Type a where
-  field FuturePoolsOf : A → Pools
+  field FuturePoolsOf : A → FPools
 open HasFuturePools ⦃...⦄ public
 
 record HasRetiring {a} (A : Type a) : Type a where
@@ -306,8 +334,9 @@ instance
   HasEpoch-CertEnv : HasEpoch CertEnv
   HasEpoch-CertEnv .EpochOf = CertEnv.epoch
 
-  unquoteDecl HasCast-CertEnv HasCast-DState HasCast-PState HasCast-GState HasCast-CertState HasCast-DelegEnv HasCast-PoolEnv HasCast-GovCertEnv = derive-HasCast
-    (   (quote CertEnv , HasCast-CertEnv)
+  unquoteDecl HasCast-StakePoolState HasCast-CertEnv HasCast-DState HasCast-PState HasCast-GState HasCast-CertState HasCast-DelegEnv HasCast-PoolEnv HasCast-GovCertEnv = derive-HasCast
+    (   (quote StakePoolState , HasCast-StakePoolState)
+    ∷   (quote CertEnv , HasCast-CertEnv)
     ∷   (quote DState , HasCast-DState)
     ∷   (quote PState , HasCast-PState)
     ∷   (quote GState , HasCast-GState)
@@ -323,7 +352,8 @@ private variable
   sDelegs stakeDelegs    : StakeDelegs
   ccKeys ccHotKeys       : CCHotKeys
   vDelegs voteDelegs     : VoteDelegs
-  pools fPools           : Pools
+  pools                  : Pools
+  fPools                 : FPools
   retiring               : Retiring
   A                      : Type
   deposits deposits'     : A ⇀ Coin
@@ -422,6 +452,8 @@ instance
 
   unquoteDecl DecEq-StakePoolParams = derive-DecEq
     ((quote StakePoolParams , DecEq-StakePoolParams) ∷ [])
+  unquoteDecl DecEq-StakePoolState = derive-DecEq
+    ((quote StakePoolState , DecEq-StakePoolState) ∷ [])
   unquoteDecl DecEq-DCert = derive-DecEq
     ((quote DCert , DecEq-DCert) ∷ [])
 ```
@@ -453,11 +485,40 @@ data _⊢_⇀⦇_,DELEG⦈_ : DelegEnv → DState → DCert → DState → Type 
 ## `POOL`{.AgdaDatatype} Transition System
 
 ```agda
+IsVRFUnique : VRF → Pools → FPools → Type
+IsVRFUnique vrfKey pools fPools = 
+   ¬ vrfKey ∈ mapˢ vrf (range pools) ∪ mapˢ vrf (range fPools)
+
+IsBLSUnique : Maybe BlsVKey → Pools → FPools → Type
+IsBLSUnique nothing       pools fPools = ⊤
+IsBLSUnique (just blsKey) pools fPools =
+   ¬ blsKey ∈ mapPartial ((proj₁ <$>_) ∘ bls) (range pools) ∪ mapPartial ((proj₁ <$>_) ∘ bls) (range fPools)
+
+IsValidBLSPoP : Maybe (BlsVKey × BlsPoP) → Type
+IsValidBLSPoP nothing                   = ⊤
+IsValidBLSPoP (just (blsVKey , blsPoP)) = isValidPoP blsVKey blsPoP
+```
+
+<!--
+```agda
+IsBLSUnique? : ∀ {blsKey pools fPools} → IsBLSUnique blsKey pools fPools ⁇
+IsBLSUnique? {(just x)} = Dec-→
+IsBLSUnique? {nothing}  = Dec-⊤
+
+IsValidBLSPoP? : ∀ {x} → IsValidBLSPoP x ⁇
+IsValidBLSPoP? {just x}  = Dec-isValidPoP
+IsValidBLSPoP? {nothing} = Dec-⊤
+```
+-->
+
+```agda
 data _⊢_⇀⦇_,POOL⦈_ : PoolEnv → PState → DCert → PState → Type where
 
   POOL-reg :
     ∙ ¬ (IsPoolRegistered pools kh)
-    ∙ ¬ (poolParams .vrf ∈ mapˢ vrf (range pools ∪ range fPools))
+    ∙ IsVRFUnique (poolParams .vrf) pools fPools
+    ∙ IsBLSUnique (proj₁ <$> poolParams .bls) pools fPools
+    ∙ IsValidBLSPoP (poolParams .bls)
     ∙ NetworkIdOf (poolParams .rewardAccount) ≡ NetworkId
     ∙ pp .minPoolCost ≤ poolParams .cost
     ────────────────────────────────
@@ -466,7 +527,7 @@ data _⊢_⇀⦇_,POOL⦈_ : PoolEnv → PState → DCert → PState → Type wh
                  , retiring
                  , deposits
                  ⟧ ⇀⦇ regpool kh poolParams ,POOL⦈ ⟦
-                   pools ∪ˡ ❴ kh , poolParams ❵
+                   pools ∪ˡ ❴ kh , mkStakePoolState e poolParams ❵
                  , fPools
                  , retiring
                  , deposits ∪ˡ ❴ kh , pp .poolDeposit ❵
@@ -474,7 +535,9 @@ data _⊢_⇀⦇_,POOL⦈_ : PoolEnv → PState → DCert → PState → Type wh
 
   POOL-rereg :
     ∙ IsPoolRegistered pools kh
-    ∙ ¬ (poolParams .vrf ∈ mapˢ vrf (range (pools ∣ ❴ kh ❵ ᶜ) ∪ range (fPools ∣ ❴ kh ❵ ᶜ)))
+    ∙ IsVRFUnique (poolParams .vrf) (pools ∣ ❴ kh ❵ ᶜ) (fPools ∣ ❴ kh ❵ ᶜ)
+    ∙ IsBLSUnique (proj₁ <$> poolParams .bls) (pools ∣ ❴ kh ❵ ᶜ) (fPools ∣ ❴ kh ❵ ᶜ)
+    ∙ IsValidBLSPoP (poolParams .bls)
     ∙ NetworkIdOf (poolParams .rewardAccount) ≡ NetworkId
     ∙ pp .minPoolCost ≤ poolParams .cost
     ────────────────────────────────

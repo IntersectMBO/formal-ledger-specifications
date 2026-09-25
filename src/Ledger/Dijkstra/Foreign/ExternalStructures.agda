@@ -20,7 +20,7 @@ open import Ledger.Dijkstra.Specification.Crypto using (LeiosCryptoStructure)
 open import Data.Nat.Properties using (<-isStrictTotalOrder)
 open import Ledger.Dijkstra.Foreign.Script externalFunctions public
 
-open ExternalFunctions externalFunctions using (extIsSigned)
+open ExternalFunctions externalFunctions using (extIsSigned; extIsValidPoP)
 
 instance
   _ = HSCryptoStructure
@@ -66,21 +66,24 @@ HsGovParams = record
 open import Ledger.Conway.Specification.TokenAlgebra.Coin Crypto.ScriptHash
    using (Coin-TokenAlgebra)
 
-HSLeiosCryptoStructure : LeiosCryptoStructure HSCryptoStructure
-HSLeiosCryptoStructure = record
-  { BlsVKey              = ℕ
-  ; BlsSig               = ℕ
-  ; BlsPoP               = ℕ
-  ; isValidPoP           = λ vk pop → extIsSigned vk vk pop ≡ true
-  ; isSignedByAggregate  = λ vks m σ → extIsSigned (sum (setToList vks)) m σ ≡ true
-  ; _<ᵏʰ_                = _<_
-  ; <ᵏʰ-isSTO            = <-isStrictTotalOrder
-  ; EBHash               = ℕ
-  ; TxRefHash            = ℕ
-  ; RBHeaderHash         = ℕ
-  ; hashEBRefs           = λ refs → sum (map proj₁ refs)
-  ; rbHeaderHashBytes    = id
-  }
+instance
+  HSLeiosCryptoStructure : LeiosCryptoStructure HSCryptoStructure
+  HSLeiosCryptoStructure = record
+    { BlsVKey              = ℕ
+    ; BlsSig               = ℕ
+    ; BlsPoP               = ℕ
+    ; isValidPoP           = λ vk pop → extIsValidPoP vk pop ≡ true
+    ; isSignedByAggregate  = λ vks m σ → extIsSigned (sum (setToList vks)) m σ ≡ true
+    ; _<ᵏʰ_                = _<_
+    ; <ᵏʰ-isSTO            = <-isStrictTotalOrder
+    ; EBHash               = ℕ
+    ; TxRefHash            = ℕ
+    ; RBHeaderHash         = ℕ
+    ; hashEBRefs           = λ refs → sum (map proj₁ refs)
+    ; rbHeaderHashBytes    = id
+    }
+
+open LeiosCryptoStructure HSLeiosCryptoStructure
 
 instance
   HSTransactionStructure : TransactionStructure

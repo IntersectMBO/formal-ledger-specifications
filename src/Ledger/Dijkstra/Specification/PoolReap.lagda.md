@@ -41,7 +41,8 @@ instance
 private variable
   e : Epoch
   treasury reserves : Coin
-  pools fPools : Pools
+  pools : Pools
+  fPools : FPools
   retiring : KeyHash ⇀ Epoch
   depositsᵖ : KeyHash ⇀ Coin
   voteDelegs : VoteDelegs
@@ -49,7 +50,7 @@ private variable
   rewards : Rewards
   depositsᵈ : Credential ⇀ Coin
 
-open StakePoolParams using (rewardAccount)
+open StakePoolState using (rewardAccount)
 ```
 -->
 
@@ -61,7 +62,7 @@ data _⊢_⇀⦇_,POOLREAP⦈_ : ⊤ → PoolReapState → Epoch → PoolReapSta
         retired = retiring ⁻¹ e
 
         rewardAccounts : KeyHash ⇀ Credential
-        rewardAccounts = mapValues (CredentialOf ∘ rewardAccount) (pools ∣ retired)
+        rewardAccounts = mapValues (CredentialOf ∘ rewardAccount ∘ params) (pools ∣ retired)
 
         rewardAccounts' : Credential ⇀ Coin
         rewardAccounts' = aggregateBy (rewardAccounts ˢ) depositsᵖ

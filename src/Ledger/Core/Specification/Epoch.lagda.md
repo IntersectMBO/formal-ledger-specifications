@@ -92,10 +92,19 @@ record GlobalConstants : Type₁ where
          MaxLovelaceSupplyᶜ : Coin
          Quorum : ℕ
          NetworkId : Network
+         -- KES setup, from which the voting key age bound is derived (CIP-0164).
+         MaxKESEvoᶜ : ℕ
+         SlotsPerKESPeriodᶜ : ℕ
 
   instance
     NonZero-ActiveSlotCoeff : ℚ.NonZero ActiveSlotCoeff
     NonZero-ActiveSlotCoeff = ℚ.>-nonZero (ℚ.positive⁻¹ ActiveSlotCoeff)
+
+  -- Maximum age of a registered Leios voting key: the KES key lifetime rounded
+  -- up to whole epochs, plus two epochs of activation delay — a registered key
+  -- enters the mark snapshot at the next boundary and the committee at the one after.
+  maxKeyAgeEpochs : ℕ
+  maxKeyAgeEpochs = (MaxKESEvoᶜ * SlotsPerKESPeriodᶜ + SlotsPerEpochᶜ ∸ 1) / SlotsPerEpochᶜ + 2
 
   ℕ+ᵉ≡+ᵉ' : ∀ {a b} → additionVia suc a b ≡ a + b
   ℕ+ᵉ≡+ᵉ' {zero} {b} = refl
