@@ -171,4 +171,79 @@ parameters the function is applied to.
     slotsFromDuration (3 * leiosHeaderPeriod + leiosVotingPeriod + leiosDiffusionPeriod)
 ```
 
+## Leios Certificates
+
+A certificate stands in for a quorum of votes on an EB announcement: the set of
+seat indices that signed (the bitfield of CIP-0164) and their aggregate BLS
+signature.
+
+```agda
+record LeiosCert : Type where
+  field
+    signers  : ℙ ℕ
+    sig      : BlsSig
+```
+
+<!--
+```agda
+instance
+  unquoteDecl HasCast-LeiosCert = derive-HasCast
+    [ (quote LeiosCert , HasCast-LeiosCert) ]
+
+open LeiosCert
+```
+-->
+
+A seat index is a position in the committee list, so the committee is also a map
+from indices to seats; the keyed seats are those holding a key, and the stake a
+set of signers carries is the sum of their weights.
+
+```agda
+seatMap : LeiosCommittee → ℕ ⇀ LeiosSeat
+seatMap = go 0
+  where
+    go : ℕ → LeiosCommittee → ℕ ⇀ LeiosSeat
+    go _ []        = ∅ᵐ
+    go i (s ∷ ss)  = ❴ i , s ❵ᵐ ∪ˡ go (suc i) ss
+
+keyedSeats : LeiosCommittee → ℕ ⇀ BlsVKey
+keyedSeats cmt = mapMaybeWithKeyᵐ (λ _ s → s .key) (seatMap cmt)
+
+signedStake : LeiosCommittee → ℙ ℕ → Coin
+signedStake cmt signers = ∑[ w ← mapValues weight (seatMap cmt ∣ signers) ] w
+
+totalActiveStake : (KeyHash ⇀ Coin) → Coin
+totalActiveStake pd = ∑[ c ← pd ] c
+```
+
+A certificate is valid for a message, the hash of the announcing block's header,
+when every signing seat holds a key (a keyless seat cannot sign), the aggregate
+signature verifies under the set of those keys, and the signing seats' stake
+meets the quorum threshold `τ` of the *total* active stake, not merely the
+seated stake.
+
+```agda
+record ValidLeiosCert
+  (cmt   : LeiosCommittee)
+  (tot   : Coin)
+  (τ     : UnitInterval)
+  (msg   : Ser)
+  (cert  : LeiosCert) : Type where
+  field
+    signersKeyed    : cert .signers ⊆ dom (keyedSeats cmt)
+    validSignature  : isSignedByAggregate
+                        (range (keyedSeats cmt ∣ cert .signers))
+                        msg (cert .sig)
+    quorum          : fromUnitInterval τ ℚ.* fromℚℕ tot ℚ.≤ fromℚℕ (signedStake cmt (cert .signers))
+```
+
+Of the five checks of CIP-0164's [Certificate Validation][cip-certval], the first
+(conformance to the CDDL) is structural typing; the second is
+`validSignature`{.AgdaField}; the third, that every signer is a committee member
+able to sign, is `signersKeyed`{.AgdaField}; the fourth is `quorum`{.AgdaField};
+and the fifth, that the message is the hash of the announcing header taken from
+the chain context, is supplied by the block rule that applies the certificate,
+through `msg`{.AgdaBound}.
+
 [cip-step5]: https://github.com/cardano-foundation/CIPs/blob/master/CIP-0164/README.md#step-5-chain-inclusion
+[cip-certval]: https://github.com/cardano-foundation/CIPs/blob/master/CIP-0164/README.md#certificate-validation
