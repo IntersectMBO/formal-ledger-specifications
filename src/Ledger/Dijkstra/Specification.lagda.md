@@ -56,6 +56,12 @@ import Ledger.Dijkstra.Specification.Chain
 import Ledger.Dijkstra.Specification.Chain.Properties
 ```
 
+## Abstract Cryptographic Primitives
+
+```agda
+import Ledger.Dijkstra.Specification.Crypto
+```
+
 ## Enactment
 
 ```agda
@@ -97,6 +103,12 @@ import Ledger.Dijkstra.Specification.Gov.Properties
 ```agda
 import Ledger.Dijkstra.Specification.Ledger
 import Ledger.Dijkstra.Specification.Ledger.Properties
+```
+
+## Leios
+
+```agda
+import Ledger.Dijkstra.Specification.Leios.Types
 ```
 
 ## Pool Reaping Transition
