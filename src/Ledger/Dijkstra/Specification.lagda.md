@@ -108,6 +108,7 @@ import Ledger.Dijkstra.Specification.Ledger.Properties
 ## Leios
 
 ```agda
+import Ledger.Dijkstra.Specification.Leios
 import Ledger.Dijkstra.Specification.Leios.Types
 ```
 
