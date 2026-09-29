@@ -173,12 +173,13 @@ parameters the function is applied to.
 
 ## Leios Certificates
 
-A certificate stands in for a quorum of votes on an EB announcement: the set of
-seat indices that signed (the bitfield of CIP-0164) and their aggregate BLS
-signature.
+An EB certificate (`eb_certificate` in CIP-0164's CDDL) stands in for a quorum
+of votes on an EB announcement: the set of seat indices that signed (the CIP's
+bitfield) and their aggregate BLS signature.  It is not a transaction certificate;
+it travels in the body of the ranking block that certifies the EB.
 
 ```agda
-record LeiosCert : Type where
+record EBCert : Type where
   field
     signers  : ℙ ℕ
     sig      : BlsSig
@@ -187,10 +188,10 @@ record LeiosCert : Type where
 <!--
 ```agda
 instance
-  unquoteDecl HasCast-LeiosCert = derive-HasCast
-    [ (quote LeiosCert , HasCast-LeiosCert) ]
+  unquoteDecl HasCast-EBCert = derive-HasCast
+    [ (quote EBCert , HasCast-EBCert) ]
 
-open LeiosCert
+open EBCert
 ```
 -->
 
@@ -223,12 +224,12 @@ meets the quorum threshold `τ` of the *total* active stake, not merely the
 seated stake.
 
 ```agda
-record ValidLeiosCert
+record ValidEBCert
   (cmt   : LeiosCommittee)
   (tot   : Coin)
   (τ     : UnitInterval)
   (msg   : Ser)
-  (cert  : LeiosCert) : Type where
+  (cert  : EBCert) : Type where
   field
     signersKeyed    : cert .signers ⊆ dom (keyedSeats cmt)
     validSignature  : isSignedByAggregate
