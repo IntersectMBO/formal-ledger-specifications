@@ -9,16 +9,8 @@ Leios adds the following objects to the chain's traffic:
 
 +  an endorser block (EB);
 +  a header announcement that names the EB;
-+  the committee's votes;
-+  a certificate that aggregates a quorum of votes.
 
-This module defines types for the first two of these.
-
-The certificate, `LeiosCert`{.AgdaRecord}, is defined beside the committee whose
-quorum of votes it certifies.  Votes have no type in the ledger specification:
-they never reach the chain, and CIP-164 assigns the job of casting and validating
-them to the node.  What reaches the ledger is a certificate of an aggregation of
-votes.  The hash carriers (`TxRefHash`{.AgdaField}, `EBHash`{.AgdaField},
+The hash carriers (`TxRefHash`{.AgdaField}, `EBHash`{.AgdaField},
 `hashEBRefs`{.AgdaField}) are fields of the era's
 `LeiosCryptoStructure`{.AgdaRecord} record, which this module takes as a
 parameter.

@@ -56,7 +56,7 @@ how often or in what order.
 
 <!-- TODO: reference the registration rule's key-uniqueness premise once it exists. -->
 
-## The Tie-Break on Pool Ids
+## Pool ordering
 
 The committee of an epoch consists of a subset of pools, which includes those
 pools with the most active stake, with ties broken by pool id in ascending order
@@ -67,9 +67,6 @@ The stake order depends on the epoch's stake distribution, so it is defined in t
 committee module.
 
 The field `_<ᵏʰ_` exists exclusively for deciding tie-breaks.
-A pool id is a key hash and `KeyHash`{.AgdaField} is abstract with decidable
-equality and nothing else, so `_<ᵏʰ_` must be accompanied by the assertion
-that it is a strict total order.
 
 ```agda
   field
