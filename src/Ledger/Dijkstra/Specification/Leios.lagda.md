@@ -1,5 +1,5 @@
 ---
-source_branch: leios-main
+source_branch: master
 source_path: src/Ledger/Dijkstra/Specification/Leios.lagda.md
 ---
 
@@ -19,37 +19,37 @@ module Ledger.Dijkstra.Specification.Leios
   (gs : GovStructure) (open GovStructure gs) where
 
 open import Ledger.Prelude
-open import Ledger.Prelude.Numeric.UnitInterval using (UnitInterval; fromUnitInterval)
+open import Ledger.Prelude.Numeric.UnitInterval
+  using (UnitInterval; clamp; fromUnitInterval; ≤ᵘⁱ-DTO; _<ᵘⁱ_)
 open import Ledger.Dijkstra.Specification.Certs gs
 
-open import Agda.Builtin.FromNat
 open import Data.List.Sort
-open import Data.Nat.Properties
-  using (<⇒≤; >⇒≢; ≤∧≢⇒<)
-  renaming (≤-decTotalOrder to ℕ-≤-decTotalOrder)
+import Data.Rational.Properties as ℚ
 open import Data.Rational as ℚ using (ℚ)
-open import Data.Rational.Literals using (number)
+open import Data.Refinement.Properties using (value-injective)
 open import Relation.Binary.Bundles using (DecTotalOrder)
-open import Relation.Binary.PropositionalEquality using () renaming (sym to ≡-sym)
-open import Function using (case_of_)
+open import Relation.Binary.PropositionalEquality
+  using ()
+  renaming (sym to ≡-sym)
+open import Relation.Binary.Definitions
 
-open Number number renaming (fromNat to fromℚℕ)
 open StakePoolState
 ```
 -->
 
 ## Voting Committee
 
-A committee seat holds a pool, its voting weight (the pool's active stake) and
-the pool's honoured voting key — `nothing`{.AgdaInductiveConstructor} makes a
-*keyless* seat, which counts for committee membership but can never sign.  The
-committee maps each seat index (the `voter_id` of CIP-0164) to its seat.
+A committee seat holds a pool, its voting weight (the pool's fraction
+of total active stake) and the pool's honoured voting key —
+`nothing`{.AgdaInductiveConstructor} makes a *keyless* seat, which
+counts for committee membership but can never sign.  The committee
+maps each seat index (the `voter_id` of CIP-0164) to its seat.
 
 ```agda
 record LeiosSeat : Type where
   field
     pool    : KeyHash
-    weight  : Coin
+    weight  : UnitInterval
     key     : Maybe BlsVKey
 
 LeiosCommittee : Type
@@ -93,7 +93,7 @@ pools with the most active stake, ties broken by ascending pool keyhash.
 
 ```agda
 _≼_ : LeiosSeat → LeiosSeat → Type
-ls₁ ≼ ls₂ = c₂ < c₁ ⊎ (c₁ ≡ c₂ × ls₁ .pool ≤ᵏʰ ls₂ .pool)
+ls₁ ≼ ls₂ = c₂ <ᵘⁱ c₁ ⊎ (c₁ ≡ c₂ × ls₁ .pool ≤ᵏʰ ls₂ .pool)
   where
     c₁ = ls₁ .weight
     c₂ = ls₂ .weight
@@ -108,17 +108,21 @@ private
     where
       open import Relation.Binary.Construct.On using (decTotalOrder)
       open import Data.Product.Relation.Binary.Lex.NonStrict using (×-decTotalOrder)
-      open import Relation.Binary.Properties.DecTotalOrder ℕ-≤-decTotalOrder
+      open import Relation.Binary.Properties.DecTotalOrder ≤ᵘⁱ-DTO using (≥-decTotalOrder)
 
   open DecTotalOrder ≼-DTO renaming (_≤_ to _≤DTO_) using ()
 
-  ≼-DTO⇒≼ : ∀ {x y} → x ≼ y → x ≤DTO y
-  ≼-DTO⇒≼ (inj₁ p)          = inj₁ (<⇒≤ p , >⇒≢ p)
-  ≼-DTO⇒≼ (inj₂ (refl , q)) = inj₂ (refl , q)
+  ≼⇒≤DTO : ∀ {x y} → x ≼ y → x ≤DTO y
+  ≼⇒≤DTO (inj₁ p)          = inj₁ (ℚ.<⇒≤ p , ℚ.<⇒≢ p ∘ ≡-sym)
+  ≼⇒≤DTO (inj₂ (refl , q)) = inj₂ (refl , q)
 
-  ≼⇒≼-DTO : ∀ {x y} → x ≤DTO y → x ≼ y
-  ≼⇒≼-DTO (inj₁ (p  , q))     = inj₁ (≤∧≢⇒< p (λ r → q (≡-sym r)))
-  ≼⇒≼-DTO (inj₂ (refl , snd)) = inj₂ (refl , snd)
+  ≤DTO⇒≼ : ∀ {x y} → x ≤DTO y → x ≼ y
+  ≤DTO⇒≼ {x} {y} (inj₁ (p , q))
+    with ℚ.<-cmp (fromUnitInterval (y .weight)) (fromUnitInterval (x .weight))
+  ... | tri< lt _ _  = inj₁ lt
+  ... | tri≈ _ eq _  = ⊥-elim (q (≡-sym eq))
+  ... | tri> _ _ gt  = ⊥-elim (ℚ.<-irrefl refl (ℚ.<-≤-trans gt p))
+  ≤DTO⇒≼ (inj₂ (e , q)) = inj₂ (value-injective e , q)
 ```
 -->
 
@@ -134,9 +138,15 @@ module _ (pp : PParams)
   selectCommittee : Epoch → (KeyHash ⇀ Coin) → Pools → LeiosCommittee
   selectCommittee e pd pools = take leiosCommitteeSize sortedLeiosSeats
     where
+      totalStake : Coin
+      totalStake = ∑[ c ← pd ] c
+
+      poolDistr : KeyHash ⇀ UnitInterval
+      poolDistr = mapValues (λ c → clamp (c /₀ totalStake)) pd
+
       allLeiosSeats : List LeiosSeat
-      allLeiosSeats = map (λ (kh , c) → ⟦ kh , c , (if lookupᵐ? pools kh then (λ {spp} → honouredBlsKey e (spp .bls)) else nothing) ⟧)
-                          (setToList (pd ˢ))
+      allLeiosSeats = map (λ (kh , w) → ⟦ kh , w , (if lookupᵐ? pools kh then (λ {spp} → honouredBlsKey e (spp .bls)) else nothing) ⟧)
+                          (setToList (poolDistr ˢ))
 
       sortedLeiosSeats : List LeiosSeat
       sortedLeiosSeats = sort ≼-DTO allLeiosSeats
