@@ -21,6 +21,7 @@ open import Data.Rational.Show using () renaming (show to ℚshow)
 open import Data.Refinement using (Refinement-syntax; value; _,_)
 open import Relation.Binary.Construct.On using (decTotalOrder)
 open import Relation.Binary using (DecTotalOrder)
+import Data.Integer as ℤ
 
 open ≤-Reasoning
 
@@ -94,6 +95,9 @@ clamp x with 0 ≤? x
 ... | yes 0≤x with x ≤? 1
 ...     | no  _   = mkUnitInterval 1
 ...     | yes x≤1 = (x , [ 0≤x , x≤1 ])
+
+0ᵘⁱ : UnitInterval
+0ᵘⁱ = mkUnitInterval 0
 
 -- UnitInterval Properties
 

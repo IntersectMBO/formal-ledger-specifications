@@ -21,7 +21,7 @@ module Ledger.Dijkstra.Specification.Leios
 open import Ledger.Prelude
 open Filter using (filter)
 open import Ledger.Prelude.Numeric.UnitInterval
-  using (UnitInterval; clamp; fromUnitInterval; ≤ᵘⁱ-DTO; _<ᵘⁱ_)
+  using (UnitInterval; clamp; fromUnitInterval; ≤ᵘⁱ-DTO; _<ᵘⁱ_; 0ᵘⁱ)
 open import Ledger.Dijkstra.Specification.Certs gs
 
 open import Data.List.Sort
@@ -149,12 +149,14 @@ module _ (pp : PParams)
       totalStake : Coin
       totalStake = ∑[ c ← pd ] c
 
-      poolDistr : KeyHash ⇀ UnitInterval
-      poolDistr = mapValues (λ c → clamp (c /₀ totalStake)) pd
+      leiosSeatMap : KeyHash ⇀ UnitInterval × Maybe BlsVKey
+      leiosSeatMap = flip mapWithKey pools λ kh spp →
+        let vkey = honouredBlsKey e (spp .bls)
+            weight = if lookupᵐ? pd kh then (λ {c} → clamp (c /₀ totalStake)) else 0ᵘⁱ
+        in weight , vkey
 
       allLeiosSeats : List LeiosSeat
-      allLeiosSeats = map (λ (kh , w) → ⟦ kh , w , (if lookupᵐ? pools kh then (λ {spp} → honouredBlsKey e (spp .bls)) else nothing) ⟧)
-                          (setToList (poolDistr ˢ))
+      allLeiosSeats = map (λ (kh , (w , vk)) → ⟦ kh , w , vk ⟧) (setToList (leiosSeatMap ˢ))
 
       sortedLeiosSeats : List LeiosSeat
       sortedLeiosSeats = sort ≼-DTO allLeiosSeats

@@ -138,9 +138,7 @@ record NewEpochState : Type where
     leiosCommittee  : LeiosCommittee
 ```
 
-The `leiosCommittee`{.AgdaField} is the materialized Leios voting committee of
-the current epoch, selected from the same stake distribution as
-`pd`{.AgdaField} (CIP-0164).
+The `leiosCommittee`{.AgdaField} field materializes the Leios voting committee.
 
 ??? info "Differences with the Shelley Specification"
 
@@ -803,6 +801,11 @@ data _⊢_⇀⦇_,EPOCH⦈_ : ⊤ → EpochState → Epoch → EpochState → Ty
 Finally, we define the `NEWEPOCH`{.AgdaDatatype} transition system, which computes
 the new state as of the start of a new epoch.
 
+In Dijkstra, `NewEpochState`{.AgdaRecord} tracks the Leios committee
+used for vote certification. The committee that will be active at
+epoch `e+2` is selected from the stake distribution and pparams at the
+boundary between epochs `e` and `e+1`.
+
 ```agda
 data _⊢_⇀⦇_,NEWEPOCH⦈_ : ⊤ → NewEpochState → Epoch → NewEpochState → Type where
 
@@ -811,7 +814,7 @@ data _⊢_⇀⦇_,NEWEPOCH⦈_ : ⊤ → NewEpochState → Epoch → NewEpochSta
       eps' = applyRUpd ru eps
       ss   = EpochState.ss eps''
       pd'  = calculatePoolDelegatedStake (Snapshots.set ss)
-      cmt' = selectCommittee (PParamsOf eps') e pd' (PoolsOf (Snapshots.set ss))
+      cmt' = selectCommittee (PParamsOf eps) e pd' (PoolsOf (Snapshots.set ss))
     in
       ∙ e ≡ lastEpoch + 1
       ∙ _ ⊢ eps' ⇀⦇ e ,EPOCH⦈ eps''
@@ -827,7 +830,7 @@ data _⊢_⇀⦇_,NEWEPOCH⦈_ : ⊤ → NewEpochState → Epoch → NewEpochSta
     let
       ss   = EpochState.ss eps'
       pd'  = calculatePoolDelegatedStake (Snapshots.set ss)
-      cmt' = selectCommittee (PParamsOf eps') e pd' (PoolsOf (Snapshots.set ss))
+      cmt' = selectCommittee (PParamsOf eps) e pd' (PoolsOf (Snapshots.set ss))
     in
       ∙ e ≡ lastEpoch + 1
       ∙ _ ⊢ eps ⇀⦇ e ,EPOCH⦈ eps'
