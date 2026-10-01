@@ -26,6 +26,11 @@ open import Ledger.Dijkstra.Specification.Ledger.Properties.Computational txs ab
 open import Ledger.Dijkstra.Specification.Utxo txs abs
 open Computational ⦃...⦄
 open Block
+
+leiosBodyChecksFailure : Bool → Maybe CertifiedEB → List TopLevelTx → String
+leiosBodyChecksFailure _     nothing  _ = "certifiedEB is set but the block carries no EB certificate"
+leiosBodyChecksFailure false (just _) _ = "the block carries an EB certificate but certifiedEB is not set"
+leiosBodyChecksFailure true  (just _) _ = "a block carrying an EB certificate carries transactions"
 ```
 -->
 
@@ -39,10 +44,14 @@ BBODY-computeProof : (Γ : BBodyEnv) (s : BBodyState) (block : Block)
 BBODY-computeProof Γ (ls , _) block
   using maxBlockExUnits ← PParams.maxBlockExUnits (PParamsOf (proj₁ Γ))
   using sumTotExUnits   ← (∑ˡ[ tx ← block .ts ] totExUnits tx)
+  using certified       ← BHBody.certifiedEB (BHeader.bhbody (block .bheader))
+  with leiosBodyChecks? certified (block .ebCert) (block .ts)
+... | no _ = failure $ leiosBodyChecksFailure certified (block .ebCert) (block .ts)
+... | yes lbc
   with ¿ maxBlockExUnits ≥ᵉ sumTotExUnits ¿
 ... | yes p = do
   _ , lsStep ← computeProof _ ls (block .ts)
-  success (_ , BBODY-Block-Body (block .≡-bBodySize , block .≡-bBodyHash , p , lsStep))
+  success (_ , BBODY-Block-Body (block .≡-bBodySize , block .≡-bBodyHash , lbc , p , lsStep))
 ... | no _ = failure $
   "Block ExUnits constraint failed: total tx ExUnits "
   +ˢ show sumTotExUnits
@@ -59,9 +68,13 @@ BBODY-completeness : (Γ : BBodyEnv) (s : BBodyState) (block : Block) (s' : BBod
 
 <!--
 ```agda
-BBODY-completeness Γ s block _ (BBODY-Block-Body (_ , _ , p , lsStep))
+BBODY-completeness Γ s block _ (BBODY-Block-Body (_ , _ , lbc , p , lsStep))
   using maxBlockExUnits ← PParams.maxBlockExUnits (PParamsOf (proj₁ Γ))
   using sumTotExUnits   ← (∑ˡ[ tx ← block .ts ] totExUnits tx)
+  using certified       ← BHBody.certifiedEB (BHeader.bhbody (block .bheader))
+  with leiosBodyChecks? certified (block .ebCert) (block .ts)
+... | no ¬lbc = ⊥-elim $ ¬lbc lbc
+... | yes _
   with ¿ maxBlockExUnits ≥ᵉ sumTotExUnits ¿
 ... | no ¬p = ⊥-elim $ ¬p p
 ... | yes _
