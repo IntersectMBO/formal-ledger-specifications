@@ -35,6 +35,8 @@ record EpochStructure : Type₁ where
         firstSlot                     : Epoch → Slot
         RandomnessStabilisationWindow : Slot
         StabilityWindow               : Slot
+        -- a wall-clock duration in whole slots, rounded up
+        slotsFromDuration             : Milliseconds → Slot
         sucᵉ                          : Epoch → Epoch
 
   _+ᵉ_ = additionVia sucᵉ
@@ -115,6 +117,7 @@ record GlobalConstants : Type₁ where
     .firstSlot e                   → e * SlotsPerEpochᶜ
     .RandomnessStabilisationWindow → RandomnessStabilisationWindowᶜ
     .StabilityWindow               → StabilityWindowᶜ
+    .slotsFromDuration d           → durationToSlots SlotLengthᶜ d
     .sucᵉ                          → suc
     .e<sucᵉ                        → +-monoˡ-≤ _ (>-nonZero⁻¹ SlotsPerEpochᶜ)
     .≤-predᵉ                       → [ (λ p → inj₁ (+-cancelˡ-< _ _ _ p)) , (λ p → inj₂ (suc-injective p)) ]′
