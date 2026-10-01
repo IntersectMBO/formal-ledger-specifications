@@ -22,6 +22,10 @@ instance
                                           • fieldPrefix "ls"
   Conv-LeiosSeat = autoConvert LeiosSeat
 
+  HsTy-LeiosCommittees = autoHsType LeiosCommittees ⊣ withConstructor "MkLeiosCommittees"
+                                                    • fieldPrefix "lc"
+  Conv-LeiosCommittees = autoConvert LeiosCommittees
+
   HsTy-NewEpochState = autoHsType NewEpochState ⊣ withConstructor "MkNewEpochState"
                                                   • fieldPrefix "nes"
   Conv-NewEpochState = autoConvert NewEpochState
