@@ -32,18 +32,18 @@ instance
   ShowMultiSigData = mkShow (λ x → "")
 
 open import Test.LedgerImplementation SData SData
-open TransactionStructure SVTransactionStructure
+open TransactionStructure SVTransactionStructure renaming (Datum to SCDatum) hiding (Redeemer)
 open Implementation
 
 -- Make this get all output datums
-getInlineOutputDatum : STxOut → List MultiSigData → Maybe Datum
+getInlineOutputDatum : STxOut → List MultiSigData → Maybe SCDatum
 getInlineOutputDatum (a , b , just (inj₁ (inj₁ x))) dats = just (inj₁ (inj₁ x))
 getInlineOutputDatum (a , b , just (inj₁ (inj₂ y))) dats = nothing
 getInlineOutputDatum (a , b , just (inj₂ y)) dats = nothing
 getInlineOutputDatum (a , b , nothing) dats = nothing
 
-newLabel : ScriptContext -> Maybe Label
-newLabel (record { realizedInputs = realizedInputs ; txouts = txouts ; fee = fee ; mint = mint ; txwdrls = txwdrls ; txvldt = txvldt ; vkey = vkey ; txdats = txdats ; txid = txid } , snd) with
+newDatum : ScriptContext -> Maybe Datum
+newDatum (record { realizedInputs = realizedInputs ; txouts = txouts ; fee = fee ; mint = mint ; txwdrls = txwdrls ; txvldt = txvldt ; vkey = vkey ; txdats = txdats ; txid = txid } , snd) with
   mapMaybe (λ x → getInlineOutputDatum x txdats) (map proj₂ txouts)
 ... | [] = nothing
 ... | inj₁ (inj₁ x) ∷ [] = just x
@@ -142,14 +142,14 @@ expired slot (txinfo , _) = maybe (λ deadline →  ⌊ slot >? deadline ⌋)
                                      false
                                      (proj₂ (STxInfo.txvldt txinfo))
 
-multiSigValidator' : MultiSig → Label → Input → ScriptContext → Bool
+multiSigValidator' : MultiSig → Datum → Redeemer → ScriptContext → Bool
 
 multiSigValidator' param Holding (Propose v pkh slot) ctx =
   (oldValue ctx == newValue ctx) ∧
   compareScriptValues _≟_ (oldValue ctx) (newValue ctx)
   ∧ compareScriptValues _≥?_ (oldValue ctx) (just v)
   ∧ ⌊ v ≥? 0 ⌋
-  ∧ (case (newLabel ctx) of λ where
+  ∧ (case (newDatum ctx) of λ where
       nothing → false
       (just Holding) → false
       (just (Collecting v' pkh' slot' sigs')) →
@@ -166,7 +166,7 @@ multiSigValidator' param (Collecting v pkh slot sigs) (Add sig) ctx =
  compareScriptValues _≟_ (oldValue ctx) (newValue ctx) -- should this be equal or _≤_
   ∧ checkSigned sig ctx
   ∧ query sig (MultiSig.signatories param)
-  ∧ (case (newLabel ctx) of λ where
+  ∧ (case (newDatum ctx) of λ where
       nothing → false
       (just Holding) → false
       (just (Collecting v' pkh' slot' sigs')) →
@@ -177,7 +177,7 @@ multiSigValidator' param (Collecting v pkh slot sigs) (Add sig) ctx =
 
 multiSigValidator' param (Collecting v pkh slot sigs) Pay ctx =
  ⌊ (length sigs) ≥? MultiSig.minNumSignatures param ⌋
-   ∧ (case (newLabel ctx) of λ where
+   ∧ (case (newDatum ctx) of λ where
       nothing → false
       (just Holding) → checkPayment pkh v ctx
                        ∧ compareScriptValues _≟_ (oldValue ctx) (maybeMap (_+_ {{addValue}} v) (newValue ctx))
@@ -186,7 +186,7 @@ multiSigValidator' param (Collecting v pkh slot sigs) Pay ctx =
 
 multiSigValidator' param (Collecting v pkh slot sigs) Cancel ctx =
   compareScriptValues _≟_ (oldValue ctx) (newValue ctx)
-  ∧ (case (newLabel ctx) of λ where
+  ∧ (case (newDatum ctx) of λ where
       nothing → false
       (just Holding) → expired slot ctx
       (just (Collecting _ _ _ _)) → false)
