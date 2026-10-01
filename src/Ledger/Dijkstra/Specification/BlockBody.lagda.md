@@ -14,32 +14,48 @@ module Ledger.Dijkstra.Specification.BlockBody
   where
 
 open import Ledger.Prelude
+open import Ledger.Dijkstra.Specification.Crypto using (LeiosCryptoStructure)
 open import Ledger.Dijkstra.Specification.Enact govStructure
 open import Ledger.Dijkstra.Specification.Ledger txs abs
+open import Ledger.Dijkstra.Specification.Leios govStructure using (EBCert)
+open import Ledger.Dijkstra.Specification.Leios.Types cryptoStructure leiosCryptoStructure
+  using (EndorserBlock; Announcement)
 open import Ledger.Dijkstra.Specification.Rewards txs abs
 open import Ledger.Dijkstra.Specification.Utxo txs abs using (totExUnits)
 
+open LeiosCryptoStructure leiosCryptoStructure using (RBHeaderHash)
+
 record BHBody : Type where
   field
-    bvkcold : VKey
-    bsize   : ℕ
-    slot    : Slot
-    bhash   : KeyHash
-    hBbsize : ℕ
+    bvkcold      : VKey
+    bsize        : ℕ
+    slot         : Slot
+    bhash        : KeyHash
+    hBbsize      : ℕ
+    announcedEB  : Maybe Announcement
+    certifiedEB  : Bool
 
 record BHeader : Type where
   field
     bhbody : BHBody
     bhsig  : Sig
 
+record CertifiedEB : Type where
+  field
+    cert     : EBCert
+    eb       : EndorserBlock
+    closure  : List TopLevelTx
+
 record Block : Type where
   field
-    bheader     : BHeader
-    ts          : List TopLevelTx
-    bBodySize   : ℕ
-    bBodyHash   : KeyHash
-    ≡-bBodySize : bBodySize ≡ BHBody.hBbsize (BHeader.bhbody bheader)
-    ≡-bBodyHash : bBodyHash ≡ BHBody.bhash (BHeader.bhbody bheader)
+    bheader      : BHeader
+    bHeaderHash  : RBHeaderHash
+    ts           : List TopLevelTx
+    ebCert       : Maybe CertifiedEB
+    bBodySize    : ℕ
+    bBodyHash    : KeyHash
+    ≡-bBodySize  : bBodySize ≡ BHBody.hBbsize (BHeader.bhbody bheader)
+    ≡-bBodyHash  : bBodyHash ≡ BHBody.bhash (BHeader.bhbody bheader)
 
 BBodyEnv : Type
 BBodyEnv = EnactState × Acnt
