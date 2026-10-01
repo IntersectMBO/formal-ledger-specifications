@@ -95,6 +95,8 @@ record GlobalConstants : Type₁ where
          -- KES setup, from which the voting key age bound is derived (CIP-0164).
          MaxKESEvoᶜ : ℕ
          SlotsPerKESPeriodᶜ : ℕ
+         -- The genesis slot length, which converts the Leios periods to slots (CIP-0164).
+         SlotLengthᶜ : Milliseconds; ⦃ NonZero-SlotLengthᶜ ⦄ : NonZero SlotLengthᶜ
 
   instance
     NonZero-ActiveSlotCoeff : ℚ.NonZero ActiveSlotCoeff
