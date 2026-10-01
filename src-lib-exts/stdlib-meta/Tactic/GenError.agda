@@ -2,7 +2,8 @@
 {-# OPTIONS --safe #-}
 --------------------------------------------------------------------------------
 -- genError: returns the type of the most recently bound variable as a string
--- genErrors: match on a negated conjunction and return the string of that type
+-- genErrors: match on a negated conjunction and return the strings of every
+--            conjunct that fails, one per line
 --------------------------------------------------------------------------------
 
 module stdlib-meta.Tactic.GenError where
@@ -18,25 +19,36 @@ open import Class.MonadReader.Instances
 open import Class.MonadTC.Instances
 open import Class.Show
 open import Relation.Nullary using (¬_)
+open import Relation.Nullary.Decidable.Core using (_because_)
 
+open import Reflection.AST.DeBruijn using (weaken)
 open import Reflection.Tactic
 open import Reflection.Utils
 open import Reflection.Utils.TCI
 import Reflection as R
 import Agda.Builtin.Reflection as R
 open import Tactic.ClauseBuilder
+import Data.String as Str
 
 private
-  dec-de-morgan : ∀{P Q : Set} → ⦃ P ⁇ ⦄ → ¬ (P × Q) → ¬ P ⊎ ¬ Q
-  dec-de-morgan ⦃ ⁇ no ¬p ⦄ ¬pq = inj₁ ¬p
-  dec-de-morgan ⦃ ⁇ yes p ⦄ ¬pq = inj₂ λ q → ¬pq (p , q)
+  decideOne : (P : Set) → ⦃ P ⁇ ⦄ → Dec P
+  decideOne P = dec
+
+  vArgsOf : List (Arg Term) → List Term
+  vArgsOf [] = []
+  vArgsOf (vArg x ∷ xs) = x ∷ vArgsOf xs
+  vArgsOf (_      ∷ xs) = vArgsOf xs
+
+  -- combine the message for a failed conjunct with the messages for the
+  -- conjuncts after it, dropping the separator when there's nothing to join
+  joinMsgs : String → String → String
+  joinMsgs s "" = s
+  joinMsgs s t  = s Str.++ " × " Str.++ t
 
 instance
   _ = MonadTC-TCI
   _ = Functor-M
   _ = ContextMonad-MonadTC
-
-open ClauseExprM
 
 genError' : ITactic
 genError' = inDebugPath "genError" do
@@ -48,20 +60,67 @@ module _ ⦃ _ : TCOptions ⦄ where
   macro
     genError = initTac genError'
 
-genErrors' : ℕ → Term → ITactic
-genErrors' 0 _ = error1 "genErrors: out of fuel"
-genErrors' (suc fuel) t = inDebugPath "genErrors" $ flip catch
-  (λ _ → genError') $ do
-    m1 ← newMeta unknown
-    m2 ← extendContext ("" , vArg m1) $ newMeta unknown
-    unifyWithGoal =<< caseMatch (quote dec-de-morgan ∙⟦ t ⟧) (matchExprM $
-        (([ ("" , vArg unknown) ] , vArg (quote inj₁ ◇⟦ ` 0 ⟧)) , finishMatch (withGoalHole genError'))
-      ∷ (([ ("" , vArg m1) ]      , vArg (quote inj₂ ◇⟦ ` 0 ⟧)) , finishMatch (return m2)) ∷ [])
-    extendContext ("" , vArg m1) $ runWithHole m2 (genErrors' fuel (♯ 0))
+-- ¬ (P × Q × ...) → P × Q × ...  (pure, syntactic)
+unwrapNeg : Term → Maybe Term
+unwrapNeg (def (quote ¬_) as) with vArgsOf as
+... | Q ∷ [] = just Q
+... | _      = nothing
+unwrapNeg (pi (arg _ Q) (abs _ (def (quote ⊥) []))) = just Q
+unwrapNeg _ = nothing
+
+truePat falsePat : SinglePattern
+truePat  = ([ ("" , vArg unknown) ] , vArg ((quote _because_) ◇⟦ (quote true  ◇) ∣ (` 0) ⟧))
+falsePat = ([ ("" , vArg unknown) ] , vArg ((quote _because_) ◇⟦ (quote false ◇) ∣ (` 0) ⟧))
+
+leaf : ℕ → Term → Term → ITactic
+leaf depth gTy X = flip catch (λ _ → unconditional) (strictAtTop decided)
+  where
+  strictAtTop : ITactic → ITactic
+  strictAtTop = case depth of λ where
+    zero    → noConstraints
+    (suc _) → id
+
+  unconditional : ITactic
+  unconditional = do
+    s ← liftTC (R.formatErrorParts (R.strErr "¬ " ∷ R.termErr (weaken depth X) ∷ []))
+    unifyWithGoal (lit (Literal.string s))
+
+  decided : ITactic
+  decided = do
+    s ← liftTC (R.formatErrorParts (R.strErr "¬ " ∷ R.termErr (weaken depth X) ∷ []))
+    unifyWithGoal =<< caseMatch (quote decideOne ∙⟦ weaken depth X ⟧) (return $ MatchExpr
+        ( (truePat  , inj₂ (just (lit (Literal.string ""))))
+        ∷ (falsePat , inj₂ (just (lit (Literal.string s))))
+        ∷ []))
+
+buildLevel : ℕ → ℕ → Term → Term → ITactic
+buildLevel (suc fuel) depth gTy X@(def (quote _×_) as) with vArgsOf as
+... | A ∷ B ∷ [] = do
+  s ← liftTC (R.formatErrorParts (R.strErr "¬ " ∷ R.termErr (weaken depth A) ∷ []))
+  m1True      ← newMeta unknown
+  mTrue       ← extendContext ("" , vArg m1True) $ newMeta (weaken (suc depth) gTy)
+  m1False     ← newMeta unknown
+  mFalseTail  ← extendContext ("" , vArg m1False) $ newMeta (weaken (suc depth) gTy)
+  unifyWithGoal =<< caseMatch (quote decideOne ∙⟦ weaken depth A ⟧) (return $ MatchExpr
+      ( (truePat  , inj₂ (just mTrue))
+      ∷ (falsePat , inj₂ (just ((quote joinMsgs) ∙⟦ lit (Literal.string s) ∣ mFalseTail ⟧)))
+      ∷ []))
+  extendContext ("" , vArg m1True)  $ runWithHole mTrue      (buildLevel fuel (suc depth) gTy B)
+  extendContext ("" , vArg m1False) $ runWithHole mFalseTail (buildLevel fuel (suc depth) gTy B)
+... | _ = leaf depth gTy X
+buildLevel _ depth gTy X = leaf depth gTy X
+
+genErrors' : Term → ITactic
+genErrors' t = inDebugPath "genErrors" do
+  ty ← inferType t
+  just q ← return (unwrapNeg ty)
+    where nothing → error1 "genErrors: argument is not of the form ¬ (P × Q × ...)"
+  gTy ← goalTy
+  buildLevel 100 0 gTy q
 
 module _ ⦃ _ : TCOptions ⦄ where
   macro
-    genErrors = initTac ∘ (genErrors' 100)
+    genErrors = initTac ∘ genErrors'
 
 private
   open import Tactic.Defaults
@@ -78,8 +137,34 @@ private
     test₂ : {A : Set} → (a : A) → a ≡ a → String
     test₂ _ eq = genError
 
-    test₃ : {A B C : Set} → ⦃ A ⁇ ⦄ → ⦃ B ⁇ ⦄ → ¬ (A × B × C) → String
+    -- N = 1: no split at all -- straight to the direct-leaf equation
+    test₄ : {A : Set} → ¬ A → String
+    test₄ x = genErrors x
+
+    _ : test₄ {A = ⊥} (λ x → x) ≡ "¬ A"
+    _ = refl
+
+    test₃ : {A B C : Set} → ⦃ A ⁇ ⦄ → ⦃ B ⁇ ⦄ → ⦃ C ⁇ ⦄ → ¬ (A × B × C) → String
     test₃ x = genErrors x
 
     _ : test₃ {A = ⊤} {⊥} {⊤} (λ where (_ , () , _)) ≡ "¬ B"
+    _ = refl
+
+    _ : test₃ {A = ⊥} {⊥} {⊤} (λ where (_ , () , _)) ≡ "¬ A × ¬ B"
+    _ = refl
+
+    _ : test₃ {A = ⊥} {⊥} {⊥} (λ where (_ , () , _)) ≡ "¬ A × ¬ B × ¬ C"
+    _ = refl
+
+    -- N = 2: exactly one decision split, both branches decidable direct leaves
+    test₅ : {A B : Set} → ⦃ A ⁇ ⦄ → ⦃ B ⁇ ⦄ → ¬ (A × B) → String
+    test₅ x = genErrors x
+
+    _ : test₅ {A = ⊤} {⊥} (λ p → proj₂ p) ≡ "¬ B"
+    _ = refl
+
+    _ : test₅ {A = ⊥} {⊤} (λ p → proj₁ p) ≡ "¬ A"
+    _ = refl
+
+    _ : test₅ {A = ⊥} {⊥} (λ p → proj₁ p) ≡ "¬ A × ¬ B"
     _ = refl
