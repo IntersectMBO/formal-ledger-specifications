@@ -88,7 +88,7 @@ d_HSScriptStructure_26 ::
   MAlonzo.Code.Ledger.Conway.Specification.Script.Base.T_ScriptStructure_284
 d_HSScriptStructure_26 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Foreign.Script.Structure.d_HSScriptStructure_372
+      MAlonzo.Code.Ledger.Conway.Foreign.Script.Structure.d_HSScriptStructure_374
       (coe v0)
 -- Ledger.Conway.Foreign.Script._.HSTimelock
 d_HSTimelock_28 a0 = ()

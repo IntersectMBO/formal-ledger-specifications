@@ -59,7 +59,7 @@ d_HSScriptStructure_26 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.T_ScriptStructure_524
 d_HSScriptStructure_26 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Foreign.Script.Structure.d_HSScriptStructure_418
+      MAlonzo.Code.Ledger.Dijkstra.Foreign.Script.Structure.d_HSScriptStructure_420
       (coe v0)
 -- Ledger.Dijkstra.Foreign.Script._.Hashable-HSNativeScript
 d_Hashable'45'HSNativeScript_28 ::

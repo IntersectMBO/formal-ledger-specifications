@@ -112,26 +112,26 @@ d_HasTreasury'45'Acnt_200 ::
   MAlonzo.Code.Ledger.Core.Specification.Crypto.T_CryptoStructure_140 ->
   MAlonzo.Code.Ledger.Core.Specification.Epoch.T_EpochStructure_22 ->
   MAlonzo.Code.Ledger.Conway.Specification.Script.Base.T_ScriptStructure_284 ->
-  MAlonzo.Code.Ledger.Prelude.Base.T_HasTreasury_80
+  MAlonzo.Code.Ledger.Prelude.Base.T_HasTreasury_82
 d_HasTreasury'45'Acnt_200 ~v0 ~v1 ~v2 = du_HasTreasury'45'Acnt_200
 du_HasTreasury'45'Acnt_200 ::
-  MAlonzo.Code.Ledger.Prelude.Base.T_HasTreasury_80
+  MAlonzo.Code.Ledger.Prelude.Base.T_HasTreasury_82
 du_HasTreasury'45'Acnt_200
   = coe
-      MAlonzo.Code.Ledger.Prelude.Base.C_constructor_90
+      MAlonzo.Code.Ledger.Prelude.Base.C_constructor_92
       (coe (\ v0 -> d_treasury_194 (coe v0)))
 -- Ledger.Conway.Specification.PParams.HasReserves-Acnt
 d_HasReserves'45'Acnt_202 ::
   MAlonzo.Code.Ledger.Core.Specification.Crypto.T_CryptoStructure_140 ->
   MAlonzo.Code.Ledger.Core.Specification.Epoch.T_EpochStructure_22 ->
   MAlonzo.Code.Ledger.Conway.Specification.Script.Base.T_ScriptStructure_284 ->
-  MAlonzo.Code.Ledger.Prelude.Base.T_HasReserves_60
+  MAlonzo.Code.Ledger.Prelude.Base.T_HasReserves_62
 d_HasReserves'45'Acnt_202 ~v0 ~v1 ~v2 = du_HasReserves'45'Acnt_202
 du_HasReserves'45'Acnt_202 ::
-  MAlonzo.Code.Ledger.Prelude.Base.T_HasReserves_60
+  MAlonzo.Code.Ledger.Prelude.Base.T_HasReserves_62
 du_HasReserves'45'Acnt_202
   = coe
-      MAlonzo.Code.Ledger.Prelude.Base.C_constructor_70
+      MAlonzo.Code.Ledger.Prelude.Base.C_constructor_72
       (coe (\ v0 -> d_reserves_196 (coe v0)))
 -- Ledger.Conway.Specification.PParams.HasCast-Acnt
 d_HasCast'45'Acnt_204 ::
