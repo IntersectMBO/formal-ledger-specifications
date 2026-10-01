@@ -21,7 +21,9 @@ import MAlonzo.Code.Ledger.Dijkstra.Foreign.Cert              as X
 import MAlonzo.Code.Ledger.Dijkstra.Foreign.Chain             as X
   (ChainState(..), Block(..), chainStep)
 import MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs             as X
-  ( StakePoolParams(..), PState(..), DelegEnv(..), GovCertEnv(..), PoolEnv(..), CertEnv(..), DState(..), DCert(..), GState(..), CertState(..)
+  ( StakePoolParams(..), StakePoolState(..), PState(..)
+  , DelegEnv(..), GovCertEnv(..), PoolEnv(..), CertEnv(..)
+  , DState(..), DCert(..), GState(..), CertState(..)
   , delegStep, govCertStep, poolStep)
 import MAlonzo.Code.Ledger.Dijkstra.Foreign.Entities          as X
   (EntitiesEnv(..), entitiesStep, SubEntitiesEnv(..), subentitiesStep)
@@ -38,7 +40,7 @@ import MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Actions       as X
 import MAlonzo.Code.Ledger.Dijkstra.Foreign.Ledger            as X
   (LedgerEnv(..), LedgerState(..), ledgerStep, ledgersStep)
 import MAlonzo.Code.Ledger.Dijkstra.Foreign.NewEpoch          as X
-  (NewEpochState(..), newEpochStep)
+  (NewEpochState(..), LeiosSeat(..), newEpochStep)
 import MAlonzo.Code.Ledger.Dijkstra.Foreign.Ratify            as X
   (RatifyEnv(..), RatifyState(..), ratifyStep)
 import MAlonzo.Code.Ledger.Dijkstra.Foreign.Rewards           as X

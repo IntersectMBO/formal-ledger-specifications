@@ -92,6 +92,9 @@ record GlobalConstants : Type₁ where
          MaxLovelaceSupplyᶜ : Coin
          Quorum : ℕ
          NetworkId : Network
+         -- KES setup, from which the voting key age bound is derived (CIP-0164).
+         MaxKESEvoᶜ : ℕ
+         SlotsPerKESPeriodᶜ : ℕ
 
   instance
     NonZero-ActiveSlotCoeff : ℚ.NonZero ActiveSlotCoeff
