@@ -26,6 +26,11 @@ open import Ledger.Dijkstra.Specification.Ledgers.Properties.Computational txs a
 open import Ledger.Dijkstra.Specification.Utxo txs abs
 open Computational ⦃...⦄
 open Block
+
+leiosBodyChecksFailure : Bool → Maybe CertifiedEB → List TopLevelTx → String
+leiosBodyChecksFailure _     nothing  _ = "certifiedEB is set but the block carries no EB certificate"
+leiosBodyChecksFailure false (just _) _ = "the block carries an EB certificate but certifiedEB is not set"
+leiosBodyChecksFailure true  (just _) _ = "a block carrying an EB certificate carries transactions"
 ```
 -->
 
@@ -36,9 +41,13 @@ BBODY-computeProof : (Γ : BBodyEnv) (s : BBodyState) (block : Block)
 
 <!--
 ```agda
-BBODY-computeProof Γ (ls , _) block = do
+BBODY-computeProof Γ (ls , _) block
+  using certified ← BHBody.certifiedEB (BHeader.bhbody (block .bheader))
+  with leiosBodyChecks? certified (block .ebCert) (block .ts)
+... | no _ = failure $ leiosBodyChecksFailure certified (block .ebCert) (block .ts)
+... | yes lbc = do
   _ , lsStep ← computeProof _ ls (block .ts)
-  success (_ , BBODY-Block-Body (block .≡-bBodySize , block .≡-bBodyHash , lsStep))
+  success (_ , BBODY-Block-Body (block .≡-bBodySize , block .≡-bBodyHash , lbc , lsStep))
 ```
 -->
 
@@ -50,9 +59,13 @@ BBODY-completeness : (Γ : BBodyEnv) (s : BBodyState) (block : Block) (s' : BBod
 
 <!--
 ```agda
-BBODY-completeness Γ s block _ (BBODY-Block-Body (_ , _  , lsStep))
- with recomputeProof lsStep | completeness _ _ _ _ lsStep
-... | success _ | refl = refl
+BBODY-completeness Γ s block _ (BBODY-Block-Body (_ , _ , lbc , lsStep))
+  using certified ← BHBody.certifiedEB (BHeader.bhbody (block .bheader))
+  with leiosBodyChecks? certified (block .ebCert) (block .ts)
+... | no ¬lbc = ⊥-elim $ ¬lbc lbc
+... | yes _
+    with recomputeProof lsStep | completeness _ _ _ _ lsStep
+...    | success _ | refl = refl
 
 instance
 ```

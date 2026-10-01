@@ -67,6 +67,21 @@ BBodyState = LedgerState × BlocksMade
 incrBlocks : KeyHash → BlocksMade → BlocksMade
 incrBlocks hk b = b ∪⁺ singletonᵐ hk 1
 
+leiosBodyChecks : Bool → Maybe CertifiedEB → List TopLevelTx → Type
+leiosBodyChecks certified nothing   _    = certified ≡ false
+leiosBodyChecks certified (just _)  txs  = certified ≡ true × txs ≡ []
+
+leiosBodyChecks? : ∀ certified ebCert txs → Dec (leiosBodyChecks certified ebCert txs)
+leiosBodyChecks? certified nothing  _       = certified ≟ false
+leiosBodyChecks? certified (just _) (_ ∷ _) = no λ { (_ , ()) }
+leiosBodyChecks? certified (just _) []      with certified ≟ true
+... | yes p = yes (p , refl)
+... | no ¬p = no (¬p ∘ proj₁)
+
+instance
+  Dec-leiosBodyChecks : ∀ {certified ebCert txs} → leiosBodyChecks certified ebCert txs ⁇
+  Dec-leiosBodyChecks = ⁇ (leiosBodyChecks? _ _ _)
+
 data _⊢_⇀⦇_,BBODY⦈_
   : BBodyEnv → BBodyState → Block → BBodyState → Type where
 
@@ -92,6 +107,7 @@ data _⊢_⇀⦇_,BBODY⦈_
 
     ∙ block .bBodySize ≡ bhb .hBbsize
     ∙ block .bBodyHash ≡ bhb .bhash
+    ∙ leiosBodyChecks (bhb .certifiedEB) (block .ebCert) txs
     ∙ Γw ⊢ ls ⇀⦇ txs ,LEDGERS⦈ ls'
     ────────────────────────────────
     (es , acnt) ⊢ ls , b ⇀⦇ block ,BBODY⦈ (ls' , incrBlocks hk b)
