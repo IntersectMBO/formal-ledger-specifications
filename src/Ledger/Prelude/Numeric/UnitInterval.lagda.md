@@ -15,10 +15,13 @@ open import Prelude
 open import Agda.Builtin.FromNat
 open import Class.Show using (Show; show)
 open import Data.Irrelevant using ([_])
-open import Data.Rational using (ℚ; _≤_; _≤?_; _*_; nonNegative)
-open import Data.Rational.Properties
+open import Data.Rational using (ℚ; _≤_; _<_; _≤?_; _*_; nonNegative) renaming (_/_ to _/ℚ_)
+open import Data.Rational.Properties hiding (_≟_)
 open import Data.Rational.Show using () renaming (show to ℚshow)
 open import Data.Refinement using (Refinement-syntax; value; _,_)
+open import Relation.Binary.Construct.On using (decTotalOrder)
+open import Relation.Binary
+open import Function
 
 open ≤-Reasoning
 
@@ -93,6 +96,14 @@ clamp x with 0 ≤? x
 ...     | no  _   = mkUnitInterval 1
 ...     | yes x≤1 = (x , [ 0≤x , x≤1 ])
 
+-- Helper function to convert a pair of ℕ to a Rational
+mkℚ : ℕ → ℕ → Maybe ℚ
+mkℚ n d with d ≟ 0
+... | yes p = nothing
+... | no ¬p =
+  let instance _ = ≢-nonZero ¬p
+  in just (ℤ.pos d /ℚ d)
+
 -- UnitInterval Properties
 
 -- The predicate for 'UnitInterval' also holds in a proof-relevant context.
@@ -114,4 +125,10 @@ prop-toUnitInterval-fromUnitInterval : ∀ (x : UnitInterval)
 prop-toUnitInterval-fromUnitInterval (x , [ p0 ]) with isInUnitInterval x
 ... | no ¬p = ⊥-elim-irr (¬p p0)
 ... | yes p = refl
+
+_<ᵘⁱ_ : UnitInterval → UnitInterval → Type
+_<ᵘⁱ_ = _<_ on value
+
+≤ᵘⁱ-DTO : DecTotalOrder 0ℓ 0ℓ 0ℓ
+≤ᵘⁱ-DTO = decTotalOrder {B = UnitInterval} ≤-decTotalOrder value
 ```
