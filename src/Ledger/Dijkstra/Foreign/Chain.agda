@@ -23,10 +23,15 @@ open import Ledger.Dijkstra.Foreign.Utxo
 open import Ledger.Dijkstra.Foreign.Ledger
 open import Ledger.Dijkstra.Foreign.NewEpoch
 open import Ledger.Dijkstra.Foreign.Transaction
+open import Ledger.Dijkstra.Specification.Crypto using (LeiosCryptoStructure)
+open import Ledger.Dijkstra.Specification.Leios DummyGovStructure using (EBCert)
+open import Ledger.Dijkstra.Specification.Leios.Types cryptoStructure leiosCryptoStructure
+  using (EndorserBlock)
 open import Ledger.Dijkstra.Specification.Chain it DummyAbstractFunctions
 open import Ledger.Dijkstra.Specification.Chain.Properties.Computational it DummyAbstractFunctions
 
 open Computational
+open LeiosCryptoStructure HSLeiosCryptoStructure using (RBHeaderHash)
 
 instance
   HsTy-BHBody = autoHsType BHBody ⊣ withConstructor "MkBHBody"
@@ -37,12 +42,25 @@ instance
                                       • fieldPrefix "bh"
   Conv-BHeader = autoConvert BHeader
 
+  HsTy-EBCert = autoHsType EBCert ⊣ withConstructor "MkEBCert"
+                                    • fieldPrefix "ebc"
+  Conv-EBCert = autoConvert EBCert
+
+  HsTy-EndorserBlock = autoHsType EndorserBlock ⊣ withConstructor "MkEndorserBlock"
+  Conv-EndorserBlock = autoConvert EndorserBlock
+
+  HsTy-CertifiedEB = autoHsType CertifiedEB ⊣ withConstructor "MkCertifiedEB"
+                                              • fieldPrefix "ceb"
+  Conv-CertifiedEB = autoConvert CertifiedEB
+
 record HSBlock : Type where
   field
-    bheader   : BHeader
-    ts        : List TopLevelTx
-    bBodySize : ℕ
-    bBodyHash : KeyHash
+    bheader      : BHeader
+    bHeaderHash  : RBHeaderHash
+    ts           : List TopLevelTx
+    ebCert       : Maybe CertifiedEB
+    bBodySize    : ℕ
+    bBodyHash    : KeyHash
 
 open HSBlock
 
@@ -61,7 +79,9 @@ instance
                  show (BHBody.bhash (BHeader.bhbody (bheader b)))
   ... | yes q = record
     { bheader = bheader b
+    ; bHeaderHash = bHeaderHash b
     ; ts = ts b
+    ; ebCert = ebCert b
     ; bBodySize = bBodySize b
     ; ≡-bBodySize = p
     ; ≡-bBodyHash = q
