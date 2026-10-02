@@ -19,10 +19,13 @@ module Ledger.Dijkstra.Specification.Chain
 
 open import Ledger.Dijkstra.Specification.BlockBody txs abs public
 open import Ledger.Dijkstra.Specification.Certs govStructure
+open import Ledger.Dijkstra.Specification.Crypto using (LeiosCryptoStructure)
 open import Ledger.Dijkstra.Specification.Enact govStructure
 open import Ledger.Dijkstra.Specification.Epoch txs abs
 open import Ledger.Dijkstra.Specification.Gov govStructure
 open import Ledger.Dijkstra.Specification.Ledger txs abs
+open import Ledger.Dijkstra.Specification.Leios.Types cryptoStructure leiosCryptoStructure
+  using (Announcement)
 open import Ledger.Prelude; open Equivalence
 open import Ledger.Dijkstra.Specification.Ratify govStructure
 open import Ledger.Dijkstra.Specification.RewardUpdate txs abs
@@ -30,20 +33,39 @@ open import Ledger.Dijkstra.Specification.Utxo txs abs
 
 open import Algebra
 open import Data.Nat.Properties using (+-0-monoid)
+
+open LeiosCryptoStructure leiosCryptoStructure using (RBHeaderHash)
 ```
 -->
 
 ## Definition of <span class="AgdaRecord">ChainState</span> {#sec:definition-of-chainstate}
 
+Beside the new-epoch state, the chain state remembers the last applied block:
+its slot, the hash of its header, and the endorser block (EB) its header
+announced, if any.  Every block replaces this record, so an announcement
+survives exactly one block and only the immediate successor can certify it
+([Step 5][cip-step5]).  The consensus specification keeps the same record
+under the same name ([alignment][dn-alignment]).
+
 ```agda
+record LastAppliedBlock : Type where
+  field
+    slot         : Slot
+    headerHash   : RBHeaderHash
+    announcedEB  : Maybe Announcement
+
 record ChainState : Type where
   field
     newEpochState  : NewEpochState
+    lastApplied    : Maybe LastAppliedBlock
 ```
 
 <!--
 ```agda
 instance
+  unquoteDecl HasCast-LastAppliedBlock = derive-HasCast
+    [ (quote LastAppliedBlock , HasCast-LastAppliedBlock) ]
+
   HasNewEpochState-ChainState : HasNewEpochState ChainState
   HasNewEpochState-ChainState .NewEpochStateOf = ChainState.newEpochState
 
@@ -98,10 +120,8 @@ data _⊢_⇀⦇_,CHAIN⦈_ : ⊤ → ChainState → Block → ChainState → Ty
 
 ```agda
     let  cs' = record cs
-                 { newEpochState = record nes
-                                     {  bcur = bcur';
-                                        epochState = record epochState {ls = ls'}
-                                     }
+                 { newEpochState  = record nes { bcur = bcur'; epochState = record epochState {ls = ls'} }
+                 ; lastApplied    = just ⟦ slot , bHeaderHash , announcedEB ⟧
                  }
     in
     ∙ totalRefScriptsSize ls ts ≤ maxRefScriptSizePerBlock
@@ -110,3 +130,8 @@ data _⊢_⇀⦇_,CHAIN⦈_ : ⊤ → ChainState → Block → ChainState → Ty
       ────────────────────────────────
       _ ⊢ cs ⇀⦇ b ,CHAIN⦈ cs'
 ```
+
+The resulting chain state records the block as the last applied block.
+
+[cip-step5]: https://github.com/cardano-foundation/CIPs/blob/master/CIP-0164/README.md#step-5-chain-inclusion
+[dn-alignment]: https://github.com/IntersectMBO/formal-ledger-specifications/blob/leios-docs/docs/leios/design-note.md#alignment-with-the-consensus-specification
