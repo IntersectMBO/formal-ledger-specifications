@@ -19,6 +19,7 @@ open import Ledger.Dijkstra.Foreign.Cert
 open import Ledger.Dijkstra.Foreign.Gov
 open import Ledger.Dijkstra.Foreign.Rewards
 open import Ledger.Dijkstra.Foreign.Transaction
+open import Ledger.Dijkstra.Foreign.Account
 open import Ledger.Dijkstra.Specification.Utxo it DummyAbstractFunctions
 open import Ledger.Dijkstra.Specification.Utxow.Properties.Computational it DummyAbstractFunctions
 open import Ledger.Dijkstra.Specification.Utxo.Properties.Computational it DummyAbstractFunctions
@@ -45,6 +46,7 @@ instance
 
 unquoteDecl = do
   hsTypeAlias UTxO
+  hsTypeAlias OutputDeposits
   
 utxo-step : HsType (UTxOEnv → UTxOState → Tx TxLevelTop → ComputationResult String UTxOState)
 utxo-step = to (compute Computational-UTXO)

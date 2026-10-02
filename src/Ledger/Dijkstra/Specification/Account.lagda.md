@@ -101,6 +101,33 @@ AccountBalanceIntervals : Type
 AccountBalanceIntervals = Credential ⇀ BalanceInterval
 ```
 
+## Deposit Backers {#sec:deposit-backers}
+
+A *new-style* output does not carry its own minimum-ada deposit (see the
+`Utxo`{.AgdaModule} module).  Instead, the deposit is recorded when the output is
+created and is backed in one of two ways:
+
++  `backedByStore`{.AgdaInductiveConstructor}: the deposit is paid into the
+   ledger-controlled *deposit store* and released to the transaction that spends
+   the output;
++  `backedByAccount`{.AgdaInductiveConstructor} `c`{.AgdaBound}: no ada moves.
+   The deposit is *locked* in the balance of the account with credential
+   `c`{.AgdaBound}, where it stays staked, and it is unlocked automatically when
+   the output is spent.
+
+```agda
+data DepositBacker : Type where
+  backedByStore    : DepositBacker
+  backedByAccount  : Credential → DepositBacker
+```
+
+<!--
+```agda
+unquoteDecl DecEq-DepositBacker = derive-DecEq
+  ((quote DepositBacker , DecEq-DepositBacker) ∷ [])
+```
+-->
+
 
 
 [CIP 159]: https://github.com/cardano-foundation/CIPs/tree/master/CIP-0159

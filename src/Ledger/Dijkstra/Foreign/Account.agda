@@ -26,3 +26,6 @@ private
 instance
   HsTy-BalanceInterval = autoHsType BalanceInterval ⊣ onConstructors toHaskellConstr
   Conv-BalanceInterval = autoConvert BalanceInterval
+
+  HsTy-DepositBacker = autoHsType DepositBacker
+  Conv-DepositBacker = autoConvert DepositBacker

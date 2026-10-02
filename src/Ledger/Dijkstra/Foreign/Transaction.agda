@@ -64,6 +64,9 @@ record TxBodySub : Type where
     txRequiredTopLevelGuards  : ℙ (Credential × Maybe Datum)
     txDirectDeposits          : DirectDeposits
     txBalanceIntervals        : AccountBalanceIntervals
+    txOutBacking              : Ix ⇀ DepositBacker
+    txStoreDeposit            : Coin
+    txStoreRelease            : Coin
 
 instance
   convTxBodySub : Convertible (TxBody TxLevelSub) TxBodySub
@@ -137,6 +140,9 @@ record TxBodyTop : Type where
     txDirectDeposits         : DirectDeposits
     txBalanceIntervals       : AccountBalanceIntervals
     txStartingBalanceIntervals : AccountBalanceIntervals
+    txOutBacking               : Ix ⇀ DepositBacker
+    txStoreDeposit             : Coin
+    txStoreRelease             : Coin
 
 instance
   convTxBodyTop : Convertible (TxBody TxLevelTop) TxBodyTop

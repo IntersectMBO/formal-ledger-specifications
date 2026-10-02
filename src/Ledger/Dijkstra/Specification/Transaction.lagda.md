@@ -186,6 +186,16 @@ record TransactionStructure : Type₁ where
   UTxO : Type
   UTxO = TxIn ⇀ TxOut
 
+  -- The deposit recorded for a new-style output at creation, and its backer
+  -- (see `DepositBacker` in the `Account` module).  The amount is never
+  -- recomputed: it is exactly what is released or unlocked when the output
+  -- is spent, whatever the protocol parameters are by then.
+  OutputDeposit : Type
+  OutputDeposit = Coin × DepositBacker
+
+  OutputDeposits : Type
+  OutputDeposits = TxIn ⇀ OutputDeposit
+
   RedeemerPtr : Type
   RedeemerPtr = Tag × Ix
 
@@ -243,6 +253,20 @@ Of particular note in the Dijkstra era are
    this field records the account balance interval assertions that this transaction
    makes about account balances before any sub-transaction is processed.
 
++  `txOutBacking`{.AgdaField}: present at both transaction levels, this field marks
+   which outputs are *new-style*, i.e. do not carry their own minimum-ada deposit,
+   and says how each one's deposit is backed (see `DepositBacker`{.AgdaDatatype}).
+   Outputs not in its domain are ordinary self-backed outputs.
+
++  `txStoreDeposit`{.AgdaField} and `txStoreRelease`{.AgdaField}: present at both
+   transaction levels, these fields *declare* how much ada this transaction pays
+   into, and receives from, the deposit store.  The ledger checks that they equal
+   the amounts it computes, so they carry no freedom; declaring them makes the
+   amounts part of the signed body.  Neither amount is netted against the other,
+   and a sub-transaction is not balanced on its own: whichever transaction in the
+   batch supplies the ada for a deposit, or receives a release, is decided by the
+   batch-wide balance.
+
 ```agda
   mutual
     record Tx (txLevel : TxLevel) : Type where
@@ -282,6 +306,9 @@ Of particular note in the Dijkstra era are
         txDirectDeposits           : DirectDeposits
         txBalanceIntervals         : AccountBalanceIntervals
         txStartingBalanceIntervals : InTopLevel txLevel AccountBalanceIntervals
+        txOutBacking               : Ix ⇀ DepositBacker
+        txStoreDeposit             : Coin
+        txStoreRelease             : Coin
         ---------------------
 
       requiredSignerHashes : ℙ KeyHash
@@ -436,6 +463,18 @@ could be either of them.
     field IsValidFlagOf : A → Bool
   open HasIsValidFlag ⦃...⦄ public
 
+  record HasOutBacking {a} (A : Type a) : Type a where
+    field OutBackingOf : A → Ix ⇀ DepositBacker
+  open HasOutBacking ⦃...⦄ public
+
+  record HasStoreDeposit {a} (A : Type a) : Type a where
+    field StoreDepositOf : A → Coin
+  open HasStoreDeposit ⦃...⦄ public
+
+  record HasStoreRelease {a} (A : Type a) : Type a where
+    field StoreReleaseOf : A → Coin
+  open HasStoreRelease ⦃...⦄ public
+
   instance
     HasTxBody-Tx : HasTxBody (Tx txLevel)
     HasTxBody-Tx .TxBodyOf = Tx.txBody
@@ -492,6 +531,21 @@ could be either of them.
     HasStartingBalanceIntervals-TxBody .StartingBalanceIntervalsOf = TxBody.txStartingBalanceIntervals
     HasStartingBalanceIntervals-Tx : HasStartingBalanceIntervals TopLevelTx
     HasStartingBalanceIntervals-Tx .StartingBalanceIntervalsOf = StartingBalanceIntervalsOf ∘ TxBodyOf
+
+    HasOutBacking-TxBody : HasOutBacking (TxBody txLevel)
+    HasOutBacking-TxBody .OutBackingOf = TxBody.txOutBacking
+    HasOutBacking-Tx : HasOutBacking (Tx txLevel)
+    HasOutBacking-Tx .OutBackingOf = OutBackingOf ∘ TxBodyOf
+
+    HasStoreDeposit-TxBody : HasStoreDeposit (TxBody txLevel)
+    HasStoreDeposit-TxBody .StoreDepositOf = TxBody.txStoreDeposit
+    HasStoreDeposit-Tx : HasStoreDeposit (Tx txLevel)
+    HasStoreDeposit-Tx .StoreDepositOf = StoreDepositOf ∘ TxBodyOf
+
+    HasStoreRelease-TxBody : HasStoreRelease (TxBody txLevel)
+    HasStoreRelease-TxBody .StoreReleaseOf = TxBody.txStoreRelease
+    HasStoreRelease-Tx : HasStoreRelease (Tx txLevel)
+    HasStoreRelease-Tx .StoreReleaseOf = StoreReleaseOf ∘ TxBodyOf
 
     HasValidInterval-TxBody : HasValidInterval (TxBody txLevel)
     HasValidInterval-TxBody .ValidIntervalOf = TxBody.txVldt
