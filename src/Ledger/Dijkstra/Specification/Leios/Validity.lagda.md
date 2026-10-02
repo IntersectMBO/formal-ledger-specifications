@@ -109,6 +109,32 @@ here does not encode that invariant, so `ValidEB`{.AgdaRecord} states it as
 instance
   Dec-Unique : ∀ {A : Type} ⦃ _ : DecEq A ⦄ {xs : List A} → Unique xs ⁇
   Dec-Unique {xs = xs} = ⁇ unique? _≟_ xs
+
+private
+  nonempty? : ∀ {A : Type} (xs : List A) → Dec (xs ≢ [])
+  nonempty? []       = no λ p → p refl
+  nonempty? (_ ∷ _)  = yes λ ()
+
+module _ {Γ : LedgerEnv} {ls : LedgerState} where
+  open PParams (PParamsOf Γ)
+
+  instance
+    Dec-WithinEBBounds : ∀ {eb closure} → WithinEBBounds {Γ} {ls} eb closure ⁇
+    Dec-WithinEBBounds {eb} {closure} = ⁇ map′
+      (λ (a , b , c , d) → record { ebSizeOK = a ; txsSizeOK = b ; exUnitsOK = c ; refScriptsOK = d })
+      (λ w → let open WithinEBBounds w in ebSizeOK , txsSizeOK , exUnitsOK , refScriptsOK)
+      ¿ ebSize eb ≤ leiosMaxEBSize
+      × ∑ˡ[ tx ← closure ] SizeOf tx ≤ leiosMaxEBTxsSize
+      × leiosMaxEBExUnits ≥ᵉ ∑ˡ[ tx ← closure ] totExUnits tx
+      × ∑ˡ[ tx ← closure ] refScriptsSize tx (UTxOOf ls) ≤ leiosMaxRefScriptSizePerEB ¿
+
+  -- Given the extension, the remaining conditions decide validity.
+  ValidEB? : ∀ eb closure → (∃[ ls' ] Γ ⊢ ls ⇀⦇ closure ,LEDGERS⦈ ls') → Dec (ValidEB {Γ} {ls} eb closure)
+  ValidEB? eb closure ext = map′
+    (λ (n , u , m , b) → record { nonempty = n ; uniqueRefs = u ; matchesRefs = m ; withinBounds = b ; validExtension = ext })
+    (λ v → let open ValidEB v in nonempty , uniqueRefs , matchesRefs , withinBounds)
+    (nonempty? closure ×-dec unique? _≟_ (map proj₁ (EndorserBlock.ebTxRefs eb))
+                       ×-dec ¿ MatchesRefs eb closure × WithinEBBounds {Γ} {ls} eb closure ¿)
 ```
 -->
 

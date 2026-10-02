@@ -234,5 +234,24 @@ and the fifth, that the message is the hash of the announcing header taken from
 the chain context, is supplied by the block rule that applies the certificate,
 through `msg`{.AgdaBound}.
 
+<!--
+```agda
+instance
+  Dec-ValidEBCert : ∀ {cmt τ msg cert} → ValidEBCert cmt τ msg cert ⁇
+  Dec-ValidEBCert {cmt} {τ} {msg} {cert} = ⁇ map′ fromConjuncts toConjuncts ¿ Conjuncts ¿
+    where
+      Conjuncts : Type
+      Conjuncts = cert .signers ⊆ dom (keyedSeats cmt)
+                × isSignedByAggregate (range (keyedSeats cmt ∣ cert .signers)) msg (cert .sig)
+                × fromUnitInterval τ ℚ.≤ signedWeight cmt (cert .signers)
+
+      fromConjuncts : Conjuncts → ValidEBCert cmt τ msg cert
+      fromConjuncts (k , s , q) = record { signersKeyed = k ; validSignature = s ; quorum = q }
+
+      toConjuncts : ValidEBCert cmt τ msg cert → Conjuncts
+      toConjuncts v = let open ValidEBCert v in signersKeyed , validSignature , quorum
+```
+-->
+
 [cip-certval]: https://github.com/cardano-foundation/CIPs/blob/master/CIP-0164/README.md#certificate-validation
 [cip-step5]: https://github.com/cardano-foundation/CIPs/blob/master/CIP-0164/README.md#step-5-chain-inclusion
