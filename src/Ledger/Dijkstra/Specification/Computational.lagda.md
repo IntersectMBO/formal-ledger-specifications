@@ -28,6 +28,10 @@ open import Interface.ComputationalRelation
 open import Ledger.Dijkstra.Specification.BlockBody txs abs using (_⊢_⇀⦇_,BBODY⦈_)
 open import Ledger.Dijkstra.Specification.BlockBody.Properties.Computational txs abs
 
+open import Ledger.Dijkstra.Specification.Chain txs abs
+  using (_⊢_⇀⦇_,CHAIN⦈_ ; _⊢_⇀⦇_,CERTIFY⦈_)
+open import Ledger.Dijkstra.Specification.Chain.Properties.Computational txs abs
+
 open import Ledger.Dijkstra.Specification.Certs govStructure
   using (_⊢_⇀⦇_,CERT⦈_ ; _⊢_⇀⦇_,CERTS⦈_ ; _⊢_⇀⦇_,DELEG⦈_ ; _⊢_⇀⦇_,GOVCERT⦈_)
 open import Ledger.Dijkstra.Specification.Certs.Properties.Computational govStructure
@@ -82,7 +86,9 @@ Adding a new rule requires adding an entry here.
 ```agda
 _ = Computational _⊢_⇀⦇_,BBODY⦈_       String  ∋ it
 _ = Computational _⊢_⇀⦇_,CERT⦈_        String  ∋ it
+_ = Computational _⊢_⇀⦇_,CERTIFY⦈_     String  ∋ it
 _ = Computational _⊢_⇀⦇_,CERTS⦈_       String  ∋ it
+_ = Computational _⊢_⇀⦇_,CHAIN⦈_       String  ∋ it
 _ = Computational _⊢_⇀⦇_,DELEG⦈_       String  ∋ it
 _ = Computational _⊢_⇀⦇_,ENACT⦈_       String  ∋ it
 _ = Computational _⊢_⇀⦇_,EPOCH⦈_       ⊥       ∋ it

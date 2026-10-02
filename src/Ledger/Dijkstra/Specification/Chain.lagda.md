@@ -24,8 +24,11 @@ open import Ledger.Dijkstra.Specification.Enact govStructure
 open import Ledger.Dijkstra.Specification.Epoch txs abs
 open import Ledger.Dijkstra.Specification.Gov govStructure
 open import Ledger.Dijkstra.Specification.Ledger txs abs
+open import Ledger.Dijkstra.Specification.Leios govStructure
+  using (LeiosCommittee; ValidEBCert; certificationDelay)
 open import Ledger.Dijkstra.Specification.Leios.Types cryptoStructure leiosCryptoStructure
-  using (Announcement)
+  using (Announcement; hashEB)
+open import Ledger.Dijkstra.Specification.Leios.Validity txs abs using (ValidEB)
 open import Ledger.Prelude; open Equivalence
 open import Ledger.Dijkstra.Specification.Ratify govStructure
 open import Ledger.Dijkstra.Specification.RewardUpdate txs abs
@@ -34,7 +37,7 @@ open import Ledger.Dijkstra.Specification.Utxo txs abs
 open import Algebra
 open import Data.Nat.Properties using (+-0-monoid)
 
-open LeiosCryptoStructure leiosCryptoStructure using (RBHeaderHash)
+open LeiosCryptoStructure leiosCryptoStructure using (EBHash; RBHeaderHash; rbHeaderHashBytes)
 ```
 -->
 
@@ -101,12 +104,83 @@ private variable
 ```
 -->
 
+## The <span class="AgdaDatatype">CERTIFY</span> Transition System {#sec:the-certify-transition-system}
+
+The certificate branch judges a block's certificate, when the block carries
+one, in the world of the block that announced the EB, which is the chain state
+before the tick.  Its environment packs what the branch reads from there, with
+the certifying block's slot, and `certifyEnv`{.AgdaFunction} reads it off the
+chain state.
+
+```agda
+record CertifyEnv : Type where
+  field
+    lastApplied  : Maybe LastAppliedBlock
+    committee    : LeiosCommittee
+    enactState   : EnactState
+    treasury     : Treasury
+    slot         : Slot
+```
+
+<!--
+```agda
+instance
+  unquoteDecl HasCast-CertifyEnv = derive-HasCast
+    [ (quote CertifyEnv , HasCast-CertifyEnv) ]
+```
+-->
+
+```agda
+certifyEnv : ChainState → Block → CertifyEnv
+certifyEnv cs b = ⟦ lastApplied , leiosCommittee , EnactStateOf cs , TreasuryOf newEpochState , slot ⟧
+  where
+    open ChainState cs
+    open NewEpochState newEpochState using (leiosCommittee)
+    open BHBody (BHeader.bhbody (Block.bheader b)) using (slot)
+
+pendingEB : LastAppliedBlock → Maybe EBHash
+pendingEB la = proj₁ <$> LastAppliedBlock.announcedEB la
+```
+
+```agda
+data _⊢_⇀⦇_,CERTIFY⦈_ : CertifyEnv → LedgerState → Maybe CertifiedEB → LedgerState → Type where
+
+  CERTIFY-None : ∀ {Γ : CertifyEnv} {ls : LedgerState} →
+      ────────────────────────────────
+      Γ ⊢ ls ⇀⦇ nothing ,CERTIFY⦈ ls
+
+  CERTIFY-EB : ∀ {Γ : CertifyEnv} {ls ls₁ : LedgerState} {ceb : CertifiedEB} {la : LastAppliedBlock}
+```
+
+<!--
+```agda
+    → let open CertifyEnv Γ; open CertifiedEB ceb
+          open LastAppliedBlock la renaming (slot to announcingSlot)
+          open EnactState enactState using (constitution)
+          open PParams (PParamsOf enactState) using (leiosQuorumStakeThreshold) in
+```
+-->
+
+```agda
+    let  pp  = PParamsOf enactState
+         Γ'  = ⟦ announcingSlot , ∣ constitution ∣ , pp , enactState , treasury ⟧
+    in
+    ∙ lastApplied ≡ just la
+    ∙ pendingEB la ≡ just (hashEB eb)
+    ∙ announcingSlot + certificationDelay pp ≤ slot
+    ∙ ValidEBCert committee leiosQuorumStakeThreshold (rbHeaderHashBytes headerHash) cert
+    ∙ ValidEB {Γ'} {ls} eb closure
+    ∙ Γ' ⊢ ls ⇀⦇ closure ,LEDGERS⦈ ls₁
+      ────────────────────────────────
+      Γ ⊢ ls ⇀⦇ just ceb ,CERTIFY⦈ ls₁
+```
+
 ## The <span class="AgdaDatatype">CHAIN</span> Transition System {#sec:the-chain-transition-system}
 
 ```agda
 data _⊢_⇀⦇_,CHAIN⦈_ : ⊤ → ChainState → Block → ChainState → Type where
 
-  CHAIN : ∀ {bcur'} {b : Block} {nes : NewEpochState} {cs : ChainState}
+  CHAIN : ∀ {bcur'} {b : Block} {nes : NewEpochState} {cs : ChainState} {ls₁ : LedgerState}
 ```
 
 <!--
@@ -119,13 +193,15 @@ data _⊢_⇀⦇_,CHAIN⦈_ : ⊤ → ChainState → Block → ChainState → Ty
 -->
 
 ```agda
-    let  cs' = record cs
-                 { newEpochState  = record nes { bcur = bcur'; epochState = record epochState {ls = ls'} }
-                 ; lastApplied    = just ⟦ slot , bHeaderHash , announcedEB ⟧
-                 }
+    let  nes₁  = record newEpochState { epochState = record (EpochStateOf cs) {ls = ls₁} }
+         cs'   = record cs
+                   { newEpochState  = record nes { bcur = bcur'; epochState = record epochState {ls = ls'} }
+                   ; lastApplied    = just ⟦ slot , bHeaderHash , announcedEB ⟧
+                   }
     in
+    ∙ certifyEnv cs b ⊢ LedgerStateOf cs ⇀⦇ ebCert ,CERTIFY⦈ ls₁
+    ∙ tt ⊢ nes₁ ⇀⦇ slot ,TICK⦈ nes
     ∙ totalRefScriptsSize ls ts ≤ maxRefScriptSizePerBlock
-    ∙ tt ⊢ newEpochState ⇀⦇ slot ,TICK⦈ nes
     ∙ (es , acnt) ⊢ (ls , bcur) ⇀⦇ b ,BBODY⦈ (ls' , bcur')
       ────────────────────────────────
       _ ⊢ cs ⇀⦇ b ,CHAIN⦈ cs'
