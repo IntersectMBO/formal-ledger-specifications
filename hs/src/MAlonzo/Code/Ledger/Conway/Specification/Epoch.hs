@@ -3211,7 +3211,7 @@ du_Δt'45'nonneg_3586 v0 v1 v2 v3
                MAlonzo.Code.Ledger.Conway.Specification.PParams.d_treasuryCut_384
                (coe du_prevPp_3476 (coe v3)))))
       (coe
-         MAlonzo.Code.Ledger.Prelude.Numeric.UnitInterval.du_UnitInterval'45''42''45'0'8804'_198
+         MAlonzo.Code.Ledger.Prelude.Numeric.UnitInterval.du_UnitInterval'45''42''45'0'8804'_174
          (coe
             MAlonzo.Code.Data.Rational.Literals.d_fromℤ_6
             (coe du_rewardPot_3502 (coe v0) (coe v1) (coe v2) (coe v3)))

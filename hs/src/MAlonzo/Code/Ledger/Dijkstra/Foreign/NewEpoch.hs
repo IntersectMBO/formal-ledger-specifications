@@ -86,8 +86,8 @@ data NewEpochState = MkNewEpochState {nesLastEpoch :: Integer, nesBprev :: (MAlo
   deriving (Show, Eq, Generic)
 -- Ledger.Dijkstra.Foreign.NewEpoch._._≼_
 d__'8828'__10 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.T_LeiosSeat_1460 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.T_LeiosSeat_1460 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.T_LeiosSeat_1454 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.T_LeiosSeat_1454 ->
   ()
 d__'8828'__10 = erased
 -- Ledger.Dijkstra.Foreign.NewEpoch._.HasCast-LeiosSeat
@@ -95,7 +95,7 @@ d_HasCast'45'LeiosSeat_12 ::
   MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.T_HasCast_16
 d_HasCast'45'LeiosSeat_12
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.du_HasCast'45'LeiosSeat_1478
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.du_HasCast'45'LeiosSeat_1472
 -- Ledger.Dijkstra.Foreign.NewEpoch._.LeiosCommittee
 d_LeiosCommittee_14 :: ()
 d_LeiosCommittee_14 = erased
@@ -107,7 +107,7 @@ d_honouredBlsKey_20 ::
   Maybe MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 -> Maybe Integer
 d_honouredBlsKey_20
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.d_honouredBlsKey_1482
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.d_honouredBlsKey_1476
       (coe
          MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_govStructure_2868
          (coe
@@ -118,7 +118,7 @@ d_honouredBlsKey_20
 d_maxKeyAge_22 :: Integer
 d_maxKeyAge_22
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.d_maxKeyAge_1480
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.d_maxKeyAge_1474
       (coe
          MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_govStructure_2868
          (coe
@@ -131,10 +131,10 @@ d_selectCommittee_24 ::
   Integer ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
-  [MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.T_LeiosSeat_1460]
+  [MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.T_LeiosSeat_1454]
 d_selectCommittee_24
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.d_selectCommittee_1532
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.d_selectCommittee_1592
       (coe
          MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_govStructure_2868
          (coe
@@ -143,27 +143,27 @@ d_selectCommittee_24
                MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_24)))
 -- Ledger.Dijkstra.Foreign.NewEpoch._.LeiosSeat.key
 d_key_28 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.T_LeiosSeat_1460 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.T_LeiosSeat_1454 ->
   Maybe Integer
 d_key_28 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.d_key_1472
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.d_key_1466
       (coe v0)
 -- Ledger.Dijkstra.Foreign.NewEpoch._.LeiosSeat.pool
 d_pool_30 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.T_LeiosSeat_1460 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.T_LeiosSeat_1454 ->
   Integer
 d_pool_30 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.d_pool_1468
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.d_pool_1462
       (coe v0)
 -- Ledger.Dijkstra.Foreign.NewEpoch._.LeiosSeat.weight
 d_weight_32 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.T_LeiosSeat_1460 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.T_LeiosSeat_1454 ->
   MAlonzo.Code.Data.Refinement.Base.T_Refinement_28
 d_weight_32 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.d_weight_1470
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.d_weight_1464
       (coe v0)
 -- Ledger.Dijkstra.Foreign.NewEpoch._._⊢_⇀⦇_,EPOCH⦈_
 d__'8866'_'8640''10631'_'44'EPOCH'10632'__36 a0 a1 a2 a3 = ()
@@ -625,7 +625,7 @@ d_NewEpochStateOf_220 v0
 -- Ledger.Dijkstra.Foreign.NewEpoch._.LeiosCommittees.current
 d_current_224 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.T_LeiosCommittees_4224 ->
-  [MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.T_LeiosSeat_1460]
+  [MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.T_LeiosSeat_1454]
 d_current_224 v0
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_current_4230
@@ -633,7 +633,7 @@ d_current_224 v0
 -- Ledger.Dijkstra.Foreign.NewEpoch._.LeiosCommittees.next
 d_next_226 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.T_LeiosCommittees_4224 ->
-  [MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.T_LeiosSeat_1460]
+  [MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.T_LeiosSeat_1454]
 d_next_226 v0
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_next_4232
@@ -1079,7 +1079,7 @@ d_Conv'45'LeiosSeat_318
       (coe
          (\ v0 ->
             case coe v0 of
-              MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.C_constructor_1474 v1 v2 v3
+              MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.C_constructor_1468 v1 v2 v3
                 -> coe
                      C_MkLeiosSeat_723 (coe v1)
                      (coe
@@ -1119,7 +1119,7 @@ d_Conv'45'LeiosSeat_318
             case coe v0 of
               C_MkLeiosSeat_723 v1 v2 v3
                 -> coe
-                     MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.C_constructor_1474
+                     MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.C_constructor_1468
                      (coe v1)
                      (let v4
                             = MAlonzo.Code.Ledger.Prelude.Numeric.UnitInterval.d_toUnitInterval_74

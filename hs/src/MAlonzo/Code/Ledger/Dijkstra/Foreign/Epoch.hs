@@ -533,7 +533,7 @@ d_NewEpochStateOf_194 v0
 -- Ledger.Dijkstra.Foreign.Epoch._.LeiosCommittees.current
 d_current_198 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.T_LeiosCommittees_4224 ->
-  [MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.T_LeiosSeat_1460]
+  [MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.T_LeiosSeat_1454]
 d_current_198 v0
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_current_4230
@@ -541,7 +541,7 @@ d_current_198 v0
 -- Ledger.Dijkstra.Foreign.Epoch._.LeiosCommittees.next
 d_next_200 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.T_LeiosCommittees_4224 ->
-  [MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.T_LeiosSeat_1460]
+  [MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.T_LeiosSeat_1454]
 d_next_200 v0
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_next_4232
