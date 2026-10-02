@@ -25,7 +25,7 @@ open import Ledger.Dijkstra.Specification.Certs gs
 
 open import Data.List.Sort
 import Data.Rational.Properties as ℚ
-open import Data.Rational as ℚ using (ℚ)
+open import Data.Rational as ℚ using (ℚ; 0ℚ)
 open import Data.Refinement.Properties using (value-injective)
 open import Relation.Binary.Bundles using (DecTotalOrder)
 open import Relation.Binary.PropositionalEquality
@@ -196,8 +196,9 @@ open EBCert
 -->
 
 A seat index is a position in the committee list, so the committee is also a map
-from indices to seats; the keyed seats are those holding a key, and the stake a
-set of signers carries is the sum of their weights.
+from indices to seats; the keyed seats are those holding a key, and the weight a
+set of signers carries is the sum of their seats' weights, each the pool's share
+of the total active stake.
 
 ```agda
 seatMap : LeiosCommittee → ℕ ⇀ LeiosSeat
@@ -210,23 +211,24 @@ seatMap = go 0
 keyedSeats : LeiosCommittee → ℕ ⇀ BlsVKey
 keyedSeats cmt = mapMaybeWithKeyᵐ (λ _ s → s .key) (seatMap cmt)
 
-signedStake : LeiosCommittee → ℙ ℕ → Coin
-signedStake cmt signers = ∑[ w ← mapValues weight (seatMap cmt ∣ signers) ] w
-
-totalActiveStake : (KeyHash ⇀ Coin) → Coin
-totalActiveStake pd = ∑[ c ← pd ] c
+signedWeight : LeiosCommittee → ℙ ℕ → ℚ
+signedWeight cmt signers = go 0 cmt
+  where
+    go : ℕ → LeiosCommittee → ℚ
+    go _ []        = 0ℚ
+    go i (s ∷ ss)  = (if ¿ i ∈ signers ¿ then fromUnitInterval (s .weight) else 0ℚ) ℚ.+ go (suc i) ss
 ```
 
 A certificate is valid for a message, the hash of the announcing block's header,
 when every signing seat holds a key (a keyless seat cannot sign), the aggregate
-signature verifies under the set of those keys, and the signing seats' stake
-meets the quorum threshold `τ` of the *total* active stake, not merely the
-seated stake.
+signature verifies under the set of those keys, and the signing seats' summed
+weight meets the quorum threshold `τ`.  Since each weight is a share of the
+*total* active stake, the comparison is against the whole stake, not merely the
+seated stake, as CIP-0164 requires.
 
 ```agda
 record ValidEBCert
   (cmt   : LeiosCommittee)
-  (tot   : Coin)
   (τ     : UnitInterval)
   (msg   : Ser)
   (cert  : EBCert) : Type where
@@ -235,7 +237,7 @@ record ValidEBCert
     validSignature  : isSignedByAggregate
                         (range (keyedSeats cmt ∣ cert .signers))
                         msg (cert .sig)
-    quorum          : fromUnitInterval τ ℚ.* fromℚℕ tot ℚ.≤ fromℚℕ (signedStake cmt (cert .signers))
+    quorum          : fromUnitInterval τ ℚ.≤ signedWeight cmt (cert .signers)
 ```
 
 Of the five checks of CIP-0164's [Certificate Validation][cip-certval], the first
