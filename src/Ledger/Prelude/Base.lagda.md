@@ -9,6 +9,7 @@ module Ledger.Prelude.Base where
 
 open import Agda.Primitive using (lzero) renaming (Set to Type) public
 open import Data.Nat
+open import Data.Nat.DivMod using (_/_)
 ```
 -->
 
@@ -20,6 +21,10 @@ Coin = ℕ
 
 Milliseconds : Type
 Milliseconds = ℕ
+
+-- The number of slots a duration spans, rounded up: ⌈d / slotLength⌉.
+durationToSlots : (slotLength : Milliseconds) → ⦃ NonZero slotLength ⦄ → Milliseconds → ℕ
+durationToSlots l d = (d + l ∸ 1) / l
 
 Donations Fees Reserves Treasury : Type
 Donations         = Coin

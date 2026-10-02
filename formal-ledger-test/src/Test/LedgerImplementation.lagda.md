@@ -49,6 +49,7 @@ module Implementation where
   NetworkId        = 0
   MaxKESEvoᶜ       = 10
   SlotsPerKESPeriodᶜ = 20  -- derives a key age of 4 epochs at 100 slots per epoch
+  SlotLengthᶜ      = 1000  -- one second per slot
 
   SKey = ℕ
   VKey = ℕ
