@@ -170,19 +170,19 @@ d_utxoSt_2878 v0
 d_EBCert_2902 a0 a1 = ()
 -- Ledger.Dijkstra.Specification.BlockBody._.EBCert.sig
 d_sig_2908 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.T_EBCert_1654 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.T_EBCert_1566 ->
   AgdaAny
 d_sig_2908 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.d_sig_1662
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.d_sig_1574
       (coe v0)
 -- Ledger.Dijkstra.Specification.BlockBody._.EBCert.signers
 d_signers_2910 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.T_EBCert_1654 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.T_EBCert_1566 ->
   [Integer]
 d_signers_2910 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.d_signers_1660
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.d_signers_1572
       (coe v0)
 -- Ledger.Dijkstra.Specification.BlockBody._.Announcement
 d_Announcement_2914 ::
@@ -295,13 +295,13 @@ d_bhsig_3076 v0
 -- Ledger.Dijkstra.Specification.BlockBody.CertifiedEB
 d_CertifiedEB_3080 a0 a1 = ()
 data T_CertifiedEB_3080
-  = C_constructor_3094 MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.T_EBCert_1654
+  = C_constructor_3094 MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.T_EBCert_1566
                        MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.Types.T_EndorserBlock_22
                        [MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3838]
 -- Ledger.Dijkstra.Specification.BlockBody.CertifiedEB.cert
 d_cert_3088 ::
   T_CertifiedEB_3080 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.T_EBCert_1654
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.T_EBCert_1566
 d_cert_3088 v0
   = case coe v0 of
       C_constructor_3094 v1 v2 v3 -> coe v1

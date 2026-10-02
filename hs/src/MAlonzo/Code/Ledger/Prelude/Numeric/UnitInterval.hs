@@ -24,11 +24,14 @@ import qualified MAlonzo.Code.Class.Show.Core
 import qualified MAlonzo.Code.Data.Empty
 import qualified MAlonzo.Code.Data.Integer.Base
 import qualified MAlonzo.Code.Data.Integer.Properties
+import qualified MAlonzo.Code.Data.Nat.Properties
 import qualified MAlonzo.Code.Data.Rational.Base
 import qualified MAlonzo.Code.Data.Rational.Literals
 import qualified MAlonzo.Code.Data.Rational.Properties
 import qualified MAlonzo.Code.Data.Rational.Show
 import qualified MAlonzo.Code.Data.Refinement.Base
+import qualified MAlonzo.Code.Relation.Binary.Bundles
+import qualified MAlonzo.Code.Relation.Binary.Construct.On
 import qualified MAlonzo.Code.Relation.Binary.Reasoning.Base.Triple
 import qualified MAlonzo.Code.Relation.Binary.Reasoning.Syntax
 import qualified MAlonzo.Code.Relation.Nullary.Decidable.Core
@@ -433,11 +436,42 @@ d_clamp_118 v0
                              MAlonzo.Code.Data.Rational.Literals.d_fromℤ_6
                              (coe (0 :: Integer))))
          _ -> MAlonzo.RTE.mazUnreachableError)
+-- Ledger.Prelude.Numeric.UnitInterval.mkℚ
+d_mkℚ_146 ::
+  Integer -> Integer -> Maybe MAlonzo.Code.Data.Rational.Base.T_ℚ_6
+d_mkℚ_146 ~v0 v1 = du_mkℚ_146 v1
+du_mkℚ_146 ::
+  Integer -> Maybe MAlonzo.Code.Data.Rational.Base.T_ℚ_6
+du_mkℚ_146 v0
+  = let v1
+          = coe
+              MAlonzo.Code.Relation.Nullary.Decidable.Core.du_map'8242'_178
+              erased
+              (\ v1 ->
+                 coe
+                   MAlonzo.Code.Data.Nat.Properties.du_'8801''8658''8801''7495'_2786
+                   (coe v0))
+              (coe
+                 MAlonzo.Code.Relation.Nullary.Decidable.Core.d_T'63'_72
+                 (coe eqInt (coe v0) (coe (0 :: Integer)))) in
+    coe
+      (case coe v1 of
+         MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v2 v3
+           -> if coe v2
+                then coe
+                       seq (coe v3) (coe MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18)
+                else coe
+                       seq (coe v3)
+                       (coe
+                          MAlonzo.Code.Agda.Builtin.Maybe.C_just_16
+                          (coe
+                             MAlonzo.Code.Data.Rational.Base.du__'47'__156 (coe v0) (coe v0)))
+         _ -> MAlonzo.RTE.mazUnreachableError)
 -- Ledger.Prelude.Numeric.UnitInterval.fromUnitInterval-inUnitInterval
-d_fromUnitInterval'45'inUnitInterval_148 ::
+d_fromUnitInterval'45'inUnitInterval_172 ::
   MAlonzo.Code.Data.Refinement.Base.T_Refinement_28 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_fromUnitInterval'45'inUnitInterval_148 v0
+d_fromUnitInterval'45'inUnitInterval_172 v0
   = case coe v0 of
       MAlonzo.Code.Data.Refinement.Base.C__'44'__42 v1
         -> let v3
@@ -466,24 +500,39 @@ d_fromUnitInterval'45'inUnitInterval_148 v0
                 _ -> MAlonzo.RTE.mazUnreachableError)
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Prelude.Numeric.UnitInterval.UnitInterval-*-0≤
-d_UnitInterval'45''42''45'0'8804'_174 ::
+d_UnitInterval'45''42''45'0'8804'_198 ::
   MAlonzo.Code.Data.Rational.Base.T_ℚ_6 ->
   MAlonzo.Code.Data.Refinement.Base.T_Refinement_28 ->
   MAlonzo.Code.Data.Rational.Base.T__'8804'__54 ->
   MAlonzo.Code.Data.Rational.Base.T__'8804'__54
-d_UnitInterval'45''42''45'0'8804'_174 v0 v1 ~v2
-  = du_UnitInterval'45''42''45'0'8804'_174 v0 v1
-du_UnitInterval'45''42''45'0'8804'_174 ::
+d_UnitInterval'45''42''45'0'8804'_198 v0 v1 ~v2
+  = du_UnitInterval'45''42''45'0'8804'_198 v0 v1
+du_UnitInterval'45''42''45'0'8804'_198 ::
   MAlonzo.Code.Data.Rational.Base.T_ℚ_6 ->
   MAlonzo.Code.Data.Refinement.Base.T_Refinement_28 ->
   MAlonzo.Code.Data.Rational.Base.T__'8804'__54
-du_UnitInterval'45''42''45'0'8804'_174 v0 v1
+du_UnitInterval'45''42''45'0'8804'_198 v0 v1
   = coe
       du_inUnitInterval'45''42''45'0'8804'_40 (coe v0)
       (coe MAlonzo.Code.Data.Refinement.Base.d_value_38 (coe v1))
-      (coe d_fromUnitInterval'45'inUnitInterval_148 (coe v1))
+      (coe d_fromUnitInterval'45'inUnitInterval_172 (coe v1))
 -- Ledger.Prelude.Numeric.UnitInterval.prop-toUnitInterval-fromUnitInterval
-d_prop'45'toUnitInterval'45'fromUnitInterval_184 ::
+d_prop'45'toUnitInterval'45'fromUnitInterval_208 ::
   MAlonzo.Code.Data.Refinement.Base.T_Refinement_28 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_prop'45'toUnitInterval'45'fromUnitInterval_184 = erased
+d_prop'45'toUnitInterval'45'fromUnitInterval_208 = erased
+-- Ledger.Prelude.Numeric.UnitInterval._<ᵘⁱ_
+d__'60''7512''8305'__230 ::
+  MAlonzo.Code.Data.Refinement.Base.T_Refinement_28 ->
+  MAlonzo.Code.Data.Refinement.Base.T_Refinement_28 -> ()
+d__'60''7512''8305'__230 = erased
+-- Ledger.Prelude.Numeric.UnitInterval.≤ᵘⁱ-DTO
+d_'8804''7512''8305''45'DTO_232 ::
+  MAlonzo.Code.Relation.Binary.Bundles.T_DecTotalOrder_1098
+d_'8804''7512''8305''45'DTO_232
+  = coe
+      MAlonzo.Code.Relation.Binary.Construct.On.du_decTotalOrder_642
+      (coe
+         MAlonzo.Code.Data.Rational.Properties.d_'8804''45'decTotalOrder_3648)
+      (coe
+         (\ v0 -> MAlonzo.Code.Data.Refinement.Base.d_value_38 (coe v0)))
