@@ -95,6 +95,10 @@ instance
   HsTy-Block = mkHsType Block (HsType HSBlock)
   Conv-Block = Conv-Block-HSBlock ⨾ Conv-HSBlock
 
+  HsTy-LastAppliedBlock = autoHsType LastAppliedBlock ⊣ withConstructor "MkLastAppliedBlock"
+                                                      • fieldPrefix "lab"
+  Conv-LastAppliedBlock = autoConvert LastAppliedBlock
+
   HsTy-ChainState = autoHsType ChainState ⊣ withConstructor "MkChainState"
                                             • fieldPrefix "cs"
   Conv-ChainState = autoConvert ChainState
