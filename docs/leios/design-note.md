@@ -41,9 +41,11 @@ The note draws on the following sources:
 ## Module placement
 
 Leios lands in the Dijkstra era as additive Leios modules plus edits to
-existing modules and their derived layers; no separate era, and no `Ledger.Core`
-change: the BLS voting primitives extend the core `CryptoStructure` from a
-Dijkstra-local record, where Peras, also a Dijkstra extension, can share them.
+existing modules and their derived layers; no separate era, and no change to the
+core crypto structure: the BLS voting primitives extend the core
+`CryptoStructure` from a Dijkstra-local record, where Peras, also a Dijkstra
+extension, can share them.  The core does change in two small places, the
+constants and the prelude unit named after the module map below.
 
 [CIP-164] requires a new ledger era for the block-format change
 ([Versioning][cip-versioning]), and the implementation prototypes Leios in
@@ -184,9 +186,9 @@ application.
 **Ordering corollary**.  One corollary settles the parameter-change question, on
 which the CIP is silent: everything about an announced EB is evaluated in the
 announcing world.  The closure runs under `A`'s parameters; the certificate is
-checked against the committee, the total active stake, and the quorum threshold
-`τ` pinned at announcement; the timing window uses the period lengths in force at
-`A`.  A certificate proves what the voters checked, and the voters could check only
+checked against the committee, whose seat weights carry that epoch's stake
+shares, and the quorum threshold `τ` pinned at announcement; the timing window
+uses the period lengths in force at `A`.  A certificate proves what the voters checked, and the voters could check only
 `A`'s world; validating it against data none of them could have seen would break
 that reading.  The vote signature is bound to the hash of `A`'s header for the
 same reason: the binding "ensures voters validated the EB against the same ledger
@@ -349,7 +351,8 @@ The LLF adds the following defaults, each grounded in the design document:
    which the announcing RB was produced; the CIP sizes the signer bitfield by
    exactly that committee ([Appendix B][cip-cddl]).  A certificate landing just
    after an epoch boundary is therefore checked against the announcing epoch's
-   committee and total active stake, per the ordering corollary above.
+   committee, whose weights carry that epoch's stake shares, per the ordering
+   corollary above.
 
 ## Protocol parameters
 
@@ -482,9 +485,9 @@ The consensus repository's `Ledger/*` modules are hand-adapted copies (the crypt
 and epoch structures, a trimmed `PParams`, the prelude), so nothing merged here
 reaches it until someone carries it over.
 
-The following records, as of 2026-09-17 and revised 2026-10-01 after the
-review of the consensus PR, where the two specs agree, where they must not
-drift, and what each side should adjust to reconcile the two.
+The table and the items below record, as of 2026-09-17 and revised 2026-10-01
+after the review of the consensus PR, where the two specs agree, where they must
+not drift, and what each side should adjust to reconcile the two.
 
 The guiding rule is one definition per shared quantity.  Its target home is the
 common library `agda-cardano-common` ([#919][fls-919], [repository][cardano-common]),
@@ -568,6 +571,14 @@ aligned by the table below; the library move follows the release.
 
     **Adjustment: consensus**.  None.
 
+5.  **The committee reaches the consensus specification through the ledger interface**, not by copying.
+
+    The consensus's `ChainHeadEnv` is the ledger's `NewEpochState`, which the
+    committee work extends with the materialized committee.  When that
+    specification needs seat membership (`doesEpochCommitteeIncludeMe` above), the
+    step is one more `LedgerInterface` field, a committee getter, not a copy of
+    the committee module.  (Nothing to do until then.)
+
 6.  **Whose parameters bound the delay across an epoch boundary** is the one
     row still open.  PR 2278 reads the parameters of the forecast at the
     certifying header; this note's ordering corollary assumed the announcing
@@ -588,14 +599,6 @@ aligned by the table below; the library move follows the release.
 
     **Adjustment: consensus**.  `getPParams nes` in place of `getPParams
     forecast` in `certChecks`, or the same stored slot in `LastAppliedBlock`.
-
-5.  **The committee reaches the consensus specification through the ledger interface**, not by copying.
-
-    The consensus's `ChainHeadEnv` is the ledger's `NewEpochState`, which the
-    committee work extends with the materialized committee.  When that
-    specification needs seat membership (`doesEpochCommitteeIncludeMe` above), the
-    step is one more `LedgerInterface` field, a committee getter, not a copy of
-    the committee module.  (Nothing to do until then.)
 
 ## Out of scope: rewards and incentives
 
