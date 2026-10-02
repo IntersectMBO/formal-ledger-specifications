@@ -115,7 +115,8 @@ private
 <!--
 ```agda
 module _ (pp : PParams)
-         (let open PParams pp using (leiosCommitteeSize)) where
+         (let open PParams pp using ( leiosCommitteeSize
+                                    ; leiosHeaderPeriod; leiosVotingPeriod; leiosDiffusionPeriod )) where
 ```
 -->
 
@@ -135,6 +136,25 @@ module _ (pp : PParams)
 
       sortedLeiosSeats : List LeiosSeat
       sortedLeiosSeats = sort ≼-DTO allLeiosSeats
+```
+
+## Certification Delay
+
+CIP-0164 admits a certificate only when the certifying block is at least
+`⌈(3·L_hdr + L_vote + L_diff) / slotLength⌉` slots after the announcing block
+([Step 5][cip-step5]).  `certificationDelay`{.AgdaFunction} computes that bound
+from the protocol parameters: three header diffusion periods, the voting
+period, and the additional diffusion period, summed in milliseconds and
+converted to whole slots by `slotsFromDuration`{.AgdaField} through the genesis
+slot length `SlotLengthᶜ`{.AgdaField}.  The conversion rounds up, since
+rounding down would admit a certificate before the durations the security
+argument relies on have elapsed.  The chain rule decides which block's
+parameters the function is applied to.
+
+```agda
+  certificationDelay : Slot
+  certificationDelay =
+    slotsFromDuration (3 * leiosHeaderPeriod + leiosVotingPeriod + leiosDiffusionPeriod)
 ```
 
 ## Leios Certificates
@@ -214,4 +234,24 @@ and the fifth, that the message is the hash of the announcing header taken from
 the chain context, is supplied by the block rule that applies the certificate,
 through `msg`{.AgdaBound}.
 
+<!--
+```agda
+instance
+  Dec-ValidEBCert : ∀ {cmt τ msg cert} → ValidEBCert cmt τ msg cert ⁇
+  Dec-ValidEBCert {cmt} {τ} {msg} {cert} = ⁇ map′ fromConjuncts toConjuncts ¿ Conjuncts ¿
+    where
+      Conjuncts : Type
+      Conjuncts = cert .signers ⊆ dom (keyedSeats cmt)
+                × isSignedByAggregate (range (keyedSeats cmt ∣ cert .signers)) msg (cert .sig)
+                × fromUnitInterval τ ℚ.≤ signedWeight cmt (cert .signers)
+
+      fromConjuncts : Conjuncts → ValidEBCert cmt τ msg cert
+      fromConjuncts (k , s , q) = record { signersKeyed = k ; validSignature = s ; quorum = q }
+
+      toConjuncts : ValidEBCert cmt τ msg cert → Conjuncts
+      toConjuncts v = let open ValidEBCert v in signersKeyed , validSignature , quorum
+```
+-->
+
 [cip-certval]: https://github.com/cardano-foundation/CIPs/blob/master/CIP-0164/README.md#certificate-validation
+[cip-step5]: https://github.com/cardano-foundation/CIPs/blob/master/CIP-0164/README.md#step-5-chain-inclusion
