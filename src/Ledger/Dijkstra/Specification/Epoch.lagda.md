@@ -127,6 +127,10 @@ instance
 -->
 
 ```agda
+record LeiosCommittees : Type where
+  field
+    current next : LeiosCommittee
+
 record NewEpochState : Type where
   field
     lastEpoch       : Epoch
@@ -135,12 +139,10 @@ record NewEpochState : Type where
     epochState      : EpochState
     ru              : Maybe RewardUpdate
     pd              : PoolDelegatedStake
-    leiosCommittee  : LeiosCommittee
+    leiosCommittee  : LeiosCommittees
 ```
 
-The `leiosCommittee`{.AgdaField} is the materialized Leios voting committee of
-the current epoch, selected from the same stake distribution as
-`pd`{.AgdaField} (CIP-0164).
+The `leiosCommittee`{.AgdaField} field materializes the Leios voting committee.
 
 ??? info "Differences with the Shelley Specification"
 
@@ -195,9 +197,10 @@ instance
   HasPParams-NewEpochState : HasPParams NewEpochState
   HasPParams-NewEpochState .PParamsOf = PParamsOf ∘ EpochStateOf
 
-  unquoteDecl HasCast-EpochState HasCast-NewEpochState = derive-HasCast
-    ( (quote EpochState     , HasCast-EpochState)
-    ∷ [ (quote NewEpochState  , HasCast-NewEpochState)])
+  unquoteDecl HasCast-LeiosCommittees HasCast-EpochState HasCast-NewEpochState = derive-HasCast
+    (   (quote EpochState      , HasCast-EpochState)
+    ∷   (quote LeiosCommittees , HasCast-LeiosCommittees)
+    ∷ [ (quote NewEpochState   , HasCast-NewEpochState)])
 
 open GovActionState using (returnAddr; deposit)
 
@@ -552,7 +555,7 @@ private variable
   ru : RewardUpdate
   mru : Maybe RewardUpdate
   pd : PoolDelegatedStake
-  cmt : LeiosCommittee
+  currentCommittee nextCommittee : LeiosCommittee
 ```
 -->
 
@@ -803,6 +806,13 @@ data _⊢_⇀⦇_,EPOCH⦈_ : ⊤ → EpochState → Epoch → EpochState → Ty
 Finally, we define the `NEWEPOCH`{.AgdaDatatype} transition system, which computes
 the new state as of the start of a new epoch.
 
+In Dijkstra, `NewEpochState`{.AgdaRecord} tracks the Leios committee
+used for vote certification. At the epoch boundary between epochs `e`
+and `e+1`, the committee that will be active at epoch `e+2` is seated
+(i.e., selected). The type `LeiosCommittees`{.AgdaRecord} records the
+current active and future committees, which rotate in a similar manner
+to the snapshots mechanism.
+
 ```agda
 data _⊢_⇀⦇_,NEWEPOCH⦈_ : ⊤ → NewEpochState → Epoch → NewEpochState → Type where
 
@@ -811,28 +821,28 @@ data _⊢_⇀⦇_,NEWEPOCH⦈_ : ⊤ → NewEpochState → Epoch → NewEpochSta
       eps' = applyRUpd ru eps
       ss   = EpochState.ss eps''
       pd'  = calculatePoolDelegatedStake (Snapshots.set ss)
-      cmt' = selectCommittee (PParamsOf eps') e pd' (PoolsOf (Snapshots.set ss))
+      cmt  = selectCommittee (PParamsOf eps') e pd' (PoolsOf (Snapshots.set ss))
     in
       ∙ e ≡ lastEpoch + 1
       ∙ _ ⊢ eps' ⇀⦇ e ,EPOCH⦈ eps''
       ──────────────────────────────────────────────
-      _ ⊢ ⟦ lastEpoch , bprev , bcur , eps , just ru , pd , cmt ⟧ ⇀⦇ e ,NEWEPOCH⦈ ⟦ e , bcur , ∅ᵐ  , eps'' , nothing , pd' , cmt' ⟧
+      _ ⊢ ⟦ lastEpoch , bprev , bcur , eps , just ru , pd , ⟦ currentCommittee , nextCommittee ⟧ ⟧ ⇀⦇ e ,NEWEPOCH⦈ ⟦ e , bcur , ∅ᵐ  , eps'' , nothing , pd' , ⟦ nextCommittee , cmt ⟧ ⟧
 
   NEWEPOCH-Not-New : ∀ {bprev bcur : BlocksMade} →
     ∙ e ≢ lastEpoch + 1
       ──────────────────────────────────────────────
-      _ ⊢ ⟦ lastEpoch , bprev , bcur , eps , mru , pd , cmt ⟧ ⇀⦇ e ,NEWEPOCH⦈ ⟦ lastEpoch , bprev , bcur , eps , mru , pd , cmt ⟧
+      _ ⊢ ⟦ lastEpoch , bprev , bcur , eps , mru , pd , ⟦ currentCommittee , nextCommittee ⟧ ⟧ ⇀⦇ e ,NEWEPOCH⦈ ⟦ lastEpoch , bprev , bcur , eps , mru , pd , ⟦ currentCommittee , nextCommittee ⟧ ⟧
 
   NEWEPOCH-No-Reward-Update : ∀ {bprev bcur : BlocksMade} →
     let
       ss   = EpochState.ss eps'
       pd'  = calculatePoolDelegatedStake (Snapshots.set ss)
-      cmt' = selectCommittee (PParamsOf eps') e pd' (PoolsOf (Snapshots.set ss))
+      cmt  = selectCommittee (PParamsOf eps') e pd' (PoolsOf (Snapshots.set ss))
     in
       ∙ e ≡ lastEpoch + 1
       ∙ _ ⊢ eps ⇀⦇ e ,EPOCH⦈ eps'
       ──────────────────────────────────────────────
-      _ ⊢ ⟦ lastEpoch , bprev , bcur , eps , nothing , pd , cmt ⟧ ⇀⦇ e ,NEWEPOCH⦈ ⟦ e , bcur , ∅ᵐ , eps' , nothing , pd' , cmt' ⟧
+      _ ⊢ ⟦ lastEpoch , bprev , bcur , eps , nothing , pd , ⟦ currentCommittee , nextCommittee ⟧ ⟧ ⇀⦇ e ,NEWEPOCH⦈ ⟦ e , bcur , ∅ᵐ , eps' , nothing , pd' , ⟦ nextCommittee , cmt ⟧ ⟧
 ```
 
 # References {#references .unnumbered}

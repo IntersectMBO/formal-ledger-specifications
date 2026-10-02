@@ -40,7 +40,8 @@ import MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Actions       as X
 import MAlonzo.Code.Ledger.Dijkstra.Foreign.Ledger            as X
   (LedgerEnv(..), LedgerState(..), ledgerStep, ledgersStep)
 import MAlonzo.Code.Ledger.Dijkstra.Foreign.NewEpoch          as X
-  (NewEpochState(..), LeiosSeat(..), newEpochStep)
+  ( NewEpochState(..), LeiosSeat(..), LeiosCommittees(..)
+  , newEpochStep)
 import MAlonzo.Code.Ledger.Dijkstra.Foreign.Ratify            as X
   (RatifyEnv(..), RatifyState(..), ratifyStep)
 import MAlonzo.Code.Ledger.Dijkstra.Foreign.Rewards           as X
