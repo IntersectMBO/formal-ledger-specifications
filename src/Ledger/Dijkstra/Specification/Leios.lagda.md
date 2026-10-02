@@ -1,5 +1,5 @@
 ---
-source_branch: leios-main
+source_branch: master
 source_path: src/Ledger/Dijkstra/Specification/Leios.lagda.md
 ---
 
@@ -19,7 +19,7 @@ module Ledger.Dijkstra.Specification.Leios
   (gs : GovStructure) (open GovStructure gs) where
 
 open import Ledger.Prelude
-open import Ledger.Prelude.Numeric.UnitInterval using (UnitInterval; fromUnitInterval)
+open import Ledger.Prelude.Numeric.UnitInterval using (UnitInterval; mkℚ; toUnitInterval; fromUnitInterval; ≤ᵘⁱ-DTO; _<ᵘⁱ_)
 open import Ledger.Dijkstra.Specification.Certs gs
 
 open import Agda.Builtin.FromNat
@@ -27,7 +27,7 @@ open import Data.List.Sort
 open import Data.Nat.Properties
   using (<⇒≤; >⇒≢; ≤∧≢⇒<)
   renaming (≤-decTotalOrder to ℕ-≤-decTotalOrder)
-open import Data.Rational as ℚ using (ℚ)
+open import Data.Rational as ℚ using (ℚ; 0ℚ)
 open import Data.Rational.Literals using (number)
 open import Relation.Binary.Bundles using (DecTotalOrder)
 open import Relation.Binary.PropositionalEquality using () renaming (sym to ≡-sym)
@@ -49,7 +49,7 @@ committee maps each seat index (the `voter_id` of CIP-0164) to its seat.
 record LeiosSeat : Type where
   field
     pool    : KeyHash
-    weight  : Coin
+    weight  : UnitInterval
     key     : Maybe BlsVKey
 
 LeiosCommittee : Type
@@ -93,7 +93,7 @@ pools with the most active stake, ties broken by ascending pool keyhash.
 
 ```agda
 _≼_ : LeiosSeat → LeiosSeat → Type
-ls₁ ≼ ls₂ = c₂ < c₁ ⊎ (c₁ ≡ c₂ × ls₁ .pool ≤ᵏʰ ls₂ .pool)
+ls₁ ≼ ls₂ = c₂ <ᵘⁱ c₁ ⊎ (c₁ ≡ c₂ × ls₁ .pool ≤ᵏʰ ls₂ .pool)
   where
     c₁ = ls₁ .weight
     c₂ = ls₂ .weight
@@ -108,17 +108,7 @@ private
     where
       open import Relation.Binary.Construct.On using (decTotalOrder)
       open import Data.Product.Relation.Binary.Lex.NonStrict using (×-decTotalOrder)
-      open import Relation.Binary.Properties.DecTotalOrder ℕ-≤-decTotalOrder
-
-  open DecTotalOrder ≼-DTO renaming (_≤_ to _≤DTO_) using ()
-
-  ≼-DTO⇒≼ : ∀ {x y} → x ≼ y → x ≤DTO y
-  ≼-DTO⇒≼ (inj₁ p)          = inj₁ (<⇒≤ p , >⇒≢ p)
-  ≼-DTO⇒≼ (inj₂ (refl , q)) = inj₂ (refl , q)
-
-  ≼⇒≼-DTO : ∀ {x y} → x ≤DTO y → x ≼ y
-  ≼⇒≼-DTO (inj₁ (p  , q))     = inj₁ (≤∧≢⇒< p (λ r → q (≡-sym r)))
-  ≼⇒≼-DTO (inj₂ (refl , snd)) = inj₂ (refl , snd)
+      open import Relation.Binary.Properties.DecTotalOrder ≤ᵘⁱ-DTO using (≥-decTotalOrder)
 ```
 -->
 
@@ -133,10 +123,95 @@ module _ (pp : PParams)
   selectCommittee : Epoch → (KeyHash ⇀ Coin) → Pools → LeiosCommittee
   selectCommittee e pd pools = take leiosCommitteeSize sortedLeiosSeats
     where
+      totalStake : Coin
+      totalStake = ∑[ c ← pd ] c
+
+      poolDistr : KeyHash ⇀ UnitInterval
+      poolDistr = mapMaybeWithKeyᵐ (λ _ c → mkℚ c totalStake >>= toUnitInterval) pd
+
       allLeiosSeats : List LeiosSeat
-      allLeiosSeats = map (λ (kh , c) → ⟦ kh , c , (if lookupᵐ? pools kh then (λ {spp} → honouredBlsKey e (spp .bls)) else nothing) ⟧)
-                          (setToList (pd ˢ))
+      allLeiosSeats = map (λ (kh , w) → ⟦ kh , w , (if lookupᵐ? pools kh then (λ {spp} → honouredBlsKey e (spp .bls)) else nothing) ⟧)
+                          (setToList (poolDistr ˢ))
 
       sortedLeiosSeats : List LeiosSeat
       sortedLeiosSeats = sort ≼-DTO allLeiosSeats
 ```
+
+## Leios Certificates
+
+An EB certificate (`eb_certificate` in CIP-0164's CDDL) stands in for a quorum
+of votes on an EB announcement: the set of seat indices that signed (the CIP's
+bitfield) and their aggregate BLS signature.  It is not a transaction certificate;
+it travels in the body of the ranking block that certifies the EB.
+
+```agda
+record EBCert : Type where
+  field
+    signers  : ℙ ℕ
+    sig      : BlsSig
+```
+
+<!--
+```agda
+instance
+  unquoteDecl HasCast-EBCert = derive-HasCast
+    [ (quote EBCert , HasCast-EBCert) ]
+
+open EBCert
+```
+-->
+
+A seat index is a position in the committee list, so the committee is also a map
+from indices to seats; the keyed seats are those holding a key, and the weight a
+set of signers carries is the sum of their seats' weights, each the pool's share
+of the total active stake.
+
+```agda
+seatMap : LeiosCommittee → ℕ ⇀ LeiosSeat
+seatMap = go 0
+  where
+    go : ℕ → LeiosCommittee → ℕ ⇀ LeiosSeat
+    go _ []        = ∅ᵐ
+    go i (s ∷ ss)  = ❴ i , s ❵ᵐ ∪ˡ go (suc i) ss
+
+keyedSeats : LeiosCommittee → ℕ ⇀ BlsVKey
+keyedSeats cmt = mapMaybeWithKeyᵐ (λ _ s → s .key) (seatMap cmt)
+
+signedWeight : LeiosCommittee → ℙ ℕ → ℚ
+signedWeight cmt signers = go 0 cmt
+  where
+    go : ℕ → LeiosCommittee → ℚ
+    go _ []        = 0ℚ
+    go i (s ∷ ss)  = (if ¿ i ∈ signers ¿ then fromUnitInterval (s .weight) else 0ℚ) ℚ.+ go (suc i) ss
+```
+
+A certificate is valid for a message, the hash of the announcing block's header,
+when every signing seat holds a key (a keyless seat cannot sign), the aggregate
+signature verifies under the set of those keys, and the signing seats' summed
+weight meets the quorum threshold `τ`.  Since each weight is a share of the
+*total* active stake, the comparison is against the whole stake, not merely the
+seated stake, as CIP-0164 requires.
+
+```agda
+record ValidEBCert
+  (cmt   : LeiosCommittee)
+  (τ     : UnitInterval)
+  (msg   : Ser)
+  (cert  : EBCert) : Type where
+  field
+    signersKeyed    : cert .signers ⊆ dom (keyedSeats cmt)
+    validSignature  : isSignedByAggregate
+                        (range (keyedSeats cmt ∣ cert .signers))
+                        msg (cert .sig)
+    quorum          : fromUnitInterval τ ℚ.≤ signedWeight cmt (cert .signers)
+```
+
+Of the five checks of CIP-0164's [Certificate Validation][cip-certval], the first
+(conformance to the CDDL) is structural typing; the second is
+`validSignature`{.AgdaField}; the third, that every signer is a committee member
+able to sign, is `signersKeyed`{.AgdaField}; the fourth is `quorum`{.AgdaField};
+and the fifth, that the message is the hash of the announcing header taken from
+the chain context, is supplied by the block rule that applies the certificate,
+through `msg`{.AgdaBound}.
+
+[cip-certval]: https://github.com/cardano-foundation/CIPs/blob/master/CIP-0164/README.md#certificate-validation
