@@ -1229,7 +1229,7 @@ d_selectCommittee_3588 ::
   AgdaAny ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
-  [MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.T_LeiosSeat_1460]
+  [MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.T_LeiosSeat_1454]
 d_selectCommittee_3588 v0 ~v1 = du_selectCommittee_3588 v0
 du_selectCommittee_3588 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
@@ -1237,10 +1237,10 @@ du_selectCommittee_3588 ::
   AgdaAny ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
-  [MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.T_LeiosSeat_1460]
+  [MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.T_LeiosSeat_1454]
 du_selectCommittee_3588 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.d_selectCommittee_1532
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.d_selectCommittee_1592
       (coe
          MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_govStructure_2868
          (coe v0))
@@ -1874,7 +1874,7 @@ data T_NewEpochState_4224
                        (Maybe
                           MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T_RewardUpdate_3864)
                        MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-                       [MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.T_LeiosSeat_1460]
+                       [MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.T_LeiosSeat_1454]
 -- Ledger.Dijkstra.Specification.Epoch.NewEpochState.lastEpoch
 d_lastEpoch_4240 :: T_NewEpochState_4224 -> AgdaAny
 d_lastEpoch_4240 v0
@@ -1920,7 +1920,7 @@ d_pd_4250 v0
 -- Ledger.Dijkstra.Specification.Epoch.NewEpochState.leiosCommittee
 d_leiosCommittee_4252 ::
   T_NewEpochState_4224 ->
-  [MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.T_LeiosSeat_1460]
+  [MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.T_LeiosSeat_1454]
 d_leiosCommittee_4252 v0
   = case coe v0 of
       C_constructor_4254 v1 v2 v3 v4 v5 v6 v7 -> coe v7
@@ -3270,7 +3270,7 @@ du_Δt'45'nonneg_4444 v0 v1 v2 v3
                MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_treasuryCut_450
                (coe du_prevPp_4334 (coe v3)))))
       (coe
-         MAlonzo.Code.Ledger.Prelude.Numeric.UnitInterval.du_UnitInterval'45''42''45'0'8804'_198
+         MAlonzo.Code.Ledger.Prelude.Numeric.UnitInterval.du_UnitInterval'45''42''45'0'8804'_174
          (coe
             MAlonzo.Code.Data.Rational.Literals.d_fromℤ_6
             (coe du_rewardPot_4360 (coe v0) (coe v1) (coe v2) (coe v3)))

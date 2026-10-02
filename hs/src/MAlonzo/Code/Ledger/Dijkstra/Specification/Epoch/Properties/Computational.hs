@@ -33201,7 +33201,7 @@ du_NEWEPOCH'45'total_4224 v0 v1 v2
                                                                                       (coe v12))
                                                                                    (coe v1))))))
                                                                     (coe
-                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.d_selectCommittee_1532
+                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.d_selectCommittee_1592
                                                                        (coe
                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_govStructure_2868
                                                                           (coe v0))
@@ -33737,7 +33737,7 @@ du_NEWEPOCH'45'total_4224 v0 v1 v2
                                                                                    (coe v11)
                                                                                    (coe v1))))))
                                                                     (coe
-                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.d_selectCommittee_1532
+                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.d_selectCommittee_1592
                                                                        (coe
                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_govStructure_2868
                                                                           (coe v0))
