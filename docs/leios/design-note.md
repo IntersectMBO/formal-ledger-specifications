@@ -24,9 +24,8 @@ resolved and taken in reference order.
 The note draws on the following sources:
 
 +  [CIP-164] (the normative text), as amended by
-   [cardano-foundation/CIPs #1250][cip-1250], the revision this note quotes: the
-   `cip-…` links resolve on that revision's branch and move back to `master` when
-   it merges;
+   [cardano-foundation/CIPs #1250][cip-1250], merged 2026-09-15; the `cip-…`
+   links resolve on `master`;
 +  the implementation team's [Leios design document][design-doc] with its requirement
    register (`REQ-…`);
 +  the cardano-ledger prototype ([#5626][cl-5626]: announcement, certificate bit,
@@ -42,9 +41,11 @@ The note draws on the following sources:
 ## Module placement
 
 Leios lands in the Dijkstra era as additive Leios modules plus edits to
-existing modules and their derived layers; no separate era, and no `Ledger.Core`
-change: the BLS voting primitives extend the core `CryptoStructure` from a
-Dijkstra-local record, where Peras, also a Dijkstra extension, can share them.
+existing modules and their derived layers; no separate era, and no change to the
+core crypto structure: the BLS voting primitives extend the core
+`CryptoStructure` from a Dijkstra-local record, where Peras, also a Dijkstra
+extension, can share them.  The core does change in two small places, the
+constants and the prelude unit named after the module map below.
 
 [CIP-164] requires a new ledger era for the block-format change
 ([Versioning][cip-versioning]), and the implementation prototypes Leios in
@@ -55,9 +56,9 @@ merges from `master` cheap.
 The abstract voting crypto lives in `Ledger.Dijkstra.Specification.Crypto` as
 `LeiosCryptoStructure`, a record parameterized by the core `CryptoStructure` that adds
 the BLS carriers and verification predicates (keys, signatures, proofs of
-possession, aggregate verification over the serialization type), the strict total
-order on key hashes that supplies the committee tie-break, and the Leios hash
-carriers.  `GovStructure` carries one beside its core crypto structure and
+possession, aggregate verification over the serialization type), the decidable
+total order on key hashes that supplies the committee tie-break, and the Leios
+hash carriers.  `GovStructure` carries one beside its core crypto structure and
 opens it public, so the names are ambient in every rule module, `Certs`
 included, and the proof-of-possession premise is statable with no module
 signature changing; the core record stays as it is, so Conway learns nothing
@@ -72,19 +73,26 @@ The new modules, and the edits to existing modules, are as follows:
 
 ```text
 src/Ledger/Dijkstra/Specification/
-├── Crypto.lagda.md         -- LeiosCryptoStructure: BLS primitives; key-hash order (the
-│                           --   tie-break); the EB, tx-reference, and header hashes
+├── Crypto.lagda.md         -- LeiosCryptoStructure: BLS primitives; the key-hash order
+│                           --   (the tie-break); the EB, tx-reference, and header hashes
 ├── Gov/Base.lagda.md       -- edit: GovStructure carries a LeiosCryptoStructure
-├── Leios.lagda.md          -- seats, committee selection, quorum arithmetic;
-│                           --   certificate and EB validity
-├── Leios/Types.lagda.md    -- EndorserBlock, Announcement
-├── PParams.lagda.md        -- edit: the Leios parameter block
-├── Certs.lagda.md          -- edit: voting-key registration (mechanism per the
-│                           --   Keys bullet of the committee section)
+├── Leios.lagda.md          -- seats and committee selection; EBCert and ValidEBCert;
+│                           --   certificationDelay
+├── Leios/Types.lagda.md    -- EndorserBlock, hashEB, Announcement
+├── Leios/Validity.lagda.md -- ValidEB: reference agreement, the bounds, valid extension
+├── PParams.lagda.md        -- edit: the Leios parameter block; the quorum lower bound
+├── Certs.lagda.md          -- edit: the voting key in the pool-registration certificate,
+│                           --   the POOL premises, the key in the pool state
 ├── Epoch.lagda.md          -- edit: the committee materialized at the boundary
-├── BlockBody.lagda.md      -- edit: announcement/certificate fields, BBODY premises
-└── Chain.lagda.md          -- edit: pending-announcement threading, window check
+├── BlockBody.lagda.md      -- edit: the Leios block fields, CertifiedEB, leiosBodyChecks
+└── Chain.lagda.md          -- edit: pending announcement, window, certificate branch
 ```
+
+Two edits fall outside the Dijkstra tree, in the units the alignment subsection
+says will move to the common library: `Ledger/Prelude/Base` (`Milliseconds`,
+`durationToSlots`) and `Ledger/Core/Specification/Epoch` (the KES constants,
+`SlotLengthᶜ`, `slotsFromDuration`).  As of 2026-10-01 everything above the
+`BlockBody` line is merged or in review and `Chain` is the one edit not begun.
 
 The map lists the modules where design decisions land.  The era's derived layers
 construct and pattern-match the very records and premises these edits change — the
@@ -107,9 +115,10 @@ relation (`LEDGERS`), exactly as `BBODY` applies a block's own transactions.
 > in Praos, with phase-1 and phase-2 validation applying equally to both RB
 > and EB transactions" ([Ledger Management][cip-ledger]).
 
-`ValidEB`, the property a certificate ultimately certifies, conjoins
-reference/closure agreement, nonemptiness ([vote condition 6][cip-step3]), the
-per-EB bounds, and this valid-extension condition stated with `LEDGERS`.
+`ValidEB` (`Leios/Validity`), the property a certificate ultimately certifies,
+conjoins reference/closure agreement, nonemptiness ([vote condition
+6][cip-step3]), duplicate-freedom of the references, the per-EB bounds, and this
+valid-extension condition stated with `LEDGERS`.
 
 The implementation, by contrast, applies a certified closure by "reapplication
 with minimal checks and UTxO updates", "omitting previously performed phase 1 & 2
@@ -177,16 +186,18 @@ application.
 **Ordering corollary**.  One corollary settles the parameter-change question, on
 which the CIP is silent: everything about an announced EB is evaluated in the
 announcing world.  The closure runs under `A`'s parameters; the certificate is
-checked against the committee, the total active stake, and the quorum threshold
-`τ` pinned at announcement; the timing window uses the period lengths in force at
-`A`.  A certificate proves what the voters checked, and the voters could check only
+checked against the committee, whose seat weights carry that epoch's stake
+shares, and the quorum threshold `τ` pinned at announcement; the timing window
+uses the period lengths in force at `A`.  A certificate proves what the voters checked, and the voters could check only
 `A`'s world; validating it against data none of them could have seen would break
 that reading.  The vote signature is bound to the hash of `A`'s header for the
 same reason: the binding "ensures voters validated the EB against the same ledger
 state it extends when certified on chain", and it also disambiguates among
 multiple headers announcing the same EB ([Vote Structure][cip-vote]).
 *The LLF assumes this corollary as a working default, pending confirmation from
-the implementers*.
+the implementers*.  Its timing clause is the one part under discussion: the
+consensus specification reads the period lengths in force at `B`; item 6 of the
+alignment subsection records the two readings and the recommendation.
 
 This ordering also answers the following open question of the design document:
 "How much of the work lives in `BBODY` itself versus a dedicated EB-body rule, and
@@ -250,15 +261,19 @@ The LLF adds the following defaults, each grounded in the design document:
    stores it the same way: the committee is a field of the new-epoch state,
    selected at the boundary from the stake distribution the state already
    holds, which is why the epoch module is among the touched modules of the
-   [Module placement](#module-placement) section above.
+   [Module placement](#module-placement) section above.  [#1342][fls-1342] (in
+   review) proposes a pair of committees, current and next, rotated at the
+   boundary; whether the fresh computation serves the epoch being entered, as
+   cardano-ledger's does, or the next one is pending (see the roadmap).  The
+   chain rule reads the committee of the state before the tick either way.
 
 +  **Order and indices**.  A *seat* is a position in the committee's canonical
    order, carrying its pool, its weight, and (optionally) its voting key.  The
    descending-stake order fixes the seat indices that votes (`voter_id`) and
    certificate bitfields address.  That order depends on the epoch's stake
    distribution and is defined in the committee module from it; the crypto record
-   supplies only the tie-break, as a strict total order on the abstract key-hash
-   type.
+   supplies only the tie-break, as a decidable total order on the abstract
+   key-hash type (`_≤ᵏʰ_`, settled in the review of [#1300][fls-1300]).
 
    The CIP now pins the tie-break itself, byte-wise ascending on the pool's key
    hash, together with the fewer-than-`N_c` case ([Epoch Boundary][cip-epoch]);
@@ -276,6 +291,12 @@ The LLF adds the following defaults, each grounded in the design document:
    descending stake with the pinned tie-break, determinism) become provable
    lemmas rather than assumptions.
 
++  **Weights**.  A seat's weight is the pool's share of the total active stake,
+   a `UnitInterval`, as in `cardano-crypto-leios`, where a seat is a `Rational`
+   weight and an optional key ([#1341][fls-1341], in review).  The quorum then
+   compares `τ` with the signers' summed weight, and no total passes through
+   the certificate check ([#1333][fls-1333]).
+
 +  **Keyless seats**.  Membership is by stake alone, "independent of key
    registration" ([REQ-KeylessSeat][dd-committee]), a requirement [#1250][cip-1250]
    adopts into the CIP: a selected pool without a
@@ -287,9 +308,8 @@ The LLF adds the following defaults, each grounded in the design document:
 
    No parameter constraint implies certifiability (with the committee sized by
    seats, even the coverage `σ(N_c)` is emergent), so the LLF
-   names the gap with a `certifiable` predicate (keyed committee stake at least
-   `τ` of the total active stake), and the condition implementers must monitor has
-   a name.
+   names the gap with a `certifiable` predicate (the keyed seats' summed weight
+   at least `τ`), and the condition implementers must monitor has a name.
 
    The gap is not hypothetical.  During the Musashi certification outage of
    2026-08-12/13 ([ouroboros-leios #1046][ol-1046]), the committee's participating
@@ -319,13 +339,20 @@ The LLF adds the following defaults, each grounded in the design document:
    proof travel as an optional field of the pool-registration certificate, so the
    LLF's registration premise attaches to `POOL` (a present key carries a valid
    proof of possession), and the key becomes active at an epoch boundary, as the
-   CIP prescribes.
+   CIP prescribes.  As built in [#1331][fls-1331]: `StakePoolParams` carries
+   the optional key with its proof; `POOL` requires the proof to verify and the
+   key to belong to no other pool; the pool state keeps the key with its
+   registration epoch, from which `maxKeyAge` (the KES lifetime in epochs plus
+   two, cardano-ledger [6047][cl-6047]) bounds its life.  A re-registration with
+   an unchanged key keeps that epoch here, where cardano-ledger restamps it: a
+   divergence to raise.
 
 +  **The pin**.  A certificate is validated against the committee of the epoch in
    which the announcing RB was produced; the CIP sizes the signer bitfield by
    exactly that committee ([Appendix B][cip-cddl]).  A certificate landing just
    after an epoch boundary is therefore checked against the announcing epoch's
-   committee and total active stake, per the ordering corollary above.
+   committee, whose weights carry that epoch's stake shares, per the ordering
+   corollary above.
 
 ## Protocol parameters
 
@@ -371,7 +398,9 @@ coverage, which lives in the stake distribution, so it cannot sit in a parameter
 predicate ([choosing the quorum threshold][cip-quorum]).  The LLF imposes
 `0.5 < τ` in the parameter well-formedness predicate (the disabled state never
 needs `τ ≡ 0`) and leaves `τ < σ(N_c)` to the CIP's operational guidance for
-choosing `N_c`.  The earlier revisions' `τ < σ_c`, which made a quorum
+choosing `N_c`.  Built in [#1340][fls-1340], with the same bound on parameter
+updates, because the Foreign layer discharges preservation of well-formedness
+by a postulate conditioned on the update-level check alone.  The earlier revisions' `τ < σ_c`, which made a quorum
 arithmetically reachable by a fully keyed committee, has no seat-count
 counterpart at the parameter level; reachability is exactly what the committee
 section's `certifiable` predicate names.
@@ -421,8 +450,8 @@ each to its ledger counterpart, or records what stays outside the ledger spec an
 
 | Proposed function             | Ledger counterpart |
 | ----------------------------- | -------------------- |
-| `applyCertifiedEb`            | The certificate branch of the block and chain rules: `ValidCert` plus the closure applied via `LEDGERS` from the announcing state, per the ordering above. |
-| `validateCertificate`         | `ValidCert` (`Leios`): signers are keyed seats of the pinned committee, the aggregate signature verifies over the announcing header's hash, and the signers' stake meets τ times the total active stake.  The contextual half — agreement with the pending announcement, the timing window — sits as block/chain premises. |
+| `applyCertifiedEb`            | The certificate branch of the chain rule: `ValidEBCert` plus the closure applied via `LEDGERS` from the announcing state, per the ordering above. |
+| `validateCertificate`         | `ValidEBCert` (`Leios`): signers are keyed seats of the pinned committee, the aggregate signature verifies over the announcing header's hash, and the signers' summed weight meets τ.  The contextual half — agreement with the pending announcement, the timing window — sits as block/chain premises. |
 | `validateVote`                | Outside the ledger spec (decided 2026-09-22; see the [addendum](#why-a-vote-type-at-all)).  Votes never appear on chain; consensus composes the check from ledger-provided pieces, a seat lookup in the committee and aggregate verification under that seat's key alone. |
 | `doesEpochCommitteeIncludeMe` | Decidable membership on `Committee` (`Leios`), a seat lookup by pool.  The "me" binding is consensus-local; the ledger side is the seat lookup, which the implementation serves from its materialized committee ([REQ-LedgerStateVotingCommittee][dd-certver]). |
 | `initializeVotingLedgerState` | Follow-up (the voting-state interface).  Meaning fixed now: the announcing block's post-`BBODY` state paired with fresh EB accumulators, one per cumulative `ValidEB` bound: referenced-transaction bytes, `ExUnits`, and reference-script bytes. |
@@ -433,7 +462,7 @@ each to its ledger counterpart, or records what stays outside the ledger spec an
 The protocol-level Agda specification is shaped for the same division: its
 base-layer interface submits ranking blocks carrying
 `txsOrEbCert : List Tx ⊎ EBCert` and declares a single base-layer judgment,
-the certificate check `V-chkCerts`, the role `ValidCert` is intended to fill.
+the certificate check `V-chkCerts`, the role `ValidEBCert` is intended to fill.
 (An intended correspondence: that specification declares the hook but its
 transition rules do not yet call it.)
 
@@ -456,8 +485,9 @@ The consensus repository's `Ledger/*` modules are hand-adapted copies (the crypt
 and epoch structures, a trimmed `PParams`, the prelude), so nothing merged here
 reaches it until someone carries it over.
 
-The following records, as of 2026-09-17, where the two specs agree, where they
-must not drift, and what each side should adjust to reconcile the two.
+The table and the items below record, as of 2026-09-17 and revised 2026-10-01
+after the review of the consensus PR, where the two specs agree, where they must
+not drift, and what each side should adjust to reconcile the two.
 
 The guiding rule is one definition per shared quantity.  Its target home is the
 common library `agda-cardano-common` ([#919][fls-919], [repository][cardano-common]),
@@ -478,11 +508,11 @@ aligned by the table below; the library move follows the release.
 | Consensus spec                                           | Ledger spec                                                                                           | Agreement                                     |
 | -------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- | --------------------------------------------- |
 | `Lhdrᶜ`, `Lvoteᶜ`, `Ldiffᶜ`: genesis constants, in slots | `leiosHeaderPeriod`, `leiosVotingPeriod`, `leiosDiffusionPeriod`: `PParams` fields, in `Milliseconds` | Disagree; item 1                              |
-| `certificationDelay = 3·Lhdr + Lvote + Ldiff`            | `⌈(3·L_hdr + L_vote + L_diff) / slotLength⌉`, to be defined once; item 2                              | Same boundary: `s_A + delay ≤ s_B`            |
+| `certificationDelay = slotsFromDuration (3·hdr + vote + diff)` | `certificationDelay : PParams → Slot`, by `slotsFromDuration` and `SlotLengthᶜ` ([#1340][fls-1340], the consensus names) | Same definition; whose parameters: item 6 |
 | `HashEB`; `AnnouncedEB` with `hash` and `size`           | `EBHash`; `Announcement = EBHash × ℕ`                                                                 | Same content, each repository's names; item 3 |
 | `LastAppliedBlock` with `sℓ`, `h`, `aeb`                 | `CHAIN`'s pending announcement: the announcing slot, header hash, and announcement                    | Same semantics: every block replaces it       |
 | `HashHeader`, the `h` above                              | `RBHeaderHash`, the message the certificate is verified against                                       | Same object                                   |
-| `certifiedEB` gates `certChecks`                         | The block rule requires the bit to agree with the body; item 4                                        | Sound together                                |
+| `certifiedEB` gates `certChecks`                         | `leiosBodyChecks` in `BBODY` requires the bit to agree with the body ([#1339][fls-1339]); item 4     | Sound together                                |
 
 1.  **The periods are protocol parameters in milliseconds** (not genesis constants in slots).
 
@@ -504,7 +534,8 @@ aligned by the table below; the library move follows the release.
     The CIP converts the summed durations to slots with the
     genesis `slotLength`, rounded up ([Step 5][cip-step5]).
 
-    **Adjustment: ledger**.  `SlotLengthᶜ : Milliseconds`, nonzero, joins the core
+    **Adjustment: ledger** (done in [#1340][fls-1340], with the consensus
+    specification's names).  `SlotLengthᶜ : Milliseconds`, nonzero, joins the core
     `GlobalConstants` (the committee work already adds the KES constants there,
     which the consensus copy carries too, so the two records converge), and the
     conversion of a `Milliseconds` duration to slots, `⌈d / SlotLengthᶜ⌉`, is
@@ -513,9 +544,9 @@ aligned by the table below; the library move follows the release.
     the common library with `Milliseconds`; the function over `PParams` is
     era-specific and stays in the ledger spec.
 
-    **Adjustment: consensus**.  The `GlobalConstants` copy takes the constant, and
-    `certChecks` applies the copied conversion to its own parameters instead of
-    summing slots.  The inequality already agrees: the consensus premise `sℓ +
+    **Adjustment: consensus** (done in PR 2278's last commit, 2026-09-28).  The
+    `GlobalConstants` copy takes the constant, and `certChecks` applies the
+    copied conversion to its own parameters instead of summing slots.  The inequality already agrees: the consensus premise `sℓ +
     certificationDelay ≤ s` is the CIP's "at least ⌈…⌉ slots after."
 
 
@@ -547,6 +578,27 @@ aligned by the table below; the library move follows the release.
     specification needs seat membership (`doesEpochCommitteeIncludeMe` above), the
     step is one more `LedgerInterface` field, a committee getter, not a copy of
     the committee module.  (Nothing to do until then.)
+
+6.  **Whose parameters bound the delay across an epoch boundary** is the one
+    row still open.  PR 2278 reads the parameters of the forecast at the
+    certifying header; this note's ordering corollary assumed the announcing
+    block's.  Both are sound, and the two specifications must agree to the
+    slot.  The forecast is not one quantity: header validation forecasts from
+    the chain tip without the announced EB's closure, while a body-side check
+    after the tick sees a state that includes the closure, and the closure's
+    transactions can change what the boundary enacts, so the two forecasts can
+    name different parameters for the same block.  The announcing block's
+    parameters have no such ambiguity, and they can be pinned when the
+    announcing block is applied, as the earliest slot at which a certificate
+    may follow, stored with the pending announcement.  Recommendation
+    (2026-10-01, pending Carlos and Javier): the announcing block's, pinned.
+
+    **Adjustment: ledger**.  The pending announcement carries the earliest
+    certifying slot, computed with the parameters in force when the announcing
+    block is applied ([#1338][fls-1338]).
+
+    **Adjustment: consensus**.  `getPParams nes` in place of `getPParams
+    forecast` in `certChecks`, or the same stored slot in `LastAppliedBlock`.
 
 ## Out of scope: rewards and incentives
 
@@ -643,7 +695,7 @@ module already sees it and reachability constrains nothing here.
 
 For the rest, every Leios type has more than one consumer, as follows:
 
-+  `Certificate`: `BlockBody`'s field and `ValidCert`;
++  `EBCert`: `BlockBody`'s field and `ValidEBCert`;
 +  `EndorserBlock`: `BlockBody`'s payload and `ValidEB`;
 +  `Announcement`: `BlockBody`'s header and `Chain`'s `PendingEB`;
 +  the committee: `Chain`'s pin and both validity relations.
@@ -684,6 +736,11 @@ practical arguments:
 (`Leios` for the committee and the validity relations, `Leios/Types` for the
 primitive types) with the crypto in the core structure: flatter than the
 subtree argued for above, Leios-named as it argues, and inlined nowhere.
+
+*Postscript, 2026-10-01*.  Three Leios-named modules now (`Leios/Validity`
+holds `ValidEB`), the crypto in its own Dijkstra module, `CertifiedEB` beside
+`Block` in `BlockBody` because it mentions `TopLevelTx`, and the block-local
+checks in `BBODY`; the module placement above is the as-built map.
 
 ---
 
@@ -728,7 +785,16 @@ subtree argued for above, Leios-named as it argues, and inlined nowhere.
 [oc-2278]: https://github.com/IntersectMBO/ouroboros-consensus/pull/2278
 [oc-1677]: https://github.com/IntersectMBO/ouroboros-consensus/issues/1677
 [fls-919]: https://github.com/IntersectMBO/formal-ledger-specifications/issues/919
+[fls-1300]: https://github.com/IntersectMBO/formal-ledger-specifications/pull/1300
 [fls-1304]: https://github.com/IntersectMBO/formal-ledger-specifications/pull/1304
+[fls-1331]: https://github.com/IntersectMBO/formal-ledger-specifications/pull/1331
+[fls-1333]: https://github.com/IntersectMBO/formal-ledger-specifications/pull/1333
+[fls-1338]: https://github.com/IntersectMBO/formal-ledger-specifications/issues/1338
+[fls-1339]: https://github.com/IntersectMBO/formal-ledger-specifications/pull/1339
+[fls-1340]: https://github.com/IntersectMBO/formal-ledger-specifications/pull/1340
+[fls-1341]: https://github.com/IntersectMBO/formal-ledger-specifications/pull/1341
+[fls-1342]: https://github.com/IntersectMBO/formal-ledger-specifications/pull/1342
+[cl-6047]: https://github.com/IntersectMBO/cardano-ledger/pull/6047
 [oc-vote-golden]: https://github.com/IntersectMBO/ouroboros-consensus/blob/leios-prototype/ouroboros-consensus-cardano/golden/cardano/leios/LeiosVote
 [cardano-common]: https://github.com/input-output-hk/agda-cardano-common
 [leios-formal-spec]: https://github.com/input-output-hk/ouroboros-leios-formal-spec
