@@ -10,25 +10,26 @@
 <a id="197" class="Keyword">open</a> <a id="202" class="Keyword">import</a> <a id="209" href="Data.Integer.html" class="Module">Data.Integer</a> <a id="222" class="Symbol">as</a> <a id="225" class="Module">ℤ</a>
 <a id="227" class="Keyword">open</a> <a id="232" class="Keyword">import</a> <a id="239" href="Data.Rational.html" class="Module">Data.Rational</a> <a id="253" class="Symbol">as</a> <a id="256" class="Module">ℚ</a>
 
-<a id="HSGlobalConstants"></a><a id="259" href="Ledger.Core.Foreign.Epoch.html#259" class="Function">HSGlobalConstants</a> <a id="277" class="Symbol">:</a> <a id="279" href="Ledger.Core.Specification.Epoch.html#2370" class="Record">GlobalConstants</a>
+<a id="HSGlobalConstants"></a><a id="259" href="Ledger.Core.Foreign.Epoch.html#259" class="Function">HSGlobalConstants</a> <a id="277" class="Symbol">:</a> <a id="279" href="Ledger.Core.Specification.Epoch.html#2490" class="Record">GlobalConstants</a>
 <a id="295" href="Ledger.Core.Foreign.Epoch.html#259" class="Function">HSGlobalConstants</a> <a id="313" class="Symbol">=</a> <a id="315" class="Keyword">record</a> <a id="322" class="Symbol">{</a>
-  <a id="326" href="Ledger.Core.Specification.Epoch.html#2409" class="Field">Network</a> <a id="334" class="Symbol">=</a> <a id="336" href="Agda.Builtin.Nat.html#203" class="Datatype">ℕ</a>
-  <a id="340" class="Symbol">;</a> <a id="342" href="Ledger.Core.Specification.Epoch.html#2498" class="Field">SlotsPerEpochᶜ</a> <a id="357" class="Symbol">=</a> <a id="359" class="Number">4320</a>
-  <a id="366" class="Symbol">;</a> <a id="368" href="Ledger.Core.Specification.Epoch.html#2581" class="Field">ActiveSlotCoeff</a> <a id="384" class="Symbol">=</a> <a id="386" href="Data.Integer.Base.html#1585" class="Function">ℤ.1ℤ</a> <a id="391" href="Data.Rational.Base.html#3963" class="Function Operator">ℚ./</a> <a id="395" class="Number">20</a>
-  <a id="400" class="Symbol">;</a> <a id="402" href="Ledger.Core.Specification.Epoch.html#2670" class="Field">RandomnessStabilisationWindowᶜ</a> <a id="433" class="Symbol">=</a> <a id="435" class="Number">10</a>
-  <a id="440" class="Symbol">;</a> <a id="442" href="Ledger.Core.Specification.Epoch.html#2714" class="Field">StabilityWindowᶜ</a> <a id="459" class="Symbol">=</a> <a id="461" class="Number">10</a>
-  <a id="466" class="Symbol">;</a> <a id="468" href="Ledger.Core.Specification.Epoch.html#2744" class="Field">MaxLovelaceSupplyᶜ</a> <a id="487" class="Symbol">=</a> <a id="489" class="Number">1</a>
-  <a id="493" class="Symbol">;</a> <a id="495" href="Ledger.Core.Specification.Epoch.html#2779" class="Field">Quorum</a> <a id="502" class="Symbol">=</a> <a id="504" class="Number">1</a>
-  <a id="508" class="Symbol">;</a> <a id="510" href="Ledger.Core.Specification.Epoch.html#2799" class="Field">NetworkId</a> <a id="520" class="Symbol">=</a> <a id="522" class="Number">0</a>
-  <a id="526" class="Symbol">;</a> <a id="528" href="Ledger.Core.Specification.Epoch.html#2910" class="Field">MaxKESEvoᶜ</a> <a id="539" class="Symbol">=</a> <a id="541" class="Number">10</a>
-  <a id="546" class="Symbol">;</a> <a id="548" href="Ledger.Core.Specification.Epoch.html#2934" class="Field">SlotsPerKESPeriodᶜ</a> <a id="567" class="Symbol">=</a> <a id="569" class="Number">864</a>  <a id="574" class="Comment">-- derives a key age of 4 epochs</a>
-  <a id="609" class="Symbol">}</a>
+  <a id="326" href="Ledger.Core.Specification.Epoch.html#2529" class="Field">Network</a> <a id="334" class="Symbol">=</a> <a id="336" href="Agda.Builtin.Nat.html#203" class="Datatype">ℕ</a>
+  <a id="340" class="Symbol">;</a> <a id="342" href="Ledger.Core.Specification.Epoch.html#2618" class="Field">SlotsPerEpochᶜ</a> <a id="357" class="Symbol">=</a> <a id="359" class="Number">4320</a>
+  <a id="366" class="Symbol">;</a> <a id="368" href="Ledger.Core.Specification.Epoch.html#2701" class="Field">ActiveSlotCoeff</a> <a id="384" class="Symbol">=</a> <a id="386" href="Data.Integer.Base.html#1585" class="Function">ℤ.1ℤ</a> <a id="391" href="Data.Rational.Base.html#3963" class="Function Operator">ℚ./</a> <a id="395" class="Number">20</a>
+  <a id="400" class="Symbol">;</a> <a id="402" href="Ledger.Core.Specification.Epoch.html#2790" class="Field">RandomnessStabilisationWindowᶜ</a> <a id="433" class="Symbol">=</a> <a id="435" class="Number">10</a>
+  <a id="440" class="Symbol">;</a> <a id="442" href="Ledger.Core.Specification.Epoch.html#2834" class="Field">StabilityWindowᶜ</a> <a id="459" class="Symbol">=</a> <a id="461" class="Number">10</a>
+  <a id="466" class="Symbol">;</a> <a id="468" href="Ledger.Core.Specification.Epoch.html#2864" class="Field">MaxLovelaceSupplyᶜ</a> <a id="487" class="Symbol">=</a> <a id="489" class="Number">1</a>
+  <a id="493" class="Symbol">;</a> <a id="495" href="Ledger.Core.Specification.Epoch.html#2899" class="Field">Quorum</a> <a id="502" class="Symbol">=</a> <a id="504" class="Number">1</a>
+  <a id="508" class="Symbol">;</a> <a id="510" href="Ledger.Core.Specification.Epoch.html#2919" class="Field">NetworkId</a> <a id="520" class="Symbol">=</a> <a id="522" class="Number">0</a>
+  <a id="526" class="Symbol">;</a> <a id="528" href="Ledger.Core.Specification.Epoch.html#3030" class="Field">MaxKESEvoᶜ</a> <a id="539" class="Symbol">=</a> <a id="541" class="Number">10</a>
+  <a id="546" class="Symbol">;</a> <a id="548" href="Ledger.Core.Specification.Epoch.html#3054" class="Field">SlotsPerKESPeriodᶜ</a> <a id="567" class="Symbol">=</a> <a id="569" class="Number">864</a>  <a id="574" class="Comment">-- derives a key age of 4 epochs</a>
+  <a id="609" class="Symbol">;</a> <a id="611" href="Ledger.Core.Specification.Epoch.html#3177" class="Field">SlotLengthᶜ</a> <a id="623" class="Symbol">=</a> <a id="625" class="Number">1000</a>  <a id="631" class="Comment">-- one second per slot, mainnet&#39;s value</a>
+  <a id="673" class="Symbol">}</a>
 
-<a id="HSEpochStructure"></a><a id="612" href="Ledger.Core.Foreign.Epoch.html#612" class="Function">HSEpochStructure</a> <a id="629" class="Symbol">:</a> <a id="631" href="Ledger.Core.Specification.Epoch.html#674" class="Record">EpochStructure</a>
-<a id="646" href="Ledger.Core.Foreign.Epoch.html#612" class="Function">HSEpochStructure</a> <a id="663" class="Symbol">=</a> <a id="665" href="Ledger.Core.Specification.Epoch.html#3231" class="Function">ℕEpochStructure</a> <a id="681" href="Ledger.Core.Foreign.Epoch.html#259" class="Function">HSGlobalConstants</a>
+<a id="HSEpochStructure"></a><a id="676" href="Ledger.Core.Foreign.Epoch.html#676" class="Function">HSEpochStructure</a> <a id="693" class="Symbol">:</a> <a id="695" href="Ledger.Core.Specification.Epoch.html#674" class="Record">EpochStructure</a>
+<a id="710" href="Ledger.Core.Foreign.Epoch.html#676" class="Function">HSEpochStructure</a> <a id="727" class="Symbol">=</a> <a id="729" href="Ledger.Core.Specification.Epoch.html#3525" class="Function">ℕEpochStructure</a> <a id="745" href="Ledger.Core.Foreign.Epoch.html#259" class="Function">HSGlobalConstants</a>
 
-<a id="700" class="Keyword">open</a> <a id="705" href="Ledger.Core.Specification.Epoch.html#674" class="Module">EpochStructure</a> <a id="720" href="Ledger.Core.Foreign.Epoch.html#612" class="Function">HSEpochStructure</a>
+<a id="764" class="Keyword">open</a> <a id="769" href="Ledger.Core.Specification.Epoch.html#674" class="Module">EpochStructure</a> <a id="784" href="Ledger.Core.Foreign.Epoch.html#676" class="Function">HSEpochStructure</a>
 
-<a id="738" class="Keyword">unquoteDecl</a> <a id="750" class="Symbol">=</a>
+<a id="802" class="Keyword">unquoteDecl</a> <a id="814" class="Symbol">=</a>
   hsTypeAlias Epoch
 </pre></body></html>
