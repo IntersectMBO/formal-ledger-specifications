@@ -29,6 +29,7 @@ module Ledger.Dijkstra.Specification.Leios.Validity
 
 open import Ledger.Prelude
 open import Data.List.Relation.Unary.Unique.Propositional using (Unique)
+open import Data.List.Relation.Unary.Unique.DecPropositional using (unique?)
 open import Ledger.Dijkstra.Specification.Ledger txs abs
 open import Ledger.Dijkstra.Specification.Utxo txs abs using (totExUnits; refScriptsSize)
 open import Ledger.Dijkstra.Specification.Leios.Types cryptoStructure leiosCryptoStructure
@@ -111,6 +112,36 @@ the EB structure itself: the CIP's reference list is an insertion-ordered map
 that admits no duplicate keys ([Appendix B][cip-cddl]).  The list type here does
 not encode that invariant, so `ValidEB`{.AgdaRecord} states it as
 `uniqueRefsOK`{.AgdaField}.
+
+<!--
+```agda
+private
+  nonempty? : ∀ {A : Type} (xs : List A) → Dec (xs ≢ [])
+  nonempty? []       = no λ p → p refl
+  nonempty? (_ ∷ _)  = yes λ ()
+
+module _ {Γ : LedgerEnv} {ls : LedgerState} where
+  open PParams (PParamsOf Γ)
+
+  instance
+    Dec-WithinEBBounds : ∀ {eb closure} → WithinEBBounds {Γ} {ls} eb closure ⁇
+    Dec-WithinEBBounds {eb} {closure} = ⁇ map′
+      (λ (a , b , c , d) → record { ebSizeOK = a ; txsSizeOK = b ; totExUnitsOK = c ; refScriptsSizeOK = d })
+      (λ w → let open WithinEBBounds w in ebSizeOK , txsSizeOK , totExUnitsOK , refScriptsSizeOK)
+      ¿ ebSize eb ≤ leiosMaxEBSize
+      × ∑ˡ[ tx ← closure ] SizeOf tx ≤ leiosMaxEBTxsSize
+      × leiosMaxEBExUnits ≥ᵉ ∑ˡ[ tx ← closure ] totExUnits tx
+      × ∑ˡ[ tx ← closure ] refScriptsSize tx (UTxOOf ls) ≤ leiosMaxRefScriptSizePerEB ¿
+
+  -- Given the extension, the remaining conditions decide validity.
+  ValidEB? : ∀ eb closure → (∃[ ls' ] Γ ⊢ ls ⇀⦇ closure ,LEDGERS⦈ ls') → Dec (ValidEB {Γ} {ls} eb closure)
+  ValidEB? eb closure ext = map′
+    (λ (n , u , r , b) → record { nonemptyOK = n ; uniqueRefsOK = u ; refsOK = r ; boundsOK = b ; extensionOK = ext })
+    (λ v → let open ValidEB v in nonemptyOK , uniqueRefsOK , refsOK , boundsOK)
+    (nonempty? closure ×-dec unique? _≟_ (map proj₁ (EndorserBlock.ebTxRefs eb))
+                       ×-dec ¿ EndorserBlock.ebTxRefs eb ≡ map refOf closure × WithinEBBounds {Γ} {ls} eb closure ¿)
+```
+-->
 
 [cip-params]: https://github.com/cardano-foundation/CIPs/blob/master/CIP-0164/README.md#protocol-parameters
 [cip-step3]: https://github.com/cardano-foundation/CIPs/blob/master/CIP-0164/README.md#step-3-committee-validation
