@@ -84,6 +84,7 @@ import qualified MAlonzo.Code.Ledger.Dijkstra.Specification.Certs
 import qualified MAlonzo.Code.Ledger.Dijkstra.Specification.Crypto
 import qualified MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions
 import qualified MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Base
+import qualified MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.Types
 import qualified MAlonzo.Code.Ledger.Dijkstra.Specification.PParams
 import qualified MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base
 import qualified MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Native
@@ -11777,70 +11778,88 @@ d_vrf_3904 v0
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.AbstractFunctions
 d_AbstractFunctions_3908 a0 = ()
+-- Ledger.Dijkstra.Foreign.ExternalStructures._.AbstractFunctions.ebSize
+d_ebSize_3918 ::
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3262 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.Types.T_EndorserBlock_22 ->
+  Integer
+d_ebSize_3918 v0
+  = coe
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.d_ebSize_3294
+      (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.AbstractFunctions.getLanguageView
-d_getLanguageView_3918 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3248 ->
+d_getLanguageView_3920 ::
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3262 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParams_312 ->
   MAlonzo.Code.Ledger.Dijkstra.Foreign.Script.Base.T_HSLanguage_10 ->
   MAlonzo.Code.Agda.Builtin.Unit.T_'8868'_6
-d_getLanguageView_3918 v0
+d_getLanguageView_3920 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.d_getLanguageView_3266
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.d_getLanguageView_3284
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.AbstractFunctions.indexOfImp
-d_indexOfImp_3920 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3248 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_indexOf_3216
-d_indexOfImp_3920 v0
+d_indexOfImp_3922 ::
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3262 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_indexOf_3230
+d_indexOfImp_3922 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.d_indexOfImp_3268
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.d_indexOfImp_3286
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.AbstractFunctions.scriptSize
-d_scriptSize_3922 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3248 ->
+d_scriptSize_3924 ::
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3262 ->
   MAlonzo.Code.Data.Sum.Base.T__'8846'__30 -> Integer
-d_scriptSize_3922 v0
+d_scriptSize_3924 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.d_scriptSize_3270
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.d_scriptSize_3288
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.AbstractFunctions.serializedSize
-d_serializedSize_3924 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3248 ->
+d_serializedSize_3926 ::
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3262 ->
   Integer -> Integer
-d_serializedSize_3924 v0
+d_serializedSize_3926 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.d_serializedSize_3264
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.d_serializedSize_3282
+      (coe v0)
+-- Ledger.Dijkstra.Foreign.ExternalStructures._.AbstractFunctions.txRefHash
+d_txRefHash_3928 ::
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3262 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3838 ->
+  Integer
+d_txRefHash_3928 v0
+  = coe
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.d_txRefHash_3292
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.AbstractFunctions.txScriptFee
-d_txScriptFee_3926 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3248 ->
+d_txScriptFee_3930 ::
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3262 ->
   MAlonzo.Code.Agda.Builtin.Unit.T_'8868'_6 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 -> Integer
-d_txScriptFee_3926 v0
+d_txScriptFee_3930 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.d_txScriptFee_3262
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.d_txScriptFee_3280
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.AbstractFunctions.valContext
-d_valContext_3928 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3248 ->
+d_valContext_3932 ::
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3262 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Script.ScriptPurpose.T_TxInfo_3180 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Script.ScriptPurpose.T_ScriptPurpose_3168 ->
   Integer
-d_valContext_3928 v0
+d_valContext_3932 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.d_valContext_3272
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.d_valContext_3290
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures.HSAbstractFunctions
-d_HSAbstractFunctions_3946 ::
+d_HSAbstractFunctions_3950 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3248
-d_HSAbstractFunctions_3946 v0
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3262
+d_HSAbstractFunctions_3950 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.C_constructor_3274
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.C_constructor_3296
       (coe (\ v1 v2 -> 0 :: Integer)) (coe (\ v1 -> 0 :: Integer))
       (coe (\ v1 v2 -> coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8))
       (coe
-         MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.C_constructor_3246
+         MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.C_constructor_3260
          (coe
             (\ v1 v2 ->
                coe
@@ -11875,18 +11894,18 @@ d_HSAbstractFunctions_3946 v0
                                MAlonzo.Code.Class.DecEq.Instances.du_DecEq'45''8846'_188
                                (coe MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
                                (coe MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)))
-                         (coe v3) (coe du_rewardAddressToSOP_3952 (coe v1)))
+                         (coe v3) (coe du_rewardAddressToSOP_3956 (coe v1)))
                     (coe
                        MAlonzo.Code.Data.List.Sort.Base.d_sort_248
                        (coe
                           MAlonzo.Code.Data.List.Sort.du_sortingAlgorithm_138
-                          (coe du_DecTotalOrder'45'RewardAddressSOP_3966))
+                          (coe du_DecTotalOrder'45'RewardAddressSOP_3970))
                        (coe
                           MAlonzo.Code.Axiom.Set.du_map_426
                           (MAlonzo.Code.Axiom.Set.d_th_1516
                              (coe
                                 MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
-                          (coe du_rewardAddressToSOP_3952)
+                          (coe du_rewardAddressToSOP_3956)
                           (coe
                              MAlonzo.Code.Class.IsSet.du_dom_586
                              (coe
@@ -11965,17 +11984,18 @@ d_HSAbstractFunctions_3946 v0
                      MAlonzo.Code.Ledger.Dijkstra.Foreign.Script.Structure.d_psScriptSize_374
                      (coe v2)
               _ -> MAlonzo.RTE.mazUnreachableError))
-      (coe (\ v1 v2 -> 0 :: Integer))
+      (coe (\ v1 v2 -> 0 :: Integer)) (coe (\ v1 -> 0 :: Integer))
+      (coe (\ v1 -> 0 :: Integer))
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.rewardAddressToSOP
-d_rewardAddressToSOP_3952 ::
+d_rewardAddressToSOP_3956 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
   MAlonzo.Code.Ledger.Core.Specification.Address.T_RewardAddress_116 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_rewardAddressToSOP_3952 ~v0 v1 = du_rewardAddressToSOP_3952 v1
-du_rewardAddressToSOP_3952 ::
+d_rewardAddressToSOP_3956 ~v0 v1 = du_rewardAddressToSOP_3956 v1
+du_rewardAddressToSOP_3956 ::
   MAlonzo.Code.Ledger.Core.Specification.Address.T_RewardAddress_116 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-du_rewardAddressToSOP_3952 v0
+du_rewardAddressToSOP_3956 v0
   = case coe v0 of
       MAlonzo.Code.Ledger.Core.Specification.Address.C_constructor_126 v1 v2
         -> case coe v2 of
@@ -11990,14 +12010,14 @@ du_rewardAddressToSOP_3952 v0
              _ -> MAlonzo.RTE.mazUnreachableError
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.DecTotalOrder-RewardAddressSOP
-d_DecTotalOrder'45'RewardAddressSOP_3966 ::
+d_DecTotalOrder'45'RewardAddressSOP_3970 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_DecTotalOrder_1098
-d_DecTotalOrder'45'RewardAddressSOP_3966 ~v0
-  = du_DecTotalOrder'45'RewardAddressSOP_3966
-du_DecTotalOrder'45'RewardAddressSOP_3966 ::
+d_DecTotalOrder'45'RewardAddressSOP_3970 ~v0
+  = du_DecTotalOrder'45'RewardAddressSOP_3970
+du_DecTotalOrder'45'RewardAddressSOP_3970 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_DecTotalOrder_1098
-du_DecTotalOrder'45'RewardAddressSOP_3966
+du_DecTotalOrder'45'RewardAddressSOP_3970
   = coe
       MAlonzo.Code.Relation.Binary.Bundles.C_constructor_1272
       (coe

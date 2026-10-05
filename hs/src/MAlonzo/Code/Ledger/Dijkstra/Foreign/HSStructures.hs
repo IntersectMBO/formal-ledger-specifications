@@ -1321,10 +1321,10 @@ d_DirectDepositsOf_266 v0
 d_DrepThresholds_268 = ()
 -- Ledger.Dijkstra.Foreign.HSStructures._.HSAbstractFunctions
 d_HSAbstractFunctions_272 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3248
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3262
 d_HSAbstractFunctions_272
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSAbstractFunctions_3946
+      MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSAbstractFunctions_3950
       (coe
          MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_24)
 -- Ledger.Dijkstra.Foreign.HSStructures._.govStructure
