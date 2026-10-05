@@ -1,5 +1,5 @@
 ---
-source_branch: leios-main
+source_branch: master
 source_path: src/Ledger/Dijkstra/Specification/Leios/Validity.lagda.md
 ---
 
@@ -29,7 +29,6 @@ module Ledger.Dijkstra.Specification.Leios.Validity
 
 open import Ledger.Prelude
 open import Data.List.Relation.Unary.Unique.Propositional using (Unique)
-open import Data.List.Relation.Unary.Unique.DecPropositional using (unique?)
 open import Ledger.Dijkstra.Specification.Ledger txs abs
 open import Ledger.Dijkstra.Specification.Utxo txs abs using (totExUnits; refScriptsSize)
 open import Ledger.Dijkstra.Specification.Leios.Types cryptoStructure leiosCryptoStructure
@@ -43,15 +42,13 @@ open LeiosCryptoStructure leiosCryptoStructure using (TxRefHash)
 ```agda
 refOf : TopLevelTx → TxRefHash × ℕ
 refOf tx = txRefHash tx , SizeOf tx
-
-MatchesRefs : EndorserBlock → List TopLevelTx → Type
-MatchesRefs eb closure = EndorserBlock.ebTxRefs eb ≡ map refOf closure
 ```
 
-The rules receive the closure resolved, and `MatchesRefs`{.AgdaFunction} is
-the premise that ties it to the block: the reference list is, entry for entry,
-the hash of each transaction's complete bytes paired with its declared size.
-Order is part of the agreement, since the closure applies in reference order.
+The rules receive the closure resolved, and `refOf`{.AgdaFunction} is what the
+EB's reference to a transaction must be: the hash of its complete bytes paired
+with its declared size.  `ValidEB`{.AgdaRecord} below requires the reference
+list to be, entry for entry, `refOf`{.AgdaFunction} of the closure; order is
+part of the agreement, since the closure applies in reference order.
 
 ### The bounds
 
@@ -65,32 +62,41 @@ module _ {Γ : LedgerEnv} {ls : LedgerState} where
 
   record WithinEBBounds (eb : EndorserBlock) (closure : List TopLevelTx) : Type where
     field
-      ebSizeOK      : ebSize eb ≤ leiosMaxEBSize
-      txsSizeOK     : ∑ˡ[ tx ← closure ] SizeOf tx ≤ leiosMaxEBTxsSize
-      exUnitsOK     : leiosMaxEBExUnits ≥ᵉ ∑ˡ[ tx ← closure ] totExUnits tx
-      refScriptsOK  : ∑ˡ[ tx ← closure ] refScriptsSize tx (UTxOOf ls) ≤ leiosMaxRefScriptSizePerEB
+      ebSizeOK          : ebSize eb ≤ leiosMaxEBSize
+      txsSizeOK         : ∑ˡ[ tx ← closure ] SizeOf tx ≤ leiosMaxEBTxsSize
+      totExUnitsOK      : leiosMaxEBExUnits ≥ᵉ ∑ˡ[ tx ← closure ] totExUnits tx
+      refScriptsSizeOK  : ∑ˡ[ tx ← closure ] refScriptsSize tx (UTxOOf ls) ≤ leiosMaxRefScriptSizePerEB
 ```
 
-The four fields of `WithinEBBounds`{.AgdaRecord} cover the five endorser-block
-bounds of CIP-164's Table 3: the size of the EB itself, the total size of the
-referenced transactions, the total size of their reference scripts, and the
-Plutus step and memory limits, the last two bundled into the single
-`ExUnits`{.AgdaField} value `leiosMaxEBExUnits`{.AgdaField}.
+The fields of `WithinEBBounds`{.AgdaRecord} are the endorser-block bounds of
+CIP-164's [Table 3][cip-params], as follows:
+
++  `ebSizeOK`{.AgdaField}: the size of the EB itself is at most `S_EB`
+   (`leiosMaxEBSize`{.AgdaField});
++  `txsSizeOK`{.AgdaField}: the total size of the referenced transactions is at
+   most `S_EB-tx` (`leiosMaxEBTxsSize`{.AgdaField});
++  `totExUnitsOK`{.AgdaField}: the closure's Plutus steps and memory fit
+   `leiosMaxEBExUnits`{.AgdaField}, one `ExUnits`{.AgdaFunction} value for the
+   table's two budget rows;
++  `refScriptsSizeOK`{.AgdaField}: the total size of the closure's reference
+   scripts is at most `S_EB-ref` (`leiosMaxRefScriptSizePerEB`{.AgdaField}).
+
+Four fields cover the table's five rows.
 
 ### Validity
 
 ```agda
   record ValidEB (eb : EndorserBlock) (closure : List TopLevelTx) : Type where
     field
-      nonempty        : closure ≢ []
-      uniqueRefs      : Unique (map proj₁ (EndorserBlock.ebTxRefs eb))
-      matchesRefs     : MatchesRefs eb closure
-      withinBounds    : WithinEBBounds eb closure
-      validExtension  : ∃[ ls' ] Γ ⊢ ls ⇀⦇ closure ,LEDGERS⦈ ls'
+      nonemptyOK    : closure ≢ []
+      uniqueRefsOK  : Unique (map proj₁ (EndorserBlock.ebTxRefs eb))
+      refsOK        : EndorserBlock.ebTxRefs eb ≡ map refOf closure
+      boundsOK      : WithinEBBounds eb closure
+      extensionOK   : ∃[ ls' ] Γ ⊢ ls ⇀⦇ closure ,LEDGERS⦈ ls'
 ```
 
-Of CIP-164's six vote-casting conditions, the two that the ledger can check land
-here, namely,
+Of CIP-164's six vote-casting conditions ([Step 3][cip-step3]), the two that
+the ledger can check land here, namely,
 
 +  the closure is a valid extension, through the same `LEDGERS`{.AgdaDatatype}
    relation the block rules use;
@@ -98,17 +104,15 @@ here, namely,
 
 The other four (header arrival within the header diffusion period, equivocation
 detection, the validation deadline, chain position) are node-local checks, so
-they stay at the protocol level.  Duplicate-freedom of the references is not a
-vote condition but an invariant of the EB structure itself: the CIP's reference
-list is an insertion-ordered map that admits no duplicate keys.  The list type
-here does not encode that invariant, so `ValidEB`{.AgdaRecord} states it as
-`uniqueRefs`{.AgdaField}.
+they stay at the protocol level.
 
-<!--
-```agda
-instance
-  Dec-Unique : ∀ {A : Type} ⦃ _ : DecEq A ⦄ {xs : List A} → Unique xs ⁇
-  Dec-Unique {xs = xs} = ⁇ unique? _≟_ xs
-```
--->
+Duplicate-freedom of the references is not a vote condition but an invariant of
+the EB structure itself: the CIP's reference list is an insertion-ordered map
+that admits no duplicate keys ([Appendix B][cip-cddl]).  The list type here does
+not encode that invariant, so `ValidEB`{.AgdaRecord} states it as
+`uniqueRefsOK`{.AgdaField}.
+
+[cip-params]: https://github.com/cardano-foundation/CIPs/blob/master/CIP-0164/README.md#protocol-parameters
+[cip-step3]: https://github.com/cardano-foundation/CIPs/blob/master/CIP-0164/README.md#step-3-committee-validation
+[cip-cddl]: https://github.com/cardano-foundation/CIPs/blob/master/CIP-0164/README.md#appendix-b-cddl
 
