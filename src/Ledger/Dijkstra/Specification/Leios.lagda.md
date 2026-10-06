@@ -19,6 +19,7 @@ module Ledger.Dijkstra.Specification.Leios
   (gs : GovStructure) (open GovStructure gs) where
 
 open import Ledger.Prelude
+open Filter using (filter)
 open import Ledger.Prelude.Numeric.UnitInterval
   using (UnitInterval; clamp; fromUnitInterval; ≤ᵘⁱ-DTO; _<ᵘⁱ_)
 open import Ledger.Dijkstra.Specification.Certs gs
@@ -26,6 +27,9 @@ open import Ledger.Dijkstra.Specification.Certs gs
 open import Data.List.Sort
 import Data.Rational.Properties as ℚ
 open import Data.Rational as ℚ using (ℚ)
+open import Data.List as L using (upTo; mapMaybe)
+open import Data.List.Relation.Unary.All using () renaming (All to Allˡ)
+open import Data.Maybe using (Is-just)
 open import Data.Refinement.Properties using (value-injective)
 open import Relation.Binary.Bundles using (DecTotalOrder)
 open import Relation.Binary.PropositionalEquality
@@ -34,6 +38,10 @@ open import Relation.Binary.PropositionalEquality
 open import Relation.Binary.Definitions
 
 open StakePoolState
+
+private
+  instance
+    CommMonoid-ℚ-+ = Conversion.fromBundle ℚ.+-0-commutativeMonoid
 ```
 -->
 
@@ -171,4 +179,70 @@ parameters the function is applied to.
     slotsFromDuration (3 * leiosHeaderPeriod + leiosVotingPeriod + leiosDiffusionPeriod)
 ```
 
+## Leios Certificates
+
+An EB certificate (`eb_certificate` in CIP-0164's CDDL) stands in for a quorum
+of votes on an EB announcement: the set of seat indices that signed (the CIP's
+bitfield) and their aggregate BLS signature.
+It is part of the body of the ranking block that certifies the EB.
+
+```agda
+record EBCert : Type where
+  field
+    signers  : ℙ ℕ
+    sig      : BlsSig
+```
+
+<!--
+```agda
+instance
+  unquoteDecl HasCast-EBCert = derive-HasCast
+    [ (quote EBCert , HasCast-EBCert) ]
+
+open EBCert
+```
+-->
+
+A seat index is a position in the committee list.  `signersSeats`{.AgdaFunction}
+collects, in seat order, the seats whose index the certificate names, and the
+weight a set of signers carries is the sum of those seats' weights, each the
+pool's share of the total active stake.
+
+```agda
+signersSeats : LeiosCommittee → ℙ ℕ → List LeiosSeat
+signersSeats cmt signers =
+  map proj₂ (filter (λ (i , _) → i ∈ signers) (L.zip (upTo (length cmt)) cmt))
+```
+
+A certificate is valid for a message, the hash of the announcing block's header,
+when every signer names a seat and every such seat holds a key (a keyless seat
+cannot sign), the aggregate signature verifies under those keys, and the
+signers' summed weight meets the quorum threshold `τ`.  Since each weight is a
+share of the *total* active stake, the comparison is against the whole stake,
+not merely the seated stake, as CIP-0164 requires.
+
+```agda
+record ValidEBCert
+  (cmt   : LeiosCommittee)
+  (τ     : UnitInterval)
+  (msg   : Ser)
+  (cert  : EBCert) : Type where
+  seats = signersSeats cmt (cert .signers)
+  field
+    signersSeated   : cert .signers ⊆ fromList (upTo (length cmt))
+    signersKeyed    : Allˡ (λ s → Is-just (s .key)) seats
+    validSignature  : isSignedByAggregate (fromList (mapMaybe key seats)) msg (cert .sig)
+    quorum          : fromUnitInterval τ ℚ.≤ ∑ˡ[ s ← seats ] fromUnitInterval (s .weight)
+```
+
+Of the five checks of CIP-0164's [Certificate Validation][cip-certval], the
+first, that the certificate conforms to the CDDL, is the type
+`EBCert`{.AgdaRecord} itself; the second is `validSignature`{.AgdaField}; the
+third, that every signer is a committee member able to sign, is
+`signersSeated`{.AgdaField} with `signersKeyed`{.AgdaField}; the fourth is
+`quorum`{.AgdaField}; and the fifth, that the message is the hash of the
+announcing header taken from the chain context, is supplied by the chain rule
+that applies the certificate, through `msg`{.AgdaBound}.
+
 [cip-step5]: https://github.com/cardano-foundation/CIPs/blob/master/CIP-0164/README.md#step-5-chain-inclusion
+[cip-certval]: https://github.com/cardano-foundation/CIPs/blob/master/CIP-0164/README.md#certificate-validation
