@@ -873,7 +873,7 @@ d_Conv'45'ChainState_194
                 -> coe
                      C_MkChainState_7483
                      (coe
-                        MAlonzo.Code.Ledger.Dijkstra.Foreign.NewEpoch.C_MkNewEpochState_1965
+                        MAlonzo.Code.Ledger.Dijkstra.Foreign.NewEpoch.C_MkNewEpochState_1969
                         (coe
                            MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_lastEpoch_4252
                            (coe v1))
@@ -1929,7 +1929,7 @@ d_Conv'45'ChainState_194
                                  case coe v2 of
                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.C_constructor_4266 v3 v4 v5 v6 v7 v8 v9
                                      -> coe
-                                          MAlonzo.Code.Ledger.Dijkstra.Foreign.NewEpoch.C_MkNewEpochState_1965
+                                          MAlonzo.Code.Ledger.Dijkstra.Foreign.NewEpoch.C_MkNewEpochState_1969
                                           (coe v3)
                                           (coe
                                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
@@ -2901,7 +2901,7 @@ d_Conv'45'ChainState_194
                            (coe
                               (\ v2 ->
                                  case coe v2 of
-                                   MAlonzo.Code.Ledger.Dijkstra.Foreign.NewEpoch.C_MkNewEpochState_1965 v3 v4 v5 v6 v7 v8 v9
+                                   MAlonzo.Code.Ledger.Dijkstra.Foreign.NewEpoch.C_MkNewEpochState_1969 v3 v4 v5 v6 v7 v8 v9
                                      -> coe
                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.C_constructor_4266
                                           (coe v3)
@@ -7336,7 +7336,7 @@ d_ChainState_7481 = ()
 type T_ChainState_7481 = ChainState
 pattern C_MkChainState_7483 a0 = MkChainState a0
 check_MkChainState_7483 ::
-  MAlonzo.Code.Ledger.Dijkstra.Foreign.NewEpoch.T_NewEpochState_1963 ->
+  MAlonzo.Code.Ledger.Dijkstra.Foreign.NewEpoch.T_NewEpochState_1967 ->
   T_ChainState_7481
 check_MkChainState_7483 = MkChainState
 cover_ChainState_7481 :: ChainState -> ()

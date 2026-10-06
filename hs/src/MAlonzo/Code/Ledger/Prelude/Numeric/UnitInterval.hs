@@ -29,6 +29,8 @@ import qualified MAlonzo.Code.Data.Rational.Literals
 import qualified MAlonzo.Code.Data.Rational.Properties
 import qualified MAlonzo.Code.Data.Rational.Show
 import qualified MAlonzo.Code.Data.Refinement.Base
+import qualified MAlonzo.Code.Relation.Binary.Bundles
+import qualified MAlonzo.Code.Relation.Binary.Construct.On
 import qualified MAlonzo.Code.Relation.Binary.Reasoning.Base.Triple
 import qualified MAlonzo.Code.Relation.Binary.Reasoning.Syntax
 import qualified MAlonzo.Code.Relation.Nullary.Decidable.Core
@@ -487,3 +489,18 @@ d_prop'45'toUnitInterval'45'fromUnitInterval_184 ::
   MAlonzo.Code.Data.Refinement.Base.T_Refinement_28 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
 d_prop'45'toUnitInterval'45'fromUnitInterval_184 = erased
+-- Ledger.Prelude.Numeric.UnitInterval._<ᵘⁱ_
+d__'60''7512''8305'__206 ::
+  MAlonzo.Code.Data.Refinement.Base.T_Refinement_28 ->
+  MAlonzo.Code.Data.Refinement.Base.T_Refinement_28 -> ()
+d__'60''7512''8305'__206 = erased
+-- Ledger.Prelude.Numeric.UnitInterval.≤ᵘⁱ-DTO
+d_'8804''7512''8305''45'DTO_208 ::
+  MAlonzo.Code.Relation.Binary.Bundles.T_DecTotalOrder_1098
+d_'8804''7512''8305''45'DTO_208
+  = coe
+      MAlonzo.Code.Relation.Binary.Construct.On.du_decTotalOrder_642
+      (coe
+         MAlonzo.Code.Data.Rational.Properties.d_'8804''45'decTotalOrder_3648)
+      (coe
+         (\ v0 -> MAlonzo.Code.Data.Refinement.Base.d_value_38 (coe v0)))

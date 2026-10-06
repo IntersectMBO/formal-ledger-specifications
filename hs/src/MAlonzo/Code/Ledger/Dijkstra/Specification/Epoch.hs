@@ -1229,7 +1229,7 @@ d_selectCommittee_3600 ::
   AgdaAny ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
-  [MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.T_LeiosSeat_1466]
+  [MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.T_LeiosSeat_1460]
 d_selectCommittee_3600 v0 ~v1 = du_selectCommittee_3600 v0
 du_selectCommittee_3600 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
@@ -1237,10 +1237,10 @@ du_selectCommittee_3600 ::
   AgdaAny ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
-  [MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.T_LeiosSeat_1466]
+  [MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.T_LeiosSeat_1460]
 du_selectCommittee_3600 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.d_selectCommittee_1642
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.d_selectCommittee_1604
       (coe
          MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_govStructure_2880
          (coe v0))
@@ -1874,7 +1874,7 @@ data T_NewEpochState_4236
                        (Maybe
                           MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T_RewardUpdate_3870)
                        MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-                       [MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.T_LeiosSeat_1466]
+                       [MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.T_LeiosSeat_1460]
 -- Ledger.Dijkstra.Specification.Epoch.NewEpochState.lastEpoch
 d_lastEpoch_4252 :: T_NewEpochState_4236 -> AgdaAny
 d_lastEpoch_4252 v0
@@ -1920,7 +1920,7 @@ d_pd_4262 v0
 -- Ledger.Dijkstra.Specification.Epoch.NewEpochState.leiosCommittee
 d_leiosCommittee_4264 ::
   T_NewEpochState_4236 ->
-  [MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.T_LeiosSeat_1466]
+  [MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.T_LeiosSeat_1460]
 d_leiosCommittee_4264 v0
   = case coe v0 of
       C_constructor_4266 v1 v2 v3 v4 v5 v6 v7 -> coe v7

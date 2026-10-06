@@ -438,7 +438,7 @@ d_lastEpoch_3526 v0
 -- Ledger.Dijkstra.Specification.Chain._.NewEpochState.leiosCommittee
 d_leiosCommittee_3528 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.T_NewEpochState_4236 ->
-  [MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.T_LeiosSeat_1466]
+  [MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.T_LeiosSeat_1460]
 d_leiosCommittee_3528 v0
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_leiosCommittee_4264
