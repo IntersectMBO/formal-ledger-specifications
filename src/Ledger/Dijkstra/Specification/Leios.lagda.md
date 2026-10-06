@@ -19,14 +19,15 @@ module Ledger.Dijkstra.Specification.Leios
   (gs : GovStructure) (open GovStructure gs) where
 
 open import Ledger.Prelude
+open Filter using (filter)
 open import Ledger.Prelude.Numeric.UnitInterval
   using (UnitInterval; clamp; fromUnitInterval; ≤ᵘⁱ-DTO; _<ᵘⁱ_)
 open import Ledger.Dijkstra.Specification.Certs gs
 
 open import Data.List.Sort
 import Data.Rational.Properties as ℚ
-open import Data.Rational as ℚ using (ℚ; 0ℚ)
-open import Data.List using (upTo; mapMaybe)
+open import Data.Rational as ℚ using (ℚ)
+open import Data.List as L using (upTo; mapMaybe)
 open import Data.List.Relation.Unary.All using () renaming (All to Allˡ)
 open import Data.Maybe using (Is-just)
 open import Data.Refinement.Properties using (value-injective)
@@ -37,6 +38,10 @@ open import Relation.Binary.PropositionalEquality
 open import Relation.Binary.Definitions
 
 open StakePoolState
+
+private
+  instance
+    CommMonoid-ℚ-+ = Conversion.fromBundle ℚ.+-0-commutativeMonoid
 ```
 -->
 
@@ -205,14 +210,8 @@ pool's share of the total active stake.
 
 ```agda
 signersSeats : LeiosCommittee → ℙ ℕ → List LeiosSeat
-signersSeats cmt signers = go 0 cmt
-  where
-    go : ℕ → LeiosCommittee → List LeiosSeat
-    go _ []        = []
-    go i (s ∷ ss)  = (if ¿ i ∈ signers ¿ then [ s ] else []) ++ go (suc i) ss
-
-signedWeight : List LeiosSeat → ℚ
-signedWeight = foldr (λ s w → fromUnitInterval (s .weight) ℚ.+ w) 0ℚ
+signersSeats cmt signers =
+  map proj₂ (filter (λ (i , _) → i ∈ signers) (L.zip (upTo (length cmt)) cmt))
 ```
 
 A certificate is valid for a message, the hash of the announcing block's header,
@@ -233,7 +232,7 @@ record ValidEBCert
     signersSeated   : cert .signers ⊆ fromList (upTo (length cmt))
     signersKeyed    : Allˡ (λ s → Is-just (s .key)) seats
     validSignature  : isSignedByAggregate (fromList (mapMaybe key seats)) msg (cert .sig)
-    quorum          : fromUnitInterval τ ℚ.≤ signedWeight seats
+    quorum          : fromUnitInterval τ ℚ.≤ ∑ˡ[ s ← seats ] fromUnitInterval (s .weight)
 ```
 
 Of the five checks of CIP-0164's [Certificate Validation][cip-certval], the
