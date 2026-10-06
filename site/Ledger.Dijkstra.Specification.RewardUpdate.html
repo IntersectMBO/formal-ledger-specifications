@@ -7047,6 +7047,34 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Dijkstra.Specification.Leios.Validity.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Validity
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -11736,7 +11764,7 @@
 <a id="184" class="Keyword">open</a> <a id="189" class="Keyword">import</a> <a id="196" href="Ledger.Dijkstra.Specification.Transaction.html" class="Module">Ledger.Dijkstra.Specification.Transaction</a>
 <a id="238" class="Keyword">module</a> <a id="245" href="Ledger.Dijkstra.Specification.RewardUpdate.html" class="Module">Ledger.Dijkstra.Specification.RewardUpdate</a>
   <a id="290" class="Symbol">(</a><a id="291" href="Ledger.Dijkstra.Specification.RewardUpdate.html#291" class="Bound">txs</a> <a id="295" class="Symbol">:</a> <a id="297" class="Symbol">_)</a> <a id="300" class="Symbol">(</a><a id="301" class="Keyword">open</a> <a id="306" href="Ledger.Dijkstra.Specification.Transaction.html#3273" class="Module">TransactionStructure</a> <a id="327" href="Ledger.Dijkstra.Specification.RewardUpdate.html#291" class="Bound">txs</a><a id="330" class="Symbol">)</a>
-  <a id="334" class="Symbol">(</a><a id="335" href="Ledger.Dijkstra.Specification.RewardUpdate.html#335" class="Bound">abs</a> <a id="339" class="Symbol">:</a> <a id="341" href="Ledger.Dijkstra.Specification.Abstract.html#919" class="Record">AbstractFunctions</a> <a id="359" href="Ledger.Dijkstra.Specification.RewardUpdate.html#291" class="Bound">txs</a><a id="362" class="Symbol">)</a> <a id="364" class="Symbol">(</a><a id="365" class="Keyword">open</a> <a id="370" href="Ledger.Dijkstra.Specification.Abstract.html#919" class="Module">AbstractFunctions</a> <a id="388" href="Ledger.Dijkstra.Specification.RewardUpdate.html#335" class="Bound">abs</a><a id="391" class="Symbol">)</a>
+  <a id="334" class="Symbol">(</a><a id="335" href="Ledger.Dijkstra.Specification.RewardUpdate.html#335" class="Bound">abs</a> <a id="339" class="Symbol">:</a> <a id="341" href="Ledger.Dijkstra.Specification.Abstract.html#1175" class="Record">AbstractFunctions</a> <a id="359" href="Ledger.Dijkstra.Specification.RewardUpdate.html#291" class="Bound">txs</a><a id="362" class="Symbol">)</a> <a id="364" class="Symbol">(</a><a id="365" class="Keyword">open</a> <a id="370" href="Ledger.Dijkstra.Specification.Abstract.html#1175" class="Module">AbstractFunctions</a> <a id="388" href="Ledger.Dijkstra.Specification.RewardUpdate.html#335" class="Bound">abs</a><a id="391" class="Symbol">)</a>
   <a id="395" class="Keyword">where</a>
 
 <a id="402" class="Keyword">open</a> <a id="407" class="Keyword">import</a> <a id="414" href="Ledger.Prelude.html" class="Module">Ledger.Prelude</a>
@@ -11751,7 +11779,7 @@
 
   <a id="_⊢_⇀⦇_,RUPD⦈_.RUPD-Create-Reward-Update"></a><a id="690" href="Ledger.Dijkstra.Specification.RewardUpdate.html#690" class="InductiveConstructor">RUPD-Create-Reward-Update</a> <a id="716" class="Symbol">:</a> <a id="718" class="Symbol">{</a><a id="719" href="Ledger.Dijkstra.Specification.RewardUpdate.html#719" class="Bound">b</a> <a id="721" class="Symbol">:</a> <a id="723" href="Ledger.Dijkstra.Specification.Rewards.html#5140" class="Function">BlocksMade</a><a id="733" class="Symbol">}</a> <a id="735" class="Symbol">{</a><a id="736" href="Ledger.Dijkstra.Specification.RewardUpdate.html#736" class="Bound">es</a> <a id="739" class="Symbol">:</a> <a id="741" href="Ledger.Dijkstra.Specification.Epoch.html#2482" class="Record">EpochState</a><a id="751" class="Symbol">}</a> <a id="753" class="Symbol">{</a><a id="754" href="Ledger.Dijkstra.Specification.RewardUpdate.html#754" class="Bound">s</a> <a id="756" class="Symbol">:</a> <a id="758" href="Ledger.Core.Specification.Epoch.html#818" class="Function">Slot</a><a id="762" class="Symbol">}</a> <a id="764" class="Symbol">→</a>
     <a id="770" class="Keyword">let</a>
-      <a id="780" href="Ledger.Dijkstra.Specification.RewardUpdate.html#780" class="Bound">ru&#39;</a> <a id="784" class="Symbol">=</a> <a id="786" href="Ledger.Dijkstra.Specification.Epoch.html#7514" class="Function">createRUpd</a> <a id="797" href="Ledger.Core.Specification.Epoch.html#2498" class="Function">SlotsPerEpochᶜ</a> <a id="812" href="Ledger.Dijkstra.Specification.RewardUpdate.html#719" class="Bound">b</a> <a id="814" href="Ledger.Dijkstra.Specification.RewardUpdate.html#736" class="Bound">es</a> <a id="817" href="Ledger.Core.Specification.Epoch.html#2744" class="Function">MaxLovelaceSupplyᶜ</a>
+      <a id="780" href="Ledger.Dijkstra.Specification.RewardUpdate.html#780" class="Bound">ru&#39;</a> <a id="784" class="Symbol">=</a> <a id="786" href="Ledger.Dijkstra.Specification.Epoch.html#7514" class="Function">createRUpd</a> <a id="797" href="Ledger.Core.Specification.Epoch.html#2618" class="Function">SlotsPerEpochᶜ</a> <a id="812" href="Ledger.Dijkstra.Specification.RewardUpdate.html#719" class="Bound">b</a> <a id="814" href="Ledger.Dijkstra.Specification.RewardUpdate.html#736" class="Bound">es</a> <a id="817" href="Ledger.Core.Specification.Epoch.html#2864" class="Function">MaxLovelaceSupplyᶜ</a>
     <a id="840" class="Keyword">in</a>
     <a id="847" href="Prelude.InferenceRules.html#56075" class="Function Operator">∙</a> <a id="849" href="Ledger.Dijkstra.Specification.RewardUpdate.html#754" class="Bound">s</a> <a id="851" href="Class.HasOrder.Core.html#848" class="Function Operator">&gt;</a> <a id="853" href="Ledger.Core.Specification.Epoch.html#1007" class="Function">firstSlot</a> <a id="863" class="Symbol">(</a><a id="864" href="Ledger.Core.Specification.Epoch.html#954" class="Function">epoch</a> <a id="870" href="Ledger.Dijkstra.Specification.RewardUpdate.html#754" class="Bound">s</a><a id="871" class="Symbol">)</a> <a id="873" href="Class.HasAdd.Core.html#162" class="Field Operator">+</a> <a id="875" href="Ledger.Core.Specification.Epoch.html#1060" class="Function">RandomnessStabilisationWindow</a>
     <a id="909" href="Prelude.InferenceRules.html#13694" class="Function Operator">────────────────────────────────</a>
