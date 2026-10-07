@@ -193,7 +193,7 @@ main = do
         legacyStep lang =
             let script = Right (MkHSPlutusScript 20 0 lang)
                 legacyParams = params{ppCostmdlsAssoc = MkLanguageCostModels [(lang, ())]}
-                legacyEnv = env{uePparams = legacyParams, ueUtxo₀ = legacyUtxo, ueAllScripts = MkHSSet [script]}
+                legacyEnv = env{uePparams = legacyParams, ueLegacyMode = True, ueUtxo₀ = legacyUtxo, ueAllScripts = MkHSSet [script]}
                 legacyTx = tx{txtopTxBody = legacyBody, txtopTxWitnesses = legacyWits{txwScripts = MkHSSet [script]}}
              in utxowStep legacyEnv (state{usUtxo = legacyUtxo}) legacyTx
     check "V1 ignores protection on hidden reference-input address" (accepted (legacyStep PV1))
