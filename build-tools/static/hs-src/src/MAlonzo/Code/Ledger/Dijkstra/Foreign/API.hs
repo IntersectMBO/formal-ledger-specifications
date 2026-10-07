@@ -51,4 +51,4 @@ import MAlonzo.Code.Ledger.Dijkstra.Foreign.Script.Base      as X
   (HSLanguage(..))
 
 import MAlonzo.Code.Ledger.Dijkstra.Foreign.Receiving as X
-  (receivingScriptHashes, receivingKeyHashes, receivingPointer, subReceivingScriptHashes, subReceivingKeyHashes, subReceivingPointer)
+  (receivingScriptHashes, receivingKeyHashes, receivingPointer, subReceivingScriptHashes, subReceivingKeyHashes, subReceivingPointer, collectingScriptCount, subCollectingScriptCount)

@@ -10,6 +10,7 @@ open import Data.Sum.Relation.Binary.LeftOrder using (⊎-<-isDecTotalOrder)
 open import Tactic.Derive.Show
 import Data.Fin
 import Data.List.Sort
+import Data.List
 
 open import Ledger.Prelude
 
@@ -136,7 +137,8 @@ instance
           λ x xs → Data.Fin.toℕ <$> findIndexᵇ (==-GovProposal x) xs
       ; indexOfReceiving      =
           λ x xs → Data.Fin.toℕ <$> findIndexᵇ (_== x)
-            (Data.List.Sort.sort ≤-decTotalOrder (setToList xs))
+            (Data.List.Sort.sort ≤-decTotalOrder
+              (Data.List.deduplicateᵇ _==_ (setToList xs)))
       ; indexOfGuard          =
           λ x xs → Data.Fin.toℕ <$> findIndexᵇ (_== x) xs
       }

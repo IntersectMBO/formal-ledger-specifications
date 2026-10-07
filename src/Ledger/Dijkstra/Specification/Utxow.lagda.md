@@ -143,7 +143,7 @@ allowedLanguagesLegacy tx utxo =
   )
   ∪
   (
-    if ¬ usesBootstrapAddr × ¬ usesV4Features × ¬ usesV3Features × ¬ usesV2Features
+    if ¬ usesBootstrapAddr × ¬ usesV4FeaturesV1 × ¬ usesV3Features × ¬ usesV2Features
       then ❴ PlutusV1 ❵
       else ∅
   )
@@ -154,6 +154,12 @@ allowedLanguagesLegacy tx utxo =
 
     usesV4Features = UsesV4Features tx ⊎
       ∃[ o ∈ range (TxOutsOf tx) ∪ range (utxo ∣ (SpendInputsOf tx ∪ ReferenceInputsOf tx)) ]
+        (isProtected (proj₁ o) ≡ true)
+
+    -- V1 does not expose reference inputs in TxInfo; retain its existing
+    -- UsesV2Features checks without adding hidden reference protection.
+    usesV4FeaturesV1 = UsesV4Features tx ⊎
+      ∃[ o ∈ range (TxOutsOf tx) ∪ range (utxo ∣ SpendInputsOf tx) ]
         (isProtected (proj₁ o) ≡ true)
 
     usesV3Features = UsesV3Features tx

@@ -3,6 +3,7 @@
 -- README.md. No ledger target helper is imported as a specification oracle.
 
 import Control.Monad (unless)
+import Data.List (nub, sort)
 import MAlonzo.Code.Ledger.Dijkstra.Foreign.API
 
 params :: PParams
@@ -163,13 +164,19 @@ main = do
             body
                 { txbtopTxOuts =
                     MkHSMap
-                        [(0, out True (ScriptObj 20) 2), (1, out True (ScriptObj 30) 2), (2, out True (ScriptObj 20) 2), (3, out True (KeyHashObj 7) 2), (4, out False (ScriptObj 10) 2)]
+                        [(0, out True (ScriptObj 20) 2), (1, out True (ScriptObj 30) 2), (2, (Left (BaseAddr 0 (ScriptObj 20) (Just (KeyHashObj 99)) True), (2, (Nothing, Nothing)))), (3, out True (KeyHashObj 7) 2), (4, out False (ScriptObj 10) 2), (5, out True (KeyHashObj 7) 0)]
                 }
         domainTx = tx{txtopTxBody = domainBody}
         MkHSSet scripts = receivingScriptHashes domainTx
         MkHSSet keys = receivingKeyHashes domainTx
-    check "grouped script hashes exclude keys and ordinary outputs" (length scripts == 2 && all (`elem` scripts) [20, 30] && keys == [7])
+    check "grouped script hashes exclude keys and ordinary outputs" (sort (nub scripts) == [20, 30] && sort (nub keys) == [7])
     check "canonical pointers keep native slots and reject unknown hashes" (receivingPointer domainTx 20 == Just (Receive, 0) && receivingPointer domainTx 30 == Just (Receive, 1) && receivingPointer domainTx 40 == Nothing)
+    let MkHSMap domainOutputs = txbtopTxOuts domainBody
+        reversedDomainTx = domainTx{txtopTxBody = domainBody{txbtopTxOuts = MkHSMap (reverse domainOutputs)}}
+        groupedChildTx = childTx{txsubTxBody = childBody{txbsubTxOuts = txbtopTxOuts domainBody}}
+        MkHSSet groupedChildScripts = subReceivingScriptHashes groupedChildTx
+    check "Receiving pointers are independent of output-map presentation order" (receivingPointer reversedDomainTx 20 == Just (Receive, 0) && receivingPointer reversedDomainTx 30 == Just (Receive, 1))
+    check "child duplicate hashes and stake variants retain canonical unique slots" (sort (nub groupedChildScripts) == [20, 30] && subReceivingPointer groupedChildTx 20 == Just (Receive, 0) && subReceivingPointer groupedChildTx 30 == Just (Receive, 1))
     let protectedReturn = tx{txtopTxBody = body{txbtopCollateralReturn = Just (out True (KeyHashObj 7) 2)}}
     check "protected collateral return rejected without scripts" (not (accepted (utxowStep env state protectedReturn)))
     let p2 = Right (MkHSPlutusScript 20 0 PV4)
@@ -178,6 +185,30 @@ main = do
     check "Plutus Receiving missing redeemer rejected" (not (accepted (utxowStep p2Env state p2Tx)))
     let p2Wits = (txtopTxWitnesses p2Tx){txwTxRedeemers = MkHSMap [((Receive, 0), (0, (1, 2)))]}
     check "Plutus Receiving exact redeemer accepted under abstract evaluator" (accepted (utxowStep p2Env state (p2Tx{txtopTxWitnesses = p2Wits})))
+    let legacyConsumed = (Left (BaseAddr 0 (ScriptObj 20) Nothing False), (10, (Just (Right 0), Nothing)))
+        legacyReference = out True (KeyHashObj 7) 5
+        legacyUtxo = MkHSMap [((10, 0), legacyConsumed), ((10, 1), out False (KeyHashObj 1) 5), ((10, 2), legacyReference)]
+        legacyBody = body{txbtopReferenceInputs = MkHSSet [(10, 2)], txbtopCollateralInputs = MkHSSet [(10, 1)], txbtopScriptIntegrityHash = Just 0}
+        legacyWits = (txtopTxWitnesses tx){txwTxData = MkHSSet [0], txwTxRedeemers = MkHSMap [((Spend, 0), (0, (1, 2)))]}
+        legacyStep lang =
+            let script = Right (MkHSPlutusScript 20 0 lang)
+                legacyParams = params{ppCostmdlsAssoc = MkLanguageCostModels [(lang, ())]}
+                legacyEnv = env{uePparams = legacyParams, ueUtxo₀ = legacyUtxo, ueAllScripts = MkHSSet [script]}
+                legacyTx = tx{txtopTxBody = legacyBody, txtopTxWitnesses = legacyWits{txwScripts = MkHSSet [script]}}
+             in utxowStep legacyEnv (state{usUtxo = legacyUtxo}) legacyTx
+    check "V1 ignores protection on hidden reference-input address" (accepted (legacyStep PV1))
+    check "V2 rejects protection on visible reference-input address" (not (accepted (legacyStep PV2)))
+    check "V3 rejects protection on visible reference-input address" (not (accepted (legacyStep PV3)))
+    let duplicateP2Tx = p2Tx{txtopTxBody = (txtopTxBody p2Tx){txbtopTxOuts = MkHSMap [(0, out True (ScriptObj 20) 5), (1, out True (ScriptObj 20) 5)]}, txtopTxWitnesses = p2Wits}
+        duplicateP2Child = childTx{txsubTxBody = childBody{txbsubTxOuts = txbtopTxOuts (txtopTxBody duplicateP2Tx)}, txsubTxWitnesses = p2Wits}
+        guardedWits = p2Wits{txwTxRedeemers = MkHSMap [((Receive, 0), (0, (1, 2))), ((Guard, 0), (0, (1, 2)))]}
+        guardedP2Tx = duplicateP2Tx{txtopTxBody = (txtopTxBody duplicateP2Tx){txbtopTxGuards = MkHSSet [ScriptObj 20]}, txtopTxWitnesses = guardedWits}
+        guardedP2Child = duplicateP2Child{txsubTxBody = (txsubTxBody duplicateP2Child){txbsubTxGuards = MkHSSet [ScriptObj 20]}, txsubTxWitnesses = guardedWits}
+        p2Scripts = MkHSSet [p2]
+    check "duplicate top Receiving outputs collect exactly one invocation" (collectingScriptCount params duplicateP2Tx utxo p2Scripts == 1)
+    check "duplicate child Receiving outputs collect exactly one invocation" (subCollectingScriptCount params duplicateP2Child utxo p2Scripts == 1)
+    check "same top script under Guard and Receiving retains both invocations" (collectingScriptCount params guardedP2Tx utxo p2Scripts == 2)
+    check "same child script under Guard and Receiving retains both invocations" (subCollectingScriptCount params guardedP2Child utxo p2Scripts == 2)
     let budgetTx = p2Tx{txtopTxWitnesses = p2Wits}
         budgetStep limit = utxowStep (p2Env{uePparams = params{ppMaxTxExUnits = limit}}) state budgetTx
     check "Receiving budget below both maxima is accepted" (accepted (budgetStep (2, 3)))

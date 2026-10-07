@@ -12,6 +12,11 @@
   older Plutus contexts that cannot represent it; Conway outputs stay unprotected.
 - Represent top-level collateral return/total collateral, reject protected
   returns in phase 1, and retain collateral-only invalid-batch state effects.
+- Deduplicate the foreign Receiving hash-domain presentation before sorting
+  and indexing, so repeated outputs cannot occupy extra redeemer slots.
+- Deduplicate semantic purpose/credential identities before collecting evaluator
+  arguments, preserving distinct purposes with equal foreign contexts.
+- Check legacy protected references only where visible: V2/V3, excluding V1.
 - Instantiate foreign execution-budget ordering componentwise; limits admit
   budgets below or equal to the maximum and reject either exceeded component.
 - Aggregate execution budgets across all bodies for transaction/block limits and

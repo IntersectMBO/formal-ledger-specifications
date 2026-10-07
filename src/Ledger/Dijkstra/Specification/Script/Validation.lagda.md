@@ -21,7 +21,7 @@ open import Ledger.Dijkstra.Specification.Certs govStructure
 open import Ledger.Dijkstra.Specification.Abstract txs
 open import Ledger.Dijkstra.Specification.Script.ScriptPurpose txs
 
-open import Data.List using (fromMaybe)
+open import Data.List using (fromMaybe; deduplicateᵇ)
 ```
 -->
 
@@ -199,13 +199,20 @@ opaque
 The function `collectP2ScriptsWithContext`.{AgdaFunction} builds a list of
 phase-2 scripts paired with their contexts for phase-2 validation. The scripts
 that are needed for validation are retrieved from the transaction using the
-function `credsNeeded`{.AgdaFunction}.
+function `credsNeeded`{.AgdaFunction}. The collector deduplicates semantic
+`(ScriptPurpose, Credential)` identities before mapping to arguments. Proposal
+identity uses the existing semantic comparator used by proposal indexing; all
+other purposes compare their tag and payload directly. Distinct purposes remain
+distinct even when the foreign context abstraction produces equal arguments.
 
 In Dijkstra, the execution of a guard script can require several (including
 none) data. The function `assembleData` accounts for this situation by returning
 a list of lists of data (a list of data is part of the context of a script).
 
 ```agda
+  purposeCredentialEquals : ScriptPurpose × Credential → ScriptPurpose × Credential → Bool
+  purposeCredentialEquals (sp , c) (sp′ , c′) = scriptPurposeEquals sp sp′ ∧ (c == c′)
+
   collectP2ScriptsWithContext
     : PParams
     → Tx ℓ
@@ -213,7 +220,7 @@ a list of lists of data (a list of data is part of the context of a script).
     → ℙ Script
     → List (P2Script × List Data × ExUnits × CostModel)
   collectP2ScriptsWithContext pp tx utxo allScripts
-    = concat (setToList (mapˢ toScript (credsNeeded utxo tx)))
+    = concat (map toScript (deduplicateᵇ purposeCredentialEquals (setToList (credsNeeded utxo tx))))
     where
       context : ScriptPurpose → Data
       context sp = valContext (txInfoForPurpose utxo tx sp) sp

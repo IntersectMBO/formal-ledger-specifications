@@ -15,7 +15,9 @@ fixture dependencies. The driver ignores ambient GHC package environments.
 
 The fixtures cover ordinary setup, top/child activation at protocol majors 11
 and 12, protected key witness obligations, native script/redeemer obligations,
-grouped domains and canonical pointers, output-only reference-script rejection,
+grouped domains and canonical pointers, exact top/child collection counts for
+duplicate Receiving outputs and the same script under distinct purposes,
+output-only reference-script rejection, V1 versus V2/V3 reference visibility,
 protected collateral return rejection on both validity paths, and collateral-only
 state effects for top and child Receiving failures. The execution-budget
 fixtures independently test below-limit admission, equality admission and
@@ -29,3 +31,7 @@ not establish actual UPLC evaluation, script context encoding, concrete DSIGN,
 script fees, integrity hashing or multiasset collateral algebra. The ledger
 conformance runner uses actual DSIGN verification and has the model/concrete
 coverage boundary documented in `CIP160.md`.
+
+The foreign HSSet exposes a list presentation of a mathematical set; that list
+can contain duplicates. Domain observations therefore compare semantic sets,
+while pointer assertions retain exact indexes in the unique sorted domain.

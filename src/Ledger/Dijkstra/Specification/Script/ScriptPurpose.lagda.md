@@ -35,6 +35,25 @@ record ScriptPurpose : Type where
   field
     tag   : Tag
     data′ : ScriptPurposeData tag
+
+
+-- Proposal identity follows the semantic comparator used by indexOfProposal;
+-- map uniqueness proofs are deliberately not compared propositionally.
+scriptPurposeDataEquals : (tag : Tag) → ScriptPurposeData tag → ScriptPurposeData tag → Bool
+scriptPurposeDataEquals Spend = _==_
+scriptPurposeDataEquals Mint = _==_
+scriptPurposeDataEquals Cert = _==_
+scriptPurposeDataEquals Reward = _==_
+scriptPurposeDataEquals Vote = _==_
+scriptPurposeDataEquals Propose = ==-GovProposal
+scriptPurposeDataEquals Guard = _==_
+scriptPurposeDataEquals Receive = _==_
+
+scriptPurposeEquals : ScriptPurpose → ScriptPurpose → Bool
+scriptPurposeEquals (⟦ tag , dat ⟧ˢᵖ) (⟦ tag′ , dat′ ⟧ˢᵖ) with tag ≟ tag′
+... | no _ = false
+... | yes refl = scriptPurposeDataEquals tag dat dat′
+
 ```
 
 Note that `Guard c` always indexes into *the current `tx`'s* `txGuards`:
