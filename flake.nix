@@ -122,6 +122,7 @@
               }).overrideAttrs
                 (oldAttrs: {
                   buildInputs = oldAttrs.buildInputs ++ [
+                    (haskellPackages.ghcWithPackages (p: [ p.text p.ieee754 ]))
                     fls-shake-agdaWithPackages.buildInputs
                   ];
                 });

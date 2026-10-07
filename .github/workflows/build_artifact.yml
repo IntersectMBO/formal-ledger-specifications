@@ -24,6 +24,9 @@ jobs:
       - name: Build artifact
         run: |
           nix develop --command fls-shake --trace -j8 ${{ inputs.target }}
+      - name: Check extracted Receiving regressions
+        if: inputs.target == 'hs'
+        run: nix develop --command bash formal-ledger-test/runtime/run-receiving.sh
       - name: Upload artifact
         uses: actions/upload-artifact@v7
         with:

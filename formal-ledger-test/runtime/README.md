@@ -12,6 +12,8 @@ formal-ledger-test/runtime/run-receiving.sh
 The GHC environment needs `text` and `ieee754`, as the generated package does.
 `FLS_GHC` selects a compiler; `FLS_RUNTIME_BUILD_DIR` can retain/reuse the compiled
 fixture dependencies. The driver ignores ambient GHC package environments.
+The Haskell artifact CI job runs these regressions after extraction and before
+upload; the pinned development shell provides GHC with both required packages.
 
 The fixtures cover ordinary setup, top/child activation at protocol majors 11
 and 12, protected key witness obligations, native script/redeemer obligations,
