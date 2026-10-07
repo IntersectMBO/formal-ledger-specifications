@@ -186,15 +186,26 @@ record TransactionStructure : Type₁ where
   UTxO : Type
   UTxO = TxIn ⇀ TxOut
 
-  -- The deposit recorded for a new-style output at creation, and its backer
-  -- (see `DepositBacker` in the `Account` module).  The amount is never
-  -- recomputed: it is exactly what is released or unlocked when the output
-  -- is spent, whatever the protocol parameters are by then.
-  OutputDeposit : Type
-  OutputDeposit = Coin × DepositBacker
+  -- The backing assigned to each live store-backed output when it was created,
+  -- keyed by the output's TxIn.  The amount is never recomputed: it is exactly
+  -- what is released when the output is spent, whatever the protocol
+  -- parameters are by then.
+  StoreBacking : Type
+  StoreBacking = TxIn ⇀ Coin
 
-  OutputDeposits : Type
-  OutputDeposits = TxIn ⇀ OutputDeposit
+  -- Deposit-store operations (see `txDepositStoreChange` below).
+  data DepositStoreChange : Type where
+    DepositToStore     : Coin → DepositStoreChange
+    WithdrawFromStore  : Coin → Ix → DepositStoreChange
+
+  data SubTxWithdrawalTarget : Type where
+    SubTxOutput      : Ix → SubTxWithdrawalTarget
+    DelegateToTopTx  : SubTxWithdrawalTarget
+
+  data DepositStoreSubTxChange : Type where
+    SubTxDepositToStore           : Coin → DepositStoreSubTxChange
+    SubTxRequestDepositFromTopTx  : Coin → DepositStoreSubTxChange
+    SubTxWithdrawFromStore        : Coin → SubTxWithdrawalTarget → DepositStoreSubTxChange
 
   RedeemerPtr : Type
   RedeemerPtr = Tag × Ix
@@ -253,19 +264,31 @@ Of particular note in the Dijkstra era are
    this field records the account balance interval assertions that this transaction
    makes about account balances before any sub-transaction is processed.
 
-+  `txOutBacking`{.AgdaField}: present at both transaction levels, this field marks
-   which outputs are *new-style*, i.e. do not carry their own minimum-ada deposit,
-   and says how each one's deposit is backed (see `DepositBacker`{.AgdaDatatype}).
-   Outputs not in its domain are ordinary self-backed outputs.
++  `txStoreBackedOutputs`{.AgdaField}: present at both transaction levels, this
+   field marks which outputs are *store-backed*: they hold only application assets,
+   and the ada backing their place in the UTxO is held in the ledger's deposit store.
+   All other outputs are *implicit-deposit* outputs, which carry their own minimum
+   ada as before.  (The Haskell prototype distinguishes the two by the output's own
+   encoding; marking them in the body is equivalent for the rules below.)
 
-+  `txStoreDeposit`{.AgdaField} and `txStoreRelease`{.AgdaField}: present at both
-   transaction levels, these fields *declare* how much ada this transaction pays
-   into, and receives from, the deposit store.  The ledger checks that they equal
-   the amounts it computes, so they carry no freedom; declaring them makes the
-   amounts part of the signed body.  Neither amount is netted against the other,
-   and a sub-transaction is not balanced on its own: whichever transaction in the
-   batch supplies the ada for a deposit, or receives a release, is decided by the
-   batch-wide balance.
++  `txDepositStoreChange`{.AgdaField}: present at both transaction levels, with a
+   different type at each.  It *declares* how this transaction changes the deposit
+   store, as a single net amount; the ledger checks it against the amount it
+   computes, so the declaration carries no freedom.
+
+   +  A top-level transaction declares the net change of the *whole batch*: its own
+      contribution and that of every subtransaction, each counted once.  It is
+      `DepositToStore`{.AgdaInductiveConstructor} if the batch adds backing,
+      `WithdrawFromStore`{.AgdaInductiveConstructor} if it releases backing, and
+      absent if the net change is zero.  A withdrawal names one of the
+      transaction's own outputs, whose coin already includes the withdrawn amount.
+
+   +  A subtransaction declares its own net change: a deposit it funds
+      (`SubTxDepositToStore`{.AgdaInductiveConstructor}), a deposit it asks the
+      top-level transaction to fund (`SubTxRequestDepositFromTopTx`{.AgdaInductiveConstructor}),
+      or a withdrawal (`SubTxWithdrawFromStore`{.AgdaInductiveConstructor}), settled
+      either in one of its own outputs or by the top-level transaction.  Absence
+      means the subtransaction's backing does not change.
 
 ```agda
   mutual
@@ -306,9 +329,9 @@ Of particular note in the Dijkstra era are
         txDirectDeposits           : DirectDeposits
         txBalanceIntervals         : AccountBalanceIntervals
         txStartingBalanceIntervals : InTopLevel txLevel AccountBalanceIntervals
-        txOutBacking               : Ix ⇀ DepositBacker
-        txStoreDeposit             : Coin
-        txStoreRelease             : Coin
+        txStoreBackedOutputs       : ℙ Ix
+        txDepositStoreChange       : InLevel txLevel (Maybe DepositStoreChange)
+                                                     (Maybe DepositStoreSubTxChange)
         ---------------------
 
       requiredSignerHashes : ℙ KeyHash
@@ -463,17 +486,15 @@ could be either of them.
     field IsValidFlagOf : A → Bool
   open HasIsValidFlag ⦃...⦄ public
 
-  record HasOutBacking {a} (A : Type a) : Type a where
-    field OutBackingOf : A → Ix ⇀ DepositBacker
-  open HasOutBacking ⦃...⦄ public
+  record HasStoreBackedOutputs {a} (A : Type a) : Type a where
+    field StoreBackedOutputsOf : A → ℙ Ix
+  open HasStoreBackedOutputs ⦃...⦄ public
 
-  record HasStoreDeposit {a} (A : Type a) : Type a where
-    field StoreDepositOf : A → Coin
-  open HasStoreDeposit ⦃...⦄ public
+  TopStoreChangeOf : TopLevelTx → Maybe DepositStoreChange
+  TopStoreChangeOf = TxBody.txDepositStoreChange ∘ Tx.txBody
 
-  record HasStoreRelease {a} (A : Type a) : Type a where
-    field StoreReleaseOf : A → Coin
-  open HasStoreRelease ⦃...⦄ public
+  SubStoreChangeOf : SubLevelTx → Maybe DepositStoreSubTxChange
+  SubStoreChangeOf = TxBody.txDepositStoreChange ∘ Tx.txBody
 
   instance
     HasTxBody-Tx : HasTxBody (Tx txLevel)
@@ -532,20 +553,10 @@ could be either of them.
     HasStartingBalanceIntervals-Tx : HasStartingBalanceIntervals TopLevelTx
     HasStartingBalanceIntervals-Tx .StartingBalanceIntervalsOf = StartingBalanceIntervalsOf ∘ TxBodyOf
 
-    HasOutBacking-TxBody : HasOutBacking (TxBody txLevel)
-    HasOutBacking-TxBody .OutBackingOf = TxBody.txOutBacking
-    HasOutBacking-Tx : HasOutBacking (Tx txLevel)
-    HasOutBacking-Tx .OutBackingOf = OutBackingOf ∘ TxBodyOf
-
-    HasStoreDeposit-TxBody : HasStoreDeposit (TxBody txLevel)
-    HasStoreDeposit-TxBody .StoreDepositOf = TxBody.txStoreDeposit
-    HasStoreDeposit-Tx : HasStoreDeposit (Tx txLevel)
-    HasStoreDeposit-Tx .StoreDepositOf = StoreDepositOf ∘ TxBodyOf
-
-    HasStoreRelease-TxBody : HasStoreRelease (TxBody txLevel)
-    HasStoreRelease-TxBody .StoreReleaseOf = TxBody.txStoreRelease
-    HasStoreRelease-Tx : HasStoreRelease (Tx txLevel)
-    HasStoreRelease-Tx .StoreReleaseOf = StoreReleaseOf ∘ TxBodyOf
+    HasStoreBackedOutputs-TxBody : HasStoreBackedOutputs (TxBody txLevel)
+    HasStoreBackedOutputs-TxBody .StoreBackedOutputsOf = TxBody.txStoreBackedOutputs
+    HasStoreBackedOutputs-Tx : HasStoreBackedOutputs (Tx txLevel)
+    HasStoreBackedOutputs-Tx .StoreBackedOutputsOf = StoreBackedOutputsOf ∘ TxBodyOf
 
     HasValidInterval-TxBody : HasValidInterval (TxBody txLevel)
     HasValidInterval-TxBody .ValidIntervalOf = TxBody.txVldt

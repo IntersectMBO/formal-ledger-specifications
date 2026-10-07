@@ -27,6 +27,7 @@ record indexOf : Type where
 record AbstractFunctions : Type where
   field txScriptFee     : Prices → ExUnits → Fees
         serializedSize  : Value → MemoryEstimate
+        serializedTxOutSize : TxOut → MemoryEstimate
         getLanguageView : PParams → Language → LangDepView
         indexOfImp      : indexOf
         scriptSize      : Script → ℕ

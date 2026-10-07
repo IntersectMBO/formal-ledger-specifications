@@ -39,6 +39,16 @@ instance
                                               • fieldPrefix "txw"
   Conv-TxWitnesses = autoConvert TxWitnesses
 
+instance
+  HsTy-DepositStoreChange = autoHsType DepositStoreChange
+  Conv-DepositStoreChange = autoConvert DepositStoreChange
+
+  HsTy-SubTxWithdrawalTarget = autoHsType SubTxWithdrawalTarget
+  Conv-SubTxWithdrawalTarget = autoConvert SubTxWithdrawalTarget
+
+  HsTy-DepositStoreSubTxChange = autoHsType DepositStoreSubTxChange
+  Conv-DepositStoreSubTxChange = autoConvert DepositStoreSubTxChange
+
 unquoteDecl = do
   hsTypeAlias Redeemer
   hsTypeAlias RedeemerPtr
@@ -64,9 +74,8 @@ record TxBodySub : Type where
     txRequiredTopLevelGuards  : ℙ (Credential × Maybe Datum)
     txDirectDeposits          : DirectDeposits
     txBalanceIntervals        : AccountBalanceIntervals
-    txOutBacking              : Ix ⇀ DepositBacker
-    txStoreDeposit            : Coin
-    txStoreRelease            : Coin
+    txStoreBackedOutputs      : ℙ Ix
+    txDepositStoreChange      : Maybe DepositStoreSubTxChange
 
 instance
   convTxBodySub : Convertible (TxBody TxLevelSub) TxBodySub
@@ -140,9 +149,8 @@ record TxBodyTop : Type where
     txDirectDeposits         : DirectDeposits
     txBalanceIntervals       : AccountBalanceIntervals
     txStartingBalanceIntervals : AccountBalanceIntervals
-    txOutBacking               : Ix ⇀ DepositBacker
-    txStoreDeposit             : Coin
-    txStoreRelease             : Coin
+    txStoreBackedOutputs       : ℙ Ix
+    txDepositStoreChange       : Maybe DepositStoreChange
 
 instance
   convTxBodyTop : Convertible (TxBody TxLevelTop) TxBodyTop

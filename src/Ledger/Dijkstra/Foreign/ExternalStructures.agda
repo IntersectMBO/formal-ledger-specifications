@@ -115,6 +115,7 @@ instance
     ; serializedSize = λ v → 0
     ; txRefHash      = λ _ → 0
     ; ebSize         = λ _ → 0
+    ; serializedTxOutSize = λ _ → 0
     ; indexOfImp  = record
       { indexOfDCert          =
           λ x xs → Data.Fin.toℕ <$> findIndexᵇ (_== x) xs

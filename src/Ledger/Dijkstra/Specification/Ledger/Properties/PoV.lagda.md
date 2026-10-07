@@ -195,16 +195,18 @@ module LEDGER-PoV
   -- `balance-∪` and `split-balance`, a batch-wide "spend inputs preserved" invariant
   -- and freshness of each sub-tx's TxId relative to the running UTxO.
   --
-  -- Here and below, `outCoin`/`inCoin` pair a transaction's outputs with its
-  -- declared store deposit, and its spent inputs with its declared store
-  -- release, since `getCoin` of a `UTxOState` includes the deposit store.  The
-  -- store summands of these equations are proved from the rules in
-  -- `Utxo.Properties.OutputDeposits` (`SUBUTXO-store`, `UTXO-store`).
+  -- Subtransactions do not change the deposit store, so their equation is as
+  -- before.  The store is updated once, by the top-level transaction, with the
+  -- batch's declared net change; `outCoin`/`inCoin` pair the top-level
+  -- transaction's outputs with its declared store deposit, and its spent inputs
+  -- with its declared store withdrawal.  The store summand of the top-level
+  -- equation is proved from the rules in `Utxo.Properties.DepositStore`
+  -- (`UTXO-store`).
   ( subutxow-step-coin : {Γ : SubUTxOEnv} {s₀ s₁ : UTxOState} {stx : SubLevelTx}
       → IsTopLevelValidFlagOf Γ ≡ true
       → Γ ⊢ s₀ ⇀⦇ stx ,SUBUTXOW⦈ s₁
-      → getCoin s₀ + outCoin stx + DonationsOf stx
-        ≡ getCoin s₁ + inCoin (UTxOOf Γ) stx )
+      → getCoin s₀ + cbalance (outs stx) + DonationsOf stx
+        ≡ getCoin s₁ + cbalance (UTxOOf Γ ∣ SpendInputsOf stx) )
 
   -- Batch-wide invariants on the post-SUBLEDGERS UTxO state.  Both follow from
   -- batch-wide input disjointness and TxId freshness, which the outer UTXO rule
@@ -305,11 +307,11 @@ module LEDGER-PoV
   ( UTXOW-batch-balance-coin : {Γ' : UTxOEnv} {s₀ s₁ : UTxOState}
       → Γ' ⊢ s₀ ⇀⦇ tx ,UTXOW⦈ s₁
       → inCoin (UTxOOf Γ') tx + getCoin (WithdrawalsOf tx)
-          + sum (map (λ stx → inCoin (UTxOOf Γ') stx + getCoin (WithdrawalsOf stx))
+          + sum (map (λ stx → cbalance (UTxOOf Γ' ∣ SpendInputsOf stx) + getCoin (WithdrawalsOf stx))
                      (SubTransactionsOf tx))
           + refundCertDeposits (PParamsOf Γ') (allDCerts tx)
         ≡ outCoin tx + TxFeesOf tx + DonationsOf tx + getCoin (DirectDepositsOf tx)
-          + sum (map (λ stx → outCoin stx + DonationsOf stx + getCoin (DirectDepositsOf stx))
+          + sum (map (λ stx → cbalance (outs stx) + DonationsOf stx + getCoin (DirectDepositsOf stx))
                      (SubTransactionsOf tx))
           + newCertDeposits (PParamsOf Γ') (dom (PoolsOf Γ')) (allDCerts tx)
           + ( govProposalsDeposits (PParamsOf Γ') (ListOfGovProposalsOf tx)
@@ -422,9 +424,9 @@ the per-`SUBUTXOW`{.AgdaDatatype} coin equation at each step:
     → SubLedgerEnv.isTopLevelValid Γ ≡ true
     → Γ ⊢ s₀ ⇀⦇ stxs ,SUBLEDGERS⦈ s₁
     → getCoin (UTxOStateOf s₀)
-      + sum (map (λ stx → outCoin stx + DonationsOf stx) stxs)
+      + sum (map (λ stx → cbalance (outs stx) + DonationsOf stx) stxs)
       ≡  getCoin (UTxOStateOf s₁)
-         + sum (map (λ stx → inCoin (UTxOOf Γ) stx) stxs)
+         + sum (map (λ stx → cbalance (UTxOOf Γ ∣ SpendInputsOf stx)) stxs)
 
   -- Base case: empty list.  `Id-nop` unifies s₀ ≡ s₁ and both sums are 0.
   SUBLEDGERS-utxo-coin _ (BS-base Id-nop) = refl
@@ -451,17 +453,17 @@ the per-`SUBUTXOW`{.AgdaDatatype} coin equation at each step:
     U₀ = getCoin (UTxOStateOf s₀)
     U₁ = getCoin (UTxOStateOf s₁)
     Uₙ = getCoin (UTxOStateOf sₙ)
-    p-stx = outCoin stx + DonationsOf stx
-    c-stx = inCoin (UTxOOf Γ) stx
-    p-sum = sum (map (λ stx → outCoin stx + DonationsOf stx) sigs)
-    c-sum = sum (map (λ stx → inCoin (UTxOOf Γ) stx) sigs)
+    p-stx = cbalance (outs stx) + DonationsOf stx
+    c-stx = cbalance (UTxOOf Γ ∣ SpendInputsOf stx)
+    p-sum = sum (map (λ stx → cbalance (outs stx) + DonationsOf stx) sigs)
+    c-sum = sum (map (λ stx → cbalance (UTxOOf Γ ∣ SpendInputsOf stx)) sigs)
 
     -- Single-step coin equation from the SUBUTXOW step assumption.
-    step-eq : U₀ + outCoin stx + DonationsOf stx ≡ U₁ + c-stx
+    step-eq : U₀ + cbalance (outs stx) + DonationsOf stx ≡ U₁ + c-stx
     step-eq = subutxow-step-coin isV' subutxowStep
 
     step-P-C : U₀ + p-stx ≡ U₁ + c-stx
-    step-P-C = trans (sym (+-assoc U₀ (outCoin stx) (DonationsOf stx))) step-eq
+    step-P-C = trans (sym (+-assoc U₀ (cbalance (outs stx)) (DonationsOf stx))) step-eq
 
     ih : U₁ + p-sum ≡ Uₙ + c-sum
     ih = SUBLEDGERS-utxo-coin isV rest
@@ -880,13 +882,13 @@ preserved" invariant:
 
       Ctop Csub : Coin
       Ctop = inCoin (UTxOOf (UTxOStateOf s)) tx
-      Csub = sum (map (λ stx → inCoin (UTxOOf (UTxOStateOf s)) stx)
+      Csub = sum (map (λ stx → cbalance (UTxOOf (UTxOStateOf s) ∣ SpendInputsOf stx))
                       (SubTransactionsOf tx))
 
       Psub PsubDD : Coin
-      Psub = sum (map (λ stx → outCoin stx + DonationsOf stx)
+      Psub = sum (map (λ stx → cbalance (outs stx) + DonationsOf stx)
                       (SubTransactionsOf tx))
-      PsubDD = sum (map (λ stx → outCoin stx + DonationsOf stx + getCoin (DirectDepositsOf stx))
+      PsubDD = sum (map (λ stx → cbalance (outs stx) + DonationsOf stx + getCoin (DirectDepositsOf stx))
                         (SubTransactionsOf tx))
 
       -- The additive constant on both sides of the inner chain.
@@ -912,13 +914,13 @@ preserved" invariant:
             ≡⟨ cong (λ x → x + negPart dct + negPart dcs) (+-assoc (Ctop + Wtop) Csub subWdrlsCoin) ⟩
           Ctop + Wtop + (Csub + subWdrlsCoin) + negPart dct + negPart dcs
             ≡˘⟨ cong (λ x → Ctop + Wtop + x + negPart dct + negPart dcs)
-                     (sum-map-+ (λ stx → inCoin (UTxOOf (UTxOStateOf s)) stx)
+                     (sum-map-+ (λ stx → cbalance (UTxOOf (UTxOStateOf s) ∣ SpendInputsOf stx))
                                 wdrwl (SubTransactionsOf tx)) ⟩
           Ctop + Wtop + CsubW + negPart dct + negPart dcs
             ≡⟨ convert ⟩
           O + F + DN + DDtop + posPart dct + PsubDD + posPart dcs + totGov
             ≡⟨ cong (λ x → O + F + DN + DDtop + posPart dct + x + posPart dcs + totGov)
-                    (sum-map-+ (λ stx → outCoin stx + DonationsOf stx)
+                    (sum-map-+ (λ stx → cbalance (outs stx) + DonationsOf stx)
                                (λ stx → getCoin (DirectDepositsOf stx))
                                (SubTransactionsOf tx)) ⟩
           O + F + DN + DDtop + posPart dct + (Psub + subDirectDepsCoin) + posPart dcs + totGov
@@ -933,7 +935,7 @@ preserved" invariant:
         DN    = DonationsOf tx
         DDtop = getCoin (DirectDepositsOf tx)
         Wtop  = getCoin (WithdrawalsOf tx)
-        CsubW = sum (map (λ stx → inCoin (UTxOOf (UTxOStateOf s)) stx
+        CsubW = sum (map (λ stx → cbalance (UTxOOf (UTxOStateOf s) ∣ SpendInputsOf stx)
                                 + getCoin (WithdrawalsOf stx))
                          (SubTransactionsOf tx))
 

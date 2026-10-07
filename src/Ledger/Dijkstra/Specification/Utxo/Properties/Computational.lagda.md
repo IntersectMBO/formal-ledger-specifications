@@ -102,7 +102,7 @@ instance
 ```agda
   Computational-UTXO = record {go} where
     module go (Γ : UTxOEnv) (s₀ : UTxOState) (txTop : TopLevelTx)
-      (let H , ⁇ H? = UTXO-premises {Γ = Γ} {txTop = txTop} {s₀ = s₀})
+      (let H , ⁇ H? = UTXO-premises {txTop = txTop} {Γ = Γ} {s₀ = s₀})
       where
 
       module UTXOS = Computational Computational-UTXOS
@@ -113,16 +113,16 @@ instance
         → ComputationResult String (∃[ s₁ ] Γ ⊢ s₀ ⇀⦇ txTop ,UTXO⦈ s₁)
       computeProof-aux d (failure x) = failure "UTXO" 
       computeProof-aux (no ¬p) (success x) = failure "UTXO"
-      computeProof-aux (yes (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , p₁₂ , p₁₃ , p₁₄ , p₁₅ , p₁₆ , p₁₇ , p₁₈ , p₁₉ , p₂₀ , p₂₁ )) (success h)
-        = success (-, UTXO (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , p₁₂ , p₁₃ , p₁₄ , p₁₅ , p₁₆ , p₁₇ , p₁₈ , p₁₉ , p₂₀ , p₂₁ , proj₂ h))
+      computeProof-aux (yes (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , p₁₂ , p₁₃ , p₁₄ , p₁₅ , p₁₆ , p₁₇ , p₁₈ , p₁₉ , p₂₀ )) (success h)
+        = success (-, UTXO (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , p₁₂ , p₁₃ , p₁₄ , p₁₅ , p₁₆ , p₁₇ , p₁₈ , p₁₉ , p₂₀ , proj₂ h))
 
       computeProof : ComputationResult String (∃[ s₁ ] Γ ⊢ s₀ ⇀⦇ txTop ,UTXO⦈ s₁)
       computeProof = computeProof-aux H? (UTXOS.computeProof Γ tt txTop)
 
       completeness : ∀ s₁ → Γ ⊢ s₀ ⇀⦇ txTop ,UTXO⦈ s₁ → map proj₁ computeProof ≡ success s₁
-      completeness s₁ (UTXO-⋯ p₀ p₁ p₂ p₃ p₄ p₅ p₆ p₇ p₈ p₉ p₁₀ p₁₁ p₁₂ p₁₃ p₁₄ p₁₅ p₁₆ p₁₇ p₁₈ p₁₉ p₂₀ p₂₁ h)
+      completeness s₁ (UTXO-⋯ p₀ p₁ p₂ p₃ p₄ p₅ p₆ p₇ p₈ p₉ p₁₀ p₁₁ p₁₂ p₁₃ p₁₄ p₁₅ p₁₆ p₁₇ p₁₈ p₁₉ p₂₀ h)
         with H?
-      ... | no ¬p = ⊥-elim (¬p ((p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , p₁₂ , p₁₃ , p₁₄ , p₁₅ , p₁₆ , p₁₇ , p₁₈ , p₁₉ , p₂₀ , p₂₁ )))
+      ... | no ¬p = ⊥-elim (¬p ((p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , p₁₂ , p₁₃ , p₁₄ , p₁₅ , p₁₆ , p₁₇ , p₁₈ , p₁₉ , p₂₀ )))
       ... | yes _
         with UTXOS.computeProof Γ tt txTop | UTXOS.completeness _ _ _ _ h
       ... | success h | refl = refl

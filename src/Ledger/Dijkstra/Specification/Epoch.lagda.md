@@ -381,7 +381,7 @@ This section defines the function `applyRUpd`{.AgdaFunction}, which applies a
 applyRUpd : RewardUpdate → EpochState → EpochState
 applyRUpd rewardUpdate ⟦ ⟦ treasury , reserves ⟧ᵃ
                        , ss
-                       , ⟦ ⟦ utxo , fees , donations , outDeposits ⟧ᵘ
+                       , ⟦ ⟦ utxo , fees , donations , depositStore , storeBacking ⟧ᵘ
                          , govSt
                          , ⟦ ⟦ voteDelegs , stakeDelegs , rewards , deposits ⟧ᵈ , pState , gState ⟧ᶜˢ ⟧ˡ
                        , es
@@ -389,7 +389,7 @@ applyRUpd rewardUpdate ⟦ ⟦ treasury , reserves ⟧ᵃ
                        ⟧ᵉ' = ⟦ ⟦ posPart (pos treasury + Δt + pos unregRU')
                                , posPart (pos reserves + Δr) ⟧
                              , ss
-                             , ⟦ ⟦ utxo , posPart (pos fees + Δf) , donations , outDeposits ⟧
+                             , ⟦ ⟦ utxo , posPart (pos fees + Δf) , donations , depositStore , storeBacking ⟧
                                , govSt
                                , ⟦ ⟦ voteDelegs , stakeDelegs , rewards ∪⁺ regRU , deposits ⟧ , pState , gState ⟧ ⟧
                              , es
@@ -664,7 +664,7 @@ module Pre-POOLREAPUpdate (e  : Epoch)
 -->
 ```agda
   utxoSt' : UTxOState
-  utxoSt' = ⟦ UTxOOf utxoSt , FeesOf utxoSt , 0 , OutDepositsOf utxoSt ⟧
+  utxoSt' = ⟦ UTxOOf utxoSt , FeesOf utxoSt , 0 , DepositStoreOf utxoSt , StoreBackingOf utxoSt ⟧
 
   pState' : PState
   pState' = ⟦ applyFPools e pools fPools , ∅ , retiring , deposits ⟧
