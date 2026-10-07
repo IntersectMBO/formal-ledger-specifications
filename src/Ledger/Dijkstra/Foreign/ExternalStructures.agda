@@ -130,7 +130,7 @@ instance
 
       ; indexOfTxIn           = λ x xs → Data.Fin.toℕ <$> findIndexᵇ (_== x) (setToList xs)
       ; indexOfPolicyId       = λ _ _ → nothing
-      ; indexOfVote           = λ _ _ → nothing
+      ; indexOfVote           = λ x xs → Data.Fin.toℕ <$> findIndexᵇ (_== x) xs
       ; indexOfProposal       =
           λ x xs → Data.Fin.toℕ <$> findIndexᵇ (==-GovProposal x) xs
       ; indexOfGuard          =
