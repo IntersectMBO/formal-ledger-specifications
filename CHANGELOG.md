@@ -4,6 +4,9 @@
 
 ### WIP
 
+- Enumerate Leios committee seats once per semantic registered pool identity,
+  including when several credentials delegate to one pool; test the composed
+  epoch transition and exact top-K seats without normalizing committee lists.
 - Retain registered zero-stake pools in Leios committee selection, assigning
   absent delegated stake zero while preserving fractional weights, ranking and
   pool-identity tie breaks; expose and test the extracted selection function.

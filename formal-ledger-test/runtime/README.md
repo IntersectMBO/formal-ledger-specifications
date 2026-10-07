@@ -32,11 +32,16 @@ baselines at major 12 with hard-fork enactment and epoch application at major 13
 They require the authoritative enactment version and stored protocol-parameter
 version to agree, while retaining the parameter-update chain identity.
 
-Nine committee-selection regressions preserve registered zero-stake/keyless
+Thirteen committee-selection regressions preserve registered zero-stake/keyless
 seats, disabled size, fractional positive weights, identity tie breaks, top-K
 selection, unregistered-pool exclusion and honored/expired keys. The foreign
 global constants imply a four-epoch key lifetime; the key-age assertions state
 that premise and do not claim arbitrary network-global agreement.
+Four of these exercise composed `newEpochStep`: a single delegator with stake 4,
+two delegators with stakes 1+3 or 2+2, and a top-K boundary with another pool.
+They require one exact list seat per pool, so repeated internal stake-relation
+entries cannot consume another registered pool's slot. These reach the internal
+aggregation path that duplicate foreign map inputs alone do not exercise.
 
 These are executable model regressions under its explicit foreign premises:
 `utxowStep` uses the dummy abstract evaluator and signature verifier;
@@ -47,7 +52,9 @@ script fees, integrity hashing or multiasset collateral algebra. The ledger
 conformance runner uses actual DSIGN verification and has the model/concrete
 coverage boundary documented in `CIP160.md`.
 
-The foreign HSSet exposes a list presentation of a mathematical set; that list
-can contain duplicates. Domain observations therefore compare semantic sets,
+The foreign HSSet and HSMap expose list presentations of mathematical sets and
+maps; those lists can contain repeated equal entries. Domain observations and
+the composed epoch's resulting stake map therefore compare semantic sets,
 while Receiving domain assertions retain every distinct output index, including
 identical outputs, and pointer assertions require the original body-local index.
+Committee seats are lists: their exact comparison never removes duplicate seats.

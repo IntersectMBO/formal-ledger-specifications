@@ -318,3 +318,26 @@ main = do
     let keyedPools = MkHSMap [(20, pool Nothing), (10, pool (Just (77, 0)))]
     check "registered key is honored before the foreign four-epoch age boundary" (seats 3 [(10, 3), (20, 1)] keyedPools == [MkLeiosSeat 10 (3 / 4) (Just 77), MkLeiosSeat 20 (1 / 4) Nothing])
     check "expired registered key preserves its keyless seat and pool identity" (seats 4 [(10, 3), (20, 1)] keyedPools == [MkLeiosSeat 10 (3 / 4) Nothing, MkLeiosSeat 20 (1 / 4) Nothing])
+
+    -- Foreign map inputs normalize duplicate pairs. Composed NEWEPOCH instead
+    -- reaches the internally aggregated stake relation produced by distinct
+    -- delegators, so these fixtures exercise the real list-enumeration boundary.
+    let poolCerts = emptyCerts{pState = MkPState pools (MkHSMap []) (MkHSMap []) (MkHSMap [])}
+        poolLedger = emptyLedger{lsCertState = poolCerts}
+        committeeAfter count delegatedStake delegations =
+            let snapshot = MkSnapshot (MkHSMap delegatedStake) (MkHSMap delegations) pools
+                committeeEnact = versionEnact{esPparams = (versionParams{ppLeiosCommitteeSize = count}, snd (esPparams versionEnact))}
+                committeeEpoch = MkEpochState (MkAcnt 0 0) (MkSnapshots snapshot snapshot snapshot 0) poolLedger committeeEnact (MkRatifyState committeeEnact (MkHSSet []) False)
+                initial = MkNewEpochState 0 (MkHSMap []) (MkHSMap []) committeeEpoch Nothing (MkHSMap []) []
+             in newEpochStep () initial 1
+        committeeAgrees result expectedStake expectedSeats = case result of
+            Failure _ -> False
+            Success final ->
+                let MkHSMap resultingStake = nesPd final
+                 in sort (nub resultingStake) == expectedStake && nesLeiosCommittee final == expectedSeats
+        delegators = [(KeyHashObj 1, 10), (KeyHashObj 2, 10)]
+        onePositiveSeat = [MkLeiosSeat 10 1 Nothing, MkLeiosSeat 20 0 Nothing]
+    check "composed epoch seats a single delegator's pool once" (committeeAgrees (committeeAfter 2 [(KeyHashObj 1, 4)] [(KeyHashObj 1, 10)]) [(10, 4)] onePositiveSeat)
+    check "composed epoch seats a pool once for split 1+3 delegators" (committeeAgrees (committeeAfter 2 [(KeyHashObj 1, 1), (KeyHashObj 2, 3)] delegators) [(10, 4)] onePositiveSeat)
+    check "composed epoch seats a pool once for equal 2+2 delegators" (committeeAgrees (committeeAfter 2 [(KeyHashObj 1, 2), (KeyHashObj 2, 2)] delegators) [(10, 4)] onePositiveSeat)
+    check "composed epoch top-K cannot spend two slots on the same pool" (committeeAgrees (committeeAfter 2 [(KeyHashObj 1, 1), (KeyHashObj 2, 3), (KeyHashObj 3, 2)] (delegators ++ [(KeyHashObj 3, 20)])) [(10, 4), (20, 2)] [MkLeiosSeat 10 (2 / 3) Nothing, MkLeiosSeat 20 (1 / 3) Nothing])

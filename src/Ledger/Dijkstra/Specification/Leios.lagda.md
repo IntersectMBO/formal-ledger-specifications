@@ -27,7 +27,7 @@ open import Ledger.Dijkstra.Specification.Certs gs
 open import Data.List.Sort
 import Data.Rational.Properties as ℚ
 open import Data.Rational as ℚ using (ℚ)
-open import Data.List as L using (upTo; mapMaybe)
+open import Data.List as L using (upTo; mapMaybe; deduplicateᵇ)
 open import Data.List.Relation.Unary.All using () renaming (All to Allˡ)
 open import Data.Maybe using (Is-just)
 open import Data.Refinement.Properties using (value-injective)
@@ -158,12 +158,19 @@ module _ (pp : PParams)
       poolDistr = mapValues (λ c → clamp (c /₀ totalStake)) registeredStake
 
       allLeiosSeats : List LeiosSeat
-      allLeiosSeats = map (λ (kh , w) → ⟦ kh , w , (if lookupᵐ? pools kh then (λ {spp} → honouredBlsKey e (spp .bls)) else nothing) ⟧)
-                          (setToList (poolDistr ˢ))
+      allLeiosSeats = L.mapMaybe
+        (λ kh → lookupᵐ? poolDistr kh >>= λ w →
+          just ⟦ kh , w , (if lookupᵐ? pools kh then (λ {spp} → honouredBlsKey e (spp .bls)) else nothing) ⟧)
+        (deduplicateᵇ _==_ (setToList (dom pools)))
 
       sortedLeiosSeats : List LeiosSeat
       sortedLeiosSeats = sort ≼-DTO allLeiosSeats
 ```
+
+The committee is a list with one seat per registered pool. Enumerating unique
+pool identities preserves that rule even when an internally aggregated stake
+map has repeated list presentation. Distinct pools remain distinct seats even
+when their stake or honored keys agree.
 
 ## Certification Delay
 
