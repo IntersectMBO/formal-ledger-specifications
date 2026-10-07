@@ -4,16 +4,23 @@
 
 ### WIP
 
-- Add CIP-160 protected address identity, grouped body-local Receiving purposes,
-  sorted unique pointer domains and protected key/native/Plutus witness rules.
+- Retain registered zero-stake pools in Leios committee selection, assigning
+  absent delegated stake zero while preserving fractional weights, ranking and
+  pool-identity tie breaks; expose and test the extracted selection function.
+- Synchronize the stored protocol-parameter version during hard-fork enactment,
+  retaining the parameter-update chain identity; test major 12 to 13 through
+  extracted enactment and epoch transitions against complete expected states.
+- Add CIP-160 protected address identity and one body-local Receiving purpose
+  per protected script output, with the original output index and resolved output
+  in its context; enforce protected key/native/Plutus witness rules.
 - Admit protected ordinary outputs only from protocol major 12, independently
   in parent and child bodies; mirror historical rejection in Conway conformance.
 - Preserve protection in script-context output/input representations and reject
   older Plutus contexts that cannot represent it; Conway outputs stay unprotected.
 - Represent top-level collateral return/total collateral, reject protected
   returns in phase 1, and retain collateral-only invalid-batch state effects.
-- Deduplicate the foreign Receiving hash-domain presentation before sorting
-  and indexing, so repeated outputs cannot occupy extra redeemer slots.
+- Preserve identical protected Plutus outputs at different indices as separate
+  executions with distinct redeemers and budgets; never rank or group by script hash.
 - Deduplicate semantic purpose/credential identities before collecting evaluator
   arguments, preserving distinct purposes with equal foreign contexts.
 - Check legacy protected references only where visible: V2/V3, excluding V1.

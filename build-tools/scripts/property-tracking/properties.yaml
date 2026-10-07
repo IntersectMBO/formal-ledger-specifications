@@ -477,3 +477,16 @@ properties:
       Address protection changes identity while preserving the output's payment
       and staking credentials and value. Receiving creation authorization is a
       separate UTXOW premise. Track the source proposal before release.
+
+  - id: dijkstra-receiving-output-indices
+    title: "CIP-160 Receiving preserves and distinguishes output indices"
+    era: dijkstra
+    sts: UTXOW
+    module: Ledger.Dijkstra.Specification.Script.Validation
+    anchor: "thm:ReceivingOutputIndices"
+    defs: [receiving-pointer-preserves-index, receiving-indices-distinct]
+    issues: []
+    notes: >
+      Every protected script output uses its original body-local output index.
+      Different indices have distinct Receiving pointers even for identical
+      resolved outputs; parent and child maps are resolved separately.

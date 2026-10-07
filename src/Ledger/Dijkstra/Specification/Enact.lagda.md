@@ -134,7 +134,9 @@ data _⊢_⇀⦇_,ENACT⦈_ : EnactEnv → EnactState → GovAction → EnactSta
 
   Enact-HF :
     ───────────────────────────────────────
-    ⟦ gid , t , ep ⟧ ⊢ s ⇀⦇ ⟦ TriggerHardFork , protVer ⟧ᵍᵃ ,ENACT⦈ record s { pv = protVer , gid }
+    ⟦ gid , t , ep ⟧ ⊢ s ⇀⦇ ⟦ TriggerHardFork , protVer ⟧ᵍᵃ ,ENACT⦈
+      record s { pv = protVer , gid
+               ; pparams = record (s .pparams .proj₁) { pv = protVer } , s .pparams .proj₂ }
 
   Enact-PParams :
     ───────────────────────────────────────

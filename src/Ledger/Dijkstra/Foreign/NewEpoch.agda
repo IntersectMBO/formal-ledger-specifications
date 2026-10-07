@@ -9,6 +9,8 @@ open import Ledger.Prelude
 open import Ledger.Prelude.Foreign.HSTypes
 
 open import Ledger.Dijkstra.Foreign.HSStructures
+open import Ledger.Dijkstra.Foreign.Cert
+open import Ledger.Dijkstra.Foreign.PParams
 open import Ledger.Dijkstra.Foreign.Epoch
 open import Ledger.Dijkstra.Foreign.Rewards
 open import Ledger.Dijkstra.Specification.Leios DummyGovStructure
@@ -30,3 +32,8 @@ newepoch-step : HsType (⊤ → NewEpochState → Epoch → ComputationResult �
 newepoch-step = to (compute Computational-NEWEPOCH)
 
 {-# COMPILE GHC newepoch-step as newEpochStep #-}
+
+select-leios-committee : HsType (PParams → Epoch → (KeyHash ⇀ Coin) → Pools → LeiosCommittee)
+select-leios-committee = to selectCommittee
+
+{-# COMPILE GHC select-leios-committee as selectLeiosCommittee #-}

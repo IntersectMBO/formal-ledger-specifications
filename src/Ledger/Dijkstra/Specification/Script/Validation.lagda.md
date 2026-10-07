@@ -44,6 +44,21 @@ receivingScriptHashes = mapPartial isScriptObj ∘ receivingCredentials
 receivingKeyHashes : Tx ℓ → ℙ KeyHash
 receivingKeyHashes = mapPartial isKeyHashObj ∘ receivingCredentials
 
+receivingOutputs : Tx ℓ → ℙ (Ix × TxOut)
+receivingOutputs tx = mapPartial
+  (λ entry@(_ , o) →
+    if isProtected (proj₁ o)
+    then (isScriptObj (payCred (proj₁ o)) >>= λ _ → just entry)
+    else nothing)
+  ((TxOutsOf tx) ˢ)
+
+receivingOutput : Tx ℓ → Ix → Maybe TxOut
+receivingOutput tx ix = do
+  o ← lookupᵐ? (TxOutsOf tx) ix
+  if isProtected (proj₁ o)
+    then (isScriptObj (payCred (proj₁ o)) >>= λ _ → just o)
+    else nothing
+
 rdptr : Tx ℓ → ScriptPurpose → Maybe RedeemerPtr
 rdptr tx = λ where
   ⟦ Cert          , h ⟧ˢᵖ → map (Cert           ,_) $ indexOfDCert          h (DCertsOf tx)
@@ -53,7 +68,28 @@ rdptr tx = λ where
   ⟦ Vote          , h ⟧ˢᵖ → map (Vote           ,_) $ indexOfVote           h (map GovVote.voter (ListOfGovVotesOf tx))
   ⟦ Propose       , h ⟧ˢᵖ → map (Propose        ,_) $ indexOfProposal       h (ListOfGovProposalsOf tx)
   ⟦ Guard         , h ⟧ˢᵖ → map (Guard          ,_) $ indexOfGuard          h (setToList (GuardsOf tx))
-  ⟦ Receive       , h ⟧ˢᵖ → map (Receive        ,_) $ indexOfReceiving      h (receivingScriptHashes tx)
+  ⟦ Receive       , (ix , _) ⟧ˢᵖ → (λ _ → (Receive , ix)) <$> receivingOutput tx ix
+
+```
+
+## Theorem: Receiving keeps and distinguishes output indices {#thm:ReceivingOutputIndices}
+
+Protected script outputs retain their original body-local index. In particular,
+outputs at different indices cannot share a Receiving redeemer pointer, even
+when their entire resolved outputs are identical.
+
+```agda
+receiving-pointer-preserves-index
+  : (tx : Tx ℓ) (ix : Ix) (o : TxOut)
+  → receivingOutput tx ix ≡ just o
+  → rdptr tx ⟦ Receive , (ix , o) ⟧ˢᵖ ≡ just (Receive , ix)
+receiving-pointer-preserves-index tx ix o eligible rewrite eligible = refl
+
+receiving-indices-distinct
+  : (ix ix′ : Ix) → ix ≢ ix′
+  → _≢_ {A = Maybe RedeemerPtr} (just (Receive , ix)) (just (Receive , ix′))
+receiving-indices-distinct ix ix′ different ptrs-equal =
+  different (cong (λ p → maybe proj₂ ix p) ptrs-equal)
 
 indexedRdmrs : Tx ℓ → ScriptPurpose → Maybe (Redeemer × ExUnits)
 indexedRdmrs tx sp = maybe (λ x → lookupᵐ? (RedeemersOf tx) x) nothing (rdptr tx sp)
@@ -168,7 +204,7 @@ credsNeeded utxo tx =
                                  then (λ {sh} → just (⟦ Propose , p ⟧ˢᵖ , ScriptObj sh))
                                  else nothing)                           (fromList (ListOfGovProposalsOf tx))
   ∪ mapˢ        (λ c       → (⟦ Guard , c ⟧ˢᵖ , c))                      (GuardsOf tx)
-  ∪ mapˢ        (λ sh      → (⟦ Receive , sh ⟧ˢᵖ , ScriptObj sh))        (receivingScriptHashes tx)
+  ∪ mapˢ        (λ entry@(_ , o) → (⟦ Receive , entry ⟧ˢᵖ , payCred (proj₁ o))) (receivingOutputs tx)
 
   where
     collateralInputs : Tx ℓ → ℙ TxIn

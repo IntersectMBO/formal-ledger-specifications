@@ -135,10 +135,6 @@ instance
       ; indexOfVote           = λ _ _ → nothing
       ; indexOfProposal       =
           λ x xs → Data.Fin.toℕ <$> findIndexᵇ (==-GovProposal x) xs
-      ; indexOfReceiving      =
-          λ x xs → Data.Fin.toℕ <$> findIndexᵇ (_== x)
-            (Data.List.Sort.sort ≤-decTotalOrder
-              (Data.List.deduplicateᵇ _==_ (setToList xs)))
       ; indexOfGuard          =
           λ x xs → Data.Fin.toℕ <$> findIndexᵇ (_== x) xs
       }

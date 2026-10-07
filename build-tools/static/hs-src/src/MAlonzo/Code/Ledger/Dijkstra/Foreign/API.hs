@@ -40,7 +40,7 @@ import MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Actions       as X
 import MAlonzo.Code.Ledger.Dijkstra.Foreign.Ledger            as X
   (LedgerEnv(..), LedgerState(..), ledgerStep, ledgersStep)
 import MAlonzo.Code.Ledger.Dijkstra.Foreign.NewEpoch          as X
-  (NewEpochState(..), LeiosSeat(..), newEpochStep)
+  (NewEpochState(..), LeiosSeat(..), newEpochStep, selectLeiosCommittee)
 import MAlonzo.Code.Ledger.Dijkstra.Foreign.Ratify            as X
   (RatifyEnv(..), RatifyState(..), ratifyStep)
 import MAlonzo.Code.Ledger.Dijkstra.Foreign.Rewards           as X
@@ -51,4 +51,7 @@ import MAlonzo.Code.Ledger.Dijkstra.Foreign.Script.Base      as X
   (HSLanguage(..))
 
 import MAlonzo.Code.Ledger.Dijkstra.Foreign.Receiving as X
-  (receivingScriptHashes, receivingKeyHashes, receivingPointer, subReceivingScriptHashes, subReceivingKeyHashes, subReceivingPointer, collectingScriptCount, subCollectingScriptCount)
+  ( receivingScriptHashes, receivingKeyHashes, receivingOutputs, receivingPointer
+  , subReceivingScriptHashes, subReceivingKeyHashes, subReceivingOutputs, subReceivingPointer
+  , collectingScriptCount, subCollectingScriptCount, collectingScriptArguments, subCollectingScriptArguments
+  )

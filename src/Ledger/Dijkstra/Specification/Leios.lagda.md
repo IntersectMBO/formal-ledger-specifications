@@ -98,6 +98,8 @@ honouredBlsKey e (just (k , e'))  =
 
 The committee for an epoch consists of the `leiosCommitteeSize`{.AgdaField}
 pools with the most active stake, ties broken by ascending pool keyhash.
+Every registered pool is eligible for a seat; a missing delegated-stake entry
+means zero stake and does not remove the pool from the selection domain.
 
 ```agda
 _≼_ : LeiosSeat → LeiosSeat → Type
@@ -146,11 +148,14 @@ module _ (pp : PParams)
   selectCommittee : Epoch → (KeyHash ⇀ Coin) → Pools → LeiosCommittee
   selectCommittee e pd pools = take leiosCommitteeSize sortedLeiosSeats
     where
+      registeredStake : KeyHash ⇀ Coin
+      registeredStake = (pd ∣ dom pools) ∪ˡ mapValues (λ _ → 0) pools
+
       totalStake : Coin
-      totalStake = ∑[ c ← pd ] c
+      totalStake = ∑[ c ← registeredStake ] c
 
       poolDistr : KeyHash ⇀ UnitInterval
-      poolDistr = mapValues (λ c → clamp (c /₀ totalStake)) pd
+      poolDistr = mapValues (λ c → clamp (c /₀ totalStake)) registeredStake
 
       allLeiosSeats : List LeiosSeat
       allLeiosSeats = map (λ (kh , w) → ⟦ kh , w , (if lookupᵐ? pools kh then (λ {spp} → honouredBlsKey e (spp .bls)) else nothing) ⟧)
