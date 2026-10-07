@@ -11995,7 +11995,25 @@ d_HSAbstractFunctions_3956 v0
                          (coe v3) (coe v1))
                     v2)))
          (coe (\ v1 v2 -> coe MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18))
-         (coe (\ v1 v2 -> coe MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18))
+         (coe
+            (\ v1 v2 ->
+               coe
+                 MAlonzo.Code.Data.Maybe.Base.du_map_64
+                 (coe MAlonzo.Code.Data.Fin.Base.du_toℕ_18)
+                 (coe
+                    MAlonzo.Code.Data.List.Base.du_findIndex'7495'_928
+                    (\ v3 ->
+                       coe
+                         MAlonzo.Code.Class.DecEq.Core.du__'61''61'__18 (coe ())
+                         (let v4 = d_HSTransactionStructure_748 (coe v0) in
+                          coe
+                            (coe
+                               MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_DecEq'45'GovVoter_1386
+                               (coe
+                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_govStructure_2880
+                                  (coe v4))))
+                         (coe v3) (coe v1))
+                    v2)))
          (coe
             (\ v1 v2 ->
                coe
