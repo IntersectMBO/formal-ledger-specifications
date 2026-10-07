@@ -78,9 +78,6 @@ which never merges.
    the state before the tick, as the note's pin says, whatever the pair's
    members are called.  A pair matters to a validator that runs after the tick,
    which the chain rule does not.
-+  **Which epoch's `leiosCommitteeSize` sizes the committee.**  The spec reads
-   it after `EPOCH`; cardano-ledger records it in the mark snapshot one boundary
-   earlier.  Open since the review of #1300.
 
 ## Alignment
 
@@ -92,8 +89,7 @@ which never merges.
    (`Snap.hs`); `BBODY` validates no certificate yet.  To raise with the ledger
    team: the re-registration epoch (the spec keeps it, cardano-ledger restamps
    it); the proof of possession, which the prototype does not verify; the
-   committee-size epoch; the prototype's ten-slot `minCertificationGap` against
-   the formula.
+   prototype's ten-slot `minCertificationGap` against the formula.
 
 ## Deferred by design
 
