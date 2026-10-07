@@ -168,12 +168,12 @@ the rules fix the following total order:
     transactions are allowed in the RB" ([Step 5][cip-step5]); so its body
     contributes the certificate premises and the usual bookkeeping.
 
-(The implementation already diverges from the lower bound.  The prototype's
-`minCertificationGap` is 10 slots whereas the formula gives 14 with the Musashi
-parameters, whose slot and wall-clock readings coincide at a one-second
-`slotLength`.
-Both sides are live and measured by the trace-verifier work; the divergence is
-flagged upstream, like the proof-of-possession divergence in the committee section.)
+(The prototype computes the same bound: its `minCertificationGap` rounds the
+summed periods up to whole slots of the era's slot length (ouroboros-consensus,
+branch `leios-prototype`, `LeiosDemoTypes.hs`).  With the testnet's periods of
+1, 4 and 7 seconds and a one-second `slotLength` (ouroboros-leios,
+`testnet/config`), both give 14 slots.  An earlier revision of this note recorded
+a constant 10-slot gap here.)
 
 A block may announce its own EB while certifying its predecessor's ("it may
 optionally announce its own EB for future certification", [Step 5][cip-step5]); it
@@ -325,10 +325,10 @@ The LLF adds the following defaults, each grounded in the design document:
    registration certificate carries an optional `bls_key`, the public key with its
    proof of possession, and the proof "is mandatory and verified at registration",
    against rogue-key attacks on BLS aggregation ([Key Registration and
-   Rotation][cip-keyreg]; [REQ-CheckProofOfPossession][dd-committee]).  The
-   prototype's `sppLeiosKey` on `StakePoolParams` ([#5626][cl-5626];
-   `spsLeiosKey` is its pool-state mirror) stores the key *without checking the
-   proof*, a divergence to flag with the implementers.
+   Rotation][cip-keyreg]; [REQ-CheckProofOfPossession][dd-committee]).  cardano-ledger's
+   Dijkstra `POOL` rule verifies the proof and rejects a key whose proof fails
+   (`BlsKeyInvalidProofOfPossession`; [cardano-ledger #5993][cl-5993]), and its
+   committee selection seats such a pool keyless.
 
    Rotation is re-registration ([REQ-RotateBLSKeys][dd-keys]), on a cadence
    comparable to KES rotation, with activation at an epoch boundary aligned to
@@ -782,6 +782,7 @@ checks in `BBODY`; the module placement above is the as-built map.
 [cl-5626]: https://github.com/IntersectMBO/cardano-ledger/pull/5626
 [cl-5965]: https://github.com/IntersectMBO/cardano-ledger/issues/5965
 [cl-6002]: https://github.com/IntersectMBO/cardano-ledger/pull/6002
+[cl-5993]: https://github.com/IntersectMBO/cardano-ledger/issues/5993
 [oc-2278]: https://github.com/IntersectMBO/ouroboros-consensus/pull/2278
 [oc-1677]: https://github.com/IntersectMBO/ouroboros-consensus/issues/1677
 [fls-919]: https://github.com/IntersectMBO/formal-ledger-specifications/issues/919
