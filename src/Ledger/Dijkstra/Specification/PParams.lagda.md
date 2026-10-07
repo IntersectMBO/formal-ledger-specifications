@@ -26,7 +26,8 @@ module Ledger.Dijkstra.Specification.PParams
 
 open import Data.Product.Properties
 open import Data.Nat.Properties using (m+1+n≢m)
-open import Data.Rational using (ℚ)
+open import Data.Rational as ℚ using (ℚ; ½)
+import Data.Maybe.Relation.Unary.All as Maybe
 open import Relation.Nullary.Decidable
 open import Data.List.Relation.Unary.Any using (Any; here; there)
 
@@ -36,7 +37,7 @@ open import Ledger.Prelude
 open import Ledger.Core.Specification.Crypto
 open import Ledger.Core.Specification.Epoch
 -- open import Ledger.Dijkstra.Specification.Script.Base
-open import Ledger.Prelude.Numeric using (UnitInterval; ℕ⁺)
+open import Ledger.Prelude.Numeric using (UnitInterval; fromUnitInterval; ℕ⁺)
 
 
 private variable
@@ -113,6 +114,17 @@ record PParams : Type where
     maxCollateralInputs           : ℕ
     pv                            : ProtVer -- retired, keep for now
 
+    -- Network group (Leios)
+    leiosHeaderPeriod             : Milliseconds
+    leiosVotingPeriod             : Milliseconds
+    leiosDiffusionPeriod          : Milliseconds
+    leiosMaxEBSize                : ℕ
+    leiosMaxEBTxsSize             : ℕ
+    leiosCommitteeSize            : ℕ
+    leiosQuorumStakeThreshold     : UnitInterval
+    leiosMaxEBExUnits             : ExUnits
+    leiosMaxRefScriptSizePerEB    : ℕ
+
     -- Economic group
     a                             : ℕ
     b                             : ℕ
@@ -152,6 +164,25 @@ record PParams : Type where
   costmdls = fromListᵐ (languageCostModels costmdlsAssoc)
 ```
 
+*Leios parameters*
+
+Leios adds the *endorser block* (EB), an ordered list of transaction references
+that a block producer announces alongside its ranking block; a committee of
+stake pools votes on the EB, and a certificate carried by the following ranking
+block brings the referenced transactions into the ledger.  Three of the nine
+parameters measure a Leios round in wall-clock time (header diffusion, voting,
+and the additional diffusion that follows voting), four bound an EB (its
+reference list, the transactions listed, their script execution, and their
+reference scripts), `leiosCommitteeSize`{.AgdaField} (`N_c`) is the number of
+committee seats — the committee being the `N_c` pools with the most active
+stake — `leiosQuorumStakeThreshold`{.AgdaField} (`τ`) is the fraction of
+the total active stake a certificate's signers must carry.  The voting key age
+bound is not a parameter: it is derived from the KES setup
+(`maxKeyAgeEpochs`{.AgdaFunction} in the `Epoch`{.AgdaModule} module).  The
+ranking block keeps its existing bound `maxBlockSize`{.AgdaField}, so Leios
+adds no field for it.  Zero-valued Leios parameters are meaningful: they are the protocol's
+disabled state during rollout.
+
 *Security group*
 
 `maxBlockSize`{.AgdaField} `maxTxSize`{.AgdaField}
@@ -159,9 +190,23 @@ record PParams : Type where
 `maxBlockExUnits`{.AgdaField} `a`{.AgdaField} `b`{.AgdaField}
 `minFeeRefScriptCoinsPerByte`{.AgdaField} `coinsPerUTxOByte`{.AgdaField}
 `govActionDeposit`{.AgdaField}
+`leiosHeaderPeriod`{.AgdaField} `leiosVotingPeriod`{.AgdaField}
+`leiosDiffusionPeriod`{.AgdaField} `leiosMaxEBSize`{.AgdaField}
+`leiosMaxEBTxsSize`{.AgdaField} `leiosCommitteeSize`{.AgdaField}
+`leiosQuorumStakeThreshold`{.AgdaField} `leiosMaxEBExUnits`{.AgdaField}
+`leiosMaxRefScriptSizePerEB`{.AgdaField}
 
 
 ## Protocol Parameter Well Formedness
+
+The Leios parameters are deliberately absent from
+`positivePParams`{.AgdaFunction}: zero values are the protocol's disabled
+state, and governance must be able to reach it.  Of CIP-164's quorum
+constraint `0.5 < τ < σ(N_c)`, the lower bound is a property of the parameters
+alone and `paramsWellFormed`{.AgdaFunction} imposes it (the disabled state
+never needs `τ ≡ 0`); the upper bound relates the threshold to the stake
+coverage of the selected committee, a property of the stake distribution rather
+than of the parameters, so it cannot be imposed here.
 
 ```agda
 positivePParams : PParams → List ℕ
@@ -173,13 +218,15 @@ positivePParams pp =  ( maxBlockSize ∷ maxTxSize ∷ maxHeaderSize
 
 paramsWellFormed : PParams → Type
 paramsWellFormed pp = 0 ∉ fromList (positivePParams pp)
+                    × ½ ℚ.< fromUnitInterval leiosQuorumStakeThreshold
+  where open PParams pp
 ```
 
 <!--
 ```agda
 paramsWF-elim : (pp : PParams) → paramsWellFormed pp → (n : ℕ) → n ∈ˡ (positivePParams pp) → n > 0
 paramsWF-elim pp pwf (suc n) x = z<s
-paramsWF-elim pp pwf 0 0∈ = ⊥-elim (pwf (to ∈-fromList 0∈))
+paramsWF-elim pp (pwf , _) 0 0∈ = ⊥-elim (pwf (to ∈-fromList 0∈))
   where open Equivalence
 
 record HasPParams {a} (A : Type a) : Type a where
@@ -208,6 +255,10 @@ instance
 ```
 -->
 
+A parameter update is well formed when it sets none of the parameters of
+`positivePParams`{.AgdaFunction} to zero and, if it sets the quorum threshold,
+sets it above one half: applying a well-formed update to well-formed parameters
+then yields well-formed parameters.
 
 ```agda
 module PParamsUpdate where
@@ -218,6 +269,15 @@ module PParamsUpdate where
           maxCollateralInputs           : Maybe ℕ
           maxTxExUnits maxBlockExUnits  : Maybe ExUnits
           pv                            : Maybe ProtVer -- retired, keep for now
+          leiosHeaderPeriod             : Maybe Milliseconds
+          leiosVotingPeriod             : Maybe Milliseconds
+          leiosDiffusionPeriod          : Maybe Milliseconds
+          leiosMaxEBSize                : Maybe ℕ
+          leiosMaxEBTxsSize             : Maybe ℕ
+          leiosCommitteeSize            : Maybe ℕ
+          leiosQuorumStakeThreshold     : Maybe UnitInterval
+          leiosMaxEBExUnits             : Maybe ExUnits
+          leiosMaxRefScriptSizePerEB    : Maybe ℕ
           a b                           : Maybe ℕ
           keyDeposit                    : Maybe Coin
           poolDeposit                   : Maybe Coin
@@ -249,6 +309,7 @@ module PParamsUpdate where
        just 0 ∉ fromList ( maxBlockSize ∷ maxTxSize ∷ maxHeaderSize ∷ maxValSize
                          ∷ coinsPerUTxOByte ∷ poolDeposit ∷ collateralPercentage ∷ ccMaxTermLength
                          ∷ govActionLifetime ∷ govActionDeposit ∷ drepDeposit ∷ [] )
+     × Maybe.All (λ τ → ½ ℚ.< fromUnitInterval τ) leiosQuorumStakeThreshold
     where open PParamsUpdate ppu
 ```
 
@@ -268,6 +329,15 @@ module PParamsUpdate where
       ∷ is-just maxTxExUnits
       ∷ is-just maxBlockExUnits
       ∷ is-just pv
+      ∷ is-just leiosHeaderPeriod
+      ∷ is-just leiosVotingPeriod
+      ∷ is-just leiosDiffusionPeriod
+      ∷ is-just leiosMaxEBSize
+      ∷ is-just leiosMaxEBTxsSize
+      ∷ is-just leiosCommitteeSize
+      ∷ is-just leiosQuorumStakeThreshold
+      ∷ is-just leiosMaxEBExUnits
+      ∷ is-just leiosMaxRefScriptSizePerEB
       ∷ [])
 
   modifiesEconomicGroup : PParamsUpdate → Bool
@@ -326,6 +396,15 @@ module PParamsUpdate where
       ∷ is-just coinsPerUTxOByte
       ∷ is-just govActionDeposit
       ∷ is-just minFeeRefScriptCoinsPerByte
+      ∷ is-just leiosHeaderPeriod
+      ∷ is-just leiosVotingPeriod
+      ∷ is-just leiosDiffusionPeriod
+      ∷ is-just leiosMaxEBSize
+      ∷ is-just leiosMaxEBTxsSize
+      ∷ is-just leiosCommitteeSize
+      ∷ is-just leiosQuorumStakeThreshold
+      ∷ is-just leiosMaxEBExUnits
+      ∷ is-just leiosMaxRefScriptSizePerEB
       ∷ []
       )
 
@@ -370,6 +449,15 @@ module PParamsUpdate where
       ; maxTxExUnits                = U.maxTxExUnits ?↗ P.maxTxExUnits
       ; maxBlockExUnits             = U.maxBlockExUnits ?↗ P.maxBlockExUnits
       ; pv                          = U.pv ?↗ P.pv
+      ; leiosHeaderPeriod           = U.leiosHeaderPeriod ?↗ P.leiosHeaderPeriod
+      ; leiosVotingPeriod           = U.leiosVotingPeriod ?↗ P.leiosVotingPeriod
+      ; leiosDiffusionPeriod        = U.leiosDiffusionPeriod ?↗ P.leiosDiffusionPeriod
+      ; leiosMaxEBSize              = U.leiosMaxEBSize ?↗ P.leiosMaxEBSize
+      ; leiosMaxEBTxsSize           = U.leiosMaxEBTxsSize ?↗ P.leiosMaxEBTxsSize
+      ; leiosCommitteeSize          = U.leiosCommitteeSize ?↗ P.leiosCommitteeSize
+      ; leiosQuorumStakeThreshold   = U.leiosQuorumStakeThreshold ?↗ P.leiosQuorumStakeThreshold
+      ; leiosMaxEBExUnits           = U.leiosMaxEBExUnits ?↗ P.leiosMaxEBExUnits
+      ; leiosMaxRefScriptSizePerEB  = U.leiosMaxRefScriptSizePerEB ?↗ P.leiosMaxRefScriptSizePerEB
       ; a                           = U.a ?↗ P.a
       ; b                           = U.b ?↗ P.b
       ; keyDeposit                  = U.keyDeposit ?↗ P.keyDeposit
@@ -441,3 +529,6 @@ record GovParams : Type₁ where
 and Andre Knispel and Matthias Benkort and Kevin Hammond and Charles
 Hoskinson and Samuel Leathers. *A First Step Towards On-Chain
 Decentralized Governance*. 2023.
+
+[cip-164]: https://github.com/cardano-scaling/CIPs/blob/leios/CIP-0164/README.md#protocol-parameters "CIP-164 | Protocol parameters"
+[cl-6002]: https://github.com/IntersectMBO/cardano-ledger/pull/6002 "cardano-ledger | Add Leios protocol parameters to DijkstraEra"

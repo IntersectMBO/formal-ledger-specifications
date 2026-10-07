@@ -4,7 +4,7 @@ module Ledger.Dijkstra.Foreign.ExternalStructures (externalFunctions : ExternalF
 
 open import Data.Nat.Instances using (ℕ-≤-isDecTotalOrder)
 open import Data.Nat.Properties using (≤-decTotalOrder)
-open import Relation.Binary.Bundles
+open import Relation.Binary.Bundles using (DecTotalOrder)
 open import Data.Product.Relation.Binary.Lex.NonStrict using (×-isDecTotalOrder)
 open import Data.Sum.Relation.Binary.LeftOrder using (⊎-<-isDecTotalOrder)
 open import Tactic.Derive.Show
@@ -17,7 +17,10 @@ open import Ledger.Core.Foreign.Epoch
 open import Ledger.Core.Foreign.Address
 open import Ledger.Dijkstra.Specification.Transaction public
 open import Ledger.Core.Foreign.Crypto externalFunctions
+open import Ledger.Dijkstra.Specification.Crypto using (LeiosCryptoStructure)
 open import Ledger.Dijkstra.Foreign.Script externalFunctions public
+
+open ExternalFunctions externalFunctions using (extIsSigned; extIsValidPoP)
 
 instance
   _ = HSCryptoStructure
@@ -64,20 +67,40 @@ open import Ledger.Conway.Specification.TokenAlgebra.Coin Crypto.ScriptHash
    using (Coin-TokenAlgebra)
 
 instance
+  HSLeiosCryptoStructure : LeiosCryptoStructure HSCryptoStructure
+  HSLeiosCryptoStructure = record
+    { BlsVKey              = ℕ
+    ; BlsSig               = ℕ
+    ; BlsPoP               = ℕ
+    ; isValidPoP           = λ vk pop → extIsValidPoP vk pop ≡ true
+    ; isSignedByAggregate  = λ vks m σ → extIsSigned (sum (setToList vks)) m σ ≡ true
+    ; _≤ᵏʰ_                 = _≤_
+    ; ≤ᵏʰ-isDTO             = ℕ-≤-isDecTotalOrder
+    ; EBHash               = ℕ
+    ; TxRefHash            = ℕ
+    ; RBHeaderHash         = ℕ
+    ; hashEBRefs           = λ refs → sum (map proj₁ refs)
+    ; rbHeaderHashBytes    = id
+    }
+
+open LeiosCryptoStructure HSLeiosCryptoStructure
+
+instance
   HSTransactionStructure : TransactionStructure
   HSTransactionStructure = record
-    { TxId            = ℕ
-    ; Ix              = ℕ
-    ; AuxiliaryData   = ℕ
-    ; epochStructure  = it
-    ; globalConstants = it
-    ; cryptoStructure = it
-    ; govParams       = HsGovParams
-    ; txidBytes       = id
-    ; scriptStructure = it
-    ; adHashingScheme = isHashableSet-ℕ
-    ; Hashable-ScriptIntegrity = record { hash = λ x → 0 }
-    ; tokenAlgebra    = Coin-TokenAlgebra
+    { TxId                      = ℕ
+    ; Ix                        = ℕ
+    ; AuxiliaryData             = ℕ
+    ; epochStructure            = it
+    ; globalConstants           = it
+    ; cryptoStructure           = it
+    ; leiosCryptoStructure      = HSLeiosCryptoStructure
+    ; govParams                 = HsGovParams
+    ; txidBytes                 = id
+    ; scriptStructure           = it
+    ; adHashingScheme           = isHashableSet-ℕ
+    ; Hashable-ScriptIntegrity  = record { hash = λ x → 0 }
+    ; tokenAlgebra              = Coin-TokenAlgebra
     }
 
 open TransactionStructure HSTransactionStructure public
@@ -91,6 +114,8 @@ instance
   HSAbstractFunctions = record
     { txScriptFee    = λ tt y → 0
     ; serializedSize = λ v → 0
+    ; txRefHash      = λ _ → 0
+    ; ebSize         = λ _ → 0
     ; indexOfImp  = record
       { indexOfDCert          =
           λ x xs → Data.Fin.toℕ <$> findIndexᵇ (_== x) xs
