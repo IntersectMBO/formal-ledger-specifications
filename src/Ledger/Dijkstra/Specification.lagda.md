@@ -148,6 +148,7 @@ import Ledger.Dijkstra.Specification.TokenAlgebra.Base
 
 ```agda
 import Ledger.Dijkstra.Specification.Transaction
+import Ledger.Dijkstra.Specification.Transaction.Properties
 ```
 
 ## <span class="AgdaModule">Utxo</span>

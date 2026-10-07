@@ -47,3 +47,6 @@ import MAlonzo.Code.Ledger.Dijkstra.Foreign.Utxo              as X
   ( UTxOEnv(..), UTxOState(..), UTxO, utxoStep, utxowStep)
 import MAlonzo.Code.Ledger.Dijkstra.Foreign.Script.Base      as X
   (HSLanguage(..))
+
+import MAlonzo.Code.Ledger.Dijkstra.Foreign.Receiving as X
+  (receivingScriptHashes, receivingKeyHashes, receivingPointer, subReceivingScriptHashes, subReceivingKeyHashes, subReceivingPointer)

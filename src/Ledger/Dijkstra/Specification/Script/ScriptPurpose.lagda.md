@@ -28,6 +28,7 @@ ScriptPurposeData Reward        = RewardAddress
 ScriptPurposeData Vote          = GovVoter
 ScriptPurposeData Propose       = GovProposal
 ScriptPurposeData Guard         = Credential
+ScriptPurposeData Receive       = ScriptHash
 
 record ScriptPurpose : Type where
   constructor ⟦_,_⟧ˢᵖ

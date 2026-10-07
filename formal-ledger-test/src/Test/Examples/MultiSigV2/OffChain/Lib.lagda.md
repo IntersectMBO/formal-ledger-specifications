@@ -71,7 +71,7 @@ getWalletUTxO : (scriptHash : ℕ) → UTxO → List (TxIn × TxOut)
 getWalletUTxO sh (utxo , prf) = filter (λ { (_ , addr , _) → matchWalletHash? sh (payCred addr)}) (setToList utxo)
 
 succeedTxOut' : TxOut
-succeedTxOut' = inj₁ (record { net = 0 ;
+succeedTxOut' = inj₁ (record { net = 0 ; protected = false ;
                            pay = ScriptObj 777 ;
                            stake = just (ScriptObj 777) })
                            , 700000000000 , just (inj₁ (inj₁ (inj₁ Holding))) , nothing

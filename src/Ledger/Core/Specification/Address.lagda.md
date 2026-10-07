@@ -92,6 +92,7 @@ record BaseAddr : Type where
     net    : Network
     pay    : Credential
     stake  : Maybe Credential
+    protected : Bool
 
 record BootstrapAddr : Type where
   field
@@ -176,6 +177,19 @@ isScriptRewardAddress  = isScript ∘ CredentialOf
 
 <!--
 ```agda
+isProtected : Addr → Bool
+isProtected (inj₁ a) = BaseAddr.protected a
+isProtected (inj₂ _) = false
+
+protect : BaseAddr → BaseAddr
+protect a = record a { protected = true }
+
+protection-preserves-payment : ∀ a → BaseAddr.pay (protect a) ≡ BaseAddr.pay a
+protection-preserves-payment a = refl
+
+protection-preserves-stake : ∀ a → BaseAddr.stake (protect a) ≡ BaseAddr.stake a
+protection-preserves-stake a = refl
+
 payCred (inj₁ record {pay = pay}) = pay
 payCred (inj₂ record {pay = pay}) = pay
 

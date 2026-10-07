@@ -117,6 +117,8 @@ record TxBodyTop : Type where
     txIns                    : ℙ TxIn
     referenceInputs          : ℙ TxIn
     collateralInputs         : ℙ TxIn
+    collateralReturn         : Maybe TxOut
+    totalCollateral          : Maybe Coin
     txOuts                   : Ix ⇀ TxOut
     txId                     : TxId
     txCerts                  : List DCert

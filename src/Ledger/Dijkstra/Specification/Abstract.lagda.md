@@ -20,12 +20,14 @@ record indexOf : Type where
     indexOfVote           : GovVoter       → List GovVoter     → Maybe Ix
     indexOfProposal       : GovProposal    → List GovProposal  → Maybe Ix
     indexOfGuard          : Credential     → List Credential   → Maybe Ix
+    indexOfReceiving      : ScriptHash     → ℙ ScriptHash       → Maybe Ix
 
 record AbstractFunctions : Type where
   field txScriptFee     : Prices → ExUnits → Fees
         serializedSize  : Value → MemoryEstimate
         getLanguageView : PParams → Language → LangDepView
         indexOfImp      : indexOf
+        nextOutputIndex : (Ix ⇀ TxOut) → Ix
         scriptSize      : Script → ℕ
         valContext      : TxInfo → ScriptPurpose → Data
 ```

@@ -46,11 +46,15 @@ import Data.List.Relation.Unary.All as List
 import Data.List.Relation.Unary.AllPairs as List
 import Data.List.Relation.Unary.Any as List
 import Data.Sum.Relation.Unary.All as Sum
+import Data.Maybe.Relation.Unary.All as Maybe
 
 open RewardAddress
 
 totExUnits : ∀{ℓ} → Tx ℓ → ExUnits
 totExUnits tx = ∑[ (_ , eu) ← RedeemersOf tx ] eu
+
+totExUnitsBatch : TopLevelTx → ExUnits
+totExUnitsBatch tx = ∑ˡ[ units ← (totExUnits tx ∷ map totExUnits (SubTransactionsOf tx)) ] units
 
 -- utxoEntrySizeWithoutVal = 27 words (8 bytes)
 utxoEntrySizeWithoutVal : MemoryEstimate
@@ -94,7 +98,7 @@ The `UTxOEnv`{.AgdaRecord} carries
 +  `utxo₀`{.AgdaField}: *pre-batch snapshot* of the UTxO;
 +  `allScripts`{.AgdaField}: *batch-wide script pool* containing all scripts available
    to the batch (witness scripts plus reference scripts resolved from allowed
-   reference inputs and batch outputs);
+   reference and spending inputs);
 +  `legacyMode`{.AgdaField}: whether the top-level transaction is processed in
    *legacy mode*.  This is decided once, in the `LEDGER`{.AgdaDatatype} rule
    (via `isLegacyMode`{.AgdaFunction}, defined in the `Utxow`{.AgdaModule}
@@ -234,7 +238,7 @@ refScriptsSize tx utxo =
 
 minfee : PParams → TopLevelTx → UTxO → Coin
 minfee pp txTop utxo = pp .a * (SizeOf txTop) + pp .b
-                       + txScriptFee (pp .prices) (totExUnits txTop)
+                       + txScriptFee (pp .prices) (totExUnitsBatch txTop)
                        + scriptsCost pp (refScriptsSize txTop utxo)
 ```
 
@@ -284,11 +288,52 @@ isAdaOnly v = policies v ≡ᵉ coinPolicies
 
 ### Collateral Check
 ```agda
+collateralReturnOf : TopLevelTx → Maybe TxOut
+collateralReturnOf = TxBody.collateralReturn ∘ TxBodyOf
+
+totalCollateralOf : TopLevelTx → Maybe Coin
+totalCollateralOf = TxBody.totalCollateral ∘ TxBodyOf
+
+collateralReturnOuts : TopLevelTx → UTxO
+collateralReturnOuts tx = maybe
+  (λ o → ❴ (TxIdOf tx , nextOutputIndex (TxOutsOf tx)) , o ❵ᵐ)
+  ∅ (collateralReturnOf tx)
+
+collateralReturnValue : TopLevelTx → Value
+collateralReturnValue tx = maybe txOutToValue (inject 0) (collateralReturnOf tx)
+
+collateralReturnCoin : TopLevelTx → Coin
+collateralReturnCoin tx = maybe (coin ∘ txOutToValue) 0 (collateralReturnOf tx)
+
+collateralCollected : TopLevelTx → UTxO → Coin
+collateralCollected tx utxo = cbalance (utxo ∣ CollateralInputsOf tx) ∸ collateralReturnCoin tx
+
+ReturnOutputWellFormed : PParams → TxOut → Type
+ReturnOutputWellFormed pp o = isProtected (proj₁ o) ≡ false
+  × netId (proj₁ o) ≡ NetworkId
+  × inject ((160 + utxoEntrySize o) * coinsPerUTxOByte pp) ≤ᵗ txOutToValue o
+  × serializedSize (txOutToValue o) ≤ maxValSize pp
+  × Sum.All (const ⊤) (λ a → AttrSizeOf a ≤ 64) (proj₁ o)
+
+record CollateralReturnWellFormed (pp : PParams) (ret : Maybe TxOut) : Type where
+  constructor return-well-formed
+  field validReturn : Maybe.All (ReturnOutputWellFormed pp) ret
+
+instance
+  Dec-CollateralReturnWellFormed : CollateralReturnWellFormed ⁇²
+  Dec-CollateralReturnWellFormed {pp} {nothing} .dec = yes (return-well-formed Maybe.nothing)
+  Dec-CollateralReturnWellFormed {pp} {just o} .dec with ¿ ReturnOutputWellFormed pp o ¿
+  ... | yes p = yes (return-well-formed (Maybe.just p))
+  ... | no ¬p = no λ { (return-well-formed (Maybe.just p)) → ¬p p }
+
 collateralCheck : PParams → TopLevelTx → UTxO → Type
 collateralCheck pp txTop utxo =
   All (λ (addr , _) → isVKeyAddr addr) (range (utxo ∣ CollateralInputsOf txTop))
-  × isAdaOnly (balance (utxo ∣ CollateralInputsOf txTop))
-  × coin (balance (utxo ∣ CollateralInputsOf txTop)) * 100 ≥ (TxFeesOf txTop) * pp .collateralPercentage
+  × balance (utxo ∣ CollateralInputsOf txTop)
+      ≡ collateralReturnValue txTop + inject (collateralCollected txTop utxo)
+  × collateralCollected txTop utxo * 100 ≥ (TxFeesOf txTop) * pp .collateralPercentage
+  × collateralReturnCoin txTop ≤ cbalance (utxo ∣ CollateralInputsOf txTop)
+  × totalCollateralOf txTop ~ just (collateralCollected txTop utxo)
   × (CollateralInputsOf txTop) ≢ ∅
 ```
 
@@ -513,7 +558,8 @@ data _⊢_⇀⦇_,UTXO⦈_ : UTxOEnv → UTxOState → TopLevelTx → UTxOState 
     ∙ coin (MintedValueOf txTop) ≡ 0
     ∙ consumedBatch (PParamsOf Γ) txTop (UTxOOf Γ) ≡ producedBatch (PParamsOf Γ) (PoolsOf Γ) txTop
     ∙ (LegacyModeOf Γ ≡ true → consumedLegacy (PParamsOf Γ) txTop (UTxOOf Γ) ≡ producedLegacy (PParamsOf Γ) (PoolsOf Γ) txTop)  -- (4)
-    ∙ SizeOf txTop ≤ maxTxSize (PParamsOf Γ)
+    ∙ (SizeOf txTop ≤ maxTxSize (PParamsOf Γ)
+      × maxTxExUnits (PParamsOf Γ) ≥ᵉ totExUnitsBatch txTop)
     ∙ ∑ˡ[ x ← setToList (allReferenceScripts txTop (UTxOOf Γ)) ] scriptSize x ≤ (PParamsOf Γ) .maxRefScriptSizePerTx
     ∙ ((RedeemersOf txTop ˢ ≢ ∅) ⊎ (List.Any (λ txSub → RedeemersOf txSub ˢ ≢ ∅) (SubTransactionsOf txTop))
         → collateralCheck (PParamsOf Γ) txTop (UTxOOf Γ))
@@ -523,12 +569,13 @@ data _⊢_⇀⦇_,UTXO⦈_ : UTxOEnv → UTxOState → TopLevelTx → UTxOState 
     ∙ ∀[ (a , _) ∈ range (TxOutsOf txTop) ] (Sum.All (const ⊤) (λ a → AttrSizeOf a ≤ maxBootstrapAddrSize)) a
     ∙ ∀[ (a , _) ∈ range (TxOutsOf txTop) ] (netId a ≡ NetworkId)
     ∙ MaybeNetworkIdOf txTop ~ just NetworkId
-    ∙ CurrentTreasuryOf txTop  ~ just (TreasuryOf Γ)
+    ∙ (CurrentTreasuryOf txTop ~ just (TreasuryOf Γ)
+      × CollateralReturnWellFormed (PParamsOf Γ) (collateralReturnOf txTop))
     ∙ Γ ⊢ _ ⇀⦇ txTop ,UTXOS⦈ _
       ────────────────────────────────
     let
        s₁ = if IsValidFlagOf txTop
-            then ⟦ (UTxOOf s₀ ∣ SpendInputsOf txTop ᶜ) ∪ˡ outs txTop , FeesOf s₀ + TxFeesOf txTop , DonationsOf s₀ + DonationsOf txTop ⟧ else ⟦ UTxOOf s₀ ∣ (CollateralInputsOf txTop) ᶜ , FeesOf s₀ + cbalance (UTxOOf s₀ ∣ CollateralInputsOf txTop) , DonationsOf s₀ ⟧
+            then ⟦ (UTxOOf s₀ ∣ SpendInputsOf txTop ᶜ) ∪ˡ outs txTop , FeesOf s₀ + TxFeesOf txTop , DonationsOf s₀ + DonationsOf txTop ⟧ else ⟦ (UTxOOf s₀ ∣ (CollateralInputsOf txTop) ᶜ) ∪ˡ collateralReturnOuts txTop , FeesOf s₀ + collateralCollected txTop (UTxOOf s₀) , DonationsOf s₀ ⟧
     in
       Γ ⊢ s₀ ⇀⦇ txTop ,UTXO⦈ s₁
 

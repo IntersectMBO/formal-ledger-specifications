@@ -34,7 +34,7 @@ initEnv : UTxOEnv
 initEnv = createEnv 0
 
 initTxOut : TxOut
-initTxOut = inj₁ (record { net = 0 ;
+initTxOut = inj₁ (record { net = 0 ; protected = false ;
                            pay = ScriptObj 777 ;
                            stake = just (ScriptObj 777) })
                            , scriptValue , just (inj₂ (inj₁ (inj₁ (Always [])))) , nothing

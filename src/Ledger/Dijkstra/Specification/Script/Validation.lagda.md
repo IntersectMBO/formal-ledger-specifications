@@ -33,6 +33,17 @@ private variable
 -->
 
 ```agda
+receivingCredentials : Tx ℓ → ℙ Credential
+receivingCredentials tx = mapPartial
+  (λ (a , _) → if isProtected a then just (payCred a) else nothing)
+  (range (TxOutsOf tx))
+
+receivingScriptHashes : Tx ℓ → ℙ ScriptHash
+receivingScriptHashes = mapPartial isScriptObj ∘ receivingCredentials
+
+receivingKeyHashes : Tx ℓ → ℙ KeyHash
+receivingKeyHashes = mapPartial isKeyHashObj ∘ receivingCredentials
+
 rdptr : Tx ℓ → ScriptPurpose → Maybe RedeemerPtr
 rdptr tx = λ where
   ⟦ Cert          , h ⟧ˢᵖ → map (Cert           ,_) $ indexOfDCert          h (DCertsOf tx)
@@ -42,6 +53,7 @@ rdptr tx = λ where
   ⟦ Vote          , h ⟧ˢᵖ → map (Vote           ,_) $ indexOfVote           h (map GovVote.voter (ListOfGovVotesOf tx))
   ⟦ Propose       , h ⟧ˢᵖ → map (Propose        ,_) $ indexOfProposal       h (ListOfGovProposalsOf tx)
   ⟦ Guard         , h ⟧ˢᵖ → map (Guard          ,_) $ indexOfGuard          h (setToList (GuardsOf tx))
+  ⟦ Receive       , h ⟧ˢᵖ → map (Receive        ,_) $ indexOfReceiving      h (receivingScriptHashes tx)
 
 indexedRdmrs : Tx ℓ → ScriptPurpose → Maybe (Redeemer × ExUnits)
 indexedRdmrs tx sp = maybe (λ x → lookupᵐ? (RedeemersOf tx) x) nothing (rdptr tx sp)
@@ -156,6 +168,7 @@ credsNeeded utxo tx =
                                  then (λ {sh} → just (⟦ Propose , p ⟧ˢᵖ , ScriptObj sh))
                                  else nothing)                           (fromList (ListOfGovProposalsOf tx))
   ∪ mapˢ        (λ c       → (⟦ Guard , c ⟧ˢᵖ , c))                      (GuardsOf tx)
+  ∪ mapˢ        (λ sh      → (⟦ Receive , sh ⟧ˢᵖ , ScriptObj sh))        (receivingScriptHashes tx)
 
   where
     collateralInputs : Tx ℓ → ℙ TxIn

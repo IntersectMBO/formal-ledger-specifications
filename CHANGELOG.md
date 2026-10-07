@@ -4,6 +4,17 @@
 
 ### WIP
 
+- Add CIP-160 protected address identity, grouped body-local Receiving purposes,
+  sorted unique pointer domains and protected key/native/Plutus witness rules.
+- Preserve protection in script-context output/input representations and reject
+  older Plutus contexts that cannot represent it; Conway outputs stay unprotected.
+- Represent top-level collateral return/total collateral, reject protected
+  returns in phase 1, and retain collateral-only invalid-batch state effects.
+- Aggregate execution budgets across all bodies for transaction/block limits and
+  abstract fees. Exclude newly created output scripts from the witness pool.
+- Extract Receiving domain/pointer APIs and prove payment, stake and value
+  preservation; record the foreign evaluator and representation premises.
+
 - Move cert-deposit helpers from `Utxo` to `Certs`.
 - Fix `updateCertDeposits`: use `foldl` (CERTS is head-first).
 - Add `HasCoin-UTxOState` and `HasCoin-LedgerState` instances; the latter sums UTxO total, rewards balance, and all three deposit fields.

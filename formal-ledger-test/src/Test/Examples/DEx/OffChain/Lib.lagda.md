@@ -66,7 +66,7 @@ getWalletUTxO sh (utxo , prf) = filter (λ { (_ , addr , _) → matchWalletHash?
 
 {-
 succeedTxOut' : TxOut
-succeedTxOut' = inj₁ (record { net = 0 ;
+succeedTxOut' = inj₁ (record { net = 0 ; protected = false ;
                            pay = ScriptObj 777 ;
                            stake = just (ScriptObj 777) })
                            , {!!} , just (inj₁ (inj₁ (inj₁ (Always [])))) , nothing

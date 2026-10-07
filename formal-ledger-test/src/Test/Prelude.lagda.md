@@ -40,6 +40,7 @@ record SBaseAddr : Set where
   field net    : SNetwork
         pay    : SCredential
         stake  : Maybe SCredential
+        protected : Bool
 instance
   unquoteDecl DecEq-SBaseAddr = derive-DecEq
     ((quote SBaseAddr , DecEq-SBaseAddr) ∷ [])

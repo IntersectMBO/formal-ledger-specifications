@@ -152,7 +152,9 @@ allowedLanguagesLegacy tx utxo =
 
     usesBootstrapAddr = ∃[ (a , _) ∈ os ] IsBootstrapAddr a
 
-    usesV4Features = UsesV4Features tx
+    usesV4Features = UsesV4Features tx ⊎
+      ∃[ o ∈ range (TxOutsOf tx) ∪ range (utxo ∣ (SpendInputsOf tx ∪ ReferenceInputsOf tx)) ]
+        (isProtected (proj₁ o) ≡ true)
 
     usesV3Features = UsesV3Features tx
 
@@ -277,7 +279,7 @@ data _⊢_⇀⦇_,SUBUTXOW⦈_ : SubUTxOEnv → UTxOState → SubLevelTx → UTx
       credentialsNeeded = mapˢ proj₂ (credsNeeded utxo₀ txSub)
 
       vKeyHashesNeeded : ℙ KeyHash
-      vKeyHashesNeeded = mapPartial isKeyHashObj credentialsNeeded
+      vKeyHashesNeeded = receivingKeyHashes txSub ∪ mapPartial isKeyHashObj credentialsNeeded
                          ∪ concatMapˢ poolOwners (fromList txCerts)
 
       scriptHashesNeeded : ℙ ScriptHash
@@ -378,7 +380,7 @@ attempting both.
       vKeyHashesProvided = mapˢ hash (dom vKeySigs)
 
       vKeyHashesNeeded : ℙ KeyHash
-      vKeyHashesNeeded = mapPartial isKeyHashObj credentialsNeeded
+      vKeyHashesNeeded = receivingKeyHashes txTop ∪ mapPartial isKeyHashObj credentialsNeeded
                          ∪ concatMapˢ poolOwners (fromList txCerts)
 
       scriptHashesNeeded : ℙ ScriptHash
@@ -475,7 +477,7 @@ attempting both.
       vKeyHashesProvided = mapˢ hash (dom vKeySigs)
 
       vKeyHashesNeeded : ℙ KeyHash
-      vKeyHashesNeeded = mapPartial isKeyHashObj credentialsNeeded
+      vKeyHashesNeeded = receivingKeyHashes txTop ∪ mapPartial isKeyHashObj credentialsNeeded
                          ∪ concatMapˢ poolOwners (fromList txCerts)
 
       scriptHashesNeeded : ℙ ScriptHash

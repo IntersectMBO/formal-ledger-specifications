@@ -3,6 +3,7 @@ open import Ledger.Core.Foreign.ExternalFunctions
 module Ledger.Dijkstra.Foreign.ExternalStructures (externalFunctions : ExternalFunctions) where
 
 open import Data.Nat.Instances using (ℕ-≤-isDecTotalOrder)
+open import Data.Nat.Properties using (≤-decTotalOrder)
 open import Relation.Binary.Bundles
 open import Data.Product.Relation.Binary.Lex.NonStrict using (×-isDecTotalOrder)
 open import Data.Sum.Relation.Binary.LeftOrder using (⊎-<-isDecTotalOrder)
@@ -108,9 +109,13 @@ instance
       ; indexOfVote           = λ _ _ → nothing
       ; indexOfProposal       =
           λ x xs → Data.Fin.toℕ <$> findIndexᵇ (==-GovProposal x) xs
+      ; indexOfReceiving      =
+          λ x xs → Data.Fin.toℕ <$> findIndexᵇ (_== x)
+            (Data.List.Sort.sort ≤-decTotalOrder (setToList xs))
       ; indexOfGuard          =
           λ x xs → Data.Fin.toℕ <$> findIndexᵇ (_== x) xs
       }
+    ; nextOutputIndex = λ os → length (setToList (dom os))
     ; scriptSize = λ where
         (inj₁ x) → HSNativeScript.nsScriptSize x
         (inj₂ x) → HSPlutusScript.psScriptSize x

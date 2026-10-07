@@ -22,7 +22,7 @@ open TransactionStructure SVTransactionStructure
 open Implementation
 
 openTxOut : Value → PlutusScript → TxOut
-openTxOut v script = inj₁ (record { net = 0 ;
+openTxOut v script = inj₁ (record { net = 0 ; protected = false ;
                            pay = ScriptObj (proj₁ script) ;
                            stake = just (ScriptObj (proj₁ script)) })
                            , v
@@ -34,7 +34,7 @@ openTx id w v tw script = record { body = record defaultTxBody
                          { txIns = Ledger.Prelude.fromList ((w , w) ∷ [])
                          ; txOuts = fromListIx ((tw , openTxOut v script)
                                                ∷ (w
-                                                 , ((inj₁ (record { net = 0 ;
+                                                 , ((inj₁ (record { net = 0 ; protected = false ;
                                                                     pay = KeyHashObj w ;
                                                                     stake = just (KeyHashObj w) }))
                                                -- , 10000000000 , nothing , nothing))

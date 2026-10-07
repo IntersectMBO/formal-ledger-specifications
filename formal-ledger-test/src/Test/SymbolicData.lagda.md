@@ -37,8 +37,8 @@ credToSymbolic (KeyHashObj x) = KeyHashObj x
 credToSymbolic (ScriptObj x) = ScriptObj x
 
 AddrToSymbolic : Addr → SAddr
-AddrToSymbolic (inj₁ record { net = net ; pay = pay ; stake = stake })
-  = inj₁ (record { net = net ; pay = credToSymbolic pay ; stake = maybe (λ x → just (credToSymbolic x)) nothing stake })
+AddrToSymbolic (inj₁ record { net = net ; pay = pay ; stake = stake ; protected = protected })
+  = inj₁ (record { net = net ; pay = credToSymbolic pay ; stake = maybe (λ x → just (credToSymbolic x)) nothing stake ; protected = protected })
 AddrToSymbolic (inj₂ record { net = net ; pay = pay ; attrsSize = attrsSize })
   = inj₂ (record { net = net ; pay = credToSymbolic pay ; attrsSize = attrsSize })
 

@@ -35,7 +35,7 @@ makePayTxOut Holding ix txo = []
 makePayTxOut (Collecting vl pkh x₂ x₃) ix txo =
             (ix , payScriptTxOut txo vl)
             ∷
-             (777 , ((inj₁ (record { net = 0 ; pay = KeyHashObj pkh ; stake = just (KeyHashObj pkh) })) ,
+             (777 , ((inj₁ (record { net = 0 ; protected = false ; pay = KeyHashObj pkh ; stake = just (KeyHashObj pkh) })) ,
               (vl , nothing , nothing))) ∷ []
 
 makePayTx : (id : ℕ) → UTxOState → PlutusScript → (w : ℕ) → Maybe Tx

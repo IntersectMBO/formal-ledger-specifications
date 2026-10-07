@@ -13,3 +13,5 @@ open import Ledger.Dijkstra.Foreign.Ratify public
 open import Ledger.Dijkstra.Foreign.Utxo public
 open import Ledger.Dijkstra.Foreign.Script public
 
+
+open import Ledger.Dijkstra.Foreign.Receiving public

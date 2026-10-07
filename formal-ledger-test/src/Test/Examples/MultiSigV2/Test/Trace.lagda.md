@@ -40,7 +40,7 @@ initEnv : UTxOEnv
 initEnv = createEnv 0
 
 initTxOut : TxOut
-initTxOut = inj₁ (record { net = 0 ;
+initTxOut = inj₁ (record { net = 0 ; protected = false ;
                            pay = ScriptObj 777 ;
                            stake = just (ScriptObj 777) })
                            , 800000000000 , just (inj₂ (inj₁ (inj₁ Holding))) , nothing

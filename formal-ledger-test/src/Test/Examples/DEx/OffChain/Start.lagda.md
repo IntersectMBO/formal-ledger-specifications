@@ -24,7 +24,7 @@ open Implementation
 import Data.Rational.Base as Q
 
 startTxOut : Value → Q.ℚ → ℕ → PlutusScript → TxOut
-startTxOut v r o script = inj₁ (record { net = 0 ;
+startTxOut v r o script = inj₁ (record { net = 0 ; protected = false ;
                            pay = ScriptObj (proj₁ script) ;
                            stake = just (ScriptObj (proj₁ script)) })
                            , v
@@ -36,7 +36,7 @@ startTx id w tw v r script = record { body = record defaultTxBody
                          { txIns = Ledger.Prelude.fromList ((w , w) ∷ [])
                          ; txOuts = fromListIx ((tw , startTxOut v r w script)
                                                ∷ (w
-                                                 , ((inj₁ (record { net = 0 ;
+                                                 , ((inj₁ (record { net = 0 ; protected = false ;
                                                                     pay = KeyHashObj w ;
                                                                     stake = just (KeyHashObj w) }))
                                                , ((startValue - feeValue) - v) , nothing , nothing))

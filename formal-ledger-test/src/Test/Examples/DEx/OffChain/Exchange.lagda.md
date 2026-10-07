@@ -33,7 +33,7 @@ scriptETxOut (Always q o) (fst , txValue , snd) w v = (fst , (txValue - v) , (ju
 makeExchangeTxOut : Label → (scriptIx : ℕ) → TxOut → (w : ℕ) → (v : Value) → List (ℕ × TxOut)
 makeExchangeTxOut (Always r o) ix txo w v =
             (ix , scriptETxOut (Always r o) txo w v) ∷
-            (2 , ((inj₁ (record { net = 0 ; pay = KeyHashObj o ; stake = just (KeyHashObj o) })) ,
+            (2 , ((inj₁ (record { net = 0 ; protected = false ; pay = KeyHashObj o ; stake = just (KeyHashObj o) })) ,
               (ratioValue v r , nothing , nothing)))∷ []
 
 

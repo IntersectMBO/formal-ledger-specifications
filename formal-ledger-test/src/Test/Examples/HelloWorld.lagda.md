@@ -41,7 +41,7 @@ initEnv : UTxOEnv
 initEnv = createEnv 0
 
 initTxOut : TxOut
-initTxOut = inj₁ (record { net = 0 ;
+initTxOut = inj₁ (record { net = 0 ; protected = false ;
                            pay = ScriptObj 777 ;
                            stake = just (ScriptObj 777) })
                            , 10 , nothing , nothing
@@ -58,7 +58,7 @@ succeedTx = record { body = record
                          ; refInputs = ∅
                          ; txOuts = fromListIx ((6 , initTxOut)
                                                ∷ (5
-                                                 , ((inj₁ (record { net = 0 ;
+                                                 , ((inj₁ (record { net = 0 ; protected = false ;
                                                                     pay = KeyHashObj 5 ;
                                                                     stake = just (KeyHashObj 5) }))
                                                  , (1000000000000 - 10000000000) , nothing , nothing))
