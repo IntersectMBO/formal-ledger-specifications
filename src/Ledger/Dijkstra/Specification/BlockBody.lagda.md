@@ -112,9 +112,9 @@ leiosBodyChecks certified nothing   _    = certified ≡ false
 leiosBodyChecks certified (just _)  txs  = certified ≡ true × txs ≡ []
 ```
 
-The bit is an input the rule checks, not a value computed from the body: the
-consensus specification gates its certification-delay check on the bit, which is
-sound only if the ledger verifies it ([alignment item 4][dn-alignment] of the
+The bit is an input the rule checks, not a value computed from the body.  Header
+validation sees the bit but not the body, so a check it gates on the bit is sound
+only if the ledger verifies the bit ([alignment item 4][dn-alignment] of the
 design note).
 
 <!--
@@ -135,9 +135,9 @@ instance
 The rule requires the body's size and hash to agree with the header, the block
 to pass `leiosBodyChecks`{.AgdaFunction}, the transactions' execution units to
 fit the block limit, and `LEDGERS`{.AgdaDatatype} to accept the transactions.
-Everything contextual about a certificate is judged by `CHAIN`{.AgdaDatatype},
-which sees the announcing block: the certification delay, the certificate's
-validity against the committee pinned at announcement
+The checks that need the announcing block, which `BBODY`{.AgdaDatatype} does
+not see, belong to `CHAIN`{.AgdaDatatype}: the certification delay, the
+certificate's validity against the committee pinned at announcement
 (`ValidEBCert`{.AgdaRecord}), and the certified EB's validity and application
 (`ValidEB`{.AgdaRecord}).
 
