@@ -286,6 +286,17 @@ isAdaOnly v = policies v ≡ᵉ coinPolicies
 ```
 -->
 
+### Address Protection Admission
+
+Ordinary outputs admit protection only from protocol major version 12. This
+check applies independently to top-level and child outputs. Collateral returns
+remain unprotected at every protocol version.
+
+```agda
+ProtectionAdmitted : PParams → Addr → Type
+ProtectionAdmitted pp a = isProtected a ≡ false ⊎ 12 ≤ proj₁ (pv pp)
+```
+
 ### Collateral Check
 ```agda
 collateralReturnOf : TopLevelTx → Maybe TxOut
@@ -508,7 +519,7 @@ data _⊢_⇀⦇_,SUBUTXO⦈_ : SubUTxOEnv → UTxOState → SubLevelTx → UTxO
        (inject ((UTxOOverhead + utxoEntrySize o) * coinsPerUTxOByte (PParamsOf Γ)) ≤ᵗ txOutToValue o)
     ∙ ∀[ (_ , o) ∈ ∣ TxOutsOf txSub ∣ ] (serializedSize (txOutToValue o) ≤ maxValSize (PParamsOf Γ))
     ∙ ∀[ (a , _) ∈ range (TxOutsOf txSub) ] (Sum.All (const ⊤) (λ a → AttrSizeOf a ≤ maxBootstrapAddrSize) a)
-    ∙ ∀[ (a , _) ∈ range (TxOutsOf txSub) ] (netId a ≡ NetworkId)
+    ∙ ∀[ (a , _) ∈ range (TxOutsOf txSub) ] (netId a ≡ NetworkId × ProtectionAdmitted (PParamsOf Γ) a)
     ∙ MaybeNetworkIdOf txSub ~ just NetworkId
     ∙ CurrentTreasuryOf txSub ~ just (TreasuryOf Γ)
       ────────────────────────────────
@@ -567,7 +578,7 @@ data _⊢_⇀⦇_,UTXO⦈_ : UTxOEnv → UTxOState → TopLevelTx → UTxOState 
          (inject ((UTxOOverhead + utxoEntrySize o) * coinsPerUTxOByte (PParamsOf Γ)) ≤ᵗ txOutToValue o)
     ∙ ∀[ (_ , o) ∈ ∣ TxOutsOf txTop ∣ ] (serializedSize (txOutToValue o) ≤ maxValSize (PParamsOf Γ))
     ∙ ∀[ (a , _) ∈ range (TxOutsOf txTop) ] (Sum.All (const ⊤) (λ a → AttrSizeOf a ≤ maxBootstrapAddrSize)) a
-    ∙ ∀[ (a , _) ∈ range (TxOutsOf txTop) ] (netId a ≡ NetworkId)
+    ∙ ∀[ (a , _) ∈ range (TxOutsOf txTop) ] (netId a ≡ NetworkId × ProtectionAdmitted (PParamsOf Γ) a)
     ∙ MaybeNetworkIdOf txTop ~ just NetworkId
     ∙ (CurrentTreasuryOf txTop ~ just (TreasuryOf Γ)
       × CollateralReturnWellFormed (PParamsOf Γ) (collateralReturnOf txTop))

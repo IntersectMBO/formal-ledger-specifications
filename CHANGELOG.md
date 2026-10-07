@@ -6,13 +6,15 @@
 
 - Add CIP-160 protected address identity, grouped body-local Receiving purposes,
   sorted unique pointer domains and protected key/native/Plutus witness rules.
+- Admit protected ordinary outputs only from protocol major 12, independently
+  in parent and child bodies; mirror historical rejection in Conway conformance.
 - Preserve protection in script-context output/input representations and reject
   older Plutus contexts that cannot represent it; Conway outputs stay unprotected.
 - Represent top-level collateral return/total collateral, reject protected
   returns in phase 1, and retain collateral-only invalid-batch state effects.
 - Aggregate execution budgets across all bodies for transaction/block limits and
   abstract fees. Exclude newly created output scripts from the witness pool.
-- Extract Receiving domain/pointer APIs and prove payment, stake and value
+- Extract Receiving domain/pointer APIs and a child UTXOW step; prove payment, stake and value
   preservation; record the foreign evaluator and representation premises.
 
 - Move cert-deposit helpers from `Utxo` to `Certs`.

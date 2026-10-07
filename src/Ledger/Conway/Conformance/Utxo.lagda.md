@@ -111,7 +111,7 @@ data _⊢_⇀⦇_,UTXO⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Type
         serSize (getValueʰ txout) ≤ maxValSize pp
     ∙ ∀[ (a , _) ∈ range txOutsʰ ]
         Sum.All (const ⊤) (λ a → a .BootstrapAddr.attrsSize ≤ 64) a
-    ∙ ∀[ (a , _) ∈ range txOutsʰ ]  netId a         ≡ NetworkId
+    ∙ ∀[ (a , _) ∈ range txOutsʰ ]  (netId a ≡ NetworkId × isProtected a ≡ false)
     ∙ ∀[ a ∈ dom txWithdrawals ]    NetworkIdOf a   ≡ NetworkId
     ∙ txNetworkId ~ just NetworkId
     ∙ currentTreasury ~ just treasury

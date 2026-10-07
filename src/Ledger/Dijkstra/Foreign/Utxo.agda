@@ -55,3 +55,8 @@ utxow-step : HsType (UTxOEnv → UTxOState → Tx TxLevelTop → ComputationResu
 utxow-step = to (compute Computational-UTXOW)
 
 {-# COMPILE GHC utxow-step as utxowStep #-}
+
+sub-utxow-step : HsType (SubUTxOEnv → UTxOState → Tx TxLevelSub → ComputationResult String UTxOState)
+sub-utxow-step = to (compute Computational-SUBUTXOW)
+
+{-# COMPILE GHC sub-utxow-step as subUtxowStep #-}

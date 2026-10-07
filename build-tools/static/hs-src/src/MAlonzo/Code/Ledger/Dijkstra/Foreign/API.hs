@@ -44,7 +44,7 @@ import MAlonzo.Code.Ledger.Dijkstra.Foreign.Ratify            as X
 import MAlonzo.Code.Ledger.Dijkstra.Foreign.Rewards           as X
   (RewardUpdate(..), Snapshot(..), Snapshots(..))
 import MAlonzo.Code.Ledger.Dijkstra.Foreign.Utxo              as X
-  ( UTxOEnv(..), UTxOState(..), UTxO, utxoStep, utxowStep)
+  ( UTxOEnv(..), SubUTxOEnv(..), UTxOState(..), UTxO, utxoStep, utxowStep, subUtxowStep)
 import MAlonzo.Code.Ledger.Dijkstra.Foreign.Script.Base      as X
   (HSLanguage(..))
 
