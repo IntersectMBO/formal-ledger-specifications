@@ -33210,10 +33210,7 @@ du_NEWEPOCH'45'total_4234 v0 v1 v2
                                                                           (coe
                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.du_HasPParams'45'EnactState_1372)
                                                                           (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_es_4218
-                                                                             (coe
-                                                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_applyRUpd_4494
-                                                                                (coe v0) (coe v8)
-                                                                                (coe v12))))
+                                                                             (coe v12)))
                                                                        (coe v1)
                                                                        (coe
                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_calculatePoolDelegatedStake_4550
@@ -33746,13 +33743,7 @@ du_NEWEPOCH'45'total_4234 v0 v1 v2
                                                                           (coe
                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.du_HasPParams'45'EnactState_1372)
                                                                           (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_es_4218
-                                                                             (coe
-                                                                                MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
-                                                                                (coe
-                                                                                   du_EPOCH'45'total''_4200
-                                                                                   (coe v0)
-                                                                                   (coe v11)
-                                                                                   (coe v1)))))
+                                                                             (coe v11)))
                                                                        (coe v1)
                                                                        (coe
                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_calculatePoolDelegatedStake_4550
