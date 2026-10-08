@@ -99,19 +99,19 @@ data ChainState = MkChainState {csNewEpochState :: MAlonzo.Code.Ledger.Dijkstra.
 d_EBCert_10 = ()
 -- Ledger.Dijkstra.Foreign.Chain._.EBCert.sig
 d_sig_16 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.T_EBCert_1640 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.T_EBCert_1648 ->
   Integer
 d_sig_16 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.d_sig_1648
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.d_sig_1656
       (coe v0)
 -- Ledger.Dijkstra.Foreign.Chain._.EBCert.signers
 d_signers_18 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.T_EBCert_1640 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.T_EBCert_1648 ->
   [Integer]
 d_signers_18 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.d_signers_1646
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.d_signers_1654
       (coe v0)
 -- Ledger.Dijkstra.Foreign.Chain._.EndorserBlock
 d_EndorserBlock_22 = ()
@@ -389,7 +389,7 @@ d_'8801''45'bBodySize_138 = erased
 -- Ledger.Dijkstra.Foreign.Chain._.CertifiedEB.cert
 d_cert_142 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.T_CertifiedEB_3090 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.T_EBCert_1640
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.T_EBCert_1648
 d_cert_142 v0
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_cert_3098
@@ -684,7 +684,7 @@ d_Conv'45'EBCert_172
       (coe
          (\ v0 ->
             case coe v0 of
-              MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.C_constructor_1650 v1 v2
+              MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.C_constructor_1658 v1 v2
                 -> coe
                      C_MkEBCert_6549
                      (coe
@@ -702,7 +702,7 @@ d_Conv'45'EBCert_172
             case coe v0 of
               C_MkEBCert_6549 v1 v2
                 -> coe
-                     MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.C_constructor_1650
+                     MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.C_constructor_1658
                      (coe
                         MAlonzo.Code.Axiom.Set.du_fromList_456
                         (coe
@@ -786,10 +786,10 @@ d_Conv'45'CertifiedEB_180
                               (coe
                                  MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                  (coe MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                              (MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.d_signers_1646
+                              (MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.d_signers_1654
                                  (coe v1))))
                         (coe
-                           MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.d_sig_1648
+                           MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.d_sig_1656
                            (coe v1)))
                      (coe
                         C_MkEndorserBlock_7285
@@ -826,7 +826,7 @@ d_Conv'45'CertifiedEB_180
                            (coe
                               (\ v4 ->
                                  case coe v4 of
-                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.C_constructor_1650 v5 v6
+                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.C_constructor_1658 v5 v6
                                      -> coe
                                           C_MkEBCert_6549
                                           (coe
@@ -845,7 +845,7 @@ d_Conv'45'CertifiedEB_180
                                  case coe v4 of
                                    C_MkEBCert_6549 v5 v6
                                      -> coe
-                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.C_constructor_1650
+                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.C_constructor_1658
                                           (coe
                                              MAlonzo.Code.Axiom.Set.du_fromList_456
                                              (coe

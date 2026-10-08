@@ -303,7 +303,7 @@ d_'8801''45'bBodySize_2750 = erased
 -- Ledger.Dijkstra.Specification.Chain._.CertifiedEB.cert
 d_cert_2754 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.T_CertifiedEB_3090 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.T_EBCert_1640
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.T_EBCert_1648
 d_cert_2754 v0
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_cert_3098
