@@ -55,9 +55,8 @@ record BHeader : Type where
 
 A certifying body carries, beside the certificate, the EB it certifies and that
 EB's *closure*: its referenced transactions, resolved and in reference order.
-The rules take the closure as an input and never ask whether data is available
-(the design note's [availability decision][dn-availability]), so it travels with
-the certificate.
+The rules take the closure as an input and never ask whether data is available,
+so it travels with the certificate.
 
 ```agda
 record CertifiedEB : Type where
@@ -114,8 +113,7 @@ leiosBodyChecks certified (just _)  txs  = certified ≡ true × txs ≡ []
 
 The bit is an input the rule checks, not a value computed from the body.  Header
 validation sees the bit but not the body, so a check it gates on the bit is sound
-only if the ledger verifies the bit ([alignment item 4][dn-alignment] of the
-design note).
+only if the ledger verifies the bit.
 
 <!--
 ```agda
@@ -177,5 +175,3 @@ data _⊢_⇀⦇_,BBODY⦈_
 [cip-rb]: https://github.com/cardano-foundation/CIPs/blob/master/CIP-0164/README.md#ranking-blocks-rbs
 [cip-inclusion]: https://github.com/cardano-foundation/CIPs/blob/master/CIP-0164/README.md#rb-inclusion-rules
 [cip-step5]: https://github.com/cardano-foundation/CIPs/blob/master/CIP-0164/README.md#step-5-chain-inclusion
-[dn-availability]: https://github.com/IntersectMBO/formal-ledger-specifications/blob/leios-docs/docs/leios/design-note.md#availability
-[dn-alignment]: https://github.com/IntersectMBO/formal-ledger-specifications/blob/leios-docs/docs/leios/design-note.md#alignment-with-the-consensus-specification
