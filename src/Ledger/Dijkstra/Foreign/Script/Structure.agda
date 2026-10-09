@@ -73,7 +73,7 @@ HSP2ScriptStructure = record {
   ; language = λ z → HSPlutusScript.psScriptLanguage z
   ; validPlutusScript = λ _ _ _ _ → extValidPlutusScript ≡ true
   ; PlutusScript = HSPlutusScript
-  ; _≥ᵉ_ = _≡_
+  ; _≥ᵉ_ = λ (memory , steps) (memory′ , steps′) → memory′ ≤ memory × steps′ ≤ steps
   }
   where
     open ExternalFunctions externalFunctions
@@ -82,6 +82,27 @@ HSP2ScriptStructure = record {
       Hashable-HSPlutusScript .hash = HSPlutusScript.psScriptHash
       _ = Conversion.fromBundle (commutativeMonoid +-0-commutativeMonoid +-0-commutativeMonoid)
       _ = Show-×
+
+private
+  open PlutusStructure HSP2ScriptStructure using (_≥ᵉ_; ≥ᵉ-Dec)
+
+  budget-below : ⌊ ¿ (2 , 3) ≥ᵉ (1 , 2) ¿ ⌋ ≡ true
+  budget-below = refl
+
+  budget-equal : ⌊ ¿ (2 , 3) ≥ᵉ (2 , 3) ¿ ⌋ ≡ true
+  budget-equal = refl
+
+  budget-memory-boundary : ⌊ ¿ (2 , 3) ≥ᵉ (2 , 2) ¿ ⌋ ≡ true
+  budget-memory-boundary = refl
+
+  budget-steps-boundary : ⌊ ¿ (2 , 3) ≥ᵉ (1 , 3) ¿ ⌋ ≡ true
+  budget-steps-boundary = refl
+
+  budget-memory-exceeded : ⌊ ¿ (2 , 3) ≥ᵉ (3 , 2) ¿ ⌋ ≡ false
+  budget-memory-exceeded = refl
+
+  budget-steps-exceeded : ⌊ ¿ (2 , 3) ≥ᵉ (1 , 4) ¿ ⌋ ≡ false
+  budget-steps-exceeded = refl
 
 HSScriptStructure : ScriptStructure
 HSScriptStructure = record
