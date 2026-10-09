@@ -111,8 +111,8 @@ instance
         : Dec H
         → ComputationResult String (∃[ s₁ ] Γ ⊢ tt ⇀⦇ txTop ,UTXOS⦈ s₁)
         → ComputationResult String (∃[ s₁ ] Γ ⊢ s₀ ⇀⦇ txTop ,UTXO⦈ s₁)
-      computeProof-aux d (failure x) = failure "UTXO" 
-      computeProof-aux (no ¬p) (success x) = failure "UTXO"
+      computeProof-aux d (failure x) = failure x
+      computeProof-aux (no ¬p) (success x) = failure (genErrors ¬p)
       computeProof-aux (yes (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , p₁₂ , p₁₃ , p₁₄ , p₁₅ , p₁₆ , p₁₇ )) (success h)
         = success (-, UTXO (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , p₁₂ , p₁₃ , p₁₄ , p₁₅ , p₁₆ , p₁₇ , proj₂ h))
 
