@@ -19,14 +19,13 @@ open import Test.LedgerImplementation SData SData
 open import Test.AbstractImplementation valContext
 open import Test.Lib valContext
 
-open import Ledger.Conway.Specification.Script.Validation SVTransactionStructure SVAbstractFunctions
 open import Ledger.Conway.Specification.Utxo SVTransactionStructure SVAbstractFunctions
 
-open TransactionStructure SVTransactionStructure
+open TransactionStructure SVTransactionStructure renaming (Datum to SCDatum) hiding (Redeemer)
 open Implementation
 
 
-makeAddSigTxOut : Label → (scriptIx w : ℕ) → TxOut → List (ℕ × TxOut)
+makeAddSigTxOut : Datum → (scriptIx w : ℕ) → TxOut → List (ℕ × TxOut)
 makeAddSigTxOut Holding ix w txo = []
 makeAddSigTxOut (Collecting vl pkh d sigs) ix w (fst , fst₁ , snd) =
   (ix , (fst , fst₁ ,  just (inj₁ (inj₁ (inj₁ (Collecting vl pkh d (insert' w sigs))))) , nothing)) ∷ []
@@ -56,7 +55,7 @@ makeAddSigTx id state script@(sh , _) w =
                 txAD = nothing }
                 ))
             nothing
-            (getLabel scOut)})
+            (getDatum scOut)})
           nothing
           (getScriptUTxO sh (UTxOState.utxo state))
 

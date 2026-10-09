@@ -21,14 +21,14 @@ open import Test.Lib valContext
 
 open import Ledger.Conway.Specification.Utxo SVTransactionStructure SVAbstractFunctions
 
-open TransactionStructure SVTransactionStructure
+open TransactionStructure SVTransactionStructure renaming (Datum to SCDatum) hiding (Redeemer)
 open Implementation
 
 import Data.Rational.Base as Q
 
 
 
-makeUpdateTxOut : Label → (scriptIx w : ℕ) → Value → Q.ℚ → TxOut → List (ℕ × TxOut)
+makeUpdateTxOut : Datum → (scriptIx w : ℕ) → Value → Q.ℚ → TxOut → List (ℕ × TxOut)
 makeUpdateTxOut (Always q o) ix w v r (fst , txValue , snd) =
   (ix , (fst , v ,  just (inj₁ (inj₁ (inj₁ (Always r o)))) , nothing)) ∷ [] 
 
@@ -50,14 +50,14 @@ makeUpdateTx id state script@(sh , _) w v r =
                                 scripts = Ledger.Prelude.fromList ((inj₂ script) ∷ []) ;
                                 txdats = ∅ ; 
                                 txrdmrs = fromListᵐ (((Spend , (proj₂ scIn)) ,
-                                                      inj₁ (inj₂ (Input.Update v r)) , 
+                                                      inj₁ (inj₂ (Redeemer.Update v r)) , 
                                                       ((getTxId wutxo) , w)) ∷ []) } ;
                 txsize = 10 ;
                 isValid = true ;
                 txAD = nothing }
                 ))
             nothing
-            (getLabel (fst , txValue , snd))})
+            (getDatum (fst , txValue , snd))})
           nothing
           (getScriptUTxO sh (UTxOState.utxo state))
 
