@@ -100,7 +100,7 @@ data _⊢_⇀⦇_,CHAIN⦈_ : ⊤ → ChainState → Block → ChainState → Ty
     let  cs' = record cs
                  { newEpochState = record nes
                                      {  bcur = bcur';
-                                        epochState = record epochState {ls = ls'}
+                                        epochState = record (EpochStateOf nes) {ls = ls'}
                                      }
                  }
     in
