@@ -15,7 +15,6 @@ module Ledger.Dijkstra.Specification.Enact.Properties.Computational
   (gs : _) (open GovStructure gs) where
 
 open import Ledger.Prelude
-open import Ledger.Core.Specification.ProtocolVersion using (ProtVer)
 open import Ledger.Dijkstra.Specification.Gov.Actions gs hiding (yes; no)
 open import Ledger.Dijkstra.Specification.Enact gs
 open EnactState
@@ -81,30 +80,3 @@ instance
     rewrite dec-yes (¿ ∑[ x ← s .withdrawals ∪⁺ wdrl ] x ≤ EnactEnv.treasury Γᵉ ¿) p .proj₂
     = refl
 ```
-
-<!--
-```agda
-private
-  -- Check the computed result, including both independently tracked action IDs.
-  module _ (Γ : EnactEnv) (s : EnactState) (v : ProtVer) where
-    hardFork = Computational.compute Computational-ENACT Γ s ⟦ TriggerHardFork , v ⟧ᵍᵃ
-
-    hardFork-versions :
-      (map (λ s′ → s′ .pv .proj₁ , PParams.pv (PParamsOf s′)) hardFork)
-        ≡ success (v , v)
-    hardFork-versions = refl
-
-    hardFork-actionIds :
-      (map (λ s′ → s′ .pv .proj₂ , s′ .pparams .proj₂) hardFork)
-        ≡ success (EnactEnv.gid Γ , s .pparams .proj₂)
-    hardFork-actionIds = refl
-
-    hardFork-otherParams :
-      (map (λ s′ → record (PParamsOf s′) { pv = PParams.pv (PParamsOf s) }) hardFork)
-        ≡ success (PParamsOf s)
-    hardFork-otherParams = refl
-
-    info-unchanged : Computational.compute Computational-ENACT Γ s ⟦ Info , tt ⟧ᵍᵃ ≡ success s
-    info-unchanged = refl
-```
--->
