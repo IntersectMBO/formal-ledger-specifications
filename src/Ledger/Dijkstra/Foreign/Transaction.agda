@@ -40,14 +40,21 @@ instance
   Conv-TxWitnesses = autoConvert TxWitnesses
 
 instance
-  HsTy-DepositStoreChange = autoHsType DepositStoreChange
-  Conv-DepositStoreChange = autoConvert DepositStoreChange
+  HsTy-TopTxReleaseSettlement = autoHsType TopTxReleaseSettlement
+  Conv-TopTxReleaseSettlement = autoConvert TopTxReleaseSettlement
 
-  HsTy-SubTxWithdrawalTarget = autoHsType SubTxWithdrawalTarget
-  Conv-SubTxWithdrawalTarget = autoConvert SubTxWithdrawalTarget
+  HsTy-SubTxReleaseTarget = autoHsType SubTxReleaseTarget
+  Conv-SubTxReleaseTarget = autoConvert SubTxReleaseTarget
 
-  HsTy-DepositStoreSubTxChange = autoHsType DepositStoreSubTxChange
-  Conv-DepositStoreSubTxChange = autoConvert DepositStoreSubTxChange
+  -- The top- and sub-level declarations share constructor names in Agda;
+  -- qualify them, as the Haskell prototype does with its TopTx/SubTx modules.
+  HsTy-TopTxNetUTxODepositChange = autoHsType TopTxNetUTxODepositChange
+                                     ⊣ onConstructors ("TopTx" S.++_)
+  Conv-TopTxNetUTxODepositChange = autoConvert TopTxNetUTxODepositChange
+
+  HsTy-SubTxNetUTxODepositChange = autoHsType SubTxNetUTxODepositChange
+                                     ⊣ onConstructors ("SubTx" S.++_)
+  Conv-SubTxNetUTxODepositChange = autoConvert SubTxNetUTxODepositChange
 
 unquoteDecl = do
   hsTypeAlias Redeemer
@@ -75,7 +82,7 @@ record TxBodySub : Type where
     txDirectDeposits          : DirectDeposits
     txBalanceIntervals        : AccountBalanceIntervals
     txStoreBackedOutputs      : ℙ Ix
-    txDepositStoreChange      : Maybe DepositStoreSubTxChange
+    txNetUTxODepositChange    : SubTxUTxODepositDeclaration
 
 instance
   convTxBodySub : Convertible (TxBody TxLevelSub) TxBodySub
@@ -150,7 +157,7 @@ record TxBodyTop : Type where
     txBalanceIntervals       : AccountBalanceIntervals
     txStartingBalanceIntervals : AccountBalanceIntervals
     txStoreBackedOutputs       : ℙ Ix
-    txDepositStoreChange       : Maybe DepositStoreChange
+    txNetUTxODepositChange     : TopTxUTxODepositDeclaration
 
 instance
   convTxBodyTop : Convertible (TxBody TxLevelTop) TxBodyTop

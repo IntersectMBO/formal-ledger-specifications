@@ -38,6 +38,7 @@ import Data.List.Relation.Unary.AllPairs as List
 
 open import Tactic.Derive.DecEq
 open import Relation.Nullary.Decidable using (⌊_⌋)
+open import Ledger.Prelude.Numeric using (ℕ⁺)
 ```
 -->
 
@@ -186,26 +187,44 @@ record TransactionStructure : Type₁ where
   UTxO : Type
   UTxO = TxIn ⇀ TxOut
 
-  -- The backing assigned to each live store-backed output when it was created,
-  -- keyed by the output's TxIn.  The amount is never recomputed: it is exactly
-  -- what is released when the output is spent, whatever the protocol
-  -- parameters are by then.
-  StoreBacking : Type
-  StoreBacking = TxIn ⇀ Coin
+  -- The UTxO capacity deposit allocated to each live store-backed output when
+  -- it was created, keyed by the output's TxIn.  The amount is never
+  -- recomputed: it is exactly what is released when the output is spent.
+  UTxODepositRecords : Type
+  UTxODepositRecords = TxIn ⇀ Coin
 
-  -- Deposit-store operations (see `txDepositStoreChange` below).
-  data DepositStoreChange : Type where
-    DepositToStore     : Coin → DepositStoreChange
-    WithdrawFromStore  : Coin → Ix → DepositStoreChange
+  -- Declared amounts are strictly positive; zero has its own declaration.
+  PositiveCoin : Type
+  PositiveCoin = ℕ⁺
 
-  data SubTxWithdrawalTarget : Type where
-    SubTxOutput      : Ix → SubTxWithdrawalTarget
-    DelegateToTopTx  : SubTxWithdrawalTarget
+  -- Where the top-level transaction's own share of a net release is settled.
+  data TopTxReleaseSettlement : Type where
+    NoTopTxSettlement      : TopTxReleaseSettlement
+    TopTxSettlementOutput  : Ix → TopTxReleaseSettlement
 
-  data DepositStoreSubTxChange : Type where
-    SubTxDepositToStore           : Coin → DepositStoreSubTxChange
-    SubTxRequestDepositFromTopTx  : Coin → DepositStoreSubTxChange
-    SubTxWithdrawFromStore        : Coin → SubTxWithdrawalTarget → DepositStoreSubTxChange
+  -- Where a subtransaction's net release is settled.
+  data SubTxReleaseTarget : Type where
+    SubTxSettlementOutput  : Ix → SubTxReleaseTarget
+    DelegateToTopTx        : SubTxReleaseTarget
+
+  data TopTxNetUTxODepositChange : Type where
+    DeclaresNetUTxODepositAllocation  : PositiveCoin → TopTxNetUTxODepositChange
+    DeclaresNetUTxODepositRelease     : PositiveCoin → TopTxReleaseSettlement → TopTxNetUTxODepositChange
+    DeclaresZeroNetUTxODeposit        : TopTxNetUTxODepositChange
+
+  data SubTxNetUTxODepositChange : Type where
+    DeclaresNetUTxODepositAllocation  : PositiveCoin → SubTxNetUTxODepositChange
+    RequestsUTxODepositFromTopTx      : PositiveCoin → SubTxNetUTxODepositChange
+    DeclaresNetUTxODepositRelease     : PositiveCoin → SubTxReleaseTarget → SubTxNetUTxODepositChange
+    DeclaresZeroNetUTxODeposit        : SubTxNetUTxODepositChange
+
+  -- `nothing` is the absence of a declaration (`NoUTxODepositDeclaration`),
+  -- which is distinct from an explicit zero.
+  TopTxUTxODepositDeclaration : Type
+  TopTxUTxODepositDeclaration = Maybe TopTxNetUTxODepositChange
+
+  SubTxUTxODepositDeclaration : Type
+  SubTxUTxODepositDeclaration = Maybe SubTxNetUTxODepositChange
 
   RedeemerPtr : Type
   RedeemerPtr = Tag × Ix
@@ -266,29 +285,29 @@ Of particular note in the Dijkstra era are
 
 +  `txStoreBackedOutputs`{.AgdaField}: present at both transaction levels, this
    field marks which outputs are *store-backed*: they hold only application assets,
-   and the ada backing their place in the UTxO is held in the ledger's deposit store.
-   All other outputs are *implicit-deposit* outputs, which carry their own minimum
-   ada as before.  (The Haskell prototype distinguishes the two by the output's own
-   encoding; marking them in the body is equivalent for the rules below.)
+   and the UTxO capacity deposit for their place in the UTxO is held in the ledger's
+   DepositStore.  All other outputs are *implicit-deposit* outputs, which carry their
+   own minimum ada as before.  (The Haskell prototype distinguishes the two by the
+   output's own encoding; marking them in the body is equivalent for the rules.)
 
-+  `txDepositStoreChange`{.AgdaField}: present at both transaction levels, with a
-   different type at each.  It *declares* how this transaction changes the deposit
-   store, as a single net amount; the ledger checks it against the amount it
-   computes, so the declaration carries no freedom.
++  `txNetUTxODepositChange`{.AgdaField}: present at both transaction levels, with a
+   different type at each.  It *declares* a net change in UTxO capacity deposits;
+   the ledger checks it against the amount it computes, so it carries no freedom.
+   An absent declaration is distinct from an explicit zero, and every nonzero amount
+   is strictly positive, its sign given by the constructor.
 
    +  A top-level transaction declares the net change of the *whole batch*: its own
-      contribution and that of every subtransaction, each counted once.  It is
-      `DepositToStore`{.AgdaInductiveConstructor} if the batch adds backing,
-      `WithdrawFromStore`{.AgdaInductiveConstructor} if it releases backing, and
-      absent if the net change is zero.  A withdrawal names one of the
-      transaction's own outputs, whose coin already includes the withdrawn amount.
+      contribution and that of every subtransaction, each counted once.  It is a
+      net allocation, a net release, or an explicit zero.  A net release also says
+      whether the top-level transaction's own share of it is settled in one of its
+      outputs (`TopTxSettlementOutput`{.AgdaInductiveConstructor}).
 
-   +  A subtransaction declares its own net change: a deposit it funds
-      (`SubTxDepositToStore`{.AgdaInductiveConstructor}), a deposit it asks the
-      top-level transaction to fund (`SubTxRequestDepositFromTopTx`{.AgdaInductiveConstructor}),
-      or a withdrawal (`SubTxWithdrawFromStore`{.AgdaInductiveConstructor}), settled
-      either in one of its own outputs or by the top-level transaction.  Absence
-      means the subtransaction's backing does not change.
+   +  A subtransaction declares its own contribution: a net allocation it accounts
+      for itself (`DeclaresNetUTxODepositAllocation`{.AgdaInductiveConstructor}), a
+      net allocation whose funding it delegates to the top-level transaction
+      (`RequestsUTxODepositFromTopTx`{.AgdaInductiveConstructor}), a net release
+      settled in one of its own outputs or delegated to the top-level transaction,
+      or an explicit zero.
 
 ```agda
   mutual
@@ -330,8 +349,8 @@ Of particular note in the Dijkstra era are
         txBalanceIntervals         : AccountBalanceIntervals
         txStartingBalanceIntervals : InTopLevel txLevel AccountBalanceIntervals
         txStoreBackedOutputs       : ℙ Ix
-        txDepositStoreChange       : InLevel txLevel (Maybe DepositStoreChange)
-                                                     (Maybe DepositStoreSubTxChange)
+        txNetUTxODepositChange     : InLevel txLevel TopTxUTxODepositDeclaration
+                                                     SubTxUTxODepositDeclaration
         ---------------------
 
       requiredSignerHashes : ℙ KeyHash
@@ -490,11 +509,11 @@ could be either of them.
     field StoreBackedOutputsOf : A → ℙ Ix
   open HasStoreBackedOutputs ⦃...⦄ public
 
-  TopStoreChangeOf : TopLevelTx → Maybe DepositStoreChange
-  TopStoreChangeOf = TxBody.txDepositStoreChange ∘ Tx.txBody
+  TopTxDeclarationOf : TopLevelTx → TopTxUTxODepositDeclaration
+  TopTxDeclarationOf = TxBody.txNetUTxODepositChange ∘ Tx.txBody
 
-  SubStoreChangeOf : SubLevelTx → Maybe DepositStoreSubTxChange
-  SubStoreChangeOf = TxBody.txDepositStoreChange ∘ Tx.txBody
+  SubTxDeclarationOf : SubLevelTx → SubTxUTxODepositDeclaration
+  SubTxDeclarationOf = TxBody.txNetUTxODepositChange ∘ Tx.txBody
 
   instance
     HasTxBody-Tx : HasTxBody (Tx txLevel)

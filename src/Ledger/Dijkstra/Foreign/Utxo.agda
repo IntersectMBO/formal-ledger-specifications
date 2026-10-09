@@ -45,7 +45,7 @@ instance
 
 unquoteDecl = do
   hsTypeAlias UTxO
-  hsTypeAlias StoreBacking
+  hsTypeAlias UTxODepositRecords
   
 utxo-step : HsType (UTxOEnv → UTxOState → Tx TxLevelTop → ComputationResult String UTxOState)
 utxo-step = to (compute Computational-UTXO)

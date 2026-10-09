@@ -3,19 +3,22 @@ source_branch: master
 source_path: src/Ledger/Dijkstra/Specification/Utxo/Properties/DepositStore.lagda.md
 ---
 
-# Properties of the Deposit Store: Single Steps {#sec:properties-of-the-deposit-store-steps}
+# Properties of the DepositStore: Single Steps {#sec:properties-of-the-depositstore-steps}
 
 This module derives, from the `SUBUTXO`{.AgdaDatatype} and `UTXO`{.AgdaDatatype}
-rules, how a single step changes the deposit store and the recorded backing.
+rules, how a single step changes the DepositStore balance and the total of the UTxO
+capacity deposit records.
 
-+  A valid subtransaction leaves the store unchanged, and changes the total
-   recorded backing by exactly its declared deposit minus its declared withdrawal
-   (`SUBUTXO-backing`{.AgdaFunction}).
-+  A valid top-level transaction changes the store by exactly its declared batch
-   deposit minus its declared batch withdrawal (`UTXO-store`{.AgdaFunction}), and
-   changes the total recorded backing by the backing it creates minus the backing
-   its own inputs release (`UTXO-backing`{.AgdaFunction}).
-+  Invalid steps change neither.
++  A valid subtransaction leaves the store balance unchanged, and changes the total
+   of the records by exactly its declared net allocation minus its declared net
+   release (`SUBUTXO-records`{.AgdaFunction}).
++  A valid top-level transaction changes the store balance by exactly the batch's
+   declared net change (`UTXO-store`{.AgdaFunction}), and the total of the records
+   by the deposits it allocates minus those its own inputs release
+   (`UTXO-records`{.AgdaFunction}).
++  A failed batch releases the deposits of its store-backed collateral: the store
+   balance and the total of the records both fall by that amount
+   (`UTXO-invalid`{.AgdaFunction}).
 
 These are composed over a whole batch in `Ledger.Properties.DepositStore`{.AgdaModule}.
 
@@ -48,10 +51,10 @@ open ≡-Reasoning
 
 ```agda
 module Steps
-  ( totalBacking-∪ˡ : {m m' : StoreBacking} → disjoint (dom m) (dom m')
-      → totalBacking (m ∪ˡ m') ≡ totalBacking m + totalBacking m' )
-  ( totalBacking-split : (m : StoreBacking) (keys : ℙ TxIn)
-      → totalBacking m ≡ totalBacking (m ∣ keys ᶜ) + totalBacking (m ∣ keys) )
+  ( totalUTxODeposits-∪ˡ : {m m' : UTxODepositRecords} → disjoint (dom m) (dom m')
+      → totalUTxODeposits (m ∪ˡ m') ≡ totalUTxODeposits m + totalUTxODeposits m' )
+  ( totalUTxODeposits-split : (m : UTxODepositRecords) (keys : ℙ TxIn)
+      → totalUTxODeposits m ≡ totalUTxODeposits (m ∣ keys ᶜ) + totalUTxODeposits (m ∣ keys) )
   where
 ```
 
@@ -76,43 +79,43 @@ module Steps
     swap-right : ∀ a b c → a +ᴺ b +ᴺ c ≡ a +ᴺ c +ᴺ b
     swap-right = solve-∀
 
-    -- From `B₀ + C ≡ B₁ + R` (the step) and `C + W ≡ R + D` (the declaration),
-    -- conclude `B₀ + D ≡ B₁ + W` by cancelling `R`.
-    net-step : ∀ B₀ B₁ C R D W → B₀ + C ≡ B₁ + R → C + W ≡ R + D → B₀ + D ≡ B₁ + W
-    net-step B₀ B₁ C R D W step decl = +-cancelʳ-≡ R (B₀ + D) (B₁ + W) $ begin
-      B₀ + D + R      ≡⟨ r₁ B₀ D R ⟩
-      B₀ + (R + D)    ≡˘⟨ cong (B₀ +_) decl ⟩
-      B₀ + (C + W)    ≡⟨ r₂ B₀ C W ⟩
-      B₀ + C + W      ≡⟨ cong (_+ W) step ⟩
-      B₁ + R + W      ≡⟨ swap-right B₁ R W ⟩
-      B₁ + W + R      ∎
+    -- From `T₀ + A ≡ T₁ + R` (the step) and `A + DR ≡ R + DA` (the declaration),
+    -- conclude `T₀ + DA ≡ T₁ + DR` by cancelling `R`.
+    net-step : ∀ T₀ T₁ A R DA DR → T₀ + A ≡ T₁ + R → A + DR ≡ R + DA → T₀ + DA ≡ T₁ + DR
+    net-step T₀ T₁ A R DA DR step decl = +-cancelʳ-≡ R (T₀ + DA) (T₁ + DR) $ begin
+      T₀ + DA + R      ≡⟨ r₁ T₀ DA R ⟩
+      T₀ + (R + DA)    ≡˘⟨ cong (T₀ +_) decl ⟩
+      T₀ + (A + DR)    ≡⟨ r₂ T₀ A DR ⟩
+      T₀ + A + DR      ≡⟨ cong (_+ DR) step ⟩
+      T₁ + R + DR      ≡⟨ swap-right T₁ R DR ⟩
+      T₁ + DR + R      ∎
       where
         r₁ : ∀ a b c → a +ᴺ b +ᴺ c ≡ a +ᴺ (c +ᴺ b)
         r₁ = solve-∀
         r₂ : ∀ a b c → a +ᴺ (b +ᴺ c) ≡ a +ᴺ b +ᴺ c
         r₂ = solve-∀
 
-  -- The common step: applying a transaction's backing to `bk` adds the backing it
-  -- creates and removes the backing its inputs release, given freshness of the
-  -- new entries.
-  backing-step : (pp : PParams) {ℓ : TxLevel} (tx : Tx ℓ) (bk : StoreBacking)
-    → disjoint (dom (bk ∣ SpendInputsOf tx ᶜ)) (dom (newBacking pp tx))
-    → totalBacking bk + createdBacking pp tx
-      ≡ totalBacking (applyBacking pp tx bk) + releasedBacking bk tx
-  backing-step pp tx bk disj = begin
-    totalBacking bk + totalBacking new
-      ≡⟨ cong (_+ totalBacking new) (totalBacking-split bk (SpendInputsOf tx)) ⟩
-    totalBacking kept + totalBacking spent + totalBacking new
-      ≡⟨ swap-right (totalBacking kept) (totalBacking spent) (totalBacking new) ⟩
-    totalBacking kept + totalBacking new + totalBacking spent
-      ≡˘⟨ cong (_+ totalBacking spent) (totalBacking-∪ˡ {kept} {new} disj) ⟩
-    totalBacking (kept ∪ˡ new) + totalBacking spent
+  -- The common step: applying a transaction's records to `recs` adds the deposits
+  -- it allocates and removes those its inputs release, given freshness of the new
+  -- records.
+  records-step : (pp : PParams) {ℓ : TxLevel} (tx : Tx ℓ) (recs : UTxODepositRecords)
+    → disjoint (dom (recs ∣ SpendInputsOf tx ᶜ)) (dom (newUTxODepositRecords pp tx))
+    → totalUTxODeposits recs + allocatedUTxODeposits pp tx
+      ≡ totalUTxODeposits (applyUTxODepositRecords pp tx recs) + releasedUTxODeposits recs tx
+  records-step pp tx recs disj = begin
+    totalUTxODeposits recs + totalUTxODeposits new
+      ≡⟨ cong (_+ totalUTxODeposits new) (totalUTxODeposits-split recs (SpendInputsOf tx)) ⟩
+    totalUTxODeposits kept + totalUTxODeposits spent + totalUTxODeposits new
+      ≡⟨ swap-right (totalUTxODeposits kept) (totalUTxODeposits spent) (totalUTxODeposits new) ⟩
+    totalUTxODeposits kept + totalUTxODeposits new + totalUTxODeposits spent
+      ≡˘⟨ cong (_+ totalUTxODeposits spent) (totalUTxODeposits-∪ˡ {kept} {new} disj) ⟩
+    totalUTxODeposits (kept ∪ˡ new) + totalUTxODeposits spent
       ∎
     where
-      kept spent new : StoreBacking
-      kept  = bk ∣ SpendInputsOf tx ᶜ
-      spent = bk ∣ SpendInputsOf tx
-      new   = newBacking pp tx
+      kept spent new : UTxODepositRecords
+      kept  = recs ∣ SpendInputsOf tx ᶜ
+      spent = recs ∣ SpendInputsOf tx
+      new   = newUTxODepositRecords pp tx
 ```
 -->
 
@@ -121,37 +124,32 @@ module Steps
 ```agda
   SUBUTXO-store : {Γ : SubUTxOEnv} {s₀ s₁ : UTxOState} {stx : SubLevelTx}
     → Γ ⊢ s₀ ⇀⦇ stx ,SUBUTXO⦈ s₁
-    → DepositStoreOf s₁ ≡ DepositStoreOf s₀
+    → StoreBalanceOf s₁ ≡ StoreBalanceOf s₀
 
-  SUBUTXO-backing : {Γ : SubUTxOEnv} {s₀ s₁ : UTxOState} {stx : SubLevelTx}
+  SUBUTXO-records : {Γ : SubUTxOEnv} {s₀ s₁ : UTxOState} {stx : SubLevelTx}
     → IsTopLevelValidFlagOf Γ ≡ true
-    → disjoint (dom (StoreBackingOf s₀ ∣ SpendInputsOf stx ᶜ))
-               (dom (newBacking (PParamsOf Γ) stx))
+    → disjoint (dom (UTxODepositRecordsOf s₀ ∣ SpendInputsOf stx ᶜ))
+               (dom (newUTxODepositRecords (PParamsOf Γ) stx))
     → Γ ⊢ s₀ ⇀⦇ stx ,SUBUTXO⦈ s₁
-    → totalBacking (StoreBackingOf s₀) + subStoreDeposit stx
-      ≡ totalBacking (StoreBackingOf s₁) + subStoreWithdrawal stx
-
-  SUBUTXO-backing-invalid : {Γ : SubUTxOEnv} {s₀ s₁ : UTxOState} {stx : SubLevelTx}
-    → IsTopLevelValidFlagOf Γ ≡ false
-    → Γ ⊢ s₀ ⇀⦇ stx ,SUBUTXO⦈ s₁
-    → StoreBackingOf s₁ ≡ StoreBackingOf s₀
+    → totalUTxODeposits (UTxODepositRecordsOf s₀) + subTxNetAllocation stx
+      ≡ totalUTxODeposits (UTxODepositRecordsOf s₁) + subTxNetRelease stx
 ```
 
 <!--
 ```agda
-  SUBUTXO-store {Γ} (SUBUTXO _) = if-same DepositStoreOf (IsTopLevelValidFlagOf Γ) refl refl
+  SUBUTXO-store {Γ} (SUBUTXO _) = if-same StoreBalanceOf (IsTopLevelValidFlagOf Γ) refl refl
 
-  SUBUTXO-backing {Γ} {s₀} {s₁} {stx} isV disj (SUBUTXO (_ , _ , _ , _ , _ , _ , (_ , decl , _) , _)) =
-    net-step (totalBacking (StoreBackingOf s₀)) (totalBacking (StoreBackingOf s₁))
-             (createdBacking pp stx) (releasedBacking (StoreBackingOf s₀) stx)
-             (subStoreDeposit stx) (subStoreWithdrawal stx)
-             (trans (backing-step pp stx (StoreBackingOf s₀) disj)
-                    (cong (λ b → totalBacking b + releasedBacking (StoreBackingOf s₀) stx)
-                          (sym (if-true StoreBackingOf (IsTopLevelValidFlagOf Γ) isV))))
+  SUBUTXO-records {Γ} {s₀} {s₁} {stx} isV disj (SUBUTXO (_ , _ , _ , _ , _ , _ , (_ , _ , decl , _) , _)) =
+    net-step (totalUTxODeposits recs₀) (totalUTxODeposits (UTxODepositRecordsOf s₁))
+             (allocatedUTxODeposits pp stx) (releasedUTxODeposits recs₀ stx)
+             (subTxNetAllocation stx) (subTxNetRelease stx)
+             (trans (records-step pp stx recs₀ disj)
+                    (cong (λ r → totalUTxODeposits r + releasedUTxODeposits recs₀ stx)
+                          (sym (if-true UTxODepositRecordsOf (IsTopLevelValidFlagOf Γ) isV))))
              decl
-    where pp = PParamsOf Γ
-
-  SUBUTXO-backing-invalid {Γ} isI (SUBUTXO _) = if-false StoreBackingOf (IsTopLevelValidFlagOf Γ) isI
+    where
+      pp   = PParamsOf Γ
+      recs₀ = UTxODepositRecordsOf s₀
 ```
 -->
 
@@ -161,48 +159,59 @@ module Steps
   UTXO-store : {Γ : UTxOEnv} {s₀ s₁ : UTxOState} {tx : TopLevelTx}
     → IsValidFlagOf tx ≡ true
     → Γ ⊢ s₀ ⇀⦇ tx ,UTXO⦈ s₁
-    → DepositStoreOf s₁ + topStoreWithdrawal tx ≡ DepositStoreOf s₀ + topStoreDeposit tx
+    → StoreBalanceOf s₁ + txTotalNetRelease tx ≡ StoreBalanceOf s₀ + txTotalNetAllocation tx
 
-  UTXO-backing : {Γ : UTxOEnv} {s₀ s₁ : UTxOState} {tx : TopLevelTx}
+  UTXO-records : {Γ : UTxOEnv} {s₀ s₁ : UTxOState} {tx : TopLevelTx}
     → IsValidFlagOf tx ≡ true
-    → disjoint (dom (StoreBackingOf s₀ ∣ SpendInputsOf tx ᶜ))
-               (dom (newBacking (PParamsOf Γ) tx))
+    → disjoint (dom (UTxODepositRecordsOf s₀ ∣ SpendInputsOf tx ᶜ))
+               (dom (newUTxODepositRecords (PParamsOf Γ) tx))
     → Γ ⊢ s₀ ⇀⦇ tx ,UTXO⦈ s₁
-    → totalBacking (StoreBackingOf s₀) + createdBacking (PParamsOf Γ) tx
-      ≡ totalBacking (StoreBackingOf s₁) + releasedBacking (StoreBackingOf s₀) tx
+    → totalUTxODeposits (UTxODepositRecordsOf s₀) + allocatedUTxODeposits (PParamsOf Γ) tx
+      ≡ totalUTxODeposits (UTxODepositRecordsOf s₁) + releasedUTxODeposits (UTxODepositRecordsOf s₀) tx
 
-  -- Premise (2) of `TopStoreOK`: the reconciliation of the batch's declared net.
+  -- Check (4) of `TopTxUTxODepositOK`: the reconciliation of the batch's declared
+  -- net change with the subtransactions' contributions.
   UTXO-reconcile : {Γ : UTxOEnv} {s₀ s₁ : UTxOState} {tx : TopLevelTx}
     → Γ ⊢ s₀ ⇀⦇ tx ,UTXO⦈ s₁
-    → createdBacking (PParamsOf Γ) tx + topStoreWithdrawal tx + subsStoreDeposit tx
-      ≡ releasedBacking (StoreBackingOf s₀) tx + topStoreDeposit tx + subsStoreWithdrawal tx
+    → allocatedUTxODeposits (PParamsOf Γ) tx + txTotalNetRelease tx + subTxsNetAllocation tx
+      ≡ releasedUTxODeposits (UTxODepositRecordsOf s₀) tx + txTotalNetAllocation tx + subTxsNetRelease tx
 ```
 
-A failed batch applies only its collateral, which carries no recorded backing
-(premise (5) of `UTXO`{.AgdaDatatype}), so the store and the recorded backing are
-unchanged.
+On a failed batch, only the collateral is applied: the deposits of store-backed
+collateral inputs are released from the store to the fee pot, and their records
+removed (DS-COLL-002, DS-COLL-004).
 
 ```agda
   UTXO-invalid : {Γ : UTxOEnv} {s₀ s₁ : UTxOState} {tx : TopLevelTx}
     → IsValidFlagOf tx ≡ false
     → Γ ⊢ s₀ ⇀⦇ tx ,UTXO⦈ s₁
-    → DepositStoreOf s₁ ≡ DepositStoreOf s₀ × StoreBackingOf s₁ ≡ StoreBackingOf s₀
+    → let released = collateralReleasedUTxODeposits (UTxODepositRecordsOf s₀) tx in
+      StoreBalanceOf s₁ + released ≡ StoreBalanceOf s₀
+      × totalUTxODeposits (UTxODepositRecordsOf s₁) + released
+        ≡ totalUTxODeposits (UTxODepositRecordsOf s₀)
 ```
 
 <!--
 ```agda
-  UTXO-store {s₀ = s₀} {tx = tx} isV (UTXO-⋯ _ _ _ _ _ _ _ _ _ _ _ _ (_ , _ , _ , solvent) _ _ _ _ _ _ _ _ _) =
-    trans (cong (_+ topStoreWithdrawal tx) (if-true DepositStoreOf (IsValidFlagOf tx) isV))
-          (m∸n+n≡m solvent)
+  UTXO-store {tx = tx} isV (UTXO-⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ solvent _ _ _ _ _ _ _ _) =
+    trans (cong (_+ txTotalNetRelease tx) (if-true StoreBalanceOf (IsValidFlagOf tx) isV))
+          (m∸n+n≡m (solvent isV))
 
-  UTXO-backing {Γ} {s₀} {s₁} {tx} isV disj (UTXO-⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _) =
-    trans (backing-step (PParamsOf Γ) tx (StoreBackingOf s₀) disj)
-          (cong (λ b → totalBacking b + releasedBacking (StoreBackingOf s₀) tx)
-                (sym (if-true StoreBackingOf (IsValidFlagOf tx) isV)))
+  UTXO-records {Γ} {s₀} {s₁} {tx} isV disj (UTXO-⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _) =
+    trans (records-step (PParamsOf Γ) tx (UTxODepositRecordsOf s₀) disj)
+          (cong (λ r → totalUTxODeposits r + releasedUTxODeposits (UTxODepositRecordsOf s₀) tx)
+                (sym (if-true UTxODepositRecordsOf (IsValidFlagOf tx) isV)))
 
-  UTXO-reconcile (UTXO-⋯ _ _ _ _ _ _ _ _ _ _ _ _ (_ , reconcile , _ , _) _ _ _ _ _ _ _ _ _) = reconcile
+  UTXO-reconcile (UTXO-⋯ _ _ _ _ _ _ _ _ _ _ _ _ (_ , _ , _ , reconcile , _) _ _ _ _ _ _ _ _ _) = reconcile
 
-  UTXO-invalid {tx = tx} isI (UTXO-⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _) =
-    if-false DepositStoreOf (IsValidFlagOf tx) isI , if-false StoreBackingOf (IsValidFlagOf tx) isI
+  UTXO-invalid {s₀ = s₀} {tx = tx} isI (UTXO-⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ solvent _ _ _ _ _ _ _) =
+      trans (cong (_+ released) (if-false StoreBalanceOf (IsValidFlagOf tx) isI))
+            (m∸n+n≡m (solvent isI))
+    , trans (cong (λ r → totalUTxODeposits r + released)
+                  (if-false UTxODepositRecordsOf (IsValidFlagOf tx) isI))
+            (sym (totalUTxODeposits-split recs₀ (CollateralInputsOf tx)))
+    where
+      recs₀    = UTxODepositRecordsOf s₀
+      released = collateralReleasedUTxODeposits recs₀ tx
 ```
 -->

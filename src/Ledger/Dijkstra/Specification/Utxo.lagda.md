@@ -42,9 +42,11 @@ open import Ledger.Dijkstra.Specification.Script.Validation txs abs
 open import Ledger.Dijkstra.Specification.Fees using (scriptsCost)
 
 open import Data.Maybe using (fromMaybe)
+open import Ledger.Prelude.Numeric using (fromℕ⁺)
 import Data.List.Relation.Unary.All as List
 import Data.List.Relation.Unary.AllPairs as List
 import Data.List.Relation.Unary.Any as List
+import Data.Maybe.Relation.Unary.All as MaybeAll
 import Data.Sum.Relation.Unary.All as Sum
 
 open RewardAddress
@@ -116,26 +118,29 @@ If `Γ`{.AgdaBound} denotes a particular `UTxOEnv`{.AgdaRecord}, then
 we often access the `allScripts`{.AgdaField} field of `Γ`{.AgdaBound}
 via `ScriptPoolOf`{.AgdaField} `Γ`{.AgdaBound}.
 
-The state has two new components:
+The state has two new components (DS-STORE-001, DS-STORE-005):
 
-+  `depositStore`{.AgdaField}: the *deposit store*, the ledger pot holding the ada
-   that backs store-backed outputs;
-+  `storeBacking`{.AgdaField}: the exact backing assigned to each live store-backed
-   output when it was created, keyed by its `TxIn`{.AgdaFunction}.
++  `storeBalance`{.AgdaField}: the ada actually held in the *DepositStore*, the
+   ledger pot holding the UTxO capacity deposits of store-backed outputs;
++  `utxoDepositRecords`{.AgdaField}: the UTxO capacity deposit allocated to each live
+   store-backed output when it was created, keyed by its `TxIn`{.AgdaFunction}.
 
-The store should hold exactly what it owes, that is, `depositStore`{.AgdaField}
-should equal the sum of `storeBacking`{.AgdaField}.  This invariant is preserved
-by the `LEDGER`{.AgdaDatatype} rule (see `Ledger.Properties.DepositStore`{.AgdaModule}).
+The records are an obligation, not a second pot: their total is what the store
+must cover.  The store is *solvent* when its balance is at least that total; the
+`LEDGER`{.AgdaDatatype} rule preserves the margin between the two (see
+`Ledger.Properties.DepositStore`{.AgdaModule}).  Both start at zero at the
+transition from Conway, where every existing output is an implicit-deposit output
+(DS-STORE-004).
 
 ```agda
 record UTxOState : Type where
   constructor ⟦_,_,_,_,_⟧ᵘ
   field
-    utxo          : UTxO
-    fees          : Fees
-    donations     : Donations
-    depositStore  : Coin
-    storeBacking  : StoreBacking
+    utxo                : UTxO
+    fees                : Fees
+    donations           : Donations
+    storeBalance        : Coin
+    utxoDepositRecords  : UTxODepositRecords
 ```
 
 <!--
@@ -148,13 +153,13 @@ record HasIsTopLevelValidFlag {a} (A : Type a) : Type a where
   field IsTopLevelValidFlagOf : A → Bool
 open HasIsTopLevelValidFlag ⦃...⦄ public
 
-record HasDepositStore {a} (A : Type a) : Type a where
-  field DepositStoreOf : A → Coin
-open HasDepositStore ⦃...⦄ public
+record HasStoreBalance {a} (A : Type a) : Type a where
+  field StoreBalanceOf : A → Coin
+open HasStoreBalance ⦃...⦄ public
 
-record HasStoreBacking {a} (A : Type a) : Type a where
-  field StoreBackingOf : A → StoreBacking
-open HasStoreBacking ⦃...⦄ public
+record HasUTxODepositRecords {a} (A : Type a) : Type a where
+  field UTxODepositRecordsOf : A → UTxODepositRecords
+open HasUTxODepositRecords ⦃...⦄ public
 
 record HasLegacyMode {a} (A : Type a) : Type a where
   field LegacyModeOf : A → Bool
@@ -218,11 +223,11 @@ instance
   HasDonations-UTxOState : HasDonations UTxOState
   HasDonations-UTxOState .DonationsOf = UTxOState.donations
 
-  HasDepositStore-UTxOState : HasDepositStore UTxOState
-  HasDepositStore-UTxOState .DepositStoreOf = UTxOState.depositStore
+  HasStoreBalance-UTxOState : HasStoreBalance UTxOState
+  HasStoreBalance-UTxOState .StoreBalanceOf = UTxOState.storeBalance
 
-  HasStoreBacking-UTxOState : HasStoreBacking UTxOState
-  HasStoreBacking-UTxOState .StoreBackingOf = UTxOState.storeBacking
+  HasUTxODepositRecords-UTxOState : HasUTxODepositRecords UTxOState
+  HasUTxODepositRecords-UTxOState .UTxODepositRecordsOf = UTxOState.utxoDepositRecords
 
   HasPools-UTxOEnv : HasPools UTxOEnv
   HasPools-UTxOEnv .PoolsOf = UTxOEnv.pools₀
@@ -265,14 +270,14 @@ minfee pp txTop utxo = pp .a * (SizeOf txTop) + pp .b
                        + scriptsCost pp (refScriptsSize txTop utxo)
 ```
 
-### Store Backing
+### UTxO Capacity Deposits
 
-The backing of a store-backed output is computed by the same formula as an
-implicit-deposit output's minimum ada, over the output's full serialized size
-(address, application assets, datum, script and encoding overhead), at the
-parameters current when the output is created.  The backing is not part of the
-output, so it does not change the size it is computed from.  It is recorded at
-creation and never recomputed.
+The UTxO capacity deposit required by a new store-backed output is computed by the
+same formula as an implicit-deposit output's minimum ada, over the output's full
+serialized size (address, application assets, datum, reference script and encoding
+overhead), at the parameters current when the output is created (DS-STORE-003).
+The deposit is held outside the output, so it does not change the size it is
+computed from.  It is allocated at creation, recorded, and never recomputed.
 
 **Note**.  The minimum-ada check on implicit-deposit outputs below still uses the
 older `utxoEntrySize`{.AgdaFunction} measure (the size of the output's value only).
@@ -281,80 +286,93 @@ older `utxoEntrySize`{.AgdaFunction} measure (the size of the output's value onl
 utxoOverhead : ℕ
 utxoOverhead = 160
 
-backingFor : PParams → TxOut → Coin
-backingFor pp o = (utxoOverhead + serializedTxOutSize o) * coinsPerUTxOByte pp
+requiredUTxODeposit : PParams → TxOut → Coin
+requiredUTxODeposit pp o = (utxoOverhead + serializedTxOutSize o) * coinsPerUTxOByte pp
 ```
 
-`newBacking`{.AgdaFunction} records the backing of each store-backed output of a
-transaction, keyed by the output's `TxIn`{.AgdaFunction}.
-`applyBacking`{.AgdaFunction} is the effect of a valid transaction on the recorded
-backing: entries for spent inputs are removed (their backing is released), and
-entries for the transaction's store-backed outputs are added.
+`newUTxODepositRecords`{.AgdaFunction} records the deposit allocated to each
+store-backed output of a transaction, keyed by the output's `TxIn`{.AgdaFunction}.
+`applyUTxODepositRecords`{.AgdaFunction} is the effect of a valid transaction on the
+records: the records of spent inputs are removed (their deposits are released), and
+those of the transaction's store-backed outputs are added.  Reference inputs release
+nothing.
 
 ```agda
-newBacking : PParams → Tx ℓ → StoreBacking
-newBacking pp tx =
-  mapKeys (TxIdOf tx ,_) (mapValues (backingFor pp) (TxOutsOf tx ∣ StoreBackedOutputsOf tx))
+newUTxODepositRecords : PParams → Tx ℓ → UTxODepositRecords
+newUTxODepositRecords pp tx =
+  mapKeys (TxIdOf tx ,_) (mapValues (requiredUTxODeposit pp) (TxOutsOf tx ∣ StoreBackedOutputsOf tx))
 
-applyBacking : PParams → Tx ℓ → StoreBacking → StoreBacking
-applyBacking pp tx bk = (bk ∣ SpendInputsOf tx ᶜ) ∪ˡ newBacking pp tx
+applyUTxODepositRecords : PParams → Tx ℓ → UTxODepositRecords → UTxODepositRecords
+applyUTxODepositRecords pp tx recs = (recs ∣ SpendInputsOf tx ᶜ) ∪ˡ newUTxODepositRecords pp tx
 
-totalBacking : StoreBacking → Coin
-totalBacking bk = ∑[ b ← bk ] b
+totalUTxODeposits : UTxODepositRecords → Coin
+totalUTxODeposits recs = ∑[ d ← recs ] d
 
-createdBacking : PParams → Tx ℓ → Coin
-createdBacking pp tx = totalBacking (newBacking pp tx)
+allocatedUTxODeposits : PParams → Tx ℓ → Coin
+allocatedUTxODeposits pp tx = totalUTxODeposits (newUTxODepositRecords pp tx)
 
-releasedBacking : StoreBacking → Tx ℓ → Coin
-releasedBacking bk tx = totalBacking (bk ∣ SpendInputsOf tx)
+releasedUTxODeposits : UTxODepositRecords → Tx ℓ → Coin
+releasedUTxODeposits recs tx = totalUTxODeposits (recs ∣ SpendInputsOf tx)
+
+collateralReleasedUTxODeposits : UTxODepositRecords → TopLevelTx → Coin
+collateralReleasedUTxODeposits recs tx = totalUTxODeposits (recs ∣ CollateralInputsOf tx)
 ```
 
-### Declared Store Changes
+### Declared Net Changes
 
-The amounts a transaction declares (see `txDepositStoreChange`{.AgdaField}).  A
-subtransaction's deposit is the same amount whether it funds it itself or asks
-the top-level transaction to fund it.
+Signed quantities are represented by their nonnegative allocation and release
+parts.  A subtransaction's *contribution* counts every net allocation and release
+it declares, whether accounted for locally or delegated to the top-level
+transaction (DS-TX-003); its *local* part counts only those it accounts for itself
+(DS-TX-006).
 
 ```agda
-topStoreDeposit topStoreWithdrawal : TopLevelTx → Coin
-topStoreDeposit tx with TopStoreChangeOf tx
-... | just (DepositToStore c) = c
-... | _                       = 0
-topStoreWithdrawal tx with TopStoreChangeOf tx
-... | just (WithdrawFromStore c _) = c
-... | _                            = 0
+txTotalNetAllocation txTotalNetRelease : TopLevelTx → Coin
+txTotalNetAllocation tx with TopTxDeclarationOf tx
+... | just (DeclaresNetUTxODepositAllocation a)  = fromℕ⁺ a
+... | _                                          = 0
+txTotalNetRelease tx with TopTxDeclarationOf tx
+... | just (DeclaresNetUTxODepositRelease a _)   = fromℕ⁺ a
+... | _                                          = 0
 
-subStoreDeposit subStoreWithdrawal : SubLevelTx → Coin
-subStoreDeposit tx with SubStoreChangeOf tx
-... | just (SubTxDepositToStore c)           = c
-... | just (SubTxRequestDepositFromTopTx c)  = c
-... | _                                      = 0
-subStoreWithdrawal tx with SubStoreChangeOf tx
-... | just (SubTxWithdrawFromStore c _) = c
-... | _                                 = 0
+subTxNetAllocation subTxNetRelease : SubLevelTx → Coin
+subTxNetAllocation tx with SubTxDeclarationOf tx
+... | just (DeclaresNetUTxODepositAllocation a)  = fromℕ⁺ a
+... | just (RequestsUTxODepositFromTopTx a)      = fromℕ⁺ a
+... | _                                          = 0
+subTxNetRelease tx with SubTxDeclarationOf tx
+... | just (DeclaresNetUTxODepositRelease a _)   = fromℕ⁺ a
+... | _                                          = 0
 
-subsStoreDeposit subsStoreWithdrawal : TopLevelTx → Coin
-subsStoreDeposit    txTop = sum (map subStoreDeposit    (SubTransactionsOf txTop))
-subsStoreWithdrawal txTop = sum (map subStoreWithdrawal (SubTransactionsOf txTop))
+subTxLocalNetAllocation subTxLocalNetRelease : SubLevelTx → Coin
+subTxLocalNetAllocation tx with SubTxDeclarationOf tx
+... | just (DeclaresNetUTxODepositAllocation a)                          = fromℕ⁺ a
+... | _                                                                  = 0
+subTxLocalNetRelease tx with SubTxDeclarationOf tx
+... | just (DeclaresNetUTxODepositRelease a (SubTxSettlementOutput _))   = fromℕ⁺ a
+... | _                                                                  = 0
+
+subTxsNetAllocation subTxsNetRelease subTxsLocalNetAllocation subTxsLocalNetRelease
+  : TopLevelTx → Coin
+subTxsNetAllocation      txTop = sum (map subTxNetAllocation      (SubTransactionsOf txTop))
+subTxsNetRelease         txTop = sum (map subTxNetRelease         (SubTransactionsOf txTop))
+subTxsLocalNetAllocation txTop = sum (map subTxLocalNetAllocation (SubTransactionsOf txTop))
+subTxsLocalNetRelease    txTop = sum (map subTxLocalNetRelease    (SubTransactionsOf txTop))
 ```
 
-A withdrawal settled in one of the transaction's own outputs names that output,
-whose coin must already include the withdrawn amount.  The *shortfall* is how far
-the named output falls short of the withdrawn amount (zero if no output is named).
+The top-level transaction accounts for the part of the batch's net change that the
+subtransactions do not account for locally, including delegated contributions:
+
+    topTxNetUTxODepositChange = txTotalNetUTxODepositChange − Σ subTxLocalNetUTxODepositChange
+
+Its *net release* is the amount it must settle in its own output (DS-TX-006).  This
+can exceed the batch's net release, when subtransactions fund net allocations
+locally.
 
 ```agda
-coinAt : Tx ℓ → Ix → Coin
-coinAt tx ix = maybe (coin ∘ txOutToValue) 0 (lookupᵐ? (TxOutsOf tx) ix)
-
-topTargetShortfall : TopLevelTx → Coin
-topTargetShortfall tx with TopStoreChangeOf tx
-... | just (WithdrawFromStore c ix) = c ∸ coinAt tx ix
-... | _                             = 0
-
-subTargetShortfall : SubLevelTx → Coin
-subTargetShortfall tx with SubStoreChangeOf tx
-... | just (SubTxWithdrawFromStore c (SubTxOutput ix)) = c ∸ coinAt tx ix
-... | _                                                = 0
+topTxNetRelease : TopLevelTx → Coin
+topTxNetRelease tx = (txTotalNetRelease tx + subTxsLocalNetAllocation tx)
+                     ∸ (txTotalNetAllocation tx + subTxsLocalNetRelease tx)
 ```
 
 For the preservation-of-value argument it is convenient to name the ada that the
@@ -363,10 +381,10 @@ its inputs:
 
 ```agda
 outCoin : TopLevelTx → Coin
-outCoin tx = cbalance (outs tx) + topStoreDeposit tx
+outCoin tx = cbalance (outs tx) + txTotalNetAllocation tx
 
 inCoin : UTxO → TopLevelTx → Coin
-inCoin utxo tx = cbalance (utxo ∣ SpendInputsOf tx) + topStoreWithdrawal tx
+inCoin utxo tx = cbalance (utxo ∣ SpendInputsOf tx) + txTotalNetRelease tx
 ```
 
 <!--
@@ -377,7 +395,7 @@ instance
 
   HasCoin-UTxOState : HasCoin UTxOState
   HasCoin-UTxOState .getCoin s = getCoin (UTxOOf s) + FeesOf s + DonationsOf s
-                                 + DepositStoreOf s
+                                 + StoreBalanceOf s
 ```
 -->
 
@@ -448,7 +466,7 @@ module _ (pp : PParams) where
   consumed : TopLevelTx → UTxO → Value
   consumed txTop utxo = consumedTx txTop utxo
                        + inject (refundCertDeposits pp (allDCerts txTop))
-                       + inject (topStoreWithdrawal txTop)
+                       + inject (txTotalNetRelease txTop)
 
   consumedBatch : TopLevelTx → UTxO → Value
   consumedBatch txTop utxo = consumed txTop utxo
@@ -457,6 +475,7 @@ module _ (pp : PParams) where
   consumedLegacy : TopLevelTx → UTxO → Value
   consumedLegacy txTop utxo = consumedTx txTop utxo
                        + inject (refundCertDeposits pp (DCertsOf txTop))
+                       + inject (txTotalNetRelease txTop + subTxsLocalNetAllocation txTop)
 ```
 
 Direct deposits can be made into account addresses.
@@ -464,11 +483,18 @@ In the preservation-of-value equation, direct deposits appear on the
 *produced* side: `getCoin (DirectDepositsOf tx)` sums the ADA of all direct deposits in
 the transaction and that amount is deposited into accounts.
 
-The deposit store is treated the same way, once per batch: the top-level
-transaction's declared deposit (the batch's net addition to the store) is on the
-*produced* side, and its declared withdrawal (the batch's net release) on the
-*consumed* side.  Subtransactions' declarations are checked (see below) but do
-not appear here, since the top-level declaration already includes them.
+The DepositStore is treated the same way, once per batch (DS-TX-004): the
+top-level transaction's declared net allocation is on the *produced* side, and its
+declared net release on the *consumed* side.  Subtransactions' declarations are
+checked (see below) but do not appear here, since the top-level declaration already
+includes them.
+
+In legacy mode the top-level transaction must also balance on its own.  There it
+accounts for its own share of the batch's net change, `topTxNetUTxODepositChange`
+above, which includes delegated contributions but not those the subtransactions
+account for locally.  Adding the local contributions to both sides keeps the terms
+nonnegative.  **PROVISIONAL**: the DepositStore rules target all Plutus versions
+(DS-PLUTUS-001) but do not yet address legacy mode.
 
 ```agda
   producedTx : Tx ℓ → Value
@@ -481,7 +507,7 @@ not appear here, since the top-level declaration already includes them.
   produced pools txTop = producedTx txTop
                    + inject (TxFeesOf txTop)
                    + inject (newCertDeposits pp (dom pools) (allDCerts txTop))
-                   + inject (topStoreDeposit txTop)
+                   + inject (txTotalNetAllocation txTop)
 
   producedBatch : Pools → TopLevelTx → Value
   producedBatch pools txTop = produced pools txTop
@@ -491,6 +517,7 @@ not appear here, since the top-level declaration already includes them.
   producedLegacy pools txTop = producedTx txTop
                    + inject (TxFeesOf txTop)
                    + inject (newCertDeposits pp pools' (DCertsOf txTop))
+                   + inject (txTotalNetAllocation txTop + subTxsLocalNetRelease txTop)
     where
       pools' = foldl (λ { pools (regpool kh _) → pools ∪ ❴ kh ❵
                         ; pools _              → pools
@@ -571,63 +598,117 @@ The [CIP][1] states:
   operation of scripts is not disrupted, for example, by temporarily duplicating
   thread tokens, or falsifying access to assets via flash loans.
 
-### Store Checks
+### UTxO Capacity Deposit Checks
+
+A body that creates or spends store-backed outputs must declare its net change,
+possibly as an explicit zero (DS-TX-001).  Absence of a declaration is allowed only
+for a body with no such activity.
+
+```agda
+NoStoreBackedActivity : UTxODepositRecords → Tx ℓ → Type
+NoStoreBackedActivity recs tx =
+  StoreBackedOutputsOf tx ≡ᵉ ∅ × ∀[ i ∈ SpendInputsOf tx ] i ∉ dom recs
+```
+
+A net release settled in one of a body's own outputs names an output that exists
+and whose coin already includes the settlement amount (DS-TX-007).  For a
+subtransaction, the settlement amount is its declared release.  For the top-level
+transaction, it is its own share, `topTxNetRelease`{.AgdaFunction}, not the batch's
+whole net release; and it names an output exactly when that share is nonzero
+(DS-TX-006).  The coin of a store-backed output is its application ada.
+
+```agda
+coinAt : Tx ℓ → Ix → Coin
+coinAt tx ix = maybe (coin ∘ txOutToValue) 0 (lookupᵐ? (TxOutsOf tx) ix)
+
+SettlesIn : Tx ℓ → Coin → Ix → Type
+SettlesIn tx a ix = ix ∈ dom (TxOutsOf tx) × a ≤ coinAt tx ix
+
+subTxSettlementOutput : SubTxUTxODepositDeclaration → Maybe (Coin × Ix)
+subTxSettlementOutput (just (DeclaresNetUTxODepositRelease a (SubTxSettlementOutput ix))) =
+  just (fromℕ⁺ a , ix)
+subTxSettlementOutput _ = nothing
+
+topTxSettlementOutput : TopTxUTxODepositDeclaration → Maybe Ix
+topTxSettlementOutput (just (DeclaresNetUTxODepositRelease _ (TopTxSettlementOutput ix))) = just ix
+topTxSettlementOutput _ = nothing
+
+declaresNoTopTxSettlement : TopTxUTxODepositDeclaration → Bool
+declaresNoTopTxSettlement (just (DeclaresNetUTxODepositRelease _ NoTopTxSettlement)) = true
+declaresNoTopTxSettlement _ = false
+
+SubTxSettlementOK : SubLevelTx → Type
+SubTxSettlementOK tx =
+  MaybeAll.All (λ (a , ix) → SettlesIn tx a ix) (subTxSettlementOutput (SubTxDeclarationOf tx))
+
+TopTxSettlementOK : TopLevelTx → Type
+TopTxSettlementOK tx =
+    (declaresNoTopTxSettlement (TopTxDeclarationOf tx) ≡ true → topTxNetRelease tx ≡ 0)
+  × MaybeAll.All (λ ix → 0 < topTxNetRelease tx × SettlesIn tx (topTxNetRelease tx) ix)
+                 (topTxSettlementOutput (TopTxDeclarationOf tx))
+```
 
 Every subtransaction is checked against its own outputs and inputs:
 
-1. Only the transaction's own outputs can be marked store-backed.
-2. Its declared change is exact: the backing it creates, minus the backing its
-   spent inputs release, is the amount it declares.  Declaring more or less is
-   rejected.
-3. A withdrawal settled in one of its outputs names an output holding at least
-   the withdrawn amount.
+1. Only its own outputs can be marked store-backed.
+2. It declares, if it creates or spends store-backed outputs (DS-TX-001).
+3. Its contribution is exact: the deposits it allocates, minus those its inputs
+   release, is the amount it declares, whether accounted for locally or delegated
+   (DS-TX-003, DS-TX-010).  Declaring more or less is rejected.  In particular, a
+   body that only spends store-backed outputs declares a net release of everything
+   they release (DS-TX-005).
+4. A release settled in one of its outputs is settled there (DS-TX-007).
+
+Amounts are strictly positive by their type (DS-TX-008).
 
 ```agda
-SubStoreOK : PParams → StoreBacking → SubLevelTx → Type
-SubStoreOK pp bk tx =
-    StoreBackedOutputsOf tx ⊆ dom (TxOutsOf tx)                    -- (1)
-  × createdBacking pp tx + subStoreWithdrawal tx
-    ≡ releasedBacking bk tx + subStoreDeposit tx                    -- (2)
-  × subTargetShortfall tx ≡ 0                                       -- (3)
+SubTxUTxODepositOK : PParams → UTxODepositRecords → SubLevelTx → Type
+SubTxUTxODepositOK pp recs tx =
+    StoreBackedOutputsOf tx ⊆ dom (TxOutsOf tx)                         -- (1)
+  × (Is-just (SubTxDeclarationOf tx) ⊎ NoStoreBackedActivity recs tx)   -- (2)
+  × allocatedUTxODeposits pp tx + subTxNetRelease tx
+    ≡ releasedUTxODeposits recs tx + subTxNetAllocation tx               -- (3)
+  × SubTxSettlementOK tx                                                 -- (4)
 ```
 
-The top-level transaction declares the net change of the whole batch, so its
-check reconciles that amount with the subtransactions' declarations:
+The top-level transaction declares the net change of the whole batch, so its checks
+reconcile that amount with the subtransactions' declarations:
 
 1. As above.
-2. The batch net, minus what the subtransactions declared, is the change in
-   backing that the top-level transaction itself causes.  Together with the
-   subtransactions' own checks, this makes the declared net exactly the batch's
-   change in backing.
-3. As above, for `WithdrawFromStore`{.AgdaInductiveConstructor}.
-4. The store stays solvent: it never pays out more than it holds.  (This follows
-   from the invariant that the store equals the total recorded backing; checking
-   it keeps the rule well-defined on any state.)
+2. As above.
+3. If any subtransaction declares, so does the top-level transaction (DS-TX-009).
+4. The batch's declared net change, minus the subtransactions' contributions, is
+   the change that the top-level transaction's own outputs and inputs cause
+   (DS-TX-002, DS-TX-003).  Together with the subtransactions' own checks, this
+   makes the declared net change exactly the batch's change in deposits.
+5. Its own share of a net release is settled as described above (DS-TX-006,
+   DS-TX-007).
 
 ```agda
-TopStoreOK : PParams → StoreBacking → Coin → TopLevelTx → Type
-TopStoreOK pp bk store tx =
-    StoreBackedOutputsOf tx ⊆ dom (TxOutsOf tx)                    -- (1)
-  × createdBacking pp tx + topStoreWithdrawal tx + subsStoreDeposit tx
-    ≡ releasedBacking bk tx + topStoreDeposit tx + subsStoreWithdrawal tx  -- (2)
-  × topTargetShortfall tx ≡ 0                                       -- (3)
-  × topStoreWithdrawal tx ≤ store + topStoreDeposit tx              -- (4)
+TopTxUTxODepositOK : PParams → UTxODepositRecords → TopLevelTx → Type
+TopTxUTxODepositOK pp recs tx =
+    StoreBackedOutputsOf tx ⊆ dom (TxOutsOf tx)                         -- (1)
+  × (Is-just (TopTxDeclarationOf tx) ⊎ NoStoreBackedActivity recs tx)   -- (2)
+  × (List.Any (λ stx → Is-just (SubTxDeclarationOf stx)) (SubTransactionsOf tx)
+       → Is-just (TopTxDeclarationOf tx))                                -- (3)
+  × allocatedUTxODeposits pp tx + txTotalNetRelease tx + subTxsNetAllocation tx
+    ≡ releasedUTxODeposits recs tx + txTotalNetAllocation tx + subTxsNetRelease tx  -- (4)
+  × TopTxSettlementOK tx                                                 -- (5)
 ```
 
-A store-backed output is exempt from the minimum-ada check, since its backing is
-held in the store.  Every implicit-deposit output must still carry its own
-minimum ada.
+A store-backed output is exempt from the minimum-ada check, since its deposit is
+held in the store; it may hold no application ada or assets at all (DS-TX-012).
+Every implicit-deposit output must still carry its own minimum ada.  Release needs
+no authority beyond the spent output's own spending conditions (DS-TX-011).
 
-**OPEN**.
-
-+  *Local settlement.*  A subtransaction's withdrawal settled in its own output
-   (`SubTxOutput`{.AgdaInductiveConstructor}) is meant to be accounted for within
-   that subtransaction, not merely bounded as in (3).  Since subtransactions may be
-   unbalanced and only the batch balances, this is not yet expressible; likewise,
-   a subtransaction that funds its own deposit and one that asks the top-level
-   transaction to fund it are treated the same here.
-+  *Empty outputs.*  Whether a store-backed output may be empty, or must satisfy
-   some smaller minimum, is not decided; no such check is made.
+**OPEN** (DS-TX-007).  A subtransaction's release settled in its own output is
+meant to be accounted for within that subtransaction, not merely bounded as in (4):
+a subtransaction spending 10 ada and releasing a 2 ada deposit into its only output
+should leave 12 ada there, if it has no other flows.  This is not expressed by the
+checks above together with batch balance, which would also accept 10 ada and use
+the released 2 ada elsewhere in the batch.  Subtransactions must remain free to be
+unbalanced and to contribute to the top-level fee, so a no-export inequality is
+not adopted, and no additional signed information is agreed.
 
 ### The <span class="AgdaDatatype">SUBUTXO</span> Rule
 
@@ -657,7 +738,7 @@ data _⊢_⇀⦇_,SUBUTXO⦈_ : SubUTxOEnv → UTxOState → SubLevelTx → UTxO
     ∙ SpendInputsOf txSub ⊆ dom (UTxOOf s₀) -- (3)
     ∙ inInterval (SlotOf Γ) (ValidIntervalOf txSub)
     ∙ coin (MintedValueOf txSub) ≡ 0
-    ∙ SubStoreOK (PParamsOf Γ) (StoreBackingOf s₀) txSub
+    ∙ SubTxUTxODepositOK (PParamsOf Γ) (UTxODepositRecordsOf s₀) txSub
     ∙ ∀[ (ix , o) ∈ ∣ TxOutsOf txSub ∣ ] (ix ∉ StoreBackedOutputsOf txSub →
        inject ((UTxOOverhead + utxoEntrySize o) * coinsPerUTxOByte (PParamsOf Γ)) ≤ᵗ txOutToValue o)
     ∙ ∀[ (_ , o) ∈ ∣ TxOutsOf txSub ∣ ] (serializedSize (txOutToValue o) ≤ maxValSize (PParamsOf Γ))
@@ -669,8 +750,8 @@ data _⊢_⇀⦇_,SUBUTXO⦈_ : SubUTxOEnv → UTxOState → SubLevelTx → UTxO
     let
        s₁ = if IsTopLevelValidFlagOf Γ
             then ⟦ (UTxOOf s₀ ∣ SpendInputsOf txSub ᶜ) ∪ˡ outs txSub , FeesOf s₀ , DonationsOf s₀ + DonationsOf txSub
-                 , DepositStoreOf s₀ , applyBacking (PParamsOf Γ) txSub (StoreBackingOf s₀) ⟧
-            else ⟦ UTxOOf s₀ , FeesOf s₀ , DonationsOf s₀ , DepositStoreOf s₀ , StoreBackingOf s₀ ⟧
+                 , StoreBalanceOf s₀ , applyUTxODepositRecords (PParamsOf Γ) txSub (UTxODepositRecordsOf s₀) ⟧
+            else ⟦ UTxOOf s₀ , FeesOf s₀ , DonationsOf s₀ , StoreBalanceOf s₀ , UTxODepositRecordsOf s₀ ⟧
     in
       Γ ⊢ s₀ ⇀⦇ txSub ,SUBUTXO⦈ s₁
 ```
@@ -697,18 +778,19 @@ unquoteDecl SUBUTXO-premises = genPremises SUBUTXO-premises (quote SUBUTXO)
 
 4. In Legacy Mode: The top-level transaction must be self-balancing.
 
-5. **PROVISIONAL**.  Collateral inputs must be implicit-deposit outputs.  A
-   failed batch applies only the collateral, so a collateral input's recorded
-   backing would otherwise stay in the store with no output to release it to.
+5. The DepositStore can pay what the path actually applied takes from it
+   (DS-STORE-001).  This follows from solvency of the initial state; checking it
+   keeps the rule well-defined on any state.
 
-6. **PROVISIONAL**.  In Legacy Mode: the top-level transaction may neither create
-   nor spend store-backed outputs, since scripts older than Plutus V4 cannot see
-   the store.  Its own share of the batch's store change is therefore zero, and the
-   legacy balance equation (4) is unchanged; the batch's net store change, funded
-   by the subtransactions, enters only the batch balance.
+The DepositStore is updated once, by the top-level transaction, with the batch's
+declared net change; subtransactions update only the records.
 
-The deposit store is updated once, by the top-level transaction, with the batch's
-declared net change.  Subtransactions update only the recorded backing.
+If the batch fails phase-2 validation, only its collateral is applied, and the
+ordinary declarations have no effect (DS-COLL-001, DS-COLL-004).  Collateral inputs
+may be store-backed outputs: their records are removed and their released deposits
+go to the fee pot, on top of the collateral coins, which alone must cover the
+minimum collateral fee (`collateralCheck`{.AgdaFunction}; DS-COLL-002).  This
+specification does not model a collateral return, so no deposit is allocated to one.
 
 ```agda
 data _⊢_⇀⦇_,UTXO⦈_ : UTxOEnv → UTxOState → TopLevelTx → UTxOState → Type where
@@ -731,10 +813,11 @@ data _⊢_⇀⦇_,UTXO⦈_ : UTxOEnv → UTxOState → TopLevelTx → UTxOState 
     ∙ ∑ˡ[ x ← setToList (allReferenceScripts txTop (UTxOOf Γ)) ] scriptSize x ≤ (PParamsOf Γ) .maxRefScriptSizePerTx
     ∙ ((RedeemersOf txTop ˢ ≢ ∅) ⊎ (List.Any (λ txSub → RedeemersOf txSub ˢ ≢ ∅) (SubTransactionsOf txTop))
         → collateralCheck (PParamsOf Γ) txTop (UTxOOf Γ))
-    ∙ TopStoreOK (PParamsOf Γ) (StoreBackingOf s₀) (DepositStoreOf s₀) txTop
-    ∙ ∀[ i ∈ CollateralInputsOf txTop ] i ∉ dom (StoreBackingOf s₀) -- (5)
-    ∙ (LegacyModeOf Γ ≡ true → StoreBackedOutputsOf txTop ≡ᵉ ∅
-                              × ∀[ i ∈ SpendInputsOf txTop ] i ∉ dom (StoreBackingOf s₀)) -- (6)
+    ∙ TopTxUTxODepositOK (PParamsOf Γ) (UTxODepositRecordsOf s₀) txTop
+    ∙ (IsValidFlagOf txTop ≡ true →
+         txTotalNetRelease txTop ≤ StoreBalanceOf s₀ + txTotalNetAllocation txTop) -- (5)
+    ∙ (IsValidFlagOf txTop ≡ false →
+         collateralReleasedUTxODeposits (UTxODepositRecordsOf s₀) txTop ≤ StoreBalanceOf s₀) -- (5)
     ∙ ∀[ (ix , o) ∈ ∣ TxOutsOf txTop ∣ ] (ix ∉ StoreBackedOutputsOf txTop →
          inject ((UTxOOverhead + utxoEntrySize o) * coinsPerUTxOByte (PParamsOf Γ)) ≤ᵗ txOutToValue o)
     ∙ ∀[ (_ , o) ∈ ∣ TxOutsOf txTop ∣ ] (serializedSize (txOutToValue o) ≤ maxValSize (PParamsOf Γ))
@@ -747,10 +830,14 @@ data _⊢_⇀⦇_,UTXO⦈_ : UTxOEnv → UTxOState → TopLevelTx → UTxOState 
     let
        s₁ = if IsValidFlagOf txTop
             then ⟦ (UTxOOf s₀ ∣ SpendInputsOf txTop ᶜ) ∪ˡ outs txTop , FeesOf s₀ + TxFeesOf txTop , DonationsOf s₀ + DonationsOf txTop
-                 , DepositStoreOf s₀ + topStoreDeposit txTop ∸ topStoreWithdrawal txTop
-                 , applyBacking (PParamsOf Γ) txTop (StoreBackingOf s₀) ⟧
-            else ⟦ UTxOOf s₀ ∣ (CollateralInputsOf txTop) ᶜ , FeesOf s₀ + cbalance (UTxOOf s₀ ∣ CollateralInputsOf txTop) , DonationsOf s₀
-                 , DepositStoreOf s₀ , StoreBackingOf s₀ ⟧
+                 , StoreBalanceOf s₀ + txTotalNetAllocation txTop ∸ txTotalNetRelease txTop
+                 , applyUTxODepositRecords (PParamsOf Γ) txTop (UTxODepositRecordsOf s₀) ⟧
+            else ⟦ UTxOOf s₀ ∣ (CollateralInputsOf txTop) ᶜ
+                 , FeesOf s₀ + cbalance (UTxOOf s₀ ∣ CollateralInputsOf txTop)
+                             + collateralReleasedUTxODeposits (UTxODepositRecordsOf s₀) txTop
+                 , DonationsOf s₀
+                 , StoreBalanceOf s₀ ∸ collateralReleasedUTxODeposits (UTxODepositRecordsOf s₀) txTop
+                 , UTxODepositRecordsOf s₀ ∣ CollateralInputsOf txTop ᶜ ⟧
     in
       Γ ⊢ s₀ ⇀⦇ txTop ,UTXO⦈ s₁
 
