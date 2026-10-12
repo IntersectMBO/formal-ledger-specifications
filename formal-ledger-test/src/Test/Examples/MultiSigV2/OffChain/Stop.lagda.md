@@ -1,6 +1,6 @@
 ---
 source_branch: master
-source_path: src/Test/Examples/MultiSigV2/OffChain/Cleanup.lagda.md
+source_path: src/Test/Examples/MultiSigV2/OffChain/Stop.lagda.md
 ---
 ```agda
 {-# OPTIONS --safe #-}
@@ -22,7 +22,7 @@ open import Test.Lib valContext
 open import Ledger.Conway.Specification.Script.Validation SVTransactionStructure SVAbstractFunctions
 open import Ledger.Conway.Specification.Utxo SVTransactionStructure SVAbstractFunctions
 
-open TransactionStructure SVTransactionStructure renaming (Datum to SCDatum) hiding (Redeemer)
+open TransactionStructure SVTransactionStructure hiding (Datum; Redeemer)
 open Implementation
 
 makeStopTx : (id : ℕ) → UTxOState → PlutusScript → (w : ℕ) → Maybe Tx

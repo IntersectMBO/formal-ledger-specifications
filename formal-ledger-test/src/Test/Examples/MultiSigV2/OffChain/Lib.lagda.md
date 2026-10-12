@@ -18,7 +18,7 @@ open import Test.LedgerImplementation SData SData
 open import Test.AbstractImplementation valContext
 open import Test.Lib valContext
 
-open TransactionStructure SVTransactionStructure renaming (Datum to SCDatum) hiding (Redeemer)
+open TransactionStructure SVTransactionStructure hiding (Datum; Redeemer)
 open Implementation
 
 open import Data.List using (filter)
@@ -73,12 +73,12 @@ succeedTxOut' = inj₁ (record { net = 0 ;
                            stake = just (ScriptObj 777) })
                            , 700000000000 , just (inj₁ (inj₁ (inj₁ Holding))) , nothing
 
-getDatum : TxOut → Maybe Datum
-getDatum (fst , fst₁ , just (inj₁ (inj₁ (inj₁ x))) , snd) = just x
-getDatum (fst , fst₁ , just (inj₁ (inj₁ (inj₂ y))) , snd) = nothing
-getDatum (fst , fst₁ , just (inj₁ (inj₂ y)) , snd) = nothing
-getDatum (fst , fst₁ , just (inj₂ y) , snd) = nothing
-getDatum (fst , fst₁ , nothing , snd) = nothing
+txOutToDatum : TxOut → Maybe Datum
+txOutToDatum (fst , fst₁ , just (inj₁ (inj₁ (inj₁ x))) , snd) = just x
+txOutToDatum (fst , fst₁ , just (inj₁ (inj₁ (inj₂ y))) , snd) = nothing
+txOutToDatum (fst , fst₁ , just (inj₁ (inj₂ y)) , snd) = nothing
+txOutToDatum (fst , fst₁ , just (inj₂ y) , snd) = nothing
+txOutToDatum (fst , fst₁ , nothing , snd) = nothing
 
 -- Assumes a list of filtered waller txins and subtracts a default fee from the head of the list
 makeFeeTxOut : List (TxIn × TxOut) → List (ℕ × TxOut)

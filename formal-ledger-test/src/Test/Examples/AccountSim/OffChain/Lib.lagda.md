@@ -18,7 +18,7 @@ open import Test.Prelude AccountSimData
 open import Test.SymbolicData AccountSimData
 open import Test.LedgerImplementation SData SData
 
-open TransactionStructure SVTransactionStructure renaming (Datum to SCDatum) hiding (Redeemer)
+open TransactionStructure SVTransactionStructure hiding (Datum; Redeemer)
 
 defaultTxBody : TxBody
 defaultTxBody = record
@@ -65,14 +65,12 @@ getWalletUTxO : (scriptHash : ℕ) → UTxO → List (TxIn × TxOut)
 getWalletUTxO sh (utxo , prf) = filter (λ { (_ , addr , _) → matchWalletHash? sh (payCred addr)}) (setToList utxo)
 
 
-
-getDatum : TxOut → Maybe Datum
-getDatum (fst , fst₁ , just (inj₁ (inj₁ (inj₁ x))) , snd) = just x
-getDatum (fst , fst₁ , just (inj₁ (inj₁ (inj₂ y))) , snd) = nothing
-getDatum (fst , fst₁ , just (inj₁ (inj₂ y)) , snd) = nothing
-getDatum (fst , fst₁ , just (inj₂ y) , snd) = nothing
-getDatum (fst , fst₁ , nothing , snd) = nothing
-
+txOutToDatum : TxOut → Maybe Datum
+txOutToDatum (fst , fst₁ , just (inj₁ (inj₁ (inj₁ x))) , snd) = just x
+txOutToDatum (fst , fst₁ , just (inj₁ (inj₁ (inj₂ y))) , snd) = nothing
+txOutToDatum (fst , fst₁ , just (inj₁ (inj₂ y)) , snd) = nothing
+txOutToDatum (fst , fst₁ , just (inj₂ y) , snd) = nothing
+txOutToDatum (fst , fst₁ , nothing , snd) = nothing
 
 
 -- Assumes a list of filtered waller txins and subtracts a default fee from the head of the list
