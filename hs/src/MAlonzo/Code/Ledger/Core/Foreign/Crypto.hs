@@ -27,7 +27,7 @@ d_HSCryptoStructure_12 ::
   MAlonzo.Code.Ledger.Core.Specification.Crypto.T_CryptoStructure_140
 d_HSCryptoStructure_12 v0
   = coe
-      MAlonzo.Code.Ledger.Core.Foreign.Crypto.Structure.d_HSCryptoStructure_34
+      MAlonzo.Code.Ledger.Core.Foreign.Crypto.Structure.d_HSCryptoStructure_36
       (coe v0)
 -- Ledger.Core.Foreign.Crypto._.HSPKKScheme
 d_HSPKKScheme_14 ::
@@ -35,5 +35,5 @@ d_HSPKKScheme_14 ::
   MAlonzo.Code.Ledger.Core.Specification.Crypto.T_PKKScheme_60
 d_HSPKKScheme_14 v0
   = coe
-      MAlonzo.Code.Ledger.Core.Foreign.Crypto.Structure.d_HSPKKScheme_18
+      MAlonzo.Code.Ledger.Core.Foreign.Crypto.Structure.d_HSPKKScheme_20
       (coe v0)
