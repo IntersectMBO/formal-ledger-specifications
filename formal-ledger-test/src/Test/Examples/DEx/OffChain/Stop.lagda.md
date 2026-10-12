@@ -1,6 +1,6 @@
 ---
 source_branch: master
-source_path: src/Test/Examples/DEx/OffChain/Close.lagda.md
+source_path: src/Test/Examples/DEx/OffChain/Stop.lagda.md
 ---
 ```agda
 {-# OPTIONS --safe #-}

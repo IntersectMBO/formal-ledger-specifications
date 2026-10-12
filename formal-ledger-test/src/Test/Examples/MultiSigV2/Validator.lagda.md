@@ -209,7 +209,7 @@ agdaValidator param lab red ctx = case (lab , red) of λ where
       (case (newDatum ctx) of λ where
         (just Holding) -> expired d ctx 
         _ -> false) 
-    (Holding , Cleanup) -> gt minValue (fromMaybe 0 (oldValue ctx)) && not (continuing ctx)
+    (Holding , Stop) -> gt minValue (fromMaybe 0 (oldValue ctx)) && not (continuing ctx)
     _ -> false 
 
 

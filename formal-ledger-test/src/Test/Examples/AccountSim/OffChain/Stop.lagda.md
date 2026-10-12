@@ -1,6 +1,6 @@
 ---
 source_branch: master
-source_path: src/Test/Examples/AccountSim/OffChain/Cleanup.lagda.md
+source_path: src/Test/Examples/AccountSim/OffChain/Stop.lagda.md
 ---
 ```agda
 {-# OPTIONS --safe #-}

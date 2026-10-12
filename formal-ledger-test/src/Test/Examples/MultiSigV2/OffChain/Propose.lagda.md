@@ -21,7 +21,7 @@ open import Test.Lib valContext
 
 open import Ledger.Conway.Specification.Utxo SVTransactionStructure SVAbstractFunctions
 
-open TransactionStructure SVTransactionStructure renaming (Datum to SCDatum) hiding (Redeemer)
+open TransactionStructure SVTransactionStructure hiding (Datum; Redeemer)
 open Implementation
 
 
@@ -57,7 +57,7 @@ makeProposeTx id state script@(sh , _) w v tw d =
                 txAD = nothing }
                 ))
             nothing
-            (getDatum scOut)})
+            (txOutToDatum scOut)})
           nothing
           (getScriptUTxO sh (UTxOState.utxo state))
 ```

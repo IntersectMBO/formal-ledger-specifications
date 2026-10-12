@@ -56,7 +56,7 @@ initState' = fromList' (createInitUtxoState 5 1000000000000)
 
 -- Hack to have partial Transactions
 data Tx' : Set where
-    openContract : ℕ → ℕ → ℕ → ℕ → Tx'
+    start        : ℕ → ℕ → ℕ → ℕ → Tx'
     addSig       : ℕ → ℕ → Tx'
     pay          : ℕ → ℕ → Tx'
     propose      : ℕ → ℕ → ℕ → ℕ → ℕ → Tx'
@@ -64,7 +64,7 @@ data Tx' : Set where
     stop         : ℕ → ℕ → Tx'
 
 makeTx : UTxOState → PlutusScript → Tx' → Maybe Tx
-makeTx s script (openContract id w v tw) = just (openTx id w v tw script)
+makeTx s script (start id w v tw) = just (startTx id w v tw script)
 makeTx s script (addSig id w) = makeAddSigTx id s script w
 makeTx s script (pay id w) = makePayTx id s script w
 makeTx s script (propose id w v tw d) = makeProposeTx id s script w v tw d
@@ -97,7 +97,7 @@ evalTransanctionsW env (success s) (tx' ∷ txs') =
 
 -- Add Sig trace
 addSigTrace : List Tx'
-addSigTrace = openContract 6 5 800000000000 6
+addSigTrace = start 6 5 800000000000 6
               ∷ propose 7 5 100000000000 2 4
               ∷ addSig 8 5
               ∷ addSig 9 2
@@ -106,7 +106,7 @@ addSigTrace = openContract 6 5 800000000000 6
 
 failingTrace : List Tx'
 failingTrace =
-   openContract 6 2 800000000000 5
+   start 6 2 800000000000 5
    ∷ propose 7 1 500000000000 5 13
    ∷ addSig 8 2
    ∷ addSig 9 3
@@ -115,7 +115,7 @@ failingTrace =
    ∷ []
 
 utxowTrace : List Tx'
-utxowTrace = openContract 6 5 800000000000 6
+utxowTrace = start 6 5 800000000000 6
              ∷ propose 7 5 100000000000 2 3
              ∷ addSig 8 5
              ∷ addSig 9 2
@@ -123,7 +123,7 @@ utxowTrace = openContract 6 5 800000000000 6
              ∷ []
              
 utxowTrace2 : List Tx'
-utxowTrace2 = openContract 6 5 800000000000 6
+utxowTrace2 = start 6 5 800000000000 6
              ∷ propose 7 5 100000000000 2 0
              ∷ addSig 8 5
              ∷ addSig 9 2           
@@ -138,7 +138,7 @@ utxowTrace2 = openContract 6 5 800000000000 6
 
 
 utxowTrace3 : List Tx'
-utxowTrace3 = openContract 6 5 800000000000 6
+utxowTrace3 = start 6 5 800000000000 6
              ∷ propose 7 5 799999999900 2 5
              ∷ addSig 8 5
              ∷ addSig 9 2    
