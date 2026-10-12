@@ -363,9 +363,9 @@ depositsChange pp txb deposits =
   getCoin (updateDeposits pp txb deposits) - getCoin deposits
 
 data inInterval (slot : Slot) : (Maybe Slot × Maybe Slot) → Type where
-  both   : ∀ {l r}  → l ≤ slot × slot ≤ r  →  inInterval slot (just l   , just r)
+  both   : ∀ {l r}  → l ≤ slot × slot < r  →  inInterval slot (just l   , just r)
   lower  : ∀ {l}    → l ≤ slot             →  inInterval slot (just l   , nothing)
-  upper  : ∀ {r}    → slot ≤ r             →  inInterval slot (nothing  , just r)
+  upper  : ∀ {r}    → slot < r             →  inInterval slot (nothing  , just r)
   none   :                                    inInterval slot (nothing  , nothing)
 ```
 
@@ -374,14 +374,14 @@ data inInterval (slot : Slot) : (Maybe Slot × Maybe Slot) → Type where
 -- Note: inInterval has to be a type definition for inference to work
 instance
   Dec-inInterval : inInterval ⁇²
-  Dec-inInterval {slot} {just x  , just y } .dec with x ≤? slot | slot ≤? y
+  Dec-inInterval {slot} {just x  , just y } .dec with x ≤? slot | slot <? y
   ... | no ¬p₁ | _      = no λ where (both (h₁ , h₂)) → ¬p₁ h₁
   ... | yes p₁ | no ¬p₂ = no λ where (both (h₁ , h₂)) → ¬p₂ h₂
   ... | yes p₁ | yes p₂ = yes (both (p₁ , p₂))
   Dec-inInterval {slot} {just x  , nothing} .dec with x ≤? slot
   ... | no ¬p = no  (λ where (lower h) → ¬p h)
   ... | yes p = yes (lower p)
-  Dec-inInterval {slot} {nothing , just x } .dec with slot ≤? x
+  Dec-inInterval {slot} {nothing , just x } .dec with slot <? x
   ... | no ¬p = no  (λ where (upper h) → ¬p h)
   ... | yes p = yes (upper p)
   Dec-inInterval {slot} {nothing , nothing} .dec = yes none

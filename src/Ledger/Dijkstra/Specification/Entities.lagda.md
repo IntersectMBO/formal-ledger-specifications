@@ -99,7 +99,13 @@ withdrawals, direct deposits, and account balance intervals.
 CIP-159 introduces two new fields to transactions: `directDeposits`
 and `balanceIntervals`. Direct deposits represent value that flows
 from the transaction into account addresses. Balance intervals enable
-transactions to assert predicates about account balances.
+CIP-159 introduces three new transaction fields: `txDirectDeposits`{.AgdaField},
+`txBalanceIntervals`{.AgdaField} and, at the top level only,
+`txStartingBalanceIntervals`{.AgdaField}.  Direct deposits represent value that
+flows from the transaction into account addresses.  The two interval fields let
+a transaction assert bounds on account balances: `txBalanceIntervals`{.AgdaField}
+against the balances this rule sees, and `txStartingBalanceIntervals`{.AgdaField}
+against the balances at the start of the whole batch (`rewards₀`{.AgdaField}).
 
 ### Withdrawals
 
@@ -175,12 +181,13 @@ data _⊢_⇀⦇_,ENTITIES⦈_ : EntitiesEnv → CertState → TopLevelTx → Ce
     let refresh         = mapPartial (isGovVoterDRep ∘ voter) (fromList (ListOfGovVotesOf txTop))
         refreshedDReps  = mapValueRestricted (const (e + pp .drepActivity)) dReps refresh
 
-        withdrawalsSubTxs          = foldl (λ acc txSub → acc ∪⁺ WithdrawalsOf txSub) ∅ (SubTransactionsOf txTop)
-        withdrawals                = WithdrawalsOf txTop
-        withdrawalsCredentials     = mapˢ stake (dom withdrawals)
-        accountBalanceIntervals    = BalanceIntervalsOf txTop
-        directDeposits             = DirectDepositsOf txTop
-        directDepositsCredentials  = mapˢ stake (dom directDeposits)
+        withdrawalsSubTxs               = foldl (λ acc txSub → acc ∪⁺ WithdrawalsOf txSub) ∅ (SubTransactionsOf txTop)
+        withdrawals                     = WithdrawalsOf txTop
+        withdrawalsCredentials          = mapˢ stake (dom withdrawals)
+        accountBalanceIntervals         = BalanceIntervalsOf txTop
+        startingAccountBalanceIntervals = StartingBalanceIntervalsOf txTop
+        directDeposits                  = DirectDepositsOf txTop
+        directDepositsCredentials       = mapˢ stake (dom directDeposits)
     in
 
     ∙ ∀[ a ∈ dom withdrawals ] NetworkIdOf a ≡ NetworkId
@@ -197,6 +204,10 @@ data _⊢_⇀⦇_,ENTITIES⦈_ : EntitiesEnv → CertState → TopLevelTx → Ce
     ∙ dom accountBalanceIntervals ⊆ dom rewards
     ∙ ∀[ (c , interval) ∈ accountBalanceIntervals ˢ ]
         (InBalanceInterval (maybe id 0 (lookupᵐ? rewards c)) interval)
+
+    ∙ dom startingAccountBalanceIntervals ⊆ dom rewards₀
+    ∙ ∀[ (c , interval) ∈ startingAccountBalanceIntervals ˢ ]
+        (InBalanceInterval (maybe id 0 (lookupᵐ? rewards₀ c)) interval)
 
     ∙ ⟦ e , pp , cc ⟧ ⊢ ⟦ ⟦ voteDelegs , stakeDelegs , applyWithdrawals withdrawals rewards , depositsᵈ ⟧ , pState , ⟦ refreshedDReps , ccHotKeys , depositsᵍ ⟧ ⟧ ⇀⦇ DCertsOf txTop  ,CERTS⦈ ⟦ ⟦ voteDelegs' , stakeDelegs' , rewards' , depositsᵈ' ⟧ , pState' , gState' ⟧
 
