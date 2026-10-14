@@ -40,7 +40,7 @@ AddrToSymbolic : Addr → SAddr
 AddrToSymbolic (inj₁ record { net = net ; pay = pay ; stake = stake })
   = inj₁ (record { net = net ; pay = credToSymbolic pay ; stake = maybe (λ x → just (credToSymbolic x)) nothing stake })
 AddrToSymbolic (inj₂ record { net = net ; pay = pay ; attrsSize = attrsSize })
-  = inj₂ (record { net = net ; pay = credToSymbolic pay ; attrsSize = attrsSize })
+  = inj₂ (record { net = net ; pay = KeyHashObj pay ; attrsSize = attrsSize })
 
 RwdAddrToSymbolic : RewardAddress → SRewardAddress
 RwdAddrToSymbolic record { net = net ; stake = stake } = record { net = net ; stake = credToSymbolic stake }

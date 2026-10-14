@@ -96,7 +96,7 @@ record BaseAddr : Type where
 record BootstrapAddr : Type where
   field
     net        : Network
-    pay        : Credential
+    pay        : KeyHash
     attrsSize  : ℕ
 
 record RewardAddress : Type where
@@ -152,13 +152,11 @@ instance
 
 ```agda
 VKeyBaseAddr         = Σ[ addr ∈ BaseAddr       ] isVKey    (addr .pay)
-VKeyBootstrapAddr    = Σ[ addr ∈ BootstrapAddr  ] isVKey    (addr .pay)
 ScriptBaseAddr       = Σ[ addr ∈ BaseAddr       ] isScript  (addr .pay)
-ScriptBootstrapAddr  = Σ[ addr ∈ BootstrapAddr  ] isScript  (addr .pay)
 
 Addr        = BaseAddr        ⊎ BootstrapAddr
-VKeyAddr    = VKeyBaseAddr    ⊎ VKeyBootstrapAddr
-ScriptAddr  = ScriptBaseAddr  ⊎ ScriptBootstrapAddr
+VKeyAddr    = VKeyBaseAddr    ⊎ BootstrapAddr
+ScriptAddr  = ScriptBaseAddr
 ```
 
 *Helper functions*
@@ -177,7 +175,7 @@ isScriptRewardAddress  = isScript ∘ CredentialOf
 <!--
 ```agda
 payCred (inj₁ record {pay = pay}) = pay
-payCred (inj₂ record {pay = pay}) = pay
+payCred (inj₂ record {pay = pay}) = (KeyHashObj pay)
 
 stakeCred (inj₁ record {stake = stake}) = stake
 stakeCred (inj₂ _) = nothing
@@ -216,7 +214,6 @@ _ = isScriptRewardAddress ⁇¹ ∋ it
 
 getScriptHash : ∀ a → isScriptAddr a → ScriptHash
 getScriptHash (inj₁ _) (SHisScript sh) = sh
-getScriptHash (inj₂ _) (SHisScript sh) = sh
 
 instance abstract
   unquoteDecl DecEq-BaseAddr DecEq-BootstrapAddr DecEq-RewardAddress = derive-DecEq
