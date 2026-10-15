@@ -20,6 +20,10 @@ capacity deposit records.
    balance and the total of the records both fall by that amount
    (`UTXO-invalid`{.AgdaFunction}).
 
+The rules do not check that the store can pay what a step takes from it
+(DS-STATE-SOLVENCY), so the two store lemmas assume it; the batch-level proof
+discharges that assumption from solvency of the initial state.
+
 These are composed over a whole batch in `Ledger.Properties.DepositStore`{.AgdaModule}.
 
 As with `balance-∪`{.AgdaFunction} and `split-balance`{.AgdaFunction} in the
@@ -43,7 +47,8 @@ open import Ledger.Prelude
 open import Ledger.Dijkstra.Specification.Utxo txs abs
 
 open import Data.Nat.Base using () renaming (_+_ to _+ᴺ_)
-open import Data.Nat.Properties using (+-cancelʳ-≡; m∸n+n≡m)
+open import Data.Nat.Properties using (+-cancelʳ-≡; m∸n+n≡m; m≤n+m)
+  renaming (≤-trans to ≤ᴺ-trans; ≤-reflexive to ≤ᴺ-reflexive)
 open import Data.Nat.Tactic.RingSolver using (solve-∀)
 open ≡-Reasoning
 ```
@@ -94,6 +99,14 @@ module Steps
         r₁ = solve-∀
         r₂ : ∀ a b c → a +ᴺ (b +ᴺ c) ≡ a +ᴺ b +ᴺ c
         r₂ = solve-∀
+
+  -- The collateral's released deposits are part of the total.
+  collateral≤total : (recs : UTxODepositRecords) (tx : TopLevelTx)
+    → collateralReleasedUTxODeposits recs tx ≤ totalUTxODeposits recs
+  collateral≤total recs tx =
+    ≤ᴺ-trans (m≤n+m (totalUTxODeposits (recs ∣ CollateralInputsOf tx))
+                    (totalUTxODeposits (recs ∣ CollateralInputsOf tx ᶜ)))
+             (≤ᴺ-reflexive (sym (totalUTxODeposits-split recs (CollateralInputsOf tx))))
 
   -- The common step: applying a transaction's records to `recs` adds the deposits
   -- it allocates and removes those its inputs release, given freshness of the new
@@ -159,6 +172,7 @@ module Steps
   UTXO-store : {Γ : UTxOEnv} {s₀ s₁ : UTxOState} {tx : TopLevelTx}
     → IsValidFlagOf tx ≡ true
     → Γ ⊢ s₀ ⇀⦇ tx ,UTXO⦈ s₁
+    → txTotalNetRelease tx ≤ StoreBalanceOf s₀ + txTotalNetAllocation tx
     → StoreBalanceOf s₁ + txTotalNetRelease tx ≡ StoreBalanceOf s₀ + txTotalNetAllocation tx
 
   UTXO-records : {Γ : UTxOEnv} {s₀ s₁ : UTxOState} {tx : TopLevelTx}
@@ -179,34 +193,35 @@ module Steps
 
 On a failed batch, only the collateral is applied: the deposits of store-backed
 collateral inputs are released from the store to the fee pot, and their records
-removed (DS-COLL-002, DS-COLL-004).
+removed (DS-COLLATERAL-SURPLUS, DS-COLLATERAL-SETTLEMENT).
 
 ```agda
   UTXO-invalid : {Γ : UTxOEnv} {s₀ s₁ : UTxOState} {tx : TopLevelTx}
     → IsValidFlagOf tx ≡ false
     → Γ ⊢ s₀ ⇀⦇ tx ,UTXO⦈ s₁
     → let released = collateralReleasedUTxODeposits (UTxODepositRecordsOf s₀) tx in
-      StoreBalanceOf s₁ + released ≡ StoreBalanceOf s₀
+      released ≤ StoreBalanceOf s₀
+    → StoreBalanceOf s₁ + released ≡ StoreBalanceOf s₀
       × totalUTxODeposits (UTxODepositRecordsOf s₁) + released
         ≡ totalUTxODeposits (UTxODepositRecordsOf s₀)
 ```
 
 <!--
 ```agda
-  UTXO-store {tx = tx} isV (UTXO-⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ solvent _ _ _ _ _ _ _ _) =
+  UTXO-store {tx = tx} isV (UTXO-⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _) canPay =
     trans (cong (_+ txTotalNetRelease tx) (if-true StoreBalanceOf (IsValidFlagOf tx) isV))
-          (m∸n+n≡m (solvent isV))
+          (m∸n+n≡m canPay)
 
-  UTXO-records {Γ} {s₀} {s₁} {tx} isV disj (UTXO-⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _) =
+  UTXO-records {Γ} {s₀} {s₁} {tx} isV disj (UTXO-⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _) =
     trans (records-step (PParamsOf Γ) tx (UTxODepositRecordsOf s₀) disj)
           (cong (λ r → totalUTxODeposits r + releasedUTxODeposits (UTxODepositRecordsOf s₀) tx)
                 (sym (if-true UTxODepositRecordsOf (IsValidFlagOf tx) isV)))
 
-  UTXO-reconcile (UTXO-⋯ _ _ _ _ _ _ _ _ _ _ _ _ (_ , _ , _ , reconcile , _) _ _ _ _ _ _ _ _ _) = reconcile
+  UTXO-reconcile (UTXO-⋯ _ _ _ _ _ _ _ _ _ _ _ _ (_ , _ , _ , reconcile , _) _ _ _ _ _ _ _) = reconcile
 
-  UTXO-invalid {s₀ = s₀} {tx = tx} isI (UTXO-⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ solvent _ _ _ _ _ _ _) =
+  UTXO-invalid {s₀ = s₀} {tx = tx} isI (UTXO-⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _) canPay =
       trans (cong (_+ released) (if-false StoreBalanceOf (IsValidFlagOf tx) isI))
-            (m∸n+n≡m (solvent isI))
+            (m∸n+n≡m canPay)
     , trans (cong (λ r → totalUTxODeposits r + released)
                   (if-false UTxODepositRecordsOf (IsValidFlagOf tx) isI))
             (sym (totalUTxODeposits-split recs₀ (CollateralInputsOf tx)))

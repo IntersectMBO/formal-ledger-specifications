@@ -39,6 +39,10 @@ instance
                                             • fieldPrefix "sue"
   Conv-SubUTxOEnv = autoConvert SubUTxOEnv
 
+  HsTy-DepositStore = autoHsType DepositStore ⊣ withConstructor "MkDepositStore"
+                                                • fieldPrefix "ds"
+  Conv-DepositStore = autoConvert DepositStore
+
   HsTy-UTxOState = autoHsType UTxOState ⊣ withConstructor "MkUTxOState"
                                           • fieldPrefix "us"
   Conv-UTxOState = autoConvert UTxOState

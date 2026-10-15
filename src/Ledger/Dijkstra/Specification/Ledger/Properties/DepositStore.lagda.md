@@ -5,18 +5,22 @@ source_path: src/Ledger/Dijkstra/Specification/Ledger/Properties/DepositStore.la
 
 # Properties of <span class="AgdaDatatype">LEDGER</span>: DepositStore Solvency {#thm:LEDGER-store}
 
-This module proves DS-STORE-001: the DepositStore stays solvent.  A state is
+This module proves DS-STATE-SOLVENCY: the DepositStore stays solvent.  A state is
 *solvent* when the store balance covers the total of the UTxO capacity deposits
-recorded for live store-backed outputs:
+allocated to live store-backed outputs:
 
-    totalUTxODeposits utxoDepositRecords ≤ storeBalance
+    totalUTxODeposits allocations ≤ balance
 
-We prove the stronger statement that every `LEDGER`{.AgdaDatatype} step preserves
-the *margin* between the two, `storeBalance − totalUTxODeposits`, on both the
-successful and the failed path (`LEDGER-margin`{.AgdaFunction}).  Solvency is
-therefore preserved (`LEDGER-solvent`{.AgdaFunction}), and so is exact coverage:
-starting from the empty store and no records (DS-STORE-004), the store always holds
-exactly what it owes.
+We prove the stronger statement that every `LEDGER`{.AgdaDatatype} step from a
+solvent state preserves the *margin* between the two, `balance − totalUTxODeposits`,
+on both the successful and the failed path (`LEDGER-margin`{.AgdaFunction};
+DS-STATE-BALANCE).  Solvency is therefore preserved (`LEDGER-solvent`{.AgdaFunction}),
+and so is exact coverage: starting from the empty store (DS-STATE-INITIALIZATION),
+the store always holds exactly what it owes.
+
+As the rules document requires, this is a property of the rules, not a check in
+them: the `UTXO`{.AgdaDatatype} rule has no solvency premise.  Solvency of the
+initial state is what guarantees that the store can pay each step.
 
 ## Proof Strategy
 
@@ -56,7 +60,7 @@ module Ledger.Dijkstra.Specification.Ledger.Properties.DepositStore
   where
 
 open import Data.Nat.Base using () renaming (_+_ to _+ᴺ_)
-open import Data.Nat.Properties using (+-cancelʳ-≡; +-cancelˡ-≤; +-monoˡ-≤; +-comm)
+open import Data.Nat.Properties using (+-cancelʳ-≡; +-cancelˡ-≤; +-monoˡ-≤; +-comm; m≤n+m)
   renaming (≤-trans to ≤ᴺ-trans; ≤-reflexive to ≤ᴺ-reflexive)
 open import Data.Nat.Tactic.RingSolver using (solve-∀)
 
@@ -133,17 +137,42 @@ module LEDGER-Store
         r₃ : ∀ a b c → a +ᴺ b +ᴺ c ≡ a +ᴺ (c +ᴺ b)
         r₃ = solve-∀
 
-    -- The whole valid batch: from the subtransactions (I), the top-level step (II),
-    -- the reconciliation (III) and the store update (IV), the balance and the
-    -- total change by the same amount.
-    batch-arith : ∀ P₀ P₁ P₂ T₀ T₁ T₂ A R TA TR SA SR
-      → P₁ ≡ P₀
+    -- The records over a whole valid batch: from the subtransactions (I), the
+    -- top-level step (II) and the reconciliation (III), the total of the records
+    -- changes by the batch's declared net change.
+    records-arith : ∀ T₀ T₁ T₂ A R TA TR SA SR
       → T₀ + SA ≡ T₁ + SR            -- (I)
       → T₁ + A ≡ T₂ + R              -- (II)
       → A + TR + SA ≡ R + TA + SR    -- (III)
+      → T₂ + TR ≡ T₀ + TA
+    records-arith T₀ T₁ T₂ A R TA TR SA SR I II III =
+      +-cancelʳ-≡ (R + SA) (T₂ + TR) (T₀ + TA) $ begin
+        T₂ + TR + (R + SA)    ≡⟨ r₁ T₂ TR R SA ⟩
+        T₂ + R + TR + SA      ≡˘⟨ cong (λ x → x + TR + SA) II ⟩
+        T₁ + A + TR + SA      ≡⟨ r₂ T₁ A TR SA ⟩
+        T₁ + (A + TR + SA)    ≡⟨ cong (T₁ +_) III ⟩
+        T₁ + (R + TA + SR)    ≡⟨ r₃ T₁ R TA SR ⟩
+        T₁ + SR + R + TA      ≡˘⟨ cong (λ x → x + R + TA) I ⟩
+        T₀ + SA + R + TA      ≡⟨ r₄ T₀ SA R TA ⟩
+        T₀ + TA + (R + SA)    ∎
+      where
+        r₁ : ∀ t₂ w r sa → t₂ +ᴺ w +ᴺ (r +ᴺ sa) ≡ t₂ +ᴺ r +ᴺ w +ᴺ sa
+        r₁ = solve-∀
+        r₂ : ∀ t₁ a w sa → t₁ +ᴺ a +ᴺ w +ᴺ sa ≡ t₁ +ᴺ (a +ᴺ w +ᴺ sa)
+        r₂ = solve-∀
+        r₃ : ∀ t₁ r d sr → t₁ +ᴺ (r +ᴺ d +ᴺ sr) ≡ t₁ +ᴺ sr +ᴺ r +ᴺ d
+        r₃ = solve-∀
+        r₄ : ∀ t₀ sa r d → t₀ +ᴺ sa +ᴺ r +ᴺ d ≡ t₀ +ᴺ d +ᴺ (r +ᴺ sa)
+        r₄ = solve-∀
+
+    -- The whole valid batch: with the records (above) and the store update (IV),
+    -- the balance and the total change by the same amount.
+    batch-arith : ∀ P₀ P₁ P₂ T₀ T₂ TA TR
+      → P₁ ≡ P₀
+      → T₂ + TR ≡ T₀ + TA            -- records
       → P₂ + TR ≡ P₁ + TA            -- (IV)
       → P₂ + T₀ ≡ P₀ + T₂
-    batch-arith P₀ P₁ P₂ T₀ T₁ T₂ A R TA TR SA SR P₁≡ I II III IV =
+    batch-arith P₀ P₁ P₂ T₀ T₂ TA TR P₁≡ records IV =
       +-cancelʳ-≡ TR (P₂ + T₀) (P₀ + T₂) $ begin
         P₂ + T₀ + TR      ≡⟨ swap-right P₂ T₀ TR ⟩
         P₂ + TR + T₀      ≡⟨ cong (_+ T₀) IV ⟩
@@ -155,30 +184,10 @@ module LEDGER-Store
       where
         swap-right : ∀ a b c → a +ᴺ b +ᴺ c ≡ a +ᴺ c +ᴺ b
         swap-right = solve-∀
-        r₁ : ∀ t₂ w r sa → t₂ +ᴺ w +ᴺ (r +ᴺ sa) ≡ t₂ +ᴺ r +ᴺ w +ᴺ sa
-        r₁ = solve-∀
-        r₂ : ∀ t₁ a w sa → t₁ +ᴺ a +ᴺ w +ᴺ sa ≡ t₁ +ᴺ (a +ᴺ w +ᴺ sa)
-        r₂ = solve-∀
-        r₃ : ∀ t₁ r d sr → t₁ +ᴺ (r +ᴺ d +ᴺ sr) ≡ t₁ +ᴺ sr +ᴺ r +ᴺ d
-        r₃ = solve-∀
-        r₄ : ∀ t₀ sa r d → t₀ +ᴺ sa +ᴺ r +ᴺ d ≡ t₀ +ᴺ d +ᴺ (r +ᴺ sa)
-        r₄ = solve-∀
         r₅ : ∀ p a b → p +ᴺ a +ᴺ b ≡ p +ᴺ (b +ᴺ a)
         r₅ = solve-∀
         r₆ : ∀ p a b → p +ᴺ (a +ᴺ b) ≡ p +ᴺ a +ᴺ b
         r₆ = solve-∀
-
-        -- The total of the records changes by the batch's declared net change.
-        records : T₂ + TR ≡ T₀ + TA
-        records = +-cancelʳ-≡ (R + SA) (T₂ + TR) (T₀ + TA) $ begin
-          T₂ + TR + (R + SA)    ≡⟨ r₁ T₂ TR R SA ⟩
-          T₂ + R + TR + SA      ≡˘⟨ cong (λ x → x + TR + SA) II ⟩
-          T₁ + A + TR + SA      ≡⟨ r₂ T₁ A TR SA ⟩
-          T₁ + (A + TR + SA)    ≡⟨ cong (T₁ +_) III ⟩
-          T₁ + (R + TA + SR)    ≡⟨ r₃ T₁ R TA SR ⟩
-          T₁ + SR + R + TA      ≡˘⟨ cong (λ x → x + R + TA) I ⟩
-          T₀ + SA + R + TA      ≡⟨ r₄ T₀ SA R TA ⟩
-          T₀ + TA + (R + SA)    ∎
 
     -- The failed batch: balance and total both fall by the released collateral deposits.
     collateral-arith : ∀ P₀ P₂ T₀ T₂ Rc → P₂ + Rc ≡ P₀ → T₂ + Rc ≡ T₀ → P₂ + T₀ ≡ P₀ + T₂
@@ -235,6 +244,7 @@ module LEDGER-Store
 ```agda
   LEDGER-margin : {Γ : LedgerEnv} {s s' : LedgerState} {tx : TopLevelTx}
     → Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s'
+    → Solvent (UTxOStateOf s)
     → MarginPreserved (UTxOStateOf s) (UTxOStateOf s')
 
   LEDGER-solvent : {Γ : LedgerEnv} {s s' : LedgerState} {tx : TopLevelTx}
@@ -244,38 +254,55 @@ module LEDGER-Store
 
 <!--
 ```agda
-  LEDGER-margin {s = s} {tx = tx} (LEDGER-I {utxoState₁ = u₁} (invalid , _ , utxoStep)) =
-    let (store≡ , total≡) = UTXO-invalid invalid (UTXOW⇒UTXO utxoStep)
+  LEDGER-margin {s = s} {tx = tx} (LEDGER-I {utxoState₁ = u₁} (invalid , _ , utxoStep)) solvent₀ =
+    let (store≡ , total≡) = UTXO-invalid invalid (UTXOW⇒UTXO utxoStep) canPay
     in collateral-arith (StoreBalanceOf u₀) (StoreBalanceOf u₁)
                         (totalUTxODeposits (UTxODepositRecordsOf u₀))
                         (totalUTxODeposits (UTxODepositRecordsOf u₁))
                         (collateralReleasedUTxODeposits (UTxODepositRecordsOf u₀) tx)
                         store≡ total≡
-    where u₀ = UTxOStateOf s
+    where
+      u₀ = UTxOStateOf s
+      -- The released collateral deposits are part of the total, which the store covers.
+      canPay = ≤ᴺ-trans (collateral≤total (UTxODepositRecordsOf u₀) tx) solvent₀
 
   LEDGER-margin {Γ = Γ} {s = s} {tx = tx}
-    (LEDGER-V {utxoState₁ = u₁} {utxoState₂ = u₂} (valid , subStep , _ , _ , utxoStep)) =
-    batch-arith (StoreBalanceOf u₀) (StoreBalanceOf u₁) (StoreBalanceOf u₂)
-                (totalUTxODeposits (UTxODepositRecordsOf u₀))
-                (totalUTxODeposits (UTxODepositRecordsOf u₁))
-                (totalUTxODeposits (UTxODepositRecordsOf u₂))
-                (allocatedUTxODeposits (LedgerEnv.pparams Γ) tx)
-                (releasedUTxODeposits (UTxODepositRecordsOf u₁) tx)
-                (txTotalNetAllocation tx) (txTotalNetRelease tx)
-                (subTxsNetAllocation tx) (subTxsNetRelease tx)
-                (SUBLEDGERS-store subStep)
-                (SUBLEDGERS-records valid subStep)
-                (UTXO-records valid (top-fresh h) h)
-                (UTXO-reconcile h)
-                (UTXO-store valid h)
+    (LEDGER-V {utxoState₁ = u₁} {utxoState₂ = u₂} (valid , subStep , _ , _ , utxoStep)) solvent₀ =
+    batch-arith P₀ P₁ (StoreBalanceOf u₂) T₀ T₂ TA TR P₁≡P₀ records
+                (UTXO-store valid h canPay)
     where
       u₀ = UTxOStateOf s
       h  = UTXOW⇒UTXO utxoStep
+      P₀ = StoreBalanceOf u₀
+      P₁ = StoreBalanceOf u₁
+      T₀ = totalUTxODeposits (UTxODepositRecordsOf u₀)
+      T₂ = totalUTxODeposits (UTxODepositRecordsOf u₂)
+      TA = txTotalNetAllocation tx
+      TR = txTotalNetRelease tx
+
+      P₁≡P₀ : P₁ ≡ P₀
+      P₁≡P₀ = SUBLEDGERS-store subStep
+
+      records : T₂ + TR ≡ T₀ + TA
+      records = records-arith T₀ (totalUTxODeposits (UTxODepositRecordsOf u₁)) T₂
+                  (allocatedUTxODeposits (LedgerEnv.pparams Γ) tx)
+                  (releasedUTxODeposits (UTxODepositRecordsOf u₁) tx)
+                  TA TR (subTxsNetAllocation tx) (subTxsNetRelease tx)
+                  (SUBLEDGERS-records valid subStep)
+                  (UTXO-records valid (top-fresh h) h)
+                  (UTXO-reconcile h)
+
+      -- The batch's net release is at most what the records held plus its net
+      -- allocation, and the store covers the records.
+      canPay : TR ≤ P₁ + TA
+      canPay = subst (λ p → TR ≤ p + TA) (sym P₁≡P₀)
+                 (≤ᴺ-trans (m≤n+m TR T₂)
+                   (≤ᴺ-trans (≤ᴺ-reflexive records) (+-monoˡ-≤ TA solvent₀)))
 
   LEDGER-solvent {s = s} {s' = s'} step solvent₀ =
     +-cancelˡ-≤ T₀ T₂ P₂
       (≤ᴺ-trans (+-monoˡ-≤ T₂ solvent₀)
-               (≤ᴺ-reflexive (trans (sym (LEDGER-margin step)) (+-comm P₂ T₀))))
+               (≤ᴺ-reflexive (trans (sym (LEDGER-margin step solvent₀)) (+-comm P₂ T₀))))
     where
       P₂ = StoreBalanceOf (UTxOStateOf s')
       T₀ = totalUTxODeposits (UTxODepositRecordsOf (UTxOStateOf s))
