@@ -27,14 +27,24 @@ open import Ledger.Dijkstra.Specification.Crypto using (LeiosCryptoStructure)
 open import Ledger.Dijkstra.Specification.Enact govStructure
 open import Ledger.Dijkstra.Specification.Ledger txs abs
 open import Ledger.Dijkstra.Specification.Leios govStructure using (EBCert)
-open import Ledger.Dijkstra.Specification.Leios.Types cryptoStructure leiosCryptoStructure
-  using (Announcement)
 open import Ledger.Dijkstra.Specification.Rewards txs abs
 open import Ledger.Dijkstra.Specification.Utxo txs abs using (totExUnits)
 
-open LeiosCryptoStructure leiosCryptoStructure using (RBHeaderHash)
+open LeiosCryptoStructure leiosCryptoStructure using (EBHash; RBHeaderHash)
 ```
 -->
+
+An **announcement** is the pair a header may carry: the announced EB's
+identifier and its declared byte size.
+
+```agda
+Announcement : Type
+Announcement = EBHash × ℕ
+```
+
+A wrong declared size invalidates nothing (the CIP has honest nodes decline to
+vote instead), so size agreement belongs to the voters' checks, not to block
+validity.
 
 ```agda
 record BHBody : Type where
