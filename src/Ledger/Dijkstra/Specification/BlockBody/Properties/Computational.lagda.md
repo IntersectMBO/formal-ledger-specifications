@@ -23,11 +23,12 @@ open import Ledger.Dijkstra.Specification.BlockBody txs abs
 open import Ledger.Dijkstra.Specification.Enact govStructure
 open import Ledger.Core.Specification.Epoch
 open import Ledger.Dijkstra.Specification.Ledgers.Properties.Computational txs abs
+open import Ledger.Dijkstra.Specification.Leios govStructure using (EBCert)
 open import Ledger.Dijkstra.Specification.Utxo txs abs
 open Computational ⦃...⦄
 open Block
 
-leiosBodyChecksFailure : Bool → Maybe CertifiedEB → List TopLevelTx → String
+leiosBodyChecksFailure : Bool → Maybe EBCert → List TopLevelTx → String
 leiosBodyChecksFailure _     nothing  _ = "certifiedEB is set but the block carries no EB certificate"
 leiosBodyChecksFailure false (just _) _ = "the block carries an EB certificate but certifiedEB is not set"
 leiosBodyChecksFailure true  (just _) _ = "a block carrying an EB certificate carries transactions"
