@@ -25,8 +25,6 @@ open import Ledger.Dijkstra.Foreign.NewEpoch
 open import Ledger.Dijkstra.Foreign.Transaction
 open import Ledger.Dijkstra.Specification.Crypto using (LeiosCryptoStructure)
 open import Ledger.Dijkstra.Specification.Leios DummyGovStructure using (EBCert)
-open import Ledger.Dijkstra.Specification.Leios.Types cryptoStructure leiosCryptoStructure
-  using (EndorserBlock)
 open import Ledger.Dijkstra.Specification.Chain it DummyAbstractFunctions
 open import Ledger.Dijkstra.Specification.Chain.Properties.Computational it DummyAbstractFunctions
 
@@ -46,19 +44,12 @@ instance
                                     • fieldPrefix "ebc"
   Conv-EBCert = autoConvert EBCert
 
-  HsTy-EndorserBlock = autoHsType EndorserBlock ⊣ withConstructor "MkEndorserBlock"
-  Conv-EndorserBlock = autoConvert EndorserBlock
-
-  HsTy-CertifiedEB = autoHsType CertifiedEB ⊣ withConstructor "MkCertifiedEB"
-                                              • fieldPrefix "ceb"
-  Conv-CertifiedEB = autoConvert CertifiedEB
-
 record HSBlock : Type where
   field
     bheader      : BHeader
     bHeaderHash  : RBHeaderHash
     ts           : List TopLevelTx
-    ebCert       : Maybe CertifiedEB
+    ebCert       : Maybe EBCert
     bBodySize    : ℕ
     bBodyHash    : KeyHash
 

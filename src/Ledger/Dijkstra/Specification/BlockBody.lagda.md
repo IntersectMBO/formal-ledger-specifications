@@ -28,7 +28,7 @@ open import Ledger.Dijkstra.Specification.Enact govStructure
 open import Ledger.Dijkstra.Specification.Ledger txs abs
 open import Ledger.Dijkstra.Specification.Leios govStructure using (EBCert)
 open import Ledger.Dijkstra.Specification.Leios.Types cryptoStructure leiosCryptoStructure
-  using (EndorserBlock; Announcement)
+  using (Announcement)
 open import Ledger.Dijkstra.Specification.Rewards txs abs
 open import Ledger.Dijkstra.Specification.Utxo txs abs using (totExUnits)
 
@@ -53,31 +53,27 @@ record BHeader : Type where
     bhsig  : Sig
 ```
 
-A certifying body carries, beside the certificate, the EB it certifies and that
-EB's *closure*: its referenced transactions, resolved and in reference order.
-The rules take the closure as an input and never ask whether data is available,
-so it travels with the certificate.
+A certifying body carries the certificate and nothing else of Leios
+([Ranking Blocks][cip-rb]): the EB it certifies and that EB's *closure*, its
+referenced transactions resolved and in reference order, are not part of the
+block.  The chain-level rules receive them beside the block, resolved by
+consensus, and check them against the certificate; the block itself says only
+that it certifies.
 
 ```agda
-record CertifiedEB : Type where
-  field
-    cert     : EBCert
-    eb       : EndorserBlock
-    closure  : List TopLevelTx
-
 record Block : Type where
   field
     bheader      : BHeader
     bHeaderHash  : RBHeaderHash
     ts           : List TopLevelTx
-    ebCert       : Maybe CertifiedEB
+    ebCert       : Maybe EBCert
     bBodySize    : ℕ
     bBodyHash    : KeyHash
     ≡-bBodySize  : bBodySize ≡ BHBody.hBbsize (BHeader.bhbody bheader)
     ≡-bBodyHash  : bBodyHash ≡ BHBody.bhash (BHeader.bhbody bheader)
 ```
 
-The header hash is an input too: no body contains the hash of its own header,
+The header hash is an input: no body contains the hash of its own header,
 so consensus supplies it, and it is the message a later certificate is verified
 against (`ValidEBCert`{.AgdaRecord} in `Leios`{.AgdaModule}).
 
@@ -106,7 +102,7 @@ certificate, requiring the bit in both directions so that a false bit cannot
 hide a certificate.
 
 ```agda
-leiosBodyChecks : Bool → Maybe CertifiedEB → List TopLevelTx → Type
+leiosBodyChecks : Bool → Maybe EBCert → List TopLevelTx → Type
 leiosBodyChecks certified nothing   _    = certified ≡ false
 leiosBodyChecks certified (just _)  txs  = certified ≡ true × txs ≡ []
 ```
