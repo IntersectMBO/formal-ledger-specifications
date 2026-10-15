@@ -107,14 +107,20 @@ incrBlocks hk b = b ∪⁺ singletonᵐ hk 1
 CIP-164 fixes two rules about a block alone ([Inclusion Rules][cip-inclusion];
 [Step 5][cip-step5]): a header that sets `certified_eb` obliges its body to
 carry a certificate, and a body carrying a certificate carries no transactions
-of its own.  `leiosBodyChecks`{.AgdaFunction} states both by cases on the
-certificate, requiring the bit in both directions so that a false bit cannot
-hide a certificate.
+of its own.  `ValidLeiosBlock`{.AgdaFunction} states both, by cases on the
+body's certificate, requiring the bit in both directions so that a false bit
+cannot hide a certificate.
 
 ```agda
-leiosBodyChecks : Bool → Maybe EBCert → List TopLevelTx → Type
-leiosBodyChecks certified nothing   _    = certified ≡ false
-leiosBodyChecks certified (just _)  txs  = certified ≡ true × txs ≡ []
+certifiedBit : Block → Bool
+certifiedBit b = BHBody.certifiedEB (BHeader.bhbody (Block.bheader b))
+
+ValidLeiosBlock : Block → Type
+ValidLeiosBlock b = valid (certifiedBit b) (Block.ebCert b) (Block.ts b)
+  where
+    valid : Bool → Maybe EBCert → List TopLevelTx → Type
+    valid certified nothing   _    = certified ≡ false
+    valid certified (just _)  txs  = certified ≡ true × txs ≡ []
 ```
 
 The bit is an input the rule checks, not a value computed from the body.  Header
@@ -123,21 +129,22 @@ only if the ledger verifies the bit.
 
 <!--
 ```agda
-leiosBodyChecks? : ∀ certified ebCert txs → Dec (leiosBodyChecks certified ebCert txs)
-leiosBodyChecks? certified nothing  _       = certified ≟ false
-leiosBodyChecks? certified (just _) (_ ∷ _) = no λ { (_ , ()) }
-leiosBodyChecks? certified (just _) []      with certified ≟ true
+ValidLeiosBlock? : ∀ b → Dec (ValidLeiosBlock b)
+ValidLeiosBlock? b with Block.ebCert b | Block.ts b
+... | nothing | _     = certifiedBit b ≟ false
+... | just _  | _ ∷ _ = no λ { (_ , ()) }
+... | just _  | []    with certifiedBit b ≟ true
 ... | yes p = yes (p , refl)
 ... | no ¬p = no (¬p ∘ proj₁)
 
 instance
-  Dec-leiosBodyChecks : ∀ {certified ebCert txs} → leiosBodyChecks certified ebCert txs ⁇
-  Dec-leiosBodyChecks = ⁇ (leiosBodyChecks? _ _ _)
+  Dec-ValidLeiosBlock : ∀ {b} → ValidLeiosBlock b ⁇
+  Dec-ValidLeiosBlock {b} = ⁇ (ValidLeiosBlock? b)
 ```
 -->
 
 The rule requires the body's size and hash to agree with the header, the block
-to pass `leiosBodyChecks`{.AgdaFunction}, the transactions' execution units to
+to satisfy `ValidLeiosBlock`{.AgdaFunction}, the transactions' execution units to
 fit the block limit, and `LEDGERS`{.AgdaDatatype} to accept the transactions.
 The checks that need the announcing block, which `BBODY`{.AgdaDatatype} does
 not see, belong to `CHAIN`{.AgdaDatatype}: the certification delay, the
@@ -170,7 +177,7 @@ data _⊢_⇀⦇_,BBODY⦈_
 
     ∙ block .bBodySize ≡ bhb .hBbsize
     ∙ block .bBodyHash ≡ bhb .bhash
-    ∙ leiosBodyChecks (bhb .certifiedEB) (block .ebCert) txs
+    ∙ ValidLeiosBlock block
     ∙ PParams.maxBlockExUnits pp ≥ᵉ (∑ˡ[ tx ← txs ] totExUnits tx)
     ∙ Γ ⊢ ls ⇀⦇ txs ,LEDGERS⦈ ls'
     ────────────────────────────────
