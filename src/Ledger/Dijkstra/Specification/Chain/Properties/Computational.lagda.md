@@ -26,7 +26,7 @@ open import Ledger.Dijkstra.Specification.Epoch txs abs
 open import Ledger.Dijkstra.Specification.Ledger txs abs
 open import Ledger.Dijkstra.Specification.Ledger.Properties.Computational txs abs
 open import Ledger.Dijkstra.Specification.Leios govStructure
-  using (ValidEBCert; Dec-ValidEBCert)
+  using (EBCert; ValidEBCert; Dec-ValidEBCert)
 open import Ledger.Dijkstra.Specification.Leios.Types cryptoStructure leiosCryptoStructure
   using (hashEB)
 open import Ledger.Dijkstra.Specification.Leios.Validity txs abs using (ValidEB?)
@@ -60,8 +60,8 @@ pendingFailure la with LastAppliedBlock.announcedEB la
 ... | nothing = "the last applied block announced no EB"
 ... | just _  = "the certified EB is not the one the last applied block announced"
 
-module _ (Γ : CertifyEnv) (la : LastAppliedBlock) (ceb : CertifiedEB) where
-  open CertifyEnv Γ; open CertifiedEB ceb
+module _ (Γ : CertifyEnv) (la : LastAppliedBlock) (cert : EBCert) (reb : ResolvedEB) where
+  open CertifyEnv Γ; open ResolvedEB reb
   open LastAppliedBlock la using (headerHash)
   open PParams (PParamsOf enactState) using (leiosQuorumStakeThreshold)
 
@@ -77,46 +77,52 @@ instance
 
 ```agda
   Computational-CERTIFY : Computational _⊢_⇀⦇_,CERTIFY⦈_ String
-  Computational-CERTIFY .computeProof Γ ls nothing = success (ls , CERTIFY-None)
-  Computational-CERTIFY .computeProof Γ ls (just ceb)
+  Computational-CERTIFY .computeProof Γ ls (nothing , nothing) = success (ls , CERTIFY-None)
+  Computational-CERTIFY .computeProof Γ ls (just _ , nothing) =
+    failure "the block carries an EB certificate but no resolved EB came beside it"
+  Computational-CERTIFY .computeProof Γ ls (nothing , just _) =
+    failure "a resolved EB came beside a block that carries no EB certificate"
+  Computational-CERTIFY .computeProof Γ ls (just cert , just reb)
     with pending? (CertifyEnv.lastApplied Γ)
   ... | no _ = failure "the chain has no last applied block, so no EB is pending"
   ... | yes (la , la≡)
-    with pendingEB? Γ la ceb
+    with pendingEB? Γ la cert reb
   ... | no _ = failure (pendingFailure la)
   ... | yes pend
-    with validCert? Γ la ceb
+    with validCert? Γ la cert reb
   ... | no _ = failure "the EB certificate is not valid against the announcing epoch's committee"
   ... | yes vc = do
-    ls₁ , ext ← computeProof _ ls (CertifiedEB.closure ceb)
-    case ValidEB? (CertifiedEB.eb ceb) (CertifiedEB.closure ceb) (ls₁ , ext) of λ where
+    ls₁ , ext ← computeProof _ ls (ResolvedEB.closure reb)
+    case ValidEB? (ResolvedEB.eb reb) (ResolvedEB.closure reb) (ls₁ , ext) of λ where
       (no _)  → failure "the certified EB is not valid in the announcing block's environment"
       (yes v) → success (ls₁ , CERTIFY-EB (la≡ , pend , vc , v , ext))
 
-  Computational-CERTIFY .completeness Γ ls nothing    _   CERTIFY-None = refl
-  Computational-CERTIFY .completeness Γ ls (just ceb) ls₁ (CERTIFY-EB {la = la} (la≡ , pend , vc , v , ext))
+  Computational-CERTIFY .completeness Γ ls (nothing , nothing) _ CERTIFY-None = refl
+  Computational-CERTIFY .completeness Γ ls (just _ , nothing) _ ()
+  Computational-CERTIFY .completeness Γ ls (nothing , just _) _ ()
+  Computational-CERTIFY .completeness Γ ls (just cert , just reb) ls₁ (CERTIFY-EB {la = la} (la≡ , pend , vc , v , ext))
     with pending? (CertifyEnv.lastApplied Γ)
   ... | no ¬pending = ⊥-elim (¬pending (la , la≡))
   ... | yes (la' , la≡')
     with trans (sym la≡') la≡
   ... | refl
-    with pendingEB? Γ la ceb
+    with pendingEB? Γ la cert reb
   ... | no ¬pend = ⊥-elim (¬pend pend)
   ... | yes _
-    with validCert? Γ la ceb
+    with validCert? Γ la cert reb
   ... | no ¬vc = ⊥-elim (¬vc vc)
   ... | yes _
     with recomputeProof ext | completeness _ _ _ _ ext
   ... | success (_ , ext') | refl
-    with ValidEB? (CertifiedEB.eb ceb) (CertifiedEB.closure ceb) (_ , ext')
+    with ValidEB? (ResolvedEB.eb reb) (ResolvedEB.closure reb) (_ , ext')
   ... | no ¬v = ⊥-elim (¬v v)
   ... | yes _ = refl
 ```
 
 ```agda
   Computational-CHAIN : Computational _⊢_⇀⦇_,CHAIN⦈_ String
-  Computational-CHAIN .computeProof Γ cs b = do
-    ls₁ , certStep ← computeProof (certifyEnv cs) (LedgerStateOf cs) (b .Block.ebCert)
+  Computational-CHAIN .computeProof Γ cs (b , reb) = do
+    ls₁ , certStep ← computeProof (certifyEnv cs) (LedgerStateOf cs) (b .Block.ebCert , reb)
     nes , tickStep ← map₁ ⊥-elim $ computeProof {STS = _⊢_⇀⦇_,TICK⦈_} _ _ _
     case delayChecks? (PParamsOf (EpochState.es (NewEpochState.epochState nes))) (cs .ChainState.lastApplied) (b .Block.ebCert) (blockSlot b) of λ where
       (no _)  → failure "the certificate comes before the certification delay has elapsed"
@@ -126,7 +132,7 @@ instance
           (no ¬p) → failure "totalRefScriptsSize > maxRefScriptSizePerBlock"
           (yes p) → success (_ , CHAIN (certStep , tickStep , d , p , bbStep))
 
-  Computational-CHAIN .completeness _ cs b _ (CHAIN {nes = nes} (certStep , tickStep , d , p , bbStep))
+  Computational-CHAIN .completeness _ cs (b , reb) _ (CHAIN {nes = nes} (certStep , tickStep , d , p , bbStep))
     with recomputeProof certStep | completeness _ _ _ _ certStep
   ... | success _ | refl
     with recomputeProof tickStep | completeness _ _ _ _ tickStep
