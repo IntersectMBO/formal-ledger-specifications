@@ -1529,29 +1529,33 @@ d_Computational'45'CHAIN_4004 v0 v1
                                                                                                                          (coe
                                                                                                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4210
                                                                                                                             (coe
-                                                                                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_epochState_4286
+                                                                                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_EpochStateOf_4234
                                                                                                                                (coe
-                                                                                                                                  v11)))
+                                                                                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_HasEpochState'45'NewEpochState_4338)
+                                                                                                                               v11))
                                                                                                                          (coe
                                                                                                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ss_4212
                                                                                                                             (coe
-                                                                                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_epochState_4286
+                                                                                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_EpochStateOf_4234
                                                                                                                                (coe
-                                                                                                                                  v11)))
+                                                                                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_HasEpochState'45'NewEpochState_4338)
+                                                                                                                               v11))
                                                                                                                          (coe
                                                                                                                             v20)
                                                                                                                          (coe
                                                                                                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_es_4216
                                                                                                                             (coe
-                                                                                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_epochState_4286
+                                                                                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_EpochStateOf_4234
                                                                                                                                (coe
-                                                                                                                                  v11)))
+                                                                                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_HasEpochState'45'NewEpochState_4338)
+                                                                                                                               v11))
                                                                                                                          (coe
                                                                                                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4218
                                                                                                                             (coe
-                                                                                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_epochState_4286
+                                                                                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_EpochStateOf_4234
                                                                                                                                (coe
-                                                                                                                                  v11))))
+                                                                                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_HasEpochState'45'NewEpochState_4338)
+                                                                                                                               v11)))
                                                                                                                       (coe
                                                                                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ru_4288
                                                                                                                          (coe
