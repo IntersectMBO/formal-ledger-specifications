@@ -17,7 +17,7 @@ open import Ledger.Prelude
 open import Ledger.Dijkstra.Specification.Enact govStructure
 open import Ledger.Dijkstra.Specification.Ledger txs abs
 open import Ledger.Dijkstra.Specification.Rewards txs abs
-open import Ledger.Dijkstra.Specification.Utxo txs abs using (totExUnits)
+open import Ledger.Dijkstra.Specification.Utxo txs abs using (totalExUnits)
 
 record BHBody : Type where
   field
@@ -74,7 +74,7 @@ data _⊢_⇀⦇_,BBODY⦈_
 
     ∙ block .bBodySize ≡ bhb .hBbsize
     ∙ block .bBodyHash ≡ bhb .bhash
-    ∙ PParams.maxBlockExUnits pp ≥ᵉ (∑ˡ[ tx ← txs ] totExUnits tx)
+    ∙ (∑ˡ[ tx ← txs ] totalExUnits tx) ≤ᵉᵘ PParams.maxBlockExUnits pp
     ∙ Γ ⊢ ls ⇀⦇ txs ,LEDGERS⦈ ls'
     ────────────────────────────────
     (es , acnt) ⊢ ls , b ⇀⦇ block ,BBODY⦈ (ls' , incrBlocks hk b)

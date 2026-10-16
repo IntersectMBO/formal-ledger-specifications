@@ -23,6 +23,7 @@ open import Ledger.Dijkstra.Specification.Chain txs abs
 open import Ledger.Dijkstra.Specification.Enact govStructure using (EnactState)
 open import Ledger.Dijkstra.Specification.Epoch txs abs
 open import Ledger.Dijkstra.Specification.Ledger txs abs
+open import Ledger.Dijkstra.Specification.Utxo txs abs
 open import Ledger.Dijkstra.Specification.RewardUpdate txs abs
 open import Ledger.Dijkstra.Specification.RewardUpdate.Properties.Computational txs abs
 open import Ledger.Prelude
@@ -36,8 +37,8 @@ module _
   (open PParams ∣ pparams ∣ using (maxRefScriptSizePerBlock))
   (ts : List TopLevelTx)
   where
-  refScriptSize≤?Bound : Dec (totalRefScriptsSize ls ts ≤ maxRefScriptSizePerBlock)
-  refScriptSize≤?Bound = totalRefScriptsSize ls ts ≤? maxRefScriptSizePerBlock
+  refScriptSize≤?Bound : Dec (∑ˡ[ x ← ts ] totalRefScriptsSize (UTxOOf ls) x ≤ maxRefScriptSizePerBlock)
+  refScriptSize≤?Bound = ∑ˡ[ x ← ts ] totalRefScriptsSize (UTxOOf ls) x ≤? maxRefScriptSizePerBlock
 
 instance
 ```

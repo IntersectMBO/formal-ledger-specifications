@@ -30,7 +30,7 @@ BBODY-computeProof
 BBODY-computeProof Γ (ls , _) block
   using maxBlockExUnits ← PParams.maxBlockExUnits (PParamsOf (proj₁ Γ))
   using sumTotExUnits ← (∑ˡ[ tx ← block .ts ] totExUnits tx)
-  with Dec (maxBlockExUnits ≥ᵉ sumTotExUnits) ∋ dec
+  with Dec (sumTotExUnits ≤ᵉᵘ maxBlockExUnits) ∋ dec
 ... | yes p = do
     _ , lsStep ← computeProof _ ls (block .ts)
     success
@@ -51,7 +51,7 @@ BBODY-completeness
 BBODY-completeness Γ s block _ (BBODY-Block-Body (_ , _ , p , lsStep))
   using maxBlockExUnits ← PParams.maxBlockExUnits (PParamsOf (proj₁ Γ))
   using sumTotExUnits ← (∑ˡ[ tx ← block .ts ] totExUnits tx)
-  with Dec (maxBlockExUnits ≥ᵉ sumTotExUnits) ∋ dec
+  with Dec (sumTotExUnits ≤ᵉᵘ maxBlockExUnits) ∋ dec
 ... | no ¬p = ⊥-elim $ ¬p p
 ... | yes _
     with recomputeProof lsStep | completeness _ _ _ _ lsStep
