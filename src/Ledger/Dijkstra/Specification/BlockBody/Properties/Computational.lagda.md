@@ -38,8 +38,8 @@ BBODY-computeProof : (Γ : BBodyEnv) (s : BBodyState) (block : Block)
 ```agda
 BBODY-computeProof Γ (ls , _) block
   using maxBlockExUnits ← PParams.maxBlockExUnits (PParamsOf (proj₁ Γ))
-  using sumTotExUnits   ← (∑ˡ[ tx ← block .ts ] totExUnits tx)
-  with ¿ maxBlockExUnits ≥ᵉ sumTotExUnits ¿
+  using sumTotExUnits   ← (∑ˡ[ tx ← block .ts ] totalExUnits tx)
+  with ¿ sumTotExUnits ≤ᵉᵘ maxBlockExUnits ¿
 ... | yes p = do
   _ , lsStep ← computeProof _ ls (block .ts)
   success (_ , BBODY-Block-Body (block .≡-bBodySize , block .≡-bBodyHash , p , lsStep))
@@ -61,8 +61,8 @@ BBODY-completeness : (Γ : BBodyEnv) (s : BBodyState) (block : Block) (s' : BBod
 ```agda
 BBODY-completeness Γ s block _ (BBODY-Block-Body (_ , _ , p , lsStep))
   using maxBlockExUnits ← PParams.maxBlockExUnits (PParamsOf (proj₁ Γ))
-  using sumTotExUnits   ← (∑ˡ[ tx ← block .ts ] totExUnits tx)
-  with ¿ maxBlockExUnits ≥ᵉ sumTotExUnits ¿
+  using sumTotExUnits   ← (∑ˡ[ tx ← block .ts ] totalExUnits tx)
+  with ¿ sumTotExUnits ≤ᵉᵘ maxBlockExUnits ¿
 ... | no ¬p = ⊥-elim $ ¬p p
 ... | yes _
     with recomputeProof lsStep | completeness _ _ _ _ lsStep

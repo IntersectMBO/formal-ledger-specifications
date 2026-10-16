@@ -31,7 +31,7 @@ open import Ledger.Prelude
 open import Data.List.Relation.Unary.Unique.Propositional using (Unique)
 open import Data.List.Relation.Unary.Unique.DecPropositional using (unique?)
 open import Ledger.Dijkstra.Specification.Ledger txs abs
-open import Ledger.Dijkstra.Specification.Utxo txs abs using (totExUnits; refScriptsSize)
+open import Ledger.Dijkstra.Specification.Utxo txs abs using (totalExUnits; totalRefScriptsSize)
 open import Ledger.Dijkstra.Specification.Leios.Types cryptoStructure leiosCryptoStructure
 open import Ledger.Dijkstra.Specification.Crypto using (LeiosCryptoStructure)
 open LeiosCryptoStructure leiosCryptoStructure using (TxRefHash)
@@ -65,8 +65,8 @@ module _ {Γ : LedgerEnv} {ls : LedgerState} where
     field
       ebSizeOK          : ebSize eb ≤ leiosMaxEBSize
       txsSizeOK         : ∑ˡ[ tx ← closure ] SizeOf tx ≤ leiosMaxEBTxsSize
-      totExUnitsOK      : leiosMaxEBExUnits ≥ᵉ ∑ˡ[ tx ← closure ] totExUnits tx
-      refScriptsSizeOK  : ∑ˡ[ tx ← closure ] refScriptsSize tx (UTxOOf ls) ≤ leiosMaxRefScriptSizePerEB
+      totExUnitsOK      : ∑ˡ[ tx ← closure ] totalExUnits tx ≤ᵉᵘ leiosMaxEBExUnits
+      refScriptsSizeOK  : ∑ˡ[ tx ← closure ] totalRefScriptsSize (UTxOOf ls) tx ≤ leiosMaxRefScriptSizePerEB
 ```
 
 The fields of `WithinEBBounds`{.AgdaRecord} are the endorser-block bounds of
@@ -130,8 +130,8 @@ module _ {Γ : LedgerEnv} {ls : LedgerState} where
       (λ w → let open WithinEBBounds w in ebSizeOK , txsSizeOK , totExUnitsOK , refScriptsSizeOK)
       ¿ ebSize eb ≤ leiosMaxEBSize
       × ∑ˡ[ tx ← closure ] SizeOf tx ≤ leiosMaxEBTxsSize
-      × leiosMaxEBExUnits ≥ᵉ ∑ˡ[ tx ← closure ] totExUnits tx
-      × ∑ˡ[ tx ← closure ] refScriptsSize tx (UTxOOf ls) ≤ leiosMaxRefScriptSizePerEB ¿
+      × ∑ˡ[ tx ← closure ] totalExUnits tx ≤ᵉᵘ leiosMaxEBExUnits
+      × ∑ˡ[ tx ← closure ] totalRefScriptsSize (UTxOOf ls) tx ≤ leiosMaxRefScriptSizePerEB ¿
 
   -- Given the extension, the remaining conditions decide validity.
   ValidEB? : ∀ eb closure → (∃[ ls' ] Γ ⊢ ls ⇀⦇ closure ,LEDGERS⦈ ls') → Dec (ValidEB {Γ} {ls} eb closure)
