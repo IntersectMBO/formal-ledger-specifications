@@ -32,9 +32,9 @@ open import Ledger.Dijkstra.Specification.Epoch txs abs
 open import Ledger.Dijkstra.Specification.Gov govStructure
 open import Ledger.Dijkstra.Specification.Ledger txs abs
 open import Ledger.Dijkstra.Specification.Leios govStructure
-  using (LeiosCommittee; ValidEBCert; certificationDelay)
+  using (EBCert; LeiosCommittee; ValidEBCert; certificationDelay)
 open import Ledger.Dijkstra.Specification.Leios.Types cryptoStructure leiosCryptoStructure
-  using (Announcement; hashEB)
+  using (EndorserBlock; hashEB)
 open import Ledger.Dijkstra.Specification.Leios.Validity txs abs using (ValidEB)
 open import Ledger.Prelude; open Equivalence
 open import Ledger.Dijkstra.Specification.Ratify govStructure
@@ -150,9 +150,22 @@ pendingEB la = proj₁ <$> LastAppliedBlock.announcedEB la
 announced, if it announced one; the declared size beside it is no validity
 condition (see `Leios.Types`{.AgdaModule}).
 
-Without a certificate the ledger state is unchanged.  With one, the block
-certifies the EB its predecessor announced, and the branch requires the
-following, all in the announcing block's world:
+The block carries its certificate alone.  The EB it certifies and that EB's
+*closure*, its referenced transactions resolved and in reference order, reach
+the chain rule beside the block; the rules take the closure as an input and
+never ask whether data is available.
+
+```agda
+record ResolvedEB : Type where
+  field
+    eb       : EndorserBlock
+    closure  : List TopLevelTx
+```
+
+Without a certificate, and with no resolved EB beside the block, the ledger
+state is unchanged.  With both, the block certifies the EB its predecessor
+announced, and the branch requires the following, all in the announcing
+block's world:
 
 +  the chain has a last applied block, and the EB it announced is the certified
    one ([Step 5][cip-step5], rule 1);
@@ -167,19 +180,22 @@ following, all in the announcing block's world:
    announcing block left, and the resulting state is the one the chain rule
    continues from ([Ledger Management][cip-ledger]).
 
+A certificate without its resolved EB, or a resolved EB beside a block that
+carries no certificate, admits no transition.
+
 ```agda
-data _⊢_⇀⦇_,CERTIFY⦈_ : CertifyEnv → LedgerState → Maybe CertifiedEB → LedgerState → Type where
+data _⊢_⇀⦇_,CERTIFY⦈_ : CertifyEnv → LedgerState → Maybe EBCert × Maybe ResolvedEB → LedgerState → Type where
 
   CERTIFY-None : ∀ {Γ : CertifyEnv} {ls : LedgerState} →
       ────────────────────────────────
-      Γ ⊢ ls ⇀⦇ nothing ,CERTIFY⦈ ls
+      Γ ⊢ ls ⇀⦇ (nothing , nothing) ,CERTIFY⦈ ls
 
-  CERTIFY-EB : ∀ {Γ : CertifyEnv} {ls ls₁ : LedgerState} {ceb : CertifiedEB} {la : LastAppliedBlock}
+  CERTIFY-EB : ∀ {Γ : CertifyEnv} {ls ls₁ : LedgerState} {cert : EBCert} {reb : ResolvedEB} {la : LastAppliedBlock}
 ```
 
 <!--
 ```agda
-    → let open CertifyEnv Γ; open CertifiedEB ceb
+    → let open CertifyEnv Γ; open ResolvedEB reb
           open LastAppliedBlock la renaming (slot to announcingSlot)
           open EnactState enactState using (constitution)
           open PParams (PParamsOf enactState) using (leiosQuorumStakeThreshold) in
@@ -196,7 +212,7 @@ data _⊢_⇀⦇_,CERTIFY⦈_ : CertifyEnv → LedgerState → Maybe CertifiedEB
     ∙ ValidEB {Γ'} {ls} eb closure
     ∙ Γ' ⊢ ls ⇀⦇ closure ,LEDGERS⦈ ls₁
       ────────────────────────────────
-      Γ ⊢ ls ⇀⦇ just ceb ,CERTIFY⦈ ls₁
+      Γ ⊢ ls ⇀⦇ (just cert , just reb) ,CERTIFY⦈ ls₁
 ```
 
 Two decisions fix the world the branch reads, and both follow from one
@@ -217,14 +233,15 @@ instance names the failed premise.
 
 ## The <span class="AgdaDatatype">CHAIN</span> Transition System {#sec:the-chain-transition-system}
 
-The chain rule applies a block in three steps.  The certificate branch takes
+The chain rule's signal is the block together with the resolved EB it certifies,
+if it carries a certificate.  The rule applies a block in three steps.  The certificate branch takes
 the ledger state the last applied block left to `ls₁`{.AgdaBound}; the
 new-epoch state with that ledger state ticks to the block's slot, so an epoch
 boundary between the two blocks sees the closure's effects in its reward
 update, ratification, and snapshots, though not in enactment, which installs
 what the previous boundary ratified; and the block's body runs on the ticked
 state, under the reference-script bound as before.  A certifying block carries
-no transactions of its own, by `leiosBodyChecks`{.AgdaFunction}, so its body
+no transactions of its own, by `ValidLeiosBlock`{.AgdaFunction}, so its body
 contributes the bookkeeping alone.
 
 Between the tick and the body, the rule checks the certification delay: a
@@ -237,7 +254,7 @@ check by cases: a block without a certificate owes nothing, a certificate with
 no last applied block has nothing to certify, and otherwise the slots compare.
 
 ```agda
-delayChecks : PParams → Maybe LastAppliedBlock → Maybe CertifiedEB → Slot → Type
+delayChecks : PParams → Maybe LastAppliedBlock → Maybe EBCert → Slot → Type
 delayChecks _  _         nothing   _ = ⊤
 delayChecks _  nothing   (just _)  _ = ⊥
 delayChecks pp (just la) (just _)  s = LastAppliedBlock.slot la + certificationDelay pp ≤ s
@@ -257,9 +274,9 @@ instance
 -->
 
 ```agda
-data _⊢_⇀⦇_,CHAIN⦈_ : ⊤ → ChainState → Block → ChainState → Type where
+data _⊢_⇀⦇_,CHAIN⦈_ : ⊤ → ChainState → Block × Maybe ResolvedEB → ChainState → Type where
 
-  CHAIN : ∀ {bcur'} {b : Block} {nes : NewEpochState} {cs : ChainState} {ls₁ : LedgerState}
+  CHAIN : ∀ {bcur'} {b : Block} {reb : Maybe ResolvedEB} {nes : NewEpochState} {cs : ChainState} {ls₁ : LedgerState}
 ```
 
 <!--
@@ -277,12 +294,12 @@ data _⊢_⇀⦇_,CHAIN⦈_ : ⊤ → ChainState → Block → ChainState → Ty
                    ; lastApplied    = just ⟦ slot , bHeaderHash , announcedEB ⟧
                    }
     in
-    ∙ certifyEnv cs ⊢ LedgerStateOf cs ⇀⦇ ebCert ,CERTIFY⦈ ls₁
+    ∙ certifyEnv cs ⊢ LedgerStateOf cs ⇀⦇ (ebCert , reb) ,CERTIFY⦈ ls₁
     ∙ tt ⊢ nes₁ ⇀⦇ slot ,TICK⦈ nes
     ∙ delayChecks (PParamsOf es) lastApplied ebCert slot
     ∙ (es , acnt) ⊢ (ls , bcur) ⇀⦇ b ,BBODY⦈ (ls' , bcur')
       ────────────────────────────────
-      _ ⊢ cs ⇀⦇ b ,CHAIN⦈ cs'
+      _ ⊢ cs ⇀⦇ (b , reb) ,CHAIN⦈ cs'
 ```
 
 The resulting chain state records the block as the last applied block, with
