@@ -5,10 +5,9 @@ source_path: src/Ledger/Dijkstra/Specification/Leios/Types.lagda.md
 
 ## Leios Primitive Types {#sec:leios-primitive-types}
 
-Leios adds the following objects to the chain's traffic:
-
-+  an endorser block (EB);
-+  a header announcement that names the EB;
+Leios adds the endorser block (EB) to the chain's traffic; this module defines
+it and its identifier.  The announcement that names an EB is a header field,
+defined with the block in `BlockBody`{.AgdaModule}.
 
 The hash carriers (`TxRefHash`{.AgdaField}, `EBHash`{.AgdaField},
 `hashEBRefs`{.AgdaField}) are fields of the era's
@@ -73,23 +72,6 @@ data arrives.
 What `hashEB`{.AgdaFunction} deliberately does not fix is the preimage, since
 `hashEBRefs`{.AgdaField} is abstract and no byte-exact serialization of the
 reference list is pinned.[^1]
-
-### Announcements
-
-```agda
-Announcement : Type
-Announcement = EBHash × ℕ
-```
-
-An **announcement** is the pair a ranking-block (RB) header may carry; it consists
-of the announced EB's identifier and declared byte size.
-
-A wrong declared size invalidates nothing (the CIP has honest nodes decline to
-vote instead), so size agreement belongs to the voters' checks, not to block
-validity.
-
-The header also flags whether its own body carries a certificate; the spec reads
-that off the body itself, so the flag has no counterpart here.
 
 <!--
 ```agda
