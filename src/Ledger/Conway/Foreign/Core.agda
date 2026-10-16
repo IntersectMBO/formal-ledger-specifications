@@ -48,9 +48,6 @@ module Implementation where
   ExUnits      = ℕ × ℕ
   ExUnit-CommutativeMonoid =
     Conversion.fromBundle (commutativeMonoid +-0-commutativeMonoid +-0-commutativeMonoid)
-  ≥ᵉ-Dec = _≡_ {A = ExUnits} ⁇² ∋ it
-  _≥ᵉ_ : ExUnits → ExUnits → Type
-  _≥ᵉ_ = _≡_
 
   instance
     Show-ExUnits : Show ExUnits
