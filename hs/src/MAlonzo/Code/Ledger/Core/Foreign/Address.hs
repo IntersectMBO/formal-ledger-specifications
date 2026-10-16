@@ -35,7 +35,7 @@ data Credential = KeyHashObj Integer | ScriptObj Integer
   deriving (Show, Eq, Generic)
 data BaseAddr = BaseAddr {baseNet :: Integer, basePay :: MAlonzo.Code.Ledger.Core.Foreign.Address.Credential, baseStake :: (Maybe MAlonzo.Code.Ledger.Core.Foreign.Address.Credential)}
   deriving (Show, Eq, Generic)
-data BootstrapAddr = BootstrapAddr {bootNet :: Integer, bootPay :: MAlonzo.Code.Ledger.Core.Foreign.Address.Credential, bootAttrsSize :: Integer}
+data BootstrapAddr = BootstrapAddr {bootNet :: Integer, bootPay :: Integer, bootAttrsSize :: Integer}
   deriving (Show, Eq, Generic)
 data RewardAddress = RewardAddress {rwdNet :: Integer, rwdStake :: MAlonzo.Code.Ledger.Core.Foreign.Address.Credential}
   deriving (Show, Eq, Generic)
@@ -72,19 +72,19 @@ d_Dec'45'isScript_28 ::
   MAlonzo.Code.Class.Decidable.Core.T__'8263'_10
 d_Dec'45'isScript_28
   = coe
-      MAlonzo.Code.Ledger.Core.Specification.Address.du_Dec'45'isScript_308
+      MAlonzo.Code.Ledger.Core.Specification.Address.du_Dec'45'isScript_300
 -- Ledger.Core.Foreign.Address._.Dec-isVKey
 d_Dec'45'isVKey_30 ::
   MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20 ->
   MAlonzo.Code.Class.Decidable.Core.T__'8263'_10
 d_Dec'45'isVKey_30
   = coe
-      MAlonzo.Code.Ledger.Core.Specification.Address.du_Dec'45'isVKey_294
+      MAlonzo.Code.Ledger.Core.Specification.Address.du_Dec'45'isVKey_286
 -- Ledger.Core.Foreign.Address._.DecEq-BaseAddr
 d_DecEq'45'BaseAddr_32 :: MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 d_DecEq'45'BaseAddr_32
   = coe
-      MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'BaseAddr_346
+      MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'BaseAddr_336
       (coe MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
       (coe MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
       (coe MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
@@ -93,8 +93,7 @@ d_DecEq'45'BootstrapAddr_34 ::
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 d_DecEq'45'BootstrapAddr_34
   = coe
-      MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'BootstrapAddr_348
-      (coe MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
+      MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'BootstrapAddr_338
       (coe MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
       (coe MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
 -- Ledger.Core.Foreign.Address._.DecEq-Credential
@@ -102,7 +101,7 @@ d_DecEq'45'Credential_36 ::
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 d_DecEq'45'Credential_36
   = coe
-      MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_292
+      MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_284
       (coe MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
       (coe MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
 -- Ledger.Core.Foreign.Address._.DecEq-RewardAddress
@@ -110,7 +109,7 @@ d_DecEq'45'RewardAddress_38 ::
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 d_DecEq'45'RewardAddress_38
   = coe
-      MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'RewardAddress_350
+      MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'RewardAddress_340
       (coe MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
       (coe MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
       (coe MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
@@ -164,7 +163,7 @@ d_IsBootstrapAddr'63'_76 ::
   MAlonzo.Code.Class.Decidable.Core.T__'8263'_10
 d_IsBootstrapAddr'63'_76
   = coe
-      MAlonzo.Code.Ledger.Core.Specification.Address.du_IsBootstrapAddr'63'_322
+      MAlonzo.Code.Ledger.Core.Specification.Address.du_IsBootstrapAddr'63'_314
 -- Ledger.Core.Foreign.Address._.IsKeyHashObj
 d_IsKeyHashObj_80 a0 = ()
 -- Ledger.Core.Foreign.Address._.IsKeyHashObj?
@@ -207,250 +206,244 @@ d_ScriptAddr_98 = erased
 -- Ledger.Core.Foreign.Address._.ScriptBaseAddr
 d_ScriptBaseAddr_100 :: ()
 d_ScriptBaseAddr_100 = erased
--- Ledger.Core.Foreign.Address._.ScriptBootstrapAddr
-d_ScriptBootstrapAddr_102 :: ()
-d_ScriptBootstrapAddr_102 = erased
 -- Ledger.Core.Foreign.Address._.Show-Credential
-d_Show'45'Credential_106 ::
+d_Show'45'Credential_104 ::
   MAlonzo.Code.Class.Show.Core.T_Show_10 ->
   MAlonzo.Code.Class.Show.Core.T_Show_10 ->
   MAlonzo.Code.Class.Show.Core.T_Show_10 ->
   MAlonzo.Code.Class.Show.Core.T_Show_10
-d_Show'45'Credential_106 v0 v1 v2
+d_Show'45'Credential_104 v0 v1 v2
   = coe
-      MAlonzo.Code.Ledger.Core.Specification.Address.du_Show'45'Credential_362
+      MAlonzo.Code.Ledger.Core.Specification.Address.du_Show'45'Credential_352
       v1 v2
 -- Ledger.Core.Foreign.Address._.Show-Credential×Coin
-d_Show'45'Credential'215'Coin_108 ::
+d_Show'45'Credential'215'Coin_106 ::
   MAlonzo.Code.Class.Show.Core.T_Show_10 ->
   MAlonzo.Code.Class.Show.Core.T_Show_10 ->
   MAlonzo.Code.Class.Show.Core.T_Show_10 ->
   MAlonzo.Code.Class.Show.Core.T_Show_10
-d_Show'45'Credential'215'Coin_108 v0 v1 v2
+d_Show'45'Credential'215'Coin_106 v0 v1 v2
   = coe
-      MAlonzo.Code.Ledger.Core.Specification.Address.du_Show'45'Credential'215'Coin_366
+      MAlonzo.Code.Ledger.Core.Specification.Address.du_Show'45'Credential'215'Coin_356
       v1 v2
 -- Ledger.Core.Foreign.Address._.Show-RewardAddress
-d_Show'45'RewardAddress_110 ::
+d_Show'45'RewardAddress_108 ::
   MAlonzo.Code.Class.Show.Core.T_Show_10 ->
   MAlonzo.Code.Class.Show.Core.T_Show_10 ->
   MAlonzo.Code.Class.Show.Core.T_Show_10 ->
   MAlonzo.Code.Class.Show.Core.T_Show_10
-d_Show'45'RewardAddress_110
+d_Show'45'RewardAddress_108
   = coe
-      MAlonzo.Code.Ledger.Core.Specification.Address.du_Show'45'RewardAddress_364
+      MAlonzo.Code.Ledger.Core.Specification.Address.du_Show'45'RewardAddress_354
 -- Ledger.Core.Foreign.Address._.VKeyAddr
-d_VKeyAddr_112 :: ()
-d_VKeyAddr_112 = erased
+d_VKeyAddr_110 :: ()
+d_VKeyAddr_110 = erased
 -- Ledger.Core.Foreign.Address._.VKeyBaseAddr
-d_VKeyBaseAddr_114 :: ()
-d_VKeyBaseAddr_114 = erased
--- Ledger.Core.Foreign.Address._.VKeyBootstrapAddr
-d_VKeyBootstrapAddr_116 :: ()
-d_VKeyBootstrapAddr_116 = erased
+d_VKeyBaseAddr_112 :: ()
+d_VKeyBaseAddr_112 = erased
 -- Ledger.Core.Foreign.Address._.Withdrawals
-d_Withdrawals_120 :: ()
-d_Withdrawals_120 = erased
+d_Withdrawals_116 :: ()
+d_Withdrawals_116 = erased
 -- Ledger.Core.Foreign.Address._.WithdrawalsOf
-d_WithdrawalsOf_122 ::
+d_WithdrawalsOf_118 ::
   MAlonzo.Code.Ledger.Core.Specification.Address.T_HasWithdrawals_194 ->
   AgdaAny -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_WithdrawalsOf_122 v0
+d_WithdrawalsOf_118 v0
   = coe
       MAlonzo.Code.Ledger.Core.Specification.Address.d_WithdrawalsOf_202
       (coe v0)
 -- Ledger.Core.Foreign.Address._.getScriptHash
-d_getScriptHash_124 ::
+d_getScriptHash_120 ::
   MAlonzo.Code.Data.Sum.Base.T__'8846'__30 ->
   MAlonzo.Code.Ledger.Core.Specification.Address.T_isScript_78 ->
   Integer
-d_getScriptHash_124
+d_getScriptHash_120
   = coe
-      MAlonzo.Code.Ledger.Core.Specification.Address.du_getScriptHash_340
+      MAlonzo.Code.Ledger.Core.Specification.Address.du_getScriptHash_332
 -- Ledger.Core.Foreign.Address._.isBootstrapAddr
-d_isBootstrapAddr_126 ::
+d_isBootstrapAddr_122 ::
   MAlonzo.Code.Data.Sum.Base.T__'8846'__30 ->
   Maybe
     MAlonzo.Code.Ledger.Core.Specification.Address.T_BootstrapAddr_100
-d_isBootstrapAddr_126
+d_isBootstrapAddr_122
   = coe
-      MAlonzo.Code.Ledger.Core.Specification.Address.du_isBootstrapAddr_290
+      MAlonzo.Code.Ledger.Core.Specification.Address.du_isBootstrapAddr_282
 -- Ledger.Core.Foreign.Address._.isKeyHash
-d_isKeyHash_128 ::
+d_isKeyHash_124 ::
   MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20 ->
   ()
-d_isKeyHash_128 = erased
+d_isKeyHash_124 = erased
 -- Ledger.Core.Foreign.Address._.isKeyHashObj
-d_isKeyHashObj_130 ::
+d_isKeyHashObj_126 ::
   MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20 ->
   Maybe Integer
-d_isKeyHashObj_130
+d_isKeyHashObj_126
   = coe
       MAlonzo.Code.Ledger.Core.Specification.Address.du_isKeyHashObj_46
 -- Ledger.Core.Foreign.Address._.isKeyHashObjᵇ
-d_isKeyHashObj'7495'_132 ::
+d_isKeyHashObj'7495'_128 ::
   MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20 ->
   Bool
-d_isKeyHashObj'7495'_132
+d_isKeyHashObj'7495'_128
   = coe
       MAlonzo.Code.Ledger.Core.Specification.Address.du_isKeyHashObj'7495'_62
 -- Ledger.Core.Foreign.Address._.isScript
-d_isScript_134 a0 = ()
+d_isScript_130 a0 = ()
 -- Ledger.Core.Foreign.Address._.isScriptAddr
-d_isScriptAddr_136 ::
+d_isScriptAddr_132 ::
   MAlonzo.Code.Data.Sum.Base.T__'8846'__30 -> ()
-d_isScriptAddr_136 = erased
+d_isScriptAddr_132 = erased
 -- Ledger.Core.Foreign.Address._.isScriptObj
-d_isScriptObj_138 ::
+d_isScriptObj_134 ::
   MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20 ->
   Maybe Integer
-d_isScriptObj_138
+d_isScriptObj_134
   = coe
       MAlonzo.Code.Ledger.Core.Specification.Address.du_isScriptObj_68
 -- Ledger.Core.Foreign.Address._.isScriptRewardAddress
-d_isScriptRewardAddress_140 ::
+d_isScriptRewardAddress_136 ::
   MAlonzo.Code.Ledger.Core.Specification.Address.T_RewardAddress_116 ->
   ()
-d_isScriptRewardAddress_140 = erased
+d_isScriptRewardAddress_136 = erased
 -- Ledger.Core.Foreign.Address._.isVKey
-d_isVKey_142 a0 = ()
+d_isVKey_138 a0 = ()
 -- Ledger.Core.Foreign.Address._.isVKeyAddr
-d_isVKeyAddr_144 :: MAlonzo.Code.Data.Sum.Base.T__'8846'__30 -> ()
-d_isVKeyAddr_144 = erased
+d_isVKeyAddr_140 :: MAlonzo.Code.Data.Sum.Base.T__'8846'__30 -> ()
+d_isVKeyAddr_140 = erased
 -- Ledger.Core.Foreign.Address._.netId
-d_netId_146 :: MAlonzo.Code.Data.Sum.Base.T__'8846'__30 -> Integer
-d_netId_146
-  = coe MAlonzo.Code.Ledger.Core.Specification.Address.du_netId_266
+d_netId_142 :: MAlonzo.Code.Data.Sum.Base.T__'8846'__30 -> Integer
+d_netId_142
+  = coe MAlonzo.Code.Ledger.Core.Specification.Address.du_netId_258
 -- Ledger.Core.Foreign.Address._.payCred
-d_payCred_148 ::
+d_payCred_144 ::
   MAlonzo.Code.Data.Sum.Base.T__'8846'__30 ->
   MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20
-d_payCred_148
-  = coe MAlonzo.Code.Ledger.Core.Specification.Address.du_payCred_262
+d_payCred_144
+  = coe MAlonzo.Code.Ledger.Core.Specification.Address.du_payCred_254
 -- Ledger.Core.Foreign.Address._.stakeCred
-d_stakeCred_150 ::
+d_stakeCred_146 ::
   MAlonzo.Code.Data.Sum.Base.T__'8846'__30 ->
   Maybe
     MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20
-d_stakeCred_150
+d_stakeCred_146
   = coe
-      MAlonzo.Code.Ledger.Core.Specification.Address.du_stakeCred_264
+      MAlonzo.Code.Ledger.Core.Specification.Address.du_stakeCred_256
 -- Ledger.Core.Foreign.Address._.BaseAddr.net
-d_net_154 ::
+d_net_150 ::
   MAlonzo.Code.Ledger.Core.Specification.Address.T_BaseAddr_84 ->
   Integer
-d_net_154 v0
+d_net_150 v0
   = coe
       MAlonzo.Code.Ledger.Core.Specification.Address.d_net_92 (coe v0)
 -- Ledger.Core.Foreign.Address._.BaseAddr.pay
-d_pay_156 ::
+d_pay_152 ::
   MAlonzo.Code.Ledger.Core.Specification.Address.T_BaseAddr_84 ->
   MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20
-d_pay_156 v0
+d_pay_152 v0
   = coe
       MAlonzo.Code.Ledger.Core.Specification.Address.d_pay_94 (coe v0)
 -- Ledger.Core.Foreign.Address._.BaseAddr.stake
-d_stake_158 ::
+d_stake_154 ::
   MAlonzo.Code.Ledger.Core.Specification.Address.T_BaseAddr_84 ->
   Maybe
     MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20
-d_stake_158 v0
+d_stake_154 v0
   = coe
       MAlonzo.Code.Ledger.Core.Specification.Address.d_stake_96 (coe v0)
 -- Ledger.Core.Foreign.Address._.BootstrapAddr.attrsSize
-d_attrsSize_162 ::
+d_attrsSize_158 ::
   MAlonzo.Code.Ledger.Core.Specification.Address.T_BootstrapAddr_100 ->
   Integer
-d_attrsSize_162 v0
+d_attrsSize_158 v0
   = coe
       MAlonzo.Code.Ledger.Core.Specification.Address.d_attrsSize_112
       (coe v0)
 -- Ledger.Core.Foreign.Address._.BootstrapAddr.net
-d_net_164 ::
+d_net_160 ::
   MAlonzo.Code.Ledger.Core.Specification.Address.T_BootstrapAddr_100 ->
   Integer
-d_net_164 v0
+d_net_160 v0
   = coe
       MAlonzo.Code.Ledger.Core.Specification.Address.d_net_108 (coe v0)
 -- Ledger.Core.Foreign.Address._.BootstrapAddr.pay
-d_pay_166 ::
+d_pay_162 ::
   MAlonzo.Code.Ledger.Core.Specification.Address.T_BootstrapAddr_100 ->
-  MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20
-d_pay_166 v0
+  Integer
+d_pay_162 v0
   = coe
       MAlonzo.Code.Ledger.Core.Specification.Address.d_pay_110 (coe v0)
 -- Ledger.Core.Foreign.Address._.HasAttrSize.AttrSizeOf
-d_AttrSizeOf_176 ::
+d_AttrSizeOf_172 ::
   MAlonzo.Code.Ledger.Core.Specification.Address.T_HasAttrSize_214 ->
   AgdaAny -> Integer
-d_AttrSizeOf_176 v0
+d_AttrSizeOf_172 v0
   = coe
       MAlonzo.Code.Ledger.Core.Specification.Address.d_AttrSizeOf_222
       (coe v0)
 -- Ledger.Core.Foreign.Address._.HasCredential.CredentialOf
-d_CredentialOf_180 ::
+d_CredentialOf_176 ::
   MAlonzo.Code.Ledger.Core.Specification.Address.T_HasCredential_30 ->
   AgdaAny ->
   MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20
-d_CredentialOf_180 v0
+d_CredentialOf_176 v0
   = coe
       MAlonzo.Code.Ledger.Core.Specification.Address.d_CredentialOf_38
       (coe v0)
 -- Ledger.Core.Foreign.Address._.HasMaybeNetworkId.MaybeNetworkIdOf
-d_MaybeNetworkIdOf_184 ::
+d_MaybeNetworkIdOf_180 ::
   MAlonzo.Code.Ledger.Core.Specification.Address.T_HasMaybeNetworkId_174 ->
   AgdaAny -> Maybe Integer
-d_MaybeNetworkIdOf_184 v0
+d_MaybeNetworkIdOf_180 v0
   = coe
       MAlonzo.Code.Ledger.Core.Specification.Address.d_MaybeNetworkIdOf_182
       (coe v0)
 -- Ledger.Core.Foreign.Address._.HasNetworkId.NetworkIdOf
-d_NetworkIdOf_188 ::
+d_NetworkIdOf_184 ::
   MAlonzo.Code.Ledger.Core.Specification.Address.T_HasNetworkId_154 ->
   AgdaAny -> Integer
-d_NetworkIdOf_188 v0
+d_NetworkIdOf_184 v0
   = coe
       MAlonzo.Code.Ledger.Core.Specification.Address.d_NetworkIdOf_162
       (coe v0)
 -- Ledger.Core.Foreign.Address._.HasRewardAddress.RewardAddressOf
-d_RewardAddressOf_192 ::
+d_RewardAddressOf_188 ::
   MAlonzo.Code.Ledger.Core.Specification.Address.T_HasRewardAddress_134 ->
   AgdaAny ->
   MAlonzo.Code.Ledger.Core.Specification.Address.T_RewardAddress_116
-d_RewardAddressOf_192 v0
+d_RewardAddressOf_188 v0
   = coe
       MAlonzo.Code.Ledger.Core.Specification.Address.d_RewardAddressOf_142
       (coe v0)
 -- Ledger.Core.Foreign.Address._.HasWithdrawals.WithdrawalsOf
-d_WithdrawalsOf_196 ::
+d_WithdrawalsOf_192 ::
   MAlonzo.Code.Ledger.Core.Specification.Address.T_HasWithdrawals_194 ->
   AgdaAny -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_WithdrawalsOf_196 v0
+d_WithdrawalsOf_192 v0
   = coe
       MAlonzo.Code.Ledger.Core.Specification.Address.d_WithdrawalsOf_202
       (coe v0)
 -- Ledger.Core.Foreign.Address._.RewardAddress.net
-d_net_208 ::
+d_net_204 ::
   MAlonzo.Code.Ledger.Core.Specification.Address.T_RewardAddress_116 ->
   Integer
-d_net_208 v0
+d_net_204 v0
   = coe
       MAlonzo.Code.Ledger.Core.Specification.Address.d_net_122 (coe v0)
 -- Ledger.Core.Foreign.Address._.RewardAddress.stake
-d_stake_210 ::
+d_stake_206 ::
   MAlonzo.Code.Ledger.Core.Specification.Address.T_RewardAddress_116 ->
   MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20
-d_stake_210 v0
+d_stake_206 v0
   = coe
       MAlonzo.Code.Ledger.Core.Specification.Address.d_stake_124 (coe v0)
 -- Ledger.Core.Foreign.Address.HsTy-Credential
-d_HsTy'45'Credential_220 ::
+d_HsTy'45'Credential_216 ::
   MAlonzo.Code.Class.HasHsType.Core.T_HasHsType_10
-d_HsTy'45'Credential_220 = erased
+d_HsTy'45'Credential_216 = erased
 -- Ledger.Core.Foreign.Address.Conv-Credential
-d_Conv'45'Credential_222 ::
+d_Conv'45'Credential_218 ::
   MAlonzo.Code.Class.Convertible.Core.T_Convertible_10
-d_Conv'45'Credential_222
+d_Conv'45'Credential_218
   = coe
       MAlonzo.Code.Class.Convertible.Core.C_constructor_24
       (coe
@@ -474,13 +467,13 @@ d_Conv'45'Credential_222
                      (coe v1)
               _ -> MAlonzo.RTE.mazUnreachableError))
 -- Ledger.Core.Foreign.Address.HsTy-BaseAddr
-d_HsTy'45'BaseAddr_224 ::
+d_HsTy'45'BaseAddr_220 ::
   MAlonzo.Code.Class.HasHsType.Core.T_HasHsType_10
-d_HsTy'45'BaseAddr_224 = erased
+d_HsTy'45'BaseAddr_220 = erased
 -- Ledger.Core.Foreign.Address.Conv-BaseAddr
-d_Conv'45'BaseAddr_226 ::
+d_Conv'45'BaseAddr_222 ::
   MAlonzo.Code.Class.Convertible.Core.T_Convertible_10
-d_Conv'45'BaseAddr_226
+d_Conv'45'BaseAddr_222
   = coe
       MAlonzo.Code.Class.Convertible.Core.C_constructor_24
       (coe
@@ -519,7 +512,7 @@ d_Conv'45'BaseAddr_226
                         (coe
                            MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
                            (coe MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
-                           (coe d_Conv'45'Credential_222))
+                           (coe d_Conv'45'Credential_218))
                         v3)
               _ -> MAlonzo.RTE.mazUnreachableError))
       (coe
@@ -559,51 +552,24 @@ d_Conv'45'BaseAddr_226
                         (coe
                            MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
                            (coe MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
-                           (coe d_Conv'45'Credential_222))
+                           (coe d_Conv'45'Credential_218))
                         v3)
               _ -> MAlonzo.RTE.mazUnreachableError))
 -- Ledger.Core.Foreign.Address.HsTy-BootstrapAddr
-d_HsTy'45'BootstrapAddr_228 ::
+d_HsTy'45'BootstrapAddr_224 ::
   MAlonzo.Code.Class.HasHsType.Core.T_HasHsType_10
-d_HsTy'45'BootstrapAddr_228 = erased
+d_HsTy'45'BootstrapAddr_224 = erased
 -- Ledger.Core.Foreign.Address.Conv-BootstrapAddr
-d_Conv'45'BootstrapAddr_230 ::
+d_Conv'45'BootstrapAddr_226 ::
   MAlonzo.Code.Class.Convertible.Core.T_Convertible_10
-d_Conv'45'BootstrapAddr_230
+d_Conv'45'BootstrapAddr_226
   = coe
       MAlonzo.Code.Class.Convertible.Core.C_constructor_24
       (coe
          (\ v0 ->
             case coe v0 of
               MAlonzo.Code.Ledger.Core.Specification.Address.C_constructor_114 v1 v2 v3
-                -> coe
-                     C_BootstrapAddr_2739 (coe v1)
-                     (coe
-                        MAlonzo.Code.Class.Convertible.Core.d_to_20
-                        (coe
-                           MAlonzo.Code.Class.Convertible.Core.C_constructor_24
-                           (coe
-                              (\ v4 ->
-                                 case coe v4 of
-                                   MAlonzo.Code.Ledger.Core.Specification.Address.C_KeyHashObj_22 v5
-                                     -> coe C_KeyHashObj_617 (coe v5)
-                                   MAlonzo.Code.Ledger.Core.Specification.Address.C_ScriptObj_24 v5
-                                     -> coe C_ScriptObj_631 (coe v5)
-                                   _ -> MAlonzo.RTE.mazUnreachableError))
-                           (coe
-                              (\ v4 ->
-                                 case coe v4 of
-                                   C_KeyHashObj_617 v5
-                                     -> coe
-                                          MAlonzo.Code.Ledger.Core.Specification.Address.C_KeyHashObj_22
-                                          (coe v5)
-                                   C_ScriptObj_631 v5
-                                     -> coe
-                                          MAlonzo.Code.Ledger.Core.Specification.Address.C_ScriptObj_24
-                                          (coe v5)
-                                   _ -> MAlonzo.RTE.mazUnreachableError)))
-                        v2)
-                     (coe v3)
+                -> coe C_BootstrapAddr_2739 (coe v1) (coe v2) (coe v3)
               _ -> MAlonzo.RTE.mazUnreachableError))
       (coe
          (\ v0 ->
@@ -611,42 +577,16 @@ d_Conv'45'BootstrapAddr_230
               C_BootstrapAddr_2739 v1 v2 v3
                 -> coe
                      MAlonzo.Code.Ledger.Core.Specification.Address.C_constructor_114
-                     (coe v1)
-                     (coe
-                        MAlonzo.Code.Class.Convertible.Core.d_from_22
-                        (coe
-                           MAlonzo.Code.Class.Convertible.Core.C_constructor_24
-                           (coe
-                              (\ v4 ->
-                                 case coe v4 of
-                                   MAlonzo.Code.Ledger.Core.Specification.Address.C_KeyHashObj_22 v5
-                                     -> coe C_KeyHashObj_617 (coe v5)
-                                   MAlonzo.Code.Ledger.Core.Specification.Address.C_ScriptObj_24 v5
-                                     -> coe C_ScriptObj_631 (coe v5)
-                                   _ -> MAlonzo.RTE.mazUnreachableError))
-                           (coe
-                              (\ v4 ->
-                                 case coe v4 of
-                                   C_KeyHashObj_617 v5
-                                     -> coe
-                                          MAlonzo.Code.Ledger.Core.Specification.Address.C_KeyHashObj_22
-                                          (coe v5)
-                                   C_ScriptObj_631 v5
-                                     -> coe
-                                          MAlonzo.Code.Ledger.Core.Specification.Address.C_ScriptObj_24
-                                          (coe v5)
-                                   _ -> MAlonzo.RTE.mazUnreachableError)))
-                        v2)
-                     (coe v3)
+                     (coe v1) (coe v2) (coe v3)
               _ -> MAlonzo.RTE.mazUnreachableError))
 -- Ledger.Core.Foreign.Address.HsTy-RewardAddress
-d_HsTy'45'RewardAddress_232 ::
+d_HsTy'45'RewardAddress_228 ::
   MAlonzo.Code.Class.HasHsType.Core.T_HasHsType_10
-d_HsTy'45'RewardAddress_232 = erased
+d_HsTy'45'RewardAddress_228 = erased
 -- Ledger.Core.Foreign.Address.Conv-RewardAddress
-d_Conv'45'RewardAddress_234 ::
+d_Conv'45'RewardAddress_230 ::
   MAlonzo.Code.Class.Convertible.Core.T_Convertible_10
-d_Conv'45'RewardAddress_234
+d_Conv'45'RewardAddress_230
   = coe
       MAlonzo.Code.Class.Convertible.Core.C_constructor_24
       (coe
@@ -654,7 +594,7 @@ d_Conv'45'RewardAddress_234
             case coe v0 of
               MAlonzo.Code.Ledger.Core.Specification.Address.C_constructor_126 v1 v2
                 -> coe
-                     C_RewardAddress_3923 (coe v1)
+                     C_RewardAddress_3911 (coe v1)
                      (coe
                         MAlonzo.Code.Class.Convertible.Core.d_to_20
                         (coe
@@ -684,7 +624,7 @@ d_Conv'45'RewardAddress_234
       (coe
          (\ v0 ->
             case coe v0 of
-              C_RewardAddress_3923 v1 v2
+              C_RewardAddress_3911 v1 v2
                 -> coe
                      MAlonzo.Code.Ledger.Core.Specification.Address.C_constructor_126
                      (coe v1)
@@ -747,20 +687,20 @@ d_BootstrapAddr_2737 = ()
 type T_BootstrapAddr_2737 = BootstrapAddr
 pattern C_BootstrapAddr_2739 a0 a1 a2 = BootstrapAddr a0 a1 a2
 check_BootstrapAddr_2739 ::
-  Integer -> T_Credential_615 -> Integer -> T_BootstrapAddr_2737
+  Integer -> Integer -> Integer -> T_BootstrapAddr_2737
 check_BootstrapAddr_2739 = BootstrapAddr
 cover_BootstrapAddr_2737 :: BootstrapAddr -> ()
 cover_BootstrapAddr_2737 x
   = case x of
       BootstrapAddr _ _ _ -> ()
 -- Ledger.Core.Foreign.Address.RewardAddress
-d_RewardAddress_3921 = ()
-type T_RewardAddress_3921 = RewardAddress
-pattern C_RewardAddress_3923 a0 a1 = RewardAddress a0 a1
-check_RewardAddress_3923 ::
-  Integer -> T_Credential_615 -> T_RewardAddress_3921
-check_RewardAddress_3923 = RewardAddress
-cover_RewardAddress_3921 :: RewardAddress -> ()
-cover_RewardAddress_3921 x
+d_RewardAddress_3909 = ()
+type T_RewardAddress_3909 = RewardAddress
+pattern C_RewardAddress_3911 a0 a1 = RewardAddress a0 a1
+check_RewardAddress_3911 ::
+  Integer -> T_Credential_615 -> T_RewardAddress_3909
+check_RewardAddress_3911 = RewardAddress
+cover_RewardAddress_3909 :: RewardAddress -> ()
+cover_RewardAddress_3909 x
   = case x of
       RewardAddress _ _ -> ()
