@@ -228,11 +228,12 @@ check only the announcing block's world.
 +  **The quorum threshold** is the announcing block's as well, read from the
    same enact state.
 
-The certification delay is not a premise of the branch.  It compares two slots
-under the parameters in force at the certifying block, and the chain rule
-checks it after the tick, below.  A certificate that fails a check admits no
-transition, like every other block fault; the `Computational`{.AgdaRecord}
-instance names the failed premise.
+The certification delay is not a premise of the branch, nor is the epoch the
+two blocks must share.  Both compare the announcing block's slot with the
+certifying block's, the delay under the parameters in force at the latter, and
+the chain rule checks them after the tick, below.  A certificate that fails a
+check admits no transition, like every other block fault; the
+`Computational`{.AgdaRecord} instance names the failed premise.
 
 ## The <span class="AgdaDatatype">CHAIN</span> Transition System {#sec:the-chain-transition-system}
 
@@ -256,11 +257,29 @@ specifications agree to the slot.  `delayChecks`{.AgdaFunction} states the
 check by cases: a block without a certificate owes nothing, a certificate with
 no last applied block has nothing to certify, and otherwise the slots compare.
 
+It also checks that the two blocks share an epoch ([Step 5][cip-step5], rule
+4): an announcement does not survive an epoch boundary, so the first block of
+an epoch never certifies.  The rule buys simplicity rather than safety.  An
+epoch boundary already concentrates a great deal of work, and an announcement
+that outlived it would be one more thing to carry across; across an era
+boundary the announcement, the certificate and the endorser block would
+further have to stay syntactically compatible with the very format change a
+new era exists to make.  Era transitions fall on epoch boundaries, so this one
+check covers both, at a cost of at most one endorser block per boundary.
+`epochChecks`{.AgdaFunction} is a premise of its own rather than a conjunct of
+`delayChecks`{.AgdaFunction}, so that the `Computational`{.AgdaRecord}
+instance names this failure separately; it states the same three cases.
+
 ```agda
 delayChecks : PParams → Maybe LastAppliedBlock → Maybe EBCert → Slot → Type
 delayChecks _  _         nothing   _ = ⊤
 delayChecks _  nothing   (just _)  _ = ⊥
 delayChecks pp (just la) (just _)  s = LastAppliedBlock.slot la + certificationDelay pp ≤ s
+
+epochChecks : Maybe LastAppliedBlock → Maybe EBCert → Slot → Type
+epochChecks _         nothing   _ = ⊤
+epochChecks nothing   (just _)  _ = ⊥
+epochChecks (just la) (just _)  s = epoch (LastAppliedBlock.slot la) ≡ epoch s
 ```
 
 <!--
@@ -270,9 +289,17 @@ delayChecks? _  _         nothing  _ = yes tt
 delayChecks? _  nothing   (just _) _ = no λ ()
 delayChecks? pp (just la) (just _) s = ¿ LastAppliedBlock.slot la + certificationDelay pp ≤ s ¿
 
+epochChecks? : ∀ m c s → Dec (epochChecks m c s)
+epochChecks? _         nothing  _ = yes tt
+epochChecks? nothing   (just _) _ = no λ ()
+epochChecks? (just la) (just _) s = epoch (LastAppliedBlock.slot la) ≟ epoch s
+
 instance
   Dec-delayChecks : ∀ {pp m c s} → delayChecks pp m c s ⁇
   Dec-delayChecks {pp} {m} {c} {s} = ⁇ (delayChecks? pp m c s)
+
+  Dec-epochChecks : ∀ {m c s} → epochChecks m c s ⁇
+  Dec-epochChecks {m} {c} {s} = ⁇ (epochChecks? m c s)
 ```
 -->
 
@@ -301,6 +328,7 @@ data _⊢_⇀⦇_,CHAIN⦈_ : ⊤ → ChainState → Block × Maybe ResolvedEB �
     ∙ certifyEnv cs ⊢ LedgerStateOf cs ⇀⦇ (ebCert , reb) ,CERTIFY⦈ ls₁
     ∙ tt ⊢ nes₁ ⇀⦇ slot ,TICK⦈ nes
     ∙ delayChecks (PParamsOf es) lastApplied ebCert slot
+    ∙ epochChecks lastApplied ebCert slot
     ∙ totalRefScriptsSize ls ts ≤ maxRefScriptSizePerBlock
     ∙ (es , acnt) ⊢ (ls , bcur) ⇀⦇ b ,BBODY⦈ (ls' , bcur')
       ────────────────────────────────
