@@ -71,9 +71,6 @@ instance
   HasPParams-ChainState : HasPParams ChainState
   HasPParams-ChainState .PParamsOf = PParamsOf ∘ EnactStateOf
 
-totalRefScriptsSize : LedgerState → List TopLevelTx → ℕ
-totalRefScriptsSize ls txs = sum $ map (λ txTop → refScriptsSize txTop (UTxOOf ls)) txs
-
 private variable
   ls' : LedgerState
 ```
@@ -104,7 +101,7 @@ data _⊢_⇀⦇_,CHAIN⦈_ : ⊤ → ChainState → Block → ChainState → Ty
                                      }
                  }
     in
-    ∙ totalRefScriptsSize ls ts ≤ maxRefScriptSizePerBlock
+    ∙ ∑ˡ[ x ← ts ] totalRefScriptsSize (UTxOOf ls) x ≤ maxRefScriptSizePerBlock
     ∙ tt ⊢ newEpochState ⇀⦇ slot ,TICK⦈ nes
     ∙ (es , acnt) ⊢ (ls , bcur) ⇀⦇ b ,BBODY⦈ (ls' , bcur')
       ────────────────────────────────
