@@ -78,14 +78,14 @@ src/Ledger/Dijkstra/Specification/
 ├── Gov/Base.lagda.md       -- edit: GovStructure carries a LeiosCryptoStructure
 ├── Leios.lagda.md          -- seats and committee selection; EBCert and ValidEBCert;
 │                           --   certificationDelay
-├── Leios/Types.lagda.md    -- EndorserBlock, hashEB, Announcement
+├── Leios/Types.lagda.md    -- EndorserBlock, hashEB
 ├── Leios/Validity.lagda.md -- ValidEB: reference agreement, the bounds, valid extension
 ├── PParams.lagda.md        -- edit: the Leios parameter block; the quorum lower bound
 ├── Certs.lagda.md          -- edit: the voting key in the pool-registration certificate,
 │                           --   the POOL premises, the key in the pool state
 ├── Epoch.lagda.md          -- edit: the committee materialized at the boundary
-├── BlockBody.lagda.md      -- edit: the Leios block fields, CertifiedEB, leiosBodyChecks
-└── Chain.lagda.md          -- edit: pending announcement, window, certificate branch
+├── BlockBody.lagda.md      -- edit: Announcement, the Leios block fields, ValidLeiosBlock
+└── Chain.lagda.md          -- edit: pending announcement, ResolvedEB, window, certificate branch
 ```
 
 Two edits fall outside the Dijkstra tree, in the units the alignment subsection
@@ -414,11 +414,14 @@ not enter the spec.
 ## Availability
 
 The rules take the closure as input and never ask whether data is available.
-The block, as the spec sees it, is the resolved block: alongside the certificate
-it carries the certified EB and the closure ("the ledger must be provided with all
-endorsed transactions resolved", [REQ-LedgerResolvedBlockValidation][dd-blockval]),
-and a matching premise checks the closure against the EB's references pointwise,
-hash and declared size.  The CIP documents the reference hash as covering the
+The block carries the certificate alone; the EB it certifies and the closure
+reach the chain rule beside the block, resolved by consensus ("the ledger must
+be provided with all endorsed transactions resolved",
+[REQ-LedgerResolvedBlockValidation][dd-blockval]), and a matching premise
+checks the closure against the EB's references pointwise, hash and declared
+size.  (Decided 2026-10-14 in Carlos's review of [#1339][fls-1339]: a
+certified-EB record on the block was a device for stating the rules, not a
+chain object.)  The CIP documents the reference hash as covering the
 complete transaction bytes ([Appendix B][cip-cddl]), so the references pin the
 closure's full content, not only the transaction bodies.
 
@@ -512,7 +515,7 @@ aligned by the table below; the library move follows the release.
 | `HashEB`; `AnnouncedEB` with `hash` and `size`           | `EBHash`; `Announcement = EBHash × ℕ`                                                                 | Same content, each repository's names; item 3 |
 | `LastAppliedBlock` with `sℓ`, `h`, `aeb`                 | `CHAIN`'s pending announcement: the announcing slot, header hash, and announcement                    | Same semantics: every block replaces it       |
 | `HashHeader`, the `h` above                              | `RBHeaderHash`, the message the certificate is verified against                                       | Same object                                   |
-| `certifiedEB` gates `certChecks`                         | `leiosBodyChecks` in `BBODY` requires the bit to agree with the body ([#1339][fls-1339]); item 4     | Sound together                                |
+| `certifiedEB` gates `certChecks`                         | `ValidLeiosBlock` in `BBODY` requires the bit to agree with the body ([#1339][fls-1339]); item 4     | Sound together                                |
 
 1.  **The periods are protocol parameters in milliseconds** (not genesis constants in slots).
 
@@ -579,26 +582,22 @@ aligned by the table below; the library move follows the release.
     step is one more `LedgerInterface` field, a committee getter, not a copy of
     the committee module.  (Nothing to do until then.)
 
-6.  **Whose parameters bound the delay across an epoch boundary** is the one
-    row still open.  PR 2278 reads the parameters of the forecast at the
-    certifying header; this note's ordering corollary assumed the announcing
-    block's.  Both are sound, and the two specifications must agree to the
-    slot.  The forecast is not one quantity: header validation forecasts from
-    the chain tip without the announced EB's closure, while a body-side check
-    after the tick sees a state that includes the closure, and the closure's
-    transactions can change what the boundary enacts, so the two forecasts can
-    name different parameters for the same block.  The announcing block's
-    parameters have no such ambiguity, and they can be pinned when the
-    announcing block is applied, as the earliest slot at which a certificate
-    may follow, stored with the pending announcement.  Recommendation
-    (2026-10-01, pending Carlos and Javier): the announcing block's, pinned.
+6.  **Whose parameters bound the delay across an epoch boundary**: those in
+    force at the certifying block, which the tick installed.  Dijkstra's
+    `EPOCH` installs the enact state ratified one boundary earlier, so the
+    certified closure cannot move them, and the forecast consensus takes at the
+    certifying header returns exactly them; the earlier worry that the two
+    readings could name different parameters was unfounded.  Decided
+    2026-10-08 in [#1346][fls-1346]: the delay is a `CHAIN` premise on the
+    ticked state's parameters, checked after the tick, and no earliest slot is
+    stored.  The consensus specification's `certChecks` and the node's header
+    rule (Praos2, on `main` since 2026-10-09) read the same values.  Consensus
+    PR 2409 would forbid certifying across an epoch boundary at all, which
+    removes the case; see the roadmap's pending decisions.
 
-    **Adjustment: ledger**.  The pending announcement carries the earliest
-    certifying slot, computed with the parameters in force when the announcing
-    block is applied ([#1338][fls-1338]).
+    **Adjustment: ledger**.  None beyond [#1346][fls-1346].
 
-    **Adjustment: consensus**.  `getPParams nes` in place of `getPParams
-    forecast` in `certChecks`, or the same stored slot in `LastAppliedBlock`.
+    **Adjustment: consensus**.  None; the specifications agree to the slot.
 
 ## Out of scope: rewards and incentives
 

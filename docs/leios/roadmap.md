@@ -5,16 +5,16 @@
 Where the Leios Ledger Formalization stands, what is in review, in what order it
 lands, and what remains.  The [design note](design-note.md) records the
 decisions; this file records the state, and is updated as PRs merge.  Last
-updated 2026-10-01, after the integration branch merged into `master`, the first
-two Integration PRs opened, and Carlos's two committee PRs were reviewed.
+updated 2026-10-15, after Carlos's review of the block structure, the merge of
+the `CHAIN` fix, and the consensus side's Praos2 merge.
 
 ## How the work reaches `master`
 
 The integration branch `leios-main` carried the first four PRs and merged into
 `master` on 2026-10-01 ([#1335]), one commit per PR.  Since then every PR
-targets `master` directly, stacked where one needs another; `leios-main` is
-dormant and to be deleted.  This file and the design note live on `leios-docs`,
-which never merges.
+targets `master` directly, stacked where one needs another; `leios-main` has
+nothing of its own and is to be deleted.  This file and the design note live on
+`leios-docs`, which never merges.
 
 ## Merged
 
@@ -22,78 +22,99 @@ which never merges.
    Table 3 with their update companions; zero values are the disabled state.
 +  [#1304] The Leios crypto structure and the primitive types (William):
    `LeiosCryptoStructure` carried by `GovStructure`; `Leios.Types`
-   (`EndorserBlock`, `hashEB`, `Announcement`); no vote type.
+   (`EndorserBlock`, `hashEB`); no vote type.
 +  [#1331] BLS keys on stake pools (Carlos): the optional key with its proof of
    possession in the pool-registration certificate, the `POOL` premises, and the
    pool state keeping the key with its registration epoch.
 +  [#1300] The voting committee (Sebastian, rebuilt by Carlos): seats, the
    committee materialized in `NewEpochState` at the boundary, the key age
    derived from the KES constants, the tie-break as a decidable total order.
++  [#1330] Endorser-block validity (William): `ValidEB` in `Leios.Validity`
+   (2026-10-05).
++  [#1340] Certification delay (William, issue [#1337]): `SlotLengthᶜ`,
+   `durationToSlots`, `slotsFromDuration`, and `certificationDelay`, with the
+   consensus specification's names; the `½ < τ` bound and its update-level
+   mirror (2026-10-05).
++  [#1341] Seat weights as fractions of the total active stake (Carlos,
+   2026-10-06).
++  [#1333] Certificate validity (William): `EBCert` and `ValidEBCert` with the
+   quorum over the signers' summed weight (2026-10-06).
++  [#1342] One committee per epoch (Carlos): selected entering an epoch from the
+   set snapshot and serving it, every registered pool ranked (2026-10-08).
+   cardano-ledger's conformance tests compare the two committees seat by seat
+   (its PR 6149, merged 2026-10-14).
++  [#1354] The executable-instance listing checked from the umbrella
+   (2026-10-12); [#1353] `CHAIN` keeps the ticked epoch state in its result
+   (issue [#1352], 2026-10-15).
 +  [#1297], [#1329] The design note and this file, on `leios-docs`.
 
 ## In review, in merge order
 
-1.  [#1341] Seat weights as fractions of the total active stake (Carlos), the
-    shape of `cardano-crypto-leios`.  Before merging: the fraction is computed
-    as `d / d`, so every weight is one; and the visible order `_≼_` is no
-    longer connected to the order the sort uses.  Reviewed 2026-10-01.
-2.  [#1333] Certificate validity (William): `EBCert`, and
-    `ValidEBCert cmt τ msg cert` with the quorum over the signers' summed
-    weight.  Stacked on #1341.
-3.  [#1339] Block structure (William, issue [#1336]): the announcement, the
-    certified bit, the header hash, and `CertifiedEB` on the block types;
-    `leiosBodyChecks` as one premise of `BBODY`.  Stacked on #1333.
-4.  [#1340] Certification delay (William, issue [#1337]): `SlotLengthᶜ`,
-    `durationToSlots`, `slotsFromDuration`, and `certificationDelay`, with the
-    consensus specification's names; the `½ < τ` bound and its update-level
-    mirror.  Independent; one link definition conflicts with #1333 for whoever
-    merges second.
-5.  [#1330] Endorser-block validity (William): `ValidEB` in `Leios.Validity`.
-    Independent.
-6.  [#1342] Current and next committees (Carlos); contains #1341's commit.
-    Before merging: whether the committee computed at a boundary serves the
-    epoch being entered, as the implementation's does, or the next one; the
-    epoch passed to the key-age check; the field name and prose.  Reviewed
-    2026-10-01.
+1.  [#1339] Block structure (William, issue [#1336]): the announcement, the
+    certified bit, and the header hash on the header and block types; the body
+    carries the certificate alone; `ValidLeiosBlock` as one premise of `BBODY`.
+    Reworked 2026-10-15 to Carlos's four comments of 2026-10-14: the
+    certificate in place of a certified-EB record in the body, that record out
+    of the PR, the announcement defined beside the header field, and the
+    predicate over the block.
+2.  [#1346] `CHAIN` (William, issue [#1338]): the last applied block in the
+    chain state; `CERTIFY`, which judges the certificate against the announcing
+    epoch's committee and threshold and applies the EB's closure to the state
+    the announcing block left; the delay checked after the tick; the rule's
+    signal the block with the resolved EB beside it.  Stacked on #1339.
+3.  [#1355] `certifiable` (William): the keyed seats' summed weight is at least
+    `τ`.  Independent; review requested 2026-10-15.
 
 ## Integration
 
-+  [#1336] Block structure: in [#1339].
-+  [#1337] Certification delay: in [#1340].
-+  [#1338] `CHAIN`, the pending announcement and the certificate branch: not
-   started; its two open decisions are below.
-+  The wrap-up, not yet filed: the worked example, the `certifiable` predicate,
-   the decisions recorded in module prose and the divergences raised with the
-   ledger team; the refresh of these documents; the housekeeping.
++  [#1336] Block structure: in [#1339].  [#1337] Certification delay: merged in
+   [#1340].  [#1338] `CHAIN`: in [#1346].
++  The wrap-up, not yet filed: the worked example (the success path of
+   `CERTIFY` has not run on data), the decisions recorded in module prose, the
+   refresh of these documents, and the housekeeping.
+
+## Decisions taken since 1 October
+
++  **Whose parameters bound the certification delay**: those in force after the
+   tick, at the certifying block; `EPOCH` installs the enact state ratified a
+   boundary earlier, so the certified closure cannot move them, and the
+   consensus specification and the node's header rule read the same values
+   (the design note's alignment item 6).
++  **The block carries the certificate alone** (Carlos, 2026-10-14): the EB it
+   certifies and that EB's closure are not chain objects; the chain rule
+   receives them beside the block as `ResolvedEB`, and `CERTIFY` judges the
+   pair.  cardano-ledger's body likewise carries only the certificate, and its
+   `DijkstraEndorserBlock` pairs the references with their transactions as a
+   separate object.
++  **The committee the chain rule reads**: the one in the chain state before the
+   tick, the announcing epoch's.
 
 ## Decisions pending
 
-+  **Whose parameters bound the certification delay.**  The consensus
-   specification (ouroboros-consensus PR 2278, approved 2026-10-01) reads the
-   forecast at the certifying header; the design note's working default is the
-   announcing block's world.  Recommendation: the announcing block's, pinned as
-   the earliest certifying slot when the announcing block is applied, for the
-   reason given in item 6 of the note's alignment subsection.
-+  **Which committee the chain rule reads** if [#1342] lands: the committee of
-   the state before the tick, as the note's pin says, whatever the pair's
-   members are called.  A pair matters to a validator that runs after the tick,
-   which the chain rule does not.
++  **No certification across an epoch boundary** (consensus PR 2409, approved
+   and open): the specification either states it as a premise of `CERTIFY` or
+   records that consensus enforces it; CIP-164 does not state it.
++  **Which component checks what**: the node's header rule on `main` checks the
+   pending announcement and the delay, and `blockMatchesHeader` the bit and the
+   no-transactions rule; cardano-ledger's `BBODY` validates nothing about the
+   Leios certificate yet, and where it will apply a certified closure is
+   unanswered.  The questions are drafted for the ledger team.
 
 ## Alignment
 
-+  Consensus specification: PR 2278 reviewed and approved 2026-10-01; the
-   ledger side took its names for the slot length and the conversion; the
-   parameter question above is the open row of the note's table.
++  Consensus specification: PR 2278, approved 2026-10-01 with six open
+   comments, predates Praos2 (PR 2386, merged 2026-10-09) and PR 2409.  The
+   ledger side took its names for the slot length and the conversion.
++  Node: Praos2 on `main` carries the last header's announcement in the
+   chain-dependent state, bounds the announced EB size, checks the pending
+   announcement and the delay in the header rule, and checks the bit against
+   the body.
 +  Implementation: cardano-ledger `master` seats the committee as the mark
-   snapshot rotates into set, judging keys for the epoch being entered
-   (`Snap.hs`); `BBODY` validates no certificate yet.  To raise with the ledger
-   team: the re-registration epoch (the spec keeps it for an unchanged key; the
-   `POOLREAP` rule Dijkstra shares restamps it through `mkStakePoolState`).
-   Three items listed here earlier do not hold: cardano-ledger records the
-   committee size in the mark snapshot with the parameters `NEWEPOCH` here also
-   reads, its Dijkstra `POOL` rule verifies the proof of possession (issue 5993),
-   and the prototype's `minCertificationGap` computes the CIP's rounded-up
-   formula from the slot length.
+   snapshot rotates into set; `POOL` verifies the proof of possession; the
+   endorser block is a separate object, the references with their transactions
+   (PR 6174); the forecast and a state query expose the committee to consensus;
+   a re-registered unchanged key keeps its epoch (PR 6170), as the
+   specification has it.  Open: the pending decisions above.
 
 ## Deferred by design
 
@@ -119,3 +140,8 @@ interface; feature gating; the common library ([#919]), after the first release.
 [#1340]: https://github.com/IntersectMBO/formal-ledger-specifications/pull/1340
 [#1341]: https://github.com/IntersectMBO/formal-ledger-specifications/pull/1341
 [#1342]: https://github.com/IntersectMBO/formal-ledger-specifications/pull/1342
+[#1346]: https://github.com/IntersectMBO/formal-ledger-specifications/pull/1346
+[#1352]: https://github.com/IntersectMBO/formal-ledger-specifications/issues/1352
+[#1353]: https://github.com/IntersectMBO/formal-ledger-specifications/pull/1353
+[#1354]: https://github.com/IntersectMBO/formal-ledger-specifications/pull/1354
+[#1355]: https://github.com/IntersectMBO/formal-ledger-specifications/pull/1355
