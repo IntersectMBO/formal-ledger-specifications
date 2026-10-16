@@ -12,9 +12,9 @@ the `CHAIN` fix, and the consensus side's Praos2 merge.
 
 The integration branch `leios-main` carried the first four PRs and merged into
 `master` on 2026-10-01 ([#1335]), one commit per PR.  Since then every PR
-targets `master` directly, stacked where one needs another; `leios-main` has
-nothing of its own and is to be deleted.  This file and the design note live on
-`leios-docs`, which never merges.
+targets `master` directly, stacked where one needs another; `leios-main`, which
+had nothing of its own, was deleted on 2026-10-16.  This file and the design
+note live on `leios-docs`, which never merges.
 
 ## Merged
 
