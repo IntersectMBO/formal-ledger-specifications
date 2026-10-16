@@ -123,17 +123,22 @@ instance
     nes , tickStep ← map₁ ⊥-elim $ computeProof {STS = _⊢_⇀⦇_,TICK⦈_} _ _ _
     case delayChecks? (PParamsOf (EpochState.es (NewEpochState.epochState nes))) (cs .ChainState.lastApplied) (b .Block.ebCert) (blockSlot b) of λ where
       (no _)  → failure "the certificate comes before the certification delay has elapsed"
-      (yes d) → do
-        (_ , _) , bbStep ← computeProof _ (LedgerStateOf nes , nes .NewEpochState.bcur) b
-        success (_ , CHAIN (certStep , tickStep , d , bbStep))
+      (yes d) → case epochChecks? (cs .ChainState.lastApplied) (b .Block.ebCert) (blockSlot b) of λ where
+        (no _)  → failure "the certificate crosses an epoch boundary, so the announcement has been retired"
+        (yes e) → do
+          (_ , _) , bbStep ← computeProof _ (LedgerStateOf nes , nes .NewEpochState.bcur) b
+          success (_ , CHAIN (certStep , tickStep , d , e , bbStep))
 
-  Computational-CHAIN .completeness _ cs (b , reb) _ (CHAIN {nes = nes} (certStep , tickStep , d , bbStep))
+  Computational-CHAIN .completeness _ cs (b , reb) _ (CHAIN {nes = nes} (certStep , tickStep , d , e , bbStep))
     with recomputeProof certStep | completeness _ _ _ _ certStep
   ... | success _ | refl
     with recomputeProof tickStep | completeness _ _ _ _ tickStep
   ... | success _ | refl
     with delayChecks? (PParamsOf (EpochState.es (NewEpochState.epochState nes))) (cs .ChainState.lastApplied) (b .Block.ebCert) (blockSlot b)
   ... | no ¬d = ⊥-elim (¬d d)
+  ... | yes _
+    with epochChecks? (cs .ChainState.lastApplied) (b .Block.ebCert) (blockSlot b)
+  ... | no ¬e = ⊥-elim (¬e e)
   ... | yes _
     with recomputeProof bbStep | completeness _ _ _ _ bbStep
   ... | success _ | refl = refl
