@@ -59,13 +59,20 @@ record PlutusStructure : Type₁ where
         ⦃ DecEq-Language           ⦄ : DecEq Language
         ⦃ Show-Language            ⦄ : Show Language
 
-  infix 4 _≥ᵉ_
-  field  _≥ᵉ_              : ExUnits → ExUnits → Type
-         ⦃ ≥ᵉ-Dec ⦄        : _≥ᵉ_ ⁇²
+  infix 4 _≤ᵉᵘ_
+  field  _≤ᵉᵘ_              : ExUnits → ExUnits → Type
+         ⦃ ≥ᵉ-Dec ⦄        : _≤ᵉᵘ_ ⁇²
          ⦃ DecEq-ExUnits ⦄ : DecEq ExUnits
          ⦃ DecEQ-Prices  ⦄ : DecEq Prices
          ⦃ Show-ExUnits  ⦄ : Show ExUnits
          ⦃ Show-Prices   ⦄ : Show Prices
+
+  instance
+    HasAdd-ExUnits : HasAdd ExUnits
+    HasAdd-ExUnits = record { _+_ = _<>_ }
+
+  0ᵉᵘ : ExUnits
+  0ᵉᵘ = ε
 
   PlutusV1 = fromPlutusLanguage .to V1
   PlutusV2 = fromPlutusLanguage .to V2
