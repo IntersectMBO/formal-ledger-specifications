@@ -23,16 +23,16 @@ open import Ledger.Dijkstra.Specification.Abstract
 open import Ledger.Dijkstra.Specification.Transaction
 
 module Ledger.Dijkstra.Specification.Leios.Validity
-  (txs : _) (open TransactionStructure txs)
-  (abs : AbstractFunctions txs) (open AbstractFunctions abs)
+  (transactionStructure : _) (open TransactionStructure transactionStructure)
+  (abs : AbstractFunctions transactionStructure) (open AbstractFunctions abs)
   where
 
 open import Ledger.Prelude
 open import Data.List.Relation.Unary.Unique.Propositional using (Unique)
 open import Data.List.Relation.Unary.Unique.DecPropositional using (unique?)
-open import Ledger.Dijkstra.Specification.Ledger txs abs
-open import Ledger.Dijkstra.Specification.Ledgers txs abs
-open import Ledger.Dijkstra.Specification.Utxo txs abs using (totalExUnits; totalRefScriptsSize)
+open import Ledger.Dijkstra.Specification.Ledger transactionStructure abs
+open import Ledger.Dijkstra.Specification.Ledgers transactionStructure abs
+open import Ledger.Dijkstra.Specification.Utxo transactionStructure abs using (totalExUnits; totalRefScriptsSize)
 open import Ledger.Dijkstra.Specification.Leios.Types cryptoStructure leiosCryptoStructure
 open import Ledger.Dijkstra.Specification.Crypto using (LeiosCryptoStructure)
 open LeiosCryptoStructure leiosCryptoStructure using (TxRefHash)
@@ -58,16 +58,6 @@ The environment and state are those of the announcing block.  The closure of the
 EB is judged against the ledger state the announcing block left and the parameters
 in force there.
 
-```agda
-module _ {Γ : LedgerEnv} {ls : LedgerState} where
-  open PParams (PParamsOf Γ)
-
-  record WithinEBBounds (eb : EndorserBlock) (closure : List TopLevelTx) : Type where
-    field
-      ebSizeOK          : ebSize eb ≤ leiosMaxEBSize
-      txsSizeOK         : ∑ˡ[ tx ← closure ] SizeOf tx ≤ leiosMaxEBTxsSize
-```
-
 The fields of `WithinEBBounds`{.AgdaRecord} are the endorser-block bounds of
 CIP-164's [Table 3][cip-params], as follows:
 
@@ -84,14 +74,43 @@ size of the closure's reference scripts is at most `S_EB-ref`
 
 ### Validity
 
+<!--
 ```agda
-  record ValidEB (eb : EndorserBlock) (closure : List TopLevelTx) : Type where
-    field
-      nonemptyOK    : closure ≢ []
-      uniqueRefsOK  : Unique (map proj₁ (EndorserBlock.ebTxRefs eb))
-      refsOK        : EndorserBlock.ebTxRefs eb ≡ map refOf closure
-      boundsOK      : WithinEBBounds eb closure
-      extensionOK   : ∃[ ls' ] ⟦ Γ , leiosMaxRefScriptSizePerEB , leiosMaxEBExUnits ⟧ ⊢ ls ⇀⦇ closure ,LEDGERS⦈ ls'
+private
+  variable
+    Γ : LedgerEnv
+    ls ls' : LedgerState
+    eb : EndorserBlock
+    txs : List TopLevelTx
+
+  open PParams
+  open EndorserBlock
+```
+-->
+
+```agda
+data EBWellFormed : EndorserBlock → Type where
+  ebWellFormed :
+    ∙ ebTxRefs eb ≢ []
+    ∙ Unique (map proj₁ (ebTxRefs eb))
+    ────────────────────────────────
+    EBWellFormed eb
+```
+
+
+```agda
+data  _,_⊢_⇀⦇_,EB⦈_ : LedgerEnv → List TopLevelTx → LedgerState → EndorserBlock → LedgerState → Type where
+  EB :
+    let
+      pp = PParamsOf Γ
+    in
+      ∙ EBWellFormed eb
+      ∙ ebTxRefs eb ≡ map (λ tx → txRefHash tx , SizeOf tx) txs
+      ∙ ebSize eb ≤ pp .leiosMaxEBSize
+      ∙ ∑ˡ[ tx ← txs ] SizeOf tx ≤ pp .leiosMaxEBTxsSize
+      ∙ ⟦ Γ , pp .leiosMaxRefScriptSizePerEB , pp .leiosMaxEBExUnits ⟧ ⊢ ls ⇀⦇ txs ,LEDGERS⦈ ls'
+      ────────────────────────────────
+      Γ , txs ⊢ ls ⇀⦇ eb ,EB⦈ ls'
 ```
 
 Of CIP-164's six vote-casting conditions ([Step 3][cip-step3]), the two that
@@ -110,34 +129,6 @@ the EB structure itself: the CIP's reference list is an insertion-ordered map
 that admits no duplicate keys ([Appendix B][cip-cddl]).  The list type here does
 not encode that invariant, so `ValidEB`{.AgdaRecord} states it as
 `uniqueRefsOK`{.AgdaField}.
-
-<!--
-```agda
-private
-  nonempty? : ∀ {A : Type} (xs : List A) → Dec (xs ≢ [])
-  nonempty? []       = no λ p → p refl
-  nonempty? (_ ∷ _)  = yes λ ()
-
-module _ {Γ : LedgerEnv} {ls : LedgerState} where
-  open PParams (PParamsOf Γ)
-
-  instance
-    Dec-WithinEBBounds : ∀ {eb closure} → WithinEBBounds {Γ} {ls} eb closure ⁇
-    Dec-WithinEBBounds {eb} {closure} = ⁇ map′
-      (λ (a , b) → record { ebSizeOK = a ; txsSizeOK = b })
-      (λ w → let open WithinEBBounds w in ebSizeOK , txsSizeOK)
-      ¿ ebSize eb ≤ leiosMaxEBSize
-      × ∑ˡ[ tx ← closure ] SizeOf tx ≤ leiosMaxEBTxsSize ¿
-
-  -- Given the extension, the remaining conditions decide validity.
-  ValidEB? : ∀ eb closure → (∃[ ls' ] _ ⊢ ls ⇀⦇ closure ,LEDGERS⦈ ls') → Dec (ValidEB {Γ} {ls} eb closure)
-  ValidEB? eb closure ext = map′
-    (λ (n , u , r , b) → record { nonemptyOK = n ; uniqueRefsOK = u ; refsOK = r ; boundsOK = b ; extensionOK = ext })
-    (λ v → let open ValidEB v in nonemptyOK , uniqueRefsOK , refsOK , boundsOK)
-    (nonempty? closure ×-dec unique? _≟_ (map proj₁ (EndorserBlock.ebTxRefs eb))
-                       ×-dec ¿ EndorserBlock.ebTxRefs eb ≡ map refOf closure × WithinEBBounds {Γ} {ls} eb closure ¿)
-```
--->
 
 [cip-params]: https://github.com/cardano-foundation/CIPs/blob/master/CIP-0164/README.md#protocol-parameters
 [cip-step3]: https://github.com/cardano-foundation/CIPs/blob/master/CIP-0164/README.md#step-3-committee-validation
