@@ -362,7 +362,4 @@ data _⊢_⇀⦇_,LEDGER⦈_ : LedgerEnv → LedgerState → TopLevelTx → Ledg
       ∙ ⟦ slot , pp , treasury , utxo₀ , PoolsOf certState₀ , allScripts , legacyMode ⟧ ⊢ utxoState₀ ⇀⦇ tx ,UTXOW⦈ utxoState₁
         ────────────────────────────────
         ⟦ slot , ppolicy , pp , enactState , treasury ⟧ ⊢ ⟦ utxoState₀ , govState₀ , certState₀ ⟧ ⇀⦇ tx ,LEDGER⦈ ⟦ utxoState₁ , govState₀ , certState₀ ⟧
-
-_⊢_⇀⦇_,LEDGERS⦈_ : LedgerEnv → LedgerState → List TopLevelTx → LedgerState → Type
-_⊢_⇀⦇_,LEDGERS⦈_ = ReflexiveTransitiveClosure {sts = _⊢_⇀⦇_,LEDGER⦈_}
 ```

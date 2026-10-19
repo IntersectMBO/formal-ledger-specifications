@@ -31,6 +31,7 @@ open import Ledger.Prelude
 open import Data.List.Relation.Unary.Unique.Propositional using (Unique)
 open import Data.List.Relation.Unary.Unique.DecPropositional using (unique?)
 open import Ledger.Dijkstra.Specification.Ledger txs abs
+open import Ledger.Dijkstra.Specification.Ledgers txs abs
 open import Ledger.Dijkstra.Specification.Utxo txs abs using (totalExUnits; totalRefScriptsSize)
 open import Ledger.Dijkstra.Specification.Leios.Types cryptoStructure leiosCryptoStructure
 open import Ledger.Dijkstra.Specification.Crypto using (LeiosCryptoStructure)
@@ -65,8 +66,6 @@ module _ {Γ : LedgerEnv} {ls : LedgerState} where
     field
       ebSizeOK          : ebSize eb ≤ leiosMaxEBSize
       txsSizeOK         : ∑ˡ[ tx ← closure ] SizeOf tx ≤ leiosMaxEBTxsSize
-      totExUnitsOK      : ∑ˡ[ tx ← closure ] totalExUnits tx ≤ᵉᵘ leiosMaxEBExUnits
-      refScriptsSizeOK  : ∑ˡ[ tx ← closure ] totalRefScriptsSize (UTxOOf ls) tx ≤ leiosMaxRefScriptSizePerEB
 ```
 
 The fields of `WithinEBBounds`{.AgdaRecord} are the endorser-block bounds of
@@ -75,14 +74,13 @@ CIP-164's [Table 3][cip-params], as follows:
 +  `ebSizeOK`{.AgdaField}: the size of the EB itself is at most `S_EB`
    (`leiosMaxEBSize`{.AgdaField});
 +  `txsSizeOK`{.AgdaField}: the total size of the referenced transactions is at
-   most `S_EB-tx` (`leiosMaxEBTxsSize`{.AgdaField});
-+  `totExUnitsOK`{.AgdaField}: the closure's Plutus steps and memory fit
-   `leiosMaxEBExUnits`{.AgdaField}, one `ExUnits`{.AgdaFunction} value for the
-   table's two budget rows;
-+  `refScriptsSizeOK`{.AgdaField}: the total size of the closure's reference
-   scripts is at most `S_EB-ref` (`leiosMaxRefScriptSizePerEB`{.AgdaField}).
+   most `S_EB-tx` (`leiosMaxEBTxsSize`{.AgdaField}).
 
-Four fields cover the table's five rows.
+The table's remaining rows are enforced by `LEDGERS`{.AgdaDatatype}: the
+closure's Plutus steps and memory fit `leiosMaxEBExUnits`{.AgdaField}, one
+`ExUnits`{.AgdaFunction} value for the table's two budget rows; and the total
+size of the closure's reference scripts is at most `S_EB-ref`
+(`leiosMaxRefScriptSizePerEB`{.AgdaField}).
 
 ### Validity
 
@@ -93,7 +91,7 @@ Four fields cover the table's five rows.
       uniqueRefsOK  : Unique (map proj₁ (EndorserBlock.ebTxRefs eb))
       refsOK        : EndorserBlock.ebTxRefs eb ≡ map refOf closure
       boundsOK      : WithinEBBounds eb closure
-      extensionOK   : ∃[ ls' ] Γ ⊢ ls ⇀⦇ closure ,LEDGERS⦈ ls'
+      extensionOK   : ∃[ ls' ] ⟦ Γ , leiosMaxRefScriptSizePerEB , leiosMaxEBExUnits ⟧ ⊢ ls ⇀⦇ closure ,LEDGERS⦈ ls'
 ```
 
 Of CIP-164's six vote-casting conditions ([Step 3][cip-step3]), the two that
@@ -126,15 +124,13 @@ module _ {Γ : LedgerEnv} {ls : LedgerState} where
   instance
     Dec-WithinEBBounds : ∀ {eb closure} → WithinEBBounds {Γ} {ls} eb closure ⁇
     Dec-WithinEBBounds {eb} {closure} = ⁇ map′
-      (λ (a , b , c , d) → record { ebSizeOK = a ; txsSizeOK = b ; totExUnitsOK = c ; refScriptsSizeOK = d })
-      (λ w → let open WithinEBBounds w in ebSizeOK , txsSizeOK , totExUnitsOK , refScriptsSizeOK)
+      (λ (a , b) → record { ebSizeOK = a ; txsSizeOK = b })
+      (λ w → let open WithinEBBounds w in ebSizeOK , txsSizeOK)
       ¿ ebSize eb ≤ leiosMaxEBSize
-      × ∑ˡ[ tx ← closure ] SizeOf tx ≤ leiosMaxEBTxsSize
-      × ∑ˡ[ tx ← closure ] totalExUnits tx ≤ᵉᵘ leiosMaxEBExUnits
-      × ∑ˡ[ tx ← closure ] totalRefScriptsSize (UTxOOf ls) tx ≤ leiosMaxRefScriptSizePerEB ¿
+      × ∑ˡ[ tx ← closure ] SizeOf tx ≤ leiosMaxEBTxsSize ¿
 
   -- Given the extension, the remaining conditions decide validity.
-  ValidEB? : ∀ eb closure → (∃[ ls' ] Γ ⊢ ls ⇀⦇ closure ,LEDGERS⦈ ls') → Dec (ValidEB {Γ} {ls} eb closure)
+  ValidEB? : ∀ eb closure → (∃[ ls' ] _ ⊢ ls ⇀⦇ closure ,LEDGERS⦈ ls') → Dec (ValidEB {Γ} {ls} eb closure)
   ValidEB? eb closure ext = map′
     (λ (n , u , r , b) → record { nonemptyOK = n ; uniqueRefsOK = u ; refsOK = r ; boundsOK = b ; extensionOK = ext })
     (λ v → let open ValidEB v in nonemptyOK , uniqueRefsOK , refsOK , boundsOK)

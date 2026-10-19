@@ -111,6 +111,13 @@ import Ledger.Dijkstra.Specification.Ledger
 import Ledger.Dijkstra.Specification.Ledger.Properties
 ```
 
+## Ledgers
+
+```agda
+import Ledger.Dijkstra.Specification.Ledgers
+import Ledger.Dijkstra.Specification.Ledgers.Properties
+```
+
 ## Leios
 
 ```agda

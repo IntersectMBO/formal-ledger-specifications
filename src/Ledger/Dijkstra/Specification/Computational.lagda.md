@@ -45,8 +45,12 @@ open import Ledger.Dijkstra.Specification.Gov govStructure
 open import Ledger.Dijkstra.Specification.Gov.Properties.Computational txs
 
 open import Ledger.Dijkstra.Specification.Ledger txs abs
-  using (_⊢_⇀⦇_,LEDGER⦈_ ; _⊢_⇀⦇_,LEDGERS⦈_ ; _⊢_⇀⦇_,SUBLEDGER⦈_ ; _⊢_⇀⦇_,SUBLEDGERS⦈_)
+  using (_⊢_⇀⦇_,LEDGER⦈_ ; _⊢_⇀⦇_,SUBLEDGER⦈_ ; _⊢_⇀⦇_,SUBLEDGERS⦈_)
 open import Ledger.Dijkstra.Specification.Ledger.Properties.Computational txs abs
+
+open import Ledger.Dijkstra.Specification.Ledgers txs abs
+  using (_⊢_⇀⦇_,LEDGERS⦈_)
+open import Ledger.Dijkstra.Specification.Ledgers.Properties.Computational txs abs
 
 open import Ledger.Dijkstra.Specification.PoolReap txs
   using (_⊢_⇀⦇_,POOLREAP⦈_)
