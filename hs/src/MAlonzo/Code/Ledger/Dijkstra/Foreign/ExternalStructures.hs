@@ -313,7 +313,7 @@ d_HSScriptStructure_188 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.T_ScriptStructure_522
 d_HSScriptStructure_188 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Foreign.Script.Structure.d_HSScriptStructure_420
+      MAlonzo.Code.Ledger.Dijkstra.Foreign.Script.Structure.d_HSScriptStructure_432
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.Hashable-HSNativeScript
 d_Hashable'45'HSNativeScript_190 ::
@@ -433,7 +433,7 @@ d___252 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.T_ScriptStructure_522
 d___252 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Foreign.Script.Structure.d_HSScriptStructure_420
+      MAlonzo.Code.Ledger.Dijkstra.Foreign.Script.Structure.d_HSScriptStructure_432
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures.Crypto.Dec-isSigned
 d_Dec'45'isSigned_256 ::
@@ -1629,7 +1629,7 @@ d_HSTransactionStructure_748 v0
       (coe
          MAlonzo.Code.Class.DecEq.Core.C_constructor_32
          (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796))
-      (MAlonzo.Code.Ledger.Dijkstra.Foreign.Script.Structure.d_HSScriptStructure_420
+      (MAlonzo.Code.Ledger.Dijkstra.Foreign.Script.Structure.d_HSScriptStructure_432
          (coe v0))
       (d_HsGovParams_644 (coe v0))
       (coe
@@ -5803,7 +5803,7 @@ d_scriptStructure_1920 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.T_ScriptStructure_522
 d_scriptStructure_1920 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Foreign.Script.Structure.d_HSScriptStructure_420
+      MAlonzo.Code.Ledger.Dijkstra.Foreign.Script.Structure.d_HSScriptStructure_432
       (coe v0)
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.scriptsOfTx
 d_scriptsOfTx_1922 ::

@@ -1534,7 +1534,7 @@ d_HSScriptStructure_380
           = MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_24 in
     coe
       (coe
-         MAlonzo.Code.Ledger.Dijkstra.Foreign.Script.Structure.d_HSScriptStructure_420
+         MAlonzo.Code.Ledger.Dijkstra.Foreign.Script.Structure.d_HSScriptStructure_432
          (coe v0))
 -- Ledger.Dijkstra.Foreign.HSStructures._.HasAccount
 d_HasAccount_382 a0 a1 = ()
@@ -4682,7 +4682,7 @@ d_scriptStructure_1508
           = MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_24 in
     coe
       (coe
-         MAlonzo.Code.Ledger.Dijkstra.Foreign.Script.Structure.d_HSScriptStructure_420
+         MAlonzo.Code.Ledger.Dijkstra.Foreign.Script.Structure.d_HSScriptStructure_432
          (coe v0))
 -- Ledger.Dijkstra.Foreign.HSStructures._.scriptsOfTx
 d_scriptsOfTx_1510 ::

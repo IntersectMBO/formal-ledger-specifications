@@ -24,6 +24,7 @@ import qualified MAlonzo.Code.Class.CommutativeMonoid.Core
 import qualified MAlonzo.Code.Class.DecEq.Core
 import qualified MAlonzo.Code.Class.DecEq.Instances
 import qualified MAlonzo.Code.Class.Decidable.Core
+import qualified MAlonzo.Code.Class.Decidable.Instances
 import qualified MAlonzo.Code.Class.Show.Core
 import qualified MAlonzo.Code.Class.Show.Instances
 import qualified MAlonzo.Code.Data.List.Relation.Unary.All
@@ -44,7 +45,6 @@ import qualified MAlonzo.Code.Ledger.Core.Specification.Epoch
 import qualified MAlonzo.Code.Ledger.Dijkstra.Foreign.Script.Base
 import qualified MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base
 import qualified MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Native
-import qualified MAlonzo.Code.Prelude
 import qualified MAlonzo.Code.Relation.Nullary.Decidable.Core
 import qualified MAlonzo.Code.Relation.Nullary.Reflects
 import qualified MAlonzo.Code.Qstdlib.Data.List.Relation.Unary.MOf
@@ -599,14 +599,17 @@ d_HSP2ScriptStructure_390 v0
          (coe (\ v1 -> seq (coe v1) (coe ("tt" :: Data.Text.Text)))))
       MAlonzo.Code.Ledger.Dijkstra.Foreign.Script.Base.d_DecEq'45'HSLanguage_24
       MAlonzo.Code.Ledger.Dijkstra.Foreign.Script.Base.d_Show'45'HSLanguage_26
-      (coe
-         MAlonzo.Code.Class.Decidable.Core.du_'8263''178'__102
-         (coe
-            MAlonzo.Code.Class.DecEq.Core.d__'8799'__16
-            (coe
-               MAlonzo.Code.Prelude.d_DecEq'45''215''8242'_4 () erased () erased
-               MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22
-               MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)))
+      (\ v1 v2 ->
+         coe
+           MAlonzo.Code.Class.Decidable.Instances.du_Dec'45''215'_14
+           (coe
+              MAlonzo.Code.Class.Decidable.Instances.d_ℕ'45'Dec'45''8804'_34
+              (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe v2))
+              (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe v1)))
+           (coe
+              MAlonzo.Code.Class.Decidable.Instances.d_ℕ'45'Dec'45''8804'_34
+              (MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30 (coe v2))
+              (MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30 (coe v1))))
       (coe
          MAlonzo.Code.Class.DecEq.Instances.du_DecEq'45''215'_182
          (coe MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
@@ -645,17 +648,17 @@ du_Hashable'45'HSPlutusScript_404
       MAlonzo.Code.Interface.TypeClasses.Hashable.C_constructor_20
       (coe (\ v0 -> d_psScriptHash_372 (coe v0)))
 -- Ledger.Dijkstra.Foreign.Script.Structure.HSScriptStructure
-d_HSScriptStructure_420 ::
+d_HSScriptStructure_432 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.T_ScriptStructure_522
-d_HSScriptStructure_420 v0
+d_HSScriptStructure_432 v0
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.C_constructor_694
       (coe d_HSP1ScriptStructure_356 (coe v0))
-      (\ v1 v2 v3 v4 v5 -> coe du_hashRespectsUnion_432 v4 v5)
+      (\ v1 v2 v3 v4 v5 -> coe du_hashRespectsUnion_444 v4 v5)
       (coe d_HSP2ScriptStructure_390 (coe v0))
 -- Ledger.Dijkstra.Foreign.Script.Structure._.hashRespectsUnion
-d_hashRespectsUnion_432 ::
+d_hashRespectsUnion_444 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
   () ->
   () ->
@@ -663,13 +666,13 @@ d_hashRespectsUnion_432 ::
   MAlonzo.Code.Interface.TypeClasses.Hashable.T_Hashable_10 ->
   MAlonzo.Code.Interface.TypeClasses.Hashable.T_Hashable_10 ->
   MAlonzo.Code.Interface.TypeClasses.Hashable.T_Hashable_10
-d_hashRespectsUnion_432 ~v0 ~v1 ~v2 ~v3 v4 v5
-  = du_hashRespectsUnion_432 v4 v5
-du_hashRespectsUnion_432 ::
+d_hashRespectsUnion_444 ~v0 ~v1 ~v2 ~v3 v4 v5
+  = du_hashRespectsUnion_444 v4 v5
+du_hashRespectsUnion_444 ::
   MAlonzo.Code.Interface.TypeClasses.Hashable.T_Hashable_10 ->
   MAlonzo.Code.Interface.TypeClasses.Hashable.T_Hashable_10 ->
   MAlonzo.Code.Interface.TypeClasses.Hashable.T_Hashable_10
-du_hashRespectsUnion_432 v0 v1
+du_hashRespectsUnion_444 v0 v1
   = coe
       MAlonzo.Code.Interface.TypeClasses.Hashable.C_constructor_20
       (coe
