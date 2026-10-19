@@ -321,7 +321,7 @@ d_HSScriptStructure_188 ::
   MAlonzo.Code.Ledger.Conway.Specification.Script.Base.T_ScriptStructure_286
 d_HSScriptStructure_188 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Foreign.Script.Structure.d_HSScriptStructure_374
+      MAlonzo.Code.Ledger.Conway.Foreign.Script.Structure.d_HSScriptStructure_386
       (coe v0)
 -- Ledger.Conway.Foreign.ExternalStructures._.HSTimelock
 d_HSTimelock_190 a0 = ()
@@ -437,7 +437,7 @@ d___302 ::
   MAlonzo.Code.Ledger.Conway.Specification.Script.Base.T_ScriptStructure_286
 d___302 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Foreign.Script.Structure.d_HSScriptStructure_374
+      MAlonzo.Code.Ledger.Conway.Foreign.Script.Structure.d_HSScriptStructure_386
       (coe v0)
 -- Ledger.Conway.Foreign.ExternalStructures.Crypto.Dec-isSigned
 d_Dec'45'isSigned_306 ::
@@ -1415,7 +1415,7 @@ d_HSTransactionStructure_690 v0
          (coe v0))
       (MAlonzo.Code.Ledger.Core.Specification.Epoch.d_'46'extendedlambda0_382
          (coe MAlonzo.Code.Ledger.Core.Foreign.Epoch.d_HSGlobalConstants_8))
-      (MAlonzo.Code.Ledger.Conway.Foreign.Script.Structure.d_HSScriptStructure_374
+      (MAlonzo.Code.Ledger.Conway.Foreign.Script.Structure.d_HSScriptStructure_386
          (coe v0))
       (d_HsGovParams_644 (coe v0))
       (coe
@@ -1469,17 +1469,17 @@ d__'8776'__702 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
   Integer -> Integer -> ()
 d__'8776'__702 = erased
--- Ledger.Conway.Foreign.ExternalStructures._._≤ᵗ_
-d__'8804''7511'__704 ::
-  MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
-  Integer -> Integer -> ()
-d__'8804''7511'__704 = erased
--- Ledger.Conway.Foreign.ExternalStructures._._≥ᵉ_
-d__'8805''7497'__706 ::
+-- Ledger.Conway.Foreign.ExternalStructures._._≤ᵉᵘ_
+d__'8804''7497''7512'__704 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 -> ()
-d__'8805''7497'__706 = erased
+d__'8804''7497''7512'__704 = erased
+-- Ledger.Conway.Foreign.ExternalStructures._._≤ᵗ_
+d__'8804''7511'__706 ::
+  MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
+  Integer -> Integer -> ()
+d__'8804''7511'__706 = erased
 -- Ledger.Conway.Foreign.ExternalStructures._.+ᵉ≡+ᵉ'
 d_'43''7497''8801''43''7497'''_708 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
@@ -4455,7 +4455,7 @@ d_scriptStructure_1510 ::
   MAlonzo.Code.Ledger.Conway.Specification.Script.Base.T_ScriptStructure_286
 d_scriptStructure_1510 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Foreign.Script.Structure.d_HSScriptStructure_374
+      MAlonzo.Code.Ledger.Conway.Foreign.Script.Structure.d_HSScriptStructure_386
       (coe v0)
 -- Ledger.Conway.Foreign.ExternalStructures._.sign
 d_sign_1512 ::
@@ -4711,17 +4711,17 @@ d_'8804''45'pred'7497'_1560 v0
          (coe
             MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_epochStructure_1796
             (coe v1)))
--- Ledger.Conway.Foreign.ExternalStructures._.≥ᵉ-Dec
-d_'8805''7497''45'Dec_1562 ::
+-- Ledger.Conway.Foreign.ExternalStructures._.≤ᵉᵘ-Dec
+d_'8804''7497''7512''45'Dec_1562 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Class.Decidable.Core.T__'8263'_10
-d_'8805''7497''45'Dec_1562 v0
+d_'8804''7497''7512''45'Dec_1562 v0
   = let v1 = d_HSTransactionStructure_690 (coe v0) in
     coe
       (coe
-         MAlonzo.Code.Ledger.Conway.Specification.Script.Base.d_'8805''7497''45'Dec_246
+         MAlonzo.Code.Ledger.Conway.Specification.Script.Base.d_'8804''7497''7512''45'Dec_246
          (coe
             MAlonzo.Code.Ledger.Conway.Specification.Script.Base.d_ps_334
             (coe
@@ -6969,11 +6969,11 @@ d_treasuryCut_2302 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.PParams.d_treasuryCut_698
       (coe v0)
--- Ledger.Conway.Foreign.ExternalStructures._.PlutusStructure._≥ᵉ_
-d__'8805''7497'__2306 ::
+-- Ledger.Conway.Foreign.ExternalStructures._.PlutusStructure._≤ᵉᵘ_
+d__'8804''7497''7512'__2306 ::
   MAlonzo.Code.Ledger.Conway.Specification.Script.Base.T_PlutusStructure_134 ->
   AgdaAny -> AgdaAny -> ()
-d__'8805''7497'__2306 = erased
+d__'8804''7497''7512'__2306 = erased
 -- Ledger.Conway.Foreign.ExternalStructures._.PlutusStructure.CostModel
 d_CostModel_2308 ::
   MAlonzo.Code.Ledger.Conway.Specification.Script.Base.T_PlutusStructure_134 ->
@@ -7236,14 +7236,14 @@ d_validPlutusScript_2372 ::
   MAlonzo.Code.Ledger.Conway.Specification.Script.Base.T_PlutusStructure_134 ->
   AgdaAny -> [AgdaAny] -> AgdaAny -> AgdaAny -> ()
 d_validPlutusScript_2372 = erased
--- Ledger.Conway.Foreign.ExternalStructures._.PlutusStructure.≥ᵉ-Dec
-d_'8805''7497''45'Dec_2374 ::
+-- Ledger.Conway.Foreign.ExternalStructures._.PlutusStructure.≤ᵉᵘ-Dec
+d_'8804''7497''7512''45'Dec_2374 ::
   MAlonzo.Code.Ledger.Conway.Specification.Script.Base.T_PlutusStructure_134 ->
   AgdaAny ->
   AgdaAny -> MAlonzo.Code.Class.Decidable.Core.T__'8263'_10
-d_'8805''7497''45'Dec_2374 v0
+d_'8804''7497''7512''45'Dec_2374 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Specification.Script.Base.d_'8805''7497''45'Dec_246
+      MAlonzo.Code.Ledger.Conway.Specification.Script.Base.d_'8804''7497''7512''45'Dec_246
       (coe v0)
 -- Ledger.Conway.Foreign.ExternalStructures._.PoolThresholds.Q1
 d_Q1_2378 ::
@@ -7294,11 +7294,11 @@ d_stake_2392 ::
 d_stake_2392 v0
   = coe
       MAlonzo.Code.Ledger.Core.Specification.Address.d_stake_124 (coe v0)
--- Ledger.Conway.Foreign.ExternalStructures._.ScriptStructure._≥ᵉ_
-d__'8805''7497'__2396 ::
+-- Ledger.Conway.Foreign.ExternalStructures._.ScriptStructure._≤ᵉᵘ_
+d__'8804''7497''7512'__2396 ::
   MAlonzo.Code.Ledger.Conway.Specification.Script.Base.T_ScriptStructure_286 ->
   AgdaAny -> AgdaAny -> ()
-d__'8805''7497'__2396 = erased
+d__'8804''7497''7512'__2396 = erased
 -- Ledger.Conway.Foreign.ExternalStructures._.ScriptStructure.CostModel
 d_CostModel_2398 ::
   MAlonzo.Code.Ledger.Conway.Specification.Script.Base.T_ScriptStructure_286 ->
@@ -7815,14 +7815,14 @@ d_validPlutusScript_2510 ::
   MAlonzo.Code.Ledger.Conway.Specification.Script.Base.T_ScriptStructure_286 ->
   AgdaAny -> [AgdaAny] -> AgdaAny -> AgdaAny -> ()
 d_validPlutusScript_2510 = erased
--- Ledger.Conway.Foreign.ExternalStructures._.ScriptStructure.≥ᵉ-Dec
-d_'8805''7497''45'Dec_2512 ::
+-- Ledger.Conway.Foreign.ExternalStructures._.ScriptStructure.≤ᵉᵘ-Dec
+d_'8804''7497''7512''45'Dec_2512 ::
   MAlonzo.Code.Ledger.Conway.Specification.Script.Base.T_ScriptStructure_286 ->
   AgdaAny ->
   AgdaAny -> MAlonzo.Code.Class.Decidable.Core.T__'8263'_10
-d_'8805''7497''45'Dec_2512 v0
+d_'8804''7497''7512''45'Dec_2512 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Specification.Script.Base.d_'8805''7497''45'Dec_246
+      MAlonzo.Code.Ledger.Conway.Specification.Script.Base.d_'8804''7497''7512''45'Dec_246
       (coe
          MAlonzo.Code.Ledger.Conway.Specification.Script.Base.d_ps_334
          (coe v0))

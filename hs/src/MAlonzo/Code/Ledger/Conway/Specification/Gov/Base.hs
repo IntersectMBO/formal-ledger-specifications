@@ -432,10 +432,10 @@ d_scriptStructure_718 v0
   = case coe v0 of
       C_constructor_1456 v3 v4 v5 v6 v7 v8 v9 -> coe v7
       _ -> MAlonzo.RTE.mazUnreachableError
--- Ledger.Conway.Specification.Gov.Base.GovStructure._._≥ᵉ_
-d__'8805''7497'__722 ::
+-- Ledger.Conway.Specification.Gov.Base.GovStructure._._≤ᵉᵘ_
+d__'8804''7497''7512'__722 ::
   T_GovStructure_10 -> AgdaAny -> AgdaAny -> ()
-d__'8805''7497'__722 = erased
+d__'8804''7497''7512'__722 = erased
 -- Ledger.Conway.Specification.Gov.Base.GovStructure._.CostModel
 d_CostModel_724 :: T_GovStructure_10 -> ()
 d_CostModel_724 = erased
@@ -868,14 +868,14 @@ d_validPlutusScript_836 ::
   T_GovStructure_10 ->
   AgdaAny -> [AgdaAny] -> AgdaAny -> AgdaAny -> ()
 d_validPlutusScript_836 = erased
--- Ledger.Conway.Specification.Gov.Base.GovStructure._.≥ᵉ-Dec
-d_'8805''7497''45'Dec_838 ::
+-- Ledger.Conway.Specification.Gov.Base.GovStructure._.≤ᵉᵘ-Dec
+d_'8804''7497''7512''45'Dec_838 ::
   T_GovStructure_10 ->
   AgdaAny ->
   AgdaAny -> MAlonzo.Code.Class.Decidable.Core.T__'8263'_10
-d_'8805''7497''45'Dec_838 v0
+d_'8804''7497''7512''45'Dec_838 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Specification.Script.Base.d_'8805''7497''45'Dec_246
+      MAlonzo.Code.Ledger.Conway.Specification.Script.Base.d_'8804''7497''7512''45'Dec_246
       (coe
          MAlonzo.Code.Ledger.Conway.Specification.Script.Base.d_ps_334
          (coe d_scriptStructure_718 (coe v0)))
