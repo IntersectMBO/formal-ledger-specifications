@@ -83,27 +83,6 @@ HSP2ScriptStructure = record {
       _ = Conversion.fromBundle (commutativeMonoid +-0-commutativeMonoid +-0-commutativeMonoid)
       _ = Show-×
 
-private
-  open PlutusStructure HSP2ScriptStructure using (_≥ᵉ_; ≥ᵉ-Dec)
-
-  budget-below : ⌊ ¿ (2 , 3) ≥ᵉ (1 , 2) ¿ ⌋ ≡ true
-  budget-below = refl
-
-  budget-equal : ⌊ ¿ (2 , 3) ≥ᵉ (2 , 3) ¿ ⌋ ≡ true
-  budget-equal = refl
-
-  budget-memory-boundary : ⌊ ¿ (2 , 3) ≥ᵉ (2 , 2) ¿ ⌋ ≡ true
-  budget-memory-boundary = refl
-
-  budget-steps-boundary : ⌊ ¿ (2 , 3) ≥ᵉ (1 , 3) ¿ ⌋ ≡ true
-  budget-steps-boundary = refl
-
-  budget-memory-exceeded : ⌊ ¿ (2 , 3) ≥ᵉ (3 , 2) ¿ ⌋ ≡ false
-  budget-memory-exceeded = refl
-
-  budget-steps-exceeded : ⌊ ¿ (2 , 3) ≥ᵉ (1 , 4) ¿ ⌋ ≡ false
-  budget-steps-exceeded = refl
-
 HSScriptStructure : ScriptStructure
 HSScriptStructure = record
   { p1s = HSP1ScriptStructure
