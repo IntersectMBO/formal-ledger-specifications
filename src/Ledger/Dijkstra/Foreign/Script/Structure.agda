@@ -73,7 +73,7 @@ HSP2ScriptStructure = record {
   ; language = λ z → HSPlutusScript.psScriptLanguage z
   ; validPlutusScript = λ _ _ _ _ → extValidPlutusScript ≡ true
   ; PlutusScript = HSPlutusScript
-  ; _≥ᵉ_ = _≡_
+  ; _≥ᵉ_ = λ (memory , steps) (memory′ , steps′) → memory′ ≤ memory × steps′ ≤ steps
   }
   where
     open ExternalFunctions externalFunctions
