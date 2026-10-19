@@ -16,6 +16,7 @@ module Ledger.Dijkstra.Specification.BlockBody
 open import Ledger.Prelude
 open import Ledger.Dijkstra.Specification.Enact govStructure
 open import Ledger.Dijkstra.Specification.Ledger txs abs
+open import Ledger.Dijkstra.Specification.Ledgers txs abs
 open import Ledger.Dijkstra.Specification.Rewards txs abs
 open import Ledger.Dijkstra.Specification.Utxo txs abs using (totalExUnits)
 
@@ -70,12 +71,12 @@ data _⊢_⇀⦇_,BBODY⦈_
       hk = hash (bhb .bvkcold)
       pp = PParamsOf es
       Γ  = ⟦ bhb .slot , ∣ es .constitution ∣ , pp , es , TreasuryOf acnt ⟧
+      Γw = ⟦ Γ , PParams.maxRefScriptSizePerBlock pp , PParams.maxBlockExUnits pp ⟧
      in
 
     ∙ block .bBodySize ≡ bhb .hBbsize
     ∙ block .bBodyHash ≡ bhb .bhash
-    ∙ (∑ˡ[ tx ← txs ] totalExUnits tx) ≤ᵉᵘ PParams.maxBlockExUnits pp
-    ∙ Γ ⊢ ls ⇀⦇ txs ,LEDGERS⦈ ls'
+    ∙ Γw ⊢ ls ⇀⦇ txs ,LEDGERS⦈ ls'
     ────────────────────────────────
     (es , acnt) ⊢ ls , b ⇀⦇ block ,BBODY⦈ (ls' , incrBlocks hk b)
 ```

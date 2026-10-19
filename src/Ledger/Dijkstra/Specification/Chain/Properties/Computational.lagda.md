@@ -32,13 +32,9 @@ open Computational ⦃...⦄
 
 module _
   (nes : NewEpochState)
-  (open EpochState (NewEpochState.epochState nes) using (ls) renaming (es to es'))
-  (open EnactState es' using (pparams))
-  (open PParams ∣ pparams ∣ using (maxRefScriptSizePerBlock))
+  (open EpochState (NewEpochState.epochState nes) using (ls))
   (ts : List TopLevelTx)
   where
-  refScriptSize≤?Bound : Dec (∑ˡ[ x ← ts ] totalRefScriptsSize (UTxOOf ls) x ≤ maxRefScriptSizePerBlock)
-  refScriptSize≤?Bound = ∑ˡ[ x ← ts ] totalRefScriptsSize (UTxOOf ls) x ≤? maxRefScriptSizePerBlock
 
 instance
 ```
@@ -49,16 +45,11 @@ instance
   Computational-CHAIN .computeProof Γ s b = do
     nes , tickStep ← map₁ ⊥-elim $ computeProof {STS = _⊢_⇀⦇_,TICK⦈_} _ _ _
     (_ , _) , bbStep ← computeProof _ (LedgerStateOf nes , nes .NewEpochState.bcur) b
-    case refScriptSize≤?Bound nes (b .Block.ts) of λ where
-      (no ¬p) → failure "totalRefScriptsSize > maxRefScriptSizePerBlock"
-      (yes p) → success (_ , CHAIN (p , tickStep , bbStep))
+    success (_ , CHAIN (tickStep , bbStep))
 
-  Computational-CHAIN .completeness _ s b _ (CHAIN {nes = nes} (p , tickStep , bbStep))
+  Computational-CHAIN .completeness _ s b _ (CHAIN {nes = nes} (tickStep , bbStep))
     with recomputeProof tickStep | completeness _ _ _ _ tickStep
   ... | success _ | refl
     with recomputeProof bbStep | completeness _ _ _ _ bbStep
-  ... | success _ | refl
-    with refScriptSize≤?Bound nes (Block.ts b)
-  ... | yes p = refl
-  ... | no ¬p = ⊥-elim (¬p p)
+  ... | success _ | refl = refl
 ```

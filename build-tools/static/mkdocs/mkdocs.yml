@@ -269,6 +269,10 @@ nav:
       - Properties/:
         - Computational: Ledger.Dijkstra.Specification.Ledger.Properties.Computational.md
         - PoV: Ledger.Dijkstra.Specification.Ledger.Properties.PoV.md
+    - Ledgers: Ledger.Dijkstra.Specification.Ledgers.md
+    - Ledgers/:
+      - Properties/:
+        - Computational: Ledger.Dijkstra.Specification.Ledgers.Properties.Computational.md
     - Leios: Ledger.Dijkstra.Specification.Leios.md
     - Leios/:
       - Types: Ledger.Dijkstra.Specification.Leios.Types.md

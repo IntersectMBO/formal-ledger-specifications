@@ -22,7 +22,7 @@ open import Ledger.Prelude
 open import Ledger.Dijkstra.Specification.BlockBody txs abs
 open import Ledger.Dijkstra.Specification.Enact govStructure
 open import Ledger.Core.Specification.Epoch
-open import Ledger.Dijkstra.Specification.Ledger.Properties.Computational txs abs
+open import Ledger.Dijkstra.Specification.Ledgers.Properties.Computational txs abs
 open import Ledger.Dijkstra.Specification.Utxo txs abs
 open Computational ⦃...⦄
 open Block
@@ -36,18 +36,9 @@ BBODY-computeProof : (Γ : BBodyEnv) (s : BBodyState) (block : Block)
 
 <!--
 ```agda
-BBODY-computeProof Γ (ls , _) block
-  using maxBlockExUnits ← PParams.maxBlockExUnits (PParamsOf (proj₁ Γ))
-  using sumTotExUnits   ← (∑ˡ[ tx ← block .ts ] totalExUnits tx)
-  with ¿ sumTotExUnits ≤ᵉᵘ maxBlockExUnits ¿
-... | yes p = do
+BBODY-computeProof Γ (ls , _) block = do
   _ , lsStep ← computeProof _ ls (block .ts)
-  success (_ , BBODY-Block-Body (block .≡-bBodySize , block .≡-bBodyHash , p , lsStep))
-... | no _ = failure $
-  "Block ExUnits constraint failed: total tx ExUnits "
-  +ˢ show sumTotExUnits
-  +ˢ " exceeds maxBlockExUnits "
-  +ˢ show maxBlockExUnits
+  success (_ , BBODY-Block-Body (block .≡-bBodySize , block .≡-bBodyHash , lsStep))
 ```
 -->
 
@@ -59,14 +50,9 @@ BBODY-completeness : (Γ : BBodyEnv) (s : BBodyState) (block : Block) (s' : BBod
 
 <!--
 ```agda
-BBODY-completeness Γ s block _ (BBODY-Block-Body (_ , _ , p , lsStep))
-  using maxBlockExUnits ← PParams.maxBlockExUnits (PParamsOf (proj₁ Γ))
-  using sumTotExUnits   ← (∑ˡ[ tx ← block .ts ] totalExUnits tx)
-  with ¿ sumTotExUnits ≤ᵉᵘ maxBlockExUnits ¿
-... | no ¬p = ⊥-elim $ ¬p p
-... | yes _
-    with recomputeProof lsStep | completeness _ _ _ _ lsStep
-...    | success _ | refl = refl
+BBODY-completeness Γ s block _ (BBODY-Block-Body (_ , _  , lsStep))
+ with recomputeProof lsStep | completeness _ _ _ _ lsStep
+... | success _ | refl = refl
 
 instance
 ```

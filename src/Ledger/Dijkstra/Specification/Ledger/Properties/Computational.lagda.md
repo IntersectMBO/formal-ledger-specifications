@@ -294,8 +294,5 @@ instance
         with computeUtxow utxoΓ utxoSt txTop
            | completeUtxow utxoΓ utxoSt txTop utxoSt₁ utxoStep
       ... | success _ | refl = refl
-
-Computational-LEDGERS : Computational _⊢_⇀⦇_,LEDGERS⦈_ String
-Computational-LEDGERS = it
 ```
 -->

@@ -87,9 +87,8 @@ data _⊢_⇀⦇_,CHAIN⦈_ : ⊤ → ChainState → Block → ChainState → Ty
 <!--
 ```agda
     → let open ChainState cs; open Block b; open BHeader bheader
-          open BHBody bhbody; open NewEpochState nes
-          open EpochState epochState; open EnactState es renaming (pparams to pp)
-          open PParams ∣ pp ∣ using (maxRefScriptSizePerBlock) in
+          open BHBody bhbody; open NewEpochState nes; open EpochState epochState
+      in
 ```
 -->
 
@@ -101,7 +100,6 @@ data _⊢_⇀⦇_,CHAIN⦈_ : ⊤ → ChainState → Block → ChainState → Ty
                                      }
                  }
     in
-    ∙ ∑ˡ[ x ← ts ] totalRefScriptsSize (UTxOOf ls) x ≤ maxRefScriptSizePerBlock
     ∙ tt ⊢ newEpochState ⇀⦇ slot ,TICK⦈ nes
     ∙ (es , acnt) ⊢ (ls , bcur) ⇀⦇ b ,BBODY⦈ (ls' , bcur')
       ────────────────────────────────
