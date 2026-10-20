@@ -128,8 +128,9 @@ validation sees the bit but not the body, so a check it gates on the bit is soun
 only if the ledger verifies the bit.
 
 The rule requires the body's size and hash to agree with the header, the block
-to satisfy `ValidLeiosBlock`{.AgdaFunction}, the transactions' execution units to
-fit the block limit, and `LEDGERS`{.AgdaDatatype} to accept the transactions.
+to satisfy `ValidLeiosBlock`{.AgdaFunction}, and `LEDGERS`{.AgdaDatatype} to
+accept the transactions within the block's limits on reference-script size and
+execution units.
 The checks that need the announcing block, which `BBODY`{.AgdaDatatype} does
 not see, belong to `CHAIN`{.AgdaDatatype}: the certification delay, the epoch
 the two blocks share, the certificate's validity against the committee pinned at
