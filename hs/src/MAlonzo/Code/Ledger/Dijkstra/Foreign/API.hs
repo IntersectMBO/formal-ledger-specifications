@@ -38,7 +38,7 @@ import MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov               as X
 import MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Actions       as X
   (GovAction (..))
 import MAlonzo.Code.Ledger.Dijkstra.Foreign.Ledger            as X
-  (LedgerEnv(..), LedgerState(..), ledgerStep, ledgersStep)
+  (LedgerEnv(..), LedgerState(..), ledgerStep, LedgersEnv(..), ledgersStep)
 import MAlonzo.Code.Ledger.Dijkstra.Foreign.NewEpoch          as X
   (NewEpochState(..), LeiosSeat(..), newEpochStep)
 import MAlonzo.Code.Ledger.Dijkstra.Foreign.Ratify            as X

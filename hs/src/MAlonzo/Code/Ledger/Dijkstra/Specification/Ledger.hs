@@ -3043,12 +3043,3 @@ data T__'8866'_'8640''10631'_'44'LEDGER'10632'__4156
                        [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
                        MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 |
     C_LEDGER'45'I_4176 MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
--- Ledger.Dijkstra.Specification.Ledger._⊢_⇀⦇_,LEDGERS⦈_
-d__'8866'_'8640''10631'_'44'LEDGERS'10632'__4178 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3276 ->
-  T_LedgerEnv_3896 ->
-  T_LedgerState_3936 ->
-  [MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3866] ->
-  T_LedgerState_3936 -> ()
-d__'8866'_'8640''10631'_'44'LEDGERS'10632'__4178 = erased
