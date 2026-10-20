@@ -31,6 +31,7 @@ open import Ledger.Dijkstra.Specification.Enact govStructure
 open import Ledger.Dijkstra.Specification.Epoch txs abs
 open import Ledger.Dijkstra.Specification.Gov govStructure
 open import Ledger.Dijkstra.Specification.Ledger txs abs
+open import Ledger.Dijkstra.Specification.Ledgers txs abs
 open import Ledger.Dijkstra.Specification.Leios govStructure
   using (EBCert; LeiosCommittee; ValidEBCert; certificationDelay)
 open import Ledger.Dijkstra.Specification.Leios.Types cryptoStructure leiosCryptoStructure
@@ -181,9 +182,10 @@ block's world:
    chain context, is met by the message supplied here);
 +  the EB is valid in the announcing block's environment, which is what the
    voters checked (`ValidEB`{.AgdaRecord});
-+  the closure applies through `LEDGERS`{.AgdaDatatype} to the ledger state the
-   announcing block left, and the resulting state is the one the chain rule
-   continues from ([Ledger Management][cip-ledger]).
++  the closure applies through `LEDGERS`{.AgdaDatatype}, within the endorser
+   block's limits on reference-script size and execution units, to the ledger
+   state the announcing block left, and the resulting state is the one the
+   chain rule continues from ([Ledger Management][cip-ledger]).
 
 A certificate without its resolved EB, or a resolved EB beside a block that
 carries no certificate, admits no transition.
@@ -203,13 +205,15 @@ data _⊢_⇀⦇_,CERTIFY⦈_ : CertifyEnv → LedgerState → Maybe EBCert × M
     → let open CertifyEnv Γ; open ResolvedEB reb
           open LastAppliedBlock la renaming (slot to announcingSlot)
           open EnactState enactState using (constitution)
-          open PParams (PParamsOf enactState) using (leiosQuorumStakeThreshold) in
+          open PParams (PParamsOf enactState)
+            using (leiosQuorumStakeThreshold; leiosMaxRefScriptSizePerEB; leiosMaxEBExUnits) in
 ```
 -->
 
 ```agda
-    let  pp  = PParamsOf enactState
-         Γ'  = ⟦ announcingSlot , ∣ constitution ∣ , pp , enactState , treasury ⟧
+    let  pp   = PParamsOf enactState
+         Γ'   = ⟦ announcingSlot , ∣ constitution ∣ , pp , enactState , treasury ⟧
+         Γeb  = ⟦ Γ' , leiosMaxRefScriptSizePerEB , leiosMaxEBExUnits ⟧
     in
     ∙ lastApplied ≡ just la
     ∙ pendingEB la ≡ just (hashEB eb)
@@ -217,7 +221,7 @@ data _⊢_⇀⦇_,CERTIFY⦈_ : CertifyEnv → LedgerState → Maybe EBCert × M
     ∙ epoch announcingSlot ≡ epoch slot
     ∙ ValidEBCert committee leiosQuorumStakeThreshold (rbHeaderHashBytes headerHash) cert
     ∙ ValidEB {Γ'} {ls} eb closure
-    ∙ Γ' ⊢ ls ⇀⦇ closure ,LEDGERS⦈ ls₁
+    ∙ Γeb ⊢ ls ⇀⦇ closure ,LEDGERS⦈ ls₁
       ────────────────────────────────
       Γ ⊢ ls ⇀⦇ (just cert , just reb) ,CERTIFY⦈ ls₁
 ```
@@ -246,10 +250,9 @@ The chain rule's signal is the block together with the resolved EB it certifies,
 if it carries a certificate.  The rule applies a block in three steps.  The
 certificate branch takes the ledger state the last applied block left to
 `ls₁`{.AgdaBound}; the new-epoch state with that ledger state ticks to the
-block's slot; and the block's body runs on the ticked state, under the
-reference-script bound as before.  A certifying block carries no transactions of
-its own, by `ValidLeiosBlock`{.AgdaFunction}, so its body contributes the
-bookkeeping alone.
+block's slot; and the block's body runs on the ticked state.  A certifying block
+carries no transactions of its own, by `ValidLeiosBlock`{.AgdaFunction}, so its
+body contributes the bookkeeping alone.
 
 ```agda
 data _⊢_⇀⦇_,CHAIN⦈_ : ⊤ → ChainState → Block × Maybe ResolvedEB → ChainState → Type where
