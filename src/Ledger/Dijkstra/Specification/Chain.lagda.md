@@ -55,8 +55,8 @@ Beside the `NewEpochState`{.AgdaRecord}, the ChainState records the last applied
 block: its slot, the hash of its header, and the EB its header announced, if any.
 Every block replaces this record, so an announcement survives exactly one block
 and only the immediate successor can certify it ([Step 5][cip-step5]).
-(The consensus specification's record of the same name carries the same three
-fields beside the block number.)
+(The consensus specification's record of the same name carries the block
+number, the slot, and the header hash.)
 
 ```agda
 record LastAppliedBlock : Type where
