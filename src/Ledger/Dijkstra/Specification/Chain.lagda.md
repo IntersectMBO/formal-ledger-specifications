@@ -115,12 +115,13 @@ The certificate branch judges a block's certificate, when the block carries
 one, in the world of the block that announced the EB.  That world is the chain
 state before the tick: its enact state and treasury are those the announcing
 block's own body ran under, and its committee is the announcing epoch's.  The
-branch's environment packs what it reads from there, and
-`certifyEnv`{.AgdaFunction} reads it off the chain state.
+branch's environment packs what it reads from there beside the certifying
+block's slot, and `certifyEnv`{.AgdaFunction} reads it off the chain state.
 
 ```agda
 record CertifyEnv : Type where
   field
+    slot         : Slot
     lastApplied  : Maybe LastAppliedBlock
     committee    : LeiosCommittee
     enactState   : EnactState
@@ -136,8 +137,8 @@ instance
 -->
 
 ```agda
-certifyEnv : ChainState → CertifyEnv
-certifyEnv cs = ⟦ lastApplied , leiosCommittee , EnactStateOf cs , TreasuryOf newEpochState ⟧
+certifyEnv : ChainState → Slot → CertifyEnv
+certifyEnv cs s = ⟦ s , lastApplied , leiosCommittee , EnactStateOf cs , TreasuryOf newEpochState ⟧
   where
     open ChainState cs
     open NewEpochState newEpochState using (leiosCommittee)
@@ -169,6 +170,10 @@ block's world:
 
 +  the chain has a last applied block, and the EB it announced is the certified
    one ([Step 5][cip-step5], rule 1);
++  the certifying block's slot is at least `certificationDelay`{.AgdaFunction}
+   slots after the announcing block's ([Step 5][cip-step5], rule 3);
++  the two blocks share an epoch, so an announcement does not survive an epoch
+   boundary and the first block of an epoch never certifies;
 +  the certificate is valid for the announcing block's header hash, against the
    committee and the quorum threshold of the announcing epoch
    (`ValidEBCert`{.AgdaRecord}; [Certificate Validation][cip-certval], whose
@@ -208,6 +213,8 @@ data _⊢_⇀⦇_,CERTIFY⦈_ : CertifyEnv → LedgerState → Maybe EBCert × M
     in
     ∙ lastApplied ≡ just la
     ∙ pendingEB la ≡ just (hashEB eb)
+    ∙ announcingSlot + certificationDelay pp ≤ slot
+    ∙ epoch announcingSlot ≡ epoch slot
     ∙ ValidEBCert committee leiosQuorumStakeThreshold (rbHeaderHashBytes headerHash) cert
     ∙ ValidEB {Γ'} {ls} eb closure
     ∙ Γ' ⊢ ls ⇀⦇ closure ,LEDGERS⦈ ls₁
@@ -215,90 +222,34 @@ data _⊢_⇀⦇_,CERTIFY⦈_ : CertifyEnv → LedgerState → Maybe EBCert × M
       Γ ⊢ ls ⇀⦇ (just cert , just reb) ,CERTIFY⦈ ls₁
 ```
 
-Two decisions fix the world the branch reads, and both follow from one
-principle: a certificate proves what the voters checked, and the voters could
-check only the announcing block's world.
+The epoch premise buys simplicity rather than safety.  An epoch boundary
+already concentrates a great deal of work, and an announcement that outlived it
+would be one more thing to carry across; across an era boundary, the
+announcement, the certificate, and the endorser block would further have to
+stay syntactically compatible with the very format change a new era exists to
+make.  Era transitions fall on epoch boundaries, so this one premise covers
+both, at a cost of at most one endorser block per boundary.
 
-+  **The committee** is the one in the chain state before the tick, the
-   committee of the announcing block's epoch, which also sizes the certificate's
-   signer bitfield.  Reading it there needs no new state.
-+  **The quorum threshold** is the announcing block's as well, read from the
-   same enact state.
+It also makes the world the branch reads unambiguous.  A certificate proves what
+the voters checked, and the voters could check only the announcing block's
+world; with no epoch boundary between the two blocks, that world's committee,
+quorum threshold, and parameters are also the certifying block's.  The branch
+reads them from the chain state before the tick, where the committee is the
+announcing epoch's, which also sizes the certificate's signer bitfield.
 
-The certification delay is not a premise of the branch, nor is the epoch the
-two blocks must share.  Both compare the announcing block's slot with the
-certifying block's, the delay under the parameters in force at the latter, and
-the chain rule checks them after the tick, below.  A certificate that fails a
-check admits no transition, like every other block fault; the
-`Computational`{.AgdaRecord} instance names the failed premise.
+A certificate that fails a check admits no transition, like every other block
+fault; the `Computational`{.AgdaRecord} instance names the failed premise.
 
 ## The <span class="AgdaDatatype">CHAIN</span> Transition System {#sec:the-chain-transition-system}
 
 The chain rule's signal is the block together with the resolved EB it certifies,
-if it carries a certificate.  The rule applies a block in three steps.  The certificate branch takes
-the ledger state the last applied block left to `ls₁`{.AgdaBound}; the
-new-epoch state with that ledger state ticks to the block's slot, so an epoch
-boundary between the two blocks sees the closure's effects in its reward
-update, ratification, and snapshots, though not in enactment, which installs
-what the previous boundary ratified; and the block's body runs on the ticked
-state, under the reference-script bound as before.  A certifying block carries
-no transactions of its own, by `ValidLeiosBlock`{.AgdaFunction}, so its body
-contributes the bookkeeping alone.
-
-Between the tick and the body, the rule checks the certification delay: a
-certifying block's slot is at least `certificationDelay`{.AgdaFunction} slots
-after the announcing block's ([Step 5][cip-step5], rule 3), with the parameters
-in force at the certifying block's own slot, those the tick installed.  The
-consensus specification's header rule reads the same parameters, so the two
-specifications agree to the slot.  `delayChecks`{.AgdaFunction} states the
-check by cases: a block without a certificate owes nothing, a certificate with
-no last applied block has nothing to certify, and otherwise the slots compare.
-
-It also checks that the two blocks share an epoch ([Step 5][cip-step5], rule
-4): an announcement does not survive an epoch boundary, so the first block of
-an epoch never certifies.  The rule buys simplicity rather than safety.  An
-epoch boundary already concentrates a great deal of work, and an announcement
-that outlived it would be one more thing to carry across; across an era
-boundary the announcement, the certificate and the endorser block would
-further have to stay syntactically compatible with the very format change a
-new era exists to make.  Era transitions fall on epoch boundaries, so this one
-check covers both, at a cost of at most one endorser block per boundary.
-`epochChecks`{.AgdaFunction} is a premise of its own rather than a conjunct of
-`delayChecks`{.AgdaFunction}, so that the `Computational`{.AgdaRecord}
-instance names this failure separately; it states the same three cases.
-
-```agda
-delayChecks : PParams → Maybe LastAppliedBlock → Maybe EBCert → Slot → Type
-delayChecks _  _         nothing   _ = ⊤
-delayChecks _  nothing   (just _)  _ = ⊥
-delayChecks pp (just la) (just _)  s = LastAppliedBlock.slot la + certificationDelay pp ≤ s
-
-epochChecks : Maybe LastAppliedBlock → Maybe EBCert → Slot → Type
-epochChecks _         nothing   _ = ⊤
-epochChecks nothing   (just _)  _ = ⊥
-epochChecks (just la) (just _)  s = epoch (LastAppliedBlock.slot la) ≡ epoch s
-```
-
-<!--
-```agda
-delayChecks? : ∀ pp m c s → Dec (delayChecks pp m c s)
-delayChecks? _  _         nothing  _ = yes tt
-delayChecks? _  nothing   (just _) _ = no λ ()
-delayChecks? pp (just la) (just _) s = ¿ LastAppliedBlock.slot la + certificationDelay pp ≤ s ¿
-
-epochChecks? : ∀ m c s → Dec (epochChecks m c s)
-epochChecks? _         nothing  _ = yes tt
-epochChecks? nothing   (just _) _ = no λ ()
-epochChecks? (just la) (just _) s = epoch (LastAppliedBlock.slot la) ≟ epoch s
-
-instance
-  Dec-delayChecks : ∀ {pp m c s} → delayChecks pp m c s ⁇
-  Dec-delayChecks {pp} {m} {c} {s} = ⁇ (delayChecks? pp m c s)
-
-  Dec-epochChecks : ∀ {m c s} → epochChecks m c s ⁇
-  Dec-epochChecks {m} {c} {s} = ⁇ (epochChecks? m c s)
-```
--->
+if it carries a certificate.  The rule applies a block in three steps.  The
+certificate branch takes the ledger state the last applied block left to
+`ls₁`{.AgdaBound}; the new-epoch state with that ledger state ticks to the
+block's slot; and the block's body runs on the ticked state, under the
+reference-script bound as before.  A certifying block carries no transactions of
+its own, by `ValidLeiosBlock`{.AgdaFunction}, so its body contributes the
+bookkeeping alone.
 
 ```agda
 data _⊢_⇀⦇_,CHAIN⦈_ : ⊤ → ChainState → Block × Maybe ResolvedEB → ChainState → Type where
@@ -321,10 +272,8 @@ data _⊢_⇀⦇_,CHAIN⦈_ : ⊤ → ChainState → Block × Maybe ResolvedEB �
                    ; lastApplied    = just ⟦ slot , bHeaderHash , announcedEB ⟧
                    }
     in
-    ∙ certifyEnv cs ⊢ LedgerStateOf cs ⇀⦇ (ebCert , reb) ,CERTIFY⦈ ls₁
+    ∙ certifyEnv cs slot ⊢ LedgerStateOf cs ⇀⦇ (ebCert , reb) ,CERTIFY⦈ ls₁
     ∙ tt ⊢ nes₁ ⇀⦇ slot ,TICK⦈ nes
-    ∙ delayChecks (PParamsOf es) lastApplied ebCert slot
-    ∙ epochChecks lastApplied ebCert slot
     ∙ (es , acnt) ⊢ (ls , bcur) ⇀⦇ b ,BBODY⦈ (ls' , bcur')
       ────────────────────────────────
       _ ⊢ cs ⇀⦇ (b , reb) ,CHAIN⦈ cs'
