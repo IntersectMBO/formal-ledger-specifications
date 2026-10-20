@@ -29,7 +29,7 @@ open Computational ⦃...⦄
 open Block
 
 validLeiosBlockFailure : Block → String
-validLeiosBlockFailure b = go (certifiedBit b) (Block.ebCert b)
+validLeiosBlockFailure b = go (BHBody.certifiedEB (BHeader.bhbody (bheader b))) (ebCert b)
   where
     go : Bool → Maybe EBCert → String
     go _     nothing  = "certifiedEB is set but the block carries no EB certificate"
@@ -46,7 +46,7 @@ BBODY-computeProof : (Γ : BBodyEnv) (s : BBodyState) (block : Block)
 <!--
 ```agda
 BBODY-computeProof Γ (ls , _) block
-  with ValidLeiosBlock? block
+  with ¿ ValidLeiosBlock block ¿
 ... | no _ = failure $ validLeiosBlockFailure block
 ... | yes lbc = do
   _ , lsStep ← computeProof _ ls (block .ts)
@@ -63,7 +63,7 @@ BBODY-completeness : (Γ : BBodyEnv) (s : BBodyState) (block : Block) (s' : BBod
 <!--
 ```agda
 BBODY-completeness Γ s block _ (BBODY-Block-Body (_ , _ , lbc , lsStep))
-  with ValidLeiosBlock? block
+  with ¿ ValidLeiosBlock block ¿
 ... | no ¬lbc = ⊥-elim $ ¬lbc lbc
 ... | yes _
     with recomputeProof lsStep | completeness _ _ _ _ lsStep

@@ -108,41 +108,23 @@ incrBlocks hk b = b ∪⁺ singletonᵐ hk 1
 CIP-164 fixes two rules about a block alone ([Inclusion Rules][cip-inclusion];
 [Step 5][cip-step5]): a header that sets `certified_eb` obliges its body to
 carry a certificate, and a body carrying a certificate carries no transactions
-of its own.  `ValidLeiosBlock`{.AgdaFunction} states both, by cases on the
-body's certificate, requiring the bit in both directions so that a false bit
-cannot hide a certificate.
+of its own.  `ValidLeiosBlock`{.AgdaFunction} states both as a disjoint union,
+one alternative for a body without a certificate and one for a body with one,
+so the bit is required in both directions and a false bit cannot hide a
+certificate.
 
 ```agda
-certifiedBit : Block → Bool
-certifiedBit b = BHBody.certifiedEB (BHeader.bhbody (Block.bheader b))
-
 ValidLeiosBlock : Block → Type
-ValidLeiosBlock b = valid (certifiedBit b) (Block.ebCert b) (Block.ts b)
+ValidLeiosBlock b =  (Is-nothing ebCert × certifiedEB ≡ false)
+                  ⊎  (Is-just ebCert × certifiedEB ≡ true × length ts ≡ 0)
   where
-    valid : Bool → Maybe EBCert → List TopLevelTx → Type
-    valid certified nothing   _    = certified ≡ false
-    valid certified (just _)  txs  = certified ≡ true × txs ≡ []
+    open Block b
+    open BHBody (BHeader.bhbody bheader)
 ```
 
 The bit is an input the rule checks, not a value computed from the body.  Header
 validation sees the bit but not the body, so a check it gates on the bit is sound
 only if the ledger verifies the bit.
-
-<!--
-```agda
-ValidLeiosBlock? : ∀ b → Dec (ValidLeiosBlock b)
-ValidLeiosBlock? b with Block.ebCert b | Block.ts b
-... | nothing | _     = certifiedBit b ≟ false
-... | just _  | _ ∷ _ = no λ { (_ , ()) }
-... | just _  | []    with certifiedBit b ≟ true
-... | yes p = yes (p , refl)
-... | no ¬p = no (¬p ∘ proj₁)
-
-instance
-  Dec-ValidLeiosBlock : ∀ {b} → ValidLeiosBlock b ⁇
-  Dec-ValidLeiosBlock {b} = ⁇ (ValidLeiosBlock? b)
-```
--->
 
 The rule requires the body's size and hash to agree with the header, the block
 to satisfy `ValidLeiosBlock`{.AgdaFunction}, the transactions' execution units to
