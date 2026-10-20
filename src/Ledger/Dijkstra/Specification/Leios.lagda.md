@@ -186,10 +186,11 @@ parameters the function is applied to.
 Only keyed seats can sign, so the weight a certificate can gather is bounded
 by the keyed seats' summed weight, and a committee whose keyed seats hold less
 than the quorum threshold `τ` (`leiosQuorumStakeThreshold`{.AgdaField}) of the
-total active stake can certify nothing.  No constraint on the
-parameters rules this out, since the seats' keys and weights come from the
-stake distribution.  `certifiable`{.AgdaFunction} names the condition, which
-is what an operator watches when certificates stop appearing.
+total active stake can certify nothing.  No constraint on the parameters rules
+this out: the seats' weights come from the stake distribution, and their keys
+from registrations that expire (`honouredBlsKey`{.AgdaFunction}).
+`certifiable`{.AgdaFunction} names the condition, which is what an operator
+watches when certificates stop appearing.
 
 ```agda
   certifiable : LeiosCommittee → Type
