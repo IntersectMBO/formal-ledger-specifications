@@ -54,8 +54,8 @@ The list type keeps the ordering of the references but does not forbid repeated
 reference hashes: duplicate-freedom is a validity condition on the announced
 block, stated beside the nonemptiness and size conditions.
 
-<!-- TODO: reference the validity condition once it is enforced (the `ValidEB`
-     predicate of `Leios.Validity`). -->
+<!-- TODO: reference the validity condition once it is enforced (the `EB`
+     rule of `Leios.Validity`). -->
 
 ### Endorser block identifiers
 

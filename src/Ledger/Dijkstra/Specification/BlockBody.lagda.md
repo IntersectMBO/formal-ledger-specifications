@@ -135,7 +135,7 @@ The checks that need the announcing block, which `BBODY`{.AgdaDatatype} does
 not see, belong to `CHAIN`{.AgdaDatatype}: the certification delay, the epoch
 the two blocks share, the certificate's validity against the committee pinned at
 announcement (`ValidEBCert`{.AgdaRecord}), and the certified EB's validity and
-application (`ValidEB`{.AgdaRecord}).
+application (`EB`{.AgdaDatatype}).
 
 ```agda
 data _⊢_⇀⦇_,BBODY⦈_
