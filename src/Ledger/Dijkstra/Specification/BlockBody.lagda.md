@@ -131,10 +131,10 @@ The rule requires the body's size and hash to agree with the header, the block
 to satisfy `ValidLeiosBlock`{.AgdaFunction}, the transactions' execution units to
 fit the block limit, and `LEDGERS`{.AgdaDatatype} to accept the transactions.
 The checks that need the announcing block, which `BBODY`{.AgdaDatatype} does
-not see, belong to `CHAIN`{.AgdaDatatype}: the certification delay, the
-certificate's validity against the committee pinned at announcement
-(`ValidEBCert`{.AgdaRecord}), and the certified EB's validity and application
-(`ValidEB`{.AgdaRecord}).
+not see, belong to `CHAIN`{.AgdaDatatype}: the certification delay, the epoch
+the two blocks share, the certificate's validity against the committee pinned at
+announcement (`ValidEBCert`{.AgdaRecord}), and the certified EB's validity and
+application (`ValidEB`{.AgdaRecord}).
 
 ```agda
 data _⊢_⇀⦇_,BBODY⦈_
