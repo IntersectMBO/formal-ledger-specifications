@@ -36,7 +36,7 @@ open import Ledger.Dijkstra.Specification.Leios govStructure
   using (EBCert; LeiosCommittee; ValidEBCert; certificationDelay)
 open import Ledger.Dijkstra.Specification.Leios.Types cryptoStructure leiosCryptoStructure
   using (EndorserBlock; hashEB)
-open import Ledger.Dijkstra.Specification.Leios.Validity txs abs using (ValidEB)
+open import Ledger.Dijkstra.Specification.Leios.Validity txs abs using (_,_⊢_⇀⦇_,EB⦈_)
 open import Ledger.Prelude; open Equivalence
 open import Ledger.Dijkstra.Specification.Ratify govStructure
 open import Ledger.Dijkstra.Specification.RewardUpdate txs abs
@@ -180,12 +180,13 @@ block's world:
    (`ValidEBCert`{.AgdaRecord}; [Certificate Validation][cip-certval], whose
    fifth check, that the message is the announcing header's hash taken from the
    chain context, is met by the message supplied here);
-+  the EB is valid in the announcing block's environment, which is what the
-   voters checked (`ValidEB`{.AgdaRecord});
-+  the closure applies through `LEDGERS`{.AgdaDatatype}, within the endorser
-   block's limits on reference-script size and execution units, to the ledger
-   state the announcing block left, and the resulting state is the one the
-   chain rule continues from ([Ledger Management][cip-ledger]).
++  the EB steps by `EB`{.AgdaDatatype} from the ledger state the announcing
+   block left, in that block's environment, which is what the voters checked:
+   the EB is well formed and within its bounds, its references are its
+   closure's, and the closure applies through `LEDGERS`{.AgdaDatatype} within
+   the endorser block's limits on reference-script size and execution units;
+   the resulting state is the one the chain rule continues from
+   ([Ledger Management][cip-ledger]).
 
 A certificate without its resolved EB, or a resolved EB beside a block that
 carries no certificate, admits no transition.
@@ -206,22 +207,20 @@ data _⊢_⇀⦇_,CERTIFY⦈_ : CertifyEnv → LedgerState → Maybe EBCert × M
           open LastAppliedBlock la renaming (slot to announcingSlot)
           open EnactState enactState using (constitution)
           open PParams (PParamsOf enactState)
-            using (leiosQuorumStakeThreshold; leiosMaxRefScriptSizePerEB; leiosMaxEBExUnits) in
+            using (leiosQuorumStakeThreshold) in
 ```
 -->
 
 ```agda
     let  pp   = PParamsOf enactState
          Γ'   = ⟦ announcingSlot , ∣ constitution ∣ , pp , enactState , treasury ⟧
-         Γeb  = ⟦ Γ' , leiosMaxRefScriptSizePerEB , leiosMaxEBExUnits ⟧
     in
     ∙ lastApplied ≡ just la
     ∙ pendingEB la ≡ just (hashEB eb)
     ∙ announcingSlot + certificationDelay pp ≤ slot
     ∙ epoch announcingSlot ≡ epoch slot
     ∙ ValidEBCert committee leiosQuorumStakeThreshold (rbHeaderHashBytes headerHash) cert
-    ∙ ValidEB {Γ'} {ls} eb closure
-    ∙ Γeb ⊢ ls ⇀⦇ closure ,LEDGERS⦈ ls₁
+    ∙ Γ' , closure ⊢ ls ⇀⦇ eb ,EB⦈ ls₁
       ────────────────────────────────
       Γ ⊢ ls ⇀⦇ (just cert , just reb) ,CERTIFY⦈ ls₁
 ```

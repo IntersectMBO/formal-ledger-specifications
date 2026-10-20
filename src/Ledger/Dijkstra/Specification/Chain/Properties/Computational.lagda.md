@@ -30,7 +30,11 @@ open import Ledger.Dijkstra.Specification.Leios govStructure
   using (EBCert; ValidEBCert; Dec-ValidEBCert; certificationDelay)
 open import Ledger.Dijkstra.Specification.Leios.Types cryptoStructure leiosCryptoStructure
   using (hashEB)
-open import Ledger.Dijkstra.Specification.Leios.Validity txs abs using (ValidEB?)
+open import Ledger.Dijkstra.Specification.Leios.Validity txs abs
+  using (_,_⊢_⇀⦇_,EB⦈_; EB; EBWellFormed; ebWellFormed)
+open import Ledger.Dijkstra.Specification.Leios.Types cryptoStructure leiosCryptoStructure
+  using (EndorserBlock)
+open import Data.List.Relation.Unary.Unique.DecPropositional using (unique?)
 open import Ledger.Dijkstra.Specification.RewardUpdate txs abs
 open import Ledger.Dijkstra.Specification.RewardUpdate.Properties.Computational txs abs
 open import Ledger.Prelude
@@ -74,6 +78,22 @@ module _ (Γ : CertifyEnv) (la : LastAppliedBlock) (cert : EBCert) (reb : Resolv
   validCert? : Dec (ValidEBCert committee leiosQuorumStakeThreshold (rbHeaderHashBytes headerHash) cert)
   validCert? = ¿ _ ¿
 
+  -- The EB step's checks besides LEDGERS, against the announcing block's parameters.
+  ebChecks? : Dec ( EBWellFormed eb
+                  × EndorserBlock.ebTxRefs eb ≡ map (λ tx → txRefHash tx , SizeOf tx) closure
+                  × ebSize eb ≤ PParams.leiosMaxEBSize (PParamsOf enactState)
+                  × ∑ˡ[ tx ← closure ] SizeOf tx ≤ PParams.leiosMaxEBTxsSize (PParamsOf enactState) )
+  ebChecks? = wellFormed? ×-dec ¿ _ ¿
+    where
+      refs = EndorserBlock.ebTxRefs eb
+      nonempty? : Dec (refs ≢ [])
+      nonempty? with refs
+      ... | []    = no λ p → p refl
+      ... | _ ∷ _ = yes λ ()
+      wellFormed? : Dec (EBWellFormed eb)
+      wellFormed? = map′ (λ (n , u) → ebWellFormed (n , u)) (λ where (ebWellFormed (n , u)) → n , u)
+                         (nonempty? ×-dec unique? _≟_ (map proj₁ refs))
+
 instance
 ```
 -->
@@ -102,14 +122,14 @@ instance
   ... | no _ = failure "the EB certificate is not valid against the announcing epoch's committee"
   ... | yes vc = do
     ls₁ , ext ← computeProof _ ls (ResolvedEB.closure reb)
-    case ValidEB? (ResolvedEB.eb reb) (ResolvedEB.closure reb) (ls₁ , ext) of λ where
+    case ebChecks? Γ la cert reb of λ where
       (no _)  → failure "the certified EB is not valid in the announcing block's environment"
-      (yes v) → success (ls₁ , CERTIFY-EB (la≡ , pend , d , e , vc , v , ext))
+      (yes (wf , refs , sz , tsz)) → success (ls₁ , CERTIFY-EB (la≡ , pend , d , e , vc , EB (wf , refs , sz , tsz , ext)))
 
   Computational-CERTIFY .completeness Γ ls (nothing , nothing) _ CERTIFY-None = refl
   Computational-CERTIFY .completeness Γ ls (just _ , nothing) _ ()
   Computational-CERTIFY .completeness Γ ls (nothing , just _) _ ()
-  Computational-CERTIFY .completeness Γ ls (just cert , just reb) ls₁ (CERTIFY-EB {la = la} (la≡ , pend , d , e , vc , v , ext))
+  Computational-CERTIFY .completeness Γ ls (just cert , just reb) ls₁ (CERTIFY-EB {la = la} (la≡ , pend , d , e , vc , EB (wf , refs , sz , tsz , ext)))
     with pending? (CertifyEnv.lastApplied Γ)
   ... | no ¬pending = ⊥-elim (¬pending (la , la≡))
   ... | yes (la' , la≡')
@@ -129,8 +149,8 @@ instance
   ... | yes _
     with recomputeProof ext | completeness _ _ _ _ ext
   ... | success (_ , ext') | refl
-    with ValidEB? (ResolvedEB.eb reb) (ResolvedEB.closure reb) (_ , ext')
-  ... | no ¬v = ⊥-elim (¬v v)
+    with ebChecks? Γ la cert reb
+  ... | no ¬c = ⊥-elim (¬c (wf , refs , sz , tsz))
   ... | yes _ = refl
 ```
 
