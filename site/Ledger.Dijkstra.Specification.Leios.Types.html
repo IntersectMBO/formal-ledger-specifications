@@ -12129,12 +12129,12 @@ voters validated.</p>
 <p>The list type keeps the ordering of the references but does not forbid repeated
 reference hashes: duplicate-freedom is a validity condition on the announced
 block, stated beside the nonemptiness and size conditions.</p>
-<!-- TODO: reference the validity condition once it is enforced (the `ValidEB`
-     predicate of `Leios.Validity`). -->
+<!-- TODO: reference the validity condition once it is enforced (the `EB`
+     rule of `Leios.Validity`). -->
 
 <h3 id="endorser-block-identifiers">Endorser block identifiers<a class="headerlink" href="#endorser-block-identifiers" title="Permanent link">&para;</a></h3>
-<pre class="Agda"><a id="hashEB"></a><a id="2029" href="Ledger.Dijkstra.Specification.Leios.Types.html#2029" class="Function">hashEB</a> <a id="2036" class="Symbol">:</a> <a id="2038" href="Ledger.Dijkstra.Specification.Leios.Types.html#1051" class="Record">EndorserBlock</a> <a id="2052" class="Symbol">→</a> <a id="2054" href="Ledger.Dijkstra.Specification.Crypto.html#3463" class="Field">EBHash</a>
-<a id="2061" href="Ledger.Dijkstra.Specification.Leios.Types.html#2029" class="Function">hashEB</a> <a id="2068" href="Ledger.Dijkstra.Specification.Leios.Types.html#2068" class="Bound">eb</a> <a id="2071" class="Symbol">=</a> <a id="2073" href="Ledger.Dijkstra.Specification.Crypto.html#3505" class="Field">hashEBRefs</a> <a id="2084" class="Symbol">(</a><a id="2085" href="Ledger.Dijkstra.Specification.Leios.Types.html#1090" class="Field">EndorserBlock.ebTxRefs</a> <a id="2108" href="Ledger.Dijkstra.Specification.Leios.Types.html#2068" class="Bound">eb</a><a id="2110" class="Symbol">)</a>
+<pre class="Agda"><a id="hashEB"></a><a id="2019" href="Ledger.Dijkstra.Specification.Leios.Types.html#2019" class="Function">hashEB</a> <a id="2026" class="Symbol">:</a> <a id="2028" href="Ledger.Dijkstra.Specification.Leios.Types.html#1051" class="Record">EndorserBlock</a> <a id="2042" class="Symbol">→</a> <a id="2044" href="Ledger.Dijkstra.Specification.Crypto.html#3463" class="Field">EBHash</a>
+<a id="2051" href="Ledger.Dijkstra.Specification.Leios.Types.html#2019" class="Function">hashEB</a> <a id="2058" href="Ledger.Dijkstra.Specification.Leios.Types.html#2058" class="Bound">eb</a> <a id="2061" class="Symbol">=</a> <a id="2063" href="Ledger.Dijkstra.Specification.Crypto.html#3505" class="Field">hashEBRefs</a> <a id="2074" class="Symbol">(</a><a id="2075" href="Ledger.Dijkstra.Specification.Leios.Types.html#1090" class="Field">EndorserBlock.ebTxRefs</a> <a id="2098" href="Ledger.Dijkstra.Specification.Leios.Types.html#2058" class="Bound">eb</a><a id="2100" class="Symbol">)</a>
 </pre>
 <p><code class="AgdaFunction">hashEB</code> fixes the identity of an endorser block as the CIP does,
 "computed from the complete EB structure": the identifier is the hash of the
@@ -12143,7 +12143,7 @@ data arrives.</p>
 <p>What <code class="AgdaFunction">hashEB</code> deliberately does not fix is the preimage, since
 <code class="AgdaField">hashEBRefs</code> is abstract and no byte-exact serialization of the
 reference list is pinned.<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup></p>
-<pre class="Agda hidden-source"><a id="2569" class="Keyword">unquoteDecl</a> <a id="DecEq-EndorserBlock"></a><a id="2581" href="Ledger.Dijkstra.Specification.Leios.Types.html#2581" class="Function">DecEq-EndorserBlock</a> <a id="2601" class="Symbol">=</a> <a id="2603" href="Tactic.Derive.DecEq.html#5150" class="Function">derive-DecEq</a> <a id="2616" class="Symbol">((</a><a id="2618" class="Keyword">quote</a> <a id="2624" href="Ledger.Dijkstra.Specification.Leios.Types.html#1051" class="Record">EndorserBlock</a> <a id="2638" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="2640" href="Ledger.Dijkstra.Specification.Leios.Types.html#2581" class="Function">DecEq-EndorserBlock</a><a id="2659" class="Symbol">)</a> <a id="2661" href="Agda.Builtin.List.html#199" class="InductiveConstructor Operator">∷</a> <a id="2663" href="Agda.Builtin.List.html#184" class="InductiveConstructor">[]</a><a id="2665" class="Symbol">)</a>
+<pre class="Agda hidden-source"><a id="2559" class="Keyword">unquoteDecl</a> <a id="DecEq-EndorserBlock"></a><a id="2571" href="Ledger.Dijkstra.Specification.Leios.Types.html#2571" class="Function">DecEq-EndorserBlock</a> <a id="2591" class="Symbol">=</a> <a id="2593" href="Tactic.Derive.DecEq.html#5150" class="Function">derive-DecEq</a> <a id="2606" class="Symbol">((</a><a id="2608" class="Keyword">quote</a> <a id="2614" href="Ledger.Dijkstra.Specification.Leios.Types.html#1051" class="Record">EndorserBlock</a> <a id="2628" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="2630" href="Ledger.Dijkstra.Specification.Leios.Types.html#2571" class="Function">DecEq-EndorserBlock</a><a id="2649" class="Symbol">)</a> <a id="2651" href="Agda.Builtin.List.html#199" class="InductiveConstructor Operator">∷</a> <a id="2653" href="Agda.Builtin.List.html#184" class="InductiveConstructor">[]</a><a id="2655" class="Symbol">)</a>
 </pre>
 
 <hr />
