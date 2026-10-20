@@ -37,11 +37,11 @@ import qualified MAlonzo.Code.Ledger.Prelude.Base
 import qualified MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory
 import qualified MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base
 
--- _._≥ᵉ_
-d__'8805''7497'__22 ::
+-- _._≤ᵉᵘ_
+d__'8804''7497''7512'__20 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   AgdaAny -> AgdaAny -> ()
-d__'8805''7497'__22 = erased
+d__'8804''7497''7512'__20 = erased
 -- _.Acnt
 d_Acnt_36 a0 = ()
 -- _.HasCast-HashProtected-MaybeScriptHash
