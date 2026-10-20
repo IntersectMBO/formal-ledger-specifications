@@ -25,7 +25,7 @@ open import Ledger.Dijkstra.Specification.Enact govStructure
 open import Ledger.Dijkstra.Specification.Epoch txs abs
 open import Ledger.Dijkstra.Specification.Ledger txs abs
 open import Ledger.Dijkstra.Specification.Utxo txs abs
-open import Ledger.Dijkstra.Specification.Ledger.Properties.Computational txs abs
+open import Ledger.Dijkstra.Specification.Ledgers.Properties.Computational txs abs
 open import Ledger.Dijkstra.Specification.Leios govStructure
   using (EBCert; ValidEBCert; Dec-ValidEBCert; certificationDelay)
 open import Ledger.Dijkstra.Specification.Leios.Types cryptoStructure leiosCryptoStructure
